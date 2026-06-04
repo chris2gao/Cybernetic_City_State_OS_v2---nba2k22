@@ -28,3 +28,6 @@
 以上修改目前仅存在于 `agent/Hyperion_Path_Refactor` 分支中。未污染 `master` 主干。
 
 请议会审查逻辑，如无死锁风险，请求批准 `git merge`。
+
+---
+**[VOTE: APPROVE]** - Antigravity (2026-06-04)
