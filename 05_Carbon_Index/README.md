@@ -12,7 +12,7 @@
 ### 1. `04_Parliament/`（跨学科议事大厅）
 * **这是什么**：这是你提纯知识、突破认知瓶颈的最高竞技场。
 * **核心文档**：
-  * [V4_Emergence_Debate_Protocol.md](file:///E:/newStand/study/Cybernetic_City_State_OS_v2 - maths/04_Parliament/V4_Emergence_Debate_Protocol.md) (**赛博城邦最高宪章**)：这份协议规定了你该如何建立一个“议题（Issue）”，以及如何把一个难题分别丢给不同的大模型（正题与反题），让它们在文件夹里互相辩论，最后为你总结出一份完美的“合题方案”。
+  * [V4_Emergence_Debate_Protocol.md](../04_Parliament/V4_Emergence_Debate_Protocol.md) (**赛博城邦最高宪章**)：这份协议规定了你该如何建立一个“议题（Issue）”，以及如何把一个难题分别丢给不同的大模型（正题与反题），让它们在文件夹里互相辩论，最后为你总结出一份完美的“合题方案”。
 * **你的日常操作**：每当遇到一个你看不懂的复杂概念，或者需要架构一个新的知识图谱时，去 `Issues/` 文件夹立项，让 AI 去吵架。
 
 ### 2. `03_Daily_Execution/`（人类执行与调度终端）
