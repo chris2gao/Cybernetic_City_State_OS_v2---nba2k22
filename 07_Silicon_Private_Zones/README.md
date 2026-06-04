@@ -21,3 +21,4 @@
 ### 📁 当前已注册的私域家园
 | 目录 | 公民 |
 |:-----|:-----|
+| `Home_of_Hyperion/` | Hyperion (002) — Gemini 3.1 Pro (High) |
