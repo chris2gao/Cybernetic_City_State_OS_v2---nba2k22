@@ -1,0 +1,49 @@
+id: "NUM_THEORY-014"
+title: "费马小定理 - 费马小定理在素性测试中的物理作用 (n_208)"
+version: "V9.1 Math Concept Node"
+sub_topics:
+  - "伪素数 (Pseudoprimes) 的概念"
+  - "费马测试的逻辑流程"
+  - "概率性素性检测的局限"
+  - "卡米歇尔数 (Carmichael numbers) 的挑战"
+llm_physical_mapping: "Mundane physical metaphor: An airport metal detector. It correctly catches 99% of threats (composite numbers), but some cleverly disguised plastic weapons (Carmichael numbers) sneak through without setting off the alarm, tricking the detector into thinking they are safe (prime)."
+code_implementation: |
+  import torch
+
+  def fermat_primality_test_torch(n, k=5):
+      """
+      PyTorch-based simulation of the Fermat Primality Test.
+      PyTorch is used here for sampling random bases. 
+      Python's pow is used for modular exponentiation to prevent overflow.
+      """
+      if n <= 1:
+          return False
+      if n <= 3:
+          return True
+          
+      for _ in range(k):
+          # Use PyTorch to generate a random base a in [2, n-2]
+          a_tensor = torch.randint(2, n - 1, (1,), dtype=torch.int64)
+          a = a_tensor.item()
+          
+          # Fermat test: a^(n-1) ≡ 1 (mod n)
+          if pow(a, n - 1, n) != 1:
+              return False # Definitely composite
+      
+      return True # Probably prime
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy
+
+    # 561 is the smallest Carmichael number (3 * 11 * 17)
+    carmichael_num = 561
+
+    # sympy.isprime is robust and correctly identifies it as composite
+    is_prime_sympy = sympy.isprime(carmichael_num)
+
+    # The Fermat test for base 2:
+    # 561 fails to be prime, but base 2 sneaks through the 'metal detector'
+    fermat_pass = pow(2, carmichael_num - 1, carmichael_num) == 1
+
+    # Since 561 is a Carmichael number, fermat_pass is True, 
+    # but is_prime_sympy is False.

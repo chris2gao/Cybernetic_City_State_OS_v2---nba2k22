@@ -1,0 +1,26 @@
+id: "DISCRETE-226"
+concept_name: "图论基础 - 通路 (Path)、回路 (Cycle) 与图的连通性 (n_226)"
+sub_topics:
+  - "简单通路与初级通路的区分"
+  - "连通图与连通分量的定义"
+  - "强连通、弱连通（有向图专用）"
+  - "判别连通性的矩阵幂运算法"
+llm_physical_mapping: "mundane physical metaphor: like water pipes connecting houses; a connected component is a cluster of houses where water can flow between any two, and a cycle is a closed loop of pipes."
+code_implementation: |
+  import networkx as nx
+  
+  def connectivity_checks():
+      G = nx.Graph([(1, 2), (2, 3), (4, 5)])
+      components = list(nx.connected_components(G))
+      has_cycle = nx.cycle_basis(G)
+      return components, len(has_cycle) > 0
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import networkx as nx
+    import numpy as np
+    G = nx.Graph([(1, 2), (2, 3)])
+    A = nx.to_numpy_array(G)
+    # A^2 represents paths of length 2
+    A_squared = np.dot(A, A)
+    assert A_squared[0, 2] > 0 # Path from 1 to 3 of length 2
+    assert nx.is_connected(G)

@@ -1,0 +1,21 @@
+concept_node:
+  id: "MINI-04"
+  symbol: "c1*v1 + c2*v2 = 0 implies c1=c2=0"
+  name: "Linear Independence"
+  pure_math_definition:
+    description: "Vectors are independent if the only solution to their linear combination being zero is the trivial one."
+  llm_physical_mapping:
+    tensor_shape_flow: "Det(Stacked Tensors) != 0"
+    cognitive_intuition: "No redundant dimensions. Each force acts in a unique direction."
+  code_implementation:
+    snippet: |
+      import torch
+      V = torch.tensor([[1.0, 0.0], [0.0, 1.0]])
+      is_independent = torch.det(V) != 0
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      v1 = sp.Matrix([1, 0])
+      v2 = sp.Matrix([0, 1])
+      V = sp.Matrix.hstack(v1, v2)
+      assert V.det() != 0

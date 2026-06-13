@@ -1,0 +1,39 @@
+concept_node:
+  id: "SET_THEORY-004"
+  domain: "set_operations"
+  name: "集合的对称差 (Symmetric Difference) (n_8)"
+  sub_topics: ['对称差的集合定义', '对称差的维恩图表示', '交换律与结合律', '布尔环中的加法对应']
+  llm_physical_mapping: |
+    Imagine two different guest lists for two parties. The symmetric difference represents the people who are invited to EXACTLY ONE of the parties, but not both. Those invited to both are excluded. Physically, it is the combination of the two groups minus their overlapping members, functioning like an 'Exclusive OR' (XOR) gate in logic.
+  code_implementation: |
+    import torch
+
+    def symmetric_difference(set_A: torch.Tensor, set_B: torch.Tensor) -> torch.Tensor:
+        """
+        Calculates the symmetric difference of two sets represented as boolean tensors.
+        Equivalent to logical XOR: (A or B) and not (A and B).
+        """
+        return set_A ^ set_B
+
+    # Example: Boolean masks representing presence of elements
+    A = torch.tensor([True, False, True, False])
+    B = torch.tensor([True, True, False, False])
+
+    sym_diff = symmetric_difference(A, B)
+    print(f"Set A: {A}")
+    print(f"Set B: {B}")
+    print(f"Symmetric Difference (A XOR B): {sym_diff}")
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy
+      from sympy import FiniteSet, SymmetricDifference
+      from sympy.logic.boolalg import Xor
+
+      # Set Theory approach
+      A = FiniteSet(1, 2, 3)
+      B = FiniteSet(3, 4, 5)
+      sym_diff = SymmetricDifference(A, B)
+      
+      # Logic/Boolean approach
+      x, y = sympy.symbols('x y')
+      xor_expr = Xor(x, y)

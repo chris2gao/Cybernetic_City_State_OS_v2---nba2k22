@@ -1,0 +1,101 @@
+concept_node:
+  id: PROP_LOGIC-005
+  title: Normal Forms (主析取范式 DNF 与主合取范式 CNF)
+  version: '9.1'
+  domain: Propositional Logic
+  sub_topics:
+  - 主析取范式（Disjunctive Normal Form）
+  - 主合取范式（Conjunctive Normal Form）
+  - 范式的求解方法与唯一性
+  description: Disjunctive Normal Form (DNF) and Conjunctive Normal Form (CNF) represent
+    standardized ways of writing propositional formulas. DNF is an OR of ANDs (sum
+    of products), while CNF is an AND of ORs (product of sums). They are fundamental
+    to automated theorem proving, logical circuit design, and boolean satisfiability
+    (SAT).
+  llm_physical_mapping:
+    concept: Sum of Products / Product of Sums
+    neural_network_analogy: 'DNF connects directly to the ''Sum of Products'' paradigm,
+      conceptually mapping to a two-layer neural network architecture: a hidden layer
+      computing logical ANDs (minterms) followed by an output layer computing logical
+      ORs. In a differentiable setting, this can be structurally modeled as max-pooling
+      (OR) over logical AND combinations. CNF similarly represents a product of sums,
+      functioning as an AND over OR operations.'
+  code_implementation:
+    language: python
+    framework: pytorch
+    description: Constructs a DNF expression and a CNF expression evaluated from primitive
+      boolean tensors.
+    snippet: "import torch\n\ndef evaluate_dnf(x: torch.Tensor, minterms: torch.Tensor)\
+      \ -> torch.Tensor:\n    \"\"\"\n    Evaluate a DNF (Disjunctive Normal Form)\
+      \ expression.\n    x: (batch_size, num_vars) boolean tensor\n    minterms: (num_minterms,\
+      \ num_vars) boolean tensor representing the required variable states for each\
+      \ AND clause.\n    Returns: (batch_size,) boolean tensor\n    \"\"\"\n    x_exp\
+      \ = x.unsqueeze(1)               # (batch_size, 1, num_vars)\n    minterms_exp\
+      \ = minterms.unsqueeze(0) # (1, num_minterms, num_vars)\n    \n    # AND operation:\
+      \ all literals in a minterm must match\n    and_clauses = torch.all(x_exp ==\
+      \ minterms_exp, dim=-1) # (batch_size, num_minterms)\n    \n    # OR operation\
+      \ (max-pooling): at least one minterm must be true\n    dnf_result = torch.any(and_clauses,\
+      \ dim=-1)            # (batch_size,)\n    return dnf_result\n\ndef evaluate_cnf(x:\
+      \ torch.Tensor, maxterms: torch.Tensor) -> torch.Tensor:\n    \"\"\"\n    Evaluate\
+      \ a CNF (Conjunctive Normal Form) expression.\n    x: (batch_size, num_vars)\
+      \ boolean tensor\n    maxterms: (num_maxterms, num_vars) boolean tensor representing\
+      \ the required variable states for each OR clause.\n    Returns: (batch_size,)\
+      \ boolean tensor\n    \"\"\"\n    x_exp = x.unsqueeze(1)               # (batch_size,\
+      \ 1, num_vars)\n    maxterms_exp = maxterms.unsqueeze(0) # (1, num_maxterms,\
+      \ num_vars)\n    \n    # OR operation: at least one literal in a maxterm must\
+      \ match\n    or_clauses = torch.any(x_exp == maxterms_exp, dim=-1)  # (batch_size,\
+      \ num_maxterms)\n    \n    # AND operation: all maxterms must be true\n    cnf_result\
+      \ = torch.all(or_clauses, dim=-1)             # (batch_size,)\n    return cnf_result\n\
+      \n# Example Usage\nif __name__ == \"__main__\":\n    # Variables: [x0, x1]\n\
+      \    x = torch.tensor([[True, False], [True, True], [False, False]])\n    \n\
+      \    # DNF Example: (x0 AND NOT x1) OR (NOT x0 AND x1)  [XOR logic]\n    minterms\
+      \ = torch.tensor([[True, False], [False, True]])\n    print(\"DNF Evaluation:\"\
+      , evaluate_dnf(x, minterms))\n    \n    # CNF Example: (x0 OR x1) AND (NOT x0\
+      \ OR NOT x1)   [XOR logic]\n    maxterms = torch.tensor([[True, True], [False,\
+      \ False]])\n    print(\"CNF Evaluation:\", evaluate_cnf(x, maxterms))\n"
+  v8_sanity_audit:
+    description: Use SymPy to convert an expression to DNF and CNF and assert logical
+      equivalence.
+    sympy_pseudo_code: 'from sympy import symbols, Implies, Equivalent
+
+      from sympy.logic.boolalg import to_dnf, to_cnf, simplify_logic
+
+
+      # Define propositional symbols
+
+      p, q, r = symbols(''p q r'')
+
+
+      # Define an arbitrary expression: p => (q AND r)
+
+      expr = Implies(p, q & r)
+
+
+      # Convert to Disjunctive Normal Form (DNF)
+
+      dnf_expr = to_dnf(expr)
+
+      print(f"Original: {expr}")
+
+      print(f"DNF Form: {dnf_expr}")  # Output: ~p | (q & r)
+
+
+      # Convert to Conjunctive Normal Form (CNF)
+
+      cnf_expr = to_cnf(expr)
+
+      print(f"CNF Form: {cnf_expr}")  # Output: (~p | q) & (~p | r)
+
+
+      # Sanity checks: assert structural form equivalence
+
+      assert simplify_logic(Equivalent(expr, dnf_expr)) == True, "DNF equivalence
+      failed!"
+
+      assert simplify_logic(Equivalent(expr, cnf_expr)) == True, "CNF equivalence
+      failed!"
+
+      print("Sanity audit passed: DNF and CNF representations are logically equivalent
+      to the original expression.")
+
+      '

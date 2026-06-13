@@ -1,0 +1,55 @@
+id: "TRIG-015"
+version: "9.1"
+name: "正弦/余弦定理 - 正弦定理推导：利用面积等价或外接圆直径进行严密代数推演 (n_176)"
+description: "Derivation of the Law of Sines using triangle area equivalence and circumcircle geometry."
+sub_topics:
+  - "三角形面积公式的等积变形推导"
+  - "外接圆直径（2R）作为比例系数的几何推导"
+  - "定理的分式比例形式与边角关系"
+  - "各类型三角形（锐角/钝角/直角）的普适性验证"
+llm_physical_mapping: "Mundane physical metaphor: Projecting triangle sides onto a circumcircle. Imagine a triangle inscribed inside a circular hoop. The diameter of the hoop uniquely bounds the relationship between any side's length and the angle opposite it. Adjusting an angle while keeping the hoop's size constant smoothly modifies the opposite side's length like an elastic chord anchored on a perfect ring."
+code_implementation:
+  language: "python"
+  framework: "pytorch"
+  snippet: |
+    import torch
+
+    def law_of_sines_find_side(a: torch.Tensor, angle_A: torch.Tensor, angle_B: torch.Tensor) -> torch.Tensor:
+        """
+        Using Law of Sines: a / sin(A) = b / sin(B)
+        Solves for side b.
+        """
+        # Ensure angles are in radians
+        b = a * (torch.sin(angle_B) / torch.sin(angle_A))
+        return b
+
+    def circumcircle_diameter(a: torch.Tensor, angle_A: torch.Tensor) -> torch.Tensor:
+        """
+        Returns the diameter of the circumcircle using: 2R = a / sin(A)
+        """
+        return a / torch.sin(angle_A)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    from sympy import Point, Triangle, sin, pi
+
+    # Create a 3-4-5 right triangle
+    p1 = Point(0, 0)
+    p2 = Point(4, 0)
+    p3 = Point(0, 3)
+
+    t = Triangle(p1, p2, p3)
+    circ = t.circumcircle
+
+    # Diameter of circumcircle (2R)
+    diameter = 2 * circ.radius
+
+    # The side opposite to the right angle (at p1) is the hypotenuse
+    hypotenuse = p2.distance(p3)
+    angle_p1 = pi / 2
+
+    # Law of Sines ratio: a / sin(A) = 2R
+    law_of_sines_ratio = hypotenuse / sin(angle_p1)
+
+    # Verify that the ratio equals the diameter
+    assert law_of_sines_ratio == diameter
+    assert diameter == 5

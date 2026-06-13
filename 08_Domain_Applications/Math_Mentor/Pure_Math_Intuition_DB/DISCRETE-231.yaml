@@ -1,0 +1,27 @@
+id: "DISCRETE-231"
+concept_name: "树与网络 - 最小生成树 (Minimum Spanning Tree, MST)：Kruskal 与 Prim 算法背后的贪心博弈逻辑 (n_231)"
+sub_topics:
+  - "生成树的概念与权重代价"
+  - "Kruskal 算法：加边法与并查集应用"
+  - "Prim 算法：加点法与优先级队列"
+  - "贪心策略在 MST 问题中的最优性证明"
+llm_physical_mapping: "mundane physical metaphor: like a construction crew paving the cheapest dirt roads between a set of villages so every village is reachable without paving every single road."
+code_implementation: |
+  import networkx as nx
+  
+  def find_mst():
+      G = nx.Graph()
+      G.add_edge('A', 'B', weight=4)
+      G.add_edge('B', 'C', weight=8)
+      G.add_edge('A', 'C', weight=2)
+      mst = nx.minimum_spanning_tree(G)
+      return mst.edges(data=True)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import networkx as nx
+    G = nx.Graph()
+    G.add_weighted_edges_from([(1, 2, 10), (2, 3, 5), (1, 3, 1)])
+    T = nx.minimum_spanning_tree(G)
+    total_weight = sum(d['weight'] for u, v, d in T.edges(data=True))
+    assert total_weight == 6
+    assert nx.is_tree(T)

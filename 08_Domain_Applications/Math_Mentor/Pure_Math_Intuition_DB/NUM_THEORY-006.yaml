@@ -1,0 +1,54 @@
+concept_node:
+  id: "NUM_THEORY-006"
+  title: "最大公因数/最小公倍数 - 互质的概念及其在分数简化中的应用 (n_200)"
+  domain: "number_theory"
+  core_intuition: "当两个数互质时，它们除了 1 以外没有其他公因数。在分数简化（约分）过程中，一旦分子和分母达到互质状态，分数就达到了最简形式，无法再被进一步缩小。"
+  sub_topics:
+    - "互质（Coprime）的定义：GCD 为 1"
+    - "两数互质的判定方法"
+    - "利用互质概念定义最简分数"
+    - "互质性在约分过程中的收敛性应用"
+  llm_physical_mapping:
+    metaphor: "Two mechanical gears with no common divisors ensuring even wear over time"
+    description: |
+      A mundane physical metaphor is two mechanical gears meshing together. If the numbers of teeth on the two gears are coprime (their GCD is 1), every tooth on one gear will eventually contact every tooth on the other gear before the cycle repeats. This prevents specific teeth from repeatedly hitting each other and ensures even wear over time, mirroring the concept of no common "divisors" overlapping.
+  code_implementation:
+    language: "python"
+    framework: "pytorch"
+    snippet: |
+      import torch
+      import math
+
+      def check_coprime_pytorch(tensor_a, tensor_b):
+          # Convert PyTorch tensors to standard integers
+          a = tensor_a.item()
+          b = tensor_b.item()
+          
+          # Compute coprime status using math.gcd
+          is_coprime = math.gcd(a, b) == 1
+          
+          # Return the result as a boolean tensor
+          return torch.tensor(is_coprime, dtype=torch.bool)
+
+      a = torch.tensor(15)
+      b = torch.tensor(28)
+      result = check_coprime_pytorch(a, b)
+      print(f"Are {a.item()} and {b.item()} coprime? {result.item()}")
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy
+
+      def check_coprime_sympy(a, b):
+          # Determine if a and b are coprime using sympy.igcd
+          return sympy.igcd(a, b) == 1
+
+      a = 15
+      b = 28
+      result = check_coprime_sympy(a, b)
+      print(f"Are {a} and {b} coprime? {result}")
+
+      # Verification with non-coprime numbers
+      c = 14
+      d = 21
+      result2 = check_coprime_sympy(c, d)
+      print(f"Are {c} and {d} coprime? {result2}")

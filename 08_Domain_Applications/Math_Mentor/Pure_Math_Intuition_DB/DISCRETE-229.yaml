@@ -1,0 +1,27 @@
+id: "DISCRETE-229"
+concept_name: "树与网络 - 树的等价定理推导：n 个顶点的树恰好有 n-1 条边（数学归纳法证明） (n_229)"
+sub_topics:
+  - "树的六种等价定义"
+  - "边数公式 m = n - 1 的严密证明"
+  - "添加一条边必产生环的性质"
+  - "删除任意一条边必不连通的性质"
+llm_physical_mapping: "mundane physical metaphor: like connecting 5 Lego blocks in a line; you strictly need exactly 4 pegs to join them all together."
+code_implementation: |
+  import networkx as nx
+  
+  def check_tree_properties(n):
+      T = nx.path_graph(n)
+      nodes = T.number_of_nodes()
+      edges = T.number_of_edges()
+      return nodes == edges + 1
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import networkx as nx
+    n = 10
+    T = nx.random_labeled_tree(n)
+    nodes = T.number_of_nodes()
+    edges = T.number_of_edges()
+    assert edges == nodes - 1
+    edge_to_remove = list(T.edges())[0]
+    T.remove_edge(*edge_to_remove)
+    assert not nx.is_connected(T)

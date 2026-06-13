@@ -1,0 +1,38 @@
+id: "DISCRETE-258"
+concept_name: "有限状态机（DFA/NFA） - NFA 到 DFA 的等价转换（子集构造法）直觉 (n_258)"
+sub_topics:
+  - "非确定性分支的并行探索模拟"
+  - "幂集构造法 (Subset Construction) 流程"
+  - "状态爆炸现象的数学解释"
+  - "转换后的 DFA 在执行效率上的优势"
+llm_physical_mapping: "mundane physical metaphor: Ghostly security guards patrolling a building. Instead of tracking one guard splitting into multiple timelines (NFA), you define a new 'super-guard' team (DFA state) that represents 'rooms 2, 4, and 5 are currently occupied', moving the entire team as a single solid block."
+code_implementation: |
+  def nfa_to_dfa_step(current_nfa_states, symbol, nfa_transitions):
+      # Find all reachable states from a SET of current states given a symbol
+      next_states = set()
+      for state in current_nfa_states:
+          if (state, symbol) in nfa_transitions:
+              for next_s in nfa_transitions[(state, symbol)]:
+                  next_states.add(next_s)
+      return frozenset(next_states)
+
+  # NFA transition where q0 on 'a' goes to q0 and q1
+  nfa_trans = {
+      ('q0', 'a'): ['q0', 'q1'],
+      ('q0', 'b'): ['q0'],
+      ('q1', 'b'): ['q2']
+  }
+  
+  start_dfa_state = frozenset(['q0'])
+  next_dfa_state = nfa_to_dfa_step(start_dfa_state, 'a', nfa_trans)
+  print(f"DFA transitions from {set(start_dfa_state)} on 'a' to {set(next_dfa_state)}")
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy
+    
+    # Power set size logic
+    nfa_states = 3
+    max_dfa_states = 2**nfa_states
+    
+    # The number of maximum possible DFA states is exactly the power set size of NFA states
+    assert max_dfa_states == 8

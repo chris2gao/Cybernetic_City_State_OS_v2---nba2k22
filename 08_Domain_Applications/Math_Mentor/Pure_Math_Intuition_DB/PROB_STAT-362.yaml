@@ -1,0 +1,25 @@
+id: "PROB_STAT-362"
+concept_name: "假设检验 - P 值的物理意义与第一/二类错误的权衡 (n_362)"
+sub_topics:
+  - "P 值定义：在 H0 成立时观测到当前极端情况的概率"
+  - "第 I 类错误 (弃真) 与第 II 类错误 (取伪)"
+  - "显著性水平 α 的物理阈值设定"
+  - "检验效能 (Power) 的概念"
+llm_physical_mapping: "calculating the chance that a completely fair set of weighted dice could accidentally produce a bullet hole map this extreme."
+code_implementation: |
+  import sympy as sp
+  from sympy.stats import Normal, P
+  X = Normal('X', 0, 1)
+  x_obs = sp.Symbol('x_obs')
+  # P-value for one-sided test
+  p_value = P(X > x_obs)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    from sympy.stats import Normal, P, density
+    z = Normal('z', 0, 1)
+    # Probability of Type I error alpha for one-tailed Z-test with threshold 1.96
+    # Using integration of density for certainty
+    x = sp.Symbol('x')
+    alpha = sp.integrate(density(z)(x), (x, 1.96, sp.oo))
+    assert alpha.evalf() < 0.05

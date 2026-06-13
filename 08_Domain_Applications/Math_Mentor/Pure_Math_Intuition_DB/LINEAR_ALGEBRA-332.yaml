@@ -1,0 +1,18 @@
+id: "LINEAR_ALGEBRA-332"
+concept_name: "秩与零空间（核空间）/维数定理 - 零空间/核空间 (Null Space/Kernel)：在变换中被压缩到原点的向量集合 (n_332)"
+sub_topics:
+  - "核空间的集合定义 Ker(A) = {x | Ax=0}"
+  - "齐次线性方程组解空间与核空间的同构"
+  - "核空间维数（Nullity）的物理直觉"
+  - "变换过程中的信息损失度量"
+llm_physical_mapping: "spatial deformation/stretching/rotating: the null space consists of all spatial directions that are completely crushed down to a single point (the origin) during the deformation."
+code_implementation: |
+  import sympy as sp
+  A = sp.Matrix([[1, 2], [2, 4]])
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    A = sp.Matrix([[1, 2], [2, 4]])
+    null_space = A.nullspace()
+    assert len(null_space) == 1
+    assert A * null_space[0] == sp.Matrix([[0], [0]])

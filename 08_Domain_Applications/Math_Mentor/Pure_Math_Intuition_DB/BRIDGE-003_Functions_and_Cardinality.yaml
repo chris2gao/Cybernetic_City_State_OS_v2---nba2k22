@@ -1,0 +1,77 @@
+concept_node:
+  id: "BRIDGE-003"
+  domain: "cross_domain_bridge"
+  name: "映射与基数 (Mappings ↔ Cardinality)"
+  sub_topics:
+    - "双射作为衡量集合势 (Cardinality) 的唯一标尺"
+    - "单射与基数不等式 (|A| ≤ |B|)"
+    - "满射与选择公理的隐藏联系"
+    - "无限集合与其真子集等势的映射构造"
+  llm_physical_mapping: |
+    Imagine two vast, unlit galaxies where you cannot possibly count the stars. How do you know which galaxy has more stars? 
+    You do not count. Instead, you stretch an unbreakable, infinitely long luminous string from each star in Galaxy A to a unique star in Galaxy B.
+    If every star in A is connected, and there are no leftover stars in B, you have proven they are exactly the same size without ever knowing the count. 
+    This is the essence of a bijection: establishing equality of cardinality through perfect structural pairing, transcending the need for arithmetic counting.
+    An injection is tying every star in A to a star in B, with B perhaps having leftovers (A ≤ B).
+    A surjection is making sure every star in B has at least one string from A (A ≥ B).
+  code_implementation: |
+    import torch
+
+    def verify_bijection(set_a_indices, set_b_indices, mapping_a_to_b):
+        """
+        PyTorch simulation of checking if a mapping between two sets of indices is a bijection,
+        thus proving they have the same cardinality without explicitly comparing their lengths.
+        """
+        # mapping_a_to_b is a tensor of size len(set_a_indices) containing indices of set_b
+        
+        # 1. Check Injection (One-to-One): No two elements in A map to the same element in B
+        unique_targets = torch.unique(mapping_a_to_b)
+        is_injective = len(unique_targets) == len(set_a_indices)
+        
+        # 2. Check Surjection (Onto): Every element in B is mapped to
+        # Ensure all elements in set_b_indices are in unique_targets
+        is_surjective = len(unique_targets) == len(set_b_indices) and torch.all(torch.isin(set_b_indices, unique_targets))
+        
+        is_bijective = is_injective and is_surjective
+        
+        return {
+            "is_injective": is_injective,
+            "is_surjective": is_surjective,
+            "is_bijective": is_bijective,
+            "implies_equal_cardinality": is_bijective
+        }
+
+    # Example: A={0,1,2}, B={10,11,12}
+    set_a = torch.tensor([0, 1, 2])
+    set_b = torch.tensor([10, 11, 12])
+    mapping = torch.tensor([12, 10, 11]) # Perfect matching
+
+    print(verify_bijection(set_a, set_b, mapping))
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+
+      # Pseudo-code demonstrating the logical implications of mappings on cardinality
+      # A: "There exists an injection from X to Y"
+      # B: "|X| <= |Y|"
+      # C: "There exists a surjection from X to Y"
+      # D: "|X| >= |Y|"
+      # E: "There exists a bijection from X to Y"
+      # F: "|X| == |Y|"
+
+      inj, leq = sp.symbols('Injection(X->Y) Card(X)<=Card(Y)')
+      surj, geq = sp.symbols('Surjection(X->Y) Card(X)>=Card(Y)')
+      bij, eq = sp.symbols('Bijection(X->Y) Card(X)==Card(Y)')
+
+      # Logic rules
+      rules = [
+          sp.Equivalent(inj, leq),
+          sp.Equivalent(surj, geq),
+          sp.Equivalent(bij, inj & surj),
+          sp.Equivalent(eq, leq & geq),
+          sp.Equivalent(bij, eq) # The ultimate conclusion
+      ]
+
+      # Can verify that bijection implies equal cardinality
+      proof = sp.Implies(bij, eq)
+      print(f"Is Bijection -> Equal Cardinality consistent with rules? {proof}")

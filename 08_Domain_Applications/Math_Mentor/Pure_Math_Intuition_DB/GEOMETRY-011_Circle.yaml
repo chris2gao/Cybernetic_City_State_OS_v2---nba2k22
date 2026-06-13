@@ -1,0 +1,33 @@
+concept_node:
+  id: "GEOMETRY-011"
+  name: "圆与多边形 - 圆的严格定义（平面上到定点的距离等于定长的所有点的集合） (n_131)"
+  sub_topics:
+    - "定点（圆心）与定长（半径）的概念"
+    - "圆的集合语言描述与特征性质"
+    - "圆的旋转对称性与轴对称性"
+    - "点与圆的位置关系（圆内、圆上、圆外）"
+  llm_physical_mapping: "A tetherball attached to a central pole by a fixed-length rope swinging in a flat plane, perfectly defining a circular locus, or the sweeping tip of a drafting compass."
+  code_implementation: |
+    import torch
+    
+    def check_points_on_circle(points: torch.Tensor, center: torch.Tensor, radius: float, tol: float = 1e-5) -> torch.Tensor:
+        """
+        Uses PyTorch L2 distance equality threshold `torch.isclose` to define a circle mathematically.
+        points: Tensor of shape (N, 2)
+        center: Tensor of shape (2,)
+        """
+        distances = torch.linalg.norm(points - center, ord=2, dim=-1)
+        return torch.isclose(distances, torch.tensor(radius, dtype=distances.dtype), atol=tol)
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      from sympy.geometry import Point, Circle
+      
+      # Representing the circle algebraically and geometrically
+      center = Point(0, 0)
+      radius = sp.Symbol('r', positive=True)
+      c = Circle(center, radius)
+      
+      # Evaluating a point's relation to the circle
+      p = Point(sp.Symbol('x'), sp.Symbol('y'))
+      equation = c.equation(x='x', y='y') # x**2 + y**2 - r**2 = 0

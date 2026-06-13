@@ -1,0 +1,46 @@
+id: "DISCRETE-261"
+concept_name: "容斥原理（离散应用） - 经典应用：错排问题 (Derangements) 的公式推导（信封全装错概率） (n_261)"
+sub_topics:
+  - "错排问题的定义与集合表示"
+  - "利用容斥原理推导错排通项公式"
+  - "错排数列的递推公式 (D_n = (n-1)(D_{n-1} + D_{n-2}))"
+  - "n 趋于无穷时错排概率的极限 (1/e)"
+  - "错排问题的典型应用场景与变体"
+llm_physical_mapping: "mundane physical metaphor: Stuffing physical letters into pre-addressed envelopes blindly. A derangement is the exact scenario where absolutely zero letters land in their matching envelope, calculated by taking all possibilities and systematically subtracting the instances where at least one letter got lucky."
+code_implementation: |
+  import math
+
+  def derangements(n):
+      if n == 0: return 1
+      if n == 1: return 0
+      
+      d = [0] * (n + 1)
+      d[0] = 1
+      d[1] = 0
+      for i in range(2, n + 1):
+          d[i] = (i - 1) * (d[i - 1] + d[i - 2])
+      return d[n]
+
+  for i in range(1, 6):
+      d_n = derangements(i)
+      total = math.factorial(i)
+      prob = d_n / total
+      print(f"n={i}, Derangements={d_n}, Total={total}, Prob={prob:.4f}")
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy
+    from sympy import factorial, E
+    
+    # Derangement for n=4
+    n = 4
+    D_4 = factorial(n) * sum(((-1)**k) / factorial(k) for k in range(n + 1))
+    
+    assert D_4 == 9
+    
+    # Recursive formula check
+    def D(m):
+        if m == 1: return 0
+        if m == 2: return 1
+        return (m-1)*(D(m-1)+D(m-2))
+    
+    assert D(4) == 9

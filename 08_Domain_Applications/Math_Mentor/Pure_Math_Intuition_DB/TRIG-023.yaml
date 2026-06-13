@@ -1,0 +1,30 @@
+id: "TRIG-023"
+concept_name: "角度与弧度的转换 - 弧度的严格定义（弧长与半径的比值：θ = l / r）"
+sub_topics:
+  - "弧度作为一个无量纲的比值属性"
+  - "单位圆上的对应关系"
+  - "扇形中心角的度量定义"
+  - "弧度制对数轴实数化映射的意义"
+llm_physical_mapping: "Measuring a curved arc using a string, then laying the string out straight against a ruler."
+code_implementation: |
+  import torch
+
+  def compute_radian(arc_length: float, radius: float) -> torch.Tensor:
+      l_tensor = torch.tensor(arc_length, dtype=torch.float32)
+      r_tensor = torch.tensor(radius, dtype=torch.float32)
+      theta = l_tensor / r_tensor
+      return theta
+
+  radian_val = compute_radian(10.0, 5.0)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    l, r = sp.symbols('l r', positive=True, real=True)
+    theta = l / r
+    
+    circumference = 2 * sp.pi * r
+    theta_full = theta.subs(l, circumference)
+    
+    is_valid = sp.simplify(theta_full - 2 * sp.pi) == 0
+    print("Is full circle 2*pi?", is_valid)

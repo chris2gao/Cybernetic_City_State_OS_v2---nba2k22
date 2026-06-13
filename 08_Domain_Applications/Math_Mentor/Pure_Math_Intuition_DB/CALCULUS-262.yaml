@@ -1,0 +1,24 @@
+id: "CALCULUS-262"
+concept_name: "极限与连续 - 发生学溯源：芝诺悖论（飞矢不动）与计算瞬时速度的物理危机 (n_262)"
+sub_topics:
+  - "芝诺悖论：飞矢不动的逻辑逻辑困境"
+  - "瞬时速度定义中“0/0”型的逻辑矛盾"
+  - "贝克莱主教对无穷小量“死魂灵”的质疑"
+  - "第二次数学危机及其对微积分基础的影响"
+  - "从平均速度向瞬时速度转化的极限思想"
+llm_physical_mapping: "mundane physical metaphor: reading a car's speedometer at a single instant. If you freeze time, distance and time are both zero, so speed is 0/0. Limit is like taking shorter and shorter intervals to guess the frozen dial reading."
+code_implementation: |
+  import sympy as sp
+  # Average velocity as delta t approaches 0
+  t, dt = sp.symbols('t dt')
+  s = t**2  # Position function
+  v_avg = ((t + dt)**2 - t**2) / dt
+  v_inst = sp.limit(v_avg, dt, 0)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    t, dt = sp.symbols('t dt')
+    s = t**2
+    v_avg = ((t + dt)**2 - t**2) / dt
+    v_inst = sp.limit(v_avg, dt, 0)
+    assert sp.simplify(v_inst - 2*t) == 0

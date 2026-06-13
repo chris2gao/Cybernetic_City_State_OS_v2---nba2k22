@@ -1,0 +1,29 @@
+id: "DISCRETE-233"
+concept_name: "计数原理 - 加法原理（分类：集合的并）与乘法原理（分步：笛卡尔积） (n_233)"
+sub_topics:
+  - "加法原理：互不相交事件的合并"
+  - "乘法原理：独立步骤的序列复合"
+  - "集合论背景：并集基数与笛卡尔积基数"
+  - "应用中“分类”与“分步”的识别技巧"
+llm_physical_mapping: "mundane physical metaphor: sorting items into independent buckets for addition, and assembling a meal from a menu of distinct courses for multiplication."
+code_implementation: |
+  def counting_principles():
+      # Addition: Choose 1 item from bucket A (3 items) OR bucket B (2 items)
+      bucket_a = ['apple', 'banana', 'cherry']
+      bucket_b = ['orange', 'grape']
+      addition_total = len(bucket_a) + len(bucket_b)
+      
+      # Multiplication: Choose 1 from A AND 1 from B
+      multiplication_total = len(bucket_a) * len(bucket_b)
+      
+      return addition_total, multiplication_total
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    # Addition principle: |A U B| = |A| + |B| (if mutually exclusive)
+    # Multiplication principle: |A x B| = |A| * |B|
+    A_size = 3
+    B_size = 2
+    addition_result = A_size + B_size
+    multiplication_result = A_size * B_size
+    assert addition_result == 5
+    assert multiplication_result == 6

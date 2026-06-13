@@ -1,0 +1,60 @@
+concept_node:
+  id: "FRACTIONS-002"
+  title: "分数与小数 (fractions_and_decimals) - 分数的四则运算逻辑推导 (n_58)"
+  description: "Logical derivations for the four arithmetic operations involving fractions, including unit unification for addition/subtraction, area models for multiplication, algebraic proofs for division rules, and strategies for complex fractions."
+  tags: ["fractions", "arithmetic", "math_intuition", "algebraic_proof"]
+  sub_topics:
+    - "同分母分数加减的单位统一逻辑"
+    - "分数乘法的面积模型推导"
+    - "除法“翻转相乘”法则的代数证明"
+    - "繁分数的化简策略"
+  llm_physical_mapping:
+    metaphor: "A set of varying sized measuring cups and modular blocks. Adding/subtracting requires finding cups of the same unit (common denominator). Multiplying is creating a rectangular grid of blocks and finding the area. Division is like asking 'how many of this smaller cup fit into the larger cup?' which is mathematically equivalent to multiplying by the reciprocal cup size."
+    application: "Helps ground the abstract rules of fractional arithmetic in physical actions of grouping, scaling, and partitioning."
+  code_implementation:
+    language: "python"
+    framework: "pytorch"
+    snippet: |
+      import torch
+      import math
+      
+      def add_fractions(n1, d1, n2, d2):
+          # Common denominator logic
+          lcm = abs(d1 * d2) // math.gcd(d1, d2)
+          num1_scaled = n1 * (lcm // d1)
+          num2_scaled = n2 * (lcm // d2)
+          return num1_scaled + num2_scaled, lcm
+          
+      def mul_fractions(n1, d1, n2, d2):
+          return n1 * n2, d1 * d2
+          
+      # PyTorch tensors for vectorized fractional ops via float conversion
+      def pt_fraction_div(n1, d1, n2, d2):
+          t_n1 = torch.tensor(n1, dtype=torch.float32)
+          t_d1 = torch.tensor(d1, dtype=torch.float32)
+          t_n2 = torch.tensor(n2, dtype=torch.float32)
+          t_d2 = torch.tensor(d2, dtype=torch.float32)
+          # a/b / c/d = (a*d) / (b*c)
+          return (t_n1 * t_d2) / (t_d1 * t_n2)
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      from sympy import Rational, symbols
+      
+      # Symbolic representation
+      a, b, c, d = symbols('a b c d')
+      f1 = Rational(1, 2)
+      f2 = Rational(3, 4)
+      
+      # Addition
+      add_res = f1 + f2
+      
+      # Multiplication
+      mul_res = f1 * f2
+      
+      # Division
+      div_res = f1 / f2
+      
+      # Complex fraction simplification
+      # (a/b) / (c/d) = (a*d) / (b*c)
+      complex_frac = (a/b) / (c/d)
+      simplified = complex_frac.simplify()

@@ -1,0 +1,28 @@
+id: "DISCRETE-250"
+concept_name: "关系的性质（自反/对称/传递/反对称） - 关系的闭包运算：自反闭包、对称闭包，以及传递闭包的 Warshall 算法推导 (n_250)"
+sub_topics:
+  - "闭包的最小扩张思想"
+  - "传递闭包的路径搜索本质"
+  - "Warshall 算法的动态规划推导"
+  - "闭包在知识图谱关系推理中的应用"
+llm_physical_mapping: "mundane physical metaphor: constructing direct bridges over indirect routes. If you have a dirt road from A to B, and B to C, a transitive closure operation builds a massive direct highway exactly from A to C, repeating until every possible multi-stop journey has a direct single-flight option."
+code_implementation: |
+  def warshall_transitive_closure(matrix):
+      n = len(matrix)
+      closure = [row[:] for row in matrix]
+      for k in range(n):
+          for i in range(n):
+              for j in range(n):
+                  closure[i][j] = closure[i][j] or (closure[i][k] and closure[k][j])
+      return closure
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    # Simple transitive closure logic via boolean or/and
+    # 0 -> 1 -> 2
+    paths = {(0, 1), (1, 2)}
+    transitive_paths = set(paths)
+    for a, b in paths:
+        for c, d in paths:
+            if b == c:
+                transitive_paths.add((a, d))
+    assert (0, 2) in transitive_paths

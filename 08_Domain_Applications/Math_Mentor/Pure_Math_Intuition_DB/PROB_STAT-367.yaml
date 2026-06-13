@@ -1,0 +1,23 @@
+id: "PROB_STAT-367"
+concept_name: "协方差与相关系数 - 度量随机变量协同波动的线性强度 (n_367)"
+sub_topics:
+  - "协方差定义 Cov(X, Y) = E[XY] - E[X]E[Y]"
+  - "皮尔逊相关系数 ρ 的标准化意义"
+  - "独立性与不相关性的关系（独立必不相关）"
+  - "协方差矩阵在高维数据分析中的核心地位"
+llm_physical_mapping: "Think of covariance as examining a scatter plot of bullet hole maps from two variables. If the holes stretch linearly diagonally, the weighted dice of one variable strongly influence the other's chip distribution."
+code_implementation: |
+  import sympy as sp
+  EX, EY, EXY, VarX, VarY = sp.symbols('E_X E_Y E_XY Var_X Var_Y')
+  # Covariance
+  Cov_XY = EXY - EX * EY
+  # Pearson correlation coefficient
+  rho = Cov_XY / sp.sqrt(VarX * VarY)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    EX, EY, EXY, VarX, VarY = sp.symbols('E_X E_Y E_XY Var_X Var_Y')
+    Cov_XY = EXY - EX * EY
+    rho = Cov_XY / sp.sqrt(VarX * VarY)
+    val = rho.subs({EXY: 10, EX: 2, EY: 3, VarX: 4, VarY: 4})
+    assert val == 1

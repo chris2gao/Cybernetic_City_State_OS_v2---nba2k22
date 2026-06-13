@@ -1,0 +1,18 @@
+id: "LINEAR_ALGEBRA-320"
+concept_name: "特征值与特征向量 - 物理共振直觉：特征值 λ 为能量增长/衰减率，特征向量为系统长态稳定轴 (n_320)"
+sub_topics:
+  - "动力系统中的渐进稳定性分析"
+  - "马尔可夫链中的稳态分布与特征值 1"
+  - "振动系统中的固有频率映射"
+  - "特征分解 (Eigendecomposition) 的物理拆解"
+llm_physical_mapping: "spatial deformation/stretching/rotating: In repeated spatial transformations, the space stretches along the stable axes. If the eigenvalue's magnitude is >1, volume expands along this axis; if <1, it compresses. Over time, the axis with the largest eigenvalue dominates the entire space's shape."
+code_implementation: |
+  import sympy as sp
+  A = sp.Matrix([[0.8, 0.3], [0.2, 0.7]]) # Markov matrix
+  eigenvals = A.eigenvals()
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    A = sp.Matrix([[0.8, 0.3], [0.2, 0.7]])
+    eigenvals = list(A.eigenvals().keys())
+    assert any(abs(val - 1) < 1e-5 for val in eigenvals), "Markov matrix must have eigenvalue 1"

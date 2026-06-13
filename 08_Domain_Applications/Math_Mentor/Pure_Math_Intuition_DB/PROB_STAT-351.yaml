@@ -1,0 +1,28 @@
+id: "PROB_STAT-351"
+concept_name: "常用分布（正态/泊松/指数等） - 泊松分布：稀有事件爆发频率 (n_351)"
+sub_topics:
+  - "泊松流的平稳性、独立增量性与普通性"
+  - "泊松分布公式 P(X=k) 的推导"
+  - "期望与方差相等 (λ) 的物理特征"
+  - "在排队论与网络流量建模中的应用"
+llm_physical_mapping: "mundane physical metaphor: recording bullet holes randomly appearing on a very long wall over time. Most sections have 0 holes, some have 1, rarely 2. It tracks the rare discrete impacts in a continuous expanse."
+code_implementation: |
+  import sympy as sp
+  from sympy.stats import Poisson, P, E, variance
+  
+  lam = sp.Symbol('lambda', positive=True)
+  X = Poisson('X', lam)
+  
+  mean_X = E(X)
+  var_X = variance(X)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    from sympy.stats import Poisson, P, E, variance
+    
+    # Concrete Poisson
+    X = Poisson('X', 3)
+    
+    assert E(X) == 3
+    assert variance(X) == 3
+    assert P(sp.Eq(X, 0)) == sp.exp(-3)

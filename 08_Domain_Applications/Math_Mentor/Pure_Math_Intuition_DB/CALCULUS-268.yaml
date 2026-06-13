@@ -1,0 +1,24 @@
+id: "CALCULUS-268"
+concept_name: "导数与微分 - 复合函数求导法则（链式法则 Chain Rule）：深度学习反向传播的物理源头 (n_268)"
+sub_topics:
+  - "链式法则的数学形式与变量替换"
+  - "复合映射的中间变量传递机制"
+  - "链式法则在多元复合函数中的扩展"
+  - "深度学习反向传播（Backpropagation）的梯度传导模型"
+  - "雅可比矩阵在链式法则中的体现"
+llm_physical_mapping: "mundane physical metaphor: gears in a bicycle. The pedals turn the front gear, which turns the chain, which turns the back gear. The total ratio of wheel spin to pedal spin is the product of the gear ratios (derivatives) at each connection."
+code_implementation: |
+  import sympy as sp
+  x = sp.Symbol('x')
+  u = sp.Function('u')(x)
+  f = sp.Function('f')(u)
+  # Chain rule
+  chain_rule = sp.diff(f, x)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.Symbol('x')
+    u = sp.Function('u')(x)
+    f = sp.Function('f')(u)
+    chain_rule = sp.diff(f, x)
+    assert chain_rule == sp.Derivative(f, u) * sp.Derivative(u, x)

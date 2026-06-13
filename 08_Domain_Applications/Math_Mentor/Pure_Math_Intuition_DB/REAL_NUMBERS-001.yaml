@@ -1,0 +1,36 @@
+concept_node:
+  id: "REAL_NUMBERS-001"
+  title: "实数轴的连续性与无理数的无限不循环特征 (n_106)"
+  category: "solid_geometry_and_constructions"
+  sub_topics:
+    - "实数与数轴上的点的一一对应关系"
+    - "有理数的稠密性与实数的连续性（戴德金分割初步）"
+    - "无理数的小数展开特征（无限不循环）"
+    - "常见无理数的分类（代数数与超越数初步）"
+  llm_physical_mapping: |
+    Mundane physical metaphor: Cutting a continuous string vs. a beaded necklace. 
+    Rational numbers are like beads on a necklace—dense, but with gaps between them. 
+    If you cut the necklace at a random point, you'll likely hit the string (the gap).
+    Real numbers are like a perfectly continuous, solid string. 
+    Every possible point on the string corresponds to a real number, leaving no gaps.
+  code_implementation: |
+    import torch
+    import math
+    
+    # PyTorch floating point representation limits
+    # Irrational numbers like Pi or sqrt(2) cannot be represented exactly
+    val_pi = torch.tensor(math.pi, dtype=torch.float32)
+    val_sqrt2 = torch.tensor(math.sqrt(2), dtype=torch.float32)
+    
+    print(f"Float32 Pi representation limit: {val_pi.item():.25f}")
+    print(f"Float32 Sqrt(2) representation limit: {val_sqrt2.item():.25f}")
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      
+      # Logic for evaluating irrational numbers
+      pi_val = sp.pi.evalf(50) # 50 decimal places, demonstrating infinite non-repeating
+      
+      num = sp.sqrt(2)
+      # Check if the number is irrational
+      is_irrational = num.is_irrational

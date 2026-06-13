@@ -1,0 +1,49 @@
+concept_node:
+  id: "PROOF_METHODS-003"
+  domain: "证明方法（直接/反证/归纳） (proof_methods) - 反证法 (Contradiction)"
+  sub_topics:
+    - '反设命题的构造'
+    - '逻辑矛盾的推导过程'
+    - '排中律的应用'
+    - '归谬法的结论判定'
+  llm_physical_mapping: "Imagine navigating a maze to find an exit. To prove a specific path is the ONLY exit (Path A), you assume the opposite (Path B is also an exit). You walk down Path B and hit a solid, inescapable brick wall (a contradiction/impossible state). Because Path B leads to a literal dead-end, your initial assumption must be false, leaving Path A as the true exit."
+  code_implementation: |-
+    import torch
+
+    def proof_by_contradiction_demo():
+        # Hypothesis (P): Tensor A > 0
+        # Conclusion (Q): sum(A) > 0
+        A = torch.tensor([1.0, 2.0, 3.0])
+        
+        # To prove P -> Q by contradiction, we assume P and NOT Q
+        # Assumption: P is True, Q is False
+        p_is_true = torch.all(A > 0)
+        not_q_is_true = torch.sum(A) <= 0
+        
+        # We simulate the derivation. If P is true, elements are positive, 
+        # so their sum must be positive.
+        # But our assumption says the sum is <= 0.
+        # This gives a contradiction: (sum(A) > 0) AND (sum(A) <= 0)
+        derived_q = torch.sum(A) > 0
+        contradiction = not_q_is_true and derived_q
+        
+        # Since contradiction is False (it's impossible), our assumption (Not Q) must be wrong.
+        assert bool(contradiction) is False, "Contradiction reached, therefore Q must be True."
+        return True
+
+    proof_by_contradiction_demo()
+  v8_sanity_audit:
+    sympy_pseudo_code: |-
+      from sympy.logic.boolalg import And, Not, Implies, Equivalent
+      from sympy import symbols, simplify
+
+      P, Q = symbols('P Q')
+      
+      assumption = And(P, Not(Q))
+      contradiction = False
+      
+      proof_structure = Implies(assumption, contradiction)
+      
+      # Use Equivalent and simplify to check logical equivalence
+      assert simplify(Equivalent(proof_structure, Implies(P, Q))) == True, "Proof logic does not match Implies(P, Q)!"
+      print("Sanity audit passed: Implies(And(P, Not(Q)), False) is logically equivalent to Implies(P, Q).")

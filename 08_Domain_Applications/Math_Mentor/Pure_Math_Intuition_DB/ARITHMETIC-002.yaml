@@ -1,0 +1,50 @@
+concept_node:
+  id: "ARITHMETIC-002"
+  name: "整数四则运算 (integer_arithmetic) - 减法与除法的逆运算性质（作为加法与乘法的逆向操作） (n_55)"
+  sub_topics:
+    - "减法作为加法的逆运算（加相反数）"
+    - "除法作为乘法的逆运算（乘倒数）"
+    - "加法逆元与乘法逆元的存在性"
+    - "逆运算在方程求解中的基础作用"
+  llm_physical_mapping: |
+    Mundane physical metaphor: Inverse operations act as the universe's "undo" functionality. 
+    If addition is physically combining piles of stones, subtraction is removing them—or equivalently, adding "anti-stones" (holes or debts).
+    If multiplication scales an object's size, division is the inverse scaling (shrinking) that restores the original dimensions.
+    Conceptually, elements meet their inverses to annihilate back to the identity state (0 for addition, 1 for multiplication).
+  code_implementation: |
+    import torch
+
+    # Simulating inverse operations as finding the path back to identity
+    def demonstrate_inverses():
+        # Additive inverse: a + (-a) = 0
+        a = torch.tensor([42.0])
+        inv_a = -a
+        identity_add = a + inv_a
+        print(f"Additive identity reached: {identity_add.item() == 0.0}")
+
+        # Multiplicative inverse: b * (1/b) = 1 (for non-zero)
+        b = torch.tensor([7.0])
+        inv_b = 1.0 / b
+        identity_mult = b * inv_b
+        print(f"Multiplicative identity reached: {torch.allclose(identity_mult, torch.tensor([1.0]))}")
+
+        # Inverse matrix (extension of multiplication inverse to higher dimensions)
+        M = torch.tensor([[1., 2.], [3., 4.]])
+        M_inv = torch.inverse(M)
+        identity_matrix = torch.matmul(M, M_inv)
+        print(f"Matrix inverse reached identity: {torch.allclose(identity_matrix, torch.eye(2), atol=1e-6)}")
+
+    demonstrate_inverses()
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      from sympy import symbols, Eq, solve
+
+      a, b, x = symbols('a b x')
+
+      # Subtraction as inverse of addition
+      add_eq = Eq(a + x, b)
+      inv_add_solution = solve(add_eq, x)[0] # x = b - a
+
+      # Division as inverse of multiplication
+      mult_eq = Eq(a * x, b)
+      inv_mult_solution = solve(mult_eq, x)[0] # x = b / a

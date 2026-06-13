@@ -1,0 +1,60 @@
+version: "9.1"
+id: "TRIG-002"
+title: "三角函数定义 - 直角三角形中的静态比值定义（正弦、余弦、正切）"
+concept_type: "math_concept"
+status: "active"
+tags:
+  - Trigonometry
+  - Right Triangle
+  - Ratios
+  - SOH-CAH-TOA
+
+sub_topics:
+  - "正弦、余弦、正切的对边/斜边/邻边比值定义"
+  - "锐角三角函数的取值范围与单调性"
+  - "特殊角（30°, 45°, 60°）的三角函数值"
+  - "互余两角的三角函数转换性质"
+
+llm_physical_mapping: |
+  **Mundane Physical Metaphor: Building Ramps & SOH-CAH-TOA**
+  Imagine building a wheelchair ramp or stairs. The slope or steepness depends on the ratio of the "rise" (opposite side) to the "run" (adjacent side).
+  - The ramp's physical surface is the hypotenuse.
+  - SOH (Sine = Opposite / Hypotenuse): Ratio of height to ramp length.
+  - CAH (Cosine = Adjacent / Hypotenuse): Ratio of base length to ramp length.
+  - TOA (Tangent = Opposite / Adjacent): Ratio of height to base length (steepness).
+
+code_implementation: |
+  import torch
+  
+  def compute_trig_ratios(opposite: torch.Tensor, adjacent: torch.Tensor):
+      """Compute sin, cos, tan for right triangles given opposite and adjacent sides."""
+      hypotenuse = torch.sqrt(opposite**2 + adjacent**2)
+      
+      sin_val = opposite / hypotenuse
+      cos_val = adjacent / hypotenuse
+      tan_val = opposite / adjacent
+      
+      return sin_val, cos_val, tan_val
+
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    theta = sp.Symbol('theta')
+    
+    # Verify special angles
+    assert sp.sin(sp.pi/6) == sp.Rational(1, 2)
+    assert sp.cos(sp.pi/6) == sp.sqrt(3)/2
+    assert sp.tan(sp.pi/6) == sp.sqrt(3)/3
+    
+    assert sp.sin(sp.pi/4) == sp.sqrt(2)/2
+    assert sp.cos(sp.pi/4) == sp.sqrt(2)/2
+    assert sp.tan(sp.pi/4) == 1
+    
+    assert sp.sin(sp.pi/3) == sp.sqrt(3)/2
+    assert sp.cos(sp.pi/3) == sp.Rational(1, 2)
+    assert sp.tan(sp.pi/3) == sp.sqrt(3)
+    
+    # Verify complementary angle identity: sin(90° - x) = cos(x)
+    assert sp.simplify(sp.sin(sp.pi/2 - theta) - sp.cos(theta)) == 0
+    assert sp.simplify(sp.cos(sp.pi/2 - theta) - sp.sin(theta)) == 0

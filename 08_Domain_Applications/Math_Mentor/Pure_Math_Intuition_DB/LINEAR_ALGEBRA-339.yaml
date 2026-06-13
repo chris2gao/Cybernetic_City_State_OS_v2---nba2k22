@@ -1,0 +1,21 @@
+id: "LINEAR_ALGEBRA-339"
+concept_name: "正定矩阵与二次型 - 正定矩阵判定（特征值全为正、顺序主子式全为正） (n_339)"
+sub_topics:
+  - "正定性的四个等价判定条件"
+  - "霍尔维茨判据 (Hurwitz Criterion) 的物理应用"
+  - "半正定、负定与不定矩阵的区分"
+  - "在极值判别（海森矩阵）中的应用"
+llm_physical_mapping: "spatial deformation characterized by outward stretching in all possible directions. If you imagine a perfectly spherical volume of space, applying a positive definite transformation stretches the sphere into an ellipsoid where every single axis has expanded outward. No axis shrinks or flips inward. The leading principal minors test ensures that every lower-dimensional cross-section of the space also strictly expands."
+code_implementation: |
+  import sympy as sp
+  A = sp.Matrix([[2, -1], [-1, 2]])
+  # Check eigenvalues
+  eigenvals = list(A.eigenvals().keys())
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    A = sp.Matrix([[2, -1], [-1, 2]])
+    eigenvals = list(A.eigenvals().keys())
+    assert all(e > 0 for e in eigenvals)
+    assert A[0, 0] > 0
+    assert A.det() > 0

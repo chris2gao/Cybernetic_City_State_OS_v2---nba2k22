@@ -1,0 +1,72 @@
+concept_node:
+  version: '9.1'
+  node:
+    id: PRED_LOGIC-001
+    name: Quantifiers (量词 ∀ / ∃)
+    category: Predicate Logic
+    description: Universal (∀) and Existential (∃) quantifiers represent assertions
+      over a domain. ∀ means 'for all elements in the domain, the predicate is true'.
+      ∃ means 'there exists at least one element in the domain for which the predicate
+      is true'.
+  llm_physical_mapping:
+  - concept: ∀ (For All)
+    mapping: Mapped to `torch.all()` or logical AND reduction over a domain tensor.
+      Physically, it represents a global consensus or constraint satisfaction across
+      all points.
+  - concept: ∃ (Exists)
+    mapping: Mapped to `torch.any()` or logical OR reduction over a domain tensor.
+      Physically, it represents a search for a feature, anomaly, or specific state.
+  code_implementation:
+    language: python
+    framework: pytorch
+    code: "import torch\n\ndef test_quantifiers():\n    # Define a finite domain:\
+      \ [-2.0, -1.0, 0.0, 1.0, 2.0]\n    domain = torch.tensor([-2.0, -1.0, 0.0, 1.0,\
+      \ 2.0])\n    \n    # Predicate P(x): x^2 >= 0\n    predicate_P = (domain **\
+      \ 2 >= 0)\n    \n    # Predicate Q(x): x == 0\n    predicate_Q = (domain ==\
+      \ 0)\n    \n    # Universal Quantifier (∀x P(x)) -> torch.all\n    for_all_P\
+      \ = torch.all(predicate_P)\n    print(f\"∀x P(x) (x^2 >= 0): {for_all_P.item()}\"\
+      ) # Should be True\n    \n    # Existential Quantifier (∃x Q(x)) -> torch.any\n\
+      \    exists_Q = torch.any(predicate_Q)\n    print(f\"∃x Q(x) (x == 0): {exists_Q.item()}\"\
+      ) # Should be True\n    \n    return for_all_P.item(), exists_Q.item()\n   \
+      \ \ntest_quantifiers()\n"
+  v8_sanity_audit:
+    sympy_pseudo_code: 'import sympy as sp
+
+
+      # Since SymPy''s 1st order logic over sets isn''t purely native for evaluation,
+
+      # we can use Python generators combined with SymPy expressions.
+
+      x = sp.Symbol(''x'', real=True)
+
+      domain_set = [-2, -1, 0, 1, 2]
+
+
+      # Predicate P(x): x^2 >= 0
+
+      P = x**2 >= 0
+
+
+      # Predicate Q(x): x == 0
+
+      Q = sp.Eq(x, 0)
+
+
+      # ∀x in Domain P(x)
+
+      for_all_P = all(P.subs(x, val) == True for val in domain_set)
+
+
+      # ∃x in Domain Q(x)
+
+      exists_Q = any(Q.subs(x, val) == True for val in domain_set)
+
+
+      print(f"∀x P(x): {for_all_P}")
+
+      print(f"∃x Q(x): {exists_Q}")
+
+      '
+  sub_topics:
+  - 个体词、谓词与量词（全称 ∀ / 存在 ∃）
+  - 一阶语言的基本构件

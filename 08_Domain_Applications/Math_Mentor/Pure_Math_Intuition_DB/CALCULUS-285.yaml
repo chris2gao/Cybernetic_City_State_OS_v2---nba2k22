@@ -1,0 +1,36 @@
+id: "CALCULUS-285"
+concept_name: "多元微积分 - 方向导数与梯度 (Gradient)：梯度永远指向 Loss 攀升最快的方向 (n_285)"
+sub_topics:
+  - "方向导数的严格定义与计算公式"
+  - "梯度的向量表达式与几何指向"
+  - "梯度作为最大方向导数的证明"
+  - "梯度在最速下降算法中的动力学原型"
+llm_physical_mapping: "mundane physical metaphor: standing on a hill and dropping a ball; the gradient points straight up the steepest path, while the ball rolls down the exact opposite direction (negative gradient)."
+code_implementation: |
+  import sympy as sp
+  
+  x, y = sp.symbols('x y')
+  f = x**2 + 2*y**2
+  
+  # Gradient vector
+  grad_f = [sp.diff(f, x), sp.diff(f, y)]
+  
+  # Directional derivative along a unit vector u = (u1, u2)
+  u1, u2 = sp.symbols('u1 u2')
+  dir_deriv = grad_f[0]*u1 + grad_f[1]*u2
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    x, y = sp.symbols('x y')
+    f = x**2 + y**2
+    grad_f = [sp.diff(f, x), sp.diff(f, y)]
+    
+    # At point (1, 1), grad is (2, 2)
+    grad_at_1_1 = [expr.subs({x: 1, y: 1}) for expr in grad_f]
+    assert grad_at_1_1 == [2, 2]
+    
+    # Directional derivative in direction of gradient (normalized)
+    norm = sp.sqrt(2**2 + 2**2)
+    dir_deriv_max = grad_at_1_1[0]*(2/norm) + grad_at_1_1[1]*(2/norm)
+    assert dir_deriv_max == sp.sqrt(8)

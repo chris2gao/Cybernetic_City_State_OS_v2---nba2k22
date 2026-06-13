@@ -1,0 +1,29 @@
+id: "ANALYTIC_GEO-377"
+concept_name: "曲线方程（圆锥曲线） - 椭圆、双曲线、抛物线的标准方程与离心率物理意义 (n_377)"
+sub_topics:
+  - "椭圆的第一/第二定义与焦距性质"
+  - "双曲线的渐近线与等轴双曲线"
+  - "抛物线的准线与焦半径性质"
+  - "离心率 e 对轨道形状的物理控制逻辑"
+llm_physical_mapping: "mundane physical metaphor: pinning two ends of a string to a cardboard and drawing a curve with a pencil pulling the string tight. Moving the pins closer makes it rounder (lower eccentricity), moving them apart makes it flatter."
+code_implementation: |
+  import sympy as sp
+  x, y = sp.symbols('x y')
+  a, b = 5, 3
+  ellipse_eq = sp.Eq(x**2/a**2 + y**2/b**2, 1)
+  c = sp.sqrt(a**2 - b**2)
+  eccentricity = c / a
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    ellipse = sp.Ellipse(sp.Point(0, 0), hradius=5, vradius=3)
+    c = sp.sqrt(5**2 - 3**2)
+    assert ellipse.foci == (sp.Point(-c, 0), sp.Point(c, 0)) or ellipse.foci == (sp.Point(c, 0), sp.Point(-c, 0))
+    
+    p = sp.Point(0, 3) # point on ellipse
+    assert p in ellipse
+    
+    # Sum of distances to foci is 2a = 10
+    dist_sum = p.distance(ellipse.foci[0]) + p.distance(ellipse.foci[1])
+    assert sp.simplify(dist_sum) == 10

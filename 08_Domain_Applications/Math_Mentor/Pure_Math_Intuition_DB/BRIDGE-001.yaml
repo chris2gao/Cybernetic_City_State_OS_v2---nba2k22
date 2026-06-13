@@ -1,0 +1,26 @@
+id: "BRIDGE-001"
+concept_name: "数论与逻辑的跨层桥接 - 模运算与等价关系的完美同构 (L2 ↔ L1)"
+sub_topics:
+  - "模 n 运算定义与同余类的商集划分"
+  - "自反性、对称性、传递性在模运算中的代数证明"
+  - "从'除法取余'到'无穷直线被折叠成 n 个格子的手镯'的认知升维"
+llm_physical_mapping: "mundane physical metaphor: wrapping an infinitely long measuring tape around a cylinder with circumference n. All numbers that land on the same vertical line are in the same equivalence class."
+code_implementation: |
+  import sympy as sp
+  # Equivalence relation proof for modulo
+  a, b, c, n = sp.symbols('a b c n', integer=True)
+  # Reflexive: a - a = 0 = 0 * n
+  # Symmetric: if a - b = k*n, then b - a = (-k)*n
+  # Transitive: if a - b = k*n and b - c = j*n, then a - c = (k+j)*n
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    # Test modulo as equivalence relation
+    n = 5
+    # Symmetric
+    def R(x, y): return (x - y) % n == 0
+    assert R(12, 7) == R(7, 12)
+    # Transitive
+    assert (R(17, 12) and R(12, 7)) == R(17, 7)
+    # Equivalence classes partition
+    classes = {i % n for i in range(100)}
+    assert len(classes) == n

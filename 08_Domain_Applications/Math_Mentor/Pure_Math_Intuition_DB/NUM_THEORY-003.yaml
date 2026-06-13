@@ -1,0 +1,28 @@
+id: "NUM_THEORY-003"
+version: "9.1"
+type: "math_concept_node"
+title: "整除与素数 - 素数与合数的定义，以及欧几里得素数无限性的经典反证法（构造 p1p2...pn + 1）"
+sub_topics:
+  - "素数与合数的分类定义"
+  - "欧几里得反证法的逻辑步骤"
+  - "构造数 P = (p1*p2*...*pn) + 1 的质因数属性分析"
+  - "素数在数轴上分布的无限性结论"
+llm_physical_mapping: "Imagine a set of distinct prime-shaped building blocks. If you claim you have all the basic prime blocks in the world, and you snap one of each together to form a long chain, then add one extra 1x1 'remainder' block at the end, the resulting structure cannot be built using just the blocks you claimed were 'all' of them (because dividing by any of them always leaves that 1x1 remainder)."
+code_implementation: |
+  import torch
+  import sympy
+
+  def euclid_proof_demo():
+      p1 = torch.tensor(2)
+      p2 = torch.tensor(3)
+      P_tensor = (p1 * p2) + 1
+      P = P_tensor.item()
+      
+      factors = sympy.factorint(P)
+      return P, factors
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy
+    
+    factors = sympy.factorint(2 * 3 * 5 * 7 + 1)
+    assert factors == {211: 1}

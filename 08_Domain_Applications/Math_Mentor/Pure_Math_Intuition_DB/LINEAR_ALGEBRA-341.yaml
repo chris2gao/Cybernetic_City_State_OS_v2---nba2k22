@@ -1,0 +1,22 @@
+id: "LINEAR_ALGEBRA-341"
+concept_name: "矩阵分解（LU/QR/Cholesky） - LU 分解（高斯消元封装）、QR 分解与 Cholesky 分解 (n_341)"
+sub_topics:
+  - "LU 分解：下三角与上三角的乘积"
+  - "QR 分解：正交矩阵与上三角矩阵"
+  - "Cholesky 分解：对称正定矩阵的特殊分解"
+  - "分解算法在数值计算稳定性上的优劣比对"
+llm_physical_mapping: "spatial deformation broken down into sequential primitive steps. LU decomposition splits a complex spatial shear into two simpler chained triangular shears. QR decomposition splits any spatial stretch and rotation into a pure rigid rotation (Q) followed by a triangular shear and stretch (R). It is like disassembling a complex mechanical gear twisting operation into discrete, basic mechanical steps."
+code_implementation: |
+  import sympy as sp
+  A = sp.Matrix([[12, -51, 4], [6, 167, -68], [-4, 24, -41]])
+  Q, R = A.QRdecomposition()
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    A = sp.Matrix([[12, -51, 4], [6, 167, -68], [-4, 24, -41]])
+    Q, R = A.QRdecomposition()
+    assert sp.simplify(Q.T * Q) == sp.eye(3)
+    assert R[1, 0] == 0
+    assert R[2, 0] == 0
+    assert R[2, 1] == 0
+    assert Q * R == A

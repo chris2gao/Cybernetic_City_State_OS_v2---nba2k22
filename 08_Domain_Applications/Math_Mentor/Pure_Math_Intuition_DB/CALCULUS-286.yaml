@@ -1,0 +1,42 @@
+id: "CALCULUS-286"
+concept_name: "曲线/曲面积分 - 第一/第二类曲线积分：沿着曲线的“做功”物理意义 (n_286)"
+sub_topics:
+  - "第一类曲线积分：对弧长的积分 (质量、长度)"
+  - "第二类曲线积分：对坐标的积分 (变力做功)"
+  - "两类曲线积分的联系与转化公式"
+  - "路径方向对第二类曲线积分符号的影响"
+llm_physical_mapping: "mundane physical metaphor: dragging a heavy box along a winding muddy path. First-kind integral calculates the total mass of mud accumulated; second-kind integral calculates the total energy spent fighting friction and gravity."
+code_implementation: |
+  import sympy as sp
+  
+  t = sp.symbols('t')
+  # Parametric curve: r(t) = (cos(t), sin(t)), t from 0 to pi
+  x, y = sp.cos(t), sp.sin(t)
+  dx, dy = sp.diff(x, t), sp.diff(y, t)
+  
+  # First kind: Integral of f(x,y) ds
+  f_1 = x**2 + y**2
+  ds = sp.sqrt(dx**2 + dy**2)
+  int_first_kind = sp.integrate(f_1 * ds, (t, 0, sp.pi))
+  
+  # Second kind: Integral of P(x,y)dx + Q(x,y)dy
+  P, Q = -y, x
+  int_second_kind = sp.integrate(P*dx + Q*dy, (t, 0, sp.pi))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    t = sp.symbols('t')
+    x, y = sp.cos(t), sp.sin(t)
+    dx, dy = sp.diff(x, t), sp.diff(y, t)
+    
+    # Unit circle arc from 0 to pi has length pi
+    ds = sp.simplify(sp.sqrt(dx**2 + dy**2))
+    length = sp.integrate(ds, (t, 0, sp.pi))
+    assert length == sp.pi
+    
+    # Vector field F = (-y, x), integral along unit circle arc
+    # F dot dr = (-sin t)(-sin t) + (cos t)(cos t) = 1
+    P, Q = -y, x
+    work = sp.integrate(P*dx + Q*dy, (t, 0, sp.pi))
+    assert work == sp.pi

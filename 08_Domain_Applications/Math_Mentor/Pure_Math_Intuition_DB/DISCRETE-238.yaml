@@ -1,0 +1,25 @@
+id: "DISCRETE-238"
+concept_name: "鸽巢原理 - 应用构造训练：学会定义什么是“鸽子”与“巢”（如 Ramsey 定理初步应用） (n_238)"
+sub_topics:
+  - "数论证明中的余数作为“巢”"
+  - "几何证明中的面积区域作为“巢”"
+  - "朋友问题：六人中必有三人相互认识或不认识"
+  - "构造技巧：将复杂约束转化为容纳关系"
+llm_physical_mapping: "mundane physical metaphor: sorting items by their properties, like categorizing a group of people by their birth months (the 'holes') to find two born in the same month."
+code_implementation: |
+  def friends_problem():
+      # Simplified representation of Ramsey's theorem R(3,3) = 6
+      # In any group of 6 people, there are either 3 mutual friends or 3 mutual strangers.
+      # This is an existence proof by defining pigeons (relations) and holes (friend/stranger).
+      people = 6
+      relations_per_person = people - 1 # 5 relations
+      # Pigeonhole: putting 5 relations into 2 holes (friend or stranger)
+      # means at least ceil(5/2) = 3 relations must be of the same type.
+      return 3
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import math
+    relations = 5
+    categories = 2 # Friend or Stranger
+    majority_relation = math.ceil(relations / categories)
+    assert majority_relation == 3

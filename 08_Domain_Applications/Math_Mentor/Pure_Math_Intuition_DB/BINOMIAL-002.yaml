@@ -1,0 +1,51 @@
+concept_node:
+  id: "BINOMIAL-002"
+  name: "二项式定理 (binomial_theorem) - 组合数与二项式系数的等价映射 (n_115)"
+  sub_topics:
+    - "组合数公式 C(n,k) 的定义"
+    - "二项式系数的物理意义"
+    - "二项式系数的性质（对称性与最大值）"
+    - "二项式系数之和与奇偶项系数和"
+  llm_physical_mapping: "Think of choosing k apples from a basket of n distinct apples. The number of ways you can pick the apples without caring about the order is C(n, k). The binomial coefficient maps exactly to this physical act of 'choosing'. The symmetry C(n, k) = C(n, n-k) represents that choosing k apples to take is physically equivalent to choosing n-k apples to leave behind."
+  code_implementation: |
+    import torch
+
+    def binomial_coefficient_tensor(n: int, k: int) -> torch.Tensor:
+        """
+        Calculate combination C(n, k) using PyTorch tensors factorially 
+        via the log-gamma function for numerical stability.
+        """
+        if k < 0 or k > n:
+            return torch.tensor(0.0)
+            
+        n_t = torch.tensor(n, dtype=torch.float32)
+        k_t = torch.tensor(k, dtype=torch.float32)
+        
+        # log(n!) = lgamma(n + 1)
+        num = torch.lgamma(n_t + 1)
+        den = torch.lgamma(k_t + 1) + torch.lgamma(n_t - k_t + 1)
+        
+        # C(n, k) = exp(log(n!) - log(k!) - log((n-k)!))
+        return torch.exp(num - den).round()
+
+    # Test the implementation
+    n, k = 5, 2
+    result = binomial_coefficient_tensor(n, k)
+    print(f"C({n}, {k}) = {result.item()}")
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      
+      n, k = sp.symbols('n k', integer=True, nonnegative=True)
+      
+      # 1. Combinatorial validation
+      combination = sp.binomial(n, k)
+      
+      # 2. Symmetry property: C(n, k) == C(n, n-k)
+      symmetry_diff = sp.simplify(sp.binomial(n, k) - sp.binomial(n, n-k))
+      print(f"Symmetry check (difference should be 0): {symmetry_diff}")
+      
+      # 3. Sum of binomial coefficients: Sum_{k=0}^n C(n, k) = 2^n
+      # Using n=5 as a concrete example for summation
+      sum_coeff = sp.summation(sp.binomial(5, k), (k, 0, 5))
+      print(f"Sum of C(5, k) for k=0 to 5: {sum_coeff} (should be 2**5 = 32)")

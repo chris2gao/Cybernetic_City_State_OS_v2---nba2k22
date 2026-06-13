@@ -1,0 +1,31 @@
+id: "DISCRETE-251"
+concept_name: "偏序集与格 - 偏序集的严格定义（自反、反对称、传递）与哈斯图 (Hasse Diagram) (n_251)"
+sub_topics:
+  - "偏序关系的判定与哈斯图绘制"
+  - "链 (Chain) 与反链 (Antichain) 的概念"
+  - "极大元、极小元、最大元、最小元"
+  - "狄尔沃斯定理 (Dilworth's Theorem) 初步"
+llm_physical_mapping: "mundane physical metaphor: a corporate organizational chart without any redundant arrows. The CEO is at the top (maximum), managers below, and interns at the bottom (minimal). An arrow only goes from immediate boss to employee, hiding the implied arrows from CEO straight to interns because it's already implicitly understood."
+code_implementation: |
+  def is_partial_order(relation, elements):
+      # Must be reflexive, antisymmetric, and transitive
+      for x in elements:
+          if (x, x) not in relation: return False
+      for x, y in relation:
+          if x != y and (y, x) in relation: return False
+          for z in elements:
+              if (y, z) in relation and (x, z) not in relation: return False
+      return True
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    # Subset inclusion is a partial order
+    # {} subset {1} subset {1, 2}
+    subset_relations = {
+        (frozenset(), frozenset()),
+        (frozenset(), frozenset([1])),
+        (frozenset([1]), frozenset([1])),
+        (frozenset([1]), frozenset([1, 2])),
+        (frozenset([1, 2]), frozenset([1, 2])),
+        (frozenset(), frozenset([1, 2])) # transitive
+    }
+    assert (frozenset([1]), frozenset([1, 2])) in subset_relations

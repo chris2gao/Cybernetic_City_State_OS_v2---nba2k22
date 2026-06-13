@@ -1,0 +1,41 @@
+id: "TRIG-001"
+title: "三角函数定义 - 发生学溯源：古希腊天文学家测量仰角计算距离的“弦表” (n_162)"
+sub_topics:
+  - "希帕求斯与早期弦表的编制"
+  - "相似三角形在远距离测量中的应用"
+  - "仰角、俯角与弦长的几何映射"
+  - "从弦表到三角函数表的发展历程"
+llm_physical_mapping: |
+  mundane physical metaphor: ancient astronomers measuring celestial angles.
+  By standing on Earth and measuring the angle of elevation of a celestial body,
+  astronomers could map angles to chords (a physical distance on a circle),
+  effectively defining the earliest version of trigonometric functions to calculate
+  distances across the celestial sphere.
+code_implementation: |
+  import torch
+  import math
+  
+  # PyTorch tensor basic angular/distance mappings
+  def angular_to_distance(elevation_angles: torch.Tensor, baseline_distance: float) -> torch.Tensor:
+      """
+      Calculate height or vertical distance based on baseline distance and elevation angle.
+      """
+      return baseline_distance * torch.tan(elevation_angles)
+  
+  angles = torch.tensor([math.pi/6, math.pi/4, math.pi/3]) # 30, 45, 60 degrees
+  heights = angular_to_distance(angles, baseline_distance=100.0)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    angle = sp.Symbol('angle', real=True)
+    baseline = sp.Symbol('baseline', real=True, positive=True)
+    
+    # Distance calculations with angles
+    height = baseline * sp.tan(angle)
+    
+    # Test case: angle = 45 degrees (pi/4), baseline = 10
+    # The height should equal the baseline
+    test_height = height.subs({angle: sp.pi / 4, baseline: 10})
+    
+    assert sp.simplify(test_height - 10) == 0

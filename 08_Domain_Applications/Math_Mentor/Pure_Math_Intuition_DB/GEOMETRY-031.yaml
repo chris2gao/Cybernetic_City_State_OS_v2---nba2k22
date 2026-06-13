@@ -1,0 +1,80 @@
+concept_node:
+  id: "GEOMETRY-031"
+  name: "勾股定理的几何面积拼图证明（如赵爽弦图或欧几里得面积转换）"
+  domain: "Geometry"
+  description: "Geometric and area-based proofs of the Pythagorean Theorem, including visual puzzle methods like Zhao Shuang's String Figure, Euclidean area conversions, and Garfield's Trapezoid proof."
+  prerequisites:
+    - "GEOMETRY-030"
+    - "GEOMETRY-004"
+  sub_topics:
+    - "赵爽弦图的构造与“出入相补”原理"
+    - "欧几里得的“桥之宝典”面积证明法"
+    - "总统证法：利用梯形面积推导勾股定理"
+    - "毕达哥拉斯拼图法（正方形割补）"
+    - "勾股定理在坐标系中的代数与几何验证"
+  core_intuition:
+    - "The Pythagorean Theorem is fundamentally a statement about the conservation of area: the area of a square built on the hypotenuse is exactly equal to the sum of the areas of the squares built on the other two sides."
+    - "These areas can be visually decomposed, rearranged, and mapped onto each other like puzzle pieces without any overlap or gaps, proving the relationship without complex algebra."
+  llm_physical_mapping: "Mundane physical metaphor: Rearranging identical puzzle pieces. Imagine having a wooden puzzle made of four identical right triangles and a small square. By packing these same pieces into different square frames (one with area (a+b)^2), you can leave empty space equal to c^2 in one arrangement, and a^2 + b^2 in another. Since the total frame area and puzzle pieces are unchanged, the remaining empty areas must be equal."
+  code_implementation:
+    language: "python"
+    framework: "pytorch"
+    snippet: |
+      import torch
+
+      def verify_zhao_shuang_area(a: torch.Tensor, b: torch.Tensor) -> bool:
+          """
+          Verifies area conservation in Zhao Shuang's String Figure (a^2 + b^2 = c^2).
+          Assuming a < b without loss of generality.
+          """
+          # Area of 4 identical right triangles
+          area_4_triangles = 4 * (0.5 * a * b)
+          
+          # Area of the central small square
+          area_small_square = (b - a)**2
+          
+          # Total area of the big square constructed on the hypotenuse c
+          # Area = c^2
+          c_squared = area_4_triangles + area_small_square
+          
+          # We know c^2 should equal a^2 + b^2
+          algebraic_sum = a**2 + b**2
+          
+          return torch.allclose(c_squared, algebraic_sum)
+
+      # Example usage
+      a = torch.tensor([3.0, 5.0, 7.0])
+      b = torch.tensor([4.0, 12.0, 24.0])
+      
+      print("Area conservation holds:", verify_zhao_shuang_area(a, b))
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+
+      a, b, c = sp.symbols('a b c', positive=True)
+
+      # 1. Zhao Shuang's String Figure Proof
+      # Four identical right triangles and a central small square (b-a)^2 form a large square c^2
+      area_4_triangles = 4 * (sp.Rational(1, 2) * a * b)
+      area_small_square = (b - a)**2
+      
+      total_area = sp.simplify(area_4_triangles + area_small_square)
+      print(f"Total area simplifies to: {total_area}")
+      assert total_area == a**2 + b**2
+
+      # 2. Garfield's Trapezoid Proof
+      # A trapezoid formed by two identical right triangles and one isosceles right triangle with hypotenuse c
+      # Area = 1/2 * (base1 + base2) * height
+      base1, base2, height = a, b, a + b
+      trapezoid_area_formula = sp.Rational(1, 2) * (base1 + base2) * height
+
+      # Sum of parts: 2 * (1/2 * a * b) + 1/2 * c^2
+      parts_area = 2 * (sp.Rational(1, 2) * a * b) + sp.Rational(1, 2) * c**2
+
+      # Equate the two areas
+      equation = sp.Eq(trapezoid_area_formula, parts_area)
+      
+      # Solve for c^2
+      c_squared_solution = sp.solve(equation, c**2)[0]
+      print(f"Garfield proof yields c^2 = {c_squared_solution}")
+      assert sp.simplify(c_squared_solution - (a**2 + b**2)) == 0

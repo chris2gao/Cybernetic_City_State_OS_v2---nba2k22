@@ -1,0 +1,30 @@
+id: "PROB_STAT-353"
+concept_name: "常用分布（正态/泊松/指数等） - 正态分布：连续世界的终极中心 (n_353)"
+sub_topics:
+  - "高斯分布函数的数学形式与钟形曲线"
+  - "标准正态分布 N(0, 1) 的转换法则"
+  - "68-95-99.7 法则（σ 原则）"
+  - "最大熵原理：在已知均值方差下不确定性最大的分布"
+llm_physical_mapping: "mundane physical metaphor: a massive pile of chips dropped from a center point above a pegboard. The chips pile up highest in the middle and symmetrically trail off on the sides, naturally forming a bell-shaped mound."
+code_implementation: |
+  import sympy as sp
+  from sympy.stats import Normal, density, E, variance
+  
+  mu, sigma = sp.symbols('mu sigma', positive=True)
+  X = Normal('X', mu, sigma)
+  
+  x = sp.Symbol('x')
+  pdf_X = density(X)(x)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    from sympy.stats import Normal, P, E, variance
+    
+    Z = Normal('Z', 0, 1)
+    
+    assert E(Z) == 0
+    assert variance(Z) == 1
+    
+    # Symmetry property
+    assert P(Z > 0) == sp.Rational(1, 2)
+    assert P(Z < 0) == sp.Rational(1, 2)

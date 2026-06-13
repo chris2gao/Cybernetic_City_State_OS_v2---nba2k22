@@ -1,0 +1,32 @@
+id: "NUM_THEORY-004"
+title: "整除与素数 - 算术基本定理（唯一分解定理）在数论中的公理化地位 (n_198)"
+sub_topics:
+  - "质因数分解的存在性证明"
+  - "质因数分解的唯一性证明"
+  - "正整数的标准分解式表示法"
+  - "算术基本定理在推导约数性质中的核心作用"
+llm_physical_mapping: "A mundane physical metaphor: Just as every complex chemical molecule has a unique formula representing the exact number of each fundamental atom (elements) it contains (like H2O), every integer greater than 1 can be uniquely broken down into a specific 'chemical formula' of prime numbers (the 'atoms' of arithmetic)."
+code_implementation: |
+  import torch
+
+  def prime_factorization_tensor(n_val, current_prime_val=2, factors=None):
+      if factors is None:
+          factors = {}
+      
+      n = torch.tensor(n_val, dtype=torch.int64)
+      p = torch.tensor(current_prime_val, dtype=torch.int64)
+      
+      if n <= 1:
+          return factors
+          
+      if n % p == 0:
+          factors[current_prime_val] = factors.get(current_prime_val, 0) + 1
+          return prime_factorization_tensor((n // p).item(), current_prime_val, factors)
+      else:
+          return prime_factorization_tensor(n.item(), current_prime_val + 1, factors)
+          
+  # prime_factorization_tensor(120) -> {2: 3, 3: 1, 5: 1}
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy
+    assert sympy.factorint(120) == {2: 3, 3: 1, 5: 1}

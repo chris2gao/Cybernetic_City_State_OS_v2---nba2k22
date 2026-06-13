@@ -1,0 +1,47 @@
+concept_node:
+  id: "FUNCTION-003"
+  node_name: "复合函数：由内向外的“洋葱模型”执行栈"
+  module_context: "函数概念初步（定义域/值域/复合/反函数）"
+  sub_topics:
+    - "复合函数的定义与中间变量"
+    - "复合函数定义域的传递法则"
+    - "复合函数解析式的求法"
+    - "复合函数的单调性判定原则（同增异减）"
+  llm_physical_mapping: |
+    Mundane physical metaphor: A sequential factory assembly line. Raw material (input x) enters the first machine (inner function g), which converts it into an intermediate component (u = g(x)). This component is then fed directly into the second machine (outer function f), which processes it into the final product (y = f(u)). The output of the first machine must be compatible with the input requirements of the second machine (the range of g must be a subset of the domain of f). It is an "onion model" where execution evaluates the innermost parentheses first and works its way outwards.
+  code_implementation: |
+    import torch
+    import torch.nn as nn
+
+    # Inner function g(x) = x^2 - 4
+    class InnerG(nn.Module):
+        def forward(self, x):
+            return x**2 - 4
+
+    # Outer function f(u) = ReLU(u)
+    class OuterF(nn.Module):
+        def forward(self, u):
+            return torch.relu(u)
+
+    # PyTorch's nn.Sequential mathematically represents functional composition: f(g(x))
+    # It acts as a pipeline where the output of G becomes the input of F.
+    composite_model = nn.Sequential(
+        InnerG(), 
+        OuterF()
+    )
+
+    x_tensor = torch.tensor([-3.0, 0.0, 3.0])
+    y_tensor = composite_model(x_tensor)
+    # Output: tensor([5., 0., 5.])
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      
+      x, u = sp.symbols('x u')
+      g = x**2 - 1       # inner function
+      f = sp.sqrt(u)     # outer function
+      
+      # Compose f(g(x)) by substituting 'u' with the expression for 'g'
+      f_composite_g = f.subs(u, g)
+      
+      # Resulting expression: sqrt(x**2 - 1)

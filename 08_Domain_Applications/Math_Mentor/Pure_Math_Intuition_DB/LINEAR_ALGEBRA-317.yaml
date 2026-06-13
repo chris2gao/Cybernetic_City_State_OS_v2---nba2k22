@@ -1,0 +1,18 @@
+id: "LINEAR_ALGEBRA-317"
+concept_name: "线性方程组 - 高斯消元法（Gaussian Elimination）与阶梯形矩阵 (n_317)"
+sub_topics:
+  - "初等行变换的三种形式"
+  - "行最简形 (RREF) 的标准结构"
+  - "消元过程的算法复杂度 O(n³)"
+  - "矩阵秩在判定消元结果中的作用"
+llm_physical_mapping: "spatial deformation/stretching/rotating: Gaussian elimination is like systematically aligning our viewpoint along coordinate axes, step by step rotating and shearing the space until the solution emerges as a simple intersection."
+code_implementation: |
+  import sympy as sp
+  M = sp.Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+  rref_matrix, pivot_columns = M.rref()
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    M = sp.Matrix([[1, 2, 3], [2, 4, 6], [1, 0, 1]])
+    rref, pivots = M.rref()
+    assert len(pivots) == 2, "Matrix rank should match non-zero rows in RREF"

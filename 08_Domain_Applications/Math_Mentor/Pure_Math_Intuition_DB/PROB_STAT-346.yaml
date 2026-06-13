@@ -1,0 +1,27 @@
+id: "PROB_STAT-346"
+concept_name: "条件概率 - 事件在已知部分信息下的概率坍缩 (n_346)"
+sub_topics:
+  - "信息注入对样本空间的收缩效应"
+  - "P(A|B) 的形式定义与直观理解"
+  - "条件概率作为新概率空间的建立"
+  - "蒙提霍尔问题（三门问题）的条件概率剖析"
+llm_physical_mapping: "mundane physical metaphor: a bullet hole map on a target. Finding condition A given B is like zooming in on a specific region B of the target and calculating the proportion of bullet holes in sub-region A relative to only region B."
+code_implementation: |
+  import sympy as sp
+  from sympy.stats import Die, P, Given
+  
+  # Sample space: rolling a die
+  X = Die('X', 6)
+  
+  # Event A: rolling a 2
+  # Event B: rolling an even number
+  cond_prob = P(sp.Eq(X, 2), sp.Eq(X % 2, 0))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    # A = rolling 2, B = rolling even
+    # P(A) = 1/6, P(B) = 3/6, P(A and B) = P(A) = 1/6
+    prob_A_and_B = sp.Rational(1, 6)
+    prob_B = sp.Rational(3, 6)
+    prob_A_given_B = prob_A_and_B / prob_B
+    assert prob_A_given_B == sp.Rational(1, 3)

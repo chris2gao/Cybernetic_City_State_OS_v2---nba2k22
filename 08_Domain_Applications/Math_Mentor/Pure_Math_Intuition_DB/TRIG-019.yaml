@@ -1,0 +1,47 @@
+version: "9.1"
+id: "TRIG-019"
+name: "三角方程 - 利用单位圆旋转对称性理解解集的物理分布 (n_180)"
+sub_topics:
+  - "单位圆上的动点坐标与三角函数映射"
+  - "水平/垂直扫描线与单位圆的交点分析"
+  - "解在单位圆上的旋转对称性与镜像对称性"
+  - "解集在数轴上的周期性平移分布"
+llm_physical_mapping: "Intersecting a horizontal laser line across a Ferris wheel to find heights."
+code_implementation: |
+  import torch
+  import matplotlib.pyplot as plt
+
+  theta = torch.linspace(0, 4 * torch.pi, 1000)
+  y = torch.sin(theta)
+  target = 0.5
+  
+  intersections = []
+  for i in range(len(theta) - 1):
+      if (y[i] - target) * (y[i+1] - target) <= 0:
+          intersections.append(theta[i])
+  intersections = torch.tensor(intersections)
+
+  plt.figure(figsize=(10, 4))
+  plt.plot(theta.numpy(), y.numpy(), label='sin(theta)')
+  plt.axhline(y=target, color='r', linestyle='--', label='Laser line (y=0.5)')
+  if len(intersections) > 0:
+      plt.scatter(intersections.numpy(), [target]*len(intersections), color='g', zorder=5, label='Intersections')
+  plt.title('Ferris wheel horizontal laser line intersections')
+  plt.legend()
+  plt.grid(True)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    from sympy.geometry import Circle, Point, Line
+    
+    x = sp.Symbol('x')
+    eq = sp.Eq(sp.sin(x), sp.S(1)/2)
+    sols = sp.solve(eq, x)
+    
+    c = Circle(Point(0, 0), 1)
+    l = Line(Point(-5, sp.S(1)/2), Point(5, sp.S(1)/2))
+    points = c.intersection(l)
+    
+    assert len(points) == 2
+    for p in points:
+        assert sp.simplify(p.y - sp.S(1)/2) == 0

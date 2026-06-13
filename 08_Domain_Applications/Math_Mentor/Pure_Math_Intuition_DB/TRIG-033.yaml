@@ -1,0 +1,70 @@
+version: "9.1"
+node_metadata:
+  id: "TRIG-033"
+  concept_name: "三角学综合应用 - 多边形测量、不可达高度测量以及球面三角学的降维初探 (n_194)"
+  category: "Trigonometry"
+  difficulty_level: 6
+  importance: 8
+
+pedagogical_context:
+  sub_topics:
+    - "测量不可达物体高度的双基线测角法"
+    - "多边形面积的三角网格剖分法"
+    - "仰角、俯角、方位角的空间定位"
+    - "球面三角形（航海航空）中内角和大于 180° 的启蒙"
+  prerequisites:
+    - "TRIG-031"
+    - "TRIG-032"
+  learning_objectives:
+    - "Master triangulation techniques for measuring unreachable objects."
+    - "Understand how to decompose complex polygons into manageable triangles."
+    - "Gain spatial awareness using elevation, depression, and azimuth angles."
+    - "Conceptualize spherical geometry where angles exceed 180 degrees."
+  common_misconceptions:
+    - "Applying planar trigonometry rules directly to spherical surfaces without correction."
+    - "Confusing angle of elevation with angle of depression in complex 3D scenarios."
+
+cognitive_anchoring:
+  llm_physical_mapping: "triangulating a mountain peak from two different valleys."
+  intuition_primer: |
+    Imagine you're trying to figure out how tall a distant mountain is without ever climbing it. By measuring angles to the peak from two distinct, known locations (valleys), you can form triangles and calculate the height. When distances get massive, like sailing across an ocean, the flat triangles start bending with the Earth, requiring a whole new set of rules: spherical trigonometry.
+
+code_implementation:
+  language: "python"
+  framework: "pytorch"
+  code_snippet: |
+    import torch
+
+    def triangulate_distance(baseline_dist, angle_A_rad, angle_B_rad):
+        # Using law of sines to find distance from point A to the object
+        # baseline is between A and B
+        # angle C is the angle at the object
+        angle_C_rad = torch.pi - angle_A_rad - angle_B_rad
+        
+        # d_A / sin(B) = baseline / sin(C) => d_A = baseline * sin(B) / sin(C)
+        distance_from_A = baseline_dist * torch.sin(angle_B_rad) / torch.sin(angle_C_rad)
+        return distance_from_A
+
+    baseline = torch.tensor(100.0) # 100 meters
+    angle_A = torch.tensor(1.0) # approx 57 degrees
+    angle_B = torch.tensor(1.2) # approx 68 degrees
+    dist_A = triangulate_distance(baseline, angle_A, angle_B)
+    print(f"Distance from point A: {dist_A.item():.2f} meters")
+
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    baseline, alpha, beta = sp.symbols('baseline alpha beta', positive=True)
+    gamma = sp.pi - alpha - beta
+    dist_A = sp.symbols('dist_A', positive=True)
+    
+    # Law of sines: dist_A / sin(beta) = baseline / sin(gamma)
+    eq = sp.Eq(dist_A / sp.sin(beta), baseline / sp.sin(gamma))
+    
+    dist_A_sol = sp.solve(eq, dist_A)[0]
+    expected = baseline * sp.sin(beta) / sp.sin(alpha + beta)
+    
+    # Since sin(pi - (alpha + beta)) == sin(alpha + beta)
+    diff = sp.simplify(dist_A_sol - expected)
+    assert diff == 0, f"Expected 0, got {diff}"

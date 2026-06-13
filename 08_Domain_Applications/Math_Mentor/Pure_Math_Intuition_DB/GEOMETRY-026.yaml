@@ -1,0 +1,72 @@
+concept_node:
+  id: "GEOMETRY-026"
+  name: "直线与角（平行线/垂线/角的性质） - 角的度量与分类（锐角、直角、钝角、平角、周角）"
+  sub_topics:
+    - "角的定义与度、分、秒的换算"
+    - "锐角、直角、钝角的角度范围"
+    - "平角 (180°) 与周角 (360°) 的特殊性"
+    - "余角与补角的定义及性质"
+  llm_physical_mapping: "Opening a hinge or a door. The angle measures the extent to which the hinge is opened from its closed state. An acute angle is a slightly open door, a right angle is a door opened straight out, an obtuse angle is a door opened wide, a straight angle is a door opened flat against the wall, and a full angle represents a complete revolution of a rotating turnstile."
+  code_implementation: |
+    import torch
+    import math
+
+    def classify_angle(angle_rad):
+        """Classify angles given in radians using PyTorch."""
+        # Normalize angle to [0, 2*pi)
+        angle_rad = torch.fmod(angle_rad, 2 * math.pi)
+        angle_rad = torch.where(angle_rad < 0, angle_rad + 2 * math.pi, angle_rad)
+        
+        pi = math.pi
+        pi_half = pi / 2
+        
+        # Classification thresholds (with small epsilon for float comparison)
+        eps = 1e-6
+        
+        classifications = []
+        for a in angle_rad:
+            a_val = a.item()
+            if a_val < eps:
+                classifications.append("Zero Angle")
+            elif a_val < pi_half - eps:
+                classifications.append("Acute Angle")
+            elif abs(a_val - pi_half) <= eps:
+                classifications.append("Right Angle")
+            elif a_val < pi - eps:
+                classifications.append("Obtuse Angle")
+            elif abs(a_val - pi) <= eps:
+                classifications.append("Straight Angle")
+            elif a_val < 2 * pi - eps:
+                classifications.append("Reflex Angle")
+            else:
+                classifications.append("Full Angle")
+                
+        return classifications
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      
+      # Define angle variables
+      alpha, beta, theta = sp.symbols('alpha beta theta')
+      
+      # Angle classification examples
+      right_angle_rad = sp.pi / 2
+      straight_angle_rad = sp.pi
+      full_angle_rad = 2 * sp.pi
+      
+      # Degree/Radian conversion
+      deg_to_rad = sp.rad(90)  # evaluates to pi/2
+      rad_to_deg = sp.deg(sp.pi) # evaluates to 180
+      
+      # Complementary angles (余角): sum is 90 degrees or pi/2 radians
+      complementary_relation = sp.Eq(alpha + beta, sp.pi / 2)
+      
+      # Supplementary angles (补角): sum is 180 degrees or pi radians
+      supplementary_relation = sp.Eq(alpha + beta, sp.pi)
+      
+      # Trigonometric properties related to supplementary/complementary angles
+      # sin(pi/2 - theta) == cos(theta)
+      assert sp.simplify(sp.sin(sp.pi/2 - theta) - sp.cos(theta)) == 0
+      
+      # sin(pi - theta) == sin(theta)
+      assert sp.simplify(sp.sin(sp.pi - theta) - sp.sin(theta)) == 0

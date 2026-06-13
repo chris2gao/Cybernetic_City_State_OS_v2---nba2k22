@@ -1,0 +1,68 @@
+version: "9.1"
+id: "NUM_THEORY-012"
+topic: "中国剩余定理 - 构造性证明：通过计算各模数乘积 Mi 及其逆元，构造同余方程组在模 M 下的唯一解 (n_206)"
+concept_node_id: "n_206"
+sub_topics:
+  - "模数两两互质的假设"
+  - "辅助量 Mi 和其模逆元的计算"
+  - "通解公式的构造过程"
+  - "唯一性证明（在模 M 下）"
+llm_physical_mapping: "mundane physical metaphor: a combination lock where each dial operates independently via coprime gears. Finding the exact configuration corresponds to satisfying all modular constraints simultaneously, with the unique solution being the synchronized state of the gears."
+code_implementation: >
+  import torch
+
+  def extgcd(a, b):
+      if b == 0:
+          return 1, 0, a
+      x1, y1, gcd = extgcd(b, a % b)
+      x = y1
+      y = x1 - (a // b) * y1
+      return x, y, gcd
+
+  def crt(a: torch.Tensor, m: torch.Tensor) -> torch.Tensor:
+      # a: residues, m: moduli
+      
+      # 1. calculate M (product of all moduli)
+      M = torch.prod(m)
+      
+      # 2. calculate Mi
+      Mi = M // m
+      
+      # 3. calculate modular inverse of Mi mod m[i]
+      inv = torch.zeros_like(Mi)
+      for i in range(len(m)):
+          x, _, _ = extgcd(Mi[i].item(), m[i].item())
+          inv[i] = (x % m[i].item() + m[i].item()) % m[i].item()
+          
+      # 4. Construct the solution
+      x = torch.sum(a * Mi * inv) % M
+      return x
+
+  # Example: x = 2 (mod 3), x = 3 (mod 5), x = 2 (mod 7)
+  a = torch.tensor([2, 3, 2], dtype=torch.int64)
+  m = torch.tensor([3, 5, 7], dtype=torch.int64)
+  x = crt(a, m)
+  print(f"CRT Solution: {x.item()}")
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy
+    
+    # Residues and moduli
+    a = [2, 3, 2]
+    m = [3, 5, 7]
+    
+    M = 1
+    for mod in m:
+        M *= mod
+        
+    Mi = [M // mod for mod in m]
+    
+    # Calculate inverses using sympy
+    inv = [sympy.mod_inverse(Mi[i], m[i]) for i in range(len(m))]
+    
+    # Calculate solution
+    x = sum(a[i] * Mi[i] * inv[i] for i in range(len(m))) % M
+    
+    # Verify the solution
+    for i in range(len(m)):
+        assert x % m[i] == a[i]

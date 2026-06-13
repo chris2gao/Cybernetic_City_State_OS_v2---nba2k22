@@ -1,0 +1,21 @@
+id: "LINEAR_ALGEBRA-334"
+concept_name: "秩与零空间（核空间）/维数定理 - 大模型映射：RoPE 稳定秩分析与低秩微调 (LoRA) 的本质 (n_334)"
+sub_topics:
+  - "权重矩阵的低秩分解 W = BA"
+  - "稳定秩 (Stable Rank) 对泛化能力的指示作用"
+  - "LoRA 通过约束秩来控制参数更新范围"
+  - "语义特征在高维空间中的低秩流形假设"
+llm_physical_mapping: "spatial deformation/stretching/rotating: low-rank adaptation forces the spatial deformation to occur only along a few restricted axes, effectively freezing most of the original space's stretching while learning specific flat deformations."
+code_implementation: |
+  import sympy as sp
+  B = sp.Matrix([[1], [2]])
+  A = sp.Matrix([[3, 4]])
+  W = B * A
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    B = sp.Matrix([[1], [2]])
+    A = sp.Matrix([[3, 4]])
+    W = B * A
+    assert W.shape == (2, 2)
+    assert W.rank() == 1

@@ -1,0 +1,71 @@
+concept_node:
+  id: PROP_LOGIC-003
+  symbol: \neg(P \land Q) \equiv \neg P \lor \neg Q
+  name: De Morgan's Laws (德·摩根定律)
+  domain: Mathematical Logic (数理逻辑) / Propositional Calculus
+  sub_topics:
+  - 交换律、结合律与分配律
+  - 德·摩根定律 (De Morgan's Laws)
+  - 吸收律与等幂律
+  - 互补律与零一律
+  pure_math_definition:
+    description: 'De Morgan''s laws state that the negation of a conjunction is the
+      disjunction of the negations, and the negation of a disjunction is the conjunction
+      of the negations.
+
+      '
+    axioms:
+    - NOT (P AND Q) == (NOT P) OR (NOT Q)
+    - NOT (P OR Q) == (NOT P) AND (NOT Q)
+  llm_physical_mapping:
+    tensor_shape_flow: Boolean inversion distributed over binary tensor operations
+      flips the operation type.
+    cognitive_intuition: 'If it''s NOT true that both A and B are here, it means at
+      least one of them is missing.
+
+      '
+  code_implementation:
+    snippet: 'import torch
+
+
+      P = torch.tensor([True, True, False, False])
+
+      Q = torch.tensor([True, False, True, False])
+
+
+      # ~(P & Q) == ~P | ~Q
+
+      left_side = ~(P & Q)
+
+      right_side = (~P) | (~Q)
+
+      is_equivalent = torch.all(left_side == right_side).item()
+
+      '
+  v8_sanity_audit:
+    sympy_pseudo_code: 'import sympy as sp
+
+      from sympy.logic.boolalg import Equivalent, And, Or, Not
+
+
+      P, Q = sp.symbols(''P Q'')
+
+
+      # Demorgan Law 1
+
+      expr1_left = Not(And(P, Q))
+
+      expr1_right = Or(Not(P), Not(Q))
+
+      assert sp.simplify_logic(Equivalent(expr1_left, expr1_right)) == True
+
+
+      # Demorgan Law 2
+
+      expr2_left = Not(Or(P, Q))
+
+      expr2_right = And(Not(P), Not(Q))
+
+      assert sp.simplify_logic(Equivalent(expr2_left, expr2_right)) == True
+
+      '

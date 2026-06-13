@@ -1,0 +1,68 @@
+concept_node:
+  id: "MAPPING-005"
+  domain: "mappings_and_relations"
+  sub_topics:
+    - "复合映射的定义与条件"
+    - "复合映射的结合律"
+    - "复合映射的单射与满射遗传性"
+    - "恒等映射在复合中的作用"
+  topic: "复合映射 (Composition of mappings)"
+  llm_physical_mapping: "An assembly line in a factory. Workstation A (mapping f) takes raw materials (domain) and turns them into parts (codomain of f). Workstation B (mapping g) takes these parts (domain of g, which must include the range of f) and turns them into finished products (codomain of g). The composition g ∘ f represents the entire factory process from raw materials to finished products in one continuous flow, bypassing intermediate handling if viewed as a single black-box workstation."
+  code_implementation: |
+    import torch
+
+    def mapping_f(x):
+        # f: R -> R, f(x) = x^2
+        return x ** 2
+
+    def mapping_g(x):
+        # g: R -> R, g(x) = x + 3
+        return x + 3
+        
+    def composition_g_f(x):
+        # (g ∘ f)(x) = g(f(x))
+        return mapping_g(mapping_f(x))
+
+    x_tensor = torch.tensor([-2.0, -1.0, 0.0, 1.0, 2.0])
+    
+    # Apply composition
+    result = composition_g_f(x_tensor)
+    print("x:", x_tensor)
+    print("(g ∘ f)(x):", result)
+    
+    # Check associativity h ∘ (g ∘ f) == (h ∘ g) ∘ f
+    def mapping_h(x):
+        return x * 2
+        
+    h_g_f_1 = mapping_h(composition_g_f(x_tensor))
+    h_g_f_2 = mapping_h(mapping_g(mapping_f(x_tensor)))
+    print("Associativity holds:", torch.all(h_g_f_1 == h_g_f_2).item())
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      from sympy import Symbol, Function, Implies
+      from sympy.logic.boolalg import And
+      
+      x = Symbol('x')
+      A = Symbol('A') # Set A
+      B = Symbol('B') # Set B
+      C = Symbol('C') # Set C
+      
+      f = Function('f') # f: A -> B
+      g = Function('g') # g: B -> C
+      g_comp_f = Function('g_comp_f') # g ∘ f: A -> C
+      
+      # Definition of composition
+      def_composition = (g_comp_f(x) == g(f(x)))
+      
+      # Injectivity inheritance
+      # If g ∘ f is injective, then f is injective
+      comp_injective = Implies(g_comp_f(x) == g_comp_f(Symbol('y')), x == Symbol('y'))
+      f_injective = Implies(f(x) == f(Symbol('y')), x == Symbol('y'))
+      injectivity_theorem = Implies(comp_injective, f_injective)
+      
+      # Surjectivity inheritance
+      # If g ∘ f is surjective, then g is surjective
+      # Formalization in boolean logic for audit structure
+      comp_surjective = Function('Surjective')('g_comp_f', A, C)
+      g_surjective = Function('Surjective')('g', B, C)
+      surjectivity_theorem = Implies(comp_surjective, g_surjective)

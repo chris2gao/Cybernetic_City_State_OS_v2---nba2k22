@@ -1,0 +1,24 @@
+id: "LINEAR_ALGEBRA-313"
+concept_name: "矩阵运算 - 逆矩阵的定义与物理意义（变换的可逆性） (n_313)"
+sub_topics:
+  - "逆矩阵 A⁻¹ 的定义 (AA⁻¹ = I)"
+  - "逆矩阵存在的条件：非奇异矩阵 (det ≠ 0)"
+  - "物理意义：撤销空间扭曲，还原原始坐标"
+  - "伴随矩阵法与初等变换法求逆"
+llm_physical_mapping: "spatial deformation/stretching/rotating: Inverse matrices physically represent rewinding a spatial deformation to exactly restore the initial geometric grid. If space was squashed into a lower dimension (det=0), the information is lost and cannot be rewound."
+code_implementation: |
+  import sympy as sp
+  
+  A = sp.Matrix([[4, 7], [2, 6]])
+  
+  # Inverse matrix
+  A_inv = A.inv()
+  
+  # Verify A * A_inv is Identity
+  I = A * A_inv
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    A = sp.Matrix([[4, 7], [2, 6]])
+    A_inv = A.inv()
+    assert A * A_inv == sp.eye(2)

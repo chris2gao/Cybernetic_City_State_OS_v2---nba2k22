@@ -1,0 +1,64 @@
+concept_node:
+  id: PROP_LOGIC-002
+  symbol: P \leftrightarrow Q
+  name: Truth Tables & Logical Equivalence (真值表与逻辑等价)
+  domain: Mathematical Logic (数理逻辑) / Propositional Calculus
+  sub_topics:
+  - 真值表的系统构建方法
+  - 逻辑等价的判定与证明
+  - 常用逻辑等价式
+  pure_math_definition:
+    description: 'A truth table displays the logical value of a compound proposition
+      for every possible combination of truth values of its atomic components. Two
+      propositions are logically equivalent if their truth tables are identical.
+
+      '
+    axioms:
+    - 'Equivalence: P == Q iff P -> Q AND Q -> P.'
+  llm_physical_mapping:
+    tensor_shape_flow: Cartesian product of Boolean tensors to simulate all input
+      combinations. Equality test across all states.
+    cognitive_intuition: 'A complete map of all possible universes. Two maps are equivalent
+      if every single parallel universe matches.
+
+      '
+  code_implementation:
+    snippet: 'import torch
+
+
+      # Generate truth table using meshgrid
+
+      P_vals = torch.tensor([True, False])
+
+      Q_vals = torch.tensor([True, False])
+
+
+      P, Q = torch.meshgrid(P_vals, Q_vals, indexing=''ij'')
+
+      P, Q = P.flatten(), Q.flatten()
+
+
+      # A -> B is logically equivalent to NOT A OR B
+
+      implication = (~P) | Q
+
+      '
+  v8_sanity_audit:
+    sympy_pseudo_code: 'import sympy as sp
+
+      from sympy.logic.boolalg import Equivalent, Implies, Or, Not
+
+
+      P, Q = sp.symbols(''P Q'')
+
+
+      expr1 = Implies(P, Q)
+
+      expr2 = Or(Not(P), Q)
+
+
+      # Assert they are logically equivalent (truth tables match)
+
+      assert sp.simplify_logic(Equivalent(expr1, expr2)) == True
+
+      '

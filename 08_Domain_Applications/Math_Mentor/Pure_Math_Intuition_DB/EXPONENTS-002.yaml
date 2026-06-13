@@ -1,0 +1,59 @@
+concept_node:
+  id: "EXPONENTS-002"
+  title: "逻辑延伸：零指数与负整数指数幂的物理意义与代数推导（消除公式断层）"
+  domain: "rational_exponents_and_power_functions"
+  sub_topics:
+    - "零指数幂的定义与成立条件"
+    - "负整数指数幂的定义及其倒数关系"
+    - "指数运算性质从正整数到整数集的扩充"
+    - "代数推导中的连续性与一致性原则"
+  llm_physical_mapping: "Mundane physical metaphor: Imagine a photocopying machine with an enlargement/reduction setting. An exponent of positive 'n' means enlarging the image by a factor of 'x' repeatedly 'n' times. An exponent of '0' means leaving the image as is (a factor of 1). An exponent of negative 'n' means reducing the image by a factor of 'x' repeatedly 'n' times. The process is a continuous extension of scaling."
+  code_implementation: |
+    import torch
+    
+    def test_exponents():
+        # PyTorch negative and zero powers
+        x = torch.tensor([2.0, 4.0, 5.0], dtype=torch.float32)
+        
+        # Zero exponent: x^0 = 1 (for x != 0)
+        zero_power = torch.pow(x, 0)
+        assert torch.all(zero_power == 1.0), "x^0 must be 1"
+        
+        # Negative integer exponent: x^-n = 1 / x^n
+        n = 3
+        neg_power = torch.pow(x, -n)
+        expected_neg_power = 1.0 / torch.pow(x, n)
+        assert torch.allclose(neg_power, expected_neg_power), "x^-n must equal 1/x^n"
+        
+        return zero_power, neg_power
+        
+    print(test_exponents())
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      from sympy import symbols, simplify, Eq
+      
+      x, n = symbols('x n', nonzero=True)
+      
+      # Derivation of x^0 = 1 using exponent quotient rule: x^a / x^b = x^(a-b)
+      # Let a = n, b = n
+      quotient_expr = x**n / x**n
+      exponent_expr = x**(n - n)
+      
+      # We know x^n / x^n = 1 (since x != 0)
+      # And x**(n-n) = x**0
+      assert simplify(quotient_expr) == 1
+      assert simplify(exponent_expr) == x**0
+      
+      # Therefore, x^0 = 1
+      
+      # Derivation of x^-n using exponent quotient rule: x^a / x^b = x^(a-b)
+      # Let a = 0, b = n
+      neg_exponent_expr = x**(0 - n)  # x^-n
+      quotient_neg_expr = x**0 / x**n
+      
+      # Since we established x^0 = 1
+      final_neg_expr = 1 / x**n
+      
+      # Therefore x^-n = 1 / x^n
+      is_consistent = simplify(neg_exponent_expr - final_neg_expr) == 0
+      assert is_consistent

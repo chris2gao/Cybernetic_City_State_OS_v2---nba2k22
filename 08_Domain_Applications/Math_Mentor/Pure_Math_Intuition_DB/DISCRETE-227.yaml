@@ -1,0 +1,23 @@
+id: "DISCRETE-227"
+concept_name: "图论基础 - 特殊图：完全图、二分图 (Bipartite Graphs)、欧拉图与哈密顿图 (n_227)"
+sub_topics:
+  - "完全图 Kn 的边数性质"
+  - "二分图的判定与匹配背景"
+  - "欧拉回路的充要条件（度数全偶）"
+  - "哈密顿路径问题的复杂性（NP-完全）"
+llm_physical_mapping: "mundane physical metaphor: like a completely tangled ball of yarn (complete graph) vs. a room where boys only dance with girls and vice versa (bipartite graph)."
+code_implementation: |
+  import networkx as nx
+  
+  def check_special_graphs():
+      K5 = nx.complete_graph(5)
+      B = nx.complete_bipartite_graph(3, 2)
+      return nx.is_eulerian(K5), nx.is_bipartite(B)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import networkx as nx
+    K4 = nx.complete_graph(4)
+    num_edges = K4.number_of_edges()
+    assert num_edges == 4 * 3 / 2
+    B = nx.complete_bipartite_graph(2, 3)
+    assert nx.is_bipartite(B)

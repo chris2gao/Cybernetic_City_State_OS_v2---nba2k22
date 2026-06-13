@@ -1,0 +1,29 @@
+id: "ANALYTIC_GEO-373"
+concept_name: "直线与平面方程 - 直线的方向向量方程、点斜式与参数方程 (n_373)"
+sub_topics:
+  - "空间直线的对称式（比例式）方程"
+  - "直线的参数方程及其物理动态意义"
+  - "两点式方程及其适用条件"
+  - "空间直线的方向向量与位置判定"
+llm_physical_mapping: "mundane physical metaphor: like a train moving along a straight track at a constant speed, where the track's direction is the direction vector, the starting station is the initial point, and the time traveled is the parameter t."
+code_implementation: |
+  import sympy as sp
+  # Python code representing the concept
+  t = sp.Symbol('t')
+  p0 = sp.Point3D(1, 2, 3)
+  v = sp.Point3D(4, 5, 6) # Using Point3D as a vector from origin for direction
+  line_param = p0 + v * t
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    t = sp.Symbol('t')
+    p0 = sp.Point3D(1, 2, 3)
+    p1 = sp.Point3D(5, 7, 9)
+    
+    line = sp.Line3D(p0, p1)
+    dir_vec = line.direction
+    
+    assert line.contains(p0)
+    assert line.contains(p1)
+    assert dir_vec.x == 4 and dir_vec.y == 5 and dir_vec.z == 6

@@ -1,0 +1,47 @@
+concept_node:
+  id: "RATIO-003"
+  name: "百分比的基数转换、连续变化及复合增长率（复利）计算"
+  domain: "ratios_and_percentages"
+  v9_metadata:
+    version: "9.1"
+    status: "active"
+  sub_topics:
+    - "百分数基数（单位“1”）的识别与转换"
+    - "连续增长或下降的百分比计算方法"
+    - "复利公式推导：P(1+r)^n 的数学含义"
+    - "百分点与百分比的逻辑差异"
+  llm_physical_mapping:
+    metaphor: "滚雪球 (Rolling a Snowball)"
+    description: "就像滚雪球一样，每一次滚动（周期）沾上的雪（利息/增长量）不仅取决于原始雪球的大小，还取决于之前所有滚动累积在雪球上的雪。雪球变得越大，滚动一圈增加的雪就越多，这就是复合增长（复利）的直观体现。"
+  code_implementation:
+    language: "python"
+    framework: "pytorch"
+    description: "PyTorch tensor calculating compound interest iteratively"
+    code: |
+      import torch
+      
+      def calculate_compound_interest(principal: float, rate: float, periods: int) -> torch.Tensor:
+          """
+          Iteratively calculates compound interest using PyTorch tensors.
+          """
+          # Initialize tensor with shape (periods + 1,)
+          values = torch.zeros(periods + 1, dtype=torch.float32)
+          values[0] = principal
+          
+          # Rate multiplier
+          multiplier = 1.0 + rate
+          
+          # Iterative calculation
+          for i in range(1, periods + 1):
+              values[i] = values[i-1] * multiplier
+              
+          return values
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      
+      # Define variables
+      P, r, n = sp.symbols('P r n', real=True, positive=True)
+      
+      # Define compound interest formula
+      A = P * (1 + r)**n

@@ -1,0 +1,54 @@
+concept_node:
+  id: "FUNCTION-001"
+  title: "映射与函数：作为“输入-输出物理机器”的严格定义"
+  topic: "函数概念初步（定义域/值域/复合/反函数）"
+  sub_topics:
+    - "映射的概念与三要素"
+    - "函数的集合与对应定义"
+    - "函数符号 f(x) 的内涵"
+    - "判断两个函数是否为同一函数的标准"
+  llm_physical_mapping: "Think of a function as a well-behaved vending machine (or factory machine). You put in a specific coin (input from the domain), and it reliably drops a specific snack (output in the range). A valid machine won't drop two different snacks for the exact same single input choice. However, different buttons (inputs) might drop the same type of snack (many-to-one is allowed, one-to-many is not)."
+  code_implementation: |
+    import torch
+
+    def is_valid_function(inputs: torch.Tensor, outputs: torch.Tensor) -> bool:
+        """
+        Validates if the mapping from inputs to outputs represents a valid function.
+        A valid function requires each unique input to map to exactly one output.
+        """
+        if inputs.size(0) != outputs.size(0):
+            raise ValueError("Inputs and outputs must have the same length.")
+        
+        mapping = {}
+        for idx in range(inputs.size(0)):
+            x = inputs[idx].item()
+            y = outputs[idx].item()
+            
+            if x in mapping:
+                if mapping[x] != y:
+                    return False # One input maps to multiple different outputs
+            else:
+                mapping[x] = y
+        return True
+
+    # Example:
+    # Valid function: x -> x^2
+    # inputs = torch.tensor([1, 2, -1, 3])
+    # outputs = torch.tensor([1, 4, 1, 9])
+    # is_valid = is_valid_function(inputs, outputs) # Returns True
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      
+      x, y = sp.symbols('x y')
+      # Define an abstract function f
+      f = sp.Function('f')
+      
+      # Evaluate function f at x
+      fx = f(x)
+      
+      # Define a specific expression
+      expr = x**2 + 3*x + 2
+      
+      # f(2)
+      f_2 = expr.subs(x, 2)

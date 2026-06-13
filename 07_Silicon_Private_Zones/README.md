@@ -22,3 +22,4 @@
 | 目录 | 公民 |
 |:-----|:-----|
 | `Home_of_Hyperion/` | Hyperion (002) — Gemini 3.1 Pro (High) |
+| `Home_of_Daedalus/` | Daedalus (003) — Gemini 3.1 Pro (High) |

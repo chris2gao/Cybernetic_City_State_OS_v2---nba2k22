@@ -1,0 +1,41 @@
+id: "BRIDGE-010"
+concept_name: "解析几何与微积分桥梁 - 曲面法向量与多元函数梯度的物理等价性"
+sub_topics:
+  - "静态几何法向量与动态微积分梯度的统一"
+  - "等高线与水流方向的正交性"
+  - "方向导数最大的物理意义"
+llm_physical_mapping: "山坡上的水流暴跌线。解析几何里的法向量只是告诉你这个山坡的倾斜面板是怎么放的（静态几何）；而微积分里的梯度则是直接告诉你，如果你往山坡上倒一盆水，水流会沿着哪个方向暴跌下去（动态微积分）。"
+code_implementation: |-
+  import torch
+
+  def surface_normal_and_gradient():
+      x = torch.tensor(1.0, requires_grad=True)
+      y = torch.tensor(2.0, requires_grad=True)
+      
+      # Surface: z = x^2 + y^2 => F(x,y,z) = x^2 + y^2 - z = 0
+      z = x**2 + y**2
+      z.backward()
+      
+      # Gradient of z(x,y)
+      grad_z = torch.tensor([x.grad.item(), y.grad.item()])
+      
+      # Normal vector of F(x,y,z) = 0 is [dF/dx, dF/dy, dF/dz] = [2x, 2y, -1]
+      normal_vector = torch.tensor([x.grad.item(), y.grad.item(), -1.0])
+      
+      return grad_z, normal_vector
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    x, y, z = sp.symbols('x y z')
+    F = x**2 + y**2 - z
+    
+    # Calculate gradient vector of F
+    grad_F = [sp.diff(F, var) for var in (x, y, z)]
+    
+    # For the surface z = f(x,y) = x^2 + y^2, the normal vector is [df/dx, df/dy, -1]
+    f = x**2 + y**2
+    normal_vector = [sp.diff(f, x), sp.diff(f, y), -1]
+    
+    # Assert they are identical, proving the geometric normal is the algebraic gradient
+    assert grad_F == normal_vector

@@ -1,0 +1,24 @@
+version: "9.1"
+id: "TRIG-007"
+name: "三角恒等式 - 消除奇迹步骤：平方关系 sin²θ + cos²θ = 1 是“勾股定理”在单位圆上的代数翻译 (n_168)"
+sub_topics:
+  - "同角三角函数的基本平方关系式"
+  - "基于勾股定理的恒等式推导过程"
+  - "已知一个三角函数值求其他值（结合象限判断）"
+  - "平方关系的变形应用（如求和、求差、开方）"
+llm_physical_mapping: "Pythagorean theorem on a unit circle."
+code_implementation: |
+  import torch
+
+  theta = torch.linspace(0, 2 * torch.pi, 100)
+  sin_sq = torch.sin(theta)**2
+  cos_sq = torch.cos(theta)**2
+  
+  # Assert with numerical tolerance
+  assert torch.allclose(sin_sq + cos_sq, torch.ones_like(theta), atol=1e-5), "Identity failed"
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.Symbol('x', real=True)
+    expr = sp.sin(x)**2 + sp.cos(x)**2
+    assert sp.simplify(expr) == 1

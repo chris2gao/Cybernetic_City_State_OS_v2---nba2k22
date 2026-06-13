@@ -1,0 +1,30 @@
+concept_node:
+  id: "GEOMETRY-014"
+  name: "面积与体积 - 面积的公理化定义（可加性、运动不变性） (n_134)"
+  sub_topics:
+    - "单位正方形面积定义（公理化基础）"
+    - "面积的有限可加性（图形剖分面积不变）"
+    - "运动不变性：全等图形面积相等"
+    - "面积的非负性与单调性"
+  llm_physical_mapping: "mundane physical metaphor (e.g. laying identical square tiles on a floor). Additivity corresponds to counting non-overlapping tiles, motion invariance to moving tiles without resizing, and the unit square area is just one tile."
+  code_implementation: |-
+    import torch
+
+    def count_grid_cells_area(grid_tensor: torch.Tensor) -> float:
+        """
+        PyTorch discrete integration by counting grid cells.
+        grid_tensor is a 2D boolean or 0/1 tensor where 1 indicates the shape.
+        """
+        return grid_tensor.sum().item()
+  v8_sanity_audit:
+    sympy_pseudo_code: |-
+      from sympy.geometry import Point, Polygon
+
+      def test_area_motion_invariance():
+          # A polygon and its translation
+          poly = Polygon(Point(0, 0), Point(2, 0), Point(2, 2), Point(0, 2))
+          translated_poly = Polygon(Point(3, 1), Point(5, 1), Point(5, 3), Point(3, 3))
+          
+          # sympy.geometry.Polygon.area equivalence checks under translation
+          assert poly.area == translated_poly.area
+          return True

@@ -1,0 +1,26 @@
+concept_node:
+  id: "CALC-04"
+  symbol: "f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}"
+  name: "Derivative"
+  pure_math_definition:
+    description: "The instantaneous rate of change of a function."
+    axioms:
+      - "Limit of the difference quotient."
+  llm_physical_mapping:
+    tensor_shape_flow: "Jacobian matrix computation."
+    cognitive_intuition: "The speedometer of a moving car."
+  code_implementation:
+    snippet: |
+      import torch
+      x = torch.tensor([2.0], requires_grad=True)
+      y = x**2
+      y.backward()
+      grad = x.grad # Should be 4.0
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      x, h = sp.symbols('x h')
+      f = x**2
+      diff_quotient = (f.subs(x, x+h) - f)/h
+      deriv = sp.limit(diff_quotient, h, 0)
+      assert deriv == 2*x

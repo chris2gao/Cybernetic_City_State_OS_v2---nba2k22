@@ -1,0 +1,20 @@
+id: "CALCULUS-292"
+concept_name: "洛必达法则 - 洛必达法则的推导 (n_292)"
+sub_topics:
+  - "利用柯西中值定理进行严格推导"
+  - "0/0 型与 ∞/∞ 型的证明逻辑"
+  - "反复应用洛必达法则的收敛性"
+  - "导数连续性对法则适用的限制条件"
+llm_physical_mapping: "mundane physical metaphor: treating limits as a race between two cars; L'Hopital's rule compares their instantaneous speedometers to see who wins when both reach the finish line simultaneously."
+code_implementation: |
+  import sympy as sp
+  x = sp.Symbol('x')
+  f = sp.sin(x)
+  g = x
+  limit_val = sp.limit(f/g, x, 0)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.Symbol('x')
+    f, g = sp.sin(x), x
+    assert sp.limit(f/g, x, 0) == sp.limit(sp.diff(f, x)/sp.diff(g, x), x, 0)

@@ -1,0 +1,39 @@
+concept_node:
+  version: '9.1'
+  id: PRED_LOGIC-003
+  name: Well-Formed Formulas
+  chinese_name: 合式公式 WFF
+  domain: Predicate Logic
+  sub_topics:
+  - 谓词逻辑的合式公式（WFF）构造
+  - 公式的解释与赋值
+  core_concept:
+    definition: A Well-Formed Formula (WFF) is a structurally valid sequence of symbols
+      from a given alphabet that conforms to the grammar rules of a formal language,
+      analogous to a syntactically correct sentence.
+    llm_physical_mapping: In programming and LLM terms, a WFF is equivalent to a valid
+      Abstract Syntax Tree (AST) after parsing, or a valid computational graph in
+      PyTorch where dimensions strictly match and operators are properly applied.
+  code_implementation:
+    python_pytorch_example: "import torch\n\ndef test_wff_computation_graph(tensor_a,\
+      \ tensor_b):\n    \"\"\"\n    Demonstrates WFF concept using PyTorch tensor\
+      \ operations.\n    A structurally sound operation (matching shapes) is a WFF.\n\
+      \    \"\"\"\n    try:\n        # The 'syntax rule' here is that shapes must\
+      \ be broadcastable/match\n        result = torch.logical_and(tensor_a, tensor_b)\n\
+      \        return True, \"Valid WFF: Tensor shapes align for logical operation.\"\
+      \n    except RuntimeError as e:\n        return False, f\"Not a WFF (Syntax\
+      \ Error): {e}\"\n\n# Valid WFF representation\na = torch.tensor([True, False,\
+      \ True])\nb = torch.tensor([False, False, True])\nis_wff_1, msg_1 = test_wff_computation_graph(a,\
+      \ b)\nprint(msg_1) # Valid WFF\n\n# Invalid WFF representation (shape mismatch)\n\
+      c = torch.tensor([True, False])\nis_wff_2, msg_2 = test_wff_computation_graph(a,\
+      \ c)\nprint(msg_2) # Not a WFF\n"
+  v8_sanity_audit:
+    sympy_pseudo_code: "from sympy import sympify\nfrom sympy.core.sympify import\
+      \ SympifyError\n\ndef parse_formula(formula_str):\n    \"\"\"\n    Attempt to\
+      \ parse a mathematical formula string into an AST.\n    \"\"\"\n    try:\n \
+      \       # sympify acts as our formal language parser\n        ast_node = sympify(formula_str)\n\
+      \        return True, f\"Parsed successfully into AST: {type(ast_node)}\"\n\
+      \    except SympifyError:\n        return False, \"Parsing failed: Not a Well-Formed\
+      \ Formula.\"\n\n# Test 1: Valid Mathematical WFF\nvalid, res_valid = parse_formula(\"\
+      x**2 + 2*x + 1\")\nprint(res_valid)\n\n# Test 2: Invalid Mathematical WFF (Syntax\
+      \ Error)\ninvalid, res_invalid = parse_formula(\"x**2 + * 2 x\")\nprint(res_invalid)\n"

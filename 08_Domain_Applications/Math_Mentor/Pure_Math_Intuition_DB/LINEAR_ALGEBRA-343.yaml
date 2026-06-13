@@ -1,0 +1,24 @@
+id: "LINEAR_ALGEBRA-343"
+concept_name: "最小二乘法 - 统计回归与数据拟合的几何基石 (n_343)"
+sub_topics:
+  - "线性回归模型的代数表达"
+  - "偏差平方和（SSE）的极小化逻辑"
+  - "映射在神经网络输出层线性逼近中的作用"
+  - "权重更新的闭式解与迭代解的关联"
+llm_physical_mapping: "spatial deformation fitting a rigid line through a cloud of scattered points. Imagine trying to thread a stiff metal rod through a collection of floating beads in space. The rod cannot pass through every bead. The least squares approach adjusts the tilt and position of the rod to minimize the total length of all the imaginary elastic bands snapping perpendicularly from each bead to the metal rod."
+code_implementation: |
+  import sympy as sp
+  # Linear regression for points (1, 2), (2, 3), (3, 5)
+  A = sp.Matrix([[1, 1], [1, 2], [1, 3]])
+  y = sp.Matrix([2, 3, 5])
+  x = (A.T * A).LUsolve(A.T * y)
+  c, m = x[0], x[1]
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    A = sp.Matrix([[1, 1], [1, 2], [1, 3]])
+    y = sp.Matrix([2, 3, 5])
+    x = (A.T * A).LUsolve(A.T * y)
+    c, m = x[0], x[1]
+    assert m == sp.Rational(3, 2)
+    assert c == sp.Rational(1, 3)

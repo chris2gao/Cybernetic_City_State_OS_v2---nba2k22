@@ -1,0 +1,76 @@
+concept_node:
+  id: MAPPING-001
+  symbol: A \times B
+  name: Cartesian Product (笛卡尔积)
+  domain: Mappings and Relations (映射与关系)
+  sub_topics:
+  - 有序对与n元组的概念
+  - 笛卡尔积的正式定义
+  - 笛卡尔积的基数性质
+  - 笛卡尔积对并、交运算的分配律
+  pure_math_definition:
+    description: 'The Cartesian product of sets A and B is the set of all ordered
+      pairs (a, b) where a is in A and b is in B.
+
+      '
+    axioms:
+    - (a, b) in A x B iff a in A and b in B
+  llm_physical_mapping:
+    tensor_shape_flow: torch.cartesian_prod or torch.meshgrid. Expanding two 1D tensors
+      of size N and M into an (N*M, 2) tensor.
+    cognitive_intuition: 'A grid where every item from list A meets every item from
+      list B. Like combining shirts and pants to find all possible outfits.
+
+      '
+  code_implementation:
+    snippet: 'import torch
+
+
+      A = torch.tensor([1, 2])
+
+      B = torch.tensor([3, 4, 5])
+
+
+      # Cartesian product
+
+      product = torch.cartesian_prod(A, B)
+
+      # tensor([[1, 3],
+
+      #         [1, 4],
+
+      #         [1, 5],
+
+      #         [2, 3],
+
+      #         [2, 4],
+
+      #         [2, 5]])
+
+      '
+  v8_sanity_audit:
+    sympy_pseudo_code: 'import sympy as sp
+
+      from sympy import FiniteSet, ProductSet
+
+
+      A = FiniteSet(1, 2)
+
+      B = FiniteSet(3, 4, 5)
+
+
+      cartesian = ProductSet(A, B)
+
+
+      # Test cardinality
+
+      assert len(cartesian) == len(A) * len(B)
+
+
+      # Test membership
+
+      assert (1, 4) in cartesian
+
+      assert (3, 1) not in cartesian
+
+      '

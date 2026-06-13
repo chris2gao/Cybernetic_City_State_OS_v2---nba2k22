@@ -1,0 +1,47 @@
+concept_node:
+  id: "FRACTIONS-001"
+  concept_name: "分数与小数 (fractions_and_decimals) - 分数的几何直觉与等价性（约分与通分的代数依据） (n_57)"
+  sub_topics:
+    - "分数作为整体-部分关系的面积模型"
+    - "数轴上的点与分数对应"
+    - "分数基本性质：分子分母同乘除的不变性"
+    - "最大公约数与约分至最简分数"
+    - "最小公倍数与异分母通分"
+  llm_physical_mapping: "Slicing a pizza into finer pieces but the total volume remains the same. A pizza cut into 4 slices where you take 2 (2/4) represents the exact same physical amount of food as cutting it into 2 slices and taking 1 (1/2)."
+  code_implementation: |
+    import torch
+    
+    # Representing fractions as (numerator, denominator) pairs in PyTorch
+    fractions = torch.tensor([
+        [1, 2],  # 1/2
+        [2, 4],  # 2/4
+        [3, 6],  # 3/6
+    ], dtype=torch.float32)
+    
+    # Computing decimal value
+    decimals = fractions[:, 0] / fractions[:, 1]
+    
+    # Check equivalence
+    is_equivalent = torch.allclose(decimals[0], decimals)
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      from sympy import gcd, lcm
+      
+      # Define fractions
+      f1 = sp.Rational(2, 4)
+      f2 = sp.Rational(3, 6)
+      
+      # Equivalence
+      assert f1 == f2
+      assert f1 == sp.Rational(1, 2)
+      
+      # Simplification using GCD
+      n, d = 12, 18
+      g = sp.gcd(n, d)
+      simplified = sp.Rational(n // g, d // g)
+      
+      # Common Denominator (通分) using LCM
+      d1, d2 = 4, 6
+      common_denom = sp.lcm(d1, d2)
+      # n1/d1 -> (n1 * (common_denom/d1)) / common_denom

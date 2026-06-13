@@ -1,0 +1,21 @@
+id: "CALCULUS-300"
+concept_name: "Green定理/Stokes定理/Gauss散度定理 - 高斯散度定理：封闭曲面通量与体积分散度转换 (n_300)"
+sub_topics:
+  - "散度 (Divergence) 的物理意义：源与汇"
+  - "通量积分与散度体积积分的转换"
+  - "连续介质力学中的质量守恒方程推导"
+  - "高斯公式在静电场分析中的应用"
+llm_physical_mapping: "mundane physical metaphor: counting the water leaking out of a sponge by measuring either the droplets leaving the surface or the expansion rate of water inside."
+code_implementation: |
+  import sympy as sp
+  from sympy.vector import CoordSys3D, divergence
+  N = CoordSys3D('N')
+  F = N.x*N.i + N.y*N.j + N.z*N.k
+  div = divergence(F)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    from sympy.vector import CoordSys3D, divergence
+    N = CoordSys3D('N')
+    F = N.x*N.i + N.y*N.j + N.z*N.k
+    assert divergence(F) == 3

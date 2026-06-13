@@ -1,0 +1,44 @@
+concept_node:
+  id: "BINOMIAL-003"
+  concept_name: "二项式展开公式及其通项公式的推导"
+  domain: "binomial_theorem"
+  version: "9.1"
+  sub_topics:
+    - "二项式展开式的标准形式"
+    - "二项式通项公式 T_{r+1} 的结构"
+    - "展开式项数、次数与系数的特征"
+    - "赋值法在系数和问题中的应用"
+  llm_physical_mapping: "Imagine n identical boxes, each containing an apple (a) and a banana (b). You must select exactly one piece of fruit from each box. The expansion (a+b)^n represents all possible collections of n fruits you can form. Choosing 'a' from k boxes and 'b' from the remaining (n-k) boxes results in the term a^k b^{n-k}. The number of different ways to choose those k boxes out of n is exactly the combination C(n,k). Thus, the coefficient of each term is simply the number of distinct physical paths to arrive at that specific fruit combination."
+  code_implementation: |
+    import torch
+
+    def binomial_expand_pytorch(n):
+        # PyTorch expansion of polynomials iteratively
+        # Initial polynomial: (x + 1)^1 -> 1*x + 1
+        coeffs = torch.tensor([1.0, 1.0])
+        
+        if n == 0:
+            return torch.tensor([1.0])
+            
+        for _ in range(n - 1):
+            # Multiply by (x + 1)
+            shifted = torch.cat([torch.tensor([0.0]), coeffs])
+            original = torch.cat([coeffs, torch.tensor([0.0])])
+            coeffs = shifted + original
+            
+        return coeffs
+
+    print(f"(x+1)^4 coefficients: {binomial_expand_pytorch(4)}")
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      
+      a, b = sp.symbols('a b')
+      n = 4
+      expr = (a + b)**n
+      expanded = sp.expand(expr)
+      
+      print(expanded)
+      # Verify algebraic theorem using SymPy
+      term_coeff = expanded.coeff(a**2 * b**2)
+      assert term_coeff == sp.binomial(4, 2)

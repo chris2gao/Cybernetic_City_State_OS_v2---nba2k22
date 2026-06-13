@@ -1,0 +1,22 @@
+concept_node:
+  id: MAPPING-002
+  title: Strict Definition of a Function (函数的严格定义)
+  llm_physical_mapping: A function is a relation (matrix) where every row (element
+    in domain) has exactly one `1` (maps to exactly one element in codomain). It's
+    a deterministic forward pass.
+  code_implementation: "import torch\n\ndef is_valid_function(M: torch.Tensor) ->\
+    \ bool:\n    \"\"\"\n    Checks if a boolean relation matrix M forms a valid function.\n\
+    \    M is of shape (num_domain_elements, num_codomain_elements).\n    \"\"\"\n\
+    \    return torch.all(M.sum(dim=1) == 1).item()"
+  v8_sanity_audit:
+    sympy_pseudo_code: "def is_function(relation_set):\n    \"\"\"\n    Asserts that\
+      \ a set of tuples `f` satisfies the definition of a function.\n    No two tuples\
+      \ can have the same first element but different second elements.\n    \"\"\"\
+      \n    domain_map = {}\n    for x, y in relation_set:\n        if x in domain_map\
+      \ and domain_map[x] != y:\n            return False\n        domain_map[x] =\
+      \ y\n    return True"
+  sub_topics:
+  - 映射作为特殊二元关系的定义
+  - 定义域、陪域（到达域）与值域
+  - 像与原像的概念
+  - 恒等映射与常数映射

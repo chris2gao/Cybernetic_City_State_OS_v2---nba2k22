@@ -1,0 +1,52 @@
+concept_node:
+  id: "ALGEBRA-002"
+  concept_name: "绝对值与根式 (absolute_value_and_radicals) - 绝对值方程与绝对值不等式（三角不等式雏形） (n_108)"
+  sub_topics:
+    - "形如 |x|=a 与 |x-a|=b 的方程解法"
+    - "绝对值不等式的区域表示（大于取两边，小于取中间）"
+    - "绝对值三角不等式定理 |a+b| ≤ |a|+|b|"
+    - "含绝对值函数图像的对称性与折点分析"
+  llm_physical_mapping: |
+    mundane physical metaphor: Absolute value represents the physical distance from a reference point, ignoring direction. Imagine a stiff tape measure anchored at a target point (a); measuring exactly a distance 'b' gives two possible locations (a-b and a+b). Absolute value inequalities are like tolerance bounds in manufacturing: staying within a margin of error represents '< b' (within the tolerance zone), while being outside the acceptable zone represents '> b' (defective parts).
+  code_implementation: |
+    # PyTorch tensor inequality masks
+    import torch
+
+    # Absolute value inequality: |x - a| < b
+    x = torch.linspace(-10, 10, 100)
+    a, b = 2.0, 3.0
+    
+    # Distance from target
+    distance = torch.abs(x - a)
+    
+    # '<' Mask: inside the interval (a-b, a+b)
+    inside_mask = distance < b
+    valid_x_inside = x[inside_mask]
+
+    # '>' Mask: outside the interval (greater means take both sides)
+    outside_mask = distance > b
+    valid_x_outside = x[outside_mask]
+    
+    # Triangle inequality check: |x + y| <= |x| + |y|
+    y = torch.linspace(5, -5, 100)
+    lhs = torch.abs(x + y)
+    rhs = torch.abs(x) + torch.abs(y)
+    triangle_holds = torch.all(lhs <= (rhs + 1e-6))  # Add epsilon for float tolerance
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      from sympy import Symbol, Abs, solve, solve_univariate_inequality
+      
+      x = Symbol('x', real=True)
+      a, b = 2, 3
+      
+      # Equation: |x - a| = b
+      eq_solutions = solve(Abs(x - a) - b, x)
+      # Output: [-1, 5]
+      
+      # Inequality: |x - a| < b (Less than takes middle)
+      ineq_less = solve_univariate_inequality(Abs(x - a) < b, x)
+      # Output: (-1 < x) & (x < 5)
+      
+      # Inequality: |x - a| > b (Greater than takes sides)
+      ineq_greater = solve_univariate_inequality(Abs(x - a) > b, x)
+      # Output: (x < -1) | (5 < x)

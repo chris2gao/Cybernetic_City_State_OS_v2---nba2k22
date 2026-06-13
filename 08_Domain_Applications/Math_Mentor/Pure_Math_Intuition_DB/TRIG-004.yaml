@@ -1,0 +1,25 @@
+id: "TRIG-004"
+version: "9.1"
+name: "单位圆 - 消除奇迹步骤：单位圆作为“动态旋转机器”将三角函数解放为圆上动点坐标 (x=cosθ, y=sinθ) (n_165)"
+node_type: "concept"
+sub_topics:
+  - "单位圆的代数方程与几何特征"
+  - "三角函数线（正弦线、余弦线、正切线）"
+  - "任意角三角函数的通用坐标定义"
+  - "动点旋转与三角函数周期性的初步联系"
+llm_physical_mapping: "Mundane physical metaphor: spinning Ferris wheel. The unit circle acts as a dynamic rotation machine, where the height of a passenger cabin maps to the sine (y-coordinate) and the horizontal distance from the center maps to the cosine (x-coordinate)."
+code_implementation: |
+  import torch
+  
+  def unit_circle_position(theta_tensor):
+      # PyTorch coordinates [cos, sin]
+      return torch.stack([torch.cos(theta_tensor), torch.sin(theta_tensor)], dim=-1)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    theta = sp.Symbol('theta', real=True)
+    p = sp.Point(sp.cos(theta), sp.sin(theta))
+    
+    # Verify the point maps to the unit circle
+    assert sp.simplify(p.x**2 + p.y**2) == 1

@@ -1,0 +1,43 @@
+version: "9.1"
+id: "NUM_THEORY-002"
+concept_name: "整除与素数 - 整除的严格代数定义（若 a=bc，则 b|a）及其传递性推导 (n_196)"
+domain: "Number Theory"
+sub_topics:
+  - "整除的代数等式定义与符号表示"
+  - "整除关系的传递性证明"
+  - "整除关系的线性组合性质（a|b, a|c => a|mb+nc）"
+  - "带余除法（欧几里得除法）的基础逻辑"
+llm_physical_mapping: "mundane physical metaphor: stacking identical blocks exactly reaching a specific height with no remainder."
+code_implementation: |
+  import torch
+  
+  def is_divisible(a: torch.Tensor, b: torch.Tensor) -> torch.Tensor:
+      # PyTorch modulus operator a % b == 0
+      return a % b == 0
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    # a = bc => b|a
+    a = 12
+    b = 3
+    c = 4
+    assert a == b * c
+    assert a % b == 0
+    assert a % c == 0
+    
+    # Transitivity: if x|y and y|z then x|z
+    x = 2
+    y = 6
+    z = 18
+    assert y % x == 0
+    assert z % y == 0
+    assert z % x == 0
+    
+    # Linear combination: if a|b and a|c then a|(mb+nc)
+    a_val = 5
+    b_val = 15
+    c_val = 20
+    assert b_val % a_val == 0
+    assert c_val % a_val == 0
+    m = 2
+    n = 3
+    assert (m * b_val + n * c_val) % a_val == 0

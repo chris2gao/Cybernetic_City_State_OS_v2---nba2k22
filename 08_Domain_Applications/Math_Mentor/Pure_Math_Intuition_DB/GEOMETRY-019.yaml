@@ -1,0 +1,29 @@
+concept_node:
+  id: "GEOMETRY-019"
+  name: "坐标几何初步 - 两点间距离公式（勾股定理在坐标系上的翻译）"
+  sub_topics:
+    - "直角坐标系中水平与垂直距离的分量表示"
+    - "勾股定理向距离公式的代数转化"
+    - "两点间距离公式的代数表达式推导"
+    - "距离公式在判断多边形性质中的应用"
+  llm_physical_mapping: |
+    Mundane physical metaphor: Measuring the straight-line distance (as the crow flies) between two points in a city grid. The horizontal difference between the points corresponds to the east-west blocks (Δx), and the vertical difference corresponds to the north-south blocks (Δy). Applying the Pythagorean theorem to this right triangle formed by the city blocks gives the direct diagonal distance, analogous to the distance formula.
+  code_implementation: |
+    import torch
+
+    def compute_distance(point_a, point_b):
+        """
+        Calculate the L2 norm (Euclidean distance) between two vectors using PyTorch.
+        """
+        p1 = torch.tensor(point_a, dtype=torch.float32)
+        p2 = torch.tensor(point_b, dtype=torch.float32)
+        return torch.norm(p1 - p2, p=2).item()
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      from sympy.geometry import Point
+      
+      # sympy.geometry.Point.distance validation
+      p1 = Point(1, 2)
+      p2 = Point(4, 6)
+      dist = p1.distance(p2)
+      assert dist == 5

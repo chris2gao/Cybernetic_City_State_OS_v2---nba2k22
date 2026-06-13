@@ -1,0 +1,70 @@
+concept_node:
+  id: "MAPPING-006"
+  domain: "mappings_and_relations"
+  name: "逆映射 (Inverse mapping) (n_14)"
+  sub_topics:
+    - "逆映射的定义"
+    - "存在逆映射的充要条件（双射）"
+    - "左逆映射与单射的关系"
+    - "右逆映射与满射的关系"
+  llm_physical_mapping:
+    description: "想象一个储物柜系统（映射 f）。每个储物柜只能放一把特定的钥匙（定义域到值域的映射）。如果你知道钥匙编号（x），你可以找到对应的储物柜（f(x)）。逆映射就像是当你只知道储物柜编号（y）时，能够准确找回那把唯一的钥匙（f^{-1}(y)）。这只有在每个储物柜恰好对应一把钥匙，且所有储物柜都被使用（双射）时才能完美实现（既不重叠也不遗漏）。左逆映射就像是即使有些柜子空着（不满足满射），但只要每把钥匙对应的柜子不重叠（单射），你依然可以通过放着钥匙的柜子找回它。右逆映射就像是即使一把钥匙能开多个柜子（不满足单射），只要每个柜子都至少能被一把钥匙打开（满射），对于任意一个柜子你总能找出一把对应的钥匙。"
+  code_implementation:
+    language: python
+    code: |
+      import torch
+      
+      def is_bijective(mapping_matrix):
+          """
+          mapping_matrix is a boolean tensor of shape (N, M) 
+          where mapping_matrix[i, j] = True iff f(x_i) = y_j
+          N is size of domain, M is size of codomain.
+          """
+          # Check if mapping is valid (each x maps to exactly one y)
+          is_valid = torch.all(mapping_matrix.sum(dim=1) == 1)
+          
+          # Check injective: each y has at most one x mapped to it
+          injective = torch.all(mapping_matrix.sum(dim=0) <= 1)
+          
+          # Check surjective: each y has at least one x mapped to it
+          surjective = torch.all(mapping_matrix.sum(dim=0) >= 1)
+          
+          return is_valid and injective and surjective
+          
+      def get_inverse_mapping(mapping_matrix):
+          """
+          Returns the inverse mapping matrix if the original mapping is bijective.
+          For a relation matrix representing a bijection, the inverse is simply its transpose.
+          """
+          if not is_bijective(mapping_matrix):
+              raise ValueError("Mapping must be bijective to have a well-defined unique inverse.")
+          return mapping_matrix.T
+          
+      # Example: A bijective mapping between domain of 3 elements and codomain of 3 elements
+      # f(x0)=y1, f(x1)=y2, f(x2)=y0
+      f = torch.tensor([
+          [False, True,  False],
+          [False, False, True ],
+          [True,  False, False]
+      ])
+      
+      f_inv = get_inverse_mapping(f)
+      print("Inverse mapping matrix (f_inv):\n", f_inv)
+      # f_inv(y0)=x2, f_inv(y1)=x0, f_inv(y2)=x1
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      from sympy import Symbol, Implies, Equivalent
+      from sympy.logic.boolalg import And, Or
+      
+      left_inverse_def = Symbol('left_inverse_def')
+      right_inverse_def = Symbol('right_inverse_def')
+      is_injective = Symbol('is_injective')
+      is_surjective = Symbol('is_surjective')
+      
+      # Bijective: both injective and surjective
+      is_bijective = And(is_injective, is_surjective)
+      
+      # Key Theorems formalized conceptually:
+      # Left inverse exists <-> f is injective
+      # Right inverse exists <-> f is surjective
+      # Inverse (two-sided) exists <-> f is bijective

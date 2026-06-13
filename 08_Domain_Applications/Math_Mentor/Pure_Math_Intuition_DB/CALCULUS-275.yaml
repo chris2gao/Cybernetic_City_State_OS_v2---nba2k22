@@ -1,0 +1,25 @@
+id: "CALCULUS-275"
+concept_name: "微积分基本定理 - 牛顿-莱布尼茨公式 (Newton-Leibniz Formula)：∫a^b f(x) dx = F(b) - F(a) (n_275)"
+sub_topics:
+  - "变限积分函数的导数证明"
+  - "公式连接局部变化与全局累积的纽带作用"
+  - "定积分计算的代数化跃迁"
+  - "历史上微积分独立发现的证据"
+llm_physical_mapping: "Calculating a bank account's growth by subtracting the start-of-month balance from the end-of-month balance, instead of adding up every single transaction in between."
+code_implementation: |
+  import sympy as sp
+  x = sp.Symbol('x')
+  a, b = sp.symbols('a b')
+  f = 3 * x**2
+  F = sp.integrate(f, x)
+  # Newton-Leibniz: F(b) - F(a)
+  definite_integral = F.subs(x, b) - F.subs(x, a)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x, a, b = sp.symbols('x a b')
+    f = 3 * x**2
+    F = sp.integrate(f, x)
+    nl_eval = F.subs(x, b) - F.subs(x, a)
+    direct_int = sp.integrate(f, (x, a, b))
+    assert sp.simplify(nl_eval - direct_int) == 0

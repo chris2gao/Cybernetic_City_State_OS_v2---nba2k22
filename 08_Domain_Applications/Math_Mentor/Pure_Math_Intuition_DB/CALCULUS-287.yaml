@@ -1,0 +1,50 @@
+id: "CALCULUS-287"
+concept_name: "曲线/曲面积分 - 第一/第二类曲面积分：穿过曲面的“流体通量”物理意义 (n_287)"
+sub_topics:
+  - "第一类曲面积分：对面积的积分 (曲面质量、面积)"
+  - "第二类曲面积分：对坐标的积分 (流体通量)"
+  - "曲面定向与侧的概念"
+  - "两类曲面积分的参数化计算方法"
+llm_physical_mapping: "mundane physical metaphor: holding a fishing net in a flowing river. First-kind integral calculates the amount of netting material used; second-kind integral calculates the volume of water flowing through the net per second."
+code_implementation: |
+  import sympy as sp
+  
+  u, v = sp.symbols('u v')
+  # Parametric surface: Sphere x=sin(u)cos(v), y=sin(u)sin(v), z=cos(u)
+  x = sp.sin(u) * sp.cos(v)
+  y = sp.sin(u) * sp.sin(v)
+  z = sp.cos(u)
+  
+  r = sp.Matrix([x, y, z])
+  ru = r.diff(u)
+  rv = r.diff(v)
+  normal = ru.cross(rv)
+  
+  dS = normal.norm()
+  # First kind: surface area
+  area_integrand = sp.simplify(dS)
+  
+  # Second kind: Flux of vector field F=(x, y, z)
+  F = sp.Matrix([x, y, z])
+  flux_integrand = sp.simplify(F.dot(normal))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    u, v = sp.symbols('u v', real=True, positive=True)
+    x = sp.sin(u) * sp.cos(v)
+    y = sp.sin(u) * sp.sin(v)
+    z = sp.cos(u)
+    
+    r = sp.Matrix([x, y, z])
+    ru = r.diff(u)
+    rv = r.diff(v)
+    normal = ru.cross(rv)
+    
+    # Vector field F = r
+    F = sp.Matrix([x, y, z])
+    flux_density = sp.trigsimp(F.dot(normal))
+    
+    # For a unit sphere, normal vector points outward and F.n = 1 * |r_u x r_v|
+    # Since we parameterize with u (colatitude) and v (longitude), |r_u x r_v| = sin(u)
+    assert sp.simplify(flux_density - sp.sin(u)) == 0

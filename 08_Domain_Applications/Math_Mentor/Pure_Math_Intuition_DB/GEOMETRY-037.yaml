@@ -1,0 +1,50 @@
+concept_node:
+  id: "GEOMETRY-037"
+  title: "几何变换（平移/旋转/反射/缩放） - 变换的复合（洋葱模型的执行栈：顺序对结果的影响）"
+  sub_topics:
+    - "复合变换的执行顺序与逻辑栈"
+    - "变换组合的非交换性（先移后转 vs 先转后移）"
+    - "复合变换的简化（多个平移合并为单一平移）"
+    - "滑动反射（Glide Reflection）等复合形式"
+  llm_physical_mapping: "Mundane physical metaphor: the order of operations in getting dressed (putting on socks then shoes is different from shoes then socks) or moving furniture (translating to a corner then rotating vs rotating then translating to a corner)."
+  code_implementation: |
+    import torch
+    import math
+
+    # Translation matrix (homogeneous coordinates for 2D)
+    T = torch.tensor([
+        [1.0, 0.0, 2.0],
+        [0.0, 1.0, 3.0],
+        [0.0, 0.0, 1.0]
+    ])
+
+    # Rotation matrix (90 degrees)
+    theta = math.pi / 2
+    cos_t = math.cos(theta)
+    sin_t = math.sin(theta)
+    R = torch.tensor([
+        [cos_t, -sin_t, 0.0],
+        [sin_t,  cos_t, 0.0],
+        [0.0,    0.0,   1.0]
+    ])
+
+    # T @ R: Rotate first, then translate
+    TR = T @ R
+
+    # R @ T: Translate first, then rotate
+    RT = R @ T
+
+    print("Non-commutativity shown by T @ R != R @ T")
+    print("Are matrices equal?", torch.allclose(TR, RT))
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      
+      tx, ty, theta = sp.symbols('tx ty theta')
+      T = sp.Matrix([[1, 0, tx], [0, 1, ty], [0, 0, 1]])
+      R = sp.Matrix([[sp.cos(theta), -sp.sin(theta), 0], [sp.sin(theta), sp.cos(theta), 0], [0, 0, 1]])
+      
+      TR = T * R
+      RT = R * T
+      diff = sp.simplify(TR - RT)
+      # diff is non-zero, proving non-commutativity

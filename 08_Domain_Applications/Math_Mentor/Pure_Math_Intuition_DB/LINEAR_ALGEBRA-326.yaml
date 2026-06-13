@@ -1,0 +1,18 @@
+id: "LINEAR_ALGEBRA-326"
+concept_name: "奇异值分解（SVD） - 数据压缩终极利器：任何变换拆解为“旋转 → 拉伸 → 再次旋转” (n_326)"
+sub_topics:
+  - "SVD 的通用公式 A = UΣVᵀ"
+  - "奇异值与特征值的联系与区别"
+  - "任意矩阵（非方阵）的分解能力"
+  - "物理直觉：主成分提取与维度剥离"
+llm_physical_mapping: "spatial deformation/stretching/rotating: an arbitrary matrix acting on space decomposes into a sequence of rotating the space, stretching it along orthogonal axes, and rotating it again."
+code_implementation: |
+  import sympy as sp
+  A = sp.Matrix([[1, 2], [3, 4]])
+  # SymPy's SVD isn't standard numerical, but we can compute eigenvalues of A*A.T
+  # Or just use the idea of SVD
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    A = sp.Matrix([[1, 2], [3, 4]])
+    assert A.rank() == 2

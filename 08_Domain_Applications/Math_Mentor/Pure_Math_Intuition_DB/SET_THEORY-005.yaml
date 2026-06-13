@@ -1,0 +1,56 @@
+concept_node:
+  id: "SET_THEORY-005"
+  domain: "set_operations"
+  sub_topics: ['两个集合的容斥原理', '三个集合的容斥原理', '多集合的推广公式', '在计数问题中的应用']
+  llm_physical_mapping: "Imagine hosting a party and inviting guests from two different social clubs: Club A and Club B. If you count the guests from Club A and add the guests from Club B, you will double-count the people who belong to both clubs. To get the accurate number of unique guests, you must subtract the number of people who are in both clubs (the intersection)."
+  code_implementation: |
+    import torch
+
+    def test_inclusion_exclusion():
+        # Universe of 10 elements, simulated with boolean masks
+        A = torch.tensor([1, 1, 1, 1, 1, 0, 0, 0, 0, 0], dtype=torch.bool) # |A| = 5
+        B = torch.tensor([0, 0, 0, 1, 1, 1, 1, 0, 0, 0], dtype=torch.bool) # |B| = 4
+        C = torch.tensor([0, 0, 0, 0, 1, 1, 1, 1, 1, 0], dtype=torch.bool) # |C| = 5
+        
+        # Inclusion-Exclusion for 2 sets (A, B)
+        # |A ∪ B| = |A| + |B| - |A ∩ B|
+        size_A, size_B, size_C = A.sum(), B.sum(), C.sum()
+        intersection_AB = (A & B).sum()
+        union_AB_formula = size_A + size_B - intersection_AB
+        union_AB_actual = (A | B).sum()
+        assert union_AB_formula == union_AB_actual
+        
+        # Inclusion-Exclusion for 3 sets (A, B, C)
+        # |A ∪ B ∪ C| = |A| + |B| + |C| - |A ∩ B| - |A ∩ C| - |B ∩ C| + |A ∩ B ∩ C|
+        int_AC = (A & C).sum()
+        int_BC = (B & C).sum()
+        int_ABC = (A & B & C).sum()
+        
+        union_ABC_formula = size_A + size_B + size_C - intersection_AB - int_AC - int_BC + int_ABC
+        union_ABC_actual = (A | B | C).sum()
+        assert union_ABC_formula == union_ABC_actual
+        
+        return union_ABC_formula.item()
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      from sympy import FiniteSet, Union, Intersection
+
+      def verify_inclusion_exclusion_sympy():
+          A = FiniteSet(1, 2, 3, 4, 5)
+          B = FiniteSet(4, 5, 6, 7)
+          C = FiniteSet(5, 6, 7, 8, 9)
+
+          union_AB = Union(A, B)
+          union_ABC = Union(A, B, C)
+          
+          # 2 Sets Formula: |A ∪ B| = |A| + |B| - |A ∩ B|
+          formula_AB = len(A) + len(B) - len(Intersection(A, B))
+          assert len(union_AB) == formula_AB
+          
+          # 3 Sets Formula: |A ∪ B ∪ C| = |A| + |B| + |C| - |A ∩ B| - |A ∩ C| - |B ∩ C| + |A ∩ B ∩ C|
+          formula_ABC = (len(A) + len(B) + len(C) 
+                         - len(Intersection(A, B)) 
+                         - len(Intersection(A, C)) 
+                         - len(Intersection(B, C)) 
+                         + len(Intersection(A, B, C)))
+          assert len(union_ABC) == formula_ABC

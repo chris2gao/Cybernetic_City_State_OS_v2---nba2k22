@@ -1,0 +1,27 @@
+id: "DISCRETE-249"
+concept_name: "关系的性质（自反/对称/传递/反对称） - 关系矩阵 (Relation Matrix) 的布尔乘法与关系图表示 (n_249)"
+sub_topics:
+  - "关系矩阵的布尔积运算法则"
+  - "复合关系在矩阵中的乘法映射"
+  - "关系图中的通路与矩阵幂次的关系"
+  - "矩阵稀疏性对存储与计算的影响"
+llm_physical_mapping: "mundane physical metaphor: a grid of light switches representing one-way roads between cities. Multiplying the matrix by itself is like asking 'if I drive exactly two segments, where can I reach?' and flipping a light switch ON if there's any valid two-step path."
+code_implementation: |
+  def boolean_matrix_multiply(A, B):
+      n = len(A)
+      result = [[0]*n for _ in range(n)]
+      for i in range(n):
+          for j in range(n):
+              for k in range(n):
+                  result[i][j] |= (A[i][k] and B[k][j])
+      return result
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    from sympy import Matrix
+    
+    # Define a boolean relation matrix
+    A = Matrix([[0, 1], [1, 0]])
+    # Boolean multiplication mapping paths of length 2
+    A_squared = A * A
+    assert A_squared[0, 0] == 1
+    assert A_squared[0, 1] == 0

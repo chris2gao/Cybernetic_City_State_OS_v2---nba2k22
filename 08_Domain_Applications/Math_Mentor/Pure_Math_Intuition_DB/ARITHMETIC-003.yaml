@@ -1,0 +1,60 @@
+concept_node:
+  id: "ARITHMETIC-003"
+  type: "math_concept"
+  title: "运算优先级法则 (BODMAS/PEMDAS) 的逻辑基础 (n_56)"
+  domain: "integer_arithmetic"
+  sub_topics:
+    - "括号提升运算层级的逻辑"
+    - "乘除先于加减的结构性原因（重复加法理论）"
+    - "幂运算的优先级定位"
+    - "同级运算自左向右的执行约定"
+  llm_physical_mapping: "Think of an assembly line where operations are physical packaging steps. Addition/subtraction are loose items on the belt. Multiplication/division are pre-packaged boxes of items. Exponents are shipping containers full of boxes. You must unpack the containers (exponents) first, then the boxes (multiplication), before counting the loose items together (addition). Parentheses act as priority 'VIP' envelopes that must be opened and resolved before interacting with the rest of the conveyor belt, forcing an immediate sub-assembly regardless of the normal packaging hierarchy."
+  code_implementation: |
+    import ast
+    import operator
+
+    # A hierarchical evaluation simulation highlighting order of operations
+    def evaluate_math_ast(expression: str):
+        operators = {
+            ast.Add: operator.add,
+            ast.Sub: operator.sub,
+            ast.Mult: operator.mul,
+            ast.Div: operator.truediv,
+            ast.Pow: operator.pow,
+        }
+
+        def eval_node(node, depth=0):
+            indent = "  " * depth
+            if isinstance(node, ast.Expression):
+                return eval_node(node.body, depth)
+            elif isinstance(node, ast.BinOp):
+                print(f"{indent}Evaluating {type(node.op).__name__} operation...")
+                left = eval_node(node.left, depth + 1)
+                right = eval_node(node.right, depth + 1)
+                result = operators[type(node.op)](left, right)
+                print(f"{indent}Result of {left} {type(node.op).__name__} {right} = {result}")
+                return result
+            elif isinstance(node, ast.Constant):
+                print(f"{indent}Leaf node value: {node.value}")
+                return node.value
+            else:
+                raise TypeError(node)
+
+        tree = ast.parse(expression, mode='eval')
+        return eval_node(tree)
+
+    # Calling evaluate_math_ast("2 + 3 * (4 - 1)") will output the hierarchical resolution order.
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      from sympy import sympify, srepr
+      
+      # Parsing mathematical expression into a structured execution tree
+      expr = sympify("2 + 3 * (4 ** 2 - 1)")
+      
+      # The internal representation reveals the priority structure
+      # PEMDAS is encoded as a nested tree where deeper nodes are evaluated first
+      print("Expression:", expr)
+      print("AST Tree Representation:", srepr(expr))
+      
+      # Output shows Add(2, Mul(3, Add(Pow(4, 2), -1)))
+      # Parentheses enforced the Add(Pow, -1) to be evaluated before Mul

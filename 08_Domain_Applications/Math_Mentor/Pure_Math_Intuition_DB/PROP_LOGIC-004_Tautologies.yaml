@@ -1,0 +1,77 @@
+concept_node:
+  node_meta:
+    version: '9.1'
+    id: PROP_LOGIC-004
+    title: Tautologies and Contradictions (永真式与矛盾式)
+    domain: Propositional Logic
+  llm_physical_mapping:
+    description: Tautologies represent states that are unconditionally true across
+      all possible configurations, mapped to a tensor of all 1s (True). Contradictions
+      are states that are unconditionally false, mapped to a tensor of all 0s (False).
+    tensor_representation:
+      tautology: torch.ones(size, dtype=torch.bool)
+      contradiction: torch.zeros(size, dtype=torch.bool)
+  code_implementation:
+    language: python
+    framework: pytorch
+    code: 'import torch
+
+
+      # Define all possible truth values for P
+
+      P = torch.tensor([True, False], dtype=torch.bool)
+
+
+      # Tautology: P or not P (P ∨ ¬P)
+
+      tautology_tensor = P | ~P
+
+
+      # Contradiction: P and not P (P ∧ ¬P)
+
+      contradiction_tensor = P & ~P
+
+
+      # Check properties using torch.all() and torch.any()
+
+      # A tautology is True for all assignments
+
+      is_tautology = torch.all(tautology_tensor).item()
+
+
+      # A contradiction is False for all assignments (so any() is False)
+
+      is_contradiction = not torch.any(contradiction_tensor).item()
+
+
+      print(f"Tautology tensor: {tautology_tensor}, Is tautology? {is_tautology}")
+
+      print(f"Contradiction tensor: {contradiction_tensor}, Is contradiction? {is_contradiction}")
+
+      '
+  v8_sanity_audit:
+    sympy_pseudo_code: 'from sympy.abc import P
+
+      from sympy.logic.boolalg import Or, And, Not
+
+
+      # Define the logical expressions
+
+      tautology_expr = Or(P, Not(P))
+
+      contradiction_expr = And(P, Not(P))
+
+
+      # Evaluate and assert
+
+      assert tautology_expr.simplify() == True, "Expression must simplify to True
+      (Tautology)"
+
+      assert contradiction_expr.simplify() == False, "Expression must simplify to
+      False (Contradiction)"
+
+      '
+  sub_topics:
+  - 永真式（重言式）的定义与判定
+  - 矛盾式的定义与判定
+  - 可满足式与逻辑蕴含

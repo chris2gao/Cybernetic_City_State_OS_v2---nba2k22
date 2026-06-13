@@ -1,0 +1,30 @@
+id: "ANALYTIC_GEO-389"
+concept_name: "空间曲线与曲面的参数化 - 参数化表达空间复杂形状的方法 (n_389)"
+sub_topics:
+  - "第一基本形式与第二基本形式初步"
+  - "曲面参数化的坐标网格与曲面积分"
+  - "曲线的弧长参数化 (Arc-length Parameterization)"
+  - "在计算机辅助设计 (CAD) 中的几何建模应用"
+llm_physical_mapping: "mundane physical metaphor: Think of parameterizing a surface like wrapping a flat sheet of grid paper around a globe or a vase. The math maps each grid intersection (u, v) from the flat paper to a specific 3D coordinate (x, y, z) in space, acting like a GPS coordinate system plastered onto a curved object."
+code_implementation: |
+  import sympy as sp
+  
+  def sphere_parameterization(u, v, r):
+      # u: azimuthal angle, v: polar angle
+      x = r * sp.sin(v) * sp.cos(u)
+      y = r * sp.sin(v) * sp.sin(u)
+      z = r * sp.cos(v)
+      return sp.Matrix([x, y, z])
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    u, v = sp.symbols('u v')
+    r = 1
+    x = r * sp.sin(v) * sp.cos(u)
+    y = r * sp.sin(v) * sp.sin(u)
+    z = r * sp.cos(v)
+    
+    # Check that x^2 + y^2 + z^2 = r^2
+    radius_squared = sp.simplify(x**2 + y**2 + z**2)
+    assert radius_squared == 1

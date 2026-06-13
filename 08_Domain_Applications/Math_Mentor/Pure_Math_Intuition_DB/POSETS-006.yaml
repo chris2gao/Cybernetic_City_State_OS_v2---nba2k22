@@ -1,0 +1,67 @@
+concept_node:
+  id: "POSETS-006"
+  concept_name: "分配格与有界格 (Distributive and Bounded Lattices)"
+  domain: "posets_and_lattices"
+  sub_topics:
+    - "分配格的定义与判别准则"
+    - "有界格的定义（全上界与全下界）"
+    - "余格与补元的概念"
+    - "布尔格的基本特征"
+    - "模格与分配格的关系"
+  llm_physical_mapping:
+    metaphor: "A multi-tiered water filtration system."
+    mapping: |
+      - Universal Bounds: The top is the raw water inlet (universal upper bound, 1), and the bottom is the final pure water outlet (universal lower bound, 0).
+      - Distributivity: Splitting the water flow through two parallel filters and then combining them (A ∧ (B ∨ C)) yields the exact same water quality as combining the flow from two parallel setups where the water is split first ( (A ∧ B) ∨ (A ∧ C) ). The order of mixing and filtering distributes perfectly without introducing new impurities or losing paths.
+      - Complements: For any filter stage, there is an exact opposite filter (complement) such that running water through both parallelly covers everything (union is the whole inlet) and running water through both sequentially stops everything (intersection is the empty outlet).
+  code_implementation:
+    language: "python"
+    framework: "pytorch"
+    description: "PyTorch boolean tensor operations to simulate distributive lattice properties."
+    code: |
+      import torch
+
+      def check_distributivity(a, b, c):
+          # In a boolean lattice (which is distributive), logical AND and OR serve as meet and join.
+          # a ^ (b v c) == (a ^ b) v (a ^ c)
+          lhs = torch.logical_and(a, torch.logical_or(b, c))
+          rhs = torch.logical_or(torch.logical_and(a, b), torch.logical_and(a, c))
+          
+          # a v (b ^ c) == (a v b) ^ (a v c)
+          lhs_dual = torch.logical_or(a, torch.logical_and(b, c))
+          rhs_dual = torch.logical_and(torch.logical_or(a, b), torch.logical_or(a, c))
+          
+          return torch.all(lhs == rhs).item(), torch.all(lhs_dual == rhs_dual).item()
+
+      # Example with random boolean tensors
+      a = torch.randint(0, 2, (5,), dtype=torch.bool)
+      b = torch.randint(0, 2, (5,), dtype=torch.bool)
+      c = torch.randint(0, 2, (5,), dtype=torch.bool)
+
+      dist1, dist2 = check_distributivity(a, b, c)
+      print(f"Meet distributes over join: {dist1}")
+      print(f"Join distributes over meet: {dist2}")
+
+      # Universal bounds
+      top = torch.ones((5,), dtype=torch.bool)
+      bottom = torch.zeros((5,), dtype=torch.bool)
+      print(f"a AND top = a: {torch.all(torch.logical_and(a, top) == a).item()}")
+      print(f"a OR bottom = a: {torch.all(torch.logical_or(a, bottom) == a).item()}")
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy
+      from sympy.logic.boolalg import And, Or
+
+      # Define symbols for lattice elements
+      a, b, c = sympy.symbols('a b c')
+
+      # Check distributivity
+      # a ^ (b v c) = (a ^ b) v (a ^ c)
+      expr1 = And(a, Or(b, c))
+      expr2 = Or(And(a, b), And(a, c))
+      
+      # Simplify the equivalence
+      equiv = sympy.Equivalent(expr1, expr2)
+      is_distributive = sympy.simplify_logic(equiv)
+      
+      print(f"Distributive law holds: {is_distributive}")

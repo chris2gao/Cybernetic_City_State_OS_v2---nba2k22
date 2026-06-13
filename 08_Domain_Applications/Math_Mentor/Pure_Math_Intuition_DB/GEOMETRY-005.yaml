@@ -1,0 +1,91 @@
+concept_node:
+  v9_1_metadata:
+    id: "GEOMETRY-005"
+    type: "math_concept_node"
+    version: "9.1"
+    name: "三角形内角和为 180° 的证明"
+  
+  description: >
+    三角形内角和为 180° 的证明（依赖平行线性质，禁止天降结论）。
+
+  sub_topics:
+    - "平行线的构造与交角转化"
+    - "内错角与同位角在三角形顶点处的拼合"
+    - "平角(180°)与内角和的等价"
+    - "球面三角形内角和大于180度的对比启发"
+  
+  llm_physical_mapping:
+    metaphor: "Folding the three corners of a paper triangle into a straight edge."
+    description: >
+      Imagine cutting out a paper triangle and folding its three corners inwards so their vertices meet at a single point on one of the edges. The three angles together form a straight line, providing a visceral, tactile intuition that their sum exactly equals a straight angle (180°). This physical process mirrors the abstract geometric proof of constructing a parallel line through a vertex.
+  
+  code_implementation:
+    language: "python"
+    framework: "pytorch"
+    description: "PyTorch verifying angles summing to pi."
+    code: |
+      import torch
+      import math
+
+      def verify_triangle_angle_sum():
+          # Define coordinates of a triangle vertices
+          A = torch.tensor([0.0, 0.0], dtype=torch.float64)
+          B = torch.tensor([3.0, 0.0], dtype=torch.float64)
+          C = torch.tensor([0.0, 4.0], dtype=torch.float64)
+
+          # Calculate directional vectors representing the edges
+          v_AB = B - A
+          v_AC = C - A
+          v_BA = A - B
+          v_BC = C - B
+          v_CA = A - C
+          v_CB = B - C
+
+          # Helper function to compute the angle between two vectors using dot product
+          def get_angle(v1, v2):
+              cos_theta = torch.dot(v1, v2) / (torch.norm(v1) * torch.norm(v2))
+              # Clamp for numerical stability to avoid NaNs in acos
+              cos_theta = torch.clamp(cos_theta, -1.0, 1.0)
+              return torch.acos(cos_theta)
+
+          # Compute the interior angles
+          angle_A = get_angle(v_AB, v_AC)
+          angle_B = get_angle(v_BA, v_BC)
+          angle_C = get_angle(v_CA, v_CB)
+
+          # Calculate their sum
+          angle_sum = angle_A + angle_B + angle_C
+          
+          # Verify sum is approximately pi
+          assert torch.isclose(angle_sum, torch.tensor(math.pi, dtype=torch.float64), atol=1e-5), "Angles do not sum to pi!"
+          return angle_sum.item()
+
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      from sympy.geometry import Point, Triangle
+
+      def verify_triangle_sum_sympy():
+          # Create symbolic points for a general triangle
+          x1, y1, x2, y2, x3, y3 = sp.symbols('x1 y1 x2 y2 x3 y3')
+          p1 = Point(x1, y1)
+          p2 = Point(x2, y2)
+          p3 = Point(x3, y3)
+          
+          # Try with a concrete triangle first to demonstrate the property
+          # since symbolic simplification of acos can be complex
+          p_a = Point(0, 0)
+          p_b = Point(3, 0)
+          p_c = Point(0, 4)
+          
+          t = Triangle(p_a, p_b, p_c)
+          
+          # Get interior angles (returned as a dictionary of {Point: angle})
+          angles_dict = t.angles
+          
+          # Sum of the angles
+          angle_sum = sum(angles_dict.values())
+          
+          # Verify the sum simplifies exactly to pi
+          assert sp.simplify(angle_sum - sp.pi) == 0, "Sum of angles in sympy triangle is not pi"
+          return angle_sum

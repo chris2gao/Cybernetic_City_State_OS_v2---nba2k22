@@ -1,0 +1,20 @@
+id: "CALCULUS-295"
+concept_name: "反常积分（广义积分） - 概率密度函数在全空间积分必须为 1 的物理约束映射 (n_295)"
+sub_topics:
+  - "概率公理在连续空间的积分表达"
+  - "归一化常数的计算逻辑"
+  - "积分收敛性与概率分布存在性的关系"
+  - "在全域空间内质量（概率）守恒的物理直觉"
+llm_physical_mapping: "mundane physical metaphor: rolling out a lump of dough over an infinite table; no matter how thin it gets, the total amount of dough remains exactly one lump."
+code_implementation: |
+  import sympy as sp
+  x = sp.Symbol('x', real=True)
+  sigma, mu = sp.symbols('sigma mu', positive=True, real=True)
+  pdf = (1/(sigma * sp.sqrt(2*sp.pi))) * sp.exp(-0.5 * ((x - mu)/sigma)**2)
+  integral_val = sp.integrate(pdf, (x, -sp.oo, sp.oo))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.Symbol('x', real=True)
+    pdf = sp.exp(-x**2/2) / sp.sqrt(2*sp.pi)
+    assert sp.integrate(pdf, (x, -sp.oo, sp.oo)) == 1

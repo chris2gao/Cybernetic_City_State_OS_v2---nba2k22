@@ -1,0 +1,34 @@
+id: "NUM_THEORY-001"
+concept_name: "整除与素数 - 发生学溯源：寻找构成所有数字的“不可分割的物理原子” (n_195)"
+version: "9.1"
+sub_topics:
+  - "自然数的乘法分解概念"
+  - "素数作为整数构建单元的原子性"
+  - "历史视角的数论起源：毕达哥拉斯与欧几里得"
+  - "不可约性与素性概念的区分"
+llm_physical_mapping: "Lego blocks where primes are the 1x1 base pieces. Composite numbers are structures built by snapping these prime pieces together (multiplication). Factorization is the process of breaking the structure down into its 1x1 fundamental building blocks."
+code_implementation: |
+  import torch
+
+  def basic_sieve(limit: int) -> torch.Tensor:
+      # PyTorch algorithm representing a basic sieve
+      if limit < 2:
+          return torch.empty(0, dtype=torch.long)
+      is_prime = torch.ones(limit + 1, dtype=torch.bool)
+      is_prime[0] = is_prime[1] = False
+      for p in range(2, int(limit**0.5) + 1):
+          if is_prime[p]:
+              is_prime[p*p:limit+1:p] = False
+      return torch.nonzero(is_prime, as_tuple=False).view(-1)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy
+    
+    # Check primality
+    assert sympy.isprime(7) is True
+    assert sympy.isprime(12) is False
+    
+    # Check factorint (prime decomposition)
+    # 60 = 2^2 * 3^1 * 5^1
+    assert sympy.factorint(60) == {2: 2, 3: 1, 5: 1}
+    assert sympy.factorint(17) == {17: 1}

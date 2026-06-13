@@ -1,0 +1,24 @@
+id: "CALCULUS-276"
+concept_name: "微积分基本定理 - 认知流形大统一：证明动态瞬间变化率（导数）与静态历史累积量（积分）互为逆运算 (n_276)"
+sub_topics:
+  - "导数与积分的运算对称性"
+  - "互逆关系的严格证明链条"
+  - "这一发现在自然科学中的革命性意义"
+  - "微积分工具箱的闭环构建"
+llm_physical_mapping: "Zipping up a jacket (integral accumulation) and unzipping it (derivative subtraction) are perfect reverse operations on the same zipper track."
+code_implementation: |
+  import sympy as sp
+  t, x = sp.symbols('t x')
+  f = sp.sin(t)
+  # F(x) = int_0^x f(t) dt
+  F = sp.integrate(f, (t, 0, x))
+  # dF/dx should yield f(x)
+  derivative_of_integral = sp.diff(F, x)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    t, x = sp.symbols('t x')
+    f = sp.sin(t)
+    F = sp.integrate(f, (t, 0, x))
+    # Fundamental Theorem of Calculus: d/dx \int_0^x f(t)dt = f(x)
+    assert sp.simplify(sp.diff(F, x) - f.subs(t, x)) == 0

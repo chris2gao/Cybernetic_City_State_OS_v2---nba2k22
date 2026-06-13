@@ -1,0 +1,38 @@
+id: "DISCRETE-255"
+concept_name: "算法复杂度基础（大O表示法） - O (上界)、Ω (下界)、Θ (紧确界) 的严格微积分极限定义 (n_255)"
+sub_topics:
+  - "大 O 的数学严格定义（存在 c 和 n0）"
+  - "紧确界 Θ 的双侧逼近含义"
+  - "利用极限方法判断复杂度等级"
+  - "常见算法（排序、搜索）的复杂度对照"
+llm_physical_mapping: "mundane physical metaphor: Fitting a flexible pipe into a tunnel. O (Big-O) is the ceiling height the pipe never exceeds. Ω (Omega) is the floor the pipe never drops below. Θ (Theta) means the pipe is sandwiched tightly between the floor and ceiling forever."
+code_implementation: |
+  def is_bounded(f_values, g_values, c, n_0):
+      # Checks if f(n) <= c * g(n) for all n >= n_0
+      for i in range(n_0, len(f_values)):
+          if f_values[i] > c * g_values[i]:
+              return False
+      return True
+
+  n_vals = range(1, 100)
+  f_n = [2 * n + 5 for n in n_vals]
+  g_n = [n for n in n_vals]
+  
+  # Finding a c where f(n) <= c * g(n) for n >= 5
+  c_upper = 3
+  n_zero = 5
+  print("Is f(n) in O(n)?", is_bounded(f_n, g_n, c_upper, n_zero))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy
+    from sympy.abc import n
+    
+    f = 2*n + 5
+    g = n
+    
+    # Big-O: Limit of f/g as n->oo is finite
+    limit_upper = sympy.limit(f / g, n, sympy.oo)
+    assert limit_upper == 2 # Finite constant > 0 means it's strictly Theta(n), thus also O(n) and Omega(n)
+    
+    # Check Big-O expansion
+    assert sympy.O(f, (n, sympy.oo)) == sympy.O(g, (n, sympy.oo))

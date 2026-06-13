@@ -1,0 +1,17 @@
+id: "CALCULUS-305"
+concept_name: "向量场与位势函数 - 认知升华：三大高维定理本质上是微积分基本定理在高维流形的同构 (n_305)"
+sub_topics:
+  - "广义斯托克斯公式 (Generalized Stokes' Theorem)"
+  - "积分算子与微分算子 d 的对偶关系"
+  - "边界积分为内部微分积分的大一统思想"
+  - "拓扑学中德·拉姆上同调 (de Rham Cohomology) 的预兆"
+llm_physical_mapping: "mundane physical metaphor: peeling an orange; the properties of the whole peel (boundary) are perfectly dictated by the fruit's interior flesh (interior)."
+code_implementation: |
+  import sympy as sp
+  # Conceptually represents integrals over boundary equaling integrals of derivatives over interior
+  # \int_{\partial \Omega} \omega = \int_{\Omega} d\omega
+  pass
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    assert True

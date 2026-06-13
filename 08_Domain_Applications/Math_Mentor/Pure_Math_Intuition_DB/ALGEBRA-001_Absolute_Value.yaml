@@ -1,0 +1,26 @@
+concept_node:
+  id: "ALGEBRA-001"
+  name: "绝对值与根式 (absolute_value_and_radicals) - 绝对值的几何意义（数轴上的物理距离） (n_107)"
+  sub_topics:
+    - "数轴上点到原点的距离定义 |x|"
+    - "数轴上两点间距离公式 |a-b|"
+    - "绝对值的非负性及其几何解释"
+    - "零点分段法在处理多个绝对值时的应用"
+  llm_physical_mapping: "mundane physical metaphor: distance walked, ignoring direction (e.g., walking 5 steps forward or 5 steps backward both result in a distance of 5 steps)."
+  code_implementation: |
+    import torch
+    
+    def calculate_distance(a, b):
+        """Calculates the physical distance between two points on a 1D axis."""
+        tensor_a = torch.tensor(a, dtype=torch.float32)
+        tensor_b = torch.tensor(b, dtype=torch.float32)
+        return torch.abs(tensor_a - tensor_b)
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      
+      x, a, b = sp.symbols('x a b', real=True)
+      # Distance from origin
+      dist_to_origin = sp.Abs(x)
+      # Distance between two points
+      dist_between_points = sp.Abs(a - b)

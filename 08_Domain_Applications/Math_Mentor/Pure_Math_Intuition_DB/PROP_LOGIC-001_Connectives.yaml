@@ -1,0 +1,86 @@
+concept_node:
+  id: PROP_LOGIC-001
+  symbol: P \land Q, P \lor Q, \neg P
+  name: Propositional Logic Connectives (命题逻辑与逻辑联结词)
+  domain: Mathematical Logic (数理逻辑) / Propositional Calculus
+  sub_topics:
+  - 原子命题的定义与识别
+  - 逻辑联结词：与（∧）、或（∨）、非（¬）、蕴含（→）、等价（↔）
+  - 复合命题的构造与解析
+  pure_math_definition:
+    description: 'A proposition is a declarative statement that is either True or
+      False. Logical connectives (AND, OR, NOT) combine propositions to form compound
+      propositions.
+
+      '
+    axioms:
+    - P AND Q is True iff both P and Q are True.
+    - P OR Q is True iff at least one is True.
+    - NOT P is True iff P is False.
+  llm_physical_mapping:
+    tensor_shape_flow: 'Boolean Masking operations: mask_A & mask_B, mask_A | mask_B,
+      ~mask_A'
+    cognitive_intuition: 'Think of propositions as electrical switches in a circuit.  AND
+      is a series circuit (both must be closed).  OR is a parallel circuit (either
+      can be closed). NOT is an inverter.
+
+      '
+  code_implementation:
+    snippet: 'import torch
+
+
+      # Propositions represented as Boolean Tensors
+
+      P = torch.tensor([True, True, False, False])
+
+      Q = torch.tensor([True, False, True, False])
+
+
+      # AND (Conjunction)
+
+      P_and_Q = P & Q  # [True, False, False, False]
+
+
+      # OR (Disjunction)
+
+      P_or_Q = P | Q   # [True, True, True, False]
+
+
+      # NOT (Negation)
+
+      not_P = ~P       # [False, False, True, True]
+
+      '
+  v8_sanity_audit:
+    sympy_pseudo_code: 'import sympy as sp
+
+      from sympy.logic.boolalg import And, Or, Not
+
+
+      P, Q = sp.symbols(''P Q'')
+
+
+      # Test logic combinations
+
+      expr1 = And(P, Q)
+
+      expr2 = Or(P, Q)
+
+      expr3 = Not(P)
+
+
+      # Substitution tests (Truth Table Evaluation)
+
+      assert expr1.subs({P: True, Q: True}) == True
+
+      assert expr1.subs({P: True, Q: False}) == False
+
+
+      assert expr2.subs({P: False, Q: False}) == False
+
+      assert expr2.subs({P: False, Q: True}) == True
+
+
+      assert expr3.subs({P: True}) == False
+
+      '

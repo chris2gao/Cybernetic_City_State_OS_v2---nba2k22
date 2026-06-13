@@ -1,0 +1,23 @@
+id: "DISCRETE-234"
+concept_name: "计数原理 - 排列 (Permutation)：从 n 个实体中依次抽取 k 个的阶乘降维推导 (n_234)"
+sub_topics:
+  - "有序抽取的决策树模型"
+  - "全排列 P(n,n) = n! 的递推逻辑"
+  - "排列数公式 P(n,k) 的代数构造"
+  - "重复排列与有限制条件的排列计算"
+llm_physical_mapping: "mundane physical metaphor: seating people in chairs; the first person has n chairs to choose from, the second has n-1, creating a shrinking pool of options."
+code_implementation: |
+  import math
+  
+  def permutation(n, k):
+      # P(n,k) = n! / (n-k)!
+      if k > n:
+          return 0
+      return math.factorial(n) // math.factorial(n - k)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import math
+    def P(n, k):
+        return math.factorial(n) // math.factorial(n-k)
+    assert P(5, 3) == 5 * 4 * 3
+    assert P(4, 4) == 24

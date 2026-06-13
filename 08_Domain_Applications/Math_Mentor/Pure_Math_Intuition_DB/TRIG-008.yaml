@@ -1,0 +1,34 @@
+id: "TRIG-008"
+version: "9.1"
+name: "三角恒等式 - 商数关系（tanθ = sinθ/cosθ）与倒数关系（sec, csc, cot） (n_169)"
+node_type: "concept"
+sub_topics:
+  - "正切、正弦与余弦的商数恒等式"
+  - "余切、正割、余割的定义与计算"
+  - "同角三角函数的倒数恒等式"
+  - "复合恒等式的化简与证明技巧"
+llm_physical_mapping: "Ratios of side lengths."
+code_implementation: |
+  import torch
+
+  def compute_reciprocal_trig(angles_rad):
+      sin_val = torch.sin(angles_rad)
+      cos_val = torch.cos(angles_rad)
+      tan_val = torch.tan(angles_rad)
+      
+      sec_val = 1.0 / cos_val
+      csc_val = 1.0 / sin_val
+      cot_val = 1.0 / tan_val
+      
+      return sec_val, csc_val, cot_val
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    x = sp.Symbol('x')
+    
+    # Reciprocal identity
+    assert sp.simplify(sp.sec(x) * sp.cos(x)) == 1
+    
+    # Quotient identity (tan = sin/cos)
+    assert sp.simplify(sp.tan(x) - sp.sin(x)/sp.cos(x)) == 0

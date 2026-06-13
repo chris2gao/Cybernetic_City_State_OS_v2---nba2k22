@@ -1,0 +1,20 @@
+id: "LINEAR_ALGEBRA-328"
+concept_name: "张量初步 - 发生学溯源：起源于物理应力分析，将向量转化的“物理机器” (n_328)"
+sub_topics:
+  - "张量作为多维数组的推广"
+  - "线性变换的更高级抽象（多线性映射）"
+  - "张量的阶 (Rank/Order) 与分量表示"
+  - "物理背景：弹性力学中的应力张量"
+llm_physical_mapping: "spatial deformation/stretching/rotating: a tensor acts as a multilinear machine that processes multiple input directions in space to produce an output spatial deformation, much like stress deforming a solid material."
+code_implementation: |
+  import sympy as sp
+  v = sp.Matrix([1, 2])
+  w = sp.Matrix([3, 4])
+  T = v * w.T
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    v = sp.Matrix([1, 2])
+    w = sp.Matrix([3, 4])
+    T = v * w.T
+    assert T.shape == (2, 2)

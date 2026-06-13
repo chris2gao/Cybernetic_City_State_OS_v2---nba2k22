@@ -1,0 +1,22 @@
+id: "PROB_STAT-355"
+concept_name: "期望与方差 - 方差：物理上的转动惯量/离散度 (n_355)"
+sub_topics:
+  - "方差的定义 Var(X) = E[(X - E[X])^2]"
+  - "计算公式 Var(X) = E[X^2] - (E[X])^2"
+  - "标准差 (Standard Deviation) 的物理含义"
+  - "切比雪夫不等式与偏离期望的概率边界"
+llm_physical_mapping: "chip distribution around a center of mass, measuring the rotational inertia of the probability chips."
+code_implementation: |
+  import sympy as sp
+  x, mu = sp.symbols('x mu')
+  p = sp.Function('p')(x)
+  # Variance
+  variance = sp.Integral((x - mu)**2 * p, (x, -sp.oo, sp.oo))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.Symbol('x')
+    E_x = sp.summation(x * sp.Rational(1, 6), (x, 1, 6))
+    E_x2 = sp.summation(x**2 * sp.Rational(1, 6), (x, 1, 6))
+    variance = E_x2 - E_x**2
+    assert variance == sp.Rational(35, 12)

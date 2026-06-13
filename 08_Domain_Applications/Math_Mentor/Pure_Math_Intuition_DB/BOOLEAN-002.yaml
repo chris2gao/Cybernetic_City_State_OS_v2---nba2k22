@@ -1,0 +1,60 @@
+concept_node:
+  id: "BOOLEAN-002"
+  title: "布尔代数基础 - 布尔表达式与规范型"
+  domain: "boolean_algebra"
+  sub_topics:
+    - "极小项 (Minterm) 与极大项 (Maxterm)"
+    - "主析取范式 (SOP)"
+    - "主合取范式 (POS)"
+    - "卡诺图 (Karnaugh Map) 化简初步"
+  description: "Introduction to Boolean expressions, minterms, maxterms, canonical forms (Sum of Products, Product of Sums), and basic Karnaugh Map simplification techniques."
+  llm_physical_mapping:
+    metaphor: "A multi-way light switch circuit board."
+    details: >
+      Think of Boolean expressions as blueprints for wiring a complex set of light switches to a single bulb.
+      Minterms (SOP) are like listing every possible specific combination of switch positions (up/down) that turns the light ON.
+      Maxterms (POS) are like listing every combination that guarantees the light is OFF, and ensuring we avoid them.
+      A Karnaugh Map is a visual grid layout of these switches that groups adjacent winning combinations, allowing you to use fewer wires and switches to get the exact same light behavior.
+  code_implementation:
+    language: "python"
+    framework: "pytorch"
+    snippet: |
+      import torch
+
+      # Define a simple 2-variable truth table
+      A = torch.tensor([0, 0, 1, 1], dtype=torch.bool)
+      B = torch.tensor([0, 1, 0, 1], dtype=torch.bool)
+
+      # Function: F(A, B) = A XOR B
+      # As SOP (Sum of Products) / Minterms: F = A'B + AB'
+      minterm_1 = (~A & B)   # A=0, B=1
+      minterm_2 = (A & ~B)   # A=1, B=0
+      sop_expression = minterm_1 | minterm_2
+
+      # As POS (Product of Sums) / Maxterms: F = (A+B)(A'+B')
+      maxterm_0 = (A | B)    # Avoid A=0, B=0
+      maxterm_3 = (~A | ~B)  # Avoid A=1, B=1
+      pos_expression = maxterm_0 & maxterm_3
+
+      print("Truth Table Result:", sop_expression)
+      print("SOP == POS:", torch.equal(sop_expression, pos_expression))
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy
+      from sympy.logic.boolalg import SOPform, POSform, truth_table
+      
+      A, B, C = sympy.symbols('A B C')
+      
+      # Define minterms where the function is True (e.g., 1, 2, 4)
+      minterms = [[0, 0, 1], [0, 1, 0], [1, 0, 0]]
+      sop = SOPform([A, B, C], minterms)
+      print("SOP Form:", sop)
+      
+      # Define maxterms where the function is False
+      pos = POSform([A, B, C], minterms)
+      print("POS Form:", pos)
+      
+      # Simplify expression (similar to K-Map)
+      expr = (A & ~B) | (A & B)
+      simplified = sympy.simplify_logic(expr)
+      print("Simplified:", simplified)

@@ -1,0 +1,26 @@
+id: "DISCRETE-228"
+concept_name: "树与网络 - 物理映射：树作为没有任何环的连通图，代表信息传递的最经济路径 (n_228)"
+sub_topics:
+  - "树的最小连通性与最大无环性"
+  - "树在文件系统与决策流中的体现"
+  - "叶节点与内部节点的层次结构"
+  - "唯一路径属性带来的确定性"
+llm_physical_mapping: "mundane physical metaphor: like a plumbing system where water flows from a main tank, branching into smaller pipes to individual taps, with no loops to prevent backflow."
+code_implementation: |
+  import networkx as nx
+  
+  def build_tree():
+      T = nx.Graph()
+      T.add_edges_from([('Root', 'A'), ('Root', 'B'), ('A', 'C'), ('A', 'D')])
+      is_tree = nx.is_tree(T)
+      return T, is_tree
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import networkx as nx
+    T = nx.Graph()
+    T.add_edges_from([(1, 2), (1, 3), (2, 4), (2, 5)])
+    assert nx.is_tree(T)
+    assert nx.is_connected(T)
+    # Adding an edge creates a cycle
+    T.add_edge(4, 5)
+    assert not nx.is_tree(T)

@@ -1,0 +1,26 @@
+id: "BRIDGE-004"
+concept_name: "树结构与代数表达式的同构 - AST抽象语法树的物理编译过程 (L2 ↔ L1)"
+sub_topics:
+  - "运算优先级（括号）与树的层级深度同构"
+  - "中缀表达式（人类习惯）与树的后序遍历（逆波兰表达式）映射"
+  - "二叉树的叶子节点（操作数）与内部节点（运算符）职责划分"
+llm_physical_mapping: "mundane physical metaphor: a plumbing network for chemical processing. Raw materials (numbers/variables) enter at the top leaves, mix at the Y-joints (operators like + or *), and flow down to produce a single combined output at the root pipe."
+code_implementation: |
+  import ast
+  # Python's built-in AST parser demonstrates the tree structure of algebra
+  expr = "a * (b + c)"
+  tree = ast.parse(expr, mode='eval')
+  # tree.body is a BinOp (Multiply), with 'a' as left child and BinOp (Add) as right child
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import ast
+    expr = "3 * (4 + 5)"
+    tree = ast.parse(expr, mode='eval')
+    
+    # Root is multiplication
+    assert isinstance(tree.body, ast.BinOp)
+    assert isinstance(tree.body.op, ast.Mult)
+    
+    # Right child is addition
+    assert isinstance(tree.body.right, ast.BinOp)
+    assert isinstance(tree.body.right.op, ast.Add)

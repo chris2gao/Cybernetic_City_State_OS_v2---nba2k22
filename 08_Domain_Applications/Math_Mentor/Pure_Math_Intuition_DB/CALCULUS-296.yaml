@@ -1,0 +1,20 @@
+id: "CALCULUS-296"
+concept_name: "多元函数极值（条件极值/拉格朗日乘数法） - 无条件极值判定（海森矩阵 Hessian Matrix 初步） (n_296)"
+sub_topics:
+  - "多元函数的一阶必要条件（梯度为零）"
+  - "二阶充分条件：海森矩阵的正定性分析"
+  - "鞍点 (Saddle points) 的代数判定与几何特征"
+  - "Hessian 矩阵在优化算法中的物理权重意义"
+llm_physical_mapping: "mundane physical metaphor: testing the shape of a valley bottom by rolling a marble; if it's a true minimum, it curves upwards in all directions."
+code_implementation: |
+  import sympy as sp
+  x, y = sp.symbols('x y')
+  f = x**2 + y**2
+  hessian = sp.hessian(f, (x, y))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x, y = sp.symbols('x y')
+    f = x**2 + y**2
+    H = sp.hessian(f, (x, y))
+    assert H.det() > 0 and H[0,0] > 0

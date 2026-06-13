@@ -1,0 +1,42 @@
+concept_node:
+  id: "GEOMETRY-007"
+  name: "三角形（全等/相似） - 全等三角形 (Congruence) 的判定公理与定理（SAS, SSS, ASA, AAS, HL）"
+  sub_topics:
+    - "全等的定义与刚体变换等价性"
+    - "SAS公理与SSS, ASA推导"
+    - "直角三角形的HL特例"
+    - "为什么SSA不能判定全等（动摇的支点）"
+  llm_physical_mapping: "Industrial molds or 3D printing replicas. When manufacturing parts, if key parameters (like two sides and the included angle - SAS, or three sides - SSS) are fixed, the final molded pieces are perfect physical replicas. They can be perfectly superimposed in space (isometric transformation) because their rigid structure is entirely determined by these minimal constraints."
+  code_implementation: |
+    import torch
+
+    def check_isometric_congruence(tri1, tri2, tol=1e-5):
+        '''
+        tri1, tri2: Tensors of shape (3, N) representing triangle vertices.
+        Uses SSS (Side-Side-Side) equivalence to confirm if two triangles 
+        are congruent via an isometric transformation in N-D space.
+        '''
+        def get_sorted_sides(t):
+            s1 = torch.norm(t[0] - t[1])
+            s2 = torch.norm(t[1] - t[2])
+            s3 = torch.norm(t[2] - t[0])
+            sides = torch.stack([s1, s2, s3])
+            return torch.sort(sides)[0]
+            
+        sides1 = get_sorted_sides(tri1)
+        sides2 = get_sorted_sides(tri2)
+        
+        return torch.allclose(sides1, sides2, atol=tol)
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      from sympy.geometry import Triangle, Point
+      
+      def check_congruence(t1: Triangle, t2: Triangle) -> bool:
+          # Check if triangles are similar
+          similar = t1.is_similar(t2)
+          
+          # In SymPy, congruence is similarity with a ratio of 1.
+          # We can verify the ratio is 1 by comparing their perimeters.
+          ratio_is_one = (t1.perimeter == t2.perimeter)
+          
+          return similar and ratio_is_one

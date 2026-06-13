@@ -1,0 +1,19 @@
+id: "LINEAR_ALGEBRA-333"
+concept_name: "秩与零空间（核空间）/维数定理 - 维数定理：Rank + Nullity = n（信息能量守恒） (n_333)"
+sub_topics:
+  - "维数定理的代数证明过程"
+  - "物理直觉：输入维度的分配（有效输出 vs 彻底压缩）"
+  - "映射的单射、满射性与维数定理的关系"
+  - "在算子理论中的推广（引出 Fredholm 算子）"
+llm_physical_mapping: "volume changes: the total number of input spatial dimensions must be conserved; any direction that doesn't survive as an independent stretching direction (rank) must have been crushed flat (nullity)."
+code_implementation: |
+  import sympy as sp
+  A = sp.Matrix([[1, 2, 3], [2, 4, 6]])
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    A = sp.Matrix([[1, 2, 3], [2, 4, 6]])
+    n = A.shape[1]
+    rank = A.rank()
+    nullity = len(A.nullspace())
+    assert rank + nullity == n

@@ -1,0 +1,37 @@
+concept_node:
+  id: "GEOMETRY-040"
+  name: "立体几何基础（棱柱/棱锥/球体），尺规作图基础 - 尺规作图的哲学限制：只允许使用没有刻度的直尺（造线）和圆规（造圆） (n_160)"
+  sub_topics:
+    - "无刻度直尺的功能局限：仅限连接两点"
+    - "圆规的核心功能：定长传递与轨迹生成"
+    - "五种基本作图动作（如作垂直平分线）"
+    - "尺规作图的不可解难题（如化圆为方、三等分角）"
+  llm_physical_mapping: "Imagine a master builder constrained by minimalist, philosophical rules: they can only draw a taut chalk line between two existing stakes (straightedge) and trace a perfect circle by keeping a fixed length of rope anchored to a stake (compass). No tape measures or protractors exist. Every complex geometric structure must be meticulously built from these pure, unmeasured intersections."
+  code_implementation: |
+    import torch
+    
+    def find_circle_line_intersection(circle_center, radius, line_point1, line_point2):
+        # A PyTorch algebraic representation of straightedge and compass intersections
+        # circle_center: (x0, y0), line passes through (x1, y1) and (x2, y2)
+        cx, cy = circle_center
+        p1x, p1y = line_point1
+        p2x, p2y = line_point2
+        
+        # Line eq: A*x + B*y + C = 0
+        A = p2y - p1y
+        B = p1x - p2x
+        C = p2x * p1y - p2y * p1x
+        
+        # Distance from center to line
+        dist = torch.abs(A * cx + B * cy + C) / torch.sqrt(A**2 + B**2)
+        
+        # Return boolean tensor indicating if the compass sweep crosses the straightedge line
+        return dist <= radius
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      from sympy.geometry import Circle, Line, Point
+      p1, p2, center = Point(0, 0), Point(1, 1), Point(0, 1)
+      L = Line(p1, p2)
+      C = Circle(center, 1)
+      # Calculates geometric intersections exactly mimicking straightedge and compass actions
+      intersections = L.intersection(C)

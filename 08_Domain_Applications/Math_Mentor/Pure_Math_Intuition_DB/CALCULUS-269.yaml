@@ -1,0 +1,26 @@
+id: "CALCULUS-269"
+concept_name: "微分中值定理 - 逻辑连贯性升级：罗尔定理 → 拉格朗日中值定理 → 柯西中值定理的嵌套证明链 (n_269)"
+sub_topics:
+  - "罗尔定理的条件（闭区间连续、开区间可导、端点值相等）"
+  - "从罗尔定理推导拉格朗日中值定理的辅助函数构造"
+  - "柯西中值定理的参数方程推广及其证明"
+  - "三大定理在逻辑上的包含与演进关系"
+  - "达布定理（导函数的介值性）"
+llm_physical_mapping: "mundane physical metaphor: tilting a picture frame. Rolle's theorem is a level frame where the top edge must be flat somewhere. Lagrange is tilting the frame, where the edge must be parallel to the tilted bottom somewhere. Cauchy is comparing two differently tilted frames."
+code_implementation: |
+  import sympy as sp
+  # Demonstrate Rolle's Theorem
+  x = sp.Symbol('x', real=True)
+  f = x**3 - 3*x
+  # f(-sqrt(3)) = 0, f(sqrt(3)) = 0
+  # There must exist c in (-sqrt(3), sqrt(3)) where f'(c) = 0
+  f_prime = sp.diff(f, x)
+  critical_points = sp.solve(f_prime, x)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.Symbol('x', real=True)
+    f = x**3 - 3*x
+    f_prime = sp.diff(f, x)
+    critical_points = sp.solve(f_prime, x)
+    assert 1 in critical_points and -1 in critical_points

@@ -1,0 +1,55 @@
+concept_node:
+  id: "GEOMETRY-016"
+  name: "面积与体积 - 圆的周长与面积公式（引入极限逼近思想：分割拼补为近似矩形） (n_136)"
+  sub_topics:
+    - "圆周率 π 的定义与割圆术逼近思想"
+    - "圆周长公式 C = 2πr 的形成"
+    - "扇形分割与拼补法（转化为近似矩形）"
+    - "圆面积公式 A = πr² 的极限推导"
+  intuition_framework:
+    llm_physical_mapping: "Imagine cutting a round pie or pizza into many thin triangular slices. By arranging these slices alternatingly (one pointing up, the next pointing down), they form a shape resembling a parallelogram. As the number of slices approaches infinity, the edges flatten out, forming a perfect rectangle. The height of this rectangle is the radius (r), and its width is half the circumference (πr). The area of the rectangle is therefore πr × r = πr²."
+  code_implementation:
+    language: "python"
+    framework: "pytorch"
+    snippet: |
+      import torch
+
+      def approximate_pi_limit():
+          """
+          Numerically approximates pi by calculating the semi-perimeter
+          of regular polygons inscribed in a unit circle (r=1), 
+          doubling the number of sides iteratively.
+          """
+          # Start with a hexagon (6 sides), inscribed side length is 1
+          n = 6
+          s_n = torch.tensor(1.0, dtype=torch.float64)
+          
+          for _ in range(20):
+              perimeter = n * s_n
+              pi_approx = perimeter / 2.0
+              # print(f"Sides: {n}, Pi Approximation: {pi_approx.item()}")
+              
+              # Formula to find side length of 2n-gon from n-gon
+              # s_{2n} = sqrt(2 - 2 * sqrt(1 - (s_n / 2)^2))
+              s_n = torch.sqrt(2.0 - 2.0 * torch.sqrt(1.0 - (s_n / 2.0)**2))
+              n *= 2
+              
+          return pi_approx.item()
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      
+      n = sp.Symbol('n', positive=True)
+      r = sp.Symbol('r', positive=True)
+      
+      # Area of regular n-gon inscribed in a circle of radius r:
+      # Consists of n isosceles triangles with side r and included angle 2*pi/n
+      polygon_area = n * 0.5 * r**2 * sp.sin(2 * sp.pi / n)
+      
+      # Limit of polygon area as n approaches infinity
+      area_limit = sp.limit(polygon_area, n, sp.oo)
+      
+      # Verify it converges to pi * r^2
+      is_correct = sp.simplify(area_limit - sp.pi * r**2) == 0
+      print(f"Polygon area limit approaches: {area_limit}")
+      print(f"Matches pi*r^2: {is_correct}")

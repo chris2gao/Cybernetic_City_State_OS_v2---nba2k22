@@ -1,0 +1,26 @@
+id: "DISCRETE-223"
+concept_name: "图论基础 - 发生学溯源：欧拉解决“柯尼斯堡七桥问题”时的物理抽象（点与边的转化） (n_223)"
+sub_topics:
+  - "柯尼斯堡七桥问题的拓扑建模"
+  - "忽略物理形状，抽象为顶点与边"
+  - "路径连通性与度数的关联"
+  - "历史上第一个图论定理的诞生"
+llm_physical_mapping: "mundane physical metaphor: like connecting islands with physical wooden bridges, abstracting land masses to simple pegs and bridges to rubber bands between them."
+code_implementation: |
+  import networkx as nx
+  
+  def konigsberg_graph():
+      G = nx.MultiGraph()
+      G.add_nodes_from(['A', 'B', 'C', 'D'])
+      # Adding bridges as edges
+      G.add_edges_from([('A', 'B'), ('A', 'B'), ('A', 'C'), ('A', 'C'), ('A', 'D'), ('B', 'D'), ('C', 'D')])
+      return G
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import networkx as nx
+    G = nx.MultiGraph()
+    G.add_edges_from([('A', 'B'), ('A', 'B'), ('A', 'C'), ('A', 'C'), ('A', 'D'), ('B', 'D'), ('C', 'D')])
+    # Eulerian circuit exists iff all vertices have even degree
+    odd_degrees = [v for v, d in G.degree() if d % 2 != 0]
+    assert len(odd_degrees) == 4
+    assert not nx.has_eulerian_path(G)

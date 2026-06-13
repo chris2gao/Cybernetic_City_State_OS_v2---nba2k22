@@ -1,0 +1,38 @@
+concept_node:
+  id: "BRIDGE-005"
+  domain: "cross_domain_bridge"
+  name: "对角线论证与哥德尔定理 (Infinity ↔ Godel)"
+  sub_topics:
+    - "康托尔对角线构造的核心：反身性否定"
+    - "哥德尔配数与说谎者悖论的对角线映射"
+    - "图灵停机问题中的对角线阴影"
+    - "自我指涉 (Self-reference) 导致的不完备性拓扑"
+  llm_physical_mapping: "A metaphor about a mirror reflecting a mirror, or an ultimate catalog trying to list itself, inevitably breaking the dimension it inhabits by generating an uncontainable element that escapes the system's grasp."
+  code_implementation: |
+    import torch
+
+    def diagonal_inversion(matrix: torch.Tensor) -> torch.Tensor:
+        """
+        Simulates Cantor's diagonal inversion.
+        Given an NxN boolean matrix, constructs a vector not in the rows by flipping the diagonal.
+        """
+        assert matrix.dim() == 2 and matrix.size(0) == matrix.size(1), "Matrix must be NxN"
+        diagonal = torch.diagonal(matrix)
+        inverted_vector = ~diagonal
+        return inverted_vector
+
+    # Example:
+    # mat = torch.tensor([[True, False], [True, True]], dtype=torch.bool)
+    # print(diagonal_inversion(mat)) # tensor([False, False])
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      from sympy import Symbol, Not, Equivalent
+      
+      # Let D_i be the diagonal element at row i, col i
+      D_i = Symbol('D_i')
+      
+      # Let V_i be the i-th element of the newly constructed vector
+      V_i = Symbol('V_i')
+      
+      # The logic of diagonal inversion: the new element is the negation of the diagonal element
+      diagonal_inversion = Equivalent(V_i, Not(D_i))

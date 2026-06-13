@@ -1,0 +1,48 @@
+id: "TRIG-014"
+title: "正弦/余弦定理 - 余弦定理推导：勾股定理在非正交空间下的“广义修正版”及物理补偿项意义 (n_175)"
+type: "concept_node"
+version: "9.1"
+domain: "Math"
+related_nodes: []
+sub_topics:
+  - "余弦定理的向量推导（数量积法）"
+  - "物理学中合力计算的平行四边形定则"
+  - "修正项 -2ab cosC 的几何补偿意义"
+  - "钝角与锐角三角形中的长度修正对比"
+llm_physical_mapping: |
+  Think of the Law of Cosines as the Pythagorean theorem acting in non-orthogonal spaces. Imagine you walk a distance 'a', turn an angle, and walk a distance 'b'. If your turn made your paths perpendicular, the distance back home is sqrt(a^2 + b^2). If you turn at any other angle, the '-2ab cos(C)' acts as a physical compensation term that corrects for your paths either partially pointing in the same direction or opposing each other (like force vectors adding up). It corrects the Pythagorean sum by explicitly subtracting their projected overlap.
+code_implementation: |
+  import torch
+
+  def law_of_cosines(a: torch.Tensor, b: torch.Tensor, C: torch.Tensor) -> torch.Tensor:
+      """
+      Calculate side length c in a triangle with sides a and b, and angle C between them.
+      """
+      return torch.sqrt(a**2 + b**2 - 2 * a * b * torch.cos(C))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+
+    # We use dot products to prove the Law of Cosines vectorially
+    # Let c_vec = a_vec - b_vec
+    # Then |c_vec|^2 = (a_vec - b_vec) \dot (a_vec - b_vec)
+    
+    # We represent this in 2D coordinates
+    a, b, C = sp.symbols('a b C', real=True, positive=True)
+    
+    # Let b_vec be along the x-axis: [b, 0]
+    bx, by = b, 0
+    # Let a_vec be at angle C from b_vec: [a*cos(C), a*sin(C)]
+    ax, ay = a * sp.cos(C), a * sp.sin(C)
+    
+    # c_vec is the difference vector connecting endpoints
+    cx, cy = ax - bx, ay - by
+    
+    # |c_vec|^2 using dot product (or coordinate distance)
+    c_squared = sp.simplify(cx**2 + cy**2)
+    
+    # Expected right hand side of the Law of Cosines
+    expected = a**2 + b**2 - 2*a*b*sp.cos(C)
+    
+    # The dot product derivation perfectly matches the algebraic expectation
+    assert sp.simplify(c_squared - expected) == 0, "Vector derivation of Law of Cosines does not match!"

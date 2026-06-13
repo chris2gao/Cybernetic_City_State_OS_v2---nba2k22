@@ -1,0 +1,28 @@
+id: "DISCRETE-241"
+concept_name: "递推关系 - 经典离散模型：汉诺塔问题 (Tower of Hanoi) 与卡特兰数 (Catalan Numbers) 的几何意义 (n_241)"
+sub_topics:
+  - "汉诺塔的递归算法与 2^n - 1 步数推导"
+  - "卡特兰数的组合意义（括号匹配、二叉树计数）"
+  - "卡特兰数的通项公式与生成函数推导"
+  - "实际应用中的递归结构识别"
+llm_physical_mapping: "mundane physical metaphor: stacking concentric wooden rings on pegs (Tower of Hanoi) where larger rings cannot sit on smaller ones; shifting a stack requires shifting a smaller stack first."
+code_implementation: |
+  import math
+  
+  def tower_of_hanoi_steps(n):
+      # T_n = 2 * T_{n-1} + 1
+      return 2**n - 1
+      
+  def catalan_number(n):
+      # C_n = (1 / (n + 1)) * (2n choose n)
+      return math.comb(2 * n, n) // (n + 1)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    def hanoi(n):
+        return 2**n - 1
+    def catalan(n):
+        import math
+        return math.comb(2*n, n) // (n+1)
+        
+    assert hanoi(3) == 7
+    assert catalan(3) == 5

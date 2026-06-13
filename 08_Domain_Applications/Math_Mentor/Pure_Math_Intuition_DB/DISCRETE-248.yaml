@@ -1,0 +1,22 @@
+id: "DISCRETE-248"
+concept_name: "形式语言与自动机 - 正则表达式 (Regular Expressions) 与乔姆斯基文法层级 (Chomsky Hierarchy) (n_248)"
+sub_topics:
+  - "正则表达式的代数原语"
+  - "乔姆斯基四种文法 (0-3 型) 的定义"
+  - "上下文无关文法与下推自动机"
+  - "递归可枚举语言与图灵机"
+llm_physical_mapping: "mundane physical metaphor: a set of mechanical sieves with different mesh complexities. A Type-3 sieve (Regular Expression) can only filter simple repeating patterns. A Type-2 sieve (Pushdown Automaton) has a spring-loaded stack memory, so it can count matching pairs of items (like balanced parentheses). Type-0 is the ultimate factory that can process anything computable."
+code_implementation: |
+  import re
+  
+  def regex_match(pattern: str, text: str):
+      # Type-3 grammar (Regular language) matching
+      return bool(re.fullmatch(pattern, text))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import re
+    
+    # Regular expression for matching a string of a's followed by b's
+    pattern = "a*b*"
+    assert re.fullmatch(pattern, "aaabbb") is not None
+    assert re.fullmatch(pattern, "ba") is None

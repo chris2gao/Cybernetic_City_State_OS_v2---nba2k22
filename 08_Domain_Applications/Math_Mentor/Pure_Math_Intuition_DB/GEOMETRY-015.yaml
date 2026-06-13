@@ -1,0 +1,56 @@
+concept_node:
+  id: "GEOMETRY-015"
+  title: "面积与体积 - 面积公式的推导演进链条：矩形 → 平行四边形 → 三角形 → 梯形 (n_135)"
+  sub_topics:
+    - "矩形面积公式（底乘高）的基础地位"
+    - "平行四边形的割补法与等积变形"
+    - "三角形作为平行四边形的一半推导"
+    - "梯形的转化与拼接推导（补成平行四边形或切割）"
+  llm_physical_mapping: "mundane physical metaphor: cutting and pasting paper shapes. For example, cutting a right triangle from one end of a paper parallelogram and taping it to the other end transforms it into a rectangle. Two identical paper triangles can be rotated and taped together to form a parallelogram. Two identical paper trapezoids can be flipped and joined to form a large parallelogram."
+  code_implementation: |-
+    import torch
+
+    def shoelace_area(vertices: torch.Tensor) -> torch.Tensor:
+        """
+        Calculates the area of a polygon using the shoelace formula 
+        (which is derived from 2D cross products of sequential vertices).
+        vertices: Tensor of shape (N, 2)
+        """
+        x = vertices[:, 0]
+        y = vertices[:, 1]
+        cross_products = x * torch.roll(y, -1) - torch.roll(x, -1) * y
+        return 0.5 * torch.abs(torch.sum(cross_products))
+
+    # Base = 5, Height = 3
+    rect = torch.tensor([[0.0, 0.0], [5.0, 0.0], [5.0, 3.0], [0.0, 3.0]])
+    para = torch.tensor([[0.0, 0.0], [5.0, 0.0], [7.0, 3.0], [2.0, 3.0]])
+    tri = torch.tensor([[0.0, 0.0], [5.0, 0.0], [2.0, 3.0]])
+    trap = torch.tensor([[0.0, 0.0], [5.0, 0.0], [4.0, 3.0], [1.0, 3.0]])
+
+    print(f"Rectangle Area: {shoelace_area(rect).item()}")      # 15.0
+    print(f"Parallelogram Area: {shoelace_area(para).item()}")  # 15.0
+    print(f"Triangle Area: {shoelace_area(tri).item()}")        # 7.5
+    print(f"Trapezoid Area: {shoelace_area(trap).item()}")      # 12.0
+  v8_sanity_audit:
+    sympy_pseudo_code: |-
+      import sympy as sp
+      from sympy.geometry import Point, Polygon, Triangle
+
+      # Setup points (base=b, height=h, horizontal offset=a, top_base=c)
+      b, h, a, c = sp.symbols('b h a c', positive=True)
+
+      # 1. Rectangle
+      rect = Polygon(Point(0, 0), Point(b, 0), Point(b, h), Point(0, h))
+      assert sp.simplify(rect.area - b * h) == 0
+
+      # 2. Parallelogram
+      para = Polygon(Point(0, 0), Point(b, 0), Point(b + a, h), Point(a, h))
+      assert sp.simplify(para.area - b * h) == 0
+
+      # 3. Triangle
+      tri = Triangle(Point(0, 0), Point(b, 0), Point(a, h))
+      assert sp.simplify(tri.area - (b * h) / 2) == 0
+
+      # 4. Trapezoid (top base = c)
+      trap = Polygon(Point(0, 0), Point(b, 0), Point(a + c, h), Point(a, h))
+      assert sp.simplify(trap.area - (b + c) * h / 2) == 0

@@ -1,0 +1,24 @@
+id: "DISCRETE-247"
+concept_name: "形式语言与自动机 - 字母表 (Alphabet)、字符串 (String) 与形式语言的集合定义 (n_247)"
+sub_topics:
+  - "字符串的连接、克莱尼闭包运算"
+  - "形式语言作为字符串集合的性质"
+  - "空串 (ε) 的代数作用"
+  - "语言类之间的包含关系"
+llm_physical_mapping: "mundane physical metaphor: stringing beads on a thread. The alphabet is the set of bead colors available. A string is a specific sequence of beads. The Kleene star is a factory that can output any possible necklace length, including an empty thread with no beads on it (the empty string)."
+code_implementation: |
+  def kleene_star_example(alphabet: list, max_len: int):
+      results = [""]
+      current = [""]
+      for _ in range(max_len):
+          next_strings = [s + c for s in current for c in alphabet]
+          results.extend(next_strings)
+          current = next_strings
+      return results
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    # Test concatenation and empty string properties
+    epsilon = ""
+    string_a = "hello"
+    assert string_a + epsilon == string_a
+    assert epsilon + string_a == string_a

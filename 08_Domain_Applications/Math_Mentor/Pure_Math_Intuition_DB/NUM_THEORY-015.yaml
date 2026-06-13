@@ -1,0 +1,35 @@
+version: "9.1"
+id: "NUM_THEORY-015"
+concept: "二次剩余"
+description: "逻辑危机引发：在模 p 域中并非所有数都能开平方，引出二次剩余与非二次剩余的对称分布"
+sub_topics:
+  - "模 p 下的平方映射分析"
+  - "二次剩余与二次非剩余的定义"
+  - "对称分布性质：各占 (p-1)/2 个"
+  - "乘法群中的子群结构"
+llm_physical_mapping: "mundane physical metaphor: folding a number line in half and wrapping it around a circle, causing some spots to get two hits and others zero."
+code_implementation: |-
+  import torch
+
+  def check_quadratic_residue_distribution(p: int):
+      x = torch.arange(p)
+      residues = (x**2) % p
+      histogram = torch.bincount(residues, minlength=p)
+      return histogram
+
+  # Example output for p=7:
+  # x^2 % 7 -> [0, 1, 4, 2, 2, 4, 1]
+  # histogram -> tensor([1, 2, 2, 0, 2, 0, 0])
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    from sympy.ntheory import is_quad_residue
+    
+    # For modulo 7, the squares are 0, 1, 4, 2. 
+    # Non-zero quadratic residues: 1, 2, 4. 
+    # Non-quadratic residues: 3, 5, 6.
+    assert is_quad_residue(1, 7) == True
+    assert is_quad_residue(2, 7) == True
+    assert is_quad_residue(3, 7) == False
+    assert is_quad_residue(4, 7) == True
+    assert is_quad_residue(5, 7) == False
+    assert is_quad_residue(6, 7) == False

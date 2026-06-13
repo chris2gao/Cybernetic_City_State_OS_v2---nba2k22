@@ -1,0 +1,52 @@
+concept_node:
+  id: "TRIG-006"
+  symbol: "\\theta \\in \\{0, \\pi/2, \\pi, 3\\pi/2\\}"
+  name: "单位圆 - 界限角（0, π/2, π, 3π/2）的极值计算 (n_167)"
+  domain: "Trigonometry"
+
+  sub_topics:
+    - "0 与 2π 的坐标及其函数值"
+    - "π/2 与 3π/2 的坐标及其函数值"
+    - "π 的坐标及其函数值"
+    - "正切函数在界限角处的无定义状态分析"
+
+  pure_math_definition:
+    description: "Strict mathematical evaluation of boundary angles (quadrantal angles) on the unit circle."
+    axioms:
+      - "\\sin(0) = 0, \\cos(0) = 1"
+      - "\\sin(\\pi/2) = 1, \\cos(\\pi/2) = 0"
+      - "\\sin(\\pi) = 0, \\cos(\\pi) = -1"
+      - "\\sin(3\\pi/2) = -1, \\cos(3\\pi/2) = 0"
+
+  llm_physical_mapping:
+    architecture_component: "Compass directions (North, South, East, West)"
+    cognitive_intuition: "These boundary points act as the extreme limits or poles of the feature space, perfectly aligning with orthogonal directional anchors."
+    tensor_shape_flow: "Boundary conditions in normalized tensor dimensions [-1, 1]."
+
+  code_implementation:
+    framework: "PyTorch"
+    snippet: |
+      import torch
+      import math
+      
+      boundary_angles = torch.tensor([0.0, math.pi/2, math.pi, 3*math.pi/2])
+      sin_values = torch.sin(boundary_angles)
+      cos_values = torch.cos(boundary_angles)
+      tan_values = torch.tan(boundary_angles)
+
+  v8_sanity_audit:
+    engine: "SymPy"
+    validation_target: "Evaluate extrema values and complex infinity at boundaries."
+    execution_logic: "Checks standard boundary outputs for sine/cosine and expects complex infinity (zoo) for tangent at pi/2."
+    sympy_pseudo_code: |
+      import sympy as sp
+      
+      assert sp.sin(0) == 0
+      assert sp.cos(0) == 1
+      assert sp.sin(sp.pi/2) == 1
+      assert sp.cos(sp.pi/2) == 0
+      assert sp.sin(sp.pi) == 0
+      assert sp.cos(sp.pi) == -1
+      
+      val_tan_pi_2 = sp.tan(sp.pi/2)
+      assert val_tan_pi_2 == sp.zoo, f"Expected zoo, got {val_tan_pi_2}"

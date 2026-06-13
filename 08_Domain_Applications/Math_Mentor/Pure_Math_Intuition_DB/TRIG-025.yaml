@@ -1,0 +1,29 @@
+version: 9.1
+node_id: TRIG-025
+title: "三角函数图像 - 正弦与余弦的波形图（振幅 A、角频率 ω、初相 φ 的物理演化机制）"
+sub_topics:
+  - "正弦曲线与余弦曲线的五点作图法"
+  - "振幅 A 控制纵向拉伸的能量含义"
+  - "角频率 ω 与周期 T = 2π/ω 的倒数关系"
+  - "初相 φ 的波形水平平移（时间超前或滞后）"
+llm_physical_mapping: "Think of an oscillator or a pendulum attached to a pen, swinging back and forth over a moving sheet of paper. The amplitude A is how wide the pendulum swings (the energy), the angular frequency ω determines how fast it swings (tightness of the waves), and the phase φ determines where the pendulum was in its swing when the paper started moving (the head start or delay)."
+code_implementation: >
+  import torch
+  
+  def compute_waveform(x, A=1.0, omega=1.0, phi=0.0):
+      # x is a PyTorch tensor representing time or spatial coordinates
+      return A * torch.sin(omega * x + phi)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    x, A, omega, phi = sp.symbols('x A omega phi', real=True, positive=True)
+    y = A * sp.sin(omega * x + phi)
+    
+    # Check periodicity: f(x + T) = f(x) where T = 2*pi/omega
+    T = 2 * sp.pi / omega
+    y_shifted = A * sp.sin(omega * (x + T) + phi)
+    y_shifted_simplified = sp.simplify(y_shifted)
+    
+    # Assert periodicity
+    assert sp.simplify(y - y_shifted_simplified) == 0, "Periodicity check failed"

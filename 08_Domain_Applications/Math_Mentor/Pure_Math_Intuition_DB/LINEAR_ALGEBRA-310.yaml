@@ -1,0 +1,26 @@
+id: "LINEAR_ALGEBRA-310"
+concept_name: "线性映射 - 发生学溯源：将矩阵理解为空间扭曲/线性变换的机器 (n_310)"
+sub_topics:
+  - "映射 f: V -> W 的线性公理（加性与齐性）"
+  - "线性变换对原点与直线形状的保持"
+  - "空间扭曲：旋转、缩放、切变、投影"
+  - "矩阵作为线性变换在特定基下的数值快照"
+llm_physical_mapping: "spatial deformation/stretching/rotating: A matrix is a machine that actively stretches, shears, and rotates space. The origin stays fixed, and parallel lines remain parallel, capturing a uniform deformation of the entire coordinate grid."
+code_implementation: |
+  import sympy as sp
+  
+  x, y = sp.symbols('x y')
+  v = sp.Matrix([x, y])
+  
+  # Shear matrix
+  A_shear = sp.Matrix([[1, 1], [0, 1]])
+  
+  # Transforming the vector
+  v_transformed = A_shear * v
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    A = sp.Matrix([[1, 1], [0, 1]])
+    v = sp.Matrix([1, 1])
+    transformed = A * v
+    assert transformed == sp.Matrix([2, 1])

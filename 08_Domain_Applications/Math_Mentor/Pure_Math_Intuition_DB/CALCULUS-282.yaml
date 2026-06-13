@@ -1,0 +1,35 @@
+id: "CALCULUS-282"
+concept_name: "多元微积分 - 多元函数的极限与连续拓扑 (n_282)"
+sub_topics:
+  - "欧氏空间 R^n 中的距离与邻域"
+  - "重极限与累次极限的区别"
+  - "路径无关极限的定义与证明"
+  - "多元连续函数的性质（有界性、介值性）"
+llm_physical_mapping: "mundane physical metaphor: navigating a 3D terrain where altitude depends on GPS coordinates; true continuity means no sudden cliffs, and approaching a spot yields the same altitude regardless of the path taken."
+code_implementation: |
+  import sympy as sp
+  
+  x, y = sp.symbols('x y')
+  # A function whose limit depends on path: f(x, y) = x*y / (x**2 + y**2)
+  f = x * y / (x**2 + y**2)
+  
+  # Limit along path y = k*x
+  k = sp.symbols('k')
+  path_limit = sp.limit(f.subs(y, k*x), x, 0)
+  
+  # A continuous function: g(x, y) = x**2 + y**2
+  g = x**2 + y**2
+  limit_g = sp.limit(sp.limit(g, x, 0), y, 0)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    x, y = sp.symbols('x y')
+    f = x * y / (x**2 + y**2)
+    k = sp.symbols('k')
+    
+    limit_along_k = sp.simplify(f.subs(y, k*x))
+    assert limit_along_k == k / (1 + k**2)
+    
+    g = x**2 + y**2
+    assert sp.limit(sp.limit(g, x, 0), y, 0) == 0

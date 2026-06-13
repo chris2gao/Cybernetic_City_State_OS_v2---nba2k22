@@ -1,0 +1,23 @@
+id: "CALCULUS-273"
+concept_name: "积分（定积分/不定积分） - 黎曼定积分 (Riemann Integral) 的严格定义：分割、取样、求和、取极限 (n_273)"
+sub_topics:
+  - "区间的任意分割与大和/小和"
+  - "黎曼和 (Riemann Sum) 的构造"
+  - "达布上和与下和的一致性极限"
+  - "可积性的充要条件讨论"
+llm_physical_mapping: "Estimating the total paint needed for a bumpy wall by dividing it into thin vertical rectangular strips. The thinner the strips, the more accurate the paint estimate."
+code_implementation: |
+  import sympy as sp
+  x = sp.Symbol('x')
+  f = x**2
+  # Definite integral representing the limit of Riemann sums
+  a, b = 0, 1
+  exact_area = sp.integrate(f, (x, a, b))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.Symbol('x')
+    f = x**2
+    # Definite integral from 0 to 1
+    integral_val = sp.integrate(f, (x, 0, 1))
+    assert integral_val == sp.Rational(1, 3)

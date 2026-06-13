@@ -1,0 +1,26 @@
+id: "CALCULUS-265"
+concept_name: "导数与微分 - 导数的物理意义（瞬时变化率/速度）与几何意义（切线斜率） (n_265)"
+sub_topics:
+  - "导数作为增量比值的极限定义"
+  - "物理意义：质点运动的瞬时速度与加速度"
+  - "几何意义：曲线切线的斜率与割线的极限"
+  - "函数可导性与连续性的关系"
+  - "单侧导数（左导数与右导数）"
+llm_physical_mapping: "mundane physical metaphor: a skateboarder on a ramp. The steepness of the ramp at the exact spot the wheels touch is the derivative (tangent slope). The speed they are falling/rising at that split second is the physical meaning."
+code_implementation: |
+  import sympy as sp
+  x = sp.Symbol('x')
+  f = x**3
+  # Geometric meaning: slope of tangent
+  f_prime = sp.diff(f, x)
+  slope_at_2 = f_prime.subs(x, 2)
+  # Tangent line equation at x=2, y=8
+  tangent_line = slope_at_2 * (x - 2) + 8
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.Symbol('x')
+    f = x**3
+    f_prime = sp.diff(f, x)
+    slope_at_2 = f_prime.subs(x, 2)
+    assert slope_at_2 == 12

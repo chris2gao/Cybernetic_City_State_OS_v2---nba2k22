@@ -1,0 +1,33 @@
+id: "CALCULUS-283"
+concept_name: "多元微积分 - 偏导数 (Partial Derivatives)：独立观察单一参数变化对系统的影响 (n_283)"
+sub_topics:
+  - "偏导数的形式定义与几何解释"
+  - "高阶偏导数与克莱罗定理 (混合偏导相等条件)"
+  - "偏增量与偏变化率的物理意义"
+  - "偏导数在敏感度分析中的作用"
+llm_physical_mapping: "mundane physical metaphor: tuning an audio mixing board; adjusting the bass slider while keeping treble and volume fixed shows the partial effect of bass on the overall sound."
+code_implementation: |
+  import sympy as sp
+  
+  x, y = sp.symbols('x y')
+  f = x**3 * y**2 + sp.sin(x*y)
+  
+  # First partial derivatives
+  df_dx = sp.diff(f, x)
+  df_dy = sp.diff(f, y)
+  
+  # Mixed second partial derivatives
+  d2f_dxdy = sp.diff(df_dx, y)
+  d2f_dydx = sp.diff(df_dy, x)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    x, y = sp.symbols('x y')
+    f = x**3 * y**2 + sp.sin(x*y)
+    
+    d2f_dxdy = sp.diff(sp.diff(f, x), y)
+    d2f_dydx = sp.diff(sp.diff(f, y), x)
+    
+    # Clairaut's theorem: mixed partials are equal
+    assert sp.simplify(d2f_dxdy - d2f_dydx) == 0

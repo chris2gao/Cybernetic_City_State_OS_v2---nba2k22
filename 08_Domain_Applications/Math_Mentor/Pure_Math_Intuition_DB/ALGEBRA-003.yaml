@@ -1,0 +1,40 @@
+concept_node:
+  id: "ALGEBRA-003"
+  title: "绝对值与根式 (absolute_value_and_radicals) - 二次根式与高次根式的化简、同类二次根式的合并 (n_109)"
+  sub_topics:
+    - "最简二次根式的定义与标准"
+    - "根式的积与商的运算法则"
+    - "同类二次根式的判定与加减运算"
+    - "根号下含变量的代数式化简（注意定义域）"
+  llm_physical_mapping: "Mundane physical metaphor: Simplifying a radical is like unpacking a box where only complete sets (perfect squares/nth powers) can be taken out. Elements that don't form a complete set stay inside the box. Combining like radicals is sorting and grouping boxes that contain the exact same leftover items."
+  code_implementation: |
+    import torch
+
+    # PyTorch representing numeric simplification concepts
+    # sqrt(12) + sqrt(27) = 2*sqrt(3) + 3*sqrt(3) = 5*sqrt(3)
+    tensors = torch.tensor([12.0, 27.0])
+    roots = torch.sqrt(tensors)
+    
+    sum_roots = torch.sum(roots)
+    simplified_sum = 5 * torch.sqrt(torch.tensor(3.0))
+    
+    assert torch.allclose(sum_roots, simplified_sum), "Calculations mismatch"
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      
+      x = sp.Symbol('x', real=True)
+      y = sp.Symbol('y', positive=True)
+      
+      # Simplifying numeric radicals
+      expr1 = sp.sqrt(12) + sp.sqrt(27)
+      print(sp.simplify(expr1)) # 5*sqrt(3)
+      
+      # Simplifying algebraic radicals, carefully handling domains
+      # sqrt(x^2) = |x|
+      expr2 = sp.sqrt(x**2)
+      print(sp.simplify(expr2)) # Abs(x)
+      
+      # sqrt(y^3) = y * sqrt(y) since y is positive
+      expr3 = sp.sqrt(y**3)
+      print(sp.simplify(expr3)) # y*sqrt(y)

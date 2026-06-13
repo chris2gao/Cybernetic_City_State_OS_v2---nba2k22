@@ -1,0 +1,40 @@
+id: "BRIDGE-008"
+concept_name: "微积分与概率桥梁 - 定积分在概率密度函数(PDF)中的测度物理化"
+sub_topics:
+  - "离散求和到连续积分的测度跃迁"
+  - "全概率积分必定为1的归一化物理要求"
+  - "累积分布函数(CDF)与变上限积分的同构"
+llm_physical_mapping: "不均匀沙堆的称重仪。把概率密度函数 (PDF) 看作是地上一堆厚薄不均的沙子。你在某段区间上求定积分，就是在用铲子把那段地面的沙子全铲起来放到秤上称重。整片沙堆的总重量（全区间积分）永远等于 1。"
+
+code_implementation: |
+  import torch
+  import math
+
+  # Calculate the integral of a standard normal PDF over [-10, 10]
+  # to approximate [-infinity, +infinity]
+  x = torch.linspace(-10, 10, 100000)
+  dx = x[1] - x[0]
+  
+  # Standard normal PDF: f(x) = (1 / sqrt(2*pi)) * exp(-0.5 * x^2)
+  pdf = (1.0 / math.sqrt(2 * math.pi)) * torch.exp(-0.5 * x**2)
+  
+  # Riemann sum approximation of the integral
+  integral = torch.sum(pdf * dx).item()
+  
+  assert abs(integral - 1.0) < 1e-3, f"Integral evaluated to {integral}, expected ~1.0"
+  print(f"PyTorch approximated total probability: {integral}")
+
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    x = sp.Symbol('x')
+    
+    # Define the symbolic standard normal PDF
+    pdf = (1 / sp.sqrt(2 * sp.pi)) * sp.exp(-x**2 / 2)
+    
+    # Integrate from negative infinity to positive infinity
+    integral_result = sp.integrate(pdf, (x, -sp.oo, sp.oo))
+    
+    assert integral_result == 1, "The total probability integral must be exactly 1"
+    print("SymPy verification passed: Total probability is exactly 1")

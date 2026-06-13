@@ -1,0 +1,67 @@
+version: "9.1"
+id: "TRIG-020"
+type: "Math Concept Node"
+title: "三角方程 - 复杂三角方程的代数降维求解（如利用恒等式降阶） (n_181)"
+sub_topics:
+  - "二倍角公式在降幂中的应用"
+  - "辅助角公式（合一变形）的消元作用"
+  - "代数换元法（如令 t = sin x + cos x）"
+  - "和差化积与积化和差的结构简化"
+  - "万能公式在有理化方程中的应用"
+llm_physical_mapping: "Transforming complex interlocked gears into a single equivalent gear system."
+code_implementation: |
+  import torch
+
+  def newton_raphson_trig_solver(initial_guess, max_iter=100, tol=1e-6):
+      # Example: Solve sin(2x) + cos(x) = 0
+      # f(x) = sin(2x) + cos(x)
+      x = torch.tensor([initial_guess], requires_grad=True, dtype=torch.float32)
+      
+      for i in range(max_iter):
+          f_x = torch.sin(2 * x) + torch.cos(x)
+          if torch.abs(f_x).item() < tol:
+              print(f"Converged at x = {x.item():.4f} after {i} iterations")
+              return x.item()
+          
+          f_x.backward()
+          
+          with torch.no_grad():
+              x_new = x - f_x / x.grad
+              x.grad.zero_()
+          
+          x = x_new.detach().clone().requires_grad_(True)
+              
+      print("Did not converge.")
+      return x.item()
+
+  if __name__ == "__main__":
+      # Root should be around pi/2 = 1.5708
+      newton_raphson_trig_solver(initial_guess=1.0)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    x = sp.Symbol('x')
+    
+    # Equation: sin(2x) + cos(x) = 0
+    # Can be rewritten using double angle: 2sin(x)cos(x) + cos(x) = 0
+    # cos(x)(2sin(x) + 1) = 0
+    
+    eq = sp.sin(2*x) + sp.cos(x)
+    
+    # Simplify the equation
+    simplified_eq = sp.trigsimp(eq)
+    
+    # Solve the equation
+    solutions = sp.solve(simplified_eq, x)
+    
+    # Verify solutions
+    for sol in solutions:
+        assert sp.simplify(eq.subs(x, sol)) == 0
+        
+    # Check specifically for expected roots in principal domain
+    assert sp.simplify(eq.subs(x, sp.pi/2)) == 0
+    assert sp.simplify(eq.subs(x, 7*sp.pi/6)) == 0
+    assert sp.simplify(eq.subs(x, 11*sp.pi/6)) == 0
+    
+    print("Sympy verification passed.")

@@ -1,0 +1,60 @@
+concept_node:
+  id: "POSETS-004"
+  name: "上界/下界与上确界/下确界 (Supremum & Infimum)"
+  domain: "posets_and_lattices"
+  level: "n_30"
+  sub_topics:
+    - "上界与下界的集合定义"
+    - "最小上界 (LUB) 或上确界 (Sup)"
+    - "最大下界 (GLB) 或下确界 (Inf)"
+    - "格 (Lattice) 的基本运算定义"
+  llm_physical_mapping:
+    metaphor: "A ceiling panel and a floor panel containing a collection of varying-height pillars."
+    description: "Imagine a room with several pillars of different heights. An 'upper bound' is any flat ceiling panel that can be placed above all the pillars without crushing them. The 'supremum' (least upper bound) is the lowest possible ceiling panel that perfectly touches the top of the tallest pillar. A 'lower bound' is any flat floor panel underneath all the pillars. The 'infimum' (greatest lower bound) is the highest possible floor panel that perfectly touches the base of the shortest pillar."
+  code_implementation:
+    language: "python"
+    framework: "pytorch"
+    snippet: |
+      import torch
+
+      def find_bounds_and_extrema(universal_set: torch.Tensor, subset: torch.Tensor):
+          # universal_set and subset are 1D tensors representing sets of numbers 
+          # with standard <= partial order (which happens to be a total order here for simplicity)
+          
+          # A boolean mask for upper bounds: element u in universal_set is an upper bound 
+          # if it is >= ALL elements in the subset
+          # subset.max() acts as a proxy for checking all elements
+          is_upper_bound = universal_set >= subset.max()
+          upper_bounds = universal_set[is_upper_bound]
+          
+          # A boolean mask for lower bounds: element l in universal_set is a lower bound
+          # if it is <= ALL elements in the subset
+          is_lower_bound = universal_set <= subset.min()
+          lower_bounds = universal_set[is_lower_bound]
+          
+          # Supremum (Least Upper Bound - LUB)
+          supremum = upper_bounds.min() if len(upper_bounds) > 0 else float('inf')
+          
+          # Infimum (Greatest Lower Bound - GLB)
+          infimum = lower_bounds.max() if len(lower_bounds) > 0 else float('-inf')
+          
+          return upper_bounds, supremum, lower_bounds, infimum
+
+      # Example
+      U = torch.arange(0, 10, dtype=torch.float32)
+      A = torch.tensor([2.5, 4.1, 3.8])
+      
+      ub, sup, lb, inf = find_bounds_and_extrema(U, A)
+      print(f"Subset A: {A}")
+      print(f"Upper Bounds: {ub}")
+      print(f"Supremum (LUB): {sup}")
+      print(f"Lower Bounds: {lb}")
+      print(f"Infimum (GLB): {inf}")
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      from sympy import symbols, Implies, And
+      
+      is_upper_bound = symbols('is_upper_bound')
+      is_lower_bound = symbols('is_lower_bound')
+      is_supremum = symbols('is_supremum')
+      is_infimum = symbols('is_infimum')

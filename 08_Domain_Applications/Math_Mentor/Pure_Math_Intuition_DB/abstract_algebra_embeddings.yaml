@@ -1,0 +1,70 @@
+concept_node:
+  id: "ALG-001"
+  symbol: "(G, \\oplus) \\text{ (Group)}"
+  name: "Group Theory & Vector Translation (群论与向量平移)"
+  domain: "Abstract Algebra (抽象代数)"
+  
+  pure_math_definition:
+    description: >
+      群是由一个集合及其上的二元运算组成的代数结构。它抽象了“对称性”和“可逆变换”的本质。
+      群不关心元素的具体物理含义，只关心运算本身是否满足特定的公理法则。
+    axioms:
+      - "封闭性 (Closure): \\forall a, b \\in G, a \\oplus b \\in G"
+      - "结合律 (Associativity): \\forall a, b, c \\in G, (a \\oplus b) \\oplus c = a \\oplus (b \\oplus c)"
+      - "单位元 (Identity): \\exists e \\in G \\text{ s.t. } \\forall a \\in G, e \\oplus a = a \\oplus e = a"
+      - "逆元 (Inverse): \\forall a \\in G, \\exists a^{-1} \\in G \\text{ s.t. } a \\oplus a^{-1} = e"
+
+  llm_physical_mapping:
+    architecture_component: "Word2Vec / Embedding Latent Space"
+    cognitive_intuition: >
+      大模型的 Embedding 隐空间（Latent Space）实际上构成了一个近似的阿贝尔群（交换群）。
+      经典的等式：King - Man + Woman = Queen。在这个空间里，对词向量进行加减运算（群作用），实际上就是在进行“语义的几何平移”。
+      封闭性保证了任何合法的语义操作，其结果仍然落在这个词表空间内（尽管有时需要找最近邻词）；逆元保证了语义的转换是可逆的（如增加性别特征，也可以减去性别特征）。
+    tensor_shape_flow: "E_{king}[1, d] \\ominus E_{man}[1, d] \\oplus E_{woman}[1, d] \\approx E_{queen}[1, d]"
+
+  code_implementation:
+    framework: "PyTorch"
+    snippet: |
+      import torch
+      
+      def latent_space_group_action(embeddings: dict, target_vocab: torch.Tensor):
+          # 从隐空间中提取向量群元
+          king = embeddings['king']
+          man = embeddings['man']
+          woman = embeddings['woman']
+          
+          # 执行群运算 (向量平移)
+          queen_approx = king - man + woman
+          
+          # 验证封闭性：通过计算 L2 距离，寻找离群运算结果最近的合法群元（合法词汇）
+          distances = torch.norm(target_vocab - queen_approx, dim=1)
+          return target_vocab[torch.argmin(distances)]
+
+  v8_sanity_audit:
+    engine: "SymPy + Z3"
+    validation_target: "结合律在隐空间平移中的不变量属性 (Associativity of Translations)"
+    execution_logic: >
+      验证在 n 维向量的欧几里得空间中，无论语义转换（平移向量）的顺序如何组合，
+      (A + B) + C 必定等于 A + (B + C)。结合律是大模型进行多跳推理 (Multi-hop Reasoning) 的基础保障。
+    sympy_pseudo_code: |
+      import sympy as sp
+      
+      # 定义三个向量作为群元 (这里为了演示用三维向量)
+      A1, A2, A3 = sp.symbols('A1 A2 A3', real=True)
+      B1, B2, B3 = sp.symbols('B1 B2 B3', real=True)
+      C1, C2, C3 = sp.symbols('C1 C2 C3', real=True)
+      
+      A = sp.Matrix([A1, A2, A3])
+      B = sp.Matrix([B1, B2, B3])
+      C = sp.Matrix([C1, C2, C3])
+      
+      # 定义群的二元运算 (向量加法)
+      def group_op(v1, v2):
+          return v1 + v2
+          
+      # 结合律左右等式
+      left_side = group_op(group_op(A, B), C)
+      right_side = group_op(A, group_op(B, C))
+      
+      # 断言验证
+      assert sp.simplify(left_side - right_side) == sp.zeros(3, 1), "Associativity Axiom Violated!"

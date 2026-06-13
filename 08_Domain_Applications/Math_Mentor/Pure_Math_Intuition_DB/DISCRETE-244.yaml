@@ -1,0 +1,23 @@
+id: "DISCRETE-244"
+concept_name: "布尔代数 - 布尔代数的公理系统与代数运算法则 (n_244)"
+sub_topics:
+  - "德·摩根定律在布尔代数中的形式"
+  - "吸收律、分配律与结合律"
+  - "布尔表达式的等价变换证明"
+  - "最小项与最大项展开式"
+llm_physical_mapping: "mundane physical metaphor: rearranging pipes and valves. De Morgan's laws show that turning off the main water valve (NOT (A OR B)) is exactly the same as having both individual branch valves turned off (NOT A AND NOT B)."
+code_implementation: |
+  def de_morgan(a: bool, b: bool):
+      # not (A or B) == (not A) and (not B)
+      left_side = not (a or b)
+      right_side = (not a) and (not b)
+      return left_side == right_side
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    from sympy.logic.boolalg import And, Or, Not, simplify_logic
+    from sympy.abc import A, B
+    
+    # De Morgan's Law
+    expr1 = Not(Or(A, B))
+    expr2 = And(Not(A), Not(B))
+    assert simplify_logic(expr1) == simplify_logic(expr2)

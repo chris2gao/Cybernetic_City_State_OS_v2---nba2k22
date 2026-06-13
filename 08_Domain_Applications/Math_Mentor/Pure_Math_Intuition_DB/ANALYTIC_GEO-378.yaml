@@ -1,0 +1,28 @@
+id: "ANALYTIC_GEO-378"
+concept_name: "极坐标 - 笛卡尔坐标与极坐标的相互映射与物理适用场景 (n_378)"
+sub_topics:
+  - "极径 ρ 与极角 θ 的代数定义"
+  - "坐标转换公式 x=ρcosθ, y=ρsinθ"
+  - "极坐标在圆周运动与螺旋线描述中的优势"
+  - "常见极坐标图形（心形线、玫瑰线、阿基米德螺旋线）"
+llm_physical_mapping: "mundane physical metaphor: like a radar screen. Instead of moving right and up (Cartesian), the radar sweeps an angle (theta) and reports the distance (rho) to the object."
+code_implementation: |
+  import sympy as sp
+  rho, theta = sp.symbols('rho theta')
+  x = rho * sp.cos(theta)
+  y = rho * sp.sin(theta)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    r, theta = 5, sp.pi/4
+    
+    x = r * sp.cos(theta)
+    y = r * sp.sin(theta)
+    
+    assert sp.simplify(x) == 5 * sp.sqrt(2) / 2
+    assert sp.simplify(y) == 5 * sp.sqrt(2) / 2
+    
+    # Back to polar
+    rho_sq = x**2 + y**2
+    assert sp.simplify(rho_sq) == 25

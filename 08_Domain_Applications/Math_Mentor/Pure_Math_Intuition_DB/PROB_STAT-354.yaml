@@ -1,0 +1,22 @@
+id: "PROB_STAT-354"
+concept_name: "期望与方差 - 期望：物理上的重心 (n_354)"
+sub_topics:
+  - "离散型与连续型随机变量期望的定义"
+  - "期望的线性性质 E[aX + bY] = aE[X] + bE[Y]"
+  - "随机变量函数的期望（无意识统计学家定律 LOTUS）"
+  - "期望作为长期实验结果的加权平均"
+llm_physical_mapping: "weighted dice rolling with their mass distribution forming a physical center of gravity representing the expected value."
+code_implementation: |
+  import sympy as sp
+  x = sp.Symbol('x')
+  f = sp.Function('f')(x)
+  p = sp.Function('p')(x)
+  # Expected value of f(x)
+  E_fx = sp.Integral(f * p, (x, -sp.oo, sp.oo))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.Symbol('x')
+    p = sp.Piecewise((1/6, (x >= 1) & (x <= 6)), (0, True))
+    E_x = sp.summation(x * (1/6), (x, 1, 6))
+    assert sp.simplify(E_x - 7/2) == 0

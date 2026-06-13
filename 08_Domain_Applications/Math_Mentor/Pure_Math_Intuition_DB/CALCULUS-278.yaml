@@ -1,0 +1,26 @@
+id: "CALCULUS-278"
+concept_name: "级数与收敛 - 幂级数与收敛半径 (n_278)"
+sub_topics:
+  - "幂级数的形式定义"
+  - "阿贝尔定理与收敛区间"
+  - "收敛半径 R 的计算公式"
+  - "幂级数在其收敛区间内的逐项求导与积分"
+llm_physical_mapping: "A radio transmitter's signal clarity: perfectly clear at the broadcast tower (center), degrading outward until it becomes pure static past a certain boundary (radius of convergence)."
+code_implementation: |
+  import sympy as sp
+  n = sp.Symbol('n', integer=True, positive=True)
+  x = sp.Symbol('x')
+  # Power series for e^x: sum (x^n / n!)
+  c_n = 1 / sp.factorial(n)
+  # Radius of convergence R = lim |c_n / c_{n+1}|
+  c_n_plus_1 = c_n.subs(n, n + 1)
+  R = sp.limit(sp.Abs(c_n / c_n_plus_1), n, sp.oo)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    n = sp.Symbol('n', integer=True, positive=True)
+    c_n = 1 / sp.factorial(n)
+    c_n_plus_1 = 1 / sp.factorial(n + 1)
+    R = sp.limit(sp.Abs(c_n / c_n_plus_1), n, sp.oo)
+    # e^x converges everywhere, so radius is infinity
+    assert R == sp.oo

@@ -1,0 +1,32 @@
+id: "TRIG-010"
+version: "9.1"
+name: "反三角函数 - 逻辑危机引发：周期性导致非单射，违背函数定义法则 (n_171)"
+node_type: "concept"
+sub_topics:
+  - "周期性与单射性的矛盾"
+  - "反函数存在的充分必要条件（双射）"
+  - "多值函数向单值函数的逻辑转化"
+  - "限制定义域的数学必要性"
+llm_physical_mapping: "Shadows are non-injective (many times of day yield same shadow length)."
+code_implementation: |
+  import torch
+  import math
+
+  # Demonstrating aliasing in inverse trig functions
+  angles = torch.tensor([math.pi/6, 5*math.pi/6, 13*math.pi/6])
+  sins = torch.sin(angles)
+  arcsins = torch.asin(sins)
+
+  print("Original angles:", angles)
+  print("Sins:", sins)
+  print("Arcsins (aliased):", arcsins)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    # Evaluating sin and asin
+    val1 = sp.asin(sp.sin(5*sp.pi/2))
+    val2 = 5*sp.pi/2
+    
+    # Demonstration that the values are not equal due to restricted domain
+    is_not_equal = val1 != val2

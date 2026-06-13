@@ -1,0 +1,62 @@
+concept_node:
+  node_meta:
+    version: 9.1
+    id: PRED_LOGIC-002
+    title: Bound and Free Variables (约束变元与自由变元)
+    domain: Predicate Logic
+  llm_physical_mapping: In the context of tensor operations or LLM physical architecture,
+    bound variables map directly to dummy indices in tensor contractions (such as
+    the inner indices in `torch.einsum`) or reduced dimensions. These indices are
+    summed or marginalized over and do not appear in the final output shape. Free
+    variables correspond to the remaining, unreduced dimensions that determine the
+    output tensor's shape. Just as the name of a dummy index doesn't change the contraction
+    result, renaming a bound variable doesn't change the logical statement's meaning,
+    whereas changing a free variable changes the output.
+  code_implementation: "import torch\n\n# Consider a 2D tensor representing a binary\
+    \ predicate P(x, y)\n# Let dimension 0 represent 'x' and dimension 1 represent\
+    \ 'y'\nP_xy = torch.ones((5, 3)) \n\n# \"Binding\" the variable 'x' (e.g., via\
+    \ universal or existential quantification)\n# is mathematically equivalent to\
+    \ reducing over its corresponding dimension.\n# Here, we bind 'x' by summing over\
+    \ dim=0, leaving 'y' as a free variable.\nbound_x_expr = P_xy.sum(dim=0)\n\n#\
+    \ The output shape is now (3,), which corresponds purely to the free variable\
+    \ 'y'.\n# The dimension for 'x' has been completely \"bound\" (reduced) and no\
+    \ longer exists in the output.\nprint(\"Shape after binding x:\", bound_x_expr.shape)\n"
+  v8_sanity_audit:
+    sympy_pseudo_code: 'import sympy as sp
+
+
+      x, y, z = sp.symbols(''x y z'')
+
+
+      # Let''s consider a definite integral, which formally binds the variable ''x''
+
+      # Integral of (x * y) with respect to x from 0 to 1
+
+      expr = sp.Integral(x * y, (x, 0, 1))
+
+
+      # 1. Substituting a bound variable (x) from the outside does nothing.
+
+      # SymPy correctly recognizes ''x'' as a bound dummy variable, so subs(x, 5)
+      ignores the bound ''x''.
+
+      expr_sub_x = expr.subs(x, 5)
+
+
+      # 2. Substituting a free variable (y) changes the expression''s overall value.
+
+      expr_sub_y = expr.subs(y, z)
+
+
+      # Sanity checks:
+
+      assert expr_sub_x.doit() == y / 2  # The bound variable substitution had no
+      effect
+
+      assert expr_sub_y.doit() == z / 2  # The free variable substitution changed
+      the result
+
+      '
+  sub_topics:
+  - 约束变元与自由变元的区分
+  - 变元的辖域与代换规则

@@ -1,0 +1,42 @@
+concept_node:
+  id: "GEOMETRY-029"
+  title: "直线与角（平行线/垂线/角的性质） - 垂线段最短原理（点到直线距离的物理意义） (n_149)"
+  description: "Understanding the principle that the perpendicular segment from a point to a line is the shortest distance between them."
+  sub_topics:
+    - "垂线的定义与基本画法"
+    - "点到直线的垂线段与斜线段对比"
+    - "垂线段最短定理的逻辑证明"
+    - "点到直线的距离定义及实际应用意义"
+  llm_physical_mapping: "Imagine someone is drowning in a river and you need to throw a lifeline from the straightest shore point. Throwing the lifeline straight across (perpendicular to the shore) is the shortest distance and takes the least rope, compared to throwing it diagonally."
+  code_implementation: |
+    import torch
+    
+    def point_to_line_distance(point: torch.Tensor, line_point_a: torch.Tensor, line_point_b: torch.Tensor) -> torch.Tensor:
+        """
+        Calculate the shortest distance from a point to a line defined by two points using PyTorch.
+        """
+        line_vec = line_point_b - line_point_a
+        point_vec = point - line_point_a
+        
+        # Project point_vec onto line_vec
+        line_len_sq = torch.dot(line_vec, line_vec)
+        if line_len_sq == 0:
+            return torch.norm(point_vec)
+            
+        proj_length = torch.dot(point_vec, line_vec) / line_len_sq
+        proj_vec = proj_length * line_vec
+        
+        # The perpendicular vector is point_vec - proj_vec
+        perp_vec = point_vec - proj_vec
+        return torch.norm(perp_vec)
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      from sympy import Point, Line
+      
+      def calculate_distance():
+          p = Point(0, 5)
+          l = Line(Point(-5, 0), Point(5, 0))
+          
+          # Shortest distance from point to line
+          dist = l.distance(p)
+          return dist

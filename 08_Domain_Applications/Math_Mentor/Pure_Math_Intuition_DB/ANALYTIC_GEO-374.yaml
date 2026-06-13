@@ -1,0 +1,31 @@
+id: "ANALYTIC_GEO-374"
+concept_name: "直线与平面方程 - 平面的法向量方程与截距式方程 (n_374)"
+sub_topics:
+  - "平面的点法式方程推导"
+  - "平面的一般方程 Ax+By+Cz+D=0"
+  - "截距式方程在坐标轴上的截距含义"
+  - "平面的法向量与平面的倾斜姿态"
+llm_physical_mapping: "mundane physical metaphor: like placing a flat wooden board on the ground. The normal vector is a stick glued perfectly straight up from the board. No matter how you tilt the board, the stick always tells you its exact tilt."
+code_implementation: |
+  import sympy as sp
+  x, y, z = sp.symbols('x y z')
+  normal_vector = (2, -1, 3)
+  point_on_plane = (1, 1, 1)
+  # A(x-x0) + B(y-y0) + C(z-z0) = 0
+  plane_eq = sp.Eq(normal_vector[0]*(x - point_on_plane[0]) + 
+                   normal_vector[1]*(y - point_on_plane[1]) + 
+                   normal_vector[2]*(z - point_on_plane[2]), 0)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    p1 = sp.Point3D(1, 0, 0)
+    p2 = sp.Point3D(0, 2, 0)
+    p3 = sp.Point3D(0, 0, 3)
+    
+    plane = sp.Plane(p1, p2, p3)
+    
+    assert p1 in plane
+    assert p2 in plane
+    assert p3 in plane
+    assert plane.normal_vector == (6, 3, 2)

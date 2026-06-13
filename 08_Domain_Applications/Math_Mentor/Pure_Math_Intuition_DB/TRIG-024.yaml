@@ -1,0 +1,51 @@
+metadata:
+  version: "9.1"
+  id: "TRIG-024"
+  type: "Math Concept Node"
+  title: "角度与弧度的转换 - 弧度与角度的代数换算推导（π rad = 180°） (n_185)"
+
+sub_topics:
+  - "圆周率 π 与全圆周长的关系推导"
+  - "360 度与 2π 弧度的对应原理"
+  - "单位换算因子 (180/π) 与 (π/180)"
+  - "特殊角的弧度-角度对照表"
+
+llm_physical_mapping: "Using a conversion dial that translates Fahrenheit-like scales (degrees) to Kelvin-like absolute scales (radians)."
+
+code_implementation: |
+  import torch
+  
+  # Demonstrating PyTorch torch.deg2rad and torch.rad2deg equivalent logic
+  
+  def apply_deg2rad(deg_tensor: torch.Tensor) -> torch.Tensor:
+      """Equivalent to torch.deg2rad"""
+      return deg_tensor * (torch.pi / 180.0)
+      
+  def apply_rad2deg(rad_tensor: torch.Tensor) -> torch.Tensor:
+      """Equivalent to torch.rad2deg"""
+      return rad_tensor * (180.0 / torch.pi)
+      
+  # Example usages:
+  # deg_vals = torch.tensor([0., 90., 180., 270., 360.])
+  # rad_vals = torch.deg2rad(deg_vals)
+
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    deg = sp.Symbol('deg', real=True)
+    rad = sp.Symbol('rad', real=True)
+    pi = sp.pi
+    
+    # 180 constant vs sympy.pi mappings
+    to_rad_factor = pi / 180
+    to_deg_factor = 180 / pi
+    
+    calc_rad = deg * to_rad_factor
+    calc_deg = rad * to_deg_factor
+    
+    # Sanity checks mapping 180 to pi and vice versa
+    assert sp.simplify(calc_rad.subs(deg, 180) - pi) == 0
+    assert sp.simplify(calc_rad.subs(deg, 90) - pi / 2) == 0
+    assert sp.simplify(calc_deg.subs(rad, pi) - 180) == 0
+    assert sp.simplify(calc_deg.subs(rad, pi / 2) - 90) == 0

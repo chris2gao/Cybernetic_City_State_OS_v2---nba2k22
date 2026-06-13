@@ -1,0 +1,21 @@
+id: "CALCULUS-293"
+concept_name: "洛必达法则 - 利用导数解决 0/0 型、∞/∞ 型未定式的降维求解 (n_293)"
+sub_topics:
+  - "未定式的类型识别与转化"
+  - "指数型未定式的对数转化法"
+  - "洛必达法则与泰勒展开在求极限中的效率比对"
+  - "避免机械套用公式：验证导数存在性"
+llm_physical_mapping: "mundane physical metaphor: unravelling a tangled knot by peeling it layer by layer, differentiating until the actual limits emerge."
+code_implementation: |
+  import sympy as sp
+  x = sp.Symbol('x')
+  f = sp.exp(x) - 1
+  g = x
+  limit_val = sp.limit(f/g, x, 0)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.Symbol('x')
+    f = sp.exp(x) - 1
+    g = x
+    assert sp.limit(f/g, x, 0) == sp.limit(sp.diff(f, x)/sp.diff(g, x), x, 0)

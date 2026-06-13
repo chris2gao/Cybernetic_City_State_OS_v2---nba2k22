@@ -1,0 +1,16 @@
+id: "LINEAR_ALGEBRA-331"
+concept_name: "秩与零空间（核空间）/维数定理 - 秩 (Rank)：变换后幸存的有效空间维度 (n_331)"
+sub_topics:
+  - "秩的行秩与列秩等价性证明"
+  - "秩作为线性映射值域维数的本质"
+  - "满秩矩阵与非奇异性的关联"
+  - "秩在判定方程组解的存在性中的作用"
+llm_physical_mapping: "volume changes: the rank is the number of independent directions that survive a transformation; if rank is less than the input dimension, spatial volume collapses to zero, and the output is a flat structure."
+code_implementation: |
+  import sympy as sp
+  A = sp.Matrix([[1, 2, 3], [2, 4, 6], [1, 0, 1]])
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    A = sp.Matrix([[1, 2, 3], [2, 4, 6], [1, 0, 1]])
+    assert A.rank() == 2

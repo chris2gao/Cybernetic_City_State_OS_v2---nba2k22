@@ -1,0 +1,55 @@
+concept_node:
+  id: "ALGEBRA-004"
+  name: "绝对值与根式 (absolute_value_and_radicals) - 分母有理化（利用平方差公式消除分母无理数） (n_110)"
+  description: "Rationalizing denominators using the difference of squares formula to eliminate irrational parts."
+  sub_topics:
+    - "单项分母的有理化方法"
+    - "共轭根式的概念及其乘积特性"
+    - "利用 (a+b)(a-b)=a²-b² 进行复合分母有理化"
+    - "复杂根式分式的变形与化简技巧"
+  llm_physical_mapping: "Imagine a washing machine. The 'denominator' is your clothing covered in mud (the radical). You add a specialized detergent (the conjugate). When they mix, a chemical reaction occurs perfectly neutralizing the mud (the difference of squares: (a+b)(a-b) = a²-b²), leaving the clothing completely clean and standard (rationalized), while the mud particles are suspended harmlessly in the water (transferred to the numerator)."
+  code_implementation: |
+    import torch
+
+    # Conceptually, rationalizing a denominator is like multiplying a complex 
+    # number by its conjugate to get a real magnitude squared in the denominator.
+    # In PyTorch, we can simulate this algebraically.
+    
+    def simulate_rationalization(numerator, denom_real, denom_irrational_coeff, irrational_base):
+        # Represents numerator / (denom_real + denom_irrational_coeff * sqrt(irrational_base))
+        # Conjugate: (denom_real - denom_irrational_coeff * sqrt(irrational_base))
+        
+        # Denominator becomes: denom_real**2 - (denom_irrational_coeff**2 * irrational_base)
+        rational_denom = denom_real**2 - (denom_irrational_coeff**2 * irrational_base)
+        
+        # New numerator terms
+        num_real_part = numerator * denom_real
+        num_irrational_part = numerator * (-denom_irrational_coeff)
+        
+        return {
+            "numerator_real": num_real_part,
+            "numerator_irrational_coeff": num_irrational_part,
+            "irrational_base": irrational_base,
+            "rationalized_denominator": rational_denom
+        }
+        
+    # Example: 5 / (3 + 2*sqrt(2))
+    # denom_real = 3, coeff = 2, base = 2
+    # result denom = 3^2 - (2^2 * 2) = 9 - 8 = 1
+    # num_real = 5 * 3 = 15
+    # num_irr = 5 * -2 = -10
+    # Result: 15 - 10*sqrt(2)
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      
+      # Rationalizing a fractional expression with a binomial surd in the denominator
+      a, b, c = sp.symbols('a b c', positive=True)
+      
+      # Example 1: 1 / (sqrt(a) + sqrt(b))
+      expr1 = 1 / (sp.sqrt(a) + sp.sqrt(b))
+      rat1 = sp.radsimp(expr1)
+      
+      # Example 2: c / (a + sp.sqrt(b))
+      expr2 = c / (a + sp.sqrt(b))
+      rat2 = sp.radsimp(expr2)

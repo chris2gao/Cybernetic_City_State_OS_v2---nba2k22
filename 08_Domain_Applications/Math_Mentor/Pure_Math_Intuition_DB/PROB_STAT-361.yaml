@@ -1,0 +1,22 @@
+id: "PROB_STAT-361"
+concept_name: "假设检验 - 零假设与备择假设的博弈 (n_361)"
+sub_topics:
+  - "H0 (Null Hypothesis) 与 H1 (Alternative Hypothesis) 的设立"
+  - "拒绝域与临界值的确定"
+  - "单侧检验与双侧检验的选择"
+  - "统计决策的逻辑框架：证伪而非证实"
+llm_physical_mapping: "comparing two different chip distribution models to test if an opponent is using fair dice or rigged weighted dice based on evidence."
+code_implementation: |
+  import sympy as sp
+  alpha = sp.Symbol('alpha')
+  p_val = sp.Symbol('p_val')
+  # Reject H0 if p_val < alpha
+  reject_condition = p_val < alpha
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    # Simplistic logic abstraction for H0 rejection
+    p_value = 0.03
+    alpha = 0.05
+    reject_H0 = p_value < alpha
+    assert reject_H0 is True

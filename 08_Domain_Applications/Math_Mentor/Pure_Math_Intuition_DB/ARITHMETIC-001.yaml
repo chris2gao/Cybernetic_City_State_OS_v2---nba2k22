@@ -1,0 +1,82 @@
+concept_node:
+  id: "ARITHMETIC-001"
+  title: "加法与乘法的基本定律（交换律、结合律、分配律）"
+  domain: "integer_arithmetic"
+  core_intuition: "加法是合并，乘法是按批次放大。基本定律是宇宙资源守恒在操作组合上的反映，不管顺序如何、怎么分批处理，最终总量不变。"
+  sub_topics:
+    - "加法与乘法的交换律"
+    - "加法与乘法的结合律"
+    - "乘法对加法的分配律"
+    - "单位元 (0 与 1) 的代数属性"
+    - "定律在复杂算式化简中的应用"
+  llm_physical_mapping:
+    metaphor: "积木堆叠与包装箱 (Building Blocks and Packing Boxes)"
+    description: >
+      交换律就像你把左手的苹果放到右边，右手的放到左边，总数不变。
+      结合律是你把三个箱子里的东西，先算前两个还是先算后两个，最后总数一样。
+      分配律就像给一个大盒子里的小袋子打包，你可以把大盒子里的两小袋先合起来一起称重，
+      也可以分别对每小袋称重然后加起来，结果等价。
+  code_implementation:
+    language: "python"
+    framework: "pytorch"
+    snippet: |
+      import torch
+
+      def verify_arithmetic_laws(a, b, c):
+          # Commutative Property (交换律)
+          add_comm = torch.eq(a + b, b + a)
+          mul_comm = torch.eq(a * b, b * a)
+          
+          # Associative Property (结合律)
+          add_assoc = torch.eq((a + b) + c, a + (b + c))
+          mul_assoc = torch.eq((a * b) * c, a * (b * c))
+          
+          # Distributive Property (分配律)
+          distributive = torch.eq(a * (b + c), (a * b) + (a * c))
+          
+          return {
+              "commutative_add": add_comm.item(),
+              "commutative_mul": mul_comm.item(),
+              "associative_add": add_assoc.item(),
+              "associative_mul": mul_assoc.item(),
+              "distributive": distributive.item()
+          }
+
+      # Test with some tensors
+      a, b, c = torch.tensor(2), torch.tensor(3), torch.tensor(5)
+      results = verify_arithmetic_laws(a, b, c)
+      print("Arithmetic Laws Verified:", results)
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      from sympy import Symbol, Eq, simplify, expand
+
+      # Define symbols
+      a = Symbol('a', integer=True)
+      b = Symbol('b', integer=True)
+      c = Symbol('c', integer=True)
+
+      # 1. Commutative Laws
+      comm_add = Eq(a + b, b + a)
+      comm_mul = Eq(a * b, b * a)
+
+      # 2. Associative Laws
+      assoc_add = Eq((a + b) + c, a + (b + c))
+      assoc_mul = Eq((a * b) * c, a * (b * c))
+
+      # 3. Distributive Law
+      lhs_dist = a * (b + c)
+      rhs_dist = a * b + a * c
+      dist_law = Eq(expand(lhs_dist), rhs_dist)
+
+      # 4. Identity Elements
+      id_add = Eq(a + 0, a)
+      id_mul = Eq(a * 1, a)
+
+      # Print verification
+      print("Commutative Add:", simplify(comm_add))
+      print("Commutative Mul:", simplify(comm_mul))
+      print("Associative Add:", simplify(assoc_add))
+      print("Associative Mul:", simplify(assoc_mul))
+      print("Distributive:", simplify(dist_law))
+      print("Identity Add:", simplify(id_add))
+      print("Identity Mul:", simplify(id_mul))

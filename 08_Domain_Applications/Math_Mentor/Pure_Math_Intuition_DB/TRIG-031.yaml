@@ -1,0 +1,54 @@
+version: "9.1"
+id: "TRIG-031"
+title: "正弦型函数 y = Asin(ωx + φ) 的整体平移与伸缩变换法则"
+concept_node_id: "n_192"
+domain: "Trigonometry"
+sub_topics:
+  - "纵向伸缩变换（A 的作用）"
+  - "横向伸缩变换（ω 的作用）"
+  - "相位平移（φ/ω 的整体性平移）"
+  - "“先平移后伸缩”与“先伸缩后平移”的代数一致性解析"
+llm_physical_mapping: "stretching, squishing, and sliding a spring map."
+code_implementation: |
+  import torch
+
+  def apply_affine_transform(x: torch.Tensor, A: float, omega: float, phi: float) -> torch.Tensor:
+      """
+      Applies amplitude scaling (A), frequency scaling (omega), 
+      and phase shift (phi) to a base sine wave.
+      """
+      # Affine transformations in time/space
+      transformed_x = omega * x + phi
+      return A * torch.sin(transformed_x)
+
+  # Example usage
+  time_space_tensor = torch.linspace(0, 2 * torch.pi, 100)
+  A_scale = 2.0
+  omega_scale = 0.5
+  phase_shift = torch.pi / 4
+
+  y = apply_affine_transform(time_space_tensor, A_scale, omega_scale, phase_shift)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    x, A, omega, phi = sp.symbols('x A omega phi')
+    
+    # Method 1: Translate by phi, then Scale by omega
+    f1 = sp.sin(x)
+    f1_translated = f1.subs(x, x + phi)
+    f1_scaled = f1_translated.subs(x, omega * x)
+    y_m1 = A * f1_scaled
+    
+    # Method 2: Scale by omega, then Translate by phi/omega
+    f2 = sp.sin(x)
+    f2_scaled = f2.subs(x, omega * x)
+    f2_translated = f2_scaled.subs(x, x + phi / omega)
+    y_m2 = A * f2_translated
+    
+    # Target function
+    expected = A * sp.sin(omega * x + phi)
+    
+    # Verify Both Methods Match Target
+    assert sp.simplify(y_m1 - expected) == 0, "Translate-then-Scale mismatch"
+    assert sp.simplify(y_m2 - expected) == 0, "Scale-then-Translate mismatch"

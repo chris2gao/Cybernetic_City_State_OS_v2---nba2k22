@@ -1,0 +1,73 @@
+concept_node:
+  id: "GEOMETRY-003"
+  title: "欧氏几何公理 - 第五公设（平行公设）的特殊性危机与非欧几何直觉 (n_123)"
+  sub_topics:
+    - "第五公设的等价命题（Playfair公理）"
+    - "试图证明第五公设的失败"
+    - "球面几何（黎曼）与双曲几何（罗巴切夫斯基）初步"
+    - "曲率对平行线相交的影响"
+  llm_physical_mapping: |
+    Imagine drawing parallel lines on different surfaces. On a flat table (Euclidean), two parallel lines will never meet. Now imagine drawing two "straight" lines (great circles, like the equator and a meridian) on a perfectly spherical orange. Even if they start parallel (e.g., both perpendicular to the equator), they will inevitably intersect at the poles. In contrast, on a saddle-shaped surface (Pringle chip / hyperbolic geometry), parallel lines diverge and curve away from each other. This physical mapping demonstrates how the fifth postulate depends entirely on the curvature of the space.
+  code_implementation: |
+    # PyTorch distances: Euclidean vs Spherical
+    import torch
+    import math
+
+    def euclidean_distance(p1, p2):
+        return torch.norm(p1 - p2, p=2)
+
+    def spherical_distance(p1, p2, radius=1.0):
+        # Assuming p1 and p2 are vectors (points on a sphere of given radius)
+        # Normalize to unit vectors
+        v1 = p1 / torch.norm(p1)
+        v2 = p2 / torch.norm(p2)
+        
+        # Cosine of the angle between them
+        cos_theta = torch.dot(v1, v2)
+        # Clip to [-1, 1] for numerical stability
+        cos_theta = torch.clamp(cos_theta, -1.0, 1.0)
+        
+        # Distance is the arc length: radius * theta
+        return radius * torch.acos(cos_theta)
+
+    # Example points on a unit sphere (x, y, z)
+    p1 = torch.tensor([1.0, 0.0, 0.0])
+    p2 = torch.tensor([0.0, 1.0, 0.0])
+
+    print(f"Euclidean distance (straight line through the sphere): {euclidean_distance(p1, p2):.4f}")
+    print(f"Spherical distance (great circle arc on the surface): {spherical_distance(p1, p2):.4f}")
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      from sympy.geometry import Point3D
+
+      # In sympy, geometry is primarily Euclidean. 
+      # To model spherical geometry, we can define points on a sphere and calculate great circle distance.
+
+      def great_circle_distance(p1, p2, radius=1):
+          """Calculate the great circle distance between two Point3D objects on a sphere."""
+          v1 = sp.Matrix([p1.x, p1.y, p1.z])
+          v2 = sp.Matrix([p2.x, p2.y, p2.z])
+          
+          # Dot product
+          dot_product = v1.dot(v2)
+          
+          # Magnitudes
+          mag1 = sp.sqrt(v1.dot(v1))
+          mag2 = sp.sqrt(v2.dot(v2))
+          
+          # Angle theta = acos( (v1 dot v2) / (|v1| * |v2|) )
+          angle = sp.acos(dot_product / (mag1 * mag2))
+          
+          # Arc length
+          return radius * angle
+
+      # Points on the unit sphere
+      pA = Point3D(1, 0, 0)
+      pB = Point3D(0, 1, 0)
+
+      dist_euclid = pA.distance(pB)
+      dist_sphere = great_circle_distance(pA, pB)
+
+      print(f"Euclid (chord): {dist_euclid}")
+      print(f"Sphere (arc): {dist_sphere}")

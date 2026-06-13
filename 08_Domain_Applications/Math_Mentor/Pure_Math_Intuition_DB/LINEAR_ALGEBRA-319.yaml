@@ -1,0 +1,21 @@
+id: "LINEAR_ALGEBRA-319"
+concept_name: "特征值与特征向量 - 发生学溯源：动态系统演化中寻找不改变方向的特殊向量 (n_319)"
+sub_topics:
+  - "算子方程 Av = λv 的物理背景"
+  - "特征向量作为变换中的“稳定轴”"
+  - "特征值 λ 作为沿轴向的缩放倍率"
+  - "寻找变换的不变量思想"
+llm_physical_mapping: "spatial deformation/stretching/rotating: Under a continuous spatial deformation, most vectors change their direction. Eigenvectors are the special 'stable axes' of the space that only stretch or compress (scaled by the eigenvalue) without being knocked off their original line."
+code_implementation: |
+  import sympy as sp
+  A = sp.Matrix([[2, 0], [0, 3]])
+  eigenvals = A.eigenvals()
+  eigenvects = A.eigenvects()
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    A = sp.Matrix([[2, 1], [0, 3]])
+    eigenvects = A.eigenvects()
+    val = eigenvects[0][0]
+    vec = eigenvects[0][2][0]
+    assert A * vec == val * vec, "Eigenvector property Av = lambda v failed"

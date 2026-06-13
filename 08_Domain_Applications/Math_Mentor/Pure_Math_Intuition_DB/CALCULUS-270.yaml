@@ -1,0 +1,29 @@
+id: "CALCULUS-270"
+concept_name: "微分中值定理 - 中值定理的物理直觉：旅程中平均速度必定在某瞬间被精确达到 (n_270)"
+sub_topics:
+  - "拉格朗日中值定理的平均速度物理模型"
+  - "罗尔定理在往返运动中的物理直觉（速度必有零点）"
+  - "几何视角：平行于割线的切线存在性"
+  - "利用中值定理进行函数的误差估计"
+  - "中值定理在证明不等式中的应用"
+llm_physical_mapping: "mundane physical metaphor: highway speed traps. If you travel 120 miles in 2 hours, your average speed is 60 mph. Even if you slow down and speed up, at least one exact moment during the trip your speedometer must have pointed exactly to 60 mph."
+code_implementation: |
+  import sympy as sp
+  # Lagrange Mean Value Theorem
+  x = sp.Symbol('x')
+  f = x**2
+  a, b = 0, 2
+  avg_rate = (f.subs(x, b) - f.subs(x, a)) / (b - a)
+  f_prime = sp.diff(f, x)
+  c = sp.solve(f_prime - avg_rate, x)[0]
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.Symbol('x')
+    f = x**2
+    a, b = 0, 2
+    avg_rate = (f.subs(x, b) - f.subs(x, a)) / (b - a)
+    f_prime = sp.diff(f, x)
+    c = sp.solve(f_prime - avg_rate, x)[0]
+    assert c == 1
+    assert a < c < b

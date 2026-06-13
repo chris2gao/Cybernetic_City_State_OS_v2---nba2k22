@@ -1,0 +1,65 @@
+id: "NUM_THEORY-028"
+concept_name: "原根与离散对数初步 - 密码学映射：离散对数作为单向陷门机器 (One-way Trapdoor)，RSA 与 Diffie-Hellman 的安全底座 (n_222)"
+sub_topics:
+  - "离散对数问题的定义 (a^x ≡ b mod m)"
+  - "正向幂运算与逆向对数运算的计算不对称性"
+  - "Diffie-Hellman 密钥交换协议流程"
+  - "密码学中大素数选择的重要性"
+llm_physical_mapping: "mundane physical metaphor: mixing paint colors is easy, but un-mixing them into exact original ratios is practically impossible."
+code_implementation: |
+  import torch
+  import time
+
+  def mod_exp(base, exp, mod):
+      # Fast modular exponentiation
+      result = torch.tensor(1, dtype=torch.int64)
+      base = torch.tensor(base, dtype=torch.int64) % mod
+      exp = torch.tensor(exp, dtype=torch.int64)
+      
+      while exp > 0:
+          if exp % 2 == 1:
+              result = (result * base) % mod
+          exp = exp // 2
+          base = (base * base) % mod
+      return result.item()
+
+  def brute_force_discrete_log(base, target, mod):
+      # Naive discrete log (brute force search) showing time complexity
+      base_t = torch.tensor(base, dtype=torch.int64)
+      target_t = torch.tensor(target, dtype=torch.int64)
+      mod_t = torch.tensor(mod, dtype=torch.int64)
+      
+      current = torch.tensor(1, dtype=torch.int64)
+      for x in range(mod):
+          if current == target_t:
+              return x
+          current = (current * base_t) % mod_t
+      return -1
+
+  # Demonstration
+  p = 10007 # Small prime
+  g = 5     # Primitive root
+  x = 1234  # Secret exponent
+
+  t0 = time.time()
+  y = mod_exp(g, x, p)
+  t1 = time.time()
+  print(f"Fast exp: {g}^{x} ≡ {y} mod {p} took {t1-t0:.6f} seconds")
+
+  t2 = time.time()
+  recovered_x = brute_force_discrete_log(g, y, p)
+  t3 = time.time()
+  print(f"Brute force discrete log: found x = {recovered_x} took {t3-t2:.6f} seconds")
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy
+    
+    modulus = 10007
+    base = 5
+    x = 1234
+    
+    target = pow(base, x, modulus)
+    
+    # Map variables to match the requested signature: sympy.discrete_log(modulus, target, base)
+    recovered_x = sympy.discrete_log(modulus, target, base)
+    assert recovered_x == x

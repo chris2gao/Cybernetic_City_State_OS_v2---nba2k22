@@ -1,0 +1,47 @@
+concept_node:
+  id: "PROOF_METHODS-001"
+  domain: "证明方法（直接/反证/归纳） (proof_methods) - 直接证明法 (n_1)"
+  sub_topics: ['演绎推理逻辑', '定义与公理的直接应用', '已知定理的引用', '证明步骤的前向推导']
+  llm_physical_mapping: "Building a bridge sequentially across a river. Point A is the starting premise, and you lay down one solid plank (axiom/theorem) after another until you directly reach Point B (the conclusion). Every step must securely rest on the previous ones."
+  code_implementation: |-
+    import torch
+
+    # Direct proof modelled as forward Boolean transitions (Modus Ponens)
+    # State: [P, Q, R]
+    # Initial state (Premise): P is True
+    state = torch.tensor([1.0, 0.0, 0.0]) # P is known
+    
+    # Transition matrix representing implications:
+    # P -> Q (weight from P to Q is 1)
+    # Q -> R (weight from Q to R is 1)
+    # Self-loops for keeping established truths
+    transitions = torch.tensor([
+        [1.0, 1.0, 0.0], # P implies P, Q
+        [0.0, 1.0, 1.0], # Q implies Q, R
+        [0.0, 0.0, 1.0]  # R implies R
+    ])
+
+    # Step 1: P -> Q
+    state = (torch.matmul(state, transitions) > 0).float()
+    
+    # Step 2: Q -> R
+    state = (torch.matmul(state, transitions) > 0).float()
+    
+    # Conclusion: R is True
+    assert state[2] == 1.0, "Direct proof failed to reach the conclusion"
+  v8_sanity_audit:
+    sympy_pseudo_code: |-
+      from sympy import symbols
+      from sympy.logic.boolalg import Implies, And
+      from sympy.logic.inference import satisfiable
+      
+      P, Q, R = symbols('P Q R')
+      
+      # Direct proof chain: P, P->Q, Q->R entails R
+      premises = And(P, Implies(P, Q), Implies(Q, R))
+      conclusion = R
+      
+      # The argument is valid if (premises -> conclusion) is a tautology.
+      # This is equivalent to ~ (premises -> conclusion) being unsatisfiable.
+      argument = Implies(premises, conclusion)
+      assert satisfiable(~argument) == False, "Direct proof logic is flawed!"

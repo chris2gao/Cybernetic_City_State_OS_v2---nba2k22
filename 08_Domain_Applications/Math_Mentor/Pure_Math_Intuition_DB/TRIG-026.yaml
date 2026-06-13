@@ -1,0 +1,42 @@
+id: TRIG-026
+version: 9.1
+name: "三角函数图像 - 正切与余切的渐近线图与周期 π 的代数解释 (n_187)"
+sub_topics:
+  - 正切函数的图像特征与中心对称性
+  - 垂直渐近线 x = kπ + π/2 的发生学成因
+  - 正切周期为 π 的代数推导
+  - 余切函数图像的翻转与平移对应关系
+llm_physical_mapping: "projecting a beam of light from the center of a room onto a straight flat wall."
+code_implementation:
+  language: python
+  code: |
+    import torch
+    import matplotlib.pyplot as plt
+    import numpy as np
+    
+    x = torch.linspace(-2 * np.pi, 2 * np.pi, 2000)
+    y = torch.tan(x)
+    
+    # Mask values near the asymptotes for plotting
+    y[y.abs() > 20] = float('nan')
+    
+    plt.figure(figsize=(10, 6))
+    plt.plot(x.numpy(), y.numpy(), label='y = tan(x)', color='blue')
+    
+    # Plot asymptotes
+    for k in range(-2, 3):
+        plt.axvline(x=(k * np.pi + np.pi/2), color='red', linestyle='--', alpha=0.5, label='Asymptote' if k == 0 else "")
+        
+    plt.ylim(-10, 10)
+    plt.xlim(-2 * np.pi, 2 * np.pi)
+    plt.axhline(0, color='black', linewidth=0.8)
+    plt.axvline(0, color='black', linewidth=0.8)
+    plt.title('Tangent Function and its Asymptotes')
+    plt.legend()
+    plt.grid(True, alpha=0.3)
+    plt.show()
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.Symbol('x')
+    assert sp.periodicity(sp.tan(x), x) == sp.pi

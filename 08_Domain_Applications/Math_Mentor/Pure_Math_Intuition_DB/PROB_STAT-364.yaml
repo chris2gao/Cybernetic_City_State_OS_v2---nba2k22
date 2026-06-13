@@ -1,0 +1,22 @@
+id: "PROB_STAT-364"
+concept_name: "全概率公式与贝叶斯定理 - 消除奇迹步骤：贝叶斯作为“执果索因”的逆向概率更新机器 (n_364)"
+sub_topics:
+  - "全概率公式对复杂样本空间的划分累加"
+  - "贝叶斯公式的代数结构 P(A|B) ∝ P(B|A)P(A)"
+  - "逆向概率思维：从现象观测推测原因概率"
+  - "生活应用：疾病筛查中的假阳性概率分析"
+llm_physical_mapping: "Think of Bayes theorem as examining a bullet hole map on a target: you see the final holes (evidence) and use the known chip distribution from different guns (likelihoods) and the weighted dice roll of which gun was selected (priors) to reconstruct the probability of which weapon fired the shot."
+code_implementation: |
+  import sympy as sp
+  p_A, p_B_given_A, p_B_given_not_A = sp.symbols('P_A P_B|A P_B|notA')
+  # Total probability P(B)
+  p_B = p_A * p_B_given_A + (1 - p_A) * p_B_given_not_A
+  # Bayes theorem P(A|B)
+  p_A_given_B = (p_B_given_A * p_A) / p_B
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    p_A, p_B_given_A, p_B_given_not_A = sp.symbols('P_A P_B|A P_B|notA')
+    p_B = p_A * p_B_given_A + (1 - p_A) * p_B_given_not_A
+    p_A_given_B = (p_B_given_A * p_A) / p_B
+    assert p_A_given_B.subs({p_A: 0.01, p_B_given_A: 0.99, p_B_given_not_A: 0.05}).evalf() < 0.2

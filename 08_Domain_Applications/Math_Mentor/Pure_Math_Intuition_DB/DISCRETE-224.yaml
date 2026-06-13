@@ -1,0 +1,29 @@
+id: "DISCRETE-224"
+concept_name: "图论基础 - 无向图与有向图的严格定义及其邻接矩阵/邻接表表示 (n_224)"
+sub_topics:
+  - "图的集合语言定义 G=(V, E)"
+  - "有向边的序偶表示与无向边的集合表示"
+  - "邻接矩阵的代数性质"
+  - "邻接表在稀疏图存储中的空间优势"
+llm_physical_mapping: "mundane physical metaphor: like a grid of mailboxes (adjacency matrix) vs. each person having a personalized list of friends' names (adjacency list) on a sticky note."
+code_implementation: |
+  import networkx as nx
+  import numpy as np
+  
+  def graph_representations():
+      G = nx.DiGraph()
+      G.add_edges_from([(1, 2), (2, 3)])
+      adj_matrix = nx.to_numpy_array(G)
+      adj_list = nx.to_dict_of_lists(G)
+      return adj_matrix, adj_list
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import networkx as nx
+    import numpy as np
+    G = nx.DiGraph()
+    G.add_edges_from([(1, 2), (2, 3)])
+    adj_matrix = nx.to_numpy_array(G)
+    # Check shape and specific elements
+    assert adj_matrix.shape == (3, 3)
+    assert adj_matrix[0, 1] == 1.0
+    assert adj_matrix[1, 0] == 0.0

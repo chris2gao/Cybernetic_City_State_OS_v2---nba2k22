@@ -1,0 +1,52 @@
+concept_node:
+  id: "GEOMETRY-028"
+  title: "直线与角（平行线/垂线/角的性质） - 平行线的判定与性质（同位角、内错角、同旁内角的转换关系） (n_148)"
+  sub_topics:
+    - "同位角相等判定平行线及其性质"
+    - "内错角相等判定平行线及其性质"
+    - "同旁内角互补判定平行线及其性质"
+    - "平行公理：过直线外一点有且仅有一条平行线"
+  llm_physical_mapping: "mundane physical metaphor: train tracks intersecting a straight road. The angles formed at each intersection must be identical (corresponding angles) for the tracks to maintain constant distance and never meet."
+  code_implementation: |
+    import torch
+    
+    # PyTorch simulating parallel lines with identical normal vectors
+    def is_parallel(normal1: torch.Tensor, normal2: torch.Tensor, tol: float = 1e-6) -> bool:
+        """
+        Check if two 2D lines are parallel using their normal vectors.
+        Parallel lines have proportional (or identical) normal vectors.
+        """
+        # Cross product magnitude for 2D vectors
+        cross_prod = normal1[0] * normal2[1] - normal1[1] * normal2[0]
+        return bool(torch.abs(cross_prod) < tol)
+    
+    # Example: two lines with parallel normal vectors
+    n1 = torch.tensor([1.0, -2.0])
+    n2 = torch.tensor([-1.0, 2.0])
+    
+    parallel_check = is_parallel(n1, n2)
+    print(f"Lines are parallel: {parallel_check}")
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      from sympy.geometry import Point, Line
+      
+      # Define points to construct lines
+      p1, p2 = Point(0, 0), Point(2, 1)
+      p3, p4 = Point(0, 3), Point(2, 4)
+      
+      # Create lines
+      L1 = Line(p1, p2)
+      L2 = Line(p3, p4)
+      
+      # SymPy geometry parallelism checks
+      is_parallel = L1.is_parallel(L2)
+      assert is_parallel == True, "Lines should be parallel"
+      
+      # Transversal line
+      p5, p6 = Point(1, -1), Point(1, 5)
+      transversal = Line(p5, p6)
+      
+      # Intersections (where corresponding/alternate interior angles would be located)
+      inter1 = L1.intersection(transversal)
+      inter2 = L2.intersection(transversal)

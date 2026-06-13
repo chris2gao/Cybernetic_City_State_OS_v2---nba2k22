@@ -1,0 +1,52 @@
+version: "9.1"
+id: "TRIG-005"
+title: "单位圆 - 三角函数在四个象限的符号正负（通过坐标正负自然推导，严禁死记口诀）"
+sub_topics:
+  - "第一象限坐标符号与函数值正负"
+  - "第二象限坐标符号与函数值正负"
+  - "第三象限坐标符号与函数值正负"
+  - "第四象限坐标符号与函数值正负"
+llm_physical_mapping: "Cartesian quadrants mapped to pos/neg signs. The (x, y) coordinates on the unit circle directly correspond to (cos(θ), sin(θ)). We derive the signs naturally from the Cartesian axes instead of rote memorization. Quadrant I: (+x, +y), Quadrant II: (-x, +y), Quadrant III: (-x, -y), Quadrant IV: (+x, -y)."
+code_implementation: >
+  import torch
+  import math
+
+  # Angles representing Quadrants 1, 2, 3, 4
+  angles = torch.tensor([math.pi/4, 3*math.pi/4, 5*math.pi/4, 7*math.pi/4])
+
+  cos_vals = torch.cos(angles) # corresponds to x-coordinates
+  sin_vals = torch.sin(angles) # corresponds to y-coordinates
+
+  cos_signs = torch.sign(cos_vals)
+  sin_signs = torch.sign(sin_vals)
+
+  print(f"x-coordinate (cos) signs per quadrant: {cos_signs.tolist()}")
+  print(f"y-coordinate (sin) signs per quadrant: {sin_signs.tolist()}")
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+
+    # Test specific angles in the four quadrants
+    angles = [sp.pi/4, 3*sp.pi/4, 5*sp.pi/4, 7*sp.pi/4]
+    
+    # Q1: x > 0, y > 0
+    q1_cos = sp.cos(angles[0])
+    q1_sin = sp.sin(angles[0])
+    assert q1_cos > 0 and q1_sin > 0, "Q1 coordinates must be (+, +)"
+    
+    # Q2: x < 0, y > 0
+    q2_cos = sp.cos(angles[1])
+    q2_sin = sp.sin(angles[1])
+    assert q2_cos < 0 and q2_sin > 0, "Q2 coordinates must be (-, +)"
+    
+    # Q3: x < 0, y < 0
+    q3_cos = sp.cos(angles[2])
+    q3_sin = sp.sin(angles[2])
+    assert q3_cos < 0 and q3_sin < 0, "Q3 coordinates must be (-, -)"
+    
+    # Q4: x > 0, y < 0
+    q4_cos = sp.cos(angles[3])
+    q4_sin = sp.sin(angles[3])
+    assert q4_cos > 0 and q4_sin < 0, "Q4 coordinates must be (+, -)"
+
+    print("All quadrant sign deductions passed.")

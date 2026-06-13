@@ -1,0 +1,26 @@
+id: "ANALYTIC_GEO-388"
+concept_name: "射影坐标初步 - 发生学溯源：齐次坐标与文艺复兴透视法，3D 引擎透视投影的底座 (n_388)"
+sub_topics:
+  - "笛卡尔坐标向齐次坐标 [x, y, 1] 的升维映射"
+  - "射影平面的公理化：平行线交于无穷远点"
+  - "射影变换（保线变换）与交比不变量"
+  - "计算机视觉中相机成像模型的数学原型"
+llm_physical_mapping: "mundane physical metaphor: Imagine looking down a straight railroad track; the parallel steel rails appear to meet at a single vanishing point on the horizon. Homogeneous coordinates add an extra 'depth' number to standard coordinates, allowing math to formally treat that infinite vanishing point like any regular location on a piece of paper."
+code_implementation: |
+  import sympy as sp
+  
+  def homogeneous_point(x, y):
+      return sp.Matrix([x, y, 1])
+      
+  def project_to_cartesian(h_point):
+      w = h_point[2]
+      return sp.Matrix([h_point[0]/w, h_point[1]/w])
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    h_point = sp.Matrix([4, 6, 2])
+    w = h_point[2]
+    cartesian = sp.Matrix([h_point[0]/w, h_point[1]/w])
+    
+    assert list(cartesian) == [2, 3]

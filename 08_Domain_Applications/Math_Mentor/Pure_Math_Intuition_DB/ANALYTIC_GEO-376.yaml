@@ -1,0 +1,28 @@
+id: "ANALYTIC_GEO-376"
+concept_name: "曲线方程（圆锥曲线） - 发生学溯源：平面切割双圆锥体产生的圆、椭圆、抛物线与双曲线 (n_376)"
+sub_topics:
+  - "丹德林球 (Dandelin Spheres) 的几何逻辑"
+  - "切割角与圆锥母线夹角的关系判定"
+  - "圆锥曲线的统一极坐标定义"
+  - "历史上从立体截面到平面轨迹的认知跨越"
+llm_physical_mapping: "mundane physical metaphor: shining a flashlight against a wall. If shining straight, you see a circle. Tilt it slightly, it stretches into an ellipse. Tilt it parallel to the wall, it's a parabola. Tilt it further, it becomes a hyperbola branch."
+code_implementation: |
+  import sympy as sp
+  x, y = sp.symbols('x y')
+  # Ellipse equation from cutting a cone
+  ellipse_eq = sp.Eq(x**2 / 4 + y**2 / 9, 1)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    # Circle as a special ellipse
+    circle = sp.Ellipse(sp.Point(0, 0), hradius=3, vradius=3)
+    assert circle.eccentricity == 0
+    
+    # Ellipse
+    ellipse = sp.Ellipse(sp.Point(0, 0), hradius=5, vradius=3)
+    assert ellipse.eccentricity == sp.Rational(4, 5)
+    
+    # Parabola
+    parabola = sp.Parabola(sp.Point(0, 1), sp.Line(sp.Point(0, -1), sp.Point(1, -1)))
+    assert parabola.eccentricity == 1

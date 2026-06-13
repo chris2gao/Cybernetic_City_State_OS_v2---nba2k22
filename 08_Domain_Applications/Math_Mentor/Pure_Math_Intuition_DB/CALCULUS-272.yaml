@@ -1,0 +1,25 @@
+id: "CALCULUS-272"
+concept_name: "积分（定积分/不定积分） - 不定积分（原函数族）的定义 (n_272)"
+sub_topics:
+  - "原函数的定义与存在性"
+  - "积分常数 C 的物理意义（初值条件的缺失）"
+  - "不定积分的基本公式表"
+  - "线性性质与简单化简技巧"
+llm_physical_mapping: "A car's speedometer reading (derivative) doesn't tell you the starting city. Adding +C is like picking the starting city on a map to track the total journey (integral)."
+code_implementation: |
+  import sympy as sp
+  x = sp.Symbol('x')
+  f = 2 * x
+  # Integration yields a family of functions, often written implicitly with + C
+  indefinite_integral = sp.integrate(f, x) # Result is x**2
+  # C is represented implicitly by sympy unless we add it
+  C = sp.Symbol('C')
+  family_of_functions = indefinite_integral + C
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x, C = sp.symbols('x C')
+    f = 2 * x
+    F = sp.integrate(f, x) + C
+    # Verify that the derivative of the family of functions brings us back to f
+    assert sp.diff(F, x) == f

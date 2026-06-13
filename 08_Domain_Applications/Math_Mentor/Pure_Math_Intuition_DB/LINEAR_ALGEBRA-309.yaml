@@ -1,0 +1,29 @@
+id: "LINEAR_ALGEBRA-309"
+concept_name: "向量空间 - 大模型映射：词嵌入（Word Embeddings）的物理意义——语义相似度的几何近邻 (n_309)"
+sub_topics:
+  - "高维空间中的语义向量化表示"
+  - "欧氏距离与余弦相似度作为关系度量"
+  - "语义偏置在空间轴向上的分布"
+  - "词嵌入维度作为特征提取精度的物理权衡"
+llm_physical_mapping: "spatial deformation/stretching/rotating: Words are mapped to points in a high-dimensional space where concepts spatially deform according to semantic meaning; rotation angles (cosine similarity) signify closeness in meaning rather than absolute distance."
+code_implementation: |
+  import sympy as sp
+  
+  # Mock 3D word embeddings
+  king = sp.Matrix([0.9, 0.5, 0.1])
+  man = sp.Matrix([0.8, 0.1, 0.1])
+  woman = sp.Matrix([0.1, 0.8, 0.1])
+  
+  # king - man + woman = queen
+  queen_approx = king - man + woman
+  
+  # Cosine similarity calculation (dot product / (norm1 * norm2))
+  def cos_sim(v1, v2):
+      return v1.dot(v2) / (v1.norm() * v2.norm())
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    v1 = sp.Matrix([1, 0, 0])
+    v2 = sp.Matrix([0, 1, 0])
+    dot_prod = v1.dot(v2)
+    assert dot_prod == 0

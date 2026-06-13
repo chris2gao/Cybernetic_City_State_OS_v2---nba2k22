@@ -1,0 +1,69 @@
+concept_node:
+  id: "GEOMETRY-035"
+  name: "几何变换（平移/旋转/反射/缩放） - 全等图形与等距变换的等价性（全等本质上是一个或多个等距变换的复合） (n_155)"
+  sub_topics:
+    - "全等图形的动态重合定义"
+    - "单一变换判定全等（平移、旋转、反射）"
+    - "组合变换（复合变换）下的图形一致性"
+    - "全等图形中对应元素的映射关系"
+  llm_physical_mapping: "Moving a rigid cookie cutter or a stencil over a piece of paper. You can slide it (translation), spin it (rotation), or flip it over (reflection). No matter what sequence of these motions you perform, the shape and size of the cutout it produces remain absolutely identical (congruent). Thus, congruence is just a history of rigid physical movements."
+  code_implementation: |-
+    import torch
+    import math
+
+    def apply_rigid_transformations(points: torch.Tensor, translation_vec: torch.Tensor, angle_rad: float, reflect_x: bool = False) -> torch.Tensor:
+        # points: [N, 2] tensor representing geometric vertices
+        # 1. Translation
+        transformed = points + translation_vec
+        
+        # 2. Rotation around origin
+        cos_theta = math.cos(angle_rad)
+        sin_theta = math.sin(angle_rad)
+        rot_matrix = torch.tensor([
+            [cos_theta, -sin_theta],
+            [sin_theta,  cos_theta]
+        ], dtype=points.dtype)
+        transformed = torch.matmul(transformed, rot_matrix.T)
+        
+        # 3. Reflection (across y-axis if reflect_x is True, meaning x -> -x)
+        if reflect_x:
+            ref_matrix = torch.tensor([[-1.0, 0.0], [0.0, 1.0]], dtype=points.dtype)
+            transformed = torch.matmul(transformed, ref_matrix)
+            
+        return transformed
+
+    # Example: A right triangle
+    triangle = torch.tensor([[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]])
+    translation = torch.tensor([2.0, 3.0])
+    
+    # Apply sequence of rigid transformations
+    transformed_triangle = apply_rigid_transformations(triangle, translation, angle_rad=math.pi/2, reflect_x=True)
+    
+    # The original and transformed triangles are perfectly congruent (isometric equivalence).
+    # Area, side lengths, and interior angles are preserved.
+  v8_sanity_audit:
+    sympy_pseudo_code: |-
+      from sympy import Point, Polygon, pi, Line
+      
+      # Define original shape
+      p1, p2, p3 = Point(0, 0), Point(1, 0), Point(0, 1)
+      poly_original = Polygon(p1, p2, p3)
+      
+      # Apply rigid transformations (Isometries)
+      # 1. Translate by vector (2, 3)
+      poly_translated = poly_original.translate(2, 3)
+      
+      # 2. Rotate by pi/2 around origin
+      poly_rotated = poly_translated.rotate(pi/2)
+      
+      # 3. Reflect across Y axis (x=0)
+      y_axis = Line(Point(0, 0), Point(0, 1))
+      poly_reflected = poly_rotated.reflect(y_axis)
+      
+      # Check if shapes are geometrically equivalent (congruent)
+      # In SymPy, isometric transformations guarantee congruence.
+      # We can verify by checking if invariants like area and perimeter are conserved.
+      assert abs(poly_original.area) == abs(poly_reflected.area)
+      assert poly_original.perimeter == poly_reflected.perimeter
+      
+      # The equivalence under these transformations fundamentally defines geometric congruence.

@@ -1,0 +1,29 @@
+id: "LINEAR_ALGEBRA-312"
+concept_name: "矩阵运算 - 矩阵的基本运算及其代数性质 (n_312)"
+sub_topics:
+  - "矩阵加法与数乘的线性性质"
+  - "转置矩阵 (Transpose) 的定义与性质"
+  - "矩阵幂运算 A^n 的含义"
+  - "分块矩阵的运算规则与计算优势"
+llm_physical_mapping: "spatial deformation/stretching/rotating: Matrix powers represent repeating the same spatial deformation multiple times. Transposition switches rows and columns, algebraically mirroring dual operations without breaking the underlying grid lines."
+code_implementation: |
+  import sympy as sp
+  
+  A = sp.Matrix([[1, 2], [3, 4]])
+  B = sp.Matrix([[2, 0], [0, 2]])
+  
+  # Addition
+  C = A + B
+  
+  # Transpose
+  A_T = A.T
+  
+  # Power
+  A_2 = A**2
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    A = sp.Matrix([[1, 2], [3, 4]])
+    A_T = A.T
+    assert A_T == sp.Matrix([[1, 3], [2, 4]])
+    assert A**2 == A * A

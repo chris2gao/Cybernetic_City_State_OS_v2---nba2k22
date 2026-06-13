@@ -1,0 +1,25 @@
+id: "DISCRETE-243"
+concept_name: "布尔代数 - 布尔函数的定义、真值表与逻辑门 (AND, OR, NOT, XOR) 的物理电路映射 (n_243)"
+sub_topics:
+  - "布尔函数的数学表达式"
+  - "逻辑门的物理实现原理"
+  - "复合逻辑电路的真值表分析"
+  - "异或 (XOR) 在奇偶校验中的物理作用"
+llm_physical_mapping: "mundane physical metaphor: switches in a circuit. AND is two switches in series (both must be closed for water/electricity to flow), OR is two switches in parallel (if either is closed, it flows), NOT is a switch that rests closed but opens when pushed. XOR is like a two-way staircase light switch, where flipping either switch changes the state."
+code_implementation: |
+  def boolean_gates(a: bool, b: bool):
+      return {
+          "AND": a and b,
+          "OR": a or b,
+          "NOT_A": not a,
+          "XOR": a != b
+      }
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    from sympy.logic.boolalg import And, Or, Not, Xor
+    from sympy.abc import A, B
+    
+    assert And(True, True) == True
+    assert Or(False, True) == True
+    assert Not(True) == False
+    assert Xor(True, False) == True

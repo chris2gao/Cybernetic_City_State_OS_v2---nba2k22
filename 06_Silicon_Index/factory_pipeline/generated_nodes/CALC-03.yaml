@@ -1,0 +1,24 @@
+concept_node:
+  id: "CALC-03"
+  symbol: "\\lim_{x \\to a} f(x) = f(a)"
+  name: "Continuity"
+  pure_math_definition:
+    description: "A function is continuous at a if its limit as x approaches a equals f(a)."
+    axioms:
+      - "Limit exists and equals function value"
+  llm_physical_mapping:
+    tensor_shape_flow: "No jumps in tensor gradient flow."
+    cognitive_intuition: "Drawing a curve without lifting the pen."
+  code_implementation:
+    snippet: |
+      import torch
+      x = torch.tensor([0.0], requires_grad=True)
+      f_a = x**2
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      x, a = sp.symbols('x a')
+      f = x**2
+      lim_val = sp.limit(f, x, a)
+      f_val = f.subs(x, a)
+      assert lim_val == f_val

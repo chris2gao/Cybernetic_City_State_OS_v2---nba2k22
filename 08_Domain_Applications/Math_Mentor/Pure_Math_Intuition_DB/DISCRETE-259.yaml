@@ -1,0 +1,38 @@
+id: "DISCRETE-259"
+concept_name: "容斥原理（离散应用） - 发生学溯源：处理多集合重叠区域时，为了不重复计算而发明的动态平衡机器 (n_259)"
+sub_topics:
+  - "维恩图的逻辑重叠分析"
+  - "加减交替的能量平衡直觉"
+  - "集合交集的组合权重计算"
+  - "概率论中 Poincaré 公式的前置逻辑"
+llm_physical_mapping: "mundane physical metaphor: Painting overlapping circles of light on a wall. When two spotlights overlap, the center is twice as bright. To calculate total area covered, you add the circles, then subtract the over-bright overlapped zone to restore balance."
+code_implementation: |
+  def inclusion_exclusion_2_sets(A, B):
+      size_A = len(A)
+      size_B = len(B)
+      size_intersection = len(A.intersection(B))
+      
+      # |A ∪ B| = |A| + |B| - |A ∩ B|
+      union_size = size_A + size_B - size_intersection
+      return union_size
+
+  set_A = {1, 2, 3, 4}
+  set_B = {3, 4, 5, 6}
+  
+  calculated_union = inclusion_exclusion_2_sets(set_A, set_B)
+  actual_union = len(set_A.union(set_B))
+  print(f"Calculated: {calculated_union}, Actual: {actual_union}")
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy
+    
+    A, B, A_int_B = sympy.symbols('A B A_int_B')
+    # PIE formula
+    union_formula = A + B - A_int_B
+    
+    # Specific numerical check
+    val_A = 4
+    val_B = 4
+    val_int = 2
+    
+    assert union_formula.subs({A: val_A, B: val_B, A_int_B: val_int}) == 6

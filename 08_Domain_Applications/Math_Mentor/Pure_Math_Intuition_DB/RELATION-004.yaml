@@ -1,0 +1,77 @@
+concept_node:
+  id: "RELATION-004"
+  domain: "Discrete Mathematics / Abstract Algebra"
+  name: "等价关系 - 等价类构成的商集 (Quotient Set)"
+  sub_topics:
+    - '商集的定义'
+    - '自然映射 (Canonical projection)'
+    - '同余关系与商代数初步'
+    - '商集在数学构造中的意义（如构造有理数）'
+  llm_physical_mapping:
+    metaphor: "Sorting objects into distinct bins based on a shared property (e.g., sorting mail by zip code)."
+    description: "Imagine a post office with unsorted mail (the original set). An equivalence relation is the rule 'has the same zip code'. An equivalence class is a specific mailbox containing all letters for one zip code. The Quotient Set is the collection of all these mailboxes. You are no longer looking at individual letters; you are operating on the level of mailboxes. The canonical projection is the act of dropping a specific letter into its corresponding mailbox."
+  code_implementation: |
+    import torch
+
+    def quotient_set(elements: torch.Tensor, eq_relation_matrix: torch.Tensor):
+        """
+        Simulates the construction of a quotient set from an equivalence relation.
+        elements: 1D tensor [N]
+        eq_relation_matrix: 2D boolean tensor [N, N] (reflexive, symmetric, transitive)
+        """
+        n = elements.shape[0]
+        visited = torch.zeros(n, dtype=torch.bool)
+        classes = []
+
+        for i in range(n):
+            if not visited[i]:
+                # The equivalence class of element i is represented by its row
+                eq_class_mask = eq_relation_matrix[i]
+                
+                # Extract the elements in this equivalence class
+                eq_class = elements[eq_class_mask]
+                classes.append(eq_class)
+                
+                # Mark these elements as visited so they aren't processed again
+                visited = visited | eq_class_mask
+
+        return classes
+
+    # Example: set A = {0, 1, 2, 3, 4, 5}, relation x ~ y iff x mod 3 == y mod 3
+    elements = torch.arange(6)
+    
+    # Constructing the equivalence relation matrix
+    mod_vals = elements % 3
+    eq_matrix = (mod_vals.unsqueeze(0) == mod_vals.unsqueeze(1))
+    
+    # Q = A / ~
+    q_set = quotient_set(elements, eq_matrix)
+    # Output: [tensor([0, 3]), tensor([1, 4]), tensor([2, 5])]
+    
+    # Canonical Projection mapping: a -> [a]
+    def canonical_projection(element_idx: int, eq_matrix: torch.Tensor, elements: torch.Tensor):
+        return elements[eq_matrix[element_idx]]
+        
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      from sympy import symbols, Equivalent, Implies
+      
+      # Let x, y be elements of a set A
+      x, y = symbols('x y')
+      
+      # Let R(x, y) denote x is equivalent to y
+      R_xy = symbols('R(x,y)')
+      
+      # Let C(x) denote the equivalence class of x
+      C_x_eq_C_y = symbols('C(x)==C(y)')
+      C_x_neq_C_y = symbols('C(x)!=C(y)')
+      
+      # Disjoint property
+      C_x_intersect_C_y_empty = symbols('Intersect(C(x),C(y))==EmptySet')
+      
+      # Fundamental Theorem of Equivalence Relations
+      # 1. Two elements are equivalent if and only if their equivalence classes are equal
+      theorem_1 = Equivalent(R_xy, C_x_eq_C_y)
+      
+      # 2. If two equivalence classes are not equal, they are disjoint
+      theorem_2 = Implies(C_x_neq_C_y, C_x_intersect_C_y_empty)

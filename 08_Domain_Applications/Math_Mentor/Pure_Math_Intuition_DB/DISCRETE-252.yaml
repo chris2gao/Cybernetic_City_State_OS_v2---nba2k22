@@ -1,0 +1,36 @@
+id: "DISCRETE-252"
+concept_name: "偏序集与格 - 拓扑排序 (Topological Sorting)：在偏序集上规划无冲突的执行路径（如并发任务调度） (n_252)"
+sub_topics:
+  - "入度为零结点的依次剔除算法"
+  - "排序结果的非唯一性与全序扩张"
+  - "循环依赖探测与死锁预防"
+  - "项目管理中关键路径法 (CPM) 的底座"
+llm_physical_mapping: "mundane physical metaphor: getting dressed in the morning. You cannot put on your shoes before your socks (dependency). Topological sorting is just laying out all clothing items in a straight line from left to right so that you never pick up an item before its prerequisites are met."
+code_implementation: |
+  def topological_sort(graph):
+      # graph is dict: {node: [dependencies]}
+      in_degree = {u: 0 for u in graph}
+      for u in graph:
+          for v in graph[u]:
+              if v not in in_degree: in_degree[v] = 0
+              in_degree[v] += 1
+              
+      queue = [u for u in in_degree if in_degree[u] == 0]
+      sorted_order = []
+      
+      while queue:
+          u = queue.pop(0)
+          sorted_order.append(u)
+          for v in graph.get(u, []):
+              in_degree[v] -= 1
+              if in_degree[v] == 0:
+                  queue.append(v)
+                  
+      return sorted_order if len(sorted_order) == len(in_degree) else []
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    # Simple dependency verification
+    socks = 1
+    shoes = 2
+    order = [socks, shoes]
+    assert order.index(socks) < order.index(shoes)

@@ -1,0 +1,34 @@
+id: "DISCRETE-260"
+concept_name: "容斥原理（离散应用） - 维恩图 (Venn Diagram) 面积割补证明 (n_260)"
+sub_topics:
+  - "指示函数的求和属性"
+  - "二项式系数恒等式在证明中的作用"
+  - "几何面积向离散计数的映射"
+  - "复杂重叠区域的层级剥离"
+llm_physical_mapping: "mundane physical metaphor: Stacking transparent colored plastic sheets. An element in exactly 'k' sets has 'k' sheets stacked. The inclusion-exclusion formula uses alternating addition and subtraction to ensure every element, regardless of how many sheets cover it, is counted exactly once, peeling away the excess."
+code_implementation: |
+  from math import comb
+
+  def verify_element_counted_once(k):
+      # If an element belongs to k overlapping sets,
+      # how many times is it counted in the Inclusion-Exclusion formula?
+      # Formula: C(k,1) - C(k,2) + C(k,3) ... + (-1)^(k-1) C(k,k)
+      counted_times = 0
+      for i in range(1, k + 1):
+          counted_times += ((-1)**(i - 1)) * comb(k, i)
+      return counted_times
+
+  # Test for elements present in 1, 2, 3, or 4 intersecting sets
+  for k_sets in range(1, 5):
+      print(f"Element in {k_sets} sets is counted {verify_element_counted_once(k_sets)} time(s).")
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy
+    from sympy import binomial
+    
+    # Prove that sum_{i=1}^k (-1)^(i-1) binomial(k, i) == 1
+    # This is equivalent to 1 - (1 - 1)^k == 1
+    k = 5
+    sum_val = sum(((-1)**(i-1)) * binomial(k, i) for i in range(1, k+1))
+    
+    assert sum_val == 1

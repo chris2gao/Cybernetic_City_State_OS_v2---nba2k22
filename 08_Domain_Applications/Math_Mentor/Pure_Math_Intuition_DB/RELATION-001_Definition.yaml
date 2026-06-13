@@ -1,0 +1,78 @@
+concept_node:
+  id: RELATION-001
+  name: Definition of a Relation
+  chinese_name: 关系的定义 - 笛卡尔积的子集
+  description: A binary relation from a set A to a set B is a subset of the Cartesian
+    product A × B. It assigns truth values to pairs (a, b) indicating whether a is
+    related to b.
+  llm_physical_mapping: A relation between set A and set B can be physically mapped
+    as a boolean mask over the A x B Cartesian product tensor. For finite sets, this
+    is equivalent to an adjacency matrix where the entry at (i, j) is True if the
+    i-th element of A relates to the j-th element of B, and False otherwise.
+  code_implementation: 'import torch
+
+
+    # Define two finite sets (1D tensors) A and B
+
+    A = torch.tensor([1, 2, 3])
+
+    B = torch.tensor([2, 4])
+
+
+    # Cartesian product represented via broadcasting to form a 2D boolean mask
+
+    # We want to represent the relation ''a < b''
+
+
+    A_expanded = A.unsqueeze(1) # shape (3, 1)
+
+    B_expanded = B.unsqueeze(0) # shape (1, 2)
+
+
+    # Boolean mask (adjacency matrix) for the relation a < b
+
+    relation_matrix = A_expanded < B_expanded
+
+
+    print("Set A:", A)
+
+    print("Set B:", B)
+
+    print("Relation Matrix (A x B) for ''a < b'':")
+
+    print(relation_matrix)
+
+    '
+  v8_sanity_audit:
+    sympy_pseudo_code: 'from sympy import FiniteSet, ProductSet
+
+
+      # Define sets A and B
+
+      A = FiniteSet(1, 2, 3)
+
+      B = FiniteSet(2, 4)
+
+
+      # Cartesian product A x B
+
+      A_x_B = ProductSet(A, B)
+
+
+      # Define a relation R: subset of A x B where a < b
+
+      R = FiniteSet(*[(a, b) for a in A for b in B if a < b])
+
+
+      # Sanity check: assert that R is indeed a subset of the Cartesian product
+
+      assert R.is_subset(A_x_B), "Relation must be a subset of the Cartesian product"
+
+      print("Sanity check passed: R is a subset of A x B.")
+
+      '
+  sub_topics:
+  - 二元关系作为笛卡尔积子集的定义
+  - 关系的定义域、值域与域
+  - 关系矩阵的表示方法
+  - 关系图（有向图）的表示方法

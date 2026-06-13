@@ -1,0 +1,25 @@
+id: "PROB_STAT-365"
+concept_name: "全概率公式与贝叶斯定理 - 基于先验信念吸收新证据输出后验信念的逻辑过程 (n_365)"
+sub_topics:
+  - "先验分布 (Prior) 与后验分布 (Posterior)"
+  - "似然函数作为信息的过滤器"
+  - "贝叶斯更新的递归属性：今日的后验是明日的先验"
+  - "贝叶斯推理在大模型不确定性量化中的作用"
+llm_physical_mapping: "Imagine a continuous chip distribution on a table representing your prior belief. As new evidence arrives like weighted dice rolls, you sweep away chips that contradict the evidence, renormalizing the remaining pile to form the posterior chip distribution."
+code_implementation: |
+  import sympy as sp
+  from sympy.stats import Beta, density
+  # Conjugate prior Beta-Binomial parameters
+  alpha, beta_param, n, k = sp.symbols('alpha beta n k', positive=True)
+  # Posterior parameters
+  post_alpha = alpha + k
+  post_beta = beta_param + n - k
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    alpha, beta_param, n, k = sp.symbols('alpha beta n k', positive=True)
+    post_alpha = alpha + k
+    post_beta = beta_param + n - k
+    val_alpha = post_alpha.subs({alpha: 1, k: 10})
+    val_beta = post_beta.subs({beta_param: 1, n: 10, k: 10})
+    assert val_alpha == 11 and val_beta == 1

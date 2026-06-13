@@ -1,0 +1,32 @@
+id: "ANALYTIC_GEO-385"
+concept_name: "坐标系变换（旋转/平移） - 平移变换与旋转变换矩阵 (n_385)"
+sub_topics:
+  - "坐标轴平移的代数转换"
+  - "旋转变换矩阵的推导及其正交性"
+  - "复合变换的矩阵乘法顺序（左乘与右乘的区别）"
+  - "基变换与坐标变换的反向演化逻辑"
+llm_physical_mapping: "mundane physical metaphor: Imagine sliding a transparent map over a table (translation) and then pivoting it around a pin (rotation). No matter how you move or turn the map, the distances between the cities drawn on it never change, but the order of operations matters: turning then sliding ends up in a different spot than sliding then turning."
+code_implementation: |
+  import sympy as sp
+  
+  def rotate_2d(point, theta):
+      p = sp.Matrix(point)
+      R = sp.Matrix([
+          [sp.cos(theta), -sp.sin(theta)],
+          [sp.sin(theta), sp.cos(theta)]
+      ])
+      return R * p
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    p = sp.Matrix([1, 0])
+    theta = sp.pi / 2
+    R = sp.Matrix([
+        [sp.cos(theta), -sp.sin(theta)],
+        [sp.sin(theta), sp.cos(theta)]
+    ])
+    
+    p_rot = R * p
+    assert sp.simplify(p_rot[0]) == 0
+    assert sp.simplify(p_rot[1]) == 1

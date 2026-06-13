@@ -1,0 +1,36 @@
+id: "DISCRETE-254"
+concept_name: "算法复杂度基础（大O表示法） - 物理意义：评估算法在吞噬无限膨胀数据时，其算力与时间消耗的“渐进边界” (n_254)"
+sub_topics:
+  - "忽略常数项与低阶项的哲学依据"
+  - "时间复杂度与空间复杂度的权衡"
+  - "算法可扩展性的量化标准"
+  - "输入规模 n 对执行时间的压迫分析"
+llm_physical_mapping: "mundane physical metaphor: A conveyor belt system evaluating motor strain. At low speeds (small n), friction (constant terms) matters, but as you dump tons of gravel infinitely fast (large n), only the motor's core scaling mechanism dictates when the belt snaps."
+code_implementation: |
+  def evaluate_growth(n):
+      # Exact steps: 3*n^2 + 50*n + 1000
+      exact_steps = 3 * (n ** 2) + 50 * n + 1000
+      
+      # Dominant term representing O(n^2)
+      dominant_term = 3 * (n ** 2)
+      
+      ratio = dominant_term / exact_steps
+      return exact_steps, ratio
+
+  # As n grows, the dominant term takes over completely
+  for n in [10, 100, 10000]:
+      exact, ratio = evaluate_growth(n)
+      print(f"n={n}: Exact={exact}, Dominant Ratio={ratio:.4f}")
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy
+    from sympy.abc import n
+    
+    exact_func = 3*n**2 + 50*n + 1000
+    dominant_func = n**2
+    
+    # Limit of exact/dominant as n -> infinity is a constant (3), proving O(n^2)
+    limit_val = sympy.limit(exact_func / dominant_func, n, sympy.oo)
+    
+    assert limit_val == 3
+    assert sympy.O(exact_func, (n, sympy.oo)) == sympy.O(n**2, (n, sympy.oo))

@@ -1,0 +1,44 @@
+concept_node:
+  id: "GEOMETRY-020"
+  name: "坐标几何初步 - 线段的中点坐标公式"
+  sub_topics:
+    - "中点坐标作为端点坐标算术平均数的意义"
+    - "中点公式在坐标平面内的分量形式推导"
+    - "平行线分线段成比例定理在坐标系的体现"
+    - "中点公式在中心对称问题中的代数表达"
+  llm_physical_mapping: "Imagine two friends standing at different intersections in a city grid. The midpoint is exactly where they would meet if they both walked at the same speed straight toward each other. In physics, if you place two equal weights at two coordinates on a rigid massless rod, the midpoint represents the exact center of mass where the system perfectly balances."
+  code_implementation: |
+    import torch
+
+    def calculate_midpoint(point_a, point_b):
+        """
+        Calculates the midpoint of a line segment given its endpoints using PyTorch.
+        Applies the component-wise arithmetic mean: (A + B) / 2
+        """
+        tensor_a = torch.tensor(point_a, dtype=torch.float32)
+        tensor_b = torch.tensor(point_b, dtype=torch.float32)
+        
+        # Calculate arithmetic mean
+        midpoint = (tensor_a + tensor_b) / 2.0
+        
+        return midpoint.tolist()
+        
+    # Example: calculate_midpoint([1.0, 2.0], [5.0, 8.0]) -> [3.0, 5.0]
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      
+      def verify_midpoint_algebraically():
+          # Define generic coordinates for two points
+          x1, y1, x2, y2 = sp.symbols('x1 y1 x2 y2')
+          p1 = sp.geometry.Point(x1, y1)
+          p2 = sp.geometry.Point(x2, y2)
+          
+          # Compute midpoint using sympy's geometric representation
+          mid = p1.midpoint(p2)
+          
+          # Validate algebraic equivalence
+          assert sp.simplify(mid.x - (x1 + x2) / 2) == 0
+          assert sp.simplify(mid.y - (y1 + y2) / 2) == 0
+          
+          return mid

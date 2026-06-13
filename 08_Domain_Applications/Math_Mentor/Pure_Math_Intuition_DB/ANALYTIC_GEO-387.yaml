@@ -1,0 +1,35 @@
+id: "ANALYTIC_GEO-387"
+concept_name: "曲线的切线与法线 - 利用多元微积分计算空间曲线切向量与曲面法向量 (n_387)"
+sub_topics:
+  - "参数曲线的切向量 r'(t)"
+  - "隐式曲面 F(x,y,z)=0 的梯度作为法向量"
+  - "切平面方程与法线方程的代数构造"
+  - "局部线性化在曲面几何特征分析中的应用"
+llm_physical_mapping: "mundane physical metaphor: Imagine riding a rollercoaster in the dark; the direction your headlight points at any moment is the tangent vector. Now imagine standing on a smooth hill; dropping a plumb bob straight down between your feet gives you the normal vector, pointing directly away from the surface slope."
+code_implementation: |
+  import sympy as sp
+  
+  def curve_tangent_and_surface_normal():
+      t, x, y, z = sp.symbols('t x y z')
+      
+      # Curve r(t) = [t, t**2, t**3]
+      r = sp.Matrix([t, t**2, t**3])
+      tangent = sp.diff(r, t)
+      
+      # Surface F(x, y, z) = x**2 + y**2 + z**2 - 1
+      F = x**2 + y**2 + z**2 - 1
+      grad = sp.Matrix([sp.diff(F, var) for var in (x, y, z)])
+      
+      return tangent, grad
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    t, x, y, z = sp.symbols('t x y z')
+    r = sp.Matrix([t, t**2, t**3])
+    tangent = sp.diff(r, t)
+    assert list(tangent.subs(t, 1)) == [1, 2, 3]
+    
+    F = x**2 + y**2 + z**2 - 1
+    grad = sp.Matrix([sp.diff(F, var) for var in (x, y, z)])
+    assert list(grad.subs({x:1, y:0, z:0})) == [2, 0, 0]

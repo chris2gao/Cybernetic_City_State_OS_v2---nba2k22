@@ -1,0 +1,23 @@
+id: "CALCULUS-279"
+concept_name: "泰勒展开 - 发生学溯源：将复杂超越函数降阶为简单的多项式求和物理机器 (n_279)"
+sub_topics:
+  - "在特定点附近用多项式逼近曲线的思想"
+  - "逼近精度随项数增加的变化趋势"
+  - "余项（皮亚诺余项、拉格朗日余项）的作用"
+  - "局部多项式近似的物理稳定性"
+llm_physical_mapping: "Sketching a curved river on a map using a series of straight lines. A single line works for a tiny segment, but adding more bendy lines (higher degree terms) traces the river perfectly over a larger stretch."
+code_implementation: |
+  import sympy as sp
+  x = sp.Symbol('x')
+  f = sp.sin(x)
+  # Approximating a transcendental function with a polynomial at x=0
+  taylor_approx = sp.series(f, x, 0, 5).removeO()
+  # taylor_approx is x - x**3/6
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.Symbol('x')
+    f = sp.sin(x)
+    taylor_poly = sp.series(f, x, 0, 4).removeO()
+    # Check that the first derivative at x=0 matches
+    assert sp.diff(taylor_poly, x).subs(x, 0) == sp.diff(f, x).subs(x, 0)

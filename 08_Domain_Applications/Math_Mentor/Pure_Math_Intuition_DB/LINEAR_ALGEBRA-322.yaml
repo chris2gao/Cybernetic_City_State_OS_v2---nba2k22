@@ -1,0 +1,21 @@
+id: "LINEAR_ALGEBRA-322"
+concept_name: "内积空间 - 内积的几何意义（夹角与相似度）、范数（长度）与柯西-施瓦茨不等式 (n_322)"
+sub_topics:
+  - "内积的公理化定义（正定性、对称性、线性）"
+  - "夹角余弦公式 cosθ = <u,v> / (||u|| ||v||)"
+  - "范数 (Norm) 作为长度的度量"
+  - "柯西-施瓦茨不等式的代数证明与物理边界"
+llm_physical_mapping: "spatial deformation/stretching/rotating: Inner product maps to the geometric projection of one vector onto another. It defines the 'rigidity' and metric of the space, allowing us to measure distances and angles between structural axes during a spatial transformation."
+code_implementation: |
+  import sympy as sp
+  u = sp.Matrix([1, 2, 3])
+  v = sp.Matrix([4, 5, 6])
+  inner_product = u.dot(v)
+  norm_u = u.norm()
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    u = sp.Matrix([1, 2, 3])
+    v = sp.Matrix([4, 5, 6])
+    dot_prod = u.dot(v)
+    assert dot_prod**2 <= u.dot(u) * v.dot(v), "Cauchy-Schwarz inequality violated"

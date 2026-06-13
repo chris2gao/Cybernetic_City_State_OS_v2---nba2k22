@@ -1,0 +1,25 @@
+id: "PROB_STAT-363"
+concept_name: "回归分析 - 利用最小二乘法将数据投影到低维线性子空间的误差最小化过程 (n_363)"
+sub_topics:
+  - "一元与多元线性回归模型"
+  - "残差平方和的极小化计算"
+  - "回归系数的显著性检验 (t 检验、F 检验)"
+  - "回归曲线作为条件期望 E[Y|X] 的几何轨迹"
+llm_physical_mapping: "drawing a straight line through a scatter of bullet hole maps to minimize the squared physical distance of chips to the line."
+code_implementation: |
+  import sympy as sp
+  b0, b1 = sp.symbols('b0 b1')
+  x_i, y_i = sp.symbols('x_i y_i')
+  # Sum of squared residuals
+  RSS = sp.Sum((y_i - (b0 + b1*x_i))**2, (x_i, 1, 10))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    b0, b1 = sp.symbols('b0 b1')
+    x_vals = [1, 2, 3]
+    y_vals = [2, 4, 6] # Perfect y = 2x
+    RSS = sum((y_vals[i] - (b0 + b1*x_vals[i]))**2 for i in range(3))
+    eq1 = sp.diff(RSS, b0)
+    eq2 = sp.diff(RSS, b1)
+    solution = sp.solve((eq1, eq2), (b0, b1))
+    assert solution[b0] == 0 and solution[b1] == 2

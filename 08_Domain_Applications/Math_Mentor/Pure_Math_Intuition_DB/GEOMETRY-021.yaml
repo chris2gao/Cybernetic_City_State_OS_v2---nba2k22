@@ -1,0 +1,46 @@
+concept_node:
+  id: "GEOMETRY-021"
+  name: "坐标几何初步 - 直线的斜率 (Slope) 的物理意义与点斜式、截距式方程雏形"
+  sub_topics:
+    - "斜率的物理意义：变化率与倾斜程度"
+    - "两点坐标计算斜率的公式"
+    - "直线的倾斜角与斜率的关系"
+    - "点斜式方程的几何推导"
+    - "截距式方程的定义与适用范围"
+  llm_physical_mapping: "Mundane physical metaphor: The steepness of a hill, a ramp, or a flight of stairs. The slope represents how much you go up (rise, dy) for every step forward (run, dx). A flat road has zero slope, a gentle hill has a small positive slope, and a steep cliff has a very high slope. Going downhill corresponds to a negative slope."
+  code_implementation: |
+    import torch
+
+    def calculate_slope(p1, p2):
+        """
+        Calculate the slope between two points.
+        p1, p2: torch tensors of shape (2,) representing (x, y) coordinates.
+        """
+        dx = p2[0] - p1[0]
+        dy = p2[1] - p1[1]
+        
+        if dx == 0:
+            return float('inf')  # Vertical line
+            
+        slope = dy / dx
+        return slope
+
+    # Example Usage
+    point_a = torch.tensor([1.0, 2.0])
+    point_b = torch.tensor([4.0, 8.0])
+    m = calculate_slope(point_a, point_b)
+    print(f"Slope (dy/dx): {m.item()}")
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      from sympy import Point, Line
+      
+      # Define two points
+      p1 = Point(1, 2)
+      p2 = Point(4, 8)
+      
+      # Create a line connecting the points
+      L = Line(p1, p2)
+      
+      # Extract and verify the slope
+      slope_val = L.slope
+      print(slope_val)

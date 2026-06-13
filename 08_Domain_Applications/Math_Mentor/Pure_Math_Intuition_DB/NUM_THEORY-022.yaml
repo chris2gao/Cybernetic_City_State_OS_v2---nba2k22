@@ -1,0 +1,39 @@
+id: "NUM_THEORY-022"
+topic: "欧拉函数φ(n) - 积性函数性质推导：当 gcd(m,n)=1 时，φ(mn) = φ(m)φ(n) (n_216)"
+sub_topics:
+  - "既约剩余系的直积映射"
+  - "积性函数的定义与验证"
+  - "φ(n) 通项公式的导出"
+  - "在复合模数下的计算简化"
+llm_physical_mapping: |
+  Mundane physical metaphor: Imagine a rectangular area grid with dimensions m and n.
+  When the lengths m and n are coprime (gcd(m, n) = 1), the grid perfectly maps remainders modulo m and modulo n to remainders modulo m*n via the Chinese Remainder Theorem.
+  If we select the columns that are coprime to m and the rows that are coprime to n, the intersection points perfectly form the set of elements coprime to m*n.
+  This means the "coprime area" is simply the product of the coprime dimensions, physically illustrating the multiplicative property φ(mn) = φ(m)φ(n).
+code_implementation: |
+  import torch
+  import math
+
+  def simulate_multiplicative_property(m_val: int, n_val: int):
+      # PyTorch algorithm simulating the multiplicative property of Euler's totient function
+      m = torch.tensor([m_val])
+      n = torch.tensor([n_val])
+      
+      def phi(val_tensor):
+          v = int(val_tensor.item())
+          return sum(1 for i in range(1, v + 1) if math.gcd(v, i) == 1)
+          
+      phi_m = torch.tensor([phi(m)])
+      phi_n = torch.tensor([phi(n)])
+      phi_mn = torch.tensor([phi(m * n)])
+      
+      # Verifying φ(mn) = φ(m)φ(n)
+      is_multiplicative = torch.equal(phi_mn, phi_m * phi_n)
+      return is_multiplicative
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy
+    m = 12
+    n = 35
+    assert sympy.gcd(m, n) == 1
+    assert sympy.totient(m * n) == sympy.totient(m) * sympy.totient(n)

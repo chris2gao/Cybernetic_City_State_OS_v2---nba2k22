@@ -1,0 +1,36 @@
+id: "PROB_STAT-352"
+concept_name: "常用分布（正态/泊松/指数等） - 指数分布：无记忆性的等待时间 (n_352)"
+sub_topics:
+  - "指数密度函数 f(x) = λe^{-λx}"
+  - "无记忆性 (Memoryless Property) 的代数证明"
+  - "与泊松过程的时间间隔关联"
+  - "失效概率与可靠性工程的物理背景"
+llm_physical_mapping: "mundane physical metaphor: waiting for the next randomly occurring bullet hole on the wall. The time spent waiting does not 'build up' wear and tear; every moment feels like starting the wait entirely fresh (memoryless)."
+code_implementation: |
+  import sympy as sp
+  from sympy.stats import Exponential, P, E
+  
+  lam = sp.Symbol('lambda', positive=True)
+  X = Exponential('X', lam)
+  
+  # PDF
+  x = sp.Symbol('x', positive=True)
+  pdf_X = lam * sp.exp(-lam * x)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    from sympy.stats import Exponential, P, density
+    
+    X = Exponential('X', 2)
+    x = sp.Symbol('x', positive=True)
+    
+    pdf_expr = density(X)(x)
+    assert pdf_expr == 2 * sp.exp(-2 * x)
+    
+    # Memoryless property test over specific intervals
+    p_greater_2 = P(X > 2)
+    p_greater_3 = P(X > 3)
+    p_greater_1 = P(X > 1)
+    
+    # P(X > 3 | X > 1) = P(X > 3) / P(X > 1) = P(X > 2)
+    assert sp.simplify((p_greater_3 / p_greater_1) - p_greater_2) == 0

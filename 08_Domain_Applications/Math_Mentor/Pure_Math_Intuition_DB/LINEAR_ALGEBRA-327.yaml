@@ -1,0 +1,17 @@
+id: "LINEAR_ALGEBRA-327"
+concept_name: "奇异值分解（SVD） - 大模型映射：奇异值神经算子 (SVD-NO) 通过学习低秩结构削减计算开销 (n_327)"
+sub_topics:
+  - "矩阵的低秩逼近（Eckart-Young 定理）"
+  - "模型权重压缩与参数高效微调的底座"
+  - "潜空间特征的去噪处理"
+  - "奇异值谱分布对模型泛化能力的预警"
+llm_physical_mapping: "volume changes: truncating the singular value decomposition discards the spatial deformation axes that have negligible stretching factor, preserving the primary volume changes while reducing the number of spatial basis directions we track."
+code_implementation: |
+  import sympy as sp
+  A = sp.Matrix([[1, 1], [1, 1.0001]])
+  # Rank approximation concept
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    A = sp.Matrix([[1, 1], [1, 1]])
+    assert A.rank() == 1

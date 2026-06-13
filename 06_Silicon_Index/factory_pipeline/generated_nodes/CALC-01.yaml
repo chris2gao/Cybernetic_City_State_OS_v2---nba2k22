@@ -1,0 +1,24 @@
+concept_node:
+  id: "CALC-01"
+  symbol: "\\lim_{n \\to \\infty} a_n = L"
+  name: "Limit of a Sequence"
+  pure_math_definition:
+    description: "A sequence converges to L if for every epsilon > 0, there exists an N such that for all n > N, |a_n - L| < epsilon."
+    axioms:
+      - "Convergence of 1/n to 0"
+  llm_physical_mapping:
+    tensor_shape_flow: "Sequence of Tensors approaching a fixed point."
+    cognitive_intuition: "Walking halfway to the wall infinitely many times."
+  code_implementation:
+    snippet: |
+      import torch
+      n = torch.arange(1, 1000, dtype=torch.float32)
+      a_n = 1.0 / n
+      L = a_n[-1] # Approximates 0
+  v8_sanity_audit:
+    sympy_pseudo_code: |
+      import sympy as sp
+      n = sp.Symbol('n')
+      a_n = 1/n
+      L = sp.limit(a_n, n, sp.oo)
+      assert L == 0

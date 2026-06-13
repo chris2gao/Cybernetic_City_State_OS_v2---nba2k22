@@ -1,0 +1,23 @@
+id: "PROB_STAT-356"
+concept_name: "大数定律 - 频率在极限下收敛于概率的物理保证 (n_356)"
+sub_topics:
+  - "切比雪夫大数定律"
+  - "伯努利大数定律：频率收敛于概率"
+  - "统计推断的可行性基石"
+  - "抽样调查与海量数据统计的理论支撑"
+llm_physical_mapping: "weighted dice being rolled thousands of times, the empirical bullet hole maps accumulating to perfectly match the theoretical target probability map."
+code_implementation: |
+  import sympy as sp
+  n, epsilon = sp.symbols('n epsilon', positive=True)
+  p = sp.Symbol('p', positive=True)
+  # Chebyshev inequality bound
+  prob_bound = p * (1 - p) / (n * epsilon**2)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    n = sp.Symbol('n', positive=True)
+    epsilon = sp.Symbol('epsilon', positive=True)
+    var_X_bar = 1 / n
+    chebyshev_bound = var_X_bar / epsilon**2
+    limit_bound = sp.limit(chebyshev_bound, n, sp.oo)
+    assert limit_bound == 0
