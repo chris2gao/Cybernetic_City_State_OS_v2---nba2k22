@@ -1,0 +1,50 @@
+id: FA-008
+title: "对偶空间与自反性 (Dual Spaces and Reflexivity)"
+sub_topics: 
+  - "连续线性泛函 (Continuous Linear Functionals)"
+  - "哈恩-巴拿赫定理 (Hahn-Banach Theorem)"
+  - "第二对偶空间 (Second Dual Space)"
+  - "规范等距同构 (Canonical Isometric Isomorphism)"
+llm_physical_mapping: "映射至大语言模型的自注意力机制（Self-Attention）与旋转位置编码（RoPE）。Query 向量空间与 Key 向量空间互为对偶结构。通过点积计算 QK^T，实际上是在计算连续线性泛函（Query）作用于向量（Key）上的值。自反性（Reflexivity）确保了信息在原始隐变量空间与特征对偶空间之间的无损同构转换。而哈恩-巴拿赫定理（Hahn-Banach Extension）在物理上对应着 RoPE 的外推能力（Extrapolation），即将局部维度上的旋转不变性（有界算子）保范扩展到测试时计算（Test-Time Compute）中任意长度的上下文拓扑空间，不损失其几何代数结构的完整性。"
+code_implementation: |
+  import torch
+  import torch.nn as nn
+  import math
+  
+  class DualSpaceAttention(nn.Module):
+      def __init__(self, dim):
+          super().__init__()
+          self.q_proj = nn.Linear(dim, dim) # Maps to Dual Space (Functionals)
+          self.k_proj = nn.Linear(dim, dim) # Maps to Primal Space (Vectors)
+          
+      def forward(self, x):
+          # x: (seq_len, dim)
+          Q = self.q_proj(x) # Dual elements
+          K = self.k_proj(x) # Primal elements
+          
+          # Dual evaluation: applying functionals Q to vectors K
+          # Scaled dot-product stabilizes the variance in the dual pairing
+          attention_scores = (Q @ K.T) / math.sqrt(x.size(-1))
+          return attention_scores
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    import math
+    
+    def verify_duality_attention():
+        seq_len, dim = 10, 64
+        X = torch.randn(seq_len, dim)
+        W_q = torch.randn(dim, dim) / math.sqrt(dim)
+        W_k = torch.randn(dim, dim) / math.sqrt(dim)
+        
+        Q = X @ W_q.T # Dual
+        K = X @ W_k.T # Primal
+        
+        scores = Q @ K.T
+        
+        # Verify the linearity of the dual evaluation
+        alpha = 2.0
+        Q_scaled = (alpha * X) @ W_q.T
+        scores_scaled = Q_scaled @ K.T
+        assert torch.allclose(scores_scaled, alpha * scores, atol=1e-5), "Dual evaluation must be linear"
+        return True

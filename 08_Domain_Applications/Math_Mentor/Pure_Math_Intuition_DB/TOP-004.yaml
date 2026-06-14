@@ -1,0 +1,40 @@
+id: "TOP-004"
+title: "连通性与道路连通 (Connectedness and Path Connectedness)"
+sub_topics:
+  - "连通空间的定义：不可被分离为两个不相交开集"
+  - "道路连通：两点之间的连续映射"
+  - "连通分支"
+llm_physical_mapping: "道路连通性是理解大模型思维链（Chain of Thought, CoT）与测试时计算（Test-Time Compute）中逻辑推演的最佳物理映射。在语义的黎曼流形中，从初始问题 Token 到最终答案 Token 并非可以随意跃迁，必须通过连续的、语义距离相近的中间态（Thinking Tokens）构建出一条连通的路径。幻觉（Hallucinations）或逻辑断裂，在拓扑上等价于模型试图在一个不连通的语义分支间强行跳跃，或者经过了里奇曲率极高的奇点区域。有效的连续自回归过程，本质上就是在解空间中寻找一条低能量阻力的连续拓扑路径。"
+code_implementation: |
+  import torch
+
+  def generate_path_connected_cot(start_embed, target_embed, num_steps, transition_model):
+      # Path connectedness: constructing a continuous sequence of states (CoT)
+      # from start_embed to a target_embed
+      current_state = start_embed
+      path = [current_state]
+      
+      for step in range(num_steps):
+          # Predict the next intermediate state vector
+          # The transition_model should ensure small topological distances between steps
+          delta = transition_model(current_state)
+          current_state = current_state + delta
+          path.append(current_state)
+          
+      return torch.stack(path)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    import torch.nn as nn
+    
+    def test_path_connectedness():
+        start = torch.randn(1, 64)
+        target = torch.randn(1, 64)
+        transition = nn.Linear(64, 64) # simple linear step generator
+        
+        path = generate_path_connected_cot(start, target, num_steps=10, transition_model=transition)
+        
+        assert path.shape == (11, 1, 64)
+        # Check continuity: difference between consecutive steps should be bounded
+        step_diffs = torch.norm(path[1:] - path[:-1], dim=-1)
+        assert torch.all(step_diffs < 10.0), "Path discontinuity detected"

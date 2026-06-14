@@ -1,0 +1,45 @@
+id: REAL_ANALYSIS-025
+title: "Riemann Integration"
+sub_topics:
+  - "Partitions and Riemann Sums"
+  - "Integrability Conditions"
+  - "Area Under the Curve"
+llm_physical_mapping: "KV Cache Accumulation and Attention Context. A Riemann integral accumulates the area under a curve through discrete infinitesimal partitions. In autoregressive generation, KV Caching literally acts as a discrete Riemann accumulator over time. It concatenates the physical matrices of past semantic context. The self-attention dot product then integrates over this historical partition array."
+code_implementation: |
+  import torch
+  
+  class RiemannKVCache(torch.nn.Module):
+      def __init__(self):
+          super().__init__()
+          self.k_cache = None
+          self.v_cache = None
+          
+      def update_and_integrate(self, q, k_new, v_new):
+          # Accumulate partitions (dx)
+          if self.k_cache is None:
+              self.k_cache = k_new
+              self.v_cache = v_new
+          else:
+              self.k_cache = torch.cat([self.k_cache, k_new], dim=1)
+              self.v_cache = torch.cat([self.v_cache, v_new], dim=1)
+              
+          # Integration: \int q * k(t) dt 
+          # The dot product sums over the discrete sequence length dimension
+          attention_scores = torch.matmul(q, self.k_cache.transpose(-2, -1)) / (q.size(-1) ** 0.5)
+          attention_weights = torch.softmax(attention_scores, dim=-1)
+          
+          # Final integral result mapping back to V space
+          return torch.matmul(attention_weights, self.v_cache)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    
+    # Audit: Summation logic of Riemann integration in cache
+    k_cache = torch.ones(1, 10, 64) # 10 history tokens
+    q = torch.ones(1, 1, 64)        # Current query
+    
+    # Score sums over the dimension of 10
+    scores = torch.matmul(q, k_cache.transpose(-2, -1))
+    
+    # The integration volume expands with sequence length
+    assert scores.shape == (1, 1, 10)

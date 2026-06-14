@@ -1,0 +1,30 @@
+id: "REAL_ANALYSIS-005"
+title: "Riemann and Lebesgue Integration"
+sub_topics:
+  - "Riemann Sums"
+  - "Measure Theory Basics"
+  - "Fundamental Theorem of Calculus"
+llm_physical_mapping: "Matches the functional Flow Matching (Continuous Dynamical System) ODE-to-SDE integration. Just as Lebesgue integration evaluates area by continuous measure over vector spaces, Flow Matching integrates over continuous probability vector fields (dx_t = v_t dt) using Fokker-Planck equations to transform noise distributions into target empirical measures."
+code_implementation: |
+  import torch
+  import torch.nn as nn
+
+  class FlowMatchingIntegration(nn.Module):
+      def __init__(self):
+          super().__init__()
+
+      def forward(self, x_0, x_1, t):
+          # Riemann/Lebesgue integration of probability paths
+          # dx_t / dt = v_t(x) = x_1 - x_0 (straight path interpolation)
+          x_t = (1 - t) * x_0 + t * x_1
+          v_t = x_1 - x_0
+          return x_t, v_t
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    x_0 = torch.randn(10)
+    x_1 = torch.randn(10)
+    t = 0.5
+    x_t = (1 - t) * x_0 + t * x_1
+    v_t = x_1 - x_0
+    assert torch.allclose(x_t + 0.5 * v_t, x_1)

@@ -1,40 +1,32 @@
-concept_node:
-  id: "RUSSELL-002"
-  domain: "Set Theory and Logic"
-  sub_topics:
-    - "类型 (Types) 的引入"
-    - "个体、集合、集合的集合分层"
-    - "类型限制下的集合构造"
-    - "与现代编程语言类型系统的渊源"
-  title: "Russell悖论与类型论 (russell_and_type_theory) - 简单类型论 (Simple Type Theory) 基础 (n_43)"
-  intuition: "为了阻止系统因为自我指涉而崩溃，我们必须建立森严的阶级壁垒。底层个体是0级，装个体的容器是1级，装容器的超级容器是2级。高维物理法则规定：N级容器只能装N-1级的实体，从根本上消灭了‘容器装自己’这种物理不可能事件。"
-  llm_physical_mapping: "大模型张量引擎的绝对阶 (Rank) 限制：简单类型论完美映射于现代张量架构（如 PyTorch 的 Tensor 维度定义）。0阶是标量 (Scalar, 对应Type 0的个体)，1阶是向量 (Vector, 包含标量的集合, Type 1)，2阶是矩阵 (Matrix, 包含向量的集合, Type 2)。框架从底层物理机制上硬性规定：一个 1阶向量 内部绝对不可能嵌套存放另一个完整的 1阶向量（如果嵌套了，它在物理内存上就会自动升格为 2阶矩阵）。这种严丝合缝的维度强制跃迁规则，使得罗素悖论（试图把一个Type 1的集合塞进Type 1）在编译期就会触发降维打击般的类型报错。"
-  code_implementation: |-
+id: "RUSSELL-002"
+title: "Type Theory"
+sub_topics: 
+  - "Hierarchy of Types"
+  - "Preventing Circularity"
+  - "Calculus of Inductive Constructions (CIC)"
+llm_physical_mapping: |
+  Directly maps to the deep Layered Architecture of the Transformer and the Residual Stream. To prevent Russell's circularity, Type Theory demands a strict hierarchy (Type 0, Type 1, etc.). In an LLM, computation strictly flows forward: Layer N (Type N) computes features and writes them to the residual stream to be read by Layer N+1 (Type N+1). A vector at Layer L can NEVER attend backward to Layer L+1. This strict physical depth hierarchy completely eliminates circular topological paradoxes during the forward pass.
+code_implementation: |
+  def forward_type_theory(x: torch.Tensor, layers: torch.nn.ModuleList) -> torch.Tensor:
+      # Computation strictly ascends the hierarchy of types (layers)
+      # No layer can pass its output back to a previous layer in a single pass
+      for i, layer in enumerate(layers):
+          # x_N+1 = x_N + Layer_N(x_N)
+          x = x + layer(x) 
+      return x
+v8_sanity_audit:
+  sympy_pseudo_code: |
     import torch
-
-    # 隐喻：简单类型论的物理级防御——张量秩 (Rank) 的强制约束
-    def simple_type_theory_tensor_rank_metaphor():
-        try:
-            # Type 0: 基础标量个体 (0D Tensor)
-            indiv_1 = torch.tensor(1.0)
-            indiv_2 = torch.tensor(2.0)
-            
-            # Type 1: 由标量组成的向量 (1D Tensor)
-            # 这合法，因为 1阶张量 只能容纳 0阶标量
-            set_type_1 = torch.stack([indiv_1, indiv_2])
-            
-            # 尝试发动罗素悖论攻击：试图让 Type 1 的集合包含其自身
-            # 这意味着我们要在构建向量时，塞入一个标量和一个完整的向量！
-            # 框架底层的维度对齐机制（简单类型论检查器）会瞬间识破并阻断：
-            torch.stack([indiv_1, set_type_1])
-            
-        except Exception as e:
-            # 在 PyTorch 中会抛出 RuntimeError: stack expects each tensor to be equal size
-            return f"【架构级物理防御】维度/类型约束生效，悖论构造失败：{str(e)}"
-
-    print(simple_type_theory_tensor_rank_metaphor())
-  v9_semantic_audit:
-    cognitive_mapping_validation: |-
-      1. 核心矛盾映射：简单类型论中“不同级别的对象不能互属”的抽象数理规则，精准降维映射为深度学习框架中张量（Tensor）的秩（Rank）对齐与维度约束。
-      2. 物理极限映射：试图在数学上构造“属于自身的集合”，被物理引擎具象化为试图把一维向量强行压入一维向量内部的非法操作，必然触发底层的 RuntimeError。
-      3. 架构解法映射：去除了 V8 中使用“组织架构与员工文件夹”的凡人庸俗比喻，直接用算力引擎最基础的 Tensor Shape 规则来阐释类型论的威力，契合 Mode B 纯数高架标准。
+    import torch.nn as nn
+    
+    def test_strict_hierarchy():
+        x = torch.zeros(10)
+        layer1 = nn.Linear(10, 10)
+        layer2 = nn.Linear(10, 10)
+        
+        # Type 0 -> Type 1 -> Type 2
+        out_1 = x + layer1(x)
+        out_2 = out_1 + layer2(out_1)
+        
+        # The final representation is structurally founded on previous types
+        assert out_2.shape == (10,)

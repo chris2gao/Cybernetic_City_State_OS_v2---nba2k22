@@ -1,0 +1,33 @@
+id: "REAL_ANALYSIS-008"
+title: "Continuity via Flow Matching and Continuous ODEs"
+sub_topics:
+  - "Continuous Functions"
+  - "Probability Flow ODE"
+  - "Flow-GRPO Denoising"
+llm_physical_mapping:
+  - "Continuous dynamics in LLMs modeled via Flow Matching (Stage 4), transitioning from discrete probabilities to continuous ODEs."
+  - "Marginal score $\\nabla \\log p_t(x)$ directs the continuous flow of representations in functional spaces."
+  - "Fokker-Planck equation preserves continuity of probability density across transformation stages."
+code_implementation: |
+  import torch
+
+  def probability_flow_ode(x, t, v_t, dt):
+      # Flow matching continuous Euler step
+      dx = v_t(x, t) * dt
+      return x + dx
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    
+    x = torch.randn(1, 512)
+    t = torch.tensor([0.1])
+    dt = 0.01
+    
+    # Dummy velocity field v_t
+    def v_t(x, t):
+        return -x / t
+        
+    dx = v_t(x, t) * dt
+    x_next = x + dx
+    
+    assert x_next.shape == x.shape

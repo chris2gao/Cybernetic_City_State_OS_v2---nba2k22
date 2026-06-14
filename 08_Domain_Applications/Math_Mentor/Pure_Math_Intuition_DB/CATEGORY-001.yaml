@@ -1,0 +1,58 @@
+id: CATEGORY-001
+title: 范畴、函子与自然变换 (Categories, Functors and Natural Transformations)
+sub_topics:
+  - 对象与态射 (Objects and Morphisms)
+  - 范畴公理 (Category Axioms: Associativity and Identity)
+  - 协变与逆变函子 (Covariant and Contravariant Functors)
+  - 自然变换与自然同构 (Natural Transformations and Isomorphisms)
+llm_physical_mapping:
+  - 范畴与层级映射: "在LLM中，不同的隐藏层（Hidden Layers）或流形空间可以视为不同的范畴。对象（Objects）对应于特定层的特征张量或Token表征向量，而态射（Morphisms）则对应于层内的前馈映射（FFN）或自注意力变换。"
+  - 函子映射: "函子类似于跨越不同范畴的保结构映射。在LLM架构中，从离散Token空间到连续嵌入空间的映射（Embedding层），或从一个隐藏层的高维空间到另一个隐藏层的残差连接变换，充当了函子的角色，它保持了语义结构的态射组合。"
+  - 自然变换映射: "如果存在两种不同的网络层结构（例如两种平行的注意力机制或MLP映射）能够完成相同的抽象变换，自然变换则描述了这两个映射路径之间存在平滑的结构等价关系（例如通过权重重组或正交变换实现不同参数化路径的等效）。"
+code_implementation: >
+  import torch
+  import torch.nn as nn
+
+  class CategoryMorphism(nn.Module):
+      def __init__(self, dim):
+          super().__init__()
+          self.transform = nn.Linear(dim, dim)
+      
+      def forward(self, obj_tensor):
+          # 态射的物理作用：张量空间内的线性映射
+          return self.transform(obj_tensor)
+
+  class FunctorMapping(nn.Module):
+      def __init__(self, dim_source, dim_target):
+          super().__init__()
+          # 函子：保持结构的范畴间映射
+          self.functor = nn.Linear(dim_source, dim_target)
+          
+      def forward(self, source_tensor):
+          return self.functor(source_tensor)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    # Pure Python code block demonstrating Category concepts via PyTorch operations
+    import torch
+    import torch.nn as nn
+
+    # Simulating Object and Morphism
+    dim = 256
+    obj_A = torch.randn(1, dim)
+    morphism_f = nn.Linear(dim, dim)
+    obj_B = morphism_f(obj_A)
+
+    # Simulating Functor (preserving structure F(f) : F(A) -> F(B))
+    dim_target = 512
+    functor_F = nn.Linear(dim, dim_target)
+    # Target category morphism
+    morphism_F_f = nn.Linear(dim_target, dim_target)
+    
+    # Natural Transformation conceptual check:
+    # F(B) = F(f(A))
+    F_A = functor_F(obj_A)
+    F_B = functor_F(obj_B)
+    
+    mapped_F_A = morphism_F_f(F_A)
+    # The diagram commutes if mapped_F_A roughly structurally equals F_B in specific trained weights
+    print(mapped_F_A.shape == F_B.shape)

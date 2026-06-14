@@ -1,0 +1,41 @@
+id: REAL_ANALYSIS-024
+title: "Taylor's Theorem and Series Expansions"
+sub_topics:
+  - "Taylor Polynomials"
+  - "Remainder Terms (Lagrange)"
+  - "Analytic Functions"
+llm_physical_mapping: "SwiGLU Polynomial Approximation Capability. Taylor's theorem deconstructs non-linear functions into an infinite series of polynomials. In the LLM FFN layer, SwiGLU uses the non-monotonic Swish activation ($x \\cdot \\sigma(x)$). Because the sigmoid $\\sigma(x)$ can be Taylor-expanded into infinite polynomial terms, the SwiGLU structure naturally approximates high-order feature multiplications without explicit multiplicative operators."
+code_implementation: |
+  import torch
+  import torch.nn.functional as F
+  
+  def swiglu_taylor_approximation(x, w1, w2, w3):
+      # Exact SwiGLU Forward
+      exact_gate = F.silu(x @ w1.T)
+      exact_val = x @ w2.T
+      exact_out = (exact_gate * exact_val) @ w3.T
+      
+      # First order Taylor approximation of Sigmoid: sigma(z) ~ 0.5 + 0.25*z
+      # silu(z) = z * sigma(z) ~ 0.5z + 0.25z^2
+      z = x @ w1.T
+      taylor_gate = 0.5 * z + 0.25 * (z ** 2)
+      taylor_out = (taylor_gate * exact_val) @ w3.T
+      
+      return exact_out, taylor_out
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    import torch.nn.functional as F
+    
+    # Audit: Taylor expansion accuracy around x=0
+    z = torch.tensor([0.1])
+    
+    # Exact SiLU
+    exact = F.silu(z)
+    
+    # Taylor approximation: z * (0.5 + 0.25*z)
+    approx = z * (0.5 + 0.25 * z)
+    
+    # For small z, the approximation is extremely close
+    error = torch.abs(exact - approx)
+    assert error < 1e-3, "Taylor expansion fails locally"

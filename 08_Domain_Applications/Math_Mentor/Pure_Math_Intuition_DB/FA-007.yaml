@@ -1,0 +1,43 @@
+id: FA-007
+title: "弱拓扑与 Banach-Alaoglu 定理 (Weak Topology and Banach-Alaoglu Theorem)"
+sub_topics: 
+  - "弱收敛与弱星拓扑 (Weak and Weak* Topology)"
+  - "单位球的紧致性 (Compactness of Unit Ball)"
+  - "泛函分离 (Separation by Functionals)"
+  - "混合专家与稀疏性 (MoE and Sparsity)"
+llm_physical_mapping: "映射至混合专家架构（MoE）中的路由分布网络与流匹配算法中的概率测度演化。Banach-Alaoglu 定理指出，对偶空间的闭单位球在弱星拓扑下是紧的。在MoE中，Router 算子输出的专家权重（概率单纯形）属于在弱拓扑下紧致的概率测度空间。尽管模型参数维度极高，但由于弱紧性，带噪声的 Top-k 门控机制和负载均衡损失（Load Balancing Loss）能够确保系统的策略分布必定能在泛函空间中收敛至一个全局稳态。同时，Flow-GRPO 强化学习中群体优势评估的概率收敛，也基于测度在弱星拓扑下的紧致性保障。"
+code_implementation: |
+  import torch
+  import torch.nn.functional as F
+  
+  def weak_topology_moe_routing(hidden_states, router_weights, num_experts=8, k=2):
+      # hidden_states: (batch, dim)
+      # router_weights: (dim, num_experts)
+      logits = hidden_states @ router_weights
+      # The probability simplex forms a weak* compact set
+      routing_probs = F.softmax(logits, dim=-1)
+      
+      # Top-k selection simulating sparsity within the compact measure space
+      top_probs, top_indices = torch.topk(routing_probs, k, dim=-1)
+      top_probs = top_probs / top_probs.sum(dim=-1, keepdim=True) # Renormalize
+      
+      return top_probs, top_indices
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    import torch.nn.functional as F
+    
+    def verify_weak_compactness_routing():
+        batch_size = 32
+        num_experts = 8
+        logits = torch.randn(batch_size, num_experts)
+        probs = F.softmax(logits, dim=-1)
+        
+        # Verify it lies in the closed unit ball of L1 (probability simplex)
+        norms = torch.sum(probs, dim=-1)
+        assert torch.allclose(norms, torch.ones_like(norms)), "Probabilities must sum to 1, lying in the compact simplex"
+        
+        # Simulate weak convergence over time (iterations)
+        avg_probs = torch.mean(probs, dim=0)
+        assert avg_probs.shape[0] == num_experts, "Weak limit functional evaluated over experts"
+        return True

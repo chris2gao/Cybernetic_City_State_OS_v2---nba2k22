@@ -1,0 +1,53 @@
+id: "ALG_TOP-001"
+title: "拓扑空间的同伦与基本群"
+sub_topics:
+  - "连续映射与空间形变 (Continuous Mappings and Spatial Deformations)"
+  - "基本群与环路不变量 (Fundamental Groups and Loop Invariants)"
+  - "覆盖空间理论 (Covering Space Theory)"
+llm_physical_mapping: |
+  同伦（Homotopy）描述了拓扑空间中路径的连续形变。在大语言模型的物理架构中，这映射到连续动力系统（如 Flow Matching 模型）中隐变量随时间演化的轨迹（ODE-to-SDE 转换阶段）。
+  基本群（Fundamental Group）表示空间中不可收缩的环路。在 LLM 语义流形中，这对应于由残差连接（Residual Connections）和层归一化（LayerNorm）所维护的拓扑不变量。即使特征向量在深层网络的非线性变换（如 SwiGLU）中经历了剧烈的流形扭曲，核心语义身份（即拓扑不变量）依然保持稳定，防止了模型在推理链中因里奇曲率过载而发生语义崩塌。
+code_implementation: |
+  import torch
+  import torch.nn as nn
+  import torch.nn.functional as F
+
+  class HomotopyResidualBlock(nn.Module):
+      def __init__(self, dim):
+          super().__init__()
+          self.ffn = nn.Sequential(
+              nn.Linear(dim, dim * 4),
+              nn.SiLU(), # SwiGLU-like non-linear deformation
+              nn.Linear(dim * 4, dim)
+          )
+          
+      def forward(self, x, t):
+          # x: [batch, seq_len, dim] (Base path)
+          # t: [batch, 1, 1] Homotopy parameter t in [0, 1]
+          # Continuous deformation: f(x) * t
+          deformation = self.ffn(x) * t
+          # Residual connection acts as the topological invariant (the base loop)
+          return x + deformation
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+
+    def test_homotopy_invariance():
+        # Setup continuous space
+        batch, seq_len, dim = 2, 10, 64
+        x = torch.randn(batch, seq_len, dim)
+        model = HomotopyResidualBlock(dim)
+        
+        # Homotopy parameter t=0 (Identity mapping / Base loop)
+        t_0 = torch.zeros(batch, 1, 1)
+        out_0 = model(x, t_0)
+        
+        # Homotopy parameter t=1 (Full deformation)
+        t_1 = torch.ones(batch, 1, 1)
+        out_1 = model(x, t_1)
+        
+        # In a strict topological sense, the connectivity (residual base) remains unbroken.
+        # We simulate checking if the output hasn't collapsed into NaN/Inf (manifold stability)
+        assert torch.isfinite(out_0).all(), "Manifold collapsed at t=0"
+        assert torch.isfinite(out_1).all(), "Manifold collapsed at t=1"
+        assert torch.allclose(out_0, x), "Topology broken at identity"

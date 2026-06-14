@@ -1,0 +1,37 @@
+id: "ALG_GEO-001"
+title: "仿射簇与 Zariski 拓扑"
+sub_topics:
+  - "多项式环与理想"
+  - "零点集与仿射代数集"
+  - "希尔伯特零点定理"
+  - "Zariski 拓扑结构"
+llm_physical_mapping: "Zariski 拓扑可以通过大模型的“掩码矩阵”（Masking Matrices）与“稀疏化机制（MoE）”来映射。Zariski 拓扑中的闭集对应于多项式方程组的解集，而在大模型中，特定的注意力掩码（Attention Mask）或者门控路由权重将高维流形限制在特定的零点集（即不激活的神经元或被截断的序列）上。闭集对应于网络中“特征为0”的子空间。"
+code_implementation: |
+  import torch
+  import torch.nn as nn
+  
+  class AffineVarietyZariskiTopology(nn.Module):
+      def __init__(self, ambient_dim, ideal_generators_dim):
+          super().__init__()
+          self.ideal_generators = nn.Linear(ambient_dim, ideal_generators_dim, bias=False)
+          
+      def forward(self, x):
+          evaluations = self.ideal_generators(x)
+          zariski_closed_mask = torch.exp(-torch.abs(evaluations) * 1e4)
+          variety_mask = torch.prod(zariski_closed_mask, dim=-1, keepdim=True)
+          return x * variety_mask
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    import torch.nn as nn
+    
+    def test_zariski():
+        ambient_dim = 16
+        ideal_dim = 4
+        x = torch.randn(10, ambient_dim)
+        ideal = nn.Linear(ambient_dim, ideal_dim, bias=False)
+        evals = ideal(x)
+        mask = torch.exp(-torch.abs(evals) * 1000)
+        variety_mask = torch.prod(mask, dim=-1, keepdim=True)
+        projected_x = x * variety_mask
+        assert projected_x.shape == x.shape

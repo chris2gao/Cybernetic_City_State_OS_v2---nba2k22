@@ -1,0 +1,57 @@
+id: CATEGORY-002
+title: 极限与上极限 (Limits and Colimits)
+sub_topics:
+  - 图表与锥 (Diagrams and Cones)
+  - 积与上积 (Products and Coproducts)
+  - 推出与拉回 (Pushouts and Pullbacks)
+  - 泛性质 (Universal Properties)
+llm_physical_mapping:
+  - 极限映射: "极限（如拉回或积）对应于信息的压缩与结构聚合。在MoE（混合专家架构）或多头注意力中，多个特征头输出通过门控网络（Router）被加权聚合为唯一的最优（泛性质）表征，这类似于在一个锥（Cone）中寻找极限。信息从分散的计算图汇聚为一个核心不变量。"
+  - 上极限映射: "上极限（如推出或上积）对应于信息的扩展和合并。在前向计算中，不同模态或不同路径的表征（如文本Token张量与图像Patch张量）被拼接（Concatenation）进入同一个高维流形，形成一个统一的联合表征，这就是上极限的直观体现。"
+code_implementation: >
+  import torch
+  import torch.nn as nn
+
+  class LimitAggregation(nn.Module):
+      def __init__(self, dim):
+          super().__init__()
+          self.proj1 = nn.Linear(dim, dim)
+          self.proj2 = nn.Linear(dim, dim)
+          
+      def forward(self, tensor_a, tensor_b):
+          # 极限：寻找满足图表交换结构的最优聚合点
+          # 此处用加权求和和多层投影模拟拉回（Pullback）概念
+          x = self.proj1(tensor_a)
+          y = self.proj2(tensor_b)
+          return torch.min(x, y) # Element-wise minimum as a structural "limit"
+
+  class ColimitConcatenation(nn.Module):
+      def __init__(self, dim):
+          super().__init__()
+          self.expansion = nn.Linear(dim * 2, dim)
+          
+      def forward(self, tensor_a, tensor_b):
+          # 上极限：将异构空间的元素沿张量维度拼接，并映射到统一个拓扑空间（Pushout/Coproduct）
+          joined = torch.cat([tensor_a, tensor_b], dim=-1)
+          return self.expansion(joined)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    import torch.nn as nn
+    
+    dim = 128
+    tensor_A = torch.randn(1, dim)
+    tensor_B = torch.randn(1, dim)
+    
+    # Limit: Point-wise minimum simulating intersection/pullback
+    proj_A = nn.Linear(dim, dim)
+    proj_B = nn.Linear(dim, dim)
+    limit_cone = torch.min(proj_A(tensor_A), proj_B(tensor_B))
+    
+    # Colimit: Concatenation and expansion
+    concat = torch.cat([tensor_A, tensor_B], dim=-1)
+    colimit_expansion = nn.Linear(dim * 2, dim)
+    colimit_cone = colimit_expansion(concat)
+    
+    assert limit_cone.shape == (1, dim)
+    assert colimit_cone.shape == (1, dim)

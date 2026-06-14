@@ -1,0 +1,28 @@
+id: "REAL_ANALYSIS-004"
+title: "Differentiation"
+sub_topics:
+  - "Derivative definition"
+  - "Mean Value Theorem"
+  - "Taylor's Theorem"
+llm_physical_mapping: "Aligns with SwiGLU activation's non-monotonic derivative property. Unlike ReLU which has a derivative discontinuity at 0, Swish/SiLU (x * sigmoid(x)) is smooth everywhere and has a non-monotonic 'valley'. This Taylor-expandable polynomial approximation ensures gradient transmission across negative values without dying neurons."
+code_implementation: |
+  import torch
+  import torch.nn as nn
+  import torch.nn.functional as F
+
+  class SwishDerivativeMVT(nn.Module):
+      def __init__(self, dim):
+          super().__init__()
+          self.proj = nn.Linear(dim, dim)
+
+      def forward(self, x):
+          # x * sigmoid(x) is smoothly differentiable, avoiding derivative discontinuity
+          return F.silu(self.proj(x))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    import torch.nn.functional as F
+    x = torch.tensor([-2.0, -0.5, 0.0, 1.0], requires_grad=True)
+    y = F.silu(x)
+    y.sum().backward()
+    assert x.grad is not None

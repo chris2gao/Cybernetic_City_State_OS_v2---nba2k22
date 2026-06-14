@@ -1,0 +1,43 @@
+id: "ALG_GEO-003"
+title: "层的上同调 Sheaf Cohomology"
+sub_topics:
+  - "预层与层"
+  - "Čech 上同调"
+  - "导函子与长正合序列"
+  - "层的消灭定理"
+llm_physical_mapping: "层的上同调度量了局部截面无法提升为全局截面的“阻碍（Obstruction）”。在 LLM 中，这完美映射为“上下文融合阻碍”（Context Fusion Obstruction）。当 KV Cache 在长序列中进行注意力汇聚时，局部的 Token 语义（预层）在跨越 Chunk 块组合时，如果没有产生语义冲突，则 1 阶上同调为 0。如果存在语义断裂或多义词歧义，这种全局与局部的矛盾就是非零的上同调类。长正合序列类似于残差流（Residual Streams）中的信息无损传导。"
+code_implementation: |
+  import torch
+  import torch.nn as nn
+  
+  class CechCohomologyObstruction(nn.Module):
+      def __init__(self, dim):
+          super().__init__()
+          self.boundary_operator = nn.Linear(dim, dim, bias=False)
+          
+      def forward(self, local_sections_U, local_sections_V):
+          restriction_U = self.boundary_operator(local_sections_U)
+          restriction_V = self.boundary_operator(local_sections_V)
+          
+          cocycle = restriction_U - restriction_V
+          cohomology_obstruction = torch.norm(cocycle, p=2, dim=-1, keepdim=True)
+          return cohomology_obstruction, cocycle
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    import torch.nn as nn
+    
+    def test_cech_cohomology():
+        dim = 16
+        s_U = torch.randn(8, dim)
+        s_V = torch.randn(8, dim)
+        
+        boundary_op = nn.Linear(dim, dim, bias=False)
+        res_U = boundary_op(s_U)
+        res_V = boundary_op(s_V)
+        
+        cocycle = res_U - res_V
+        obstruction = torch.norm(cocycle, p=2, dim=-1, keepdim=True)
+        
+        assert cocycle.shape == (8, dim)
+        assert obstruction.shape == (8, 1)

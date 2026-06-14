@@ -1,0 +1,40 @@
+id: FA-005
+title: "闭图定理与开映射定理 (Closed Graph Theorem and Open Mapping Theorem)"
+sub_topics: 
+  - "巴拿赫空间 (Banach Spaces)"
+  - "连续性与有界性 (Continuity and Boundedness)"
+  - "逆算子定理 (Inverse Operator Theorem)"
+  - "完备性约束 (Completeness Constraint)"
+llm_physical_mapping: "映射至大语言模型的泛函分析视阈下的流匹配（Flow Matching）理论。开映射定理（Open Mapping Theorem）类似于非坍缩的残差流（Residual Stream）与概率流ODE的可逆性，确保语义流形（Semantic Manifold）在逐层映射时保持开放的拓扑结构，防止维度坍塌；闭图定理（Closed Graph Theorem）对应于连续动力系统演化中的稳定性，即如果网络层的极限行为闭合（例如在梯度截断或层级任务规划HTN的确定性算子中），则其前向传播必然是有界且连续的。这与带有Hedging机制的‘Try-Catch’系统容错类似，确保图不闭合时立刻触发异常拦截。"
+code_implementation: |
+  import torch
+  import torch.nn as nn
+  
+  class OpenMappingResNet(nn.Module):
+      def __init__(self, dim):
+          super().__init__()
+          self.linear = nn.Linear(dim, dim)
+          # Ensuring surjectivity and open mapping via invertible residual
+      
+      def forward(self, x):
+          # Closed graph constraint implies continuity
+          # ResNet structure x + f(x) models a bounded, invertible map under certain Lipschitz conditions
+          y = x + 0.1 * self.linear(x) 
+          return y
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    import torch.nn as nn
+    
+    def verify_closed_graph_continuity():
+        dim = 256
+        model = nn.Linear(dim, dim)
+        x_seq = torch.randn(100, dim)
+        y_seq = model(x_seq)
+        
+        # Check boundedness (continuity in Banach space)
+        x_norm = torch.norm(x_seq, dim=-1)
+        y_norm = torch.norm(y_seq, dim=-1)
+        bound_ratio = y_norm / (x_norm + 1e-9)
+        assert torch.max(bound_ratio) < 1e5, "Graph is closed, operator must be bounded"
+        return True

@@ -1,0 +1,36 @@
+id: "REAL_ANALYSIS-006"
+title: "Sequences and Series of Functions"
+sub_topics:
+  - "Pointwise vs Uniform Convergence"
+  - "Weierstrass M-Test"
+  - "Power Series and Analytic Functions"
+llm_physical_mapping: "Corresponds to the Decoding/Sampling Mechanisms (Temperature, Top-P, Top-K). Generating a sequence of tokens is like constructing a sequence of functions. Top-P (Nucleus) sampling dynamically bounds the cumulative probability mass (similar to uniform convergence bounds like the M-Test), truncating the long-tail series to ensure the generated output remains stable without deviating into hallucination divergence."
+code_implementation: |
+  import torch
+  import torch.nn as nn
+  import torch.nn.functional as F
+
+  class UniformConvergenceSampling(nn.Module):
+      def __init__(self, top_p=0.9):
+          super().__init__()
+          self.top_p = top_p
+
+      def forward(self, logits):
+          sorted_logits, sorted_indices = torch.sort(logits, descending=True, dim=-1)
+          cumulative_probs = torch.cumsum(F.softmax(sorted_logits, dim=-1), dim=-1)
+          # Truncate series to ensure uniform convergence (Top-P)
+          sorted_indices_to_remove = cumulative_probs > self.top_p
+          sorted_indices_to_remove[..., 1:] = sorted_indices_to_remove[..., :-1].clone()
+          sorted_indices_to_remove[..., 0] = 0
+          sorted_logits[sorted_indices_to_remove] = float('-inf')
+          return sorted_logits
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    import torch.nn.functional as F
+    logits = torch.tensor([[10.0, 9.0, 1.0, 0.5]])
+    sorted_logits, _ = torch.sort(logits, descending=True)
+    probs = F.softmax(sorted_logits, dim=-1)
+    cum_probs = torch.cumsum(probs, dim=-1)
+    mask = cum_probs > 0.9
+    assert mask[0, -1].item() == True

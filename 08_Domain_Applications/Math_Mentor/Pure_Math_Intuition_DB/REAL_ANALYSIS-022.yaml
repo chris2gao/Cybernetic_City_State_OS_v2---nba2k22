@@ -1,0 +1,51 @@
+id: REAL_ANALYSIS-022
+title: "Differentiability and The Derivative"
+sub_topics:
+  - "Limit of the Difference Quotient"
+  - "Chain Rule"
+  - "Local Linearity"
+llm_physical_mapping: "Backpropagation and Rectified Flow Marginal Score. Differentiability defines the local linear approximation of a function. In LLM training, via backpropagation, the gradients compute the infinitesimal difference quotient across the deep network (Chain Rule). In continuous ODEs (Flow Matching), the velocity field $v_t$ acts as the time derivative mapping the latent probability flow."
+code_implementation: |
+  import torch
+  import torch.nn as nn
+  
+  class DifferentiableManifold(nn.Module):
+      def __init__(self, dim):
+          super().__init__()
+          self.layer = nn.Linear(dim, dim)
+          
+      def forward(self, x):
+          return torch.sin(self.layer(x))
+          
+  def compute_derivative(model, x):
+      # x requires gradient to compute df/dx
+      x.requires_grad_(True)
+      y = model(x)
+      
+      # Forward pass projects to the manifold
+      # We take a scalar loss to compute the exact derivative via chain rule
+      loss = y.sum()
+      
+      # Limit of the difference quotient computed via autograd
+      loss.backward()
+      
+      # The derivative df/dx
+      return x.grad
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    
+    # Audit: Local linearity (Taylor expansion first order)
+    x = torch.tensor([2.0], requires_grad=True)
+    f = x ** 3
+    f.backward()
+    
+    df_dx = x.grad # 3 * x^2 = 12
+    
+    # Difference quotient
+    h = 1e-4
+    f_x_plus_h = (x.detach() + h) ** 3
+    approx_grad = (f_x_plus_h - x.detach()**3) / h
+    
+    # Limit approaches true derivative
+    assert torch.isclose(df_dx, approx_grad, atol=1e-3)

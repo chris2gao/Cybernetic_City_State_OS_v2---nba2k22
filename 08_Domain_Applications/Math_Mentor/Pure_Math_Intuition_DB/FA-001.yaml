@@ -1,0 +1,50 @@
+id: FA-001
+title: Hilbert空间与内积几何 (Hilbert Spaces and Inner Product Geometry)
+sub_topics:
+  - "内积与几何相似度 (Inner Products and Geometric Similarity)"
+  - "完备性与柯西列 (Completeness and Cauchy Sequences)"
+  - "正交投影与最佳逼近 (Orthogonal Projection and Best Approximation)"
+llm_physical_mapping: >
+  在大型语言模型中，Hilbert空间的内积几何是自注意力机制（Self-Attention）和词嵌入（Word Embeddings）的物理基石。
+  Query和Key矩阵的缩放点积注意力（Scaled Dot-Product Attention）本质上是在高维Hilbert空间中计算向量的内积，衡量上下文特征的几何相似性与投影相关性。
+  空间的完备性保证了深层网络中状态向量（通过残差连接和流匹配连续演化）的极限始终处于有意义的语义流形内部，避免了精度崩塌。
+code_implementation: |
+  import torch
+  import torch.nn.functional as F
+
+  def hilbert_inner_product_attention(q, k, v):
+      # 模拟Hilbert空间中的内积 (点积注意力)
+      # q, k, v 处于同一维度的Hilbert空间
+      d_k = q.size(-1)
+      # 计算内积（几何投影）并用维度平方根进行缩放，维持方差稳定
+      inner_product = torch.matmul(q, k.transpose(-2, -1)) / (d_k ** 0.5)
+      attention_weights = F.softmax(inner_product, dim=-1)
+      return torch.matmul(attention_weights, v)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+
+    # 定义Hilbert空间中的两个向量
+    x = torch.randn(1, 256)
+    y = torch.randn(1, 256)
+
+    # 1. 对称性 / 共轭对称性 (实数域下)
+    inner_xy = torch.dot(x.squeeze(), y.squeeze())
+    inner_yx = torch.dot(y.squeeze(), x.squeeze())
+    assert torch.isclose(inner_xy, inner_yx)
+
+    # 2. 线性性
+    a, b = 2.0, 3.0
+    z = torch.randn(1, 256)
+    left = torch.dot((a * x + b * y).squeeze(), z.squeeze())
+    right = a * torch.dot(x.squeeze(), z.squeeze()) + b * torch.dot(y.squeeze(), z.squeeze())
+    assert torch.isclose(left, right, atol=1e-5)
+
+    # 3. 正定性
+    inner_xx = torch.dot(x.squeeze(), x.squeeze())
+    assert inner_xx > 0
+
+    # 柯西-施瓦茨不等式: |<x,y>| <= ||x|| * ||y||
+    norm_x = torch.linalg.vector_norm(x)
+    norm_y = torch.linalg.vector_norm(y)
+    assert torch.abs(inner_xy) <= norm_x * norm_y + 1e-5

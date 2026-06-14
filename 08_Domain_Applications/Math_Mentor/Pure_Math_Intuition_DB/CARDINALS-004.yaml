@@ -1,41 +1,31 @@
-concept_node:
-  id: "CARDINALS-004"
-  title: "有限集与戴德金无限 (Finite Sets and Dedekind Infinity)"
-  domain: "Set_Theory"
-  sub_topics:
-    - "有限集的定义与性质"
-    - "阿列夫零 (Aleph-null) 与可数无限"
-    - "连续统的势 (Continuum cardinality)"
-    - "戴德金无限 (Dedekind infinite) 的定义"
-  intuition: "有限的东西，切掉一块肯定变小；但无限的东西，切掉一块，剩下的部分仍然可以完美覆盖原来的整体。戴德金给无限下的定义极具颠覆性：如果一个集合能把自己完整地塞进自己的一部分里，那它就是无限的。"
-  llm_physical_mapping: "无穷数据流的绝对平移不变性 (Absolute Shift-Invariance of Infinite Streams)：在深度学习的张量操作中，如果对一个有限长的张量 `T` 进行切片 `T[1:]`，丢掉第一个元素，新的张量长度必然减一，系统绝不可能建立新旧张量的一对一映射。这就是‘有限 (Finite)’的物理铁律。\n但戴德金无限 (Dedekind Infinite) 提出了一个恐怖的算力现象：一个无穷长的数据流生成器（如自然数生成器），当你对它执行平移操作（如 `lambda x: x+1`），你相当于丢弃了它的初始帧（0）。但在物理上，这个剩下的真子集 `[1, 2, 3...]`，依然能够与原始的 `[0, 1, 2...]` 建立严丝合缝的一对一双向映射。这种‘失去部分后依然等同于整体’的拓扑自相似性，是计算机判定一个序列是否达到‘阿列夫-0’的绝对物理特征。"
-  code_implementation: |-
+id: "CARDINALS-004"
+title: "Cardinal Arithmetic"
+sub_topics:
+  - "Addition and Multiplication of Alephs"
+  - "Exponentiation rules"
+  - "Absorption laws"
+llm_physical_mapping: "Aligns with Key-Value (KV) Caching in self-attention. Cardinal addition and multiplication for infinite cardinals absorb smaller terms (Aleph_alpha + Aleph_beta = max), much like how KV cache handles theoretically infinite context by absorbing past vectors into a constant spatial footprint O(1) for decoding."
+code_implementation: |
+  import torch
+  import torch.nn as nn
+
+  class CardinalArithmeticKV(nn.Module):
+      def __init__(self, dim):
+          super().__init__()
+          self.dim = dim
+
+      def forward(self, new_k, new_v, past_k=None, past_v=None):
+          # Absorption: appending to cache
+          if past_k is not None:
+              k = torch.cat([past_k, new_k], dim=-2)
+              v = torch.cat([past_v, new_v], dim=-2)
+          else:
+              k, v = new_k, new_v
+          return k, v
+v8_sanity_audit:
+  sympy_pseudo_code: |
     import torch
-
-    # 隐喻：有限张量的越界崩溃 vs 戴德金无限序列的平移自洽
-    def dedekind_infinity_shift_metaphor():
-        # 1. 凡人的世界 (有限集)
-        finite_tensor = torch.arange(5) # [0, 1, 2, 3, 4]
-        subset_tensor = finite_tensor[1:] # [1, 2, 3, 4]
-        # 试图在有限空间内建立整体到真子集的双射，必然导致物理大小不匹配
-        finite_bijection_possible = (finite_tensor.shape[0] == subset_tensor.shape[0])
-        
-        # 2. 戴德金的深渊 (无限集)
-        # 概念上，一个无穷数据流发生左移 (丢弃一个元素)
-        class DedekindInfiniteStream:
-            def check_subset_bijection(self):
-                # 映射规则 f(n) = n + 1
-                # 每一个原数据 n，都能在丢弃 0 后的真子集中找到唯一对应的 n+1。
-                # 没有任何元素溢出或无法匹配。
-                return "True: The infinite stream perfectly maps to its own shifted proper subset."
-                
-        infinite_entity = DedekindInfiniteStream()
-        
-        return f"有限张量能映射到真子集吗? {finite_bijection_possible}\n戴德金无穷体能映射到真子集吗? {infinite_entity.check_subset_bijection()}"
-
-    print(dedekind_infinity_shift_metaphor())
-  v9_semantic_audit:
-    cognitive_mapping_validation: |-
-      1. 核心矛盾映射：戴德金用“整体与真子集等势”定义无限，映射为无穷数据流（Generators）极其特有的“平移自相似性”（Shift-Invariance）。
-      2. 物理极限映射：有限张量 `T` 与 `T[1:]` 绝对无法通过 `.view()` 或形状对齐进行映射，这确立了有限物理显存的边界；而能越过这个边界的，就是真正的无限。
-      3. 架构解法映射：完全去除了 V8 使用“希尔伯特旅馆和停车场”的生活化比喻，切中了有限内存分配与无限流形处理的底层数据结构差异。
+    past_k = torch.randn(1, 4, 16)
+    new_k = torch.randn(1, 1, 16)
+    k = torch.cat([past_k, new_k], dim=-2)
+    assert k.shape == (1, 5, 16)

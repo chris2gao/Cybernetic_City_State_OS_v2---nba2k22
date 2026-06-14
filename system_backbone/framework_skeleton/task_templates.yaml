@@ -1,0 +1,14 @@
+# 全局任务模板库 (Global Task Templates)
+# 作用：定义各类微观任务（Micro-Tasks）的标准执行约束与输入输出 Schema。
+# 注意：本文件仅允许 Human Speaker 或 Sandbox Verification Officer (SVO) 测试通过后的提案覆盖，禁止 Institute Agent 直接写入。
+
+templates:
+  default_code_generation:
+    version: "1.0.0"
+    sandbox_constraints:
+      - "exit_code_must_be_0"
+      - "no_network_access"
+    required_inputs:
+      - "task_description"
+      - "language"
+    output_schema: "standard_code_block"

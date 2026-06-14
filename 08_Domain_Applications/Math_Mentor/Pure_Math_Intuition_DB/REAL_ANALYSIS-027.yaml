@@ -1,0 +1,43 @@
+id: REAL_ANALYSIS-027
+title: "Series Convergence: Absolute vs Conditional"
+sub_topics:
+  - "Absolute Convergence"
+  - "Conditional Convergence"
+  - "Riemann Rearrangement Theorem"
+llm_physical_mapping: "Mixture of Experts (MoE) Load Balancing. Conditional convergence implies instability—rearranging terms changes the sum entirely, analogous to MoE 'Routing Collapse' where tokens greedily cluster to a few experts, destabilizing the network. Absolute convergence guarantees stability independent of sequence order, mapped to the 'Auxiliary Load Balancing Loss' which forces a uniform gating distribution (absolute stability) across all experts regardless of batch arrangement."
+code_implementation: |
+  import torch
+  import torch.nn.functional as F
+  
+  def load_balancing_loss(gating_logits: torch.Tensor, expert_mask: torch.Tensor, num_experts: int):
+      # gating_logits: (batch_size, num_experts)
+      # expert_mask: one-hot assignments (batch_size, num_experts)
+      
+      # Probability fraction assigned to each expert
+      routing_probs = F.softmax(gating_logits, dim=-1)
+      prob_fraction = routing_probs.mean(dim=0)
+      
+      # Actual token fraction assigned to each expert
+      token_fraction = expert_mask.float().mean(dim=0)
+      
+      # The Auxiliary Loss: dot product of probabilities and actual fractions
+      # Multiplied by num_experts so ideal uniform distribution yields loss of 1.0
+      # Enforcing absolute convergence stability across the expert routing vector
+      lb_loss = num_experts * torch.sum(prob_fraction * token_fraction)
+      return lb_loss
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    
+    # Audit: Ideal absolute load balancing yields minimal penalty
+    num_experts = 4
+    batch_size = 8
+    
+    # Perfectly uniform distribution
+    routing_probs = torch.full((num_experts,), 0.25)
+    token_fraction = torch.full((num_experts,), 0.25)
+    
+    lb_loss = num_experts * torch.sum(routing_probs * token_fraction)
+    
+    # 4 * (4 * (0.25 * 0.25)) = 4 * 0.25 = 1.0
+    assert torch.isclose(lb_loss, torch.tensor(1.0)), "Uniform distribution must map to baseline loss"

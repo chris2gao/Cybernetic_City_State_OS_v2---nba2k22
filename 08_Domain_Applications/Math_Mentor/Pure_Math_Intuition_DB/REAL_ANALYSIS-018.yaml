@@ -1,0 +1,46 @@
+id: REAL_ANALYSIS-018
+title: "Completeness of Real Numbers: Supremum and Infimum"
+sub_topics:
+  - "Upper and Lower Bounds"
+  - "Least Upper Bound Property"
+  - "Archimedean Property"
+llm_physical_mapping: "Top-P (Nucleus) Sampling and Top-K Truncation. The completeness axiom states every non-empty subset of real numbers bounded above has a supremum. In LLM decoding, Top-P sampling computes the infimum of candidate sets whose cumulative probability exceeds the threshold p, acting as a strict upper bound constraint on the semantic space."
+code_implementation: |
+  import torch
+  
+  def nucleus_sampling_supremum(logits: torch.Tensor, top_p: float):
+      # Map to probability space
+      probs = torch.softmax(logits, dim=-1)
+      sorted_probs, sorted_indices = torch.sort(probs, descending=True)
+      cumulative_probs = torch.cumsum(sorted_probs, dim=-1)
+      
+      # Find the supremum boundary (infimum of indices exceeding p)
+      # This mirrors the least upper bound property
+      sorted_indices_to_remove = cumulative_probs > top_p
+      # Shift to keep at least one token
+      sorted_indices_to_remove[..., 1:] = sorted_indices_to_remove[..., :-1].clone()
+      sorted_indices_to_remove[..., 0] = 0
+      
+      # Apply bounds
+      sorted_probs[sorted_indices_to_remove] = 0.0
+      return sorted_probs / torch.sum(sorted_probs)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    
+    # Audit: Ensure probability mass is strictly bounded by Top-P threshold
+    logits = torch.randn(1, 1000)
+    p = 0.9
+    probs = torch.softmax(logits, dim=-1)
+    
+    sorted_p, _ = torch.sort(probs, descending=True)
+    cum_p = torch.cumsum(sorted_p, dim=-1)
+    
+    # Supremum boundary check
+    mask = cum_p > p
+    mask[..., 1:] = mask[..., :-1].clone()
+    mask[..., 0] = 0
+    bounded_p = sorted_p.clone()
+    bounded_p[mask] = 0.0
+    
+    assert torch.sum(bounded_p) <= p + 1e-4, "Exceeded supremum threshold"

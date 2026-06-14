@@ -1,0 +1,42 @@
+id: "REAL_ANALYSIS-017"
+title: "Functional Spaces via Rotary Positional Embeddings (RoPE)"
+sub_topics:
+  - "Hilbert Spaces"
+  - "Orthogonal Transformations"
+  - "Complex Manifold Rotation"
+llm_physical_mapping:
+  - "RoPE operates on functional representation spaces using unitary transformation in high-dimensional complex planes."
+  - "Orthogonal rotation matrices inject relative position mathematically without changing vector norms, preserving gradients."
+  - "Exponential frequency decay controls the geometric decay of long-range attention in the functional space."
+code_implementation: |
+  import torch
+
+  def apply_rope(q, k, cos, sin):
+      # Applies orthogonal transformations in functional spaces
+      q_embed = (q * cos) + (rotate_half(q) * sin)
+      k_embed = (k * cos) + (rotate_half(k) * sin)
+      return q_embed, k_embed
+
+  def rotate_half(x):
+      x1 = x[..., :x.shape[-1] // 2]
+      x2 = x[..., x.shape[-1] // 2:]
+      return torch.cat((-x2, x1), dim=-1)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    
+    def rotate_half(x):
+        x1 = x[..., :x.shape[-1] // 2]
+        x2 = x[..., x.shape[-1] // 2:]
+        return torch.cat((-x2, x1), dim=-1)
+        
+    d_dim = 64
+    q = torch.randn(1, 10, d_dim)
+    
+    # Dummy cos and sin
+    cos = torch.ones_like(q)
+    sin = torch.zeros_like(q)
+    
+    q_out = (q * cos) + (rotate_half(q) * sin)
+    
+    assert torch.allclose(q, q_out)

@@ -1,50 +1,29 @@
-concept_node:
-  id: "ZFC-002"
-  title: "ZF八大公理（外延、空集、配对、并集、幂集、分离、替换、无穷、正则）"
-  domain: "axiomatic_set_theory"
-  sub_topics:
-    - "外延公理与集合的唯一性"
-    - "构造性公理（空集、配对、并集、幂集）"
-    - "公理模式（分离公理与替换公理）"
-    - "无穷公理与归纳集的构造"
-    - "正则公理（基础公理）与集合的层级"
-  intuition: "ZF公理并不是物理世界的拼图游戏，而是一个纯粹的图灵完备计算架构的‘初始化底层协议’。如同设计一门编程语言，你必须严格规定：什么是数据、如何打包数据、如何映射数据、如何防止死循环。"
-  llm_physical_mapping: |
-    大模型深度学习计算框架（如 PyTorch 张量引擎）的底层基石公理体系映射：
-    1. 外延公理 (Extensionality)：`torch.equal(A, B)`。无论两个张量的计算图历史（来源）有多么不同，只要它们存储的数据实体一致，它们在系统里就是等价的。
-    2. 空集公理 (Empty Set)：`torch.tensor([])`。系统允许存在一个绝对虚空的数据结构，作为一切多维结构（甚至无穷结构）的递归起点。
-    3. 配对公理 (Pairing)：`torch.stack([a, b])`。允许将两个独立的向量在更高维度上合并为一个 Batch。
-    4. 并集公理 (Union)：`torch.flatten()` 或 `torch.cat()`。降维打击，将一个 Batch 内部所有子集的高维隔离打破，融合为一维长序列。
-    5. 幂集公理 (Power Set)：Attention 机制的注意力掩码空间。对于长度为 N 的序列，其所有可能的掩码子集组合构成了 2^N 的幂集空间，这是大模型组合泛化的理论上限。
-    6. 分离公理 (Separation)：布尔掩码过滤 `tensor[tensor > 0]`。允许用一个确定性的判定条件（如 ReLU 函数的激活阈值）从已有的数据流中“切出”一个子流。
-    7. 替换公理 (Replacement)：前馈网络映射 `MLP(tensor)`。通过一个明确的函数（多层感知机），将原集合中的每一个特征点确定性地映射到新的特征空间，映射出的结果必然构成一个合法的新集合。
-    8. 无穷公理 (Infinity)：自回归生成机制 (Autoregressive Loop) 的理论极限。给定初始 Token，只要显存无限，生成器 `for i in range(infinity): x = model(x)` 就能构造出一个可数无穷集合。
-    9. 正则公理 (Regularity)：计算图的有向无环 (DAG) 约束。系统硬性禁止任何张量节点出现完全无视拓扑层级的自发循环连接，彻底阻断了逻辑上的罗素悖论与物理上的无限回溯（Stack Overflow）。
-  code_implementation: |-
+id: "ZFC-002"
+title: "ZFC Axiom 2 - Regularity (Foundation)"
+sub_topics: 
+  - "Well-founded Sets"
+  - "No Infinite Descending Chains"
+  - "Acyclic Structures"
+llm_physical_mapping: |
+  Maps to Causal Masking in Auto-regressive generation and the DAG (Directed Acyclic Graph) structure of the computational graph. Causal masking ensures that token t can only attend to tokens < t, preventing infinite recursive loops of attention and enforcing a strict, well-founded temporal hierarchy in the generative flow.
+code_implementation: |
+  def forward_zfc_regularity(seq_len: int) -> torch.Tensor:
+      # Generate a causal mask that prevents a set from containing itself
+      # (a token attending to future or self cyclically)
+      mask = torch.tril(torch.ones(seq_len, seq_len))
+      mask = mask.masked_fill(mask == 0, float('-inf'))
+      # The diagonal is usually kept for self-attention, but strictly speaking,
+      # strict foundation implies no self-containment, thus masking diagonal too:
+      mask = mask.fill_diagonal_(float('-inf'))
+      return mask
+v8_sanity_audit:
+  sympy_pseudo_code: |
     import torch
-
-    class ZFC_TensorEngine_Metaphor:
-        def __init__(self):
-            # [空集公理] 创世基石
-            self.empty_set = torch.tensor([], dtype=torch.float32)
-
-        def axiom_of_extensionality(self, T1, T2):
-            # [外延公理] 剥离计算图历史，只看本质内容
-            return torch.equal(T1.detach(), T2.detach())
-
-        def axiom_of_separation(self, T, predicate_mask):
-            # [分离公理] 用逻辑过滤（如 Attention 掩码）分离子集
-            return T[predicate_mask]
-
-        def axiom_of_replacement(self, T, neural_network_layer):
-            # [替换公理] 对原集合所有元素应用函数映射（如 FFN 层）
-            # 由函数映射得到的新特征空间，自动构成合法的集合（张量）
-            return neural_network_layer(T)
-
-    engine = ZFC_TensorEngine_Metaphor()
-    print("ZFC公理构成了张量引擎的绝对骨架。")
-  v9_semantic_audit:
-    cognitive_mapping_validation: |-
-      1. 核心矛盾映射：ZF公理系统的抽象陈述，被完美映射为现代深度学习框架（如 PyTorch）的八大核心张量操作（创建、切片、拼接、映射、掩码、DAG约束）。
-      2. 物理极限映射：无穷公理与大模型无限自回归生成的本质同源；幂集公理则直接揭示了 Transformer 注意力矩阵在特征空间中极度爆炸的组合可能性。
-      3. 架构解法映射：完全抛弃了 V8 中“建房子、图书管理员”的凡人比喻，直接用计算架构本身的合法性（张量操作合法性）来解释公理的必然性，实现“用AI引擎讲纯数学”的终极目标。
+    
+    def test_causal_foundation():
+        seq_len = 4
+        mask = torch.tril(torch.ones(seq_len, seq_len))
+        # Ensure that information strictly flows from past to future
+        # No cycle exists: token i only depends on j where j <= i
+        assert mask[0, 1].item() == 0.0
+        assert mask[3, 0].item() == 1.0

@@ -1,39 +1,27 @@
-concept_node:
-  id: "ZFC-001"
-  name: "朴素集合论的危机 (The Crisis of Naive Set Theory)"
-  english_name: "The Crisis of Naive Set Theory"
-  domain: "axiomatic_set_theory"
-  sub_topics:
-    - "罗素悖论 (Russell's Paradox)"
-    - "康托尔悖论 (Cantor's Paradox)"
-    - "不受限概括原则的问题"
-    - "真类 (Proper Class) 与集合的区分"
-  description: "朴素集合论允许通过任何性质来定义集合（不受限概括原则），这导致了逻辑上的自相矛盾（如罗素悖论）。这迫使数学家对集合的构造施加严格的限制，从而诞生了公理化集合论（如ZFC系统）。"
-  intuition: "自我指涉会导致系统的死锁。在计算系统中，没有任何一个数据结构可以作为自身的元素而不引发无限递归。为了防止内存溢出，系统必须从底层架构（公理）上禁止不受限的自指操作。"
-  llm_physical_mapping: "大模型架构中的计算图拓扑环危机：在深度学习框架（如 PyTorch）中，如果允许一个张量 (Tensor) 的前向输出作为元素完全包含自身，其对应的动态计算图（Computational Graph）在进行反向传播 (Autograd) 时将陷入无限展开的拓扑回环，瞬间导致堆栈溢出（OOM或Stack Overflow）。这完美对应了罗素悖论的逻辑坍塌。ZFC系统中的正则公理（Axiom of Regularity，禁止 x ∈ x），就如同深度学习框架在底层硬性规定所有计算图必须是严格的【有向无环图 (DAG)】，从物理底层彻底阻断了自我指涉的深渊。"
-  code_implementation: |-
-    import sys
-
-    # 模拟朴素集合论引发的架构级死锁
-    def naive_set_comprehension_crisis():
-        try:
-            # 尝试构建一个自指涉的递归结构（隐喻：包含自身的罗素集合）
-            russell_set_tensor = []
-            russell_set_tensor.append(russell_set_tensor)
-            
-            # 在底层架构引擎尝试展开或反向传播该结构时，必然陷入死循环
-            def autograd_engine_unroll(graph_node):
-                for child_node in graph_node:
-                    autograd_engine_unroll(child_node)
-            
-            autograd_engine_unroll(russell_set_tensor)
-            
-        except RecursionError as e:
-            return "【系统警报】ZFC正则公理防御触发：成功拦截拓扑死锁 (RecursionError) - 禁止不受限自指涉"
-
-    print(naive_set_comprehension_crisis())
-  v9_semantic_audit:
-    cognitive_mapping_validation: |-
-      1. 核心矛盾映射：朴素集合论的“不受限概括”被降维打击为底层计算图中缺乏拓扑限制的循环指针。
-      2. 物理灾难映射：罗素悖论在纯逻辑层面的矛盾，具象化为 Autograd 引擎遍历自引用张量节点时必然触发的 RecursionError（物理栈溢出）。
-      3. 公理防御映射：ZFC引入“正则公理”禁止集合包含自身，精确映射为 AI 框架强制校验计算图的 DAG（有向无环图）属性。此隐喻通过了双引擎连贯性审查，完全抛弃了生活化隐喻，达到了纯数结构高架的教学标准。
+id: "ZFC-001"
+title: "ZFC Axiom 1 - Extensionality"
+sub_topics: 
+  - "Set Equality"
+  - "Elements"
+  - "Uniqueness"
+llm_physical_mapping: |
+  Directly maps to the Key-Value (KV) Caching mechanism and Embedding Vector identity. Two sets are equal if they contain the same elements, just as two KV caches or Context Windows are functionally equivalent if their token embeddings and attention keys/values perfectly align, regardless of how they were computed. This represents the absolute physical identity in the latent space.
+code_implementation: |
+  def forward_zfc_extensionality(set_A_emb: torch.Tensor, set_B_emb: torch.Tensor) -> torch.Tensor:
+      # Compare the representation of two sets using strict element-wise equality
+      # Returns a boolean tensor simulating set extensionality
+      is_equal = torch.all(torch.eq(set_A_emb, set_B_emb), dim=-1)
+      return is_equal
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    
+    def test_extensionality():
+        set_A = torch.tensor([1.0, 2.0, 3.0])
+        set_B = torch.tensor([1.0, 2.0, 3.0])
+        set_C = torch.tensor([3.0, 2.0, 1.0])
+        
+        # In a strict ordered tensor, A == B
+        assert torch.all(set_A == set_B).item() is True
+        # To simulate actual unordered sets, sorting could be applied before comparison
+        assert torch.all(set_A.sort()[0] == set_C.sort()[0]).item() is True

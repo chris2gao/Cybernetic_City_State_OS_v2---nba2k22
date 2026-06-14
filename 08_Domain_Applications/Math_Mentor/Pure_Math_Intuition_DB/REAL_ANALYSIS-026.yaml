@@ -1,0 +1,45 @@
+id: REAL_ANALYSIS-026
+title: "The Fundamental Theorem of Calculus"
+sub_topics:
+  - "FTC Part I (Differentiation of Integrals)"
+  - "FTC Part II (Evaluation using Antiderivatives)"
+  - "Integration and Differentiation as Inverses"
+llm_physical_mapping: "Residual Connections (ResNet / Transformer Backbone). The FTC links differentiation and integration as inverses. A residual stream updates state via $x_{t+1} = x_t + f(x_t)$, where $f(x_t)$ computes the 'derivative' or instantaneous transformation. To find the final state, the network integrates (sums) these derivatives. Backpropagation differentiates this integral effortlessly because $\\nabla x_t = 1 + \\nabla f(x_t)$, bypassing vanishing gradients."
+code_implementation: |
+  import torch
+  import torch.nn as nn
+  
+  class ResidualFTCBlock(nn.Module):
+      def __init__(self, dim):
+          super().__init__()
+          self.f = nn.Linear(dim, dim) # f(x) acts as the derivative df/dt
+          
+      def forward(self, x):
+          # Integration step: x(t+1) = x(t) + f(x(t)) * dt (where dt=1)
+          return x + self.f(x)
+          
+  class DeepTransformerStream(nn.Module):
+      def __init__(self, dim, depth):
+          super().__init__()
+          self.layers = nn.ModuleList([ResidualFTCBlock(dim) for _ in range(depth)])
+          
+      def forward(self, x):
+          # Definite integral over network depth: \int_0^D f(x_t) dt
+          for layer in self.layers:
+              x = layer(x)
+          return x
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    
+    # Audit: Derivative of the integral via residual gradient
+    x = torch.tensor([1.0], requires_grad=True)
+    f_weight = torch.tensor([2.0])
+    
+    # x_out = x + x * w
+    x_out = x + x * f_weight
+    x_out.backward()
+    
+    # dx_out / dx = 1 + d(f(x))/dx
+    # By FTC, differentiating the accumulated integral yields the base state + derivative
+    assert x.grad.item() == 1.0 + f_weight.item()

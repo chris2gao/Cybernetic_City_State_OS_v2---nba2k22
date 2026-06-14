@@ -1,0 +1,55 @@
+# 长时战役拓扑模板 (Campaign Manifest Template)
+# 作用：管理长时复杂任务（Campaign）的状态、动态路由协商与故障转移 (STAR Framework)。
+
+campaign_id: "campaign_xxxx"
+target_goal: "描述战役全局目标"
+
+# 初始状态：negotiating (正在通过 OS Coordinator 评估路线)
+# 可选状态：negotiating, planning, running, suspended, resolved, failed
+status: "negotiating"
+
+# 当前激活的战役执行路线
+active_route: null 
+
+# OS Coordinator 提供的动态路线矩阵 (The 4-Route Matrix)
+available_routes:
+  Route_A_Engine_B:
+    description: "最高法庭多模态辩论，人类在回路 (Human-in-the-loop)。成本最高，容错最强。"
+    estimated_cost: "High"
+  Route_B_MCTS_Spiral:
+    description: "蒙特卡洛树搜索沙盒推演。高自动化，极度严谨。"
+    estimated_cost: "Medium"
+  Route_C_RL_Workflow:
+    description: "动态序列规划 (GSsPO)。边走边看，环境感知强。"
+    estimated_cost: "Low"
+  Route_D_ADAS_Invention:
+    description: "元智能体搜索。自动发明全新的特工组合与工作流。"
+    estimated_cost: "Unknown (Experimental)"
+
+# STAR (Spatio-Temporal Agent Router) 故障转移降级矩阵
+# 规则：当某路线崩溃或底层抛出特定异常时，系统将根据此矩阵自动进行状态机重组。
+failure_aware_transitions:
+  Route_B_MCTS_Spiral:
+    on_error: "TimeoutError | SandboxSimulationFailed"
+    retry_limit: 3
+    fallback_route: "Route_A_Engine_B"
+    action: "Abort MCTS dry-run due to toxic logic. Escalating to Engine B to prevent real-world contamination."
+    
+  Route_C_RL_Workflow:
+    on_error: "ParameterBindingError | API_Deviation"
+    retry_limit: 2
+    fallback_route: "Route_A_Engine_B"
+    action: "Agent lost in dynamic environment. Suspend Campaign and summon Engine B / Human Arbiter."
+
+  Route_D_ADAS_Invention:
+    on_error: "Any"
+    retry_limit: 1
+    fallback_route: "Route_A_Engine_B"
+    action: "Experimental workflow failed. Fallback to safest Engine B baseline."
+
+# 宏观状态机 DAG 拓扑节点 (根据选定路线，在此处填充或动态增删)
+dag_nodes: []
+
+# 事实收益 (Factual Gains)
+# 微观短时任务成功后，将提炼的知识碎片合并到此，避免读取庞大聊天上下文
+factual_gains: []

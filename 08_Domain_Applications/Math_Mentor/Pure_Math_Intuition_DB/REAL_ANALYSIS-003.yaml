@@ -1,0 +1,33 @@
+id: "REAL_ANALYSIS-003"
+title: "Limits and Continuity"
+sub_topics:
+  - "Epsilon-Delta Definition"
+  - "Uniform Continuity"
+  - "Intermediate Value Theorem"
+llm_physical_mapping: "Corresponds to the Scaled Dot-Product Attention normalizer (division by sqrt(d_k)). Just as the epsilon-delta definition strictly binds the variance of outputs within a narrow continuous delta, dividing the logits by the dimension's square root bounds the variance to 1, preventing softmax gradients from vanishing into 'winner-takes-most' discontinuities."
+code_implementation: |
+  import torch
+  import torch.nn as nn
+  import math
+
+  class EpsilonDeltaAttention(nn.Module):
+      def __init__(self, d_k):
+          super().__init__()
+          self.scale = math.sqrt(d_k)
+
+      def forward(self, q, k, v):
+          # The scale limits the variance, ensuring continuous non-vanishing gradients
+          scores = torch.matmul(q, k.transpose(-2, -1)) / self.scale
+          attn = torch.softmax(scores, dim=-1)
+          return torch.matmul(attn, v)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    import math
+    q = torch.randn(1, 4, 32)
+    k = torch.randn(1, 4, 32)
+    v = torch.randn(1, 4, 32)
+    scores = torch.matmul(q, k.transpose(-2, -1)) / math.sqrt(32)
+    attn = torch.softmax(scores, dim=-1)
+    out = torch.matmul(attn, v)
+    assert out.shape == (1, 4, 32)

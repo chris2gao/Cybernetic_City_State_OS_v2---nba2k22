@@ -1,0 +1,37 @@
+id: "REAL_ANALYSIS-013"
+title: "Uniform Convergence via MoE Load Balancing"
+sub_topics:
+  - "Uniform Distribution"
+  - "Mixture of Experts Routing"
+  - "Load Balancing Loss"
+llm_physical_mapping:
+  - "Routing collapse represents a failure to converge uniformly across the parameter space."
+  - "Noisy Top-k Gating distributes tokens across experts to approximate a uniform expected load."
+  - "Auxiliary Load Balancing Loss forces the gating weights to converge uniformly over the batch, preventing expert starvation."
+code_implementation: |
+  import torch
+  import torch.nn.functional as F
+
+  def moe_load_balancing_loss(router_logits, num_experts):
+      # Computes auxiliary loss for uniform convergence
+      probs = F.softmax(router_logits, dim=-1)
+      mean_probs = probs.mean(dim=0)
+      
+      # Target uniform distribution across experts
+      uniform_target = torch.ones_like(mean_probs) / num_experts
+      loss = F.mse_loss(mean_probs, uniform_target)
+      return loss * num_experts
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    import torch.nn.functional as F
+    
+    batch_size, seq_len, num_experts = 2, 10, 8
+    router_logits = torch.randn(batch_size * seq_len, num_experts)
+    
+    probs = F.softmax(router_logits, dim=-1)
+    mean_probs = probs.mean(dim=0)
+    target = torch.ones_like(mean_probs) / num_experts
+    
+    loss = F.mse_loss(mean_probs, target) * num_experts
+    assert loss.item() >= 0.0

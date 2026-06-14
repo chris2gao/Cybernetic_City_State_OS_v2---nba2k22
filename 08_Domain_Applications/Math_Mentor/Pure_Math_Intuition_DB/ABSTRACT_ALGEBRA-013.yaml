@@ -1,0 +1,28 @@
+id: ABSTRACT_ALGEBRA-013
+title: "Categories and Functors"
+sub_topics:
+  - "Categories, Objects, Morphisms"
+  - "Functors"
+  - "Natural Transformations"
+  - "Adjoint Functors"
+llm_physical_mapping: "Transformer Layers as Endofunctors. A single Transformer block maps the latent representation Category $\\mathcal{C}$ back to itself. The residual connections $x + F(x)$ act as an Identity Functor combined with a mapping Functor, strictly preserving topological space dimensionality across the residual stream."
+code_implementation: "PyTorch Transformer Residual Block execution."
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    import torch.nn as nn
+    
+    class TransformerBlockFunctor(nn.Module):
+        def __init__(self, dim):
+            super().__init__()
+            self.ffn = nn.Linear(dim, dim)
+        def forward(self, x):
+            # Identity Functor (x) + FFN Functor
+            return x + self.ffn(x)
+            
+    dim = 8
+    block = TransformerBlockFunctor(dim)
+    x = torch.randn(1, dim)
+    out = block(x)
+    
+    assert out.shape == x.shape

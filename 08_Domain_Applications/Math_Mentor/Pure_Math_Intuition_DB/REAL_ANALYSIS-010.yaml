@@ -1,0 +1,36 @@
+id: "REAL_ANALYSIS-010"
+title: "Integration via Attention Matrix Accumulation"
+sub_topics:
+  - "Riemann Integrals"
+  - "Scaled Dot-Product Attention"
+  - "Value Aggregation"
+llm_physical_mapping:
+  - "Scaled dot-product attention acts as a discrete Riemann sum over sequence elements."
+  - "Attention weights function as the integration measure (probability mass) over the value matrix $V$."
+  - "Scaling by $\\sqrt{d_k}$ stabilizes the integral variance to prevent one-hot softmax collapse."
+code_implementation: |
+  import torch
+  import torch.nn.functional as F
+  import math
+
+  def scaled_dot_product_attention(Q, K, V):
+      d_k = Q.size(-1)
+      scores = torch.matmul(Q, K.transpose(-2, -1)) / math.sqrt(d_k)
+      attention_weights = F.softmax(scores, dim=-1)
+      # Integration over V
+      return torch.matmul(attention_weights, V)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    import math
+    
+    seq_len, d_k = 10, 64
+    Q = torch.randn(1, seq_len, d_k)
+    K = torch.randn(1, seq_len, d_k)
+    V = torch.randn(1, seq_len, d_k)
+    
+    scores = (Q @ K.transpose(-2, -1)) / math.sqrt(d_k)
+    attn = torch.nn.functional.softmax(scores, dim=-1)
+    out = attn @ V
+    
+    assert out.shape == (1, seq_len, d_k)

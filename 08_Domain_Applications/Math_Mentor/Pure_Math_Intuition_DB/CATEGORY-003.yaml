@@ -1,0 +1,58 @@
+id: CATEGORY-003
+title: 伴随函子与普适性质 (Adjoint Functors and Universal Properties)
+sub_topics:
+  - 左伴随与右伴随 (Left and Right Adjoints)
+  - 泛态射 (Universal Morphisms)
+  - 单位与余单位 (Unit and Counit of an Adjunction)
+  - 自由与遗忘函子 (Free and Forgetful Functors)
+llm_physical_mapping:
+  - 伴随函子映射: "伴随函子描述了两个范畴之间的最优转换。在LLM中，Encoding过程（文本->隐空间）与Decoding过程（隐空间->对数概率/Token）可以视为一对伴随。遗忘函子对应于降维/去噪，抛弃细微噪声以获得本质特征；而左伴随自由函子对应于高维映射/生成过程，从极简潜变量向复杂序列扩展。"
+  - 普适性质映射: "普适性质代表了某范畴内的一致最优解。在优化过程中，模型学习到的最优注意力权重矩阵（使得分布KL散度最小或生成概率最大）即满足一种'普适性质'，使得任何其他的路径或概率分布都可以通过该最优状态分解。"
+code_implementation: >
+  import torch
+  import torch.nn as nn
+  import torch.nn.functional as F
+
+  class LeftAdjointFreeFunctor(nn.Module):
+      def __init__(self, in_dim, out_dim):
+          super().__init__()
+          # 自由函子：将低维/紧凑概念扩展到高维度特征空间
+          self.expand = nn.Linear(in_dim, out_dim)
+          
+      def forward(self, x):
+          return F.relu(self.expand(x))
+
+  class RightAdjointForgetfulFunctor(nn.Module):
+      def __init__(self, in_dim, out_dim):
+          super().__init__()
+          # 遗忘函子：结构压缩与降维
+          self.compress = nn.Linear(in_dim, out_dim)
+          
+      def forward(self, x):
+          return self.compress(x)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    import torch.nn as nn
+    
+    base_dim = 64
+    high_dim = 256
+    
+    # X in Category C, Y in Category D
+    X = torch.randn(1, base_dim)
+    Y = torch.randn(1, high_dim)
+    
+    left_adjoint = nn.Linear(base_dim, high_dim)
+    right_adjoint = nn.Linear(high_dim, base_dim)
+    
+    # F(X) -> Y
+    F_X = left_adjoint(X)
+    morphism_F_X_to_Y = nn.MSELoss()(F_X, Y)
+    
+    # X -> G(Y)
+    G_Y = right_adjoint(Y)
+    morphism_X_to_G_Y = nn.MSELoss()(X, G_Y)
+    
+    # In an adjunction, Hom(F(X), Y) is isomorphic to Hom(X, G(Y))
+    # Here loosely represented by the correlation of forward and backward mapping capacities
+    print("Hom-set equivalence conceptualization")

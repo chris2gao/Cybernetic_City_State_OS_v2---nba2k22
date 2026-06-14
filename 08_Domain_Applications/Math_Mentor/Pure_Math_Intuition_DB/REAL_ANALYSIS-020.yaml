@@ -1,0 +1,43 @@
+id: REAL_ANALYSIS-020
+title: "Continuity and Epsilon-Delta Definition"
+sub_topics:
+  - "Epsilon-Delta Definition"
+  - "Continuous Functions on Intervals"
+  - "Intermediate Value Theorem"
+llm_physical_mapping: "Lipschitz Continuity in Neural Networks (SwiGLU). Epsilon-delta continuity guarantees that small input perturbations map to bounded output changes. In LLMs, Lipschitz continuous activation functions like SwiGLU ensure the semantic manifold does not suffer from gradient explosion, maintaining a smooth epsilon-delta relationship during the forward pass."
+code_implementation: |
+  import torch
+  import torch.nn.functional as F
+  
+  class ContinuousSwiGLU(torch.nn.Module):
+      def __init__(self, dim):
+          super().__init__()
+          self.w1 = torch.nn.Linear(dim, dim * 2)
+          self.w2 = torch.nn.Linear(dim, dim * 2)
+          self.w3 = torch.nn.Linear(dim * 2, dim)
+          
+      def forward(self, x):
+          # SwiGLU: Swish(x * W1) * (x * W2)
+          gate = F.silu(self.w1(x))
+          val = self.w2(x)
+          # The continuous mapping f(x)
+          return self.w3(gate * val)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+    import torch.nn.functional as F
+    
+    # Audit: Epsilon-Delta bound check on Swish activation
+    x = torch.tensor([1.0], requires_grad=True)
+    delta = torch.tensor([1e-4])
+    x_perturbed = x + delta
+    
+    y = F.silu(x)
+    y_perturbed = F.silu(x_perturbed)
+    
+    # epsilon is bounded by L * delta, where L is Lipschitz constant
+    epsilon = torch.abs(y_perturbed - y)
+    
+    # The derivative of SiLU is bounded, ensuring uniform Lipschitz continuity
+    L_bound = 1.1 # Max derivative of SiLU is ~1.1
+    assert epsilon <= L_bound * delta + 1e-5, "Continuity bound violated"

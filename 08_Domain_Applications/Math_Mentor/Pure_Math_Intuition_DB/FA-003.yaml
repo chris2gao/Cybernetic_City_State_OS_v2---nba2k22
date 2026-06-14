@@ -1,0 +1,59 @@
+id: FA-003
+title: 线性算子与有界性 (Linear Operators and Boundedness)
+sub_topics:
+  - "算子范数与Lipschitz连续 (Operator Norm and Lipschitz Continuity)"
+  - "线性变换矩阵 (Linear Transformation Matrices)"
+  - "连续性与有界性的等价关系 (Equivalence of Continuity and Boundedness)"
+llm_physical_mapping: >
+  在Transformer中，所有的权重矩阵（$W_Q, W_K, W_V, W_O$ 及 FFN/SwiGLU的投影层）都是高维Banach空间之间的线性算子。
+  算子的有界性（其算子范数受限）直接决定了神经网络的Lipschitz常数，进而影响前向信息传播的稳定性和反向传播的梯度行为。
+  算子有界是防止深层架构中出现几何拓扑超限和精度崩塌的根本约束；如果算子范数大于1，迭代乘法将导致指数级爆炸。
+code_implementation: |
+  import torch
+  import torch.nn as nn
+
+  class BoundedLinearOperator(nn.Module):
+      def __init__(self, in_features, out_features):
+          super().__init__()
+          self.linear = nn.Linear(in_features, out_features, bias=False)
+          
+      def compute_operator_norm(self, num_iters=10):
+          # 幂法计算线性算子的谱范数（最大的奇异值，即算子范数）
+          W = self.linear.weight
+          v = torch.randn(W.size(1), 1, device=W.device)
+          for _ in range(num_iters):
+              u = torch.matmul(W, v)
+              u = u / torch.norm(u)
+              v = torch.matmul(W.t(), u)
+              v = v / torch.norm(v)
+          operator_norm = torch.matmul(u.t(), torch.matmul(W, v)).squeeze()
+          return operator_norm
+
+      def forward(self, x):
+          return self.linear(x)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import torch
+
+    in_dim, out_dim = 256, 512
+    W = torch.randn(out_dim, in_dim) / (in_dim ** 0.5) # Kaiming/Xavier 初始化控制范数
+    x = torch.randn(10, in_dim)
+
+    # 线性算子映射 T(x) = x @ W.T
+    T_x = torch.matmul(x, W.t())
+
+    # 计算输入的范数和输出的范数
+    norm_x = torch.linalg.matrix_norm(x, ord=2) 
+    norm_T_x = torch.linalg.matrix_norm(T_x, ord=2)
+
+    # 算子范数 ||T|| = max (||T(x)|| / ||x||)
+    # 使用SVD计算真实算子范数
+    U, S, Vh = torch.linalg.svd(W)
+    operator_norm = S[0]
+
+    # 有界算子定理验证: ||T(x)|| <= ||T|| * ||x||
+    # 对于每个向量进行验证
+    for i in range(10):
+        nx = torch.linalg.vector_norm(x[i])
+        nTx = torch.linalg.vector_norm(T_x[i])
+        assert nTx <= operator_norm * nx + 1e-4
