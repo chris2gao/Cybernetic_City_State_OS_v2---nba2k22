@@ -71,6 +71,31 @@ It is not a repository constitution. It does not override:
 
 The source branch stores the stable protocol and neutral mailbox baseline. Active per-turn state is published on `ai/review/latest` and must not be merged back into the source branch.
 
+## Durable Protocol And Active Mailbox Separation
+
+Durable protocol files define behavior and may be carried by the source branch. Active mailbox files describe one current exchange and are safe to reset to neutral baseline on source publication.
+
+Durable protocol files include:
+
+- `.ai/PROTOCOL.md`
+- `.ai/PROTOCOL_ADHERENCE.md`
+- `.ai/HANDOFF_INIT_PROMPT.md`
+- `.ai/HANDOFF_COMMON_CONVENTIONS.md`
+- `.ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md`
+- `.ai/CODEX_WORK_MECHANISM_PROTOCOL.md`
+- `.ai/CODEX_TASK_INPUT_CONTRACT.md`
+- `.ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md`
+- `.ai/DECISIONS.md`
+
+Active mailbox files include:
+
+- `.ai/INBOX.md`
+- `.ai/OUTBOX.md`
+- `.ai/HUMAN_BRIEF.md`
+- `.ai/STATE.yml`
+
+On final master or another published source baseline, the active mailbox files should be neutral unless a current Human-approved task explicitly says otherwise. Live handoff state belongs on `ai/review/latest` or a task-specific review branch. Do not infer an active task from source-branch mailbox state when it is marked `neutral_baseline`.
+
 ## Pointer-Based Message Format
 
 ChatGPT-to-Codex signals contain these seven required fields:
@@ -280,6 +305,27 @@ Explicit human approval is required for:
 
 ChatGPT and Codex must not claim that a human gate is approved without evidence from a current human instruction or an authenticated approval channel.
 
+## Long-Run Task Defaults
+
+Human-authorized long-run programs inherit `.ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md`.
+
+By default, long-run execution is completion-preserving: discovered cleanup, validation, alignment, report, and repair steps are folded into the original authorized task when they are necessary for completion and remain within scope. Internal checkpoints replace repeated small Human gates.
+
+Human escalation is required only when a discovered item requires new authority, changes the objective, touches forbidden paths, requires destructive Git, requires source or master push, creates security, privacy, or secrets risk, requests Coordinator or runtime activation, or blocks all safe independent progress.
+
+This rule is an execution-efficiency rule. It does not authorize P3, bridge generation, source publication, master merge, runtime activation, secrets access, broad regeneration, or unrelated business changes.
+
+## City-State OS Alignment
+
+The `.ai` handoff layer is the communication and review layer for ChatGPT, Codex, and the Human. It should align with the broader Cybernetic City-State OS structure without silently becoming runtime governance.
+
+- `.ai/CODEX_REPORTS/*.md` stores model-to-model review evidence.
+- `campaigns/campaign_manifest_template.yaml` remains the template for future campaign state when a task explicitly opens a campaign.
+- `system_backbone/audit_ledger/system_record.jsonl` remains the audit-ledger substrate; this protocol does not authorize ledger writes by itself.
+- `02_Protocols/` contains broader OS protocol doctrine. `.ai` files provide executable handoff mechanics.
+
+Runtime integration, Coordinator activation, automatic routing, and repository-level AI control-plane changes require separate Human-approved tasks.
+
 ## Failure Handling
 
 - Reject stale packets whose `source_head` does not match the intended business commit.
@@ -292,4 +338,4 @@ ChatGPT and Codex must not claim that a human gate is approved without evidence 
 
 ## Deferred Evolution
 
-Automatic validation, multi-agent conflict handling, mandatory ChatGPT writeback, packet replay protection, repository-level governance, and automated human brief delivery are deferred. Their roadmap is recorded in the post-P2 execution memory and must not block current Math Mentor work.
+Automatic validation, multi-agent conflict handling, mandatory ChatGPT writeback, packet replay protection, repository-level governance, automated human brief delivery, and full Cybernetic City-State OS communication/control-layer activation are deferred unless a current Human-approved task opens that scope. Their roadmap is recorded in the post-P2 execution memory and P10+ protocol evolution reports.

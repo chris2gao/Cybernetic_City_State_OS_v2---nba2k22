@@ -87,6 +87,8 @@ inputs:
 
 return:
   packet_id: "codex-<task-id>"
+
+completion_policy: "completion_preserving"
 ---
 ```
 
@@ -104,10 +106,23 @@ The body may add task-specific rationale, constraints, examples, or decision que
 - `outputs.primary`: exact durable output path or `chat_plan` for non-mutating Plan mode.
 - `inputs.required_refs`: exact evidence refs; may be empty only when the task needs no external evidence.
 - `return.packet_id`: expected Codex handoff identity.
+- `completion_policy`: optional; defaults to `completion_preserving` when omitted.
 
 `task_level` is mandatory for future long packets. It prevents mutation, commit, and publication authority from being inferred from prose. Signal-only decisions that do not reference a long packet do not require it.
 
-### 5.2 Conditional Long-Packet Fields
+### 5.2 Completion Policy
+
+`completion_policy` controls how Codex treats discovered sub-tasks during execution.
+
+```yaml
+completion_policy: "completion_preserving"
+```
+
+The default value is `completion_preserving`: sub-tasks, cleanup steps, validation steps, alignment steps, report steps, or repair steps discovered during execution are internalized into the current task when they are necessary to complete the authorized objective and remain within authorized scope.
+
+Use a narrower policy only when the Human explicitly requests small-step gating. Completion-preserving execution still stops for new authority, objective changes, forbidden paths, destructive Git, source or master push, security, privacy, secrets risk, protected runtime or Coordinator activation, or whole-task blockers.
+
+### 5.3 Conditional Long-Packet Fields
 
 Add only when applicable:
 

@@ -18,7 +18,21 @@ A Long-Run Autonomous Program has this lifecycle:
 
 Small batches remain internal safety and validation units. They do not require repeated Human approval when the launch packet already authorizes their stage, paths, and actions. A run stops only under the decision rules in this protocol.
 
-## 3. Preflight-First Rule
+## 3. Completion-Preserving Task Expansion
+
+A Human-authorized long-run task should be completed as one coherent objective whenever safe and authorized.
+
+When Codex discovers sub-tasks, cleanup steps, validation steps, report steps, alignment steps, or repair steps that are necessary to complete the original authorized objective, Codex folds them into the current program's internal stage graph, checkpoint plan, issue log, or repair cohort when they remain within the authorized scope. Codex should not convert every discovered sub-task into a separate Human-gated task.
+
+Use internal checkpoints, issue logs, repair cohorts, and one final consolidated review package for non-blocking sub-issues. Report unresolved but non-blocking items in the final review log instead of stopping after each one.
+
+Ask the Human only when a discovered item requires new authority, changes the objective, touches forbidden paths, requires destructive Git, requires source or master push, creates security, privacy, or secrets risk, requests Coordinator or runtime activation, or blocks all safe independent progress.
+
+ChatGPT should propose consolidated continuation packets that complete the original objective, not a chain of narrow follow-up tasks, unless the Human explicitly asks for small-step gating.
+
+This rule does not weaken protected gates. Source publication, master merge, destructive operations, secrets-sensitive actions, Coordinator or runtime activation, automation enablement, and new business or domain authority still require explicit Human approval.
+
+## 4. Preflight-First Rule
 
 No long run starts until preflight scans for conditions that would later force the run to stop. Resolve every condition that can be resolved before launch.
 
@@ -39,7 +53,7 @@ Preflight must verify and record:
 
 If an unresolved preflight condition prevents safe execution of the authorized scope, return `blocked_preflight`. Do not begin a partial run and rediscover a known mandatory blocker later.
 
-## 4. Project-Level Permission Pre-Grant
+## 5. Project-Level Permission Pre-Grant
 
 The launch packet must state all project-level permissions needed for the full run. At minimum it declares:
 
@@ -66,7 +80,7 @@ final_publication:
 
 Missing permission means the action is not authorized. Permission for a stage does not imply permission for a protected file, source push, merge, destructive Git, secrets access, P3 entry, or bridge generation. The packet cannot weaken higher-priority restrictions.
 
-## 5. Local-Only Execution After Launch
+## 6. Local-Only Execution After Launch
 
 Before the run begins, Codex may fetch the latest approved GitHub data and resolve all required refs. Once the launch checkpoint is recorded:
 
@@ -80,13 +94,13 @@ After the final local checkpoint, perform publication once: create the final loc
 
 GitHub unavailability during execution is not a run failure because no mid-run GitHub call is allowed. If final publication is unavailable, preserve the complete local result and report `completed_with_blockers`.
 
-## 6. Internal Checkpoints And Rollback
+## 7. Internal Checkpoints And Rollback
 
 Each stage and each internal batch of at most five items has a checkpoint. A checkpoint records input/output heads, changed paths, validation evidence, issue-log additions, and rollback instructions. Checkpoints are evidence boundaries, not routine Human gates.
 
 Use narrow commits where practical. On unsafe mutation or validation regression, revert only to the last accepted local checkpoint. Do not discard unrelated accepted work.
 
-## 7. Non-Blocking Issue Log
+## 8. Non-Blocking Issue Log
 
 Every run writes:
 
@@ -105,7 +119,7 @@ The log is a review ledger, not a transcript. It must contain these sections:
 
 Log an issue and continue whenever it does not invalidate independent authorized work. Do not promote a logged ambiguity to passed status. Apply the three-attempt failure budget per stable failure signature; after exhaustion, quarantine that item and continue independent work when safe.
 
-## 8. Stop Versus Continue Decision Table
+## 9. Stop Versus Continue Decision Table
 
 | Condition | Required action |
 | --- | --- |
@@ -124,7 +138,7 @@ Log an issue and continue whenever it does not invalidate independent authorized
 
 The entire program stops only when safe independent progress is no longer possible, the baseline is endangered, or a higher-priority gate requires it.
 
-## 9. Final Status Taxonomy
+## 10. Final Status Taxonomy
 
 - `completed_clean`: every authorized stage completed with no unresolved review log or blocker.
 - `completed_with_review_log`: every authorized stage completed; non-blocking review or repair items remain in the long-run log.
@@ -134,7 +148,7 @@ The entire program stops only when safe independent progress is no longer possib
 
 These statuses describe the authorized run only. They do not imply full-corpus mathematical correctness, P3 approval, bridge readiness, source publication, or merge approval.
 
-## 10. Final Review And Post-Run Repair
+## 11. Final Review And Post-Run Repair
 
 At run end, Codex publishes one consolidated review package containing:
 
@@ -147,7 +161,17 @@ At run end, Codex publishes one consolidated review package containing:
 
 ChatGPT reviews the evidence chain and mathematical/architectural judgments. The Human decides whether to accept, request post-run repair, authorize deferred stages, publish source, merge, or roll back selected checkpoints. Post-run repair is targeted; it does not automatically restart the entire program.
 
-## 11. Knowledge Completion Program Binding
+## 12. City-State OS Alignment
+
+Long-run handoff programs are part of the repository's Cybernetic City-State OS coordination layer. They should align with the existing protocol, campaign, and audit structures without activating runtime systems by documentation alone.
+
+- Protocol authority is documented under `.ai/` and `02_Protocols/`.
+- Campaign-level planning may reference `campaigns/campaign_manifest_template.yaml` when a future task needs STAR-style campaign state.
+- Audit evidence may reference `system_backbone/audit_ledger/system_record.jsonl`, but this protocol does not authorize append-only ledger writes unless a current task explicitly permits them.
+- Long-run reports in `.ai/CODEX_REPORTS/` are review artifacts. They do not replace runtime audit ledgers or campaign manifests.
+- Runtime integration, Coordinator activation, automated routing, or OS-level governance changes require a separate Human-approved task.
+
+## 13. Knowledge Completion Program Binding
 
 Future execution of `08_Domain_Applications/Math_Mentor/KNOWLEDGE_COMPLETION_PROGRAM.md` must follow this protocol.
 

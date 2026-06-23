@@ -4,6 +4,8 @@ These conventions are inherited by all ChatGPT, Codex, and human-facing handoff 
 
 Future long task packets also follow `.ai/CODEX_TASK_INPUT_CONTRACT.md`. They state task-specific intent and differences without repeating these common conventions.
 
+Human-authorized long-run programs additionally follow `.ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md`. Such programs default to completion-preserving execution: necessary cleanup, validation, alignment, report, and repair steps are folded into the original authorized objective when they remain within scope.
+
 ## 1. Role Defaults
 
 - Human: sets goals and boundaries, resolves conflicts, approves source-branch publication, and makes final decisions for major stage transitions.
@@ -46,6 +48,7 @@ Unless explicitly enabled by a human-approved task:
 - Latest machine state lives in `.ai/STATE.yml`.
 - `.ai/INBOX.md` is only an optional index or pointer.
 - Do not paste long prompts, long execution reports, full diffs, command logs, or private data into chat.
+- Source branches carry durable protocol files and neutral mailbox baselines. Active mailbox state belongs on `ai/review/latest` or a task-specific review branch.
 
 ## 5. Pointer Dereference Defaults
 
@@ -148,7 +151,14 @@ progress_narration_policy:
 
 These defaults remove avoidable output. They do not permit skipping evidence or reasoning needed for correctness.
 
-## 11. Human-Facing Execution Recommendation Defaults
+## 11. Long-Run Completion Defaults
+
+- Do not split a Human-authorized long-run program into micro-tasks when discovered sub-steps remain necessary, safe, and in scope.
+- Use internal checkpoints, bounded issue logs, and one consolidated review package instead of repeated small Human gates.
+- Escalate only for new authority, objective change, forbidden paths, destructive Git, source/master push, security/privacy/secrets risk, Coordinator or runtime activation, or whole-task blockers.
+- Completion-preserving execution does not weaken protected gates or authorize unrelated business/domain changes.
+
+## 12. Human-Facing Execution Recommendation Defaults
 
 ChatGPT may include a short Codex execution recommendation in human-facing chat when advising the Human to start a Codex task. It may include, when useful:
 

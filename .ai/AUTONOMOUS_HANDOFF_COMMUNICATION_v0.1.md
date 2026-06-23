@@ -54,7 +54,7 @@ All packets inherit `.ai/HANDOFF_COMMON_CONVENTIONS.md` unless explicitly overri
 
 ## 5. Branches
 
-- Source branch: `legacy-mode-a-outsourcing`.
+- Source branch: the current Human-approved work branch. After the master/legacy integration, final source publication uses `master` unless a task names a different branch.
 - Review branch: `ai/review/latest`.
 - Source-branch publication requires explicit human approval.
 - The review branch is the communication bus and may contain `.ai` communication files.
@@ -228,7 +228,9 @@ Neither model may execute or review the same packet twice unless the human expli
 
 ## 16. Future Automation Deferred
 
-Deferred capabilities include a ChatGPT scheduled watcher, Codex cron/subagent context packs, multi-model debate, human interrupt delivery, stage-completion notifications, and a full Cybernetic City-State OS orchestrator. They belong to a dedicated automation phase or P10+ and must not block current Math Mentor work.
+Deferred capabilities include a ChatGPT scheduled watcher, Codex cron/subagent context packs, multi-model debate, human interrupt delivery, stage-completion notifications, and a full Cybernetic City-State OS orchestrator. They belong to a dedicated automation phase or explicit P10+ task and must not be activated by mailbox documentation alone.
+
+When an explicit P10+ task is active, protocol evolution should remain completion-preserving: necessary cleanup, validation, alignment, report, and handoff steps are folded into the authorized objective, while runtime activation, source publication, master publication, destructive operations, and secrets-sensitive actions remain Human-gated.
 
 ## 17. Safety and Authority Boundaries
 

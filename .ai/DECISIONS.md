@@ -20,3 +20,9 @@
 - Decision: Phase 1 uses Codex-only review-branch writes.
 - Future: ChatGPT writeback must be tested and approved before enablement.
 - Lease rule: An explicit expected-SHA lease is required once ChatGPT writeback is enabled.
+
+## D-0004 — Use completion-preserving long-run execution
+
+- Status: accepted
+- Decision: Human-authorized long-run programs should complete one coherent objective by folding necessary in-scope cleanup, validation, alignment, report, and repair steps into the current run.
+- Boundary: New authority, objective change, forbidden paths, destructive Git, source/master push, secrets risk, Coordinator/runtime activation, automation enablement, or unrelated business/domain scope still require explicit Human approval.

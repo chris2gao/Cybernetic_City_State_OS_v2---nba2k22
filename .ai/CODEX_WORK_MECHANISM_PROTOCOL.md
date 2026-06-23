@@ -24,6 +24,18 @@ Use Goal mode when the outcome and definition of done are stable, implementation
 
 Goal mode is the default for authorized execution and GitHub-persisted Codex output.
 
+### Completion-Preserving Task Expansion Rule
+
+For authorized execution, Codex defaults to completion-preserving task expansion. If Codex discovers sub-tasks, cleanup steps, validation steps, alignment steps, report steps, or repair steps that are necessary to finish the original authorized objective, Codex should internalize them into the current task plan when they remain within authorized scope.
+
+Do not turn every discovered item into a new Human-gated task. Use internal checkpoints, bounded issue logs, repair cohorts, and a final consolidated review package. Report non-blocking sub-issues in the final review log instead of stopping after each one.
+
+Escalate to the Human only when a discovered item requires new authority, changes the objective, touches forbidden paths, requires destructive Git, requires source or master push, creates security, privacy, or secrets risk, requests Coordinator or runtime activation, or blocks all safe independent progress.
+
+ChatGPT should likewise prefer consolidated continuation packets that complete the original objective rather than a chain of narrow follow-up tasks, unless the Human explicitly requests small-step gating.
+
+This rule does not weaken protected gates. Source publication, master merge, destructive operations, secrets-sensitive actions, Coordinator or runtime activation, automation enablement, and new business or domain authority still require explicit Human approval.
+
 ### Plan mode
 
 Plan mode is for reducing ambiguity before implementation. Codex performs non-mutating exploration, resolves discoverable facts from the environment, asks only material preference questions, and produces a decision-complete plan.
@@ -222,6 +234,8 @@ Use `.ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md` when the Human authorizes one 
 
 After launch, the run is local-only until final publication. It uses batches of at most five and durable checkpoints as internal validation units, but does not stop for routine Human approval between those batches. Non-blocking ambiguities, protected-file skips, scope candidates, deferred stages, and manual-review items go to `.ai/LONG_RUN_LOGS/<program_id>.md`; unsafe mutations and whole-program blockers follow the protocol's stop/revert table.
 
+Completion-preserving task expansion is the default within an authorized long-run program. Discovered cleanup, validation, alignment, reporting, and repair steps are folded into the current run when they are necessary for the original objective and remain inside the pre-granted authority.
+
 The successful end state is one consolidated ChatGPT review package followed by targeted post-run repair when needed. This mechanism never grants itself P3, bridge, source-push, merge, destructive-operation, or secrets authority.
 
 ### Current interactive thread
@@ -270,3 +284,4 @@ Before automation or a subagent can act, its durable context pack must include p
 4. **Multi-model conflict/debate:** define roles, evidence format, decision authority, dissent preservation, and Human escalation before introducing debate workflows.
 5. **Accepted report promotion:** define when review-only reports are copied to the source branch as durable protocol evidence.
 6. **Protocol evolution:** future revisions require an explicit reviewed task and source commit; review-branch drafts do not change the active source protocol implicitly.
+7. **City-State OS binding:** future automation should define how `.ai` handoff reports map into campaign manifests and audit ledgers without treating mailbox state as runtime activation.
