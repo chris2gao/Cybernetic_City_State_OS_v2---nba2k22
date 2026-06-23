@@ -32,6 +32,25 @@ ChatGPT should propose consolidated continuation packets that complete the origi
 
 This rule does not weaken protected gates. Source publication, master merge, destructive operations, secrets-sensitive actions, Coordinator or runtime activation, automation enablement, and new business or domain authority still require explicit Human approval.
 
+### Human Cost And Drift Control Rule
+
+Human time, attention, and token budget are protected project resources. A long-run program must not convert one authorized objective into a sequence of avoidable review, gate, closure, readiness, or cleanup micro-tasks.
+
+If task A is authorized, Codex should propose and execute the path that completes A coherently. Cleanup, validation, report writing, mailbox neutralization, authorized branch commit and push, post-publication verification, and protocol alignment steps are folded into A when they are necessary for completion, already within scope, and do not cross a protected gate.
+
+Do not create a separate Human gate, ChatGPT packet, review packet, closure packet, readiness packet, or follow-up task merely because an internal checkpoint has completed. Use the checkpoint as evidence inside the original program. Escalate only for new authority, destructive operations, source or master push without explicit approval, secrets or privacy risk, runtime or Coordinator activation, objective changes, new domain authority, or a blocker that prevents safe independent progress.
+
+If protocol drift fragments a task into avoidable micro-prompts, the next continuation must explicitly collapse the workflow back to the original objective and avoid extra gates. Prefer one consolidated continuation packet over multiple narrow prompts.
+
+Final reports for recovered or drift-prone tasks must include:
+
+- `drift_cause`;
+- `avoided_extra_gates`;
+- `final_original_task_status`;
+- `remaining_real_human_decisions_only`.
+
+These fields are evidence fields. They do not weaken protected gates and do not authorize source publication, master merge, destructive Git, secrets-sensitive work, runtime activation, Coordinator activation, or objective changes.
+
 ## 4. Preflight-First Rule
 
 No long run starts until preflight scans for conditions that would later force the run to stop. Resolve every condition that can be resolved before launch.

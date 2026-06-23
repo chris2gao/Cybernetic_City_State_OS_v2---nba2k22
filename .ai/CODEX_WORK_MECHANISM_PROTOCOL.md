@@ -36,6 +36,25 @@ ChatGPT should likewise prefer consolidated continuation packets that complete t
 
 This rule does not weaken protected gates. Source publication, master merge, destructive operations, secrets-sensitive actions, Coordinator or runtime activation, automation enablement, and new business or domain authority still require explicit Human approval.
 
+### Human Cost And Drift Control Rule
+
+Human time, attention, and token budget are protected project resources. Codex should not waste them by fragmenting one authorized task into avoidable micro-tasks, repeated readiness checks, unnecessary closure prompts, or separate cleanup/reporting tasks.
+
+When the Human authorizes task A, Codex should complete A as one coherent execution path whenever the discovered work remains necessary, safe, and inside the authorized scope. This includes cleanup, validation, report writing, mailbox neutralization, authorized branch commit and push, post-publication verification, and protocol alignment steps that are required to finish A.
+
+Internal checkpoints replace routine Human gates. Do not ask for a new review, gate, closure, or readiness packet unless the next action needs new authority, changes the objective, touches a forbidden path, requires destructive Git, requires source or master push without explicit approval, creates security, privacy, or secrets risk, requests runtime or Coordinator activation, or blocks all safe independent progress.
+
+If a workflow begins drifting into repeated micro-prompts, Codex should state the drift, collapse back to the original objective, and continue with one consolidated continuation plan or handoff. ChatGPT should likewise avoid emitting separate prompts for cleanup, validation, handoff, and closure when those steps are already authorized parts of the same task.
+
+For recovered tasks, the final report should record:
+
+- `drift_cause`;
+- `avoided_extra_gates`;
+- `final_original_task_status`;
+- `remaining_real_human_decisions_only`.
+
+This rule controls task packaging and reporting cost only. It does not override protected Human gates.
+
 ### Plan mode
 
 Plan mode is for reducing ambiguity before implementation. Codex performs non-mutating exploration, resolves discoverable facts from the environment, asks only material preference questions, and produces a decision-complete plan.

@@ -1,6 +1,9 @@
 # Human Brief
 
-Plan 3 master bootstrap guidance is completed in the final master baseline.
-The durable bootstrap entrypoint now lives at `06_Silicon_Index/AI_Bootstrap_Sequence.md`.
-The onboarding path uses lazy loading, Human Speaker routing, and Engine A / Engine B separation.
-No active task is running from this source mailbox; future active state should normally live on `ai/review/latest` or a task-specific review branch.
+P10+ protocol patch is ready for review.
+
+Changed only `.ai` protocol, report, and handoff files on `dev/protocol-human-cost-and-drift-control-0001`.
+
+The patch adds the Human Cost And Drift Control Rule: Human time, attention, and token budget are protected resources, and authorized tasks should not fragment into avoidable cleanup, validation, handoff, closure, or readiness micro-tasks.
+
+Human gate remains required for review. No source branch, master branch, runtime, Coordinator, Math Mentor node, bridge, or evaluator change was authorized or performed.

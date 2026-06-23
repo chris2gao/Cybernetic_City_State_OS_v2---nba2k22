@@ -1,8 +1,10 @@
-packet_id: null
-status: neutral_baseline
-report_ref: null
+packet_id: codex-protocol-human-cost-and-drift-control-0001
+status: completed_for_review
+report_ref: .ai/CODEX_REPORTS/protocol-human-cost-and-drift-control-0001.md
 brief_ref: .ai/HUMAN_BRIEF.md
-source_head: null
+changed_files_ref: .ai/CODEX_REPORTS/protocol-human-cost-and-drift-control-changed-files-0001.md
+dev_branch: dev/protocol-human-cost-and-drift-control-0001
+source_head: self
+master_head: eb918a55becefe609e27723073a38be319f10586
 review_branch_head: null
-human_gate: not_required
-last_completed_task: plan3-master-bootstrap-guidance-system-0001
+human_gate: required

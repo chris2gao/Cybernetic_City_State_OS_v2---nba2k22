@@ -122,7 +122,28 @@ The default value is `completion_preserving`: sub-tasks, cleanup steps, validati
 
 Use a narrower policy only when the Human explicitly requests small-step gating. Completion-preserving execution still stops for new authority, objective changes, forbidden paths, destructive Git, source or master push, security, privacy, secrets risk, protected runtime or Coordinator activation, or whole-task blockers.
 
-### 5.3 Conditional Long-Packet Fields
+### 5.3 Human Cost And Drift Control Rule
+
+Task packets should protect Human time, attention, and token budget as project resources. They should not split one authorized outcome into avoidable micro-tasks for readiness, review, closure, cleanup, validation, handoff, or mailbox neutralization.
+
+When a task uses `completion_policy: "completion_preserving"`, the packet should define the whole coherent outcome. Cleanup, validation, report writing, mailbox updates, authorized branch commit and push, post-publication verification, and protocol alignment steps should be included as completion work when they are necessary, safe, and already within the authorized task level and scope.
+
+Do not create a separate task packet for an internal checkpoint unless a real Human decision or protected action is required. Real gates include new authority, objective changes, destructive Git, source or master push without explicit approval, secrets or privacy risk, runtime or Coordinator activation, forbidden paths, new domain authority, and whole-task blockers.
+
+If a sender detects protocol drift or avoidable task fragmentation, the next packet should collapse the workflow back to the original authorized objective. Prefer one consolidated continuation packet over many narrow follow-ups.
+
+For drift recovery or drift-prone work, request these final report fields:
+
+```yaml
+drift_cause: "<why the task began fragmenting, or null>"
+avoided_extra_gates: ["<gates/prompts that were folded back into the original task>"]
+final_original_task_status: "<completed | completed_with_blockers | blocked | superseded>"
+remaining_real_human_decisions_only: ["<actual decisions still requiring Human authority>"]
+```
+
+These fields document cost control and authority boundaries. They do not authorize bypassing protected gates.
+
+### 5.4 Conditional Long-Packet Fields
 
 Add only when applicable:
 
