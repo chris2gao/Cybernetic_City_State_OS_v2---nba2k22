@@ -1,6 +1,6 @@
 # Human Brief
 
-P10+ AI handoff protocol evolution was prepared on `dev/p10-plus-ai-handoff-protocol-evolution-0001`.
-The update adopts completion-preserving long-run behavior, separates durable protocol from active mailbox state, and aligns `.ai` handoff with City-State OS campaign/audit structures.
-No Math Mentor content, evaluator, bridge, node, runtime, Coordinator, source push, or master push was performed.
-Human review is required before any further publication or runtime expansion.
+P10+ AI handoff protocol evolution is completed in the final master baseline.
+The durable protocol layer now supports completion-preserving long-run tasks, neutral source mailbox bootstrapping, and City-State OS protocol/campaign/audit alignment.
+No active task is running from this source mailbox.
+Future active handoff state should normally live on `ai/review/latest` or a task-specific review branch.
