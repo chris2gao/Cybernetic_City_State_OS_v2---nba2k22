@@ -1,0 +1,34 @@
+id: DIFF_GEO-662
+mode_routing_status: "manual_review_required"
+validation_status: "manual_review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "mode_routing_manual_review_required"
+concept_name: 陈类 - 物理意义：规范场论中纤维丛（Fiber Bundles）的全局代数不变量。测量高维物理系统底层的拓扑荷。 (n_662)
+sub_topics:
+- 示性类 (Characteristic classes) 的公理化
+- 陈类 (Chern classes) 在复向量丛上的构造
+- 拓扑绝缘体与量子霍尔效应的数学关联
+- 物理意义：流形扭曲程度的量子化度量
+llm_physical_mapping: 如同流水线上计算零件翻转次数的机械计数器，齿轮一旦咬合就只能记录整数圈，无论传送带怎样抖动，最终的总圈数绝对不变。
+code_implementation: "import numpy as np\ndef compute_integer_twists(phases):\n    diffs = np.diff(phases)\n    diffs = (diffs\
+  \ + np.pi) % (2 * np.pi) - np.pi\n    return np.round(np.sum(diffs) / (2 * np.pi))\n"
+v8_sanity_audit:
+  sympy_pseudo_code: 'import sympy as sp
+
+    phase_diff = sp.Symbol(''phase_diff'')
+
+    twist = phase_diff / (2 * sp.pi)
+
+    assert sp.simplify(twist * 2 * sp.pi - phase_diff) == 0
+
+    '

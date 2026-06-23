@@ -1,0 +1,25 @@
+id: "OPTIMIZATION-727"
+concept_name: "内点法（障碍函数法） - 物理直觉：建立“边界能量力场”，强迫探索路径远离硬性边界，直接从多面体内部穿透实现多项式时间内的绝对收敛。 (n_727)"
+sub_topics:
+  - "对数障碍函数 $-\\log(-g(x))$"
+  - "中心路径 (Central path) 的迭代跟随"
+  - "仿射变换在内点迭代中的坐标规范化"
+  - "物理意义：利用势场引导路径，规避约束冲突"
+llm_physical_mapping: "A powerful electromagnet installed on the steel walls of an industrial sorting chute. As metal parts slide down (optimizing), the magnetic force field (log barrier) violently repels them before they can crash into the hard steel walls, forcing them to ride smoothly down the central geometric tunnel."
+code_implementation: |
+  import numpy as np
+  
+  def log_barrier_energy(x, bound):
+      # Physical repulsive force field near the boundary
+      distance_to_bound = bound - x
+      if distance_to_bound <= 0:
+          return np.inf
+      return -np.log(distance_to_bound)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x, b = sp.symbols('x b')
+    barrier = -sp.log(b - x)
+    # The repulsive force (gradient) pushes away from the boundary
+    force = sp.diff(barrier, x)
+    assert force == 1/(b - x)

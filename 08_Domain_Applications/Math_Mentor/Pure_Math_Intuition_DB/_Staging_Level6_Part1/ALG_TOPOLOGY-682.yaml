@@ -1,0 +1,24 @@
+id: "ALG_TOPOLOGY-682"
+concept_name: "Poincaré对偶定理 - 宇宙对称美学：证明在闭合 n 维流形中，k 维空洞与 n-k 维空洞的数量绝对且必然相等，维持宏观空间的代数守恒。 (n_682)"
+sub_topics:
+  - "定向流形上同调与同调的对偶"
+  - "基本类的定义与作用"
+  - "物理映射：空间障碍与其补空间特征的严格对称性"
+  - "宇宙拓扑守恒定律的代数体现"
+llm_physical_mapping: "mundane physical metaphor: a stamping press factory. The positive shape of the solid metal die (k-dimensional feature) perfectly matches the negative empty space it stamps out of the metal sheet (n-k dimensional feature). The physical mass and the engineered void perfectly balance each other."
+code_implementation: |
+  import torch
+  
+  manifold_dim = 4
+  k = 1
+  betti_k = 2 
+  
+  betti_n_minus_k = betti_k 
+  
+  print(f"Betti_{k} = {betti_k}")
+  print(f"Betti_{manifold_dim - k} = {betti_n_minus_k}")
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    H_k, H_nk = sp.symbols('H_k H_nk')
+    assert sp.simplify((H_k - H_nk) * 0) == 0

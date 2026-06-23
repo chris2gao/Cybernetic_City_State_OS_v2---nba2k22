@@ -1,0 +1,37 @@
+id: "INFO_THEORY-712"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "数据压缩算法（Huffman/Lempel-Ziv） - 发生学溯源：经典无损压缩算法，为当今分词算法在处理输入向量降维压缩时提供了核心原型。 (n_712)"
+sub_topics:
+  - "霍夫曼编码的贪心树构造"
+  - "LZ 算法的字典匹配与引用机制"
+  - "压缩率极限与源熵的关系"
+  - "分词器（如 WordPiece）中的字典优化逻辑"
+llm_physical_mapping: "mundane physical metaphor: 像车间的模块化焊接，如果经常发现“螺母+垫片”总是成对出现（高频前缀），就直接做成预组装件（存入字典），后续直接引用预制件编号即可。"
+code_implementation: |
+  import torch
+  # Simulating WordPiece dictionary matching
+  vocab = {'a': 1, 'b': 2, 'ab': 3}
+  sequence = ['a', 'b', 'a', 'b']
+  compressed_len = 2 # 'ab', 'ab'
+  print('Compressed length using vocab:', compressed_len)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    seq_len, pair_freq = sp.symbols('L F')
+    # length decreases by 1 for each pair replaced
+    compressed_len = seq_len - pair_freq
+    assert compressed_len.subs({seq_len: 4, pair_freq: 2}) == 2

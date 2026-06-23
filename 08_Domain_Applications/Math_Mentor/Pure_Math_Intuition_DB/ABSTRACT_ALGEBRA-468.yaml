@@ -1,0 +1,42 @@
+id: "ABSTRACT_ALGEBRA-468"
+domain: "abstract_algebra"
+mode: "B"
+concept_name: "域与域扩张 - 通过添加方程虚根（如 i）不断扩大数系物理版图的扩张理论 (n_468)"
+sub_topics:
+  - "分裂域 (Splitting Fields) 的构造"
+  - "代数扩张与超越扩张的区别"
+  - "扩域维数与向量空间的类比"
+  - "域扩张在构建复数、有限域中的作用"
+formal_definition: |-
+  若 K 是 L 的子域且两者单位元相同，则称 L/K 为域扩张；L 同时是 K 上的向量空间，
+  其维数记为 [L:K]。元素 alpha 属于 L 若满足某个非零多项式 p(x) 属于 K[x]
+  的方程 p(alpha)=0，则称 alpha 在 K 上代数；否则称为超越。多项式 f 属于 K[x]
+  的分裂域是包含 K、使 f 完全分解为一次因子且由这些根生成的最小扩域。
+prerequisite_nodes:
+  - "n_308"
+  - "n_467"
+llm_physical_mapping: |-
+  把基础域 K 类比为模型表示层允许使用的一套标量语言与封闭运算。构造 K(alpha)
+  类似在保持旧标量和运算可嵌入的前提下，引入一个受多项式关系约束的新表示原语；
+  当扩张有限时，L 中元素可用有限个 K-系数坐标表示，对应 [L:K] 的向量空间维数。
+  分裂域则对应加入恰好足够的受约束原语，使指定关系中的全部根都能在扩展语言中表示。
+mapping_boundary: |-
+  神经网络隐藏表示通常只是实向量空间，并不天然具有域乘法、逆元或最小扩张性质；
+  增加特征维度或词表也不等于构造域扩张。该映射只帮助理解“保留旧结构、加入受关系
+  约束的新元素以及有限坐标表示”，不能替代域公理、最小多项式或分裂域证明。
+code_implementation: |
+  import sympy as sp
+  x = sp.Symbol('x')
+  # Special-case anchor only: roots of x**2 - 2 motivate adjoining sqrt(2).
+  poly = x**2 - 2
+  roots = sp.solve(poly, x)
+  extension_anchor = {"base_field": "Q", "adjoined_relation": poly, "roots": roots}
+v9_semantic_audit:
+  status: "review_required"
+  review_criteria:
+    - "The definition distinguishes an extension L/K from merely enlarging a set or vector space."
+    - "Algebraic and transcendental elements are classified by polynomial relations over K."
+    - "A splitting field is stated as a minimal root-generated extension, not just a list of roots."
+    - "The finite-degree vector-space analogy is used without claiming that every extension is finite."
+    - "The LLM-architecture mapping states explicitly that hidden representations are not fields."
+    - "The SymPy root construction is treated only as a special-case anchor, not proof of the general concept."

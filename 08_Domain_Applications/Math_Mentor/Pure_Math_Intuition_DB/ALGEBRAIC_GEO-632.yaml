@@ -1,0 +1,43 @@
+id: "ALGEBRAIC_GEO-632"
+domain: "algebraic_geometry"
+mode: "B"
+concept_name: "仿射/射影簇 - 物理直觉：仿射簇即多元多项式方程公共解在多维空间中切出的骨架。射影簇通过引入“无穷远地平线”消除平行线不相交特例，实现几何规律的完美对称。 (n_632)"
+sub_topics:
+  - "仿射空间 $A^n$ 与理想 $I(V)$ 的对应"
+  - "齐次多项式与射影空间 $P^n$"
+  - "代数簇的维数与奇异点"
+  - "物理意义：复杂约束系统的解流形"
+formal_definition: |-
+  给定域 k 与理想 I 包含于 k[x_1,...,x_n]，仿射代数集定义为
+  V(I)={a 属于 k^n | 对所有 f 属于 I，f(a)=0}。本节点采用“簇=不可约代数集”的
+  约定；其坐标环为 k[x_1,...,x_n]/I(V)。在代数闭域上，Hilbert 零点定理把代数集
+  与根理想联系起来。射影空间 P^n(k) 是 k^(n+1) 中非零向量按非零标量倍数取商；
+  射影代数集由齐次多项式的公共零点定义。维数可由坐标环的 Krull 维数给出；对适当
+  生成方程，Jacobian 秩下降刻画候选奇异点。
+prerequisite_nodes:
+  - "n_467"
+  - "n_476"
+llm_physical_mapping: |-
+  可把模型参数的精确多项式约束看作参数空间中的代数零点集：坐标环记录在该约束集上
+  无法区分的多项式观测量，局部坐标图则描述同一结构的不同参数表示。齐次化引入尺度
+  等价类，使只差整体非零缩放的参数向量表示同一个射影点。
+mapping_boundary: |-
+  一般神经网络损失、近似等式或梯度下降轨迹不是代数簇；实数零点集也不能直接套用
+  代数闭域上的零点定理。光滑流形维数与 Krull 维数概念不同，Jacobian 检验还依赖
+  方程和域的条件。参数缩放对称只有在模型确实具有相应齐次性时才对应射影化。
+code_implementation: |
+  import sympy as sp
+  x, y, z = sp.symbols("x y z")
+  # Special-case anchor: homogenize an affine equation to a projective equation.
+  affine_equation = x**2 + y**2 - 1
+  homogeneous_equation = x**2 + y**2 - z**2
+v9_semantic_audit:
+  status: "review_required"
+  review_criteria:
+    - "Affine algebraic sets are defined as common zeros of ideals in a polynomial ring."
+    - "The convention distinguishing algebraic sets from irreducible varieties is stated explicitly."
+    - "Projective space is a scalar quotient and projective equations are homogeneous."
+    - "The ideal-variety correspondence is qualified by algebraic closure and radical ideals."
+    - "Dimension and singularity language does not conflate Krull dimension with arbitrary manifold intuition."
+    - "The LLM mapping excludes approximate losses and generic optimization trajectories from being called varieties."
+    - "The code is only a homogenization anchor and not a general semantic validation."

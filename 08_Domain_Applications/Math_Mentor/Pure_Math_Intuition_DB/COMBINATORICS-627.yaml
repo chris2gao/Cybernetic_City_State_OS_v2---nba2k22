@@ -1,0 +1,37 @@
+id: "COMBINATORICS-627"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "数值方法的稳定性与收敛性分析 - 物理直觉：评估算法在吞噬初始误差后，是在千万次迭代中被收敛抹平，还是被蝴蝶效应放大导致系统崩溃。 (n_627)"
+sub_topics:
+  - "绝对稳定性区域与 A-稳定性"
+  - "舍入误差在递归中的传播动力学"
+  - "收敛阶数 (Order of convergence) 的量化评估"
+  - "物理模拟：确保仿真系统不会在长时间运行后自发爆炸"
+llm_physical_mapping: "mundane physical metaphor: 一个铁质大吊桥，要是卡车开过去的震动能被钢索吸收（收敛），桥就稳；要是这震动震一次大一倍（发散），最后桥墩子都得震飞出去。"
+code_implementation: |
+  import numpy as np
+  lmbda = 100
+  dt = 0.01
+  y = 1.0
+  for _ in range(10):
+      y = y * (1 - lmbda * dt)
+  print(y)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import numpy as np
+    lmbda = 10
+    dt = 0.01
+    assert abs(1 - lmbda * dt) < 1

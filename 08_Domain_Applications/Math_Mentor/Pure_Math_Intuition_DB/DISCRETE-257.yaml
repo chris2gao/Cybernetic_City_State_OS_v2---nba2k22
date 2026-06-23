@@ -1,4 +1,19 @@
 id: "DISCRETE-257"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
 concept_name: "有限状态机（DFA/NFA） - 确定性有限状态机 (DFA) 与非确定性有限状态机 (NFA) 的状态转移图与五元组严格定义 (n_257)"
 sub_topics:
   - "状态、字母表、转移函数、初态、终态"
@@ -7,32 +22,25 @@ sub_topics:
   - "DFA 的状态化简算法"
 llm_physical_mapping: "mundane physical metaphor: A system of interconnected subway stations with turnstiles. In a DFA, pressing 'A' takes you to exactly one specific station via a single locked tunnel. In an NFA, pressing 'A' might open doors to multiple tunnels simultaneously, requiring parallel scouting."
 code_implementation: |
-  class DFA:
-      def __init__(self, states, alphabet, transitions, start_state, accept_states):
-          self.states = states
-          self.alphabet = alphabet
-          self.transitions = transitions
-          self.start_state = start_state
-          self.accept_states = accept_states
-
-      def process(self, string):
-          current_state = self.start_state
-          for char in string:
-              if (current_state, char) not in self.transitions:
-                  return False
-              current_state = self.transitions[(current_state, char)]
-          return current_state in self.accept_states
+  def process_dfa(dfa, string):
+      current_state = dfa["start_state"]
+      for char in string:
+          key = (current_state, char)
+          if key not in dfa["transitions"]:
+              return False
+          current_state = dfa["transitions"][key]
+      return current_state in dfa["accept_states"]
 
   # DFA accepting strings ending in '0'
-  dfa = DFA(
-      states={'q0', 'q1'},
-      alphabet={'0', '1'},
-      transitions={('q0', '0'): 'q1', ('q0', '1'): 'q0', ('q1', '0'): 'q1', ('q1', '1'): 'q0'},
-      start_state='q0',
-      accept_states={'q1'}
-  )
-  print("Accepts '110':", dfa.process('110'))
-  print("Accepts '101':", dfa.process('101'))
+  dfa = {
+      "states": {'q0', 'q1'},
+      "alphabet": {'0', '1'},
+      "transitions": {('q0', '0'): 'q1', ('q0', '1'): 'q0', ('q1', '0'): 'q1', ('q1', '1'): 'q0'},
+      "start_state": 'q0',
+      "accept_states": {'q1'}
+  }
+  accepts_110 = process_dfa(dfa, '110')
+  accepts_101 = process_dfa(dfa, '101')
 v8_sanity_audit:
   sympy_pseudo_code: |
     import sympy

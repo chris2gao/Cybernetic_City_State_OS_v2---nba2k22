@@ -1,0 +1,58 @@
+id: "PDE-487"
+domain: "partial_differential_equations"
+mode: "A"
+name: "Fourier方法 - 大模型映射：将空间域微分转化为频域代数乘法，傅里叶神经算子 (FNO) 的数学底座 (n_487)"
+sub_topics:
+  - "傅里叶变换对微分算子的对角化作用"
+  - "频域算子学习的全局感受野"
+  - "FNO 在处理流体动力学预测中的高效性"
+  - "空间相关性向频域特征强度的映射"
+formal_definition: |-
+  采用 Fourier 变换 F[f](k)=integral f(x)exp(-2*pi*i*k*x)dx。若 f 及其导数
+  满足使分部积分边界项消失的条件（例如 f 属于 Schwartz 空间），则
+  F[d^m f/dx^m](k)=(2*pi*i*k)^m F[f](k)。因此常系数微分算子
+  P(d/dx) 在频域中成为乘子 P(2*pi*i*k)。周期情形中，对 Fourier 系数
+  c_n 使用约定 exp(i*n*x)，同样有 c_n(f')=i*n*c_n(f)。
+prerequisite_nodes:
+  - "n_486"
+llm_physical_mapping: |-
+  棱镜把复色光分成单色频率，可类比 Fourier 变换把空间信号分解为频率模态；在
+  每个模态上乘以频率相关系数，再重组回空间域，对应频域乘子算子。FNO 采用类似
+  表示，在保留的 Fourier 模态上学习通道间矩阵，再通过逆变换返回空间表示。
+mapping_boundary: |-
+  棱镜直觉不证明 Fourier 变换存在、收敛或可逆，也不涵盖边界条件和非周期区域。
+  FNO 是学习算子的架构，不等同于 Fourier 微分定理；截断模态、离散采样和非线性
+  层都会引入定理之外的近似与建模误差。
+code_implementation: |
+  import torch
+
+  def fourier_transform_derivative(f_x, dx=0.1):
+      F_k = torch.fft.fft(f_x)
+      N = f_x.shape[0]
+      freqs = torch.fft.fftfreq(N, d=dx)
+      F_df = 1j * 2 * torch.pi * freqs * F_k
+      df_x = torch.fft.ifft(F_df).real
+      return df_x
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+
+    x = sp.symbols('x', real=True)
+    f = 3 * sp.cos(2 * x) - 2 * sp.sin(3 * x)
+
+    # Test first- and second-derivative multiplier laws on every nonzero mode.
+    for n in (-3, -2, 2, 3):
+        c_f = sp.integrate(
+            f * sp.exp(-sp.I * n * x), (x, -sp.pi, sp.pi)
+        ) / (2 * sp.pi)
+        c_df = sp.integrate(
+            sp.diff(f, x) * sp.exp(-sp.I * n * x),
+            (x, -sp.pi, sp.pi),
+        ) / (2 * sp.pi)
+        c_d2f = sp.integrate(
+            sp.diff(f, x, 2) * sp.exp(-sp.I * n * x),
+            (x, -sp.pi, sp.pi),
+        ) / (2 * sp.pi)
+
+        assert sp.simplify(c_df - sp.I * n * c_f) == 0
+        assert sp.simplify(c_d2f + n**2 * c_f) == 0

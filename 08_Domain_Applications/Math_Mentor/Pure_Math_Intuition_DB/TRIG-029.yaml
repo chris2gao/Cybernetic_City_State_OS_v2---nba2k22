@@ -1,4 +1,19 @@
 id: "TRIG-029"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
 name: "积化和差公式 - 利用振幅调制（AM）理解包络线与高频载波的乘积物理意义"
 type: "concept_node"
 description: |
@@ -20,7 +35,7 @@ code_implementation: |
   import torch
   
   # Define time domain
-  t = torch.linspace(0, 1, 1000)
+  t = torch.linspace(0, 1, 1000, dtype=torch.float64)
   
   # Frequencies for envelope (low) and carrier (high)
   omega_m = 2.0 * torch.pi * 5.0    # 5 Hz low frequency envelope
@@ -34,7 +49,7 @@ code_implementation: |
   
   # Sanity check: product and sum forms must match exactly
   max_diff = torch.max(torch.abs(product_signal - sum_signal))
-  assert max_diff < 1e-5, f"Difference too large: {max_diff}"
+  assert max_diff < 1e-10, f"Difference too large: {max_diff}"
 v8_sanity_audit:
   sympy_pseudo_code: |
     import sympy as sp

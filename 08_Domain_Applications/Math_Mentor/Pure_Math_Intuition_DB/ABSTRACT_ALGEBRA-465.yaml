@@ -1,0 +1,51 @@
+id: "ABSTRACT_ALGEBRA-465"
+mode: "B"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "semantic_audit_not_machine_validated"
+    - "mode_b_legacy_v8_audit_not_authoritative"
+    - "mode_b_primary_mapping_requires_repair"
+concept_name: "群（子群/正规子群/商群） - 群的基础结构：子群、正规子群与商群的严格公理化定义 (n_465)"
+sub_topics:
+  - "群公理（封闭、结合、单位元、逆元）"
+  - "拉格朗日定理及其对有限群阶数的限制"
+  - "正规性 (Normality) 的代数本质：左陪集等于右陪集"
+  - "商群作为折叠对称冗余后的新结构"
+llm_physical_mapping: "mundane physical metaphor: A set of interlocking wooden blocks. A subgroup is a smaller, self-contained sub-assembly. A normal subgroup is a sub-assembly that fits into the main structure perfectly symmetrically from both the left and right sides, allowing the entire structure to be neatly packed into identical boxes (cosets) which themselves form a new mechanical assembly (quotient group)."
+code_implementation: |
+  import sympy as sp
+  from sympy.combinatorics import Permutation, PermutationGroup
+  
+  # S3 symmetric group
+  G = PermutationGroup(Permutation(0, 1, 2), Permutation(0, 1))
+  
+  # A subgroup
+  H = PermutationGroup(Permutation(0, 1, 2))
+  
+  # Check normality
+  is_normal = H.is_normal(G)
+legacy_v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    from sympy.combinatorics import Permutation, PermutationGroup
+    
+    G = PermutationGroup(Permutation(0, 1, 2), Permutation(0, 1))
+    H = PermutationGroup(Permutation(0, 1, 2))
+    assert H.is_normal(G) == True
+    assert G.order() % H.order() == 0  # Lagrange's theorem
+v9_semantic_audit:
+  status: "review_required"
+  warnings:
+    - "semantic_audit_not_machine_validated"
+  migration_note: "Legacy semantic content requires domain review; no machine-proof claim is made."

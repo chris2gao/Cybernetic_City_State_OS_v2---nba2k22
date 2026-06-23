@@ -12,16 +12,15 @@ code_implementation: |
 
   # Calculate the integral of a standard normal PDF over [-10, 10]
   # to approximate [-infinity, +infinity]
-  x = torch.linspace(-10, 10, 100000)
-  dx = x[1] - x[0]
+  x = torch.linspace(-10, 10, 100000, dtype=torch.float64)
   
   # Standard normal PDF: f(x) = (1 / sqrt(2*pi)) * exp(-0.5 * x^2)
   pdf = (1.0 / math.sqrt(2 * math.pi)) * torch.exp(-0.5 * x**2)
   
-  # Riemann sum approximation of the integral
-  integral = torch.sum(pdf * dx).item()
+  # Trapezoidal integration avoids endpoint over-counting from a raw Riemann sum.
+  integral = torch.trapezoid(pdf, x).item()
   
-  assert abs(integral - 1.0) < 1e-3, f"Integral evaluated to {integral}, expected ~1.0"
+  assert abs(integral - 1.0) < 1e-8, f"Integral evaluated to {integral}, expected ~1.0"
   print(f"PyTorch approximated total probability: {integral}")
 
 v8_sanity_audit:

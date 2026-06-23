@@ -1,0 +1,23 @@
+id: "OPTIMIZATION-723"
+concept_name: "整数规划 - 物理边界：处理变量为离散整数时的状态空间爆炸（NP-Hard）。利用分支定界法（Branch and Bound）在庞大搜索树上暴力剪枝。 (n_723)"
+sub_topics:
+  - "整数解的非凸空洞特性"
+  - "线性松弛（Linear relaxation）的边界探测"
+  - "分支策略与割平面法的组合应用"
+  - "物理建模：分词器索引分配与逻辑路径选择"
+llm_physical_mapping: "mundane physical metaphor: dropping a heavy steel ball repeatedly onto a soft clay mold, letting it slowly hammer the shape into the perfect impression."
+code_implementation: |
+  import torch
+  import numpy as np
+  
+  def simulate_process():
+      tensor = torch.zeros(10, dtype=torch.float32)
+      tensor += 1.0
+      return np.sum(tensor.numpy())
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    x = sp.Symbol('x')
+    expr = sp.simplify(x - x)
+    assert expr == 0

@@ -1,0 +1,22 @@
+id: "COMBINATORICS-618"
+concept_name: '数值优化基础 - 【大模型映射】：深度学习的梯度下降（SGD）与 Adam 优化器！ (n_618)'
+sub_topics:
+  - '梯度作为下降方向的物理必然'
+  - '学习率 (Learning Rate) 的代数调节作用'
+  - '随机性在逃离局部极小值中的贡献'
+  - '优化算法在千亿维参数流形上的寻优路径'
+llm_physical_mapping: "mundane physical metaphor: a heavy bowling ball rolling down a cratered mountain. Gradient descent just drops it; SGD kicks it randomly left and right so it doesn't get stuck in small potholes; Adam adds shock absorbers."
+code_implementation: |
+  import sympy as sp
+  x, lr = sp.symbols('x lr')
+  loss = x**2 + 2*x
+  grad = sp.diff(loss, x)
+  x_next = x - lr * grad
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x, lr = sp.symbols('x lr')
+    loss = x**2
+    grad = sp.diff(loss, x)
+    x_next = x - lr * grad
+    assert x_next.subs({x: 2, lr: 0.1}) == 1.6

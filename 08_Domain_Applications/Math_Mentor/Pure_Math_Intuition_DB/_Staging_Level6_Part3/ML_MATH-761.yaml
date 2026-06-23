@@ -1,0 +1,40 @@
+id: "ML_MATH-761"
+concept_name: "信息几何 - 策略对齐：在大语言模型策略梯度优化中作为自然梯度法（Natural Gradient）的理论基石。 (n_761)"
+sub_topics:
+  - "沿概率流形最速下降的几何指针"
+  - "消除参数化偏差对优化路径的影响"
+  - "预训练分布向对齐分布迁移的几何路径"
+  - "提升大模型 RLHF 训练效率的拓扑依据"
+llm_physical_mapping: "mundane physical metaphor: a differential steering mechanism with topography-aware gears, automatically modifying gear ratios (Natural Gradient) to maintain constant traction across the uneven probability terrain, bypassing the slippage of standard rigid axles."
+code_implementation: |
+  import torch
+  import numpy as np
+
+  # Natural gradient descent intuition: navigating probability manifold
+  params = torch.tensor([0.5, 0.5], requires_grad=True)
+
+  def probability_manifold_loss(p):
+      return torch.log(p[0]**2 + p[1]**2)
+
+  # Normal gradient
+  loss = probability_manifold_loss(params)
+  loss.backward()
+  normal_grad = params.grad.clone()
+
+  # Simulate Fisher Information Matrix (FIM) as terrain curvature
+  fim = torch.tensor([[1.2, -0.1], [-0.1, 1.5]]) 
+
+  # Natural gradient: FIM_inverse * normal_grad
+  fim_inv = torch.inverse(fim)
+  natural_grad = torch.matmul(fim_inv, normal_grad)
+
+  with torch.no_grad():
+      params -= 0.01 * natural_grad
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    p1, p2 = sp.symbols('p1 p2')
+    loss = sp.log(p1**2 + p2**2)
+    grad_p1 = sp.diff(loss, p1)
+    grad_p2 = sp.diff(loss, p2)
+    assert sp.simplify(grad_p1 - 2*p1/(p1**2 + p2**2)) == 0

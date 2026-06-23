@@ -1,0 +1,39 @@
+id: "CRYPTO_MATH-736"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "椭圆曲线密码 - 物理直觉：抛弃大素数，在代数曲线 $y^2 = x^3 + ax + b$ 上定义“打台球”式特殊加法。 (n_736)"
+sub_topics:
+  - "曲线上的阿贝尔群构造"
+  - "无穷远点的单位元角色"
+  - "标量乘法的代数实现"
+  - "几何视角：切线与割线在曲线上的碰撞规律"
+llm_physical_mapping: "factory workshop-level mechanical metaphor: a frictionless billiards table shaped as a cubic curve, where striking a ball causes it to bounce infinitely along predefined trajectory vectors until it strikes the exact geometric resonance point."
+code_implementation: |
+  import torch
+  import numpy as np
+  
+  def elliptic_billiards_bounce(x, a, b):
+      # Y^2 = X^3 + aX + b physics engine simulation
+      x_tensor = torch.tensor(x, dtype=torch.float32)
+      y_sq = torch.pow(x_tensor, 3) + a * x_tensor + b
+      return torch.relu(y_sq) # Valid domain points
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    # Assert elliptic curve point verification
+    x, y = sp.symbols('x y')
+    curve = y**2 - (x**3 + 2*x + 3)
+    assert curve.subs({x: -1, y: 0}) == 0

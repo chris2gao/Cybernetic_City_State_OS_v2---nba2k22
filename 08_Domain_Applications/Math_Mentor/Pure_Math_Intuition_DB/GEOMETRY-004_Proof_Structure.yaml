@@ -1,5 +1,20 @@
 concept_node:
   id: "GEOMETRY-004"
+  mode: "A"
+  mode_routing_status: "inferred_high_confidence"
+  validation_status: "review_required"
+  bridge_readiness_status: "manual_review_required"
+  formal_definition_status: "missing"
+  prerequisites_status: "missing"
+  mapping_boundary_status: "missing"
+  migration_review:
+    missing_reason:
+      - "formal_definition_absent"
+      - "prerequisite_nodes_absent"
+      - "mapping_boundary_absent"
+    recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+    warnings:
+      - "shape_only_or_shallow_audit_risk"
   title: "欧氏几何公理 - 命题、定理、证明的严格逻辑结构（条件与结论的映射） (n_124)"
   sub_topics:
     - "定义、公理、定理的层级"

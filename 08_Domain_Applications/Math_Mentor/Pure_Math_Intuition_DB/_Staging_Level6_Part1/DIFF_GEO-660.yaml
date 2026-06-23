@@ -1,0 +1,32 @@
+id: DIFF_GEO-660
+concept_name: 测地线 - 【流匹配映射】：弯曲空间中最平滑的轨迹。大模型扩散生成过程正是沿着 Wasserstein 流形的测地线将噪声还原为逻辑。
+  (n_660)
+sub_topics:
+- 变分法导出测地线方程
+- 测地线作为最短路径或极值轨迹
+- 指数映射 (Exponential map) 将切空间拉回流形
+- 物理映射：概率分布演化中的最小代价传输轨迹
+llm_physical_mapping: 物流车间的重力滑道：货物在没有发动机推力的情况下，完全顺着滑道底部的倾斜和扭曲自然滑落到底部，这条滑脱到底的轨道就是测地线。
+code_implementation: |
+  import torch
+  import numpy as np
+
+  def geodesic_step(position, velocity, christoffel_symbols, dt=0.01):
+      # Step along geodesic using Christoffel symbols to update velocity
+      acceleration = -torch.einsum('ijk,j,k->i', christoffel_symbols, velocity, velocity)
+      new_velocity = velocity + acceleration * dt
+      new_position = position + new_velocity * dt
+      return new_position, new_velocity
+
+  pos = torch.zeros(2)
+  vel = torch.tensor([1.0, 0.0])
+  Gamma = torch.zeros(2, 2, 2)  # flat space for dummy example
+  pos_next, vel_next = geodesic_step(pos, vel, Gamma)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+
+    t = sp.Symbol('t')
+    path = t
+    # A straight-line path in flat space has zero second derivative.
+    assert sp.diff(path, t, t) == 0

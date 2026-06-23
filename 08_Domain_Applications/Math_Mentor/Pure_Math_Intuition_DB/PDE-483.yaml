@@ -1,0 +1,40 @@
+id: "PDE-483"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+name: "特征线法 - 物理直觉：在偏微分流体中寻找“顺流而下”的特殊曲线，将 PDE 坍缩为 ODE (n_483)"
+sub_topics:
+  - "特征线方程组的代数提取"
+  - "沿特征线的信息保持与传播规律"
+  - "物理模拟：流体质点的轨迹追踪"
+  - "解在特征线上的几何演化分析"
+llm_physical_mapping: "水流中漂浮着一片树叶。树叶顺着水流的流线（特征线）运动。在树叶的参考系下，周围的环境特征是不变的。特征线法正是将观察视角从固定的河岸（欧拉视角）切换到随着水流运动的树叶（拉格朗日视角）。"
+code_implementation: |
+  import torch
+
+  def method_of_characteristics_sim(x, t, a=1.0):
+      u_xt = torch.exp(-(x - a*t)**2)
+      return u_xt
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+
+    x, t, a = sp.symbols('x t a', real=True)
+    f = sp.Function('f')
+    u = f(x - a*t)
+    u_t = sp.diff(u, t)
+    u_x = sp.diff(u, x)
+    pde_val = sp.simplify(u_t + a*u_x)
+    assert pde_val == 0, 'Method of characteristics failed for advection equation'

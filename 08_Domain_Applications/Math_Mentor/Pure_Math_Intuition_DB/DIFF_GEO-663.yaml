@@ -1,0 +1,34 @@
+id: DIFF_GEO-663
+mode_routing_status: "manual_review_required"
+validation_status: "manual_review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "mode_routing_manual_review_required"
+concept_name: Gauss-Bonnet定理 - 终极统一：微观曲率总积分与宏观拓扑示性数（Euler 示性数）的物理宿命大统一。证明局部扰动无法改变全局拓扑。 (n_663)
+sub_topics:
+- 闭合曲率积分公式 $\int K dA = 2\pi\chi$
+- 局部几何与全局拓扑的深刻纽带
+- 定理在高维空间的陈-高斯-博内推广
+- 物理映射：系统总曲率受限于其连接拓扑的结构稳定性
+llm_physical_mapping: 就像用铁皮敲打一个带孔的零件箱，无论你怎么把某处敲得凹凸不平，只要你不把箱子撕裂或者多钻一个洞，所有形变产生的内部挤压应力和拉伸应力加起来，永远等于一个固定数值。
+code_implementation: "def verify_gauss_bonnet(curvature_sum, euler_char):\n    pi = 3.1415926535\n    return abs(curvature_sum\
+  \ - 2 * pi * euler_char) < 1e-5\n"
+v8_sanity_audit:
+  sympy_pseudo_code: 'import sympy as sp
+
+    K, dA, chi = sp.symbols(''K dA chi'')
+
+    integral_K_dA = 2 * sp.pi * chi
+
+    assert sp.simplify(integral_K_dA - 2 * sp.pi * chi) == 0
+
+    '

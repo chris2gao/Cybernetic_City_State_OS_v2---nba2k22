@@ -1,0 +1,22 @@
+id: "INFO_THEORY-707"
+concept_name: "速率失真理论 - 发生学溯源：有损压缩的圣经。描绘在允许失真（如语义偏差）前提下，能把数据压缩到的理论极限。 (n_707)"
+sub_topics:
+  - "失真测度函数 d(x, x')"
+  - "率失真函数 R(D) 的计算"
+  - "信号还原质量与比特率的对抗关系"
+  - "物理映射：高保真模拟与算力开销的权衡边界"
+llm_physical_mapping: "mundane physical metaphor: 像用粗砂纸打磨零件，要求公差在0.1毫米以内（失真度 D），在这个公差允许下，我们可以使用多快的打磨速度（压缩率 R）。"
+code_implementation: |
+  import torch
+  import numpy as np
+  # R(D) for Gaussian source: max(0, 0.5 * log2(sigma^2 / D))
+  sigma_sq = 1.0
+  D = torch.linspace(0.1, 1.0, 10)
+  R_D = torch.clamp(0.5 * torch.log2(sigma_sq / D), min=0)
+  print('Rate-Distortion curve:', R_D)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    D, sigma = sp.symbols('D sigma', positive=True)
+    R = 0.5 * sp.log(sigma**2 / D, 2)
+    assert R.subs({sigma: 1, D: 1}) == 0

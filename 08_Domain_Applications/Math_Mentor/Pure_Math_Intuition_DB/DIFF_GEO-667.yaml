@@ -1,0 +1,33 @@
+id: DIFF_GEO-667
+mode_routing_status: "manual_review_required"
+validation_status: "manual_review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "mode_routing_manual_review_required"
+concept_name: 向量丛与主丛 - 物理底座：杨-米尔斯规范场论的语言。在深度研究中用于描述大模型不同语义层间的规范变换对称性。 (n_667)
+sub_topics:
+- 纤维丛的投影与局部平凡化
+- 联络形式与曲率形式（场强）
+- 规范变换作为丛的自同构
+- 模型层间信息传递的几何对称性保护
+llm_physical_mapping: 就像在一条长长的流水线主履带上，每个工位都挂载了一把可360度旋转的机械臂（纤维）。不管机械臂自己怎么转，履带依旧往前走，两者组合成一个整体系统。
+code_implementation: "def fiber_bundle_projection(base_space_coord, fiber_coord):\n    return base_space_coord\n"
+v8_sanity_audit:
+  sympy_pseudo_code: 'import sympy as sp
+
+    base, fiber = sp.symbols(''base fiber'')
+
+    projection = base
+
+    assert sp.simplify(projection - base) == 0
+
+    '

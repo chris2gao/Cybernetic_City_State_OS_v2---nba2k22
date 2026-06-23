@@ -1,0 +1,30 @@
+id: "ALGEBRAIC_GEO-636"
+concept_name: "层与概形 - 认知跃迁：格罗滕迪克通过 $Spec(R)$ 将数论与几何统一。层 (Sheaf) 是为几何空间穿上的具备局部计算能力的“数据紧身衣”。 (n_636)"
+sub_topics:
+  - "交换环的谱 $Spec(R)$ 构造"
+  - "层的局部到全局的黏合公理"
+  - "概形 (Schemes) 作为流形的代数推广"
+  - "物理直觉：在每个空间点上挂载特定的代数信息"
+llm_physical_mapping: "mundane physical metaphor: Every bolt and joint on the factory wall has a specific pressure dial attached to it. A Sheaf is the manual of rules verifying that if you read two adjacent dials on overlapping pipes, they always show matching fluid pressure values. This guarantees you can glue local pipe sections into a massive, leak-proof industrial pipeline without the whole factory exploding."
+code_implementation: |
+  import builtins
+  
+  def sheaf_gluing_check(pipe_A_readings, pipe_B_readings, overlap_indices):
+      for idx in overlap_indices:
+          if pipe_A_readings[idx] != pipe_B_readings[idx]:
+              return False
+      return True
+      
+  pipe_1 = {0: 10, 1: 15, 2: 20}
+  pipe_2 = {2: 20, 3: 25, 4: 30}
+  can_glue = sheaf_gluing_check(pipe_1, pipe_2, [2])
+  glued_system = {**pipe_1, **pipe_2} if can_glue else None
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.Symbol('x')
+    section_U = x**2 + 2
+    section_V = 2*x + 2
+    val_U = section_U.subs(x, 0)
+    val_V = section_V.subs(x, 0)
+    assert val_U == val_V

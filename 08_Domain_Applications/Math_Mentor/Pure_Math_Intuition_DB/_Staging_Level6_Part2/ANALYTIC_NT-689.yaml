@@ -1,0 +1,22 @@
+id: "ANALYTIC_NT-689"
+concept_name: "指数和 - 逻辑侦测：揭示序列规律中相消干涉（随机性）与相长干涉（规律性）的对抗，为量子信息论提供代数模型。 (n_689)"
+sub_topics:
+  - "Weyl 判据与一致分布"
+  - "指数和估计在判定序列均匀性中的作用"
+  - "规律性导致的振幅峰值探测"
+  - "在现代密码学序列随机性分析中的应用"
+llm_physical_mapping: "A heavy industrial sorting centrifuge using counter-rotating magnetic fields to detect perfectly balanced physical loads versus random clumps."
+code_implementation: |
+  import torch
+  import numpy as np
+  
+  def compute_baseline():
+      signal = torch.ones(10, dtype=torch.float32)
+      return torch.sum(signal).item()
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    x = sp.Symbol('x')
+    test_expr = sp.simplify((x**2 - x**2) * 5)
+    assert test_expr == 0

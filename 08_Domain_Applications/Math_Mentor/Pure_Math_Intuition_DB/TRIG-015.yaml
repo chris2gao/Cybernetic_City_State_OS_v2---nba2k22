@@ -1,4 +1,19 @@
 id: "TRIG-015"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
 version: "9.1"
 name: "正弦/余弦定理 - 正弦定理推导：利用面积等价或外接圆直径进行严密代数推演 (n_176)"
 description: "Derivation of the Law of Sines using triangle area equivalence and circumcircle geometry."

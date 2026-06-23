@@ -1,0 +1,47 @@
+id: "PDE-480"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+name: "经典方程（热/波/Laplace） - 热传导方程 (Heat Equation)：描述能量不可逆消散，扩散模型加噪物理引擎 (n_480)"
+sub_topics:
+  - "热方程的偏微分形式：u_t = kΔu"
+  - "热核 (Heat Kernel) 与高斯核的同构"
+  - "物理意义：熵增、平滑化与信息的自然消散"
+  - "扩散模型（Diffusion Models）中前向加噪的动力学原型"
+llm_physical_mapping: "一滴墨水滴入静止的水池中，随着时间推移，墨水的高浓度区域逐渐向低浓度区域扩散，直至整个水池颜色均匀。墨水不可逆地消散对应热量/信息的熵增和平滑化过程。"
+code_implementation: |
+  import torch
+
+  def heat_equation_sim(u, k=0.1, steps=100):
+      for _ in range(steps):
+          laplacian = (
+              torch.roll(u, shifts=1, dims=0) + 
+              torch.roll(u, shifts=-1, dims=0) + 
+              torch.roll(u, shifts=1, dims=1) + 
+              torch.roll(u, shifts=-1, dims=1) - 
+              4 * u
+          )
+          u = u + k * laplacian
+      return u
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+
+    x, t, k = sp.symbols('x t k', real=True, positive=True)
+    u = (1 / sp.sqrt(4 * sp.pi * k * t)) * sp.exp(-x**2 / (4 * k * t))
+    u_t = sp.diff(u, t)
+    u_xx = sp.diff(u, x, x)
+    diff = sp.simplify(u_t - k * u_xx)
+    assert diff == 0, 'Heat equation not satisfied by Gaussian kernel'

@@ -1,0 +1,37 @@
+id: "COMPLEX_ANALYSIS-431"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "幂级数与收敛半径 - 阿贝尔定理与收敛圆盘，超越函数降阶为多项式求和的复数域映射 (n_431)"
+sub_topics:
+  - "收敛圆盘的严格定义"
+  - "幂级数在收敛圆内的绝对一致收敛性"
+  - "超越函数的洛朗展开基础"
+  - "解析函数在收敛域内的代数稳定性"
+llm_physical_mapping: "mundane physical metaphor: a rotating centrifugal governor on a steam engine. The machine works perfectly and predictably up to a critical operational speed (convergence radius); spinning it any faster causes the mechanical components to violently fly apart."
+code_implementation: |
+  import sympy as sp
+  n = sp.Symbol('n', integer=True)
+  # Coefficient ratio for the power series exp(z) = sum z^n / n!
+  coeff = 1 / sp.factorial(n)
+  ratio = sp.limit(coeff.subs(n, n+1) / coeff, n, sp.oo)
+  # R = 1/ratio = oo
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    n = sp.Symbol('n', integer=True)
+    term = 1 / 2**n
+    ratio = sp.limit(term.subs(n, n+1) / term, n, sp.oo)
+    assert ratio == sp.Rational(1, 2)

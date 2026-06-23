@@ -1,4 +1,19 @@
 id: "NUM_THEORY-022"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
 topic: "欧拉函数φ(n) - 积性函数性质推导：当 gcd(m,n)=1 时，φ(mn) = φ(m)φ(n) (n_216)"
 sub_topics:
   - "既约剩余系的直积映射"

@@ -1,0 +1,45 @@
+id: DIFF_GEO-657
+mode_routing_status: "manual_review_required"
+validation_status: "manual_review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "mode_routing_manual_review_required"
+concept_name: Riemannian度量 - 物理直觉：一把随空间扭曲动态改变刻度的“语义尺子”。赋予高维向量计算长度、角度与空间体积的能力。 (n_657)
+sub_topics:
+- 度量张量 $g_{ij}$ 的对称正定性
+- 长度 $s = \int \sqrt{g} dx$ 的积分定义
+- 空间弯曲度对尺度的动态拉伸
+- 物理意义：流形上能量传播的最短路径代价基准
+llm_physical_mapping: 自带弹簧的橡胶卷尺：在平地上刻度均匀，拉伸到凸起的机器外壳上时，卷尺的刻度会被强制撑开，告诉你这里走一步实际上要费更多油。
+code_implementation: |
+  import torch
+  import numpy as np
+
+  def compute_metric_tensor(x):
+      # Simple non-Euclidean metric tensor, g_11 scales with x
+      g = torch.eye(2)
+      g[0, 0] = 1.0 + x**2
+      return g
+
+  metric = compute_metric_tensor(0.5)
+  vector = torch.tensor([1.0, 1.0])
+  length_sq = torch.dot(vector, torch.matmul(metric, vector))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+
+    x = sp.Symbol('x')
+    g11 = 1 + x**2
+    g22 = 1
+    # metric determinant
+    det_g = g11 * g22
+    assert det_g.subs(x, 0) == 1

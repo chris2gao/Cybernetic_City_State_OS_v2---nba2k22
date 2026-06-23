@@ -1,0 +1,50 @@
+id: STOCHASTIC-553
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+name: 泊松过程 - 到达时间的指数分布与独立增量属性。 (n_553)
+sub_topics:
+  - 第 n 次到达时间的 Gamma 分布推导
+  - 独立增量导致的事件预测无关性
+  - 泊松过程的叠加与分解性质
+  - 在网络封包到达与放射性衰变中的模型化
+llm_physical_mapping: Raindrops independently hitting a specific spot on a leaf; observing a drop hitting provides exactly zero information on when the next drop will hit.
+code_implementation: |
+  import torch
+
+  # Raindrops hitting a leaf: Arrival times and independent increments
+  rate = 5.0
+  inter_arrival = -torch.log(torch.rand(1000)) / rate
+  raindrop_times = torch.cumsum(inter_arrival, dim=0)
+
+  # Check independent increments: number of drops in non-overlapping intervals
+  t1, t2, t3 = 10.0, 20.0, 30.0
+  # Drops in [t1, t2)
+  mask1 = (raindrop_times >= t1) & (raindrop_times < t2)
+  count1 = mask1.sum().item()
+
+  # Drops in [t2, t3)
+  mask2 = (raindrop_times >= t2) & (raindrop_times < t3)
+  count2 = mask2.sum().item()
+
+  # counts are derived from independent increments
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    lmbda, t = sp.symbols('lambda t', positive=True)
+    n = sp.Symbol('n', integer=True, positive=True)
+    pdf = lmbda * (lmbda*t)**(n-1) * sp.exp(-lmbda*t) / sp.factorial(n-1)
+    integral_val = sp.integrate(pdf.subs(n, 3), (t, 0, sp.oo))
+    assert sp.simplify(integral_val) == 1, "Gamma PDF does not integrate to 1"

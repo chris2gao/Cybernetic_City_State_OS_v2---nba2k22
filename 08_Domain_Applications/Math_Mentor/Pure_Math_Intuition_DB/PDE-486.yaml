@@ -1,0 +1,42 @@
+id: "PDE-486"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+name: "分离变量 - 结合本征值问题的解析解构造 (n_486)"
+sub_topics:
+  - "施图姆-刘维尔 (Sturm-Liouville) 问题的引入"
+  - "本征函数序列的正交性与完备性"
+  - "解析解作为模态叠加的广义级数形式"
+  - "在经典物理问题（如琴弦振动）中的完整应用"
+llm_physical_mapping: "敲击一面鼓，鼓面的复杂震动可以分解为多个基本震动模式（本征态）的叠加。每个本征态都有特定的空间驻波形状。整个过程就是用一组正交的空间振动基底拼凑出任意的初始敲击状态。"
+code_implementation: |
+  import torch
+
+  def fourier_series_reconstruction(x, coeffs):
+      u = torch.zeros_like(x)
+      for n, (a, b) in enumerate(coeffs, start=1):
+          u += a * torch.cos(n * x) + b * torch.sin(n * x)
+      return u
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+
+    x = sp.Symbol('x', real=True)
+    L = sp.Symbol('L', real=True, positive=True)
+    n_val, m_val = 1, 2
+    f1_spec = sp.sin(n_val * sp.pi * x / L)
+    f2_spec = sp.sin(m_val * sp.pi * x / L)
+    ortho_check = sp.simplify(sp.integrate(f1_spec * f2_spec, (x, 0, L)))
+    assert ortho_check == 0, 'Eigenfunctions are not orthogonal'

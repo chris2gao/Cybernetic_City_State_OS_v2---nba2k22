@@ -1,0 +1,56 @@
+id: "PDE-496"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
+nid: 496
+name: "Green函数方法 - 利用基本解构造任意复杂源项下的场分布 (n_496)"
+sub_topics:
+  - "积分表示公式：u = ∫ Gf"
+  - "格林函数的边界条件修正（镜像法）"
+  - "奇异性处理与主值积分"
+  - "在电磁场、引力场计算中的标准化流程"
+llm_physical_mapping: "Placing a positive electric charge near a flat, grounded sheet of copper. The sheet alters the electric field globally. Instead of solving the complex interactions, we use the 'Method of Images': we imagine a perfectly symmetrical negative 'mirror charge' behind the sheet. Their combined fundamental fields naturally cancel out exactly at the sheet, effortlessly satisfying the boundary constraint."
+code_implementation: |
+  import torch
+
+  def method_of_images_1d(x_eval, source_pos, boundary_pos=0.0):
+      def potential_kernel(x, x_src):
+          dist = torch.abs(x - x_src) + 1e-5
+          return 1.0 / dist
+          
+      phi_real = potential_kernel(x_eval, source_pos)
+      
+      image_pos = 2 * boundary_pos - source_pos
+      phi_image = -potential_kernel(x_eval, image_pos)
+      
+      phi_total = phi_real + phi_image
+      return phi_total
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+
+    x, y, L = sp.symbols('x y L', real=True, positive=True)
+
+    G_left = x * (L - y) / L
+    G_right = y * (L - x) / L
+
+    assert sp.simplify(G_left.subs(x, 0)) == 0, "Green's function must be zero at x=0"
+    assert sp.simplify(G_right.subs(x, L)) == 0, "Green's function must be zero at x=L"
+
+    assert sp.simplify(G_left.subs(x, y) - G_right.subs(x, y)) == 0, "Green's function must be continuous at x=y"
+
+    dG_left = sp.diff(G_left, x).subs(x, y)
+    dG_right = sp.diff(G_right, x).subs(x, y)
+    assert sp.simplify(dG_right - dG_left) == -1, "Derivative jump at x=y must be -1"

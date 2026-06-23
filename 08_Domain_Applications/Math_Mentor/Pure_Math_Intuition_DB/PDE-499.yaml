@@ -1,0 +1,68 @@
+id: "PDE-499"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
+nid: 499
+name: "最大值原理 - 消除奇迹步骤：证明稳态与扩散场极值必在边界取得，内部无局部最优陷阱 (n_499)"
+sub_topics:
+  - "弱最大值原理与强最大值原理"
+  - "调和函数及其推广算子的性质"
+  - "物理意义：无源区域内物理量无法在内部自发聚集极值"
+  - "解的唯一性与对边界条件依赖性的稳定性证明"
+llm_physical_mapping: "A solid metal block absorbing heat from a fire on one side and touching ice on the other. Because the metal has no internal chemical reactions (no internal heat sources), heat only flows from hot to cold. Thus, the absolute hottest point and the absolute coldest point *must* be on the outer surfaces of the block. It is physically impossible for a pocket of metal in the center to be hotter than the fire."
+code_implementation: |
+  import torch
+
+  def verify_maximum_principle_heat_equation():
+      grid_size = 50
+      u = torch.zeros(grid_size)
+      
+      u[0] = 100.0  
+      u[-1] = 0.0   
+      
+      u[1:-1] = 50.0 
+      
+      alpha = 0.1
+      for _ in range(500):
+          u_new = u.clone()
+          u_new[1:-1] = u[1:-1] + alpha * (u[2:] - 2*u[1:-1] + u[:-2])
+          u = u_new
+          
+      max_val = torch.max(u).item()
+      min_val = torch.min(u).item()
+      
+      assert max_val <= 100.0
+      assert min_val >= 0.0
+      return max_val, min_val
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+
+    x = sp.Symbol('x', real=True)
+    c1, c2 = sp.symbols('c1 c2', real=True)
+
+    u = c1 * x + c2
+
+    assert sp.simplify(sp.diff(u, x, 2)) == 0, "Function must be harmonic"
+
+    a, b = sp.symbols('a b', real=True)
+    u_a = u.subs(x, a)
+    u_b = u.subs(x, b)
+
+    lam = sp.Symbol('lambda', real=True, positive=True)
+    x_int = lam * a + (1 - lam) * b
+    u_int = u.subs(x, x_int)
+
+    assert sp.simplify(u_int - (lam * u_a + (1 - lam) * u_b)) == 0, "Interior value is bounded by boundaries"

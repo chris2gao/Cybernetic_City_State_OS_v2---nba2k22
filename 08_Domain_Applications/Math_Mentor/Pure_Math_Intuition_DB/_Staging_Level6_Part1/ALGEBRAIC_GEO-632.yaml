@@ -1,0 +1,36 @@
+id: "ALGEBRAIC_GEO-632"
+concept_name: "仿射/射影簇 - 物理直觉：仿射簇即多元多项式方程公共解在多维空间中切出的骨架。射影簇通过引入“无穷远地平线”消除平行线不相交特例，实现几何规律的完美对称。 (n_632)"
+sub_topics:
+  - "仿射空间 $A^n$ 与理想 $I(V)$ 的对应"
+  - "齐次多项式与射影空间 $P^n$"
+  - "代数簇的维数与奇异点"
+  - "物理意义：复杂约束系统的解流形"
+llm_physical_mapping: "mundane physical metaphor: The affine variety is an interlocking set of steel rails cutting through a solid block of metal, defined by the exact intersection points of multiple cutting lasers. Projective variety wraps the workshop horizon into a perfect sphere, ensuring two parallel conveyor belts physically snap together at the absolute edge of the factory."
+code_implementation: |
+  import numpy as np
+  import torch
+  
+  def solve_constraint_variety(x):
+      # x^2 + y^2 = 1 (cylinder) and y - x = 0 (plane)
+      constraint1 = x[0]**2 + x[1]**2 - 1.0
+      constraint2 = x[1] - x[0]
+      return constraint1**2 + constraint2**2
+      
+  coords = torch.randn(10, 2, requires_grad=True)
+  optimizer = torch.optim.SGD([coords], lr=0.1)
+  for _ in range(100):
+      loss = solve_constraint_variety(coords.T).mean()
+      loss.backward()
+      optimizer.step()
+      optimizer.zero_grad()
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x, y, z = sp.symbols('x y z')
+    ideal_eq1 = x**2 + y**2 - z**2
+    ideal_eq2 = x - y
+    point = {x: 1, y: 1, z: sp.sqrt(2)}
+    res1 = ideal_eq1.subs(point)
+    res2 = ideal_eq2.subs(point)
+    assert sp.simplify(res1) == 0
+    assert sp.simplify(res2) == 0

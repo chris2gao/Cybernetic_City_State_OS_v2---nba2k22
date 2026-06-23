@@ -1,0 +1,22 @@
+id: "INFO_THEORY-705"
+concept_name: "信源编码 - 物理直觉：高频词用短码，低频词用长码。这是现代 Tokenizer（如 BPE 字节对编码）的底层设计思想。 (n_705)"
+sub_topics:
+  - "变长编码的效率优势"
+  - "编码的唯一可译性与前缀码"
+  - "Tokenizer 在词表大小与编码长度间的折中"
+  - "物理意义：根据统计概率分配存储资源，实现最优比特开销"
+llm_physical_mapping: "mundane physical metaphor: 像车间的物料架，最常用的螺丝放在最外层（短码），罕见的特殊轴承放在最里层（长码），以缩短工人的平均拿取时间。"
+code_implementation: |
+  import torch
+  # Simple frequency mapping
+  freqs = torch.tensor([0.5, 0.25, 0.125, 0.125])
+  lengths = torch.tensor([1.0, 2.0, 3.0, 3.0])
+  expected_length = torch.sum(freqs * lengths)
+  print('Expected length:', expected_length.item())
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    f1, f2, f3, f4 = sp.symbols('f1 f2 f3 f4')
+    l1, l2, l3, l4 = sp.symbols('l1 l2 l3 l4')
+    expected_len = f1*l1 + f2*l2 + f3*l3 + f4*l4
+    assert expected_len.subs({f1:0.5, f2:0.25, f3:0.125, f4:0.125, l1:1, l2:2, l3:3, l4:3}) == 1.75

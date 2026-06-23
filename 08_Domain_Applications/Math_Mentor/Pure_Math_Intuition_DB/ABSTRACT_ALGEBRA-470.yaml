@@ -1,0 +1,44 @@
+id: "ABSTRACT_ALGEBRA-470"
+mode: "B"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "semantic_audit_not_machine_validated"
+    - "mode_b_legacy_v8_audit_not_authoritative"
+    - "mode_b_primary_mapping_requires_repair"
+concept_name: "模与代数 - 向量空间的极限泛化：当标量变为“环”时向量基底概念的重建 (n_470)"
+sub_topics:
+  - "模 (Modules) 作为向量空间的推广"
+  - "自由模、投射模与内射模初步"
+  - "线性变换在模结构下的不变因子"
+  - "在同调代数与范畴化思想中的应用"
+llm_physical_mapping: "mundane physical metaphor: an array of mechanical pistons driven not by continuous hydraulic fluid (fields) but by discrete toothed ratchets (rings), where you can't divide every movement evenly."
+code_implementation: |
+  import sympy as sp
+  from sympy.matrices.normalforms import smith_normal_form
+  # Matrix over integers (a ring, not a field) representing a module homomorphism
+  M = sp.Matrix([[2, 4], [0, 3]])
+  S = smith_normal_form(M)
+legacy_v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    from sympy.matrices.normalforms import smith_normal_form
+    M = sp.Matrix([[2, 4], [0, 3]])
+    S = smith_normal_form(M)
+    assert S[0,0] == 1
+    assert S[1,1] == 6
+v9_semantic_audit:
+  status: "review_required"
+  warnings:
+    - "semantic_audit_not_machine_validated"
+  migration_note: "Legacy semantic content requires domain review; no machine-proof claim is made."

@@ -1,0 +1,35 @@
+id: "COMBINATORICS-616"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: '常微分方程数值解 - 物理工具：欧拉法与龙格-库塔法（RK4）。“走一步，看四方”的预测-校正机器，精确推测物理演化位置。 (n_616)'
+sub_topics:
+  - '显式与隐式欧拉法的稳定性差异'
+  - 'RK4 算法的高阶局部误差控制'
+  - '步长自适应调整算法'
+  - '物理直觉：在因果流中进行高精度的未来轨迹外推'
+llm_physical_mapping: "mundane physical metaphor: walking blindfolded in a bumpy field. Euler method is stepping straight blindly. RK4 is tapping your cane left, right, front, and center, then taking one calculated, perfectly averaged step."
+code_implementation: |
+  import sympy as sp
+  y, t, h = sp.symbols('y t h')
+  f = y * t
+  k1 = h * f
+  k2 = h * (f.subs({y: y + k1/2}))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    y, t, h = sp.symbols('y t h')
+    k1 = h * y
+    assert k1.subs({h: 0.1, y: 10}) == 1.0

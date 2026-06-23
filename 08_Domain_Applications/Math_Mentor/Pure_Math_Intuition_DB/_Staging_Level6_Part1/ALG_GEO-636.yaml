@@ -1,0 +1,37 @@
+id: "ALG_GEO-636"
+name: "层与概形"
+llm_physical_mapping: "A vast weather station network spread across a varied mountain terrain. The terrain itself is the base topological space, and the local weather stations represent the stalks of the sheaf, measuring and processing local properties like temperature and pressure. The gluing axiom requires that in valleys where two different stations overlap in their coverage, their calibrated measurements must perfectly align, ensuring consistent global weather data from purely local observations."
+code_implementation: |-
+  import torch
+
+  # Simulate local sections on overlapping open sets U and V
+  # For instance, a linear temperature gradient
+  section_U = torch.tensor([15.0, 16.0, 17.0]) # indices 0, 1, 2
+  section_V = torch.tensor([16.0, 17.0, 18.0]) # indices 1, 2, 3
+  
+  # The overlap corresponds to indices 1 and 2
+  overlap_U = section_U[1:]
+  overlap_V = section_V[:-1]
+  
+  # Gluing axiom: the local data must agree on the intersection
+  assert torch.allclose(overlap_U, overlap_V), "Sections must agree on overlap"
+  
+  # Combine to form a global section
+  global_section = torch.cat([section_U[:1], overlap_U, section_V[-1:]])
+v8_sanity_audit:
+  sympy_pseudo_code: |-
+    import sympy as sp
+    
+    x = sp.Symbol('x')
+    # Two polynomials representing local data on open sets U and V
+    f_U = x**2 + 2*x
+    f_V = x * (x + 2)
+    
+    # Gluing condition: f_U and f_V must algebraically agree on U intersect V
+    diff = sp.simplify(f_U - f_V)
+    assert diff == 0, "Sheaf gluing axiom failed: sections do not agree on overlap"
+sub_topics:
+  - "交换环的谱 $Spec(R)$ 构造"
+  - "层的局部到全局的黏合公理"
+  - "概形 (Schemes) 作为流形的代数推广"
+  - "物理直觉：在每个空间点上挂载特定的代数信息"

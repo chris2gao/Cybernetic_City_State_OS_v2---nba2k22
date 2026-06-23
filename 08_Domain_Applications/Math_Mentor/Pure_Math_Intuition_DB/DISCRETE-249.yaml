@@ -1,4 +1,19 @@
 id: "DISCRETE-249"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
 concept_name: "关系的性质（自反/对称/传递/反对称） - 关系矩阵 (Relation Matrix) 的布尔乘法与关系图表示 (n_249)"
 sub_topics:
   - "关系矩阵的布尔积运算法则"

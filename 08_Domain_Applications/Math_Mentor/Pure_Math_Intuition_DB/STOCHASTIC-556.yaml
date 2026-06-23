@@ -1,0 +1,45 @@
+id: STOCHASTIC-556
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+name: 鞅论基础 - 发生学溯源：起源于对“绝对公平抛硬币赌博”的数学抽象。核心法则：对未来的期望预测值永远等于现在的实际值。 (n_556)
+sub_topics:
+  - 鞅、下鞅与上鞅的集合定义
+  - 停时 (Stopping Times) 的严格描述
+  - 杜布 (Doob) 分解定理
+  - 物理直觉：无偏见的随机漫步能量守恒
+llm_physical_mapping: A perfectly balanced physical scale where equal minuscule weights are added or removed randomly; the expected future balance position remains exactly the current position.
+code_implementation: |
+  import torch
+
+  # Martingale: Perfectly balanced scale with random equal weights added/removed
+  num_steps = 1000
+  # Each step, we either add +1g or -1g with exactly 50% probability
+  weight_changes = torch.randint(0, 2, (num_steps,)).float() * 2 - 1
+  scale_balance = torch.cumsum(weight_changes, dim=0)
+
+  # E[balance_n+1 | balance_n] = balance_n
+  # Let's verify zero drift over many independent trials
+  trials = 5000
+  next_step_changes = torch.randint(0, 2, (trials,)).float() * 2 - 1
+  expected_change = next_step_changes.mean().item()
+  assert abs(expected_change) < 0.05, "Martingale property requires zero drift"
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    X_n = sp.Symbol('X_n')
+    p = sp.Rational(1, 2)
+    E_X_n_plus_1 = p * (X_n + 1) + (1 - p) * (X_n - 1)
+    assert sp.simplify(E_X_n_plus_1 - X_n) == 0, "Martingale property fails for symmetric random walk"

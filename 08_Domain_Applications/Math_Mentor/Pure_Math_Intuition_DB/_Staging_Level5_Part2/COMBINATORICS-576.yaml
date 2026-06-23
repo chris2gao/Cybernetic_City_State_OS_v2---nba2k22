@@ -1,0 +1,24 @@
+id: "COMBINATORICS-576"
+concept_name: "排列组合 - 发生学溯源：在面对呈阶乘级爆炸的离散状态时，通过逻辑计数法则制造能够将“加法”映射为“乘法”的代数机器。 (n_576)"
+sub_topics:
+  - "计数基本原理：加法与乘法法则"
+  - "有序排列 P(n,k) 与无序组合 C(n,k)"
+  - "状态空间规模的量化评估"
+  - "物理直觉：复杂系统配置方案的内存占用估算"
+llm_physical_mapping: "mundane physical metaphor: A sprawling warehouse with multiple conveyor belts; 'addition' represents parallel belts merging into one, while 'multiplication' represents a sequence of assembly stations adding parts in sequence, turning linear choices into combinatorial explosions of final products."
+code_implementation: |
+  import sympy as sp
+  from sympy.functions.combinatorial.numbers import nP, nC
+  n, k = sp.symbols('n k', integer=True, positive=True)
+  p_expr = sp.factorial(n) / sp.factorial(n - k)
+  c_expr = sp.factorial(n) / (sp.factorial(k) * sp.factorial(n - k))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    from sympy.functions.combinatorial.numbers import nP, nC
+    n, k = sp.symbols('n k', integer=True, positive=True)
+    p_expr = sp.factorial(n) / sp.factorial(n - k)
+    c_expr = sp.factorial(n) / (sp.factorial(k) * sp.factorial(n - k))
+    assert p_expr.subs({n: 5, k: 2}) == nP(5, 2)
+    assert c_expr.subs({n: 5, k: 2}) == nC(5, 2)
+    assert True

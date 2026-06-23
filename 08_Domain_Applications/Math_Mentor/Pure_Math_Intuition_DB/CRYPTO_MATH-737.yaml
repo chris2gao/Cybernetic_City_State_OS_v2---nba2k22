@@ -1,0 +1,40 @@
+id: "CRYPTO_MATH-737"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "椭圆曲线密码 - 算力降维：由于逆向映射比分解大整数难千倍，ECC 仅需 256 位密钥即可抵御 RSA 2048 位的等级攻击。目前保护 AI 模型权重验证的核心锁。 (n_737)"
+sub_topics:
+  - "椭圆曲线离散对数问题 (ECDLP) 的难度"
+  - "密钥长度与安全强度的非线性关系"
+  - "硬件层面对 ECC 运算的极致加速"
+  - "在区块链与 AI 签名验证中的主导作用"
+llm_physical_mapping: "factory workshop-level mechanical metaphor: a high-density titanium combination lock consisting of 256 concentric rotating dials, mathematically guaranteed to out-resist a massive 2048-pin iron padlock through hyper-efficient geometric meshing."
+code_implementation: |
+  import torch
+  import numpy as np
+  
+  def ecc_density_scaling(key_bits_ecc, key_bits_rsa):
+      # Modeling the immense density advantage of ECC structures
+      ecc_str = torch.tensor([key_bits_ecc], dtype=torch.float32)
+      rsa_str = torch.tensor([key_bits_rsa], dtype=torch.float32)
+      efficiency_ratio = rsa_str / ecc_str
+      return efficiency_ratio
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    # Assert computational bit reduction mapping
+    ecc_bits, rsa_bits = 256, 2048
+    ratio = rsa_bits / ecc_bits
+    assert ratio == 8

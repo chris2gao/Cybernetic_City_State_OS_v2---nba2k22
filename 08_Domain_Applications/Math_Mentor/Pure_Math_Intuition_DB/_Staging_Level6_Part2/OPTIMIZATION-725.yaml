@@ -1,0 +1,22 @@
+id: "OPTIMIZATION-725"
+concept_name: "随机优化 - 发生学溯源：由于每步全梯度计算瘫痪，被迫通过极小批次（Mini-batch）进行的“盲人摸象”式寻路。 (n_725)"
+sub_topics:
+  - "样本梯度作为总体梯度的无偏估计"
+  - "Batch Size 与计算方差的权衡"
+  - "并行计算环境下随机优化的扩展性"
+  - "物理直觉：在噪音中寻找全局下降的主干道"
+llm_physical_mapping: "A factory quality control inspector blindly testing only 3 random cogs out of 10,000 (mini-batch) to guess the overall production line defect direction. Although each small sample batch has wild variance (blind groping), over thousands of checks, the true slope of the assembly line's quality gradient emerges unbiasedly."
+code_implementation: |
+  import numpy as np
+  
+  def mini_batch_sampling(data_size, batch_size):
+      # Blind groping sampling mechanism
+      indices = np.random.choice(data_size, batch_size, replace=False)
+      return indices
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    mu, sigma, n = sp.symbols('mu sigma n')
+    # Variance of the mean of n samples is sigma^2 / n
+    variance_of_mean = sigma**2 / n
+    assert variance_of_mean.subs({sigma: 2, n: 4}) == 1

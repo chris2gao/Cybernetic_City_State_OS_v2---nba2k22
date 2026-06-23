@@ -1,0 +1,39 @@
+id: "ODE-457"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
+concept_name: "存在唯一性定理（Picard-Lindelöf） - 终极认知底座：利用压缩映射不动点定理证明 Lipschitz 连续系统轨迹的绝对确定性 (n_457)"
+sub_topics:
+  - "皮卡迭代序列的构造"
+  - "利普希茨 (Lipschitz) 条件的物理约束"
+  - "迭代序列在完备空间中的收敛性证明"
+  - "解的唯一性与对初值的连续依赖性"
+llm_physical_mapping: "mundane physical metaphor: gears interlocking perfectly without slipping. Lipschitz continuity guarantees that the 'teeth' of the function don't infinitely spike, so cranking the handle produces exactly one predictable rotation track every time."
+code_implementation: |
+  import sympy as sp
+  x = sp.symbols('x')
+  t = sp.symbols('t')
+  y_0 = 1
+  y_1 = y_0 + sp.integrate(y_0, (t, 0, x))
+  y_2 = y_0 + sp.integrate(y_1.subs(x, t), (t, 0, x))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x, t = sp.symbols('x t')
+    y_0 = 1
+    y_1 = y_0 + sp.integrate(y_0, (t, 0, x))
+    y_2 = 1 + sp.integrate(y_1.subs(x, t), (t, 0, x))
+    assert y_1 == 1 + x
+    assert y_2 == 1 + x + x**2/2

@@ -1,0 +1,42 @@
+id: "COMBINATORICS-590"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "图的着色理论（色多项式） - 物理意义：如何用最少颜色隔离相邻顶点。 (n_590)"
+sub_topics:
+  - "顶点着色数 χ(G) 与色多项式 P(G, k)"
+  - "平面图的四色定理背景"
+  - "物理建模：邻近干扰约束下的调度问题"
+  - "色多项式对图结构的代数刻画"
+llm_physical_mapping: "mundane physical metaphor: Painting adjoining steel shipping containers on a crowded dock. If two containers touch, they must be painted different colors so crane operators don't mistake them for a single massive block."
+code_implementation: |
+  import sympy as sp
+  
+  def chromatic_polynomial_tree(n, k):
+      # A tree with n vertices has chromatic polynomial k * (k - 1)^(n-1)
+      if n == 0:
+          return 1
+      return k * (k - 1)**(n - 1)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    k = sp.Symbol('k')
+    n = 4
+    tree_poly = k * (k - 1)**(n - 1)
+    
+    # Evaluate for k=3
+    ways = tree_poly.subs(k, 3)
+    assert ways == 3 * (2)**3

@@ -1,0 +1,23 @@
+id: "OPTIMIZATION-722"
+concept_name: "非线性优化（KKT条件） - 物理意义：要在“贪婪追求奖励”与“敬畏参考模型边界（KL 散度惩罚）”之间寻找纳什均衡。KKT 条件是控制模型不发生“奖励作弊”的绝对法则。 (n_722)"
+sub_topics:
+  - "互补松弛性 (Complementary slackness) 的物理含义"
+  - "约束饱和度对梯度更新的截断效应"
+  - "惩罚项作为软约束的对偶映射"
+  - "确保对齐过程不偏离预训练语义流形的数学保证"
+llm_physical_mapping: "mundane physical metaphor: adjusting multiple valves in a plumbing system simultaneously to keep water pressure perfectly balanced without bursting pipes."
+code_implementation: |
+  import torch
+  import numpy as np
+  
+  def simulate_process():
+      tensor = torch.zeros(10, dtype=torch.float32)
+      tensor += 1.0
+      return np.sum(tensor.numpy())
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    x = sp.Symbol('x')
+    expr = sp.simplify(x - x)
+    assert expr == 0

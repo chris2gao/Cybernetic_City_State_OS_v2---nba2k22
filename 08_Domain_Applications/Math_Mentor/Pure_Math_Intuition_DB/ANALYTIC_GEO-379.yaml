@@ -1,4 +1,19 @@
 id: "ANALYTIC_GEO-379"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
 concept_name: "参数方程 - 动力学视角：将参数 t 视为时间，轨迹视为质点的运动 (n_379)"
 sub_topics:
   - "参数方程消除参数向普通方程转化的技巧"

@@ -1,4 +1,19 @@
 id: "NUM_THEORY-003"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
 version: "9.1"
 type: "math_concept_node"
 title: "整除与素数 - 素数与合数的定义，以及欧几里得素数无限性的经典反证法（构造 p1p2...pn + 1）"

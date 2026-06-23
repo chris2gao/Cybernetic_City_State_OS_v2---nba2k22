@@ -1,0 +1,41 @@
+id: "OPTIMIZATION-728"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "拟牛顿法（BFGS） - 算力解放：千亿参数的海森矩阵（Hessian）无法存储。BFGS 极其聪明地利用“一阶导数历史轨迹”来动态伪造（近似）二阶曲率矩阵。 (n_728)"
+sub_topics:
+  - "割线方程 $B_{k+1}s_k = y_k$"
+  - "矩阵更新的低秩修正公式（Rank-2 update）"
+  - "逆海森矩阵的直接更新（DFP vs BFGS）"
+  - "在参数超大规模时实现二阶优化收敛速率"
+llm_physical_mapping: "An industrial robotic arm that cannot afford to 3D-scan a massive, complex engine block's entire curvature (Hessian). Instead, by merely dragging its welding tip across the surface and recording the tilt changes (first-derivative history), its control chip dynamically hallucinates a perfectly accurate structural stress map of the unseen curves."
+code_implementation: |
+  import numpy as np
+  
+  def bfgs_rank_2_update(H_inv, s_k, y_k):
+      # Forging the curvature matrix using only trajectory history
+      rho = 1.0 / (np.dot(y_k, s_k) + 1e-10)
+      I = np.eye(len(H_inv))
+      term1 = I - rho * np.outer(s_k, y_k)
+      term2 = I - rho * np.outer(y_k, s_k)
+      H_inv_new = np.dot(term1, np.dot(H_inv, term2)) + rho * np.outer(s_k, s_k)
+      return H_inv_new
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    y, s, rho = sp.symbols('y s rho')
+    # Rank-1 update simplified scalar projection check
+    scalar_update = 1 - rho * y * s
+    assert scalar_update.subs({rho: 1/(y*s + 1e-5)}) != 1

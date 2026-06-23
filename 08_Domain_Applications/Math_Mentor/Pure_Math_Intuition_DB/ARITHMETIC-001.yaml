@@ -1,5 +1,20 @@
 concept_node:
   id: "ARITHMETIC-001"
+  mode: "A"
+  mode_routing_status: "inferred_high_confidence"
+  validation_status: "review_required"
+  bridge_readiness_status: "manual_review_required"
+  formal_definition_status: "missing"
+  prerequisites_status: "missing"
+  mapping_boundary_status: "missing"
+  migration_review:
+    missing_reason:
+      - "formal_definition_absent"
+      - "prerequisite_nodes_absent"
+      - "mapping_boundary_absent"
+    recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+    warnings:
+      - "shape_only_or_shallow_audit_risk"
   title: "加法与乘法的基本定律（交换律、结合律、分配律）"
   domain: "integer_arithmetic"
   core_intuition: "加法是合并，乘法是按批次放大。基本定律是宇宙资源守恒在操作组合上的反映，不管顺序如何、怎么分批处理，最终总量不变。"

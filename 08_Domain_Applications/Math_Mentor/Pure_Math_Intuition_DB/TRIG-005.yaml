@@ -1,5 +1,20 @@
 version: "9.1"
 id: "TRIG-005"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
 title: "单位圆 - 三角函数在四个象限的符号正负（通过坐标正负自然推导，严禁死记口诀）"
 sub_topics:
   - "第一象限坐标符号与函数值正负"
@@ -7,7 +22,7 @@ sub_topics:
   - "第三象限坐标符号与函数值正负"
   - "第四象限坐标符号与函数值正负"
 llm_physical_mapping: "Cartesian quadrants mapped to pos/neg signs. The (x, y) coordinates on the unit circle directly correspond to (cos(θ), sin(θ)). We derive the signs naturally from the Cartesian axes instead of rote memorization. Quadrant I: (+x, +y), Quadrant II: (-x, +y), Quadrant III: (-x, -y), Quadrant IV: (+x, -y)."
-code_implementation: >
+code_implementation: |
   import torch
   import math
 

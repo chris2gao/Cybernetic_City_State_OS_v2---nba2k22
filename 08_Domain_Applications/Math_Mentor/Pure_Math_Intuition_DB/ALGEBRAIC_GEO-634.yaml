@@ -1,0 +1,49 @@
+id: "ALGEBRAIC_GEO-634"
+mode: "B"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "semantic_audit_not_machine_validated"
+    - "mode_b_legacy_v8_audit_not_authoritative"
+    - "mode_b_primary_mapping_requires_repair"
+concept_name: "Zariski拓扑 - 发生学溯源：抛弃欧氏距离，仅承认代数簇为“闭集”。这种极度粗糙的拓扑赋予了空间极强的“刚性”。 (n_634)"
+sub_topics:
+  - "闭集的定义：多项式的零点集"
+  - "Zariski 拓扑的不可约性与稠密性"
+  - "连续映射在代数几何中的特殊形态"
+  - "认知跃迁：从微观连续向宏观结构的一致性跃迁"
+llm_physical_mapping: "mundane physical metaphor: Instead of measuring distance with a tape measure, the factory floor is painted entirely black except for precise grooves carved by heavy milling machines. You are either perfectly inside the groove or entirely outside it. There is no close-enough rubber padding; it is absolutely rigid metal."
+code_implementation: |
+  import numpy as np
+  
+  def zariski_closed_set_checker(points, coeffs):
+      results = np.polyval(coeffs, points)
+      is_closed = np.isclose(results, 0.0, atol=1e-7)
+      return is_closed
+      
+  pts = np.array([1.0, 2.0, 1.0001])
+  roots_mask = zariski_closed_set_checker(pts, [2, -3, 1])
+legacy_v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.Symbol('x')
+    poly = (x - 1)*(x - 3)
+    roots = sp.solve(poly, x)
+    assert 1 in roots
+    assert 3 in roots
+    assert 2 not in roots
+v9_semantic_audit:
+  status: "review_required"
+  warnings:
+    - "semantic_audit_not_machine_validated"
+  migration_note: "Legacy semantic content requires domain review; no machine-proof claim is made."

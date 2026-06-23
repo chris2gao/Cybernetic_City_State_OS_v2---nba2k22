@@ -1,0 +1,51 @@
+id: "COMBINATORICS-577"
+domain: "combinatorics"
+# Routing: finite counting, enumeration, and search-state growth are directly executable.
+mode: "A"
+concept_name: "排列组合 - 核心直觉：离散状态集合的内存精确测算。 (n_577)"
+sub_topics:
+  - "离散数学中的基数计算"
+  - "重复排列与多重集组合"
+  - "在搜索算法（如 A* 或 Beam Search）中节点膨胀的控制"
+  - "枚举逻辑的完备性与非冗余性证明"
+formal_definition: |-
+  对含 n 个互异元素的有限集，取 k 个元素的有序排列数为 P(n,k)=n!/(n-k)!，无序
+  组合数为 C(n,k)=n!/(k!(n-k)!)。若一个 n 元多重集中不同类型的重数为
+  m_1,...,m_r，则使用全部元素的不同排列数为 n!/(m_1!...m_r!)；从该多重集取 k
+  个元素的不同组合，可由 product_j(1+x+...+x^(m_j)) 中 x^k 的系数得到。
+  枚举算法完备且无冗余，分别指每个合法状态至少出现一次且至多出现一次。
+prerequisite_nodes:
+  - "n_576"
+llm_physical_mapping: |-
+  把每个合法排列或组合分配给搜索系统中的一个唯一状态键；计数公式给出完整状态表的
+  精确槽位数，分支因子 b、深度 d 的满搜索树在第 d 层有 b^d 个节点。唯一键防止
+  重复扩展，覆盖检查防止合法状态遗漏，这对应枚举的非冗余性与完备性。
+mapping_boundary: |-
+  状态数只给出最坏情况下的组合规模，不等于 A* 或 Beam Search 实际访问的节点数；
+  启发式、剪枝、对称性和 beam width 都会改变运行规模。内存槽位也不证明枚举正确，
+  正确性仍需分别证明每个输出合法、所有合法输出可达且没有重复。
+code_implementation: |
+  import sympy as sp
+  elements = sp.symbols('a b c')
+  multiset = sp.Tuple(*elements)
+  combinations = list(sp.utilities.iterables.multiset_combinations(multiset, 2))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import itertools
+    import math
+
+    multiset = ("A", "A", "B", "C")
+    distinct_arrangements = set(itertools.permutations(multiset))
+    expected_arrangements = math.factorial(4) // math.factorial(2)
+    assert len(distinct_arrangements) == expected_arrangements == 12
+
+    distinct_pairs = set(itertools.combinations(multiset, 2))
+    assert distinct_pairs == {
+        ("A", "A"), ("A", "B"), ("A", "C"), ("B", "C")
+    }
+
+    branch_factor, depth = 3, 4
+    exact_depth_nodes = branch_factor ** depth
+    cumulative_nodes = sum(branch_factor ** level for level in range(depth + 1))
+    assert exact_depth_nodes == 81
+    assert cumulative_nodes == (branch_factor ** (depth + 1) - 1) // (branch_factor - 1)

@@ -1,0 +1,23 @@
+id: "ALG_TOPOLOGY-681"
+concept_name: "万有系数定理 - 探测特性：通过更换同调群的系数域（如从实数到 $Z_2$），令莫比乌斯环等空间的“扭转（Torsion）”特性瞬间暴露。 (n_681)"
+sub_topics:
+  - "同调群关于系数域的扩张"
+  - "Ext 演算与扭元 (Torsion elements)"
+  - "在离散拓扑分析中识别空间手性的工具"
+  - "物理直觉：使用不同的“测量波段”观察空间深层结构"
+llm_physical_mapping: "mundane physical metaphor: swapping the fluid in a hydraulic testing system. Testing with water (real numbers) might flow smoothly, but injecting a highly viscous oil (Z_2 coefficients) causes the mechanical gears to jam at twisted joints (torsion), instantly exposing hidden mechanical misalignments."
+code_implementation: |
+  import torch
+  
+  def compute_mod2_homology(matrix):
+      return torch.linalg.matrix_rank((matrix % 2).to(torch.float32))
+  
+  boundary = torch.tensor([[2.0, 0.0], [0.0, 2.0]])
+  print("Real rank:", torch.linalg.matrix_rank(boundary))
+  print("Z2 rank:", compute_mod2_homology(boundary))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.Integer(3)
+    mod2_val = (2 * x) % 2
+    assert mod2_val == 0

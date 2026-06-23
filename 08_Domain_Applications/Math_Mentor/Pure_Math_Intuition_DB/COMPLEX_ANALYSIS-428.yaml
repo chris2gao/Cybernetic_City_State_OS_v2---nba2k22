@@ -1,0 +1,40 @@
+id: "COMPLEX_ANALYSIS-428"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "解析延拓 - 发生学溯源：局部已知复原全局未知的刚性法则，局部基因决定全局命运 (n_428)"
+sub_topics:
+  - "解析函数的一致性定理（零点孤立性）"
+  - "通过幂级数重叠邻域进行延拓的过程"
+  - "黎曼 ζ 函数在全平面的解析延拓示例"
+  - "延拓的唯一性与单值性定理"
+llm_physical_mapping: "mundane physical metaphor: the rigid structural blueprint of a crystal lattice. Knowing the exact arrangement of atoms in a tiny seed fragment perfectly and uniquely dictates how the entire macroscopic crystal must be assembled in space."
+code_implementation: |
+  import sympy as sp
+  z = sp.Symbol('z')
+  # Geometric series expansion around z=0
+  f_local = 1 + z + z**2 + z**3 + z**4 + z**5
+  # The global analytic continuation
+  f_global = 1 / (1 - z)
+  # They match locally
+  val_local = f_local.subs(z, 0.5)
+  val_global = f_global.subs(z, 0.5)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    z = sp.Symbol('z')
+    f_global = 1 / (1 - z)
+    series_expansion = sp.series(f_global, z, 0, 4).removeO()
+    assert series_expansion == 1 + z + z**2 + z**3

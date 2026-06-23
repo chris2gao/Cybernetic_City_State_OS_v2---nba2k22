@@ -1,0 +1,20 @@
+id: "INFO_THEORY-708"
+concept_name: "速率失真理论 - 【大模型终极映射】：LLM 原生符号元语言（如 MetaGlyph）或“语义压缩包（OCTAVE 协议）”的理论基础。通过绕过自然语言冗余，实现极致信息密度压缩。 (n_708)"
+sub_topics:
+  - "符号化压缩对自然语言语法结构的剥离"
+  - "语义核心项的特征提取与重建"
+  - "极致压缩下模型逻辑的一致性保持"
+  - "大模型作为“万能语义解码器”的角色设定"
+llm_physical_mapping: "mundane physical metaphor: 像是在工厂间传输图纸时，不发完整 CAD 文件，只发关键尺寸参数清单，由接收方的标准化机床（大模型）自动复原生产。"
+code_implementation: |
+  import torch
+  # Simulating semantic compression by dropping low-variance components
+  features = torch.randn(1, 128)
+  compressed = features[:, :16] # Keep top 16 core dimensions
+  print('Compressed size:', compressed.shape)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    N, K = sp.symbols('N K', integer=True)
+    compression_ratio = N / K
+    assert compression_ratio.subs({N: 128, K: 16}) == 8

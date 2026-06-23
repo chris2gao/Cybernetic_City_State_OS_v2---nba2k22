@@ -1,0 +1,33 @@
+id: "ANALYTIC_NT-698"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "函数方程与解析延拓 - 【Zero-shot 映射】：利用全纯函数的局部刚性，强行将局部观测规律外推至整个复平面的无限泛化能力。 (n_698)"
+sub_topics:
+  - "解析函数的一致性原理应用"
+  - "从实轴已知区域向复平面的逻辑扩张"
+  - "零样本学习（Zero-shot）的数学类比：基因式规律外推"
+  - "避免在延拓路径上坠入分支切割的边界控制"
+llm_physical_mapping: "mundane physical metaphor: accurately predicting the entire 3D blueprint of a diesel engine block by scanning a single rigid gear cross-section, cantilever steel beam structurally extending over an abyss based on local anchor tension"
+code_implementation: |
+  import torch
+  def analytic_continuation_taylor(local_weights):
+      extrapolated = torch.exp(local_weights)
+      return extrapolated
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    z = sp.Symbol('z')
+    assert sp.simplify(sp.exp(0)) == 1

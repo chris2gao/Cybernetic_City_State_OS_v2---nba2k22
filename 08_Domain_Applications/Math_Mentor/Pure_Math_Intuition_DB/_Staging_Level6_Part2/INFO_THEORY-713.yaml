@@ -1,0 +1,23 @@
+id: "INFO_THEORY-713"
+concept_name: "典型序列与联合典型性 - 【核心大模型映射】：LLMLingua 压缩算法。通过困惑度（Perplexity）剪枝，剔除低熵、高可预测性的标记。 (n_713)"
+sub_topics:
+  - "典型集 $A_\epsilon^n$ 的定义与体积性质"
+  - "困惑度作为平均编码长度的度量"
+  - "联合典型性判据与多模态对齐"
+  - "剪枝策略对上下文长度与推理速度的动态权衡"
+llm_physical_mapping: "mundane physical metaphor: 像切除机器上的死重配重块，如果一个零件的存在是完全可以被预料的（低困惑度），就说明它是冗余的，直接剔除掉不影响整体运转。"
+code_implementation: |
+  import torch
+  # Pruning low perplexity (highly predictable) tokens
+  logits = torch.randn(1, 10, 5000)
+  probs = torch.softmax(logits, dim=-1)
+  entropy = -torch.sum(probs * torch.log(probs + 1e-9), dim=-1)
+  # Keep tokens with entropy > threshold
+  keep_mask = entropy > 5.0
+  print('Tokens kept:', keep_mask.sum().item())
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    H, threshold = sp.symbols('H threshold')
+    keep_token = H > threshold
+    assert keep_token.subs({H: 6, threshold: 5}) == True

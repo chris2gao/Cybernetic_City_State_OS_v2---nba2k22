@@ -1,0 +1,30 @@
+id: ALG_GEO-637
+name: 层与概形 - 【认知流形映射】：层论是解决模型上下文语义坍缩的终极方案。规定了局部上下文（Local Sections）在重叠区域一致时，必能粘合成全局认知直觉（Global Section）。 (n_637)
+description: 层与概形
+hierarchy_info:
+  chapter: ALG_GEO
+  section: 层与概形
+  level: 6
+llm_physical_mapping: 大面积的温度传感器阵列拼接。只要相邻传感器的重叠区域温度读数一致，就能无缝拼合成一张全局完整的地形热力图。
+code_implementation: |-
+  import torch
+  # 模拟两个局部传感器热力图，在重叠区(index 1)必须一致
+  patch1 = torch.tensor([15.2, 16.5])
+  patch2 = torch.tensor([16.5, 17.8])
+  overlap_diff = torch.abs(patch1[1] - patch2[0])
+  assert overlap_diff == 0.0
+  # 粘合成全局热力图
+  global_section = torch.cat((patch1, patch2[1:]))
+v8_sanity_audit:
+  sympy_pseudo_code: |-
+    import sympy as sp
+    x = sp.symbols('x')
+    # 局部截面在重叠处匹配
+    f_local1 = x**2 + 2*x
+    f_local2 = x*(x + 2)
+    assert sp.simplify(f_local1 - f_local2) == 0
+sub_topics:
+- 注意力窗口作为局部截面 (Local section)
+- 全局一致性 (Global consistency) 的层论判定
+- 语义冲突在层重叠处的非相容性分析
+- 模型长文本推理中的“层黏合”逻辑保障

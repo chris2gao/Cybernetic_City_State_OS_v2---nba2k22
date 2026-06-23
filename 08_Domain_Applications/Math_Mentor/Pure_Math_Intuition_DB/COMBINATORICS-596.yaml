@@ -1,0 +1,42 @@
+id: "COMBINATORICS-596"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "有限几何 - 认知流形统一：为组合设计提供公理化的几何架构。 (n_596)"
+sub_topics:
+  - "仿射平面与射影平面的有限点集表示"
+  - "几何结构的对称性与组合恒等式"
+  - "点线关联矩阵的代数性质"
+  - "物理直觉：在离散像素化的宇宙中建立严密的几何定律"
+llm_physical_mapping: "mundane physical metaphor: A rigid scaffolding made of steel rods and ball joints. Unlike a continuous rubber sheet, you can only attach rods at exact, discrete ball joint coordinates, yet they form perfect non-bending triangles and parallel lines."
+code_implementation: |
+  import sympy as sp
+  
+  def fano_plane_incidence():
+      # The Fano plane (smallest finite projective plane) has 7 points and 7 lines
+      # Each line has 3 points, each point is on 3 lines
+      lines = [
+          {1, 2, 3}, {3, 4, 5}, {1, 5, 6}, {1, 4, 7}, {2, 5, 7}, {3, 6, 7}, {2, 4, 6}
+      ]
+      return lines
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    lines = [{1, 2, 3}, {3, 4, 5}, {1, 5, 6}, {1, 4, 7}, {2, 5, 7}, {3, 6, 7}, {2, 4, 6}]
+    # Every pair of points determines exactly one line
+    pt1, pt2 = 1, 2
+    intersect = [l for l in lines if pt1 in l and pt2 in l]
+    assert len(intersect) == 1

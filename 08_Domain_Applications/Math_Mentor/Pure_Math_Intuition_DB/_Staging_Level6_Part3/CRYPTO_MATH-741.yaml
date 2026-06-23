@@ -1,0 +1,26 @@
+id: "CRYPTO_MATH-741"
+concept_name: "哈希函数数学 - 物理直觉：利用多项式碰撞极难特性实现数据特征的单向“坍缩”。 (n_741)"
+sub_topics:
+  - "雪崩效应与输出分布的均匀性"
+  - "基于代数结构的抗碰撞性证明"
+  - "梅克尔树 (Merkle Trees) 的层级哈希"
+  - "物理模拟：将庞大的物理实体压缩为唯一的指纹"
+llm_physical_mapping: "mundane physical metaphor: industrial shredder and blender system where specific inputs create uniquely textured dust patterns, and it is mechanically impossible to reassemble the original objects from the output dust."
+code_implementation: |
+  import hashlib
+  
+  def generate_avalanche_effect():
+      msg1 = b"Mechanical Gear A"
+      msg2 = b"Mechanical Gear B"
+      hash1 = hashlib.sha256(msg1).hexdigest()
+      hash2 = hashlib.sha256(msg2).hexdigest()
+      return hash1, hash2
+      
+  h1, h2 = generate_avalanche_effect()
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.Symbol('x')
+    poly = x**3 + 2*x + 1
+    val = poly.subs(x, 2)
+    assert val == 13

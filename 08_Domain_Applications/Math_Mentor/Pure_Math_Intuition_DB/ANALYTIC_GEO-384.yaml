@@ -1,4 +1,19 @@
 id: "ANALYTIC_GEO-384"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
 concept_name: "点线面距离公式 - 利用向量投影与法向量进行距离计算的严格推导 (n_384)"
 sub_topics:
   - "点到直线的距离向量公式（利用外积或投影）"

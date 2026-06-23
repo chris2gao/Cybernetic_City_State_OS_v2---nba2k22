@@ -1,0 +1,52 @@
+id: PDE-500
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+name: 非线性PDE简介（Hamilton-Jacobi方程） - 大模型映射：最优控制理论核心，引导模型从噪声精确坍缩至语义流形的动力学方程 (n_500)
+sub_topics:
+  - 作用量函数与哈密顿量
+  - 粘性解 (Viscosity solutions) 的引入
+  - 大模型轨迹规划中的哈密顿流视角
+  - 从噪声向语义高密度区演化的最优路径求解
+llm_physical_mapping: A wavefront of light propagating through an inhomogeneous medium, where the Hamilton-Jacobi equation determines the expanding surface and the path of least action.
+code_implementation: |
+  import torch
+
+  # Simulating Hamilton-Jacobi wavefront propagation (light ray in medium)
+  # u(x,y) represents the arrival time of the wavefront
+  grid_size = 50
+  u = torch.zeros((grid_size, grid_size))
+  u[25, 25] = -1.0 # Source of the wavefront
+
+  dt = 0.01
+  dx = 1.0
+  for _ in range(100):
+      ux = (torch.roll(u, -1, 0) - torch.roll(u, 1, 0)) / (2 * dx)
+      uy = (torch.roll(u, -1, 1) - torch.roll(u, 1, 1)) / (2 * dx)
+      # H = |nabla u|
+      H = torch.sqrt(ux**2 + uy**2 + 1e-8)
+      u_new = u - dt * H
+      u_new[25, 25] = 0.0 # Source boundary condition
+      u = u_new
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x, t = sp.symbols('x t', real=True)
+    u = sp.Function('u')(x, t)
+    H = 0.5 * sp.diff(u, x)**2
+    HJ_eq = sp.diff(u, t) + H
+    sol = x**2 / (2*t)
+    res = HJ_eq.subs(u, sol).doit()
+    assert sp.simplify(res) == 0, "HJ equation not satisfied by classic analytical solution"

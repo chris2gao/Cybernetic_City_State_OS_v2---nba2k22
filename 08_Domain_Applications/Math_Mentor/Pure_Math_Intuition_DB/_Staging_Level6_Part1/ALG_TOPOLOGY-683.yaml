@@ -1,0 +1,24 @@
+id: "ALG_TOPOLOGY-683"
+concept_name: "Eilenberg-MacLane空间 - 纯化单元：仅在特定维度存在指定群结构空洞、其余维度绝对纯净的人造拓扑原子，是搭建同伦大厦的基础设施。 (n_683)"
+sub_topics:
+  - "$K(G, n)$ 空间的定义及其唯一性"
+  - "作为同伦类分类空间的特殊地位"
+  - "对复杂空间进行维度分解的“参考原子”"
+  - "拓扑组合学中的标准化构建模块"
+llm_physical_mapping: "mundane physical metaphor: a precisely manufactured acoustic tuning fork in a soundproof vacuum chamber. The tuning fork resonates at exactly one pure mechanical frequency (one specific dimension and group structure), while the vacuum dampens all other physical vibrations to absolute zero."
+code_implementation: |
+  import torch
+  
+  def eilenberg_maclane_space(target_dim, current_dim, group_generator):
+      if current_dim == target_dim:
+          return group_generator
+      else:
+          return 0
+          
+  print("Dim 2:", eilenberg_maclane_space(2, 2, "Z"))
+  print("Dim 3:", eilenberg_maclane_space(2, 3, "Z"))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    pi_n = sp.Symbol('pi_n')
+    assert sp.simplify(pi_n * 1) == pi_n

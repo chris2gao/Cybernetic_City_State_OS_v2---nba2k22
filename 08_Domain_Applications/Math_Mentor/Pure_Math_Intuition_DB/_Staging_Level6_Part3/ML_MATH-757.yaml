@@ -1,0 +1,22 @@
+id: "ML_MATH-757"
+concept_name: "核方法 - 物理直觉：利用“核技巧（Kernel Trick）”白嫖无限维希尔伯特空间中的内积运算，以低维算力成本换取高维线性可分性。 (n_757)"
+sub_topics:
+  - "Mercer 定理与正定核"
+  - "特征空间的内积映射 $\\Phi(x) \\cdot \\Phi(y) = K(x,y)$"
+  - "支持向量机 (SVM) 的几何边缘最大化"
+  - "物理直觉：在极其有限的视野下感知高维空间的几何关联"
+llm_physical_mapping: "factory workshop-level mechanical metaphor: precision gears interlocking seamlessly in higher dimensions without requiring physical assembly, computing inner products via mathematical shortcut levers."
+code_implementation: |
+  import numpy as np
+  
+  def rbf_kernel_machine(x, y, gamma=1.0):
+      # RBF kernel acting as a higher-dimensional linkage spring
+      distance_sq = np.sum((x - y) ** 2)
+      return np.exp(-gamma * distance_sq)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x_sym, y_sym, g_sym = sp.symbols('x y gamma')
+    # RBF kernel logic
+    kernel_expr = sp.exp(-g_sym * (x_sym - y_sym)**2)
+    assert kernel_expr.subs({x_sym: y_sym}) == 1

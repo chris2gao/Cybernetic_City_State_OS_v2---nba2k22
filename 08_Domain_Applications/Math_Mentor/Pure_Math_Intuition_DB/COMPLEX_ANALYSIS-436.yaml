@@ -1,0 +1,39 @@
+id: "COMPLEX_ANALYSIS-436"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "整函数与亚纯函数（Picard定理） - 刘维尔定理延伸：非常数整函数值域覆盖几乎整个复平面，展现霸道空间覆盖能力 (n_436)"
+sub_topics:
+  - "整函数（Entire functions）的性质"
+  - "皮卡大定理：除一个点外覆盖全平面"
+  - "刘维尔定理：有界整函数必为常数"
+  - "整函数在复平面上的无穷大边缘行为分析"
+llm_physical_mapping: "mundane physical metaphor: an unconstrained fluid dye dropped into a boundless tank of water. Unless the dye is completely static (a constant function), it will forcefully diffuse to color every possible coordinate in the tank, missing at most a single speck of dust."
+code_implementation: |
+  import sympy as sp
+  z = sp.Symbol('z')
+  # Entire function e^z
+  f = sp.exp(z)
+  # Picard's theorem: e^z takes every value except 0
+  # Solving e^z = w
+  w = sp.Symbol('w')
+  solutions = sp.solve(sp.Eq(f, w), z)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    z = sp.Symbol('z')
+    f = sp.exp(z)
+    val = f.subs(z, 0)
+    assert val == 1

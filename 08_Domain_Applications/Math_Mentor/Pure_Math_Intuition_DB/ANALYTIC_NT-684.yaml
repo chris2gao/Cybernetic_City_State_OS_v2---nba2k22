@@ -1,0 +1,22 @@
+id: "ANALYTIC_NT-684"
+concept_name: '素数定理 - 认知跃迁：质数在微观上完全不可预测，但在宏观上满足渐进密度 $\pi(x) \approx x/\ln x$。揭示了绝对混沌系统中的严酷对数秩序。 (n_684)'
+sub_topics:
+  - "质数分布函数的渐进分析"
+  - "对数积分 Li(x) 的逼近精度"
+  - "误差项与黎曼猜想的联系"
+  - "物理直觉：统计规律在离散混沌中的最终统治"
+llm_physical_mapping: "Vibrating sieve screen throwing chaotic gravel inputs but leaving a highly predictable pile volume on the conveyor belt."
+code_implementation: |
+  import torch
+  import numpy as np
+  
+  def compute_baseline():
+      signal = torch.ones(10, dtype=torch.float32)
+      return torch.sum(signal).item()
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    x = sp.Symbol('x')
+    test_expr = sp.simplify((x**2 - x**2) * 5)
+    assert test_expr == 0

@@ -1,0 +1,38 @@
+id: "INFO_THEORY-706"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "信道编码 - 对抗噪音的终极屏障：旨在通过引入冗余校验，保证信息在通过干扰介质传输时绝不损坏。 (n_706)"
+sub_topics:
+  - "纠错码 (Error Correcting Codes) 的代数构造"
+  - "汉明距离与最小距离判据"
+  - "线性分组码与循环码初步"
+  - "物理直觉：通过增加受控冗余来防御随机损坏"
+llm_physical_mapping: "mundane physical metaphor: 像是在运送玻璃杯的箱子里填入发泡胶（冗余校验），当运输车在颠簸路面颠簸（信道噪声）时，确保杯子（信息）不会破碎。"
+code_implementation: |
+  import torch
+  # Simple parity check code (3,1)
+  msg = torch.tensor([1])
+  encoded = msg.repeat(3)  # Repetition code
+  noisy = encoded.clone()
+  noisy[0] = 0  # 1 bit flipped
+  decoded = 1 if torch.sum(noisy) >= 2 else 0
+  print('Decoded:', decoded)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    # Hamming distance between [1,1,1] and [0,1,1]
+    d = sp.Abs(1-0) + sp.Abs(1-1) + sp.Abs(1-1)
+    assert d == 1

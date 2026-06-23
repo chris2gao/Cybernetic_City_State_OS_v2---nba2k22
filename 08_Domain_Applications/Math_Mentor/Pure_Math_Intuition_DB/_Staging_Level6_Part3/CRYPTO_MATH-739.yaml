@@ -1,0 +1,27 @@
+id: "CRYPTO_MATH-739"
+concept_name: "格密码 - 【终极 AI 映射】：全同态加密 (FHE) 的物理心脏。解析大模型如何在“盲人（密文）”状态下直接进行矩阵运算而保持隐私。 (n_739)"
+sub_topics:
+  - "同态加法与同态乘法的代数闭合性"
+  - "密文计算中的噪声控制与重引导 (Bootstrapping)"
+  - "保护隐私的数据中心大模型推理模型"
+  - "在安全多方计算 (MPC) 中的应用"
+llm_physical_mapping: "mundane physical metaphor: sealed glove boxes with mechanical gears where assembly workers manipulate materials without ever touching them directly; noise accumulation corresponds to the wear of mechanical linkages that require periodic resetting via a bootstrap lever."
+code_implementation: |
+  import numpy as np
+  
+  def simulate_homomorphic_addition(cipher_a, cipher_b, noise_a, noise_b):
+      cipher_sum = cipher_a + cipher_b
+      noise_sum = noise_a + noise_b
+      return cipher_sum, noise_sum
+      
+  c_a, n_a = np.array([1, 2, 3]), 0.1
+  c_b, n_b = np.array([4, 5, 6]), 0.1
+  c_s, n_s = simulate_homomorphic_addition(c_a, c_b, n_a, n_b)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    m1, m2 = sp.symbols('m1 m2')
+    e1, e2 = sp.symbols('e1 e2')
+    cipher_1 = m1 + e1
+    cipher_2 = m2 + e2
+    assert sp.simplify((cipher_1 + cipher_2) - (m1 + m2)) == e1 + e2

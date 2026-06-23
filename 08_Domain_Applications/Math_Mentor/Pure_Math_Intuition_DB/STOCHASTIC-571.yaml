@@ -1,0 +1,59 @@
+id: STOCHASTIC-571
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+name: Girsanov定理（测度变换） - 【核心大模型映射】：RLHF/GRPO 中重要性采样与策略梯度裁剪的底层靠山，执行从 ODE 到 SDE 的探索性空间注入。
+  (n_571)
+domain: STOCHASTIC
+sub_topics:
+  - 重要性采样权重 (Likelihood Ratio) 的导出
+  - 策略分布偏移的数学校正
+  - 在 KL 散度约束下的奖励极大化
+  - 物理直觉：通过改变“骰子”的偏好来引导探索
+llm_physical_mapping:
+  metaphor: Tuning the weights of a biased roulette wheel during play. We can simulate
+    the results of a perfectly fair wheel (unbiased exploration) by playing the biased
+    wheel but dynamically scaling our payouts based on the relative odds (importance
+    sampling weight via Girsanov).
+code_implementation:
+  pytorch_simulation: "import torch\n\ndef importance_sampling_trajectory(steps=100,\
+    \ dt=0.01, drift=1.5):\n    # Simulating trajectories under the shifted policy\n\
+    \    dW = torch.randn(steps) * torch.sqrt(torch.tensor(dt))\n    t = torch.arange(1,\
+    \ steps+1) * dt\n    X = drift * t + torch.cumsum(dW, dim=0)\n    \n    # Calculate\
+    \ log likelihood ratio (Girsanov weight) for the sequence\n    # Log P(drift)\
+    \ / P(no_drift) = drift * X_t - 0.5 * drift^2 * t\n    log_weights = drift * X\
+    \ - 0.5 * drift**2 * t\n    weights = torch.exp(log_weights)\n    \n    # E[f(X)]\
+    \ under no drift approx equals mean(f(X) / weights) under drift\n    return weights\n\
+    \nw = importance_sampling_trajectory()\n"
+v8_sanity_audit:
+  sympy_pseudo_code: 'import sympy as sp
+
+
+    theta, W, t = sp.symbols(''theta W t'', real=True)
+
+    # Radon-Nikodym derivative Z
+
+    Z = sp.exp(theta * W - sp.Rational(1, 2) * theta**2 * t)
+
+    # Check basic algebraic consistency: log Z = theta * W - 0.5 * theta^2 * t
+
+    log_Z = sp.log(Z)
+
+    log_Z_expanded = sp.expand_log(log_Z, force=True)
+
+    assert sp.simplify(log_Z_expanded - (theta * W - sp.Rational(1, 2) * theta**2
+    * t)) == 0
+
+    '

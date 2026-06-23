@@ -1,0 +1,34 @@
+id: "ML_MATH-764"
+concept_name: "随机矩阵理论 - 物理直觉：控制参数初始化的奇异值平衡，防止梯度爆炸或死寂。 (n_764)"
+sub_topics:
+  - "Xavier/He 初始化背后的谱范数守恒"
+  - "初始权重谱分布对信号传递稳定性的影响"
+  - "奇异值均等化对梯度传导效率的增益"
+  - "为极深网络结构设计的权重平衡法则"
+llm_physical_mapping: "mundane physical metaphor: pressure regulation valves distributed across a thousand-mile pipeline; precisely calibrating initial tension to ensure hydraulic signals reach the end without bursting pipes or fading to a trickle."
+code_implementation: |
+  import torch
+  import numpy as np
+  import math
+
+  # Xavier Initialization ensuring variance preservation
+  fan_in = 100
+  fan_out = 100
+
+  # Calibrating the pressure valve
+  std_dev = math.sqrt(2.0 / (fan_in + fan_out))
+  weights = torch.randn(fan_out, fan_in) * std_dev
+
+  # Input signal pipeline
+  input_signal = torch.randn(fan_in)
+  output_signal = torch.matmul(weights, input_signal)
+
+  # Variance remains structurally stable (~1.0)
+  input_var = torch.var(input_signal)
+  output_var = torch.var(output_signal)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    fan_in, fan_out = sp.symbols('fan_in fan_out')
+    xavier_var = 2 / (fan_in + fan_out)
+    assert sp.simplify(xavier_var * (fan_in + fan_out) - 2) == 0

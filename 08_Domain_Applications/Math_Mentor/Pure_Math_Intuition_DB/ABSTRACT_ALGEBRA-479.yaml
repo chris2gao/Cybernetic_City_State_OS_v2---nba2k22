@@ -1,0 +1,39 @@
+id: "ABSTRACT_ALGEBRA-479"
+mode: "B"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "semantic_audit_not_machine_validated"
+    - "mode_b_legacy_v8_audit_not_authoritative"
+concept_name: "自由群与群的呈现 - 群的基因骨架：通过生成元与关系式定义任意复杂的群结构 (n_479)"
+sub_topics:
+  - "自由群 (Free Groups) 的构造与化简字问题"
+  - "生成元与定义关系 (Generators and Relations)"
+  - "呈现 (Presentations) 在拓扑基本群描述中的作用"
+  - "计算机代数系统中群的符号处理"
+llm_physical_mapping: "A set of colored pull-chains hanging from a ceiling. Pulling 'A' adds a green link, pulling 'A_inverse' removes a green link, collapsing them immediately. A relation is a template—if a specific sequence of links matches the template, the entire chain section mechanism springs open and vanishes."
+code_implementation: |
+  from sympy.combinatorics.free_groups import free_group
+  F, a, b = free_group("a, b")
+  word = a**2 * b**-1 * a
+legacy_v8_sanity_audit:
+  sympy_pseudo_code: |
+    from sympy.combinatorics.free_groups import free_group
+    F, a, b = free_group("a, b")
+    w = a * a**-1 * b
+    assert w == b
+v9_semantic_audit:
+  status: "review_required"
+  warnings:
+    - "semantic_audit_not_machine_validated"
+  migration_note: "Legacy semantic content requires domain review; no machine-proof claim is made."

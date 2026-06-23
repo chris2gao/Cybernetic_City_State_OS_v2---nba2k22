@@ -1,0 +1,17 @@
+id: "COMBINATORICS-615"
+concept_name: '特征值数值方法 - 物理含义：提取变换中最本质的维度，作为算力系统的主元方向。 (n_615)'
+sub_topics:
+  - '主成分分析 (PCA) 的数值实现'
+  - '奇异值分布对信息熵的指示'
+  - '低秩近似对计算开销的削减'
+  - '在模型蒸馏中提取核心知识特征'
+llm_physical_mapping: "mundane physical metaphor: flattening a squiggly wire sculpture in a vise. You orient the vise so the sculpture gets crushed along its thinnest, least important direction, saving the thickest structural rods (principal components)."
+code_implementation: |
+  import sympy as sp
+  M = sp.Matrix([[2, 0], [0, 0]])
+  U, S, V = M.singular_value_decomposition()
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    M = sp.Matrix([[2, 0], [0, 0]])
+    assert M.rank() == 1

@@ -1,0 +1,36 @@
+id: "INFO_THEORY-709"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "微分熵 - 认知流形统一：将离散的掷骰子熵定义跃迁至连续概率分布空间，揭示高斯噪声分布蕴含的最大不确定性。 (n_709)"
+sub_topics:
+  - "连续随机变量的熵积分定义"
+  - "坐标变换对微分熵的影响（相对熵的必要性）"
+  - "正态分布作为最大微分熵分布的证明"
+  - "物理直觉：连续系统在宏观状态下的最大无序度"
+llm_physical_mapping: "mundane physical metaphor: 像车间里的烟雾颗粒，不再是一颗颗数（离散熵），而是整体的浓度分布弥漫在空间中（微分熵），高斯分布就像烟雾彻底散开的最混乱状态。"
+code_implementation: |
+  import torch
+  import numpy as np
+  # Differential entropy of a Gaussian N(0, sigma^2) is 0.5 * ln(2*pi*e*sigma^2)
+  sigma = torch.tensor(1.0)
+  diff_entropy = 0.5 * torch.log(2 * torch.tensor(np.pi) * torch.tensor(np.e) * sigma**2)
+  print('Gaussian diff entropy:', diff_entropy.item())
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    sigma = sp.Symbol('sigma', positive=True)
+    h = sp.Rational(1, 2) * sp.log(2 * sp.pi * sp.E * sigma**2)
+    assert sp.simplify(h.subs(sigma, 1) - sp.Rational(1, 2) * sp.log(2 * sp.pi * sp.E)) == 0

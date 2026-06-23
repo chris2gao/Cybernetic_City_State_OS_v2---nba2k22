@@ -1,0 +1,40 @@
+id: "CRYPTO_MATH-745"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "多项式承诺 - 消除奇迹步骤：将模型计算轨迹转化为多项式，检验者仅需随机测试一点 $P(z)$ 即可从数学法则确认千亿参数运算的真实性与非篡改性。 (n_745)"
+sub_topics:
+  - "计算追踪向代数多项式的算术化 (Arithmetization)"
+  - "舒瓦茨-齐佩尔引理 (Schwartz-Zippel Lemma) 的核心保障"
+  - "验证过程的对数级复杂度优化"
+  - "在证明大模型未被权重注入后门中的应用"
+llm_physical_mapping: "An assembly line conveyor belt where a million consecutive robotic arm movements (computational trace) are laser-engraved onto a single continuous metal track. Instead of watching the entire day's production, a supervisor blindly drops a testing pin onto one random slot on the track. If the pin fits perfectly, mechanical resonance guarantees that the entire million-step sequence was executed flawlessly, because two different track designs can only overlap in at most a few microscopic points."
+code_implementation: |
+  import torch
+
+  def arithmetize_trace(trace_steps):
+      indices = torch.arange(len(trace_steps), dtype=torch.float32)
+      return torch.stack([indices, trace_steps], dim=1)
+      
+  def schwartz_zippel_check(poly_a_eval, poly_b_eval):
+      return torch.isclose(poly_a_eval, poly_b_eval)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.Symbol('x')
+    p1 = (x - 1)*(x - 2)
+    p2 = x**2 - 3*x + 2
+    random_point = 73
+    assert sp.expand(p1).subs(x, random_point) == sp.expand(p2).subs(x, random_point)

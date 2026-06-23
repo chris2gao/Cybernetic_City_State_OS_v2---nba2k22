@@ -1,5 +1,20 @@
 concept_node:
   id: "GEOMETRY-028"
+  mode: "A"
+  mode_routing_status: "inferred_high_confidence"
+  validation_status: "review_required"
+  bridge_readiness_status: "manual_review_required"
+  formal_definition_status: "missing"
+  prerequisites_status: "missing"
+  mapping_boundary_status: "missing"
+  migration_review:
+    missing_reason:
+      - "formal_definition_absent"
+      - "prerequisite_nodes_absent"
+      - "mapping_boundary_absent"
+    recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+    warnings:
+      - "shape_only_or_shallow_audit_risk"
   title: "直线与角（平行线/垂线/角的性质） - 平行线的判定与性质（同位角、内错角、同旁内角的转换关系） (n_148)"
   sub_topics:
     - "同位角相等判定平行线及其性质"

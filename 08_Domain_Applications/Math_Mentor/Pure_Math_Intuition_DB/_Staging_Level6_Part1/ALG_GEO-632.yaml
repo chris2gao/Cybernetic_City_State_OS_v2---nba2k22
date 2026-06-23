@@ -1,0 +1,29 @@
+id: ALG_GEO-632
+name: 仿射/射影簇 - 物理直觉：仿射簇即多元多项式方程公共解在多维空间中切出的骨架。射影簇通过引入“无穷远地平线”消除平行线不相交特例，实现几何规律的完美对称。 (n_632)
+description: 仿射/射影簇
+hierarchy_info:
+  chapter: ALG_GEO
+  section: 仿射/射影簇
+  level: 6
+llm_physical_mapping: 带有可调铰链的连杆机械机构。增加无穷远处的约束相当于引入虚拟铰链，避免机构在平行配置时发生奇异卡死现象。
+code_implementation: |-
+  import torch
+  x, y, w = torch.randn(3, requires_grad=True)
+  constraint = x**2 + y**2 - w**2 # 射影圆约束
+  optimizer = torch.optim.SGD([x, y, w], lr=0.01)
+  for _ in range(10):
+      loss = constraint**2
+      loss.backward()
+      optimizer.step()
+v8_sanity_audit:
+  sympy_pseudo_code: |-
+    import sympy as sp
+    x, y, w = sp.symbols('x y w')
+    f = x**2 + y**2 - w**2
+    # 验证齐次多项式的欧拉关系
+    assert sp.simplify(x*sp.diff(f, x) + y*sp.diff(f, y) + w*sp.diff(f, w) - 2*f) == 0
+sub_topics:
+- 仿射空间 $A^n$ 与理想 $I(V)$ 的对应
+- 齐次多项式与射影空间 $P^n$
+- 代数簇的维数与奇异点
+- 物理意义：复杂约束系统的解流形

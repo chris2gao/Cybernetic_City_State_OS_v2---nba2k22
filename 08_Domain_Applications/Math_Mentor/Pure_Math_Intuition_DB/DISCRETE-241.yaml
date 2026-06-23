@@ -1,4 +1,19 @@
 id: "DISCRETE-241"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
 concept_name: "递推关系 - 经典离散模型：汉诺塔问题 (Tower of Hanoi) 与卡特兰数 (Catalan Numbers) 的几何意义 (n_241)"
 sub_topics:
   - "汉诺塔的递归算法与 2^n - 1 步数推导"

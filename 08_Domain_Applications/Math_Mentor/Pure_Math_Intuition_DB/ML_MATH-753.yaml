@@ -1,0 +1,43 @@
+id: "ML_MATH-753"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "概率图模型 - 物理意义：描述多随机变量间的联合分布与依赖结构。 (n_753)"
+sub_topics:
+  - "贝叶斯网络与马尔可夫随机场 (MRF)"
+  - "因子图 (Factor Graphs) 的代数分解"
+  - "局部马尔可夫性质与分离判据"
+  - "物理直觉：变量间相互牵引的概率引力网"
+llm_physical_mapping: "A rigid mechanical scaffold connecting floating buoys. Each buoy represents a random variable, and the springs or linkages between them represent joint dependencies. Pulling one buoy sends tension through the network, but certain clamped nodes can physically isolate sections (d-separation)."
+code_implementation: |
+  import numpy as np
+  
+  # Joint probability table P(A, B) = P(A)*P(B|A)
+  p_A = np.array([0.4, 0.6]) # P(A=0), P(A=1)
+  p_B_given_A = np.array([[0.9, 0.1],   # P(B|A=0)
+                          [0.2, 0.8]])  # P(B|A=1)
+                          
+  # Joint distribution matrix
+  joint_AB = p_A[:, None] * p_B_given_A
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    p_a, p_b_given_a = sp.symbols('P_A P_B_given_A')
+    joint = p_a * p_b_given_a
+    # Law of total probability for marginal
+    marginal_b = joint + (1 - p_a) * sp.symbols('P_B_given_notA')
+    
+    assert sp.simplify(joint / p_a) == p_b_given_a

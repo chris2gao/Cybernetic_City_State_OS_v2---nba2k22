@@ -1,5 +1,19 @@
 concept_node:
   id: "PROOF_METHODS-001"
+  mode_routing_status: "manual_review_required"
+  validation_status: "manual_review_required"
+  bridge_readiness_status: "manual_review_required"
+  formal_definition_status: "missing"
+  prerequisites_status: "missing"
+  mapping_boundary_status: "missing"
+  migration_review:
+    missing_reason:
+      - "formal_definition_absent"
+      - "prerequisite_nodes_absent"
+      - "mapping_boundary_absent"
+    recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+    warnings:
+      - "mode_routing_manual_review_required"
   domain: "证明方法（直接/反证/归纳） (proof_methods) - 直接证明法 (n_1)"
   sub_topics: ['演绎推理逻辑', '定义与公理的直接应用', '已知定理的引用', '证明步骤的前向推导']
   llm_physical_mapping: "Building a bridge sequentially across a river. Point A is the starting premise, and you lay down one solid plank (axiom/theorem) after another until you directly reach Point B (the conclusion). Every step must securely rest on the previous ones."

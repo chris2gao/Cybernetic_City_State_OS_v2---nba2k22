@@ -1,0 +1,41 @@
+id: ALG_TOPOLOGY-672
+mode: "B"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "semantic_audit_not_machine_validated"
+    - "mode_b_legacy_v8_audit_not_authoritative"
+concept_name: 同伦论 - 【大模型映射】：确保扩散模型或流匹配（Flow Matching）中的生成轨迹在面对微小扰动时保持拓扑稳健性。 (n_672)
+sub_topics:
+- 生成路径的同伦变形类
+- 噪声鲁棒性与同伦性质的关联
+- 确保在不同采样策略下生成语义的一致性
+- 避免在特征流形上产生非拓扑等价的异常轨迹
+llm_physical_mapping: 如同流水线上的履带牵引系统。不管履带在运行中发生多大的轻微抖动，只要它没有脱轨断裂，零件被平稳送达终点的最终结果就绝对有保障。
+code_implementation: "def ensure_trajectory_robustness(trajectory_errors, noise_bound):\n    max_deviation = max(abs(err)\
+  \ for err in trajectory_errors)\n    return max_deviation < noise_bound\n"
+legacy_v8_sanity_audit:
+  sympy_pseudo_code: 'import sympy as sp
+
+    noise, bound = sp.symbols(''noise bound'')
+
+    safe = noise - bound
+
+    assert sp.simplify(safe - (noise - bound)) == 0
+
+    '
+v9_semantic_audit:
+  status: "review_required"
+  warnings:
+    - "semantic_audit_not_machine_validated"
+  migration_note: "Legacy semantic content requires domain review; no machine-proof claim is made."

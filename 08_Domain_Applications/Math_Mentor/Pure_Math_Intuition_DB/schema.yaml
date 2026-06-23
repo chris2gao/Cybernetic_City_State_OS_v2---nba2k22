@@ -1,5 +1,19 @@
 concept_node:
   id: "String. Unique identifier."
+  mode_routing_status: "manual_review_required"
+  validation_status: "manual_review_required"
+  bridge_readiness_status: "manual_review_required"
+  formal_definition_status: "missing"
+  prerequisites_status: "missing"
+  mapping_boundary_status: "missing"
+  migration_review:
+    missing_reason:
+      - "formal_definition_absent"
+      - "prerequisite_nodes_absent"
+      - "mapping_boundary_absent"
+    recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+    warnings:
+      - "mode_routing_manual_review_required"
   symbol: "String. LaTeX formatted mathematical symbol."
   name: "String. Human readable name."
   domain: "String. The mathematical branch."
