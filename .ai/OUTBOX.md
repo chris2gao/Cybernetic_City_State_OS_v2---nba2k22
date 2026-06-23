@@ -1,8 +1,11 @@
-packet_id: null
-status: neutral_baseline
-report_ref: null
+packet_id: codex-plan3-master-bootstrap-guidance-system-0001
+status: awaiting_review
+report_ref: .ai/CODEX_REPORTS/plan3-master-bootstrap-guidance-system-0001.md
 brief_ref: .ai/HUMAN_BRIEF.md
-source_head: null
+bootstrap_audit_ref: .ai/CODEX_REPORTS/plan3-bootstrap-consistency-audit-0001.md
+actually_read_files_ref: .ai/CODEX_REPORTS/plan3-bootstrap-actually-read-files-0001.md
+dev_branch: dev/plan3-master-bootstrap-guidance-system-0001
+source_head: self
 review_branch_head: null
-human_gate: not_required
-last_completed_task: p10-plus-ai-handoff-protocol-evolution-0001
+master_head: 6c6f284f5b703335ab4763ee0e97a3408a067efb
+human_gate: required
