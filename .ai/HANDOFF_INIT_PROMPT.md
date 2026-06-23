@@ -42,6 +42,9 @@ Record these separately as inherited-on-demand protocols. A model must know they
 
 .ai/CODEX_TASK_INPUT_CONTRACT.md
   load when parsing or validating a long ChatGPT/Human task packet
+
+.ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md
+  load when a task is a Human-authorized long-run program, uses completion-preserving execution, or requests internal checkpoints instead of repeated Human gates
 ```
 
 Relevant domain protocols are also inherited on demand when a task enters that domain. Before execution, load every inherited protocol triggered by the current role and packet type.
@@ -58,6 +61,12 @@ brief_ref
 ```
 
 If a referenced file is missing, malformed, stale, or contradictory, stop and return a short blocked handoff instead of guessing.
+
+## Source Baseline Versus Active Mailbox
+
+Published source branches should carry durable protocol files and neutral mailbox baselines. Treat `.ai/STATE.yml`, `.ai/INBOX.md`, `.ai/OUTBOX.md`, and `.ai/HUMAN_BRIEF.md` on source as inactive when they are marked `neutral_baseline` or have null packet IDs.
+
+Active handoff packets normally live on `ai/review/latest` or a task-specific review branch. At a context boundary, identify whether the current instructions refer to source protocol files, review-branch mailbox files, or both before acting.
 
 ## Fast Path For Same Context
 

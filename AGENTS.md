@@ -4,6 +4,7 @@
 
 - Read repository context before acting: `README.md`, `PROJECT_CONTEXT.md`, `ARCHITECTURE.md`, and the relevant domain protocol.
 - For AI handoff or model-to-model coordination tasks, read `.ai/PROTOCOL.md` and `.ai/STATE.yml` before acting when these files exist.
+- For Human-authorized long-run AI handoff programs, also read `.ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md` and preserve the task as one coherent objective unless a protected Human gate is reached.
 - For Math Mentor generation or validation tasks, read `08_Domain_Applications/Math_Mentor/Universal_Layer_Execution_Protocol.md`.
 - If a referenced bootstrap or protocol file is missing, report that fact instead of fabricating its content.
 
@@ -25,7 +26,7 @@
 
 ## Git Workflow
 
-- Current active branch for Math Mentor work: `legacy-mode-a-outsourcing`.
+- Active work branch is task-specific. The legacy Math Mentor branch has been integrated into `master`; do not assume `legacy-mode-a-outsourcing` unless a current task explicitly names it.
 - Remote: `origin` at `git@github.com:chris2gao/Cybernetic_City_State_OS_v2---teacher.git`.
 - Before committing, run `git status -sb`.
 - Commit related changes together with a concise message.
