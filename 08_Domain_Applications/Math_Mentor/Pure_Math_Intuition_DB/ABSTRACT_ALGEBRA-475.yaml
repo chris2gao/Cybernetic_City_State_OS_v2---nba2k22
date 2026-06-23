@@ -1,0 +1,48 @@
+id: "ABSTRACT_ALGEBRA-475"
+mode: "B"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "semantic_audit_not_machine_validated"
+    - "mode_b_legacy_v8_audit_not_authoritative"
+    - "mode_b_primary_mapping_requires_repair"
+concept_name: "主理想整环（PID）与唯一分解整环（UFD） - 算术基本定理的终极抽象：在复杂宇宙中寻找“不可分割的代数原子” (n_475)"
+sub_topics:
+  - "整环与约元、素元的概念"
+  - "PID 及其在最大公约数存在性中的意义"
+  - "UFD 中唯一分解性的保持条件"
+  - "欧几里得整环 (ED) 作为两者的特例"
+llm_physical_mapping: "mundane physical metaphor: A set of modular Lego blocks that can only be assembled or broken down into absolute fundamental single-peg bricks. In special tool-kits, there is a dedicated ruler mechanism that measures remainder lengths to precisely find the greatest common block size."
+code_implementation: |
+  import sympy as sp
+  x = sp.Symbol('x')
+  poly = x**4 - 1
+  factors = sp.factor(poly)
+  p1 = x**3 - 1
+  p2 = x**2 - 1
+  gcd_poly = sp.gcd(p1, p2)
+legacy_v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.Symbol('x')
+    poly1 = x**3 - 1
+    poly2 = x**2 - 1
+    gcd_poly = sp.gcd(poly1, poly2)
+    assert sp.simplify(gcd_poly - (x - 1)) == 0
+    factors = sp.factor(poly1)
+    assert factors == (x - 1)*(x**2 + x + 1)
+v9_semantic_audit:
+  status: "review_required"
+  warnings:
+    - "semantic_audit_not_machine_validated"
+  migration_note: "Legacy semantic content requires domain review; no machine-proof claim is made."

@@ -1,0 +1,35 @@
+id: "COMPLEX_ANALYSIS-419"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "复数与复平面 - 大模型映射：Transformer 旋转位置编码 (RoPE) 的绝对底座，位置信息转化为复平面相对旋转 (n_419)"
+sub_topics:
+  - "位置索引 m 到旋转角 mθ 的映射"
+  - "词向量成对分量作为复数的几何处理"
+  - "旋转矩阵在复数域的简明表示"
+  - "相对距离在点积计算中通过角度差体现"
+llm_physical_mapping: "mundane physical metaphor: A set of interlocking clocks where each gear represents a position index, encoding relative distance as physical phase difference between two spinning cogwheels."
+code_implementation: |
+  import sympy as sp
+  def rope_rotation(m, theta):
+      return sp.exp(sp.I * m * theta)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    m, n, theta = sp.symbols('m n theta', real=True)
+    rot_m = sp.exp(sp.I * m * theta)
+    rot_n = sp.exp(sp.I * n * theta)
+    relative = rot_m * sp.conjugate(rot_n)
+    assert sp.simplify(relative - sp.exp(sp.I * (m - n) * theta)) == 0

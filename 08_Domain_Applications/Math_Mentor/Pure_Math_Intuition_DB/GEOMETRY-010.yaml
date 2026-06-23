@@ -1,5 +1,20 @@
 concept_node:
   id: "GEOMETRY-010"
+  mode: "A"
+  mode_routing_status: "inferred_high_confidence"
+  validation_status: "review_required"
+  bridge_readiness_status: "manual_review_required"
+  formal_definition_status: "missing"
+  prerequisites_status: "missing"
+  mapping_boundary_status: "missing"
+  migration_review:
+    missing_reason:
+      - "formal_definition_absent"
+      - "prerequisite_nodes_absent"
+      - "mapping_boundary_absent"
+    recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+    warnings:
+      - "shape_only_or_shallow_audit_risk"
   title: "圆与多边形 - 多边形内角和公式 (n-2)*180° 的推导（将复杂多边形分割为三角形） (n_130)"
   sub_topics:
     - "多边形的对角线分割法（转化为 n-2 个三角形）"

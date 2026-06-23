@@ -1,0 +1,42 @@
+id: "ML_MATH-768"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "神经正切核（NTK） - 哲学意义：彻底扫清“深度学习是黑盒”的悲观论调，使理论解析 SGD 下的全局收敛动态成为可能。 (n_768)"
+sub_topics:
+  - "损失函数曲面的全局凸性论证"
+  - "收敛速度与 NTK 谱性质的关联"
+  - "模型智能涌现的解析边界"
+  - "将经验调优提升为严密的数学解析过程"
+llm_physical_mapping: "factory workshop-level mechanical metaphor: transparent combustion chamber. The previously opaque black-box engine is replaced by a clear quartz casing where the global convergence dynamics of gradient descent pistons are governed by measurable, predictable eigenvalues acting as tension springs."
+code_implementation: |
+  import numpy as np
+  
+  def predict_global_convergence(eigenvalues, time_steps):
+      # Convergence speed dictated by NTK spectrum
+      max_time = len(time_steps)
+      loss_trajectory = np.zeros(max_time)
+      for i, t in enumerate(time_steps):
+          # Sum of exponential decays tied to springs
+          loss = np.sum(np.exp(-eigenvalues * t))
+          loss_trajectory[i] = loss
+      return loss_trajectory
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    lam, t = sp.symbols('lam t')
+    loss = sp.exp(-lam * t)
+    gradient = sp.diff(loss, t)
+    assert sp.simplify(gradient + lam * loss) == 0

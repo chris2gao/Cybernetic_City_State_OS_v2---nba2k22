@@ -1,0 +1,36 @@
+id: "COMBINATORICS-623"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "最小二乘数值方法 - 发生学溯源：在无解的超定方程组中，通过正交投影寻找误差能量最小的“妥协解”。 (n_623)"
+sub_topics:
+  - "正则方程 $A^T Ax = A^T b$ 的构造"
+  - "QR 分解在提高数值稳定性中的应用"
+  - "奇异值分解 (SVD) 处理病态最小二乘问题"
+  - "物理直觉：数据拟合中的能量极小化原理"
+llm_physical_mapping: "mundane physical metaphor: 一根刚性金属杆和一堆拉力弹簧，弹簧一头固定在散落的数据点上，另一头拽着金属杆，金属杆最终停下的位置就是所有弹簧拉力平衡、总弹性势能最小的那个位置。"
+code_implementation: |
+  import sympy as sp
+  A = sp.Matrix([[1, 1], [1, 2], [1, 3]])
+  b = sp.Matrix([1, 2, 2])
+  x = (A.T * A).inv() * A.T * b
+  print(x)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    A = sp.Matrix([[1, 1], [1, 2]])
+    b = sp.Matrix([1, 2])
+    x = (A.T * A).inv() * A.T * b
+    assert x == sp.Matrix([0, 1])

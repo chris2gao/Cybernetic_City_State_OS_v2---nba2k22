@@ -1,0 +1,29 @@
+id: DIFF_GEO-655
+concept_name: 切向量场 - 物理意义：在流形每一点建立切空间并分配速度指针。描绘系统整体的语义演化“风向”与动力趋势。 (n_655)
+sub_topics:
+- 切空间 (Tangent Space) 的代数定义
+- 向量场作为切丛的截面 (Sections)
+- 积分曲线与流 (Flows) 的生成
+- 物理直觉：在流形表面的风力矢量分布场
+llm_physical_mapping: 流水线上的机械手臂风向标：每一个传送带节点上都装了一个带有弹簧的机械指针，实时指示当前流经材料该往哪个方向推拉。
+code_implementation: |
+  import torch
+  import numpy as np
+
+  def tangent_vector_field(x, y):
+      # Generate a vector field pointing in rotational direction
+      u = -y
+      v = x
+      return torch.stack([u, v], dim=-1)
+
+  grid_x, grid_y = torch.meshgrid(torch.linspace(-1, 1, 5), torch.linspace(-1, 1, 5), indexing='ij')
+  vectors = tangent_vector_field(grid_x, grid_y)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+
+    x, y = sp.symbols('x y')
+    u, v = -y, x
+    # Divergence of rotational field is zero
+    div = sp.diff(u, x) + sp.diff(v, y)
+    assert div == 0

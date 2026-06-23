@@ -1,0 +1,44 @@
+id: "ML_MATH-762"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "矩阵分解 - 物理意义：提取高维参数特征的最本质降维手段。 (n_762)"
+sub_topics:
+  - "非负矩阵分解 (NMF) 的部分-整体解释"
+  - "奇异值谱截断的去噪能力"
+  - "权重张量的层级分解与知识聚合"
+  - "物理直觉：剥离冗余背景，提取核心语义骨干"
+llm_physical_mapping: "mundane physical metaphor: a multi-stage industrial centrifuge array separating complex mixed fluids into pure elemental streams by mass, filtering out the volatile noise foam."
+code_implementation: |
+  import torch
+  import numpy as np
+
+  # SVD as physical decomposition centrifuge
+  complex_signal = torch.rand(10, 10)
+  u, s, v = torch.svd(complex_signal)
+
+  # Keep only top 2 singular values (heavy foundational gears)
+  core_s = s[:2]
+  core_u = u[:, :2]
+  core_v = v[:, :2]
+
+  # Reconstruct the denoised core structure
+  denoised_structure = torch.matmul(core_u, torch.matmul(torch.diag(core_s), core_v.t()))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    u1, s1, v1 = sp.symbols('u1 s1 v1')
+    reconstructed = u1 * s1 * v1
+    assert sp.simplify(reconstructed - u1*s1*v1) == 0

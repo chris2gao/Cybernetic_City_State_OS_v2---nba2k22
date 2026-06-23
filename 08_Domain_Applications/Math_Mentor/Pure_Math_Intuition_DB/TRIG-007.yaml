@@ -1,5 +1,20 @@
 version: "9.1"
 id: "TRIG-007"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
 name: "三角恒等式 - 消除奇迹步骤：平方关系 sin²θ + cos²θ = 1 是“勾股定理”在单位圆上的代数翻译 (n_168)"
 sub_topics:
   - "同角三角函数的基本平方关系式"

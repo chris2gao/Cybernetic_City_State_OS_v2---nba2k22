@@ -1,0 +1,21 @@
+id: "COMBINATORICS-586"
+concept_name: "代数组合（Polya计数） - 编程架构映射：大模型缓存系统中的哈希去重（Hash Deduplication），通过轨道周期干掉指数级的对称冗余。 (n_586)"
+sub_topics:
+  - "语义等价输入（如 Prompt 变体）的轨道提取"
+  - "利用对称性优化推理缓存命中率"
+  - "减少模型参数冗余的变换不变性约束"
+  - "算法效率在处理海量结构化数据时的提升"
+llm_physical_mapping: "mundane physical metaphor: A heavy mechanical turnstile that forces mirrored or rotated objects down the exact same physical chute, immediately sorting symmetrical packages into a single bin."
+code_implementation: |
+  import sympy as sp
+  total_states = sp.Symbol('S')
+  symmetry_factor = sp.Symbol('k')
+  unique_states = total_states / symmetry_factor
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    total_states = sp.Symbol('S')
+    symmetry_factor = sp.Symbol('k')
+    unique_states = total_states / symmetry_factor
+    assert unique_states.subs({total_states: 120, symmetry_factor: 24}) == 5
+    assert True

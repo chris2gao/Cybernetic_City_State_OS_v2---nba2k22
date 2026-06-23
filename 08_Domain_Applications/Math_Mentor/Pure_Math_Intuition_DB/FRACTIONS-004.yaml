@@ -1,5 +1,20 @@
 concept_node:
   id: "FRACTIONS-004"
+  mode: "A"
+  mode_routing_status: "inferred_high_confidence"
+  validation_status: "review_required"
+  bridge_readiness_status: "manual_review_required"
+  formal_definition_status: "missing"
+  prerequisites_status: "missing"
+  mapping_boundary_status: "missing"
+  migration_review:
+    missing_reason:
+      - "formal_definition_absent"
+      - "prerequisite_nodes_absent"
+      - "mapping_boundary_absent"
+    recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+    warnings:
+      - "shape_only_or_shallow_audit_risk"
   topic: "分数与小数 (fractions_and_decimals)"
   concept: "有限小数与无限循环小数的相互转化（利用等比数列或方程构造转化） (n_60)"
   sub_topics:

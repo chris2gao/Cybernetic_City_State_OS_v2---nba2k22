@@ -1,0 +1,41 @@
+id: "COMBINATORICS-587"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
+concept_name: "组合设计 - 物理直觉：研究如何设计高度对称、极其均匀的交叉子集。 (n_587)"
+sub_topics:
+  - "平衡不完全区组设计 (BIBD)"
+  - "斯坦纳三元系 (Steiner systems)"
+  - "集合分布的覆盖性质与平衡性"
+  - "物理映射：实验设计中的变量全平衡配置"
+llm_physical_mapping: "mundane physical metaphor: A pegboard grid where metal pins are hammered into holes. No matter where you drop a heavy steel ruler on the board, it exactly hits the same number of pins, distributing the impact force perfectly without tipping over."
+code_implementation: |
+  import sympy as sp
+  
+  def check_steiner_triple_system(v):
+      # Steiner triple systems STS(v) exist iff v = 1 or 3 mod 6
+      if v % 6 == 1 or v % 6 == 3:
+          return True
+      return False
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    def check_sts(v):
+        return v % 6 == 1 or v % 6 == 3
+    
+    assert check_sts(7) == True
+    assert check_sts(9) == True
+    assert check_sts(8) == False

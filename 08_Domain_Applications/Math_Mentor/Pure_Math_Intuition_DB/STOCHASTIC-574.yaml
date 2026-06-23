@@ -1,0 +1,85 @@
+id: "STOCHASTIC-574"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+name: "随机过程的谱分析 - 维纳-辛钦定理：将自相关函数映射为频域功率谱密度（傅里叶变换）。"
+domain: "STOCHASTIC"
+description: "维纳-辛钦定理（Wiener-Khinchin Theorem）证明了宽平稳随机过程的自相关函数与其功率谱密度互为傅里叶变换。这表明随机信号在时间域的记忆模式，完美等价于其在频率域的能量分布特征。"
+llm_physical_mapping: "物理映射为一面分离混合色光的棱镜。一段录音磁带上录满了嘈杂的工厂机器轰鸣声（平稳过程）。在时域上看，声音强弱变化表现出一定的自相关性（拖尾效应）；当我们把这股声波投入‘傅里叶变换’这面棱镜时，轰鸣声被折射成了频谱图，直接显示出高频切割机的尖锐能量和低频重锤的沉闷能量（功率谱密度）。维纳-辛钦定理就是连接这两种视角的法则。"
+code_implementation: |-
+  import torch
+
+  def generate_noise_signal(length=1024):
+      # Generate pink-like noise (low frequency dominated)
+      white_noise = torch.randn(length)
+      # Simple low pass filter
+      pink_noise = torch.zeros(length)
+      for i in range(1, length):
+          pink_noise[i] = 0.9 * pink_noise[i-1] + 0.1 * white_noise[i]
+      return pink_noise
+
+  signal = generate_noise_signal()
+
+  # 1. Compute PSD via FFT (Periodogram)
+  fft_out = torch.fft.fft(signal)
+  psd_fft = (torch.abs(fft_out)**2) / len(signal)
+
+  # 2. Compute Autocorrelation -> Fourier Transform
+  # Autocorrelation using convolution theorem
+  autocorr = torch.fft.ifft(torch.abs(fft_out)**2).real / len(signal)
+  
+  # FT of Autocorrelation
+  psd_from_autocorr = torch.abs(torch.fft.fft(autocorr))
+  
+  # Wiener-Khinchin dictates psd_fft and psd_from_autocorr match perfectly.
+  diff = torch.max(torch.abs(psd_fft - psd_from_autocorr))
+v8_sanity_audit:
+  sympy_pseudo_code: |-
+    import sympy as sp
+
+    # Verify the Fourier Transform of the exponential autocorrelation function R(tau) = exp(-a * |tau|)
+    # The Power Spectral Density S(omega) should be the Lorentzian function: 2a / (a^2 + omega^2)
+    
+    tau, omega = sp.symbols('tau omega', real=True)
+    a = sp.Symbol('a', positive=True, real=True)
+    
+    # Integrand for Fourier Transform: R(tau) * e^(-i * omega * tau)
+    # We split into tau < 0 and tau >= 0
+    integrand_pos = sp.exp(-a * tau) * sp.exp(-sp.I * omega * tau)
+    integrand_neg = sp.exp(a * tau) * sp.exp(-sp.I * omega * tau)
+    
+    # Compute the integrals manually using indefinite integrals then applying limits
+    # Anti-derivative for pos: exp(-(a + i*omega)*tau) / -(a + i*omega)
+    # At oo -> 0, at 0 -> -1 / -(a + i*omega)
+    int_pos_result = 1 / (a + sp.I * omega)
+    
+    # Anti-derivative for neg: exp((a - i*omega)*tau) / (a - i*omega)
+    # At 0 -> 1 / (a - i*omega), at -oo -> 0
+    int_neg_result = 1 / (a - sp.I * omega)
+    
+    # Sum the integrals
+    S_omega = int_pos_result + int_neg_result
+    
+    # Simplify the complex sum
+    S_omega_simplified = sp.simplify(S_omega)
+    
+    # Check if it equals 2a / (a^2 + omega^2)
+    expected_S = 2 * a / (a**2 + omega**2)
+    assert sp.simplify(S_omega_simplified - expected_S) == 0
+sub_topics:
+  - "功率谱密度 (PSD) 的定义与物理意义"
+  - "自相关函数与 PSD 的傅里叶变换对"
+  - "随机信号的频率分量能量分布"
+  - "在噪声平滑与信号滤波中的理论依据"

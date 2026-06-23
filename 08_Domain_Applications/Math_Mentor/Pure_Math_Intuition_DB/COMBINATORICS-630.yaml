@@ -1,0 +1,36 @@
+id: "COMBINATORICS-630"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "刚性方程组的数值处理 - 解决方案：引入隐式方法（Implicit methods）强制稳定系统的硅基演化，防止仿真崩溃发散。 (n_630)"
+sub_topics:
+  - "隐式 Runge-Kutta 与 BDF 算法"
+  - "牛顿迭代在每步解隐式方程中的介入"
+  - "算法复杂度与步长放大的权衡"
+  - "物理直觉：通过预见未来的状态来平衡当前的剧烈波动"
+llm_physical_mapping: "mundane physical metaphor: 给狂暴的活塞套上一个重型铸铁锁死机构，在每一步动作前，先强行算好下一步所有零件必须呆的位置，把它死死摁住，不让它乱蹦。"
+code_implementation: |
+  import sympy as sp
+  y, dt, lmbda = sp.symbols('y dt lmbda')
+  y_new = sp.symbols('y_new')
+  eq = y_new - y - dt * (-lmbda * y_new)
+  sol = sp.solve(eq, y_new)[0]
+  print(sol)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    y, dt, lmbda = 1, 0.1, 100
+    y_new = y / (1 + dt * lmbda)
+    assert y_new < 1

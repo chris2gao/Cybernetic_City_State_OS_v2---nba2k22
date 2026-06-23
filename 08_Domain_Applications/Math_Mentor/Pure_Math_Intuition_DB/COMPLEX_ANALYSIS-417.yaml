@@ -1,0 +1,34 @@
+id: "COMPLEX_ANALYSIS-417"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "复数与复平面 - 发生学溯源：理解 i 为二维平面内的 90° 旋转物理机器，非虚幻想象 (n_417)"
+sub_topics:
+  - "复数的代数形式 a + bi"
+  - "乘法 i * z 的旋转几何解释"
+  - "阿尔冈图（复平面）的建立"
+  - "虚数在物理矢量场描述中的实在性"
+llm_physical_mapping: "mundane physical metaphor: A mechanical gear system where multiplying by 'i' engages a perpendicular crank, rotating a rigid lever by exactly 90 degrees."
+code_implementation: |
+  import sympy as sp
+  def rotate_by_i(z):
+      return z * sp.I
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    z = sp.Symbol('z')
+    rotated = z * sp.I
+    rotated_twice = rotated * sp.I
+    assert rotated_twice.expand() == -z

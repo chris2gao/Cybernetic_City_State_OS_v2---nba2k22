@@ -1,0 +1,39 @@
+id: "COMBINATORICS-621"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "非线性方程数值求根（Newton法/二分法/割线法） - 物理动态：牛顿法（Newton-Raphson）利用局部切线作为滑梯，以几何级数速度疯狂向根逼近。 (n_621)"
+sub_topics:
+  - "迭代公式 $x_{n+1} = x_n - f(x_n)/f'(x_n)$"
+  - "局部二阶收敛性质证明"
+  - "初值选取对收敛性的关键影响"
+  - "二分法作为最稳健但较慢的兜底策略"
+llm_physical_mapping: "mundane physical metaphor: 一个带滑梯的探测针，在当前位置量一下斜率，滑梯就顺着这个斜度把你直接甩向地面交叉点，只要初始位置不离谱，三两下就能扎进地心。"
+code_implementation: |
+  import sympy as sp
+  x = sp.symbols('x')
+  f = x**2 - 2
+  df = sp.diff(f, x)
+  x_n = 1.5
+  for _ in range(3):
+      x_n = float(x_n - f.subs(x, x_n)/df.subs(x, x_n))
+  print(x_n)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.symbols('x')
+    f = x**2 - 2
+    x_val = 1.414
+    assert abs(f.subs(x, x_val)) < 0.01

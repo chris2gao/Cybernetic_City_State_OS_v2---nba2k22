@@ -1,0 +1,45 @@
+id: "ALG_TOPOLOGY-676"
+domain: "algebraic_topology"
+mode: "B"
+concept_name: "纤维丛 - 【核心 AI 映射】：多头注意力机制中词向量（底空间）与特征子空间（纤维）结合的终极解构。揭示权重在不同维度演化时的几何缠绕。 (n_676)"
+sub_topics:
+  - "纤维丛的局部平凡性 (Local triviality)"
+  - "转移函数与结构群 (Gauge group)"
+  - "切丛与法丛作为特征演化的背景"
+  - "映射：每个 Token 位置承载了一个独立的语义特征纤维"
+formal_definition: |-
+  纤维丛由 (E,B,F,pi) 组成，其中 pi:E->B 是连续满射。对每个 b 属于 B，存在
+  开邻域 U 和同胚 phi_U:pi^{-1}(U)->U x F，使 pr_1 o phi_U=pi；这称为局部平凡化。
+  纤维 E_b=pi^{-1}(b) 与典型纤维 F 同胚。在两个平凡化区域的交集上，坐标变换
+  phi_V o phi_U^{-1} 保持基点，并由作用在 F 上的转移函数描述；这些函数满足重叠
+  区域上的相容条件。向量丛进一步要求纤维为向量空间且转移函数逐点线性可逆。
+prerequisite_nodes:
+  - "n_653"
+  - "n_667"
+llm_physical_mapping: |-
+  可把一族依赖上下文位置的局部特征坐标系类比为丛：上下文状态组成基空间，每个状态
+  上方的可用特征坐标组成纤维；不同局部上下文采用不同坐标框架时，重叠区域需要可逆
+  的转换规则来保持同一表示的一致性。多头或分层表示可作为“局部坐标选择”的动机，
+  而局部平凡化强调复杂全局结构仍可在每个小区域写成基点与标准纤维的直积。
+mapping_boundary: |-
+  标准 Transformer 的隐藏状态通常全部位于同一个固定向量空间，因此更接近平凡丛；
+  Token 索引未必构成拓扑空间，注意力权重也不会自动给出连续投影、局部平凡化、结构群
+  或满足 cocycle 条件的转移函数。该映射只能解释局部坐标一致性，不能声称注意力机制
+  本身构成非平凡纤维丛。
+code_implementation: |
+  # Special-case anchor only: a globally trivial bundle B x R^d.
+  base_points = ("token_0", "token_1", "token_2")
+  fiber_dimension = 4
+  trivial_bundle_chart = {
+      point: tuple(0.0 for _ in range(fiber_dimension))
+      for point in base_points
+  }
+v9_semantic_audit:
+  status: "review_required"
+  review_criteria:
+    - "The definition names E, B, F, pi, fibers, and a local trivialization with the projection condition."
+    - "Transition functions preserve the base point and satisfy overlap compatibility."
+    - "Vector, tangent, and normal bundles are treated as structured examples rather than the definition itself."
+    - "The architecture mapping uses local feature coordinate systems as an analogy, not an identity claim."
+    - "The boundary states that ordinary Transformer hidden states usually form a fixed global vector space."
+    - "The code anchor represents only a trivial product bundle and is not evidence for nontrivial topology."

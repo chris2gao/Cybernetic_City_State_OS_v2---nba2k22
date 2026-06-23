@@ -1,0 +1,29 @@
+id: ALG_GEO-642
+name: 模空间 - 【终极 AI 映射】：模空间中的每个点本身就是一个极其复杂的宇宙。 (n_642)
+description: 模空间
+hierarchy_info:
+  chapter: ALG_GEO
+  section: 模空间
+  level: 6
+llm_physical_mapping: 复杂的模拟调音台设备。每个旋钮和推子的刻度组合（模空间中的一个点）都能输出一种独特频率和波形的物理声波共振态。
+code_implementation: |-
+  import torch
+  # 模空间参数 a 相当于调音台旋钮
+  a = torch.tensor(1.5, requires_grad=True)
+  t = torch.linspace(0, 10, 100)
+  wave_universe = torch.sin(a * t) # 生成的物理波
+  loss = torch.sum(wave_universe**2)
+  loss.backward()
+v8_sanity_audit:
+  sympy_pseudo_code: |-
+    import sympy as sp
+    a, t = sp.symbols('a t')
+    wave = sp.sin(a*t)
+    # 模参数a的微小改变使得物理波产生可微分的变化
+    diff_wave = sp.diff(wave, a)
+    assert sp.simplify(diff_wave - t*sp.cos(a*t)) == 0
+sub_topics:
+- 模空间 (Moduli space) 的公理化定义
+- 几何对象的分类与参数化映射
+- 粗模空间与细模空间的区别
+- 物理直觉：宇宙参数调节盘上的每一个旋钮位置

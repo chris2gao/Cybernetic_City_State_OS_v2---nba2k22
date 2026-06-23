@@ -1,0 +1,49 @@
+id: STOCHASTIC-550
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+name: Markov链（离散/连续） - 无后效性（Memorylessness）的严格概率定义：$P(X_{n+1}|X_n, \dots, X_1) = P(X_{n+1}|X_n)$。 (n_550)
+sub_topics:
+  - 条件概率的链式法则化简
+  - 切普曼-科尔莫戈罗夫 (C-K) 方程
+  - 状态的分类：吸收态、瞬时态与常返态
+  - 转移概率随时间的收敛性分析
+llm_physical_mapping: Chemical isomerization in a tank, where a molecule's chance of changing shape in the next second is entirely dictated by its current shape, not the path it took to get there.
+code_implementation: |
+  import torch
+
+  # Memorylessness: Chemical reaction isomerizing molecules
+  # P is transition probability for one time step
+  P = torch.tensor([
+      [0.7, 0.3],
+      [0.1, 0.9]
+  ])
+  P_2 = torch.matmul(P, P)
+  P_3 = torch.matmul(P_2, P)
+
+  # Probability over 5 steps depends only on 2+3 decomposition (C-K equation)
+  P_5_direct = torch.matrix_power(P, 5)
+  P_5_composed = torch.matmul(P_2, P_3)
+
+  diff = torch.abs(P_5_direct - P_5_composed).max().item()
+  assert diff < 1e-6, "Memorylessness (Chapman-Kolmogorov) violated"
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    a, b = sp.symbols('a b')
+    P = sp.Matrix([[1-a, a], [b, 1-b]])
+    P2 = P * P
+    P3 = P2 * P
+    assert sp.simplify(P3 - P*P2) == sp.zeros(2, 2), "C-K equation fails"

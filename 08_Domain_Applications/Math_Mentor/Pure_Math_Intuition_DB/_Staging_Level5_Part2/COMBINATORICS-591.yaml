@@ -1,0 +1,40 @@
+id: "COMBINATORICS-591"
+concept_name: "图的着色理论（色多项式） - 编译器映射：寄存器分配（Register Allocation）核心算法，顶点为变量，存活冲突为边，颜色为有限 CPU 寄存器资源。 (n_591)"
+sub_topics:
+  - "冲突图 (Interference Graph) 的构建"
+  - "Chaitin 启发式着色算法"
+  - "寄存器溢出 (Spilling) 的代价决策"
+  - "物理直觉：在极其拥挤的硬件资源中进行无冲突任务排期"
+llm_physical_mapping: "mundane physical metaphor: Assigning physical lockers to factory workers. If two workers are on shift at the same exact time (conflict edge), they cannot share a locker (color). When you run out of lockers, some workers must awkwardly dump their gear in the distant break room (spilling)."
+code_implementation: |
+  import sympy as sp
+  
+  def greedy_register_allocation(variables, conflict_edges, num_registers):
+      allocation = {}
+      for var in variables:
+          used_neighbors = {allocation[neighbor] for neighbor in conflict_edges[var] if neighbor in allocation}
+          assigned = False
+          for color in range(num_registers):
+              if color not in used_neighbors:
+                  allocation[var] = color
+                  assigned = True
+                  break
+          if not assigned:
+              allocation[var] = "SPILLED"
+      return allocation
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    vars_list = ['A', 'B', 'C']
+    edges = {'A': ['B'], 'B': ['A', 'C'], 'C': ['B']}
+    alloc = {}
+    for v in vars_list:
+        used = {alloc[n] for n in edges[v] if n in alloc}
+        for c in range(2):
+            if c not in used:
+                alloc[v] = c
+                break
+    assert alloc['A'] == 0
+    assert alloc['B'] == 1
+    assert alloc['C'] == 0

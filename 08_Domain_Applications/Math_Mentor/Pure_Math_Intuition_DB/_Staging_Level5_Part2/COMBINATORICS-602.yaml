@@ -1,0 +1,18 @@
+id: "COMBINATORICS-602"
+concept_name: "浮点数与误差 - 【大模型硬核映射】：KV 缓存量化压缩（Quantization） of the 物理底座。解析模型如何通过非对称量化在误差边界内达成空间/精度妥协。 (n_602)"
+sub_topics:
+  - "线性量化与非线性量化 (NF4/FP8) 的公式推导"
+  - "量化带来的零点漂移与比例因子补偿"
+  - "激活值异常点 (Outliers) 对浮点误差的压迫性影响"
+  - "模型权重剪枝与低比特推理的误差界限"
+llm_physical_mapping: "mundane physical metaphor: 用粗制滥造的正方形铁盒去装不同形状的石头，多出来的尖锐棱角直接用大铁锤哐当一下砸平，再盖上盖子。"
+code_implementation: |
+  import sympy as sp
+  val, scale = sp.symbols('val scale')
+  quantized = sp.floor(val / scale) * scale
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    val, scale = sp.symbols('val scale')
+    quantized = sp.floor(val / scale) * scale
+    assert quantized.subs({val: 5.7, scale: 2}) == 4

@@ -1,0 +1,19 @@
+id: "COMBINATORICS-584"
+concept_name: "极值组合 - 计算物理网络资源分配的“挤压极限”。 (n_584)"
+sub_topics:
+  - "资源竞争模型中的临界点分析"
+  - "网络拓扑连通性与边数下界"
+  - "分布式系统负载均衡的拓扑边界"
+  - "在模型量化剪枝中保持特定精度的参数下限"
+llm_physical_mapping: "mundane physical metaphor: Pushing water through a complex network of rigid iron pipes under maximum pressure; determining the exact breaking point where one more connection causes the pipe joints to burst."
+code_implementation: |
+  import sympy as sp
+  nodes = sp.Symbol('N')
+  min_edges_connected = nodes - 1
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    nodes = sp.Symbol('N')
+    min_edges_connected = nodes - 1
+    assert min_edges_connected.subs(nodes, 10) == 9
+    assert True

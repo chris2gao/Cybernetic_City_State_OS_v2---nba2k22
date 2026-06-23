@@ -1,5 +1,20 @@
 version: "9.1"
 id: "NUM_THEORY-026"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
 title: "Order of an Integer Modulo m"
 chinese_name: "原根与离散对数初步 - 阶 (Order) 的概念：满足 a^k ≡ 1 (mod m) 的最小正整数 k"
 description: "In number theory, the multiplicative order of an integer a modulo m is the smallest positive integer k such that a^k ≡ 1 (mod m). It dictates the cycle length of the sequence of powers of a."

@@ -1,0 +1,39 @@
+id: "OPTIMIZATION-724"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "随机优化 - 【大模型映射】：SGD 与 Adam 优化器！引入物理动量（Momentum），让优化算法像一颗重铁球冲过虚假局部最优坑洞。 (n_724)"
+sub_topics:
+  - "梯度的随机采样偏差"
+  - "步长衰减与收敛速率的量化关联"
+  - "指数加权移动平均 (EMA) 在 Adam 中的作用"
+  - "随机性带来的搜索鲁棒性与逃离鞍点能力"
+llm_physical_mapping: "A massive, heavy steel ball bearing rolling down a bumpy, uneven factory floor. Its sheer physical momentum allows it to crush through small potholes and rust spots (saddle points) without getting stuck, carrying forward the directional energy of its descent despite random surface variations (stochastic noise)."
+code_implementation: |
+  import torch
+  import numpy as np
+  
+  def adam_update_mock(grads, m, v, beta1=0.9, beta2=0.999, lr=0.001):
+      # Heavy steel ball physics: m carries momentum, v carries friction/scaling
+      m_new = beta1 * m + (1 - beta1) * grads
+      v_new = beta2 * v + (1 - beta2) * (grads ** 2)
+      update = lr * m_new / (np.sqrt(v_new) + 1e-8)
+      return update, m_new, v_new
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    g, b1, m = sp.symbols('g b1 m')
+    momentum_update = b1 * m + (1 - b1) * g
+    assert momentum_update.subs({b1: sp.Rational(9, 10), m: 1, g: sp.Rational(1, 2)}) == sp.Rational(19, 20)

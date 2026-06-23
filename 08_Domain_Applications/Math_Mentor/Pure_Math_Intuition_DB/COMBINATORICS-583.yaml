@@ -1,0 +1,34 @@
+id: "COMBINATORICS-583"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
+concept_name: "极值组合 - 物理意义：研究在避免出现特定子图（如不含三角形）时图的最大边数。 (n_583)"
+sub_topics:
+  - "图论中 Turán 定理的应用"
+  - "局部约束对全局密度的限制"
+  - "图密度的极值界限"
+  - "物理直觉：在不引发冲突的前提下，系统能容纳的最大连接数"
+llm_physical_mapping: "mundane physical metaphor: Packing as many wooden struts as possible to reinforce a scaffolding structure, stopping exactly one strut before it creates a rigid triangular lock that would make the structure inflexible."
+code_implementation: |
+  import sympy as sp
+  n = sp.Symbol('n', integer=True)
+  turan_edges = sp.floor(n**2 / 4)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    n = sp.Symbol('n', integer=True)
+    turan_edges = sp.floor(n**2 / 4)
+    assert turan_edges.subs(n, 4) == 4
+    assert True

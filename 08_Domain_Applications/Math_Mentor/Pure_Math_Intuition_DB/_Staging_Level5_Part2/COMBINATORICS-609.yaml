@@ -1,0 +1,23 @@
+id: "COMBINATORICS-609"
+concept_name: '数值微分 - 在物理引擎仿真与模型参数敏感度分析中作为核心估计器。 (n_609)'
+sub_topics:
+  - '计算流体动力学 (CFD) 中的偏导离散化'
+  - '参数摄动法评估模型对输入微扰的响应'
+  - '离散雅可比矩阵的构造与计算'
+  - '仿真步长对微分精度与系统稳定性的关键影响'
+llm_physical_mapping: "mundane physical metaphor: measuring the steepness of a physical slope by driving a heavy bulldozer a few inches forward and checking how much it tilts. If the step is too small, gravel ruins the reading; if too large, it misses the cliff."
+code_implementation: |
+  import sympy as sp
+  x = sp.Symbol('x')
+  f = x**3
+  df_exact = sp.diff(f, x)
+  h = sp.Symbol('h')
+  df_approx = (f.subs(x, x+h) - f.subs(x, x-h)) / (2*h)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x, h = sp.symbols('x h')
+    f = x**3
+    df_exact = sp.diff(f, x)
+    df_approx = (f.subs(x, x+h) - f.subs(x, x-h)) / (2*h)
+    assert sp.simplify(sp.limit(df_approx, h, 0) - df_exact) == 0

@@ -1,0 +1,18 @@
+id: "COMBINATORICS-611"
+concept_name: '线性方程组的数值解 - 认知跃迁：面对大模型 $4096 \times 4096$ 以上矩阵，放弃直接求逆，依靠残差迭代（如共轭梯度法）逼近真理。 (n_611)'
+sub_topics:
+  - '直接法（高斯消元）的复杂度限制'
+  - '迭代法的基本原理 x_{k+1} = Bx_k + f'
+  - '谱半径与收敛性的代数判定'
+  - '物理映射：超大规模神经网络状态更新的梯度迭代本质'
+llm_physical_mapping: "mundane physical metaphor: instead of perfectly sorting 10,000 interlocking gears at once (Gaussian elimination), you jiggle the entire machine slightly again and again, watching the misaligned teeth gradually snap into place until the grinding noise stops."
+code_implementation: |
+  import sympy as sp
+  B, x_k, f = sp.symbols('B x_k f')
+  x_next = B * x_k + f
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    B, x_k, f = sp.symbols('B x_k f')
+    x_next = B * x_k + f
+    assert x_next.subs({B: 1, x_k: 2, f: 3}) == 5

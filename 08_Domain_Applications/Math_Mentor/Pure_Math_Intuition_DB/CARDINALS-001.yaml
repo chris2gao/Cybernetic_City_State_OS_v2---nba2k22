@@ -1,27 +1,44 @@
-id: "CARDINALS-001"
-title: "Set-Theoretic Foundation of Cardinals"
-sub_topics: 
-  - "ZFC Axiom of Extensionality"
-  - "Well-Ordering Principle"
-  - "Ordinal vs Cardinal Distinction"
-llm_physical_mapping: "Maps to the Embedding layer and Byte-level BPE Tokenization, where discrete concepts are assigned foundational Euclidean dimensions. Just as tokens form the basis of the LLM's reality without Out-Of-Vocabulary elements, Cardinals form the complete basis for cardinality measurement."
-code_implementation: |
-  import torch
-  import torch.nn as nn
-
-  class CardinalFoundation(nn.Module):
-      def __init__(self, vocab_size, d_model):
-          super().__init__()
-          # Base cardinality mapping (ZFC universe elements)
-          self.embed = nn.Embedding(vocab_size, d_model)
-
-      def forward(self, x):
-          # x represents sets, output maps to a continuous cardinal dimension space
-          return self.embed(x)
-v8_sanity_audit:
-  sympy_pseudo_code: |
-    import torch
-    x = torch.tensor([1, 2, 3])
-    embed = torch.nn.Embedding(10, 16)
-    out = embed(x)
-    assert out.shape == (3, 16)
+concept_node:
+  id: "CARDINALS-001"
+  name: "基数与序数 - 集合的等势 (Equinumerosity) (n_21)"
+  domain: "Set_Theory"
+  mode: "B"
+  sub_topics:
+    - "双射函数的定义"
+    - "等势关系的自反性、对称性与传递性"
+    - "基数（势）的初步概念"
+    - "可数集与不可数集的区分"
+  intuition: "你不必真的去数清楚两堆沙子分别有多少颗。只要你能确保，每一颗红沙子都能用一根线死死绑住唯一的一颗蓝沙子，且没有任何沙子落单，那么这两堆沙子的‘绝对数量’（势）就是严格相等的。"
+  formal_definition: |-
+    对集合 A 与 B，若存在函数 f:A->B 同时为单射和满射，则称 A 与 B 等势，记作
+    A~B 或 |A|=|B|。等势是集合之间的等价关系：恒等映射给出自反性，双射的逆映射
+    给出对称性，双射的复合给出传递性。基数抽象掉元素内容和排列，只保留这个等势类。
+    集合至多可数是指它为有限集或可单射到自然数集；可数无限集与自然数集等势，不能
+    与自然数集等势的集合称为不可数集。
+  prerequisite_nodes:
+    - "n_15"
+    - "n_16"
+  llm_physical_mapping: |-
+    对有限张量，若两个索引空间之间存在可逆且无碰撞的重索引规则，则每个源位置恰好
+    对应一个目标位置，可作为“双射决定等势”的架构映射。reshape 只有在元素总数相等
+    时才可能给出这种有限索引双射；编码器若真正可逆，也体现了同样的一一对应结构。
+  mapping_boundary: |-
+    张量 numel 和 reshape 只处理有限索引集，不能验证无限集合的等势、可数性或不可数性；
+    相同元素数也不会自动提供指定集合之间的双射证明。神经表示的可逆性还可能受精度、
+    连续性和信息损失影响，因此这里只映射双射结构，不把内存操作当作基数理论证明。
+  code_implementation: |-
+    # Finite special-case anchor: explicitly verify a proposed bijection and inverse.
+    source = {"a", "b", "c"}
+    target = {1, 2, 3}
+    mapping = {"a": 2, "b": 3, "c": 1}
+    inverse = {value: key for key, value in mapping.items()}
+    finite_bijection = set(mapping) == source and set(mapping.values()) == target
+    finite_bijection = finite_bijection and len(inverse) == len(mapping)
+  v9_semantic_audit:
+    status: "review_required"
+    review_criteria:
+      - "Equinumerosity is defined by existence of a bijection, not by counting or tensor shape alone."
+      - "Reflexivity, symmetry, and transitivity are tied respectively to identity, inverse, and composition."
+      - "The distinction among finite, countably infinite, and uncountable sets is mathematically accurate."
+      - "The tensor mapping is explicitly restricted to finite index sets and does not claim to decide infinite cardinality."
+      - "The code is identified as a finite special-case anchor rather than a general proof."

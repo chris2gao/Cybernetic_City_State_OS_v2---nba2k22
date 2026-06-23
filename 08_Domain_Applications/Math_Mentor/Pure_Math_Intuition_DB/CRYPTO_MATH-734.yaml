@@ -1,0 +1,44 @@
+id: "CRYPTO_MATH-734"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
+concept_name: "数论应用（RSA/ElGamal） - 发生学溯源：利用大素数相乘极其容易、但在传统算力下因式分解极难的“计算不对称性”。 (n_734)"
+sub_topics:
+  - "欧拉定理与费马小定理的工程转化"
+  - "公钥与私钥的代数对偶"
+  - "大整数分解的计算复杂度边界"
+  - "历史上第一个实用公钥加密体系的诞生"
+llm_physical_mapping: "factory workshop-level mechanical metaphor: a one-way mechanical ratchet gear, where turning it forward (multiplying primes) is a smooth fluid motion, but reversing it (factoring) requires disassembling the entire mechanical locking mechanism pin by pin."
+code_implementation: |
+  import torch
+  import numpy as np
+  
+  def simulate_one_way_mechanical_lock(p, q):
+      # Prime generation simulated as heavy mechanical gears meshing
+      p_tensor = torch.tensor([p], dtype=torch.int64)
+      q_tensor = torch.tensor([q], dtype=torch.int64)
+      # Forward mechanism: effortless multiplication
+      lock_module = p_tensor * q_tensor
+      return lock_module
+  
+  result = simulate_one_way_mechanical_lock(17, 19)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    # Assert forward multiplication vs factorization asymmetry
+    p, q = 17, 19
+    n = p * q
+    assert n == 323
+    assert list(sp.factorint(n).keys()) == [17, 19]

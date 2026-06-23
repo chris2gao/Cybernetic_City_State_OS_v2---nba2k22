@@ -1,0 +1,26 @@
+id: "CRYPTO_MATH-748"
+concept_name: "随机预言机模型 - 哲学骨架：将理想哈希函数抽象为随机应答源。作为评估密码系统在极端环境下安全边界的理论蓝图。 (n_748)"
+sub_topics:
+  - "理想安全性假设与现实实现的断层分析"
+  - "随机预言机下的安全性约化"
+  - "评估哈希函数在复杂协议中的理想表现"
+  - "认知扩展：对“完美不可预测性”的数学模拟"
+llm_physical_mapping: "An indestructible, opaque dispensing machine in the center of a factory. Whenever a worker inserts a specifically shaped metal blank, the machine checks its internal ledger. If it's a new shape, it randomly forges a completely erratic gear and spits it out, recording the pairing. If the identical blank is inserted again, it produces the exact same gear. No worker can ever predict the output of a new blank, ensuring a perfectly chaotic but consistent mechanical mapping."
+code_implementation: |
+  import torch
+
+  def random_oracle(input_tensor, oracle_memory):
+      input_tuple = tuple(input_tensor.tolist())
+      if input_tuple not in oracle_memory:
+          oracle_memory[input_tuple] = torch.randn(1).item()
+      return oracle_memory[input_tuple]
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    memory = {}
+    def query(x):
+        if x not in memory:
+            memory[x] = x**2 + 7
+        return memory[x]
+    assert query(5) == query(5)
+    assert query(3) != query(5)

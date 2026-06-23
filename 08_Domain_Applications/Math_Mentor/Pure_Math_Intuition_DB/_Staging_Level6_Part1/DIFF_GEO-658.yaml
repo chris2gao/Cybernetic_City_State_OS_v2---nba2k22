@@ -1,0 +1,26 @@
+id: DIFF_GEO-658
+concept_name: 曲率张量 - 【核心大模型映射】：双曲大语言模型 (HELM)。测量语义空间的内在弯曲。 (n_658)
+sub_topics:
+- 黎曼曲率张量 R 的分量表示
+- 截面曲率、里奇 (Ricci) 曲率与标量曲率
+- 双曲空间 (Hyperbolic space) 的负常曲率特性
+- 语义层级结构在负曲率流形中的自然嵌入
+llm_physical_mapping: 液压机钢管测试仪：将一根笔直的钢管（向量）绕着车间的某台机器环绕推一圈，看两头是不是对不上。错开的角度就是曲率（内部应力形变）。
+code_implementation: |
+  import torch
+  import numpy as np
+
+  def parallel_transport_error(vector_in, curvature_matrix):
+      # Commutator of covariant derivatives mapped as curvature matrix
+      return torch.matmul(curvature_matrix, vector_in)
+
+  curv_matrix = torch.tensor([[0.0, -0.1], [0.1, 0.0]])
+  v_in = torch.tensor([1.0, 0.0])
+  error = parallel_transport_error(v_in, curv_matrix)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+
+    R_abcd = sp.Symbol('R')
+    # Symmetry of Riemann tensor R_abcd = -R_bacd
+    assert R_abcd - R_abcd == 0

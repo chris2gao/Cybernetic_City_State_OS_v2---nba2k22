@@ -1,4 +1,19 @@
 id: "PROB_STAT-357"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
 concept_name: "大数定律 - 弱大数定律与强大数定律的直觉区分 (n_357)"
 sub_topics:
   - "依概率收敛 (Convergence in Probability)"
@@ -8,11 +23,11 @@ sub_topics:
 llm_physical_mapping: "bullet hole maps where weak law means occasional scattered shots happen but vanish in probability, while strong law means individual sequences of shots strictly form a solid path towards the center."
 code_implementation: |
   import sympy as sp
-  n, epsilon = sp.symbols('n epsilon')
-  X_n = sp.Function('X_n')(n)
-  X = sp.Symbol('X')
-  # Convergence in probability
-  limit_prob = sp.Limit(sp.Probability(sp.Abs(X_n - X) > epsilon), n, sp.oo)
+  n = sp.Symbol('n', integer=True, positive=True)
+  # Toy model for convergence in probability:
+  # the probability of a visible deviation shrinks like 1/n.
+  prob_deviation = 1 / n
+  limit_prob = sp.limit(prob_deviation, n, sp.oo)
 v8_sanity_audit:
   sympy_pseudo_code: |
     import sympy as sp

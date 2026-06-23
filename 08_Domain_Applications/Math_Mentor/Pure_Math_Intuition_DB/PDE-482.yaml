@@ -1,0 +1,48 @@
+id: "PDE-482"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+name: "经典方程（热/波/Laplace） - 拉普拉斯方程 (Laplace Equation)：描述空间达到绝对平衡的稳态场 (n_482)"
+sub_topics:
+  - "拉普拉斯算子 Δu = 0 与调和函数"
+  - "物理意义：势能场、静电场与重力场的稳态分布"
+  - "平均值性质与最大模原理"
+  - "作为热方程达到稳态（时间趋于无穷）的极限形式"
+llm_physical_mapping: "一张边缘被分别加热到不同固定温度的金属薄板，经过漫长的时间后，板上各点的温度不再随时间变化，达到稳态的热平衡分布。此时每一点的温度恰好等于其周围邻居的平均温度。"
+code_implementation: |
+  import torch
+
+  def laplace_equation_jacobi(u, steps=100):
+      mask = torch.ones_like(u)
+      mask[0, :] = 0; mask[-1, :] = 0; mask[:, 0] = 0; mask[:, -1] = 0
+      for _ in range(steps):
+          u_new = 0.25 * (
+              torch.roll(u, shifts=1, dims=0) + 
+              torch.roll(u, shifts=-1, dims=0) + 
+              torch.roll(u, shifts=1, dims=1) + 
+              torch.roll(u, shifts=-1, dims=1)
+          )
+          u = torch.where(mask == 1, u_new, u)
+      return u
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+
+    x, y = sp.symbols('x y', real=True)
+    u = sp.log(x**2 + y**2)
+    u_xx = sp.diff(u, x, x)
+    u_yy = sp.diff(u, y, y)
+    laplacian = sp.simplify(u_xx + u_yy)
+    assert laplacian == 0, 'Laplace equation not satisfied by log(r)'

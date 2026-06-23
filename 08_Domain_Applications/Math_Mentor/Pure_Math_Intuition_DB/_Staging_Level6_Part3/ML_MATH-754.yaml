@@ -1,0 +1,32 @@
+id: "ML_MATH-754"
+concept_name: "概率图模型 - 为理解复杂系统的概率依赖与因果推理提供统一图论语言。 (n_754)"
+sub_topics:
+  - "变量消除算法与信念传播 (Sum-Product)"
+  - "隐马尔可夫模型 (HMM) 的状态拓扑"
+  - "概率推理中的计算复杂度与图宽度关联"
+  - "在处理大模型长程上下文依赖中的图形化抽象"
+llm_physical_mapping: "An industrial sorting grid where conveyor belts pass probabilistic weights (beliefs). Nodes act as mechanical sum-and-product gearboxes that combine incoming weight signals and pass the refined tolerances downstream, performing precise localized assembly without re-evaluating the whole factory floor."
+code_implementation: |
+  import numpy as np
+  
+  # Belief propagation message passing
+  def compute_message(prior, transition_matrix):
+      # Sum-Product over discrete states
+      return np.dot(prior, transition_matrix)
+      
+  state_t1 = np.array([0.7, 0.3])
+  transition = np.array([[0.8, 0.2], [0.4, 0.6]])
+  
+  # Passing belief to the next node
+  msg_t2 = compute_message(state_t1, transition)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    s1, s2, t11, t12, t21, t22 = sp.symbols('s1 s2 t11 t12 t21 t22')
+    state = sp.Matrix([s1, s2])
+    trans = sp.Matrix([[t11, t12], [t21, t22]])
+    
+    # Message passing sum-product
+    msg = state.T * trans
+    assert msg[0, 0] == s1*t11 + s2*t21

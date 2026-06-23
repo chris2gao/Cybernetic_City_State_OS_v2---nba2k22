@@ -1,0 +1,56 @@
+version: "9.1"
+node_id: ALG_GEO-635
+node_name: "Zariski拓扑 - 【大模型硬核映射】：解释大模型为何能在极小邻域重合后实现广阔泛化——因为代数多项式在 Zariski 拓扑下具备全局一致性。 (n_635)"
+mode: A
+
+llm_physical_mapping: >
+  Rigid Mechanical Linkage. In a rigid mechanical system composed of gears and levers, constraining a small number of joints forces the entire structure into a deterministic configuration. The physical rigidity maps to the algebraic property where local conditions completely dictate the global state.
+
+sub_topics:
+  - 局部解析性决定全局结构的代数版本
+  - 模型的过拟合与 Zariski 闭集的维数坍缩
+  - 泛化能力作为代数簇在全空间的连续延拓
+  - 参数分布的刚性与少样本预测的逻辑一致性
+
+code_implementation: |-
+  import torch
+  
+  def test_zariski_rigidity():
+      # Simulate algebraic rigidity: a low degree polynomial is fixed by few points
+      x = torch.linspace(-5, 5, 100)
+      # Ground truth: y = 2x^2 - 3x + 1
+      true_coeffs = torch.tensor([2.0, -3.0, 1.0])
+      
+      # Sample exactly 3 points (local neighborhood)
+      x_sample = torch.tensor([-1.0, 0.0, 1.0])
+      y_sample = 2 * x_sample**2 - 3 * x_sample + 1
+      
+      # Fit polynomial to these 3 points (Vandermonde matrix)
+      V = torch.vander(x_sample, N=3)
+      pred_coeffs = torch.linalg.solve(V, y_sample)
+      
+      # The local fit generalizes perfectly to the global domain
+      global_pred = pred_coeffs[0] * x**2 + pred_coeffs[1] * x + pred_coeffs[2]
+      global_true = 2 * x**2 - 3 * x + 1
+      
+      mse = torch.nn.functional.mse_loss(global_pred, global_true)
+      print(f"Global generalization error: {mse.item()}")
+      return mse
+
+v8_sanity_audit:
+  sympy_pseudo_code: |-
+    import sympy as sp
+    
+    x = sp.Symbol('x')
+    p = sp.Function('p')(x)
+    q = sp.Function('q')(x)
+    # Two polynomials of degree 2 that agree on 3 points must be identical everywhere
+    a1, b1, c1 = sp.symbols('a1 b1 c1')
+    a2, b2, c2 = sp.symbols('a2 b2 c2')
+    poly1 = a1*x**2 + b1*x + c1
+    poly2 = a2*x**2 + b2*x + c2
+    eqs = [poly1.subs(x, i) - poly2.subs(x, i) for i in [0, 1, 2]]
+    sols = sp.solve(eqs, (a1, b1, c1))
+    # Verify coefficients match
+    diff = sp.simplify((poly1.subs(sols) - poly2).subs(x, 5))
+    assert diff == 0, "Zariski rigidity failed: polynomials do not match globally"

@@ -1,0 +1,21 @@
+id: "ALG_TOPOLOGY-680"
+concept_name: "CW复形 - 拓扑原子：通过 Builder Pattern 逐步粘合 0 维到 n 维细胞构建高维对象，是构建绝大多数物理意义空间的“乐高积木”。 (n_680)"
+sub_topics:
+  - "细胞 (Cells) 的粘合映射 (Attaching maps)"
+  - "CW 空间的归纳构造过程"
+  - "复形的有限性与弱拓扑性质"
+  - "物理模拟：从像素点到几何体的高效层级构建"
+llm_physical_mapping: "mundane physical metaphor: a welding factory floor where physical structures are built layer by layer. First, metal joints (0-cells) are laid out, then rods (1-cells) are welded between them, followed by metal sheets (2-cells) covering the frames, incrementally constructing complex mechanical chassis."
+code_implementation: |
+  import torch
+  
+  vertices = torch.tensor([[0.0, 0.0], [1.0, 0.0]])
+  edges = torch.tensor([[0, 1]])
+  faces = torch.tensor([[0, 1, 2]])
+  print(f"Vertices: {len(vertices)}, Edges: {len(edges)}")
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    dim0, dim1 = sp.symbols('D0 D1')
+    cw_complex = dim0 + dim1
+    assert sp.simplify(cw_complex - dim1) == dim0

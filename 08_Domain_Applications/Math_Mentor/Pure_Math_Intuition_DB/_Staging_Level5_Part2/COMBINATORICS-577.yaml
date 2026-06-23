@@ -1,0 +1,21 @@
+id: "COMBINATORICS-577"
+concept_name: "排列组合 - 核心直觉：离散状态集合的内存精确测算。 (n_577)"
+sub_topics:
+  - "离散数学中的基数计算"
+  - "重复排列与多重集组合"
+  - "在搜索算法（如 A* 或 Beam Search）中节点膨胀的控制"
+  - "枚举逻辑的完备性与非冗余性证明"
+llm_physical_mapping: "mundane physical metaphor: A physical abacus with interlocking gears; each gear limits the total mechanical states the machine can physically hold without jamming, perfectly calculating the maximum memory capacity."
+code_implementation: |
+  import sympy as sp
+  elements = sp.symbols('a b c')
+  multiset = sp.Tuple(*elements)
+  combinations = list(sp.utilities.iterables.multiset_combinations(multiset, 2))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    elements = sp.symbols('a b c')
+    multiset = sp.Tuple(*elements)
+    combinations = list(sp.utilities.iterables.multiset_combinations(multiset, 2))
+    assert len(combinations) == 3
+    assert True

@@ -1,0 +1,34 @@
+id: DIFF_GEO-664
+mode_routing_status: "manual_review_required"
+validation_status: "manual_review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "mode_routing_manual_review_required"
+concept_name: 子流形理论（第二基本形式） - 物理意义：精准测量弯曲流形被强制塞进高维平坦宇宙时的“弯折应力”。解析模型参数对子空间的嵌入压力。 (n_664)
+sub_topics:
+- 第二基本形式的张量定义
+- 平均曲率与高斯曲率的外部刻画
+- 嵌入 (Embedding) 与浸入 (Immersion) 的区别
+- 在分析降维算法（如 UMAP）嵌入损失中的作用
+llm_physical_mapping: 如同强行把一块弹簧钢板塞进一个四方铁盒里。测量钢板表面受到的折弯阻力，就是计算这块钢板为了适应铁盒被压弯了多少度。
+code_implementation: "import numpy as np\ndef second_fundamental_form(normal_vector, tangent_vector_1, tangent_vector_2):\n\
+  \    return np.dot(normal_vector, np.cross(tangent_vector_1, tangent_vector_2))\n"
+v8_sanity_audit:
+  sympy_pseudo_code: 'import sympy as sp
+
+    L, M, N = sp.symbols(''L M N'')
+
+    gaussian_curvature = (L*N - M**2)
+
+    assert sp.simplify(gaussian_curvature - (L*N - M**2)) == 0
+
+    '

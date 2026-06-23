@@ -1,5 +1,20 @@
 concept_node:
   id: "GEOMETRY-039"
+  mode: "A"
+  mode_routing_status: "inferred_high_confidence"
+  validation_status: "review_required"
+  bridge_readiness_status: "manual_review_required"
+  formal_definition_status: "missing"
+  prerequisites_status: "missing"
+  mapping_boundary_status: "missing"
+  migration_review:
+    missing_reason:
+      - "formal_definition_absent"
+      - "prerequisite_nodes_absent"
+      - "mapping_boundary_absent"
+    recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+    warnings:
+      - "shape_only_or_shallow_audit_risk"
   name: "立体几何基础（棱柱/棱锥/球体），尺规作图基础 - 经典三维图形（棱柱、棱锥、球体等）的表面积与体积直觉（展开图与截面图） (n_159)"
   sub_topics:
     - "常见几何体（圆柱、棱柱）的表面展开图"

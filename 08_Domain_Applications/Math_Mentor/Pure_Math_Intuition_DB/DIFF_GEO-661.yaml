@@ -1,0 +1,44 @@
+id: DIFF_GEO-661
+mode_routing_status: "manual_review_required"
+validation_status: "manual_review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "mode_routing_manual_review_required"
+concept_name: 联络 - 认知跃迁：提供协变导数，解决向量在弯曲表面的平行移动。它是所有流形上执行梯度下降算法的绝对方向指针。 (n_661)
+sub_topics:
+- 仿射联络与列维-奇维塔 (Levi-Civita) 联络
+- 向量场的平行移动方程
+- 联络作为流形上微分结构的算子表示
+- 物理直觉：在弯曲地表进行“不转向”长距离行进的指南针
+llm_physical_mapping: 齿轮转向同步器：当你把一根天线沿着一个球形铁罐子表面移动时，联络就是那个齿轮组，告诉你每移动一寸，天线的根部需要微调旋转多少度，才能保证天线始终是指向“前方”。
+code_implementation: |
+  import torch
+  import numpy as np
+
+  def covariant_derivative(vector_field, velocity, christoffel_symbols):
+      # D_v W = dW(v) + Gamma(v, W)
+      directional_deriv = torch.zeros_like(vector_field)
+      connection_term = torch.einsum('ijk,j,k->i', christoffel_symbols, velocity, vector_field)
+      return directional_deriv + connection_term
+
+  v_f = torch.tensor([0.0, 1.0])
+  vel = torch.tensor([1.0, 0.0])
+  Gamma = torch.zeros(2, 2, 2)
+  cov_dir = covariant_derivative(v_f, vel, Gamma)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+
+    Gamma, v, w = sp.symbols('Gamma v w')
+    # simplified connection term
+    conn = Gamma * v * w
+    assert conn.subs({Gamma: 0}) == 0

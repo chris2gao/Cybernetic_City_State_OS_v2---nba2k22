@@ -1,0 +1,37 @@
+id: "INFO_THEORY-701"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "Shannon熵 - 【大模型硬核逻辑】：大语言模型预训练本质上是最小化交叉熵损失。由于真实语言的熵是常数，最小化交叉熵在数学上绝对等效于最小化 KL 散度，揭示了“语言建模即数据压缩”的真理。 (n_701)"
+sub_topics:
+  - "交叉熵与自信息熵的代数关系"
+  - "KL 散度作为分布偏差的测度"
+  - "压缩比与模型预测能力的正相关性"
+  - "训练过程作为寻找自然语言最优编码器的过程"
+llm_physical_mapping: "mundane physical metaphor: hydraulic pressure regulators, lossy compression valves, gauge calibration dials, friction reducers."
+code_implementation: |
+  import torch
+  import torch.nn.functional as F
+  
+  p = torch.tensor([0.1, 0.9])
+  q = torch.tensor([0.2, 0.8])
+  kl_div = F.kl_div(q.log(), p, reduction='sum')
+  assert kl_div >= 0
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    p, q = sp.symbols('p q', positive=True)
+    kl_div = p * sp.log(p/q)
+    assert sp.simplify(kl_div.subs({p: 0.5, q: 0.5})) == 0

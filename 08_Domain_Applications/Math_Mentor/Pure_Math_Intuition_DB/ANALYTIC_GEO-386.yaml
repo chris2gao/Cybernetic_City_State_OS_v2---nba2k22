@@ -1,4 +1,19 @@
 id: "ANALYTIC_GEO-386"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
 concept_name: "坐标系变换（旋转/平移） - 核心大模型映射：旋转位置编码 (RoPE) 的二维旋转矩阵推导及其在高维空间的泛化 (n_386)"
 sub_topics:
   - "二维旋转变换在复数域的表示 e^{iθ}"

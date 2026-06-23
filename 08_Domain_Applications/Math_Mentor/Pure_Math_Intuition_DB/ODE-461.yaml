@@ -1,0 +1,37 @@
+id: "ODE-461"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "奇异点与奇异解 - 研究方程导数无穷或无定义的“黑洞”区域（正则/不规则奇异点） (n_461)"
+sub_topics:
+  - "奇异点的定义与判别方法"
+  - "正则奇异点与弗罗贝尼乌斯方法适用性"
+  - "不规则奇异点附近的解析困难"
+  - "物理隐喻：物理规律失效或剧变临界点"
+llm_physical_mapping: "mundane physical metaphor: Like a physical gear system that suddenly jams because two gear teeth lock against each other, causing the mechanical stress (derivative) to spike to infinity. The standard predictable turning equations fail at this precise locking point, breaking the smooth mechanical transmission."
+code_implementation: |
+  import sympy as sp
+  x = sp.Symbol('x')
+  y = sp.Function('y')(x)
+  # Equation with a singularity at x=0
+  eq = sp.Eq(x**2 * y.diff(x, 2) + x * y.diff(x) + (x**2 - 1) * y, 0)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x = sp.Symbol('x')
+    eq = x**2 * sp.Function('y')(x).diff(x, 2)
+    # Check coefficient of highest derivative
+    coeff = eq.coeff(sp.Function('y')(x).diff(x, 2))
+    assert coeff.subs(x, 0) == 0

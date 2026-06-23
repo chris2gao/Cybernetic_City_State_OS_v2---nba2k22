@@ -1,0 +1,33 @@
+id: "COMBINATORICS-601"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "浮点数与误差 - 消除奇迹步骤：理解“大数吃小数”与相近数相减导致的绝望精度抵消（Catastrophic Cancellation）。 (n_601)"
+sub_topics:
+  - "舍入误差 (Rounding error) 的代数累积"
+  - "相对误差与绝对误差的判定边界"
+  - "精度丧失的临界条件分析"
+  - "物理直觉：数字化过程对连续世界的残忍切割"
+llm_physical_mapping: "mundane physical metaphor: 像是在粗糙的重型地磅上同时放上一辆卡车和一颗螺丝钉，地磅机械齿轮的物理摩擦直接把螺丝钉的重量死死卡没了。"
+code_implementation: |
+  import sympy as sp
+  L, S = sp.symbols('L S')
+  result = sp.Piecewise((L, L > 1000 * S), (L + S, True))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    L, S = sp.symbols('L S')
+    result = sp.Piecewise((L, L > 1000 * S), (L + S, True))
+    assert result.subs({L: 10000, S: 1}) == 10000

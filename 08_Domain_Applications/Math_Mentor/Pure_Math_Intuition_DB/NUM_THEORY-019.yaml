@@ -1,5 +1,20 @@
 concept_node:
   id: "NUM_THEORY-019"
+  mode: "A"
+  mode_routing_status: "inferred_high_confidence"
+  validation_status: "review_required"
+  bridge_readiness_status: "manual_review_required"
+  formal_definition_status: "missing"
+  prerequisites_status: "missing"
+  mapping_boundary_status: "missing"
+  migration_review:
+    missing_reason:
+      - "formal_definition_absent"
+      - "prerequisite_nodes_absent"
+      - "mapping_boundary_absent"
+    recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+    warnings:
+      - "shape_only_or_shallow_audit_risk"
   symbol: "\\gcd(a, b) = ax + by"
   name: "欧几里得算法（辗转相除法） - 利用欧几里得算法反向推导裴蜀定理 (Bézout's identity)：存在整数 x, y 使得 ax + by = gcd(a,b) (n_213)"
   domain: "Number Theory"

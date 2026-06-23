@@ -1,0 +1,40 @@
+id: ALG_TOPOLOGY-670
+mode: "B"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "semantic_audit_not_machine_validated"
+    - "mode_b_legacy_v8_audit_not_authoritative"
+concept_name: 基本群 - 代数化：将所有等价环路打包成群，作为探测空间连通性的初级雷达。 (n_670)
+sub_topics:
+- 群运算作为环路的拼接
+- 映射诱导的同态性质
+- 基本群在拓扑空间分类中的第一判据作用
+- 在知识图谱闭环逻辑验证中的应用
+llm_physical_mapping: 如同把工厂里所有用来捆绑货物的不同路线的绳子分类，绕过同一根承重柱的所有绳子算作同一种捆法，然后把这些绳子的打结方式编成一本操作手册。
+code_implementation: "def loop_concatenation(loop1, loop2):\n    return loop1 + loop2\n"
+legacy_v8_sanity_audit:
+  sympy_pseudo_code: 'import sympy as sp
+
+    L1, L2 = sp.symbols(''L1 L2'')
+
+    combined = L1 + L2
+
+    assert sp.simplify(combined - (L1 + L2)) == 0
+
+    '
+v9_semantic_audit:
+  status: "review_required"
+  warnings:
+    - "semantic_audit_not_machine_validated"
+  migration_note: "Legacy semantic content requires domain review; no machine-proof claim is made."

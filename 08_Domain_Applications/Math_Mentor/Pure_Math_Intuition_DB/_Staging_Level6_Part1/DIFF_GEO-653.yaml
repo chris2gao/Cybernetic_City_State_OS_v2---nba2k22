@@ -1,0 +1,27 @@
+id: DIFF_GEO-653
+concept_name: 光滑流形 - 发生学溯源：流形是局部平坦切片（图册 Charts）无缝粘合的拓扑空间。解构高维非线性表征的数据结构本质。 (n_653)
+sub_topics:
+- 图册 (Atlas) 与转移函数 (Transition maps) 的相容性
+- 流形作为局部欧氏空间的拓扑性质
+- 维数的一致性保障
+- 物理直觉：用无限张局部平面地图拼凑出弯曲的地球面
+llm_physical_mapping: 无缝拼接的传送带履带：每一块履带片（图册）都是平直的铁板，但通过铆钉（转移函数）精确拼接后，整体形成一个可以任意弯曲转动的闭环传送带。
+code_implementation: |
+  import torch
+  import numpy as np
+
+  def transition_map_patch(local_x):
+      # Overlapping region coordinate transformation
+      return torch.sin(local_x) + local_x
+
+  patch_A = torch.linspace(0, 1, 10)
+  patch_B = transition_map_patch(patch_A)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+
+    u, v = sp.symbols('u v')
+    # coordinate transition from u to v
+    v_expr = sp.sin(u) + u
+    dv_du = sp.diff(v_expr, u)
+    assert dv_du.subs(u, 0) == 2

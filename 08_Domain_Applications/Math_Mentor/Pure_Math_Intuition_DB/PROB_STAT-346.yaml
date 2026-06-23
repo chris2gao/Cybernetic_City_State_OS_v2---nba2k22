@@ -1,4 +1,19 @@
 id: "PROB_STAT-346"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
 concept_name: "条件概率 - 事件在已知部分信息下的概率坍缩 (n_346)"
 sub_topics:
   - "信息注入对样本空间的收缩效应"
@@ -8,14 +23,12 @@ sub_topics:
 llm_physical_mapping: "mundane physical metaphor: a bullet hole map on a target. Finding condition A given B is like zooming in on a specific region B of the target and calculating the proportion of bullet holes in sub-region A relative to only region B."
 code_implementation: |
   import sympy as sp
-  from sympy.stats import Die, P, Given
-  
-  # Sample space: rolling a die
-  X = Die('X', 6)
-  
-  # Event A: rolling a 2
-  # Event B: rolling an even number
-  cond_prob = P(sp.Eq(X, 2), sp.Eq(X % 2, 0))
+
+  # Sample space: rolling a fair die.
+  # A = rolling 2, B = rolling an even number.
+  prob_A_and_B = sp.Rational(1, 6)
+  prob_B = sp.Rational(3, 6)
+  cond_prob = prob_A_and_B / prob_B
 v8_sanity_audit:
   sympy_pseudo_code: |
     import sympy as sp

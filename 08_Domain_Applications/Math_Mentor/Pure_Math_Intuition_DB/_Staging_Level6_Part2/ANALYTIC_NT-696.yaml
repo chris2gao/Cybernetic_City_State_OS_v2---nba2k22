@@ -1,0 +1,17 @@
+id: "ANALYTIC_NT-696"
+concept_name: "零点密度定理 - 算法容错：在黎曼猜想尚未攻克时，用统计手段框定错误零点（能量黑洞）的密度。对应算法架构师在无法根除误差时建立的 PAC 稳健性界限。 (n_696)"
+sub_topics:
+  - "临界带内非平凡零点的计数估计"
+  - "零点分布对误差项上界的控制作用"
+  - "统计分析在未解决确定性问题时的理论补偿"
+  - "模型在面对概率性偏差时的安全搜索空间"
+llm_physical_mapping: "mundane physical metaphor: quality control statistical sampling limits on a production line, factory boiler pressure safety valves venting excess steam, acceptable tolerance boundaries for heavy hydraulic presses"
+code_implementation: |
+  import numpy as np
+  def density_bound(T):
+      return T * np.log(T)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    t = sp.Symbol('t')
+    assert sp.simplify(sp.diff(t**2, t)) == 2*t

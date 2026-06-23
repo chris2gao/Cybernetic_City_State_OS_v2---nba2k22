@@ -1,0 +1,36 @@
+id: "ODE-460"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "边值问题（Sturm-Liouville理论） - 量子力学中计算粒子在势阱中稳定波函数的数学底座 (n_460)"
+sub_topics:
+  - "薛定谔方程作为 S-L 问题的特例"
+  - "本征能量（特征值）的量子化"
+  - "稳定能态波函数的空间分布"
+  - "势阱宽度与能级间隔的代数关系"
+llm_physical_mapping: "mundane physical metaphor: Like acoustic resonances inside a rigid steel pipe closed at both ends. Sound waves bouncing back and forth interfere constructively only at specific, discrete resonant frequencies. Frequencies that don't match these discrete energy levels cancel out and disappear, leaving only the stable, quantized acoustic modes."
+code_implementation: |
+  import sympy as sp
+  x, E, V0 = sp.symbols('x E V_0')
+  psi = sp.Function('psi')(x)
+  # 1D Schrödinger equation in a potential well
+  eq = sp.Eq(-psi.diff(x, 2) + V0*psi, E*psi)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x, E = sp.symbols('x E')
+    psi = sp.Function('psi')(x)
+    eq = sp.Eq(-psi.diff(x, 2), E*psi)
+    assert eq.lhs.has(psi)

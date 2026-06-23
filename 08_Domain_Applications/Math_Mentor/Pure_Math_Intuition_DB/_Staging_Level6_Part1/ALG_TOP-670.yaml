@@ -1,0 +1,56 @@
+version: "9.1"
+node_id: ALG_TOP-670
+node_name: "基本群 - 代数化：将所有等价环路打包成群，作为探测空间连通性的初级雷达。 (n_670)"
+mode: A
+
+llm_physical_mapping: >
+  Lassoing a Pole. Throwing a lasso loop across a flat plain means you can freely pull it back to yourself. If there's a pole sticking out of the ground, and your lasso lands around it, the rope gets caught. Counting how many times the lasso wraps the pole corresponds to the fundamental group classifying the distinct loops.
+
+sub_topics:
+  - 群运算作为环路的拼接
+  - 映射诱导的同态性质
+  - 基本群在拓扑空间分类中的第一判据作用
+  - 在知识图谱闭环逻辑验证中的应用
+
+code_implementation: |-
+  import torch
+  import numpy as np
+  
+  def fundamental_group_winding():
+      # Compute winding number of a path around the origin
+      # Path 1: A circle around the origin
+      t = torch.linspace(0, 2 * np.pi, 100)
+      x = torch.cos(t)
+      y = torch.sin(t)
+      
+      # Compute angles and sum differences
+      angles = torch.atan2(y, x)
+      diffs = angles[1:] - angles[:-1]
+      
+      # Correct for branch cuts
+      diffs = torch.where(diffs > np.pi, diffs - 2 * np.pi, diffs)
+      diffs = torch.where(diffs < -np.pi, diffs + 2 * np.pi, diffs)
+      
+      total_wind = torch.sum(diffs) / (2 * np.pi)
+      print(f"Winding number: {total_wind.item():.2f}")
+      return torch.round(total_wind)
+
+v8_sanity_audit:
+  sympy_pseudo_code: |-
+    import sympy as sp
+    
+    t = sp.Symbol('t', real=True)
+    # Path of a unit circle
+    x = sp.cos(t)
+    y = sp.sin(t)
+    
+    # Form: (x dy - y dx) / (x^2 + y^2)
+    dx = sp.diff(x, t)
+    dy = sp.diff(y, t)
+    integrand = (x * dy - y * dx) / (x**2 + y**2)
+    
+    # Integrate from 0 to 2*pi
+    winding_number_val = sp.integrate(integrand, (t, 0, 2*sp.pi))
+    
+    # Winding number must be exactly 2*pi (which normalizes to 1)
+    assert sp.simplify(winding_number_val - 2*sp.pi) == 0, "Fundamental group winding fails"

@@ -1,0 +1,36 @@
+id: "ODE-463"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "Frobenius幂级数解法 - 终极救援工具：在奇异点（黑洞）边缘依然能够利用级数预测系统行为的方法 (n_463)"
+sub_topics:
+  - "弗罗贝尼乌斯级数的形式预设"
+  - "指标方程 (Indicial Equation) 的求解"
+  - "递推关系在奇异点附近的修正"
+  - "特殊函数（如 Bessel, Legendre）的统一来源"
+llm_physical_mapping: "mundane physical metaphor: Like a surveyor carefully walking a tightening spiral staircase near the center pillar. When standard Cartesian coordinate measuring fails because the curvature becomes too tight, the surveyor switches to radial tape measures (power series with fractional exponents) to safely map the area right up to the pillar."
+code_implementation: |
+  import sympy as sp
+  x, r = sp.symbols('x r')
+  n = sp.Symbol('n', integer=True)
+  a = sp.Function('a')(n)
+  # Frobenius series ansatz
+  y_approx = x**r * sum([a*x**i for i in range(3)])
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x, r = sp.symbols('x r')
+    term = x**(r + 2)
+    assert sp.simplify(term.diff(x) - (r + 2) * x**(r + 1)) == 0

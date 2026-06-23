@@ -1,0 +1,36 @@
+id: "ML_MATH-759"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "统计学习理论（VC维/PAC学习） - 为大模型缩放定律（Scaling Law）提供绝对数学下界。 (n_759)"
+sub_topics:
+  - "错误率随参数量与数据量的幂律衰减"
+  - "模型容量与泛化误差的界限分析"
+  - "训练资源投入的边际增益预测"
+  - "理论界限对模型规模扩展的指导意义"
+llm_physical_mapping: "factory workshop-level mechanical metaphor: heavy industrial conveyor belts continuously feeding raw material scaling up factory output, governed by exact thermodynamic scaling laws limiting error rates."
+code_implementation: |
+  import numpy as np
+  
+  def predict_scaling_loss(compute_c, c_min, power_alpha):
+      # Scaling law computing expected loss like mechanical friction reduction
+      return (compute_c / c_min) ** (-power_alpha)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    c_sym, alpha_sym = sp.symbols('C alpha', positive=True)
+    loss_scaling = c_sym**(-alpha_sym)
+    # Larger compute means less error
+    assert sp.limit(loss_scaling, c_sym, sp.oo) == 0

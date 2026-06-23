@@ -1,5 +1,20 @@
 concept_node:
   id: "GEOMETRY-022"
+  mode: "A"
+  mode_routing_status: "inferred_high_confidence"
+  validation_status: "review_required"
+  bridge_readiness_status: "manual_review_required"
+  formal_definition_status: "missing"
+  prerequisites_status: "missing"
+  mapping_boundary_status: "missing"
+  migration_review:
+    missing_reason:
+      - "formal_definition_absent"
+      - "prerequisite_nodes_absent"
+      - "mapping_boundary_absent"
+    recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+    warnings:
+      - "shape_only_or_shallow_audit_risk"
   title: "向量初步 - 发生学溯源：为了同时描述物理力的大小与方向而发明的“带箭头的线段” (n_142)"
   sub_topics:
     - "向量的定义：大小与方向的结合"

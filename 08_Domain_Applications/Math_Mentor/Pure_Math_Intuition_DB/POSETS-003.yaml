@@ -1,5 +1,20 @@
 concept_node:
   id: "POSETS-003"
+  mode: "A"
+  mode_routing_status: "inferred_high_confidence"
+  validation_status: "review_required"
+  bridge_readiness_status: "manual_review_required"
+  formal_definition_status: "missing"
+  prerequisites_status: "missing"
+  mapping_boundary_status: "missing"
+  migration_review:
+    missing_reason:
+      - "formal_definition_absent"
+      - "prerequisite_nodes_absent"
+      - "mapping_boundary_absent"
+    recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+    warnings:
+      - "shape_only_or_shallow_audit_risk"
   name: "极大/极小元、最大/最小元"
   domain: "posets_and_lattices"
   description: "在偏序集中，极大元、极小元、最大元和最小元是描述元素在序关系下相对大小和绝对大小边界的关键概念。区分极大（局部边界）与最大（全局边界）对于理解偏序结构至关重要。"

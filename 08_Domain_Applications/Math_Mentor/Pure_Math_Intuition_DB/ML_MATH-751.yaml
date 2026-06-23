@@ -1,0 +1,49 @@
+id: "ML_MATH-751"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "梯度下降与自动微分 - 认知公理：自动微分是在有向无环图（DAG）内存执行栈上，通过反向传播（Backpropagation）精确追踪并分配各节点对 Loss 的“物理连带责任”。 (n_751)"
+sub_topics:
+  - "计算图 (Computation Graph) 的拓扑排序"
+  - "链式法则在局部算子上的代数展开"
+  - "前向模式与反向模式的复杂度对比"
+  - "物理直觉：将误差能量沿逻辑链路反向泵送"
+llm_physical_mapping: "A heavy-industrial fluid plumbing system where the 'Loss' is hydraulic pressure. Backward propagation reverses the pump, forcing tracking fluid back through the precise valve network (DAG), allocating exact pressure drops to each gear (node) responsible for the final output."
+code_implementation: |
+  import torch
+  
+  # A simple DAG simulation
+  x = torch.tensor([2.0], requires_grad=True)
+  w = torch.tensor([3.0], requires_grad=True)
+  b = torch.tensor([1.0], requires_grad=True)
+  
+  # Forward pass (building the DAG)
+  y = w * x + b
+  loss = (y - 10.0)**2
+  
+  # Backward pass (tracing fluid back)
+  loss.backward()
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    x, w, b = sp.symbols('x w b')
+    y = w * x + b
+    loss = (y - 10)**2
+    
+    # Derivative allocation (chain rule)
+    dloss_dw = sp.diff(loss, w)
+    
+    assert dloss_dw.subs({x: 2, w: 3, b: 1}) == -12

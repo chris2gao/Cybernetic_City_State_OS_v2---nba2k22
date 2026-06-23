@@ -1,4 +1,19 @@
 id: "NUM_THEORY-010"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
 concept_name: "模运算 - 模逆元 (Modular Inverse) 的存在性条件危机：发现模运算中除法失效，仅当互质时借助裴蜀定理求逆 (n_204)"
 sub_topics:
   - "模逆元的严格定义 (ax ≡ 1 (mod m))"

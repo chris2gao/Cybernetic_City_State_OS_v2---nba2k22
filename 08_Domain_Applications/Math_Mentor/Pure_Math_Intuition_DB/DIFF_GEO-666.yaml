@@ -1,0 +1,34 @@
+id: DIFF_GEO-666
+mode_routing_status: "manual_review_required"
+validation_status: "manual_review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "mode_routing_manual_review_required"
+concept_name: Lie群与Lie代数 - 【RoPE 映射】：连续对称性的终极语言。旋转位置编码正是利用特殊正交群的分解，实现序列平移等变性。 (n_666)
+sub_topics:
+- 李群作为带有群结构的光滑流形
+- 李代数作为恒等元处的切空间
+- 指数映射从代数向群的演化
+- 旋转对称性 (SO(n)) 在位置感知特征中的刚性约束
+llm_physical_mapping: 如同一根装满转盘的旋转传动轴，我们只研究它在刚启动那一瞬间的极小扭动角度（李代数），就能推算出机器运转一整天的所有可能姿态（李群）。
+code_implementation: "import numpy as np\nimport scipy.linalg\ndef lie_algebra_to_group(skew_symmetric_matrix):\n    return\
+  \ scipy.linalg.expm(skew_symmetric_matrix)\n"
+v8_sanity_audit:
+  sympy_pseudo_code: 'import sympy as sp
+
+    theta = sp.Symbol(''theta'')
+
+    matrix = sp.Matrix([[0, -theta], [theta, 0]])
+
+    assert matrix.trace() == 0
+
+    '

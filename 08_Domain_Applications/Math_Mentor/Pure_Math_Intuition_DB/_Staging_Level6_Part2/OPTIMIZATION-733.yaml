@@ -1,0 +1,28 @@
+id: "OPTIMIZATION-733"
+concept_name: "最优控制初步（Pontryagin最大值原理） - 物理直觉：寻找从随机噪声到确定逻辑/图像的最小代价传输路径（Optimal Transport）。 (n_733)"
+sub_topics:
+  - "能量耗散极小化准则"
+  - "路径平滑性对生成质量的保障"
+  - "测地线流的动力学实现"
+  - "物理模拟：流体质点从紊乱向有序结构的定向搬运"
+llm_physical_mapping: "heavy bulldozer shaping a gravel pile into a flat road; the optimal transport path minimizes the engine fuel and piston stress required to shift each grain of sand to its final geodetic lock position."
+code_implementation: |
+  import torch
+  
+  def linear_interpolation_flow(x_0, x_1, t):
+      v_t = x_1 - x_0
+      x_t = (1 - t) * x_0 + t * x_1
+      return x_t, v_t
+  
+  x0 = torch.tensor([0.1, -0.5])
+  x1 = torch.tensor([1.0, 1.0])
+  xt, vt = linear_interpolation_flow(x0, x1, 0.5)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    t = sp.Symbol('t', real=True)
+    x0, x1 = sp.symbols('x0 x1', real=True)
+    x_t = (1 - t) * x0 + t * x1
+    v_t = sp.diff(x_t, t)
+    assert sp.simplify(v_t - (x1 - x0)) == 0

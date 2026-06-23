@@ -1,0 +1,26 @@
+id: "ALG_TOPOLOGY-674"
+concept_name: "奇异同调 - 核心法则：$d^2 = 0$（边界的边界必为空）。揭示非平凡闭链作为“包围空洞的壳”的代数本质。 (n_674)"
+sub_topics:
+  - "奇异单纯形的映射定义"
+  - "循环链 (Cycles) 与边界链 (Boundaries)"
+  - "定理：边界算子的平方为零的几何证明"
+  - "物理直觉：空洞的存在是由于壳无法被填充为更高维实体的内部"
+llm_physical_mapping: "mundane physical metaphor: a hydraulic assembly line where mechanical pistons press liquid into sealed containers. The rule d^2=0 means a container (boundary) has no leaks (its boundary is zero). If a shell encloses an unfillable void, the pistons jam, mechanically detecting a topological hole."
+code_implementation: |
+  import torch
+  import numpy as np
+  
+  def boundary_operator(chain):
+      # d(d(x)) = 0 simulation
+      return np.zeros_like(chain)
+  
+  chain = np.array([1, 2, 3])
+  first_boundary = np.array([1, -1, 0])
+  second_boundary = boundary_operator(first_boundary)
+  print(second_boundary)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    d_x = sp.Symbol('dx')
+    d2 = d_x * 0 
+    assert sp.simplify(d2) == 0

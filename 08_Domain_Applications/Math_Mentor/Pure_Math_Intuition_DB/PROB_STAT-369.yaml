@@ -1,4 +1,19 @@
 id: "PROB_STAT-369"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
 concept_name: "矩母函数与特征函数 - 大模型映射：特征函数本质上是 PDF 的傅里叶变换，频域空间降维工具 (n_369)"
 sub_topics:
   - "矩母函数 M(t) = E[e^{tX}] 的定义"

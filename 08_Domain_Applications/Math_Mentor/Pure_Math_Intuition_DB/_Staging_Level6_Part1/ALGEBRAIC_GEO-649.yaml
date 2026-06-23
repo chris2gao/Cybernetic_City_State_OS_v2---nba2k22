@@ -1,0 +1,20 @@
+id: "ALGEBRAIC_GEO-649"
+concept_name: "平坦态射与纤维积 - 认知跃迁：研究一个空间如何平滑地“形变”或投影为另一个空间，而不丢失关键维度的拓扑属性。 (n_649)"
+sub_topics:
+  - "平坦性 (Flatness) 的代数定义"
+  - "纤维积 (Fiber products) 的泛性质构造"
+  - "族 (Families) 的概念：几何对象的连续演化"
+  - "物理直觉：系统在参数连续变化下的解结构保持"
+llm_physical_mapping: "mundane physical metaphor: Extruding hot plastic through a continuous mold where the cross-sectional shape morphs smoothly from a square to a circle without snapping the material or altering its total volume."
+code_implementation: |
+  import torch
+  import numpy as np
+  
+  def flat_extrusion(t):
+      return torch.sigmoid(torch.tensor([t]))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    t = sp.Symbol('t')
+    assert sp.simplify(t*t/t) == t

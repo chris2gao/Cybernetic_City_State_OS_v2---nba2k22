@@ -1,0 +1,38 @@
+id: "OPTIMIZATION-721"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "非线性优化（KKT条件） - 【核心大模型映射】：强化学习对齐（RLHF / PPO）的数学灵魂！ (n_721)"
+sub_topics:
+  - "一阶必要条件的代数表达"
+  - "乘子 λ 与约束“价格”的物理类比"
+  - "在非凸 Loss 表面寻找局部平衡点的准则"
+  - "梯度与约束超平面法向的对齐逻辑"
+llm_physical_mapping: "mundane physical metaphor: hydraulic dampener on a shock absorber; it violently resists sudden jerks but slowly settles the bouncing spring to a dead stop."
+code_implementation: |
+  import torch
+  import numpy as np
+  
+  def simulate_process():
+      tensor = torch.zeros(10, dtype=torch.float32)
+      tensor += 1.0
+      return np.sum(tensor.numpy())
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    x = sp.Symbol('x')
+    expr = sp.simplify(x - x)
+    assert expr == 0

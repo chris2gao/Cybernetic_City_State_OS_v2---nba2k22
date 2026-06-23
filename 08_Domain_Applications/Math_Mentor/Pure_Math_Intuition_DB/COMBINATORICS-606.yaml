@@ -1,0 +1,34 @@
+id: "COMBINATORICS-606"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "数值积分 - 物理直觉：用牛顿-柯特斯公式及辛普森法则，将无穷小极限替换为有限步长 $\\Delta x$。 (n_606)"
+sub_topics:
+  - "矩形法则、梯形法则与辛普森法则的误差阶数"
+  - "代数精度概念：对多项式的完美积分能力"
+  - "复合积分公式在大区间上的稳健性"
+  - "物理意义：将连续累积量离散化为有限次数的加权求和"
+llm_physical_mapping: "mundane physical metaphor: 没法量一堆烂泥的体积，就在工厂传送带上用固定宽度的铲车一铲子一铲子怼成方块，然后数铲车倒了几次方砖。"
+code_implementation: |
+  import sympy as sp
+  x, h = sp.symbols('x h')
+  f = sp.Function('f')
+  trapezoid_area = (h / 2) * (f(x) + f(x + h))
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    h, y0, y1 = sp.symbols('h y0 y1')
+    trapezoid_area = (h / 2) * (y0 + y1)
+    assert trapezoid_area.subs({h: 2, y0: 3, y1: 5}) == 8

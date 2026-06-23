@@ -1,0 +1,38 @@
+id: "COMPLEX_ANALYSIS-420"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "全纯函数 - 消除奇迹步骤：复导数要求在任意方向逼近时变化率一致（方向无关性），赋予无限次可导的刚性 (n_420)"
+sub_topics:
+  - "复导数 f'(z) 的极限定义"
+  - "方向无关性带来的极强约束"
+  - "全纯（解析）函数的定义"
+  - "局部解析性推导全局无穷次可微的逻辑链"
+llm_physical_mapping: "mundane physical metaphor: A perfectly rigid 2D metal plate where twisting it at any local point uniquely locks the entire plate's deformation field due to zero internal shear stress."
+code_implementation: |
+  import sympy as sp
+  x, y = sp.symbols('x y', real=True)
+  z = x + sp.I * y
+  def is_holomorphic_poly(p):
+      return p.diff(sp.conjugate(z)) == 0
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x, y = sp.symbols('x y', real=True)
+    z = x + sp.I * y
+    f = z**2
+    # Wirtinger derivative df/dz_bar = 1/2 * (df/dx + i*df/dy)
+    df_dzbar = 0.5 * (sp.diff(f, x) + sp.I * sp.diff(f, y))
+    assert sp.simplify(df_dzbar) == 0

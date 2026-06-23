@@ -1,0 +1,24 @@
+id: "ML_MATH-767"
+concept_name: "神经正切核（NTK） - 【认知大爆炸】：当网络无限宽且学习率极小时，非线性网络瞬间坍缩并退化为静态的、纯确定性的线性核积分算子。 (n_767)"
+sub_topics:
+  - "NTK 的核矩阵定义与演化方程"
+  - "无限宽极限下的梯度流线性化"
+  - "模型训练轨迹的解析预测"
+  - "揭示神经网络学习能力的底层核机制"
+llm_physical_mapping: "factory workshop-level mechanical metaphor: infinite gear synchronizer. As the width of the machine extends to infinity, individual chaotic non-linear pistons freeze in place, and the entire transmission system collapses into a massive, rigidly deterministic linear camshaft operator."
+code_implementation: |
+  import numpy as np
+  
+  def ntk_linearized_evolution(t, learning_rate, kernel_matrix, error):
+      # Evolution deterministic equations
+      exponential_decay = np.exp(-learning_rate * kernel_matrix * t)
+      trajectory = (1 - exponential_decay) * error
+      return trajectory
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    t, lr, k = sp.symbols('t lr k', positive=True)
+    error = sp.symbols('error')
+    f_t = error * (1 - sp.exp(-lr * k * t))
+    df_dt = sp.diff(f_t, t)
+    assert sp.simplify(df_dt - lr * k * (error - f_t)) == 0

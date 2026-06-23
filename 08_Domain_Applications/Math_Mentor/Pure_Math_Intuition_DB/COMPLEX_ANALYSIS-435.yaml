@@ -1,0 +1,38 @@
+id: "COMPLEX_ANALYSIS-435"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "Schwarz引理 - 单位圆盘解析映射的非膨胀性质，双曲几何中庞加莱度量的地基 (n_435)"
+sub_topics:
+  - "引理内容：|f(z)| ≤ |z| 与 |f'(0)| ≤ 1"
+  - "映射对距离的压缩或保持性质"
+  - "庞加莱度量（Poincaré Metric）的引出"
+  - "引理在非欧几何分类中的核心地位"
+llm_physical_mapping: "mundane physical metaphor: a mechanical shock absorber housed in a rigid cylinder. The internal spring mechanism can strictly compress or just maintain lengths, but physically cannot stretch outward beyond the solid cylinder walls."
+code_implementation: |
+  import sympy as sp
+  z = sp.Symbol('z')
+  a = sp.Symbol('a', real=True, positive=True)
+  # A simple map from unit disk to unit disk satisfying Schwarz Lemma
+  f = a * z**2
+  # Assuming |a| <= 1, |f(z)| <= |z| for |z| < 1
+  df_at_0 = sp.diff(f, z).subs(z, 0)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    z = sp.Symbol('z')
+    f = z**2
+    df = sp.diff(f, z)
+    assert df.subs(z, 0) == 0

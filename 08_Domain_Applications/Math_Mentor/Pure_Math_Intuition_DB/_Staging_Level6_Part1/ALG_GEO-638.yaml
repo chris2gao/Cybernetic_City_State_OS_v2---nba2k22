@@ -1,0 +1,51 @@
+id: "ALG_GEO-638"
+name: "上同调 - 物理意义：一种代数雷达探针，能穿透扭曲的空间，从代数上精确计数出空间的“维度的洞”及全局障碍。 (n_638)"
+node_id: 638
+llm_physical_mapping: "Acoustic resonance in a complex cavern system. 'Holes' or topological obstacles prevent certain sound waves (closed forms) from being formed merely as the boundary of smaller resonating chambers (exact forms). The distinct standing wave modes precisely count the unfillable voids."
+code_implementation: |
+  import torch
+  
+  # A simple 1D chain with a hole (circle) to compute Betti numbers via Hodge Laplacian
+  # 4 nodes, 4 edges
+  d0 = torch.tensor([
+      [-1., 1., 0., 0.],
+      [0., -1., 1., 0.],
+      [0., 0., -1., 1.],
+      [1., 0., 0., -1.]
+  ])
+  
+  # Hodge Laplacian Delta_0 = d0^T d0 (since d_{-1} is 0)
+  delta_0 = d0.T @ d0
+  
+  # Compute eigenvalues
+  eigenvalues, _ = torch.linalg.eigh(delta_0)
+  
+  # The number of zero eigenvalues corresponds to Betti_0 (connected components)
+  betti_0 = torch.sum(eigenvalues < 1e-5).item()
+  print(f"Betti-0 (connected components) = {betti_0}")
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    # Exterior derivative d acts on forms. d(d(omega)) = 0
+    x, y, dx, dy = sp.symbols('x y dx dy')
+    # A simple 0-form (function)
+    f = x**2 * y
+    
+    # Simulate d:
+    df_x = sp.diff(f, x)
+    df_y = sp.diff(f, y)
+    
+    # d(f) = df_x * dx + df_y * dy
+    # Now simulate d(d(f)):
+    ddf_xy = sp.diff(df_x, y)
+    ddf_yx = sp.diff(df_y, x)
+    
+    # In exterior algebra, dx ^ dy = -dy ^ dx, so d(d(f)) = (ddf_xy - ddf_yx) * (dx ^ dy)
+    d2f_coeff = sp.simplify(ddf_xy - ddf_yx)
+    assert d2f_coeff == 0, "Exterior derivative must satisfy d^2 = 0"
+sub_topics:
+  - "德·拉姆 (de Rham) 与奇点上同调的类比"
+  - "闭形式与恰当形式的代数差距"
+  - "贝蒂数 (Betti numbers) 的几何含义"
+  - "物理直觉：空间中信息传递的不可穿越壁垒"

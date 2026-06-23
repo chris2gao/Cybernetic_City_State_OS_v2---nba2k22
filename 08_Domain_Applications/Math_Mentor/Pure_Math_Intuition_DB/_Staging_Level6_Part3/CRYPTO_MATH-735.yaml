@@ -1,0 +1,24 @@
+id: "CRYPTO_MATH-735"
+concept_name: "数论应用（RSA/ElGamal） - 物理意义：所有数字非对称博弈的逻辑基石。 (n_735)"
+sub_topics:
+  - "单向陷门函数的数学模型"
+  - "密钥交换过程中的信息非对称性保持"
+  - "在互联网安全协议（TLS/SSL）中的核心地位"
+  - "物理类比：带有特殊机关的数字锁"
+llm_physical_mapping: "factory workshop-level mechanical metaphor: a heavy industrial trapdoor with a hidden hydraulic release lever (the trapdoor/private key), which locks solid against external force but opens instantly when the hidden pressure valve is triggered."
+code_implementation: |
+  import torch
+  import numpy as np
+  
+  def industrial_trapdoor_encryption(msg, e, n):
+      # Forward encryption: dropping the payload through the one-way hydraulic trapdoor
+      msg_tensor = torch.tensor([msg], dtype=torch.float64)
+      encrypted_val = torch.fmod(torch.pow(msg_tensor, e), n)
+      return encrypted_val
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    # Assert trapdoor logic via modular exponentiation
+    msg, e, n = 5, 3, 14
+    cipher = (msg**e) % n
+    assert cipher == 13

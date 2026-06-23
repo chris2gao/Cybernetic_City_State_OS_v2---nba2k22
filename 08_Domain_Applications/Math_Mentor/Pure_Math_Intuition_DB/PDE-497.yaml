@@ -1,0 +1,67 @@
+id: "PDE-497"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+nid: 497
+name: "变分原理（最小作用量） - 【核心 AI 映射】：物理场自发极小化总能量泛函，梯度下降与 Loss 极小化的泛函同构 (n_497)"
+sub_topics:
+  - "作用量泛函 S[u] 的极值化"
+  - "物理规律作为能量平衡点的数学体现"
+  - "泛函梯度（变分导数）的定义"
+  - "映射：训练神经网络本质上是在寻找参数流形上的最低势能态"
+llm_physical_mapping: "A heavy metallic chain hung loosely between two identical tall posts. Gravity pulls every link downwards, while tension between the links pulls them together. The chain wiggles and slides until it finds the absolute 'lowest energy' configuration—the catenary curve. It mathematically computes the gradient of its own potential energy physically and settles exactly where the gradient is zero."
+code_implementation: |
+  import torch
+
+  def minimize_action_functional(points=50, epochs=2000, lr=0.01):
+      x = torch.linspace(0, 1, points)
+      dx = 1.0 / (points - 1)
+      
+      y = torch.linspace(0, 1, points, requires_grad=True)
+      optimizer = torch.optim.Adam([y], lr=lr)
+      
+      for _ in range(epochs):
+          optimizer.zero_grad()
+          
+          y_prime = (y[1:] - y[:-1]) / dx
+          
+          action = torch.sum((y_prime**2 + y[:-1]**2) * dx)
+          action.backward()
+          
+          with torch.no_grad():
+              y.grad[0] = 0.0
+              y.grad[-1] = 0.0
+              
+          optimizer.step()
+          
+      return y.detach()
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+
+    t = sp.Symbol('t', real=True)
+    y = sp.Function('y')(t)
+    y_dot = sp.diff(y, t)
+
+    m, k = sp.symbols('m k', real=True, positive=True)
+    L = 0.5 * m * y_dot**2 - 0.5 * k * y**2
+
+    dL_dy = sp.diff(L, y)
+    dL_dydot = sp.diff(L, y_dot)
+    
+    euler_lagrange = sp.diff(dL_dydot, t) - dL_dy
+
+    expected_eom = m * sp.diff(y, t, 2) + k * y
+    assert sp.simplify(euler_lagrange - expected_eom) == 0, "Euler-Lagrange yields harmonic oscillator EOM"

@@ -1,0 +1,35 @@
+id: "COMBINATORICS-603"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "插值与逼近 - 认知跃迁：在离散点间寻找能量最平滑（弯曲惩罚最小）的曲线穿过。 (n_603)"
+sub_topics:
+  - "插值多项式的存在唯一性定理"
+  - "最小二乘逼近与一致逼近的区别"
+  - "物理直觉：系统状态的预测补全"
+  - "误差估计项的解析结构"
+llm_physical_mapping: "mundane physical metaphor: 拿着一根极具弹性的钢条穿插进打死在木板上的几个生锈铁钉中间，钢条受内部应力限制自然会绷出一个没那么折弯的平缓弧度。"
+code_implementation: |
+  import sympy as sp
+  x, a, b, c = sp.symbols('x a b c')
+  smooth_curve = a*x**2 + b*x + c
+  energy = sp.diff(smooth_curve, x, 2)**2
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x, a, b, c = sp.symbols('x a b c')
+    smooth_curve = a*x**2 + b*x + c
+    energy = sp.diff(smooth_curve, x, 2)**2
+    assert energy == 4*a**2

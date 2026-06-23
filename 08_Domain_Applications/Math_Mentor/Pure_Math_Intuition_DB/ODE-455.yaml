@@ -1,0 +1,39 @@
+id: "ODE-455"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
+concept_name: "正合方程与积分因子 - 消除奇迹步骤：回溯全微分概念，寻找保守场势函数（能量面） (n_455)"
+sub_topics:
+  - "正合性判别准则 ∂M/∂y = ∂N/∂x"
+  - "势函数 Φ(x,y) 的求解路径积分"
+  - "物理背景：保守力做功与路径无关性"
+  - "方程作为能量守恒轨迹的代数表达"
+llm_physical_mapping: "mundane physical metaphor: walking on a perfectly smooth mountain where height is potential energy. A force field is 'exact' if moving a boulder from A to B takes the exact same energy regardless of whether you go straight or zig-zag."
+code_implementation: |
+  import sympy as sp
+  x, y = sp.symbols('x y')
+  M = 2*x*y
+  N = x**2
+  is_exact = sp.diff(M, y) == sp.diff(N, x)
+  Phi = x**2 * y
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x, y = sp.symbols('x y')
+    M, N = 2*x*y, x**2
+    assert sp.diff(M, y) == sp.diff(N, x)
+    Phi = x**2 * y
+    assert sp.diff(Phi, x) == M
+    assert sp.diff(Phi, y) == N

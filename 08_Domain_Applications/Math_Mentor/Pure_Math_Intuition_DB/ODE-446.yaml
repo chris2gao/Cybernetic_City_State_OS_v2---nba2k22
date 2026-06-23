@@ -1,0 +1,36 @@
+id: "ODE-446"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "Laplace变换 - 降维打击机器：将时域复杂的微积分操作拉入复频域，简化为代数乘除法 (n_446)"
+sub_topics:
+  - "拉氏变换的积分定义：L{f(t)} = F(s)"
+  - "微分运算向代数相乘的转换：L{f'} = sF(s) - f(0)"
+  - "卷积定理：时域卷积变为频域乘积"
+  - "变换作为算子演算的一种形式"
+llm_physical_mapping: "Like a mechanical coin sorter. In the real 'time domain', you have a chaotic, messy bucket of mixed change (complex calculus). You dump it into the Laplace machine, which shakes it through physical gratings (frequencies) so the coins drop into neat separate tubes (s-domain). Now, instead of untangling a mess manually, you just weigh the tubes (simple algebra), and dump them back out (inverse Laplace) to get your result."
+code_implementation: |
+  import sympy as sp
+  t = sp.Symbol('t', positive=True)
+  s = sp.Symbol('s')
+  f = sp.sin(t)
+  F = sp.laplace_transform(f, t, s, noconds=True)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    t = sp.Symbol('t', positive=True)
+    s = sp.Symbol('s')
+    F = sp.laplace_transform(sp.exp(t), t, s, noconds=True)
+    assert F == 1/(s - 1)

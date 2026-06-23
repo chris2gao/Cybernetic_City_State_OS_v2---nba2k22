@@ -1,0 +1,39 @@
+id: "ODE-456"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "正合方程与积分因子 - 利用积分因子强行扭曲空间曲率使方程闭合的代数逻辑 (n_456)"
+sub_topics:
+  - "积分因子 μ(x,y) 的定义与寻找"
+  - "变非正合为正合的代数技巧"
+  - "积分因子对系统物理量纲的重标定直觉"
+  - "在处理非保守耗散系统局部守恒律中的作用"
+llm_physical_mapping: "mundane physical metaphor: adding friction to a system using an external dashboard knob (integrating factor). We scale the entire environment's units so that a previously messy, path-dependent journey becomes a clean, flat energy surface."
+code_implementation: |
+  import sympy as sp
+  x, y = sp.symbols('x y')
+  M = y
+  N = -x
+  mu = 1 / (x**2 + y**2)
+  M_new = M * mu
+  N_new = N * mu
+  is_exact_now = sp.simplify(sp.diff(M_new, y) - sp.diff(N_new, x)) == 0
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x, y = sp.symbols('x y')
+    M, N = y, -x
+    mu = 1/(x**2 + y**2)
+    assert sp.simplify(sp.diff(M*mu, y) - sp.diff(N*mu, x)) == 0

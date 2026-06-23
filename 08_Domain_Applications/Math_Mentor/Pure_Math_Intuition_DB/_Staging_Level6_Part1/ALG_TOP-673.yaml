@@ -1,0 +1,54 @@
+id: "ALG_TOP-673"
+name: "单纯同调 - 算法化：将平滑空间网格化（三角形/四面体），利用矩阵初等变换直接计算拓扑特征。拓扑数据分析（TDA）计算云点聚类的核心算法。 (n_673)"
+node_id: 673
+llm_physical_mapping: "Assembling a bridge out of a discrete set of steel struts and nodes. Applying the boundary operator is like physically checking which nodes are fully enclosed by struts. The 'holes' (homology groups) are structural voids where no solid steel plates have been welded, defining the bridge's macroscopic shape."
+code_implementation: |
+  import torch
+  
+  # Simplices of a hollow triangle (1D cycle)
+  # 3 vertices (0, 1, 2)
+  # 3 edges: e0=(0,1), e1=(1,2), e2=(2,0)
+  
+  # Boundary matrix d1: maps 1-simplices to 0-simplices
+  d1 = torch.tensor([
+      [-1.,  0.,  1.],
+      [ 1., -1.,  0.],
+      [ 0.,  1., -1.]
+  ])
+  
+  # A 1-chain c = e0 + e1 + e2 representing the cycle
+  c = torch.tensor([1., 1., 1.])
+  
+  # Boundary of the cycle
+  boundary = d1 @ c
+  print("Boundary of cycle:", boundary)
+  print("Cycle is valid because boundary is all zeros.")
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    # Triangle boundary operator matrices
+    # Vertices: v0, v1, v2
+    # Edges: e01, e12, e02
+    # Face: f012
+    
+    d1 = sp.Matrix([
+        [-1,  0, -1],
+        [ 1, -1,  0],
+        [ 0,  1,  1]
+    ])
+    
+    d2 = sp.Matrix([
+        [ 1],
+        [ 1],
+        [-1]
+    ])
+    
+    # Fundamental lemma of homology: d_n * d_{n+1} = 0
+    res = d1 * d2
+    assert res == sp.zeros(3, 1), "Boundary of a boundary must be zero"
+sub_topics:
+  - "单纯复形 (Simplicial complexes) 的构造"
+  - "边界算子 $\\partial$ 与链复形"
+  - "同调群 $H_n$ 的代数计算（核空间与值域之商）"
+  - "TDA 中持续同调 (Persistent Homology) 的条形码表示"

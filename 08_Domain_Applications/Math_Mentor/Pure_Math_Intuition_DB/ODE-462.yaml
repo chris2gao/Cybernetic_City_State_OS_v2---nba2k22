@@ -1,0 +1,37 @@
+id: "ODE-462"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "奇异点与奇异解 - 包络线与奇异解的几何直觉 (n_462)"
+sub_topics:
+  - "积分曲线族的包络线推导"
+  - "奇异解不包含在通解常数族中的本质"
+  - "几何视角：多条相轨迹的切合边缘"
+  - "在非线性波动与焦散现象中的体现"
+llm_physical_mapping: "mundane physical metaphor: Like the curve formed by the overlapping beams of a car's headlights on a curved road barrier. Each individual light ray is a straight line (general solution), but together they form a sharply defined, bright curved edge (caustic/envelope) that isn't a single light ray itself, but the tangent boundary of all of them."
+code_implementation: |
+  import sympy as sp
+  x, c = sp.symbols('x c')
+  y = c*x - c**2
+  # Differentiating with respect to parameter c to find envelope
+  envelope_eq = sp.diff(y, c)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x, c = sp.symbols('x c')
+    y_family = c*x - c**2
+    c_val = sp.solve(sp.diff(y_family, c), c)[0]
+    envelope = y_family.subs(c, c_val)
+    assert envelope == x**2 / 4

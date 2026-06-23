@@ -1,0 +1,47 @@
+id: "ALG_GEO-633"
+name: "仿射/射影簇 - 【大模型硬核映射】：映射参数空间中的代数约束，解释模型解集合构成的“代数簇”结构。 (n_633)"
+node_id: 633
+llm_physical_mapping: "A rigid mechanical linkage system (like a robotic arm). The degrees of freedom are rigidly constrained by polynomial algebraic equations representing the lengths of bars and fixed pivot points. The algebraic variety corresponds directly to the set of all physically realizable configurations of this linkage system without snapping the joints."
+code_implementation: |
+  import torch
+  
+  # Finding points on an affine variety defined by x^2 + y^2 - 1 = 0 and z - x*y = 0
+  # using gradient descent to minimize the algebraic residuals.
+  coords = torch.rand(10, 3, requires_grad=True)
+  optimizer = torch.optim.Adam([coords], lr=0.05)
+  
+  for step in range(200):
+      optimizer.zero_grad()
+      x, y, z = coords[:, 0], coords[:, 1], coords[:, 2]
+      eq1 = x**2 + y**2 - 1.0
+      eq2 = z - x*y
+      loss = torch.sum(eq1**2 + eq2**2)
+      loss.backward()
+      optimizer.step()
+  
+  # Verify points are on the variety
+  error = torch.mean((coords[:,0]**2 + coords[:,1]**2 - 1.0)**2 + (coords[:,2] - coords[:,0]*coords[:,1])**2)
+  print(f"Variety collapse error: {error.item():.6f}")
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    x, y, z = sp.symbols('x y z')
+    f1 = x**2 + y**2 - 1
+    f2 = z - x*y
+    
+    t = sp.symbols('t')
+    param_x = sp.cos(t)
+    param_y = sp.sin(t)
+    param_z = param_x * param_y
+    
+    res1 = sp.simplify(f1.subs({x: param_x, y: param_y}))
+    res2 = sp.simplify(f2.subs({x: param_x, y: param_y, z: param_z}))
+    
+    assert res1 == 0, "Point must satisfy first constraint"
+    assert res2 == 0, "Point must satisfy second constraint"
+sub_topics:
+  - "权重矩阵的秩约束作为代数簇方程"
+  - "神经网络隐层的代数几何表征"
+  - "参数冗余在代数簇切空间中的体现"
+  - "模型在特定任务上的收敛域与几何簇的关系"

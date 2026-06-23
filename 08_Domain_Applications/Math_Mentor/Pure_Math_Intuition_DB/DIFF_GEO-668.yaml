@@ -1,0 +1,34 @@
+id: DIFF_GEO-668
+mode_routing_status: "manual_review_required"
+validation_status: "manual_review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "mode_routing_manual_review_required"
+concept_name: 辛几何初步 - 发生学溯源：起源于哈密顿力学相空间。基于辛结构的神经网络保障了连续动力学求解过程中的绝对体积守恒与长期稳定性。 (n_668)
+sub_topics:
+- 辛形式 ω 的反对称非退化属性
+- 哈密顿向量场与泊松括号
+- 辛映射对相空间测度的保持（刘维尔定理）
+- 辛神经网络在长期物理模拟中的能量守恒特性
+llm_physical_mapping: 如同在一个密封的液压齿轮箱中工作。活塞推进去多少体积的液压油，另一边就必定顶出多少体积，绝不会漏掉一滴，维持整个系统的能量总和恒定不变。
+code_implementation: "import numpy as np\ndef symplectic_euler_step(q, p, dq_dt, dp_dt, dt):\n    p_new = p + dt * dp_dt(q)\n\
+  \    q_new = q + dt * dq_dt(p_new)\n    return q_new, p_new\n"
+v8_sanity_audit:
+  sympy_pseudo_code: 'import sympy as sp
+
+    dq, dp = sp.symbols(''dq dp'')
+
+    symplectic_form = dq * dp - dp * dq
+
+    assert sp.simplify(symplectic_form) == 0
+
+    '

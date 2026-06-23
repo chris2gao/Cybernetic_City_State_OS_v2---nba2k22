@@ -1,4 +1,19 @@
 id: "CALCULUS-271"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
 concept_name: "积分（定积分/不定积分） - 发生学溯源：阿基米德“穷竭法”与不规则面积/体积计算的工程极限场景 (n_271)"
 sub_topics:
   - "穷竭法：通过多边形逼近曲边形面积"
@@ -14,7 +29,7 @@ code_implementation: |
   # Sum of areas of rectangles from 0 to 1
   dx = 1 / n
   x_i = i * dx
-  area_sum = sp.Sum(f.subs(x, x_i) * dx, (i, 1, n))
+  area_sum = sp.Sum(f.subs(x, x_i) * dx, (i, 1, n)).doit()
   exact_area = sp.limit(area_sum, n, sp.oo)
 v8_sanity_audit:
   sympy_pseudo_code: |

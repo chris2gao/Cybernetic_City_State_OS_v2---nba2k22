@@ -1,4 +1,19 @@
 id: "DISCRETE-254"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
 concept_name: "算法复杂度基础（大O表示法） - 物理意义：评估算法在吞噬无限膨胀数据时，其算力与时间消耗的“渐进边界” (n_254)"
 sub_topics:
   - "忽略常数项与低阶项的哲学依据"

@@ -1,0 +1,37 @@
+id: "ODE-441"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "高阶线性方程 - 特征根法 (Characteristic Equation) 的推导 (n_441)"
+sub_topics:
+  - "线性算子的代数化：D² + pD + q = 0"
+  - "指数函数解 e^{λx} 的代设逻辑"
+  - "特征多项式的根与解空间基底的对应"
+  - "线性无关解的朗斯基行列式（Wronskian）判定"
+llm_physical_mapping: "mundane physical metaphor: Like testing a bridge's structural integrity. You hit it with a heavy rubber mallet (the exponential guess function) and listen. The bridge hums back with a specific pitch—that pitch directly solves for the structural resonant frequencies (the roots)."
+code_implementation: |
+  import sympy as sp
+  x, lam, p, q = sp.symbols('x lam p q')
+  y = sp.exp(lam * x)
+  eq = sp.diff(y, x, 2) + p * sp.diff(y, x) + q * y
+  char_eq = sp.simplify(eq / y)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    x, lam, p, q = sp.symbols('x lam p q')
+    y = sp.exp(lam * x)
+    eq = sp.diff(y, x, 2) + p * sp.diff(y, x) + q * y
+    char_eq = sp.simplify(eq / y)
+    assert char_eq == lam**2 + lam*p + q

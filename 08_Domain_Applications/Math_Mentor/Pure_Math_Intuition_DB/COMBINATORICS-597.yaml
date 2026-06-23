@@ -1,0 +1,48 @@
+id: "COMBINATORICS-597"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
+concept_name: "有限几何 - 在构建高度稳健的纠删码网络中提供空间结构的理论支撑。 (n_597)"
+sub_topics:
+  - "基于有限域上直线的码字构造"
+  - "几何分布导致的纠错半径最大化"
+  - "在分布式存储（如 HDFS/Ceph）中的纠删逻辑原型"
+  - "保证局部损坏不影响全局拓扑恢复的几何依据"
+llm_physical_mapping: "mundane physical metaphor: Filing cabinets arranged in a grid in a warehouse. If a forklift crashes into one row and destroys it, you can perfectly reconstruct the lost files by cross-referencing the sum totals written on the unbroken perpendicular columns."
+code_implementation: |
+  import sympy as sp
+  
+  def finite_field_line_eval(a, b, p):
+      # Evaluates the line y = (ax + b) mod p over finite field F_p
+      # Points on this line can act as redundant shares
+      points = []
+      for x in range(p):
+          y = (a * x + b) % p
+          points.append((x, y))
+      return points
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    p = 5
+    a = 2
+    b = 1
+    # y = 2x + 1 mod 5
+    # x=0 -> y=1
+    # x=1 -> y=3
+    pts = [(x, (a*x + b) % p) for x in range(p)]
+    
+    assert pts[0] == (0, 1)
+    assert pts[1] == (1, 3)

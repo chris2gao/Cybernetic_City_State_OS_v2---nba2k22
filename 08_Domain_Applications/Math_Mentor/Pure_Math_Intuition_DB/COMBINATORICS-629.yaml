@@ -1,0 +1,33 @@
+id: "COMBINATORICS-629"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "刚性方程组的数值处理 - 物理危机：处理系统中“剧烈爆炸”与“万年冰川”并存的极端特征值悬殊。 (n_629)"
+sub_topics:
+  - "刚性 (Stiffness) 的代数定义：特征值比例悬殊"
+  - "显式方法在处理刚性问题时的步长灾难"
+  - "物理背景：化学动力学与电路仿真中的多尺度时间特性"
+  - "快速演化分量对全系统数值平衡的干扰"
+llm_physical_mapping: "mundane physical metaphor: 一个发动机里，活塞一秒钟转一万次，而油箱里的油位一小时才降一毫米。如果你按「油位」的速度来算时间，那个飞速转的活塞瞬间就会把缸体捅穿，这就叫刚性。"
+code_implementation: |
+  import numpy as np
+  eigenvalues = [-1000, -0.1]
+  stiffness_ratio = max(abs(np.array(eigenvalues))) / min(abs(np.array(eigenvalues)))
+  print(stiffness_ratio)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import numpy as np
+    eigs = np.array([-1000, -1])
+    assert max(abs(eigs)) / min(abs(eigs)) > 100

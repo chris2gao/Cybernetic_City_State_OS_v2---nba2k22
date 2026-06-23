@@ -1,0 +1,42 @@
+id: "ALGEBRAIC_GEO-645"
+mode: "B"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "semantic_audit_not_machine_validated"
+    - "mode_b_legacy_v8_audit_not_authoritative"
+    - "mode_b_primary_mapping_requires_repair"
+concept_name: "算术几何 - 揭示有理点在抽象曲线上近乎混沌却又充满对称性的排列规律。 (n_645)"
+sub_topics:
+  - "莫德尔 (Mordell) 猜想与法尔廷斯定理"
+  - "有理点数量的有限性与亏格的关系"
+  - "局部-全局原则（哈塞原理）"
+  - "数论算法在处理高维代数簇时的计算复杂性"
+llm_physical_mapping: "mundane physical metaphor: A perforated sheet metal stamping press where specific rivet holes (rational points) align only at rigid, highly constrained intervals determined by the metal's structural curvature."
+code_implementation: |
+  import torch
+  import numpy as np
+  
+  def rational_rivet_holes(limit):
+      return [x for x in range(limit) if x % 3 == 0]
+legacy_v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    x = sp.Rational(1, 2)
+    assert sp.simplify(x + x) == 1
+v9_semantic_audit:
+  status: "review_required"
+  warnings:
+    - "semantic_audit_not_machine_validated"
+  migration_note: "Legacy semantic content requires domain review; no machine-proof claim is made."

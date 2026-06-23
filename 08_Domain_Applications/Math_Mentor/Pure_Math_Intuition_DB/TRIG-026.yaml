@@ -1,4 +1,19 @@
 id: TRIG-026
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
 version: 9.1
 name: "三角函数图像 - 正切与余切的渐近线图与周期 π 的代数解释 (n_187)"
 sub_topics:
@@ -11,30 +26,21 @@ code_implementation:
   language: python
   code: |
     import torch
-    import matplotlib.pyplot as plt
-    import numpy as np
+    import math
     
-    x = torch.linspace(-2 * np.pi, 2 * np.pi, 2000)
+    x = torch.linspace(-2 * math.pi, 2 * math.pi, 2000)
     y = torch.tan(x)
     
-    # Mask values near the asymptotes for plotting
-    y[y.abs() > 20] = float('nan')
+    # tan has period pi: tan(x + pi) = tan(x), away from asymptotes.
+    sample = torch.tensor([-1.0, -0.3, 0.2, 0.8], dtype=torch.float64)
+    assert torch.allclose(torch.tan(sample + math.pi), torch.tan(sample), atol=1e-10)
     
-    plt.figure(figsize=(10, 6))
-    plt.plot(x.numpy(), y.numpy(), label='y = tan(x)', color='blue')
-    
-    # Plot asymptotes
+    asymptotes = []
     for k in range(-2, 3):
-        plt.axvline(x=(k * np.pi + np.pi/2), color='red', linestyle='--', alpha=0.5, label='Asymptote' if k == 0 else "")
-        
-    plt.ylim(-10, 10)
-    plt.xlim(-2 * np.pi, 2 * np.pi)
-    plt.axhline(0, color='black', linewidth=0.8)
-    plt.axvline(0, color='black', linewidth=0.8)
-    plt.title('Tangent Function and its Asymptotes')
-    plt.legend()
-    plt.grid(True, alpha=0.3)
-    plt.show()
+        asymptotes.append(k * math.pi + math.pi / 2)
+
+    assert len(asymptotes) == 5
+    assert torch.isfinite(y).any()
 v8_sanity_audit:
   sympy_pseudo_code: |
     import sympy as sp

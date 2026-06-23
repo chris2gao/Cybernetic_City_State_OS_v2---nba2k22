@@ -1,5 +1,20 @@
 concept_node:
   id: "GEOMETRY-002"
+  mode: "A"
+  mode_routing_status: "inferred_high_confidence"
+  validation_status: "review_required"
+  bridge_readiness_status: "manual_review_required"
+  formal_definition_status: "missing"
+  prerequisites_status: "missing"
+  mapping_boundary_status: "missing"
+  migration_review:
+    missing_reason:
+      - "formal_definition_absent"
+      - "prerequisite_nodes_absent"
+      - "mapping_boundary_absent"
+    recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+    warnings:
+      - "legacy_executable_audit_requires_concept_alignment_review"
   title: "欧氏几何公理 - 欧几里得的五大公设与公理化思维体系（从不证自明的假设出发构建宇宙） (n_122)"
   category: "Geometry"
   complexity_level: 2

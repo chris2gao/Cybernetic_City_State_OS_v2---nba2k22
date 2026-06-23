@@ -1,5 +1,21 @@
 concept_node:
   id: "FA-001"
+  mode: "B"
+  mode_routing_status: "inferred_high_confidence"
+  validation_status: "review_required"
+  bridge_readiness_status: "manual_review_required"
+  formal_definition_status: "missing"
+  prerequisites_status: "missing"
+  mapping_boundary_status: "missing"
+  migration_review:
+    missing_reason:
+      - "formal_definition_absent"
+      - "prerequisite_nodes_absent"
+      - "mapping_boundary_absent"
+    recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+    warnings:
+      - "semantic_audit_not_machine_validated"
+      - "mode_b_legacy_v8_audit_not_authoritative"
   symbol: "\\langle \\cdot, \\cdot \\rangle"
   name: "Inner Product (内积)"
   domain: "Functional Analysis (泛函分析) / Hilbert Space"
@@ -34,7 +50,7 @@ concept_node:
           scaled_scores = raw_scores / math.sqrt(q.size(-1))
           return scaled_scores
 
-  v8_sanity_audit:
+  legacy_v8_sanity_audit:
     engine: "SymPy + Z3"
     validation_target: "独立同分布向量内积的方差膨胀 (Variance Expansion of Inner Product)"
     execution_logic: >
@@ -56,3 +72,8 @@ concept_node:
       
       # 断言总方差严格等于维度 d_k
       assert sp.simplify(total_variance - d_k) == 0, "Variance Expansion Axiom Violated!"
+  v9_semantic_audit:
+    status: "review_required"
+    warnings:
+      - "semantic_audit_not_machine_validated"
+    migration_note: "Legacy semantic content requires domain review; no machine-proof claim is made."

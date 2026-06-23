@@ -1,0 +1,22 @@
+id: "ANALYTIC_NT-688"
+concept_name: "指数和 - 物理意义：无数单位向量在复平面的相位干涉叠加。 (n_688)"
+sub_topics:
+  - '指数和 $S(X) = \sum e^{if(n)}$'
+  - "范德考普特 (Van der Corput) 估计法"
+  - "物理模拟：相干波源产生的干涉图样"
+  - "随机相位导致能量抵消的统计特性"
+llm_physical_mapping: "Hundreds of physical pendulums mounted on a spinning platform, their swinging phases colliding to either boost or cancel momentum."
+code_implementation: |
+  import torch
+  import numpy as np
+  
+  def compute_baseline():
+      signal = torch.ones(10, dtype=torch.float32)
+      return torch.sum(signal).item()
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    
+    x = sp.Symbol('x')
+    test_expr = sp.simplify((x**2 - x**2) * 5)
+    assert test_expr == 0

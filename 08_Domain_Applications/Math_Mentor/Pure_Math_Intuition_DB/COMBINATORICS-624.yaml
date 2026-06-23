@@ -1,0 +1,39 @@
+id: "COMBINATORICS-624"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
+concept_name: "最小二乘数值方法 - 机器学习源头：所有回归（Regression）模型的算术地基与统计误差的最优估计。 (n_624)"
+sub_topics:
+  - "线性回归的代数解析解"
+  - "高斯-马尔可夫定理的数值体现"
+  - "权重衰减（L2 正则化）在数值计算中的引入"
+  - "模型参数在超空间中的最佳投影位置"
+llm_physical_mapping: "mundane physical metaphor: 一个工厂里的对齐夹具，通过拧动几个校准螺丝，让整条传送带的中心线尽量穿过那一堆乱七八糟的零件中心点，把偏离误差压到最低。"
+code_implementation: |
+  import sympy as sp
+  w = sp.symbols('w')
+  x = sp.Matrix([1, 2, 3])
+  y = sp.Matrix([2, 4, 6])
+  loss = sum([(y[i] - w*x[i])**2 for i in range(3)])
+  dloss = sp.diff(loss, w)
+  w_opt = sp.solve(dloss, w)[0]
+  print(w_opt)
+v8_sanity_audit:
+  sympy_pseudo_code: |
+    import sympy as sp
+    w = sp.symbols('w')
+    x, y = 1, 2
+    loss = (y - w*x)**2
+    assert sp.diff(loss, w).subs(w, 2) == 0

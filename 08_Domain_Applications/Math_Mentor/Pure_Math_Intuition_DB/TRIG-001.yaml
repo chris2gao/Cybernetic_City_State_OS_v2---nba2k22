@@ -1,4 +1,19 @@
 id: "TRIG-001"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "shape_only_or_shallow_audit_risk"
 title: "三角函数定义 - 发生学溯源：古希腊天文学家测量仰角计算距离的“弦表” (n_162)"
 sub_topics:
   - "希帕求斯与早期弦表的编制"

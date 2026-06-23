@@ -1,5 +1,20 @@
 concept_node:
   id: "ALGEBRA-002"
+  mode: "A"
+  mode_routing_status: "inferred_high_confidence"
+  validation_status: "review_required"
+  bridge_readiness_status: "manual_review_required"
+  formal_definition_status: "missing"
+  prerequisites_status: "missing"
+  mapping_boundary_status: "missing"
+  migration_review:
+    missing_reason:
+      - "formal_definition_absent"
+      - "prerequisite_nodes_absent"
+      - "mapping_boundary_absent"
+    recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+    warnings:
+      - "shape_only_or_shallow_audit_risk"
   concept_name: "绝对值与根式 (absolute_value_and_radicals) - 绝对值方程与绝对值不等式（三角不等式雏形） (n_108)"
   sub_topics:
     - "形如 |x|=a 与 |x-a|=b 的方程解法"

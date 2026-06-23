@@ -1,4 +1,19 @@
 id: "DISCRETE-230"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
 concept_name: "树与网络 - 根树 (Rooted Trees)、二叉树与大模型 MCTS 搜索树结构映射 (n_230)"
 sub_topics:
   - "根、父节点、子节点的层级拓扑"
@@ -7,16 +22,16 @@ sub_topics:
   - "搜索树在启发式博弈中的状态演化"
 llm_physical_mapping: "mundane physical metaphor: like an organizational chart in a company, starting with the CEO at the top, branching down to managers, and finally to individual contributors at the bottom."
 code_implementation: |
-  class TreeNode:
-      def __init__(self, val=0, left=None, right=None):
-          self.val = val
-          self.left = left
-          self.right = right
-          
+  def node(val, left=None, right=None):
+      return {"val": val, "left": left, "right": right}
+
   def count_nodes(root):
-      if not root:
+      if root is None:
           return 0
-      return 1 + count_nodes(root.left) + count_nodes(root.right)
+      return 1 + count_nodes(root["left"]) + count_nodes(root["right"])
+
+  root = node("root", node("left"), node("right"))
+  total_nodes = count_nodes(root)
 v8_sanity_audit:
   sympy_pseudo_code: |
     import networkx as nx

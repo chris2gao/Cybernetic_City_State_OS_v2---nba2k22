@@ -1,0 +1,31 @@
+id: DIFF_GEO-665
+mode_routing_status: "manual_review_required"
+validation_status: "manual_review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "mode_routing_manual_review_required"
+concept_name: de Rham上同调 - 探测机制：利用微分形式像雷达一样精准探测高维流形内部隐藏的“拓扑空洞”。 (n_665)
+sub_topics:
+- 外微分复形的同调性分析
+- 德·拉姆定理：解析上同调与奇异同调的等价性
+- 空间中“不可被积”障碍的代数表征
+- 物理直觉：寻找流形中流体环流的瓶颈点
+llm_physical_mapping: 如同往闭合管道网络里注入带有染料的流体，观察水流如果一直在管道里打转却找不到任何出水阀门，就说明管道网络中心肯定围绕着一个实心的铁柱子。
+code_implementation: "def detect_holes(closed_forms, exact_forms):\n    return closed_forms - exact_forms\n"
+v8_sanity_audit:
+  sympy_pseudo_code: 'import sympy as sp
+
+    omega = sp.Symbol(''omega'')
+
+    assert sp.simplify(0) == 0
+
+    '

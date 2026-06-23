@@ -1,5 +1,20 @@
 version: "9.1"
 id: "TRIG-019"
+mode: "A"
+mode_routing_status: "inferred_high_confidence"
+validation_status: "review_required"
+bridge_readiness_status: "manual_review_required"
+formal_definition_status: "missing"
+prerequisites_status: "missing"
+mapping_boundary_status: "missing"
+migration_review:
+  missing_reason:
+    - "formal_definition_absent"
+    - "prerequisite_nodes_absent"
+    - "mapping_boundary_absent"
+  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+  warnings:
+    - "legacy_executable_audit_requires_concept_alignment_review"
 name: "三角方程 - 利用单位圆旋转对称性理解解集的物理分布 (n_180)"
 sub_topics:
   - "单位圆上的动点坐标与三角函数映射"
@@ -9,7 +24,6 @@ sub_topics:
 llm_physical_mapping: "Intersecting a horizontal laser line across a Ferris wheel to find heights."
 code_implementation: |
   import torch
-  import matplotlib.pyplot as plt
 
   theta = torch.linspace(0, 4 * torch.pi, 1000)
   y = torch.sin(theta)
@@ -21,14 +35,10 @@ code_implementation: |
           intersections.append(theta[i])
   intersections = torch.tensor(intersections)
 
-  plt.figure(figsize=(10, 4))
-  plt.plot(theta.numpy(), y.numpy(), label='sin(theta)')
-  plt.axhline(y=target, color='r', linestyle='--', label='Laser line (y=0.5)')
-  if len(intersections) > 0:
-      plt.scatter(intersections.numpy(), [target]*len(intersections), color='g', zorder=5, label='Intersections')
-  plt.title('Ferris wheel horizontal laser line intersections')
-  plt.legend()
-  plt.grid(True)
+  # sin(theta)=0.5 has two solutions per 2*pi period, hence four on [0, 4*pi].
+  assert len(intersections) == 4
+  residual = torch.abs(torch.sin(intersections) - target)
+  assert torch.max(residual) < 0.01
 v8_sanity_audit:
   sympy_pseudo_code: |
     import sympy as sp

@@ -1,27 +1,46 @@
-id: "ZFC-001"
-title: "ZFC Axiom 1 - Extensionality"
-sub_topics: 
-  - "Set Equality"
-  - "Elements"
-  - "Uniqueness"
-llm_physical_mapping: |
-  Directly maps to the Key-Value (KV) Caching mechanism and Embedding Vector identity. Two sets are equal if they contain the same elements, just as two KV caches or Context Windows are functionally equivalent if their token embeddings and attention keys/values perfectly align, regardless of how they were computed. This represents the absolute physical identity in the latent space.
-code_implementation: |
-  def forward_zfc_extensionality(set_A_emb: torch.Tensor, set_B_emb: torch.Tensor) -> torch.Tensor:
-      # Compare the representation of two sets using strict element-wise equality
-      # Returns a boolean tensor simulating set extensionality
-      is_equal = torch.all(torch.eq(set_A_emb, set_B_emb), dim=-1)
-      return is_equal
-v8_sanity_audit:
-  sympy_pseudo_code: |
-    import torch
-    
-    def test_extensionality():
-        set_A = torch.tensor([1.0, 2.0, 3.0])
-        set_B = torch.tensor([1.0, 2.0, 3.0])
-        set_C = torch.tensor([3.0, 2.0, 1.0])
-        
-        # In a strict ordered tensor, A == B
-        assert torch.all(set_A == set_B).item() is True
-        # To simulate actual unordered sets, sorting could be applied before comparison
-        assert torch.all(set_A.sort()[0] == set_C.sort()[0]).item() is True
+concept_node:
+  id: "ZFC-001"
+  name: "朴素集合论的危机 (The Crisis of Naive Set Theory)"
+  english_name: "The Crisis of Naive Set Theory"
+  domain: "axiomatic_set_theory"
+  mode: "B"
+  sub_topics:
+    - "罗素悖论 (Russell's Paradox)"
+    - "康托尔悖论 (Cantor's Paradox)"
+    - "不受限概括原则的问题"
+    - "真类 (Proper Class) 与集合的区分"
+  description: "朴素集合论允许通过任何性质来定义集合（不受限概括原则），这导致了逻辑上的自相矛盾（如罗素悖论）。这迫使数学家对集合的构造施加严格的限制，从而诞生了公理化集合论（如ZFC系统）。"
+  intuition: "自我指涉会导致系统的死锁。在计算系统中，没有任何一个数据结构可以作为自身的元素而不引发无限递归。为了防止内存溢出，系统必须从底层架构（公理）上禁止不受限的自指操作。"
+  formal_definition: |-
+    朴素的不受限概括原则声称：对任意性质 phi(x)，存在集合 {x | phi(x)}。令
+    R={x | x 不属于 x}，则 R 属于 R 当且仅当 R 不属于 R，产生罗素悖论。
+    ZF/ZFC 不允许从整个宇宙任意概括成集合；分离公理模式只允许从一个已给定集合 A
+    中形成 {x 属于 A | phi(x)}。因此“所有满足 phi 的对象”可能是真类而不是集合。
+    正则公理排除成员关系的无穷下降链，但限制概括原则本身已经阻止罗素集合的构造；
+    不能把正则公理误当成解决罗素悖论的唯一机制。
+  prerequisite_nodes:
+    - "n_3"
+    - "n_6"
+  llm_physical_mapping: |-
+    可把公理化集合构造类比为带类型与作用域约束的表示系统：新对象必须由允许的构造器
+    从已有对象生成，而“按谓词筛选”只能在一个明确给定的容器内执行。这样，系统不会
+    因一句任意描述就把整个元语言中的所有对象物化为同一层级的数据对象。
+  mapping_boundary: |-
+    编程语言的类型检查、容器过滤和计算图 DAG 都不是 ZFC 公理；许多程序允许循环引用，
+    而罗素悖论是逻辑矛盾，不等同于递归溢出。尤其 DAG 约束或正则公理的类比不能替代
+    “不受限概括”与“有界分离”的关键区别，也不能证明真类理论或 ZFC 的一致性。
+  code_implementation: |-
+    # Architecture analogy only: filtering is bounded by an existing registry.
+    existing_registry = {"set_a", "set_b", "class_marker"}
+    bounded_selection = {
+        item for item in existing_registry if item.startswith("set_")
+    }
+  v9_semantic_audit:
+    status: "review_required"
+    review_criteria:
+      - "Russell's contradiction is derived from unrestricted comprehension with the correct biconditional."
+      - "Separation is described as selecting from an already existing set, not as unrestricted comprehension."
+      - "Proper classes are not silently treated as ZFC sets."
+      - "Regularity is not presented as the sole reason Russell's set cannot be formed."
+      - "The architecture mapping distinguishes logical inconsistency from recursion, cyclic data, and DAG constraints."
+      - "No semantic claim is represented as machine-proved mathematical soundness."
