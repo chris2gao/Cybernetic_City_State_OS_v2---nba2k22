@@ -1,6 +1,6 @@
 # Human Brief
 
-P10+ AI handoff protocol evolution is completed in the final master baseline.
-The durable protocol layer now supports completion-preserving long-run tasks, neutral source mailbox bootstrapping, and City-State OS protocol/campaign/audit alignment.
-No active task is running from this source mailbox.
-Future active handoff state should normally live on `ai/review/latest` or a task-specific review branch.
+Plan 3 master bootstrap guidance is completed in the final master baseline.
+The durable bootstrap entrypoint now lives at `06_Silicon_Index/AI_Bootstrap_Sequence.md`.
+The onboarding path uses lazy loading, Human Speaker routing, and Engine A / Engine B separation.
+No active task is running from this source mailbox; future active state should normally live on `ai/review/latest` or a task-specific review branch.
