@@ -1,9 +1,9 @@
 # Human Brief
 
-LRP-01 is completed for review on `dev/math-mentor-lrp-01-teacher-initialization-context-loading-0001`.
+LRP-02 is completed for review on `dev/math-mentor-lrp-02-lesson-plan-agent-contract-0001`.
 
-It adds the Math Mentor teacher initialization flow, context loading rules, and dry-run fixtures, and repairs Coordinator preflight so repository-resident manuals are lazy-loaded by path instead of requiring Human upload.
+It adds the Math Mentor lesson-plan schema, agent handoff contracts, Exam `Cognitive_State_Vector` schema, and bridge-slot teaching contract.
 
-Validation passed for required refs, three new documents, no full repo/Math Mentor ingestion, dry-run coverage, path scope, and scoped secret scan.
+Validation passed for required refs, four new documents, contract semantics, namespace separation, tool-truthfulness wording, no full repo/Math Mentor ingestion, path scope, and scoped secret scan.
 
-Human gate remains required. LRP-02 and later stages were not started.
+Human gate remains required. LRP-03 and later stages were not started.
