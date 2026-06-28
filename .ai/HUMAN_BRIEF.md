@@ -1,9 +1,9 @@
 # Human Brief
 
-P10+ protocol patch is ready for review.
+LRP-01 is completed for review on `dev/math-mentor-lrp-01-teacher-initialization-context-loading-0001`.
 
-Changed only `.ai` protocol, report, and handoff files on `dev/protocol-human-cost-and-drift-control-0001`.
+It adds the Math Mentor teacher initialization flow, context loading rules, and dry-run fixtures, and repairs Coordinator preflight so repository-resident manuals are lazy-loaded by path instead of requiring Human upload.
 
-The patch adds the Human Cost And Drift Control Rule: Human time, attention, and token budget are protected resources, and authorized tasks should not fragment into avoidable cleanup, validation, handoff, closure, or readiness micro-tasks.
+Validation passed for required refs, three new documents, no full repo/Math Mentor ingestion, dry-run coverage, path scope, and scoped secret scan.
 
-Human gate remains required for review. No source branch, master branch, runtime, Coordinator, Math Mentor node, bridge, or evaluator change was authorized or performed.
+Human gate remains required. LRP-02 and later stages were not started.
