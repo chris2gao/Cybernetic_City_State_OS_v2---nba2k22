@@ -1,9 +1,10 @@
-# Human Brief
+# HUMAN_SUMMARY
 
-LRP-05 is completed for review on `dev/math-mentor-lrp-05-student-learning-state-spaced-review-0001`.
+LRP-06 completed for review.
 
-It adds the Math Mentor student learning-state schema, spaced-review scheduler schema, learned-history rules, and graduation criteria.
+- Added capability registry, tool truthfulness policy, deterministic calculation handoff, and visualization/app capability plan.
+- Validation passed for required categories, allowed claim states, no-log wording, semantic-vs-machine distinction, no-runtime boundaries, and changed-file scope.
+- No source branch or master push was performed.
+- No runtime, external app/MCP, deterministic teaching tool, visualization generator, production Coordinator, node, bridge, prompt, evaluator, student-state, learned-history, or scheduler mutation was performed.
 
-Validation passed for required refs, status model, transition tables, evidence provenance, privacy boundaries, scheduler warnings, learned-history bridge gating, graduation boundaries, path scope, scoped secret scan, and git safety.
-
-Human gate remains required. Source branch and master were not pushed. LRP-06 was not started.
+Human/ChatGPT review is required before source publication or any future runtime/tool activation.
