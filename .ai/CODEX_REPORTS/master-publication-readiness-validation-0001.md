@@ -14,7 +14,7 @@ validation_result:
     human_brief: passed
   whitespace:
     working_tree_diff_check: passed
-    branch_diff_check_after_commit: pending_commit
+    branch_diff_check_after_commit: passed
   scope:
     allowed_only: passed
     forbidden_changes: []
@@ -28,4 +28,4 @@ validation_result:
     scoped_secret_scan: passed
 ```
 
-Final branch-level `git diff --check origin/master..HEAD` must be re-run after the cleanup commit because the two-dot form checks committed HEAD rather than the working tree. No master publication is authorized by this report.
+Final branch-level `git diff --check origin/master..origin/dev/protocol-human-cost-and-drift-control-0001` passed after the cleanup commit was pushed. No master publication is authorized by this report.
