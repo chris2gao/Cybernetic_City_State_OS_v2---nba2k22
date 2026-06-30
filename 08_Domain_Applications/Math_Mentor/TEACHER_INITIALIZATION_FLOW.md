@@ -177,4 +177,3 @@ Once ready, the Coordinator transitions to guided teaching:
 5. one compact forcing question per teaching turn unless emitting an interrupt;
 6. Exam Agent handoff only after subtopic coverage and student definition restatement;
 7. spaced-review handoff after Exam Agent trap pass, without claiming long-term graduation.
-

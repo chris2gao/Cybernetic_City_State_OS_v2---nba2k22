@@ -40,4 +40,3 @@ remaining_real_human_decisions_only:
   - "future source publication if accepted"
   - "separate future authorization for any runtime/tool/app/visualization activation"
 ```
-

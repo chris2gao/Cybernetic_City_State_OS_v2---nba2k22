@@ -81,4 +81,3 @@ remaining_real_human_decisions_only:
 known_followup_candidates:
   - "LRP-02 lesson plan schema and agent contract"
   - "LRP-03 teaching prompt consistency repair"
-

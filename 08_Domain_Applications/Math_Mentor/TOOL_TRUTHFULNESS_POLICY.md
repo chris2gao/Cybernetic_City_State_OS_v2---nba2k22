@@ -107,4 +107,3 @@ tool_truthfulness:
 ```
 
 If these fields are absent, use `not_run`, `semantic_only`, `unavailable`, `planned`, or `review_required`.
-

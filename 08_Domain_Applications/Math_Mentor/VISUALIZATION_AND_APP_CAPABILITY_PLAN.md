@@ -80,4 +80,3 @@ Human authorization is required before:
 - [ ] Preserve artifact limitations.
 - [ ] Keep semantic teaching separate from app/runtime execution.
 - [ ] Route unresolved or contradictory visual evidence to `review_required`.
-

@@ -27,4 +27,3 @@ None.
 - Source branch push authorized: no.
 - Master push authorized: no.
 - Force push authorized: no.
-

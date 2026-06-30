@@ -60,4 +60,3 @@ validation_result:
 - `git diff --check` passed.
 
 No Math Mentor runtime, production Coordinator, external app, MCP capability, deterministic calculation capability, visualization generator, student-state write, learned-history write, or scheduler write was activated.
-

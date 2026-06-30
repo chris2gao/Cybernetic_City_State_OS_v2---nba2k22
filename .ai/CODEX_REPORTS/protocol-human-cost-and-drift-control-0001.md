@@ -62,4 +62,3 @@ This task did not authorize or perform:
 - source branch push;
 - master push;
 - force push.
-

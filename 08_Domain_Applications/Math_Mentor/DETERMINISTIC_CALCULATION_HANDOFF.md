@@ -126,4 +126,3 @@ Deterministic handoff must not include:
 - [ ] No semantic-only evidence is labelled as deterministic proof.
 - [ ] Failure states remain visible.
 - [ ] Production Coordinator activation remains separately gated.
-

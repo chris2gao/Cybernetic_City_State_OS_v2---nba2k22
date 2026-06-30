@@ -267,4 +267,3 @@ Must not have:
 - continuing with mixed, unsupported metaphors;
 - claiming semantic or computational validation without evidence;
 - starting LRP-02 or later tasks.
-

@@ -40,4 +40,3 @@ The task intentionally did not read or ingest:
 - every `BRIDGE-*.yaml` file;
 - `数学知识路线图_全部.yaml`;
 - secrets, `.env`, SSH keys, tokens, private keys, or credentials.
-

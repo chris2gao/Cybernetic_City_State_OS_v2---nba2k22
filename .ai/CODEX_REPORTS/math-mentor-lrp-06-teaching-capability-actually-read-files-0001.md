@@ -44,4 +44,3 @@ None.
 ## Read Method
 
 Files were read from the exact LRP-06 working branch created from source head `e2f72682ef5f03732e63c10c9adb9c403cefb95e`. Large or already-known protocol files were read with targeted extraction of headings and lines relevant to capability registration, tool truthfulness, `lesson_plan.tool_truthfulness`, semantic audit boundaries, Human authority, runtime boundaries, and no-fake-tool-execution rules.
-

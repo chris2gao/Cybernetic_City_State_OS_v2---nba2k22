@@ -153,4 +153,3 @@ context_evidence:
 ```
 
 If evidence is unavailable, mark it unavailable and narrow the teaching behavior. Do not guess.
-

@@ -116,15 +116,15 @@ Math Mentor 教师初始化时，不允许全量读取仓库。
 
 输出判断：
 
-task\_classification**:**  
-  city\_state\_engine**:** Engine\_B  
-  domain\_application**:** Math\_Mentor  
-  human\_speaker\_gate**:** not\_required\_if\_teaching\_within\_existing\_scope  
-  forbidden\_actions**:**  
-    **\-** no runtime activation  
-    **\-** no Coordinator activation  
-    **\-** no node generation  
-    **\-** no bridge generation  
+task\_classification**:**
+  city\_state\_engine**:** Engine\_B
+  domain\_application**:** Math\_Mentor
+  human\_speaker\_gate**:** not\_required\_if\_teaching\_within\_existing\_scope
+  forbidden\_actions**:**
+    **\-** no runtime activation
+    **\-** no Coordinator activation
+    **\-** no node generation
+    **\-** no bridge generation
     **\-** no master push
 
 ### Stage 1：Math Mentor domain payload 加载
@@ -219,10 +219,10 @@ Coordinator 不应该：
 
 建议后续改名或加 namespace：
 
-Plan3\_Engine\_A**:** code\_and\_deterministic\_execution  
+Plan3\_Engine\_A**:** code\_and\_deterministic\_execution
 Plan3\_Engine\_B**:** knowledge\_entropy\_and\_human\_moderated\_court
 
-MathLane\_A**:** computable\_algebra\_lane  
+MathLane\_A**:** computable\_algebra\_lane
 MathLane\_B**:** pure\_structure\_lane
 
 #### *MathLane A：Computable Algebra Lane*
@@ -307,41 +307,41 @@ student\_request**:** "我想学习 n\_15 映射"
 
 Coordinator 应输出：
 
-target\_node**:**  
-  id**:** n\_15  
-  name**:** 映射  
-  lane**:** MathLane\_A  
-routing\_basis**:**  
-  **\-** domain  
-  **\-** subdomain  
-  **\-** node metadata  
-loaded\_context**:**  
-  **\-** target node  
-  **\-** immediate prerequisites  
-  **\-** matching bridge only  
-  **\-** learned history  
+target\_node**:**
+  id**:** n\_15
+  name**:** 映射
+  lane**:** MathLane\_A
+routing\_basis**:**
+  **\-** domain
+  **\-** subdomain
+  **\-** node metadata
+loaded\_context**:**
+  **\-** target node
+  **\-** immediate prerequisites
+  **\-** matching bridge only
+  **\-** learned history
   **\-** next roadmap node
 
 同时输出一次压缩 \[SYSTEM\_STATE\_DUMP\]：
 
-{  
-  "Target\_Node": "n\_15 映射",  
-  "Math\_Lane": "MathLane\_A",  
-  "Routing\_Basis": "domain/subdomain rule",  
-  "Core\_Definition": "...",  
-  "Sub\_Topics": \["..."\],  
-  "Bridge\_Slots": \[  
-    {  
-      "Node\_ID": "BRIDGE-XXX",  
-      "Name": "...",  
-      "Bridge\_Type": "...",  
-      "Learned\_Status": "learned | teaser\_only",  
-      "Connection": "..."  
-    }  
-  \],  
-  "Next\_Node\_Outlook": "...",  
-  "Mapping\_Status": "...",  
-  "Current\_Agent\_Active": "Guided\_Socratic\_Router"  
+{
+  "Target\_Node": "n\_15 映射",
+  "Math\_Lane": "MathLane\_A",
+  "Routing\_Basis": "domain/subdomain rule",
+  "Core\_Definition": "...",
+  "Sub\_Topics": \["..."\],
+  "Bridge\_Slots": \[
+    {
+      "Node\_ID": "BRIDGE-XXX",
+      "Name": "...",
+      "Bridge\_Type": "...",
+      "Learned\_Status": "learned | teaser\_only",
+      "Connection": "..."
+    }
+  \],
+  "Next\_Node\_Outlook": "...",
+  "Mapping\_Status": "...",
+  "Current\_Agent\_Active": "Guided\_Socratic\_Router"
 }
 
 ### Phase 2：Prep\_Architect 后台备课
@@ -358,77 +358,77 @@ Prep\_Architect 负责生成 lesson\_plan.json。
 
 建议 lesson\_plan schema：
 
-{  
-  "target\_node": {  
-    "id": "n\_xxx",  
-    "name": "...",  
-    "definition": "...",  
-    "math\_lane": "MathLane\_A | MathLane\_B",  
-    "routing\_basis": "..."  
-  },  
-  "student\_state": {  
-    "known\_nodes": \[\],  
-    "blocked\_prerequisites": \[\],  
-    "misconceptions": \[\],  
-    "frustration\_index": 0  
-  },  
-  "subtopic\_plan": \[  
-    {  
-      "subtopic\_id": "s1",  
-      "name": "...",  
-      "role": "core | auxiliary",  
-      "explanation\_goal": "...",  
-      "forcing\_question": "...",  
-      "completion\_check": "..."  
-    }  
-  \],  
-  "occurrence\_crisis": {  
-    "old\_tool\_failure": "...",  
-    "why\_this\_concept\_must\_exist": "..."  
-  },  
-  "intuition\_model": {  
-    "kind": "everyday\_physical | llm\_architecture | mixed\_transition",  
-    "content": "...",  
-    "limitation": "..."  
-  },  
-  "formal\_compression": {  
-    "definition": "...",  
-    "boundary\_conditions": \[\],  
-    "common\_counterexamples": \[\]  
-  },  
-  "bridge\_slots": \[  
-    {  
-      "bridge\_id": "BRIDGE-XXX",  
-      "node\_id": "n\_xxx",  
-      "name": "...",  
-      "learned\_status": "learned | teaser\_only | hidden",  
-      "connection": "...",  
-      "forcing\_question": "..."  
-    }  
-  \],  
-  "exam\_handoff\_conditions": {  
-    "all\_subtopics\_covered": **true**,  
-    "definition\_restatement\_required": **true**,  
-    "trap\_direction": "..."  
-  },  
-  "reprep\_triggers": {  
-    "metaphor\_failure": "...",  
-    "student\_frustration\_threshold": 3  
-  }  
+{
+  "target\_node": {
+    "id": "n\_xxx",
+    "name": "...",
+    "definition": "...",
+    "math\_lane": "MathLane\_A | MathLane\_B",
+    "routing\_basis": "..."
+  },
+  "student\_state": {
+    "known\_nodes": \[\],
+    "blocked\_prerequisites": \[\],
+    "misconceptions": \[\],
+    "frustration\_index": 0
+  },
+  "subtopic\_plan": \[
+    {
+      "subtopic\_id": "s1",
+      "name": "...",
+      "role": "core | auxiliary",
+      "explanation\_goal": "...",
+      "forcing\_question": "...",
+      "completion\_check": "..."
+    }
+  \],
+  "occurrence\_crisis": {
+    "old\_tool\_failure": "...",
+    "why\_this\_concept\_must\_exist": "..."
+  },
+  "intuition\_model": {
+    "kind": "everyday\_physical | llm\_architecture | mixed\_transition",
+    "content": "...",
+    "limitation": "..."
+  },
+  "formal\_compression": {
+    "definition": "...",
+    "boundary\_conditions": \[\],
+    "common\_counterexamples": \[\]
+  },
+  "bridge\_slots": \[
+    {
+      "bridge\_id": "BRIDGE-XXX",
+      "node\_id": "n\_xxx",
+      "name": "...",
+      "learned\_status": "learned | teaser\_only | hidden",
+      "connection": "...",
+      "forcing\_question": "..."
+    }
+  \],
+  "exam\_handoff\_conditions": {
+    "all\_subtopics\_covered": **true**,
+    "definition\_restatement\_required": **true**,
+    "trap\_direction": "..."
+  },
+  "reprep\_triggers": {
+    "metaphor\_failure": "...",
+    "student\_frustration\_threshold": 3
+  }
 }
 
 ### Phase 3：Guided Socratic Router 前台教学
 
 教学顺序必须是：
 
-发生学危机  
-→ 直觉模型  
-→ 形式压缩  
-→ bridge slot 激活  
-→ sub\_topics 全覆盖  
-→ 追问验证  
-→ 错误修复  
-→ 学生复述定义  
+发生学危机
+→ 直觉模型
+→ 形式压缩
+→ bridge slot 激活
+→ sub\_topics 全覆盖
+→ 追问验证
+→ 错误修复
+→ 学生复述定义
 → Exam handoff
 
 核心原则：
@@ -479,12 +479,12 @@ Exam\_Agent 不教学，只验收。
 
 输入：
 
-{  
-  "Cognitive\_State\_Vector": {  
-    "Struggled\_Concept": "...",  
-    "False\_Intuition": "...",  
-    "Recommended\_Trap\_Direction": "..."  
-  }  
+{
+  "Cognitive\_State\_Vector": {
+    "Struggled\_Concept": "...",
+    "False\_Intuition": "...",
+    "Recommended\_Trap\_Direction": "..."
+  }
 }
 
 验收两阶段：
@@ -511,7 +511,7 @@ Exam\_Agent 中有“briefly praise”的旧表述，和 Coordinator 的“不�
 
 后续应统一为结构性确认：
 
-VALIDATION COMPLETE.  
+VALIDATION COMPLETE.
 你识别的是定义边界，而不是靠直觉蒙对。
 
 ### Phase 5：学习历史与间隔复习
@@ -520,11 +520,11 @@ VALIDATION COMPLETE.
 
 状态层级：
 
-learning\_status**:**  
-  not\_seen**:** 未学  
-  classroom\_passed**:** 课堂通过  
-  spaced\_review\_due**:** 待复习  
-  spaced\_review\_passed**:** 复习通过  
+learning\_status**:**
+  not\_seen**:** 未学
+  classroom\_passed**:** 课堂通过
+  spaced\_review\_due**:** 待复习
+  spaced\_review\_passed**:** 复习通过
   graduated**:** 长期毕业
 
 证据优先级：
@@ -547,7 +547,7 @@ node\_id\_comparison\_implies\_mastery**:** false
 
 后续需要新增：
 
-08\_Domain\_Applications/Math\_Mentor/STUDENT\_LEARNING\_STATE\_SCHEMA.md  
+08\_Domain\_Applications/Math\_Mentor/STUDENT\_LEARNING\_STATE\_SCHEMA.md
 08\_Domain\_Applications/Math\_Mentor/SPACED\_REVIEW\_SCHEDULER\_SCHEMA.md
 
 ---
@@ -670,14 +670,14 @@ node\_id\_comparison\_implies\_mastery**:** false
 
 检查项：
 
-static\_consistency\_checks**:**  
-  **\-** no\_full\_repo\_ingestion\_required  
-  **\-** coordinator\_preflight\_uses\_lazy\_load  
-  **\-** plan3\_engine\_ab\_not\_confused\_with\_mathlane\_ab  
-  **\-** socratic\_router\_teach\_before\_interrogation  
-  **\-** no\_fake\_tool\_execution\_claim  
-  **\-** exam\_agent\_uses\_structural\_feedback  
-  **\-** bridge\_learned\_history\_rule\_preserved  
+static\_consistency\_checks**:**
+  **\-** no\_full\_repo\_ingestion\_required
+  **\-** coordinator\_preflight\_uses\_lazy\_load
+  **\-** plan3\_engine\_ab\_not\_confused\_with\_mathlane\_ab
+  **\-** socratic\_router\_teach\_before\_interrogation
+  **\-** no\_fake\_tool\_execution\_claim
+  **\-** exam\_agent\_uses\_structural\_feedback
+  **\-** bridge\_learned\_history\_rule\_preserved
   **\-** lesson\_plan\_schema\_exists
 
 通过标准：
@@ -698,14 +698,14 @@ user\_request**:** "我想学习 n\_15 映射"
 
 期望输出：
 
-expected**:**  
-  **\-** reads AI\_Bootstrap\_Sequence  
-  **\-** classifies task as Engine\_B domain teaching  
-  **\-** loads Math Mentor Coordinator  
-  **\-** loads Teaching Flow Spec  
-  **\-** locates target node  
-  **\-** loads only target node and matching bridges  
-  **\-** emits SYSTEM\_STATE\_DUMP  
+expected**:**
+  **\-** reads AI\_Bootstrap\_Sequence
+  **\-** classifies task as Engine\_B domain teaching
+  **\-** loads Math Mentor Coordinator
+  **\-** loads Teaching Flow Spec
+  **\-** locates target node
+  **\-** loads only target node and matching bridges
+  **\-** emits SYSTEM\_STATE\_DUMP
   **\-** does not dump full YAML
 
 ### Gate 3：lesson\_plan schema validation
@@ -714,75 +714,75 @@ expected**:**
 
 检查项：
 
-lesson\_plan\_schema\_checks**:**  
-  **\-** target\_node present  
-  **\-** math\_lane present  
-  **\-** routing\_basis present  
-  **\-** subtopic\_plan complete  
-  **\-** occurrence\_crisis present  
-  **\-** intuition\_model present  
-  **\-** formal\_compression present  
-  **\-** bridge\_slots present  
-  **\-** exam\_handoff\_conditions present  
+lesson\_plan\_schema\_checks**:**
+  **\-** target\_node present
+  **\-** math\_lane present
+  **\-** routing\_basis present
+  **\-** subtopic\_plan complete
+  **\-** occurrence\_crisis present
+  **\-** intuition\_model present
+  **\-** formal\_compression present
+  **\-** bridge\_slots present
+  **\-** exam\_handoff\_conditions present
   **\-** reprep\_triggers present
 
 ### Gate 4：教学 golden tests
 
 至少四个 golden cases：
 
-golden\_cases**:**  
-  mode\_a\_basic**:**  
-    target**:** basic algebra / mapping / derivative  
-    must\_have**:**  
-      **\-** occurrence crisis  
-      **\-** everyday physical intuition  
-      **\-** formal compression  
-      **\-** one short question  
-    must\_not\_have**:**  
-      **\-** sci-fi trope  
+golden\_cases**:**
+  mode\_a\_basic**:**
+    target**:** basic algebra / mapping / derivative
+    must\_have**:**
+      **\-** occurrence crisis
+      **\-** everyday physical intuition
+      **\-** formal compression
+      **\-** one short question
+    must\_not\_have**:**
+      **\-** sci-fi trope
       **\-** attention mechanism as main metaphor
 
-  mode\_b\_abstract**:**  
-    target**:** compactness / topology / functional analysis  
-    must\_have**:**  
-      **\-** MathLane\_B routing  
-      **\-** LLM architecture mapping  
-      **\-** semantic audit fallback  
-    must\_not\_have**:**  
-      **\-** everyday object as canonical metaphor  
+  mode\_b\_abstract**:**
+    target**:** compactness / topology / functional analysis
+    must\_have**:**
+      **\-** MathLane\_B routing
+      **\-** LLM architecture mapping
+      **\-** semantic audit fallback
+    must\_not\_have**:**
+      **\-** everyday object as canonical metaphor
       **\-** fake Z3 verification
 
-  bridge\_slot**:**  
-    must\_have**:**  
-      **\-** node id or bridge id  
-      **\-** concept name  
-      **\-** one-sentence connection  
+  bridge\_slot**:**
+    must\_have**:**
+      **\-** node id or bridge id
+      **\-** concept name
+      **\-** one-sentence connection
       **\-** comprehension check
 
-  tool\_truthfulness**:**  
-    no\_actual\_tool\_log**:** true  
-    must\_not\_have**:**  
-      **\-** "I already ran Z3"  
-      **\-** "the calculator verified"  
-    must\_have**:**  
-      **\-** "can be verified by tool"  
+  tool\_truthfulness**:**
+    no\_actual\_tool\_log**:** true
+    must\_not\_have**:**
+      **\-** "I already ran Z3"
+      **\-** "the calculator verified"
+    must\_have**:**
+      **\-** "can be verified by tool"
       **\-** "semantic audit only"
 
 ### Gate 5：E2E 教学 session simulation
 
 完整模拟：
 
-student request  
-→ bootstrap  
-→ coordinator state dump  
-→ prep lesson\_plan.json  
-→ guided teaching  
-→ student wrong once  
-→ repair question  
-→ student restates definition  
-→ exam handoff  
-→ exam trap  
-→ node cleared  
+student request
+→ bootstrap
+→ coordinator state dump
+→ prep lesson\_plan.json
+→ guided teaching
+→ student wrong once
+→ repair question
+→ student restates definition
+→ exam handoff
+→ exam trap
+→ node cleared
 → spaced review update or missing scheduler warning
 
 通过标准：
@@ -799,27 +799,27 @@ student request
 
 后续应补齐以下文件：
 
-recommended\_files**:**  
-  **\-** 08\_Domain\_Applications/Math\_Mentor/TEACHER\_INITIALIZATION\_FLOW.md  
-  **\-** 08\_Domain\_Applications/Math\_Mentor/LESSON\_PLAN\_SCHEMA.md  
-  **\-** 08\_Domain\_Applications/Math\_Mentor/TEACHING\_SYSTEM\_TEST\_PLAN.md  
-  **\-** 08\_Domain\_Applications/Math\_Mentor/TEACHING\_PROMPT\_CONSISTENCY\_AUDIT.md  
-  **\-** 08\_Domain\_Applications/Math\_Mentor/STUDENT\_LEARNING\_STATE\_SCHEMA.md  
+recommended\_files**:**
+  **\-** 08\_Domain\_Applications/Math\_Mentor/TEACHER\_INITIALIZATION\_FLOW.md
+  **\-** 08\_Domain\_Applications/Math\_Mentor/LESSON\_PLAN\_SCHEMA.md
+  **\-** 08\_Domain\_Applications/Math\_Mentor/TEACHING\_SYSTEM\_TEST\_PLAN.md
+  **\-** 08\_Domain\_Applications/Math\_Mentor/TEACHING\_PROMPT\_CONSISTENCY\_AUDIT.md
+  **\-** 08\_Domain\_Applications/Math\_Mentor/STUDENT\_LEARNING\_STATE\_SCHEMA.md
   **\-** 08\_Domain\_Applications/Math\_Mentor/SPACED\_REVIEW\_SCHEDULER\_SCHEMA.md
 
 优先级：
 
-priority\_order**:**  
-  P0**:**  
-    **\-** TEACHER\_INITIALIZATION\_FLOW.md  
-    **\-** LESSON\_PLAN\_SCHEMA.md  
-    **\-** TEACHING\_PROMPT\_CONSISTENCY\_AUDIT.md  
-    **\-** TEACHING\_SYSTEM\_TEST\_PLAN.md  
-  P1**:**  
-    **\-** STUDENT\_LEARNING\_STATE\_SCHEMA.md  
-    **\-** SPACED\_REVIEW\_SCHEDULER\_SCHEMA.md  
-  P2**:**  
-    **\-** golden teaching fixtures  
+priority\_order**:**
+  P0**:**
+    **\-** TEACHER\_INITIALIZATION\_FLOW.md
+    **\-** LESSON\_PLAN\_SCHEMA.md
+    **\-** TEACHING\_PROMPT\_CONSISTENCY\_AUDIT.md
+    **\-** TEACHING\_SYSTEM\_TEST\_PLAN.md
+  P1**:**
+    **\-** STUDENT\_LEARNING\_STATE\_SCHEMA.md
+    **\-** SPACED\_REVIEW\_SCHEDULER\_SCHEMA.md
+  P2**:**
+    **\-** golden teaching fixtures
     **\-** E2E teaching simulation logs
 
 ---
@@ -832,26 +832,26 @@ task\_id**:** math-mentor-teacher-initialization-and-teaching-test-plan-0001
 
 目标：
 
-objective**:**  
+objective**:**
   Complete the Math Mentor teacher initialization, lesson plan schema, prompt consistency audit, and teaching system test plan as one coherent design-and-validation task.
 
 建议输出：
 
-expected\_outputs**:**  
-  **\-** 08\_Domain\_Applications/Math\_Mentor/TEACHER\_INITIALIZATION\_FLOW.md  
-  **\-** 08\_Domain\_Applications/Math\_Mentor/LESSON\_PLAN\_SCHEMA.md  
-  **\-** 08\_Domain\_Applications/Math\_Mentor/TEACHING\_SYSTEM\_TEST\_PLAN.md  
-  **\-** 08\_Domain\_Applications/Math\_Mentor/TEACHING\_PROMPT\_CONSISTENCY\_AUDIT.md  
+expected\_outputs**:**
+  **\-** 08\_Domain\_Applications/Math\_Mentor/TEACHER\_INITIALIZATION\_FLOW.md
+  **\-** 08\_Domain\_Applications/Math\_Mentor/LESSON\_PLAN\_SCHEMA.md
+  **\-** 08\_Domain\_Applications/Math\_Mentor/TEACHING\_SYSTEM\_TEST\_PLAN.md
+  **\-** 08\_Domain\_Applications/Math\_Mentor/TEACHING\_PROMPT\_CONSISTENCY\_AUDIT.md
   **\-** .ai/CODEX\_REPORTS/math-mentor-teacher-initialization-and-teaching-test-plan-0001.md
 
 禁止：
 
-must\_not\_do**:**  
-  **\-** no new node generation  
-  **\-** no bridge generation  
-  **\-** no runtime activation  
-  **\-** no Coordinator activation  
-  **\-** no master push unless separately authorized  
+must\_not\_do**:**
+  **\-** no new node generation
+  **\-** no bridge generation
+  **\-** no runtime activation
+  **\-** no Coordinator activation
+  **\-** no master push unless separately authorized
   **\-** no fake tool execution claims
 
 ---
@@ -890,9 +890,9 @@ Math Mentor Teaching System 的理念与主干已经成立：
 
 因此，下一步不是直接开大规模授课，而是先完成：
 
-教师初始化流程  
-\+ lesson\_plan schema  
-\+ prompt 一致性审计  
+教师初始化流程
+\+ lesson\_plan schema
+\+ prompt 一致性审计
 \+ 教学系统测试计划
 
 完成这四项后，Math Mentor 才能进入可回归验证的教学系统阶段。

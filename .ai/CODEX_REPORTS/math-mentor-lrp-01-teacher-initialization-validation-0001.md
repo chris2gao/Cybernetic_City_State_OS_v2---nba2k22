@@ -57,4 +57,3 @@ rg -n "full repository|full Math Mentor|full-repository|full Math Mentor directo
 rg -n "^## Dry Run" 08_Domain_Applications/Math_Mentor/TEACHER_INITIALIZATION_DRY_RUNS.md
 git diff --check
 ```
-

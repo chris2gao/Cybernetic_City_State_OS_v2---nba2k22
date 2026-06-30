@@ -108,4 +108,3 @@ A future runtime task must satisfy all of these before this registry can be used
 - The result maps back into `lesson_plan.tool_truthfulness`.
 - Failures map to `unavailable`, `review_required`, or `not_run`, not fake success.
 - Production Coordinator activation remains separately authorized.
-
