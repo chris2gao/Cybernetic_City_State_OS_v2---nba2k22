@@ -6,7 +6,8 @@ status: completed_for_review
 ```yaml
 validation_result:
   source_before_head: "70b983087621c4127f52e8804393896f2e3bfe4c"
-  source_after_head: "8be50921d26aec318f6a404cc3166ef46b717c22"
+  source_after_head: "recorded_in_ai_review_latest_handoff_after_source_push"
+  source_after_head_resolution: "The exact final source commit cannot be embedded in the same source commit that contains this file; ai/review/latest records the post-push source head."
   master_head: "eb918a55becefe609e27723073a38be319f10586"
   source_branch:
     expected: "dev/protocol-human-cost-and-drift-control-0001"
