@@ -1,9 +1,10 @@
-# HUMAN_SUMMARY
+# Human Brief: Math Mentor Teaching Flow Prompt Repair
 
-Source branch is being prepared as a neutral baseline for master publication readiness.
+Math Mentor teaching-flow and learning-period prompts were repaired for manual chat-based teaching tests.
 
-- Math Mentor LRP-01 through LRP-06 are closed on the source branch.
-- Active LRP-06 mailbox state has been neutralized for source publication hygiene.
-- Current source head after readiness evidence repair is recorded in the final `ai/review/latest` handoff.
-- Master has not been pushed.
-- Master publication still requires separate Human authorization.
+- Updated Teaching Flow Spec, Coordinator, Prep, Socratic, and Exam prompts.
+- Aligned prompt behavior with LRP-01 through LRP-06 contracts.
+- Manual test readiness: true.
+- No runtime, production Coordinator, tools, apps, visualization, node/bridge generation, or learning-state/scheduler write was performed.
+
+Human gate: review required before using this branch as the next accepted baseline.
