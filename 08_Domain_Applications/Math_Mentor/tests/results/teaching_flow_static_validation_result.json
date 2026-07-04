@@ -189,10 +189,10 @@
       "failure_reason": null
     },
     {
-      "test_id": "fixture.CALCULUS_265.request_reprep_mathlane_a",
+      "test_id": "fixture.CALCULUS_265.ready_mathlane_a",
       "status": "pass",
       "evidence": [
-        "{\"exam_handoff_allowed\": false, \"fake_sympy_execution_claim_produced\": false, \"formal_definition_status\": \"missing\", \"handoff_status\": \"request_reprep\", \"has_subtopics\": true, \"lane\": \"MathLane_A\", \"mapping_boundary_status\": \"missing\", \"node_id\": \"CALCULUS-265\", \"prerequisites_status\": \"missing\", \"scheduler_write\": false, \"socratic_teaching_allowed\": false, \"subtopic_count\": 5, \"tool_status\": \"not_run\"}"
+        "{\"exam_handoff_allowed_after_coverage\": true, \"fake_sympy_execution_claim_produced\": false, \"formal_definition_status\": \"present\", \"handoff_status\": \"ready\", \"has_common_misconceptions\": true, \"has_mapping_boundary\": true, \"has_physical_intuition\": true, \"has_pure_math_definition\": true, \"has_required_prerequisites\": true, \"has_subtopics\": true, \"lane\": \"MathLane_A\", \"mapping_boundary_status\": \"present\", \"node_id\": \"CALCULUS-265\", \"prerequisites_status\": \"present\", \"scheduler_write\": false, \"socratic_teaching_allowed\": true, \"subtopic_count\": 5, \"tool_status\": \"not_run\"}"
       ],
       "failure_reason": null
     }
@@ -220,9 +220,10 @@
     "CALCULUS_265": {
       "status": "pass",
       "expected_behavior": {
-        "handoff_status": "request_reprep",
-        "socratic_teaching_allowed": false,
-        "exam_handoff_allowed": false,
+        "handoff_status": "ready",
+        "socratic_teaching_allowed": true,
+        "exam_handoff_allowed_after_coverage": true,
+        "tool_status": "not_run",
         "scheduler_write": false
       },
       "observed_signals": {
@@ -230,12 +231,17 @@
         "lane": "MathLane_A",
         "subtopic_count": 5,
         "has_subtopics": true,
-        "formal_definition_status": "missing",
-        "prerequisites_status": "missing",
-        "mapping_boundary_status": "missing",
-        "handoff_status": "request_reprep",
-        "socratic_teaching_allowed": false,
-        "exam_handoff_allowed": false,
+        "formal_definition_status": "present",
+        "prerequisites_status": "present",
+        "mapping_boundary_status": "present",
+        "has_pure_math_definition": true,
+        "has_required_prerequisites": true,
+        "has_mapping_boundary": true,
+        "has_physical_intuition": true,
+        "has_common_misconceptions": true,
+        "handoff_status": "ready",
+        "socratic_teaching_allowed": true,
+        "exam_handoff_allowed_after_coverage": true,
         "tool_status": "not_run",
         "scheduler_write": false,
         "fake_sympy_execution_claim_produced": false

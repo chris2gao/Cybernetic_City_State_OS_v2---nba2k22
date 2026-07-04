@@ -141,7 +141,9 @@ def load_expected_fixture(name: str) -> dict[str, Any]:
 
 
 def infer_tool_status_from_node(text: str) -> str:
-    if "run_with_log" in text and "log_ref" in text:
+    has_run_with_log = re.search(r"(?m)^\s*tool_status:\s*['\"]?run_with_log['\"]?\s*$", text) is not None
+    has_non_null_log_ref = re.search(r"(?m)^\s*log_ref:\s*(?!null\s*$)(?!None\s*$).+", text) is not None
+    if has_run_with_log and has_non_null_log_ref:
         return "run_with_log"
     return "not_run"
 
@@ -299,17 +301,32 @@ def validate_trig_fixture(results: list[CheckResult]) -> dict[str, Any]:
 def validate_calculus_fixture(results: list[CheckResult]) -> dict[str, Any]:
     expected = load_expected_fixture("calculus_265_expected.json")
     text = read_text(expected["source_file"])
+    formal_status = field_value(text, "formal_definition_status")
+    prerequisites_status = field_value(text, "prerequisites_status")
+    mapping_boundary_status = field_value(text, "mapping_boundary_status")
+    handoff_status = "ready" if (
+        formal_status == "present"
+        and prerequisites_status == "present"
+        and mapping_boundary_status == "present"
+    ) else "request_reprep"
+    socratic_allowed = handoff_status == "ready"
+    exam_allowed = handoff_status == "ready"
     observed = {
         "node_id": field_value(text, "id"),
         "lane": mode_to_lane(field_value(text, "mode")),
         "subtopic_count": count_yaml_list_items(text, "sub_topics"),
         "has_subtopics": count_yaml_list_items(text, "sub_topics") > 0,
-        "formal_definition_status": field_value(text, "formal_definition_status"),
-        "prerequisites_status": field_value(text, "prerequisites_status"),
-        "mapping_boundary_status": field_value(text, "mapping_boundary_status"),
-        "handoff_status": "request_reprep",
-        "socratic_teaching_allowed": False,
-        "exam_handoff_allowed": False,
+        "formal_definition_status": formal_status,
+        "prerequisites_status": prerequisites_status,
+        "mapping_boundary_status": mapping_boundary_status,
+        "has_pure_math_definition": has_key(text, "pure_math_definition"),
+        "has_required_prerequisites": has_key(text, "required_prerequisites"),
+        "has_mapping_boundary": has_key(text, "mapping_boundary"),
+        "has_physical_intuition": has_key(text, "physical_intuition"),
+        "has_common_misconceptions": has_key(text, "common_misconceptions"),
+        "handoff_status": handoff_status,
+        "socratic_teaching_allowed": socratic_allowed,
+        "exam_handoff_allowed_after_coverage": exam_allowed,
         "tool_status": infer_tool_status_from_node(text),
         "scheduler_write": False,
         "fake_sympy_execution_claim_produced": False,
@@ -317,7 +334,8 @@ def validate_calculus_fixture(results: list[CheckResult]) -> dict[str, Any]:
     expected_behavior = {
         "handoff_status": expected["expected_handoff_status"],
         "socratic_teaching_allowed": expected["expected_socratic_teaching_allowed"],
-        "exam_handoff_allowed": expected["expected_exam_handoff_allowed"],
+        "exam_handoff_allowed_after_coverage": expected["expected_exam_handoff_allowed_after_coverage"],
+        "tool_status": expected["expected_tool_status"],
         "scheduler_write": expected["expected_scheduler_write"],
     }
     checks = [
@@ -328,19 +346,26 @@ def validate_calculus_fixture(results: list[CheckResult]) -> dict[str, Any]:
         observed["formal_definition_status"] == expected["formal_definition_status"],
         observed["prerequisites_status"] == expected["prerequisites_status"],
         observed["mapping_boundary_status"] == expected["mapping_boundary_status"],
+        observed["has_pure_math_definition"],
+        observed["has_required_prerequisites"],
+        observed["has_mapping_boundary"],
+        observed["has_physical_intuition"],
+        observed["has_common_misconceptions"],
         observed["handoff_status"] == expected["expected_handoff_status"],
         observed["socratic_teaching_allowed"] == expected["expected_socratic_teaching_allowed"],
-        observed["exam_handoff_allowed"] == expected["expected_exam_handoff_allowed"],
+        observed["exam_handoff_allowed_after_coverage"] == expected["expected_exam_handoff_allowed_after_coverage"],
+        observed["tool_status"] == expected["expected_tool_status"],
         observed["scheduler_write"] == expected["expected_scheduler_write"],
         not observed["fake_sympy_execution_claim_produced"],
     ]
     passed = all(checks)
+    expected_status = expected["expected_handoff_status"]
     add_check(
         results,
-        "fixture.CALCULUS_265.request_reprep_mathlane_a",
+        f"fixture.CALCULUS_265.{expected_status}_mathlane_a",
         passed,
         [json.dumps(observed, ensure_ascii=False, sort_keys=True)],
-        "CALCULUS-265 did not match expected request_reprep fixture signals.",
+        f"CALCULUS-265 did not match expected {expected_status} fixture signals.",
     )
     return {
         "status": "pass" if passed else "fail",

@@ -1,12 +1,13 @@
-# Human Brief: Teaching Flow Automated Test Harness
+# Human Brief: CALCULUS-265 Semantic Repair
 
-A deterministic no-runtime test harness was added for Math Mentor manual teaching-flow readiness.
+`CALCULUS-265.yaml` was repaired as a clean `MathLane_A` teaching node for the derivative-intuition lesson.
 
-- Validator: `08_Domain_Applications/Math_Mentor/tests/teaching_flow_static_validator.py`
-- JSON result: `08_Domain_Applications/Math_Mentor/tests/results/teaching_flow_static_validation_result.json`
-- Markdown result: `08_Domain_Applications/Math_Mentor/tests/results/teaching_flow_static_validation_result.md`
-- Automated tests passed: true.
-- Manual teaching test next ready: true.
-- No runtime, LLM, tool/app/MCP, teaching execution, node/bridge generation, schema mutation, or scheduler/state write was performed.
+- Formal definition status: present.
+- Prerequisites status: present.
+- Mapping boundary status: present.
+- Fixture expectation changed from `request_reprep` to `ready`.
+- Deterministic validator result: pass.
+- CALCULUS-265 fixture status: pass.
+- No runtime, LLM, external tool/app/MCP, teaching execution, bridge generation, schema mutation, or scheduler/state write was performed.
 
 Human gate: review required after completion.

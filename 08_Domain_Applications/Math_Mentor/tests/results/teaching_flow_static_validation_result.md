@@ -14,8 +14,8 @@ repo_head_assumed: d447653ec035fe57832f24a192d5dceaf6b23c11
 ### CALCULUS_265
 
 - status: pass
-- expected_behavior: `{"exam_handoff_allowed": false, "handoff_status": "request_reprep", "scheduler_write": false, "socratic_teaching_allowed": false}`
-- observed_signals: `{"exam_handoff_allowed": false, "fake_sympy_execution_claim_produced": false, "formal_definition_status": "missing", "handoff_status": "request_reprep", "has_subtopics": true, "lane": "MathLane_A", "mapping_boundary_status": "missing", "node_id": "CALCULUS-265", "prerequisites_status": "missing", "scheduler_write": false, "socratic_teaching_allowed": false, "subtopic_count": 5, "tool_status": "not_run"}`
+- expected_behavior: `{"exam_handoff_allowed_after_coverage": true, "handoff_status": "ready", "scheduler_write": false, "socratic_teaching_allowed": true, "tool_status": "not_run"}`
+- observed_signals: `{"exam_handoff_allowed_after_coverage": true, "fake_sympy_execution_claim_produced": false, "formal_definition_status": "present", "handoff_status": "ready", "has_common_misconceptions": true, "has_mapping_boundary": true, "has_physical_intuition": true, "has_pure_math_definition": true, "has_required_prerequisites": true, "has_subtopics": true, "lane": "MathLane_A", "mapping_boundary_status": "present", "node_id": "CALCULUS-265", "prerequisites_status": "present", "scheduler_write": false, "socratic_teaching_allowed": true, "subtopic_count": 5, "tool_status": "not_run"}`
 
 ## Tests
 
@@ -79,7 +79,7 @@ repo_head_assumed: d447653ec035fe57832f24a192d5dceaf6b23c11
 - status: pass
 - failure_reason: None
 
-### fixture.CALCULUS_265.request_reprep_mathlane_a
+### fixture.CALCULUS_265.ready_mathlane_a
 
 - status: pass
 - failure_reason: None
