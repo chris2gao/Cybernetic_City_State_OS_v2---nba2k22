@@ -34,4 +34,3 @@ Read method: physical repository reads using PowerShell `Get-Content -Raw`, targ
 - no full `Pure_Math_Intuition_DB` scan;
 - no secrets, `.env`, SSH keys, tokens, private keys, or private student data;
 - no LLM, runtime Coordinator, external app/MCP, Z3, SymPy, PyTorch, calculator, sandbox, visualization, or teaching session execution.
-

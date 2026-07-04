@@ -28,4 +28,3 @@ python 08_Domain_Applications/Math_Mentor/tests/teaching_flow_static_validator.p
 ```
 
 The script exits nonzero if any required check fails.
-

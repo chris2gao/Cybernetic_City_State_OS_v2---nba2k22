@@ -41,4 +41,3 @@ Result:
 - overall_status: pass
 - automated_tests_passed: true
 - manual_test_next_ready: true
-
