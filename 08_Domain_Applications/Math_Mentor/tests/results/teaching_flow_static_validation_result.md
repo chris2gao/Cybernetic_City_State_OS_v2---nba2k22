@@ -1,0 +1,94 @@
+# Teaching Flow Static Validation Result
+
+overall_status: pass
+repo_head_assumed: d447653ec035fe57832f24a192d5dceaf6b23c11
+
+## Fixture Results
+
+### TRIG_006
+
+- status: pass
+- expected_behavior: `{"handoff_status": "ready", "scheduler_write": false, "tool_status": "not_run"}`
+- observed_signals: `{"execution_claim_without_log": false, "has_pure_math_definition": true, "has_subtopics": true, "lane": "MathLane_A", "node_id": "TRIG-006", "scheduler_write": false, "subtopic_count": 4, "tool_status": "not_run", "v8_sanity_audit_present": true}`
+
+### CALCULUS_265
+
+- status: pass
+- expected_behavior: `{"exam_handoff_allowed": false, "handoff_status": "request_reprep", "scheduler_write": false, "socratic_teaching_allowed": false}`
+- observed_signals: `{"exam_handoff_allowed": false, "fake_sympy_execution_claim_produced": false, "formal_definition_status": "missing", "handoff_status": "request_reprep", "has_subtopics": true, "lane": "MathLane_A", "mapping_boundary_status": "missing", "node_id": "CALCULUS-265", "prerequisites_status": "missing", "scheduler_write": false, "socratic_teaching_allowed": false, "subtopic_count": 5, "tool_status": "not_run"}`
+
+## Tests
+
+### static.teaching_flow_spec.required_phrases
+
+- status: pass
+- failure_reason: None
+
+### static.coordinator.required_phrases
+
+- status: pass
+- failure_reason: None
+
+### static.prep.required_phrases
+
+- status: pass
+- failure_reason: None
+
+### static.socratic.required_phrases
+
+- status: pass
+- failure_reason: None
+
+### static.exam.required_phrases
+
+- status: pass
+- failure_reason: None
+
+### static.tool_truthfulness_states.teaching_flow_spec
+
+- status: pass
+- failure_reason: None
+
+### static.tool_truthfulness_states.coordinator
+
+- status: pass
+- failure_reason: None
+
+### static.tool_truthfulness_states.prep
+
+- status: pass
+- failure_reason: None
+
+### static.tool_truthfulness_states.socratic
+
+- status: pass
+- failure_reason: None
+
+### static.tool_truthfulness_states.exam
+
+- status: pass
+- failure_reason: None
+
+### forbidden.affirmative_tool_execution_phrases
+
+- status: pass
+- failure_reason: None
+
+### fixture.TRIG_006.ready_mathlane_a
+
+- status: pass
+- failure_reason: None
+
+### fixture.CALCULUS_265.request_reprep_mathlane_a
+
+- status: pass
+- failure_reason: None
+
+## Forbidden Actions
+
+- forbidden_actions_observed: []
+- tool_execution_performed: False
+- runtime_activation_performed: False
+- coordinator_activation_performed: False
+- learning_state_write_performed: False
+- scheduler_write_performed: False

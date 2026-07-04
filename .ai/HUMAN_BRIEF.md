@@ -1,10 +1,12 @@
-# Human Brief: Math Mentor Teaching Flow Prompt Repair
+# Human Brief: Teaching Flow Automated Test Harness
 
-Math Mentor teaching-flow and learning-period prompts were repaired for manual chat-based teaching tests.
+A deterministic no-runtime test harness was added for Math Mentor manual teaching-flow readiness.
 
-- Updated Teaching Flow Spec, Coordinator, Prep, Socratic, and Exam prompts.
-- Aligned prompt behavior with LRP-01 through LRP-06 contracts.
-- Manual test readiness: true.
-- No runtime, production Coordinator, tools, apps, visualization, node/bridge generation, or learning-state/scheduler write was performed.
+- Validator: `08_Domain_Applications/Math_Mentor/tests/teaching_flow_static_validator.py`
+- JSON result: `08_Domain_Applications/Math_Mentor/tests/results/teaching_flow_static_validation_result.json`
+- Markdown result: `08_Domain_Applications/Math_Mentor/tests/results/teaching_flow_static_validation_result.md`
+- Automated tests passed: true.
+- Manual teaching test next ready: true.
+- No runtime, LLM, tool/app/MCP, teaching execution, node/bridge generation, schema mutation, or scheduler/state write was performed.
 
-Human gate: review required before using this branch as the next accepted baseline.
+Human gate: review required after completion.
