@@ -1,4 +1,4 @@
-packet_id: codex-math-mentor-calculus-265-node-semantic-repair-0001
+packet_id: codex-math-mentor-calculus-265-node-semantic-repair-0001-blocker-fix
 status: completed_for_review
 report_ref: .ai/CODEX_REPORTS/math-mentor-calculus-265-node-semantic-repair-0001.md
 validation_ref: .ai/CODEX_REPORTS/math-mentor-calculus-265-node-semantic-repair-validation-0001.md
@@ -10,7 +10,7 @@ brief_ref: .ai/HUMAN_BRIEF.md
 dev_branch: dev/math-mentor-calculus-265-node-semantic-repair-0001
 dev_branch_head: recorded_after_commit_in_review_handoff
 master_head: 2c597ec59a79c5d31adcc262b6422eee900c9ff3
-ai_review_latest_head: recorded_after_review_publication
+stale_repo_head_assumed_fixed: true
 automated_tests_passed: true
 calculus_265_ready_after_repair: true
 human_gate: required

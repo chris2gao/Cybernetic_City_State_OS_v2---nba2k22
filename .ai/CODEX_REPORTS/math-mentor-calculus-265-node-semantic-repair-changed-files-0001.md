@@ -3,6 +3,24 @@
 packet_id: codex-math-mentor-calculus-265-node-semantic-repair-0001
 status: completed_for_review
 
+blocker_fix_packet_id: codex-math-mentor-calculus-265-node-semantic-repair-0001-blocker-fix
+blocker_fix_status: completed_for_review
+
+## Blocker Fix Delta
+
+- `08_Domain_Applications/Math_Mentor/tests/teaching_flow_static_validator.py`
+- `08_Domain_Applications/Math_Mentor/tests/results/teaching_flow_static_validation_result.json`
+- `08_Domain_Applications/Math_Mentor/tests/results/teaching_flow_static_validation_result.md`
+- `.ai/CODEX_REPORTS/math-mentor-calculus-265-node-semantic-repair-0001.md`
+- `.ai/CODEX_REPORTS/math-mentor-calculus-265-node-semantic-repair-validation-0001.md`
+- `.ai/CODEX_REPORTS/math-mentor-calculus-265-node-semantic-repair-changed-files-0001.md`
+- `.ai/CODEX_REPORTS/math-mentor-calculus-265-node-semantic-repair-actually-read-files-0001.md`
+- `.ai/OUTBOX.md`
+- `.ai/HUMAN_BRIEF.md`
+- `.ai/STATE.yml`
+
+The blocker fix changes only stale `repo_head_assumed` metadata and handoff/report text. It does not modify `CALCULUS-265.yaml` or `calculus_265_expected.json`.
+
 ## Node And Test Files
 
 - `08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-265.yaml`
@@ -24,6 +42,8 @@ status: completed_for_review
 ## Explicitly Not Changed
 
 - no other `Pure_Math_Intuition_DB` node;
+- no additional `CALCULUS-265.yaml` change in blocker fix;
+- no `calculus_265_expected.json` change in blocker fix;
 - no bridge file;
 - no schema file;
 - no prompt file;

@@ -1,7 +1,7 @@
 # Teaching Flow Static Validation Result
 
 overall_status: pass
-repo_head_assumed: d447653ec035fe57832f24a192d5dceaf6b23c11
+repo_head_assumed: 2c597ec59a79c5d31adcc262b6422eee900c9ff3
 
 ## Fixture Results
 

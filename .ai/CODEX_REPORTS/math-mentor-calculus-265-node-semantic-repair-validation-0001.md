@@ -3,6 +3,9 @@
 packet_id: codex-math-mentor-calculus-265-node-semantic-repair-0001
 status: completed_for_review
 
+blocker_fix_packet_id: codex-math-mentor-calculus-265-node-semantic-repair-0001-blocker-fix
+blocker_fix_status: completed_for_review
+
 ```yaml
 validation_result:
   base_master_head: "2c597ec59a79c5d31adcc262b6422eee900c9ff3"
@@ -13,6 +16,9 @@ validation_result:
   calculus_265_fixture_status: pass
   calculus_265_handoff_status: ready
   calculus_265_ready_after_repair: true
+  stale_repo_head_assumed_fixed: true
+  repo_head_assumed: "2c597ec59a79c5d31adcc262b6422eee900c9ff3"
+  stale_repo_head_absent: pass
   changed_files_limited_to_allowed_files: pass
   git_diff_check: pass
   scoped_secret_scan: pass
@@ -38,8 +44,11 @@ validation_result:
 
 - `python 08_Domain_Applications/Math_Mentor/tests/teaching_flow_static_validator.py`
 - JSON result inspection for `overall_status: pass`
+- JSON result inspection for `repo_head_assumed: 2c597ec59a79c5d31adcc262b6422eee900c9ff3`
 - fixture result inspection for `TRIG_006: pass`
 - fixture result inspection for `CALCULUS_265: pass`
+- Markdown result inspection for `repo_head_assumed: 2c597ec59a79c5d31adcc262b6422eee900c9ff3`
+- stale head scan for `d447653ec035fe57832f24a192d5dceaf6b23c11`: absent
 - `git diff --check`
 - scoped secret scan over changed files
 - changed-file allowlist check

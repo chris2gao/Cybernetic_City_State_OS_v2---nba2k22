@@ -432,7 +432,7 @@ def main() -> int:
     overall_status = "pass" if all(item.status == "pass" for item in results) else "fail"
     result = {
         "overall_status": overall_status,
-        "repo_head_assumed": "d447653ec035fe57832f24a192d5dceaf6b23c11",
+        "repo_head_assumed": "2c597ec59a79c5d31adcc262b6422eee900c9ff3",
         "tests": [item.to_dict() for item in results],
         "fixture_results": {
             "TRIG_006": trig_result,

@@ -3,6 +3,9 @@
 packet_id: codex-math-mentor-calculus-265-node-semantic-repair-0001
 status: completed_for_review
 
+blocker_fix_packet_id: codex-math-mentor-calculus-265-node-semantic-repair-0001-blocker-fix
+blocker_fix_status: completed_for_review
+
 Read method: physical repository reads using PowerShell `Get-Content -Raw`, targeted `rg`, and the deterministic Python validator.
 
 ## Authority And Contracts
@@ -21,6 +24,12 @@ Read method: physical repository reads using PowerShell `Get-Content -Raw`, targ
 ## Fixture
 
 - `08_Domain_Applications/Math_Mentor/tests/fixtures/calculus_265_expected.json`
+
+## Blocker Fix Files
+
+- `08_Domain_Applications/Math_Mentor/tests/teaching_flow_static_validator.py`
+- `08_Domain_Applications/Math_Mentor/tests/results/teaching_flow_static_validation_result.json`
+- `08_Domain_Applications/Math_Mentor/tests/results/teaching_flow_static_validation_result.md`
 
 ## Not Read Or Executed
 

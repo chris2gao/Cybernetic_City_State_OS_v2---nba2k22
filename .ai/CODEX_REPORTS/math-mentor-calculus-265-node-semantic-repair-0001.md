@@ -3,6 +3,21 @@
 packet_id: codex-math-mentor-calculus-265-node-semantic-repair-0001
 status: completed_for_review
 
+## Blocker Fix Continuation
+
+packet_id: codex-math-mentor-calculus-265-node-semantic-repair-0001-blocker-fix
+status: completed_for_review
+
+ChatGPT review identified stale automated-test metadata. The validator and generated result files still reported:
+
+- `repo_head_assumed: d447653ec035fe57832f24a192d5dceaf6b23c11`
+
+The blocker fix updates that metadata to the current task base master head:
+
+- `repo_head_assumed: 2c597ec59a79c5d31adcc262b6422eee900c9ff3`
+
+No CALCULUS-265 node content, fixture expectation, prompt, schema, runtime, bridge, or scheduler/state content was changed for this blocker fix.
+
 ## Summary
 
 Repaired `CALCULUS-265.yaml` so the derivative-intuition lesson can be treated as a ready `MathLane_A` teaching node instead of a `request_reprep` negative fixture.
@@ -44,6 +59,7 @@ Result:
 - CALCULUS_265 handoff_status: ready
 - automated_tests_passed: true
 - calculus_265_ready_after_repair: true
+- stale_repo_head_assumed_fixed: true
 
 ## Boundaries
 
