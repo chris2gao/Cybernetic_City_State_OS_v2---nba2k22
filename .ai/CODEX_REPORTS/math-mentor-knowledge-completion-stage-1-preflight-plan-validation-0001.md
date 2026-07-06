@@ -5,7 +5,12 @@ status: pass
 
 ## Validation Summary
 
-- master base verified: `2f83fb88b6546324f35f2088bc02cf6b27918c7d`
+- master base verified: `2f83fb8de47f747c85edbf4900bca2b77f14c19e`
+- blocker_fixed: true
+- incorrect_sha_absent_from_stage1_artifacts: pass
+- correct_source_head: `2f83fb8de47f747c85edbf4900bca2b77f14c19e`
+- origin_master_verified: pass
+- merge_base_verified: pass
 - Stage 0 artifacts readable: pass
 - unknown pool inspected: pass
 - first pilot candidate files sampled: pass

@@ -24,7 +24,14 @@ Not authorized:
 
 ## 2. Stage 0 Evidence
 
-Source head: `2f83fb88b6546324f35f2088bc02cf6b27918c7d`
+Source head: `2f83fb8de47f747c85edbf4900bca2b77f14c19e`
+
+## Metadata Blocker Fix
+
+- blocker_fixed: true
+- incorrect_source_head_removed: true
+- correct_source_head: `2f83fb8de47f747c85edbf4900bca2b77f14c19e`
+- substantive_plan_content_changed: false
 
 Stage 0 inventory counts:
 
