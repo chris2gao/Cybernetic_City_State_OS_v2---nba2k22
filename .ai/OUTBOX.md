@@ -1,32 +1,23 @@
-packet_id: codex-math-mentor-knowledge-completion-stage-0-inventory-0001
-status: completed_with_review_log
-program_id: math-mentor-knowledge-completion-stage-0-inventory-0001
-report_ref: .ai/CODEX_REPORTS/math-mentor-knowledge-completion-stage-0-inventory-0001.md
-validation_ref: .ai/CODEX_REPORTS/math-mentor-knowledge-completion-stage-0-inventory-validation-0001.md
-changed_files_ref: .ai/CODEX_REPORTS/math-mentor-knowledge-completion-stage-0-inventory-changed-files-0001.md
-actually_read_files_ref: .ai/CODEX_REPORTS/math-mentor-knowledge-completion-stage-0-inventory-actually-read-files-0001.md
-manifest_ref: .ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/MANIFEST.yml
-checkpoint_ref: .ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/CHECKPOINTS/stage-0.yml
-corpus_manifest_ref: .ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/corpus_manifest.json
-parse_report_ref: .ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/parse_report.json
-classification_ref: .ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/node_classification.json
-exclusions_ref: .ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/structural_exclusions.json
-conflict_inventory_ref: .ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/duplicates_missing_conflicts.json
-long_run_log_ref: .ai/LONG_RUN_LOGS/math-mentor-knowledge-completion-stage-0-inventory-0001.md
-final_report_ref: .ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/FINAL_REPORT.md
+packet_id: codex-math-mentor-knowledge-completion-stage-1-preflight-plan-0001
+status: completed_for_review
+report_ref: .ai/CODEX_REPORTS/math-mentor-knowledge-completion-stage-1-preflight-plan-0001.md
+validation_ref: .ai/CODEX_REPORTS/math-mentor-knowledge-completion-stage-1-preflight-plan-validation-0001.md
+actually_read_files_ref: .ai/CODEX_REPORTS/math-mentor-knowledge-completion-stage-1-preflight-plan-actually-read-files-0001.md
 brief_ref: .ai/HUMAN_BRIEF.md
-work_branch: ai/knowledge-completion/stage-0-inventory-0001
-work_branch_head: self
-master_head: cefd164472ecbb7095c1aa2c243c34fbec5b51f4
+source_head: 2f83fb88b6546324f35f2088bc02cf6b27918c7d
 ai_review_latest_head: pending
-stage_0_completed: true
-source_files_modified: false
+stage_1_execution_performed: false
 teaching_nodes_modified: false
 prompt_schema_validator_modified: false
 bridge_files_modified: false
+roadmap_files_modified: false
 runtime_activation_performed: false
 coordinator_activation_performed: false
 scheduler_write_performed: false
-source_push_performed: false
-master_push_performed: false
+recommended_first_pilot_cohort:
+  - ANALYTIC_NT-684
+  - ANALYTIC_NT-687
+  - ANALYTIC_NT-688
+  - ANALYTIC_NT-692
+  - DIFF_GEO-653_human_gated_sentinel
 human_gate: required

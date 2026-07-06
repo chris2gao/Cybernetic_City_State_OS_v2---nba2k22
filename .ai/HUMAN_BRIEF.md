@@ -1,16 +1,12 @@
-# Human Brief: Knowledge Completion Stage 0 Inventory
+# Human Brief: Stage 1 Preflight Plan
 
-Stage 0 corpus inventory completed for Math Mentor on `ai/knowledge-completion/stage-0-inventory-0001`.
+Stage 1 preflight plan completed for Math Mentor Knowledge Completion.
 
-- Scope: inventory/classification only.
-- Stage 0 completed: true.
-- Teaching nodes modified: false.
-- Prompt/schema/validator modified: false.
-- Bridge files modified: false.
-- Runtime/Coordinator activation: false.
-- Scheduler/state writes: false.
-- Master/source push: false.
+- No Stage 1 execution.
+- No teaching node changes.
+- No prompt/schema/validator/roadmap/bridge changes.
+- Unknown pool classified into strategy cohorts.
+- Safest pilot finding: only 4 auto-eligible deterministic metadata-only nodes were found.
+- Recommended pilot shape: 4 ANALYTIC_NT metadata-only nodes plus 1 Human-gated DIFF_GEO sentinel.
 
-Primary review refs are in `.ai/OUTBOX.md`.
-
-Human gate: review required after completion.
+Human gate: review required before any Stage 1 mutation task.
