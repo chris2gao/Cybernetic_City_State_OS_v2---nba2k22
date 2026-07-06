@@ -1,13 +1,12 @@
-# Human Brief: Stage 1 Preflight Plan
+# Human Brief: Stage 1 Pilot Metadata-Only Repair
 
-Stage 1 preflight plan metadata blocker fix completed for Math Mentor Knowledge Completion.
+The first Stage 1 pilot metadata-only repair was completed on four ANALYTIC_NT nodes.
 
-- No Stage 1 execution.
-- No teaching node changes.
-- No prompt/schema/validator/roadmap/bridge changes.
-- Corrected the Stage 1 plan source head from the short-hash typo `2f83fb88...` to the actual published Stage 0 master commit `2f83fb8de47f747c85edbf4900bca2b77f14c19e`.
-- Unknown pool classified into strategy cohorts.
-- Safest pilot finding: only 4 auto-eligible deterministic metadata-only nodes were found.
-- Recommended pilot shape: 4 ANALYTIC_NT metadata-only nodes plus 1 Human-gated DIFF_GEO sentinel.
+- touched nodes: `ANALYTIC_NT-684`, `ANALYTIC_NT-687`, `ANALYTIC_NT-688`, `ANALYTIC_NT-692`
+- mutation type: narrow metadata/status block only
+- no `mode: A/B` was added because existing evidence did not encode lane routing
+- no semantic content, formal definitions, prerequisites, mapping boundaries, bridges, roadmaps, prompts, schemas, validators, runtime, Coordinator, scheduler, or learning state were changed
+- `DIFF_GEO-653.yaml` remained unchanged
+- static validator passed
 
-Human gate: review required before any Stage 1 mutation task.
+Human gate: review required before any next Stage 1 mutation batch.
