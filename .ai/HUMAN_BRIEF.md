@@ -1,12 +1,11 @@
-# Human Brief: Stage 1 Pilot Metadata-Only Repair
+# Human Brief: Stage 1 Batch-2 Selection Plan
 
-The first Stage 1 pilot metadata-only repair was completed on four ANALYTIC_NT nodes.
+Batch-2 selection planning is complete.
 
-- touched nodes: `ANALYTIC_NT-684`, `ANALYTIC_NT-687`, `ANALYTIC_NT-688`, `ANALYTIC_NT-692`
-- mutation type: narrow metadata/status block only
-- no `mode: A/B` was added because existing evidence did not encode lane routing
-- no semantic content, formal definitions, prerequisites, mapping boundaries, bridges, roadmaps, prompts, schemas, validators, runtime, Coordinator, scheduler, or learning state were changed
-- `DIFF_GEO-653.yaml` remained unchanged
-- static validator passed
+- recommended next metadata-only batch: none
+- reason: the first four `ANALYTIC_NT` pilot nodes consumed the only strict pure metadata-only cohort
+- remaining mode-missing identity-stable candidates are 16 `DIFF_GEO` nodes with explicit `missing` / `manual_review_required` status markers
+- next proper gate: Human semantic/quality planning, not another automatic metadata-only pilot
+- no node, roadmap, bridge, prompt, schema, validator, runtime, Coordinator, scheduler, or learning-state files were changed
 
-Human gate: review required before any next Stage 1 mutation batch.
+Human gate: required before any further Stage 1 mutation or semantic repair.

@@ -1,27 +1,19 @@
-packet_id: codex-math-mentor-knowledge-completion-stage-1-pilot-metadata-only-0001
+packet_id: codex-math-mentor-knowledge-completion-stage-1-batch-2-selection-plan-0001
 status: completed_for_review
-report_ref: .ai/CODEX_REPORTS/math-mentor-knowledge-completion-stage-1-pilot-metadata-only-0001.md
-validation_ref: .ai/CODEX_REPORTS/math-mentor-knowledge-completion-stage-1-pilot-metadata-only-validation-0001.md
-changed_files_ref: .ai/CODEX_REPORTS/math-mentor-knowledge-completion-stage-1-pilot-metadata-only-changed-files-0001.md
-actually_read_files_ref: .ai/CODEX_REPORTS/math-mentor-knowledge-completion-stage-1-pilot-metadata-only-actually-read-files-0001.md
+report_ref: .ai/CODEX_REPORTS/math-mentor-knowledge-completion-stage-1-batch-2-selection-plan-0001.md
+validation_ref: .ai/CODEX_REPORTS/math-mentor-knowledge-completion-stage-1-batch-2-selection-plan-validation-0001.md
+actually_read_files_ref: .ai/CODEX_REPORTS/math-mentor-knowledge-completion-stage-1-batch-2-selection-plan-actually-read-files-0001.md
 brief_ref: .ai/HUMAN_BRIEF.md
-work_branch: ai/knowledge-completion/stage-1-pilot-metadata-only-0001
-work_branch_head: self
-master_head: cbfeb548bdb76d588db7f36793ffe4bedf5c16ef
-touched_nodes:
-  - ANALYTIC_NT-684.yaml
-  - ANALYTIC_NT-687.yaml
-  - ANALYTIC_NT-688.yaml
-  - ANALYTIC_NT-692.yaml
-sentinel_modified: false
-semantic_content_changed: false
-teaching_nodes_modified: true
+source_head: 02fd0ed2a002a9c10e8a0eeac1a9e3874215b3ae
+recommended_next_batch: []
+next_batch_type: no_safe_metadata_batch
+stage_1_execution_performed: false
+teaching_nodes_modified: false
 prompt_schema_validator_modified: false
 bridge_files_modified: false
 roadmap_files_modified: false
 runtime_activation_performed: false
 coordinator_activation_performed: false
 scheduler_write_performed: false
-source_master_push_performed: false
 ai_review_latest_head: pending
 human_gate: required
