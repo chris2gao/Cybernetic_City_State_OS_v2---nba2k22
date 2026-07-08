@@ -1,12 +1,14 @@
-packet_id: codex-math-mentor-knowledge-completion-stage-1-batch-2-selection-plan-0001
+packet_id: codex-math-mentor-stage-1-semantic-gated-candidate-review-plan-0001
 status: completed_for_review
-report_ref: .ai/CODEX_REPORTS/math-mentor-knowledge-completion-stage-1-batch-2-selection-plan-0001.md
-validation_ref: .ai/CODEX_REPORTS/math-mentor-knowledge-completion-stage-1-batch-2-selection-plan-validation-0001.md
-actually_read_files_ref: .ai/CODEX_REPORTS/math-mentor-knowledge-completion-stage-1-batch-2-selection-plan-actually-read-files-0001.md
+report_ref: .ai/CODEX_REPORTS/math-mentor-stage-1-semantic-gated-candidate-review-plan-0001.md
+validation_ref: .ai/CODEX_REPORTS/math-mentor-stage-1-semantic-gated-candidate-review-plan-validation-0001.md
+actually_read_files_ref: .ai/CODEX_REPORTS/math-mentor-stage-1-semantic-gated-candidate-review-plan-actually-read-files-0001.md
 brief_ref: .ai/HUMAN_BRIEF.md
-source_head: 02fd0ed2a002a9c10e8a0eeac1a9e3874215b3ae
-recommended_next_batch: []
-next_batch_type: no_safe_metadata_batch
+source_head: e8a226cd355faf5db170c51dced7833c581bd077
+semantic_candidate_pool:
+  family: DIFF_GEO
+  count: 16
+recommended_first_semantic_pilot: DIFF_GEO-653.yaml
 stage_1_execution_performed: false
 teaching_nodes_modified: false
 prompt_schema_validator_modified: false
