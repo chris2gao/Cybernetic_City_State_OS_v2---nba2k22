@@ -1,21 +1,30 @@
-packet_id: codex-math-mentor-stage-1-semantic-gated-candidate-review-plan-0001
+packet_id: codex-math-mentor-stage-1-diff-geo-653-semantic-pilot-0001
 status: completed_for_review
-report_ref: .ai/CODEX_REPORTS/math-mentor-stage-1-semantic-gated-candidate-review-plan-0001.md
-validation_ref: .ai/CODEX_REPORTS/math-mentor-stage-1-semantic-gated-candidate-review-plan-validation-0001.md
-actually_read_files_ref: .ai/CODEX_REPORTS/math-mentor-stage-1-semantic-gated-candidate-review-plan-actually-read-files-0001.md
+report_ref: .ai/CODEX_REPORTS/math-mentor-stage-1-diff-geo-653-semantic-pilot-0001.md
+validation_ref: .ai/CODEX_REPORTS/math-mentor-stage-1-diff-geo-653-semantic-pilot-validation-0001.md
+changed_files_ref: .ai/CODEX_REPORTS/math-mentor-stage-1-diff-geo-653-semantic-pilot-changed-files-0001.md
+actually_read_files_ref: .ai/CODEX_REPORTS/math-mentor-stage-1-diff-geo-653-semantic-pilot-actually-read-files-0001.md
 brief_ref: .ai/HUMAN_BRIEF.md
-source_head: e8a226cd355faf5db170c51dced7833c581bd077
-semantic_candidate_pool:
-  family: DIFF_GEO
-  count: 16
-recommended_first_semantic_pilot: DIFF_GEO-653.yaml
-stage_1_execution_performed: false
-teaching_nodes_modified: false
+work_branch: ai/knowledge-completion/stage-1-diff-geo-653-semantic-pilot-0001
+work_branch_head: self
+master_head: 53a2190289f79ff5446c6677efa9d62190895a08
+touched_nodes:
+  - DIFF_GEO-653.yaml
+DIFF_GEO_654_to_668_modified: false
+semantic_content_changed: true
+mode_written: "B"
+math_lane_written: "MathLane_B"
+bridge_readiness_status: "manual_review_required"
+bridge_generated_or_indexed: false
+deterministic_validation_claimed: false
+full_semantic_repair_complete_claimed: false
+teaching_nodes_modified: true
 prompt_schema_validator_modified: false
 bridge_files_modified: false
 roadmap_files_modified: false
 runtime_activation_performed: false
 coordinator_activation_performed: false
 scheduler_write_performed: false
+source_master_push_performed: false
 ai_review_latest_head: pending
 human_gate: required

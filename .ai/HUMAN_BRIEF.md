@@ -1,12 +1,9 @@
-# Human Brief: Stage 1 Semantic-Gated Candidate Review Plan
+# Human Brief
 
-Semantic-gated review planning is complete.
+DIFF_GEO-653 one-node semantic pilot is complete for review on the work branch.
 
-- candidate family: `DIFF_GEO`
-- candidate count: 16
-- recommended first semantic pilot: `DIFF_GEO-653.yaml`
-- reason: `DIFF_GEO-653` is the smooth-manifold root node and likely prerequisite for the rest of the DIFF_GEO chain
-- all 16 candidates require Human/ChatGPT semantic decisions before repair
-- no node, roadmap, bridge, prompt, schema, validator, runtime, Coordinator, scheduler, or learning-state files were changed
+Only `DIFF_GEO-653.yaml` plus `.ai` report/handoff files were changed.
 
-Human gate: required before any semantic repair or lane-routing assignment.
+The node is now `mode: B` / `MathLane_B` with approved formal definition and mapping boundary, but prerequisites, bridge readiness, and future semantic pilot expansion remain Human-gated.
+
+No bridge was generated or indexed; no deterministic validation or full repair claim was made.

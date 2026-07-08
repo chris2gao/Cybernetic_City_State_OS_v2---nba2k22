@@ -1,18 +1,72 @@
 id: DIFF_GEO-653
-mode_routing_status: "manual_review_required"
-validation_status: "manual_review_required"
+mode: "B"
+math_lane: "MathLane_B"
+mode_routing_status: "human_approved"
+validation_status: "semantic_only"
 bridge_readiness_status: "manual_review_required"
-formal_definition_status: "missing"
-prerequisites_status: "missing"
-mapping_boundary_status: "missing"
+formal_definition_status: "human_approved"
+prerequisites_status: "manual_review_required"
+mapping_boundary_status: "human_approved"
+formal_definition: >-
+  A smooth n-manifold is a second-countable Hausdorff topological space M equipped
+  with a maximal smooth atlas. Each chart (U_alpha, phi_alpha) maps an open set
+  U_alpha in M homeomorphically onto an open subset of R^n, the charts cover M,
+  and every overlap transition map phi_beta o phi_alpha^{-1} is smooth wherever
+  it is defined. Unless stated otherwise, this node treats manifolds without
+  boundary.
+formal_definition_zh: >-
+  光滑 n 维流形是一个第二可数、Hausdorff 的拓扑空间 M，并带有一组最大光滑图册。
+  每张图把 M 的局部开集同胚到 R^n 的开子集；不同图在重叠区域上的坐标转换必须是
+  光滑函数。默认不含边界。
+candidate_prerequisite_nodes:
+  - node_id: n_282
+    file: CALCULUS-282.yaml
+    reason: "R^n distance, neighborhoods, multivariable limits and continuity."
+  - node_id: n_283
+    file: CALCULUS-283.yaml
+    reason: "Partial derivatives and smoothness intuition."
+  - node_id: n_289
+    file: CALCULUS-289.yaml
+    reason: "Jacobian and coordinate transformations."
+  - node_id: n_335
+    file: LINEAR_ALGEBRA-335.yaml
+    reason: "Coordinate/basis transition intuition."
+missing_prerequisite_concepts:
+  - point-set topology basics
+  - topological space
+  - open sets
+  - homeomorphism
+  - Hausdorff condition
+  - second-countability
+mapping_boundary:
+  primary_mapping_kind: "llm_architecture"
+  primary_mapping: >-
+    A smooth manifold can be used as an analogy for a model's latent
+    representation when different local regions require different coordinate
+    descriptions, while transition maps preserve semantic continuity between
+    local coordinate systems. Charts correspond to local coordinate views of
+    representation neighborhoods; smooth transition maps correspond to
+    controlled, differentiable reparameterizations between local views.
+  boundary: >-
+    This is only a structural analogy. It does not claim that an actual LLM
+    latent space is literally a second-countable Hausdorff smooth manifold, that
+    every representation chart is invertible, or that neural transformations are
+    globally smooth. The formal mathematical object remains the topological
+    space plus smooth atlas.
+  existing_physical_metaphor_status: "secondary_teaser_only"
 migration_review:
   missing_reason:
-    - "formal_definition_absent"
-    - "prerequisite_nodes_absent"
-    - "mapping_boundary_absent"
-  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+    - "prerequisite_nodes_partial_only"
+    - "point_set_topology_prerequisites_not_verified"
+  recommended_next_action: "Human/ChatGPT review should decide whether to repair topology prerequisite coverage before bridge review."
+  semantic_pilot:
+    decision_source: "Human Speaker approved semantic decision package"
+    lane_policy: "MathLane_B"
+    status: "one_node_semantic_pilot_applied"
   warnings:
-    - "mode_routing_manual_review_required"
+    - "semantic_only_not_machine_validated"
+    - "bridge_readiness_remains_manual_review_required"
+    - "existing_physical_metaphor_is_secondary_teaser_only"
 concept_name: 光滑流形 - 发生学溯源：流形是局部平坦切片（图册 Charts）无缝粘合的拓扑空间。解构高维非线性表征的数据结构本质。 (n_653)
 sub_topics:
 - 图册 (Atlas) 与转移函数 (Transition maps) 的相容性
