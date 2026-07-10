@@ -8,7 +8,7 @@
 本目录包含以下核心文档，指导所有新唤醒的 AI：
 * **`AI_Bootstrap_Sequence.md`**：强制开机启动序列。
   * **第一仓库读取入口**：它是 Plan 3 双引擎城邦的启动路由器，负责建立 Human Speaker 权力边界、Engine A / Engine B 分流、懒加载范围和反幻觉要求。
-* **`3号方案.md` 与 `06_Cybernetic_Citizen_Awakening.md`**：宪法与运行时契约。
+* **repository root `3号方案.md` 与 `06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md`**：宪法与运行时契约。
   * Bootstrap 完成路由后，按任务读取相关部分。
 * **`City_State_Agent_System_Prompt.md`**：可选的人类注入模板。
   * 它用于帮助新会话快速建立城邦语境，不是仓库宪法，也不覆盖平台、system、developer 或当前 Human 指令。

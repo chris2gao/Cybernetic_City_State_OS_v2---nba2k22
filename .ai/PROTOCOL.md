@@ -29,6 +29,38 @@ It is not a repository constitution. It does not override:
 
 `.ai/CODEX_WORK_MECHANISM_PROTOCOL.md` governs Codex execution mechanics only. It does not govern mathematical/domain semantics, override higher-priority instructions, or authorize a gated project stage or business change by itself.
 
+## Canonical Instruction Authority And State Freshness
+
+Instruction authority and current-state freshness are separate systems. Fresh evidence can establish what state exists; it does not grant permission to mutate, publish, merge, activate, or override a durable rule.
+
+### Instruction Authority Order
+
+Apply instruction authority in this order:
+
+1. platform, system, developer, and safety instructions;
+2. current explicit Human instruction;
+3. authenticated current Human-approved task-specific permission or override;
+4. Plan 3 constitution and the Cybernetic Citizen runtime contract;
+5. durable repository control protocols;
+6. relevant domain-authority protocols;
+7. ordinary current signal and task operational details;
+8. routing documents and historical evidence.
+
+An authenticated Human-approved task-specific override may outrank a durable repository protocol only for its explicit scope. An ordinary model-generated signal, packet, task, or report remains operational detail at level 7 and gains no override authority merely by being current. No repository artifact overrides platform safety or a current explicit Human instruction. Plan 3 Human Speaker gates remain required for protected publication, major mathematics, runtime or Coordinator activation, secrets, destructive Git, and objective-changing actions.
+
+### State Freshness Order
+
+Resolve current state in this order:
+
+1. current explicit Human statement;
+2. physical Git branch/HEAD and immutable source-head evidence;
+3. validated active review mailbox and every required dereferenced ref;
+4. published source baseline;
+5. routing snapshots;
+6. historical reports and legacy branches.
+
+Freshness establishes current state only. Git HEAD, mailbox recency, timestamps, and report age are evidence, not independent authorization. Report stale state evidence explicitly. Report an authority conflict separately from a freshness conflict.
+
 ## Roles
 
 ### Codex

@@ -83,21 +83,31 @@ The fast path preserves the same distinction: retain awareness of inherited-on-d
 
 The fast path is intended for repeated review cycles, such as several ChatGPT/Codex turns in the same task.
 
-## Authority Order
+## Instruction Authority And State Freshness
 
-Apply instructions in this order:
+The canonical definition is `.ai/PROTOCOL.md#canonical-instruction-authority-and-state-freshness`. Apply the same instruction-authority order:
 
-```text
-1. system / developer / platform instructions
-2. current explicit human instruction
-3. authenticated human-approved task or packet
-4. .ai/PROTOCOL.md
-5. .ai/HANDOFF_COMMON_CONVENTIONS.md
-6. .ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md
-7. referenced task, packet, report, or brief files
-```
+1. platform, system, developer, and safety instructions;
+2. current explicit Human instruction;
+3. authenticated current Human-approved task-specific permission or override;
+4. Plan 3 constitution and the Cybernetic Citizen runtime contract;
+5. durable repository control protocols;
+6. relevant domain-authority protocols;
+7. ordinary current signal and task operational details;
+8. routing documents and historical evidence.
 
-Repository protocol never overrides system, developer, safety, secret-protection, or current human instructions.
+An ordinary model-generated signal or packet remains level 7 and cannot override durable protocol merely because it is current. Only an authenticated current Human-approved task-specific permission or override can do so within its explicit scope.
+
+Resolve state freshness separately:
+
+1. current explicit Human statement;
+2. physical Git branch/HEAD and immutable source-head evidence;
+3. validated active review mailbox and every required dereferenced ref;
+4. published source baseline;
+5. routing snapshots;
+6. historical reports and legacy branches.
+
+Freshness establishes state only; it does not grant mutation or publication authority. Report authority conflicts separately from freshness conflicts.
 
 ## Active Communication Mode
 

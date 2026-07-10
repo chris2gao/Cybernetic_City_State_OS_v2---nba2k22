@@ -7,7 +7,7 @@
 - Domain: `08_Domain_Applications/Math_Mentor`
 - Execution source branch/head: supplied by the Human-approved launch packet and verified from Git before launch
 - Published baseline default: `master`, unless the current Human task names another source branch and immutable head
-- Current P3 state: closed
+- P3 default gate under this contract: closed. Only a current explicit Human-approved launch packet may reopen P3 for a named endpoint set and immutable source head.
 
 This document defines a future long-run program. Its execution must follow `.ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md`. It does not authorize execution, source publication, P3 entry, bridge generation, status promotion, or merge of an existing repair branch. A future execution packet must name this document, an immutable source head, an exact scope, allowed writes, publication policy, and all human-authorized stage gates.
 
@@ -476,7 +476,7 @@ The deep-repair branch `ai/p2-10-b-645-deep-repair-review@29d6bd4` was recorded 
 
 Future program execution must begin Stage 0 from the named current source head and may consult the temporary branch only as non-authoritative repair evidence. Accepted repairs should be replayed in small, minimal-diff cohorts.
 
-P3 remains closed. This document does not reopen it. Stage 7 is unreachable unless a later human-approved execution packet explicitly sets `p3_reopened: true`, names certified endpoints and an immutable baseline, and authorizes bridge landing.
+P3 is closed by default under this durable contract. This document does not reopen it. Stage 7 is unreachable unless a current explicit Human-approved launch packet sets `p3_reopened: true`, names certified endpoints and an immutable source head, and authorizes bridge landing.
 
 ## 10. Non-Goals
 
@@ -493,4 +493,4 @@ P3 remains closed. This document does not reopen it. Stage 7 is unreachable unle
 
 This plan is ready for ChatGPT and human review. It is not ready for execution until a launch packet supplies the required immutable baseline, exact scope, allowed stage range, path permissions, P3/bridge flags, stop rules, and publication policy.
 
-Recommended first execution authorization is Stages 0-6 together under `.ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md`. That run can inventory, repair, validate, and certify endpoints continuously while keeping P3 closed. Stages 7-8 require explicit launch authorization when P3 or bridge work is intended; if they are not authorized, they are logged as deferred rather than treated as a failure. After final ChatGPT review, the human may issue a separate authorization for Stages 7-9.
+Recommended first execution authorization is Stages 0-6 together under `.ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md`. That run can inventory, repair, validate, and certify endpoints while leaving the contract's default P3 gate closed. Stages 7-8 require a current explicit Human-approved launch packet when P3 or bridge work is intended; if they are not authorized, they are logged as deferred rather than treated as a failure. After final ChatGPT review, the Human may issue a separate authorization for Stages 7-9.

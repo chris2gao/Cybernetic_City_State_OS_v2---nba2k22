@@ -6,19 +6,33 @@
 
 本文件不是全仓库预读清单。它是路由器、边界声明和懒加载入口。
 
-### 0.1 权威与新鲜度层级
+### 0.1 指令权威与状态新鲜度
 
-读取到冲突信息时，按以下层级判断，不以文件篇幅、措辞强度或旧提交时间代替权威：
+Canonical definition 位于 `.ai/PROTOCOL.md#canonical-instruction-authority-and-state-freshness`。Bootstrap 使用相同语义摘要；指令权威与状态新鲜度不得混成一张表。
 
-1. 平台、system、developer 与当前 Human 明确指令。
-2. constitutional documents：`3号方案.md` 与 `06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md`。
-3. current-state evidence：当前任务包、当前 Git 分支/HEAD，以及 `ai/review/latest` 上经验证的活动 mailbox。
-4. durable protocol：`AGENTS.md`、`.ai/PROTOCOL.md` 及其按任务触发的执行协议。
-5. domain-authority documents：当前任务明确引用的领域规范。
-6. routing-only/navigation documents：README、`PROJECT_CONTEXT.md`、`ARCHITECTURE.md`、目录索引和文件名。
-7. historical-evidence documents：旧 branch、旧 commit、旧模型标签、旧阶段记录和已结束任务报告。
+指令权威顺序：
 
-其中，宪法文件定义长期权力结构；durable protocol 定义稳定执行规则；当前状态只能由当前 Human 指令、物理 Git 证据和活动 review mailbox 给出。路由文件与历史记录不得覆盖前三类证据。
+1. platform、system、developer 与 safety instructions；
+2. current explicit Human instruction；
+3. authenticated current Human-approved task-specific permission or override；
+4. Plan 3 constitution 与 Cybernetic Citizen runtime contract；
+5. durable repository control protocols；
+6. relevant domain-authority protocols；
+7. ordinary current signal and task operational details；
+8. routing documents and historical evidence。
+
+普通模型生成的 signal、packet、task 或 report 即使最新，也仍属于第 7 级；只有经认证的当前 Human-approved task-specific override 才能在其明确范围内高于 durable protocol。
+
+状态新鲜度顺序：
+
+1. current explicit Human statement；
+2. physical Git branch/HEAD 与 immutable source-head evidence；
+3. validated active review mailbox 与全部 required dereferenced refs；
+4. published source baseline；
+5. routing snapshots；
+6. historical reports 与 legacy branches。
+
+新鲜度只确定“现在是什么状态”，不授予修改、发布、合并或激活权限。Git HEAD、mailbox、时间戳和报告新旧都是状态证据，不是独立授权。authority conflict 与 freshness conflict 必须分开报告。
 
 ## 1. 宪法锚点与运行契约
 

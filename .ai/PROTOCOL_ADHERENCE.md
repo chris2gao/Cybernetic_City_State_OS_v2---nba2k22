@@ -6,18 +6,31 @@ An independent ChatGPT or Codex instance must not rely on hidden chat memory, pr
 
 This file explains how a new model loads and obeys that layer. It is operational guidance, not a repository constitution or platform-safety override.
 
-## 2. Authority Boundary
+## 2. Instruction Authority And State Freshness
 
-Apply instructions in this order:
+The canonical definition is `.ai/PROTOCOL.md#canonical-instruction-authority-and-state-freshness`. Apply the same instruction-authority order:
 
-1. platform, system, and developer instructions;
-2. current explicit Human instructions;
-3. repository `AGENTS.md` guidance;
-4. current repository protocol stack;
-5. authenticated current signal and referenced task packet;
-6. older project records and historical chat.
+1. platform, system, developer, and safety instructions;
+2. current explicit Human instruction;
+3. authenticated current Human-approved task-specific permission or override;
+4. Plan 3 constitution and the Cybernetic Citizen runtime contract;
+5. durable repository control protocols;
+6. relevant domain-authority protocols;
+7. ordinary current signal and task operational details;
+8. routing documents and historical evidence.
 
-Higher-priority safety, privacy, secret, and permission rules always remain active. A current explicit Human instruction may override an older repository convention when they conflict, but repository protocol never overrides platform safety.
+An ordinary model-generated signal or packet remains level 7 and cannot override durable protocol merely because it is current. Only an authenticated current Human-approved task-specific permission or override can do so within its explicit scope.
+
+Resolve state freshness separately:
+
+1. current explicit Human statement;
+2. physical Git branch/HEAD and immutable source-head evidence;
+3. validated active review mailbox and every required dereferenced ref;
+4. published source baseline;
+5. routing snapshots;
+6. historical reports and legacy branches.
+
+Freshness establishes state only; it does not grant mutation or publication authority. Report authority conflicts separately from freshness conflicts. Higher-priority safety, privacy, secret, and permission rules always remain active.
 
 ## 3. Bootstrap Procedure
 

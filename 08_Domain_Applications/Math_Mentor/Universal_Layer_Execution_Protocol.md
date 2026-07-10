@@ -55,7 +55,7 @@ Where older wording below would imply machine proof for Mode B, automatic bridge
 针对本城邦内所有的独立大模型（Subagents）初始化，以及外部调用的外包管线，均**强制遵守**以下资源调度底线规则：
 - **严禁并发泛滥**：任何层级的节点批量生成，**最多仅允许拉起 5 名并发特工**。
 - **强制小批次验收**：无论节点已生成多少，后续沙盒验证、语义审查、合流前复核都必须按外包批次拆开执行。每个物理验收批次最多处理 **5 个节点**；严禁一次性把几十个节点交给同一个 evaluator 进程，以免触发超时、日志截断或上下文污染。
-- **强制绝对路径预读与串行批处理**：如果任务需要读取庞大的核心参考资料（如 200k 的大模型解剖图），特工必须**通过绝对路径精准预读文件**。在支付一次性上下文成本后，特工必须在该上下文中采用**串行循环（Sequential Batching）**连续产出分配给它的多个节点。彻底废除“一节点一特工”的粗放模式，以防范大模型的“注意力失焦”与严重的 Token 算力挥霍。
+- **任务触发的精确引用与串行批处理**：只有当前任务确实需要某份核心参考资料时，特工才按仓库相对路径读取该文件。禁止为了背景知识读取整个参考目录。完成必要读取后，在同一上下文中采用**串行循环（Sequential Batching）**连续处理分配的节点，避免“一节点一特工”的上下文浪费。
 
 将该层级下数十个节点根据上述原则划分为多个批次，通过最多 5 名子特工网络执行：
 
@@ -66,10 +66,11 @@ Where older wording below would imply machine proof for Mode B, automatic bridge
 
 - **【纯数结构高架 (L4-L6 抽象分支)】**：
   - **异化规则**：放弃通俗的物理隐喻，启用**认知映射引擎 (Cognitive Mapping Engine)**。
-  - **强制前置挂载参考文件**：处理这些节点时，负责生成的 Subagent 必须优先读取并加载 `E:/newStand/study/Cybernetic_City_State_OS_v2 - teacher/08_Domain_Applications/Math_Mentor/学习期prompt/backup/` 目录下的三大核心文档作为架构参考：
-    1. `大模型解剖图：深入解析.md`
-    2. `大语言模型数学底层架构全阶段深度解析整合报告.md`
-    3. `英语算子直觉与语义架构索引.md`
+  - **任务触发的架构参考集**：当当前任务涉及 Mode B 映射生成、修复或语义审查时，按需读取以下精确仓库相对路径；不得读取整个 `backup/` 目录：
+    1. `08_Domain_Applications/Math_Mentor/学习期prompt/backup/大模型解剖图：深入解析.md`
+    2. `08_Domain_Applications/Math_Mentor/学习期prompt/backup/大语言模型数学底层架构全阶段深度解析整合报告.md`
+    3. `08_Domain_Applications/Math_Mentor/学习期prompt/backup/英语算子直觉与语义架构索引.md`
+  - 如果当前 checkout 缺少任一命名文件，必须记录缺失路径并将相关映射工作标记为 `review_required`；不得猜测、改名或发明替代路径。
   - **`llm_physical_mapping`**：必须将抽象数学结构直接映射到大语言模型 (LLM) 自身的物理架构上（例如：泛函内积 $\to$ Attention $QK^T$，拓扑同胚 $\to$ Transformer 残差流，抽象代数群 $\to$ Word2Vec 词嵌入空间）。
   - **代码锚点**：不再提供用于断言的代码，而是提供诸如 PyTorch 神经网络前向传播的核心片段作为直觉锚点。
 

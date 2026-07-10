@@ -16,18 +16,31 @@ It does not authorize a task, stage, mutation, source push, merge, regeneration,
 
 ## 2. Authority And Relationship To Existing Protocols
 
-Every task inherits, in order:
+The canonical definition is `.ai/PROTOCOL.md#canonical-instruction-authority-and-state-freshness`. Apply the same instruction-authority order:
 
-1. system, developer, platform, and current explicit Human instructions;
-2. repository `AGENTS.md` guidance;
-3. `.ai/PROTOCOL.md`;
-4. `.ai/HANDOFF_COMMON_CONVENTIONS.md`;
-5. `.ai/CODEX_WORK_MECHANISM_PROTOCOL.md`;
-6. the relevant domain protocol;
-7. this contract;
-8. the current signal and referenced task packet.
+1. platform, system, developer, and safety instructions;
+2. current explicit Human instruction;
+3. authenticated current Human-approved task-specific permission or override;
+4. Plan 3 constitution and the Cybernetic Citizen runtime contract;
+5. durable repository control protocols;
+6. relevant domain-authority protocols;
+7. ordinary current signal and task operational details;
+8. routing documents and historical evidence.
 
-A task packet states only task-specific intent, evidence, scope, validation, and overrides. It must not repeat permanent Git, secrets, polling, transcript, or retry rules unless it narrows or explicitly overrides one of them under valid authority.
+An ordinary model-generated signal or packet remains level 7 and cannot override durable protocol merely because it is current. Only an authenticated current Human-approved task-specific permission or override can do so within its explicit scope.
+
+Resolve state freshness separately:
+
+1. current explicit Human statement;
+2. physical Git branch/HEAD and immutable source-head evidence;
+3. validated active review mailbox and every required dereferenced ref;
+4. published source baseline;
+5. routing snapshots;
+6. historical reports and legacy branches.
+
+Freshness establishes state only; it does not grant mutation or publication authority. Report authority conflicts separately from freshness conflicts.
+
+A task packet states only task-specific intent, evidence, scope, validation, and permitted overrides. It must not repeat permanent Git, secrets, polling, transcript, or retry rules unless it narrows them or carries an authenticated current Human-approved task-specific override.
 
 ## 3. Two-Part Task Input
 
