@@ -160,7 +160,10 @@ This includes source-branch push, merge, conflict reconciliation, destructive Gi
 - Require explicit Human authorization and an approved strategy.
 - Re-fetch protected tips and inspect merge-base/changed paths when applicable.
 - Preserve unconsumed mailbox writes.
+- Before source/master publication, apply the `.ai/PROTOCOL.md` Source Publication Mailbox Neutralization Gate. Do not publish active `INBOX`, `STATE`, `OUTBOX`, or `HUMAN_BRIEF` snapshots into the durable source baseline.
+- Validate that source `INBOX`, `STATE`, and `OUTBOX` parse as neutral baselines and that source `HUMAN_BRIEF` is neutral before the publication commit or merge.
 - Run integration verification appropriate to the affected surface.
+- After publication, read back all four source mailbox files from the published remote HEAD and confirm that no active packet, task, work-branch, report-ref, or pending Human-gate state remains.
 - Do not use destructive force unless separately approved.
 
 Mandatory Git evidence is concise: source/review HEADs, changed/staged paths, validation/test summaries, commit SHA, lease result, and remote read-back. Full logs, branch graphs, complete diffs, and object inspection are optional diagnostics shown only when they affect a decision or failure.

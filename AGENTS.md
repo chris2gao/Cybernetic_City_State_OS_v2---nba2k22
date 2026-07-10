@@ -2,7 +2,9 @@
 
 ## Startup Rules
 
-- Read repository context before acting: `README.md`, `PROJECT_CONTEXT.md`, `ARCHITECTURE.md`, and the relevant domain protocol.
+- The first repository read is `06_Silicon_Index/AI_Bootstrap_Sequence.md`.
+- After Bootstrap, read the current Human task and only the constitutional, handoff, or domain files triggered by that task.
+- `README.md`, `PROJECT_CONTEXT.md`, and `ARCHITECTURE.md` are routing/navigation snapshots. Load them when they help locate scope or architecture; do not load them unconditionally and do not treat branch/task claims in them as current without Git or active-mailbox verification.
 - For AI handoff or model-to-model coordination tasks, read `.ai/PROTOCOL.md` and `.ai/STATE.yml` before acting when these files exist.
 - For Human-authorized long-run AI handoff programs, also read `.ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md` and preserve the task as one coherent objective unless a protected Human gate is reached.
 - For Math Mentor generation or validation tasks, read `08_Domain_Applications/Math_Mentor/Universal_Layer_Execution_Protocol.md`.

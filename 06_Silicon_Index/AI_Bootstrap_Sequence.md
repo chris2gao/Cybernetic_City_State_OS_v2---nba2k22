@@ -6,6 +6,20 @@
 
 本文件不是全仓库预读清单。它是路由器、边界声明和懒加载入口。
 
+### 0.1 权威与新鲜度层级
+
+读取到冲突信息时，按以下层级判断，不以文件篇幅、措辞强度或旧提交时间代替权威：
+
+1. 平台、system、developer 与当前 Human 明确指令。
+2. constitutional documents：`3号方案.md` 与 `06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md`。
+3. current-state evidence：当前任务包、当前 Git 分支/HEAD，以及 `ai/review/latest` 上经验证的活动 mailbox。
+4. durable protocol：`AGENTS.md`、`.ai/PROTOCOL.md` 及其按任务触发的执行协议。
+5. domain-authority documents：当前任务明确引用的领域规范。
+6. routing-only/navigation documents：README、`PROJECT_CONTEXT.md`、`ARCHITECTURE.md`、目录索引和文件名。
+7. historical-evidence documents：旧 branch、旧 commit、旧模型标签、旧阶段记录和已结束任务报告。
+
+其中，宪法文件定义长期权力结构；durable protocol 定义稳定执行规则；当前状态只能由当前 Human 指令、物理 Git 证据和活动 review mailbox 给出。路由文件与历史记录不得覆盖前三类证据。
+
 ## 1. 宪法锚点与运行契约
 
 启动序列继承两个核心文件：
@@ -30,6 +44,14 @@
 
 禁止为了“了解背景”全量预读仓库、全量预读 `system_backbone/`，或把 README / 目录索引当成事实来源替代物理读取。
 
+### 2.1 完整初始化与同上下文快速路径
+
+完整 context-boundary 初始化适用于新线程、上下文丢失、协议变更、指针冲突或 Human 明确要求重新初始化。此时读取本文件、宪法/运行契约、`AGENTS.md`，并按 `.ai/HANDOFF_INIT_PROMPT.md` 加载常驻协议栈和当前角色触发的 on-demand 协议。
+
+同一上下文且协议未变化时走 fast path：读取当前 Human 指令、`.ai/STATE.yml`、需要时的 `.ai/INBOX.md`，以及最新 signal 中所有非空引用。不得每回合重复加载完整协议栈。
+
+完整协议初始化仍然不是全仓库摄入许可。它只加载启动与通信控制面；业务目录和领域材料继续按任务懒加载。
+
 ## 3. 懒加载法则
 
 默认规则：
@@ -42,6 +64,8 @@
 - 读取后才能声称知道文件内容。
 
 如果存在 `symbolic_index.yaml`、`allowed_context_scopes` 或任务指定的引用列表，优先按它们定位上下文。若不存在，使用最小化搜索和任务相关文件读取替代全仓库摄入。
+
+当前 branch、HEAD、task status 和 Human gate 不能从 `PROJECT_CONTEXT.md`、`ARCHITECTURE.md` 或硬编码历史分支名推断。必须读取当前任务并用 `git branch --show-current`、`git rev-parse HEAD` 或等价物理证据确认。
 
 ## 4. Plan 3 双引擎路由
 
@@ -116,6 +140,21 @@ Human Speaker 是：
 - `.ai/CODEX_TASK_INPUT_CONTRACT.md`
 - `.ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md`，仅当任务是长运行或 completion-preserving 任务时。
 
+### 8.1 Source mailbox 与活动 mailbox
+
+- 发布到 source/master 的 `.ai/INBOX.md`、`.ai/STATE.yml`、`.ai/OUTBOX.md` 和 `.ai/HUMAN_BRIEF.md` 必须是 neutral baseline，不得携带已结束任务的 packet、branch、report ref 或 pending Human gate。
+- 活动 signal、任务状态、报告指针和 Human brief 留在 `ai/review/latest` 或任务专用 review branch。
+- source mailbox 与 review mailbox 冲突时，先确认当前任务指向哪一个分支；不得把 source 上的旧快照当作活动任务。
+
+### 8.2 陈旧或冲突文档处理
+
+发现 routing 文件、历史记录、mailbox 或 Git 证据互相冲突时：
+
+1. 保留原始历史记录，不静默改写事实；
+2. 以当前 Human 指令、当前 Git 证据和经验证的活动 mailbox 为当前状态；
+3. 把陈旧声明标记为 historical、routing-only 或 superseded；
+4. 若冲突影响权限、目标或允许写入范围，停止执行并报告，不猜测。
+
 ## 9. 启动完成条件
 
 AI 完成启动后，应能回答：
@@ -127,3 +166,12 @@ AI 完成启动后，应能回答：
 5. 下一步必须读取的最小文件集合是什么？
 
 如果这些问题无法回答，停止并报告缺失输入，不要猜测。
+
+完成 onboarding 时还应核对：
+
+- [ ] 当前 branch 和 HEAD 已由物理 Git 证据确认；
+- [ ] 已区分 source neutral mailbox 与活动 review mailbox；
+- [ ] 所有当前 signal 的非空引用已解引用；
+- [ ] 仅加载了任务需要的领域文件，没有全仓库或全目录摄入；
+- [ ] 已明确允许读取、允许写入、禁止动作、验证方式和返回消息格式；
+- [ ] 历史模型名、旧 branch 和旧阶段状态没有被当作当前事实。

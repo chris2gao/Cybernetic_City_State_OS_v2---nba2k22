@@ -1,5 +1,9 @@
 # POST-P2 Execution Memory for Math Mentor
 
+> **CURRENT AUTHORITY BANNER**
+>
+> This file is preserved as historical continuation memory and a P3+ planning record. It is not authoritative live branch, model, thinking-level, mailbox, or task state. Current state comes from the active Human instruction, current UI/runtime capabilities, physical Git branch/HEAD evidence, and the validated active mailbox on `ai/review/latest`. Historical labels such as `legacy-mode-a-outsourcing`, GPT-5.5, High/Extra High, and manual stage-stop rules describe earlier workflow context unless a current task explicitly reauthorizes them. Historical commits and stage records below remain unchanged as evidence. P3 remains closed until an explicit Human-approved launch.
+
 ## 0\. Purpose
 
 This document is a continuation anchor for the Math Mentor branch after P2.
@@ -10,13 +14,13 @@ If conversation context becomes full, future agents should read this document be
 
 ---
 
-## 1\. Current Branch Context
+## 1\. Historical Branch Context
 
 Repository:
 
 chris2gao/Cybernetic\_City\_State\_OS\_v2---teacher
 
-Active branch:
+Historical branch recorded when this memory was created:
 
 legacy-mode-a-outsourcing
 
@@ -46,16 +50,17 @@ This overlay is a factual status refresh only. It does not replan the pre-P3 sta
 
 No source publication, bridge indexing, Coordinator activation, or master merge is authorized by this refresh.
 
-Current rule:
+Preserved gate rule:
 
 P2 is completed; P3 remains closed until an explicit Human-approved P3 launch.
-Do not merge or push master.
-Do not push `legacy-mode-a-outsourcing`.
+Do not infer merge or publication authority from this historical memory.
 Do not index bridges or activate Coordinator consumption.
 
 ---
 
-## 2\. Core Execution Principle
+## 2\. Historical Core Execution Principle
+
+The manual stage-stop and model-switching rules in this section record the earlier workflow. Current execution follows the active task packet and current runtime capabilities.
 
 The project uses manual model reasoning-level switching.
 
@@ -71,7 +76,7 @@ Stage boundary means:
 
 ---
 
-## 3\. Model Reasoning Level Policy
+## 3\. Historical Model Reasoning Level Policy
 
 ### High
 
@@ -111,7 +116,7 @@ Use Standard / Codex for:
 
 ---
 
-## 4\. Subagent Usage Policy
+## 4\. Historical Subagent Usage Policy
 
 Subagents may be used only as:
 

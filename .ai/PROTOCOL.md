@@ -96,6 +96,20 @@ Active mailbox files include:
 
 On final master or another published source baseline, the active mailbox files should be neutral unless a current Human-approved task explicitly says otherwise. Live handoff state belongs on `ai/review/latest` or a task-specific review branch. Do not infer an active task from source-branch mailbox state when it is marked `neutral_baseline`.
 
+### Source Publication Mailbox Neutralization Gate
+
+Before a work branch is published to a durable source branch or `master`, its source-side mailbox must be neutralized. Active task snapshots must not be merged into the published source baseline.
+
+Required source publication checks:
+
+- `.ai/INBOX.md` parses and declares `intent: neutral_baseline`, with no active signal/task/packet pointer;
+- `.ai/STATE.yml` parses and declares `status: neutral_baseline`, with no active packet ID, task ID, work branch, report ref, or pending Human gate;
+- `.ai/OUTBOX.md` parses and declares `status: neutral_baseline`, with no active packet/report/branch fields;
+- `.ai/HUMAN_BRIEF.md` is a short neutral notice and does not describe an active or pending task;
+- post-publication read-back confirms those four neutral source artifacts at the published source HEAD.
+
+If any source mailbox file contains an active `packet_id`, task identity, work branch, report pointer, or pending Human gate, source publication is blocked until the source mailbox is neutralized. Active handoff state remains on `ai/review/latest`; neutralizing source does not delete durable `.ai/CODEX_REPORTS/` evidence.
+
 ## Pointer-Based Message Format
 
 ChatGPT-to-Codex signals contain these seven required fields:

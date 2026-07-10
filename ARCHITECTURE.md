@@ -1,5 +1,7 @@
 # Architecture
 
+Status: structural directory map. This file describes ownership and layout; it is not authoritative current branch, worktree, task, or mailbox state. Start from `06_Silicon_Index/AI_Bootstrap_Sequence.md` and the active task, then load the relevant domain protocol.
+
 ## Root Structure
 
 - `01_Research_Reports/`: research reports and source material.
@@ -34,7 +36,6 @@
 
 ## Known Unclear Areas
 
-- `README.md` instructs AI agents to read `06_Silicon_Index/AI_Bootstrap_Sequence.md`, but that file is not present in the current checkout.
 - `INSTANCE_CONFIG.md` still contains placeholder values.
 - Some staging directories are committed alongside merged generated nodes; future agents should verify whether staging folders are intended as permanent audit artifacts or temporary build output.
-- The local branch `subagent-Calculator-Developer-engine-a-fable-worker-3c74b6f0` is tied to a separate worktree path and may not be part of the normal publish path.
+- Historical local worktree and branch observations may appear in old reports. Verify current worktrees and branch tips from Git before using them as execution state.

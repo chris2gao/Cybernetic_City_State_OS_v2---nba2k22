@@ -5,12 +5,15 @@
 - Program version: `1.0-draft`
 - Status: planning contract only
 - Domain: `08_Domain_Applications/Math_Mentor`
-- Current source branch: `legacy-mode-a-outsourcing`
+- Execution source branch/head: supplied by the Human-approved launch packet and verified from Git before launch
+- Published baseline default: `master`, unless the current Human task names another source branch and immutable head
 - Current P3 state: closed
 
 This document defines a future long-run program. Its execution must follow `.ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md`. It does not authorize execution, source publication, P3 entry, bridge generation, status promotion, or merge of an existing repair branch. A future execution packet must name this document, an immutable source head, an exact scope, allowed writes, publication policy, and all human-authorized stage gates.
 
 Where older documents conflict with the current evaluator status model, `NODE_QUALITY_AUDIT_PLAN.md`, `BRIDGE_SCHEMA.md`, and the conservative status semantics take precedence. In particular, a Mode B semantic audit requires model review and must not be represented as a machine proof.
+
+This durable program contract does not encode volatile live progress. Current accepted progress is established by reviewed `.ai/CODEX_REPORTS/`, `.ai/PROGRAM_RUNS/` checkpoints, the active launch packet, and physical Git evidence. Legacy branches and broad repair branches are historical evidence or candidate pools unless a current Human task explicitly selects one.
 
 ## 1. Program Purpose And Boundaries
 
@@ -457,9 +460,9 @@ After the last authorized stage, Codex publishes one consolidated review package
 
 The final package must include `.ai/LONG_RUN_LOGS/<program_id>.md`. Imperfections that did not block independent work enter targeted post-run repair rather than causing repeated Human interruption during the run.
 
-## 9. Relationship To Current P2.10-B Reality
+## 9. Historical P2.10-B Evidence Snapshot
 
-The current deep-repair branch `ai/p2-10-b-645-deep-repair-review@29d6bd4` is evidence and a candidate pool, not an approved baseline.
+The deep-repair branch `ai/p2-10-b-645-deep-repair-review@29d6bd4` was recorded as evidence and a candidate pool, not an approved baseline or current source branch.
 
 - Initial candidates processed: 649.
 - Structural exclusions: 1 (`schema.yaml`).

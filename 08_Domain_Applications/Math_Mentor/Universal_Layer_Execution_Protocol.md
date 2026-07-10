@@ -1,5 +1,16 @@
 # Universal Layer Execution Protocol (通用层级执行规范)
 
+## Current Authority And Supersession Notice
+
+This file remains the durable lane-routing, split-roadmap, batch-size, and generation guidance for Math Mentor. Current execution and status semantics are additionally governed by:
+
+- `KNOWLEDGE_COMPLETION_PROGRAM.md` for Stage 0-9 completion gates;
+- `V9.1_教学流程系统规范_Teaching_Flow_Spec.md` for current teaching behavior;
+- `TOOL_TRUTHFULNESS_POLICY.md` for executable and semantic evidence wording;
+- `BRIDGE_SCHEMA.md` and an explicit Human-approved P3 launch for bridge work.
+
+Where older wording below would imply machine proof for Mode B, automatic bridge generation, automatic indexing, or Coordinator consumption, the conservative current contracts above supersede it. Historical `Mode A`/`Mode B` labels map to `MathLane_A`/`MathLane_B` in current teaching state.
+
 针对知识点库（Level 1 至 Level 6）自下而上的构建，为了保证各个领域之间知识点的**完备性**、**依赖一致性**以及**跨层关联性**，我们确立了标准操作流程 (SOP)。
 
 根据**《V9.1 神经符号双擎防崩溃指南》**的历史决议，系统目前采用**双轨制执行流 (Dual-Track Workflow)**。各个层级的特性不同，适用的生成与测试管线也存在本质差异：
@@ -70,13 +81,27 @@
 
 - **【纯数结构高架】** $\to$ **语义连贯性审查 (Semantic Consistency Audit)**
   - 遇到诸如 `topology`, `banach`, `compact` 等词缀时，总线**切断 Z3/SymPy 执行链路**。
-  - 让主控大模型读取节点内容，执行纯自然语言的“逻辑连贯性核查”，只要概念与神经网络架构的隐喻逻辑自洽（即 Verdict: `SEMANTIC_AUDIT_PASSED`），即视为成功落盘。系统容忍一定的代码不可执行性，绝对防范物理死锁。
+  - 主控模型只能形成自然语言语义审查证据。未完成 Human/ChatGPT 审查时使用 `review_required`；完成概念、定义、前置、映射边界与教学价值审查后可记录 `semantic_only` 和具体 reviewer evidence。
+  - Mode B 不存在机器式 pass。已有代码或伪代码只能作为直觉锚点、可计算特例或待审证据，不能证明完整抽象结构。
+  - Human/ChatGPT 的语义接受是后续 teaching/bridge readiness 的必要证据之一，但不等于 deterministic validation、full-node correctness 或 bridge-ready。
 
-### 阶段 4：跨层与同层知识关联映射 (Cross & Intra-Layer Bridging) [双轨通用]
-在完成该层级的基础节点生成后，必须额外构建一系列 `BRIDGE-XXX.yaml` 节点：
-- **平级关联 (Intra-Layer)**：同一层级内不同分支的同构关系。
-- **跨层关联 (Cross-Layer)**：在进入下一个层级前，建立对前置知识的强绑定回调。
-- 只有完成大桥建造，才算真正将知识图谱树转化为认知拓扑网。
+### 阶段 4：Stage 6 Bridge-Readiness Certification [不生成 Bridge]
+
+节点生成或修复完成后，先按 `KNOWLEDGE_COMPLETION_PROGRAM.md` Stage 6 认证可作为 bridge endpoint 的节点：
+
+- 身份、formal content、`sub_topics`、前置关系、教学 readiness 和 lane-correct validation evidence 必须齐全；
+- Mode A 需要接受的计算证据，Mode B 需要 Human/ChatGPT 语义接受；
+- 未满足条件的节点保持 `manual_review_required` 或 `review_required`；
+- 本阶段不得创建、修改、索引或消费任何 `BRIDGE-XXX.yaml`。
+
+真正的同层/跨层 bridge 设计与落地必须等待：
+
+1. Human 明确重新开放 P3，并命名 certified endpoint set 与 immutable source HEAD；
+2. 独立 bridge design review 通过；
+3. Human 明确授权 bridge landing；
+4. Stage 8 完成 validation、registry/index 和 Coordinator consumption 审批。
+
+在 Stage 8 批准前，任何 bridge 都不得进入正式 Coordinator consumption。
 
 ---
-**执行时机**：每做完一个大的层级或主分支时，自动触发上述四个阶段。
+**执行时机**：层级或主分支完成后，只执行当前 Human packet 明确授权的阶段。节点完成不会自动触发 P3、bridge 生成、索引或 Coordinator consumption。
