@@ -1,18 +1,195 @@
 id: DIFF_GEO-656
-mode_routing_status: "manual_review_required"
-validation_status: "manual_review_required"
+mode: "B"
+math_lane: "MathLane_B"
+mode_routing_status: "human_approved"
+validation_status: "semantic_only"
 bridge_readiness_status: "manual_review_required"
-formal_definition_status: "missing"
-prerequisites_status: "missing"
-mapping_boundary_status: "missing"
+formal_definition_status: "human_approved"
+prerequisites_status: "manual_review_required"
+mapping_boundary_status: "human_approved"
+formal_definition: >-
+  Let M be a smooth manifold. A smooth differential k-form on M is a smooth
+  section of the kth exterior power of the cotangent bundle, Λ^k(T*M).
+  Equivalently, for every p in M, a k-form assigns an alternating k-linear map
+  ω_p : (T_pM)^k -> R that depends smoothly on p. The space of smooth k-forms
+  is denoted Ω^k(M), and Ω^0(M)=C∞(M). If α∈Ω^k(M) and β∈Ω^l(M), their wedge
+  product α∧β∈Ω^(k+l)(M) is the alternating product satisfying
+  α∧β = (-1)^(kl) β∧α. For a smooth map F:N->M, the pullback F*ω is defined by
+  (F*ω)_q(v_1,...,v_k) = ω_{F(q)}(dF_q(v_1),...,dF_q(v_k)). The exterior
+  derivative is the unique family of linear operators d:Ω^k(M)->Ω^(k+1)(M)
+  satisfying: (1) for f∈C∞(M), df_p(v)=v(f); (2)
+  d(α∧β)=dα∧β+(-1)^k α∧dβ; (3) d∘d=0; and (4) F*(dω)=d(F*ω).
+  Differential forms can be integrated over oriented manifolds of matching
+  dimension. If N is a compact oriented smooth m-manifold with boundary,
+  i:∂N->N is the inclusion, and ω∈Ω^(m-1)(N), then the generalized Stokes
+  theorem states ∫_N dω = ∫_(∂N) i*ω, where ∂N carries the induced boundary
+  orientation. For noncompact manifolds, appropriate compact-support or
+  convergence assumptions are required. Differential forms do not require a
+  Riemannian metric. Orientation, degree, smoothness, boundary assumptions and
+  integrability must be specified separately.
+formal_definition_zh: >-
+  设 M 是光滑流形。M 上的光滑 k 阶微分形式，是余切丛第 k 次外幂 Λ^k(T*M) 的
+  光滑截面。等价地，它在每一点 p∈M 处指定一个交替的 k 重线性映射
+  ω_p:(T_pM)^k->R，并且该映射随 p 光滑变化。所有光滑 k-形式组成 Ω^k(M)，其中
+  Ω^0(M)=C∞(M)。若 α∈Ω^k(M)、β∈Ω^l(M)，它们的外积
+  α∧β∈Ω^(k+l)(M) 是交替乘积，并满足分次反交换律
+  α∧β=(-1)^(kl)β∧α。对光滑映射 F:N->M，微分形式的拉回 F*ω 定义为
+  (F*ω)_q(v_1,...,v_k)=ω_{F(q)}(dF_q(v_1),...,dF_q(v_k))。外微分是一族
+  线性算子 d:Ω^k(M)->Ω^(k+1)(M)，它满足：(1) 对光滑函数 f，
+  df_p(v)=v(f)；(2) 分次 Leibniz 法则
+  d(α∧β)=dα∧β+(-1)^k α∧dβ；(3) d²=0；(4) 与拉回相容：
+  F*(dω)=d(F*ω)。k 阶微分形式可以在具有相同维数并带有定向的流形上积分。
+  若 N 是紧致、定向、带边界的光滑 m 维流形，i:∂N->N 是边界包含映射，且
+  ω∈Ω^(m-1)(N)，则广义 Stokes 定理为 ∫_N dω=∫_(∂N)i*ω，其中边界使用
+  诱导定向。对于非紧流形，还必须加入紧支撑或积分收敛条件。微分形式本身不要求
+  预先给出 Riemannian 度量；形式的次数、流形定向、光滑性、边界条件和可积性
+  必须分别说明。
+candidate_prerequisite_nodes:
+  - node_id: n_653
+    file: DIFF_GEO-653.yaml
+    role: >-
+      Smooth-manifold, chart, smooth-transition and coordinate-independence
+      foundation.
+  - node_id: n_655
+    file: DIFF_GEO-655.yaml
+    role: >-
+      Tangent spaces, tangent bundle, smooth vector fields and local
+      differential-geometric language.
+  - node_id: n_328
+    file: LINEAR_ALGEBRA-328.yaml
+    role: >-
+      Multilinear maps, covariant tensors, dual-space notation and
+      coordinate-independent tensor objects.
+  - node_id: n_314
+    file: LINEAR_ALGEBRA-314.yaml
+    role: "Determinants, sign and oriented volume."
+  - node_id: n_289
+    file: CALCULUS-289.yaml
+    role: "Jacobian determinants and coordinate-change compensation."
+  - node_id: n_288
+    file: CALCULUS-288.yaml
+    role: "Multiple integration and coordinate-based volume integration."
+  - node_id: n_298
+    file: CALCULUS-298.yaml
+    role: "Classical Green theorem as a low-dimensional Stokes instance."
+  - node_id: n_299
+    file: CALCULUS-299.yaml
+    role: "Classical vector-calculus Stokes theorem."
+  - node_id: n_300
+    file: CALCULUS-300.yaml
+    role: "Gauss divergence theorem as another generalized-Stokes instance."
+unresolved_prerequisite_concepts:
+  - finite_dimensional_dual_spaces
+  - cotangent_spaces_and_cotangent_bundle
+  - exterior_algebra
+  - alternating_multilinear_maps
+  - antisymmetrization
+  - pullback_of_covariant_tensors
+  - manifold_orientation
+  - induced_boundary_orientation
+  - integration_of_forms_on_manifolds
+  - manifolds_with_boundary
+  - compact_support_and_integrability_conditions
+  - partitions_of_unity_for_global_integration
+  - chain_level_or_singular_simplex_view_of_integration
+  - exact_forms_closed_forms_and_de_Rham_complex
+mapping_boundary:
+  primary_mapping_kind: "llm_architecture_bounded_structural_analogy"
+  primary_mapping: >-
+    Treat a model representation state as a point in a hypothetical geometric
+    state space. A differential k-form can be used as an analogy for a local,
+    antisymmetric measurement rule that evaluates k independent infinitesimal
+    perturbation directions at the same state. The wedge product analogically
+    combines lower-degree local probes into a higher-degree oriented probe.
+    Pullback analogically describes how such a probe would be translated
+    backward through a change of representation coordinates or a smooth state
+    map. The exterior derivative analogically represents a coordinate-compatible
+    rule for extracting infinitesimal variation and boundary-sensitive local
+    structure from a probe. Generalized Stokes provides an analogy between
+    accumulated interior variation and a compatible boundary measurement.
+  primary_mapping_zh: >-
+    可以把模型的表示状态类比为一个假想几何状态空间中的点。k 阶微分形式可以类比为
+    一种局部、反对称的测量探针：它同时接收 k 个无穷小扰动方向，并输出一个带定向
+    信息的标量测量结果。外积可以类比为把多个低阶局部探针组合成更高阶的定向探针。
+    拉回可以类比为：当表示坐标或状态映射发生改变时，把目标空间中的测量规则反向
+    转换到原空间。外微分可以类比为一种与坐标变化相容的局部变化提取规则，用于表达
+    局部变化、闭合性及边界响应之间的结构关系。广义 Stokes 定理可以类比为内部累计
+    变化与边界测量之间的一致性关系。
+  boundary: >-
+    This is a bounded structural analogy only. It does not claim that an actual
+    LLM latent space is a smooth manifold or possesses a cotangent bundle or
+    exterior algebra. Activations, hidden states, attention weights, gradients
+    and residual updates are not literally differential forms. The wedge product
+    is not ordinary tensor concatenation, elementwise multiplication, matrix
+    multiplication, a cross product, or generic feature fusion. The exterior
+    derivative is not the ordinary gradient, Jacobian, backpropagation operator,
+    finite difference, attention update or Transformer layer operation. The
+    identity d²=0 is not a property of arbitrary neural-network updates or
+    repeated differentiation operators. A pullback is not automatically
+    implemented by changing layers, transporting activations, reparameterizing
+    weights or applying an inverse neural transformation. Ordinary LLM
+    representations have not been shown to possess the coordinate-invariance,
+    orientation, smoothness or integrability required for differential-form
+    integration. Generalized Stokes theorem is not claimed to govern Transformer
+    computation, context boundaries, token windows or information conservation.
+    No claim is made that LLM latent spaces possess nontrivial de Rham cohomology,
+    closed or exact semantic forms, or topological invariants detectable by this
+    node. A Riemannian metric, volume form, orientation, compact support and
+    boundary structure must not be silently inferred. The analogy does not
+    establish a machine-verifiable mathematical model of an LLM. The formal
+    mathematical object remains a differential form on a smooth manifold.
+  preserve_full_boundary: true
+  existing_physical_metaphor_status: "secondary_teaser_only"
+existing_code_and_audit:
+  preserve: true
+  evidence_status: "semantic_only"
+  code_interpretation: >-
+    The existing R2 function computes the determinant-like coefficient a*d-b*c.
+    If its two inputs are interpreted as coefficient vectors of 1-forms
+    α=a dx+b dy and β=c dx+d dy, the result is the coefficient of α∧β relative
+    to dx∧dy.
+  audit_interpretation: >-
+    The existing d_dx=0 assignment is only a mocked instance of the identity
+    d(dx)=0. It does not implement the exterior derivative or prove d²=0.
+  code_scope: "illustrative_R2_wedge_coefficient_only"
+  audit_scope: "mocked_d_dx_zero_identity_only"
+  explicitly_not_validated:
+    - general_exterior_algebra
+    - general_k_forms
+    - cotangent_bundle_sections
+    - coordinate_independence
+    - pullback_naturality
+    - graded_Leibniz_rule
+    - d_squared_zero_in_general
+    - integration_on_manifolds
+    - induced_boundary_orientation
+    - generalized_Stokes
+    - de_Rham_complex
+    - de_Rham_cohomology
 migration_review:
   missing_reason:
-    - "formal_definition_absent"
-    - "prerequisite_nodes_absent"
-    - "mapping_boundary_absent"
-  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+    - "prerequisite_candidates_not_yet_certified"
+    - "cotangent_and_exterior_algebra_nodes_not_verified"
+    - "orientation_and_integration_prerequisites_unresolved"
+    - "generalized_Stokes_machine_validation_not_available"
+  recommended_next_action: >-
+    Review unresolved prerequisite coverage before bridge-readiness promotion.
+    Preserve semantic_only until a separately authorized mathematical validation
+    design exists.
+  semantic_repair:
+    decision_source: "Human-approved DIFF_GEO-656 complete semantic decision package v1"
+    lane_policy: "MathLane_B"
+    formal_definition: "human_approved"
+    mapping_boundary: "human_approved"
+    existing_code_and_audit: "preserved_as_illustrative_R2_case"
+    mutation_scope: "DIFF_GEO-656.yaml_only"
   warnings:
-    - "mode_routing_manual_review_required"
+    - "semantic_only_not_machine_validated"
+    - "prerequisites_remain_manual_review_required"
+    - "bridge_readiness_remains_manual_review_required"
+    - "current_code_does_not_implement_general_differential_forms"
+    - "current_audit_does_not_prove_d_squared_zero"
+    - "existing_physical_metaphor_is_secondary_teaser_only"
 concept_name: 微分形式 - 认知跃迁：抛弃传统向量微积分，建立一套在坐标变换下绝对不变的反对称张量积分系统。 de Rham 上同调的底层探测器。 (n_656)
 sub_topics:
 - 外微分算子 d 与外积 ∧
