@@ -6,22 +6,17 @@ Status: LRP-01 control document.
 
 This document defines how a new independent model initializes as a Math Mentor teacher from the Plan 3 Cybernetic City-State OS without relying on old chat context, hidden memory, or full-repository ingestion.
 
-The flow is a documentation/control layer. It does not activate runtime, production Coordinator execution, external apps, node generation, bridge generation, or learning-history writes.
+The flow is a documentation/control layer for manual-chat teaching. Every stage preserves lazy loading and an explicit `actually_read_files` trace. It does not activate runtime, production Coordinator execution, external apps, deterministic tools, node generation, bridge generation, learning-state or learned-history writes, or spaced-review scheduler writes.
 
-## 2. Authority Chain
+## 2. Authority, Loading Order, And State Freshness
 
-The teacher initialization flow inherits this order:
+These are three separate concerns and must not be collapsed into one precedence list.
 
-1. current Human Speaker instruction;
-2. `06_Silicon_Index/AI_Bootstrap_Sequence.md`;
-3. `3号方案.md`;
-4. `06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md`;
-5. `.ai/PROTOCOL.md` and task handoff rules when the work is model-to-model coordinated;
-6. `08_Domain_Applications/Math_Mentor/08_Math_Mentor_Coordinator_Prompt.md`;
-7. `08_Domain_Applications/Math_Mentor/V9.1_教学流程系统规范_Teaching_Flow_Spec.md`;
-8. target-node YAML, matching bridge records, and learned-history state loaded for the current teaching request.
+- **Instruction authority**: use `.ai/PROTOCOL.md#canonical-instruction-authority-and-state-freshness`. This document does not define a competing authority chain.
+- **Initialization routing and file loading**: `06_Silicon_Index/AI_Bootstrap_Sequence.md` is the repository initialization router. After it, load only the Math Mentor contracts and target evidence required by the current request.
+- **State freshness**: use the current explicit Human statement, physical Git/source-head evidence when relevant, and a validated active mailbox with dereferenced refs. Freshness establishes state; it does not grant mutation, publication, runtime, or tool authority.
 
-Plan 3 Human Speaker authority remains the top-level route, translation, and final-decision gate. Math Mentor teaching is an Engine B domain teaching task. Deterministic tools may support the lesson but do not replace semantic teaching judgment.
+Plan 3 Human Speaker authority remains the route, translation, and final-decision gate. Ordinary Math Mentor teaching uses `Plan3_Engine_B`. Math Mentor teaching lanes are separately named `MathLane_A`, `MathLane_B`, and reviewed `mixed`. Deterministic tools may support the lesson only through a future Human-authorized `Plan3_Engine_A` handoff with `run_with_log` evidence; they do not replace semantic teaching judgment.
 
 ## 3. End-To-End Bootstrap Flow
 
@@ -35,8 +30,8 @@ Required actions:
 2. Read the current user request or handoff task.
 3. Read task-relevant parts of `3号方案.md` and `06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md`.
 4. Classify the task:
-   - `Engine_A` for deterministic implementation, scripts, tests, and protocol edits;
-   - `Engine_B` for teaching, mathematical semantics, cognitive state, and conceptual judgment;
+   - `Plan3_Engine_A` for deterministic implementation, scripts, tests, and protocol edits;
+   - `Plan3_Engine_B` for teaching, mathematical semantics, cognitive state, and conceptual judgment;
    - `Human_Speaker_required` when the route, target, authority, or protected action is unclear.
 5. Confirm forbidden actions for ordinary teaching:
    - no runtime activation;
@@ -50,7 +45,7 @@ Output: `task_classification`.
 
 ```yaml
 task_classification:
-  city_state_engine: "Engine_B"
+  city_state_engine: "Plan3_Engine_B"
   domain_application: "Math_Mentor"
   human_speaker_gate: "not_required_if_teaching_within_existing_scope"
   forbidden_actions:
@@ -125,7 +120,8 @@ Required fields:
 ```json
 {
   "Target_Node": "<node id and title>",
-  "Mode": "Mode A | Mode B | mixed",
+  "Plan3_Engine": "Plan3_Engine_B",
+  "Math_Lane": "MathLane_A | MathLane_B | mixed",
   "Routing_Basis": "<domain/subdomain rule or named exception>",
   "Core_Definition": "<compressed definition or axiom skeleton>",
   "Sub_Topics": ["<checkpoint names>"],
@@ -151,7 +147,7 @@ The teacher may proceed only when:
 
 - the target node is found and read;
 - the required teaching manuals have been physically read;
-- mode routing is known;
+- MathLane routing is known;
 - `sub_topics` are available or the missing field is reported;
 - bridge and learned-history limits are explicit;
 - no protected action is required.
@@ -176,4 +172,7 @@ Once ready, the Coordinator transitions to guided teaching:
 4. bridge slot shown once when first used;
 5. one compact forcing question per teaching turn unless emitting an interrupt;
 6. Exam Agent handoff only after subtopic coverage and student definition restatement;
-7. spaced-review handoff after Exam Agent trap pass, without claiming long-term graduation.
+7. after Exam Agent returns `classroom_passed`, emit only a learning-state/spaced-review placeholder unless a separate write task is authorized;
+8. preserve the explicit boundary `classroom_passed != graduated`.
+
+The manual teaching flow never performs a learning-state, learned-history, or scheduler write. It never treats this document as production Coordinator or runtime activation.

@@ -1,71 +1,140 @@
-# Math Mentor OS (V9.1) 知识节点生命周期全流程：从生成到教学
+# Math Mentor OS (V9.1) 从知识维护到手动教学的完整流程
 
-本文档完整梳理了赛博城邦 V9.1 数学教育系统从“节点生成”到“双引擎教学”的端到端数据流与执行规范。该流程确保了从底层 YAML 文件的物理生成，到顶层学生交互的绝对自洽。
+Status: aligned operational lifecycle manual for LRP-01 through LRP-06 contracts.
 
----
+## 1. 文档边界
 
-## 🚀 阶段一：知识图谱降维生成 (Generation Phase)
-**核心目标**：将庞大的理论路线图拆解为可被系统执行的独立 YAML 概念节点，存入物理数据库。
+本文档说明知识节点如何作为已存在的教学证据进入手动聊天教学。它不授权或激活：
 
-### 1. 核心输入与依据
-* **数据源基座**：`数学知识路线图_全部.yaml`（定义了所有知识点的绝对编号 `n_XXX`、层级结构及子概念列表 `sub_topics`）。
-* **外部认知素材**：`大模型解剖图：深入解析.md`（专门为 **Mode B** 的纯数抽象提供神经网络架构隐喻素材）。
+- 节点生成或批量重生成；
+- bridge 设计、生成、登记或 Coordinator 消费；
+- runtime 或 production Coordinator；
+- Z3、SymPy、Python、PyTorch、calculator、sandbox 或 app 执行；
+- learning-state、learned-history 或 spaced-review scheduler 写入；
+- source/master 发布。
 
-### 2. 执行与规范控制
-* **总指挥塔**：`Universal_Layer_Execution_Protocol.md`（规定了从第 1 层到第 6 层的流水线顺序及外包分发原则）。
-* **节点结构标尺**：`V9.1_认知映射引擎_终极实装蓝图.md`（强制规定生成的 YAML 必须包含 `sub_topics`、`llm_physical_mapping` 以及严苛的 `v8_sanity_audit` 物理代码断言）。
+指令权威采用 .ai/PROTOCOL.md 的 canonical instruction authority and state freshness 规则。文件加载顺序不是权威顺序；Git、mailbox 和时间戳的新鲜度也不是执行授权。仓库初始化由 06_Silicon_Index/AI_Bootstrap_Sequence.md 路由。
 
-### 3. 输出与归档
-* **物理落盘**：生成的单个节点文件存入 `Pure_Math_Intuition_DB/` 目录。
-* **索引绑定**：将生成的 YAML 文件名（如 `COMPLEX-001.yaml`）与路线图节点编号（如 `n_417`）在 `知识图谱_节点映射索引.md` 中进行注册与绑定，完成“生成阶段”的最终交付。
+## 2. 知识维护阶段与教学阶段分离
 
----
+知识节点生成是独立的、未来 Human 授权的维护任务，遵循 Universal_Layer_Execution_Protocol.md。普通教学不会自动进入该阶段。
 
-## 🚦 阶段二：教学请求寻址与路由 (Routing Phase)
-**核心目标**：接收学生指令，通过神经总线准确定位知识点，并判断进入哪条算力管线。
+当维护任务需要路线图时：
 
-### 1. 触发点
-* 学生向系统输入请求，例如：“我想学习 n_417” 或 “解释一下什么是复变函数”。
-* **OS 调度中心**：`08_Math_Mentor_Coordinator_Prompt.md`（主系统截获请求并启动处理链）。
+1. 根据目标层级读取对应的 split roadmap，例如 数学知识路线图_第一层基础工具.yaml 至 数学知识路线图_第六层前沿领域.yaml 中与任务相符的一份或少数几份；
+2. 仅在明确授权 full-graph audit 时读取 数学知识路线图_全部.yaml；
+3. 记录 actually_read_files，不得用文件名、索引或隐藏记忆代替物理读取；
+4. 将生成、验证、合流和索引更新视为单独授权动作。
 
-### 2. 寻址与总线分配
-* **映射寻址**：系统查阅 `知识图谱_节点映射索引.md`，将学生的自然语言或 `n_XXX` 编号映射为 `Pure_Math_Intuition_DB/` 下的绝对路径文件。
-* **双轨分流**：根据 `V9.1_赛博城邦认知映射总线实战解剖手册.md` 的总线路由法则：
-  - 若节点涉及具体数值/方程操作（如：常微分、线代），切入 **Mode A（计算代数主路）**。
-  - 若节点涉及无穷维/同构/公理证明（如：实分析、拓扑），切入 **Mode B（纯数高架路）**。
+v8_sanity_audit、SymPy/Z3 风格伪代码和张量片段默认只是 semantic_only 或高密度 prompt evidence。没有具体 run_with_log 时，不得描述为已执行、已计算、已验证、sandbox passed 或 machine-proven。
 
----
+## 3. 活跃的手动教学管线
 
-## ⚙️ 阶段三：神经符号双擎解析 (Execution & Fallback Phase)
-**核心目标**：在内存中同时点燃 LLM 语义隐喻与 Python 沙盒验证，且绝不崩溃。
+当前可执行的文档级教学管线是：
 
-### 1. 语义与代码双重加载
-此时，系统读取了 YAML 节点文件的内容：
-* **语义层（LLM 侧）**：提取 `llm_physical_mapping`（Mode A 为经典物理/齿轮/水流；Mode B 为神经网络/Attention 机制），构建降维隐喻环境。
-* **符号层（沙盒侧）**：提取 `v8_sanity_audit.sympy_pseudo_code`。
+~~~text
+Human request
+-> Coordinator minimal loading and MathLane routing
+-> Prep_Architect lesson plan
+-> Guided Socratic explanation-first teaching
+-> Exam_Agent independent classroom test
+-> learning-state / spaced-review placeholder
+~~~
 
-### 2. 执行与防崩溃保障
-* **运行法则**：遵循 `V9.1_神经符号双擎防崩溃指南.md`。
-* 沙盒在后台静默运行 `exec()` 验证伪代码的封闭性。若遇死锁、超时或维度超载，立即触发**语义审计降级 (Semantic Audit Fallback)**，强行熔断死机循环，改用纯逻辑推理托底。
+这条管线是 manual-chat-only。它描述代理间契约，不启动生产 runtime 或 Coordinator。
 
----
+### 3.1 Human Request
 
-## 🎓 阶段四：降维教学投递 (Teaching Delivery Phase)
-**核心目标**：将冷冰冰的数学符号和验证完毕的沙盒结果，转化为震撼的交互式教学体验。
+Human 提供概念、node id 或精确文件目标。普通学习请求只授权手动教学，不授权修改 prompt、node、bridge、roadmap、state 或 scheduler。
 
-### 1. 教学流执行
-* **教学剧本**：严格遵循 `V9.1_教学流程系统规范_Teaching_Flow_Spec.md`（包含：破冰建构 -> 符号引入 -> 沙盒执行反馈 -> 极端边界测试）。
-* 系统将双擎解析的结果融合成一段生动的描述输出给学生。
+### 3.2 Coordinator Minimal Lazy Loading And Routing
 
-### 2. 动态反馈循环
-* 学生提问或进行测验。系统回到阶段二/阶段三，通过动态缩放隐喻维度（从宏观水流缩放至微观流体分子），对学生的认知盲点进行**微积分式填补**，直至完全掌握当前节点。
+Coordinator：
 
----
+1. 读取 08_Math_Mentor_Coordinator_Prompt.md、Teaching Flow Spec、Lesson Plan Schema、Teaching Agent Contracts 和 Tool Truthfulness Policy；
+2. 使用精确 node id、索引或当前层级 split roadmap 定位目标；
+3. 只读取目标节点、必要的 immediate prerequisites、端点匹配的 bridge，以及确有需要的 learned-history evidence；
+4. 维护 actually_read_files 与 unavailable_files；
+5. 使用 Plan3_Engine_B 作为教学权威路由，并在 MathLane_A、MathLane_B 或已审查的 mixed 中选择教学 lane；
+6. 输出压缩 SYSTEM_STATE_DUMP，字段使用 Math_Lane，不使用旧 Mode 字段。
 
-## 📑 总结：V9.1 全生命周期审查清单 (Checklist)
+普通教学不得全量读取仓库、Math Mentor 目录、Pure_Math_Intuition_DB、所有 bridge 或完整路线图。
 
-如果我们要排查系统故障，可以依照以下文档对账：
-1. **找不到知识点？** -> 检查 `知识图谱_节点映射索引.md` 索引是否对齐。
-2. **沙盒报错卡死？** -> 检查 `V9.1_认知映射引擎_终极实装蓝图.md` 里的 YAML 语法或查阅 `防崩溃指南` 的降级策略是否被正确触发。
-3. **隐喻晦涩难懂？** -> 检查生成的节点是否违反了 `Universal_Layer_Execution_Protocol.md` 规定的隐喻约束。
-4. **老师说话像念书？** -> 检查是否脱离了 `V9.1_教学流程系统规范_Teaching_Flow_Spec.md` 的教学态势控制。
+### 3.3 Prep_Architect Lesson Plan
+
+Prep_Architect 生成符合 LESSON_PLAN_SCHEMA.md 的 wrapper：
+
+- occurrence crisis 在形式定义之前；
+- intuition model 与 MathLane 一致；
+- 每个 source sub_topics 精确进入一次 subtopic_plan；
+- bridge slot 只消费有端点与 learned-history 证据的记录；
+- tool truthfulness 使用 not_run、semantic_only、unavailable、planned、review_required 或带日志的 run_with_log；
+- 缺少 MathLane_B mapping 时返回 re-prep，不用家庭或工厂隐喻替代。
+
+### 3.4 Guided Socratic Explanation-First Teaching
+
+教学顺序：
+
+1. 解释概念为何必须出现；
+2. 给出有边界的 lane-consistent intuition；
+3. 压缩为 formal definition；
+4. 在证据允许时激活 bridge slot；
+5. 覆盖全部 sub_topics；
+6. 每个互动回合最多提出一个紧凑问题；
+7. 学生错误时先追问一次，再纠错或 re-prep；
+8. 要求学生用自己的话复述定义或判据。
+
+纯拷问先于讲解无效。MathLane_B 使用有明确 mapping_boundary 的 LLM-architecture structural analogy，pure_math_definition 始终是数学权威。
+
+### 3.5 Exam_Agent Independent Classroom Test
+
+只有在全部 subtopics 已覆盖、bridge 检查完成或明确不可用、学生已复述定义后，Socratic_Router 才发送 SYSTEM_INTERRUPT: EXAM_HANDOVER。
+
+Exam_Agent 独立测试当前课堂边界和陷阱，不补教替代课程。允许结果：
+
+- classroom_passed；
+- failed；
+- needs_reprep。
+
+classroom_passed != graduated。课堂通过不代表长期保持、review pass、scheduler 写入或 learned-history 更新。
+
+### 3.6 Learning-State / Spaced-Review Placeholder
+
+没有单独写入授权时，只输出：
+
+~~~yaml
+review_scheduler_status: "placeholder_not_written"
+actual_learning_state_write_performed: false
+actual_learned_history_write_performed: false
+actual_scheduler_write_performed: false
+graduation_status: "not_graduated"
+~~~
+
+## 4. 确定性计算的未来 Engine A Handoff
+
+教学代理可以指出某个命题适合确定性检查，但不能静默执行 exec()、后台 sandbox 或任何外部工具。
+
+真实计算需要未来 Human 授权的 Plan3_Engine_A 任务，并产生：
+
+~~~yaml
+tool_truthfulness:
+  tool_status: "run_with_log"
+  tool_family: "<Z3 | SymPy | Python | PyTorch | calculator | other>"
+  input_ref: "<required>"
+  log_ref: "<required>"
+  output_ref: "<required or null>"
+  environment_ref: "<required>"
+  limitations: []
+~~~
+
+缺少这些证据时，状态保持 not_run、semantic_only、unavailable、planned 或 review_required。
+
+## 5. Operational Audit Checklist
+
+1. **目标未定位**：只读取必要索引或对应层级 split roadmap，不读取完整路线图。
+2. **MathLane 不清楚**：回到 Coordinator 的 domain/subdomain evidence；不得用 level number 单独路由。
+3. **MathLane_B 映射缺失**：请求 re-prep；不得使用日常物理隐喻作为 primary mapping。
+4. **工具证据缺失**：标记 semantic_only 或 not_run；不得假定预验证结果。
+5. **教学漂移**：重载最小缺失 authority/manual/target evidence，并更新 actually_read_files。
+6. **Exam 通过**：记录 classroom result 与 review placeholder；不得宣称 graduated 或已写 scheduler。
+7. **任何激活动作**：本文档不授权 runtime、Coordinator、node/bridge generation 或状态写入，必须由新的 Human 任务明确开启。

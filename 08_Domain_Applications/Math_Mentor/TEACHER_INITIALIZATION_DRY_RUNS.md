@@ -2,7 +2,9 @@
 
 Status: LRP-01 validation fixtures.
 
-These dry runs are documentation fixtures. They do not activate runtime, production Coordinator execution, external apps, node generation, bridge generation, or learning-history writes.
+These dry runs are documentation fixtures for manual-chat behavior. They do not activate runtime, production Coordinator execution, external apps, deterministic tools, node generation, bridge generation, learning-state or learned-history writes, or spaced-review scheduler writes.
+
+Global fixture invariant: every fixture preserves lazy loading and `actually_read_files`. Every apparent tool, runtime, bridge, or state action is descriptive only. A deterministic execution claim requires a separately authorized `Plan3_Engine_A` handoff with `run_with_log` evidence. The outcome boundary is explicit: `classroom_passed != graduated`.
 
 ## Fixture Format
 
@@ -41,10 +43,11 @@ Expected `actually_read_files` behavior:
 
 Expected compressed state dump fields:
 
-- `Target_Node` may be `not_yet_identified`;
-- `Mode` may be `pending_target_node`;
-- `actually_read_files` is non-empty;
-- forbidden actions are explicit.
+- before a target is identified, no per-target `SYSTEM_STATE_DUMP` is emitted;
+- initialization evidence records `target_status: pending_target_node`;
+- after a target is resolved, `Math_Lane` is `MathLane_A`, `MathLane_B`, or reviewed `mixed`;
+- `Plan3_Engine` is `Plan3_Engine_B` for ordinary teaching;
+- `actually_read_files` is non-empty and forbidden actions are explicit.
 
 Expected decision:
 
@@ -55,7 +58,8 @@ Must not have:
 
 - request for Human to upload repository files;
 - full-repo ingestion;
-- runtime activation.
+- runtime or production Coordinator activation;
+- tool execution, bridge generation, learning-state write, or scheduler write.
 
 ## Dry Run 2: Known Target Node Request
 
@@ -81,7 +85,7 @@ Expected `actually_read_files` behavior:
 Expected compressed state dump fields:
 
 - `Target_Node`;
-- `Mode`;
+- `Math_Lane`;
 - `Routing_Basis`;
 - `Core_Definition`;
 - `Sub_Topics`;
@@ -101,6 +105,7 @@ Must not have:
 - loading all node YAML files;
 - assuming lower node ID means mastery;
 - bridge endpoint invention.
+- tool execution, bridge generation, learning-state write, or scheduler write.
 
 ## Dry Run 3: Manual Absent From Current Context But Present In Repository
 
@@ -154,12 +159,13 @@ Expected compressed state dump fields:
 
 Expected decision:
 
-- block with exact missing path.
+- block with the exact repository path that could not be read.
 
 Must not have:
 
 - invented summary of the missing manual;
 - teaching continuation;
+- request for Human upload of a repository manual;
 - request to activate runtime as a workaround.
 
 ## Dry Run 5: Learned-History State Unavailable
@@ -236,7 +242,7 @@ Must not have:
 
 Input condition:
 
-- teacher starts mixing Mode A everyday metaphor with Mode B canonical teaching, or references a file not in `actually_read_files`.
+- teacher starts mixing `MathLane_A` everyday metaphor with `MathLane_B` canonical teaching, or references a file not in `actually_read_files`.
 
 Expected file loading order:
 
@@ -253,7 +259,7 @@ Expected `actually_read_files` behavior:
 Expected compressed state dump fields:
 
 - `drift_detected: true`;
-- corrected `Mode`;
+- corrected `Math_Lane`;
 - corrected `Mapping_Status`;
 - updated `actually_read_files`.
 
@@ -267,3 +273,33 @@ Must not have:
 - continuing with mixed, unsupported metaphors;
 - claiming semantic or computational validation without evidence;
 - starting LRP-02 or later tasks.
+
+## Dry Run 8: Classroom Pass And Review Placeholder
+
+Input condition:
+
+- all source subtopics were taught;
+- the student restated the formal definition;
+- Exam_Agent independently returned `classroom_passed`.
+
+Expected `actually_read_files` behavior:
+
+- preserves the manuals and target evidence physically read for the lesson;
+- does not list a scheduler, learned-history, or learning-state file unless it was physically read.
+
+Expected output fields:
+
+- `exam_result: classroom_passed`;
+- `graduation_status: not_graduated`;
+- `review_scheduler_status: placeholder_not_written`;
+- `actual_scheduler_write_performed: false`.
+
+Expected decision:
+
+- close the classroom lesson and describe a future Human-authorized review/scheduler handoff.
+
+Must not have:
+
+- `classroom_passed` treated as `graduated`;
+- learning-state, learned-history, or scheduler write claims;
+- runtime, production Coordinator, tool execution, node generation, or bridge generation claims.
