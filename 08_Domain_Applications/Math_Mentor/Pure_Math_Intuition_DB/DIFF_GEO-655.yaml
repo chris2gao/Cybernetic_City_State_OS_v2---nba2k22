@@ -72,7 +72,15 @@ mapping_boundary:
     their latent spaces are not established smooth manifolds, and continuity,
     differentiability, a globally defined vector field, completeness, and a
     global flow are not implied. The formal object remains a smooth vector field
-    and its locally defined integral curves and flow.
+    and its locally defined integral curves and flow. This analogy does not claim
+    that Transformer residual updates are literal tangent vectors or that
+    Transformer layers implement a smooth vector field. A discrete Transformer
+    computation is not literally an integral curve or a continuous-time flow;
+    any neural-ODE interpretation requires separate mathematical assumptions and
+    evidence. No gradient-field or global-Lipschitz assumption is made. No
+    uniqueness claim is made without the hypotheses required by the relevant ODE
+    existence-and-uniqueness theorem, and the LLM architecture is not claimed to
+    determine a unique vector field.
   preserve_full_boundary: true
   existing_physical_metaphor_status: "secondary_teaser_only"
 existing_code_and_audit:
