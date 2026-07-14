@@ -1,108 +1,104 @@
-# Math Mentor Four-Node Certified Pilot
+# Math Mentor Four-Node Certified Pilot — Consolidated Correction
 
 ```yaml
-packet_id: "codex-math-mentor-certified-pilot-candidate-0001"
-status: "completed_with_blockers"
+packet_id: "codex-math-mentor-certified-pilot-correction-candidate-0002"
+status: "complete_awaiting_chatgpt_semantic_review"
 source_head: "b3ee031488be07748b1cbdfc19b8926b6caaa6db"
 work_branch: "codex/math-mentor-certified-pilot"
-node_repair_commit: "43e0396e7a12cfd2f6014b290dc1c15f1df9a5af"
-evidence_head: "d6d2e5145b88b73a2abeb21cfefe580a10b5cc97"
+prior_candidate_head: "e1f1be0eb9fba51ebfe36f4bd10de3d8d7b52520"
+correction_business_head: "fd77746c3eba301210fb9b7e9c4f4ab168f99b40"
 pilot_nodes:
   - "COMPLEX_ANALYSIS-418"
   - "PDE-487"
   - "ABSTRACT_ALGEBRA-468"
   - "ALG_TOPOLOGY-676"
-node_mutations:
-  - "COMPLEX_ANALYSIS-418:v8_sanity_audit.sympy_pseudo_code:argument_periodicity_assertion"
-identity_conflicts_affecting_pilot:
-  - "PDE-487:missing_explicit_roadmap_alias"
-  - "PDE-486:missing_explicit_roadmap_alias"
-prerequisite_blockers:
-  - "ALG_TOPOLOGY-676:n_667_direction_requires_human_review"
+identity_conflicts_affecting_pilot: []
+historical_p0_conflicts_preserved:
+  - "PDE-487:e472c7de-cc44-51ad-8c27-7e24233e704b"
+  - "PDE-486:c5668ff0-934f-56e6-ba54-b6fcc39efc79"
+prerequisite_blockers: []
 consumer_allowed_count: 0
 runtime_or_coordinator_activation: false
 source_or_master_publication: false
-human_gate: "required"
+pr_created: false
+human_gate: "required_after_chatgpt_exact_head_review"
 ```
 
 ## Outcome
 
-The four-node evidence chain is complete enough for exact-head ChatGPT review,
-but it is not a certification. Two open PDE alias conflicts and one disputed
-prerequisite direction are deliberately fail-closed. Codex found no basis to
-activate a consumer, create a bridge, mutate a roadmap, or issue final
-mathematical/teaching approval.
+The Human-approved consolidated correction is implemented under the original
+task and branch. The candidate is ready for ChatGPT exact-head mathematical and
+semantic review; Codex does not issue final certification.
 
-## Identity and prerequisites
+Human approved `n_487 -> PDE-487` and `n_486 -> PDE-486` as pilot semantic
+evidence. The dossiers retain the original P0 conflict IDs and explicitly state
+`production_effect: none`. No source node, roadmap, registry, crosswalk, or
+identity-resolution overlay was changed for these decisions.
 
-All four pilots and seven distinct prerequisite nodes are bound to exact paths,
-Git blob OIDs, SHA-256 hashes, and deterministic canonical UUID records. Three
-pilot bindings match explicit split-roadmap claims but remain unapproved. The
-PDE pilot and its prerequisite have split-roadmap entries, yet their source
-records lack approved explicit aliases and therefore retain their open P0
-conflicts. The empty identity-resolution overlay was not modified.
+## Node results
 
-`DIFF_GEO-654` remains a quarantined duplicate near canonical prerequisite
-`DIFF_GEO-653`; it was not treated as a substitute. Existing prerequisite bodies
-were read. Several are legacy/manual-review assets, so identity existence is not
-reported as teaching readiness.
+- `COMPLEX_ANALYSIS-418` is byte-unchanged in this continuation. Evaluator:
+  `passed`. Its mathematics and pilot teaching content were accepted in the
+  previous exact-head review; final Human certification remains pending.
+- `PDE-487` is byte-unchanged. Evaluator: `passed`. ChatGPT previously accepted
+  its mathematical and executable evidence. Human pilot-only alias decisions
+  remove the pilot evidence blocker without creating production admission.
+- `ABSTRACT_ALGEBRA-468` is byte-unchanged. Evaluator: `review_required`, never
+  machine-passed. ChatGPT previously accepted its Mode B semantic content.
+- `ALG_TOPOLOGY-676` now distinguishes structure group from gauge
+  transformations, states the U-to-V convention
+  `g_UW = g_VW o g_UV`, materially covers tangent and normal bundles, and lists
+  only `n_653` as prerequisite. The Human-classified successor `n_667` is
+  evidence-only. Evaluator remains honestly `review_required` pending corrected
+  exact-head review.
 
-## Mode-correct evidence
+The corrected `ALG_TOPOLOGY-676` blob is
+`11e9136f557d0f26fa3181dfc1d81e226f4f3f5b`, SHA-256
+`9552a7bd115e1170b3899d08603f77b07831594b85a97278d68f008e4351c9e8`.
 
-- `COMPLEX_ANALYSIS-418` Mode A: evaluator passed. Evidence covers Euler's
-  identity, explicit argument periodicity, multiplication, modulus, and De
-  Moivre. Mathematical correctness and teaching readiness remain pending.
-- `PDE-487` Mode A: evaluator passed. Multi-mode positive/negative frequency
-  checks support the periodic first/second derivative multiplier claims. The
-  continuous theorem's transform convention and Schwartz assumption are stated,
-  while the FNO mapping is explicitly bounded. Identity and prerequisite gates
-  remain blocked.
-- `ABSTRACT_ALGEBRA-468` Mode B: evaluator correctly returned
-  `review_required`. The dossier covers field extension, algebraic versus
-  transcendental elements, degree, splitting field, bounded LLM analogy, and
-  special-case-only SymPy anchor. It is not machine-passed.
-- `ALG_TOPOLOGY-676` Mode B: evaluator correctly returned `review_required`.
-  The dossier covers bundle projection, local trivializations, fiber, overlap
-  transition functions, vector specialization, the fixed-global-vector-space
-  Transformer boundary, and the trivial-product code limit. The `n_667`
-  direction is a Human gate.
+## P0 test maintenance and validation
 
-## Narrow repair
+`test_normalization_corpus.py` no longer hardcodes the obsolete E3/E4 snapshot.
+It asserts each changed candidate is E4, each unchanged Stage-0 canonical path
+is E3, and derives aggregate E3/E4 expectations from those evidence sets.
+Fixed E1/E2 counts, corpus total 667, identity counts, missing identity path,
+schema validation, and all 667 `consumer_allowed=false` assertions remain.
 
-Before: `COMPLEX_ANALYSIS-418` stated argument periodicity but did not directly
-assert it in its focused executable evidence. After: one three-line SymPy
-assertion checks `exp(i*(theta+2*pi)) == exp(i*theta)`. The exact field is
-`v8_sanity_audit.sympy_pseudo_code`; identity, filename, prerequisites,
-definitions, and scope were unchanged. The evaluator passed after repair.
+```yaml
+p0_unittest: "104/104 passed"
+validator_invocations: 2
+validator_outer_outputs_byte_identical: true
+validator_internal_repeat_builds: 2
+validator_internal_byte_identical: true
+root_candidates: 667
+staging_assets_excluded: 229
+candidate_edges_unapproved: 420
+explicit_alias_conflicts: 53
+consumer_allowed: 0
+runtime_activation_performed: false
+```
 
-## P0 regression evidence
+## Mutation boundary
 
-The consolidated validator passed with two byte-identical builds, exact
-materialized registry matches, 667 parsed root candidates, 229 excluded staging
-assets, 420 unapproved candidate edges, 53 explicit alias conflicts, and
-`consumer_allowed=0`. Runtime activation remained false.
+Continuation business/test changes are exactly:
 
-The complete unittest invocation ran 104 cases: 103 passed and one fixed-count
-test failed because provenance classification intentionally regards any path
-changed since Stage 0 as E4. This authorized node edit changes the live count
-from the test's `E3=8/E4=20` to `E3=7/E4=21`. The normalization rule itself,
-schemas, registries, admission behavior, and all other 103 tests passed. P0 files
-are forbidden in this task and were not changed; this drift is reported rather
-than concealed.
+- `08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALG_TOPOLOGY-676.yaml`
+- `08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_normalization_corpus.py`
+
+All other continuation changes are existing task evidence, reports, and source
+mailbox files. No other pilot node, non-pilot node, P0 implementation, registry,
+crosswalk, overlay, roadmap, bridge, prompt, runtime, Coordinator, student
+state, scheduler, secret, credential, source/master branch, or PR was mutated.
 
 ## Authority boundary
 
-Codex findings are evidence preparation only. ChatGPT must review the exact
-development head for mathematical and semantic adequacy. Human must adjudicate
-the two PDE bindings, the `n_667` prerequisite direction, and final
-certification/rejection. No model-generated field authorizes a write or
-consumer admission.
+Mode A execution is not mathematical certification. Mode B remains
+`review_required` and never machine-passed. Human semantic evidence in these
+dossiers is not production authentication and cannot enable a consumer.
 
 ```yaml
 avoided_extra_gates: []
-final_original_task_status: "completed_with_blockers"
+final_original_task_status: "complete_awaiting_chatgpt_semantic_review"
 remaining_real_human_decisions_only:
-  - "adjudicate_PDE-487_and_PDE-486_explicit_roadmap_alias_bindings"
-  - "adjudicate_whether_n_667_is_prerequisite_successor_or_corequisite_for_n_676"
-  - "accept_reject_or_request_correction_after_chatgpt_exact_head_semantic_review"
+  - "accept_reject_or_request_correction_after_chatgpt_exact_head_review"
 ```

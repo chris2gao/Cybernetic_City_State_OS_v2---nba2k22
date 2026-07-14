@@ -2,12 +2,13 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "math-mentor-certified-pilot-identity-evidence-v1",
   "type": "object",
-  "required": ["schema_version", "source_head", "pilots", "prerequisites", "conflicts"],
+  "required": ["schema_version", "source_head", "pilots", "prerequisites", "successor_specializations", "conflicts"],
   "properties": {
     "schema_version": {"const": "math_mentor.identity_prerequisite_evidence.v1"},
     "source_head": {"const": "b3ee031488be07748b1cbdfc19b8926b6caaa6db"},
     "pilots": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"$ref": "#/$defs/asset"}},
-    "prerequisites": {"type": "array", "minItems": 7, "maxItems": 7, "items": {"$ref": "#/$defs/asset"}},
+    "prerequisites": {"type": "array", "minItems": 6, "maxItems": 6, "items": {"$ref": "#/$defs/asset"}},
+    "successor_specializations": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/asset"}},
     "conflicts": {"type": "array"}
   },
   "$defs": {

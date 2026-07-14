@@ -1,5 +1,5 @@
 schema_version: "math_mentor.certified_pilot_dossier.v1"
-packet_id: "codex-math-mentor-certified-pilot-candidate-0001"
+packet_id: "codex-math-mentor-certified-pilot-correction-candidate-0002"
 node_id: "PDE-487"
 source:
   repository: "chris2gao/Cybernetic_City_State_OS_v2---teacher"
@@ -9,14 +9,17 @@ source:
   sha256: "96aa5f36dc6fb76172eb7a9fd194e42e390c96a4e86f91c1a2572b5d0af602bf"
 identity:
   canonical_uuid: "54c03d51-bf93-538e-b9fc-089d0fbc8eec"
-  binding_status: "identity_blocked_missing_explicit_roadmap_alias"
-  conflict_id: "e472c7de-cc44-51ad-8c27-7e24233e704b"
+  binding_status: "human_approved_pilot_semantic_binding"
+  historical_conflict_id: "e472c7de-cc44-51ad-8c27-7e24233e704b"
+  historical_registry_status: "open_unmodified"
+  decision_scope: "pilot_semantic_evidence_only"
+  production_effect: "none"
   consumer_allowed: false
 roadmap:
   alias: "n_487"
   level: 5
   title_match: true
-  binding_status: "split_roadmap_entry_found_but_source_alias_unapproved"
+  binding_status: "human_approved_for_pilot_semantic_evidence"
 domain: "partial_differential_equations"
 mode: "A"
 prerequisites:
@@ -24,8 +27,11 @@ prerequisites:
     node_id: "PDE-486"
     canonical_uuid: "7d085bf4-f2cc-508f-b712-7fb9cf7933cf"
     blob_oid: "2d3ce2ec57f775ecef0f2aa549fcfe56e9640da9"
-    identity_status: "blocked_missing_explicit_roadmap_alias"
-    conflict_id: "c5668ff0-934f-56e6-ba54-b6fcc39efc79"
+    identity_status: "human_approved_pilot_semantic_binding"
+    historical_conflict_id: "c5668ff0-934f-56e6-ba54-b6fcc39efc79"
+    historical_registry_status: "open_unmodified"
+    decision_scope: "pilot_semantic_evidence_only"
+    production_effect: "none"
     teaching_readiness: "legacy_manual_review_required"
 validation:
   sandbox_evaluator:
@@ -43,11 +49,11 @@ validation:
     - "FNO correspondence is explicitly an architecture boundary, not the theorem"
 review:
   executable_sanity: "passed"
-  mathematical_review: "awaiting_chatgpt_human_review"
-  teaching_readiness: "blocked"
+  mathematical_review: "accepted_by_chatgpt_at_e1f1be0_pending_final_human_certification"
+  teaching_readiness: "pilot_content_accepted_identity_production_effect_none"
   codex_evidence_finding: "Multi-mode tests honestly support the periodic special case and do not overclaim continuous-transform execution."
-  blocking_reason: "Pilot and prerequisite both have open missing-explicit-roadmap-alias conflicts."
+  identity_decision: "Human bound n_487 and n_486 for pilot semantic evidence only; P0 artifacts remain unchanged."
 residual_risks:
-  - "Identity conflict requires Human semantic adjudication before teaching admission."
-  - "The prerequisite node is legacy/manual-review and independently identity-blocked."
+  - "Historical P0 conflict records remain open because production trust ingress and registry mutation are outside scope."
+  - "The prerequisite node remains a legacy/manual-review teaching asset."
 consumer_allowed: false

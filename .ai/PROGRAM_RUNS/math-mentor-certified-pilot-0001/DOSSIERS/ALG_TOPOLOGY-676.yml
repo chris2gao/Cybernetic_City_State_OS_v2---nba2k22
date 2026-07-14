@@ -1,12 +1,13 @@
 schema_version: "math_mentor.certified_pilot_dossier.v1"
-packet_id: "codex-math-mentor-certified-pilot-candidate-0001"
+packet_id: "codex-math-mentor-certified-pilot-correction-candidate-0002"
 node_id: "ALG_TOPOLOGY-676"
 source:
   repository: "chris2gao/Cybernetic_City_State_OS_v2---teacher"
   base_head: "b3ee031488be07748b1cbdfc19b8926b6caaa6db"
   path: "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALG_TOPOLOGY-676.yaml"
-  blob_oid: "f94c3f74c104177ea41fdb2e31b90dc6084cb814"
-  sha256: "d49efac1f645e9b808bb3bb650aee9a3639a6340993e408f08c6473547048f5b"
+  blob_oid: "11e9136f557d0f26fa3181dfc1d81e226f4f3f5b"
+  sha256: "9552a7bd115e1170b3899d08603f77b07831594b85a97278d68f008e4351c9e8"
+  correction_commit: "fd77746c3eba301210fb9b7e9c4f4ab168f99b40"
 identity:
   canonical_uuid: "b77c439d-14ce-5b88-a9f5-f7f688a9c9c1"
   binding_status: "declared_consistent_unapproved"
@@ -27,13 +28,18 @@ prerequisites:
     identity_status: "resolved_structurally_unapproved"
     teaching_readiness: "human_approved_node_bridge_manual"
     note: "DIFF_GEO-654 remains a separate quarantined duplicate and was not substituted."
+successor_specializations:
   - alias: "n_667"
     node_id: "DIFF_GEO-667"
     canonical_uuid: "a5185b31-5dd0-5edb-85d6-4cf12af0f4a0"
     blob_oid: "216e5ef9035a6548231b943bbfb7b56efd8fa330"
     identity_status: "resolved_structurally_unapproved"
     teaching_readiness: "human_approved_node_bridge_manual"
-    dependency_direction: "disputed_requires_human_review"
+    dependency_direction: "human_approved_successor_specialization_of_n_676"
+    prerequisite: false
+    corequisite: false
+    future_candidate_direction: "n_676_to_n_667"
+    production_effect: "none"
 validation:
   sandbox_evaluator:
     status: "review_required"
@@ -41,20 +47,24 @@ validation:
     message: "Semantic audit present; review required because it is not machine validated."
     warnings: ["semantic_audit_not_machine_validated"]
   semantic_evidence:
-    definition_accuracy: "Bundle projection, local trivialization, fiber, transition functions, and vector-bundle specialization are stated accurately at the intended level."
-    overlap_compatibility: "Transition functions are described on overlaps, though the cocycle equation is not written explicitly."
+    mathematical_core: "Previously accepted by ChatGPT; preserved while applying the bounded semantic correction."
+    semantic_correction_result: "Structure group is distinct from gauge automorphisms; tangent and normal bundles are materially covered."
+    definition_accuracy: "Bundle projection, local trivialization, fiber, transition functions, vector specialization, tangent bundle, and normal bundle are stated accurately at the intended level."
+    overlap_compatibility: "With g_UV converting U-coordinates to V-coordinates, the node states g_UU=e and g_UW=g_VW o g_UV."
     mapping_correspondence: "Local feature-coordinate analogy is bounded to coordinate organization."
     mapping_boundary: "Explicitly states ordinary Transformer hidden states normally occupy one fixed global vector space."
     code_anchor_honesty: "The code is explicitly only a trivial product bundle."
     sub_topics_coverage: "complete"
     teaching_usefulness: "plausible_pending_semantic_review"
 review:
-  semantic_review_status: "blocked"
+  semantic_review_status: "awaiting_chatgpt_human_review"
   semantic_dossier: "complete"
   machine_passed: false
-  codex_evidence_finding: "Content is reviewable, but prerequisite direction n_667 -> n_676 is a real Human gate."
-  blocking_reason: "n_667 teaches vector/principal bundles and appears to presuppose the general bundle idea taught by n_676."
+  mathematical_core: "accepted_by_chatgpt_at_e1f1be0"
+  semantic_correction_result: "implemented_and_evaluator_review_required"
+  prerequisite_direction_decision: "n_667_is_successor_specialization_not_prerequisite_or_corequisite"
+  codex_evidence_finding: "The requested structure-group, cocycle, tangent/normal bundle, gauge-boundary, and prerequisite corrections are present."
 residual_risks:
-  - "Human must adjudicate whether n_667 is a prerequisite, a specialization successor, or a co-requisite."
-  - "The overlap cocycle law is implicit rather than written as an equation."
+  - "Corrected Mode B semantics still require ChatGPT exact-head review and final Human acceptance."
+  - "No canonical edge, bridge, registry entry, or consumer admission implements the successor relation."
 consumer_allowed: false

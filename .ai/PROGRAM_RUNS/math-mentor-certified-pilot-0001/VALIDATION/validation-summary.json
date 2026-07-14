@@ -1,8 +1,9 @@
 {
   "schema_version": "math_mentor.certified_pilot_validation.v1",
-  "status": "passed_with_documented_blockers",
+  "status": "passed_awaiting_exact_head_semantic_review",
   "source_head": "b3ee031488be07748b1cbdfc19b8926b6caaa6db",
   "node_repair_commit": "43e0396e7a12cfd2f6014b290dc1c15f1df9a5af",
+  "correction_business_head": "fd77746c3eba301210fb9b7e9c4f4ab168f99b40",
   "sandbox_evaluator": {
     "COMPLEX_ANALYSIS-418": {"status": "passed", "exit_code": 0},
     "PDE-487": {"status": "passed", "exit_code": 0},
@@ -11,13 +12,15 @@
   },
   "p0_unittest": {
     "executed": 104,
-    "passed": 103,
-    "failed": 1,
-    "failure": "test_all_667_candidates_normalize_fail_closed_across_four_eras: expected E3=8/E4=20, actual E3=7/E4=21 after authorized pilot-path mutation",
+    "passed": 104,
+    "failed": 0,
+    "provenance_assertions": "changed candidates are E4; unchanged Stage-0 canonical paths are E3; aggregate E3/E4 counts are evidence-derived",
     "consumer_allowed_assertions_passed_for_all_667": true
   },
   "p0_consolidated_validator": {
     "status": "passed",
+    "invocations": 2,
+    "outer_outputs_byte_identical": true,
     "repeat_builds": 2,
     "byte_identical_repeatability": true,
     "materialized_outputs_match": true,
@@ -43,10 +46,8 @@
     "bridge": false,
     "consumer_allowed_count": 0
   },
-  "blockers": [
-    "PDE-487 missing explicit roadmap alias",
-    "PDE-486 missing explicit roadmap alias",
-    "ALG_TOPOLOGY-676 prerequisite direction for n_667 requires Human review",
-    "P0 live-corpus fixed era-count test requires a future separately authorized maintenance decision"
+  "remaining_gates": [
+    "ChatGPT exact-head mathematical and semantic review of the corrected candidate",
+    "final Human certification acceptance or correction decision"
   ]
 }

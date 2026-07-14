@@ -1,10 +1,20 @@
-# Changed paths
+# Changed paths — original pilot and consolidated correction
 
-Business-node mutation:
+## Prior candidate changes through `e1f1be0`
 
-- `08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-418.yaml`
+- `COMPLEX_ANALYSIS-418.yaml`: explicit argument-periodicity assertion.
+- `.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/**`.
+- three task-specific `.ai/CODEX_REPORTS/` files.
+- `.ai/OUTBOX.md`, `.ai/STATE.yml`, `.ai/HUMAN_BRIEF.md`.
 
-Evidence and run-control paths:
+## Continuation changes from `e1f1be0`
+
+Business/test paths:
+
+- `08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALG_TOPOLOGY-676.yaml`
+- `08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_normalization_corpus.py`
+
+Existing task evidence/communication paths:
 
 - `.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/**`
 - `.ai/CODEX_REPORTS/math-mentor-certified-pilot-0001.md`
@@ -14,5 +24,7 @@ Evidence and run-control paths:
 - `.ai/STATE.yml`
 - `.ai/HUMAN_BRIEF.md`
 
-No other source, P0, registry, roadmap, bridge, prompt, runtime, Coordinator,
-state, scheduler, or credential-bearing path is in scope or changed.
+`COMPLEX_ANALYSIS-418`, `PDE-487`, and `ABSTRACT_ALGEBRA-468` are byte-unchanged
+in the continuation. No other node, P0 test/implementation, registry, roadmap,
+bridge, prompt, runtime, Coordinator, state, scheduler, secret, credential,
+source/master branch, or PR changed.
