@@ -2,7 +2,7 @@ program_id: "math-mentor-p0-control-plane-hardening-0001"
 task_id: "math-mentor-p0-control-plane-hardening-0001"
 program_kind: "authority_identity_normalization_and_admission_foundation"
 completion_policy: "completion_preserving"
-status: "complete_awaiting_exact_head_review"
+status: "correction_validated_awaiting_exact_head_review"
 source_branch: "master"
 source_head: "764d03d7d0a9ad553f4f3868699b06d9de5553ea"
 rollback_base: "764d03d7d0a9ad553f4f3868699b06d9de5553ea"
@@ -45,6 +45,10 @@ allowed_business_paths:
   - ".ai/STATE.yml"
   - ".ai/OUTBOX.md"
 review_log_ref: ".ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/REVIEW_LOG.md"
+checkpoint_refs:
+  preflight: ".ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/CHECKPOINTS/preflight.yml"
+  historical_initial_validation: ".ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/CHECKPOINTS/implementation-validated.yml"
+  current_correction_validation: ".ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/CHECKPOINTS/correction-validated.yml"
 review_log_location_note: >-
   The Human path allowlist does not include .ai/LONG_RUN_LOGS. The required
   non-blocking review ledger is therefore kept inside this allowed program-run
@@ -68,13 +72,50 @@ publication:
   source_publication_authorized: false
   chatgpt_exact_head_review_required: true
 completion:
-  validated_implementation_head: "91a1070c2d7e77eff1e1aacb9115551151b65b50"
-  final_candidate_head: "assigned_by_final_report_commit_and_external_handoff"
+  validated_implementation_head: "eebd2688f099d1be035576793a70d135086d4fa6"
+  final_candidate_head: "report_commit_itself"
   implementation_commits:
     - "bf62583503781c644a5ad66e6bd57908e37ad85f"
     - "91a1070c2d7e77eff1e1aacb9115551151b65b50"
-  test_result: "65_of_65_passed"
-  deterministic_repeatability: "two_builds_byte_identical_and_materialized_match"
+    - "80332a0dc1532a037b21e775e47ebb54fe6182c5"
+    - "eebd2688f099d1be035576793a70d135086d4fa6"
+  prior_evidence_commit: "9ed8e54"
+  test_result: "104_of_104_passed_in_52.544_seconds"
+  explicit_json_yaml_schema_validation: "passed"
+  deterministic_repeatability: "two_builds_byte_identical_committed_head_blobs_match_and_worktree_json_content_matches"
+  committed_materialization_head: "eebd2688f099d1be035576793a70d135086d4fa6"
+  worktree_raw_bytes_used_for_commit_proof: false
+  source_to_implementation_changed_paths: 45
+  changed_paths_matching_human_allowlist: 45
+  source_to_final_candidate_changed_paths: 46
+  final_candidate_paths_matching_human_allowlist: 46
+  high_confidence_credential_scan: "passed_zero_findings"
+  bytecode_caches_cleaned: true
+  validation_evidence_scope: "static_only_no_runtime_claim"
+  independent_review_blockers:
+    authority_precedence: "corrected_in_80332a0_pending_exact_head_review"
+    admission_trust_sealing: "corrected_in_80332a0_and_hardened_in_eebd268_pending_exact_head_review"
+    secret_path_classifier: "corrected_in_80332a0_and_hardened_in_eebd268_pending_exact_head_review"
+  review_clarifications:
+    replay_boundary: "corrected_in_80332a0_pending_exact_head_review"
+    caller_owned_object_snapshot_consistency: "hardened_in_eebd268_pending_exact_head_review"
+  drift_cause: >-
+    The prior evidence package was recorded before the independent review's
+    three trust-boundary blockers, replay clarification, adversarial snapshot
+    hardening, and Windows CRLF committed-blob proof correction, so it retained
+    the superseded 65-test result and worktree-oriented materialization wording.
+    The frozen corpus source did not drift.
+  avoided_extra_gates: >-
+    All correction work stayed inside the original Human-authorized P0
+    objective and exact allowlist. No artificial intermediate Human gate was
+    added; the original protected exact-head review remains required, and no
+    runtime, Coordinator, source, or master gate was bypassed.
+  final_original_task_status: "complete_awaiting_exact_head_review"
+  remaining_real_human_decisions_only:
+    - "accept_or_reject_report_commit_itself_after_chatgpt_exact_head_review"
+    - "select_a_small_semantically_certified_pilot_subset"
+    - "adjudicate_only_identity_conflicts_required_by_that_pilot"
+    - "authorize_and_choose_later_production_authentication_replay_persistence_audit_rollback_privacy_and_e2e_designs"
   changed_path_deviations: []
   runtime_activation_performed: false
   coordinator_activation_performed: false

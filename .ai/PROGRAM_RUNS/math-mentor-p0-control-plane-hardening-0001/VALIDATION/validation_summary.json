@@ -1,89 +1,135 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.2.0",
   "task_id": "math-mentor-p0-control-plane-hardening-0001",
+  "validation_status": "passed_static_correction_awaiting_exact_head_review",
+  "validation_scope": "static_only_no_runtime_claim",
   "source_head": "764d03d7d0a9ad553f4f3868699b06d9de5553ea",
-  "validated_implementation_head": "91a1070c2d7e77eff1e1aacb9115551151b65b50",
-  "status": "passed",
-  "test_suite": {
-    "command": "python -B -m unittest discover -s 08_Domain_Applications/Math_Mentor/tests/p0_control_plane -p test_*.py -v",
-    "tests_run": 65,
+  "historical_validated_implementation_head": "91a1070c2d7e77eff1e1aacb9115551151b65b50",
+  "corrected_implementation_head": "eebd2688f099d1be035576793a70d135086d4fa6",
+  "final_candidate_head": "report_commit_itself",
+  "environment": {
+    "platform": "Windows-10-10.0.19045-SP0",
+    "python": "3.14.6",
+    "git": "2.53.0.windows.2",
+    "PyYAML": "6.0.3",
+    "jsonschema": "4.26.0"
+  },
+  "unittest": {
+    "tests_run": 104,
+    "passed": 104,
     "failures": 0,
     "errors": 0,
     "skipped": 0,
-    "duration_seconds": 43.828,
+    "duration_seconds": 52.544,
     "groups": {
-      "authorization": 11,
-      "admission": 17,
-      "identity": 6,
-      "normalization_unit": 5,
-      "normalization_live_corpus": 1,
-      "registry_builder": 12,
-      "staging_diagnostics": 1,
-      "static_registries": 11,
-      "consolidated_validation": 1
+      "test_admission": 37,
+      "test_authorization": 26,
+      "test_identity": 6,
+      "test_normalization": 5,
+      "test_normalization_corpus": 1,
+      "test_registry_builder": 12,
+      "test_staging_diagnostics": 1,
+      "test_static_registries": 14,
+      "test_validate": 2
     }
+  },
+  "explicit_format_and_schema_validation": {
+    "json_parse": "passed",
+    "yaml_parse": "passed",
+    "json_schema_validation": "passed",
+    "generated_payload_hash_validation": "passed"
   },
   "consolidated_validator": {
     "status": "passed",
+    "source_head": "764d03d7d0a9ad553f4f3868699b06d9de5553ea",
     "repeat_builds": 2,
     "byte_identical_repeatability": true,
     "materialized_outputs_match": true,
-    "schemas_valid": true,
-    "payload_hashes_valid": true,
-    "source_descendant_rebuild_valid": true,
+    "committed_materialization_head": "eebd2688f099d1be035576793a70d135086d4fa6",
+    "committed_blob_bytes_match_generated": true,
+    "worktree_json_content_matches_generated": true,
+    "worktree_raw_bytes_used_for_commit_proof": false,
     "runtime_activation_performed": false,
     "output_sha256": {
       "ALIAS_CONFLICT_REGISTRY.json": "03a402f97501f85cc2eaced46d651234f57ddbce53533af92b0f82810dfd7c21",
       "CANONICAL_NODE_CROSSWALK.json": "3be77ebc9bc7a826607d28af7def16477aa01d32ab67ba5117d8d411d49697d1",
       "ROOT_CORPUS_REGISTRY.json": "cb04084040aa00dc0dd80b7bfb39215cbf96a7e50358038dc85a24b45dbc49ac"
+    },
+    "quantitative": {
+      "candidate_edges_unapproved": 420,
+      "consumer_allowed": 0,
+      "explicit_alias_conflicts": 53,
+      "fullwidth_alias_diagnostics": 7,
+      "roadmap_entries": 770,
+      "root_candidates_parsed": 667,
+      "staging_assets_excluded": 229,
+      "staging_basename_shadows": 195,
+      "staging_identity_overlap": 180,
+      "staging_yaml_parse_fail": 15,
+      "staging_yaml_parse_pass": 213,
+      "tracked_assets": 1014,
+      "unclaimed_source_files": 194
     }
   },
-  "authorization_forgery_tests": {
-    "payload_human_gate_without_external_context": "rejected",
-    "test_fixture_in_production": "rejected_at_adapter_and_verifier",
-    "serialized_allow_reentry": "rejected",
-    "direct_allow_decision_construction": "rejected",
-    "sealed_decision_unrelated_resource_reuse": "rejected",
-    "serialized_context_mutation": "cannot_mutate_internal_decision",
-    "source_head_mismatch": "rejected",
-    "effect_understatement": "rejected",
-    "prefix_sibling_path": "rejected",
-    "nonce_replay": "rejected",
-    "expiry": "rejected",
-    "post_completion_without_external_approval": "rejected",
-    "secret_path_even_with_payload_approval": "rejected",
-    "nonempty_model_writable_identity_resolution": "rejected"
+  "independent_review_corrections": {
+    "authority_precedence": {
+      "status": "implemented_pending_exact_head_review",
+      "evidence": "Canonical eight-tier order from .ai/PROTOCOL.md; same-tier sources are unordered; authenticated tier-3 Human override is distinct from ordinary tier-7 task details; granting, governing, and operational-detail sources are separated."
+    },
+    "replay_boundary": {
+      "status": "implemented_pending_exact_head_review",
+      "snapshot_scope": "host_supplied_readonly_snapshot_only",
+      "snapshot_membership_check": true,
+      "atomic_nonce_consumption_implemented": false,
+      "nonce_persistence_implemented": false,
+      "cross_process_replay_protection_implemented": false
+    },
+    "admission_trust_sealing": {
+      "status": "implemented_pending_exact_head_review",
+      "factory_identity_and_full_field_fingerprint_required": true,
+      "direct_copy_serialized_duck_typed_or_mutated_objects_rejected": true,
+      "test_fixture_evidence_rejected_in_production": true,
+      "admission_result_mappings_read_only": true
+    },
+    "secret_path_classifier": {
+      "status": "implemented_pending_exact_head_review",
+      "fixed_case_insensitive_policy_floor": true,
+      "required_minimum_paths_covered": true,
+      "cloud_tool_git_credential_paths_covered": true,
+      "malformed_windows_and_control_character_paths_rejected": true,
+      "path_only_tests_no_secret_read": true
+    },
+    "snapshot_consistency_hardening": {
+      "status": "implemented_pending_exact_head_review",
+      "authorization_request_and_grant_checked_snapshots": true,
+      "admission_request_and_evidence_issuer_owned_snapshots": true,
+      "replay_set_single_read_snapshot": true,
+      "deterministic_check_use_seam_tests": true
+    }
   },
-  "staging_exclusion_tests": {
-    "tracked_staging_assets": 229,
-    "yaml_parse_pass": 213,
-    "yaml_parse_fail": 15,
-    "basename_shadows": 195,
-    "strict_identity_overlap": 180,
-    "raw_content_identical": 0,
-    "canonical_registry_entries": 0,
-    "resolution_from_staging": 0,
-    "canonical_role_masquerade": "rejected",
-    "nested_bridge_schema_script_masquerade": "rejected"
-  },
-  "scope_validation": {
-    "implementation_changed_paths": 34,
-    "allowed_paths": 34,
-    "deviations": [],
-    "protected_business_files_mutated": [],
-    "combined_roadmap_read": false
-  },
-  "hygiene": {
+  "scope_and_hygiene": {
+    "source_to_implementation_changed_paths": 45,
+    "changed_paths_matching_human_allowlist": 45,
+    "source_to_final_candidate_changed_paths": 46,
+    "final_candidate_paths_matching_human_allowlist": 46,
+    "changed_path_deviations": [],
     "git_diff_check": "passed",
-    "high_confidence_credential_pattern_files": 0,
-    "pycache_directories_remaining": 0,
-    "real_secrets_or_signing_keys_created": false,
-    "real_student_identity_processed": false
+    "high_confidence_credential_scan": "passed_zero_findings",
+    "bytecode_caches_cleaned": true,
+    "combined_roadmap_read": false,
+    "runtime_activation_performed": false,
+    "coordinator_activation_performed": false,
+    "student_state_or_scheduler_write_performed": false,
+    "node_or_bridge_generation_performed": false,
+    "source_or_master_publication_performed": false
   },
-  "publication": {
-    "development_branch_push_authorized": true,
-    "master_push_authorized": false,
-    "source_publication_authorized": false,
-    "human_gate_after_completion": "required"
-  }
+  "drift_cause": "The prior evidence package predated the three independent-review blockers, replay-boundary clarification, adversarial snapshot hardening, and Windows CRLF-safe immutable-blob proof. Its 65-test result and worktree-oriented materialization wording were evidence drift; the frozen corpus source did not drift.",
+  "avoided_extra_gates": "Corrections remained inside the original Human-authorized P0 objective and exact allowlist. No artificial intermediate Human gate was introduced; the original protected exact-head review and every runtime, Coordinator, source, and master gate remain.",
+  "final_original_task_status": "complete_awaiting_exact_head_review",
+  "remaining_real_human_decisions_only": [
+    "accept_or_reject_report_commit_itself_after_chatgpt_exact_head_review",
+    "select_a_small_semantically_certified_pilot_subset",
+    "adjudicate_only_identity_conflicts_required_by_that_pilot",
+    "authorize_and_choose_later_production_authentication_replay_persistence_audit_rollback_privacy_and_e2e_designs"
+  ]
 }

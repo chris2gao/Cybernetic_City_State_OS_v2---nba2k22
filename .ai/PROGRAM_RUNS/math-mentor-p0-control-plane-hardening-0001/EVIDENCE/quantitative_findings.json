@@ -206,9 +206,14 @@
     ]
   },
   "deterministic_materialization": {
+    "corrected_implementation_head": "eebd2688f099d1be035576793a70d135086d4fa6",
     "repeat_build_count": 2,
     "byte_identical": true,
     "materialized_outputs_match_rebuild": true,
+    "committed_blob_bytes_match_generated": true,
+    "worktree_json_content_matches_generated": true,
+    "worktree_raw_bytes_used_for_commit_proof": false,
+    "line_ending_proof_note": "Immutable Git blobs at the corrected implementation head are the byte-level proof. Windows worktree JSON is parsed and canonicalized separately, so CRLF conversion is accepted but semantic content drift fails closed.",
     "output_sha256": {
       "ALIAS_CONFLICT_REGISTRY.json": "03a402f97501f85cc2eaced46d651234f57ddbce53533af92b0f82810dfd7c21",
       "CANONICAL_NODE_CROSSWALK.json": "3be77ebc9bc7a826607d28af7def16477aa01d32ab67ba5117d8d411d49697d1",

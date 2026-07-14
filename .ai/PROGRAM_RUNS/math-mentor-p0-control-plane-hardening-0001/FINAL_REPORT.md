@@ -4,27 +4,31 @@
 
 ```yaml
 task_id: math-mentor-p0-control-plane-hardening-0001
-status: implementation_validated_awaiting_exact_head_review
+status: correction_validated_awaiting_exact_head_review
 source_branch: master
 source_head: 764d03d7d0a9ad553f4f3868699b06d9de5553ea
 work_branch: codex/math-mentor-p0-control-plane-hardening
-validated_implementation_head: 91a1070c2d7e77eff1e1aacb9115551151b65b50
-candidate_head: assigned_after_this_report_commit
+validated_implementation_head: eebd2688f099d1be035576793a70d135086d4fa6
+candidate_head: report_commit_itself
 master_push_authorized: false
 source_publication_authorized: false
 human_gate: required
 ```
 
-P0 is implemented and statically validated. It remains inactive and requires
-ChatGPT review of the exact development-branch head followed by the protected
-Human gate. Nothing was merged or pushed to `master` by this task.
+P0 is implemented and statically revalidated after the independent-review
+corrections. It remains inactive and requires ChatGPT review of the exact
+report commit itself followed by the protected Human gate. Nothing was merged
+or pushed to `master` by this task.
 
 ## Delivered Control Plane
 
 ### Authority And Maturity
 
-- One derived, non-authorizing authority registry orders external Human and
-  repository contracts and maps protected actions to fail-closed decisions.
+- One derived, non-authorizing authority registry reproduces the canonical
+  eight tiers from `.ai/PROTOCOL.md`; same-tier sources are unordered.
+- Authenticated tier-3 Human task override is distinct from ordinary tier-7
+  task details. Action rules separate granting sources, governing contracts,
+  and operational details that may narrow but cannot grant authority.
 - One evidence-tier maturity registry distinguishes specification, static
   validation, integration evidence, and operational evidence. No capability is
   labeled operational.
@@ -62,11 +66,34 @@ Human gate. Nothing was merged or pushed to `master` by this task.
   verifier receives a sealed Human grant.
 - Authorization binds task, request, objective digest, source head, operation,
   effect, exact resources, validity, revocation, replay state, and Human gates.
+- Requests, grants, and decisions must be factory-issued and retain an intact
+  full-field fingerprint; direct, copied, duck-typed, serialized/rehydrated, or
+  post-issuance-mutated objects fail closed.
+- Verification first constructs a coherent checked request/grant snapshot and
+  consumes only that snapshot. Replacing caller-owned fields after validation
+  cannot alter the current decision; replay evidence is likewise captured by
+  a single exact immutable-set read.
+- A fixed case-insensitive policy floor rejects `.env` variants, SSH and
+  private-key material, credential filenames/directories, Git/cloud/tool
+  credential stores, Windows ADS, control characters, and non-normalized path
+  forms without reading file contents or dispatching to a caller policy hook.
+- P0 replay checking is membership testing against a host-supplied read-only
+  snapshot only. Atomic nonce consumption, nonce persistence, and
+  cross-process replay protection are explicitly not implemented.
 - Test fixtures are rejected in production mode.
 - Verifier decisions are sealed and deep-frozen; serialized snapshots cannot
   re-enter admission as trusted objects.
 - No real secret, signing key, token, credential, or production authentication
   transport was created.
+
+Path-only denial coverage includes the required `.env`, `.env.local`,
+`.env.production`, `.ssh/id_ed25519`, nested `id_rsa`/`id_ed25519`, `*.pem`,
+`*.key`, `credentials.json`, `application_default_credentials.json`,
+`secrets/**`, `credentials/**`, and `private_keys/**` cases. It also covers
+`.git/**`, `.git-credentials`, `.netrc`, `.npmrc`, `.pypirc`, service-account
+and token filenames, `*.p12`, `*.pfx`, and `.aws/**`, `.azure/**`,
+`.docker/**`, `.gnupg/**`, and `.kube/**`, plus ADS, NUL/control characters,
+and trailing dot/space components. No test opens any such path.
 
 ### Admission
 
@@ -79,6 +106,48 @@ Human gate. Nothing was merged or pushed to `master` by this task.
 - P0 canonical bridge admission is explicitly unimplemented.
 - Legacy import is limited to the three exact historical state tables and
   cannot promote a canonical learning status.
+- Admission requests and trusted evidence require internal factory issuance,
+  object-identity registration, and intact full-field fingerprints.
+- Issuance records retain separate issuer-owned snapshots, and admission uses a
+  fresh checked consumption copy; caller field replacement after verification
+  cannot promote readiness, relax a state-write request, or change bindings.
+- Direct construction, copying, duck typing, serialization reentry,
+  post-issuance mutation, and test-fixture evidence in production fail closed;
+  decision dimension and restriction mappings are read-only.
+
+## Independent-Review Corrections
+
+The initial evidence commit `9ed8e54` described the first implementation
+checkpoint at `91a1070`, including 65 tests. Independent ChatGPT review found
+three blockers and required one replay-boundary clarification. Code commit
+`80332a0dc1532a037b21e775e47ebb54fe6182c5` supplied the first correction;
+follow-up adversarial review exposed object-graph and check/use seams, which
+`eebd2688f099d1be035576793a70d135086d4fa6` closes. The combined candidate is
+pending exact-head acceptance:
+
+1. **Authority precedence:** replace the invented linear rank with the exact
+   canonical eight-tier contract, preserve unordered same-tier semantics, and
+   separate authenticated Human override from ordinary signal/task details.
+2. **Admission trust sealing:** bind authorization and admission objects to
+   factory identity plus full-field issuance fingerprints; reject copying,
+   serialization/duck reentry, private-field spoofing, post-issuance mutation,
+   and production use of test fixtures; require independently sealed evidence;
+   expose read-only result mappings; consume issuer-owned checked snapshots.
+3. **Secret-path classification:** replace the narrow component check with a
+   conservative case-insensitive protected-path floor and reject malformed or
+   Windows-specific path forms before any file access.
+4. **Replay clarification:** retain fail-closed host-snapshot membership checks
+   while stating truthfully that the verifier neither consumes nor persists
+   nonces and provides no cross-process replay defense.
+
+Additional adversarial hardening rejects behavioral subclasses, forged nested
+objects, Unicode surrogates, mutable/duck mappings, method shadowing, and
+caller-owned request/grant/evidence replacement at the precise validation/use
+seam. Deterministic tests schedule these replacements without timing sleeps.
+
+These are static trust-boundary corrections. They do not add production
+authentication, durable replay state, runtime, Coordinator, or admission
+transport capabilities.
 
 ## Reproduced Quantitative Findings
 
@@ -155,21 +224,34 @@ actually needs one of these bindings.
 
 ## Validation
 
-Main-agent candidate-head validation:
+Final correction-phase static validation:
 
 ```text
-65/65 unittest cases passed in 43.828 seconds
+104/104 unittest cases passed in 52.544 seconds
+JSON parse, YAML parse, JSON Schema, and generated payload-hash checks passed
 two independent registry builds were byte-identical
-three materialized registries matched rebuilt bytes
+canonical generated bytes matched immutable Git blobs at eebd268
+Windows worktree JSON matched after parse/canonicalization
+raw worktree bytes were not used as committed-materialization proof
 all registry, normalized-node, authorization-context, and resolution schemas passed
 all payload hashes passed
 all 667 normalized records remained consumer-disabled
 229 staging assets remained excluded
 git diff --check passed
-34/34 implementation paths matched the Human allowlist
+45/45 source-to-implementation changed paths matched the Human allowlist
+46/46 source-to-final-candidate changed paths matched the Human allowlist
 high-confidence credential-pattern scan: 0 files
 __pycache__ remaining: 0
+runtime and Coordinator activation performed: false
 ```
+
+The consolidated validator reports
+`committed_materialization_head: eebd2688f099d1be035576793a70d135086d4fa6`,
+`committed_blob_bytes_match_generated: true`,
+`worktree_json_content_matches_generated: true`, and
+`worktree_raw_bytes_used_for_commit_proof: false`. This distinction prevents
+Windows CRLF conversion from being mistaken either for semantic drift or for
+proof of the committed bytes.
 
 Output digests:
 
@@ -184,28 +266,64 @@ Detailed commands and caveats are in
 are in `EVIDENCE/quantitative_findings.json` and
 `VALIDATION/validation_summary.json`.
 
-## Commits Before Final Report
+## Commits Before Final Correction Report
 
 ```yaml
 - head: bf62583503781c644a5ad66e6bd57908e37ad85f
   subject: "docs(math-mentor): define P0 control contracts"
 - head: 91a1070c2d7e77eff1e1aacb9115551151b65b50
   subject: "feat(math-mentor): harden P0 control plane"
+- head: 9ed8e54
+  subject: "docs(ai): record P0 validation evidence"
+- head: 80332a0dc1532a037b21e775e47ebb54fe6182c5
+  subject: "fix(math-mentor): seal P0 trust boundaries"
+- head: eebd2688f099d1be035576793a70d135086d4fa6
+  subject: "fix(math-mentor): harden P0 issuance snapshots"
 ```
 
-The final evidence/report commit is identified by the external exact-head
-handoff after publication; embedding a commit's own hash in its content would
-be circular.
+The final candidate is `report_commit_itself` and is identified by the
+external exact-head handoff after the correction report commit exists;
+embedding that commit's own SHA in its content would be circular.
+The final candidate adds only the new
+`CHECKPOINTS/correction-validated.yml` path to the 45-path implementation diff;
+the other report updates reuse already counted program-evidence paths.
 
 ## Deviations
 
 - Business-path deviations: none.
+- Evidence drift was corrected: the prior package predated the three
+  independent-review blocker fixes, replay clarification, adversarial snapshot
+  hardening, and CRLF-safe Git-blob proof, so its 65-test result and
+  worktree-oriented wording were historical rather than final. The frozen
+  source corpus did not drift.
 - The standard `.ai/LONG_RUN_LOGS` path was not used because it was outside the
   exact Human allowlist. The non-blocking review ledger is stored under this
   authorized program-run directory and this deviation is explicitly recorded.
 - No combined roadmap read occurred.
 - No runtime, Coordinator, student-state, scheduler, node, bridge, source, or
   master publication occurred.
+
+## Closure Metadata
+
+```yaml
+drift_cause: >-
+  The prior evidence package was recorded before the three independent-review
+  blockers, replay clarification, adversarial snapshot hardening, and Windows
+  CRLF-safe immutable-blob proof. Its 65-test result and worktree-oriented
+  materialization wording were evidence drift; the frozen corpus source did
+  not drift.
+avoided_extra_gates: >-
+  All correction work stayed inside the original Human-authorized P0 objective
+  and exact allowlist. No artificial intermediate Human gate was added; the
+  original exact-head review remains required, and no runtime, Coordinator,
+  source, or master gate was bypassed.
+final_original_task_status: complete_awaiting_exact_head_review
+remaining_real_human_decisions_only:
+  - accept_or_reject_report_commit_itself_after_chatgpt_exact_head_review
+  - select_a_small_semantically_certified_pilot_subset
+  - adjudicate_only_identity_conflicts_required_by_that_pilot
+  - authorize_and_choose_later_production_authentication_replay_persistence_audit_rollback_privacy_and_e2e_designs
+```
 
 ## Remaining Real Human Decisions Only
 

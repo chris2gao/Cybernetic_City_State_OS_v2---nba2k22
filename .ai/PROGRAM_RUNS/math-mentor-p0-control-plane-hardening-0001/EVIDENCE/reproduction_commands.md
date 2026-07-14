@@ -8,6 +8,8 @@ source branch: master
 source head: 764d03d7d0a9ad553f4f3868699b06d9de5553ea
 historical Stage 0 head: cefd164472ecbb7095c1aa2c243c34fbec5b51f4
 work branch: codex/math-mentor-p0-control-plane-hardening
+corrected implementation head: eebd2688f099d1be035576793a70d135086d4fa6
+final candidate head: report_commit_itself
 ```
 
 The builder accepts only the fixed source head and reads controlled corpus,
@@ -71,10 +73,10 @@ python -B -m unittest discover `
   -v
 ```
 
-Main-agent result:
+Final correction-phase result:
 
 ```text
-Ran 65 tests in 43.828s
+Ran 104 tests in 52.544s
 OK
 ```
 
@@ -87,8 +89,22 @@ This includes:
 - staging exclusion and masquerade rejection;
 - non-empty model-writable identity resolution forgery rejection;
 - authorization payload-gate forgery, scope, effect, replay, expiry, secret,
-  post-gate, and fixture-in-production rejection;
-- sealed decision immutability and unrelated-resource reuse rejection;
+  post-gate, and fixture-in-production rejection, while explicitly proving
+  that the replay snapshot is read-only and does not consume or persist a
+  nonce;
+- canonical eight-tier authority precedence and the separation of
+  authenticated Human override from ordinary task details;
+- factory-issued request, grant, decision, and admission-evidence identity,
+  full-field fingerprint integrity, sealed decision immutability, immutable
+  result mappings, and unrelated-resource reuse rejection;
+- direct construction, copying, serialization reentry, duck typing,
+  post-issuance mutation, behavioral built-in subclasses, Unicode surrogates,
+  caller-object replacement after validation, and test-fixture-in-production
+  red-team rejection;
+- a fixed, case-insensitive protected-path floor covering `.env` variants,
+  SSH/private-key material, credential filenames and directories, Git/cloud
+  credential stores, control characters, Windows ADS, and non-normalized path
+  forms without reading any file contents;
 - legacy R5 non-promotion and bridge-admission-not-implemented checks.
 
 ## Consolidated Validator
@@ -103,8 +119,37 @@ python -B '08_Domain_Applications/Math_Mentor/p0_control_plane/validate.py' `
 Main-agent result:
 
 ```json
-{"byte_identical_repeatability":true,"materialized_outputs_match":true,"output_sha256":{"ALIAS_CONFLICT_REGISTRY.json":"03a402f97501f85cc2eaced46d651234f57ddbce53533af92b0f82810dfd7c21","CANONICAL_NODE_CROSSWALK.json":"3be77ebc9bc7a826607d28af7def16477aa01d32ab67ba5117d8d411d49697d1","ROOT_CORPUS_REGISTRY.json":"cb04084040aa00dc0dd80b7bfb39215cbf96a7e50358038dc85a24b45dbc49ac"},"quantitative":{"candidate_edges_unapproved":420,"consumer_allowed":0,"explicit_alias_conflicts":53,"fullwidth_alias_diagnostics":7,"roadmap_entries":770,"root_candidates_parsed":667,"staging_assets_excluded":229,"staging_basename_shadows":195,"staging_identity_overlap":180,"staging_yaml_parse_fail":15,"staging_yaml_parse_pass":213,"tracked_assets":1014,"unclaimed_source_files":194},"repeat_builds":2,"runtime_activation_performed":false,"source_head":"764d03d7d0a9ad553f4f3868699b06d9de5553ea","status":"passed"}
+{"byte_identical_repeatability":true,"committed_blob_bytes_match_generated":true,"committed_materialization_head":"eebd2688f099d1be035576793a70d135086d4fa6","materialized_outputs_match":true,"output_sha256":{"ALIAS_CONFLICT_REGISTRY.json":"03a402f97501f85cc2eaced46d651234f57ddbce53533af92b0f82810dfd7c21","CANONICAL_NODE_CROSSWALK.json":"3be77ebc9bc7a826607d28af7def16477aa01d32ab67ba5117d8d411d49697d1","ROOT_CORPUS_REGISTRY.json":"cb04084040aa00dc0dd80b7bfb39215cbf96a7e50358038dc85a24b45dbc49ac"},"quantitative":{"candidate_edges_unapproved":420,"consumer_allowed":0,"explicit_alias_conflicts":53,"fullwidth_alias_diagnostics":7,"roadmap_entries":770,"root_candidates_parsed":667,"staging_assets_excluded":229,"staging_basename_shadows":195,"staging_identity_overlap":180,"staging_yaml_parse_fail":15,"staging_yaml_parse_pass":213,"tracked_assets":1014,"unclaimed_source_files":194},"repeat_builds":2,"runtime_activation_performed":false,"source_head":"764d03d7d0a9ad553f4f3868699b06d9de5553ea","status":"passed","worktree_json_content_matches_generated":true,"worktree_raw_bytes_used_for_commit_proof":false}
 ```
+
+The validator makes two different claims deliberately. Canonical generated
+bytes from two independent builds are identical and equal the immutable Git
+blob bytes at the corrected implementation head. The Windows worktree files
+are parsed and canonicalized as JSON before comparison, so CRLF conversion is
+allowed but any JSON content drift fails. Raw worktree bytes are not used as
+proof of the committed materialization.
+
+## Explicit Format, Schema, Scope, And Hygiene Checks
+
+The correction checkpoint records the following final static checks:
+
+```text
+JSON parse: passed
+YAML parse: passed
+JSON Schema validation: passed
+generated payload-hash validation: passed
+git diff --check: passed
+source-to-implementation paths matching the Human allowlist: 45/45
+source-to-final-candidate paths matching the Human allowlist: 46/46
+high-confidence credential-pattern scan: 0 findings
+bytecode cache directories remaining after cleanup: 0
+```
+
+The final report commit is necessarily self-referential as
+`report_commit_itself`; its exact SHA is supplied by the external handoff after
+that commit exists. The one additional final-candidate path is the new
+`CHECKPOINTS/correction-validated.yml`; every other report update is on a path
+already counted in the 45-path implementation diff.
 
 ## Stage 0 Drift Measurement
 
@@ -214,6 +259,14 @@ semantically identical to roadmap entries.
   preservation input.
 - Non-empty identity resolution overlays are intentionally rejected until an
   external Human-authenticated adapter exists.
+- The authorization verifier can reject a nonce already present in a
+  host-supplied read-only snapshot. It does not atomically consume a successful
+  nonce, persist replay state, or provide cross-process replay protection.
+- Factory-issued and fingerprint-intact objects provide a static in-process
+  trust boundary only. Verifier and admission code consume checked snapshots
+  after validation so later caller-owned field replacement cannot affect the
+  decision. Production authentication, evidence ingress, durable replay state,
+  and trusted decision rehydration remain unimplemented.
 - Production authentication transport, trusted decision rehydration,
   persistence, runtime, Coordinator, state writer, scheduler writer, UI, and
   bridge admission remain unimplemented and inactive.

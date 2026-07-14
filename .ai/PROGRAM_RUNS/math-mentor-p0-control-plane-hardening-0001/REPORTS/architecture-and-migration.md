@@ -41,6 +41,27 @@ The two final decisions remain independent. An authorization allow cannot
 repair an identity, schema, readiness, provenance, or prerequisite failure.
 Likewise, an otherwise admissible asset cannot authorize a write.
 
+## Authority Boundary
+
+The authority registry is a derived index of the canonical eight-tier order
+in `.ai/PROTOCOL.md`; it does not create authority. Lower numbered tiers have
+higher authority, while sources inside one tier are unordered:
+
+1. platform, system, developer, and safety instructions;
+2. current explicit Human instruction;
+3. authenticated current Human-approved task-specific permission or override;
+4. Plan 3 and the Cybernetic Citizen contract;
+5. durable repository control protocols;
+6. relevant Math Mentor domain-authority protocols;
+7. ordinary current signals and task operational details; and
+8. routing documents and historical evidence.
+
+An ordinary model-authored packet remains tier 7 even when it contains
+approval-shaped words. It cannot become the distinct tier-3 authenticated
+Human override. Action records separately identify sources that may grant an
+effect, sources that govern and constrain it, and operational-detail sources
+that may narrow scope but never grant authority.
+
 ## Canonical Corpus Boundary
 
 Only tracked YAML files that are direct children of
@@ -103,12 +124,53 @@ operation, effect class, exact resources, validity interval, revocation state,
 nonce/replay snapshot, and pre/post Human gates. Missing, stale, mismatched,
 forged, replayed, or out-of-scope evidence fails closed.
 
+Requests, grants, and decisions must be factory-issued and retain their full
+issuance fingerprint. Directly constructed, copied, duck-typed, serialized and
+rehydrated, or post-issuance-mutated objects are untrusted even if a caller
+copies private-looking fields or methods.
+
+The verifier constructs a coherent request/grant snapshot, verifies that
+snapshot against the module-owned issuance record, and then consumes only the
+checked snapshot. It never validates an object and then rereads caller-owned
+fields for the current decision. The replay set is also captured by one exact
+immutable-set read. This closes check/use field-replacement seams without
+claiming process isolation or a durable trust store.
+
+Secret classification is a fixed module policy floor rather than a caller
+method. It applies case-insensitively to `.env` variants, SSH/private-key
+material, credential names and directories, Git/cloud/tool credential stores,
+and common key-container suffixes. Control characters, Windows ADS syntax,
+trailing dot/space components, wildcards, and non-normalized paths are rejected
+before classification. Tests use path strings only and never read secrets.
+
+Replay handling is intentionally narrower than a production replay defense.
+The host may supply an immutable point-in-time set of already-consumed nonces,
+and P0 denies a nonce found in that snapshot. P0 does not update the snapshot,
+atomically consume a newly allowed nonce, persist nonce state, or coordinate
+across processes. Those capabilities remain missing runtime layers rather than
+being implied by a static `replay_status` label.
+
 ## Admission Boundary
 
 Admission is a pure read-only evaluation over an exact asset and blob. It keeps
 authorization, identity, schema, readiness, validator, provenance, and
 prerequisite dimensions separate. It cannot write state or promote learning
 status.
+
+Admission requests and trusted admission evidence are issued through internal
+factories and tracked by object identity plus a full-field fingerprint.
+Post-issuance mutation through `object.__setattr__`, direct construction,
+copying, serialization reentry, and duck typing fail closed. Test fixture
+evidence always identifies itself as `test_fixture` and is rejected outside
+test mode. Admission decision dimension and restriction mappings are exposed
+as read-only mappings. This is static in-process hardening, not a production
+evidence transport or durable trust store.
+
+Each admission issuance record retains a separate issuer-owned snapshot and
+returns a fresh consumption copy only after the caller object still matches its
+fingerprint. Admission then uses that copy throughout evaluation. Replacing a
+caller request or evidence field after the check cannot relax a state-write
+request, promote readiness, or rewrite an asset binding.
 
 Legacy review prompts and tables are read-only importer inputs. An R5 `PASSED`
 claim cannot become `graduated`, and a legacy artifact cannot be executed by
@@ -126,8 +188,9 @@ creates staging precedence or admission.
    this P0 candidate.
 2. Humans adjudicate only the genuine identity conflicts needed by a small
    certified pilot; all other records may remain unbound.
-3. A separately authorized task selects a production trust adapter and audit
-   store. Test fixtures must not cross that boundary.
+3. A separately authorized task selects a production authentication and
+   admission-evidence adapter, atomic durable nonce-consumption store, and
+   audit store. Test fixtures must not cross that boundary.
 4. Validators certify exact node blobs; the certified subset alone can enter a
    Human-triggered read-only vertical slice.
 5. A legacy importer may map old review evidence into a quarantine/staging
@@ -148,6 +211,15 @@ creates staging precedence or admission.
 - The combined roadmap is a prohibited input and was not read.
 - Maturity evidence in this task reaches static tests only; it is not runtime
   or production evidence.
+- The corrected implementation head
+  `eebd2688f099d1be035576793a70d135086d4fa6` statically addresses the three
+  independent-review blockers, replay clarification, and adversarial snapshot
+  findings and passes 104/104 tests. Acceptance still binds to the future
+  report commit itself after exact-head review.
+- Immutable Git blobs at the corrected implementation head, not raw Windows
+  worktree bytes, prove committed generated output. Worktree JSON is parsed
+  and canonicalized separately so CRLF conversion cannot create a false drift
+  result or a false byte-proof claim.
 
 ## Remaining Human Decisions
 
