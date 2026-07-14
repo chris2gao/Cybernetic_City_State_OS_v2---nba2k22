@@ -1,8 +1,9 @@
-packet_id: null
-status: neutral_baseline
-intent: neutral_baseline
-report_ref: null
-brief_ref: null
-source_head: null
+packet_id: "codex-math-mentor-certified-pilot-candidate-0001"
+status: "completed_with_blockers"
+intent: "request_chatgpt_exact_head_mathematical_and_semantic_review"
+report_ref: ".ai/CODEX_REPORTS/math-mentor-certified-pilot-0001.md"
+brief_ref: ".ai/HUMAN_BRIEF.md"
+source_branch: "codex/math-mentor-certified-pilot"
+source_head: "d6d2e5145b88b73a2abeb21cfefe580a10b5cc97"
 review_branch_head: null
-human_gate: not_required
+human_gate: "required"

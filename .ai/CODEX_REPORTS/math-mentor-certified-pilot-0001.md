@@ -4,6 +4,10 @@ The four source-bound dossiers and consolidated evidence package are complete on
 `codex/math-mentor-certified-pilot`, pending exact-head ChatGPT review and the
 Human gate. Status is `completed_with_blockers`, not certified.
 
+The committed evidence snapshot is
+`d6d2e5145b88b73a2abeb21cfefe580a10b5cc97`; the final development head adds
+only the protocol mailbox that points to this snapshot.
+
 Key findings:
 
 - Mode A executable sanity passed for `COMPLEX_ANALYSIS-418` and `PDE-487`;
@@ -25,4 +29,3 @@ Primary evidence:
 
 Required next action: ChatGPT exact-head semantic/mathematical review, then only
 the listed Human identity/prerequisite/final-certification decisions.
-

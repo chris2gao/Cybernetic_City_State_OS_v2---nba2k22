@@ -22,4 +22,3 @@ one Stage-0-canonical path into the provenance-defined E4 set (`E3=7, E4=21`).
 No P0 file was changed. The consolidated P0 validator independently passed,
 reported byte-identical registry builds and `consumer_allowed=0`, and performed
 no runtime activation.
-

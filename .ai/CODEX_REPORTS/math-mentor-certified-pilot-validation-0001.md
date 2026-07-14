@@ -18,4 +18,3 @@
 The single unittest failure is preserved as evidence rather than normalized
 away: `detect_schema_era` defines any path changed since Stage 0 as E4, and the
 authorized pilot repair changed exactly one formerly E3 path.
-

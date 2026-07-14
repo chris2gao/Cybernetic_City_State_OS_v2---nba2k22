@@ -6,6 +6,7 @@ status: "completed_with_blockers"
 source_head: "b3ee031488be07748b1cbdfc19b8926b6caaa6db"
 work_branch: "codex/math-mentor-certified-pilot"
 node_repair_commit: "43e0396e7a12cfd2f6014b290dc1c15f1df9a5af"
+evidence_head: "d6d2e5145b88b73a2abeb21cfefe580a10b5cc97"
 pilot_nodes:
   - "COMPLEX_ANALYSIS-418"
   - "PDE-487"
@@ -105,4 +106,3 @@ remaining_real_human_decisions_only:
   - "adjudicate_whether_n_667_is_prerequisite_successor_or_corequisite_for_n_676"
   - "accept_reject_or_request_correction_after_chatgpt_exact_head_semantic_review"
 ```
-
