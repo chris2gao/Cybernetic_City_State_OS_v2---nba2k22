@@ -16,14 +16,17 @@ formal_definition: >-
   the exact forms B^k(M)=im(d:Ω^{k-1}→Ω^k). Since d²=0, B^k(M) is a
   subspace of Z^k(M), and the k-th de Rham cohomology group is the quotient
   vector space H^k_dR(M)=Z^k(M)/B^k(M). It records closed forms modulo exact
-  forms, not a set-theoretic subtraction. The Poincare lemma states that
-  closed forms are locally exact on contractible coordinate neighborhoods;
-  nonzero de Rham classes therefore express global obstructions to choosing a
-  single potential. The de Rham theorem identifies H^k_dR(M) with singular
-  cohomology with real coefficients. Integration over cycles together with
-  Stokes' theorem links differential-form representatives to topological
-  invariants. Exact forms are always closed, while closed forms need not be
-  globally exact.
+  forms, not a set-theoretic subtraction. For positive degree k>0, the
+  Poincare lemma states that closed k-forms are locally exact on contractible
+  coordinate neighborhoods; nonzero positive-degree de Rham classes can
+  therefore express global obstructions to choosing a single potential. In
+  degree zero, closed 0-forms are locally constant and B^0(M)={0} in the
+  standard de Rham complex, so H^0_dR(M) consists of locally constant
+  functions and detects connected components. The de Rham theorem identifies
+  H^k_dR(M) with singular cohomology with real coefficients. Integration over
+  cycles together with Stokes' theorem links differential-form representatives
+  to topological invariants. Exact forms are always closed, while closed forms
+  need not be globally exact.
 formal_definition_zh: >-
   对光滑流形 M，记 Ω^k(M) 为光滑 k-形式组成的向量空间。外微分
   d:Ω^k(M)→Ω^{k+1}(M) 满足 d²=0。定义闭形式空间
@@ -31,10 +34,12 @@ formal_definition_zh: >-
   B^k(M)=im(d:Ω^{k-1}→Ω^k)。由 d²=0 可知 B^k(M) 是 Z^k(M) 的
   子空间，第 k 个 de Rham 上同调群是商向量空间
   H^k_dR(M)=Z^k(M)/B^k(M)，表示闭形式模去恰当形式，而不是集合意义上的
-  “相减”。Poincare 引理说明在可缩坐标邻域中闭形式局部恰当；因此非零 de Rham
-  类表达了无法选取单一全局势的全局障碍。de Rham 定理把它与实系数奇异上同调
-  同构；形式在闭链上的积分与 Stokes 定理把解析代表和拓扑不变量联系起来。
-  恰当形式必闭，但闭形式不必全局恰当。
+  “相减”。对于正次数 k>0，Poincare 引理说明在可缩坐标邻域中闭 k-形式局部
+  恰当；因此非零正次数 de Rham 类可以表达无法选取单一全局势的全局障碍。在
+  零次数，闭 0-形式是局部常值函数，而标准 de Rham 复形中 B^0(M)={0}，故
+  H^0_dR(M) 由局部常值函数组成并检测连通分支。de Rham 定理把 H^k_dR(M)
+  与实系数奇异上同调同构；形式在闭链上的积分与 Stokes 定理把解析代表和拓扑
+  不变量联系起来。恰当形式必闭，但闭形式不必全局恰当。
 candidate_prerequisite_nodes:
   - node_id: n_653
     file: DIFF_GEO-653.yaml
@@ -61,30 +66,32 @@ mapping_boundary:
   primary_mapping: >-
     Only after a smooth representation manifold and a differential-form
     complex have been explicitly defined, de Rham cohomology can analogize
-    global constraints invisible in any one local coordinate patch: locally
-    solvable differential relations may fail to admit a single global
-    potential. The quotient identifies closed representatives that differ by
-    an exact form, so the invariant concerns a defined complex rather than
-    visual or semantic impressions of holes.
+    global constraints invisible in any one local coordinate patch: in
+    positive degree, locally exact differential-form data may fail to admit a
+    single global potential. Degree zero instead records locally constant
+    functions and connected components. The quotient identifies closed
+    representatives that differ by an exact form, so the invariant concerns a
+    defined complex rather than visual or semantic impressions of holes.
   primary_mapping_zh: >-
     只有在明确定义光滑表示流形及其微分形式复形后，de Rham 上同调才可类比为
-    单个局部坐标片看不见的全局约束：局部可解的微分关系可能不存在统一的全局势。
-    商空间把相差恰当形式的闭形式代表视为同一类，因此这里的不变量依赖一个严格
-    定义的复形，而不是对“语义空洞”的视觉或语言印象。
+    单个局部坐标片看不见的全局约束：在正次数，局部恰当的微分形式数据可能不
+    存在统一的全局势；零次数则记录局部常值函数与连通分支。商空间把相差恰当
+    形式的闭形式代表视为同一类，因此这里的不变量依赖一个严格定义的复形，而
+    不是对“语义空洞”的视觉或语言印象。
   boundary:
     - "Generic loops in latent space are not automatically homology cycles."
     - "Semantic holes are not de Rham classes without a defined manifold, forms, differential, and quotient."
     - "Closed does not mean exact globally; exact does imply closed."
     - "Cohomology is a quotient vector space, not closed forms minus exact forms as set subtraction."
     - "Non-integrable is not a synonym for non-exact without a precise differential-form statement."
-    - "Local exactness does not eliminate global cohomology classes."
+    - "For positive degrees, local exactness does not eliminate global cohomology classes; degree zero instead records locally constant functions."
     - "No de Rham complex or cohomology computation for an ordinary model is established by this node."
   preserve_full_boundary: true
   existing_physical_metaphor_status: "secondary_teaser_only"
   secondary_teaser_limitation: >-
-    The circulating-dye image may hint at a global obstruction, but it does
-    not define a manifold, cycle, differential form, exterior derivative,
-    exactness, quotient space, or cohomology class.
+    The circulating-dye image may hint at a positive-degree global
+    obstruction, but it does not define a manifold, cycle, differential form,
+    exterior derivative, exactness, quotient space, or cohomology class.
 existing_code_and_audit:
   preserve: true
   evidence_status: "semantic_only"
@@ -140,15 +147,16 @@ sub_topics:
 - exterior differential complex and the identity d squared equals zero
 - closed forms and exact forms
 - de Rham cohomology as a quotient vector space
-- local exactness and the Poincare lemma
-- global obstruction to a single potential
+- local exactness for positive-degree forms and the Poincare lemma
+- positive-degree global obstruction to a single potential
+- degree-zero cohomology, locally constant functions, and connected components
 - integration over cycles and Stokes' theorem
 - de Rham theorem and real singular cohomology
 - limits of latent-space and semantic-hole analogies
 llm_physical_mapping: >-
-  闭合管道中的染料循环只作为次级提示：它可提示“局部看似可解但全局存在障碍”，
-  却没有定义流形、闭链、微分形式、外微分、恰当性或商空间，因而不能直接代表
-  de Rham 上同调类。
+  闭合管道中的染料循环只作为次级提示：它可提示“正次数微分形式局部恰当但全局
+  仍可能存在障碍”，却没有定义流形、闭链、微分形式、外微分、恰当性或商空间，
+  因而不能直接代表 de Rham 上同调类。
 code_implementation: "def detect_holes(closed_forms, exact_forms):\n    return closed_forms - exact_forms\n"
 v8_sanity_audit:
   sympy_pseudo_code: 'import sympy as sp

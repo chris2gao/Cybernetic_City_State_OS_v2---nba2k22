@@ -23,9 +23,10 @@ formal_definition: >-
   may be described by a G-equivariant horizontal distribution or by a
   Lie-algebra-valued connection one-form satisfying equivariance and vertical
   normalization. Its curvature measures the failure of horizontal transport
-  to be locally path independent. A gauge transformation is a bundle
-  automorphism covering the identity on M; it is not an arbitrary map between
-  neural-network layers.
+  to be locally path independent. A gauge transformation is a
+  structure-preserving bundle automorphism covering the identity on M. For a
+  principal G-bundle it is G-equivariant, and for a vector bundle it is
+  fiberwise linear. It is not an arbitrary map between neural-network layers.
 formal_definition_zh: >-
   光滑流形 M 上秩为 r 的光滑向量丛是光滑映射 π:E→M，其中纤维
   E_p=π^{-1}(p) 是 r 维向量空间，并且局部平凡：每个适当开集 U⊂M 上存在
@@ -35,7 +36,8 @@ formal_definition_zh: >-
   的右 G-作用；G 的表示产生伴随向量丛。向量丛上的联络是作用于截面的协变导数，
   满足线性和 Leibniz 法则。主联络可由 G-等变水平分布描述，也可由满足等变性与
   垂直归一化的 Lie 代数值联络一形式描述；其曲率刻画水平运输局部路径无关性的
-  失败。规范变换是覆盖 M 上恒等映射的丛自同构，并非神经网络层之间的任意映射。
+  失败。规范变换是覆盖 M 上恒等映射的结构保持丛自同构；在主 G-丛情形它必须
+  G-等变，在向量丛情形它必须逐纤维线性，并非神经网络层之间的任意映射。
 candidate_prerequisite_nodes:
   - node_id: n_653
     file: DIFF_GEO-653.yaml
@@ -152,7 +154,7 @@ sub_topics:
 - associated vector bundles from group representations
 - vector-bundle and principal connections
 - curvature and horizontal transport
-- gauge transformations and bounded model-architecture analogies
+- structure-preserving gauge transformations and bounded model-architecture analogies
 llm_physical_mapping: >-
   履带与机械臂只作为次级提示：它可提示基空间坐标与纤维坐标的配对，却没有给出
   局部平凡化、转移余圈、主群作用、联络、曲率或规范变换。普通层间映射和注意力

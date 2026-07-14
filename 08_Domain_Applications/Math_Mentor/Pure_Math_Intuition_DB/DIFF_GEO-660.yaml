@@ -13,9 +13,11 @@ formal_definition: >-
   Let M be a smooth manifold with affine connection ∇. A smooth curve
   γ:I→M is an affinely parameterized geodesic when ∇_(γ_dot)γ_dot=0. In
   local coordinates this is d²x^k/dt²+Γ^k_{ij}(x(t))(dx^i/dt)(dx^j/dt)=0.
-  For a Riemannian metric and its Levi-Civita connection, constant-speed
-  geodesics are critical points of the energy functional. A geodesic segment
-  contained in a suitable normal neighborhood is locally length-minimizing,
+  For a Riemannian metric and its Levi-Civita connection, affinely
+  parameterized geodesics are critical points of the energy functional under
+  smooth variations with fixed endpoints; such geodesics have constant
+  speed. A geodesic segment contained in a suitable normal neighborhood is
+  locally length-minimizing,
   but geodesics need not be globally shortest or globally unique; cut points
   and conjugate points can destroy those properties. For p∈M and v∈T_pM,
   let γ_v be the geodesic satisfying γ_v(0)=p and γ_dot_v(0)=v. Where this
@@ -29,9 +31,10 @@ formal_definition_zh: >-
   设 M 是带仿射联络 ∇ 的光滑流形。光滑曲线 γ:I→M 称为仿射参数化测地线，
   当且仅当 ∇_(γ_dot)γ_dot=0；局部坐标中等价于
   d²x^k/dt²+Γ^k_{ij}(x(t))(dx^i/dt)(dx^j/dt)=0。若 ∇ 是 Riemannian
-  度量的 Levi-Civita 联络，则常速测地线是能量泛函的临界曲线。在适当的正规
-  邻域内，足够短的测地线段局部最短；但测地线不自动全局最短或全局唯一，截点和
-  共轭点会破坏这些性质。给定 p∈M 与 v∈T_pM，令 γ_v 满足 γ_v(0)=p、
+  度量的 Levi-Civita 联络，则仿射参数化测地线是在固定端点的光滑变分下能量
+  泛函的临界曲线；这类测地线具有常速性。在适当的正规邻域内，足够短的测地线段
+  局部最短；但测地线不自动全局最短或全局唯一，截点和共轭点会破坏这些性质。
+  给定 p∈M 与 v∈T_pM，令 γ_v 满足 γ_v(0)=p、
   γ_dot_v(0)=v；当解至少存在到时间 1 时，定义 exp_p(v)=γ_v(1)。指数映射在
   0∈T_pM 附近是局部微分同胚，但通常不全局单射；只有附加测地完备性等条件时，
   才能保证对全部切向量定义。测地线方程依赖所选联络，而距离与最短性陈述还依赖
@@ -136,7 +139,7 @@ migration_review:
 concept_name: 测地线、指数映射与 Riemannian 距离 (n_660)
 sub_topics:
 - geodesic equation for an affine connection
-- Levi-Civita geodesics and the energy functional
+- Levi-Civita geodesics and fixed-endpoint variations of the energy functional
 - local minimizing behavior versus global shortest-path claims
 - coordinate geodesic equation and Christoffel-symbol dependence
 - initial-value formulation and local existence and uniqueness
