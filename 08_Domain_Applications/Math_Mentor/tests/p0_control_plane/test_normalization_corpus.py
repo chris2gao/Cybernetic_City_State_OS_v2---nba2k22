@@ -54,6 +54,7 @@ class LiveCorpusNormalizationTests(unittest.TestCase):
         identities: Counter[str] = Counter()
         invalid: list[tuple[str, str]] = []
         missing_identity_paths: list[str] = []
+        expected_e3_paths = stage0_canonical - changed_candidates
 
         for relative_path in sorted(candidate_paths):
             normalized = parse_and_normalize_node(
@@ -64,6 +65,10 @@ class LiveCorpusNormalizationTests(unittest.TestCase):
             )
             eras[normalized["schema_era"]] += 1
             identities[normalized["identity"]["status"]] += 1
+            if relative_path in changed_candidates:
+                self.assertEqual("E4", normalized["schema_era"], relative_path)
+            elif relative_path in stage0_canonical:
+                self.assertEqual("E3", normalized["schema_era"], relative_path)
             if normalized["identity"]["status"] == "missing":
                 missing_identity_paths.append(relative_path)
             self.assertFalse(normalized["consumer_allowed"])
@@ -71,7 +76,10 @@ class LiveCorpusNormalizationTests(unittest.TestCase):
                 invalid.append((relative_path, error.message))
 
         self.assertEqual(667, len(records))
-        self.assertEqual({"E1": 143, "E2": 496, "E3": 8, "E4": 20}, dict(eras))
+        self.assertEqual(143, eras["E1"])
+        self.assertEqual(496, eras["E2"])
+        self.assertEqual(len(expected_e3_paths), eras["E3"])
+        self.assertEqual(len(changed_candidates), eras["E4"])
         self.assertEqual({"resolved": 666, "missing": 1}, dict(identities))
         self.assertEqual(
             [

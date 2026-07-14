@@ -4,18 +4,21 @@ mode: "B"
 concept_name: "纤维丛 - 【核心 AI 映射】：多头注意力机制中词向量（底空间）与特征子空间（纤维）结合的终极解构。揭示权重在不同维度演化时的几何缠绕。 (n_676)"
 sub_topics:
   - "纤维丛的局部平凡性 (Local triviality)"
-  - "转移函数与结构群 (Gauge group)"
+  - "转移函数、结构群与余圈相容性"
   - "切丛与法丛作为特征演化的背景"
   - "映射：每个 Token 位置承载了一个独立的语义特征纤维"
 formal_definition: |-
   纤维丛由 (E,B,F,pi) 组成，其中 pi:E->B 是连续满射。对每个 b 属于 B，存在
   开邻域 U 和同胚 phi_U:pi^{-1}(U)->U x F，使 pr_1 o phi_U=pi；这称为局部平凡化。
-  纤维 E_b=pi^{-1}(b) 与典型纤维 F 同胚。在两个平凡化区域的交集上，坐标变换
-  phi_V o phi_U^{-1} 保持基点，并由作用在 F 上的转移函数描述；这些函数满足重叠
-  区域上的相容条件。向量丛进一步要求纤维为向量空间且转移函数逐点线性可逆。
+  纤维 E_b=pi^{-1}(b) 与典型纤维 F 同胚。设结构群 G 作用于 F，并约定
+  g_UV(b):F->F 把 U-坐标转换为 V-坐标；则 g_UU=e，且在三重交集上满足
+  g_UW=g_VW o g_UV（因而 g_VU=g_UV^{-1}）。向量丛进一步要求纤维为向量空间，
+  转移函数取值于 GL(F)。切丛 TB 的 b 点纤维是 T_bB。若 M 嵌入 N，则法丛在
+  x 点的纤维可写成 T_xN/T_xM；选定 Riemannian 度量后，也可等同于 T_xM 在
+  T_xN 中的正交补。规范变换是已带结构丛上覆盖底空间恒等映射的结构保持自同构，
+  它不是结构群的别名。
 prerequisite_nodes:
   - "n_653"
-  - "n_667"
 llm_physical_mapping: |-
   可把一族依赖上下文位置的局部特征坐标系类比为丛：上下文状态组成基空间，每个状态
   上方的可用特征坐标组成纤维；不同局部上下文采用不同坐标框架时，重叠区域需要可逆
@@ -38,8 +41,9 @@ v9_semantic_audit:
   status: "review_required"
   review_criteria:
     - "The definition names E, B, F, pi, fibers, and a local trivialization with the projection condition."
-    - "Transition functions preserve the base point and satisfy overlap compatibility."
-    - "Vector, tangent, and normal bundles are treated as structured examples rather than the definition itself."
+    - "The U-to-V transition convention explicitly satisfies g_UU=e and g_UW=g_VW o g_UV on triple overlaps."
+    - "The structure group is distinct from gauge transformations, which are structure-preserving bundle automorphisms."
+    - "Vector, tangent, and normal bundles are treated as structured examples, with the normal fiber described by a quotient or metric-dependent orthogonal complement."
     - "The architecture mapping uses local feature coordinate systems as an analogy, not an identity claim."
     - "The boundary states that ordinary Transformer hidden states usually form a fixed global vector space."
     - "The code anchor represents only a trivial product bundle and is not evidence for nontrivial topology."
