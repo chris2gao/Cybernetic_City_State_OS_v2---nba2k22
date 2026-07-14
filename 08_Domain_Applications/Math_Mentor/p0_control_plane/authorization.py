@@ -27,6 +27,7 @@ from pathlib import PurePosixPath
 import re
 from types import MappingProxyType
 from typing import Any, ClassVar
+from weakref import WeakKeyDictionary
 
 
 AUTH_OK = "AUTH_OK"
@@ -117,6 +118,9 @@ _WILDCARD_RE = re.compile(r"[*?\[\]{}]")
 _REQUEST_SEAL = object()
 _TRUST_SEAL = object()
 _DECISION_SEAL = object()
+_ISSUED_REQUESTS = WeakKeyDictionary()
+_ISSUED_GRANTS = WeakKeyDictionary()
+_ISSUED_DECISIONS = WeakKeyDictionary()
 
 
 class AuthorizationInputError(ValueError):
@@ -135,9 +139,17 @@ class TrustBoundaryError(RuntimeError):
         self.code = code
 
 
+def _has_unicode_surrogate(value: str) -> bool:
+    return any(0xD800 <= ord(character) <= 0xDFFF for character in value)
+
+
 def _required_string(value: Any, field_name: str) -> str:
-    if not isinstance(value, str) or not value.strip():
+    if type(value) is not str or not value.strip():
         raise AuthorizationInputError(f"{field_name} must be a non-empty string")
+    if _has_unicode_surrogate(value):
+        raise AuthorizationInputError(
+            f"{field_name} must not contain Unicode surrogate code points"
+        )
     return value
 
 
@@ -169,7 +181,12 @@ def _validate_sha256(value: Any, field_name: str) -> str:
 
 def _validate_relative_path(value: Any, field_name: str, *, prefix: bool) -> str:
     value = _required_string(value, field_name)
-    if "\\" in value or ":" in value or _WILDCARD_RE.search(value):
+    if (
+        "\\" in value
+        or ":" in value
+        or _WILDCARD_RE.search(value)
+        or any(ord(character) < 32 or ord(character) == 127 for character in value)
+    ):
         raise AuthorizationInputError(f"{field_name} must be a literal POSIX path")
     if prefix:
         if not value.endswith("/"):
@@ -197,11 +214,11 @@ def _parse_time(value: Any, field_name: str, *, nullable: bool = False) -> datet
     value = _required_string(value, field_name)
     try:
         parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
-    except ValueError as exc:
-        raise AuthorizationInputError(f"{field_name} must be RFC3339") from exc
-    if parsed.tzinfo is None:
-        raise AuthorizationInputError(f"{field_name} must include a timezone")
-    return parsed.astimezone(timezone.utc)
+        if parsed.tzinfo is None:
+            raise AuthorizationInputError(f"{field_name} must include a timezone")
+        return parsed.astimezone(timezone.utc)
+    except (ValueError, OverflowError) as exc:
+        raise AuthorizationInputError(f"{field_name} must be valid RFC3339") from exc
 
 
 def _format_time(value: datetime | None) -> str | None:
@@ -227,25 +244,34 @@ def _deep_thaw(value: Any) -> Any:
 
 
 def _issuance_fingerprint(value: Any) -> str:
-    canonical = json.dumps(
-        _deep_thaw(value),
-        ensure_ascii=False,
-        sort_keys=True,
-        separators=(",", ":"),
-        allow_nan=False,
-    ).encode("utf-8")
+    try:
+        canonical = json.dumps(
+            _deep_thaw(value),
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+            allow_nan=False,
+        ).encode("utf-8")
+    except (TypeError, ValueError, UnicodeEncodeError) as exc:
+        raise AuthorizationInputError(
+            "authorization issuance value is not canonically encodable"
+        ) from exc
     return sha256(canonical).hexdigest()
 
 
 def _as_mapping(value: Any, field_name: str) -> Mapping[str, Any]:
-    if not isinstance(value, Mapping):
-        raise AuthorizationInputError(f"{field_name} must be an object")
+    if type(value) is not dict:
+        raise AuthorizationInputError(f"{field_name} must be a plain object")
+    if any(type(key) is not str for key in value):
+        raise AuthorizationInputError(
+            f"{field_name} keys must be exact built-in strings"
+        )
     return value
 
 
 def _as_string_set(value: Any, field_name: str, allowed: frozenset[str]) -> frozenset[str]:
-    if not isinstance(value, Sequence) or isinstance(value, (str, bytes)):
-        raise AuthorizationInputError(f"{field_name} must be an array")
+    if type(value) is not list:
+        raise AuthorizationInputError(f"{field_name} must be a plain array")
     result: set[str] = set()
     for item in value:
         item = _required_string(item, field_name)
@@ -255,13 +281,14 @@ def _as_string_set(value: Any, field_name: str, allowed: frozenset[str]) -> froz
     return frozenset(result)
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class ResourceRef:
     repo_id: str
     path: str
 
     @classmethod
     def from_mapping(cls, value: Mapping[str, Any]) -> "ResourceRef":
+        value = _as_mapping(value, "resource")
         return cls(
             repo_id=_required_string(value.get("repo_id"), "resources.repo_id"),
             path=_validate_relative_path(
@@ -270,10 +297,10 @@ class ResourceRef:
         )
 
     def to_dict(self) -> dict[str, str]:
-        return {"repo_id": self.repo_id, "path": self.path, "match": "exact"}
+        return _resource_ref_snapshot(self)
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class ResourceSelector:
     repo_id: str
     path: str
@@ -282,7 +309,8 @@ class ResourceSelector:
 
     @classmethod
     def from_mapping(cls, value: Mapping[str, Any]) -> "ResourceSelector":
-        match = value.get("match")
+        value = _as_mapping(value, "resource selector")
+        match = _required_string(value.get("match"), "resource selector match")
         if match not in {"exact", "prefix"}:
             raise AuthorizationInputError("resource selector match must be exact or prefix")
         operations = _as_string_set(
@@ -302,22 +330,63 @@ class ResourceSelector:
         )
 
     def matches(self, resource: ResourceRef, operation: str) -> bool:
-        if resource.repo_id != self.repo_id or operation not in self.operations:
-            return False
-        if self.match == "exact":
-            return resource.path == self.path
-        return resource.path.startswith(self.path)
+        return _resource_selector_matches(self, resource, operation)
 
     def to_dict(self) -> dict[str, Any]:
-        return {
-            "repo_id": self.repo_id,
-            "path": self.path,
-            "match": self.match,
-            "operations": sorted(self.operations),
-        }
+        return _resource_selector_snapshot(self)
 
 
-@dataclass(frozen=True)
+def _resource_ref_snapshot(resource: ResourceRef) -> dict[str, str]:
+    if type(resource) is not ResourceRef:
+        raise AuthorizationInputError("issued resource must be an exact ResourceRef")
+    repo_id = _required_string(resource.repo_id, "issued resource repo_id")
+    path = _required_string(resource.path, "issued resource path")
+    return {"repo_id": repo_id, "path": path, "match": "exact"}
+
+
+def _resource_selector_snapshot(selector: ResourceSelector) -> dict[str, Any]:
+    if type(selector) is not ResourceSelector:
+        raise AuthorizationInputError(
+            "issued resource selector must be an exact ResourceSelector"
+        )
+    repo_id = _required_string(selector.repo_id, "issued selector repo_id")
+    path = _required_string(selector.path, "issued selector path")
+    match = _required_string(selector.match, "issued selector match")
+    if match not in {"exact", "prefix"}:
+        raise AuthorizationInputError("issued selector match is invalid")
+    if type(selector.operations) is not frozenset or any(
+        type(operation) is not str for operation in selector.operations
+    ):
+        raise AuthorizationInputError(
+            "issued selector operations must be an exact frozenset of strings"
+        )
+    return {
+        "repo_id": repo_id,
+        "path": path,
+        "match": match,
+        "operations": sorted(selector.operations),
+    }
+
+
+def _resource_selector_matches(
+    selector: ResourceSelector,
+    resource: ResourceRef,
+    operation: str,
+) -> bool:
+    """Match immutable selector fields without instance method dispatch."""
+
+    if type(selector) is not ResourceSelector or type(resource) is not ResourceRef:
+        return False
+    if type(operation) is not str:
+        return False
+    if resource.repo_id != selector.repo_id or operation not in selector.operations:
+        return False
+    if selector.match == "exact":
+        return resource.path == selector.path
+    return resource.path.startswith(selector.path)
+
+
+@dataclass(frozen=True, eq=False)
 class AuthorizationRequest:
     schema_version: str
     request_id: str
@@ -329,39 +398,36 @@ class AuthorizationRequest:
     resources: tuple[ResourceRef, ...]
     gate_phase: str = "pre_action"
     payload_human_gate: Any = field(default=None, repr=False, compare=False)
-    _factory_identity: int | None = field(
-        default=None, init=False, repr=False, compare=False
-    )
-    _issued_fingerprint: str | None = field(
-        default=None, init=False, repr=False, compare=False
-    )
     _seal: object | None = field(default=None, init=False, repr=False, compare=False)
 
     @classmethod
     def from_mapping(cls, value: Mapping[str, Any]) -> "AuthorizationRequest":
-        if value.get("schema_version") != "math_mentor.authorization_request.v1":
+        value = _as_mapping(value, "authorization request")
+        schema_version = _required_string(value.get("schema_version"), "schema_version")
+        if schema_version != "math_mentor.authorization_request.v1":
             raise AuthorizationInputError("unsupported authorization request schema")
-        operation = value.get("operation")
-        effect_class = value.get("effect_class")
+        operation = _required_string(value.get("operation"), "operation")
+        effect_class = _required_string(value.get("effect_class"), "effect_class")
         if operation not in OPERATIONS:
             raise AuthorizationInputError("unsupported operation")
         if effect_class not in EFFECT_RANK or OPERATION_EFFECT[operation] != effect_class:
             raise AuthorizationInputError("operation and effect_class do not agree")
         raw_resources = value.get("resources")
-        if not isinstance(raw_resources, Sequence) or isinstance(raw_resources, (str, bytes)):
-            raise AuthorizationInputError("resources must be an array")
+        if type(raw_resources) is not list:
+            raise AuthorizationInputError("resources must be a plain array")
         resources = tuple(
             ResourceRef.from_mapping(_as_mapping(item, "resources item"))
             for item in raw_resources
         )
         if operation not in {"conversation.teach"} and not resources:
             raise AuthorizationInputError("this operation requires at least one resource")
-        gate_phase = value.get("gate_phase", "pre_action")
+        gate_phase = _required_string(
+            value.get("gate_phase", "pre_action"), "gate_phase"
+        )
         if gate_phase not in {"pre_action", "post_completion"}:
             raise AuthorizationInputError("gate_phase must be pre_action or post_completion")
         business_payload = value.get("business_payload", {})
-        if not isinstance(business_payload, Mapping):
-            raise AuthorizationInputError("business_payload must be an object")
+        business_payload = _as_mapping(business_payload, "business_payload")
         payload_gate = value.get(
             "payload_human_gate", business_payload.get("human_gate")
         )
@@ -379,53 +445,110 @@ class AuthorizationRequest:
             gate_phase=gate_phase,
             payload_human_gate=payload_gate,
         )
-        object.__setattr__(instance, "_factory_identity", id(instance))
         object.__setattr__(instance, "_seal", _REQUEST_SEAL)
-        object.__setattr__(
-            instance,
-            "_issued_fingerprint",
-            _request_fingerprint(instance),
-        )
+        _ISSUED_REQUESTS[instance] = _request_fingerprint(instance)
         return instance
 
     def is_factory_issued(self) -> bool:
         """Return true only for this exact object emitted by ``from_mapping``."""
 
-        if (
-            type(self) is not AuthorizationRequest
-            or self._seal is not _REQUEST_SEAL
-            or self._factory_identity != id(self)
-            or self._issued_fingerprint is None
-        ):
-            return False
-        try:
-            current = _request_fingerprint(self)
-        except Exception:
-            return False
-        return hmac.compare_digest(self._issued_fingerprint, current)
+        return _verified_request_snapshot(self) is not None
 
 
-def _request_fingerprint(request: AuthorizationRequest) -> str:
+@dataclass(frozen=True, slots=True)
+class _RequestSnapshot:
+    schema_version: str
+    request_id: str
+    task_id: str
+    objective_sha256: str
+    source_head: str
+    operation: str
+    effect_class: str
+    resources: tuple[ResourceRef, ...]
+    gate_phase: str
+    payload_human_gate: str | None
+
+
+def _snapshot_request(request: Any) -> _RequestSnapshot:
+    if type(request) is not AuthorizationRequest:
+        raise AuthorizationInputError("issued request must be an AuthorizationRequest")
+    string_fields = {
+        "schema_version": request.schema_version,
+        "request_id": request.request_id,
+        "task_id": request.task_id,
+        "objective_sha256": request.objective_sha256,
+        "source_head": request.source_head,
+        "operation": request.operation,
+        "effect_class": request.effect_class,
+        "gate_phase": request.gate_phase,
+    }
+    for field_name, field_value in string_fields.items():
+        _required_string(field_value, f"issued request {field_name}")
+    if type(request.resources) is not tuple:
+        raise AuthorizationInputError("issued request resources must be an exact tuple")
+    resources_list: list[ResourceRef] = []
+    for item in request.resources:
+        item_snapshot = _resource_ref_snapshot(item)
+        resources_list.append(
+            ResourceRef(
+                repo_id=item_snapshot["repo_id"],
+                path=item_snapshot["path"],
+            )
+        )
+    resources = tuple(resources_list)
     observed_gate = request.payload_human_gate
-    if observed_gate is not None and not isinstance(observed_gate, str):
-        observed_gate = "<non-string>"
+    if observed_gate is not None:
+        if type(observed_gate) is not str:
+            observed_gate = "<non-string>"
+        elif _has_unicode_surrogate(observed_gate):
+            raise AuthorizationInputError(
+                "payload_human_gate must not contain Unicode surrogates"
+            )
+    return _RequestSnapshot(
+        **string_fields,
+        resources=resources,
+        payload_human_gate=observed_gate,
+    )
+
+
+def _request_snapshot_fingerprint(snapshot: _RequestSnapshot) -> str:
     return _issuance_fingerprint(
         {
-            "schema_version": request.schema_version,
-            "request_id": request.request_id,
-            "task_id": request.task_id,
-            "objective_sha256": request.objective_sha256,
-            "source_head": request.source_head,
-            "operation": request.operation,
-            "effect_class": request.effect_class,
-            "resources": [item.to_dict() for item in request.resources],
-            "gate_phase": request.gate_phase,
-            "payload_human_gate_observed": observed_gate,
+            "schema_version": snapshot.schema_version,
+            "request_id": snapshot.request_id,
+            "task_id": snapshot.task_id,
+            "objective_sha256": snapshot.objective_sha256,
+            "source_head": snapshot.source_head,
+            "operation": snapshot.operation,
+            "effect_class": snapshot.effect_class,
+            "resources": [
+                _resource_ref_snapshot(item) for item in snapshot.resources
+            ],
+            "gate_phase": snapshot.gate_phase,
+            "payload_human_gate_observed": snapshot.payload_human_gate,
         }
     )
 
 
-@dataclass(frozen=True)
+def _request_fingerprint(request: AuthorizationRequest) -> str:
+    return _request_snapshot_fingerprint(_snapshot_request(request))
+
+
+def _verified_request_snapshot(value: Any) -> _RequestSnapshot | None:
+    if type(value) is not AuthorizationRequest or value._seal is not _REQUEST_SEAL:
+        return None
+    try:
+        issued = _ISSUED_REQUESTS.get(value)
+        snapshot = _snapshot_request(value)
+        current = _request_snapshot_fingerprint(snapshot)
+    except Exception:
+        return None
+    if type(issued) is not str or not hmac.compare_digest(issued, current):
+        return None
+    return snapshot
+
+
+@dataclass(frozen=True, eq=False)
 class TrustedHumanGrant:
     """Sealed output of a trust-boundary adapter, never a business payload."""
 
@@ -454,12 +577,6 @@ class TrustedHumanGrant:
     post_completion_approval_ref: str | None
     trust_source: str
     _seal: object = field(repr=False, compare=False)
-    _factory_identity: int | None = field(
-        default=None, init=False, repr=False, compare=False
-    )
-    _issued_fingerprint: str | None = field(
-        default=None, init=False, repr=False, compare=False
-    )
 
     def __post_init__(self) -> None:
         if self._seal is not _TRUST_SEAL:
@@ -468,21 +585,130 @@ class TrustedHumanGrant:
             )
 
     def is_factory_issued(self) -> bool:
-        if (
-            type(self) is not TrustedHumanGrant
-            or self._seal is not _TRUST_SEAL
-            or self._factory_identity != id(self)
-            or self._issued_fingerprint is None
+        return _verified_grant_snapshot(self) is not None
+
+
+@dataclass(frozen=True, slots=True)
+class _GrantSnapshot:
+    envelope_id: str
+    authority_class: str
+    principal_ref: str
+    channel: str
+    evidence_ref: str
+    task_id: str
+    request_id: str
+    objective_sha256: str
+    source_head: str
+    allowed_operations: frozenset[str]
+    resource_selectors: tuple[ResourceSelector, ...]
+    effect_ceiling: str
+    explicitly_denied_operations: frozenset[str]
+    issued_at: datetime
+    not_before: datetime
+    expires_at: datetime | None
+    revoked: bool
+    revocation_ref: str | None
+    nonce: str
+    one_time: bool
+    pre_action: str
+    post_completion: str
+    post_completion_approval_ref: str | None
+    trust_source: str
+
+
+def _snapshot_grant(grant: Any) -> _GrantSnapshot:
+    if type(grant) is not TrustedHumanGrant:
+        raise AuthorizationInputError("issued grant must be a TrustedHumanGrant")
+    string_fields = {
+        "envelope_id": grant.envelope_id,
+        "authority_class": grant.authority_class,
+        "principal_ref": grant.principal_ref,
+        "channel": grant.channel,
+        "evidence_ref": grant.evidence_ref,
+        "task_id": grant.task_id,
+        "request_id": grant.request_id,
+        "objective_sha256": grant.objective_sha256,
+        "source_head": grant.source_head,
+        "effect_ceiling": grant.effect_ceiling,
+        "nonce": grant.nonce,
+        "pre_action": grant.pre_action,
+        "post_completion": grant.post_completion,
+        "trust_source": grant.trust_source,
+    }
+    for field_name, field_value in string_fields.items():
+        _required_string(field_value, f"issued grant {field_name}")
+    optional_strings = {
+        "revocation_ref": grant.revocation_ref,
+        "post_completion_approval_ref": grant.post_completion_approval_ref,
+    }
+    for field_name, field_value in optional_strings.items():
+        if field_value is not None:
+            _required_string(field_value, f"issued grant {field_name}")
+    collection_snapshots: dict[str, frozenset[str]] = {}
+    for field_name, field_value in (
+        ("allowed_operations", grant.allowed_operations),
+        ("explicitly_denied_operations", grant.explicitly_denied_operations),
+    ):
+        if type(field_value) is not frozenset or any(
+            type(item) is not str for item in field_value
         ):
-            return False
-        try:
-            current = _grant_fingerprint(self)
-        except Exception:
-            return False
-        return hmac.compare_digest(self._issued_fingerprint, current)
+            raise AuthorizationInputError(
+                f"issued grant {field_name} must be an exact frozenset of strings"
+            )
+        collection_snapshots[field_name] = frozenset(field_value)
+    if type(grant.resource_selectors) is not tuple:
+        raise AuthorizationInputError(
+            "issued grant resource_selectors must be an exact tuple"
+        )
+    selector_snapshots: list[ResourceSelector] = []
+    for selector in grant.resource_selectors:
+        selector_snapshot = _resource_selector_snapshot(selector)
+        selector_snapshots.append(
+            ResourceSelector(
+                repo_id=selector_snapshot["repo_id"],
+                path=selector_snapshot["path"],
+                match=selector_snapshot["match"],
+                operations=frozenset(selector_snapshot["operations"]),
+            )
+        )
+    datetime_snapshots: dict[str, datetime] = {}
+    for field_name, field_value in (
+        ("issued_at", grant.issued_at),
+        ("not_before", grant.not_before),
+    ):
+        if type(field_value) is not datetime or field_value.tzinfo is not timezone.utc:
+            raise AuthorizationInputError(
+                f"issued grant {field_name} must be an exact UTC datetime"
+            )
+        datetime_snapshots[field_name] = field_value
+    expires_at = grant.expires_at
+    if expires_at is not None and (
+        type(expires_at) is not datetime or expires_at.tzinfo is not timezone.utc
+    ):
+        raise AuthorizationInputError(
+            "issued grant expires_at must be an exact UTC datetime or null"
+        )
+    revoked = grant.revoked
+    one_time = grant.one_time
+    if type(revoked) is not bool or type(one_time) is not bool:
+        raise AuthorizationInputError("issued grant boolean fields must be exact bools")
+    return _GrantSnapshot(
+        **string_fields,
+        allowed_operations=collection_snapshots["allowed_operations"],
+        resource_selectors=tuple(selector_snapshots),
+        explicitly_denied_operations=collection_snapshots[
+            "explicitly_denied_operations"
+        ],
+        issued_at=datetime_snapshots["issued_at"],
+        not_before=datetime_snapshots["not_before"],
+        expires_at=expires_at,
+        revoked=revoked,
+        **optional_strings,
+        one_time=one_time,
+    )
 
 
-def _grant_fingerprint(grant: TrustedHumanGrant) -> str:
+def _grant_snapshot_fingerprint(grant: _GrantSnapshot) -> str:
     return _issuance_fingerprint(
         {
             "envelope_id": grant.envelope_id,
@@ -494,11 +720,16 @@ def _grant_fingerprint(grant: TrustedHumanGrant) -> str:
             "request_id": grant.request_id,
             "objective_sha256": grant.objective_sha256,
             "source_head": grant.source_head,
+            "effect_ceiling": grant.effect_ceiling,
+            "nonce": grant.nonce,
+            "pre_action": grant.pre_action,
+            "post_completion": grant.post_completion,
+            "trust_source": grant.trust_source,
             "allowed_operations": sorted(grant.allowed_operations),
             "resource_selectors": [
-                selector.to_dict() for selector in grant.resource_selectors
+                _resource_selector_snapshot(selector)
+                for selector in grant.resource_selectors
             ],
-            "effect_ceiling": grant.effect_ceiling,
             "explicitly_denied_operations": sorted(
                 grant.explicitly_denied_operations
             ),
@@ -507,20 +738,36 @@ def _grant_fingerprint(grant: TrustedHumanGrant) -> str:
             "expires_at": _format_time(grant.expires_at),
             "revoked": grant.revoked,
             "revocation_ref": grant.revocation_ref,
-            "nonce": grant.nonce,
-            "one_time": grant.one_time,
-            "pre_action": grant.pre_action,
-            "post_completion": grant.post_completion,
             "post_completion_approval_ref": grant.post_completion_approval_ref,
-            "trust_source": grant.trust_source,
+            "one_time": grant.one_time,
         }
     )
+
+
+def _grant_fingerprint(grant: TrustedHumanGrant) -> str:
+    return _grant_snapshot_fingerprint(_snapshot_grant(grant))
+
+
+def _verified_grant_snapshot(value: Any) -> _GrantSnapshot | None:
+    if type(value) is not TrustedHumanGrant or value._seal is not _TRUST_SEAL:
+        return None
+    try:
+        issued = _ISSUED_GRANTS.get(value)
+        snapshot = _snapshot_grant(value)
+        current = _grant_snapshot_fingerprint(snapshot)
+    except Exception:
+        return None
+    if type(issued) is not str or not hmac.compare_digest(issued, current):
+        return None
+    return snapshot
 
 
 def _trusted_grant_from_record(
     record: Mapping[str, Any], *, trust_source: str
 ) -> TrustedHumanGrant:
-    if record.get("schema_version") != "math_mentor.trusted_human_grant.v1":
+    record = _as_mapping(record, "trusted grant")
+    schema_version = _required_string(record.get("schema_version"), "schema_version")
+    if schema_version != "math_mentor.trusted_human_grant.v1":
         raise TrustBoundaryError("unsupported trusted grant schema")
     authority = _as_mapping(record.get("authority"), "authority")
     binding = _as_mapping(record.get("binding"), "binding")
@@ -528,12 +775,17 @@ def _trusted_grant_from_record(
     validity = _as_mapping(record.get("validity"), "validity")
     gates = _as_mapping(record.get("gates"), "gates")
 
-    authority_class = authority.get("authority_class")
+    authority_class = _required_string(
+        authority.get("authority_class"), "authority.authority_class"
+    )
     if authority_class not in AUTHORITY_CLASSES:
         raise TrustBoundaryError("authority class is not Human-authoritative")
-    if authority.get("principal_type") != "human_speaker":
+    principal_type = _required_string(
+        authority.get("principal_type"), "authority.principal_type"
+    )
+    if principal_type != "human_speaker":
         raise TrustBoundaryError("principal must be human_speaker", AUTH_PRINCIPAL_INVALID)
-    channel = authority.get("channel")
+    channel = _required_string(authority.get("channel"), "authority.channel")
     if channel not in AUTHENTICATED_CHANNELS:
         raise TrustBoundaryError("untrusted authorization channel")
 
@@ -547,21 +799,25 @@ def _trusted_grant_from_record(
     )
     if allowed_operations & denied_operations:
         raise TrustBoundaryError("an operation cannot be both allowed and denied")
-    effect_ceiling = grant.get("effect_ceiling")
+    effect_ceiling = _required_string(
+        grant.get("effect_ceiling"), "grant.effect_ceiling"
+    )
     if effect_ceiling not in EFFECT_RANK:
         raise TrustBoundaryError("unsupported effect ceiling")
     raw_selectors = grant.get("resource_selectors")
-    if not isinstance(raw_selectors, Sequence) or isinstance(raw_selectors, (str, bytes)):
-        raise TrustBoundaryError("resource_selectors must be an array")
+    if type(raw_selectors) is not list:
+        raise TrustBoundaryError("resource_selectors must be a plain array")
     selectors = tuple(
         ResourceSelector.from_mapping(_as_mapping(item, "resource selector"))
         for item in raw_selectors
     )
 
-    pre_action = gates.get("pre_action")
+    pre_action = _required_string(gates.get("pre_action"), "gates.pre_action")
     if pre_action != "satisfied":
         raise TrustBoundaryError("trusted grant pre_action gate is not satisfied")
-    post_completion = gates.get("post_completion")
+    post_completion = _required_string(
+        gates.get("post_completion"), "gates.post_completion"
+    )
     if post_completion not in {"required", "not_required", "satisfied"}:
         raise TrustBoundaryError("invalid post_completion gate")
     post_ref = _optional_string(
@@ -621,12 +877,7 @@ def _trusted_grant_from_record(
         trust_source=trust_source,
         _seal=_TRUST_SEAL,
     )
-    object.__setattr__(instance, "_factory_identity", id(instance))
-    object.__setattr__(
-        instance,
-        "_issued_fingerprint",
-        _grant_fingerprint(instance),
-    )
+    _ISSUED_GRANTS[instance] = _grant_fingerprint(instance)
     return instance
 
 
@@ -656,10 +907,12 @@ class ProductionTrustBoundaryAdapter(TrustBoundaryAdapter):
     def authenticate(
         self, opaque_handle: object, *, mode: str = "production"
     ) -> TrustedHumanGrant:
+        if type(mode) is not str or mode != "production":
+            raise TrustBoundaryError("production adapter requires production mode")
         record = self._resolver(opaque_handle)
         if record is None:
             raise TrustBoundaryError("opaque authorization handle was not authenticated")
-        if not isinstance(record, Mapping):
+        if type(record) is not dict:
             raise TrustBoundaryError("external resolver returned an invalid grant record")
         try:
             return _trusted_grant_from_record(
@@ -673,17 +926,26 @@ class DeterministicTestTrustBoundaryAdapter(TrustBoundaryAdapter):
     """Deterministic adapter for fixtures; intentionally unusable in production."""
 
     def __init__(self, records: Mapping[str, Mapping[str, Any]]):
+        if type(records) is not dict or any(
+            type(handle) is not str or type(record) is not dict
+            for handle, record in records.items()
+        ):
+            raise TrustBoundaryError(
+                "deterministic trust records must be a plain string-to-object map"
+            )
         self._records = dict(records)
 
     def authenticate(
         self, opaque_handle: object, *, mode: str = "production"
     ) -> TrustedHumanGrant:
-        if mode != "test":
+        if type(mode) is not str or mode != "test":
             raise TrustBoundaryError(
                 "deterministic trust fixtures are forbidden in production",
                 AUTH_FIXTURE_IN_PRODUCTION,
             )
-        record = self._records.get(str(opaque_handle))
+        if type(opaque_handle) is not str:
+            raise TrustBoundaryError("unknown deterministic fixture handle")
+        record = self._records.get(opaque_handle)
         if record is None:
             raise TrustBoundaryError("unknown deterministic fixture handle")
         try:
@@ -692,40 +954,71 @@ class DeterministicTestTrustBoundaryAdapter(TrustBoundaryAdapter):
             raise TrustBoundaryError(str(exc)) from exc
 
 
-@dataclass(frozen=True)
-class ReadonlyAuthorizationPolicy:
-    """Case-insensitive protected-path classifier; never reads path contents."""
+_FORBIDDEN_DIRECTORY_NAMES = frozenset(
+    {
+        ".aws",
+        ".azure",
+        ".docker",
+        ".git",
+        ".gnupg",
+        ".kube",
+        ".ssh",
+        "secrets",
+        "credentials",
+        "private_keys",
+    }
+)
+_FORBIDDEN_EXACT_FILENAMES = frozenset(
+    {
+        ".git-credentials",
+        ".netrc",
+        ".npmrc",
+        ".pypirc",
+        "id_rsa",
+        "id_ed25519",
+        "credentials.json",
+        "application_default_credentials.json",
+        "service-account.json",
+        "service_account.json",
+        "token.json",
+    }
+)
+_FORBIDDEN_FILE_SUFFIXES = frozenset({".pem", ".key", ".p12", ".pfx"})
 
-    FORBIDDEN_DIRECTORY_NAMES: ClassVar[frozenset[str]] = frozenset(
-        {".ssh", "secrets", "credentials", "private_keys"}
+
+@dataclass(frozen=True, slots=True)
+class ReadonlyAuthorizationPolicy:
+    """Non-customizable view of the fixed protected-path policy floor."""
+
+    FORBIDDEN_DIRECTORY_NAMES: ClassVar[frozenset[str]] = (
+        _FORBIDDEN_DIRECTORY_NAMES
     )
-    FORBIDDEN_EXACT_FILENAMES: ClassVar[frozenset[str]] = frozenset(
-        {
-            "id_rsa",
-            "id_ed25519",
-            "credentials.json",
-            "application_default_credentials.json",
-        }
+    FORBIDDEN_EXACT_FILENAMES: ClassVar[frozenset[str]] = (
+        _FORBIDDEN_EXACT_FILENAMES
     )
-    FORBIDDEN_FILE_SUFFIXES: ClassVar[frozenset[str]] = frozenset(
-        {".pem", ".key"}
-    )
+    FORBIDDEN_FILE_SUFFIXES: ClassVar[frozenset[str]] = _FORBIDDEN_FILE_SUFFIXES
 
     def resource_is_secret(self, resource: ResourceRef) -> bool:
-        parts = tuple(part.casefold() for part in PurePosixPath(resource.path).parts)
-        if not parts:
-            return True
-        if any(part in self.FORBIDDEN_DIRECTORY_NAMES for part in parts):
-            return True
-        if any(part == ".env" or part.startswith(".env.") for part in parts):
-            return True
-        filename = parts[-1]
-        if filename in self.FORBIDDEN_EXACT_FILENAMES:
-            return True
-        return any(filename.endswith(suffix) for suffix in self.FORBIDDEN_FILE_SUFFIXES)
+        return _resource_is_secret(resource)
 
 
-@dataclass(frozen=True)
+def _resource_is_secret(resource: ResourceRef) -> bool:
+    """Apply the fixed protected-path floor independently of policy instances."""
+
+    parts = tuple(part.casefold() for part in PurePosixPath(resource.path).parts)
+    if not parts:
+        return True
+    if any(part in _FORBIDDEN_DIRECTORY_NAMES for part in parts):
+        return True
+    if any(part == ".env" or part.startswith(".env.") for part in parts):
+        return True
+    filename = parts[-1]
+    if filename in _FORBIDDEN_EXACT_FILENAMES:
+        return True
+    return any(filename.endswith(suffix) for suffix in _FORBIDDEN_FILE_SUFFIXES)
+
+
+@dataclass(frozen=True, slots=True)
 class ReadonlyReplaySnapshot:
     """Host-supplied point-in-time evidence, not a nonce-consumption store.
 
@@ -737,8 +1030,8 @@ class ReadonlyReplaySnapshot:
     consumed_nonces: frozenset[str] = frozenset()
 
     def __post_init__(self) -> None:
-        if not isinstance(self.consumed_nonces, frozenset) or any(
-            not isinstance(nonce, str) or not nonce
+        if type(self.consumed_nonces) is not frozenset or any(
+            type(nonce) is not str or not nonce
             for nonce in self.consumed_nonces
         ):
             raise AuthorizationInputError(
@@ -746,7 +1039,7 @@ class ReadonlyReplaySnapshot:
             )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, eq=False)
 class AuthorizationDecision:
     status: str
     reason_codes: tuple[str, ...]
@@ -754,12 +1047,6 @@ class AuthorizationDecision:
     requested_effect: Mapping[str, Any]
     audit: Mapping[str, Any]
     _seal: object = field(repr=False, compare=False)
-    _factory_identity: int | None = field(
-        default=None, init=False, repr=False, compare=False
-    )
-    _issued_fingerprint: str | None = field(
-        default=None, init=False, repr=False, compare=False
-    )
 
     def __post_init__(self) -> None:
         if self._seal is not _DECISION_SEAL:
@@ -768,18 +1055,27 @@ class AuthorizationDecision:
             )
 
     def is_factory_issued(self) -> bool:
-        if (
-            type(self) is not AuthorizationDecision
-            or self._seal is not _DECISION_SEAL
-            or self._factory_identity != id(self)
-            or self._issued_fingerprint is None
-        ):
+        if type(self) is not AuthorizationDecision or self._seal is not _DECISION_SEAL:
             return False
         try:
+            issued = _ISSUED_DECISIONS.get(self)
+            if type(issued) is not _DecisionIssuance:
+                return False
+            if (
+                type(self.status) is not str
+                or type(self.reason_codes) is not tuple
+                or any(type(code) is not str for code in self.reason_codes)
+                or self.status != issued.status
+                or self.reason_codes != issued.reason_codes
+                or self.authorization_context is not issued.authorization_context
+                or self.requested_effect is not issued.requested_effect
+                or self.audit is not issued.audit
+            ):
+                return False
             current = _decision_fingerprint(self)
         except Exception:
             return False
-        return hmac.compare_digest(self._issued_fingerprint, current)
+        return hmac.compare_digest(issued.fingerprint, current)
 
     def to_dict(self) -> dict[str, Any]:
         """Return an audit/transport snapshot, never reusable as trusted input."""
@@ -792,24 +1088,72 @@ class AuthorizationDecision:
         }
 
 
+@dataclass(frozen=True, slots=True)
+class _DecisionIssuance:
+    fingerprint: str
+    status: str
+    reason_codes: tuple[str, ...]
+    authorization_context: Mapping[str, Any] | None
+    requested_effect: Mapping[str, Any]
+    audit: Mapping[str, Any]
+
+
+def _deep_frozen_snapshot(value: Any, field_name: str) -> Any:
+    if type(value) is MappingProxyType:
+        result: dict[str, Any] = {}
+        for key, item in value.items():
+            if type(key) is not str:
+                raise AuthorizationInputError(
+                    f"{field_name} keys must be exact strings"
+                )
+            result[key] = _deep_frozen_snapshot(item, f"{field_name}.{key}")
+        return result
+    if type(value) is tuple:
+        return [
+            _deep_frozen_snapshot(item, f"{field_name}[]") for item in value
+        ]
+    if type(value) in {str, int, float, bool, type(None)}:
+        return value
+    raise AuthorizationInputError(
+        f"{field_name} must contain only owned immutable built-in values"
+    )
+
+
 def _decision_fingerprint(decision: AuthorizationDecision) -> str:
+    if type(decision) is not AuthorizationDecision:
+        raise AuthorizationInputError("issued decision must be exact")
+    if type(decision.status) is not str or type(decision.reason_codes) is not tuple:
+        raise AuthorizationInputError("issued decision scalar fields are invalid")
+    if any(type(code) is not str for code in decision.reason_codes):
+        raise AuthorizationInputError("issued decision reason codes must be strings")
+    context = (
+        None
+        if decision.authorization_context is None
+        else _deep_frozen_snapshot(
+            decision.authorization_context, "authorization_context"
+        )
+    )
     return _issuance_fingerprint(
         {
             "status": decision.status,
             "reason_codes": list(decision.reason_codes),
-            "authorization_context": _deep_thaw(decision.authorization_context),
-            "requested_effect": _deep_thaw(decision.requested_effect),
-            "audit": _deep_thaw(decision.audit),
+            "authorization_context": context,
+            "requested_effect": _deep_frozen_snapshot(
+                decision.requested_effect, "requested_effect"
+            ),
+            "audit": _deep_frozen_snapshot(decision.audit, "audit"),
         }
     )
 
 
 def _issue_decision(decision: AuthorizationDecision) -> AuthorizationDecision:
-    object.__setattr__(decision, "_factory_identity", id(decision))
-    object.__setattr__(
-        decision,
-        "_issued_fingerprint",
-        _decision_fingerprint(decision),
+    _ISSUED_DECISIONS[decision] = _DecisionIssuance(
+        fingerprint=_decision_fingerprint(decision),
+        status=decision.status,
+        reason_codes=decision.reason_codes,
+        authorization_context=decision.authorization_context,
+        requested_effect=decision.requested_effect,
+        audit=decision.audit,
     )
     return decision
 
@@ -817,19 +1161,21 @@ def _issue_decision(decision: AuthorizationDecision) -> AuthorizationDecision:
 def _observed_gate(value: Any) -> str | None:
     if value is None:
         return None
-    if isinstance(value, str):
+    if type(value) is str:
         return value[:64]
     return "<non-string>"
 
 
-def _requested_effect(request: AuthorizationRequest) -> dict[str, Any]:
+def _requested_effect(
+    request: AuthorizationRequest | _RequestSnapshot,
+) -> dict[str, Any]:
     return {
         "task_id": request.task_id,
         "request_id": request.request_id,
         "source_head": request.source_head,
         "operation": request.operation,
         "effect_class": request.effect_class,
-        "resources": [item.to_dict() for item in request.resources],
+        "resources": [_resource_ref_snapshot(item) for item in request.resources],
         "gate_phase": request.gate_phase,
     }
 
@@ -837,7 +1183,7 @@ def _requested_effect(request: AuthorizationRequest) -> dict[str, Any]:
 def _finish(
     status: str,
     codes: Sequence[str],
-    request: AuthorizationRequest,
+    request: AuthorizationRequest | _RequestSnapshot,
     context: Mapping[str, Any] | None = None,
 ) -> AuthorizationDecision:
     final_codes = list(codes)
@@ -902,9 +1248,26 @@ def is_verified_authorization_decision(value: Any) -> bool:
     )
 
 
+def get_verified_authorization_snapshot(
+    value: Any,
+) -> tuple[str, Mapping[str, Any] | None, Mapping[str, Any]] | None:
+    """Return issuer-owned immutable fields, never caller-replaced fields."""
+
+    if not is_verified_authorization_decision(value):
+        return None
+    issued = _ISSUED_DECISIONS.get(value)
+    if type(issued) is not _DecisionIssuance:
+        return None
+    return (
+        issued.status,
+        issued.authorization_context,
+        issued.requested_effect,
+    )
+
+
 def _authorization_context(
-    request: AuthorizationRequest,
-    grant: TrustedHumanGrant,
+    request: AuthorizationRequest | _RequestSnapshot,
+    grant: TrustedHumanGrant | _GrantSnapshot,
     now: datetime,
     reason_codes: Sequence[str],
     replay_snapshot_supplied: bool,
@@ -934,11 +1297,16 @@ def _authorization_context(
             "source_head": request.source_head,
             "operation": request.operation,
             "effect_class": request.effect_class,
-            "resources": [item.to_dict() for item in request.resources],
+            "resources": [
+                _resource_ref_snapshot(item) for item in request.resources
+            ],
         },
         "grant": {
             "allowed_operations": sorted(grant.allowed_operations),
-            "resource_selectors": [item.to_dict() for item in grant.resource_selectors],
+            "resource_selectors": [
+                _resource_selector_snapshot(item)
+                for item in grant.resource_selectors
+            ],
             "effect_ceiling": grant.effect_ceiling,
             "explicitly_denied_operations": sorted(
                 grant.explicitly_denied_operations
@@ -993,41 +1361,52 @@ def verify_authorization(
     nonce state, or coordinate replay protection across processes.
     """
 
-    if (
-        type(request) is not AuthorizationRequest
-        or not AuthorizationRequest.is_factory_issued(request)
-    ):
+    request_snapshot = _verified_request_snapshot(request)
+    if request_snapshot is None:
         return _reject_untrusted_request()
+    request = request_snapshot
     if policy is not None and type(policy) is not ReadonlyAuthorizationPolicy:
         raise AuthorizationInputError("policy must be a ReadonlyAuthorizationPolicy")
     policy = policy or ReadonlyAuthorizationPolicy()
-    if replay_snapshot is not None and not isinstance(
-        replay_snapshot, ReadonlyReplaySnapshot
-    ):
+    if replay_snapshot is not None and type(replay_snapshot) is not ReadonlyReplaySnapshot:
         raise AuthorizationInputError(
             "replay_snapshot must be a ReadonlyReplaySnapshot"
         )
     replay_snapshot_supplied = replay_snapshot is not None
-    replay_snapshot = replay_snapshot or ReadonlyReplaySnapshot()
+    observed_nonces = (
+        frozenset() if replay_snapshot is None else replay_snapshot.consumed_nonces
+    )
+    if type(observed_nonces) is not frozenset or any(
+        type(nonce) is not str or not nonce
+        for nonce in observed_nonces
+    ):
+        raise AuthorizationInputError(
+            "replay_snapshot must contain an exact frozenset of strings"
+        )
+    consumed_nonces = frozenset(observed_nonces)
     if (
         request.operation == "secret.read"
         or request.effect_class == "secret_or_privacy"
-        or any(policy.resource_is_secret(item) for item in request.resources)
+        or any(_resource_is_secret(item) for item in request.resources)
     ):
         return _finish("deny", [AUTH_SECRET_SCOPE_FORBIDDEN], request)
-    if environment_mode not in {"production", "test"}:
+    if type(environment_mode) is not str or environment_mode not in {
+        "production",
+        "test",
+    }:
         return _finish("deny", [AUTH_INDETERMINATE], request)
-    if now is not None and now.tzinfo is None:
-        raise AuthorizationInputError("now must include a timezone")
+    if now is not None and (
+        type(now) is not datetime or now.tzinfo is not timezone.utc
+    ):
+        raise AuthorizationInputError("now must be an exact UTC datetime")
     now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
 
     if trusted_grant is None:
         return _finish("human_required", [AUTH_CONTEXT_MISSING], request)
-    if (
-        type(trusted_grant) is not TrustedHumanGrant
-        or not TrustedHumanGrant.is_factory_issued(trusted_grant)
-    ):
+    grant_snapshot = _verified_grant_snapshot(trusted_grant)
+    if grant_snapshot is None:
         return _finish("deny", [AUTH_ENVELOPE_UNTRUSTED], request)
+    trusted_grant = grant_snapshot
     if trusted_grant.trust_source == "test_fixture" and environment_mode != "test":
         return _finish("deny", [AUTH_FIXTURE_IN_PRODUCTION], request)
 
@@ -1048,7 +1427,7 @@ def verify_authorization(
         checks.append(AUTH_NOT_YET_VALID)
     if trusted_grant.expires_at is not None and now >= trusted_grant.expires_at:
         checks.append(AUTH_EXPIRED)
-    if trusted_grant.nonce in replay_snapshot.consumed_nonces:
+    if trusted_grant.nonce in consumed_nonces:
         checks.append(AUTH_NONCE_REPLAY)
     if checks:
         return _finish("deny", checks, request)
@@ -1063,7 +1442,7 @@ def verify_authorization(
         missing_scope.append(AUTH_EFFECT_CEILING_EXCEEDED)
     for resource in request.resources:
         if not any(
-            selector.matches(resource, request.operation)
+            _resource_selector_matches(selector, resource, request.operation)
             for selector in trusted_grant.resource_selectors
         ):
             missing_scope.append(AUTH_RESOURCE_NOT_GRANTED)
@@ -1105,6 +1484,7 @@ __all__ = [
     "TrustBoundaryAdapter",
     "TrustBoundaryError",
     "TrustedHumanGrant",
+    "get_verified_authorization_snapshot",
     "is_verified_authorization_decision",
     "verify_authorization",
 ]

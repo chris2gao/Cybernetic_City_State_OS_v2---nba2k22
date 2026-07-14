@@ -9,8 +9,9 @@ state.
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass, field, fields
+from dataclasses import dataclass, field, replace
 from hashlib import sha256
+from hmac import compare_digest
 import json
 from pathlib import PurePosixPath
 import re
@@ -20,9 +21,9 @@ from weakref import WeakKeyDictionary
 
 from .admission_evidence import (
     TrustedAdmissionEvidence,
-    is_verified_admission_evidence,
+    _get_verified_admission_evidence_snapshot,
 )
-from .authorization import is_verified_authorization_decision
+from .authorization import get_verified_authorization_snapshot
 
 
 ADM_OK = "ADM_OK"
@@ -125,6 +126,7 @@ _UUIDV5_RE = re.compile(
 )
 _REQUEST_SEAL = object()
 _ISSUED_REQUESTS = WeakKeyDictionary()
+_NORMALIZED_SCHEMA_VERSION = "math_mentor.normalized_node.v1"
 _PURE_DB_PREFIX = (
     "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/"
 )
@@ -152,14 +154,22 @@ class AdmissionInputError(ValueError):
 
 
 def _mapping(value: Any, name: str) -> Mapping[str, Any]:
-    if not isinstance(value, Mapping):
+    if type(value) is not dict:
         raise AdmissionInputError(f"{name} must be an object")
+    if any(type(key) is not str for key in value):
+        raise AdmissionInputError(f"{name} keys must be exact strings")
     return value
 
 
+def _has_unicode_surrogate(value: str) -> bool:
+    return any(0xD800 <= ord(character) <= 0xDFFF for character in value)
+
+
 def _string(value: Any, name: str) -> str:
-    if not isinstance(value, str) or not value.strip():
+    if type(value) is not str or not value.strip():
         raise AdmissionInputError(f"{name} must be a non-empty string")
+    if _has_unicode_surrogate(value):
+        raise AdmissionInputError(f"{name} must not contain Unicode surrogates")
     return value
 
 
@@ -170,9 +180,45 @@ def _nullable_string(value: Any, name: str) -> str | None:
 
 
 def _enum(value: Any, allowed: frozenset[str], name: str) -> str:
+    value = _string(value, name)
     if value not in allowed:
         raise AdmissionInputError(f"unsupported {name}: {value!r}")
     return value
+
+
+def _boolean(value: Any, name: str) -> bool:
+    if type(value) is not bool:
+        raise AdmissionInputError(f"{name} must be a boolean")
+    return value
+
+
+def _assert_exact_json_data(value: Any, name: str) -> None:
+    """Reject behavioral subclasses and non-JSON duck containers recursively."""
+
+    value_type = type(value)
+    if value is None or value_type is bool:
+        return
+    if value_type is str:
+        if _has_unicode_surrogate(value):
+            raise AdmissionInputError(f"{name} must not contain Unicode surrogates")
+        return
+    if value_type is list:
+        for index, item in enumerate(value):
+            _assert_exact_json_data(item, f"{name}[{index}]")
+        return
+    if value_type is dict:
+        for key, item in value.items():
+            if type(key) is not str:
+                raise AdmissionInputError(f"{name} keys must be strings")
+            if _has_unicode_surrogate(key):
+                raise AdmissionInputError(
+                    f"{name} keys must not contain Unicode surrogates"
+                )
+            _assert_exact_json_data(item, f"{name}.{key}")
+        return
+    raise AdmissionInputError(
+        f"{name} must contain exact JSON object, array, string, boolean, or null values"
+    )
 
 
 def _sha1(value: Any, name: str) -> str:
@@ -190,6 +236,8 @@ def _sha256(value: Any, name: str) -> str:
 
 
 def _payload_sha256(value: Mapping[str, Any]) -> str:
+    _mapping(value, "admission request")
+    _assert_exact_json_data(value, "admission request")
     try:
         rendered = json.dumps(
             value,
@@ -200,7 +248,12 @@ def _payload_sha256(value: Mapping[str, Any]) -> str:
         )
     except (TypeError, ValueError) as exc:
         raise AdmissionInputError("admission request must be canonical JSON data") from exc
-    return sha256((rendered + "\n").encode("utf-8")).hexdigest()
+    try:
+        return sha256((rendered + "\n").encode("utf-8")).hexdigest()
+    except UnicodeEncodeError as exc:
+        raise AdmissionInputError(
+            "admission request must be canonically UTF-8 encodable"
+        ) from exc
 
 
 def _path(value: Any, name: str) -> str:
@@ -310,7 +363,7 @@ class AdmissionRequest:
         legacy = _mapping(value.get("legacy_claim", {}), "legacy_claim")
 
         raw_refs = value.get("evidence_refs", [])
-        if not isinstance(raw_refs, Sequence) or isinstance(raw_refs, (str, bytes)):
+        if type(raw_refs) is not list:
             raise AdmissionInputError("evidence_refs must be an array")
         evidence_refs = tuple(_string(item, "evidence_refs item") for item in raw_refs)
 
@@ -320,6 +373,27 @@ class AdmissionRequest:
                 validated_blob_oid, "readiness_evidence.validated_blob_oid"
             )
         schema_era = _enum(asset.get("schema_era"), SCHEMA_ERAS, "schema era")
+        asset_role = _enum(asset.get("asset_role"), ASSET_ROLES, "asset role")
+        schema_status = _enum(
+            schema.get("status"), SCHEMA_STATUSES, "schema status"
+        )
+        normalized_schema_version = _nullable_string(
+            schema.get("normalized_schema_version"),
+            "normalized_schema_version",
+        )
+        if (
+            normalized_schema_version is not None
+            and normalized_schema_version != _NORMALIZED_SCHEMA_VERSION
+        ):
+            raise AdmissionInputError("unsupported normalized schema version")
+        if (
+            asset_role == "canonical_node"
+            and schema_status == "valid"
+            and normalized_schema_version is None
+        ):
+            raise AdmissionInputError(
+                "valid canonical nodes require the supported normalized schema version"
+            )
         identity_status = _enum(
             identity.get("status"), IDENTITY_STATUSES, "identity status"
         )
@@ -386,7 +460,7 @@ class AdmissionRequest:
             source_head=_sha1(asset.get("source_head"), "asset.source_head"),
             path=_path(asset.get("path"), "asset.path"),
             blob_oid=_sha1(asset.get("blob_oid"), "asset.blob_oid"),
-            asset_role=_enum(asset.get("asset_role"), ASSET_ROLES, "asset role"),
+            asset_role=asset_role,
             schema_era=schema_era,
             identity_status=identity_status,
             canonical_node_id=canonical_node_id,
@@ -396,13 +470,8 @@ class AdmissionRequest:
             identity_crosswalk_payload_sha256=crosswalk_payload_sha256,
             crosswalk_canonical_path=canonical_path,
             crosswalk_canonical_blob_oid=canonical_blob_oid,
-            schema_status=_enum(
-                schema.get("status"), SCHEMA_STATUSES, "schema status"
-            ),
-            normalized_schema_version=_nullable_string(
-                schema.get("normalized_schema_version"),
-                "normalized_schema_version",
-            ),
+            schema_status=schema_status,
+            normalized_schema_version=normalized_schema_version,
             readiness_status=_enum(
                 readiness.get("source_status"),
                 READINESS_STATUSES,
@@ -433,27 +502,126 @@ class AdmissionRequest:
                 legacy.get("requested_canonical_status"),
                 "requested_canonical_status",
             ),
-            state_write_requested=bool(value.get("state_write_requested", False)),
-            duplicate_source=bool(value.get("duplicate_source", False)),
+            state_write_requested=_boolean(
+                value.get("state_write_requested", False), "state_write_requested"
+            ),
+            duplicate_source=_boolean(
+                value.get("duplicate_source", False), "duplicate_source"
+            ),
             evidence_refs=evidence_refs,
             _seal=_REQUEST_SEAL,
         )
-        _ISSUED_REQUESTS[request] = _request_fingerprint(request)
+        snapshot = replace(request)
+        fingerprint = _request_fingerprint(snapshot)
+        if type(fingerprint) is not str:  # pragma: no cover - constructor invariant
+            raise AdmissionInputError("parsed admission request is not fingerprintable")
+        _ISSUED_REQUESTS[request] = _RequestIssuance(
+            fingerprint=fingerprint,
+            snapshot=snapshot,
+        )
         return request
 
 
-def _request_fingerprint(value: AdmissionRequest) -> tuple[Any, ...]:
-    """Capture every parsed field so post-issuance mutation invalidates it."""
+_REQUEST_NULLABLE_STRING_FIELDS = frozenset(
+    {
+        "canonical_node_id",
+        "identity_registry_ref",
+        "identity_registry_source_head",
+        "identity_registry_blob_oid",
+        "identity_crosswalk_payload_sha256",
+        "crosswalk_canonical_path",
+        "crosswalk_canonical_blob_oid",
+        "normalized_schema_version",
+        "validator_ref",
+        "validated_blob_oid",
+        "legacy_stage",
+        "legacy_status",
+        "requested_canonical_status",
+    }
+)
+_REQUEST_BOOLEAN_FIELDS = frozenset({"state_write_requested", "duplicate_source"})
+_REQUEST_TUPLE_FIELDS = frozenset({"evidence_refs"})
+_REQUEST_STRING_FIELDS = frozenset(
+    AdmissionRequest.__dataclass_fields__
+) - _REQUEST_NULLABLE_STRING_FIELDS - _REQUEST_BOOLEAN_FIELDS - _REQUEST_TUPLE_FIELDS - {
+    "_seal"
+}
 
-    return tuple(getattr(value, item.name) for item in fields(value))
+
+def _request_fingerprint(value: AdmissionRequest) -> str | None:
+    """Hash exact immutable parsed data; behavioral subclasses fail closed."""
+
+    entries: list[list[Any]] = []
+    try:
+        for name in AdmissionRequest.__dataclass_fields__:
+            if name == "_seal":
+                continue
+            item = getattr(value, name)
+            if name in _REQUEST_STRING_FIELDS:
+                if type(item) is not str or _has_unicode_surrogate(item):
+                    return None
+                encoded: Any = ["str", item]
+            elif name in _REQUEST_NULLABLE_STRING_FIELDS:
+                if item is None:
+                    encoded = ["null", None]
+                elif type(item) is str and not _has_unicode_surrogate(item):
+                    encoded = ["str", item]
+                else:
+                    return None
+            elif name in _REQUEST_BOOLEAN_FIELDS:
+                if type(item) is not bool:
+                    return None
+                encoded = ["bool", item]
+            elif name in _REQUEST_TUPLE_FIELDS:
+                if type(item) is not tuple or any(
+                    type(part) is not str or _has_unicode_surrogate(part)
+                    for part in item
+                ):
+                    return None
+                encoded = ["tuple[str]", list(item)]
+            else:  # pragma: no cover - guarded by the complete field partition above
+                return None
+            entries.append([name, encoded])
+    except (AttributeError, TypeError):
+        return None
+    try:
+        rendered = json.dumps(
+            {
+                "schema": "math_mentor.admission_request.fingerprint.v1",
+                "fields": entries,
+            },
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+            allow_nan=False,
+        )
+        return sha256((rendered + "\n").encode("utf-8")).hexdigest()
+    except (TypeError, ValueError, UnicodeEncodeError):
+        return None
+
+
+@dataclass(frozen=True, slots=True)
+class _RequestIssuance:
+    fingerprint: str
+    snapshot: AdmissionRequest
+
+
+def _verified_request_snapshot(value: Any) -> AdmissionRequest | None:
+    if type(value) is not AdmissionRequest or value._seal is not _REQUEST_SEAL:
+        return None
+    issued = _ISSUED_REQUESTS.get(value)
+    current = _request_fingerprint(value)
+    if (
+        type(issued) is not _RequestIssuance
+        or type(current) is not str
+        or not compare_digest(issued.fingerprint, current)
+    ):
+        return None
+    return replace(issued.snapshot)
 
 
 def is_parsed_admission_request(value: Any) -> bool:
-    return (
-        type(value) is AdmissionRequest
-        and value._seal is _REQUEST_SEAL
-        and _ISSUED_REQUESTS.get(value) == _request_fingerprint(value)
-    )
+    return _verified_request_snapshot(value) is not None
 
 
 @dataclass(frozen=True)
@@ -492,33 +660,68 @@ def _authorization_parts(
     # Serialized dictionaries and duck-typed objects are deliberately rejected.
     # Rehydrating a trusted decision is a future host-boundary concern, not a
     # capability of this P0 module.
-    if not is_verified_authorization_decision(value):
+    snapshot = get_verified_authorization_snapshot(value)
+    if snapshot is None:
         return "indeterminate", None
-    if value.status != "allow":
-        return value.status, value.authorization_context
-    context = value.authorization_context
-    if not isinstance(context, Mapping):
+    status, context, requested_effect = snapshot
+    if type(status) is not str:
+        return "indeterminate", None
+    if status != "allow":
+        return status, context
+    if type(context) is not MappingProxyType:
         return "scope_mismatch", None
     binding = context.get("binding")
-    if not isinstance(binding, Mapping):
+    if type(binding) is not MappingProxyType:
         return "scope_mismatch", None
     if (
-        binding.get("source_head") != request.source_head
+        type(binding.get("source_head")) is not str
+        or binding.get("source_head") != request.source_head
+        or type(binding.get("operation")) is not str
         or binding.get("operation") != "repository.read"
+        or type(binding.get("effect_class")) is not str
         or binding.get("effect_class") != "read_only"
     ):
         return "scope_mismatch", None
     resources = binding.get("resources")
-    if not isinstance(resources, Sequence) or isinstance(resources, (str, bytes)):
+    if type(resources) is not tuple:
         return "scope_mismatch", None
     exact_asset_bound = any(
-        isinstance(resource, Mapping)
+        type(resource) is MappingProxyType
+        and type(resource.get("repo_id")) is str
         and resource.get("repo_id") == request.repo_id
+        and type(resource.get("path")) is str
         and resource.get("path") == request.path
+        and type(resource.get("match")) is str
         and resource.get("match") == "exact"
         for resource in resources
     )
     if not exact_asset_bound:
+        return "scope_mismatch", None
+
+    # Cross-check the verifier-owned requested-effect snapshot as a second
+    # issuer invariant.  Caller-replaced decision attributes are never read.
+    if type(requested_effect) is not MappingProxyType:
+        return "scope_mismatch", None
+    if (
+        type(requested_effect.get("source_head")) is not str
+        or requested_effect.get("source_head") != request.source_head
+        or type(requested_effect.get("operation")) is not str
+        or requested_effect.get("operation") != "repository.read"
+        or type(requested_effect.get("effect_class")) is not str
+        or requested_effect.get("effect_class") != "read_only"
+    ):
+        return "scope_mismatch", None
+    requested_resources = requested_effect.get("resources")
+    if type(requested_resources) is not tuple or not any(
+        type(resource) is MappingProxyType
+        and type(resource.get("repo_id")) is str
+        and resource.get("repo_id") == request.repo_id
+        and type(resource.get("path")) is str
+        and resource.get("path") == request.path
+        and type(resource.get("match")) is str
+        and resource.get("match") == "exact"
+        for resource in requested_resources
+    ):
         return "scope_mismatch", None
     return "allow", context
 
@@ -586,10 +789,13 @@ def _evidence_binding_codes(
 ) -> tuple[TrustedAdmissionEvidence | None, list[str]]:
     if value is None:
         return None, [ADM_TRUSTED_EVIDENCE_MISSING]
-    if not is_verified_admission_evidence(value):
+    evidence = _get_verified_admission_evidence_snapshot(value)
+    if evidence is None:
         return None, [ADM_TRUSTED_EVIDENCE_UNTRUSTED]
-    evidence = value
-    if environment_mode not in {"production", "test"}:
+    if type(environment_mode) is not str or environment_mode not in {
+        "production",
+        "test",
+    }:
         return evidence, [ADM_TRUSTED_EVIDENCE_UNTRUSTED]
     if evidence.trust_source == "test_fixture" and environment_mode != "test":
         return evidence, [ADM_EVIDENCE_FIXTURE_IN_PRODUCTION]
@@ -669,13 +875,15 @@ def evaluate_admission(
     retain the default and cannot use deterministic test evidence.
     """
 
-    if not is_parsed_admission_request(request):
+    request_snapshot = _verified_request_snapshot(request)
+    if request_snapshot is None:
         return _decision(
             request,
             "indeterminate",
             "blocked",
             [ADM_REQUEST_UNTRUSTED],
         )
+    request = request_snapshot
 
     auth_status, auth_context = _authorization_parts(authorization_decision, request)
     if auth_status == "deny":
@@ -691,6 +899,10 @@ def evaluate_admission(
     if request.state_write_requested:
         return _decision(
             request, auth_status, "blocked", [ADM_STATE_WRITE_FORBIDDEN]
+        )
+    if request.asset_role == "canonical_node" and request.duplicate_source:
+        return _decision(
+            request, auth_status, "blocked", [ADM_DUPLICATE_SOURCE]
         )
 
     # Safe path/role denials do not require trusting any caller readiness claim.

@@ -15,9 +15,13 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from collections.abc import Mapping
-from dataclasses import dataclass, field, fields
+from dataclasses import dataclass, field, replace
+from hashlib import sha256
+from hmac import compare_digest
+import json
 from pathlib import PurePosixPath
 import re
+from types import MappingProxyType
 from typing import Any
 from weakref import WeakKeyDictionary
 
@@ -29,6 +33,7 @@ EVIDENCE_RECORD_INVALID = "EVIDENCE_RECORD_INVALID"
 
 _SCHEMA_VERSION = "math_mentor.trusted_admission_evidence.v1"
 _REQUEST_SCHEMA_VERSION = "math_mentor.admission_request.v1"
+_NORMALIZED_SCHEMA_VERSION = "math_mentor.normalized_node.v1"
 _SHA1_RE = re.compile(r"^[0-9a-f]{40}$")
 _SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 _UUIDV5_RE = re.compile(
@@ -74,14 +79,22 @@ class AdmissionEvidenceError(RuntimeError):
 
 
 def _mapping(value: Any, name: str) -> Mapping[str, Any]:
-    if not isinstance(value, Mapping):
+    if type(value) is not dict:
         raise AdmissionEvidenceError(f"{name} must be an object")
+    if any(type(key) is not str for key in value):
+        raise AdmissionEvidenceError(f"{name} keys must be exact strings")
     return value
 
 
+def _has_unicode_surrogate(value: str) -> bool:
+    return any(0xD800 <= ord(character) <= 0xDFFF for character in value)
+
+
 def _string(value: Any, name: str) -> str:
-    if not isinstance(value, str) or not value.strip():
+    if type(value) is not str or not value.strip():
         raise AdmissionEvidenceError(f"{name} must be a non-empty string")
+    if _has_unicode_surrogate(value):
+        raise AdmissionEvidenceError(f"{name} must not contain Unicode surrogates")
     return value
 
 
@@ -92,9 +105,52 @@ def _optional_string(value: Any, name: str) -> str | None:
 
 
 def _enum(value: Any, allowed: frozenset[str], name: str) -> str:
+    value = _string(value, name)
     if value not in allowed:
         raise AdmissionEvidenceError(f"unsupported {name}: {value!r}")
     return value
+
+
+def _assert_exact_json_data(value: Any, name: str) -> None:
+    """Reject behavioral subclasses and mutable/duck JSON lookalikes."""
+
+    value_type = type(value)
+    if value is None or value_type is bool:
+        return
+    if value_type is str:
+        if _has_unicode_surrogate(value):
+            raise AdmissionEvidenceError(
+                f"{name} must not contain Unicode surrogates"
+            )
+        return
+    if value_type is list:
+        for index, item in enumerate(value):
+            _assert_exact_json_data(item, f"{name}[{index}]")
+        return
+    if value_type is dict:
+        for key, item in value.items():
+            if type(key) is not str:
+                raise AdmissionEvidenceError(f"{name} keys must be strings")
+            if _has_unicode_surrogate(key):
+                raise AdmissionEvidenceError(
+                    f"{name} keys must not contain Unicode surrogates"
+                )
+            _assert_exact_json_data(item, f"{name}.{key}")
+        return
+    raise AdmissionEvidenceError(
+        f"{name} must contain exact JSON object, array, string, boolean, or null values"
+    )
+
+
+def _canonical_json_snapshot(value: Any, name: str) -> str:
+    _assert_exact_json_data(value, name)
+    return json.dumps(
+        value,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+        allow_nan=False,
+    )
 
 
 def _sha1(value: Any, name: str, *, nullable: bool = False) -> str | None:
@@ -213,10 +269,72 @@ class TrustedAdmissionEvidence:
         }
 
 
-def _evidence_fingerprint(value: TrustedAdmissionEvidence) -> tuple[Any, ...]:
-    """Capture every issued field so object.__setattr__ cannot retain trust."""
+_EVIDENCE_NULLABLE_STRING_FIELDS = frozenset(
+    {
+        "canonical_node_id",
+        "crosswalk_source_head",
+        "crosswalk_blob_oid",
+        "crosswalk_payload_sha256",
+        "normalized_schema_version",
+        "validator_ref",
+        "validated_blob_oid",
+    }
+)
+_EVIDENCE_BOOLEAN_FIELDS = frozenset({"consumer_allowed"})
+_EVIDENCE_STRING_FIELDS = frozenset(
+    TrustedAdmissionEvidence.__dataclass_fields__
+) - _EVIDENCE_NULLABLE_STRING_FIELDS - _EVIDENCE_BOOLEAN_FIELDS - {"_seal"}
 
-    return tuple(getattr(value, item.name) for item in fields(value))
+
+def _evidence_fingerprint(value: TrustedAdmissionEvidence) -> str | None:
+    """Hash exact immutable issued data; behavioral subclasses fail closed."""
+
+    entries: list[list[Any]] = []
+    try:
+        for name in TrustedAdmissionEvidence.__dataclass_fields__:
+            if name == "_seal":
+                continue
+            item = getattr(value, name)
+            if name in _EVIDENCE_STRING_FIELDS:
+                if type(item) is not str or _has_unicode_surrogate(item):
+                    return None
+                encoded: Any = ["str", item]
+            elif name in _EVIDENCE_NULLABLE_STRING_FIELDS:
+                if item is None:
+                    encoded = ["null", None]
+                elif type(item) is str and not _has_unicode_surrogate(item):
+                    encoded = ["str", item]
+                else:
+                    return None
+            elif name in _EVIDENCE_BOOLEAN_FIELDS:
+                if type(item) is not bool:
+                    return None
+                encoded = ["bool", item]
+            else:  # pragma: no cover - guarded by the complete field partition above
+                return None
+            entries.append([name, encoded])
+    except (AttributeError, TypeError):
+        return None
+    try:
+        rendered = json.dumps(
+            {
+                "schema": "math_mentor.trusted_admission_evidence.fingerprint.v1",
+                "fields": entries,
+            },
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+            allow_nan=False,
+        )
+        return sha256((rendered + "\n").encode("utf-8")).hexdigest()
+    except (TypeError, ValueError, UnicodeEncodeError):
+        return None
+
+
+@dataclass(frozen=True, slots=True)
+class _EvidenceIssuance:
+    fingerprint: str
+    snapshot: TrustedAdmissionEvidence
 
 
 def _issue_evidence(record: Mapping[str, Any]) -> TrustedAdmissionEvidence:
@@ -226,6 +344,8 @@ def _issue_evidence(record: Mapping[str, Any]) -> TrustedAdmissionEvidence:
     even direct module-private invocation remains rejected by production
     admission.
     """
+    record = _mapping(record, "trusted admission evidence")
+    _assert_exact_json_data(record, "trusted admission evidence")
     if record.get("schema_version") != _SCHEMA_VERSION:
         raise AdmissionEvidenceError("unsupported trusted admission evidence schema")
     binding = _mapping(record.get("binding"), "binding")
@@ -262,6 +382,11 @@ def _issue_evidence(record: Mapping[str, Any]) -> TrustedAdmissionEvidence:
         binding.get("normalized_schema_version"),
         "binding.normalized_schema_version",
     )
+    if (
+        normalized_schema_version is not None
+        and normalized_schema_version != _NORMALIZED_SCHEMA_VERSION
+    ):
+        raise AdmissionEvidenceError("unsupported normalized schema version")
     validator_ref = _optional_string(
         binding.get("validator_ref"), "binding.validator_ref"
     )
@@ -296,8 +421,13 @@ def _issue_evidence(record: Mapping[str, Any]) -> TrustedAdmissionEvidence:
         )
 
     consumer_allowed = findings.get("consumer_allowed")
-    if consumer_allowed is not False:
+    if type(consumer_allowed) is not bool or consumer_allowed is not False:
         raise AdmissionEvidenceError("consumer_allowed must remain false in P0")
+    _enum(
+        findings.get("conflict_status"),
+        frozenset({"not_evaluated"}),
+        "conflict status",
+    )
     if findings.get("conflict_status") != "not_evaluated":
         raise AdmissionEvidenceError(
             "the evidence provider must not adjudicate identity conflicts"
@@ -372,7 +502,14 @@ def _issue_evidence(record: Mapping[str, Any]) -> TrustedAdmissionEvidence:
         conflict_status="not_evaluated",
         _seal=_EVIDENCE_SEAL,
     )
-    _ISSUED_EVIDENCE[evidence] = _evidence_fingerprint(evidence)
+    snapshot = replace(evidence)
+    fingerprint = _evidence_fingerprint(snapshot)
+    if type(fingerprint) is not str:  # pragma: no cover - constructor invariant
+        raise AdmissionEvidenceError("issued admission evidence is not fingerprintable")
+    _ISSUED_EVIDENCE[evidence] = _EvidenceIssuance(
+        fingerprint=fingerprint,
+        snapshot=snapshot,
+    )
     return evidence
 
 
@@ -400,31 +537,57 @@ class DeterministicTestAdmissionEvidenceProvider(AdmissionEvidenceProvider):
     """Test-composition fixture provider; never a production trust source."""
 
     def __init__(self, records: Mapping[str, Mapping[str, Any]]):
-        self._records = dict(records)
+        records = _mapping(records, "evidence records")
+        snapshots: dict[str, str] = {}
+        for handle, record in records.items():
+            handle = _string(handle, "evidence record handle")
+            record = _mapping(record, f"evidence record {handle}")
+            snapshots[handle] = _canonical_json_snapshot(
+                record, f"evidence record {handle}"
+            )
+        self._record_snapshots = MappingProxyType(snapshots)
 
     def authenticate(
         self, opaque_handle: object, *, mode: str = "production"
     ) -> TrustedAdmissionEvidence:
-        if mode != "test":
+        if type(mode) is not str or mode != "test":
             raise AdmissionEvidenceError(
                 "deterministic evidence fixtures are forbidden in production",
                 EVIDENCE_FIXTURE_IN_PRODUCTION,
             )
-        record = self._records.get(str(opaque_handle))
-        if record is None:
+        if type(opaque_handle) is not str:
             raise AdmissionEvidenceError(
                 "unknown deterministic evidence handle",
                 EVIDENCE_HANDLE_UNTRUSTED,
             )
+        snapshot = self._record_snapshots.get(opaque_handle)
+        if snapshot is None:
+            raise AdmissionEvidenceError(
+                "unknown deterministic evidence handle",
+                EVIDENCE_HANDLE_UNTRUSTED,
+            )
+        record = json.loads(snapshot)
         return _issue_evidence(record)
 
 
+def _get_verified_admission_evidence_snapshot(
+    value: Any,
+) -> TrustedAdmissionEvidence | None:
+    if type(value) is not TrustedAdmissionEvidence or value._seal is not _EVIDENCE_SEAL:
+        return None
+    issued = _ISSUED_EVIDENCE.get(value)
+    current = _evidence_fingerprint(value)
+    if (
+        type(issued) is not _EvidenceIssuance
+        or type(current) is not str
+        or not compare_digest(issued.fingerprint, current)
+    ):
+        return None
+    return replace(issued.snapshot)
+
+
 def is_verified_admission_evidence(value: Any) -> bool:
-    return (
-        type(value) is TrustedAdmissionEvidence
-        and value._seal is _EVIDENCE_SEAL
-        and _ISSUED_EVIDENCE.get(value) == _evidence_fingerprint(value)
-    )
+    return _get_verified_admission_evidence_snapshot(value) is not None
 
 
 __all__ = [

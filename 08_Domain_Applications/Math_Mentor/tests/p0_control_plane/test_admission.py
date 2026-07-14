@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import sys
 import unittest
+from unittest.mock import patch
 
 
 MATH_MENTOR_ROOT = Path(__file__).resolve().parents[2]
@@ -13,12 +14,15 @@ if str(MATH_MENTOR_ROOT) not in sys.path:
     sys.path.insert(0, str(MATH_MENTOR_ROOT))
 
 import p0_control_plane.admission_evidence as admission_evidence_module  # noqa: E402
+import p0_control_plane.admission as admission_module  # noqa: E402
+import p0_control_plane.authorization as authorization_module  # noqa: E402
 from p0_control_plane.admission import (  # noqa: E402
     ADM_AUTH_DENIED,
     ADM_AUTH_HUMAN_REQUIRED,
     ADM_AUTH_SCOPE_MISMATCH,
     ADM_BLOB_MISMATCH,
     ADM_BRIDGE_ADMISSION_NOT_IMPLEMENTED,
+    ADM_DUPLICATE_SOURCE,
     ADM_EVIDENCE_STALE,
     ADM_EVIDENCE_BLOB_MISMATCH,
     ADM_EVIDENCE_CROSSWALK_MISMATCH,
@@ -381,6 +385,286 @@ class AdmissionTests(unittest.TestCase):
             production_decision.reason_codes,
         )
 
+    def test_admission_consumes_issuer_snapshots_after_validation(self):
+        stateful_data = deepcopy(self.fixture["canonical_request"])
+        stateful_data["state_write_requested"] = True
+        request = self.request(stateful_data)
+        request_snapshot = admission_module._verified_request_snapshot(request)
+        self.assertIsNot(request, request_snapshot)
+        self.assertTrue(request_snapshot.state_write_requested)
+        original_request_verifier = admission_module._verified_request_snapshot
+
+        def snapshot_then_relax_request(value):
+            snapshot = original_request_verifier(value)
+            object.__setattr__(value, "state_write_requested", False)
+            return snapshot
+
+        with patch.object(
+            admission_module,
+            "_verified_request_snapshot",
+            side_effect=snapshot_then_relax_request,
+        ):
+            request_decision = evaluate_admission(
+                request,
+                self.allow_for(stateful_data),
+                self.evidence_for(stateful_data),
+                environment_mode="test",
+            )
+
+        self.assertEqual("blocked", request_decision.status)
+        self.assertIn(ADM_STATE_WRITE_FORBIDDEN, request_decision.reason_codes)
+        self.assertTrue(request_snapshot.state_write_requested)
+
+        evidence = self.evidence_for(
+            finding_overrides={"readiness_status": "manual_review_required"}
+        )
+        evidence_snapshot = (
+            admission_evidence_module._get_verified_admission_evidence_snapshot(
+                evidence
+            )
+        )
+        self.assertIsNot(evidence, evidence_snapshot)
+        self.assertEqual(
+            "manual_review_required",
+            evidence_snapshot.readiness_status,
+        )
+        original_evidence_verifier = (
+            admission_module._get_verified_admission_evidence_snapshot
+        )
+
+        def snapshot_then_promote_evidence(value):
+            snapshot = original_evidence_verifier(value)
+            object.__setattr__(value, "readiness_status", "ready")
+            return snapshot
+
+        with patch.object(
+            admission_module,
+            "_get_verified_admission_evidence_snapshot",
+            side_effect=snapshot_then_promote_evidence,
+        ):
+            evidence_decision = evaluate_admission(
+                self.request(),
+                self.allow,
+                evidence,
+                environment_mode="test",
+            )
+
+        self.assertEqual("review_required", evidence_decision.status)
+        self.assertIn(
+            ADM_MANUAL_REVIEW_REQUIRED,
+            evidence_decision.reason_codes,
+        )
+        self.assertEqual(
+            "manual_review_required",
+            evidence_snapshot.readiness_status,
+        )
+
+    def test_equality_spoofed_source_head_mutation_cannot_retain_trust(self):
+        class EvilStr(str):
+            def __eq__(self, other):
+                return True
+
+            def __ne__(self, other):
+                return False
+
+            __hash__ = str.__hash__
+
+        request = self.request()
+        evidence = self.evidence_for()
+        evil_head = EvilStr("d" * 40)
+        self.assertTrue(evil_head == request.source_head)
+        object.__setattr__(request, "source_head", evil_head)
+        object.__setattr__(
+            request,
+            "_issued_fingerprint",
+            "0" * 64,
+        )
+        self.assertIsNone(admission_module._request_fingerprint(request))
+        admission_module._ISSUED_REQUESTS[request] = (
+            admission_module._request_fingerprint(request)
+        )
+
+        request_decision = evaluate_admission(
+            request,
+            self.allow,
+            evidence,
+            environment_mode="test",
+        )
+        self.assertEqual("blocked", request_decision.status)
+        self.assertIn(ADM_REQUEST_UNTRUSTED, request_decision.reason_codes)
+
+        clean_request = self.request()
+        evil_evidence = self.evidence_for()
+        object.__setattr__(evil_evidence, "source_head", EvilStr("d" * 40))
+        object.__setattr__(evil_evidence, "_issued_fingerprint", "0" * 64)
+        self.assertIsNone(
+            admission_evidence_module._evidence_fingerprint(evil_evidence)
+        )
+        admission_evidence_module._ISSUED_EVIDENCE[evil_evidence] = (
+            admission_evidence_module._evidence_fingerprint(evil_evidence)
+        )
+        evidence_decision = evaluate_admission(
+            clean_request,
+            self.allow,
+            evil_evidence,
+            environment_mode="test",
+        )
+        self.assertEqual("blocked", evidence_decision.status)
+        self.assertIn(
+            ADM_TRUSTED_EVIDENCE_UNTRUSTED,
+            evidence_decision.reason_codes,
+        )
+
+    def test_request_requires_exact_builtin_json_types_recursively(self):
+        class DictSubclass(dict):
+            pass
+
+        class ListSubclass(list):
+            pass
+
+        class StringSubclass(str):
+            pass
+
+        class DuckMapping:
+            def __init__(self, data):
+                self._data = data
+
+            def get(self, key, default=None):
+                return self._data.get(key, default)
+
+            def items(self):
+                return self._data.items()
+
+        cases = []
+        top_level = deepcopy(self.fixture["canonical_request"])
+        cases.append(DictSubclass(top_level))
+
+        nested_dict = deepcopy(self.fixture["canonical_request"])
+        nested_dict["asset"] = DictSubclass(nested_dict["asset"])
+        cases.append(nested_dict)
+
+        nested_duck = deepcopy(self.fixture["canonical_request"])
+        nested_duck["asset"] = DuckMapping(nested_duck["asset"])
+        cases.append(nested_duck)
+
+        enum_subclass = deepcopy(self.fixture["canonical_request"])
+        enum_subclass["requested_use"] = StringSubclass(
+            "manual_teaching_read_only"
+        )
+        cases.append(enum_subclass)
+
+        list_subclass = deepcopy(self.fixture["canonical_request"])
+        list_subclass["evidence_refs"] = ListSubclass(
+            list_subclass["evidence_refs"]
+        )
+        cases.append(list_subclass)
+
+        nested_string_subclass = deepcopy(self.fixture["canonical_request"])
+        nested_string_subclass["evidence_refs"][0] = StringSubclass(
+            "fixture:canonical-ready"
+        )
+        cases.append(nested_string_subclass)
+
+        integer_boolean = deepcopy(self.fixture["canonical_request"])
+        integer_boolean["state_write_requested"] = 0
+        cases.append(integer_boolean)
+
+        for index, value in enumerate(cases):
+            with self.subTest(case=index):
+                with self.assertRaises(AdmissionInputError):
+                    AdmissionRequest.from_mapping(value)
+
+    def test_unicode_surrogates_fail_closed_at_request_and_provider_boundaries(self):
+        request_data = deepcopy(self.fixture["canonical_request"])
+        request_data["asset"]["repo_id"] = "\ud800"
+        with self.assertRaises(AdmissionInputError):
+            self.request(request_data)
+
+        record = self.evidence_record_for()
+        record["provider_ref"] = "\ud800"
+        with self.assertRaises(AdmissionEvidenceError):
+            DeterministicTestAdmissionEvidenceProvider(
+                {"surrogate-evidence": record}
+            )
+
+        mutated_request = self.request()
+        object.__setattr__(mutated_request, "source_head", "\ud800")
+        decision = evaluate_admission(
+            mutated_request,
+            self.allow,
+            self.evidence_for(),
+            environment_mode="test",
+        )
+        self.assertEqual("blocked", decision.status)
+        self.assertIn(ADM_REQUEST_UNTRUSTED, decision.reason_codes)
+
+    def test_provider_requires_exact_types_and_snapshots_nested_input(self):
+        class DictSubclass(dict):
+            pass
+
+        class StringSubclass(str):
+            pass
+
+        record = self.evidence_record_for()
+        with self.assertRaises(AdmissionEvidenceError):
+            DeterministicTestAdmissionEvidenceProvider(
+                DictSubclass({"admission-evidence": record})
+            )
+
+        nested_mapping = self.evidence_record_for()
+        nested_mapping["binding"] = DictSubclass(nested_mapping["binding"])
+        with self.assertRaises(AdmissionEvidenceError):
+            DeterministicTestAdmissionEvidenceProvider(
+                {"admission-evidence": nested_mapping}
+            )
+
+        enum_subclass = self.evidence_record_for()
+        enum_subclass["findings"]["readiness_status"] = StringSubclass("ready")
+        with self.assertRaises(AdmissionEvidenceError):
+            DeterministicTestAdmissionEvidenceProvider(
+                {"admission-evidence": enum_subclass}
+            )
+
+        non_boolean = self.evidence_record_for()
+        non_boolean["findings"]["consumer_allowed"] = 0
+        with self.assertRaises(AdmissionEvidenceError):
+            DeterministicTestAdmissionEvidenceProvider(
+                {"admission-evidence": non_boolean}
+            )
+
+        mutable_record = self.evidence_record_for()
+        expected_head = mutable_record["binding"]["source_head"]
+        provider = DeterministicTestAdmissionEvidenceProvider(
+            {"admission-evidence": mutable_record}
+        )
+        mutable_record["binding"]["source_head"] = "d" * 40
+        evidence = provider.authenticate("admission-evidence", mode="test")
+        self.assertEqual(expected_head, evidence.source_head)
+        self.assertEqual(
+            "admitted_manual_read_only",
+            evaluate_admission(
+                self.request(),
+                self.allow,
+                evidence,
+                environment_mode="test",
+            ).status,
+        )
+
+        with self.assertRaises(AdmissionEvidenceError):
+            provider.authenticate(StringSubclass("admission-evidence"), mode="test")
+
+        invalid_mode = evaluate_admission(
+            self.request(),
+            self.allow,
+            evidence,
+            environment_mode=StringSubclass("test"),
+        )
+        self.assertEqual("blocked", invalid_mode.status)
+        self.assertIn(
+            ADM_TRUSTED_EVIDENCE_UNTRUSTED,
+            invalid_mode.reason_codes,
+        )
+
     def test_internal_issuer_cannot_create_production_evidence(self):
         directly_issued = admission_evidence_module._issue_evidence(
             self.evidence_record_for()
@@ -471,11 +755,6 @@ class AdmissionTests(unittest.TestCase):
                 ADM_EVIDENCE_CROSSWALK_MISMATCH,
             ),
             (
-                "normalized_schema_version",
-                {"normalized_schema_version": "math_mentor.normalized_node.v2"},
-                ADM_EVIDENCE_SCHEMA_VERSION_MISMATCH,
-            ),
-            (
                 "validator_blob",
                 {"validated_blob_oid": "d" * 40},
                 ADM_EVIDENCE_VALIDATOR_BLOB_MISMATCH,
@@ -497,6 +776,29 @@ class AdmissionTests(unittest.TestCase):
                 )
                 self.assertEqual("blocked", decision.status)
                 self.assertIn(expected_code, decision.reason_codes)
+
+    def test_normalized_schema_version_is_bound_to_the_supported_contract(self):
+        unsupported_request = deepcopy(self.fixture["canonical_request"])
+        unsupported_request["schema_evidence"]["normalized_schema_version"] = (
+            "math_mentor.normalized_node.v2"
+        )
+        with self.assertRaises(AdmissionInputError):
+            self.request(unsupported_request)
+
+        unsupported_evidence = self.evidence_record_for()
+        unsupported_evidence["binding"]["normalized_schema_version"] = (
+            "math_mentor.normalized_node.v2"
+        )
+        provider = DeterministicTestAdmissionEvidenceProvider(
+            {"admission-evidence": unsupported_evidence}
+        )
+        with self.assertRaises(AdmissionEvidenceError):
+            provider.authenticate("admission-evidence", mode="test")
+
+        missing_version = deepcopy(self.fixture["canonical_request"])
+        missing_version["schema_evidence"]["normalized_schema_version"] = None
+        with self.assertRaises(AdmissionInputError):
+            self.request(missing_version)
 
     def test_authorized_raw_ready_claim_cannot_override_sealed_findings(self):
         finding_cases = (
@@ -540,6 +842,87 @@ class AdmissionTests(unittest.TestCase):
         )
         self.assertEqual("blocked", unverified_allow.status)
         self.assertIn(ADM_AUTH_HUMAN_REQUIRED, unverified_allow.reason_codes)
+
+    def test_behavioral_authorization_mapping_is_never_consumed(self):
+        class BehavioralMapping(dict):
+            def __init__(self, original):
+                super().__init__(dict(original))
+                self._original = original
+
+            def items(self):
+                return self._original.items()
+
+            def get(self, key, default=None):
+                if key == "binding":
+                    return {
+                        "source_head": "d" * 40,
+                        "operation": "repository.read",
+                        "effect_class": "read_only",
+                        "resources": (),
+                    }
+                return self._original.get(key, default)
+
+        allow = self.allow
+        object.__setattr__(
+            allow,
+            "authorization_context",
+            BehavioralMapping(allow.authorization_context),
+        )
+        decision = evaluate_admission(
+            self.request(),
+            allow,
+            self.evidence_for(),
+            environment_mode="test",
+        )
+
+        self.assertEqual("blocked", decision.status)
+        self.assertIn(ADM_AUTH_HUMAN_REQUIRED, decision.reason_codes)
+
+    def test_refingerprinted_human_required_decision_cannot_enter_admission(self):
+        admission_data = deepcopy(self.fixture["canonical_request"])
+        asset = admission_data["asset"]
+        auth_fixture = deepcopy(self.auth_fixture)
+        auth_fixture["request"]["operation"] = "repository.read"
+        auth_fixture["request"]["effect_class"] = "read_only"
+        auth_fixture["request"]["source_head"] = asset["source_head"]
+        auth_fixture["request"]["resources"] = [
+            {"repo_id": asset["repo_id"], "path": asset["path"]}
+        ]
+        human_required = verify_authorization(
+            AuthorizationRequest.from_mapping(auth_fixture["request"]),
+            None,
+            now=self.auth_now,
+            environment_mode="test",
+        )
+        legitimate = self.allow_for(admission_data)
+        object.__setattr__(human_required, "status", "allow")
+        object.__setattr__(
+            human_required, "reason_codes", legitimate.reason_codes
+        )
+        object.__setattr__(
+            human_required,
+            "authorization_context",
+            legitimate.authorization_context,
+        )
+        object.__setattr__(
+            human_required, "requested_effect", legitimate.requested_effect
+        )
+        object.__setattr__(human_required, "audit", legitimate.audit)
+        object.__setattr__(human_required, "_factory_identity", id(human_required))
+        object.__setattr__(
+            human_required,
+            "_issued_fingerprint",
+            authorization_module._decision_fingerprint(human_required),
+        )
+
+        decision = evaluate_admission(
+            self.request(admission_data),
+            human_required,
+            self.evidence_for(admission_data),
+            environment_mode="test",
+        )
+        self.assertEqual("blocked", decision.status)
+        self.assertIn(ADM_AUTH_HUMAN_REQUIRED, decision.reason_codes)
 
     def test_serialized_or_directly_constructed_allow_cannot_bypass_verifier(self):
         serialized = self.allow.to_dict()
@@ -738,6 +1121,15 @@ class AdmissionTests(unittest.TestCase):
         write_decision = evaluate_admission(self.request(write), self.allow)
         self.assertEqual("blocked", write_decision.status)
         self.assertIn(ADM_STATE_WRITE_FORBIDDEN, write_decision.reason_codes)
+
+    def test_canonical_duplicate_source_is_never_admitted(self):
+        duplicate = deepcopy(self.fixture["canonical_request"])
+        duplicate["duplicate_source"] = True
+        decision = self.evaluate_with_evidence(duplicate)
+
+        self.assertEqual("blocked", decision.status)
+        self.assertIn(ADM_DUPLICATE_SOURCE, decision.reason_codes)
+        self.assertFalse(decision.status.startswith("admitted_"))
 
 
 if __name__ == "__main__":
