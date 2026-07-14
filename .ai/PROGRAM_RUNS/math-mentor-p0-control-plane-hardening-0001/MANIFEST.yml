@@ -1,0 +1,84 @@
+program_id: "math-mentor-p0-control-plane-hardening-0001"
+task_id: "math-mentor-p0-control-plane-hardening-0001"
+program_kind: "authority_identity_normalization_and_admission_foundation"
+completion_policy: "completion_preserving"
+status: "complete_awaiting_exact_head_review"
+source_branch: "master"
+source_head: "764d03d7d0a9ad553f4f3868699b06d9de5553ea"
+rollback_base: "764d03d7d0a9ad553f4f3868699b06d9de5553ea"
+work_branch: "codex/math-mentor-p0-control-plane-hardening"
+review_branch: "ai/review/latest"
+prelaunch_review_head: "8509516c69edb5381ae596063808d5021bece031"
+engine_route: "Plan3_Engine_A"
+human_gate_after_completion: "required"
+batch_limit: 5
+authorized_actions:
+  - "read required source evidence"
+  - "write the exact P0 control-plane allowlist"
+  - "create small domain-coherent commits"
+  - "non-force push the named development branch"
+  - "publish final pointer handoff to ai/review/latest"
+forbidden_actions:
+  - "master or source publication"
+  - "force push"
+  - "runtime or Coordinator activation"
+  - "student-state or scheduler writes"
+  - "node, bridge, split-roadmap, active-prompt, legacy-prompt, existing-schema, or existing-validator mutation"
+  - "combined-roadmap read"
+  - "secret, credential, or real-student-identity handling"
+  - "frontend implementation"
+allowed_business_paths:
+  - "08_Domain_Applications/Math_Mentor/MATH_MENTOR_AUTHORITY_REGISTRY.yml"
+  - "08_Domain_Applications/Math_Mentor/MATH_MENTOR_CAPABILITY_MATURITY.yml"
+  - "08_Domain_Applications/Math_Mentor/MATH_MENTOR_DEPRECATION_MAP.yml"
+  - "08_Domain_Applications/Math_Mentor/CANONICAL_NODE_IDENTITY_SCHEMA.md"
+  - "08_Domain_Applications/Math_Mentor/CANONICAL_NODE_CROSSWALK.json"
+  - "08_Domain_Applications/Math_Mentor/ALIAS_CONFLICT_REGISTRY.json"
+  - "08_Domain_Applications/Math_Mentor/ROOT_CORPUS_REGISTRY.json"
+  - "08_Domain_Applications/Math_Mentor/NORMALIZED_NODE_SCHEMA.json"
+  - "08_Domain_Applications/Math_Mentor/AUTHORIZATION_CONTEXT_SCHEMA.json"
+  - "08_Domain_Applications/Math_Mentor/p0_control_plane/**"
+  - "08_Domain_Applications/Math_Mentor/tests/p0_control_plane/**"
+  - ".ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/**"
+  - ".ai/CODEX_REPORTS/math-mentor-p0-control-plane-hardening-0001*"
+  - ".ai/HUMAN_BRIEF.md"
+  - ".ai/STATE.yml"
+  - ".ai/OUTBOX.md"
+review_log_ref: ".ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/REVIEW_LOG.md"
+review_log_location_note: >-
+  The Human path allowlist does not include .ai/LONG_RUN_LOGS. The required
+  non-blocking review ledger is therefore kept inside this allowed program-run
+  directory and the out-of-scope canonical location is not mutated.
+identity_policy:
+  canonical_primary_key: "immutable_opaque_uuid"
+  external_crosswalk_first: true
+  suffix_resolution_allowed: false
+  basename_only_resolution_allowed: false
+  fuzzy_resolution_allowed: false
+  staging_resolution_allowed: false
+  conflict_policy: "fail_closed"
+authorization_policy:
+  payload_human_gate_is_authority: false
+  trust_source: "runtime_injected_external_context"
+  real_secrets_or_signing_keys_allowed: false
+publication:
+  development_branch_push_authorized: true
+  development_branch_force_push_authorized: false
+  master_push_authorized: false
+  source_publication_authorized: false
+  chatgpt_exact_head_review_required: true
+completion:
+  validated_implementation_head: "91a1070c2d7e77eff1e1aacb9115551151b65b50"
+  final_candidate_head: "assigned_by_final_report_commit_and_external_handoff"
+  implementation_commits:
+    - "bf62583503781c644a5ad66e6bd57908e37ad85f"
+    - "91a1070c2d7e77eff1e1aacb9115551151b65b50"
+  test_result: "65_of_65_passed"
+  deterministic_repeatability: "two_builds_byte_identical_and_materialized_match"
+  changed_path_deviations: []
+  runtime_activation_performed: false
+  coordinator_activation_performed: false
+  source_or_master_publication_performed: false
+  final_report_ref: ".ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/FINAL_REPORT.md"
+  quantitative_evidence_ref: ".ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/EVIDENCE/quantitative_findings.json"
+  validation_ref: ".ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/VALIDATION/validation_summary.json"

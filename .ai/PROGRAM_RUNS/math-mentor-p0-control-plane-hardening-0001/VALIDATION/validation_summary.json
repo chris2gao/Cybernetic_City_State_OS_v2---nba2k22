@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "math-mentor-p0-control-plane-hardening-0001",
+  "source_head": "764d03d7d0a9ad553f4f3868699b06d9de5553ea",
+  "validated_implementation_head": "91a1070c2d7e77eff1e1aacb9115551151b65b50",
+  "status": "passed",
+  "test_suite": {
+    "command": "python -B -m unittest discover -s 08_Domain_Applications/Math_Mentor/tests/p0_control_plane -p test_*.py -v",
+    "tests_run": 65,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "duration_seconds": 43.828,
+    "groups": {
+      "authorization": 11,
+      "admission": 17,
+      "identity": 6,
+      "normalization_unit": 5,
+      "normalization_live_corpus": 1,
+      "registry_builder": 12,
+      "staging_diagnostics": 1,
+      "static_registries": 11,
+      "consolidated_validation": 1
+    }
+  },
+  "consolidated_validator": {
+    "status": "passed",
+    "repeat_builds": 2,
+    "byte_identical_repeatability": true,
+    "materialized_outputs_match": true,
+    "schemas_valid": true,
+    "payload_hashes_valid": true,
+    "source_descendant_rebuild_valid": true,
+    "runtime_activation_performed": false,
+    "output_sha256": {
+      "ALIAS_CONFLICT_REGISTRY.json": "03a402f97501f85cc2eaced46d651234f57ddbce53533af92b0f82810dfd7c21",
+      "CANONICAL_NODE_CROSSWALK.json": "3be77ebc9bc7a826607d28af7def16477aa01d32ab67ba5117d8d411d49697d1",
+      "ROOT_CORPUS_REGISTRY.json": "cb04084040aa00dc0dd80b7bfb39215cbf96a7e50358038dc85a24b45dbc49ac"
+    }
+  },
+  "authorization_forgery_tests": {
+    "payload_human_gate_without_external_context": "rejected",
+    "test_fixture_in_production": "rejected_at_adapter_and_verifier",
+    "serialized_allow_reentry": "rejected",
+    "direct_allow_decision_construction": "rejected",
+    "sealed_decision_unrelated_resource_reuse": "rejected",
+    "serialized_context_mutation": "cannot_mutate_internal_decision",
+    "source_head_mismatch": "rejected",
+    "effect_understatement": "rejected",
+    "prefix_sibling_path": "rejected",
+    "nonce_replay": "rejected",
+    "expiry": "rejected",
+    "post_completion_without_external_approval": "rejected",
+    "secret_path_even_with_payload_approval": "rejected",
+    "nonempty_model_writable_identity_resolution": "rejected"
+  },
+  "staging_exclusion_tests": {
+    "tracked_staging_assets": 229,
+    "yaml_parse_pass": 213,
+    "yaml_parse_fail": 15,
+    "basename_shadows": 195,
+    "strict_identity_overlap": 180,
+    "raw_content_identical": 0,
+    "canonical_registry_entries": 0,
+    "resolution_from_staging": 0,
+    "canonical_role_masquerade": "rejected",
+    "nested_bridge_schema_script_masquerade": "rejected"
+  },
+  "scope_validation": {
+    "implementation_changed_paths": 34,
+    "allowed_paths": 34,
+    "deviations": [],
+    "protected_business_files_mutated": [],
+    "combined_roadmap_read": false
+  },
+  "hygiene": {
+    "git_diff_check": "passed",
+    "high_confidence_credential_pattern_files": 0,
+    "pycache_directories_remaining": 0,
+    "real_secrets_or_signing_keys_created": false,
+    "real_student_identity_processed": false
+  },
+  "publication": {
+    "development_branch_push_authorized": true,
+    "master_push_authorized": false,
+    "source_publication_authorized": false,
+    "human_gate_after_completion": "required"
+  }
+}
