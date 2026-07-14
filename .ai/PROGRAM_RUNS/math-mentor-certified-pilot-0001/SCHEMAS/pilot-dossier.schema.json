@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "math-mentor-certified-pilot-dossier-v1",
+  "type": "object",
+  "required": [
+    "schema_version", "packet_id", "node_id", "source", "identity",
+    "roadmap", "domain", "mode", "prerequisites", "validation",
+    "review", "residual_risks", "consumer_allowed"
+  ],
+  "properties": {
+    "schema_version": {"const": "math_mentor.certified_pilot_dossier.v1"},
+    "packet_id": {"const": "codex-math-mentor-certified-pilot-candidate-0001"},
+    "node_id": {"type": "string", "minLength": 1},
+    "source": {
+      "type": "object",
+      "required": ["repository", "base_head", "path", "blob_oid", "sha256"],
+      "properties": {
+        "repository": {"type": "string"}, "base_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "path": {"type": "string"}, "blob_oid": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": true
+    },
+    "identity": {"type": "object", "required": ["canonical_uuid", "binding_status", "consumer_allowed"]},
+    "roadmap": {"type": "object", "required": ["alias", "level", "binding_status"]},
+    "domain": {"type": "string"},
+    "mode": {"enum": ["A", "B"]},
+    "prerequisites": {"type": "array"},
+    "validation": {"type": "object", "required": ["sandbox_evaluator"]},
+    "review": {"type": "object"},
+    "residual_risks": {"type": "array"},
+    "consumer_allowed": {"const": false}
+  },
+  "additionalProperties": true
+}

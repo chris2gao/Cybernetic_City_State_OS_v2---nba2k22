@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "math-mentor-certified-pilot-identity-evidence-v1",
+  "type": "object",
+  "required": ["schema_version", "source_head", "pilots", "prerequisites", "conflicts"],
+  "properties": {
+    "schema_version": {"const": "math_mentor.identity_prerequisite_evidence.v1"},
+    "source_head": {"const": "b3ee031488be07748b1cbdfc19b8926b6caaa6db"},
+    "pilots": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"$ref": "#/$defs/asset"}},
+    "prerequisites": {"type": "array", "minItems": 7, "maxItems": 7, "items": {"$ref": "#/$defs/asset"}},
+    "conflicts": {"type": "array"}
+  },
+  "$defs": {
+    "asset": {
+      "type": "object",
+      "required": ["node_id", "path", "canonical_uuid", "blob_oid", "sha256", "binding_status", "consumer_allowed"],
+      "properties": {
+        "node_id": {"type": "string"}, "path": {"type": "string"},
+        "canonical_uuid": {"type": "string", "format": "uuid"},
+        "blob_oid": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "binding_status": {"type": "string"}, "consumer_allowed": {"const": false}
+      }
+    }
+  }
+}

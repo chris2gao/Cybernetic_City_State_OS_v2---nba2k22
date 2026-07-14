@@ -1,0 +1,32 @@
+schema_version: "math_mentor.certified_pilot_manifest.v1"
+task_id: "math-mentor-certified-pilot-0001"
+packet_id: "codex-math-mentor-certified-pilot-candidate-0001"
+status: "completed_with_blockers"
+source_head: "b3ee031488be07748b1cbdfc19b8926b6caaa6db"
+work_branch: "codex/math-mentor-certified-pilot"
+node_repair_commit: "43e0396e7a12cfd2f6014b290dc1c15f1df9a5af"
+pilot_nodes:
+  - "COMPLEX_ANALYSIS-418"
+  - "PDE-487"
+  - "ABSTRACT_ALGEBRA-468"
+  - "ALG_TOPOLOGY-676"
+artifacts:
+  dossiers: 4
+  identity_prerequisite_evidence: "EVIDENCE/identity-and-prerequisite-resolution.json"
+  validation_summary: "VALIDATION/validation-summary.json"
+  dossier_schema: "SCHEMAS/pilot-dossier.schema.json"
+  evidence_schema: "SCHEMAS/identity-prerequisite-resolution.schema.json"
+identity_conflicts_affecting_pilot:
+  - "PDE-487:missing_explicit_roadmap_alias"
+  - "PDE-486:missing_explicit_roadmap_alias"
+prerequisite_blockers:
+  - "ALG_TOPOLOGY-676:n_667_direction_requires_human_review"
+node_mutations:
+  - node_id: "COMPLEX_ANALYSIS-418"
+    field: "v8_sanity_audit.sympy_pseudo_code"
+    change: "add explicit theta + 2*pi periodicity assertion"
+consumer_allowed_count: 0
+runtime_or_coordinator_activation: false
+source_or_master_publication: false
+human_gate: "required"
+

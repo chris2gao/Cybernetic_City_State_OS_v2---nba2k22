@@ -1,0 +1,52 @@
+{
+  "schema_version": "math_mentor.certified_pilot_validation.v1",
+  "status": "passed_with_documented_blockers",
+  "source_head": "b3ee031488be07748b1cbdfc19b8926b6caaa6db",
+  "node_repair_commit": "43e0396e7a12cfd2f6014b290dc1c15f1df9a5af",
+  "sandbox_evaluator": {
+    "COMPLEX_ANALYSIS-418": {"status": "passed", "exit_code": 0},
+    "PDE-487": {"status": "passed", "exit_code": 0},
+    "ABSTRACT_ALGEBRA-468": {"status": "review_required", "exit_code": 2, "warnings": ["semantic_audit_not_machine_validated"]},
+    "ALG_TOPOLOGY-676": {"status": "review_required", "exit_code": 2, "warnings": ["semantic_audit_not_machine_validated"]}
+  },
+  "p0_unittest": {
+    "executed": 104,
+    "passed": 103,
+    "failed": 1,
+    "failure": "test_all_667_candidates_normalize_fail_closed_across_four_eras: expected E3=8/E4=20, actual E3=7/E4=21 after authorized pilot-path mutation",
+    "consumer_allowed_assertions_passed_for_all_667": true
+  },
+  "p0_consolidated_validator": {
+    "status": "passed",
+    "repeat_builds": 2,
+    "byte_identical_repeatability": true,
+    "materialized_outputs_match": true,
+    "committed_blob_bytes_match_generated": true,
+    "root_candidates_parsed": 667,
+    "staging_assets_excluded": 229,
+    "candidate_edges_unapproved": 420,
+    "explicit_alias_conflicts": 53,
+    "consumer_allowed": 0,
+    "runtime_activation_performed": false
+  },
+  "artifact_validation": {
+    "changed_yaml_json_parse": "passed",
+    "dossier_schema": "4_of_4_passed",
+    "identity_evidence_schema": "passed",
+    "git_diff_check": "passed",
+    "exact_path_allowlist": "passed",
+    "credential_secret_pattern_scan": "passed_zero_findings"
+  },
+  "activation": {
+    "runtime": false,
+    "coordinator": false,
+    "bridge": false,
+    "consumer_allowed_count": 0
+  },
+  "blockers": [
+    "PDE-487 missing explicit roadmap alias",
+    "PDE-486 missing explicit roadmap alias",
+    "ALG_TOPOLOGY-676 prerequisite direction for n_667 requires Human review",
+    "P0 live-corpus fixed era-count test requires a future separately authorized maintenance decision"
+  ]
+}
