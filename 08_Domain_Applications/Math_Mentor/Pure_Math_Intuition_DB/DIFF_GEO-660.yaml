@@ -1,26 +1,152 @@
 id: DIFF_GEO-660
-mode_routing_status: "manual_review_required"
-validation_status: "manual_review_required"
+city_state_engine: "Plan3_Engine_B"
+mode: "B"
+math_lane: "MathLane_B"
+mode_routing_status: "human_approved"
+validation_status: "semantic_only"
+tool_status: "semantic_only"
 bridge_readiness_status: "manual_review_required"
-formal_definition_status: "missing"
-prerequisites_status: "missing"
-mapping_boundary_status: "missing"
+formal_definition_status: "human_approved"
+prerequisites_status: "human_approved"
+mapping_boundary_status: "human_approved"
+formal_definition: >-
+  Let M be a smooth manifold with affine connection ∇. A smooth curve
+  γ:I→M is an affinely parameterized geodesic when ∇_(γ_dot)γ_dot=0. In
+  local coordinates this is d²x^k/dt²+Γ^k_{ij}(x(t))(dx^i/dt)(dx^j/dt)=0.
+  For a Riemannian metric and its Levi-Civita connection, constant-speed
+  geodesics are critical points of the energy functional. A geodesic segment
+  contained in a suitable normal neighborhood is locally length-minimizing,
+  but geodesics need not be globally shortest or globally unique; cut points
+  and conjugate points can destroy those properties. For p∈M and v∈T_pM,
+  let γ_v be the geodesic satisfying γ_v(0)=p and γ_dot_v(0)=v. Where this
+  solution exists through time 1, exp_p(v)=γ_v(1). The exponential map is a
+  local diffeomorphism near 0∈T_pM. It need not be globally injective, and it
+  is defined on all of T_pM only under additional geodesic-completeness
+  hypotheses. The geodesic equation depends on the selected connection; the
+  distance and minimizing statements additionally depend on the Riemannian
+  metric and appropriate local or completeness assumptions.
+formal_definition_zh: >-
+  设 M 是带仿射联络 ∇ 的光滑流形。光滑曲线 γ:I→M 称为仿射参数化测地线，
+  当且仅当 ∇_(γ_dot)γ_dot=0；局部坐标中等价于
+  d²x^k/dt²+Γ^k_{ij}(x(t))(dx^i/dt)(dx^j/dt)=0。若 ∇ 是 Riemannian
+  度量的 Levi-Civita 联络，则常速测地线是能量泛函的临界曲线。在适当的正规
+  邻域内，足够短的测地线段局部最短；但测地线不自动全局最短或全局唯一，截点和
+  共轭点会破坏这些性质。给定 p∈M 与 v∈T_pM，令 γ_v 满足 γ_v(0)=p、
+  γ_dot_v(0)=v；当解至少存在到时间 1 时，定义 exp_p(v)=γ_v(1)。指数映射在
+  0∈T_pM 附近是局部微分同胚，但通常不全局单射；只有附加测地完备性等条件时，
+  才能保证对全部切向量定义。测地线方程依赖所选联络，而距离与最短性陈述还依赖
+  Riemannian 度量以及相应的局部或完备性假设。
+candidate_prerequisite_nodes:
+  - node_id: n_653
+    file: DIFF_GEO-653.yaml
+    role: "smooth manifolds, charts, and smooth curves"
+  - node_id: n_655
+    file: DIFF_GEO-655.yaml
+    role: "tangent vectors and vector fields"
+  - node_id: n_657
+    file: DIFF_GEO-657.yaml
+    role: "Riemannian metric, curve length, and energy"
+  - node_id: n_661
+    file: DIFF_GEO-661.yaml
+    role: "affine connection, covariant derivative, and Levi-Civita connection"
+supporting_prerequisites:
+  - "ordinary differential equations and local existence and uniqueness"
+  - "calculus of variations"
+  - "local coordinate calculus"
+mapping_boundary:
+  primary_mapping_kind: "llm_architecture_bounded_structural_analogy"
+  primary_mapping: >-
+    Only after an explicit geometry has been supplied, a geodesic can
+    analogize a representation or probability path whose acceleration is zero
+    relative to that geometry. In generative modeling, a probability path is
+    a Wasserstein geodesic only when an optimal-transport metric, admissible
+    measure space, and displacement interpolation or equivalent geodesic
+    dynamics are established. This mapping highlights the difference between
+    following a chosen geometry and merely producing a smooth trajectory.
+  primary_mapping_zh: >-
+    只有先明确给出几何结构，才可把测地线类比为相对于该几何“无横向加速度”的
+    表示路径或概率路径。在生成模型中，只有明确建立最优传输度量、允许的概率测度
+    空间以及位移插值或等价测地动力学时，概率路径才可称为 Wasserstein 测地线。
+    该类比强调：沿选定几何演化与仅仅生成一条平滑轨迹并不是同一件事。
+  boundary:
+    - "Generic diffusion trajectories are not automatically Wasserstein geodesics."
+    - "Generic flow-matching paths are not automatically shortest or geodesic paths."
+    - "A learned vector field satisfying a continuity equation does not by itself prove geodesic optimality."
+    - "A hidden-state interpolation is not a Riemannian geodesic without an explicit manifold, metric, and connection."
+    - "The exponential map sends an initial tangent velocity to a geodesic endpoint where defined; it is not a generic operation that pulls a vector back onto a manifold."
+    - "Local minimizing behavior does not imply global shortest-path behavior or uniqueness."
+    - "No machine-verifiable Wasserstein or Riemannian geometry of an ordinary model is established by this node."
+  preserve_full_boundary: true
+  existing_physical_metaphor_status: "secondary_teaser_only"
+  secondary_teaser_limitation: >-
+    The gravity-slide image only hints at motion without externally imposed
+    transverse acceleration. It does not supply a connection, metric,
+    variational principle, global minimum, or optimal-transport proof.
+existing_code_and_audit:
+  preserve: true
+  evidence_status: "semantic_only"
+  run_with_log_ref: null
+  code_interpretation: >-
+    The existing function performs one explicit-Euler update of the coordinate
+    geodesic equation using a supplied Christoffel array. Its example sets
+    Γ=0, so it illustrates only straight motion in a flat-coordinate special
+    case and is sensitive to numerical-discretization choices.
+  audit_interpretation: >-
+    The existing audit checks only that the scalar path x(t)=t has zero second
+    derivative. It does not test a nonzero connection, coordinate invariance,
+    geodesic existence, minimizing behavior, the exponential map,
+    completeness, or Wasserstein optimality.
+  code_scope: "single_explicit_Euler_coordinate_step"
+  example_scope: "flat_coordinate_zero_Christoffel_case"
+  audit_scope: "scalar_straight_line_second_derivative_only"
+  explicitly_not_validated:
+    - coordinate_invariance
+    - geodesic_existence_and_uniqueness
+    - variational_characterization
+    - local_or_global_minimizing_behavior
+    - exponential_map_properties
+    - geodesic_completeness
+    - Wasserstein_optimality
 migration_review:
   missing_reason:
-    - "formal_definition_absent"
-    - "prerequisite_nodes_absent"
-    - "mapping_boundary_absent"
-  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+    - "exact_ODE_and_calculus_of_variations_node_ids_not_approved"
+    - "current_code_is_only_one_flat_coordinate_special_case"
+    - "current_audit_does_not_validate_general_geodesics"
+    - "bridge_endpoint_eligibility_not_certified"
+  recommended_next_action: >-
+    Preserve semantic_only and manual bridge review. Resolve supporting
+    prerequisite identities and any bridge certification in separate approved
+    work; do not infer Wasserstein optimality from a smooth generated path.
+  semantic_repair:
+    decision_source: "Human-approved DIFF_GEO Foundation Batch 1 Complete Semantic Decision v1"
+    city_state_engine: "Plan3_Engine_B"
+    lane_policy: "MathLane_B"
+    formal_definition: "human_approved"
+    prerequisites: "human_approved"
+    mapping_boundary: "human_approved"
+    existing_code_and_audit: "preserved_with_semantic_only_boundary"
+    mutation_scope: "DIFF_GEO-660.yaml_only"
   warnings:
-    - "mode_routing_manual_review_required"
-concept_name: 测地线 - 【流匹配映射】：弯曲空间中最平滑的轨迹。大模型扩散生成过程正是沿着 Wasserstein 流形的测地线将噪声还原为逻辑。
-  (n_660)
+    - "semantic_only_not_machine_validated"
+    - "bridge_readiness_remains_manual_review_required"
+    - "geodesic_does_not_imply_global_shortest_path"
+    - "flow_matching_does_not_imply_Wasserstein_geodesic"
+    - "current_code_is_a_single_flat_coordinate_step"
+    - "current_audit_is_a_straight_line_special_case"
+concept_name: 测地线、指数映射与 Riemannian 距离 (n_660)
 sub_topics:
-- 变分法导出测地线方程
-- 测地线作为最短路径或极值轨迹
-- 指数映射 (Exponential map) 将切空间拉回流形
-- 物理映射：概率分布演化中的最小代价传输轨迹
-llm_physical_mapping: 物流车间的重力滑道：货物在没有发动机推力的情况下，完全顺着滑道底部的倾斜和扭曲自然滑落到底部，这条滑脱到底的轨道就是测地线。
+- geodesic equation for an affine connection
+- Levi-Civita geodesics and the energy functional
+- local minimizing behavior versus global shortest-path claims
+- coordinate geodesic equation and Christoffel-symbol dependence
+- initial-value formulation and local existence and uniqueness
+- exponential map and its local-diffeomorphism property
+- cut points, conjugate points, and failure of global uniqueness
+- bounded relation to optimal transport, diffusion, and flow matching
+llm_physical_mapping: >-
+  重力滑道只作为次级提示：它可提示“相对于所选几何没有额外横向加速度”，但滑道
+  本身没有给出联络、度量、变分原理或全局最短性，更不能证明普通扩散或 flow
+  matching 轨迹是 Wasserstein 测地线。
 code_implementation: |
   import torch
   import numpy as np
