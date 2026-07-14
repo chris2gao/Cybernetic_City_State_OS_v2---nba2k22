@@ -1,26 +1,181 @@
 id: DIFF_GEO-659
-mode_routing_status: "manual_review_required"
-validation_status: "manual_review_required"
-bridge_readiness_status: "manual_review_required"
-formal_definition_status: "missing"
-prerequisites_status: "missing"
-mapping_boundary_status: "missing"
+city_state_engine: "Plan3_Engine_B"
+mode: "B"
+math_lane: "MathLane_B"
+mode_routing_status: "human_approved"
+validation_status: "semantic_only"
+tool_status: "semantic_only"
+bridge_readiness_status: "blocked_by_disposition"
+teaching_ready: false
+coordinator_consumable: false
+independent_pure_math_node: false
+formal_definition_status: "rejected_as_non_definition"
+prerequisites_status: "human_approved_research_requirements"
+mapping_boundary_status: "human_approved"
+disposition: "unsupported_claim_rejected_and_quarantined"
+canonical_math_target_id: "DIFF_GEO-658"
+canonical_math_target:
+  node_id: n_658
+  file: DIFF_GEO-658.yaml
+rejected_claim: "h = alpha * kappa^beta is a mathematical law of LLM hallucination"
+claim_status: "unvalidated_research_hypothesis_only"
+file_deletion: false
+claim_rejection: >-
+  The formula h=alpha*kappa^beta is neither a mathematical law nor an
+  established empirical relationship for model hallucination. The repository
+  supplies no operational hallucination measure, constructed representation
+  manifold, metric, connection, identified curvature quantity, fitted
+  parameters, uncertainty analysis, held-out validation, or causal design.
+  At most, after those objects and procedures are supplied, the expression
+  could be considered one hypothetical parametric regression family alongside
+  alternatives. This node is retained only as a rejected-claim audit record.
+claim_rejection_zh: >-
+  公式 h=alpha*kappa^beta 既不是大模型幻觉的数学定律，也不是已建立的经验关系。
+  仓库没有给出可操作的幻觉度量、构造出的表示流形、度量、联络、明确的曲率量、
+  拟合参数、不确定性分析、留出验证或因果设计。只有在这些对象与程序全部明确后，
+  该表达式才最多可作为与其他模型竞争的假设参数回归族。本节点仅保留为被拒绝主张
+  的审计记录。
+symbol_requirements:
+  h: >-
+    Requires an operational hallucination metric, annotation protocol, error
+    model, sampling design, and uncertainty treatment.
+  kappa: >-
+    Requires an explicit manifold, metric, connection, curvature definition,
+    and justified estimator; sectional, Ricci, scalar, and extrinsic curvature
+    are not interchangeable.
+  alpha_beta: >-
+    Require fitted units and scaling conventions, identifiability, confidence
+    intervals, alternative-model comparison, and out-of-sample validation.
+candidate_prerequisite_nodes:
+  - node_id: n_658
+    file: DIFF_GEO-658.yaml
+    role: "canonical mathematical treatment of Riemannian curvature and its boundaries"
+supporting_prerequisites:
+  - "operational measurement theory and annotation reliability"
+  - "statistical model fitting, uncertainty, and alternative functional forms"
+  - "causal inference if causal language is proposed"
+  - "held-out replication and falsification criteria"
+research_reconsideration_requirements:
+  - "explicit model family and representation space"
+  - "justified smooth geometric structure and curvature estimator"
+  - "reproducible hallucination definition and labeled benchmark"
+  - "sampling design, controls, and baseline predictors"
+  - "separated exploratory and confirmatory analysis"
+  - "uncertainty estimates and alternative functional forms"
+  - "falsification criteria and held-out replication"
+  - "evidence distinguishing association from causation"
+  - "comparison with simpler non-curvature predictors"
+mapping_boundary:
+  primary_mapping_kind: "rejected_claim_research_audit"
+  primary_mapping: >-
+    Curvature language may motivate a research question only after a genuine
+    geometric model and reproducible measurements are defined. It cannot turn
+    visual bending, embedding diagnostics, Hessians, attention matrices, or
+    verbal notions of semantic tension into a calibrated hallucination law.
+    The permitted use here is methodological: identify missing definitions,
+    competing explanations, validation requirements, and falsification tests.
+  primary_mapping_zh: >-
+    只有在建立真实几何模型并定义可复现实验测量后，曲率语言才可启发研究问题。
+    它不能把可视化弯曲、嵌入诊断、Hessian、注意力矩阵或“语义张力”等语言直接
+    变成校准过的幻觉定律。此处唯一允许的用途是方法审计：列出缺失定义、竞争解释、
+    验证要求与可证伪检验。
+  boundary:
+    - "High curvature is not established as a cause, predictor, or calibrated measure of hallucination."
+    - "Semantic density, geometric tension, fracture, and pressure are metaphors unless operationalized."
+    - "Geodesic divergence does not imply model factual error."
+    - "Curvature regularization is not established as a general hallucination-control method."
+    - "Attention, Hessian, covariance, Fisher, or embedding-visualization quantities are not automatically Riemannian curvature."
+    - "A scalar curvature score requires an explicit geometric construction and estimator."
+    - "Correlation would not establish causation without an appropriate causal design."
+    - "The canonical mathematical treatment of curvature remains DIFF_GEO-658."
+    - "This quarantined node must not be a bridge endpoint or Coordinator knowledge claim."
+    - "No empirical, predictive, causal, or calibrated curvature-hallucination relationship is accepted here."
+  preserve_full_boundary: true
+  existing_physical_metaphor_status: "rejected_claim_warning_only"
+  secondary_teaser_limitation: >-
+    The boiler-crack image is not a measurement model and supplies no evidence
+    for curvature, hallucination, prediction, or causation.
+existing_code_and_audit:
+  preserve: true
+  evidence_status: "semantic_only"
+  run_with_log_ref: null
+  code_payload_status: "preserved_rejected_hypothesis_only"
+  code_interpretation: >-
+    The existing function evaluates an assumed power function for supplied
+    numbers. It does not define or estimate curvature, measure hallucination,
+    fit alpha or beta, compare alternative models, quantify uncertainty, test
+    held-out data, or establish causality. Its historical comment is an
+    unsupported assertion and is not accepted by this disposition.
+  audit_interpretation: >-
+    The SymPy audit substitutes alpha=1, beta=2, and kappa=3 into the assumed
+    formula and obtains 9. It verifies only arithmetic conditional on the
+    rejected hypothesis; it provides no scientific evidence for that formula.
+  code_scope: "hypothetical_power_function_evaluator_only"
+  audit_scope: "one_symbolic_substitution_only"
+  explicitly_not_validated:
+    - representation_manifold
+    - Riemannian_metric
+    - affine_or_Levi_Civita_connection
+    - curvature_definition_or_estimator
+    - hallucination_measurement
+    - parameter_fitting
+    - uncertainty_quantification
+    - out_of_sample_prediction
+    - causal_relationship
+    - curvature_regularization_effectiveness
+disposition_details:
+  blocking_reason: "blocked_rejected_claim"
+  allowed_role:
+    - "claim_audit_record"
+    - "research_methodology_warning"
+  forbidden_role:
+    - "mathematical_law"
+    - "empirical_result"
+    - "predictive_or_causal_claim"
+    - "independent_pure_math_node"
+    - "bridge_endpoint"
+    - "Coordinator_knowledge_claim"
 migration_review:
   missing_reason:
-    - "formal_definition_absent"
-    - "prerequisite_nodes_absent"
-    - "mapping_boundary_absent"
-  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+    - "power_law_has_no_mathematical_or_empirical_support"
+    - "required_variables_and_measurement_procedures_are_undefined"
+    - "current_code_only_evaluates_the_assumed_formula"
+    - "current_audit_only_checks_one_substitution"
+  recommended_next_action: >-
+    Preserve this file only as a quarantined rejected-claim record. Any future
+    reconsideration requires a separately authorized research task satisfying
+    the listed measurement, statistical, replication, and causal boundaries.
+  semantic_disposition:
+    decision_source: "Human-approved DIFF_GEO Batch 2 complete semantic decision v1"
+    city_state_engine: "Plan3_Engine_B"
+    lane_policy: "MathLane_B"
+    outcome: "unsupported_claim_rejected_and_quarantined"
+    canonical_math_target: "DIFF_GEO-658"
+    file_preserved: true
+    mutation_scope: "DIFF_GEO-659.yaml_only"
   warnings:
-    - "mode_routing_manual_review_required"
-concept_name: 曲率张量 - 幻觉定量定律：大模型幻觉 $h$ 是语义流形受压产生的几何张力断裂，满足 $h = \alpha \kappa^\beta$（与局部曲率
-  $\kappa$ 成幂律关系）。 (n_659)
+    - "semantic_only_not_machine_validated"
+    - "blocked_by_rejected_claim_disposition"
+    - "not_teaching_ready"
+    - "not_coordinator_consumable"
+    - "not_a_bridge_endpoint"
+    - "power_law_is_not_an_accepted_mathematical_law"
+    - "no_curvature_hallucination_prediction_or_causation_established"
+    - "current_code_and_audit_are_conditional_arithmetic_only"
+concept_name: 曲率与模型幻觉：未经证实幂律的拒绝边界（隔离候选 n_659）
 sub_topics:
-- 局部曲率作为逻辑稠密度的度量
-- 曲率过大导致的测地线发散现象
-- 幻觉作为几何缺陷引起的路径偏移
-- 利用曲率正则化技术压制模型幻觉的理论依据
-llm_physical_mapping: 高压锅炉的焊缝裂纹警报：锅炉壁（语义流形）弯曲得太狠（曲率过大），蒸汽（逻辑链）就会从焊缝断裂处泄露，喷出的乱七八糟的蒸汽就是机器幻觉。
+  - rejection of an unsupported curvature-hallucination power law
+  - operational definition of hallucination measurements
+  - choice and estimation of a specific curvature quantity
+  - parameter fitting, units, identifiability, and uncertainty
+  - held-out validation and alternative functional forms
+  - correlation versus causal evidence
+  - falsification and replication requirements
+  - quarantine from teaching, bridges, and Coordinator consumption
+  - canonical curvature mathematics routed to DIFF_GEO-658
+llm_physical_mapping: >-
+  高压锅炉裂纹只保留为被拒绝的警示隐喻：它没有定义表示流形、曲率估计、幻觉
+  标注或统计检验，不能支持预测、因果或校准结论，更不能把幂律写成数学定律。
 code_implementation: |
   import torch
   import numpy as np
