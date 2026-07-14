@@ -1,0 +1,96 @@
+{
+  "authorization_allow": {
+    "status": "allow",
+    "authorization_context": {
+      "authorization_id": "authz-fixture-admission-0001"
+    }
+  },
+  "authorization_deny": {
+    "status": "deny",
+    "authorization_context": null
+  },
+  "canonical_request": {
+    "schema_version": "math_mentor.admission_request.v1",
+    "request_id": "admission-canonical-0001",
+    "requested_use": "manual_teaching_read_only",
+    "asset": {
+      "repo_id": "Cybernetic_City_State_OS_v2---teacher",
+      "source_head": "764d03d7d0a9ad553f4f3868699b06d9de5553ea",
+      "path": "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ARITHMETIC-001.yaml",
+      "blob_oid": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "asset_role": "canonical_node",
+      "schema_era": "E4"
+    },
+    "identity_evidence": {
+      "status": "resolved",
+      "canonical_node_id": "123e4567-e89b-52d3-a456-426614174000",
+      "registry_ref": "canonical-crosswalk:764d03d7d0a9ad553f4f3868699b06d9de5553ea:cccccccccccccccccccccccccccccccccccccccc",
+      "registry_source_head": "764d03d7d0a9ad553f4f3868699b06d9de5553ea",
+      "registry_blob_oid": "cccccccccccccccccccccccccccccccccccccccc",
+      "canonical_path": "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ARITHMETIC-001.yaml",
+      "canonical_blob_oid": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "schema_evidence": {
+      "status": "valid",
+      "normalized_schema_version": "normalized-node.v1"
+    },
+    "readiness_evidence": {
+      "source_status": "ready",
+      "validator_status": "accepted",
+      "validator_ref": "validator:fixture",
+      "validated_blob_oid": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "provenance_evidence": {
+      "status": "exact_blob_verified"
+    },
+    "prerequisite_evidence": {
+      "status": "resolved"
+    },
+    "legacy_claim": {},
+    "state_write_requested": false,
+    "duplicate_source": false,
+    "evidence_refs": ["fixture:canonical-ready"]
+  },
+  "legacy_r5_request": {
+    "schema_version": "math_mentor.admission_request.v1",
+    "request_id": "admission-legacy-r5-0001",
+    "requested_use": "legacy_import_read_only",
+    "asset": {
+      "repo_id": "Cybernetic_City_State_OS_v2---teacher",
+      "source_head": "764d03d7d0a9ad553f4f3868699b06d9de5553ea",
+      "path": "08_Domain_Applications/Math_Mentor/已毕业知识点.md",
+      "blob_oid": "f33f86b0fd0b1952ecb59d51ca6df13bddbc6d17",
+      "asset_role": "legacy_state_table",
+      "schema_era": "legacy"
+    },
+    "identity_evidence": {
+      "status": "not_applicable",
+      "canonical_node_id": null,
+      "registry_ref": null
+    },
+    "schema_evidence": {
+      "status": "not_applicable",
+      "normalized_schema_version": null
+    },
+    "readiness_evidence": {
+      "source_status": "not_applicable",
+      "validator_status": "not_applicable",
+      "validator_ref": null,
+      "validated_blob_oid": null
+    },
+    "provenance_evidence": {
+      "status": "exact_blob_verified"
+    },
+    "prerequisite_evidence": {
+      "status": "not_required"
+    },
+    "legacy_claim": {
+      "legacy_stage": "R5",
+      "legacy_status": "PASSED",
+      "requested_canonical_status": null
+    },
+    "state_write_requested": false,
+    "duplicate_source": false,
+    "evidence_refs": ["fixture:legacy-r5"]
+  }
+}
