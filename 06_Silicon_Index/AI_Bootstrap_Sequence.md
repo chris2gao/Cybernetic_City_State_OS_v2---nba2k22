@@ -117,8 +117,9 @@ Human Speaker 是：
 1. 读取本文件。
 2. 读取 `AGENTS.md`。
 3. 若任务涉及 handoff，读取 `.ai/PROTOCOL.md` 和 `.ai/STATE.yml`。
-4. 读取任务指定文件和必要领域协议。
-5. 在授权路径内执行、验证、提交和发布 review handoff。
+4. 若任务是目标稳定、边界可预先锁定的多步骤大型任务，读取 `.ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md`，并按该配置懒加载必要的工作机制、任务输入和 Long-Run 协议。
+5. 读取任务指定文件和必要领域协议。
+6. 在授权路径内执行、验证、提交和发布 review handoff。
 
 ### ChatGPT 审查者
 
@@ -142,25 +143,39 @@ Human Speaker 是：
 - README、索引和摘要只提供路由，不提供最终事实。
 - 对冲突、缺失文件、权限不足、路径变更必须显式报告。
 
-## 8. 与 `.ai` handoff 协议的关系
+## 8. 与 `.ai` handoff 和大型任务协议的关系
 
 `.ai/` 协议层负责 ChatGPT、Codex 和 Human 之间的高密度通信、review handoff、任务输入契约和长任务执行规则。
 
-如果当前任务是 `.ai` handoff 或 Codex 执行任务，继续读取：
+如果当前任务是 `.ai` handoff 或 Codex 执行任务，继续按需读取：
 
-- `.ai/PROTOCOL.md`
-- `.ai/HANDOFF_INIT_PROMPT.md`
-- `.ai/CODEX_WORK_MECHANISM_PROTOCOL.md`
-- `.ai/CODEX_TASK_INPUT_CONTRACT.md`
-- `.ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md`，仅当任务是长运行或 completion-preserving 任务时。
+- `.ai/PROTOCOL.md`：canonical authority、freshness、handoff 和 publication boundary。
+- `.ai/HANDOFF_INIT_PROMPT.md`：完整初始化入口与角色触发的协议加载。
+- `.ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md`：目标稳定、边界可预先锁定的多步骤大型任务默认统一入口。
+- `.ai/CODEX_WORK_MECHANISM_PROTOCOL.md`：Goal mode、Git workflow level、执行、验证与 review handoff 机制。
+- `.ai/CODEX_TASK_INPUT_CONTRACT.md`：完整任务包、definition of done、allowed scope、stop rules 和 return handoff。
+- `.ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md`：仅当任务具有完整 program design、stage graph、内部 checkpoints、rollback model 和长时间连续执行需求时加载。
 
-### 8.1 Source mailbox 与活动 mailbox
+### 8.1 默认大型任务路由
+
+当 Human 已授权一个稳定结果，且实现、清理、验证、报告、commit、开发分支发布或 exact-head 修复都能留在同一目标和授权范围内时：
+
+1. 默认使用 `.ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md` 作为执行入口；
+2. 使用 Goal mode 与 `completion_preserving`，把必要的内部完成工作折叠进同一任务；
+3. routine progress、checkpoint、测试通过、报告完成或 review correction 不是新的 Human gate；
+4. exact-head review 发现的范围内缺陷，应在相同 task ID 和相同开发分支继续修复，不创建 `P0.1`、`finalize`、`closure` 或其他伪阶段；
+5. 只有新权限、目标变化、forbidden path、destructive Git、未授权 source/master push、secret/privacy/security 风险、runtime/Coordinator activation、重大领域裁决或全任务 blocker 才返回 Human Speaker；
+6. 普通大型任务不得因为耗时较长而自动升级为完整 Long-Run Autonomous Program。只有确实需要预先设计 stage graph、checkpoint/rollback 和 program-level review ledger 时，才加载 Long-Run 协议。
+
+大型任务配置是 routing profile，不是 standing authorization。它不能扩大允许路径、允许动作、发布范围或跨越任何 protected gate。
+
+### 8.2 Source mailbox 与活动 mailbox
 
 - 发布到 source/master 的 `.ai/INBOX.md`、`.ai/STATE.yml`、`.ai/OUTBOX.md` 和 `.ai/HUMAN_BRIEF.md` 必须是 neutral baseline，不得携带已结束任务的 packet、branch、report ref 或 pending Human gate。
 - 活动 signal、任务状态、报告指针和 Human brief 留在 `ai/review/latest` 或任务专用 review branch。
 - source mailbox 与 review mailbox 冲突时，先确认当前任务指向哪一个分支；不得把 source 上的旧快照当作活动任务。
 
-### 8.2 陈旧或冲突文档处理
+### 8.3 陈旧或冲突文档处理
 
 发现 routing 文件、历史记录、mailbox 或 Git 证据互相冲突时：
 
