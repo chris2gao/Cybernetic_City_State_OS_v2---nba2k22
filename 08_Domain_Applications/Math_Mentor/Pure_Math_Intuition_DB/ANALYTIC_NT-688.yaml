@@ -1,33 +1,309 @@
+version: "9.1"
 id: "ANALYTIC_NT-688"
-mode_routing_status: "manual_review_required"
-validation_status: "review_required"
+city_state_engine: "Plan3_Engine_B"
+mode: "A"
+math_lane: "MathLane_A"
+mode_routing_status: "human_approved"
+formal_definition_status: "human_approved"
+prerequisites_status: "manual_review_required"
+mapping_boundary_status: "human_approved"
+validation_status: "run_with_log"
+tool_status: "run_with_log"
+teaching_ready: false
+teaching_readiness_status: "manual_review_required"
 bridge_readiness_status: "manual_review_required"
-formal_definition_status: "missing"
-prerequisites_status: "missing"
-mapping_boundary_status: "missing"
+coordinator_consumable: false
+p3_reopened: false
+bridge_generation_performed: false
 migration_review:
   stage_1_pilot: "metadata_only"
   roadmap_alias: "n_688"
-  classification: "unknown_needs_review"
-  note: "No semantic content changed; mode, validation, bridge readiness, formal definition, prerequisites, and mapping boundary require future manual review."
-concept_name: "指数和 - 物理意义：无数单位向量在复平面的相位干涉叠加。 (n_688)"
+  classification: "analytic_number_theory_mathlane_a_human_approved"
+  note: "Stages 1-6 were executed under the Human-approved ANALYTIC_NT Foundation Batch 1 packet; two exact prerequisite identities and exact-head review remain explicit blockers."
+concept_name: "指数和：有限相位和、相消现象与估计方法（n_688）"
+canonical_concept: "finite_exponential_sums"
+
 sub_topics:
-  - '指数和 $S(X) = \sum e^{if(n)}$'
-  - "范德考普特 (Van der Corput) 估计法"
-  - "物理模拟：相干波源产生的干涉图样"
-  - "随机相位导致能量抵消的统计特性"
-llm_physical_mapping: "Hundreds of physical pendulums mounted on a spinning platform, their swinging phases colliding to either boost or cancel momentum."
+  - "归一化记号 e(t)=exp(2πit) 与模 1 周期性"
+  - "有限加权指数和 S=sum_{n in I} a_n e(f(n)) 与无权情形"
+  - "复平面单位圆向量的相位叠加图像"
+  - "三角不等式平凡界 |S|<=sum |a_n|"
+  - "同相、共振、相消与等号成立的几何条件"
+  - "线性相位的有限几何和公式"
+  - "整数 alpha 时分母为零的独立共振边界"
+  - "完整单位根和的精确相消条件 N 不整除 k"
+  - "非本原单位根仍可完全相消的情形"
+  - "Van der Corput 与 Weyl 方法所需额外假设"
+  - "单频检查、Weyl 判据、随机性与一致分布的区别"
+  - "有限确定性审计的能力范围与工具真实性边界"
+
+pure_math_definition:
+  english: |-
+    Fix e(t)=exp(2*pi*i*t). This function is 1-periodic, so it depends only
+    on the class of t modulo one. Let I be a finite subset of the integers,
+    let a_n be complex weights, and let f:I->R be a real-valued phase
+    considered modulo one. A finite exponential sum is
+
+        S = sum_{n in I} a_n e(f(n)).
+
+    The unweighted case has a_n=1. The triangle inequality always gives the
+    universal trivial bound |S|<=sum_{n in I}|a_n|. Cancellation means that
+    phase structure makes the vector sum smaller than this bound; it is not
+    automatic.
+
+    For an integer N>=1 and a real alpha not in Z,
+
+        sum_{n=0}^{N-1} e(n alpha) = (1-e(N alpha))/(1-e(alpha)).
+
+    If alpha is integral, the sum is N. If alpha=k/N for an integer k and
+    N does not divide k, the complete N-term sum is zero. Van der Corput and
+    Weyl methods are families of estimates that require theorem-specific
+    differentiability, spacing, differencing, or polynomial hypotheses; they
+    are not unconditional cancellation laws.
+  chinese: |-
+    固定记号 e(t)=exp(2*pi*i*t)。因为 e(t+1)=e(t)，它只依赖于 t 模 1
+    的等价类。设 I 是有限整数指标集，a_n 是复权重，f:I->R 是按模 1
+    考察的实相位，则有限指数和定义为
+
+        S = sum_{n in I} a_n e(f(n))。
+
+    无权情形取 a_n=1。三角不等式始终给出平凡界
+    |S|<=sum_{n in I}|a_n|。所谓相消，是相位结构使复向量和小于该平凡界；
+    相消不会自动发生。
+
+    若整数 N>=1 且实数 alpha 不属于 Z，则
+
+        sum_{n=0}^{N-1} e(n alpha) = (1-e(N alpha))/(1-e(alpha))。
+
+    当 alpha 为整数时，该和等于 N。当 alpha=k/N、k 为整数且 N 不整除 k
+    时，完整的 N 项和为零。Van der Corput 与 Weyl 方法都需要各自明确的
+    光滑性、间距、差分或多项式假设，并不是无条件相消定律。
+  finite_scope_boundary: |-
+    This node defines finite sums. Its durable audit exercises only declared
+    finite identities and inequalities; it makes no convergence or asymptotic
+    theorem claim.
+
+assumptions_and_notation:
+  - "The convention is exactly e(t)=exp(2*pi*i*t), not exp(i*t)."
+  - "I is a finite subset of the integers, so no infinite-series convergence question occurs."
+  - "The weights a_n may be arbitrary complex numbers, including zero."
+  - "The phase f is real-valued and only its class modulo one affects e(f(n))."
+  - "N is a positive integer in every geometric-sum statement."
+  - "The quotient formula requires alpha not in Z; integral alpha is handled separately."
+  - "Complete root-of-unity cancellation requires N not dividing k, not gcd(N,k)=1."
+
+required_prerequisites:
+  status: "manual_review_required"
+  resolved:
+    - node_id: "COMPLEX_ANALYSIS-417"
+      file: "COMPLEX_ANALYSIS-417.yaml"
+      roadmap_alias: "n_417"
+      relationship: "supplies complex-number and complex-plane language"
+    - node_id: "COMPLEX_ANALYSIS-418"
+      file: "COMPLEX_ANALYSIS-418.yaml"
+      roadmap_alias: "n_418"
+      relationship: "supplies Euler's formula, polar form, and De Moivre machinery used for roots of unity"
+    - node_id: "NUM_THEORY-007"
+      file: "NUM_THEORY-007.yaml"
+      roadmap_alias: "n_201"
+      relationship: "supplies cyclic modular intuition"
+    - node_id: "NUM_THEORY-008"
+      file: "NUM_THEORY-008.yaml"
+      roadmap_alias: "n_202"
+      relationship: "supplies congruence and equivalence-class language; integer congruence is only a precursor to R/Z"
+    - node_id: "NUM_THEORY-009"
+      file: "NUM_THEORY-009.yaml"
+      roadmap_alias: "n_203"
+      relationship: "supplies modular-operation vocabulary"
+    - node_id: "ALGEBRA-002"
+      file: "ALGEBRA-002.yaml"
+      roadmap_alias: "n_108"
+      relationship: "supplies the absolute-value triangle inequality; this node states its complex-modulus form"
+  unresolved_exact_identities:
+    - concept: "finite_sums_and_geometric_series"
+      evidence: "FRACTIONS-004 / n_60 discusses an infinite geometric series in repeating-decimal conversion, but no exact finite-geometric-sum prerequisite node resolves from the authorized split roadmaps."
+    - concept: "basic_Fourier_phase_language"
+      evidence: "Split-roadmap aliases n_186 and n_404 exist, but n_404 has no canonical DB file and the generated TRIG file-to-alias content around n_186 is missing or inconsistent; no ID is invented."
+  supporting_and_downstream_relationships:
+    - node_id: "ANALYTIC_NT-689"
+      roadmap_alias: "n_689"
+      relationship: "Weyl-criterion and equidistribution context; supporting/downstream only, unresolved, and not certified"
+    - concept: "circle_method"
+      relationship: "downstream application context only"
+    - concept: "character_and_Gauss_sums"
+      relationship: "downstream application context only"
+
+mode_a_intuition:
+  occurrence_crisis: |-
+    A list of unit-length complex terms can produce either a large resultant
+    or almost no resultant, even though every individual term has magnitude
+    one. The missing information is their relative phase.
+  primary: |-
+    Picture each term a_n e(f(n)) as an arrow in the complex plane. Adding the
+    arrows head-to-tail shows reinforcement when directions align and
+    cancellation when they wrap around the circle. This picture explains the
+    finite vector sum itself.
+  low_friction_example: |-
+    The four terms with phases 0, 1/4, 1/2, and 3/4 point east, north, west,
+    and south, so their complete sum is zero.
+  limitations:
+    - "The arrow picture does not guarantee cancellation for an arbitrary phase."
+    - "It does not prove a Van der Corput or Weyl estimate."
+    - "It does not turn one small sum into a randomness or equidistribution certificate."
+
+mapping_boundary:
+  status: "human_approved"
+  valid_uses:
+    - "visualizing finite complex-vector reinforcement and cancellation"
+    - "explaining the triangle-inequality trivial bound"
+    - "visualizing complete roots-of-unity cancellation as a closed polygon"
+  invalid_inferences:
+    - "Cancellation is not automatic; it depends on phase and coefficient structure."
+    - "One small exponential sum does not establish randomness or equidistribution."
+    - "Weyl's criterion requires every nonzero integer frequency, not one selected frequency."
+    - "A large sum may indicate resonance or arithmetic structure but does not identify that structure."
+    - "Van der Corput and Weyl estimates require theorem-specific hypotheses."
+    - "Quantum interference is only an analogy unless a quantum state and observable are defined."
+    - "Cryptographic randomness or security cannot be certified from one or a few exponential sums."
+    - "No LLM hidden-state sequence is established as an analytic-number-theory phase sequence."
+    - "A finite audit does not validate asymptotic cancellation, Weyl's criterion, or a general Van der Corput bound."
+
+common_misconceptions:
+  - "e(t) means exp(2*pi*i*t), not exp(i*t)."
+  - "The geometric quotient formula cannot be substituted at integral alpha because its denominator is zero."
+  - "Complete cancellation needs N not dividing k; coprimality of N and k is not required."
+  - "Many unit arrows do not necessarily cancel."
+  - "A zero total need not arise from pairwise cancellation."
+  - "Phase modulo one does not mean the index itself is reduced modulo N."
+  - "The triangle bound is not normally an equality; equality reflects aligned weighted phases."
+  - "A finite exponential sum has no infinite-series convergence issue."
+  - "One numerical experiment cannot prove an asymptotic theorem."
+  - "A physical, quantum, cryptographic, or LLM analogy is not a mathematical identification."
+
+definition_restatement_hook:
+  prompt: "State the definition of a finite exponential sum, including the exact normalization of e(t), the finiteness of I, the coefficient type, and the mod-one phase convention."
+  prompt_zh: "请完整复述有限指数和定义：必须包含 e(t) 的精确归一化、I 的有限性、系数类型和相位模 1。"
+  required_elements:
+    - "e(t)=exp(2*pi*i*t)"
+    - "I is a finite integer index set"
+    - "a_n are complex weights and the unweighted case has a_n=1"
+    - "f(n) is a real phase considered modulo one"
+    - "the universal bound |S|<=sum|a_n|"
+
+forcing_question_plan:
+  - "Why does e(t+1)=e(t), and what does that say about phase modulo one?"
+  - "How does the complex triangle inequality give the universal trivial bound?"
+  - "Why is the geometric quotient formula illegal when alpha is integral?"
+  - "Why does the case N=6, k=2 cancel even though gcd(N,k)>1?"
+  - "Why does one zero exponential sum fail to prove randomness or Weyl's criterion?"
+
+teaching_flow:
+  explanation_before_questioning: true
+  intuition_before_formal_definition: true
+  one_question_per_interactive_turn: true
+  repair_once_before_correction: true
+  covers_all_sub_topics: true
+  definition_restatement_required: true
+  exam_agent_handoff: |-
+    After all subtopics and the definition restatement are covered, hand off
+    only classroom evidence and traps about normalization, the integral-alpha
+    denominator, N-divisibility versus coprimality, and one-frequency
+    overclaiming. Do not report classroom_passed or student mastery here.
+  spaced_review_handoff: |-
+    If a future Exam Agent reports classroom_passed, emit only a
+    placeholder_not_written review handoff unless a separate Human-approved
+    scheduler task authorizes a state write. Revisit one roots-of-unity case,
+    one weighted triangle-bound case, and one invalid inference.
+  current_blocker: |-
+    Exact canonical prerequisite identities for finite geometric sums and
+    basic Fourier phase language do not safely resolve from the authorized
+    split-roadmap evidence.
+
+tool_truthfulness:
+  tool_status: "run_with_log"
+  capability: "deterministic_calculation"
+  tool_family: "Python standard library"
+  audit_scope: "declared_finite_exponential_sum_identities_and_bounds"
+  script_ref: ".ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/AUDITS/ANALYTIC_NT-688.py"
+  input_ref: ".ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/INPUTS/ANALYTIC_NT-688.json"
+  output_ref: ".ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/ANALYTIC_NT-688.json"
+  environment_ref: ".ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/ENVIRONMENT/python.yml"
+  log_ref: ".ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/ANALYTIC_NT-688.log"
+  report_ref: null
+  error_ref: null
+  timestamp: "2026-07-14T08:15:20Z"
+  tolerance: 1.0e-12
+  limitations:
+    - "The audit checks only declared finite examples using binary64 complex arithmetic."
+    - "It does not validate a general Van der Corput bound or Weyl's criterion."
+    - "It does not validate asymptotic cancellation, sequence randomness, or equidistribution."
+    - "It does not validate cryptographic security or quantum-information claims."
+    - "It does not validate near-resonance conditioning, infinite sums, or convergence claims."
+
 code_implementation: |
-  import torch
-  import numpy as np
-  
-  def compute_baseline():
-      signal = torch.ones(10, dtype=torch.float32)
-      return torch.sum(signal).item()
+  import cmath
+  import math
+
+  def e(t):
+      return cmath.exp(2j * math.pi * t)
+
+  def finite_exponential_sum(weights, phases):
+      if len(weights) != len(phases):
+          raise ValueError("weights and phases must have equal length")
+      return sum((a * e(phase) for a, phase in zip(weights, phases)), 0j)
+
+  def linear_phase_sum(N, alpha):
+      return sum((e(n * alpha) for n in range(N)), 0j)
+
 v8_sanity_audit:
+  status: "run_with_log"
+  execution_claim: "bounded_finite_audit_only"
+  script_ref: ".ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/AUDITS/ANALYTIC_NT-688.py"
+  audit_scope: "declared_finite_exponential_sum_identities_and_bounds"
+  tested_properties:
+    - "complete roots-of-unity cancellation for five declared N,k pairs with N not dividing k"
+    - "finite linear geometric-sum identity for four declared nonintegral rational phases"
+    - "triangle-inequality bound for aligned, cancelling, and complex-weight examples"
+    - "N=1, integral-alpha, and all-zero-weight edge cases"
+  explicitly_not_validated:
+    - "general_van_der_Corput_bound"
+    - "Weyl_criterion"
+    - "asymptotic_cancellation"
+    - "sequence_randomness"
+    - "cryptographic_security"
+    - "quantum_information_claim"
+    - "near_resonance_numerical_conditioning"
+    - "infinite_sum_or_convergence_claim"
   sympy_pseudo_code: |
-    import sympy as sp
-    
-    x = sp.Symbol('x')
-    test_expr = sp.simplify((x**2 - x**2) * 5)
-    assert test_expr == 0
+    import cmath
+    import math
+
+    def e(t):
+        return cmath.exp(2j * math.pi * t)
+
+    tolerance = 1e-12
+    for N, k in [(2, 1), (3, 1), (4, 1), (4, 2), (6, 2)]:
+        assert k % N != 0
+        assert abs(sum(e(n * k / N) for n in range(N))) <= tolerance
+
+    N, alpha = 4, 1 / 7
+    direct = sum(e(n * alpha) for n in range(N))
+    closed = (1 - e(N * alpha)) / (1 - e(alpha))
+    assert abs(direct - closed) <= tolerance
+
+bridge_certification:
+  stage: 6
+  status: "manual_review_required"
+  certified_endpoint: false
+  locally_passed_checks:
+    - "canonical identity and split-roadmap alias n_688 resolve"
+    - "Human-approved MathLane_A routing is recorded"
+    - "formal bilingual content and twelve coherent subtopics are present"
+    - "teaching-flow hooks, misconceptions, and bounded Mode A intuition are present"
+    - "concept-relevant durable finite audit evidence exists"
+    - "all run_with_log script, input, output, environment, and log refs resolve"
+  blocking_reasons:
+    - "Exact canonical prerequisite identities for finite geometric sums and basic Fourier phase language remain unresolved."
+    - "ChatGPT has not yet accepted the exact candidate head and certification dossier."
+  p3_reopened: false
+  bridge_generated: false
