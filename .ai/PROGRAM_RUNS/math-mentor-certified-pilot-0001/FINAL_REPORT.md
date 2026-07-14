@@ -7,6 +7,7 @@ source_head: "b3ee031488be07748b1cbdfc19b8926b6caaa6db"
 work_branch: "codex/math-mentor-certified-pilot"
 prior_candidate_head: "e1f1be0eb9fba51ebfe36f4bd10de3d8d7b52520"
 correction_business_head: "fd77746c3eba301210fb9b7e9c4f4ab168f99b40"
+evidence_head: "7e4e915cdac282df5fdbda56a2e8dc018c28ac7e"
 pilot_nodes:
   - "COMPLEX_ANALYSIS-418"
   - "PDE-487"

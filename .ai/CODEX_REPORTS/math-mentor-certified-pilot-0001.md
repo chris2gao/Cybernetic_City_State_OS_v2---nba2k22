@@ -5,6 +5,8 @@ Status is `complete_awaiting_chatgpt_semantic_review`, not certified.
 
 Correction business head:
 `fd77746c3eba301210fb9b7e9c4f4ab168f99b40`.
+Committed evidence head:
+`7e4e915cdac282df5fdbda56a2e8dc018c28ac7e`.
 
 - Human pilot-only bindings for `n_487/PDE-487` and `n_486/PDE-486` are recorded
   with `production_effect: none`; historical P0 conflicts remain unmodified.
