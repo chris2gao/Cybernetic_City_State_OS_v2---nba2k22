@@ -1,0 +1,86 @@
+schema_version: "1.0.0"
+namespace_name: "https://github.com/chris2gao/Cybernetic_City_State_OS_v2---teacher#Math_Mentor/control-plane/v1"
+namespace_uuid: "e70d71ef-5916-5991-9e88-9e93fc07c31e"
+uuid_algorithm: "RFC4122_UUIDv5_SHA1"
+
+scope_root: "08_Domain_Applications/Math_Mentor"
+db_root: "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB"
+baseline:
+  expected_head: "764d03d7d0a9ad553f4f3868699b06d9de5553ea"
+  tracked_scope_path_count: 1014
+  tracked_scope_path_set_sha256: "334712813f7b66830a9190b1dbdf2c4221f0f93aba29e61f76a85c33dfbadc1f"
+  db_tracked_count: 912
+  root_direct_count: 683
+  nested_excluded_count: 229
+  root_candidate_count: 667
+  root_bridge_count: 14
+  root_schema_count: 1
+  root_script_count: 1
+
+stage0_inventory:
+  source_head: "cefd164472ecbb7095c1aa2c243c34fbec5b51f4"
+  limitations:
+    - "non_authoritative_evidence_only"
+    - "omits_level_2_from_identity_aliases"
+    - "contains_filename_suffix_guesses"
+    - "content_stale_at_current_head"
+  files:
+    - ".ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/corpus_manifest.json"
+    - ".ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/node_classification.json"
+    - ".ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/structural_exclusions.json"
+    - ".ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/parse_report.json"
+    - ".ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/identity_aliases.json"
+    - ".ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/duplicates_missing_conflicts.json"
+
+split_roadmaps:
+  - level: 1
+    path: "08_Domain_Applications/Math_Mentor/学习期prompt/数学知识路线图_第一层基础工具.yaml"
+    expected_count: 120
+    expected_first: 1
+    expected_last: 120
+    sha256: "e7e6ed866272153dbcad5110f707dc68e753c4083418e0a4b85d7d807dea3275"
+  - level: 2
+    path: "08_Domain_Applications/Math_Mentor/学习期prompt/数学知识路线图_ 第二层核心基础.yaml"
+    expected_count: 141
+    expected_first: 121
+    expected_last: 261
+    sha256: "d8d3ecba1d86959b93f95d7f113b4e478bc342369f7f9b04a3a38b7eb70a3b6b"
+  - level: 3
+    path: "08_Domain_Applications/Math_Mentor/学习期prompt/数学知识路线图_第三层大学核心.yaml"
+    expected_count: 128
+    expected_first: 262
+    expected_last: 389
+    sha256: "6d14882539a4f6ae66608d2aa2557b5f7715abcc11c4eb3614ff339c2e162374"
+  - level: 4
+    path: "08_Domain_Applications/Math_Mentor/学习期prompt/数学知识路线图_第四层进阶分析.yaml"
+    expected_count: 90
+    expected_first: 390
+    expected_last: 479
+    sha256: "9fd03ad00c73ee7671371aa97a10d8d7ffcf2e42d448c7ae63e2d5c2c8a319cf"
+  - level: 5
+    path: "08_Domain_Applications/Math_Mentor/学习期prompt/数学知识路线图_第五层专业方向.yaml"
+    expected_count: 152
+    expected_first: 480
+    expected_last: 631
+    sha256: "43e106f7f76d7a61e2bffca05f29814531c21a8b7064e3f8a5db930409427b81"
+  - level: 6
+    path: "08_Domain_Applications/Math_Mentor/学习期prompt/数学知识路线图_第六层前沿领域.yaml"
+    expected_count: 139
+    expected_first: 632
+    expected_last: 770
+    sha256: "b88f72f6c0e0838c2993e59f00c07123bb839ca93f4781217e69b90b2c649397"
+
+forbidden_inputs:
+  - "08_Domain_Applications/Math_Mentor/学习期prompt/数学知识路线图_全部.yaml"
+
+resolution_policy:
+  prohibited_methods:
+    - "filename_suffix"
+    - "basename_match"
+    - "fuzzy_title_match"
+    - "staging_identity"
+  required_approver: "Human Speaker"
+  fail_closed_consumers:
+    - "teaching"
+    - "bridge"
+    - "coordinator"

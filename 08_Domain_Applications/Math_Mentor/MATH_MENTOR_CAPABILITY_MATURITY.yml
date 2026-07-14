@@ -1,0 +1,426 @@
+schema_version: "1.0.0"
+registry_id: "math-mentor-capability-maturity-v1"
+registry_role: "derived_evidence_index_not_activation"
+operational_activation: false
+
+baseline:
+  source_head: "764d03d7d0a9ad553f4f3868699b06d9de5553ea"
+  authority_registry_ref: "08_Domain_Applications/Math_Mentor/MATH_MENTOR_AUTHORITY_REGISTRY.yml"
+
+evidence_tiers:
+  T0:
+    rank: 0
+    meaning: "No implementation or validation evidence; absence, prohibition, or an unimplemented idea."
+  T1:
+    rank: 1
+    meaning: "A repository contract, design, schema, prompt, source artifact, or implementation artifact exists; execution is not established."
+  T2:
+    rank: 2
+    meaning: "Deterministic implementation has focused static, fixture, or unit-test evidence for the named scope; no runtime integration is established."
+  T3:
+    rank: 3
+    meaning: "Integration or real-session evidence exists over real inputs and any claimed persistence is evidenced; production operation is not established."
+  T4:
+    rank: 4
+    meaning: "Repeated production operation has audit, monitoring, rollback, and source-bound evidence."
+
+maturity_states:
+  absent:
+    minimum_evidence_tier: "T0"
+    maturity_rank: 0
+  planned:
+    minimum_evidence_tier: "T0"
+    maturity_rank: 0
+  specified:
+    minimum_evidence_tier: "T1"
+    maturity_rank: 1
+  implemented_unvalidated:
+    minimum_evidence_tier: "T1"
+    maturity_rank: 1
+  statically_validated:
+    minimum_evidence_tier: "T2"
+    maturity_rank: 2
+  integration_validated:
+    minimum_evidence_tier: "T3"
+    maturity_rank: 3
+  operational:
+    minimum_evidence_tier: "T4"
+    maturity_rank: 4
+
+lifecycle_states:
+  - "current"
+  - "planned"
+  - "blocked"
+  - "deprecated"
+  - "frozen"
+
+activation_states:
+  - "manual_only"
+  - "read_only"
+  - "human_gated"
+  - "inactive"
+  - "stale_historical"
+  - "blocked"
+  - "prohibited"
+
+global_invariants:
+  - "Maturity is an evidence statement, not activation or mutation authority."
+  - "A maturity state cannot exceed the rank supported by evidence_tier."
+  - "Evidence is bound to the source head and exact scope named by its reference."
+  - "A stale result can remain historical evidence but cannot validate the current head."
+  - "Mode B semantic review is never a machine pass."
+  - "No documentation, schema, prompt, fixture, or static test activates runtime, Coordinator, UI, learning-state writes, or scheduler writes."
+  - "classroom_passed is not graduated; no R5 or legacy table state may create production graduation semantics."
+
+capabilities:
+  - capability_id: "manual_teacher_initialization"
+    lifecycle_state: "current"
+    maturity_state: "specified"
+    evidence_tier: "T1"
+    activation_state: "manual_only"
+    authority_action_id: "read_review_evidence"
+    evidence_refs:
+      - "08_Domain_Applications/Math_Mentor/TEACHER_INITIALIZATION_FLOW.md"
+      - "08_Domain_Applications/Math_Mentor/TEACHER_CONTEXT_LOADING_RULES.md"
+    allowed_claims: ["manual-chat initialization contract exists"]
+    forbidden_claims: ["runtime initializer exists", "production teacher process is active"]
+    known_limits: ["documentation control layer only"]
+
+  - capability_id: "minimal_context_loading"
+    lifecycle_state: "current"
+    maturity_state: "specified"
+    evidence_tier: "T1"
+    activation_state: "manual_only"
+    authority_action_id: "read_review_evidence"
+    evidence_refs:
+      - "08_Domain_Applications/Math_Mentor/TEACHER_CONTEXT_LOADING_RULES.md"
+      - "08_Domain_Applications/Math_Mentor/08_Math_Mentor_Coordinator_Prompt.md"
+    allowed_claims: ["lazy-loading policy is specified"]
+    forbidden_claims: ["automated context loader is operational"]
+    known_limits: ["model follows the contract manually"]
+
+  - capability_id: "mathlane_routing"
+    lifecycle_state: "current"
+    maturity_state: "specified"
+    evidence_tier: "T1"
+    activation_state: "manual_only"
+    authority_action_id: "read_review_evidence"
+    evidence_refs:
+      - "08_Domain_Applications/Math_Mentor/Universal_Layer_Execution_Protocol.md"
+      - "08_Domain_Applications/Math_Mentor/V9.1_教学流程系统规范_Teaching_Flow_Spec.md"
+    allowed_claims: ["MathLane_A and MathLane_B routing rules exist"]
+    forbidden_claims: ["all nodes have accepted routing", "routing is a production service"]
+    known_limits: ["ambiguous routing remains Human or semantic review work"]
+
+  - capability_id: "lesson_plan_agent_contract"
+    lifecycle_state: "current"
+    maturity_state: "specified"
+    evidence_tier: "T1"
+    activation_state: "manual_only"
+    authority_action_id: "read_review_evidence"
+    evidence_refs:
+      - "08_Domain_Applications/Math_Mentor/LESSON_PLAN_SCHEMA.md"
+      - "08_Domain_Applications/Math_Mentor/TEACHING_AGENT_CONTRACTS.md"
+    allowed_claims: ["lesson-plan and agent handoff contracts exist"]
+    forbidden_claims: ["autonomous agent pipeline is operational"]
+    known_limits: ["manual-chat contract only"]
+
+  - capability_id: "guided_teaching_flow"
+    lifecycle_state: "current"
+    maturity_state: "specified"
+    evidence_tier: "T1"
+    activation_state: "manual_only"
+    authority_action_id: "read_review_evidence"
+    evidence_refs:
+      - "08_Domain_Applications/Math_Mentor/V9.1_教学流程系统规范_Teaching_Flow_Spec.md"
+      - "08_Domain_Applications/Math_Mentor/学习期prompt/Socratic_Router_Prompt_v7.0.md"
+    allowed_claims: ["teach-before-interrogation behavior is specified"]
+    forbidden_claims: ["student mastery is established", "runtime session monitoring exists"]
+    known_limits: ["no runtime session executor"]
+
+  - capability_id: "exam_classroom_assessment"
+    lifecycle_state: "current"
+    maturity_state: "specified"
+    evidence_tier: "T1"
+    activation_state: "manual_only"
+    authority_action_id: "read_review_evidence"
+    evidence_refs:
+      - "08_Domain_Applications/Math_Mentor/学习期prompt/Exam_Agent_Prompt.md"
+      - "08_Domain_Applications/Math_Mentor/EXAM_HANDOFF_STATE_VECTOR_SCHEMA.md"
+    allowed_claims: ["classroom assessment contract exists"]
+    forbidden_claims: ["classroom_passed means graduated", "Exam writes persisted state"]
+    known_limits: ["manual assessment contract without persistence"]
+
+  - capability_id: "teaching_flow_static_validator"
+    lifecycle_state: "current"
+    maturity_state: "implemented_unvalidated"
+    evidence_tier: "T1"
+    activation_state: "read_only"
+    authority_action_id: "run_static_control_plane_validation"
+    evidence_refs:
+      - "08_Domain_Applications/Math_Mentor/tests/teaching_flow_static_validator.py"
+      - "08_Domain_Applications/Math_Mentor/tests/results/teaching_flow_static_validation_result.json"
+    allowed_claims: ["deterministic text and fixture validator exists"]
+    forbidden_claims: ["current head is validated by the committed stale result", "runtime teaching is validated"]
+    known_limits: ["committed result assumes an older head", "no LLM or runtime session execution"]
+
+  - capability_id: "node_executable_sanity_evaluator"
+    lifecycle_state: "current"
+    maturity_state: "implemented_unvalidated"
+    evidence_tier: "T1"
+    activation_state: "human_gated"
+    authority_action_id: "run_static_control_plane_validation"
+    evidence_refs:
+      - "06_Silicon_Index/factory_pipeline/sandbox_evaluator.py"
+      - "06_Silicon_Index/factory_pipeline/bulk_evaluator.py"
+      - "06_Silicon_Index/factory_pipeline/test_evaluator_status.py"
+    allowed_claims: ["executable sanity evaluator and focused tests exist"]
+    forbidden_claims: ["full mathematical correctness", "Mode B machine pass", "shape-only evidence proves a node"]
+    known_limits: ["execution scope is concept-specific", "current task does not run node evaluators"]
+
+  - capability_id: "mode_b_semantic_review"
+    lifecycle_state: "current"
+    maturity_state: "specified"
+    evidence_tier: "T1"
+    activation_state: "human_gated"
+    authority_action_id: "read_review_evidence"
+    evidence_refs:
+      - "08_Domain_Applications/Math_Mentor/Universal_Layer_Execution_Protocol.md"
+      - "08_Domain_Applications/Math_Mentor/NODE_QUALITY_AUDIT_PLAN.md"
+    allowed_claims: ["semantic review workflow is specified"]
+    forbidden_claims: ["semantic review is machine proof", "all Mode B nodes are accepted"]
+    known_limits: ["requires model/Human semantic judgment"]
+
+  - capability_id: "stage0_corpus_inventory"
+    lifecycle_state: "frozen"
+    maturity_state: "statically_validated"
+    evidence_tier: "T2"
+    activation_state: "stale_historical"
+    evidence_source_head: "cefd164472ecbb7095c1aa2c243c34fbec5b51f4"
+    stale_at_current_baseline: true
+    authority_action_id: "read_review_evidence"
+    evidence_refs:
+      - ".ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/MANIFEST.yml"
+      - ".ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/CHECKPOINTS/stage-0.yml"
+      - ".ai/CODEX_REPORTS/math-mentor-knowledge-completion-stage-0-inventory-validation-0001.md"
+    allowed_claims: ["Stage 0 produced validated inventory artifacts at its named source head"]
+    forbidden_claims: ["Stage 0 artifacts are authoritative for the current head", "Stage 0 established mathematical readiness"]
+    known_limits:
+      - "source head cefd164472ecbb7095c1aa2c243c34fbec5b51f4 differs from current baseline"
+      - "identity_aliases omitted the exact Level 2 roadmap"
+      - "historical filename-suffix guesses are non-authoritative"
+
+  - capability_id: "p0_identity_primitives"
+    lifecycle_state: "current"
+    maturity_state: "statically_validated"
+    evidence_tier: "T2"
+    activation_state: "read_only"
+    authority_action_id: "run_static_control_plane_validation"
+    evidence_refs:
+      - "08_Domain_Applications/Math_Mentor/p0_control_plane/identity.py"
+      - "08_Domain_Applications/Math_Mentor/p0_control_plane/identity_namespace.yml"
+      - "08_Domain_Applications/Math_Mentor/p0_control_plane/registry_builder.py"
+      - "08_Domain_Applications/Math_Mentor/CANONICAL_NODE_IDENTITY_SCHEMA.md"
+      - "08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_identity.py"
+      - "08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_registry_builder.py"
+      - "08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_validate.py"
+    allowed_claims: ["deterministic UUIDv5 identity primitives and frozen-source registry materialization pass static and live-corpus tests"]
+    forbidden_claims: ["an alias is the canonical primary key", "identity resolution proves semantic equivalence"]
+    known_limits: ["bootstrap materialization only", "prior accepted-crosswalk migration adapter is not implemented", "Human-authenticated semantic resolution adapter is not implemented"]
+
+  - capability_id: "p0_normalization_adapter"
+    lifecycle_state: "current"
+    maturity_state: "statically_validated"
+    evidence_tier: "T2"
+    activation_state: "read_only"
+    authority_action_id: "run_static_control_plane_validation"
+    evidence_refs:
+      - "08_Domain_Applications/Math_Mentor/p0_control_plane/normalization.py"
+      - "08_Domain_Applications/Math_Mentor/NORMALIZED_NODE_SCHEMA.json"
+      - "08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_normalization.py"
+    allowed_claims: ["four observed schema eras can be structurally normalized without source mutation"]
+    forbidden_claims: ["normalization repairs nodes", "normalization grants teaching admission"]
+    known_limits: ["structural adapter only", "consumer_allowed remains false"]
+
+  - capability_id: "p0_authority_index"
+    lifecycle_state: "current"
+    maturity_state: "specified"
+    evidence_tier: "T1"
+    activation_state: "read_only"
+    authority_action_id: "read_review_evidence"
+    evidence_refs:
+      - "08_Domain_Applications/Math_Mentor/MATH_MENTOR_AUTHORITY_REGISTRY.yml"
+    allowed_claims: ["authority sources and protected actions are indexed"]
+    forbidden_claims: ["registry authenticates Human identity", "registry creates authority"]
+    known_limits: ["derived non-authorizing index"]
+
+  - capability_id: "p0_authorization_verifier"
+    lifecycle_state: "current"
+    maturity_state: "statically_validated"
+    evidence_tier: "T2"
+    activation_state: "inactive"
+    authority_action_id: "run_static_control_plane_validation"
+    evidence_refs:
+      - "08_Domain_Applications/Math_Mentor/MATH_MENTOR_AUTHORITY_REGISTRY.yml"
+      - "08_Domain_Applications/Math_Mentor/AUTHORIZATION_CONTEXT_SCHEMA.json"
+      - "08_Domain_Applications/Math_Mentor/p0_control_plane/authorization.py"
+      - "08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_authorization.py"
+    allowed_claims: ["fail-closed authorization primitives pass deterministic fixture, forgery, scope, expiry, and JSON Schema tests", "rejects a nonce present in a host-supplied replay snapshot"]
+    forbidden_claims: ["local code authenticates the Human", "protected action is activated"]
+    known_limits: ["production authentication remains an external host input", "replay checking is limited to a host-supplied read-only snapshot", "one_time records host intent but does not implement nonce consumption or one-time enforcement", "atomic nonce consumption and persistence are not implemented", "cross-process replay protection and trusted-decision reauthentication are not implemented", "no production transport or secret exists"]
+
+  - capability_id: "p0_admission_gate"
+    lifecycle_state: "current"
+    maturity_state: "statically_validated"
+    evidence_tier: "T2"
+    activation_state: "inactive"
+    authority_action_id: "run_static_control_plane_validation"
+    evidence_refs:
+      - "08_Domain_Applications/Math_Mentor/p0_control_plane/admission.py"
+      - "08_Domain_Applications/Math_Mentor/p0_control_plane/admission_evidence.py"
+      - "08_Domain_Applications/Math_Mentor/NORMALIZED_NODE_SCHEMA.json"
+      - "08_Domain_Applications/Math_Mentor/CANONICAL_NODE_IDENTITY_SCHEMA.md"
+      - "08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_admission.py"
+    allowed_claims: ["pure read-only admission evaluation requires independently sealed authorization and admission evidence and passes deterministic fail-closed fixture tests"]
+    forbidden_claims: ["status promotion is applied", "Coordinator consumption is active"]
+    known_limits: ["evaluation only", "production evidence provider is deliberately inactive", "test evidence and environment mode are external host or test-composition inputs, not model-payload authority", "production evidence-provider integration is not implemented", "bridge admission remains unimplemented and Human-gated"]
+
+  - capability_id: "legacy_review_read_only_import"
+    lifecycle_state: "current"
+    maturity_state: "specified"
+    evidence_tier: "T1"
+    activation_state: "read_only"
+    authority_action_id: "read_review_evidence"
+    evidence_refs:
+      - "08_Domain_Applications/Math_Mentor/MATH_MENTOR_DEPRECATION_MAP.yml"
+      - "08_Domain_Applications/Math_Mentor/复习巩固期总调度prompt.md"
+      - "08_Domain_Applications/Math_Mentor/复习执行协议.md"
+    allowed_claims: ["legacy review artifacts may be imported as read-only historical evidence"]
+    forbidden_claims: ["legacy prompt execution", "legacy table write", "R5 to graduated production promotion"]
+    known_limits: ["import cannot mutate or activate legacy semantics"]
+
+  - capability_id: "deterministic_tool_handoff"
+    lifecycle_state: "current"
+    maturity_state: "specified"
+    evidence_tier: "T1"
+    activation_state: "human_gated"
+    authority_action_id: "run_static_control_plane_validation"
+    evidence_refs:
+      - "08_Domain_Applications/Math_Mentor/DETERMINISTIC_CALCULATION_HANDOFF.md"
+      - "08_Domain_Applications/Math_Mentor/TOOL_TRUTHFULNESS_POLICY.md"
+    allowed_claims: ["future run_with_log handoff contract exists"]
+    forbidden_claims: ["a deterministic tool ran without a log", "P0 activates tool runtime"]
+    known_limits: ["no Math Mentor tool runner is activated"]
+
+  - capability_id: "visualization_or_app_runtime"
+    lifecycle_state: "planned"
+    maturity_state: "planned"
+    evidence_tier: "T1"
+    activation_state: "inactive"
+    authority_action_id: "activate_runtime_or_production_coordinator"
+    evidence_refs:
+      - "08_Domain_Applications/Math_Mentor/VISUALIZATION_AND_APP_CAPABILITY_PLAN.md"
+    allowed_claims: ["future visualization/app plan exists"]
+    forbidden_claims: ["UI exists", "visualization was rendered", "app runtime is active"]
+    known_limits: ["no frontend or app work is in P0 scope"]
+
+  - capability_id: "student_learning_state_schema"
+    lifecycle_state: "current"
+    maturity_state: "specified"
+    evidence_tier: "T1"
+    activation_state: "inactive"
+    authority_action_id: "write_learning_state_or_review_schedule"
+    evidence_refs:
+      - "08_Domain_Applications/Math_Mentor/STUDENT_LEARNING_STATE_SCHEMA.md"
+    allowed_claims: ["future state shape is specified"]
+    forbidden_claims: ["persistent state writer exists"]
+    known_limits: ["documentation contract only"]
+
+  - capability_id: "spaced_review_scheduler_schema"
+    lifecycle_state: "current"
+    maturity_state: "specified"
+    evidence_tier: "T1"
+    activation_state: "inactive"
+    authority_action_id: "write_learning_state_or_review_schedule"
+    evidence_refs:
+      - "08_Domain_Applications/Math_Mentor/SPACED_REVIEW_SCHEDULER_SCHEMA.md"
+    allowed_claims: ["future scheduler shape is specified"]
+    forbidden_claims: ["scheduler writer exists", "review row was persisted"]
+    known_limits: ["placeholder-only until a separate Human-authorized writer task"]
+
+  - capability_id: "production_coordinator_runtime"
+    lifecycle_state: "blocked"
+    maturity_state: "absent"
+    evidence_tier: "T0"
+    activation_state: "blocked"
+    authority_action_id: "activate_runtime_or_production_coordinator"
+    evidence_refs: []
+    allowed_claims: ["production Coordinator is not active"]
+    forbidden_claims: ["Coordinator runtime is active", "manual prompt is a runtime service"]
+    known_limits: ["separate Human-approved runtime task required"]
+
+  - capability_id: "learning_state_writer"
+    lifecycle_state: "blocked"
+    maturity_state: "absent"
+    evidence_tier: "T0"
+    activation_state: "blocked"
+    authority_action_id: "write_learning_state_or_review_schedule"
+    evidence_refs: []
+    allowed_claims: ["learning-state writes are not implemented"]
+    forbidden_claims: ["state write occurred", "legacy table is persisted state"]
+    known_limits: ["separate privacy-aware writer task required"]
+
+  - capability_id: "spaced_review_scheduler_writer"
+    lifecycle_state: "blocked"
+    maturity_state: "absent"
+    evidence_tier: "T0"
+    activation_state: "blocked"
+    authority_action_id: "write_learning_state_or_review_schedule"
+    evidence_refs: []
+    allowed_claims: ["scheduler writes are not implemented"]
+    forbidden_claims: ["scheduler write occurred", "legacy scheduler may write"]
+    known_limits: ["separate Human-approved writer task required"]
+
+  - capability_id: "frontend_or_ui"
+    lifecycle_state: "blocked"
+    maturity_state: "absent"
+    evidence_tier: "T0"
+    activation_state: "blocked"
+    authority_action_id: "activate_runtime_or_production_coordinator"
+    evidence_refs: []
+    allowed_claims: ["P0 contains no frontend or UI"]
+    forbidden_claims: ["student UI exists", "dashboard is active", "interactive app was built"]
+    known_limits: ["explicitly out of P0 scope"]
+
+  - capability_id: "coordinator_bridge_consumption"
+    lifecycle_state: "blocked"
+    maturity_state: "absent"
+    evidence_tier: "T0"
+    activation_state: "blocked"
+    authority_action_id: "formal_coordinator_bridge_admission"
+    evidence_refs: []
+    allowed_claims: ["formal bridge consumption is not active"]
+    forbidden_claims: ["legacy bridge is consumable", "pending bridge is formally admitted"]
+    known_limits: ["Stage 8 acceptance and integration evidence required"]
+
+  - capability_id: "full_corpus_mathematical_correctness"
+    lifecycle_state: "blocked"
+    maturity_state: "absent"
+    evidence_tier: "T0"
+    activation_state: "prohibited"
+    authority_action_id: "machine_pass_mode_b"
+    evidence_refs: []
+    allowed_claims: ["no full-corpus correctness claim exists"]
+    forbidden_claims: ["parse success proves mathematics", "all nodes are correct"]
+    known_limits: ["requires scoped mathematical review and cannot be machine-inferred"]
+
+  - capability_id: "classroom_pass_to_graduated_transition"
+    lifecycle_state: "blocked"
+    maturity_state: "absent"
+    evidence_tier: "T0"
+    activation_state: "prohibited"
+    authority_action_id: "promote_classroom_pass_directly_to_graduated"
+    evidence_refs: []
+    allowed_claims: ["classroom_passed and graduated remain distinct"]
+    forbidden_claims: ["R5 means graduated", "classroom_passed means graduated"]
+    known_limits: ["graduation requires persisted review evidence under the current contract"]
