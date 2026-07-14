@@ -156,6 +156,7 @@ def run_audit(payload: dict) -> dict:
     all_results = roots_results + geometric_results + triangle_results + edge_results
     return {
         "audit_id": payload["audit_id"],
+        "timestamp": str(payload["execution_timestamp"]),
         "status": "passed",
         "scope": "declared_finite_exponential_sum_identities_and_bounds",
         "convention": payload["convention"],

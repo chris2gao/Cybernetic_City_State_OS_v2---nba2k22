@@ -76,6 +76,7 @@ def run_audit(payload: dict) -> dict:
         )
     return {
         "audit_id": payload["audit_id"],
+        "timestamp": str(payload["execution_timestamp"]),
         "status": "passed",
         "scope": "finite_Dirichlet_polynomial_product_and_convolution_identity",
         "case_count": len(case_results),

@@ -116,6 +116,7 @@ def run_audit(payload: dict, input_ref: str, output_ref: str, log_ref: str) -> d
 
     return {
         "audit_id": payload["audit_id"],
+        "timestamp": str(payload["execution_timestamp"]),
         "status": "passed",
         "scope": "finite_prime_counting_and_declared_sample_approximations",
         "finite_range": [0, finite_range_max],

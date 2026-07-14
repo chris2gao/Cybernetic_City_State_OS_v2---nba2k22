@@ -129,26 +129,6 @@ required_prerequisites:
       roadmap_alias: "n_217"
       relationship: "supplies the reduced residue system and multiplication on units"
       verification: "identity_resolved_but_source_node_not_formally_complete"
-    - node_id: "ABSTRACT_ALGEBRA-472"
-      file: "ABSTRACT_ALGEBRA-472.yaml"
-      roadmap_alias: "n_472"
-      relationship: "partial representation-theory and Character Theory context only"
-      verification: "partial_support_not_an_exact_finite_abelian_group_character_node"
-    - node_id: "ABSTRACT_ALGEBRA-473"
-      file: "ABSTRACT_ALGEBRA-473.yaml"
-      roadmap_alias: "n_473"
-      relationship: "partial group-homomorphism context only"
-      verification: "partial_support_not_an_exact_finite_abelian_group_character_node"
-    - node_id: "CALCULUS-277"
-      file: "CALCULUS-277.yaml"
-      roadmap_alias: "n_277"
-      relationship: "supplies scalar infinite-series convergence vocabulary"
-      verification: "partial_support_for_complex_absolute_convergence"
-    - node_id: "COMPLEX_ANALYSIS-431"
-      file: "COMPLEX_ANALYSIS-431.yaml"
-      roadmap_alias: "n_431"
-      relationship: "supplies power-series absolute and compact-subset uniform convergence vocabulary"
-      verification: "partial_support_for_general_complex_series"
     - node_id: "COMPLEX_ANALYSIS-420"
       file: "COMPLEX_ANALYSIS-420.yaml"
       roadmap_alias: "n_420"
@@ -164,11 +144,32 @@ required_prerequisites:
       roadmap_alias: "n_198"
       relationship: "supplies integer unique factorization for Euler-product decomposition"
       verification: "identity_resolved_but_source_node_not_formally_complete"
+  partial_support_only:
+    - node_id: "ABSTRACT_ALGEBRA-472"
+      file: "ABSTRACT_ALGEBRA-472.yaml"
+      roadmap_alias: "n_472"
+      relationship: "partial representation-theory and Character Theory context only"
+      limitation: "not an exact finite-abelian-group-character node; formal definition and prerequisites are missing and validation is review_required"
+    - node_id: "ABSTRACT_ALGEBRA-473"
+      file: "ABSTRACT_ALGEBRA-473.yaml"
+      roadmap_alias: "n_473"
+      relationship: "partial group-homomorphism context only"
+      limitation: "not an exact finite-abelian-group-character node; formal definition and prerequisites are missing and validation is review_required"
+    - node_id: "CALCULUS-277"
+      file: "CALCULUS-277.yaml"
+      roadmap_alias: "n_277"
+      relationship: "scalar infinite-series convergence vocabulary only"
+      limitation: "not a general complex-series absolute-convergence node; formal definition and prerequisites are missing and validation is review_required"
+    - node_id: "COMPLEX_ANALYSIS-431"
+      file: "COMPLEX_ANALYSIS-431.yaml"
+      roadmap_alias: "n_431"
+      relationship: "power-series absolute and compact-subset uniform convergence vocabulary only"
+      limitation: "not a general complex-series prerequisite; formal definition and prerequisites are missing and validation is review_required"
   unresolved_exact_identities:
     - concept: "finite_abelian_group_characters"
       evidence: "No one-to-one canonical split-roadmap teaching node resolves; n_472 and n_473 are incomplete partial contexts only."
     - concept: "complex_series_and_absolute_convergence"
-      evidence: "n_277 and n_431 are partial supports; same-batch n_692 must supply the scoped Dirichlet-series closure."
+      evidence: "n_277 and n_431 are incomplete partial supports. Same-batch n_692 now supplies the scoped Dirichlet-series closure, but no separate canonical node resolves the general complex-series prerequisite."
     - concept: "zeta_Euler_product_context"
       candidate_node_id: "ANALYTIC_NT-685"
       roadmap_alias: "n_685"
@@ -263,8 +264,10 @@ teaching_flow:
   current_blocker: |-
     The exact finite-abelian-group-character prerequisite has no one-to-one
     canonical node; zeta/Euler-product context n_685 remains unresolved and
-    uncertified; supporting prerequisite identities are not all formally
-    complete on the authorized source baseline.
+    uncertified; n_277/n_431 are incomplete partial convergence supports; and
+    exact identity supports n_202, n_203, n_204, n_217, n_420, n_428, and
+    n_198 all retain missing formal/prerequisite/mapping fields with review or
+    manual status on the authorized source baseline.
 
 tool_truthfulness:
   tool_status: "run_with_log"
@@ -359,9 +362,10 @@ bridge_certification:
     - "concept-relevant durable finite chi4 audit evidence exists"
     - "same-batch ANALYTIC_NT-692 is complete and its durable finite audit was independently re-executed by the parent integrator"
   blocking_reasons:
-    - "No exact canonical prerequisite node resolves for finite abelian group characters; n_472 and n_473 are incomplete partial contexts only."
+    - "No exact canonical prerequisite node resolves for finite abelian group characters; ABSTRACT_ALGEBRA-472/n_472 and ABSTRACT_ALGEBRA-473/n_473 are partial contexts with missing formal definitions/prerequisites and review_required validation."
+    - "No separate canonical prerequisite resolves general complex-series absolute convergence; CALCULUS-277/n_277 and COMPLEX_ANALYSIS-431/n_431 are incomplete partial supports, while same-batch ANALYTIC_NT-692 supplies only the scoped Dirichlet-series closure."
     - "ANALYTIC_NT-685/n_685 zeta and Euler-product context is explicitly unresolved and uncertified outside this batch."
-    - "Several identity-resolved supporting prerequisite nodes remain formally incomplete or review-required on the authorized source baseline."
+    - "Identity-resolved supports NUM_THEORY-008/n_202, NUM_THEORY-009/n_203, NUM_THEORY-010/n_204, NUM_THEORY-023/n_217, COMPLEX_ANALYSIS-420/n_420, COMPLEX_ANALYSIS-428/n_428, and NUM_THEORY-004/n_198 all retain missing formal definitions/prerequisites/mapping boundaries and review_required/manual readiness on the authorized baseline."
     - "ChatGPT has not yet accepted the exact candidate head and certification dossier."
   p3_reopened: false
   bridge_generated: false
