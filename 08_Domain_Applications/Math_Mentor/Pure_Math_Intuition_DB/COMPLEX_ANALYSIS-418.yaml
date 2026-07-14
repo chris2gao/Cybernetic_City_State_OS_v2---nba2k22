@@ -37,6 +37,9 @@ v8_sanity_audit:
     trig_form = sp.cos(theta) + sp.I * sp.sin(theta)
     assert sp.simplify(euler_form - trig_form) == 0
     assert sp.simplify(
+        sp.exp(sp.I * (theta + 2 * sp.pi)) - sp.exp(sp.I * theta)
+    ) == 0
+    assert sp.simplify(
         sp.exp(sp.I * alpha) * sp.exp(sp.I * beta)
         - sp.exp(sp.I * (alpha + beta))
     ) == 0
