@@ -265,9 +265,9 @@ capabilities:
       - "08_Domain_Applications/Math_Mentor/AUTHORIZATION_CONTEXT_SCHEMA.json"
       - "08_Domain_Applications/Math_Mentor/p0_control_plane/authorization.py"
       - "08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_authorization.py"
-    allowed_claims: ["fail-closed authorization primitives pass deterministic fixture, forgery, scope, replay, expiry, and JSON Schema tests"]
+    allowed_claims: ["fail-closed authorization primitives pass deterministic fixture, forgery, scope, expiry, and JSON Schema tests", "rejects a nonce present in a host-supplied replay snapshot"]
     forbidden_claims: ["local code authenticates the Human", "protected action is activated"]
-    known_limits: ["production authentication remains an external host input", "cross-process trusted-decision reauthentication is not implemented", "no production transport or secret exists"]
+    known_limits: ["production authentication remains an external host input", "replay checking is limited to a host-supplied read-only snapshot", "one_time records host intent but does not implement nonce consumption or one-time enforcement", "atomic nonce consumption and persistence are not implemented", "cross-process replay protection and trusted-decision reauthentication are not implemented", "no production transport or secret exists"]
 
   - capability_id: "p0_admission_gate"
     lifecycle_state: "current"
@@ -277,12 +277,13 @@ capabilities:
     authority_action_id: "run_static_control_plane_validation"
     evidence_refs:
       - "08_Domain_Applications/Math_Mentor/p0_control_plane/admission.py"
+      - "08_Domain_Applications/Math_Mentor/p0_control_plane/admission_evidence.py"
       - "08_Domain_Applications/Math_Mentor/NORMALIZED_NODE_SCHEMA.json"
       - "08_Domain_Applications/Math_Mentor/CANONICAL_NODE_IDENTITY_SCHEMA.md"
       - "08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_admission.py"
-    allowed_claims: ["pure read-only admission evaluation passes deterministic fail-closed fixture tests"]
+    allowed_claims: ["pure read-only admission evaluation requires independently sealed authorization and admission evidence and passes deterministic fail-closed fixture tests"]
     forbidden_claims: ["status promotion is applied", "Coordinator consumption is active"]
-    known_limits: ["evaluation only", "production evidence-provider integration is not implemented", "bridge admission remains unimplemented and Human-gated"]
+    known_limits: ["evaluation only", "production evidence provider is deliberately inactive", "test evidence and environment mode are external host or test-composition inputs, not model-payload authority", "production evidence-provider integration is not implemented", "bridge admission remains unimplemented and Human-gated"]
 
   - capability_id: "legacy_review_read_only_import"
     lifecycle_state: "current"

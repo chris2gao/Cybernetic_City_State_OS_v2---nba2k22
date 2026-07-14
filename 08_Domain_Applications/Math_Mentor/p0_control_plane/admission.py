@@ -9,15 +9,24 @@ state.
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field, fields
+from hashlib import sha256
+import json
 from pathlib import PurePosixPath
 import re
+from types import MappingProxyType
 from typing import Any
+from weakref import WeakKeyDictionary
 
+from .admission_evidence import (
+    TrustedAdmissionEvidence,
+    is_verified_admission_evidence,
+)
 from .authorization import is_verified_authorization_decision
 
 
 ADM_OK = "ADM_OK"
+ADM_REQUEST_UNTRUSTED = "ADM_REQUEST_UNTRUSTED"
 ADM_READ_ONLY_LIMIT = "ADM_READ_ONLY_LIMIT"
 ADM_TEASER_LIMIT = "ADM_TEASER_LIMIT"
 ADM_LEGACY_IMPORT_ONLY = "ADM_LEGACY_IMPORT_ONLY"
@@ -43,6 +52,19 @@ ADM_VALIDATOR_MISSING = "ADM_VALIDATOR_MISSING"
 ADM_VALIDATOR_REJECTED = "ADM_VALIDATOR_REJECTED"
 ADM_EVIDENCE_MISSING = "ADM_EVIDENCE_MISSING"
 ADM_EVIDENCE_STALE = "ADM_EVIDENCE_STALE"
+ADM_TRUSTED_EVIDENCE_MISSING = "ADM_TRUSTED_EVIDENCE_MISSING"
+ADM_TRUSTED_EVIDENCE_UNTRUSTED = "ADM_TRUSTED_EVIDENCE_UNTRUSTED"
+ADM_EVIDENCE_FIXTURE_IN_PRODUCTION = "ADM_EVIDENCE_FIXTURE_IN_PRODUCTION"
+ADM_EVIDENCE_REPO_MISMATCH = "ADM_EVIDENCE_REPO_MISMATCH"
+ADM_EVIDENCE_PAYLOAD_HASH_MISMATCH = "ADM_EVIDENCE_PAYLOAD_HASH_MISMATCH"
+ADM_EVIDENCE_SOURCE_HEAD_MISMATCH = "ADM_EVIDENCE_SOURCE_HEAD_MISMATCH"
+ADM_EVIDENCE_PATH_MISMATCH = "ADM_EVIDENCE_PATH_MISMATCH"
+ADM_EVIDENCE_BLOB_MISMATCH = "ADM_EVIDENCE_BLOB_MISMATCH"
+ADM_EVIDENCE_CROSSWALK_MISMATCH = "ADM_EVIDENCE_CROSSWALK_MISMATCH"
+ADM_EVIDENCE_SCHEMA_VERSION_MISMATCH = "ADM_EVIDENCE_SCHEMA_VERSION_MISMATCH"
+ADM_EVIDENCE_VALIDATOR_BLOB_MISMATCH = "ADM_EVIDENCE_VALIDATOR_BLOB_MISMATCH"
+ADM_EVIDENCE_PREREQUISITE_MISMATCH = "ADM_EVIDENCE_PREREQUISITE_MISMATCH"
+ADM_EVIDENCE_CLASS_MISMATCH = "ADM_EVIDENCE_CLASS_MISMATCH"
 ADM_BLOB_MISMATCH = "ADM_BLOB_MISMATCH"
 ADM_PREREQUISITE_UNRESOLVED = "ADM_PREREQUISITE_UNRESOLVED"
 ADM_REQUESTED_USE_FORBIDDEN = "ADM_REQUESTED_USE_FORBIDDEN"
@@ -97,9 +119,12 @@ PROVENANCE_STATUSES = frozenset({"exact_blob_verified", "stale", "missing"})
 PREREQUISITE_STATUSES = frozenset({"resolved", "unresolved", "not_required"})
 SCHEMA_ERAS = frozenset({"E1", "E2", "E3", "E4", "legacy", "unknown"})
 _SHA1_RE = re.compile(r"^[0-9a-f]{40}$")
+_SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 _UUIDV5_RE = re.compile(
     r"^[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
 )
+_REQUEST_SEAL = object()
+_ISSUED_REQUESTS = WeakKeyDictionary()
 _PURE_DB_PREFIX = (
     "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/"
 )
@@ -157,6 +182,27 @@ def _sha1(value: Any, name: str) -> str:
     return value
 
 
+def _sha256(value: Any, name: str) -> str:
+    value = _string(value, name)
+    if not _SHA256_RE.fullmatch(value):
+        raise AdmissionInputError(f"{name} must be a 64 character SHA-256")
+    return value
+
+
+def _payload_sha256(value: Mapping[str, Any]) -> str:
+    try:
+        rendered = json.dumps(
+            value,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+            allow_nan=False,
+        )
+    except (TypeError, ValueError) as exc:
+        raise AdmissionInputError("admission request must be canonical JSON data") from exc
+    return sha256((rendered + "\n").encode("utf-8")).hexdigest()
+
+
 def _path(value: Any, name: str) -> str:
     value = _string(value, name)
     if "\\" in value or value.startswith("/") or value.endswith("/"):
@@ -202,9 +248,10 @@ def _canonical_node_path_allowed(path: str) -> bool:
     return True
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, eq=False)
 class AdmissionRequest:
     schema_version: str
+    request_payload_sha256: str
     request_id: str
     requested_use: str
     repo_id: str
@@ -218,6 +265,7 @@ class AdmissionRequest:
     identity_registry_ref: str | None
     identity_registry_source_head: str | None
     identity_registry_blob_oid: str | None
+    identity_crosswalk_payload_sha256: str | None
     crosswalk_canonical_path: str | None
     crosswalk_canonical_blob_oid: str | None
     schema_status: str
@@ -228,15 +276,25 @@ class AdmissionRequest:
     validated_blob_oid: str | None
     provenance_status: str
     prerequisite_status: str
+    prerequisite_evidence_ref: str
+    prerequisite_evidence_sha256: str
     legacy_stage: str | None
     legacy_status: str | None
     requested_canonical_status: str | None
     state_write_requested: bool
     duplicate_source: bool
     evidence_refs: tuple[str, ...]
+    _seal: object = field(repr=False, compare=False)
+
+    def __post_init__(self) -> None:
+        if self._seal is not _REQUEST_SEAL:
+            raise AdmissionInputError(
+                "AdmissionRequest must be created by from_mapping"
+            )
 
     @classmethod
     def from_mapping(cls, value: Mapping[str, Any]) -> "AdmissionRequest":
+        request_payload_sha256 = _payload_sha256(value)
         if value.get("schema_version") != "math_mentor.admission_request.v1":
             raise AdmissionInputError("unsupported admission request schema")
         asset = _mapping(value.get("asset"), "asset")
@@ -275,6 +333,10 @@ class AdmissionRequest:
             registry_blob_oid = _sha1(
                 identity.get("registry_blob_oid"), "identity registry_blob_oid"
             )
+            crosswalk_payload_sha256 = _sha256(
+                identity.get("crosswalk_payload_sha256"),
+                "identity crosswalk_payload_sha256",
+            )
             canonical_path = _path(
                 identity.get("canonical_path"), "identity canonical_path"
             )
@@ -298,10 +360,24 @@ class AdmissionRequest:
             )
             registry_source_head = None
             registry_blob_oid = None
+            crosswalk_payload_sha256 = None
             canonical_path = None
             canonical_blob_oid = None
-        return cls(
+        prerequisite_status = _enum(
+            prerequisites.get("status"),
+            PREREQUISITE_STATUSES,
+            "prerequisite status",
+        )
+        prerequisite_evidence_ref = _string(
+            prerequisites.get("evidence_ref"), "prerequisite evidence_ref"
+        )
+        prerequisite_evidence_sha256 = _sha256(
+            prerequisites.get("evidence_sha256"),
+            "prerequisite evidence_sha256",
+        )
+        request = cls(
             schema_version="math_mentor.admission_request.v1",
+            request_payload_sha256=request_payload_sha256,
             request_id=_string(value.get("request_id"), "request_id"),
             requested_use=_enum(
                 value.get("requested_use"), REQUESTED_USES, "requested use"
@@ -317,6 +393,7 @@ class AdmissionRequest:
             identity_registry_ref=registry_ref,
             identity_registry_source_head=registry_source_head,
             identity_registry_blob_oid=registry_blob_oid,
+            identity_crosswalk_payload_sha256=crosswalk_payload_sha256,
             crosswalk_canonical_path=canonical_path,
             crosswalk_canonical_blob_oid=canonical_blob_oid,
             schema_status=_enum(
@@ -345,11 +422,9 @@ class AdmissionRequest:
                 PROVENANCE_STATUSES,
                 "provenance status",
             ),
-            prerequisite_status=_enum(
-                prerequisites.get("status"),
-                PREREQUISITE_STATUSES,
-                "prerequisite status",
-            ),
+            prerequisite_status=prerequisite_status,
+            prerequisite_evidence_ref=prerequisite_evidence_ref,
+            prerequisite_evidence_sha256=prerequisite_evidence_sha256,
             legacy_stage=_nullable_string(legacy.get("legacy_stage"), "legacy_stage"),
             legacy_status=_nullable_string(
                 legacy.get("legacy_status"), "legacy_status"
@@ -361,7 +436,24 @@ class AdmissionRequest:
             state_write_requested=bool(value.get("state_write_requested", False)),
             duplicate_source=bool(value.get("duplicate_source", False)),
             evidence_refs=evidence_refs,
+            _seal=_REQUEST_SEAL,
         )
+        _ISSUED_REQUESTS[request] = _request_fingerprint(request)
+        return request
+
+
+def _request_fingerprint(value: AdmissionRequest) -> tuple[Any, ...]:
+    """Capture every parsed field so post-issuance mutation invalidates it."""
+
+    return tuple(getattr(value, item.name) for item in fields(value))
+
+
+def is_parsed_admission_request(value: Any) -> bool:
+    return (
+        type(value) is AdmissionRequest
+        and value._seal is _REQUEST_SEAL
+        and _ISSUED_REQUESTS.get(value) == _request_fingerprint(value)
+    )
 
 
 @dataclass(frozen=True)
@@ -373,6 +465,14 @@ class AdmissionDecision:
     evidence_refs: tuple[str, ...]
     restrictions: Mapping[str, bool]
     canonical_learning_status: None = None
+
+    def __post_init__(self) -> None:
+        object.__setattr__(
+            self, "dimensions", MappingProxyType(dict(self.dimensions))
+        )
+        object.__setattr__(
+            self, "restrictions", MappingProxyType(dict(self.restrictions))
+        )
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -423,14 +523,27 @@ def _authorization_parts(
     return "allow", context
 
 
-def _dimensions(request: AdmissionRequest, auth_status: str) -> dict[str, str]:
+def _dimensions(
+    request: AdmissionRequest,
+    auth_status: str,
+    evidence: TrustedAdmissionEvidence | None = None,
+) -> dict[str, str]:
+    if evidence is None:
+        return {
+            "authorization": auth_status,
+            "identity": "untrusted",
+            "schema": "untrusted",
+            "readiness": "untrusted",
+            "provenance": "untrusted",
+            "prerequisites": "untrusted",
+        }
     return {
         "authorization": auth_status,
-        "identity": request.identity_status,
-        "schema": request.schema_status,
-        "readiness": request.readiness_status,
-        "provenance": request.provenance_status,
-        "prerequisites": request.prerequisite_status,
+        "identity": evidence.identity_status,
+        "schema": evidence.schema_status,
+        "readiness": evidence.readiness_status,
+        "provenance": evidence.provenance_status,
+        "prerequisites": evidence.prerequisite_status,
     }
 
 
@@ -441,27 +554,128 @@ def _decision(
     reason_codes: Sequence[str],
     *,
     effective_use: str = "none",
+    evidence: TrustedAdmissionEvidence | None = None,
 ) -> AdmissionDecision:
+    evidence_refs = (
+        (f"{evidence.provider_ref}#{evidence.evidence_id}",)
+        if evidence is not None
+        else ()
+    )
     return AdmissionDecision(
         status=status,
         effective_use=effective_use,
         reason_codes=tuple(reason_codes),
-        dimensions=_dimensions(request, auth_status),
-        evidence_refs=request.evidence_refs,
+        dimensions=_dimensions(request, auth_status, evidence),
+        evidence_refs=evidence_refs,
         restrictions={
             "read_only": True,
             "state_write_allowed": False,
             "scheduler_write_allowed": False,
             "runtime_activation_allowed": False,
             "coordinator_activation_allowed": False,
+            "consumer_allowed": False,
         },
     )
 
 
+def _evidence_binding_codes(
+    request: AdmissionRequest,
+    value: Any,
+    *,
+    environment_mode: str,
+) -> tuple[TrustedAdmissionEvidence | None, list[str]]:
+    if value is None:
+        return None, [ADM_TRUSTED_EVIDENCE_MISSING]
+    if not is_verified_admission_evidence(value):
+        return None, [ADM_TRUSTED_EVIDENCE_UNTRUSTED]
+    evidence = value
+    if environment_mode not in {"production", "test"}:
+        return evidence, [ADM_TRUSTED_EVIDENCE_UNTRUSTED]
+    if evidence.trust_source == "test_fixture" and environment_mode != "test":
+        return evidence, [ADM_EVIDENCE_FIXTURE_IN_PRODUCTION]
+
+    codes: list[str] = []
+    if (
+        evidence.admission_request_payload_sha256
+        != request.request_payload_sha256
+    ):
+        codes.append(ADM_EVIDENCE_PAYLOAD_HASH_MISMATCH)
+    if evidence.admission_request_schema_version != request.schema_version:
+        codes.append(ADM_EVIDENCE_SCHEMA_VERSION_MISMATCH)
+    if evidence.repo_id != request.repo_id:
+        codes.append(ADM_EVIDENCE_REPO_MISMATCH)
+    if evidence.source_head != request.source_head:
+        codes.append(ADM_EVIDENCE_SOURCE_HEAD_MISMATCH)
+    if evidence.path != request.path:
+        codes.append(ADM_EVIDENCE_PATH_MISMATCH)
+    if evidence.blob_oid != request.blob_oid:
+        codes.append(ADM_EVIDENCE_BLOB_MISMATCH)
+
+    expected_class = (
+        "legacy_state_table"
+        if request.asset_role == "legacy_state_table"
+        else "canonical_node"
+    )
+    if evidence.evidence_class != expected_class or evidence.asset_role != expected_class:
+        codes.append(ADM_EVIDENCE_CLASS_MISMATCH)
+    if evidence.schema_era != request.schema_era:
+        codes.append(ADM_EVIDENCE_SCHEMA_VERSION_MISMATCH)
+
+    if expected_class == "canonical_node":
+        if (
+            evidence.canonical_node_id != request.canonical_node_id
+            or evidence.crosswalk_source_head
+            != request.identity_registry_source_head
+            or evidence.crosswalk_blob_oid != request.identity_registry_blob_oid
+            or evidence.crosswalk_payload_sha256
+            != request.identity_crosswalk_payload_sha256
+        ):
+            codes.append(ADM_EVIDENCE_CROSSWALK_MISMATCH)
+        if evidence.normalized_schema_version != request.normalized_schema_version:
+            codes.append(ADM_EVIDENCE_SCHEMA_VERSION_MISMATCH)
+        if (
+            evidence.validator_ref != request.validator_ref
+            or evidence.validated_blob_oid != request.validated_blob_oid
+            or evidence.validated_blob_oid != request.blob_oid
+        ):
+            codes.append(ADM_EVIDENCE_VALIDATOR_BLOB_MISMATCH)
+
+    if (
+        evidence.prerequisite_status != request.prerequisite_status
+        or evidence.prerequisite_evidence_ref
+        != request.prerequisite_evidence_ref
+        or evidence.prerequisite_evidence_sha256
+        != request.prerequisite_evidence_sha256
+    ):
+        codes.append(ADM_EVIDENCE_PREREQUISITE_MISMATCH)
+    return evidence, list(dict.fromkeys(codes))
+
+
 def evaluate_admission(
-    request: AdmissionRequest, authorization_decision: Any
+    request: AdmissionRequest,
+    authorization_decision: Any,
+    admission_evidence: Any = None,
+    *,
+    environment_mode: str = "production",
 ) -> AdmissionDecision:
-    """Return a deterministic admission result without I/O or state mutation."""
+    """Evaluate two independent gates without I/O or state mutation.
+
+    Authorization grants the exact read effect.  Admission evidence establishes
+    externally attested asset/readiness facts.  Neither can substitute for the
+    other, and no field on ``request`` is treated as trusted evidence.
+
+    ``environment_mode`` is a trusted host/test-composition input, not a field
+    accepted from the model-generated request.  Production composition must
+    retain the default and cannot use deterministic test evidence.
+    """
+
+    if not is_parsed_admission_request(request):
+        return _decision(
+            request,
+            "indeterminate",
+            "blocked",
+            [ADM_REQUEST_UNTRUSTED],
+        )
 
     auth_status, auth_context = _authorization_parts(authorization_decision, request)
     if auth_status == "deny":
@@ -478,29 +692,18 @@ def evaluate_admission(
         return _decision(
             request, auth_status, "blocked", [ADM_STATE_WRITE_FORBIDDEN]
         )
-    if request.provenance_status == "missing":
-        return _decision(
-            request, auth_status, "blocked", [ADM_EVIDENCE_MISSING]
-        )
-    if request.provenance_status == "stale":
-        return _decision(request, auth_status, "blocked", [ADM_EVIDENCE_STALE])
-    if (
-        request.validated_blob_oid is not None
-        and request.validated_blob_oid != request.blob_oid
-    ):
-        return _decision(request, auth_status, "blocked", [ADM_BLOB_MISMATCH])
 
-    # asset_role is an untrusted claim.  Path-derived staging and legacy
-    # boundaries take precedence over every role supplied by the caller.
+    # Safe path/role denials do not require trusting any caller readiness claim.
     if _is_staging_path(request.path):
         return _decision(request, auth_status, "quarantined", [ADM_STAGING_ASSET])
     derived_legacy_role = _derived_legacy_role(request.path)
     if derived_legacy_role is not None and request.asset_role != derived_legacy_role:
         codes = [ADM_NON_CANONICAL_ASSET]
-        if derived_legacy_role != "legacy_state_table":
-            codes.append(ADM_LEGACY_EXECUTION_FORBIDDEN)
-        else:
-            codes.append(ADM_REQUESTED_USE_FORBIDDEN)
+        codes.append(
+            ADM_LEGACY_EXECUTION_FORBIDDEN
+            if derived_legacy_role != "legacy_state_table"
+            else ADM_REQUESTED_USE_FORBIDDEN
+        )
         return _decision(request, auth_status, "blocked", codes)
     if request.asset_role == "canonical_node" and not _canonical_node_path_allowed(
         request.path
@@ -522,33 +725,7 @@ def evaluate_admission(
         request.asset_role == "legacy_state_table"
         and request.path not in _LEGACY_STATE_PATHS
     ):
-        return _decision(
-            request, auth_status, "blocked", [ADM_NON_CANONICAL_ASSET]
-        )
-
-    if request.asset_role == "legacy_state_table":
-        if request.requested_use != "legacy_import_read_only":
-            return _decision(
-                request,
-                auth_status,
-                "blocked",
-                [ADM_NON_CANONICAL_ASSET, ADM_REQUESTED_USE_FORBIDDEN],
-            )
-        if request.requested_canonical_status is not None:
-            return _decision(
-                request,
-                auth_status,
-                "blocked",
-                [ADM_LEGACY_STATUS_NOT_CANONICAL],
-            )
-        return _decision(
-            request,
-            auth_status,
-            "admitted_legacy_import_read_only",
-            [ADM_LEGACY_IMPORT_ONLY, ADM_READ_ONLY_LIMIT],
-            effective_use="legacy_import_read_only",
-        )
-
+        return _decision(request, auth_status, "blocked", [ADM_NON_CANONICAL_ASSET])
     if request.asset_role in {
         "legacy_prompt",
         "legacy_orchestrator",
@@ -558,102 +735,116 @@ def evaluate_admission(
         if request.duplicate_source:
             codes.append(ADM_DUPLICATE_SOURCE)
         return _decision(request, auth_status, "blocked", codes)
-
     if request.asset_role == "staging_node":
         return _decision(request, auth_status, "quarantined", [ADM_STAGING_ASSET])
     if request.asset_role == "structural_asset":
         return _decision(
             request, auth_status, "blocked", [ADM_STRUCTURAL_ONLY_ASSET]
         )
-    if request.asset_role != "canonical_node":
+    if request.asset_role not in {"canonical_node", "legacy_state_table"}:
         return _decision(request, auth_status, "blocked", [ADM_NON_CANONICAL_ASSET])
-    if request.requested_use == "legacy_import_read_only":
+
+    evidence, evidence_codes = _evidence_binding_codes(
+        request, admission_evidence, environment_mode=environment_mode
+    )
+    if evidence_codes:
         return _decision(
-            request, auth_status, "blocked", [ADM_REQUESTED_USE_FORBIDDEN]
+            request,
+            auth_status,
+            "blocked",
+            evidence_codes,
+            evidence=evidence,
+        )
+    assert evidence is not None  # established by _evidence_binding_codes
+
+    def decide(
+        status: str,
+        codes: Sequence[str],
+        *,
+        effective_use: str = "none",
+    ) -> AdmissionDecision:
+        return _decision(
+            request,
+            auth_status,
+            status,
+            codes,
+            effective_use=effective_use,
+            evidence=evidence,
         )
 
-    if request.identity_status == "conflict":
-        return _decision(
-            request, auth_status, "quarantined", [ADM_IDENTITY_CONFLICT]
+    if evidence.provenance_status == "missing":
+        return decide("blocked", [ADM_EVIDENCE_MISSING])
+    if evidence.provenance_status == "stale":
+        return decide("blocked", [ADM_EVIDENCE_STALE])
+
+    if request.asset_role == "legacy_state_table":
+        if request.requested_use != "legacy_import_read_only":
+            return decide(
+                "blocked", [ADM_NON_CANONICAL_ASSET, ADM_REQUESTED_USE_FORBIDDEN]
+            )
+        if request.requested_canonical_status is not None:
+            return decide("blocked", [ADM_LEGACY_STATUS_NOT_CANONICAL])
+        return decide(
+            "admitted_legacy_import_read_only",
+            [ADM_LEGACY_IMPORT_ONLY, ADM_READ_ONLY_LIMIT],
+            effective_use="legacy_import_read_only",
         )
-    if request.identity_status == "ambiguous":
-        return _decision(
-            request, auth_status, "quarantined", [ADM_IDENTITY_AMBIGUOUS]
-        )
-    if request.identity_status != "resolved" or not request.canonical_node_id:
-        return _decision(request, auth_status, "blocked", [ADM_IDENTITY_MISSING])
+
+    if request.requested_use == "legacy_import_read_only":
+        return decide("blocked", [ADM_REQUESTED_USE_FORBIDDEN])
+    if evidence.identity_status == "conflict":
+        return decide("quarantined", [ADM_IDENTITY_CONFLICT])
+    if evidence.identity_status == "ambiguous":
+        return decide("quarantined", [ADM_IDENTITY_AMBIGUOUS])
+    if evidence.identity_status != "resolved" or not evidence.canonical_node_id:
+        return decide("blocked", [ADM_IDENTITY_MISSING])
     if request.identity_registry_source_head != request.source_head:
-        return _decision(request, auth_status, "blocked", [ADM_EVIDENCE_STALE])
+        return decide("blocked", [ADM_EVIDENCE_STALE])
     if (
         request.crosswalk_canonical_path != request.path
         or request.crosswalk_canonical_blob_oid != request.blob_oid
     ):
-        return _decision(
-            request,
-            auth_status,
+        return decide(
             "quarantined",
             [ADM_IDENTITY_CROSSWALK_INVALID, ADM_IDENTITY_CONFLICT],
         )
 
-    if request.schema_status == "missing":
-        return _decision(request, auth_status, "blocked", [ADM_SCHEMA_MISSING])
-    if request.schema_status == "invalid":
-        return _decision(request, auth_status, "blocked", [ADM_SCHEMA_INVALID])
-    if request.schema_status != "valid":
-        return _decision(request, auth_status, "blocked", [ADM_SCHEMA_UNSUPPORTED])
+    if evidence.schema_status == "missing":
+        return decide("blocked", [ADM_SCHEMA_MISSING])
+    if evidence.schema_status == "invalid":
+        return decide("blocked", [ADM_SCHEMA_INVALID])
+    if evidence.schema_status != "valid":
+        return decide("blocked", [ADM_SCHEMA_UNSUPPORTED])
+    if evidence.readiness_status == "review_required":
+        return decide("review_required", [ADM_REVIEW_REQUIRED])
+    if evidence.readiness_status == "manual_review_required":
+        return decide("review_required", [ADM_MANUAL_REVIEW_REQUIRED])
+    if evidence.readiness_status == "missing":
+        return decide("blocked", [ADM_READINESS_MISSING])
+    if evidence.readiness_status != "ready":
+        return decide("blocked", [ADM_NOT_READY])
+    if evidence.validator_status == "missing":
+        return decide("review_required", [ADM_VALIDATOR_MISSING])
+    if evidence.validator_status != "accepted":
+        return decide("review_required", [ADM_VALIDATOR_REJECTED])
+    if evidence.validated_blob_oid is None:
+        return decide("review_required", [ADM_VALIDATOR_MISSING])
 
-    if request.readiness_status == "review_required":
-        return _decision(
-            request, auth_status, "review_required", [ADM_REVIEW_REQUIRED]
-        )
-    if request.readiness_status == "manual_review_required":
-        return _decision(
-            request,
-            auth_status,
-            "review_required",
-            [ADM_MANUAL_REVIEW_REQUIRED],
-        )
-    if request.readiness_status == "missing":
-        return _decision(request, auth_status, "blocked", [ADM_READINESS_MISSING])
-    if request.readiness_status != "ready":
-        return _decision(request, auth_status, "blocked", [ADM_NOT_READY])
-    if request.validator_status == "missing":
-        return _decision(
-            request, auth_status, "review_required", [ADM_VALIDATOR_MISSING]
-        )
-    if request.validator_status != "accepted":
-        return _decision(
-            request, auth_status, "review_required", [ADM_VALIDATOR_REJECTED]
-        )
-    if request.validated_blob_oid is None:
-        return _decision(
-            request, auth_status, "review_required", [ADM_VALIDATOR_MISSING]
-        )
-
-    if request.prerequisite_status == "unresolved":
+    if evidence.prerequisite_status == "unresolved":
         if request.requested_use == "teaser_read_only":
-            return _decision(
-                request,
-                auth_status,
+            return decide(
                 "admitted_teaser_only",
                 [ADM_TEASER_LIMIT, ADM_READ_ONLY_LIMIT],
                 effective_use="teaser_read_only",
             )
-        return _decision(
-            request, auth_status, "blocked", [ADM_PREREQUISITE_UNRESOLVED]
-        )
-
+        return decide("blocked", [ADM_PREREQUISITE_UNRESOLVED])
     if request.requested_use == "teaser_read_only":
-        return _decision(
-            request,
-            auth_status,
+        return decide(
             "admitted_teaser_only",
             [ADM_TEASER_LIMIT, ADM_READ_ONLY_LIMIT],
             effective_use="teaser_read_only",
         )
-    return _decision(
-        request,
-        auth_status,
+    return decide(
         "admitted_manual_read_only",
         [ADM_OK, ADM_READ_ONLY_LIMIT],
         effective_use=request.requested_use,

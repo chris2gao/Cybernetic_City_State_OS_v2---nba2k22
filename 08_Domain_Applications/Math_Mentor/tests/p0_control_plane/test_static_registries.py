@@ -40,6 +40,9 @@ class StaticRegistryTests(unittest.TestCase):
         cls.builder_text = (MATH_MENTOR / "p0_control_plane/registry_builder.py").read_text(
             encoding="utf-8-sig"
         )
+        cls.protocol_text = (REPO_ROOT / ".ai/PROTOCOL.md").read_text(
+            encoding="utf-8-sig"
+        )
 
         cls.authority_sources = by_id(cls.authority["authority_sources"], "authority_id")
         cls.action_rules = by_id(cls.authority["action_rules"], "action_id")
@@ -68,7 +71,7 @@ class StaticRegistryTests(unittest.TestCase):
         self.assertFalse(self.capability["operational_activation"])
         self.assertFalse(self.deprecation["operational_activation"])
 
-    def test_registry_ids_and_ranks_are_unique(self) -> None:
+    def test_registry_ids_are_unique_and_authority_uses_unordered_tiers(self) -> None:
         self.assertEqual(
             len(self.authority["authority_sources"]), len(self.authority_sources)
         )
@@ -76,16 +79,171 @@ class StaticRegistryTests(unittest.TestCase):
         self.assertEqual(len(self.capability["capabilities"]), len(self.capabilities))
         self.assertEqual(len(self.deprecation["entries"]), len(self.deprecations))
 
-        ranks = [record["authority_rank"] for record in self.authority["authority_sources"]]
-        self.assertEqual(len(ranks), len(set(ranks)), "authority ranks must be unique")
-        self.assertEqual(sorted(ranks), list(range(1, len(ranks) + 1)))
+        self.assertEqual(
+            "unordered; source list order is inventory order only",
+            self.authority["canonical_authority_order"]["same_tier_ordering"],
+        )
+        for source in self.authority["authority_sources"]:
+            self.assertNotIn("authority_rank", source)
+            self.assertIn("authority_tier", source)
+            self.assertIn("authority_group", source)
+        source_tiers = [
+            source["authority_tier"] for source in self.authority["authority_sources"]
+        ]
+        self.assertEqual(sorted(source_tiers), source_tiers)
+
+    def test_authority_tiers_match_canonical_protocol_order_exactly(self) -> None:
+        self.assertEqual(
+            {
+                "path": ".ai/PROTOCOL.md",
+                "section": "Canonical Instruction Authority And State Freshness",
+            },
+            self.authority["canonical_authority_order"]["canonical_ref"],
+        )
+        expected_tiers = [
+            (
+                1,
+                "platform_system_developer_safety",
+                "platform, system, developer, and safety instructions",
+            ),
+            (2, "current_explicit_human_instruction", "current explicit Human instruction"),
+            (
+                3,
+                "authenticated_human_approved_task_override",
+                "authenticated current Human-approved task-specific permission or override",
+            ),
+            (
+                4,
+                "plan3_and_cybernetic_citizen_contracts",
+                "Plan 3 constitution and the Cybernetic Citizen runtime contract",
+            ),
+            (
+                5,
+                "durable_repository_control_protocols",
+                "durable repository control protocols",
+            ),
+            (
+                6,
+                "relevant_domain_authority_protocols",
+                "relevant domain-authority protocols",
+            ),
+            (
+                7,
+                "ordinary_signal_and_task_details",
+                "ordinary current signal and task operational details",
+            ),
+            (
+                8,
+                "routing_and_historical_evidence",
+                "routing documents and historical evidence",
+            ),
+        ]
+        actual_tiers = [
+            (
+                item["authority_tier"],
+                item["authority_group"],
+                item["canonical_label"],
+            )
+            for item in self.authority["canonical_authority_order"]["tiers"]
+        ]
+        self.assertEqual(expected_tiers, actual_tiers)
+        self.assertTrue(
+            self.authority["canonical_authority_order"][
+                "lower_number_has_higher_authority"
+            ]
+        )
+
+        protocol_positions = []
+        for tier, _, label in expected_tiers:
+            token = f"{tier}. {label}"
+            self.assertEqual(1, self.protocol_text.count(token), token)
+            protocol_positions.append(self.protocol_text.index(token))
+        self.assertEqual(sorted(protocol_positions), protocol_positions)
+
+        group_by_tier = {tier: group for tier, group, _ in expected_tiers}
+        for source in self.authority["authority_sources"]:
+            self.assertEqual(
+                group_by_tier[source["authority_tier"]],
+                source["authority_group"],
+                source["authority_id"],
+            )
+
+        expected_source_ids_by_tier = {
+            1: {"platform_system_developer_safety"},
+            2: {"current_explicit_human_instruction"},
+            3: {"authenticated_human_approved_task_override"},
+            4: {"plan3_human_speaker", "cybernetic_citizen_contract"},
+            5: {
+                "repository_working_agreements",
+                "ai_handoff_protocol",
+                "ai_protocol_adherence",
+                "codex_task_input_contract",
+                "long_run_program_protocol",
+            },
+            6: {
+                "math_mentor_universal_protocol",
+                "knowledge_completion_program",
+                "node_quality_audit_contract",
+                "bridge_schema_contract",
+                "teacher_initialization_contract",
+                "teaching_flow_contract",
+                "coordinator_manual_contract",
+                "student_state_contract",
+                "spaced_review_contract",
+                "graduation_contract",
+                "capability_semantics_contract",
+                "tool_truthfulness_contract",
+            },
+            7: {"ordinary_current_signal_task_details"},
+            8: {
+                "city_state_bootstrap",
+                "teaching_system_blueprint",
+                "teaching_system_implementation_plan",
+                "post_p2_historical_memory",
+                "stage0_inventory_evidence",
+            },
+        }
+        actual_source_ids_by_tier = {
+            tier: {
+                source["authority_id"]
+                for source in self.authority["authority_sources"]
+                if source["authority_tier"] == tier
+            }
+            for tier in range(1, 9)
+        }
+        self.assertEqual(expected_source_ids_by_tier, actual_source_ids_by_tier)
+
+    def test_authenticated_override_is_not_an_ordinary_model_packet(self) -> None:
+        override = self.authority_sources[
+            "authenticated_human_approved_task_override"
+        ]
+        ordinary = self.authority_sources["ordinary_current_signal_task_details"]
+
+        self.assertEqual(3, override["authority_tier"])
+        self.assertTrue(override["can_grant"])
+        self.assertIn("authenticated_approval_channel", override["verification"])
+        self.assertIn("never inferred", override["scope"])
+
+        self.assertEqual(7, ordinary["authority_tier"])
+        self.assertFalse(ordinary["can_grant"])
+        self.assertIn("not_human_authentication", ordinary["verification"])
+        self.assertIn("never grant an override", ordinary["scope"])
 
     def test_all_repository_references_exist(self) -> None:
+        self.assert_repo_reference_exists(
+            self.authority["canonical_authority_order"]["canonical_ref"]["path"]
+        )
         for source in self.authority["authority_sources"]:
             reference = source.get("ref")
             if reference is None:
                 self.assertEqual("external", source["source_kind"])
-                self.assertEqual("external_current", source["state"])
+                self.assertIn(source["authority_tier"], {1, 2, 3, 7})
+                expected_state = (
+                    "task_scoped"
+                    if source["authority_tier"] == 7
+                    else "external_current"
+                )
+                self.assertEqual(expected_state, source["state"])
             else:
                 self.assert_repo_reference_exists(reference)
 
@@ -108,13 +266,61 @@ class StaticRegistryTests(unittest.TestCase):
         source_ids = set(self.authority_sources)
         action_ids = set(self.action_rules)
         for rule in self.authority["action_rules"]:
-            self.assertTrue(rule["required_authority"])
+            grant_sources = set(rule["grant_authority_any_of"])
+            governing_sources = set(rule["governing_authority_sources"])
+            operational_sources = set(rule["operational_detail_sources"])
+            all_references = grant_sources | governing_sources | operational_sources
+            self.assertTrue(governing_sources, rule["action_id"])
             self.assertTrue(
-                set(rule["required_authority"]).issubset(source_ids),
+                all_references.issubset(source_ids),
                 f"unknown authority source in {rule['action_id']}",
             )
+            if rule["default_decision"] == "deny":
+                self.assertEqual(set(), grant_sources, rule["action_id"])
+            else:
+                self.assertTrue(grant_sources, rule["action_id"])
+            for source_id in grant_sources:
+                self.assertTrue(self.authority_sources[source_id]["can_grant"], source_id)
+                self.assertLessEqual(
+                    self.authority_sources[source_id]["authority_tier"], 3, source_id
+                )
+            self.assertEqual(
+                {"ordinary_current_signal_task_details"}, operational_sources
+            )
+            for source_id in operational_sources:
+                self.assertFalse(self.authority_sources[source_id]["can_grant"])
+                self.assertEqual(7, self.authority_sources[source_id]["authority_tier"])
         for capability in self.capability["capabilities"]:
             self.assertIn(capability["authority_action_id"], action_ids)
+
+    def test_protected_actions_remain_governed_by_plan3_and_awakening(self) -> None:
+        protected_actions = {
+            "write_scoped_p0_control_plane_artifact",
+            "mutate_teaching_node",
+            "open_p3_or_generate_bridge",
+            "formal_coordinator_bridge_admission",
+            "activate_runtime_or_production_coordinator",
+            "write_learning_state_or_review_schedule",
+            "publish_source_or_merge_master",
+            "access_secrets_or_credentials",
+            "bypass_human_speaker",
+        }
+        constitutional_sources = {
+            "plan3_human_speaker",
+            "cybernetic_citizen_contract",
+        }
+        for action_id in protected_actions:
+            self.assertTrue(
+                constitutional_sources.issubset(
+                    set(self.action_rules[action_id]["governing_authority_sources"])
+                ),
+                action_id,
+            )
+
+        ordinary_id = "ordinary_current_signal_task_details"
+        for rule in self.authority["action_rules"]:
+            self.assertNotIn(ordinary_id, rule["grant_authority_any_of"])
+            self.assertNotIn(ordinary_id, rule["governing_authority_sources"])
 
     def test_capability_maturity_never_exceeds_evidence(self) -> None:
         tier_ranks = {

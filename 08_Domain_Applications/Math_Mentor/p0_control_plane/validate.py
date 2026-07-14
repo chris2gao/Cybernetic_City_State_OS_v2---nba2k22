@@ -1,8 +1,9 @@
 """Validate the deterministic Math Mentor P0 control-plane materialization.
 
 This module is intentionally read-only.  It rebuilds the three generated
-registries from the frozen source commit, validates their schemas and hashes,
-and checks the fail-closed quantitative invariants reviewed for this task.
+registries from the frozen source commit, proves their canonical bytes against
+immutable blobs at the current HEAD, validates worktree JSON content regardless
+of platform line endings, and checks the reviewed fail-closed invariants.
 """
 
 from __future__ import annotations
@@ -19,11 +20,23 @@ import yaml
 
 try:
     from identity import canonical_json_bytes, canonical_node_uuid, sha256_bytes
-    from registry_builder import OUTPUT_NAMES, build_all, load_config
+    from registry_builder import (
+        OUTPUT_NAMES,
+        build_all,
+        current_head,
+        load_config,
+        snapshot_blobs,
+    )
     from staging_diagnostics import scan_staging
 except ImportError:  # pragma: no cover - package import path
     from .identity import canonical_json_bytes, canonical_node_uuid, sha256_bytes
-    from .registry_builder import OUTPUT_NAMES, build_all, load_config
+    from .registry_builder import (
+        OUTPUT_NAMES,
+        build_all,
+        current_head,
+        load_config,
+        snapshot_blobs,
+    )
     from .staging_diagnostics import scan_staging
 
 
@@ -57,6 +70,36 @@ def _read_json(path: Path) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ValidationError(f"expected JSON object: {path}")
     return value
+
+
+def _validate_materialized_output(
+    name: str,
+    generated_document: Mapping[str, Any],
+    generated_bytes: bytes,
+    committed_blob_bytes: bytes,
+    worktree_path: Path,
+) -> dict[str, Any]:
+    """Prove committed bytes while validating worktree JSON semantically.
+
+    Git's immutable blob is the byte-level materialization evidence.  The
+    worktree may use platform line endings, so it is parsed and canonicalized
+    before comparison; any JSON content drift still fails closed.
+    """
+
+    _require(
+        committed_blob_bytes == generated_bytes,
+        f"committed materialized blob bytes differ for {name}",
+    )
+    worktree_document = _read_json(worktree_path)
+    _require(
+        canonical_json_bytes(worktree_document) == generated_bytes,
+        f"worktree materialized JSON content differs for {name}",
+    )
+    _require(
+        worktree_document == generated_document,
+        f"worktree materialized document differs for {name}",
+    )
+    return worktree_document
 
 
 def _validate_json_schema(instance: Any, schema: Mapping[str, Any], label: str) -> None:
@@ -293,6 +336,15 @@ def validate_control_plane(repo_root: Path, expected_source_head: str) -> dict[s
         f"unexpected source head: {expected_source_head}",
     )
     math_mentor = repo_root / MATH_MENTOR_REL
+    committed_materialization_head = current_head(repo_root)
+    committed_repo_paths = {
+        name: (MATH_MENTOR_REL / name).as_posix() for name in OUTPUT_NAMES
+    }
+    committed_materialization_blobs = snapshot_blobs(
+        repo_root,
+        committed_materialization_head,
+        committed_repo_paths.values(),
+    )
     first = build_all(repo_root, expected_source_head)
     second = build_all(repo_root, expected_source_head)
 
@@ -304,12 +356,15 @@ def validate_control_plane(repo_root: Path, expected_source_head: str) -> dict[s
         second_bytes = canonical_json_bytes(second[name])
         _require(first_bytes == second_bytes, f"repeat build differs for {name}")
         materialized_path = math_mentor / name
-        try:
-            materialized_bytes = materialized_path.read_bytes()
-        except OSError as exc:
-            raise ValidationError(f"missing materialized output {materialized_path}: {exc}") from exc
-        _require(materialized_bytes == first_bytes, f"materialized bytes differ for {name}")
-        checked_in[name] = _read_json(materialized_path)
+        committed_repo_path = committed_repo_paths[name]
+        committed_blob_bytes = committed_materialization_blobs[committed_repo_path]
+        checked_in[name] = _validate_materialized_output(
+            name,
+            first[name],
+            first_bytes,
+            committed_blob_bytes,
+            materialized_path,
+        )
         deterministic_digests[name] = sha256_bytes(first_bytes)
 
     for name, document in checked_in.items():
@@ -359,6 +414,10 @@ def validate_control_plane(repo_root: Path, expected_source_head: str) -> dict[s
         "repeat_builds": 2,
         "byte_identical_repeatability": True,
         "materialized_outputs_match": True,
+        "committed_materialization_head": committed_materialization_head,
+        "committed_blob_bytes_match_generated": True,
+        "worktree_json_content_matches_generated": True,
+        "worktree_raw_bytes_used_for_commit_proof": False,
         "output_sha256": dict(sorted(deterministic_digests.items())),
         "quantitative": {
             "tracked_assets": 1014,

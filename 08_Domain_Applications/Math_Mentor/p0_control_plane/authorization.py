@@ -8,6 +8,10 @@ caller must first exchange an opaque platform handle through a
 
 The deterministic adapter in this module exists only for unit tests.  Both the
 adapter and the verifier reject test grants in production mode.
+
+Replay evaluation is deliberately narrow: the verifier can compare a nonce
+only with a host-supplied read-only snapshot.  It does not atomically consume
+nonces, persist replay state, or provide cross-process replay protection.
 """
 
 from __future__ import annotations
@@ -17,10 +21,12 @@ from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from hashlib import sha256
+import hmac
+import json
 from pathlib import PurePosixPath
 import re
 from types import MappingProxyType
-from typing import Any
+from typing import Any, ClassVar
 
 
 AUTH_OK = "AUTH_OK"
@@ -108,6 +114,7 @@ AUTHENTICATED_CHANNELS = frozenset(
 _SHA1_RE = re.compile(r"^[0-9a-f]{40}$")
 _SHA256_RE = re.compile(r"^sha256:[0-9a-f]{64}$")
 _WILDCARD_RE = re.compile(r"[*?\[\]{}]")
+_REQUEST_SEAL = object()
 _TRUST_SEAL = object()
 _DECISION_SEAL = object()
 
@@ -162,7 +169,7 @@ def _validate_sha256(value: Any, field_name: str) -> str:
 
 def _validate_relative_path(value: Any, field_name: str, *, prefix: bool) -> str:
     value = _required_string(value, field_name)
-    if "\\" in value or _WILDCARD_RE.search(value):
+    if "\\" in value or ":" in value or _WILDCARD_RE.search(value):
         raise AuthorizationInputError(f"{field_name} must be a literal POSIX path")
     if prefix:
         if not value.endswith("/"):
@@ -172,6 +179,10 @@ def _validate_relative_path(value: Any, field_name: str, *, prefix: bool) -> str
         if value.endswith("/"):
             raise AuthorizationInputError(f"{field_name} exact path must not end with '/'")
         path_body = value
+    if any(part.endswith((".", " ")) for part in path_body.split("/")):
+        raise AuthorizationInputError(
+            f"{field_name} components must not end with dot or space"
+        )
     pure = PurePosixPath(path_body)
     if pure.is_absolute() or not path_body or any(part in {"", ".", ".."} for part in pure.parts):
         raise AuthorizationInputError(f"{field_name} must be repository-relative")
@@ -213,6 +224,17 @@ def _deep_thaw(value: Any) -> Any:
     if isinstance(value, tuple):
         return [_deep_thaw(item) for item in value]
     return value
+
+
+def _issuance_fingerprint(value: Any) -> str:
+    canonical = json.dumps(
+        _deep_thaw(value),
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+        allow_nan=False,
+    ).encode("utf-8")
+    return sha256(canonical).hexdigest()
 
 
 def _as_mapping(value: Any, field_name: str) -> Mapping[str, Any]:
@@ -307,6 +329,13 @@ class AuthorizationRequest:
     resources: tuple[ResourceRef, ...]
     gate_phase: str = "pre_action"
     payload_human_gate: Any = field(default=None, repr=False, compare=False)
+    _factory_identity: int | None = field(
+        default=None, init=False, repr=False, compare=False
+    )
+    _issued_fingerprint: str | None = field(
+        default=None, init=False, repr=False, compare=False
+    )
+    _seal: object | None = field(default=None, init=False, repr=False, compare=False)
 
     @classmethod
     def from_mapping(cls, value: Mapping[str, Any]) -> "AuthorizationRequest":
@@ -336,7 +365,7 @@ class AuthorizationRequest:
         payload_gate = value.get(
             "payload_human_gate", business_payload.get("human_gate")
         )
-        return cls(
+        instance = cls(
             schema_version="math_mentor.authorization_request.v1",
             request_id=_required_string(value.get("request_id"), "request_id"),
             task_id=_required_string(value.get("task_id"), "task_id"),
@@ -350,6 +379,50 @@ class AuthorizationRequest:
             gate_phase=gate_phase,
             payload_human_gate=payload_gate,
         )
+        object.__setattr__(instance, "_factory_identity", id(instance))
+        object.__setattr__(instance, "_seal", _REQUEST_SEAL)
+        object.__setattr__(
+            instance,
+            "_issued_fingerprint",
+            _request_fingerprint(instance),
+        )
+        return instance
+
+    def is_factory_issued(self) -> bool:
+        """Return true only for this exact object emitted by ``from_mapping``."""
+
+        if (
+            type(self) is not AuthorizationRequest
+            or self._seal is not _REQUEST_SEAL
+            or self._factory_identity != id(self)
+            or self._issued_fingerprint is None
+        ):
+            return False
+        try:
+            current = _request_fingerprint(self)
+        except Exception:
+            return False
+        return hmac.compare_digest(self._issued_fingerprint, current)
+
+
+def _request_fingerprint(request: AuthorizationRequest) -> str:
+    observed_gate = request.payload_human_gate
+    if observed_gate is not None and not isinstance(observed_gate, str):
+        observed_gate = "<non-string>"
+    return _issuance_fingerprint(
+        {
+            "schema_version": request.schema_version,
+            "request_id": request.request_id,
+            "task_id": request.task_id,
+            "objective_sha256": request.objective_sha256,
+            "source_head": request.source_head,
+            "operation": request.operation,
+            "effect_class": request.effect_class,
+            "resources": [item.to_dict() for item in request.resources],
+            "gate_phase": request.gate_phase,
+            "payload_human_gate_observed": observed_gate,
+        }
+    )
 
 
 @dataclass(frozen=True)
@@ -381,12 +454,67 @@ class TrustedHumanGrant:
     post_completion_approval_ref: str | None
     trust_source: str
     _seal: object = field(repr=False, compare=False)
+    _factory_identity: int | None = field(
+        default=None, init=False, repr=False, compare=False
+    )
+    _issued_fingerprint: str | None = field(
+        default=None, init=False, repr=False, compare=False
+    )
 
     def __post_init__(self) -> None:
         if self._seal is not _TRUST_SEAL:
             raise TrustBoundaryError(
                 "TrustedHumanGrant must be created by a trust-boundary adapter"
             )
+
+    def is_factory_issued(self) -> bool:
+        if (
+            type(self) is not TrustedHumanGrant
+            or self._seal is not _TRUST_SEAL
+            or self._factory_identity != id(self)
+            or self._issued_fingerprint is None
+        ):
+            return False
+        try:
+            current = _grant_fingerprint(self)
+        except Exception:
+            return False
+        return hmac.compare_digest(self._issued_fingerprint, current)
+
+
+def _grant_fingerprint(grant: TrustedHumanGrant) -> str:
+    return _issuance_fingerprint(
+        {
+            "envelope_id": grant.envelope_id,
+            "authority_class": grant.authority_class,
+            "principal_ref": grant.principal_ref,
+            "channel": grant.channel,
+            "evidence_ref": grant.evidence_ref,
+            "task_id": grant.task_id,
+            "request_id": grant.request_id,
+            "objective_sha256": grant.objective_sha256,
+            "source_head": grant.source_head,
+            "allowed_operations": sorted(grant.allowed_operations),
+            "resource_selectors": [
+                selector.to_dict() for selector in grant.resource_selectors
+            ],
+            "effect_ceiling": grant.effect_ceiling,
+            "explicitly_denied_operations": sorted(
+                grant.explicitly_denied_operations
+            ),
+            "issued_at": _format_time(grant.issued_at),
+            "not_before": _format_time(grant.not_before),
+            "expires_at": _format_time(grant.expires_at),
+            "revoked": grant.revoked,
+            "revocation_ref": grant.revocation_ref,
+            "nonce": grant.nonce,
+            "one_time": grant.one_time,
+            "pre_action": grant.pre_action,
+            "post_completion": grant.post_completion,
+            "post_completion_approval_ref": grant.post_completion_approval_ref,
+            "trust_source": grant.trust_source,
+        }
+    )
 
 
 def _trusted_grant_from_record(
@@ -464,7 +592,7 @@ def _trusted_grant_from_record(
     if revoked and revocation_ref is None:
         raise TrustBoundaryError("a revoked grant must identify revocation evidence")
 
-    return TrustedHumanGrant(
+    instance = TrustedHumanGrant(
         envelope_id=_required_string(record.get("envelope_id"), "envelope_id"),
         authority_class=authority_class,
         principal_ref=_required_string(authority.get("principal_ref"), "principal_ref"),
@@ -493,6 +621,13 @@ def _trusted_grant_from_record(
         trust_source=trust_source,
         _seal=_TRUST_SEAL,
     )
+    object.__setattr__(instance, "_factory_identity", id(instance))
+    object.__setattr__(
+        instance,
+        "_issued_fingerprint",
+        _grant_fingerprint(instance),
+    )
+    return instance
 
 
 class TrustBoundaryAdapter(ABC):
@@ -559,17 +694,56 @@ class DeterministicTestTrustBoundaryAdapter(TrustBoundaryAdapter):
 
 @dataclass(frozen=True)
 class ReadonlyAuthorizationPolicy:
-    forbidden_path_parts: frozenset[str] = frozenset(
-        {".env", ".ssh", "secrets", "credentials", "private_keys"}
+    """Case-insensitive protected-path classifier; never reads path contents."""
+
+    FORBIDDEN_DIRECTORY_NAMES: ClassVar[frozenset[str]] = frozenset(
+        {".ssh", "secrets", "credentials", "private_keys"}
+    )
+    FORBIDDEN_EXACT_FILENAMES: ClassVar[frozenset[str]] = frozenset(
+        {
+            "id_rsa",
+            "id_ed25519",
+            "credentials.json",
+            "application_default_credentials.json",
+        }
+    )
+    FORBIDDEN_FILE_SUFFIXES: ClassVar[frozenset[str]] = frozenset(
+        {".pem", ".key"}
     )
 
     def resource_is_secret(self, resource: ResourceRef) -> bool:
-        return any(part.lower() in self.forbidden_path_parts for part in PurePosixPath(resource.path).parts)
+        parts = tuple(part.casefold() for part in PurePosixPath(resource.path).parts)
+        if not parts:
+            return True
+        if any(part in self.FORBIDDEN_DIRECTORY_NAMES for part in parts):
+            return True
+        if any(part == ".env" or part.startswith(".env.") for part in parts):
+            return True
+        filename = parts[-1]
+        if filename in self.FORBIDDEN_EXACT_FILENAMES:
+            return True
+        return any(filename.endswith(suffix) for suffix in self.FORBIDDEN_FILE_SUFFIXES)
 
 
 @dataclass(frozen=True)
 class ReadonlyReplaySnapshot:
+    """Host-supplied point-in-time evidence, not a nonce-consumption store.
+
+    P0 performs only membership testing against this immutable snapshot.  It
+    neither consumes a successful nonce nor persists changes, so atomic and
+    cross-process replay protection remain external host responsibilities.
+    """
+
     consumed_nonces: frozenset[str] = frozenset()
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.consumed_nonces, frozenset) or any(
+            not isinstance(nonce, str) or not nonce
+            for nonce in self.consumed_nonces
+        ):
+            raise AuthorizationInputError(
+                "consumed_nonces must be an immutable frozenset of non-empty strings"
+            )
 
 
 @dataclass(frozen=True)
@@ -580,12 +754,32 @@ class AuthorizationDecision:
     requested_effect: Mapping[str, Any]
     audit: Mapping[str, Any]
     _seal: object = field(repr=False, compare=False)
+    _factory_identity: int | None = field(
+        default=None, init=False, repr=False, compare=False
+    )
+    _issued_fingerprint: str | None = field(
+        default=None, init=False, repr=False, compare=False
+    )
 
     def __post_init__(self) -> None:
         if self._seal is not _DECISION_SEAL:
             raise TrustBoundaryError(
                 "AuthorizationDecision must be created by verify_authorization"
             )
+
+    def is_factory_issued(self) -> bool:
+        if (
+            type(self) is not AuthorizationDecision
+            or self._seal is not _DECISION_SEAL
+            or self._factory_identity != id(self)
+            or self._issued_fingerprint is None
+        ):
+            return False
+        try:
+            current = _decision_fingerprint(self)
+        except Exception:
+            return False
+        return hmac.compare_digest(self._issued_fingerprint, current)
 
     def to_dict(self) -> dict[str, Any]:
         """Return an audit/transport snapshot, never reusable as trusted input."""
@@ -596,6 +790,28 @@ class AuthorizationDecision:
             "requested_effect": _deep_thaw(self.requested_effect),
             "audit": _deep_thaw(self.audit),
         }
+
+
+def _decision_fingerprint(decision: AuthorizationDecision) -> str:
+    return _issuance_fingerprint(
+        {
+            "status": decision.status,
+            "reason_codes": list(decision.reason_codes),
+            "authorization_context": _deep_thaw(decision.authorization_context),
+            "requested_effect": _deep_thaw(decision.requested_effect),
+            "audit": _deep_thaw(decision.audit),
+        }
+    )
+
+
+def _issue_decision(decision: AuthorizationDecision) -> AuthorizationDecision:
+    object.__setattr__(decision, "_factory_identity", id(decision))
+    object.__setattr__(
+        decision,
+        "_issued_fingerprint",
+        _decision_fingerprint(decision),
+    )
+    return decision
 
 
 def _observed_gate(value: Any) -> str | None:
@@ -628,18 +844,52 @@ def _finish(
     observed = _observed_gate(request.payload_human_gate)
     if observed is not None and AUTH_PAYLOAD_GATE_IGNORED not in final_codes:
         final_codes.append(AUTH_PAYLOAD_GATE_IGNORED)
-    return AuthorizationDecision(
-        status=status,
-        reason_codes=tuple(final_codes),
-        authorization_context=_deep_freeze(context) if context is not None else None,
-        requested_effect=_deep_freeze(_requested_effect(request)),
-        audit=_deep_freeze(
-            {
-                "payload_human_gate_observed": observed,
-                "payload_human_gate_used_for_authorization": False,
-            }
-        ),
-        _seal=_DECISION_SEAL,
+    return _issue_decision(
+        AuthorizationDecision(
+            status=status,
+            reason_codes=tuple(final_codes),
+            authorization_context=(
+                _deep_freeze(context) if context is not None else None
+            ),
+            requested_effect=_deep_freeze(_requested_effect(request)),
+            audit=_deep_freeze(
+                {
+                    "payload_human_gate_observed": observed,
+                    "payload_human_gate_used_for_authorization": False,
+                }
+            ),
+            _seal=_DECISION_SEAL,
+        )
+    )
+
+
+def _reject_untrusted_request() -> AuthorizationDecision:
+    """Reject a direct, copied, or duck-typed request without inspecting it."""
+
+    return _issue_decision(
+        AuthorizationDecision(
+            status="deny",
+            reason_codes=(AUTH_REQUEST_SCHEMA_INVALID,),
+            authorization_context=None,
+            requested_effect=_deep_freeze(
+                {
+                    "task_id": None,
+                    "request_id": None,
+                    "source_head": None,
+                    "operation": None,
+                    "effect_class": None,
+                    "resources": [],
+                    "gate_phase": None,
+                }
+            ),
+            audit=_deep_freeze(
+                {
+                    "payload_human_gate_observed": None,
+                    "payload_human_gate_used_for_authorization": False,
+                }
+            ),
+            _seal=_DECISION_SEAL,
+        )
     )
 
 
@@ -647,8 +897,8 @@ def is_verified_authorization_decision(value: Any) -> bool:
     """Return true only for an in-process decision emitted by this verifier."""
 
     return (
-        isinstance(value, AuthorizationDecision)
-        and value._seal is _DECISION_SEAL
+        type(value) is AuthorizationDecision
+        and AuthorizationDecision.is_factory_issued(value)
     )
 
 
@@ -657,6 +907,7 @@ def _authorization_context(
     grant: TrustedHumanGrant,
     now: datetime,
     reason_codes: Sequence[str],
+    replay_snapshot_supplied: bool,
 ) -> dict[str, Any]:
     context_id = sha256(
         (
@@ -700,7 +951,15 @@ def _authorization_context(
             "revocation_ref": grant.revocation_ref,
             "nonce": grant.nonce,
             "one_time": grant.one_time,
-            "replay_status": "fresh",
+            "replay_status": (
+                "not_present_in_supplied_snapshot"
+                if replay_snapshot_supplied
+                else "snapshot_not_supplied"
+            ),
+            "replay_snapshot_scope": "host_supplied_readonly_snapshot_only",
+            "atomic_nonce_consumption_implemented": False,
+            "nonce_persistence_implemented": False,
+            "cross_process_replay_protection_implemented": False,
         },
         "gates": {
             "pre_action": grant.pre_action,
@@ -719,7 +978,7 @@ def _authorization_context(
 
 
 def verify_authorization(
-    request: AuthorizationRequest,
+    request: Any,
     trusted_grant: TrustedHumanGrant | None,
     *,
     policy: ReadonlyAuthorizationPolicy | None = None,
@@ -727,10 +986,35 @@ def verify_authorization(
     now: datetime | None = None,
     environment_mode: str = "production",
 ) -> AuthorizationDecision:
-    """Verify an exact requested effect against externally trusted evidence."""
+    """Verify an exact requested effect against externally trusted evidence.
 
+    ``replay_snapshot`` is point-in-time evidence supplied by the host.  This
+    local verifier does not update it, atomically consume the nonce, persist
+    nonce state, or coordinate replay protection across processes.
+    """
+
+    if (
+        type(request) is not AuthorizationRequest
+        or not AuthorizationRequest.is_factory_issued(request)
+    ):
+        return _reject_untrusted_request()
+    if policy is not None and type(policy) is not ReadonlyAuthorizationPolicy:
+        raise AuthorizationInputError("policy must be a ReadonlyAuthorizationPolicy")
     policy = policy or ReadonlyAuthorizationPolicy()
+    if replay_snapshot is not None and not isinstance(
+        replay_snapshot, ReadonlyReplaySnapshot
+    ):
+        raise AuthorizationInputError(
+            "replay_snapshot must be a ReadonlyReplaySnapshot"
+        )
+    replay_snapshot_supplied = replay_snapshot is not None
     replay_snapshot = replay_snapshot or ReadonlyReplaySnapshot()
+    if (
+        request.operation == "secret.read"
+        or request.effect_class == "secret_or_privacy"
+        or any(policy.resource_is_secret(item) for item in request.resources)
+    ):
+        return _finish("deny", [AUTH_SECRET_SCOPE_FORBIDDEN], request)
     if environment_mode not in {"production", "test"}:
         return _finish("deny", [AUTH_INDETERMINATE], request)
     if now is not None and now.tzinfo is None:
@@ -739,7 +1023,10 @@ def verify_authorization(
 
     if trusted_grant is None:
         return _finish("human_required", [AUTH_CONTEXT_MISSING], request)
-    if not isinstance(trusted_grant, TrustedHumanGrant) or trusted_grant._seal is not _TRUST_SEAL:
+    if (
+        type(trusted_grant) is not TrustedHumanGrant
+        or not TrustedHumanGrant.is_factory_issued(trusted_grant)
+    ):
         return _finish("deny", [AUTH_ENVELOPE_UNTRUSTED], request)
     if trusted_grant.trust_source == "test_fixture" and environment_mode != "test":
         return _finish("deny", [AUTH_FIXTURE_IN_PRODUCTION], request)
@@ -763,10 +1050,6 @@ def verify_authorization(
         checks.append(AUTH_EXPIRED)
     if trusted_grant.nonce in replay_snapshot.consumed_nonces:
         checks.append(AUTH_NONCE_REPLAY)
-    if request.operation == "secret.read" or request.effect_class == "secret_or_privacy":
-        checks.append(AUTH_SECRET_SCOPE_FORBIDDEN)
-    elif any(policy.resource_is_secret(item) for item in request.resources):
-        checks.append(AUTH_SECRET_SCOPE_FORBIDDEN)
     if checks:
         return _finish("deny", checks, request)
 
@@ -799,7 +1082,13 @@ def verify_authorization(
     reason_codes = [AUTH_OK]
     if request.payload_human_gate is not None:
         reason_codes.append(AUTH_PAYLOAD_GATE_IGNORED)
-    context = _authorization_context(request, trusted_grant, now, reason_codes)
+    context = _authorization_context(
+        request,
+        trusted_grant,
+        now,
+        reason_codes,
+        replay_snapshot_supplied,
+    )
     return _finish("allow", reason_codes, request, context)
 
 

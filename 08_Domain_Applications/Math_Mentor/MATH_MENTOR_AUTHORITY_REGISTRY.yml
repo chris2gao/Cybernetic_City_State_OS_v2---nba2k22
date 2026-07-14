@@ -24,9 +24,49 @@ source_states:
   - "historical_frozen"
   - "superseded"
 
+canonical_authority_order:
+  canonical_ref:
+    path: ".ai/PROTOCOL.md"
+    section: "Canonical Instruction Authority And State Freshness"
+  lower_number_has_higher_authority: true
+  same_tier_ordering: "unordered; source list order is inventory order only"
+  tiers:
+    - authority_tier: 1
+      authority_group: "platform_system_developer_safety"
+      canonical_label: "platform, system, developer, and safety instructions"
+    - authority_tier: 2
+      authority_group: "current_explicit_human_instruction"
+      canonical_label: "current explicit Human instruction"
+    - authority_tier: 3
+      authority_group: "authenticated_human_approved_task_override"
+      canonical_label: "authenticated current Human-approved task-specific permission or override"
+    - authority_tier: 4
+      authority_group: "plan3_and_cybernetic_citizen_contracts"
+      canonical_label: "Plan 3 constitution and the Cybernetic Citizen runtime contract"
+    - authority_tier: 5
+      authority_group: "durable_repository_control_protocols"
+      canonical_label: "durable repository control protocols"
+    - authority_tier: 6
+      authority_group: "relevant_domain_authority_protocols"
+      canonical_label: "relevant domain-authority protocols"
+    - authority_tier: 7
+      authority_group: "ordinary_signal_and_task_details"
+      canonical_label: "ordinary current signal and task operational details"
+    - authority_tier: 8
+      authority_group: "routing_and_historical_evidence"
+      canonical_label: "routing documents and historical evidence"
+
+action_rule_source_semantics:
+  grant_authority_any_of: "Authenticated sources that may grant the action within exact scope; list order has no meaning."
+  governing_authority_sources: "Higher-order contracts and protocols that constrain the action but do not grant it."
+  operational_detail_sources: "Tier-7 task/signal details that describe scope and evidence but never grant or override authority."
+
 global_invariants:
   - "This registry indexes authority; it does not create, authenticate, or elevate authority."
-  - "Current platform, system, developer, and explicit Human instructions remain external inputs and outrank repository artifacts."
+  - "The canonical eight-tier order is copied exactly from .ai/PROTOCOL.md; same-tier sources are unordered."
+  - "Current platform, system, developer, safety, and explicit Human instructions remain external inputs and outrank repository artifacts."
+  - "An authenticated Human-approved task-specific override is a tier-3 external input, distinct from every ordinary model-authored signal, packet, task, or report."
+  - "An ordinary current signal or task detail remains tier 7, cannot grant authority, and cannot override Plan 3, the Cybernetic Citizen contract, durable repository protocols, or domain authority."
   - "Fresh Git or mailbox state establishes freshness only and never grants mutation, publication, runtime, or Coordinator authority."
   - "Unknown actions, unknown senders, missing required refs, stale source heads, and conflicting scope fail closed."
   - "A model-authored packet cannot authenticate or satisfy a Human Speaker gate."
@@ -34,8 +74,9 @@ global_invariants:
   - "P0 validation is read-only control-plane work and does not activate a UI, runtime, production Coordinator, state writer, or scheduler writer."
 
 authority_sources:
-  - authority_id: "platform_system_developer"
-    authority_rank: 1
+  - authority_id: "platform_system_developer_safety"
+    authority_tier: 1
+    authority_group: "platform_system_developer_safety"
     source_kind: "external"
     ref: null
     state: "external_current"
@@ -43,8 +84,9 @@ authority_sources:
     can_grant: true
     scope: "platform safety, system behavior, developer instructions, and tool permissions"
 
-  - authority_id: "current_human_instruction"
-    authority_rank: 2
+  - authority_id: "current_explicit_human_instruction"
+    authority_tier: 2
+    authority_group: "current_explicit_human_instruction"
     source_kind: "external"
     ref: null
     state: "external_current"
@@ -52,62 +94,19 @@ authority_sources:
     can_grant: true
     scope: "task objective, exact scope, protected Human gates, and explicit task-specific overrides"
 
-  - authority_id: "repository_working_agreements"
-    authority_rank: 3
-    source_kind: "repository_file"
-    ref: "AGENTS.md"
-    state: "active_durable"
-    verification: "path_and_content_review"
-    can_grant: false
-    scope: "repository working, safety, Git, validation, and startup agreements"
-
-  - authority_id: "ai_handoff_protocol"
-    authority_rank: 4
-    source_kind: "repository_file"
-    ref: ".ai/PROTOCOL.md"
-    state: "active_durable"
-    verification: "path_and_content_review"
-    can_grant: false
-    scope: "instruction authority, freshness, pointer handoff, publication, and Human gates"
-
-  - authority_id: "ai_protocol_adherence"
-    authority_rank: 5
-    source_kind: "repository_file"
-    ref: ".ai/PROTOCOL_ADHERENCE.md"
-    state: "active_durable"
-    verification: "path_and_content_review"
-    can_grant: false
-    scope: "bootstrap, ref dereference, scope validation, and correction loop"
-
-  - authority_id: "codex_task_input_contract"
-    authority_rank: 6
-    source_kind: "repository_file"
-    ref: ".ai/CODEX_TASK_INPUT_CONTRACT.md"
-    state: "active_durable"
-    verification: "path_and_content_review"
-    can_grant: false
-    scope: "task identity, task level, allowed paths, required refs, stop rules, and return contract"
-
-  - authority_id: "long_run_program_protocol"
-    authority_rank: 7
-    source_kind: "repository_file"
-    ref: ".ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md"
-    state: "active_durable"
-    verification: "path_and_content_review"
-    can_grant: false
-    scope: "completion-preserving execution, checkpoints, rollback, and protected gates"
-
-  - authority_id: "city_state_bootstrap"
-    authority_rank: 8
-    source_kind: "repository_file"
-    ref: "06_Silicon_Index/AI_Bootstrap_Sequence.md"
-    state: "active_durable"
-    verification: "path_and_content_review"
-    can_grant: false
-    scope: "Engine A/B routing, Human gate routing, and minimal context loading"
+  - authority_id: "authenticated_human_approved_task_override"
+    authority_tier: 3
+    authority_group: "authenticated_human_approved_task_override"
+    source_kind: "external"
+    ref: null
+    state: "external_current"
+    verification: "authenticated_approval_channel_plus_exact_scope_binding_required"
+    can_grant: true
+    scope: "task-specific permission or override only within its authenticated explicit scope; never inferred from model-authored packet content"
 
   - authority_id: "plan3_human_speaker"
-    authority_rank: 9
+    authority_tier: 4
+    authority_group: "plan3_and_cybernetic_citizen_contracts"
     source_kind: "repository_file"
     ref: "3号方案.md"
     state: "active_durable"
@@ -116,7 +115,8 @@ authority_sources:
     scope: "Human Speaker route, translation, and final decision boundary"
 
   - authority_id: "cybernetic_citizen_contract"
-    authority_rank: 10
+    authority_tier: 4
+    authority_group: "plan3_and_cybernetic_citizen_contracts"
     source_kind: "repository_file"
     ref: "06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md"
     state: "active_durable"
@@ -124,8 +124,59 @@ authority_sources:
     can_grant: false
     scope: "Cybernetic Citizen constitutional and runtime boundaries"
 
+  - authority_id: "repository_working_agreements"
+    authority_tier: 5
+    authority_group: "durable_repository_control_protocols"
+    source_kind: "repository_file"
+    ref: "AGENTS.md"
+    state: "active_durable"
+    verification: "path_and_content_review"
+    can_grant: false
+    scope: "repository working, safety, Git, validation, and startup agreements"
+
+  - authority_id: "ai_handoff_protocol"
+    authority_tier: 5
+    authority_group: "durable_repository_control_protocols"
+    source_kind: "repository_file"
+    ref: ".ai/PROTOCOL.md"
+    state: "active_durable"
+    verification: "path_and_content_review"
+    can_grant: false
+    scope: "instruction authority, freshness, pointer handoff, publication, and Human gates"
+
+  - authority_id: "ai_protocol_adherence"
+    authority_tier: 5
+    authority_group: "durable_repository_control_protocols"
+    source_kind: "repository_file"
+    ref: ".ai/PROTOCOL_ADHERENCE.md"
+    state: "active_durable"
+    verification: "path_and_content_review"
+    can_grant: false
+    scope: "bootstrap, ref dereference, scope validation, and correction loop"
+
+  - authority_id: "codex_task_input_contract"
+    authority_tier: 5
+    authority_group: "durable_repository_control_protocols"
+    source_kind: "repository_file"
+    ref: ".ai/CODEX_TASK_INPUT_CONTRACT.md"
+    state: "active_durable"
+    verification: "path_and_content_review"
+    can_grant: false
+    scope: "task identity, task level, allowed paths, required refs, stop rules, and return contract"
+
+  - authority_id: "long_run_program_protocol"
+    authority_tier: 5
+    authority_group: "durable_repository_control_protocols"
+    source_kind: "repository_file"
+    ref: ".ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md"
+    state: "active_durable"
+    verification: "path_and_content_review"
+    can_grant: false
+    scope: "completion-preserving execution, checkpoints, rollback, and protected gates"
+
   - authority_id: "math_mentor_universal_protocol"
-    authority_rank: 11
+    authority_tier: 6
+    authority_group: "relevant_domain_authority_protocols"
     source_kind: "repository_file"
     ref: "08_Domain_Applications/Math_Mentor/Universal_Layer_Execution_Protocol.md"
     state: "active_domain"
@@ -134,7 +185,8 @@ authority_sources:
     scope: "MathLane routing, split-roadmap use, batch size, validation, and P3 boundary"
 
   - authority_id: "knowledge_completion_program"
-    authority_rank: 12
+    authority_tier: 6
+    authority_group: "relevant_domain_authority_protocols"
     source_kind: "repository_file"
     ref: "08_Domain_Applications/Math_Mentor/KNOWLEDGE_COMPLETION_PROGRAM.md"
     state: "active_domain"
@@ -143,7 +195,8 @@ authority_sources:
     scope: "planning-only Stage 0-9 completion and admission contracts"
 
   - authority_id: "node_quality_audit_contract"
-    authority_rank: 13
+    authority_tier: 6
+    authority_group: "relevant_domain_authority_protocols"
     source_kind: "repository_file"
     ref: "08_Domain_Applications/Math_Mentor/NODE_QUALITY_AUDIT_PLAN.md"
     state: "active_domain"
@@ -152,7 +205,8 @@ authority_sources:
     scope: "conservative evaluator semantics and Mode A/Mode B quality gates"
 
   - authority_id: "bridge_schema_contract"
-    authority_rank: 14
+    authority_tier: 6
+    authority_group: "relevant_domain_authority_protocols"
     source_kind: "repository_file"
     ref: "08_Domain_Applications/Math_Mentor/BRIDGE_SCHEMA.md"
     state: "active_domain"
@@ -161,7 +215,8 @@ authority_sources:
     scope: "canonical bridge schema, unresolved legacy bridges, and formal-consumption gate"
 
   - authority_id: "teacher_initialization_contract"
-    authority_rank: 15
+    authority_tier: 6
+    authority_group: "relevant_domain_authority_protocols"
     source_kind: "repository_file"
     ref: "08_Domain_Applications/Math_Mentor/TEACHER_INITIALIZATION_FLOW.md"
     state: "active_domain"
@@ -170,7 +225,8 @@ authority_sources:
     scope: "manual-chat initialization, authority/freshness separation, and no-runtime boundary"
 
   - authority_id: "teaching_flow_contract"
-    authority_rank: 16
+    authority_tier: 6
+    authority_group: "relevant_domain_authority_protocols"
     source_kind: "repository_file"
     ref: "08_Domain_Applications/Math_Mentor/V9.1_教学流程系统规范_Teaching_Flow_Spec.md"
     state: "active_domain"
@@ -179,7 +235,8 @@ authority_sources:
     scope: "manual teaching flow, MathLane namespace, Exam handoff, and placeholder review handoff"
 
   - authority_id: "coordinator_manual_contract"
-    authority_rank: 17
+    authority_tier: 6
+    authority_group: "relevant_domain_authority_protocols"
     source_kind: "repository_file"
     ref: "08_Domain_Applications/Math_Mentor/08_Math_Mentor_Coordinator_Prompt.md"
     state: "active_domain"
@@ -188,7 +245,8 @@ authority_sources:
     scope: "manual-chat orchestration contract only; no production Coordinator"
 
   - authority_id: "student_state_contract"
-    authority_rank: 18
+    authority_tier: 6
+    authority_group: "relevant_domain_authority_protocols"
     source_kind: "repository_file"
     ref: "08_Domain_Applications/Math_Mentor/STUDENT_LEARNING_STATE_SCHEMA.md"
     state: "active_domain"
@@ -197,7 +255,8 @@ authority_sources:
     scope: "future persisted learning-state shape; no writer activation"
 
   - authority_id: "spaced_review_contract"
-    authority_rank: 19
+    authority_tier: 6
+    authority_group: "relevant_domain_authority_protocols"
     source_kind: "repository_file"
     ref: "08_Domain_Applications/Math_Mentor/SPACED_REVIEW_SCHEDULER_SCHEMA.md"
     state: "active_domain"
@@ -206,7 +265,8 @@ authority_sources:
     scope: "future Human-authorized review scheduler shape; no writer activation"
 
   - authority_id: "graduation_contract"
-    authority_rank: 20
+    authority_tier: 6
+    authority_group: "relevant_domain_authority_protocols"
     source_kind: "repository_file"
     ref: "08_Domain_Applications/Math_Mentor/GRADUATION_CRITERIA.md"
     state: "active_domain"
@@ -215,7 +275,8 @@ authority_sources:
     scope: "review-evidence-based graduation; classroom pass is not graduation"
 
   - authority_id: "capability_semantics_contract"
-    authority_rank: 21
+    authority_tier: 6
+    authority_group: "relevant_domain_authority_protocols"
     source_kind: "repository_file"
     ref: "08_Domain_Applications/Math_Mentor/MATH_MENTOR_CAPABILITY_REGISTRY.md"
     state: "active_domain"
@@ -224,7 +285,8 @@ authority_sources:
     scope: "capability categories and Human authorization requirements"
 
   - authority_id: "tool_truthfulness_contract"
-    authority_rank: 22
+    authority_tier: 6
+    authority_group: "relevant_domain_authority_protocols"
     source_kind: "repository_file"
     ref: "08_Domain_Applications/Math_Mentor/TOOL_TRUTHFULNESS_POLICY.md"
     state: "active_domain"
@@ -232,8 +294,29 @@ authority_sources:
     can_grant: false
     scope: "run_with_log evidence and prohibition on fake tool claims"
 
+  - authority_id: "ordinary_current_signal_task_details"
+    authority_tier: 7
+    authority_group: "ordinary_signal_and_task_details"
+    source_kind: "external"
+    ref: null
+    state: "task_scoped"
+    verification: "pointer_dereference_scope_and_freshness_only_not_human_authentication"
+    can_grant: false
+    scope: "ordinary model-authored signals, packets, tasks, reports, and operational details; may narrow work but never grant an override"
+
+  - authority_id: "city_state_bootstrap"
+    authority_tier: 8
+    authority_group: "routing_and_historical_evidence"
+    source_kind: "repository_file"
+    ref: "06_Silicon_Index/AI_Bootstrap_Sequence.md"
+    state: "active_durable"
+    verification: "path_and_content_review"
+    can_grant: false
+    scope: "Engine A/B routing, Human gate routing, and minimal context loading"
+
   - authority_id: "teaching_system_blueprint"
-    authority_rank: 23
+    authority_tier: 8
+    authority_group: "routing_and_historical_evidence"
     source_kind: "repository_file"
     ref: "08_Domain_Applications/Math_Mentor/Math Mentor Teaching System Design.md"
     state: "historical_frozen"
@@ -242,7 +325,8 @@ authority_sources:
     scope: "architecture blueprint, not implementation-completion evidence"
 
   - authority_id: "teaching_system_implementation_plan"
-    authority_rank: 24
+    authority_tier: 8
+    authority_group: "routing_and_historical_evidence"
     source_kind: "repository_file"
     ref: "08_Domain_Applications/Math_Mentor/Math Mentor Teaching System Design implement plan.md"
     state: "superseded"
@@ -251,7 +335,8 @@ authority_sources:
     scope: "historical LRP plan whose planned status fields are stale"
 
   - authority_id: "post_p2_historical_memory"
-    authority_rank: 25
+    authority_tier: 8
+    authority_group: "routing_and_historical_evidence"
     source_kind: "repository_file"
     ref: "08_Domain_Applications/Math_Mentor/POST_P2_EXECUTION_MEMORY.md"
     state: "historical_frozen"
@@ -260,7 +345,8 @@ authority_sources:
     scope: "historical continuation evidence and non-authorizing planning memory"
 
   - authority_id: "stage0_inventory_evidence"
-    authority_rank: 26
+    authority_tier: 8
+    authority_group: "routing_and_historical_evidence"
     source_kind: "repository_file"
     ref: ".ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/MANIFEST.yml"
     state: "historical_frozen"
@@ -273,7 +359,9 @@ action_rules:
     engine_route: "Plan3_Engine_A_or_B"
     default_decision: "permit_read_only"
     human_gate: "not_required"
-    required_authority: ["platform_system_developer", "current_human_instruction"]
+    grant_authority_any_of: ["platform_system_developer_safety", "current_explicit_human_instruction", "authenticated_human_approved_task_override"]
+    governing_authority_sources: ["plan3_human_speaker", "cybernetic_citizen_contract", "ai_handoff_protocol", "ai_protocol_adherence"]
+    operational_detail_sources: ["ordinary_current_signal_task_details"]
     required_evidence: ["task_scope", "required_refs"]
     allowed_side_effects: []
     forbidden_side_effects: ["write", "runtime_activate", "coordinator_activate"]
@@ -282,7 +370,9 @@ action_rules:
     engine_route: "Plan3_Engine_A"
     default_decision: "permit_scoped_write"
     human_gate: "task_scope_required"
-    required_authority: ["current_human_instruction", "codex_task_input_contract"]
+    grant_authority_any_of: ["current_explicit_human_instruction", "authenticated_human_approved_task_override"]
+    governing_authority_sources: ["plan3_human_speaker", "cybernetic_citizen_contract", "repository_working_agreements", "codex_task_input_contract"]
+    operational_detail_sources: ["ordinary_current_signal_task_details"]
     required_evidence: ["exact_allowed_paths", "immutable_source_head"]
     allowed_side_effects: ["write_explicit_allowlist_only"]
     forbidden_side_effects: ["node_write", "bridge_write", "state_write", "scheduler_write", "runtime_activate", "coordinator_activate"]
@@ -291,7 +381,9 @@ action_rules:
     engine_route: "Plan3_Engine_A"
     default_decision: "permit_read_only"
     human_gate: "not_required_when_task_scoped"
-    required_authority: ["current_human_instruction"]
+    grant_authority_any_of: ["platform_system_developer_safety", "current_explicit_human_instruction", "authenticated_human_approved_task_override"]
+    governing_authority_sources: ["plan3_human_speaker", "cybernetic_citizen_contract", "repository_working_agreements", "codex_task_input_contract"]
+    operational_detail_sources: ["ordinary_current_signal_task_details"]
     required_evidence: ["deterministic_command", "no_runtime_boundary"]
     allowed_side_effects: ["test_process", "explicit_task_evidence_write_only"]
     forbidden_side_effects: ["node_write", "bridge_write", "state_write", "scheduler_write", "runtime_activate", "coordinator_activate"]
@@ -300,7 +392,9 @@ action_rules:
     engine_route: "Plan3_Engine_A_with_Math_Mentor_semantic_review"
     default_decision: "human_gate_required"
     human_gate: "required"
-    required_authority: ["current_human_instruction", "knowledge_completion_program"]
+    grant_authority_any_of: ["current_explicit_human_instruction", "authenticated_human_approved_task_override"]
+    governing_authority_sources: ["plan3_human_speaker", "cybernetic_citizen_contract", "math_mentor_universal_protocol", "knowledge_completion_program", "node_quality_audit_contract"]
+    operational_detail_sources: ["ordinary_current_signal_task_details"]
     required_evidence: ["exact_node_scope", "accepted_semantic_or_computational_evidence"]
     allowed_side_effects: []
     forbidden_side_effects: ["unscoped_node_write", "automatic_status_promotion"]
@@ -309,7 +403,9 @@ action_rules:
     engine_route: "Human_Speaker_required"
     default_decision: "human_gate_required"
     human_gate: "required"
-    required_authority: ["current_human_instruction", "knowledge_completion_program", "bridge_schema_contract"]
+    grant_authority_any_of: ["current_explicit_human_instruction", "authenticated_human_approved_task_override"]
+    governing_authority_sources: ["plan3_human_speaker", "cybernetic_citizen_contract", "knowledge_completion_program", "bridge_schema_contract"]
+    operational_detail_sources: ["ordinary_current_signal_task_details"]
     required_evidence: ["p3_reopened_true", "named_certified_endpoints", "immutable_source_head", "bridge_landing_authorized"]
     allowed_side_effects: []
     forbidden_side_effects: ["automatic_p3_open", "uncertified_endpoint_use", "automatic_bridge_write"]
@@ -318,7 +414,9 @@ action_rules:
     engine_route: "Human_Speaker_required"
     default_decision: "human_gate_required"
     human_gate: "required"
-    required_authority: ["current_human_instruction", "knowledge_completion_program", "bridge_schema_contract"]
+    grant_authority_any_of: ["current_explicit_human_instruction", "authenticated_human_approved_task_override"]
+    governing_authority_sources: ["plan3_human_speaker", "cybernetic_citizen_contract", "knowledge_completion_program", "bridge_schema_contract"]
+    operational_detail_sources: ["ordinary_current_signal_task_details"]
     required_evidence: ["stage8_acceptance", "indexed_bridge", "mode_correct_validation", "integration_tests"]
     allowed_side_effects: []
     forbidden_side_effects: ["automatic_coordinator_consumption", "pending_bridge_consumption"]
@@ -327,7 +425,9 @@ action_rules:
     engine_route: "Human_Speaker_required"
     default_decision: "human_gate_required"
     human_gate: "required"
-    required_authority: ["current_human_instruction", "ai_handoff_protocol"]
+    grant_authority_any_of: ["current_explicit_human_instruction", "authenticated_human_approved_task_override"]
+    governing_authority_sources: ["plan3_human_speaker", "cybernetic_citizen_contract", "ai_handoff_protocol", "long_run_program_protocol"]
+    operational_detail_sources: ["ordinary_current_signal_task_details"]
     required_evidence: ["separate_runtime_task", "exact_runtime_scope", "rollback_and_audit_plan"]
     allowed_side_effects: []
     forbidden_side_effects: ["documentation_only_activation", "implicit_coordinator_activation"]
@@ -336,7 +436,9 @@ action_rules:
     engine_route: "Human_Speaker_required"
     default_decision: "human_gate_required"
     human_gate: "required"
-    required_authority: ["current_human_instruction", "student_state_contract", "spaced_review_contract"]
+    grant_authority_any_of: ["current_explicit_human_instruction", "authenticated_human_approved_task_override"]
+    governing_authority_sources: ["plan3_human_speaker", "cybernetic_citizen_contract", "student_state_contract", "spaced_review_contract"]
+    operational_detail_sources: ["ordinary_current_signal_task_details"]
     required_evidence: ["separate_writer_task", "privacy_scope", "persistence_and_rollback_plan"]
     allowed_side_effects: []
     forbidden_side_effects: ["legacy_prompt_write", "implicit_state_write", "implicit_scheduler_write"]
@@ -345,7 +447,9 @@ action_rules:
     engine_route: "Human_Speaker_required"
     default_decision: "human_gate_required"
     human_gate: "required"
-    required_authority: ["current_human_instruction", "ai_handoff_protocol"]
+    grant_authority_any_of: ["current_explicit_human_instruction", "authenticated_human_approved_task_override"]
+    governing_authority_sources: ["plan3_human_speaker", "cybernetic_citizen_contract", "ai_handoff_protocol", "repository_working_agreements"]
+    operational_detail_sources: ["ordinary_current_signal_task_details"]
     required_evidence: ["exact_accepted_head", "publication_authorization", "remote_readback"]
     allowed_side_effects: []
     forbidden_side_effects: ["force_push_protected_source", "publication_from_stale_head"]
@@ -354,7 +458,9 @@ action_rules:
     engine_route: "none"
     default_decision: "deny"
     human_gate: "not_overridable_by_model_packet"
-    required_authority: ["math_mentor_universal_protocol", "node_quality_audit_contract"]
+    grant_authority_any_of: []
+    governing_authority_sources: ["math_mentor_universal_protocol", "node_quality_audit_contract"]
+    operational_detail_sources: ["ordinary_current_signal_task_details"]
     required_evidence: []
     allowed_side_effects: []
     forbidden_side_effects: ["machine_semantic_pass", "semantic_review_as_machine_proof"]
@@ -363,7 +469,9 @@ action_rules:
     engine_route: "none"
     default_decision: "deny"
     human_gate: "not_a_valid_production_transition"
-    required_authority: ["graduation_contract", "student_state_contract"]
+    grant_authority_any_of: []
+    governing_authority_sources: ["graduation_contract", "student_state_contract"]
+    operational_detail_sources: ["ordinary_current_signal_task_details"]
     required_evidence: []
     allowed_side_effects: []
     forbidden_side_effects: ["r5_to_graduated", "classroom_pass_to_graduated", "legacy_table_status_promotion"]
@@ -372,7 +480,9 @@ action_rules:
     engine_route: "none"
     default_decision: "deny"
     human_gate: "explicit_exact_operation_and_platform_permission_required"
-    required_authority: ["platform_system_developer", "current_human_instruction"]
+    grant_authority_any_of: []
+    governing_authority_sources: ["platform_system_developer_safety", "current_explicit_human_instruction", "plan3_human_speaker", "cybernetic_citizen_contract"]
+    operational_detail_sources: ["ordinary_current_signal_task_details"]
     required_evidence: []
     allowed_side_effects: []
     forbidden_side_effects: ["secret_read", "credential_disclosure", "environment_dump"]
@@ -381,7 +491,9 @@ action_rules:
     engine_route: "none"
     default_decision: "deny"
     human_gate: "not_overridable_by_model_consensus"
-    required_authority: ["plan3_human_speaker"]
+    grant_authority_any_of: []
+    governing_authority_sources: ["plan3_human_speaker", "cybernetic_citizen_contract"]
+    operational_detail_sources: ["ordinary_current_signal_task_details"]
     required_evidence: []
     allowed_side_effects: []
     forbidden_side_effects: ["authority_escalation", "model_consensus_replaces_human"]

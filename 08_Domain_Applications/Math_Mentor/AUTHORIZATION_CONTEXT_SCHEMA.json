@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://cybernetic-city-state.local/math-mentor/AUTHORIZATION_CONTEXT_SCHEMA.json",
   "title": "Verified Math Mentor Authorization Context",
-  "description": "Verifier output only. This object must never be accepted from a teaching, task, signal, or model-generated business payload as authorization evidence.",
+  "description": "Verifier output only. This object must never be accepted from a teaching, task, signal, or model-generated business payload as authorization evidence. Replay status describes only comparison with a host-supplied read-only snapshot; P0 does not atomically consume or persist nonces and does not provide cross-process replay protection.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -135,7 +135,7 @@
         "path": {
           "type": "string",
           "minLength": 1,
-          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*[\\\\*?\\[\\]{}]).+[^/]$"
+          "pattern": "^(?!/)(?!.*:)(?!.*[. ](?:/|$))(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*[\\\\*?\\[\\]{}]).+[^/]$"
         },
         "match": {
           "const": "exact"
@@ -154,7 +154,7 @@
         "path": {
           "type": "string",
           "minLength": 1,
-          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*[\\\\*?\\[\\]{}]).+$"
+          "pattern": "^(?!/)(?!.*:)(?!.*[. ](?:/|$))(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*[\\\\*?\\[\\]{}]).+$"
         },
         "match": {
           "enum": ["exact", "prefix"]
@@ -292,7 +292,11 @@
         "revocation_ref",
         "nonce",
         "one_time",
-        "replay_status"
+        "replay_status",
+        "replay_snapshot_scope",
+        "atomic_nonce_consumption_implemented",
+        "nonce_persistence_implemented",
+        "cross_process_replay_protection_implemented"
       ],
       "properties": {
         "issued_at": {
@@ -325,7 +329,22 @@
           "type": "boolean"
         },
         "replay_status": {
-          "const": "fresh"
+          "enum": [
+            "not_present_in_supplied_snapshot",
+            "snapshot_not_supplied"
+          ]
+        },
+        "replay_snapshot_scope": {
+          "const": "host_supplied_readonly_snapshot_only"
+        },
+        "atomic_nonce_consumption_implemented": {
+          "const": false
+        },
+        "nonce_persistence_implemented": {
+          "const": false
+        },
+        "cross_process_replay_protection_implemented": {
+          "const": false
         }
       }
     },
