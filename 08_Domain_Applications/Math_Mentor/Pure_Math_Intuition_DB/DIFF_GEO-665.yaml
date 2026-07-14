@@ -1,25 +1,154 @@
 id: DIFF_GEO-665
-mode_routing_status: "manual_review_required"
-validation_status: "manual_review_required"
+city_state_engine: "Plan3_Engine_B"
+mode: "B"
+math_lane: "MathLane_B"
+mode_routing_status: "human_approved"
+validation_status: "semantic_only"
+tool_status: "semantic_only"
 bridge_readiness_status: "manual_review_required"
-formal_definition_status: "missing"
-prerequisites_status: "missing"
-mapping_boundary_status: "missing"
+formal_definition_status: "human_approved"
+prerequisites_status: "human_approved"
+mapping_boundary_status: "human_approved"
+formal_definition: >-
+  For a smooth manifold M, let Ω^k(M) be the vector space of smooth
+  differential k-forms. The exterior derivative d:Ω^k(M)→Ω^{k+1}(M)
+  satisfies d²=0. Define the closed forms Z^k(M)=ker(d:Ω^k→Ω^{k+1}) and
+  the exact forms B^k(M)=im(d:Ω^{k-1}→Ω^k). Since d²=0, B^k(M) is a
+  subspace of Z^k(M), and the k-th de Rham cohomology group is the quotient
+  vector space H^k_dR(M)=Z^k(M)/B^k(M). It records closed forms modulo exact
+  forms, not a set-theoretic subtraction. The Poincare lemma states that
+  closed forms are locally exact on contractible coordinate neighborhoods;
+  nonzero de Rham classes therefore express global obstructions to choosing a
+  single potential. The de Rham theorem identifies H^k_dR(M) with singular
+  cohomology with real coefficients. Integration over cycles together with
+  Stokes' theorem links differential-form representatives to topological
+  invariants. Exact forms are always closed, while closed forms need not be
+  globally exact.
+formal_definition_zh: >-
+  对光滑流形 M，记 Ω^k(M) 为光滑 k-形式组成的向量空间。外微分
+  d:Ω^k(M)→Ω^{k+1}(M) 满足 d²=0。定义闭形式空间
+  Z^k(M)=ker(d:Ω^k→Ω^{k+1})，恰当形式空间
+  B^k(M)=im(d:Ω^{k-1}→Ω^k)。由 d²=0 可知 B^k(M) 是 Z^k(M) 的
+  子空间，第 k 个 de Rham 上同调群是商向量空间
+  H^k_dR(M)=Z^k(M)/B^k(M)，表示闭形式模去恰当形式，而不是集合意义上的
+  “相减”。Poincare 引理说明在可缩坐标邻域中闭形式局部恰当；因此非零 de Rham
+  类表达了无法选取单一全局势的全局障碍。de Rham 定理把它与实系数奇异上同调
+  同构；形式在闭链上的积分与 Stokes 定理把解析代表和拓扑不变量联系起来。
+  恰当形式必闭，但闭形式不必全局恰当。
+candidate_prerequisite_nodes:
+  - node_id: n_653
+    file: DIFF_GEO-653.yaml
+    role: "smooth manifolds and coordinate neighborhoods"
+  - node_id: n_656
+    file: DIFF_GEO-656.yaml
+    role: "differential forms, wedge product, exterior derivative, and Stokes' theorem"
+supporting_prerequisites:
+  - "quotient vector spaces"
+  - "basic topology, chains, cycles, boundaries, and singular cohomology"
+  - "exact repository identities for singular homology/cohomology remain unresolved and must not be invented"
+downstream_dependent_nodes:
+  - node_id: n_662
+    file: DIFF_GEO-662.yaml
+    relationship: "characteristic and Chern classes use cohomology classes"
+  - node_id: n_663
+    file: DIFF_GEO-663.yaml
+    relationship: "global curvature-topology context"
+  - node_id: n_668
+    file: DIFF_GEO-668.yaml
+    relationship: "symplectic forms are closed nondegenerate two-forms"
+mapping_boundary:
+  primary_mapping_kind: "llm_architecture_bounded_structural_analogy"
+  primary_mapping: >-
+    Only after a smooth representation manifold and a differential-form
+    complex have been explicitly defined, de Rham cohomology can analogize
+    global constraints invisible in any one local coordinate patch: locally
+    solvable differential relations may fail to admit a single global
+    potential. The quotient identifies closed representatives that differ by
+    an exact form, so the invariant concerns a defined complex rather than
+    visual or semantic impressions of holes.
+  primary_mapping_zh: >-
+    只有在明确定义光滑表示流形及其微分形式复形后，de Rham 上同调才可类比为
+    单个局部坐标片看不见的全局约束：局部可解的微分关系可能不存在统一的全局势。
+    商空间把相差恰当形式的闭形式代表视为同一类，因此这里的不变量依赖一个严格
+    定义的复形，而不是对“语义空洞”的视觉或语言印象。
+  boundary:
+    - "Generic loops in latent space are not automatically homology cycles."
+    - "Semantic holes are not de Rham classes without a defined manifold, forms, differential, and quotient."
+    - "Closed does not mean exact globally; exact does imply closed."
+    - "Cohomology is a quotient vector space, not closed forms minus exact forms as set subtraction."
+    - "Non-integrable is not a synonym for non-exact without a precise differential-form statement."
+    - "Local exactness does not eliminate global cohomology classes."
+    - "No de Rham complex or cohomology computation for an ordinary model is established by this node."
+  preserve_full_boundary: true
+  existing_physical_metaphor_status: "secondary_teaser_only"
+  secondary_teaser_limitation: >-
+    The circulating-dye image may hint at a global obstruction, but it does
+    not define a manifold, cycle, differential form, exterior derivative,
+    exactness, quotient space, or cohomology class.
+existing_code_and_audit:
+  preserve: true
+  evidence_status: "semantic_only"
+  run_with_log_ref: null
+  code_interpretation: >-
+    The existing subtraction expression treats its arguments as ordinary
+    subtractable objects. It constructs neither kernels and images of a
+    differential nor the quotient vector space Z^k/B^k, so it cannot compute
+    de Rham cohomology.
+  audit_interpretation: >-
+    The existing audit proves only the tautology 0=0. It does not test d²=0,
+    closedness, exactness, quotient equivalence, integration over cycles,
+    Poincare's lemma, or the de Rham theorem.
+  code_scope: "ordinary_subtraction_placeholder"
+  example_scope: "no_differential_complex_or_quotient"
+  audit_scope: "zero_equals_zero_tautology"
+  explicitly_not_validated:
+    - exterior_derivative_complex
+    - d_squared_zero
+    - closed_and_exact_subspaces
+    - quotient_vector_space
+    - Poincare_lemma
+    - integration_over_cycles
+    - de_Rham_theorem
 migration_review:
   missing_reason:
-    - "formal_definition_absent"
-    - "prerequisite_nodes_absent"
-    - "mapping_boundary_absent"
-  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+    - "exact_singular_homology_and_cohomology_node_ids_not_approved"
+    - "current_code_does_not_construct_a_quotient"
+    - "current_audit_is_zero_equals_zero"
+    - "bridge_endpoint_eligibility_not_certified"
+  recommended_next_action: >-
+    Preserve semantic_only and manual bridge review. Resolve exact topology
+    prerequisite identities separately; do not convert visual loops or latent
+    clusters into homology or de Rham evidence.
+  semantic_repair:
+    decision_source: "Human-approved DIFF_GEO Foundation Batch 1 Complete Semantic Decision v1"
+    city_state_engine: "Plan3_Engine_B"
+    lane_policy: "MathLane_B"
+    formal_definition: "human_approved"
+    prerequisites: "human_approved"
+    mapping_boundary: "human_approved"
+    existing_code_and_audit: "preserved_with_semantic_only_boundary"
+    mutation_scope: "DIFF_GEO-665.yaml_only"
   warnings:
-    - "mode_routing_manual_review_required"
-concept_name: de Rham上同调 - 探测机制：利用微分形式像雷达一样精准探测高维流形内部隐藏的“拓扑空洞”。 (n_665)
+    - "semantic_only_not_machine_validated"
+    - "bridge_readiness_remains_manual_review_required"
+    - "closed_forms_are_not_necessarily_exact"
+    - "cohomology_is_a_quotient_not_set_subtraction"
+    - "current_code_does_not_compute_de_Rham_cohomology"
+    - "current_audit_is_tautological"
+concept_name: de Rham 上同调：闭形式、恰当形式与全局拓扑障碍 (n_665)
 sub_topics:
-- 外微分复形的同调性分析
-- 德·拉姆定理：解析上同调与奇异同调的等价性
-- 空间中“不可被积”障碍的代数表征
-- 物理直觉：寻找流形中流体环流的瓶颈点
-llm_physical_mapping: 如同往闭合管道网络里注入带有染料的流体，观察水流如果一直在管道里打转却找不到任何出水阀门，就说明管道网络中心肯定围绕着一个实心的铁柱子。
+- exterior differential complex and the identity d squared equals zero
+- closed forms and exact forms
+- de Rham cohomology as a quotient vector space
+- local exactness and the Poincare lemma
+- global obstruction to a single potential
+- integration over cycles and Stokes' theorem
+- de Rham theorem and real singular cohomology
+- limits of latent-space and semantic-hole analogies
+llm_physical_mapping: >-
+  闭合管道中的染料循环只作为次级提示：它可提示“局部看似可解但全局存在障碍”，
+  却没有定义流形、闭链、微分形式、外微分、恰当性或商空间，因而不能直接代表
+  de Rham 上同调类。
 code_implementation: "def detect_holes(closed_forms, exact_forms):\n    return closed_forms - exact_forms\n"
 v8_sanity_audit:
   sympy_pseudo_code: 'import sympy as sp
