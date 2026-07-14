@@ -1,0 +1,411 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cybernetic-city-state.local/math-mentor/AUTHORIZATION_CONTEXT_SCHEMA.json",
+  "title": "Verified Math Mentor Authorization Context",
+  "description": "Verifier output only. This object must never be accepted from a teaching, task, signal, or model-generated business payload as authorization evidence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "authorization_id",
+    "authority",
+    "binding",
+    "grant",
+    "validity",
+    "gates",
+    "verification"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "math_mentor.authorization_context.v1"
+    },
+    "authorization_id": {
+      "type": "string",
+      "pattern": "^authz-[a-z0-9][a-z0-9._-]{7,127}$"
+    },
+    "authority": {
+      "$ref": "#/$defs/authority"
+    },
+    "binding": {
+      "$ref": "#/$defs/binding"
+    },
+    "grant": {
+      "$ref": "#/$defs/grant"
+    },
+    "validity": {
+      "$ref": "#/$defs/validity"
+    },
+    "gates": {
+      "$ref": "#/$defs/gates"
+    },
+    "verification": {
+      "$ref": "#/$defs/verification"
+    }
+  },
+  "$defs": {
+    "git_sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "operation": {
+      "enum": [
+        "repository.read",
+        "conversation.teach",
+        "control_plane.write",
+        "communication.write",
+        "student_state.write",
+        "scheduler_state.write",
+        "prompt.mutate",
+        "node.mutate",
+        "bridge.mutate",
+        "runtime.activate",
+        "coordinator.activate",
+        "external_tool.execute",
+        "source.publish",
+        "protected_git.rewrite",
+        "secret.read"
+      ]
+    },
+    "effect_class": {
+      "enum": [
+        "read_only",
+        "conversation_only",
+        "business_file_write",
+        "student_state_write",
+        "scheduler_state_write",
+        "runtime_activation",
+        "publication",
+        "destructive_git",
+        "secret_or_privacy"
+      ]
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authority_class",
+        "principal_type",
+        "principal_ref",
+        "channel",
+        "evidence_ref",
+        "authenticated"
+      ],
+      "properties": {
+        "authority_class": {
+          "enum": [
+            "current_explicit_human",
+            "authenticated_human_approved_task"
+          ]
+        },
+        "principal_type": {
+          "const": "human_speaker"
+        },
+        "principal_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "channel": {
+          "enum": [
+            "current_human_turn",
+            "authenticated_approval_channel"
+          ]
+        },
+        "evidence_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "authenticated": {
+          "const": true
+        }
+      }
+    },
+    "resource_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repo_id", "path", "match"],
+      "properties": {
+        "repo_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*[\\\\*?\\[\\]{}]).+[^/]$"
+        },
+        "match": {
+          "const": "exact"
+        }
+      }
+    },
+    "resource_selector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repo_id", "path", "match", "operations"],
+      "properties": {
+        "repo_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*[\\\\*?\\[\\]{}]).+$"
+        },
+        "match": {
+          "enum": ["exact", "prefix"]
+        },
+        "operations": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/operation"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "match": {
+                "const": "prefix"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "path": {
+                "pattern": "/$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "match": {
+                "const": "exact"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "path": {
+                "pattern": "[^/]$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "task_id",
+        "request_id",
+        "objective_sha256",
+        "source_head",
+        "operation",
+        "effect_class",
+        "resources"
+      ],
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "objective_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_head": {
+          "$ref": "#/$defs/git_sha"
+        },
+        "operation": {
+          "$ref": "#/$defs/operation"
+        },
+        "effect_class": {
+          "$ref": "#/$defs/effect_class"
+        },
+        "resources": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/resource_ref"
+          }
+        }
+      }
+    },
+    "grant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowed_operations",
+        "resource_selectors",
+        "effect_ceiling",
+        "explicitly_denied_operations"
+      ],
+      "properties": {
+        "allowed_operations": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/operation"
+          }
+        },
+        "resource_selectors": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/resource_selector"
+          }
+        },
+        "effect_ceiling": {
+          "$ref": "#/$defs/effect_class"
+        },
+        "explicitly_denied_operations": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/operation"
+          }
+        }
+      }
+    },
+    "validity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issued_at",
+        "not_before",
+        "expires_at",
+        "revocation_ref",
+        "nonce",
+        "one_time",
+        "replay_status"
+      ],
+      "properties": {
+        "issued_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "not_before": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expires_at": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "revocation_ref": {
+          "type": ["string", "null"]
+        },
+        "nonce": {
+          "type": "string",
+          "minLength": 1
+        },
+        "one_time": {
+          "type": "boolean"
+        },
+        "replay_status": {
+          "const": "fresh"
+        }
+      }
+    },
+    "gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pre_action",
+        "post_completion",
+        "post_completion_approval_ref"
+      ],
+      "properties": {
+        "pre_action": {
+          "const": "satisfied"
+        },
+        "post_completion": {
+          "enum": ["required", "not_required", "satisfied"]
+        },
+        "post_completion_approval_ref": {
+          "type": ["string", "null"]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "post_completion": {
+                "const": "satisfied"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "post_completion_approval_ref": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decision",
+        "verifier_version",
+        "verified_at",
+        "reason_codes",
+        "payload_human_gate_observed",
+        "payload_human_gate_used_for_authorization"
+      ],
+      "properties": {
+        "decision": {
+          "const": "allow"
+        },
+        "verifier_version": {
+          "const": "math_mentor.authorization_verifier.v1"
+        },
+        "verified_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "reason_codes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^AUTH_[A-Z0-9_]+$"
+          }
+        },
+        "payload_human_gate_observed": {
+          "type": ["string", "null"]
+        },
+        "payload_human_gate_used_for_authorization": {
+          "const": false
+        }
+      }
+    }
+  }
+}

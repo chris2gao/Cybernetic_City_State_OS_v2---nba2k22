@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "canonical_node_crosswalk.schema.json",
+  "title": "Math Mentor Canonical Node Crosswalk",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schema_version",
+    "source_head",
+    "namespace_uuid",
+    "identity_model",
+    "stage0_evidence_policy",
+    "resolution_policy",
+    "summary",
+    "roadmap_entries",
+    "nodes",
+    "runtime_activation_performed",
+    "payload_sha256"
+  ],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"const": "1.0.0"},
+    "source_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "generator_version": {"type": "string"},
+    "namespace_uuid": {"type": "string", "format": "uuid"},
+    "identity_model": {
+      "type": "object",
+      "required": [
+        "sole_node_primary",
+        "human_readable_identifiers_are_typed_aliases",
+        "bootstrap_seed",
+        "bootstrap_uuid_is_immutable_after_materialization",
+        "bootstrap_only",
+        "prior_crosswalk_preservation_implemented",
+        "post_bootstrap_alias_or_path_change_requires_human_reviewed_migration",
+        "human_resolution_trust_adapter_implemented",
+        "future_resolution_statuses",
+        "automatic_semantic_identity_judgment"
+      ],
+      "properties": {
+        "sole_node_primary": {"const": "canonical_uuid"},
+        "human_readable_identifiers_are_typed_aliases": {"const": true},
+        "bootstrap_seed": {"const": "exact_root_path"},
+        "bootstrap_uuid_is_immutable_after_materialization": {"const": true},
+        "bootstrap_only": {"const": true},
+        "prior_crosswalk_preservation_implemented": {"const": false},
+        "post_bootstrap_alias_or_path_change_requires_human_reviewed_migration": {"const": true},
+        "human_resolution_trust_adapter_implemented": {"const": false},
+        "future_resolution_statuses": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "human_approved"},
+            {"const": "stale_resolution"}
+          ],
+          "items": false
+        },
+        "automatic_semantic_identity_judgment": {"const": false}
+      }
+    },
+    "inputs": {"type": "array", "items": {"type": "object"}},
+    "stage0_evidence_policy": {"type": "object"},
+    "resolution_policy": {"type": "object"},
+    "summary": {"type": "object"},
+    "roadmap_entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "roadmap_entry_uuid",
+          "roadmap_id_alias",
+          "alias_namespace_or_version",
+          "level",
+          "source_path",
+          "source_sha256",
+          "title_sha256"
+        ],
+        "properties": {
+          "roadmap_entry_uuid": {"type": "string", "format": "uuid"},
+          "roadmap_id_alias": {"type": "string", "pattern": "^n_[1-9][0-9]*$"},
+          "level": {"type": "integer", "minimum": 1, "maximum": 6},
+          "source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "title_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "canonical_uuid",
+          "aliases",
+          "alias_comparison",
+          "binding_status",
+          "blockers",
+          "consumer_allowed",
+          "resolution_ref"
+        ],
+        "properties": {
+          "canonical_uuid": {"type": "string", "format": "uuid"},
+          "aliases": {"type": "array", "items": {"$ref": "#/$defs/typedAlias"}},
+          "alias_comparison": {
+            "type": "object",
+            "required": [
+              "status",
+              "explicit_roadmap_claims",
+              "stage0_non_authoritative_claim"
+            ],
+            "properties": {
+              "status": {
+                "enum": [
+                  "agree",
+                  "explicit_only",
+                  "disagree",
+                  "explicit_multi_claim",
+                  "stage0_only",
+                  "neither"
+                ]
+              },
+              "explicit_roadmap_claims": {
+                "type": "array",
+                "items": {"type": "string", "pattern": "^n_[1-9][0-9]*$"}
+              },
+              "stage0_non_authoritative_claim": {
+                "type": ["string", "null"],
+                "pattern": "^n_0*[1-9][0-9]*$"
+              }
+            }
+          },
+          "candidate_edge_uuid": {"type": ["string", "null"], "format": "uuid"},
+          "candidate_roadmap_entry_uuid": {"type": ["string", "null"], "format": "uuid"},
+          "binding_status": {
+            "enum": [
+              "declared_consistent_unapproved",
+              "human_approved",
+              "conflict_open",
+              "unclaimed",
+              "quarantined",
+              "canonicalize",
+              "stale_resolution"
+            ]
+          },
+          "source_disposition": {"type": ["object", "null"]},
+          "blockers": {"type": "array", "items": {"type": "string"}},
+          "consumer_allowed": {"const": false},
+          "resolution_ref": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "runtime_activation_performed": {"const": false},
+    "payload_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "typedAlias": {
+      "type": "object",
+      "required": [
+        "alias_type",
+        "value",
+        "namespace_or_version",
+        "status",
+        "source",
+        "resolution_ref"
+      ],
+      "properties": {
+        "alias_type": {
+          "enum": ["root_path", "root_filename", "domain_id", "roadmap_id", "legacy_alias"]
+        },
+        "value": {"type": "string"},
+        "namespace_or_version": {},
+        "status": {
+          "enum": [
+            "observed",
+            "observed_non_authoritative",
+            "declared_unapproved",
+            "conflict",
+            "human_approved",
+            "quarantined",
+            "stale_resolution"
+          ]
+        },
+        "source": {
+          "type": "object",
+          "required": ["path", "json_pointer", "content_sha256"],
+          "properties": {
+            "path": {"type": "string"},
+            "json_pointer": {"type": ["string", "null"]},
+            "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+          }
+        },
+        "resolution_ref": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

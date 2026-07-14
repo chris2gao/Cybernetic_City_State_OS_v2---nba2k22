@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "identity_resolutions.schema.json",
+  "title": "Human Speaker Identity Resolution Overlay",
+  "type": "object",
+  "required": ["schema_version", "namespace_uuid", "resolutions"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "namespace_uuid": {"type": "string", "format": "uuid"},
+    "resolutions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "resolution_id",
+          "conflict_uuid",
+          "decision",
+          "approved_source_head",
+          "approved_by",
+          "subject_content_sha256s",
+          "packet_ref"
+        ],
+        "properties": {
+          "resolution_id": {"type": "string"},
+          "conflict_uuid": {"type": "string", "format": "uuid"},
+          "decision": {
+            "enum": ["bind", "keep_distinct", "canonicalize", "quarantine", "defer"]
+          },
+          "canonical_uuid": {"type": ["string", "null"], "format": "uuid"},
+          "roadmap_entry_uuid": {"type": ["string", "null"], "format": "uuid"},
+          "approved_source_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+          "approved_by": {"const": "Human Speaker"},
+          "subject_content_sha256s": {
+            "type": "object",
+            "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+          },
+          "packet_ref": {"type": "string"},
+          "supersedes": {"type": ["string", "null"]}
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
