@@ -58,6 +58,13 @@ def run_audit(payload: dict) -> dict:
         case_results.append(
             {
                 "id": case["id"],
+                "s": case["s"],
+                "left_support": sorted(
+                    index for index, value in left.items() if value != 0j
+                ),
+                "right_support": sorted(
+                    index for index, value in right.items() if value != 0j
+                ),
                 "direct_product": encode_complex(direct),
                 "convolution_evaluation": encode_complex(regrouped),
                 "absolute_error": absolute_error,
@@ -88,14 +95,16 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--log", required=True, type=Path)
     args = parser.parse_args()
     payload = json.loads(args.input.read_text(encoding="utf-8"))
     result = run_audit(payload)
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(
-        json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
-    print(json.dumps(result, ensure_ascii=False, indent=2))
+    args.log.parent.mkdir(parents=True, exist_ok=True)
+    serialized = json.dumps(result, ensure_ascii=False, indent=2) + "\n"
+    args.output.write_text(serialized, encoding="utf-8")
+    args.log.write_text(serialized, encoding="utf-8")
+    print(serialized, end="")
     return 0
 
 
