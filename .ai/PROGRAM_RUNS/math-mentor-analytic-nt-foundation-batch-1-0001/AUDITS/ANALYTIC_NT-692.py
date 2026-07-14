@@ -61,7 +61,9 @@ def run_audit(payload: dict) -> dict:
                 "direct_product": encode_complex(direct),
                 "convolution_evaluation": encode_complex(regrouped),
                 "absolute_error": absolute_error,
-                "convolution_support": sorted(convolution),
+                "convolution_support": sorted(
+                    index for index, value in convolution.items() if value != 0j
+                ),
                 "passed": passed,
             }
         )
