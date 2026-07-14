@@ -1,25 +1,162 @@
 id: DIFF_GEO-667
-mode_routing_status: "manual_review_required"
-validation_status: "manual_review_required"
+city_state_engine: "Plan3_Engine_B"
+mode: "B"
+math_lane: "MathLane_B"
+mode_routing_status: "human_approved"
+validation_status: "semantic_only"
+tool_status: "semantic_only"
 bridge_readiness_status: "manual_review_required"
-formal_definition_status: "missing"
-prerequisites_status: "missing"
-mapping_boundary_status: "missing"
+formal_definition_status: "human_approved"
+prerequisites_status: "human_approved"
+mapping_boundary_status: "human_approved"
+formal_definition: >-
+  A rank-r smooth vector bundle over a smooth manifold M is a smooth map
+  π:E→M whose fibers E_p=π^{-1}(p) are r-dimensional vector spaces and which
+  is locally trivial: over each suitable open U⊂M there is a diffeomorphism
+  φ:π^{-1}(U)→U×R^r that is linear on every fiber. Transition functions take
+  values in GL(r) and satisfy cocycle compatibility. A section is a smooth map
+  s:M→E with π∘s=id_M; the tangent bundle is a canonical example. A principal
+  G-bundle P→M is locally trivial with fiber G and has a free right G-action
+  that is transitive on each fiber. A representation of G produces associated
+  vector bundles. A connection on a vector bundle is a covariant derivative
+  on sections satisfying linearity and a Leibniz rule. A principal connection
+  may be described by a G-equivariant horizontal distribution or by a
+  Lie-algebra-valued connection one-form satisfying equivariance and vertical
+  normalization. Its curvature measures the failure of horizontal transport
+  to be locally path independent. A gauge transformation is a bundle
+  automorphism covering the identity on M; it is not an arbitrary map between
+  neural-network layers.
+formal_definition_zh: >-
+  光滑流形 M 上秩为 r 的光滑向量丛是光滑映射 π:E→M，其中纤维
+  E_p=π^{-1}(p) 是 r 维向量空间，并且局部平凡：每个适当开集 U⊂M 上存在
+  微分同胚 φ:π^{-1}(U)→U×R^r，且它在每条纤维上是线性的。转移函数取值于
+  GL(r) 并满足余圈条件。截面是满足 π∘s=id_M 的光滑映射 s:M→E；切丛是
+  典型例子。主 G-丛 P→M 局部平凡、纤维为 G，并带有在每条纤维上自由且传递
+  的右 G-作用；G 的表示产生伴随向量丛。向量丛上的联络是作用于截面的协变导数，
+  满足线性和 Leibniz 法则。主联络可由 G-等变水平分布描述，也可由满足等变性与
+  垂直归一化的 Lie 代数值联络一形式描述；其曲率刻画水平运输局部路径无关性的
+  失败。规范变换是覆盖 M 上恒等映射的丛自同构，并非神经网络层之间的任意映射。
+candidate_prerequisite_nodes:
+  - node_id: n_653
+    file: DIFF_GEO-653.yaml
+    role: "smooth manifolds, open covers, and local triviality"
+  - node_id: n_655
+    file: DIFF_GEO-655.yaml
+    role: "tangent spaces, vector fields, and sections"
+  - node_id: n_666
+    file: DIFF_GEO-666.yaml
+    role: "Lie groups, Lie algebras, group actions, and representations"
+supporting_prerequisite_nodes:
+  - node_id: n_661
+    file: DIFF_GEO-661.yaml
+    role: "covariant derivative and parallel-transport intuition on the tangent bundle"
+supporting_prerequisites:
+  - "topology of bundles, open covers, transition functions, and cocycles"
+  - "linear algebra and representations"
+  - "exact repository identities for all topology prerequisites remain unresolved and must not be invented"
+downstream_dependent_nodes:
+  - node_id: n_662
+    file: DIFF_GEO-662.yaml
+    relationship: "Chern classes of complex vector bundles"
+mapping_boundary:
+  primary_mapping_kind: "llm_architecture_bounded_structural_analogy"
+  primary_mapping: >-
+    A bundle analogy is permitted only when a model defines a base space of
+    states or positions, a family of feature spaces over that base, explicit
+    local trivializations or basis choices, and transition transformations in
+    a stated structure group. Under those assumptions, basis-dependent
+    coordinates may change while an underlying fiber object remains
+    invariant, giving a disciplined analogy for gauge freedom. Without those
+    structures, a sequence of layers or feature vectors is ordinarily only a
+    product-like collection, not a nontrivial bundle with connection.
+  primary_mapping_zh: >-
+    只有当模型明确给出状态或位置的基空间、其上逐点的一族特征空间、局部平凡化或
+    基底选择，以及属于指定结构群的转移变换时，才能使用丛类比。在这些假设下，
+    依赖基底的坐标可以改变，而底层纤维对象保持不变，从而形成受约束的规范自由度
+    类比。若缺少这些结构，层序列或特征向量族通常只是乘积式集合，并不是带联络的
+    非平凡丛。
+  boundary:
+    - "A stack of neural-network layers is not automatically a smooth base manifold."
+    - "A feature vector at each token or layer often forms a trivial product bundle, not a nontrivial principal bundle."
+    - "Ordinary learned linear maps are not automatically gauge transformations."
+    - "Attention matrices and residual updates are not connection forms."
+    - "A change of basis is gauge-like only when a symmetry group and invariant content are explicitly defined."
+    - "Yang-Mills terminology must not be imported merely because a model has layers or transformations."
+    - "A principal connection requires equivariance and vertical normalization, not merely a matrix-valued parameter."
+    - "No nontrivial bundle topology, connection, curvature, or gauge symmetry of an ordinary model is established by this node."
+  preserve_full_boundary: true
+  existing_physical_metaphor_status: "secondary_teaser_only"
+  secondary_teaser_limitation: >-
+    The conveyor-and-robot-arm image only hints at a base coordinate paired
+    with a fiber coordinate. It does not define local trivializations,
+    transition cocycles, a principal action, connection, curvature, or gauge
+    transformation.
+existing_code_and_audit:
+  preserve: true
+  evidence_status: "semantic_only"
+  run_with_log_ref: null
+  code_interpretation: >-
+    Returning the first coordinate from a pair merely illustrates projection
+    from a trivial product. It does not validate local triviality, transition
+    functions, cocycle conditions, sections, principal actions, associated
+    bundles, connections, curvature, or gauge transformations.
+  audit_interpretation: >-
+    The existing audit checks only that a symbol assigned as the projection
+    output equals itself. It is a tautology and supplies no bundle or gauge
+    evidence.
+  code_scope: "trivial_product_projection_placeholder"
+  example_scope: "base_coordinate_return_only"
+  audit_scope: "projection_equals_base_tautology"
+  explicitly_not_validated:
+    - local_triviality
+    - transition_functions_and_cocycles
+    - smooth_sections
+    - principal_group_action
+    - associated_vector_bundles
+    - bundle_connection
+    - curvature
+    - gauge_transformations
 migration_review:
   missing_reason:
-    - "formal_definition_absent"
-    - "prerequisite_nodes_absent"
-    - "mapping_boundary_absent"
-  recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
+    - "exact_topology_prerequisite_node_ids_not_approved"
+    - "current_code_only_returns_a_product_base_coordinate"
+    - "current_audit_is_tautological"
+    - "bridge_endpoint_eligibility_not_certified"
+  recommended_next_action: >-
+    Preserve semantic_only and manual bridge review. Resolve topology and
+    representation prerequisite identities separately; do not promote layer
+    changes or attention matrices to gauge transformations or connection
+    forms.
+  semantic_repair:
+    decision_source: "Human-approved DIFF_GEO Foundation Batch 1 Complete Semantic Decision v1"
+    city_state_engine: "Plan3_Engine_B"
+    lane_policy: "MathLane_B"
+    formal_definition: "human_approved"
+    prerequisites: "human_approved"
+    mapping_boundary: "human_approved"
+    existing_code_and_audit: "preserved_with_semantic_only_boundary"
+    mutation_scope: "DIFF_GEO-667.yaml_only"
   warnings:
-    - "mode_routing_manual_review_required"
-concept_name: 向量丛与主丛 - 物理底座：杨-米尔斯规范场论的语言。在深度研究中用于描述大模型不同语义层间的规范变换对称性。 (n_667)
+    - "semantic_only_not_machine_validated"
+    - "bridge_readiness_remains_manual_review_required"
+    - "layer_stacks_are_not_automatically_bundles"
+    - "attention_matrices_are_not_connection_forms"
+    - "current_code_is_only_a_trivial_projection"
+    - "current_audit_is_tautological"
+concept_name: 向量丛、主丛、联络与规范变换 (n_667)
 sub_topics:
-- 纤维丛的投影与局部平凡化
-- 联络形式与曲率形式（场强）
-- 规范变换作为丛的自同构
-- 模型层间信息传递的几何对称性保护
-llm_physical_mapping: 就像在一条长长的流水线主履带上，每个工位都挂载了一把可360度旋转的机械臂（纤维）。不管机械臂自己怎么转，履带依旧往前走，两者组合成一个整体系统。
+- vector-bundle projection, fibers, rank, and local triviality
+- transition functions and cocycle compatibility
+- smooth sections and the tangent-bundle example
+- principal G-bundles and free transitive fiber actions
+- associated vector bundles from group representations
+- vector-bundle and principal connections
+- curvature and horizontal transport
+- gauge transformations and bounded model-architecture analogies
+llm_physical_mapping: >-
+  履带与机械臂只作为次级提示：它可提示基空间坐标与纤维坐标的配对，却没有给出
+  局部平凡化、转移余圈、主群作用、联络、曲率或规范变换。普通层间映射和注意力
+  矩阵不能因此被称为规范变换或联络形式。
 code_implementation: "def fiber_bundle_projection(base_space_coord, fiber_coord):\n    return base_space_coord\n"
 v8_sanity_audit:
   sympy_pseudo_code: 'import sympy as sp
