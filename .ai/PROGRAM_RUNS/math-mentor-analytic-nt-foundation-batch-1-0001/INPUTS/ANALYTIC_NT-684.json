@@ -1,0 +1,57 @@
+{
+  "audit_id": "ANALYTIC_NT-684-finite-prime-counting-0001",
+  "finite_range_max": 10000,
+  "comparison_tolerance": 1e-12,
+  "exact_prime_count_cases": [
+    {"id": "pi-zero", "x": 0, "expected": 0},
+    {"id": "pi-one", "x": 1, "expected": 0},
+    {"id": "pi-two", "x": 2, "expected": 1},
+    {"id": "pi-real-step-before-three", "x": 2.9, "expected": 1},
+    {"id": "pi-three", "x": 3, "expected": 2},
+    {"id": "pi-ten", "x": 10, "expected": 4},
+    {"id": "pi-square-boundary", "x": 49, "expected": 15},
+    {"id": "pi-after-square-boundary", "x": 50, "expected": 15},
+    {"id": "pi-one-hundred", "x": 100, "expected": 25},
+    {"id": "pi-one-thousand", "x": 1000, "expected": 168},
+    {"id": "pi-ten-thousand", "x": 10000, "expected": 1229}
+  ],
+  "declared_approximation_table": [
+    {
+      "id": "approximation-x-10",
+      "x": 10,
+      "expected_prime_count": 4,
+      "expected_x_over_log_x": 4.342944819033,
+      "expected_normalized_ratio": 0.921034037198
+    },
+    {
+      "id": "approximation-x-100",
+      "x": 100,
+      "expected_prime_count": 25,
+      "expected_x_over_log_x": 21.714724095163,
+      "expected_normalized_ratio": 1.151292546497
+    },
+    {
+      "id": "approximation-x-1000",
+      "x": 1000,
+      "expected_prime_count": 168,
+      "expected_x_over_log_x": 144.764827301084,
+      "expected_normalized_ratio": 1.160502886869
+    },
+    {
+      "id": "approximation-x-10000",
+      "x": 10000,
+      "expected_prime_count": 1229,
+      "expected_x_over_log_x": 1085.736204758129,
+      "expected_normalized_ratio": 1.131950831716
+    }
+  ],
+  "explicitly_not_validated": [
+    "prime_number_theorem_limit",
+    "analytic_proof",
+    "zero_free_region",
+    "Riemann_hypothesis",
+    "global_error_term",
+    "prime_gap_distribution",
+    "monotone_error_decay"
+  ]
+}

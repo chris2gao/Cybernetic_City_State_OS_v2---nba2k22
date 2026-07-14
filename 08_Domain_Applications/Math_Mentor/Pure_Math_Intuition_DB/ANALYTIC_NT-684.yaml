@@ -1,33 +1,354 @@
+version: "9.1"
 id: "ANALYTIC_NT-684"
-mode_routing_status: "manual_review_required"
-validation_status: "review_required"
+city_state_engine: "Plan3_Engine_B"
+mode: "A"
+math_lane: "MathLane_A"
+mode_routing_status: "human_approved"
+formal_definition_status: "human_approved"
+prerequisites_status: "manual_review_required"
+mapping_boundary_status: "human_approved"
+validation_status: "run_with_log"
+tool_status: "run_with_log"
+teaching_ready: false
+teaching_readiness_status: "manual_review_required"
 bridge_readiness_status: "manual_review_required"
-formal_definition_status: "missing"
-prerequisites_status: "missing"
-mapping_boundary_status: "missing"
+coordinator_consumable: false
+p3_reopened: false
+bridge_generation_performed: false
 migration_review:
   stage_1_pilot: "metadata_only"
   roadmap_alias: "n_684"
-  classification: "unknown_needs_review"
-  note: "No semantic content changed; mode, validation, bridge readiness, formal definition, prerequisites, and mapping boundary require future manual review."
-concept_name: '素数定理 - 认知跃迁：质数在微观上完全不可预测，但在宏观上满足渐进密度 $\pi(x) \approx x/\ln x$。揭示了绝对混沌系统中的严酷对数秩序。 (n_684)'
+  classification: "analytic_number_theory_mathlane_a_human_approved"
+  note: >-
+    Stages 1-6 were executed under the Human-approved ANALYTIC_NT Foundation
+    Batch 1 packet. The finite audit has durable evidence, while unresolved
+    prerequisite identities and exact-head review remain explicit blockers.
+concept_name: "素数定理：素数计数函数的渐近密度与误差边界（n_684）"
+canonical_concept: "prime_number_theorem"
+
 sub_topics:
-  - "质数分布函数的渐进分析"
-  - "对数积分 Li(x) 的逼近精度"
-  - "误差项与黎曼猜想的联系"
-  - "物理直觉：统计规律在离散混沌中的最终统治"
-llm_physical_mapping: "Vibrating sieve screen throwing chaotic gravel inputs but leaving a highly predictable pile volume on the conveyor belt."
+  - "Prime numbers and the prime-counting function π(x) / 素数与素数计数函数 π(x)"
+  - "The domain and finite step-function behavior of π(x) / π(x) 的定义域与有限阶梯行为"
+  - "The prime number theorem π(x)~x/log x / 素数定理主陈述 π(x)~x/log x"
+  - "Asymptotic equivalence as a ratio limit / 用比值极限定义渐近等价"
+  - "Finite equality versus asymptotic equivalence / 有限等式与渐近等价的区别"
+  - "The logarithmic integral Li(x) and π(x)~Li(x) / 对数积分及其渐近关系"
+  - "Chebyshev θ and ψ formulations with explicit definitions / 明确定义后的 Chebyshev 等价表述"
+  - "Local prime gaps versus cumulative macroscopic density / 局部素数间隔与累计宏观密度"
+  - "The error π(x)-Li(x), ordinary PNT, and the RH boundary / 误差项、普通 PNT 与 RH 边界"
+  - "Finite sieve tables and what they cannot prove / 有限筛表及其证明能力边界"
+
+pure_math_definition:
+  english: |-
+    For real x>=0, define the prime-counting function
+    π(x)=#{p prime : p<=x}. The prime number theorem states
+    π(x)~x/log x as x tends to infinity, meaning
+    lim_{x->infinity} π(x)log(x)/x=1. For x>=2, define
+    Li(x)=integral from 2 to x of dt/log(t). The theorem also gives
+    π(x)~Li(x). These are asymptotic statements, not exact formulas at
+    finite x and not probability assignments to individual integers.
+
+    With θ(x)=sum_{p<=x} log p and the von Mangoldt function
+    Λ(n)=log p when n=p^k for a prime p and integer k>=1, and Λ(n)=0
+    otherwise, define ψ(x)=sum_{n<=x}Λ(n)=sum_{p^k<=x}log p. The
+    standard statements θ(x)~x and ψ(x)~x are equivalent classical
+    formulations of PNT. Ordinary PNT does not assume the Riemann
+    hypothesis. RH would provide substantially stronger error control, but
+    ordinary PNT and RH must not be presented as equivalent.
+  chinese: |-
+    对实数 x>=0，定义素数计数函数 π(x)=不超过 x 的素数个数。素数定理断言
+    当 x 趋于无穷时 π(x)~x/log x，即
+    lim_{x->infinity} π(x)log(x)/x=1。对 x>=2，定义
+    Li(x)=从 2 到 x 的 dt/log(t) 积分，则定理也给出 π(x)~Li(x)。
+    这些是渐近关系，不是有限 x 上的精确公式，也不是对单个整数成为素数的
+    概率赋值。
+
+    定义 θ(x)=sum_{p<=x}log p；再定义 von Mangoldt 函数：当
+    n=p^k（p 为素数且 k>=1）时 Λ(n)=log p，否则 Λ(n)=0，并令
+    ψ(x)=sum_{n<=x}Λ(n)=sum_{p^k<=x}log p。θ(x)~x 与 ψ(x)~x 是
+    素数定理的经典等价表述。普通素数定理不以黎曼猜想为假设；黎曼猜想会
+    给出更强的误差控制，但不能把普通素数定理表述成与 RH 等价。
+  finite_equality_boundary: |-
+    The symbol ~ is defined by a limit of a ratio. It does not assert
+    π(x)=x/log x or π(x)=Li(x) at any declared finite input.
+
+assumptions_and_notation:
+  - "EN: p ranges over positive primes and x is a nonnegative real number. / 中文：p 表示正素数，x 为非负实数。"
+  - "EN: A prime is an integer greater than one with exactly two positive divisors. / 中文：素数是大于 1 且恰有两个正约数的整数。"
+  - "EN: log is the natural logarithm; the theorem concerns x tending to infinity. / 中文：log 表示自然对数，定理讨论 x 趋于无穷。"
+  - "EN: f(x)~g(x) means f(x)/g(x) tends to one where the ratio is eventually defined. / 中文：f(x)~g(x) 表示在比值最终有定义时 f(x)/g(x) 趋于 1。"
+  - "EN: Li(x) uses the Human-approved lower limit 2 and is defined here only for x>=2. / 中文：Li(x) 使用已批准的下限 2，并在本节点中只对 x>=2 定义。"
+  - "EN: The theorem has no RH assumption. / 中文：该定理不包含 RH 假设。"
+
+required_prerequisites:
+  status: "manual_review_required"
+  resolved:
+    - node_id: "NUM_THEORY-001"
+      file: "NUM_THEORY-001.yaml"
+      roadmap_alias: "n_195"
+      relationship: "supplies prime-number and multiplicative-factor language"
+    - node_id: "NUM_THEORY-002"
+      file: "NUM_THEORY-002.yaml"
+      roadmap_alias: "n_196"
+      relationship: "supplies the divisibility definition and notation"
+    - node_id: "NUM_THEORY-004"
+      file: "NUM_THEORY-004.yaml"
+      roadmap_alias: "n_198"
+      relationship: "supplies unique-prime-factorization context"
+    - node_id: "CALCULUS-263"
+      file: "CALCULUS-263.yaml"
+      roadmap_alias: "n_263"
+      relationship: "supplies rigorous function-limit vocabulary"
+    - node_id: "CALCULUS-273"
+      file: "CALCULUS-273.yaml"
+      roadmap_alias: "n_273"
+      relationship: "supplies Riemann-integral language for the declared Li(x) integral"
+    - node_id: "CALCULUS-294"
+      file: "CALCULUS-294.yaml"
+      roadmap_alias: "n_294"
+      relationship: "supplies the improper-integral vocabulary named in the approved prerequisite concept"
+  partial_support_only:
+    - node_id: "CALCULUS-266"
+      file: "CALCULUS-266.yaml"
+      roadmap_alias: "n_266"
+      limitation: "mentions derivatives of logarithmic functions but is not a standalone natural-logarithm definition node"
+    - node_id: "NUM_THEORY-021"
+      file: "NUM_THEORY-021.yaml"
+      roadmap_alias: "n_215"
+      limitation: "provides Euler phi as one arithmetic-function example, not general summatory-function language"
+    - node_id: "NUM_THEORY-022"
+      file: "NUM_THEORY-022.yaml"
+      roadmap_alias: "n_216"
+      limitation: "provides multiplicativity of Euler phi, not a general arithmetic-function foundation"
+  unresolved_exact_identities:
+    - concept: "asymptotic_equivalence"
+      evidence: >-
+        No dedicated split-roadmap or canonical DB node defines
+        f(x)~g(x) by the ratio limit. CALCULUS-263 supplies general limits,
+        while DISCRETE-255 concerns Big-O, Omega, and Theta and is not a
+        substitute.
+    - concept: "natural_logarithm_definition_and_properties"
+      evidence: >-
+        No standalone canonical node resolves. CALCULUS-266 contains only a
+        logarithmic-derivative subtopic, so this node states the needed log
+        convention without inventing a prerequisite ID.
+    - concept: "general_arithmetic_functions_and_summatory_functions"
+      evidence: >-
+        Euler-phi nodes provide examples, but no canonical node defines the
+        general concepts or summatory functions. The θ and ψ definitions are
+        therefore explicit here rather than assigned an invented ID.
+  supporting_relationships:
+    - node_id: "ANALYTIC_NT-692"
+      roadmap_alias: "n_692"
+      relationship: "Dirichlet-series language used by analytic number theory; same-batch support, not proof of PNT"
+    - node_id: "ANALYTIC_NT-685"
+      roadmap_alias: "n_685"
+      relationship: "zeta and Euler-product proof-route context; neighboring node remains unresolved and uncertified"
+    - node_id: "ANALYTIC_NT-686"
+      roadmap_alias: "n_686"
+      relationship: "zeta-zero and functional-equation context; neighboring node remains unresolved and uncertified"
+
+mode_a_intuition:
+  occurrence_crisis:
+    english: |-
+      Prime gaps look irregular locally, so a few nearby integers do not
+      reveal a stable density. The question is whether cumulative counting
+      nevertheless has a reliable large-scale law.
+    chinese: |-
+      素数间隔在局部很不规则，少量相邻整数看不出稳定密度；真正的问题是累计
+      计数在大尺度上是否仍有可靠规律。
+  primary:
+    english: |-
+      Imagine a production stream whose local gaps vary sharply while its
+      cumulative output rate approaches a stable macroscopic law. This
+      supports the distinction between local irregularity and asymptotic
+      density.
+    chinese: |-
+      想象一条生产流：局部产出间隔变化剧烈，但累计产出率逐步接近稳定的宏观
+      规律。这个图像帮助区分局部不规则与渐近密度。
+  low_friction_example:
+    english: |-
+      At x=100 there are exactly 25 primes, whereas 100/log(100) is about
+      21.7147. The mismatch is expected because PNT is a limit statement,
+      not a finite equality.
+    chinese: |-
+      x=100 时恰有 25 个素数，而 100/log(100) 约为 21.7147。二者不等并不
+      反驳定理，因为 PNT 是极限陈述而非有限等式。
+  limitations:
+    - "EN: The stream is an analogy, not a stochastic model of primes. / 中文：生产流只是类比，不是素数的随机模型。"
+    - "EN: A stable cumulative rate does not determine each local gap. / 中文：稳定的累计速率不决定每个局部间隔。"
+    - "EN: No LLM token process is established as a prime-counting process. / 中文：本节点没有把任何 LLM token 过程建立为素数计数过程。"
+
+mapping_boundary:
+  status: "human_approved"
+  valid_uses:
+    - "EN: contrasting local irregularity with cumulative asymptotic density / 中文：对比局部不规则与累计渐近密度"
+    - "EN: distinguishing a finite count from a large-scale main term / 中文：区分有限计数与大尺度主项"
+    - "EN: motivating why a ratio limit is needed / 中文：说明为何需要比值极限"
+  invalid_inferences:
+    - "EN: Primes are deterministic, not literally random. / 中文：素数是确定性对象，不是字面意义上的随机事件。"
+    - "EN: x/log x is not an exact finite prime count. / 中文：x/log x 不是有限范围内的精确素数计数。"
+    - "EN: The density heuristic 1/log x does not make primality events independent. / 中文：密度启发 1/log x 不会使素性事件彼此独立。"
+    - "EN: A finite numerical table cannot prove a limit as x tends to infinity. / 中文：有限数表不能证明 x 趋于无穷时的极限。"
+    - "EN: Better agreement at selected samples does not establish monotone error decay. / 中文：若干样本更接近不能证明误差单调下降。"
+    - "EN: PNT alone does not determine every prime gap. / 中文：PNT 本身不决定每一个素数间隔。"
+    - "EN: RH-related error estimates require separate hypotheses and are not equivalent to ordinary PNT. / 中文：RH 误差估计需要单独假设，不能与普通 PNT 等同。"
+    - "EN: A production stream or LLM token distribution is not established as a prime-counting process. / 中文：生产流或 LLM token 分布并未被建立为素数计数过程。"
+
+common_misconceptions:
+  - "EN: The symbol ~ means exact or uniformly close finite equality. / 中文：误以为 ~ 表示有限点上的精确等式或一致接近。"
+  - "EN: A mismatch at x=100 refutes PNT. / 中文：误以为 x=100 时不相等就反驳 PNT。"
+  - "EN: Each integer is independently prime with probability 1/log x. / 中文：误以为每个整数以 1/log x 的独立概率成为素数。"
+  - "EN: Four exact prime counts prove the infinite theorem. / 中文：误以为四个精确计数就证明了无穷定理。"
+  - "EN: A successful sieve run proves an analytic theorem or zero-free region. / 中文：误以为筛法运行通过就证明了解析定理或零点自由区域。"
+  - "EN: Ordinary PNT and the Riemann hypothesis are equivalent. / 中文：误以为普通 PNT 与黎曼猜想等价。"
+  - "EN: Macroscopic density determines all local prime gaps. / 中文：误以为宏观密度决定所有局部素数间隔。"
+  - "EN: Finite approximation error must decrease monotonically. / 中文：误以为有限近似误差必须单调下降。"
+
+definition_restatement_hook:
+  prompt_en: "State π(x) in words, then rewrite π(x)~x/log x as an explicit limit."
+  prompt_zh: "先用语言复述 π(x)，再把 π(x)~x/log x 改写成明确的极限。"
+  required_elements:
+    - "π(x)=#{p prime:p<=x}"
+    - "lim_{x->infinity}π(x)log(x)/x=1"
+    - "asymptotic equivalence is not finite equality"
+    - "ordinary PNT has no RH assumption"
+
+forcing_question_plan:
+  - question_en: "Does π(100) not equal to 100/log(100) contradict PNT? Why not?"
+    question_zh: "π(100) 不等于 100/log(100) 是否反驳 PNT？为什么？"
+  - question_en: "Which ratio must tend to one, and what does that say about finite equality?"
+    question_zh: "哪个比值必须趋于 1？这对有限等式意味着什么？"
+  - question_en: "Can the four audited prime counts prove an infinite limit?"
+    question_zh: "审计中的四个素数计数能否证明无穷远极限？"
+  - question_en: "Does PNT assume or imply the full RH error estimate?"
+    question_zh: "PNT 是否假设或自动推出完整的 RH 误差估计？"
+  - question_en: "Does the density heuristic make individual primality events independent?"
+    question_zh: "密度启发是否使单个素性事件彼此独立？"
+
+teaching_flow:
+  explanation_before_questioning: true
+  intuition_before_formal_definition: true
+  one_question_per_interactive_turn: true
+  repair_once_before_correction: true
+  covers_all_sub_topics: true
+  definition_restatement_required: true
+  exam_agent_handoff_en: |-
+    After all subtopics and the definition restatement are covered, hand off
+    classroom evidence for traps involving equality versus asymptotics,
+    probability and independence, PNT versus RH, finite-audit overclaiming,
+    and prime-gap overreach. Do not report classroom_passed or mastery here.
+  exam_agent_handoff_zh: |-
+    覆盖全部子主题并完成定义复述后，才把课堂证据交给 Exam Agent，重点检查
+    有限等式与渐近关系、概率独立性、PNT 与 RH、有限审计越界及素数间隔
+    过度推论。当前节点不得宣称 classroom_passed 或学生已经掌握。
+  spaced_review_handoff_en: |-
+    If a future Exam Agent reports classroom_passed, schedule review of π(x),
+    the ratio-limit meaning of ~, one finite non-equality example, and the RH
+    boundary. Emit placeholder_not_written unless a separately authorized
+    scheduler task permits a state write.
+  spaced_review_handoff_zh: |-
+    若未来 Exam Agent 报告 classroom_passed，则安排复习 π(x)、~ 的比值极限
+    含义、一个有限不等式样例及 RH 边界。除非另有获批调度任务，否则只输出
+    placeholder_not_written，不写学习状态。
+  current_blocker: |-
+    Exact canonical prerequisite identities for asymptotic equivalence,
+    natural-logarithm foundations, and general arithmetic/summatory functions
+    do not resolve at the authorized source head.
+
+tool_truthfulness:
+  tool_status: "run_with_log"
+  capability: "deterministic_calculation"
+  tool_family: "Python standard library"
+  audit_scope: "finite_prime_counting_and_declared_sample_approximations"
+  script_ref: ".ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/AUDITS/ANALYTIC_NT-684.py"
+  input_ref: ".ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/INPUTS/ANALYTIC_NT-684.json"
+  output_ref: ".ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/ANALYTIC_NT-684.json"
+  environment_ref: ".ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/ENVIRONMENT/python.yml"
+  log_ref: ".ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/ANALYTIC_NT-684.log"
+  report_ref: null
+  error_ref: null
+  environment_captured_at: "2026-07-14T08:04:38Z"
+  limitations:
+    - "The audit uses a deterministic finite sieve only through 10000."
+    - "It checks declared exact counts, finite step behavior, and a declared floating-point comparison table only."
+    - "It does not validate the prime-number-theorem limit or an analytic proof."
+    - "It does not validate a zero-free region, RH, or a global error term."
+    - "It does not validate prime-gap distribution or monotone error decay."
+
 code_implementation: |
-  import torch
-  import numpy as np
-  
-  def compute_baseline():
-      signal = torch.ones(10, dtype=torch.float32)
-      return torch.sum(signal).item()
+  import math
+
+  def prime_count_prefix(limit):
+      is_prime = [True] * (limit + 1)
+      if limit >= 0:
+          is_prime[0] = False
+      if limit >= 1:
+          is_prime[1] = False
+      for p in range(2, math.isqrt(limit) + 1):
+          if is_prime[p]:
+              for multiple in range(p * p, limit + 1, p):
+                  is_prime[multiple] = False
+      prefix = []
+      count = 0
+      for flag in is_prime:
+          count += int(flag)
+          prefix.append(count)
+      return prefix
+
+  def prime_count_at(prefix, x):
+      return prefix[math.floor(x)]
+
 v8_sanity_audit:
+  status: "run_with_log"
+  execution_claim: "bounded_finite_audit_only"
+  language: "python_standard_library"
+  script_ref: ".ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/AUDITS/ANALYTIC_NT-684.py"
+  audit_scope: "finite_prime_counting_and_declared_sample_approximations"
+  tested_properties:
+    - "π(0)=0, π(1)=0, π(2)=1, π(3)=2, π(49)=15, and π(50)=15"
+    - "π(10)=4, π(100)=25, π(1000)=168, and π(10000)=1229"
+    - "finite prefix counts are nondecreasing with increments in {0,1} through 10000"
+    - "the declared finite x/log(x) and normalized-ratio table matches its recorded tolerance"
+  explicitly_not_validated:
+    - "prime_number_theorem_limit"
+    - "analytic_proof"
+    - "zero_free_region"
+    - "Riemann_hypothesis"
+    - "global_error_term"
+    - "prime_gap_distribution"
+    - "monotone_error_decay"
   sympy_pseudo_code: |
-    import sympy as sp
-    
-    x = sp.Symbol('x')
-    test_expr = sp.simplify((x**2 - x**2) * 5)
-    assert test_expr == 0
+    import math
+
+    def prime_counts(limit):
+        sieve = [True] * (limit + 1)
+        sieve[0:2] = [False, False]
+        for p in range(2, math.isqrt(limit) + 1):
+            if sieve[p]:
+                sieve[p*p:limit+1:p] = [False] * (((limit-p*p)//p)+1)
+        out = []
+        running = 0
+        for flag in sieve:
+            running += int(flag)
+            out.append(running)
+        return out
+
+    pi = prime_counts(10000)
+    assert (pi[10], pi[100], pi[1000], pi[10000]) == (4, 25, 168, 1229)
+
+bridge_certification:
+  stage: 6
+  status: "manual_review_required"
+  certified_endpoint: false
+  locally_passed_checks:
+    - "canonical identity and split-roadmap alias n_684 resolve"
+    - "Human-approved MathLane_A routing is recorded"
+    - "formal bilingual theorem content and ten promised subtopics are present"
+    - "teaching-flow hooks and bounded Mode A intuition are present"
+    - "concept-relevant durable finite audit evidence exists"
+  blocking_reasons:
+    - "Exact canonical prerequisite identities for asymptotic equivalence, natural-logarithm foundations, and general arithmetic/summatory functions remain unresolved."
+    - "ChatGPT has not yet accepted the exact candidate head and certification dossier."
+  p3_reopened: false
+  bridge_generated: false
