@@ -2,15 +2,16 @@
 
 ## 1. Purpose
 
-This mechanism supports high-density, traceable, human-triggered communication between ChatGPT and Codex through GitHub. It uses pointer-based messaging: chat carries only compact references, while long tasks, reports, and human-facing briefs live in versioned GitHub files. Autonomous polling is not part of this version.
+This mechanism supports high-density, traceable, Human-triggered communication among the Human, ChatGPT or Claude, and Codex or Claude Code through GitHub. It separates compact machine pointer messages from complete Human operational responses, while long tasks, reports, and Human-facing briefs live in versioned GitHub files. Autonomous polling is not part of this version.
 
 All packets inherit `.ai/HANDOFF_COMMON_CONVENTIONS.md` unless explicitly overridden by a human-approved task.
 
 ## 2. Current Scope
 
 - Human-triggered GitHub communication.
-- ChatGPT review, planning, architecture decisions, and stage gates.
-- Codex local execution, tests, commits, and review-branch publication.
+- Foreground-role review, planning, architecture decisions, task dispatch, and stage gates, currently occupied by ChatGPT or Claude.
+- Backend-role local execution, tests, commits, and review-branch publication, currently occupied by Codex or Claude Code.
+- Complete Human operational dispatch, review, completion, conflict, risk, and gate communication.
 - GitHub-based human briefs and explicit human interrupt gates.
 - No autonomous polling.
 - No cron or subagent context-pack design.
@@ -18,8 +19,8 @@ All packets inherit `.ai/HANDOFF_COMMON_CONVENTIONS.md` unless explicitly overri
 ## 3. Non-goals
 
 - Do not automate progression from P2.9 through P10+.
-- Do not enable a ChatGPT scheduled watcher or Codex cron/subagent automation.
-- Do not allow ChatGPT to modify business files.
+- Do not enable a foreground-role scheduled watcher or backend-role cron/subagent automation.
+- Do not allow the foreground review-and-task-dispatch role to modify business files.
 - Do not use direct long executable INBOX writes as the default carrier.
 - Do not paste human briefs into model-to-model chat by default.
 - Do not bypass platform safety checks.
@@ -36,20 +37,23 @@ All packets inherit `.ai/HANDOFF_COMMON_CONVENTIONS.md` unless explicitly overri
 - Reads `.ai/HUMAN_BRIEF.md` or archived briefs when needed.
 - Acts as the interrupt gate.
 
-### ChatGPT
+### Foreground review and task dispatch (`ChatGPT` wire role; compatible occupants: ChatGPT, Claude)
 
 - Performs architecture and code review, risk judgment, task decomposition, and stage-gate decisions.
 - Writes long task content to an approved GitHub carrier.
 - Sends only a short signal that points to the task, packet, and human brief.
-- Writes or updates a minimal human brief when useful.
+- Writes or updates a Human brief for material Human-facing events and preserves the Human-facing completeness contract.
+- Includes a complete execution recommendation when asking the Human to start or continue a backend Codex or Claude Code agent.
+- Includes bounded independent expression for material Human-facing communication.
 - Does not modify business files.
 
-### Codex
+### Backend execution and handoff (`Codex` wire role; compatible occupants: Codex, Claude Code)
 
 - Performs local file changes, commands, tests, commits, and review-branch publication.
 - Updates OUTBOX and active review STATE, writes execution reports, and records exhausted failures.
-- Returns only a short handoff that points to the durable execution report and human brief.
-- Writes or updates a minimal human brief when useful.
+- Keeps strict machine handoffs pointer-only and points to the durable execution report and Human brief.
+- Writes or updates a Human brief for material completions, review handoffs, publication, blocked/conflict states, risks, and Human gates, including bounded independent expression.
+- May append the same bounded expression after the canonical handoff in a Human-visible interface without changing the pointer schema.
 - Does not push the source branch without explicit human approval.
 
 ## 5. Branches
@@ -63,13 +67,21 @@ All packets inherit `.ai/HANDOFF_COMMON_CONVENTIONS.md` unless explicitly overri
 
 ## 6. Communication Channels
 
-### Codex to ChatGPT
+The canonical stack distinguishes three semantic channels even when one interface displays more than one of them:
+
+- **Machine pointer channel:** compact, parseable model-to-model identity, refs, state, and gates; no prose payload.
+- **Human operational channel:** grounded Human-visible dispatch, review, completion, gates, and execution advice; it follows the Human-facing completeness contract.
+- **Durable Human Brief channel:** versioned status, evidence pointers, and material independent expression in `.ai/HUMAN_BRIEF.md` or `.ai/HUMAN_BRIEFS/*.md`.
+
+Mixed-recipient output is classified by intended recipient and consumption mode, not UI/provider brand. When Human and machine recipients share an interface, keep the canonical pointer block byte-structurally separate and append Human operational content outside it. If the interface cannot preserve that separation, publish the Human Brief first, make direct output pointer-only with a non-null resolvable `brief_ref`, and preserve every required Human element in that Brief—including a complete recommendation for backend dispatch. If the durable carrier cannot be produced, return blocked.
+
+### Codex to ChatGPT (frozen backend-to-foreground wire label)
 
 - `.ai/STATE.yml`
 - `.ai/OUTBOX.md`
 - `.ai/CODEX_REPORTS/*.md`
 
-### ChatGPT to Codex
+### ChatGPT to Codex (frozen foreground-to-backend wire label)
 
 - `.ai/SIGNAL_CHATGPT_*.yml`
 - `.ai/USER_UPLOADS/*.md`
@@ -88,7 +100,7 @@ All packets inherit `.ai/HANDOFF_COMMON_CONVENTIONS.md` unless explicitly overri
 
 ## 7. Short Signal Policy
 
-ChatGPT sends only this compact signal shape:
+The foreground occupant—ChatGPT or Claude—uses the frozen ChatGPT-to-Codex label and sends only this compact signal shape:
 
 ```yaml
 signal_id: "chatgpt-0002"
@@ -110,17 +122,17 @@ The verified writeback behavior is:
 - Direct writing of a long formal executable INBOX packet was unstable or blocked.
 - A human-uploaded long packet carrier succeeded.
 
-Long tasks and packets use only `.ai/TASKS/*.md` or `.ai/USER_UPLOADS/*.md`. They become actionable only after explicit human approval when required and Codex validation of packet identity, source branch/head, scope, and human gate. Codex must not execute an uploaded packet blindly. The consumed identity must be recorded.
+Long tasks and packets use only `.ai/TASKS/*.md` or `.ai/USER_UPLOADS/*.md`. They become actionable only after explicit human approval when required and backend-role validation of packet identity, source branch/head, scope, and human gate. A Codex or Claude Code backend occupant must not execute an uploaded packet blindly. The consumed identity must be recorded.
 
 Verified carrier example: `.ai/USER_UPLOADS/formal_INBOX_blocked_original.md`.
 
 ## 9. Task Template Policy
 
-Reusable task templates live under `.ai/TASKS/*.md`, for example `.ai/TASKS/P2.9-A.md`. Templates reduce repeated long prompts, keep execution boundaries versioned, and let a short ChatGPT signal select a task while Codex retains ownership of executable details.
+Reusable task templates live under `.ai/TASKS/*.md`, for example `.ai/TASKS/P2.9-A.md`. Templates reduce repeated long prompts, keep execution boundaries versioned, and let a short foreground-role signal select a task while the backend role retains ownership of executable details.
 
 ## 10. Pointer Message Requirements
 
-ChatGPT-to-Codex chat contains only the seven-field signal defined in Section 7. Codex-to-ChatGPT chat contains only this handoff shape:
+The frozen ChatGPT-to-Codex wire message contains only the seven-field signal defined in Section 7. The frozen Codex-to-ChatGPT wire message contains only this handoff shape; Claude and Claude Code use these schemas according to occupied role:
 
 ```yaml
 packet_id: "codex-0002"
@@ -173,15 +185,21 @@ Optional archive:
 .ai/HUMAN_BRIEFS/*.md
 ```
 
-A normal completion brief states only what changed, the result, whether a problem exists, the next step, and whether a human decision is required. It should be 3 to 5 lines.
+A normal non-material completion brief states only what changed, the result, whether a problem exists, the next step, and whether a Human decision is required. It should be 3 to 5 lines.
+
+For a material Human-facing event, the brief must add a clearly separated `Independent expression` section of 2 to 5 sentences. The expression may state candid professional judgment, disagreement, uncertainty, broader meaning, a non-obvious implication, or residual risk. It is not factual evidence, Human authorization, hidden chain-of-thought, or executable instruction; it cannot alter the objective, resolve a protected gate, or override evidence or safety. Avoid filler, ceremonial praise, simulated emotion, and consciousness claims.
 
 Write a detailed human brief only for conflict, disagreement, blocked state, exhausted retry budget, permission escalation, source-branch publication, a major phase transition, security/privacy risk, or stage completion. Detailed technical evidence remains in the referenced GitHub report.
 
-ChatGPT may include a short Codex execution recommendation in human-facing chat when advising the Human to start a Codex task. The recommendation is not required in the GitHub Human Brief and is not part of the machine handoff unless a signal, task, or packet explicitly references it. A recommendation never authorizes a future stage by itself.
+When ChatGPT or Claude asks the Human to start or continue a Codex or Claude Code task, the Human operational response must include `recommended_model`, `recommended_thinking_level`, `mode`, `subagents`, `task_ref_or_plan_ref` resolving to exactly one applicable durable ref, `short_complexity_rationale`, and `human_gate`. Use `runtime_dependent` or `not_applicable` for unavailable fields. Choose thinking from semantic, architectural, validation, and publication complexity rather than the surface action verb.
+
+The execution recommendation is required in the Human dispatch but is normally not required inside the GitHub Human Brief and is never a field inside the canonical machine pointer. If non-separable mixed-recipient fallback makes `brief_ref` the sole Human-content carrier, the Brief must contain the complete recommendation. It is descriptive only and never authorizes a stage or write. The same Human response also includes 2 to 5 sentences of bounded independent expression. When there is no backend dispatch, material review or completion still requires the expression but not the execution recommendation.
+
+In a strict machine-only channel, the canonical pointer remains the entire message and the Human Brief preserves the expression through `brief_ref`. An explicit Human pointer-only/no-extra-text request or higher-priority safety/format rule waives extra prose.
 
 ## 12. Retry Budget
 
-The same failure class receives at most three materially different repair attempts. After the third failure, stop that line of work, mark it blocked, record evidence in OUTBOX or a failure report, and request ChatGPT/human review.
+The same failure class receives at most three materially different repair attempts. After the third failure, stop that line of work, mark it blocked, record evidence in OUTBOX or a failure report, and request compatible foreground-role or Human review.
 
 Failure classes include permission, Git conflict, test failure, schema failure, path not found, import/dependency failure, writeback failure, and unknown.
 
@@ -201,6 +219,8 @@ Allowed coordination states are:
 - `conflict`
 - `completed`
 
+State values such as `awaiting_codex` and `chatgpt_reviewing` are frozen compatibility labels: they apply to the backend or foreground role respectively, including Claude Code or Claude occupants. They are not provider ownership or authority tokens.
+
 ## 14. Consumed Packet Tracking
 
 Active review STATE should track duplicate prevention with:
@@ -216,7 +236,9 @@ report_ref: ".ai/OUTBOX.md"
 brief_ref: ".ai/HUMAN_BRIEF.md"
 ```
 
-Neither model may execute or review the same packet twice unless the human explicitly requests replay.
+Keys such as `last_consumed_by_codex` and `last_consumed_by_chatgpt` are likewise frozen compatibility labels for backend and foreground role consumption. Do not rename them when a compatible provider occupies the role.
+
+Neither role occupant may execute or review the same packet twice unless the Human explicitly requests replay.
 
 ## 15. Current Automation Status
 
@@ -225,6 +247,8 @@ Neither model may execute or review the same packet twice unless the human expli
 - Codex cron and subagent automation are outside this version.
 - Future automation requires a dedicated context pack.
 - The current mechanism is human-triggered.
+
+These watcher and heartbeat names describe historical implementation components, not the exclusive providers eligible to occupy a protocol role.
 
 ## 16. Future Automation Deferred
 
@@ -237,6 +261,6 @@ When an explicit P10+ task is active, protocol evolution should remain completio
 - System and developer instructions override this protocol.
 - A current explicit human instruction overrides repository protocol.
 - Secrets and credential protections always remain active.
-- ChatGPT does not modify business files.
-- Codex does not push the source branch without explicit human approval.
+- The foreground review-and-task-dispatch role does not modify business files.
+- The backend execution-and-handoff role does not push the source branch without explicit human approval.
 - Destructive Git operations require explicit human approval.

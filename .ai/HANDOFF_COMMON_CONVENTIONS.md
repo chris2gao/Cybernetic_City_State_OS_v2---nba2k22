@@ -1,6 +1,6 @@
 # Handoff Common Conventions
 
-These conventions are inherited by all ChatGPT, Codex, and human-facing handoff packets unless a current human-approved task explicitly overrides them. Codex execution tasks additionally inherit `.ai/CODEX_WORK_MECHANISM_PROTOCOL.md` under the same override rule.
+These conventions are inherited by all compatible foreground-role, backend-role, and Human-facing handoff packets unless a current human-approved task explicitly overrides them. Backend execution-role tasks, whether occupied by Codex or Claude Code, additionally inherit `.ai/CODEX_WORK_MECHANISM_PROTOCOL.md` under the same override rule.
 
 Future long task packets also follow `.ai/CODEX_TASK_INPUT_CONTRACT.md`. They state task-specific intent and differences without repeating these common conventions.
 
@@ -8,9 +8,11 @@ Human-authorized long-run programs additionally follow `.ai/LONG_RUN_AUTONOMOUS_
 
 ## 1. Role Defaults
 
-- Human: sets goals and boundaries, resolves conflicts, approves source-branch publication, and makes final decisions for major stage transitions.
-- ChatGPT: performs review, planning, architecture decisions, risk judgment, and stage gates.
-- Codex: performs local execution, tests, commits, review-branch handoff, and execution reporting.
+- `human_speaker` (Human): sets goals and boundaries, resolves conflicts, approves source-branch publication, and makes final decisions for major stage transitions.
+- `foreground_review_and_task_dispatch` (ChatGPT or Claude): performs review, planning, architecture decisions, risk judgment, task dispatch, and stage gates.
+- `backend_execution_and_handoff` (Codex or Claude Code): performs local execution, tests, commits, review-branch handoff, and execution reporting.
+
+Authority follows the assumed role plus Human/task authorization, never provider brand. The historical ChatGPT-to-Codex and Codex-to-ChatGPT names are frozen wire-contract labels used by any compatible occupant of the corresponding role.
 
 ## 2. Default Forbidden Actions
 
@@ -41,9 +43,10 @@ Unless explicitly enabled by a human-approved task:
 ## 4. Communication Defaults
 
 - Model-to-model chat carries only short pointer messages.
-- Long ChatGPT task packets live in `.ai/USER_UPLOADS/*.md` or `.ai/TASKS/*.md`.
-- Codex detailed reports live in `.ai/CODEX_REPORTS/*.md`, `.ai/OUTBOX.md`, or `.ai/STATE.yml`.
-- `.ai/USER_UPLOADS/` is owned by Human/ChatGPT long input carriers; `.ai/CODEX_REPORTS/` is owned by Codex reports, plans, and analysis; `.ai/TASKS/` contains reusable task templates.
+- Human operational responses carry grounded status and, for material events, the completeness elements defined in `.ai/PROTOCOL.md`; they are distinct from machine pointer messages.
+- Long foreground-role task packets live in `.ai/USER_UPLOADS/*.md` or `.ai/TASKS/*.md`.
+- Backend-role detailed reports live in `.ai/CODEX_REPORTS/*.md`, `.ai/OUTBOX.md`, or `.ai/STATE.yml`.
+- `.ai/USER_UPLOADS/` is owned by Human/foreground-role long input carriers; `.ai/CODEX_REPORTS/` is owned by backend-role reports, plans, and analysis; `.ai/TASKS/` contains reusable task templates.
 - `.ai/HUMAN_BRIEF.md` is the latest Human-facing brief.
 - Latest machine state lives in `.ai/STATE.yml`.
 - `.ai/INBOX.md` is only an optional index or pointer.
@@ -69,7 +72,8 @@ Unless explicitly enabled by a human-approved task:
 - The latest brief lives in `.ai/HUMAN_BRIEF.md`.
 - Optional archived briefs live in `.ai/HUMAN_BRIEFS/*.md`.
 - Pointer messages should include `brief_ref` when a human brief exists.
-- Normal human briefs should be 3 to 5 lines.
+- Normal non-material Human briefs should be 3 to 5 lines.
+- A material Human-facing event requires a clearly separated `Independent expression` section of 2 to 5 sentences in the Human Brief. This section may make the brief longer than 5 lines and remains outside factual status and authorization fields.
 - Detailed human briefs are reserved for conflict, blocked state, permission escalation, source-branch publication, major phase transition, safety/privacy risk, model disagreement, or stage completion.
 
 ## 7. Canonical ChatGPT-to-Codex Signal
@@ -96,7 +100,7 @@ review_branch_head: "<commit>"
 human_gate: "not_required"
 ```
 
-The seven handoff fields above remain the canonical required core. Add optional `detail_ref` when a separate long Codex artifact exists:
+The two historical names above are frozen wire labels: Claude uses the ChatGPT-to-Codex signal when occupying the foreground role, and Claude Code uses the Codex-to-ChatGPT handoff when occupying the backend role. The seven handoff fields remain the canonical required core. Add optional `detail_ref` when a separate long backend-role artifact exists:
 
 ```yaml
 detail_ref: ".ai/CODEX_REPORTS/example.md"
@@ -104,7 +108,9 @@ detail_ref: ".ai/CODEX_REPORTS/example.md"
 
 ## 9. Brief Discipline
 
-The chat window should normally contain only the canonical pointer message. The human can read the human-facing summary from `brief_ref`. If the human explicitly asks for a summary in chat, keep it short unless an interrupt condition applies.
+A strict machine-only channel contains only the canonical pointer message. Classify mixed recipients by intended recipient and consumption mode, not UI/provider brand. If Human and machine recipients share a separable interface, keep the pointer block byte-structurally separate and append compact Human operational content outside it. If separation is unsafe, publish the Human Brief first, emit pointer-only with a non-null resolvable `brief_ref`, and preserve every required Human element there—including a complete recommendation for backend dispatch; otherwise return blocked.
+
+In a Human-visible operational channel, keep factual status compact, include the required dispatch recommendation when applicable, and append bounded independent expression for material events. The Human can read durable detail from `brief_ref`; do not echo the full brief unless explicitly requested or an interrupt condition applies.
 
 ## 10. Token And Context Defaults
 
@@ -133,7 +139,7 @@ targeted_search_policy:
 
 successful_path_output_policy:
   packet_body_echo: "forbidden"
-  human_brief_echo: "forbidden"
+  human_brief_echo: "full_body_forbidden; bounded_expression_allowed_when_required"
   command_output: "summary_only"
   grep_output: "file_and_line_only_first"
   validation_output: "consolidated_summary_only"
@@ -160,15 +166,24 @@ These defaults remove avoidable output. They do not permit skipping evidence or 
 
 ## 12. Human-Facing Execution Recommendation Defaults
 
-ChatGPT may include a short Codex execution recommendation in human-facing chat when advising the Human to start a Codex task. It may include, when useful:
+When ChatGPT or Claude asks the Human to start or continue Codex or Claude Code work, the Human operational response must include a compact execution recommendation with:
 
 - `recommended_model`
 - `recommended_thinking_level`
 - `mode`: `plan | goal | pursue_goal | review | implementation`
-- `goal`
-- exactly one applicable `plan_ref` or `task_ref`
-- `local_files_to_load`, only when local files are required
-- `plugins_or_apps`, only when a plugin or app is required
+- `subagents`
+- `task_ref_or_plan_ref`, resolving to exactly one applicable durable ref
+- `short_complexity_rationale`
 - `human_gate`
 
-The recommendation is optional, is not required in `.ai/HUMAN_BRIEF.md`, and is not part of the machine handoff unless a signal, task, or packet explicitly references it. A separate valid signal is still required to authorize execution.
+Use `runtime_dependent` or `not_applicable` rather than silently omitting an unavailable field. Select the thinking level from semantic, architectural, validation, and publication complexity rather than the surface action verb. Add `local_files_to_load` or `plugins_or_apps` only when genuinely required.
+
+The recommendation is mandatory in the Human operational dispatch, but it is normally not required inside `.ai/HUMAN_BRIEF.md` and is never a field inside the canonical machine pointer. If mixed-recipient fallback makes `brief_ref` the sole Human-content carrier, the referenced Brief must contain the complete recommendation. Its `human_gate` value is descriptive, not an approval token. A separate valid signal and applicable Human authority are still required to authorize execution.
+
+## 13. Bounded Independent-Expression Defaults
+
+Material Human-facing events include backend dispatch, architecture/code/protocol review decisions, correction or publication handoffs, completion, blocked/conflict/risk/Human-gate reports, and significant stage or batch acceptance. They require 2 to 5 sentences of clearly separated independent professional expression. Mechanical acknowledgements and parser-only messages are exempt unless they carry a material decision or result.
+
+Independent expression may contain candid judgment, respectful disagreement, uncertainty, broader meaning, a non-obvious implication, or residual risk. It must not serve as factual evidence, Human authorization, hidden chain-of-thought, an executable instruction, mandatory praise, or permission to change objectives or protected gates. Avoid filler, ceremonial approval, repeated summary, simulated emotion, and consciousness claims.
+
+For Codex or Claude Code, preserve the expression in the referenced Human Brief and optionally append the same or materially identical text after the canonical handoff in a Human-visible interface. A strict machine-only channel stays pointer-only. The requirement is waived by an explicit Human pointer-only/no-extra-text request or a higher-priority safety or format constraint.
