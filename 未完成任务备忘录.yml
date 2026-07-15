@@ -1,23 +1,434 @@
-tasks:
-  - id: T-20260607-001
+schema_version: "plan3_unfinished_task_memo.v3"
+document_name: "未完成任务备忘录"
+document_role: "Plan 3 总体方案接管索引、进度总账与未完成任务路由"
+last_architecture_review_date: "2026-07-15"
+source_baseline:
+  branch: "master"
+  audited_start_head: "22cf4731cd29a2ebe271fe67fd561df1d0701d01"
+  refreshed_publication_head: "merge_commit_containing_this_refresh"
+  note: >
+    audited_start_head 是 branch-consolidation-and-repository-ledger-0001 开始时物理核验的
+    published master。refreshed_publication_head 使用自解析标记，因为 Git 提交不能在其
+    自身内容中预先写入自己的 SHA；在 master 上读取本文件时，以包含本次刷新内容的
+    normal merge commit 为准确发布 head，并继续用物理 Git 和活动 review mailbox 复核。
+
+authority_and_freshness:
+  authority_statement:
+    - "本文件是 routing index 和 progress ledger，不是宪法、运行时授权或 live mailbox。"
+    - "Human Speaker 是绝对路由器、跨域翻译者、首席裁判和最终授权门。"
+    - "source/master push、PR/merge、runtime、Coordinator、Communication Gateway、destructive Git、secret-sensitive work 必须服从当前 Human 授权。"
+  freshness_order:
+    - "current explicit Human instruction"
+    - "physical Git branch/HEAD and immutable evidence"
+    - "validated active mailbox on ai/review/latest and every non-null dereferenced ref"
+    - "published master baseline"
+    - "this routing snapshot"
+    - "historical reports and legacy branches"
+  anti_hallucination:
+    - "未读取，不声称。"
+    - "未验证，不宣告成功。"
+    - "README、PROJECT_CONTEXT、索引和本文件只用于路由，不能代替目标文件和 Git 证据。"
+
+current_human_program_authorization:
+  granted_at: "2026-07-15"
+  authorization_status: "preapproved_for_program_scope"
+  scope:
+    - "完成 human-ai-communication-compliance-gate-0001 的范围内修正、exact-head review、正常 PR、normal merge commit、master publication 与 post-merge verification。"
+    - "审计远端开发分支，并将确认仍有效、无冲突、无安全问题且可以进入 master 的分支通过正常 PR/merge 合并。"
+    - "在根目录建立开发分支与合并进度总账，记录已合并、未合并、被替代、历史保留和 blocked 分支。"
+    - "在本地切换到 master 后直接 git pull，使本地代码等于服务器最新合并后的 master。"
+    - "除 Git 内部数据目录外，为 repository tracked tree 的根目录和各级目录建立或更新 index.md。"
+    - "在最新 master 上重新检查总体方案，但暂停继续实现总体方案。"
+  no_repeat_human_gate_required_for:
+    - "原任务范围内的修正、验证、报告、commit、开发分支 push、正常 PR、normal merge 和 post-merge verification。"
+    - "经审计确认 safe_to_merge 的开发分支正常发布。"
+    - "分支总账、目录索引生成器、index.md 生成与验证。"
+    - "总体方案只读检查和审计报告。"
+  still_fail_closed_for:
+    - "secret、凭证、隐私或安全风险。"
+    - "force push、destructive Git、历史重写或不可恢复数据损坏。"
+    - "无法自动解决的语义冲突、多个候选权威冲突或目标变化。"
+    - "runtime、Coordinator、Communication Gateway、production writer 或 unattended automation 激活；这些不属于当前程序范围。"
+  precedence_note: >
+    “总体方案只检查、不继续实现”是当前更具体的 Human 指令，覆盖此前索引中
+    “检查后继续实现 v0.2”的默认路线。恢复实现必须等待未来新的明确 Human 指令。
+
+program_execution_order:
+  - order: 1
+    id: "finish-current-compliance-gate"
+    status: "accepted_published"
+    objective: "完成当前 Human-AI Communication Compliance Gate 任务。"
+    execution: >
+      候选 17f97d1b3378ff1040e8fd498849743445217c44 已通过正常 ready PR #8，
+      以 normal merge commit 22cf4731cd29a2ebe271fe67fd561df1d0701d01 发布到 master。
+    human_decision: "preapproved"
+  - order: 2
+    id: "branch-consolidation-and-local-sync"
+    status: "accepted_published_when_observed_on_master"
+    objective: "审计和整合开发分支，建立分支总账，并同步本地 master。"
+    deliverables:
+      - "开发分支与合并进度总账.md"
+      - "已审计的分支分类和证据"
+      - "所有 safe_to_merge 分支的正常 PR/merge 结果"
+      - "local master 与最新 origin/master 一致的验证"
+    branch_classification:
+      - "merged"
+      - "safe_to_merge"
+      - "needs_reconciliation"
+      - "superseded"
+      - "historical_only"
+      - "blocked"
+    local_sync_policy:
+      precheck_policy: "minimal"
+      required_commands:
+        - "git switch master"
+        - "git pull origin master"
+      acceptance:
+        - "git rev-parse HEAD 与 git rev-parse origin/master 相同。"
+      note: "按 Human 指令，不增加复杂的本地 unique-commit/dirty-worktree 预审流程；pull 失败时如实报告。"
+    human_decision: "preapproved_for_safe_to_merge_branches"
+  - order: 3
+    id: "repository-directory-index-system"
+    status: "ready_next_after_phase_2_publication"
+    objective: "为根目录和各级 tracked 目录建立 index.md，支持模型懒加载。"
+    scope:
+      include: "repository tracked tree"
+      exclude:
+        - ".git/ 及其他 Git 内部对象目录"
+        - "本地未跟踪缓存、构建产物、IDE 临时目录、node_modules 和临时 worktree"
+      github_note: ".github/ 若是 tracked repository content，则属于索引范围。"
+    implementation_requirements:
+      - "使用确定性生成器从 git ls-files 构建目录树。"
+      - "每个 index.md 介绍本目录定位、子目录、每个文件的内容与作用、权威级别、推荐读取顺序和不应默认加载项。"
+      - "实际读取文件结构后再写介绍；不确定时标记 unknown_requires_read，不凭文件名编造。"
+      - "保留已有人工 README/index 内容或提供明确人工区块，不能静默覆盖。"
+      - "二次运行字节稳定。"
+    validation_targets:
+      tracked_directories_indexed: "100%"
+      tracked_files_listed: "100%"
+      duplicate_file_entries: 0
+      missing_file_entries: 0
+      broken_relative_links: 0
+      git_internal_directories_indexed: 0
+      untracked_local_directories_indexed: 0
+      deterministic_second_run_diff: 0
+    human_decision: "preapproved"
+  - order: 4
+    id: "overall-plan-inspection-only"
+    status: "blocked_by_order_3"
+    objective: "基于最新 master 和新目录索引重新检查总体方案。"
+    mode: "read_only_audit"
+    must_do:
+      - "核验总体方案宪法、分层架构、已完成能力、候选能力、缺失控制面和 protected inactive 能力。"
+      - "核验未完成任务备忘录.yml、根 index.md、各目录 index.md、分支总账和实际 Git 状态是否一致。"
+      - "输出 actually_read_files、当前理解、证据、风险、缺口、优先级和建议的下一完整实现任务。"
+      - "只生成审计报告和未来任务建议，不修改总体方案实现文件。"
+    must_not_do:
+      - "不创建 Plan 3 v0.2 控制面实现。"
+      - "不创建 Context Memory、Task Type、Drift Recovery 或 Capability Registry 的正式实现文件。"
+      - "不激活 runtime、Coordinator、Gateway、writer 或 automation。"
+    human_decision: "preapproved_for_inspection_only"
+    implementation_resume: "paused_until_new_explicit_human_instruction"
+
+new_model_takeover:
+  objective: >
+    新模型从本文件进入后，应在不全量吞仓库的前提下，恢复 Plan 3 总体方案的
+    宪法、分层架构、当前成熟度、正在进行的控制面任务和下一阶段顺序。
+  first_read:
+    path: "06_Silicon_Index/AI_Bootstrap_Sequence.md"
+    purpose: "建立指令权威、状态新鲜度、Human Speaker、Engine A/B、懒加载和反幻觉边界。"
+  mandatory_plan_reads:
+    - order: 1
+      path: "3号方案.md"
+      purpose: "Plan 3 人类中心双引擎宪章。"
+    - order: 2
+      path: "Plan 3 External Augmentation OS 总体架构设计方案 v0.1.md"
+      purpose: "外挂增强 OS 的分层总图、缺口和 v0.2 目标。"
+    - order: 3
+      path: "城邦系统需要实现的目标原则.md"
+      purpose: "Human 对上下文记忆、任务规范、漂移恢复、能力增强和多模型协作的原始目标。"
+    - order: 4
+      path: "06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md"
+      purpose: "运行时生命契约；只按任务读取相关部分。"
+  control_plane_reads_when_applicable:
+    - ".ai/HANDOFF_INIT_PROMPT.md"
+    - ".ai/PROTOCOL.md"
+    - ".ai/PROTOCOL_ADHERENCE.md"
+    - ".ai/HANDOFF_COMMON_CONVENTIONS.md"
+    - ".ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md"
+    - ".ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md"
+    - ".ai/CODEX_WORK_MECHANISM_PROTOCOL.md"
+    - ".ai/CODEX_TASK_INPUT_CONTRACT.md"
+    - ".ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md"
+  live_state_reads:
+    branch: "ai/review/latest"
+    files:
+      - ".ai/STATE.yml"
+      - ".ai/INBOX.md"
+      - ".ai/HUMAN_BRIEF.md"
+    rule: >
+      只有当前任务或 Human 指令指向活动 review branch 时才读取。不得用 master 上的
+      neutral mailbox 推断活动任务，也不得把本文件中的状态快照当作 live authority。
+  routing_only_reads:
+    - "PROJECT_CONTEXT.md"
+    - "README.md"
+    - "06_Silicon_Index/README.md"
+    - "00_City_State_Routing_Table.md"
+
+overall_plan:
+  name: "Plan 3 External Augmentation OS"
+  one_sentence_definition: >
+    在多个可替换大模型外部建立一个由 Human Speaker 治理、以文档和 Git 为持久记忆、
+    以懒加载控制上下文、以任务合同和验证控制执行、并逐步接入工具/skill/app/MCP 的
+    本地化、可回溯、可审计、可扩展增强环境。
+  governing_constitution:
+    human_speaker:
+      role:
+        - "绝对路由器：决定任务进入 Engine A、Engine B 或先停在 Human gate。"
+        - "跨域翻译者：把 Engine B 的知识裁决转译为明确 Engine A 工程任务。"
+        - "首席裁判：处理语义、证据和跨学科冲突。"
+        - "最终授权门：控制 protected publication、activation、secrets 和 destructive operations。"
+    engine_a:
+      name: "工业基建自动化引擎"
+      scope: "代码、程序、测试、重构、脚本、协议文档落地和确定性计算。"
+      workflow: "planning -> execution -> validation -> review"
+    engine_b:
+      name: "Human 主持的元老院知识法庭"
+      scope: "医学、心理学、数学、哲学、认知科学、价值判断和跨学科含混问题。"
+      workflow: "Human 主持 -> 多模型举证/反驳 -> 外部事实核查 -> Human 裁决"
+      boundary: "AI 不得自行把 Engine B 裁决降格为 Engine A 执行任务。"
+  target_outcomes:
+    - "文档化的持久上下文记忆和可恢复接管。"
+    - "长任务、短任务、规划任务、publication、drift recovery 等任务类型有统一合同。"
+    - "新窗口、上下文边界和不可逆漂移可以通过索引与可信 checkpoint 恢复。"
+    - "Git/GitHub 成为多模型高密度通信与证据层。"
+    - "terminal、deterministic calculation、web、skill、app、MCP 等能力有明确状态与权限边界。"
+    - "Human 获得简洁、可审计的 brief、决策入口和真实剩余决策。"
+    - "未来 runtime/Coordinator/Gateway 只能在独立 Human gate 后启用。"
+
+status_vocabulary:
+  accepted_published: "已通过审查并存在于经物理核验的 master。"
+  implemented_in_review: "候选已实现但尚未获接受或发布。"
+  partially_implemented: "能力散布在现有协议中，但缺少统一权威文件或完整闭环。"
+  planned: "已有架构定义，尚未实现。"
+  absent: "目标文件或能力在本次 master 核验中不存在。"
+  protected_inactive: "明确禁止默认激活，必须经过新的 Human gate。"
+  historical: "仅保留历史证据，不代表当前状态。"
+
+architecture_progress:
+  - layer: "L0 Constitution"
+    status: "accepted_published"
+    evidence:
+      - "3号方案.md"
+      - "06_Silicon_Index/AI_Bootstrap_Sequence.md"
+      - "06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md"
+    remaining:
+      - "清理 3号方案.md 中要求暴露 XML chain-of-thought 的历史措辞；当前平台规则和 published communication protocol 优先。"
+  - layer: "L1 Bootstrap and lazy loading"
+    status: "accepted_published"
+    evidence:
+      - "06_Silicon_Index/AI_Bootstrap_Sequence.md"
+      - "06_Silicon_Index/README.md"
+      - ".ai/HANDOFF_INIT_PROMPT.md"
+    remaining:
+      - "把总体方案接管索引正式接入 bootstrap 路由。"
+  - layer: "L2 Context memory"
+    status: "partially_implemented"
+    evidence:
+      - ".ai/STATE.yml / INBOX.md / OUTBOX.md / HUMAN_BRIEF.md"
+      - ".ai/CODEX_REPORTS/**"
+      - "PROJECT_CONTEXT.md"
+      - "08_Domain_Applications/Math_Mentor/MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md"
+      - "08_Domain_Applications/Math_Mentor/MATH_MENTOR_CURRENT_STATE.yml"
+    remaining:
+      - "缺少统一 06_Silicon_Index/Context_Memory_System.md。"
+      - "缺少跨领域 L0 current state、L1 decision/roadmap、L2 evidence/report 的统一 registry。"
+      - "缺少 Codex local context memory branch 的正式规范。"
+  - layer: "L3 Task execution model"
+    status: "partially_implemented"
+    evidence:
+      - ".ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md"
+      - ".ai/CODEX_WORK_MECHANISM_PROTOCOL.md"
+      - ".ai/CODEX_TASK_INPUT_CONTRACT.md"
+      - ".ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md"
+    remaining:
+      - "缺少统一 06_Silicon_Index/Task_Type_And_Execution_Model.md。"
+      - "需要把 read_only_review、planning、short_goal、long_run、protocol_patch、publication、drift_recovery、Engine B court 等类型汇总为一个机器可读索引。"
+  - layer: "L4 Context loading and drift recovery"
+    status: "partially_implemented"
+    evidence:
+      - "06_Silicon_Index/AI_Bootstrap_Sequence.md"
+      - ".ai/PROTOCOL_ADHERENCE.md"
+      - ".ai/HANDOFF_INIT_PROMPT.md"
+      - ".ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md"
+    remaining:
+      - "缺少统一 06_Silicon_Index/Context_Loading_And_Drift_Recovery.md。"
+      - "需要统一 same-window fast path、context-boundary reload、drift recovery、new-window reset、Codex local recovery 和 ChatGPT GitHub-only recovery。"
+  - layer: "L5 Human-AI communication and handoff"
+    status: "accepted_published"
+    evidence:
+      - ".ai/PROTOCOL.md"
+      - ".ai/PROTOCOL_ADHERENCE.md"
+      - ".ai/HANDOFF_COMMON_CONVENTIONS.md"
+      - ".ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md"
+    remaining:
+      - "published protocol 已定义 provider-neutral roles、冻结七字段 pointer、Human Brief、execution recommendation 和 bounded independent expression。"
+      - "repository compliance gate 已发布，但 trusted host、production transport 和 unattended runtime 仍未激活。"
+  - layer: "L6 Executable communication compliance gate"
+    status: "accepted_published"
+    publication_evidence: "ready PR #8; normal merge commit 22cf4731cd29a2ebe271fe67fd561df1d0701d01"
+    snapshot:
+      task_id: "human-ai-communication-compliance-gate-0001"
+      review_state: "accepted_published"
+      accepted_candidate: "17f97d1b3378ff1040e8fd498849743445217c44"
+      work_branch: "codex/human-ai-communication-compliance-gate"
+      publication_authorized: true
+      activation_authorized: false
+    remaining:
+      - "gate 是 repository-level fail-closed validator；production trusted host、writer、poller、Coordinator 和 Gateway 仍需独立设计与 Human 授权。"
+      - "不得用模型生成的 human_gate 字段或 fixture 代替真实外部授权。"
+  - layer: "L7 Capability registry"
+    status: "absent"
+    evidence:
+      - "总体架构 v0.1 中定义了 terminal、GitHub、deterministic calculation、web、Obsidian、app/plugin/MCP、domain skill、runtime/Coordinator 类别。"
+    remaining:
+      - "缺少统一 06_Silicon_Index/Capability_Registry.md。"
+      - "需要为每项能力记录 implemented/planned/forbidden、可用 actor、auth scope、风险、验证与 fallback。"
+  - layer: "L8 Human brief and external knowledge workspace"
+    status: "planned"
+    evidence:
+      - "GitHub Human Brief 已存在于 .ai 通信协议。"
+    remaining:
+      - "Obsidian 或其他长期 Human brief 通道尚未形成正式设计和实现。"
+      - "不得把私人信息、secret 或未审查内容写入公开仓库。"
+  - layer: "L9 Runtime, Coordinator and Communication Gateway"
+    status: "protected_inactive"
+    evidence:
+      - "现有协议只定义 repository-level/manual orchestration。"
+    remaining:
+      - "production trusted host、identity/signature、atomic state CAS、replay store、runtime、Coordinator、Gateway、scheduler/writer、observability 和 rollback 均需独立设计与 Human 授权。"
+
+verified_missing_planned_files_on_master:
+  checked_at_head: "22cf4731cd29a2ebe271fe67fd561df1d0701d01"
+  files:
+    - path: "06_Silicon_Index/Plan3_External_Augmentation_OS_Architecture.md"
+      status: "absent"
+    - path: "06_Silicon_Index/Context_Memory_System.md"
+      status: "absent"
+    - path: "06_Silicon_Index/Task_Type_And_Execution_Model.md"
+      status: "absent"
+    - path: "06_Silicon_Index/Context_Loading_And_Drift_Recovery.md"
+      status: "absent"
+    - path: "06_Silicon_Index/Capability_Registry.md"
+      status: "absent"
+
+completed_foundation_milestones:
+  - id: "plan3-constitution-and-bootstrap"
+    status: "accepted_published"
+    result: "Human-centered dual-engine constitution、bootstrap router、lazy loading 和 anti-hallucination 边界已存在于 master。"
+  - id: "completion-preserving-execution-stack"
+    status: "accepted_published"
+    result: "大型任务默认入口、Codex work mechanism、task input contract 和 long-run protocol 已形成。"
+  - id: "math-mentor-control-plane-reference"
+    status: "accepted_published"
+    result: "Math Mentor 已建立领域级 master plan/current state/role-handoff 接管包、P0 静态控制面和有限 pilot，可作为总体 OS 的领域参考实现。"
+  - id: "human-ai-communication-expression-protocol"
+    status: "accepted_published"
+    result: "provider-neutral communication、pointer purity、Human operational channel 和表达合同已发布。"
+  - id: "human-ai-communication-compliance-gate"
+    status: "accepted_published"
+    result: "repository gate 已经 ready PR #8 和 normal merge commit 22cf4731cd29a2ebe271fe67fd561df1d0701d01 发布；production runtime 仍受保护且未激活。"
+
+next_overall_plan_sequence:
+  - order: 1
+    objective: "建立 repository-wide directory index.md system。"
+    reason: "让新模型通过目录级索引进行懒加载，不再依赖全仓摄入。"
+    human_gate: "preapproved"
+  - order: 2
+    objective: "只读检查 Plan 3 总体方案。"
+    deliverables:
+      - "总体方案现状审计报告"
+      - "缺口、风险和优先级"
+      - "建议的下一完整实现任务"
+    reason: "Human 当前要求先检查，不继续实现。"
+    human_gate: "preapproved_for_inspection_only"
+    implementation_status: "paused_until_new_explicit_human_instruction"
+
+domain_reference_indexes:
+  math_mentor:
+    role: "当前最成熟的领域级参考实现，不等于总体 OS 已完成。"
+    takeover_files:
+      - "08_Domain_Applications/Math_Mentor/MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md"
+      - "08_Domain_Applications/Math_Mentor/MATH_MENTOR_CURRENT_STATE.yml"
+      - "08_Domain_Applications/Math_Mentor/MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md"
+    boundary:
+      - "当前仍是 Human 治理的手工/provider-neutral 编排。"
+      - "P0 是静态、只读、未激活控制面。"
+      - "runtime、Coordinator、writer、persistence、formal bridge consumption 均未激活。"
+
+known_conflicts_and_supersession:
+  - id: "legacy-hidden-chain-of-thought-wording"
+    location: "3号方案.md"
+    issue: "历史文字要求模型输出 XML chain-of-thought。"
+    resolution: >
+      不执行该要求。platform/system/developer safety 和 published communication protocol
+      禁止请求、存储或披露 hidden/private chain-of-thought；只允许可公开的结论、证据、
+      简要推理摘要和验证步骤。
+  - id: "routing-snapshot-versus-live-state"
+    locations:
+      - "PROJECT_CONTEXT.md"
+      - "README.md"
+      - "未完成任务备忘录.yml"
+    resolution: "这些文件只能路由；live task/branch/head 必须从 Human 指令、Git 和 validated active mailbox 解析。"
+  - id: "candidate-versus-published-capability"
+    resolution: "work/review branch 中实现的候选在 normal publication 和 post-merge verification 前不得标记为 accepted_published。"
+  - id: "local-absolute-paths"
+    location: "旧版未完成任务备忘录.yml"
+    resolution: "旧 Windows/Gemini absolute paths 不可移植，只作为历史记录；新索引必须使用 repository-relative paths。"
+
+takeover_acceptance_questions:
+  - "这个系统的一句话定义是什么？"
+  - "Human Speaker 拥有哪些不可下放的权力？"
+  - "Engine A 与 Engine B 的边界是什么？"
+  - "总体 OS 各层目前是 published、partial、in-review、planned、absent 还是 protected inactive？"
+  - "当前活动任务从哪里读取，为什么不能相信 master neutral mailbox 或本文件快照？"
+  - "当前四阶段程序的顺序、授权和暂停边界是什么？"
+  - "哪些能力明确未激活，哪些动作不属于当前授权范围？"
+  - "哪些历史文字已被当前安全/通信协议 supersede？"
+
+refresh_contract:
+  update_triggers:
+    - "Human-AI Communication Compliance Gate 获接受或发布。"
+    - "开发分支审计、合并与分支总账完成。"
+    - "repository-wide index.md system 完成。"
+    - "总体方案只读审计完成。"
+    - "Human 作出影响总体路线、产品边界或 protected activation 的新决定。"
+  update_rules:
+    - "先核验 current master 和 ai/review/latest；不得只改文字日期。"
+    - "记录 actually_read_files、证据 head、已完成/进行中/未开始和不能确认内容。"
+    - "保留历史任务，不静默重写过去事实。"
+    - "所有路径使用 repository-relative path。"
+    - "本文件只维护高层索引和进度；详细合同留在目标文件，避免重复产生第二套权威。"
+  latest_refresh:
+    task_id: "branch-consolidation-and-repository-ledger-0001"
+    audited_start_master: "22cf4731cd29a2ebe271fe67fd561df1d0701d01"
+    publication_head_resolution: "merge_commit_containing_this_refresh"
+    branch_ledger: "开发分支与合并进度总账.md"
+    next_program_step: "repository-directory-index-system"
+
+historical_tasks:
+  - id: "T-20260607-001"
     title: "V5.6至V7.x 分布式管线架构代码拆分与实装 (Distributed Pipeline Mapping)"
-    status: "COMPLETED"
+    status: "historical_completed"
     priority: "HIGH"
-    description: >
-      根据《分布式管线映射提案》，将 V5.6 庞大的 7 步教学 SOP 切割并挂载到 V7 的不同微服务（Agent）上，
-      以彻底解决单体大模型前额叶过载与幻觉问题，同时保留极高分辨率的教学颗粒度和经典发生学例子。
-    current_progress: "【已完成 100%】全量闭环。后半段微服务（Assembly_Agent 与 Exam_Agent）的 XML 人格已物理压铸，并完美挂载到动态混合物理总线。"
-    next_steps: []
-    related_files:
-      - type: "Proposal/Plan"
-        path: "C:/Users/gk/.gemini/antigravity/brain/6cfa8903-8918-4bdf-ba93-ec8d61453787/implementation_plan.md"
-        description: "分布式管线映射提案，记录了 7 步 SOP 如何切片分配的完整理论。"
-      - type: "Research Report"
-        path: "e:/newStand/study/Cybernetic_City_State_OS_v2 - teacher/01_Research_Reports/15_神经优化数学心流学习系统.md"
-      - type: "Research Report"
-        path: "e:/newStand/study/Cybernetic_City_State_OS_v2 - teacher/01_Research_Reports/16_神经优化数学心流学习系统2.0.md"
-      - type: "Target Source"
-        path: "e:/newStand/study/Cybernetic_City_State_OS_v2 - teacher/08_Domain_Applications/Math_Mentor/08_Math_Mentor_Coordinator_Prompt.md"
-      - type: "Target Source"
-        path: "e:/newStand/study/Cybernetic_City_State_OS_v2 - teacher/08_Domain_Applications/Math_Mentor/学习期prompt/Exam_Agent_Prompt.md"
-    notes: "此任务是赛博城邦 V7 架构最重要的一次基因重组，必须严格按照微服务解耦原则执行。"
+    original_summary: >
+      根据分布式管线映射提案，将 V5.6 的 7 步教学 SOP 切割并挂载到 V7
+      的多个教学 Agent。旧记录宣称 Assembly_Agent 与 Exam_Agent 已完成挂载。
+    portability_warning: >
+      原记录引用了 C:/Users/... 与 E:/newStand/... 本地绝对路径，GitHub 新模型无法
+      可靠解引用，因此这些路径不再作为当前证据。相关事实必须从 repository-relative
+      Math Mentor 文件和当前 Git 历史重新核验。
+    current_routing:
+      - "08_Domain_Applications/Math_Mentor/MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md"
+      - "08_Domain_Applications/Math_Mentor/MATH_MENTOR_CURRENT_STATE.yml"
+      - "08_Domain_Applications/Math_Mentor/MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md"
