@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "human-ai-communication-drift-record-v2",
+  "type": "object",
+  "required": ["schema_version", "sequence", "record_id", "previous_record_sha256", "record_sha256", "violation_class", "occurrence_count", "detection", "correction_status", "repository_work_preserved", "root_cause", "preventive_action", "regression_fixture_ref", "deterministic_fixture_impossible_reason", "foreground_review_required", "foreground_review_ref", "contains_private_reasoning", "contains_secret_content"],
+  "properties": {
+    "schema_version": {"const": "human_ai.communication_drift_record.v2"},
+    "sequence": {"type": "integer", "minimum": 1},
+    "record_id": {"type": "string", "minLength": 1},
+    "previous_record_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "record_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "violation_class": {"type": "string", "pattern": "^[A-Z0-9_]+$"},
+    "occurrence_count": {"type": "integer", "minimum": 1},
+    "detection": {"type": "string", "minLength": 1},
+    "correction_status": {"enum": ["open", "corrected", "not_deterministically_fixable"]},
+    "repository_work_preserved": {"type": "boolean"},
+    "root_cause": {"type": "string", "minLength": 1},
+    "preventive_action": {"type": "string", "minLength": 1},
+    "regression_fixture_ref": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["suite_ref", "case_id", "case_sha256"],
+          "properties": {
+            "suite_ref": {
+              "type": "object",
+              "required": ["kind", "commit", "path", "content_sha256"],
+              "properties": {
+                "kind": {"const": "git_blob"},
+                "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+                "path": {"type": "string", "minLength": 1},
+                "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+              },
+              "additionalProperties": false
+            },
+            "case_id": {"type": "string", "minLength": 1},
+            "case_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "deterministic_fixture_impossible_reason": {"type": ["string", "null"]},
+    "foreground_review_required": {"type": "boolean"},
+    "foreground_review_ref": {"type": ["object", "null"]},
+    "contains_private_reasoning": {"const": false},
+    "contains_secret_content": {"const": false}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"occurrence_count": {"minimum": 2}}},
+      "then": {
+        "oneOf": [
+          {"properties": {"regression_fixture_ref": {"type": "object"}, "deterministic_fixture_impossible_reason": {"type": "null"}}},
+          {"properties": {"regression_fixture_ref": {"type": "null"}, "deterministic_fixture_impossible_reason": {"type": "string", "minLength": 1}, "foreground_review_required": {"const": true}, "foreground_review_ref": {"type": "object"}}}
+        ]
+      }
+    }
+  ],
+  "additionalProperties": false
+}

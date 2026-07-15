@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "human-ai-communication-event-v1",
+  "type": "object",
+  "required": ["schema_version", "event_id", "task_id", "event_type", "provider"],
+  "properties": {
+    "schema_version": {"const": "human_ai.communication_event.v1"},
+    "event_id": {"type": "string", "minLength": 1},
+    "task_id": {"type": "string", "minLength": 1},
+    "event_type": {"type": "string", "minLength": 1},
+    "claimed_event_class": {"enum": ["C0", "C1", "C2"]},
+    "provider": {"enum": ["Human", "ChatGPT", "Claude", "Codex", "Claude Code"]},
+    "occupied_role": {
+      "enum": ["human_speaker", "foreground_review_and_task_dispatch", "backend_execution_and_handoff", null]
+    },
+    "bootstrap_receipt": {"type": ["object", "null"]},
+    "pointer": {"type": ["object", "null"]},
+    "required_refs": {
+      "type": "array",
+      "items": {"type": "object"}
+    },
+    "communication": {"type": ["object", "null"]},
+    "proposed_transition": {"type": ["object", "null"]},
+    "descriptive_human_gate": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}

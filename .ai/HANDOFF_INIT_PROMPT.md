@@ -191,6 +191,12 @@ human_response_preflight:
 
 When the Human is expected to start or continue a backend agent, the recommendation includes `recommended_model`, `recommended_thinking_level`, `mode`, `subagents`, `task_ref_or_plan_ref` resolving to exactly one applicable durable ref, `short_complexity_rationale`, and `human_gate`. Use `runtime_dependent` or `not_applicable` rather than omitting a field.
 
+## Bootstrap Receipt And Executable Gate
+
+For the first durable `C1` or protected `C2` model event after full initialization, emit a `bootstrap_receipt.schema.json`-conforming receipt through the event artifact. It binds the exact `protocol_release_head`, occupied provider-neutral role, frozen wire schema, immutable loaded-file blobs and digests, authority boundary, and onboarding answers. The neutral `source_mailbox_base_head` is not a receipt head. The receipt proves deterministic byte claims; it does not prove cognition or grant permission. Human is not a model receipt provider and remains `human_speaker`.
+
+Before any C1/C2 transition is treated as eligible, use `.ai/communication_compliance/validate_communication.py` as documented in `.ai/communication_compliance/README.md`. `C0` ordinary chat is exempt. Resolve immutable event/STATE/pointer evidence, inject a trusted current-state anchor outside the request, enforce the selected edge's stable-role matrix, and require exact-event-bound external actor-origin attestation for Human and model events alike. Human direct dispatch keeps the Human role and uses the frozen backend direction. For C2, the payload and descriptive `human_gate` remain non-authorizing; a trusted external host must additionally inject a Human `AuthorizationContext` bound to the same event and actor-origin digest.
+
 ## Completion Criteria
 
 After initialization, the agent should be able to answer:
@@ -208,6 +214,8 @@ What authority does independent expression not possess?
 How is an omission corrected without blaming context or the Human, inventing a cleanup microtask, or discarding valid work?
 Which stable role and frozen wire schema apply to each compatible ChatGPT, Claude, Codex, or Claude Code instance?
 How does a mixed-recipient interface preserve structural separation, and when must it fall back to pointer-only plus a resolvable `brief_ref`?
+What does the bootstrap receipt prove, what can it not prove, and when is the executable C1/C2 gate required?
+Why can neither `human_gate` text nor the validator authorize a C2 action, and where must trusted Human authority originate?
 ```
 
 If any answer is unclear, stop and return a short blocked handoff with the missing field or missing file.

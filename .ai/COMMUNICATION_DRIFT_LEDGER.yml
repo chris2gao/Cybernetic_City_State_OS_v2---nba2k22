@@ -1,0 +1,142 @@
+schema_version: "human_ai.communication_drift_ledger.v2"
+policy_version: "human_ai.communication_material_event_policy.v3"
+ledger_revision: 2
+previous_ledger_ref:
+  kind: git_blob
+  commit: "e6ca76bce8849f3a7a8bc498f66bfbd767aa4d0d"
+  path: ".ai/COMMUNICATION_DRIFT_LEDGER.yml"
+  content_sha256: "24802863d5c6b43ef41b25ae010eabe9288d1df11c186246ee0769a1f4e4375e"
+append_only: true
+privacy:
+  contains_private_reasoning: false
+  contains_secret_content: false
+recurrence_policy:
+  threshold: 2
+  requirement: "matching_immutable_negative_fixture_or_deterministic_impossibility_with_foreground_review"
+records:
+  - schema_version: "human_ai.communication_drift_record.v2"
+    sequence: 1
+    record_id: "compliance-correction-0002-0001"
+    previous_record_sha256: null
+    record_sha256: "1daffb352816dd54fb6c33eb14d8af517f9c1870802ad2448312aae4f6ea09fc"
+    violation_class: "TRANSITION_VALIDATION_SELF_AUTHENTICATION"
+    occurrence_count: 1
+    detection: "ChatGPT exact-head compliance review at immutable review artifact 0c3a4cd3720382cba2794acfe8034b7e96e1befb"
+    correction_status: "corrected"
+    repository_work_preserved: true
+    root_cause: "supplied validation result was treated as transition authority"
+    preventive_action: "recompute from immutable event, state, pointer, and optional validation artifact"
+    regression_fixture_ref: null
+    deterministic_fixture_impossible_reason: null
+    foreground_review_required: false
+    foreground_review_ref: null
+    contains_private_reasoning: false
+    contains_secret_content: false
+  - schema_version: "human_ai.communication_drift_record.v2"
+    sequence: 2
+    record_id: "compliance-correction-0002-0002"
+    previous_record_sha256: "1daffb352816dd54fb6c33eb14d8af517f9c1870802ad2448312aae4f6ea09fc"
+    record_sha256: "cbdccf20b46e406407731adca3b4a934c659489f5931a11ab4d536b32a62bfa3"
+    violation_class: "PROTOCOL_RELEASE_HEAD_STALE"
+    occurrence_count: 1
+    detection: "ChatGPT exact-head compliance review at immutable review artifact 0c3a4cd3720382cba2794acfe8034b7e96e1befb"
+    correction_status: "corrected"
+    repository_work_preserved: true
+    root_cause: "receipts were anchored to the neutral source mailbox base"
+    preventive_action: "separate source mailbox base from a two-commit semantics release anchor"
+    regression_fixture_ref: null
+    deterministic_fixture_impossible_reason: null
+    foreground_review_required: false
+    foreground_review_ref: null
+    contains_private_reasoning: false
+    contains_secret_content: false
+  - schema_version: "human_ai.communication_drift_record.v2"
+    sequence: 3
+    record_id: "compliance-correction-0002-0003"
+    previous_record_sha256: "cbdccf20b46e406407731adca3b4a934c659489f5931a11ab4d536b32a62bfa3"
+    record_sha256: "f80ebbd1d479716c6cefa8f792532dbd4c346c0ee71506b18f36e4ef3057449f"
+    violation_class: "HUMAN_ROUTING_STATE_GRAPH_GAP"
+    occurrence_count: 1
+    detection: "ChatGPT exact-head compliance review at immutable review artifact 0c3a4cd3720382cba2794acfe8034b7e96e1befb"
+    correction_status: "corrected"
+    repository_work_preserved: true
+    root_cause: "Human direct dispatch and persisted review states were not reachable"
+    preventive_action: "separate Human role from routing wire and validate the actual state graph"
+    regression_fixture_ref: null
+    deterministic_fixture_impossible_reason: null
+    foreground_review_required: false
+    foreground_review_ref: null
+    contains_private_reasoning: false
+    contains_secret_content: false
+  - schema_version: "human_ai.communication_drift_record.v2"
+    sequence: 4
+    record_id: "compliance-correction-0002-0004"
+    previous_record_sha256: "f80ebbd1d479716c6cefa8f792532dbd4c346c0ee71506b18f36e4ef3057449f"
+    record_sha256: "bb3c5301590502c5a1377b603578f3dea3c044e00d8f1a09724c442faffb2ec0"
+    violation_class: "DRIFT_LEDGER_HISTORY_UNENFORCED"
+    occurrence_count: 1
+    detection: "ChatGPT exact-head compliance review at immutable review artifact 0c3a4cd3720382cba2794acfe8034b7e96e1befb"
+    correction_status: "corrected"
+    repository_work_preserved: true
+    root_cause: "append-only and recurrence immutability existed only in prose"
+    preventive_action: "bind immutable prior ledger, record hash chain, and immutable suite case evidence"
+    regression_fixture_ref: null
+    deterministic_fixture_impossible_reason: null
+    foreground_review_required: false
+    foreground_review_ref: null
+    contains_private_reasoning: false
+    contains_secret_content: false
+  - schema_version: "human_ai.communication_drift_record.v2"
+    sequence: 5
+    record_id: "compliance-correction-0003-0001"
+    previous_record_sha256: "bb3c5301590502c5a1377b603578f3dea3c044e00d8f1a09724c442faffb2ec0"
+    record_sha256: "9878745da334fba1512e0e46a8c97d9c562f9d4b585b622225c5e687335462ac"
+    violation_class: "TRANSITION_ROLE_AUTHORITY_UNENFORCED"
+    occurrence_count: 1
+    detection: "ChatGPT exact-head compliance review at immutable review artifact 25e78c2932f9fa6157dee6e559f45c056379f5e2"
+    correction_status: "corrected"
+    repository_work_preserved: true
+    root_cause: "transition edges validated event shape and state but did not authorize the stable actor role"
+    preventive_action: "enforce a provider-neutral allowed-actor-role matrix on every state-changing edge"
+    regression_fixture_ref: null
+    deterministic_fixture_impossible_reason: null
+    foreground_review_required: false
+    foreground_review_ref: null
+    contains_private_reasoning: false
+    contains_secret_content: false
+  - schema_version: "human_ai.communication_drift_record.v2"
+    sequence: 6
+    record_id: "compliance-correction-0003-0002"
+    previous_record_sha256: "9878745da334fba1512e0e46a8c97d9c562f9d4b585b622225c5e687335462ac"
+    record_sha256: "1cd957337eca98b1646de4b63169c6f7d43983c3f577ac50f803d7c23b102e29"
+    violation_class: "ACTOR_ORIGIN_EVENT_BINDING_INCOMPLETE"
+    occurrence_count: 1
+    detection: "ChatGPT exact-head compliance review at immutable review artifact 25e78c2932f9fa6157dee6e559f45c056379f5e2"
+    correction_status: "corrected"
+    repository_work_preserved: true
+    root_cause: "actor and C2 authority contexts bound identifiers but not the exact event and actor-origin content"
+    preventive_action: "bind trusted actor origin and C2 authority to event digest, stable role, transition and actor-origin digest"
+    regression_fixture_ref: null
+    deterministic_fixture_impossible_reason: null
+    foreground_review_required: false
+    foreground_review_ref: null
+    contains_private_reasoning: false
+    contains_secret_content: false
+  - schema_version: "human_ai.communication_drift_record.v2"
+    sequence: 7
+    record_id: "compliance-correction-0003-0003"
+    previous_record_sha256: "1cd957337eca98b1646de4b63169c6f7d43983c3f577ac50f803d7c23b102e29"
+    record_sha256: "9543f24c8d004a96d1802d237e859161466d48aa7344077e23415aabfc843563"
+    violation_class: "INHERITED_FIXTURE_EXECUTION_OVERCLAIM"
+    occurrence_count: 1
+    detection: "ChatGPT exact-head compliance review at immutable review artifact 25e78c2932f9fa6157dee6e559f45c056379f5e2"
+    correction_status: "corrected"
+    repository_work_preserved: true
+    root_cause: "immutable prior-suite inventory entries were emitted as matched outcomes without executing current behavior"
+    preventive_action: "separate inventory from results and execute one unique current migrated equivalent for every legacy case"
+    regression_fixture_ref: null
+    deterministic_fixture_impossible_reason: null
+    foreground_review_required: false
+    foreground_review_ref: null
+    contains_private_reasoning: false
+    contains_secret_content: false

@@ -204,6 +204,8 @@ Do not create an isolated worktree merely for read-only inspection or a small `.
 
 If review publication fails because the branch advanced, fetch the new head and inspect only changed/overlapping paths. If there is no overlap, rebuild or retry with a new explicit lease. If overlap or ownership is uncertain, return `blocked` or `conflict` rather than forcing the update.
 
+For a material C1/C2 handoff, acceptance, or protected-entry proposal, produce the versioned event and physical ordered pointer, then run `.ai/communication_compliance/validate_communication.py`. Transition proof resolves those artifacts plus immutable actual STATE, binds STATE to an externally observed current review head, freshly recomputes all receipt/ref checks, and enforces the edge's allowed stable actor roles. Never pass a model-supplied validation result as authority. A stored result is optional exact comparison evidence only. Every state-changing Human/model event requires trusted-host actor-origin attestation bound to its exact digest; protected C2 action separately requires a Human `AuthorizationContext` bound to that event and actor-origin digest. The executor must compare-and-swap the same state head, separately consume replay-protected contexts, and preserve all source publication/runtime/Coordinator gates.
+
 ## 7. File Channel Semantics
 
 - `.ai/USER_UPLOADS/`: Human/foreground-role-provided long task carriers and uploaded evidence.

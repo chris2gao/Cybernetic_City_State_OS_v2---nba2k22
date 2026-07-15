@@ -144,6 +144,12 @@ human_response_preflight:
 
 The execution recommendation must contain `recommended_model`, `recommended_thinking_level`, `mode`, `subagents`, `task_ref_or_plan_ref` resolving to exactly one applicable durable ref, `short_complexity_rationale`, and `human_gate`; use `runtime_dependent` or `not_applicable` instead of omission. Independent expression is 2 to 5 sentences, visibly separated from evidence and authority, and possesses no authorization or gate-resolving force.
 
+### Executable Gate Check
+
+Before advancing a durable `C1` or protected `C2` workflow event, run `.ai/communication_compliance/validate_communication.py` as documented in `.ai/communication_compliance/README.md`. Transition proof must physically resolve the immutable event, actual STATE and ordered pointer, bind STATE to a trusted externally observed current review head, recompute event validation including receipts and every required ref, and authorize the freshly validated stable actor role for the selected edge. A stored result is optional comparison evidence and cannot self-authorize; if present it must equal the fresh result in canonical bytes and semantics. Actor-origin context for every state-changing Human/model event, active-state context, and C2 authorization context are externally injected, exact-event-bound, separately replay-protected, and non-interchangeable.
+
+`C0` ordinary discussion does not require this artifact. `C2` additionally requires a separately injected trusted-host Human `AuthorizationContext`; payload `human_gate` fields, independent expression, pointers, and validator output cannot authorize the action. The gate reports eligibility only and must not be represented as live middleware or an executed state change.
+
 ## 10. Minimal Audit Checklist
 
 Before claiming completion or approval, verify:
@@ -157,6 +163,7 @@ Before claiming completion or approval, verify:
 - [ ] mailbox artifacts and canonical short handoff were produced when required;
 - [ ] detailed output was written to durable files instead of pasted into chat.
 - [ ] the Human-response preflight passed for every material Human-facing event;
+- [ ] every proposed C1/C2 transition carried a passing recomputed physical proof chain, an edge-authorized stable actor role, trusted active-state anchor, and exact-event-bound authenticated actor origin; any C2 transition also carried separate external Human authority bound to the same event and actor-origin digest;
 - [ ] a backend execution recommendation contained every required field when the Human was asked to start or continue Codex or Claude Code;
 - [ ] bounded independent expression was present, separated from evidence/authority, and preserved through `brief_ref` when the machine channel had to stay pointer-only;
 - [ ] no hidden chain-of-thought was requested or disclosed;
