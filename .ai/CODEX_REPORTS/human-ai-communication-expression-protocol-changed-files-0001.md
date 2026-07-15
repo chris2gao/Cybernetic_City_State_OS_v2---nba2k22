@@ -3,6 +3,8 @@
 ```yaml
 task_id: human-ai-communication-expression-protocol-0001
 source_head: eb46be9dadf9672091883e4e69bcaaa70b0cb163
+parent_candidate: 8f0eec213484d16a97956d356a9ef1e163fc45fe
+candidate_revision: provider_neutral_correction_0002
 expected_changed_path_count: 10
 actual_changed_path_count: 10
 outside_allowlist_count: 0

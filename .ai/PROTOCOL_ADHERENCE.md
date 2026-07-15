@@ -2,7 +2,7 @@
 
 ## 1. Purpose
 
-An independent ChatGPT or Codex instance must not rely on hidden chat memory, prior-thread assumptions, or unversioned conventions. Repository protocol files are the shared coordination layer for task identity, evidence, authority, execution, Git, review, and output behavior.
+A compatible foreground or backend model instance—currently ChatGPT or Claude in the foreground role and Codex or Claude Code in the backend role—must not rely on hidden chat memory, prior-thread assumptions, or unversioned conventions. Repository protocol files are the shared coordination layer for task identity, evidence, authority, execution, Git, review, and output behavior.
 
 This file explains how a new model loads and obeys that layer. It is operational guidance, not a repository constitution or platform-safety override.
 
@@ -43,7 +43,7 @@ At a new model, thread, session, or uncertain context boundary:
 5. read `.ai/STATE.yml` and optional `.ai/INBOX.md`;
 6. read the current signal;
 7. dereference every non-null ref required by that signal;
-8. load `.ai/CODEX_WORK_MECHANISM_PROTOCOL.md` for Codex execution tasks and `.ai/CODEX_TASK_INPUT_CONTRACT.md` for long-packet parsing;
+8. load `.ai/CODEX_WORK_MECHANISM_PROTOCOL.md` for backend execution-role tasks, whether occupied by Codex or Claude Code, and `.ai/CODEX_TASK_INPUT_CONTRACT.md` for long-packet parsing;
 9. confirm source head, Human gate, task level, output, and next action before execution.
 
 For a Human-authorized long-duration program, load `.ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md` before preflight. A long-run launch must pass its preflight-first rule and carry the complete project-level permission pre-grant before any execution stage begins.
@@ -102,11 +102,13 @@ An authorized Long-Run Autonomous Program follows `.ai/LONG_RUN_AUTONOMOUS_PROGR
 
 ## 8. Output Schema Compliance
 
-Codex returns the canonical short handoff defined by `.ai/PROTOCOL.md`. ChatGPT returns the canonical short signal or review decision. Normal model-to-model chat contains pointers, not task bodies, reports, command logs, full diffs, or Human Brief text.
+The backend execution-and-handoff occupant returns the canonical Codex-to-ChatGPT wire handoff defined by `.ai/PROTOCOL.md`. The foreground review-and-task-dispatch occupant returns the canonical ChatGPT-to-Codex wire signal or review decision. Claude and Claude Code use those frozen schemas according to role. Normal model-to-model chat contains pointers, not task bodies, reports, command logs, full diffs, or Human Brief text.
 
-Long Codex output belongs in `.ai/CODEX_REPORTS/*.md`, `.ai/OUTBOX.md`, or another explicitly authorized path. Human-facing status belongs in `.ai/HUMAN_BRIEF.md`.
+Long backend-role output belongs in `.ai/CODEX_REPORTS/*.md`, `.ai/OUTBOX.md`, or another explicitly authorized path. Human-facing status belongs in `.ai/HUMAN_BRIEF.md`.
 
-Machine pointer output and Human operational output are separate channels. A material Human-facing response must provide grounded factual status, the canonical pointer when dispatching or handing off, bounded independent expression, and—when the Human is expected to start or continue Codex or Claude Code—a complete execution recommendation. The recommendation and expression remain outside the canonical seven-field pointer core.
+Machine pointer output and Human operational output are separate channels. Classify mixed-recipient output by intended recipient and consumption mode, not UI/provider brand. When Human and machine recipients share an interface, keep the canonical pointer block byte-structurally separate and append Human operational content outside it. If safe separation is impossible, publish the Human Brief first, emit pointer-only with a non-null resolvable `brief_ref`, and preserve every required Human element there—including a complete recommendation for backend dispatch; otherwise return blocked.
+
+A material Human-facing response must provide grounded factual status, the canonical pointer when dispatching or handing off, bounded independent expression, and—when the Human is expected to start or continue Codex or Claude Code—a complete execution recommendation. The recommendation and expression remain outside the canonical seven-field pointer core.
 
 ## 9. Review-Gate Correction Loop
 
@@ -181,6 +183,8 @@ It must also be able to answer:
 12. where Codex or Claude Code preserves expression without changing the pointer schema;
 13. which authority independent expression does not possess;
 14. how to correct a Human-facing omission without inventing a cleanup microtask or discarding valid work.
+15. which stable protocol role it occupies and which frozen wire schema that role uses, whether the instance is ChatGPT, Claude, Codex, or Claude Code;
+16. how a mixed Human+machine recipient interface preserves structural separation or falls back to pointer-only plus `brief_ref`.
 
 The model should summarize these items without executing the task. Failure to locate a required item produces a blocked onboarding result, not a guessed answer.
 

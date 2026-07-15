@@ -5,8 +5,8 @@ Use this prompt only at a context boundary, not before every review iteration.
 Context boundaries include:
 
 ```text
-new ChatGPT/Codex thread
-new Codex current-thread session
+new compatible foreground/backend model thread (ChatGPT, Claude, Codex, or Claude Code)
+new backend execution-role current-thread session (Codex or Claude Code)
 context reset or context uncertainty
 protocol file changed
 malformed/stale/contradictory pointer message
@@ -18,6 +18,8 @@ During a continuous review loop in the same active context, do not reload the fu
 ## Initialization Goal
 
 Load the current communication protocol into working context so the agent does not repeat old chat habits such as pasting long prompts, omitting `brief_ref`, treating the machine pointer as a complete Human response, omitting required backend execution advice or independent expression, or ignoring inherited default rules.
+
+The initializing instance identifies its stable role before acting: ChatGPT or Claude occupies `foreground_review_and_task_dispatch`; Codex or Claude Code occupies `backend_execution_and_handoff`; Human alone occupies `human_speaker`. Authority follows role plus Human/task authorization, never provider brand.
 
 ## Full Initialization Read Order
 
@@ -38,10 +40,10 @@ Record these separately as inherited-on-demand protocols. A model must know they
 
 ```text
 .ai/CODEX_WORK_MECHANISM_PROTOCOL.md
-  load for Codex execution, Git-level selection, validation, failure handling, or review publication
+  load for backend execution-role work by Codex or Claude Code, Git-level selection, validation, failure handling, or review publication
 
 .ai/CODEX_TASK_INPUT_CONTRACT.md
-  load when parsing or validating a long ChatGPT/Human task packet
+  load when parsing or validating a long foreground-role/Human task packet
 
 .ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md
   load when a task is a Human-authorized long-run program, uses completion-preserving execution, or requests internal checkpoints instead of repeated Human gates
@@ -81,7 +83,7 @@ If the agent already loaded this prompt and the protocol files in the same activ
 
 The fast path preserves the same distinction: retain awareness of inherited-on-demand protocols and load one only when the current task triggers it.
 
-The fast path is intended for repeated review cycles, such as several ChatGPT/Codex turns in the same task.
+The fast path is intended for repeated review cycles across compatible foreground/backend occupants, such as ChatGPT/Claude and Codex/Claude Code turns in the same task.
 
 ## Instruction Authority And State Freshness
 
@@ -125,11 +127,13 @@ human briefs live in GitHub by default
 material Human-facing responses satisfy the Human-facing completeness contract
 ```
 
-The agent must distinguish the machine pointer channel, Human operational channel, and durable Human Brief channel. A strict machine-only message remains pointer-only. A Human operational dispatch that asks the Human to start or continue Codex or Claude Code also includes a complete execution recommendation outside the pointer; material Human-facing events include 2 to 5 sentences of bounded independent expression, preserved in the Human Brief for Codex or Claude Code handoffs.
+The agent must distinguish the machine pointer channel, Human operational channel, and durable Human Brief channel. Classify by intended recipient and consumption mode, not UI/provider brand. In a separable mixed Human+machine interface, keep the canonical pointer block byte-structurally separate and append Human operational content outside it. If safe separation is impossible, direct output is pointer-only and a non-null, resolvable `brief_ref` preserves all required Human content; otherwise return blocked.
+
+A Human operational dispatch that asks the Human to start or continue Codex or Claude Code includes a complete execution recommendation outside the pointer; material Human-facing events include 2 to 5 sentences of bounded independent expression. When mixed-recipient fallback makes the Human Brief the sole Human-content carrier, that Brief must also contain the complete recommendation for a backend dispatch.
 
 ## Required Message Shapes
 
-ChatGPT-to-Codex signal:
+ChatGPT-to-Codex signal (frozen foreground-to-backend wire label, used by ChatGPT or Claude):
 
 ```yaml
 signal_id: "chatgpt-xxxx"
@@ -141,7 +145,7 @@ source_head: "<commit>"
 human_gate: "not_required | required"
 ```
 
-Codex-to-ChatGPT handoff:
+Codex-to-ChatGPT handoff (frozen backend-to-foreground wire label, used by Codex or Claude Code):
 
 ```yaml
 packet_id: "codex-xxxx"
@@ -199,9 +203,11 @@ Is human action required?
 What short pointer message should be returned?
 How do the machine pointer, Human operational, and durable Human Brief channels differ?
 When is a backend execution recommendation mandatory, and which seven fields does it contain?
-When is bounded independent expression required, and where does Codex preserve it without changing the pointer schema?
+When is bounded independent expression required, and where does the Codex/Claude Code backend role preserve it without changing the pointer schema?
 What authority does independent expression not possess?
 How is an omission corrected without blaming context or the Human, inventing a cleanup microtask, or discarding valid work?
+Which stable role and frozen wire schema apply to each compatible ChatGPT, Claude, Codex, or Claude Code instance?
+How does a mixed-recipient interface preserve structural separation, and when must it fall back to pointer-only plus a resolvable `brief_ref`?
 ```
 
 If any answer is unclear, stop and return a short blocked handoff with the missing field or missing file.

@@ -1,16 +1,18 @@
 # Codex Work Mechanism Protocol
 
-Status: active canonical protocol for Codex execution workflows on the source branch.
+Status: active canonical protocol for the backend execution-and-handoff role, compatibly occupied by Codex or Claude Code, on the source branch.
 
 ## Scope And Authority
 
-This protocol governs Codex task-execution mechanics: local implementation, file edits, tests, Git operations, review handoff, transcript/output behavior, context use, failure handling, and future automation/subagent execution design.
+This protocol governs backend-role task-execution mechanics for Codex or Claude Code: local implementation, file edits, tests, Git operations, review handoff, transcript/output behavior, context use, failure handling, and future automation/subagent execution design.
+
+This file inherits `protocol_role_compatibility` from `.ai/PROTOCOL.md`. Where ChatGPT or Codex appears as a protocol-role, wire, state, key, or path label, it denotes the compatible foreground or backend role; provider-specific historical implementation facts remain literal. No compatible occupant gains authority from its provider brand.
 
 It does not govern mathematical or domain semantics and does not replace domain protocols. It does not override system, developer, or explicit current Human instructions. It does not authorize P2.10, business-code changes, source publication, merge, regeneration, automation, or any other gated action by itself.
 
 ## 1. Purpose
 
-This protocol documents Codex's practical operating mechanism and the optimized workflow agreed among Human, ChatGPT, and Codex. It defines how Codex selects an operating mode, spends context, uses tools, edits and verifies files, publishes Git handoffs, reports failures, and stops at Human or ChatGPT decision gates.
+This protocol documents the backend role's practical operating mechanism and the optimized workflow agreed among Human Speaker, the compatible foreground role, and the compatible backend role. It defines how a Codex or Claude Code occupant selects an operating mode, spends context, uses tools, edits and verifies files, publishes Git handoffs, reports failures, and stops at Human or foreground-role decision gates.
 
 The protocol optimizes correctness and coordination. It does not grant new permissions, bypass higher-priority instructions, or authorize a project stage that has not been explicitly opened.
 
@@ -193,7 +195,7 @@ The normal successful path is:
 3. modify authorized local files directly;
 4. run one consolidated validation proportional to the task level;
 5. create one source commit when source files changed;
-6. publish one review handoff when ChatGPT review is needed;
+6. publish one review handoff when compatible foreground-role review is needed;
 7. return only the canonical short handoff.
 
 Do not repeatedly poll remote heads or repeatedly run `git status`, `git diff --stat`, broad scope scans, or equivalent defensive checks during a successful task. One initial state check and one consolidated final scope/validation check are normally sufficient.
@@ -204,14 +206,14 @@ If review publication fails because the branch advanced, fetch the new head and 
 
 ## 7. File Channel Semantics
 
-- `.ai/USER_UPLOADS/`: Human/ChatGPT-provided long task carriers and uploaded evidence.
-- `.ai/CODEX_REPORTS/`: Codex-generated long reports, analyses, discovery output, and durable execution plans.
+- `.ai/USER_UPLOADS/`: Human/foreground-role-provided long task carriers and uploaded evidence.
+- `.ai/CODEX_REPORTS/`: backend-role-generated long reports, analyses, discovery output, and durable execution plans.
 - `.ai/TASKS/`: reusable task templates selected by short signals.
 - `.ai/OUTBOX.md`: latest concise Codex execution report and pointer index.
 - `.ai/HUMAN_BRIEF.md`: latest Human-facing summary.
 - `.ai/HUMAN_BRIEFS/*.md`: archived Human briefs for material conflicts, gates, risks, or stage completions.
 
-Future Codex-generated long content goes to `.ai/CODEX_REPORTS/`. A Human-requested upload of Codex chat text into `USER_UPLOADS` is a provenance exception and does not change directory ownership.
+Future backend-role-generated long content goes to `.ai/CODEX_REPORTS/`. A Human-requested upload of backend-role chat text into `USER_UPLOADS` is a provenance exception and does not change directory ownership. The historical `USER_UPLOADS` and `CODEX_REPORTS` path names are stable namespaces, not provider authority.
 
 ## 8. Transcript And Output Policy
 
@@ -234,6 +236,8 @@ Progress narration defaults to off. Use it for blocked state, conflict, permissi
 ### Material Human-Facing Output And Bounded Independent Expression
 
 For a material Human-facing completion, review handoff, publication, blocked state, conflict, Human gate, or significant acceptance, Codex or Claude Code must preserve 2 to 5 sentences under a clearly separated `Independent expression` heading in `.ai/HUMAN_BRIEF.md` or the referenced archived Human Brief. The direct Human-visible response may append the same or materially identical bounded expression after the canonical handoff when that channel permits prose. A strict machine-only channel remains pointer-only; in that case `brief_ref` preserves the expression without changing the seven-field core.
+
+Classify mixed recipients by intended recipient and consumption mode, not UI/provider brand. In a safely separable Human+machine interface, keep the canonical pointer block byte-structurally separate and append Human operational content outside it. If safe separation is impossible, publish the Human Brief first, emit pointer-only with a non-null resolvable `brief_ref`, and preserve every otherwise-required Human element in that Brief—including the complete execution recommendation when dispatching backend work. If the Brief cannot carry that content, return blocked; interface fallback never waives the content or permits prose inside the pointer.
 
 The expression may state candid professional judgment, respectful disagreement, uncertainty, architecture or protocol meaning, execution insight, a non-obvious implication, or residual risk. It is not factual evidence, Human authorization, hidden chain-of-thought, an executable instruction, or mandatory positivity. It must not change the objective, grant permission, route engines, adjudicate a protected dispute, resolve a protected gate, approve or publish source/master, activate runtime or Coordinator, handle secrets, authorize destructive work, or override evidence or safety. Avoid generic filler, ceremonial approval, repeated summary, and simulated emotion or consciousness claims.
 
@@ -270,7 +274,7 @@ After launch, the run is local-only until final publication. It uses batches of 
 
 Completion-preserving task expansion is the default within an authorized long-run program. Discovered cleanup, validation, alignment, reporting, and repair steps are folded into the current run when they are necessary for the original objective and remain inside the pre-granted authority.
 
-The successful end state is one consolidated ChatGPT review package followed by targeted post-run repair when needed. This mechanism never grants itself P3, bridge, source-push, merge, destructive-operation, or secrets authority.
+The successful end state is one consolidated compatible foreground-role review package followed by targeted post-run repair when needed. This mechanism never grants itself P3, bridge, source-push, merge, destructive-operation, or secrets authority.
 
 ### Current interactive thread
 
@@ -305,7 +309,7 @@ Before automation or a subagent can act, its durable context pack must include p
 - Read-only diagnosis and evidence gathering do not consume a repair attempt.
 - Make at most three concrete repair attempts for the same failure class.
 - Every attempt must use new evidence, a changed hypothesis, or a materially different remedy.
-- After the third failure, stop that line of work, preserve concise evidence, record the blocked state in the repository/global failure log required by current guidance, and escalate to ChatGPT or Human.
+- After the third failure, stop that line of work, preserve concise evidence, record the blocked state in the repository/global failure log required by current guidance, and escalate to the compatible foreground role or Human.
 - Continue independent meaningful work when possible.
 - A review-branch lease conflict is new external evidence, not permission to force-push. Fetch and inspect the new write; rebuild only when it is non-conflicting and consumed, otherwise request reconciliation.
 - A required ref missing at the observed review head is invalid protocol input, not an execution repair failure. Check it once, return a blocked handoff, and retry only after a new signal or review-head change.

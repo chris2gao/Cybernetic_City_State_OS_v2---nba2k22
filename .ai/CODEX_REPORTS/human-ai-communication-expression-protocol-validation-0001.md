@@ -3,7 +3,8 @@
 ```yaml
 task_id: human-ai-communication-expression-protocol-0001
 source_head: eb46be9dadf9672091883e4e69bcaaa70b0cb163
-validation_scope: consolidated_candidate_validation
+parent_candidate: 8f0eec213484d16a97956d356a9ef1e163fc45fe
+validation_scope: consolidated_provider_neutral_correction_validation
 result: pass
 ```
 
@@ -22,6 +23,10 @@ All required protocol, pointer, authority, scope, Markdown, Git-diff, and added-
 | legacy true optional-dispatch contradictions remaining | 0 |
 | Human-response preflight fields present | 8 / 8 |
 | onboarding communication questions directly answerable | 7 / 7 |
+| compatible role occupants mapped | 4 / 4 |
+| fresh provider onboarding scenarios | 4 / 4 |
+| mixed-recipient positive/fallback scenarios | 2 / 2 |
+| unqualified canonical participant exclusions remaining | 0 |
 | source mailbox files changed | 0 / 4 |
 | Plan 3 authority document changed | 0 / 1 |
 | changed paths within exact task set | 10 / 10 |
@@ -41,6 +46,8 @@ packet_id, status, report_ref, brief_ref, source_head, review_branch_head, human
 
 The comparison covered the two definitions in `.ai/PROTOCOL.md` and the six canonical YAML examples in `.ai/HANDOFF_COMMON_CONVENTIONS.md`, `.ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md`, and `.ai/HANDOFF_INIT_PROMPT.md`. Optional `detail_ref` remains outside the required core.
 
+The historical schema names are frozen compatibility labels. ChatGPT and Claude foreground occupants use the first sequence; Codex and Claude Code backend occupants use the second. Provider substitution does not rename a key, add a field, change order, or grant authority.
+
 ## Semantic Regression Checks
 
 - Mandatory dispatch language is present across the canonical protocol, common conventions, autonomous communication mechanism, adherence rules, initialization prompt, and Codex work mechanism.
@@ -51,6 +58,11 @@ The comparison covered the two definitions in `.ai/PROTOCOL.md` and the six cano
 - Strict machine-only Codex output remains pointer-only and preserves expression through `brief_ref`.
 - Every chain-of-thought reference is a negative guard; no private reasoning transcript is requested or disclosed.
 - Human Speaker control over objective, engine routing, protected adjudication, source/master publication, runtime, Coordinator, secrets, and destructive operations is preserved.
+- Role mapping is present in the canonical protocol and inherited by adherence, common conventions, autonomous communication, initialization, the backend work mechanism, and durable decisions.
+- Targeted scans found no unqualified canonical scope/role/bootstrap statement that excludes Claude or Claude Code where compatibility matters.
+- A separable mixed interface keeps the exact pointer bytes isolated and places Human status/recommendation/expression outside the closed block.
+- A non-separable interface emits pointer-only, requires a non-null resolvable `brief_ref`, preserves all Human content in the Brief, and fails closed if that carrier is missing or incomplete.
+- Interface fallback relocates content and is not treated as a Human waiver.
 
 ## Structural And Git Checks
 
@@ -73,7 +85,15 @@ The comparison covered the two definitions in `.ai/PROTOCOL.md` and the six cano
 | expression claims permission to push or activate runtime | fail authority | correctly forbidden |
 | Human explicitly requests pointer-only output | pass waiver | pass |
 | recommendation omits any required field | fail completeness | correctly rejected by preflight |
+| fresh ChatGPT instance | foreground role + frozen ChatGPT-to-Codex schema | pass |
+| fresh Claude instance | foreground role + same frozen ChatGPT-to-Codex schema | pass |
+| fresh Codex instance | backend role + frozen Codex-to-ChatGPT schema + work mechanism | pass |
+| fresh Claude Code instance | backend role + same frozen Codex-to-ChatGPT schema + work mechanism | pass |
+| separable mixed Human+machine interface | unchanged pointer block + Human content outside | pass |
+| non-separable mixed interface with resolvable Brief | pointer-only + all Human content through `brief_ref` | pass |
+| non-separable mixed interface with null/missing/incomplete Brief | blocked | correctly rejected |
+| expression or extra key inserted into pointer | fail pointer purity | correctly rejected |
 
 ## Residual Risk
 
-`material` is defined by an explicit event taxonomy, but unusual mixed-recipient interfaces may still require judgment about whether the direct UI response is a strict machine channel or a Human operational channel. The protocol resolves that ambiguity by classifying the intended recipient and preserving expression in the durable Human Brief whenever the machine channel must remain pointer-only.
+Historical provider names remain visible in frozen wire labels, state values, path/key namespaces, and implementation-component names. The compatibility rule distinguishes those stable audit contracts from provider-derived authority; future providers still require a reviewed compatibility update rather than being inferred automatically.

@@ -18,6 +18,7 @@
 
 - Status: accepted
 - Decision: Phase 1 uses Codex-only review-branch writes.
+- Compatibility: `Codex-only` is the frozen historical label for the separately authorized backend execution-and-handoff role; a compatible Claude Code occupant gains no write authority from provider identity and still requires the same task authorization.
 - Future: ChatGPT writeback must be tested and approved before enablement.
 - Lease rule: An explicit expected-SHA lease is required once ChatGPT writeback is enabled.
 
@@ -31,6 +32,8 @@
 
 - Status: accepted
 - Decision: Human↔AI material workflow communication is governed by the canonical protocol; a backend execution recommendation is mandatory when the Human is asked to start or continue Codex or Claude Code.
+- Compatibility: Stable roles are Human-only `human_speaker`, ChatGPT/Claude `foreground_review_and_task_dispatch`, and Codex/Claude Code `backend_execution_and_handoff`; historical ChatGPT-to-Codex and Codex-to-ChatGPT names remain frozen seven-field wire labels, not provider ownership.
 - Expression: Compatible ChatGPT, Claude, Codex, and Claude Code agents preserve 2 to 5 sentences of bounded independent professional expression for material Human-facing events.
+- Mixed recipients: Classify by intended recipient and consumption mode; keep separable Human content outside the pointer, or fall back to pointer-only plus a non-null resolvable `brief_ref` that preserves all required Human content.
 - Boundary: The recommendation and expression remain outside the seven-field machine pointer core and are not factual evidence, Human authorization, hidden chain-of-thought, or executable instructions.
 - Authority: Human Speaker authority, safety, evidence requirements, pointer purity, and all source/publication/runtime/Coordinator/destructive/secrets/protected gates remain unchanged.
