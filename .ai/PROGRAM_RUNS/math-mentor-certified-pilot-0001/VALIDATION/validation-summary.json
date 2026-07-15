@@ -1,6 +1,6 @@
 {
   "schema_version": "math_mentor.certified_pilot_validation.v1",
-  "status": "passed_awaiting_exact_head_semantic_review",
+  "status": "passed_human_accepted_pending_publication",
   "source_head": "b3ee031488be07748b1cbdfc19b8926b6caaa6db",
   "node_repair_commit": "43e0396e7a12cfd2f6014b290dc1c15f1df9a5af",
   "correction_business_head": "fd77746c3eba301210fb9b7e9c4f4ab168f99b40",
@@ -46,8 +46,14 @@
     "bridge": false,
     "consumer_allowed_count": 0
   },
+  "human_acceptance": {
+    "status": "human_accepted_pilot_scope",
+    "accepted_candidate": "6830956ca9e7efff4d8c6d60602f462b0785b69a",
+    "production_identity_effect": "none",
+    "consumer_promotion": false
+  },
   "remaining_gates": [
-    "ChatGPT exact-head mathematical and semantic review of the corrected candidate",
-    "final Human certification acceptance or correction decision"
+    "normal ready PR merge into the bound master baseline",
+    "post-merge verification on the resulting exact master"
   ]
 }

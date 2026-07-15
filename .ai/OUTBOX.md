@@ -1,9 +1,8 @@
-packet_id: "codex-math-mentor-certified-pilot-correction-candidate-0002"
-status: "complete_awaiting_chatgpt_semantic_review"
-intent: "request_chatgpt_exact_head_mathematical_and_semantic_review"
-report_ref: ".ai/CODEX_REPORTS/math-mentor-certified-pilot-0001.md"
-brief_ref: ".ai/HUMAN_BRIEF.md"
-source_branch: "codex/math-mentor-certified-pilot"
-source_head: "7e4e915cdac282df5fdbda56a2e8dc018c28ac7e"
+packet_id: null
+status: neutral_baseline
+intent: neutral_baseline
+report_ref: null
+brief_ref: null
+source_head: null
 review_branch_head: null
-human_gate: "required"
+human_gate: not_required

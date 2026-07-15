@@ -5,7 +5,7 @@
   "required": ["schema_version", "status", "source_head", "correction_business_head", "sandbox_evaluator", "p0_unittest", "p0_consolidated_validator", "artifact_validation", "activation", "remaining_gates"],
   "properties": {
     "schema_version": {"const": "math_mentor.certified_pilot_validation.v1"},
-    "status": {"const": "passed_awaiting_exact_head_semantic_review"},
+    "status": {"const": "passed_human_accepted_pending_publication"},
     "source_head": {"const": "b3ee031488be07748b1cbdfc19b8926b6caaa6db"},
     "correction_business_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
     "sandbox_evaluator": {"type": "object", "minProperties": 4},

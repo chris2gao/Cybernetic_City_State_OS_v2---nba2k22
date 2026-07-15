@@ -28,3 +28,9 @@ Existing task evidence/communication paths:
 in the continuation. No other node, P0 test/implementation, registry, roadmap,
 bridge, prompt, runtime, Coordinator, state, scheduler, secret, credential,
 source/master branch, or PR changed.
+
+## Publication preparation
+
+Only existing pilot evidence/reports and the four source mailbox paths are
+updated. The five Human-accepted node/test files remain byte-identical to
+`6830956ca9e7efff4d8c6d60602f462b0785b69a`; source mailbox files are neutral.

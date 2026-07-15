@@ -1,7 +1,8 @@
 # Codex handoff: Math Mentor certified pilot consolidated correction
 
-The Human-approved correction is complete on the original task and branch.
-Status is `complete_awaiting_chatgpt_semantic_review`, not certified.
+The Human accepted the four-node pilot at exact candidate
+`6830956ca9e7efff4d8c6d60602f462b0785b69a`. The original task is prepared for
+normal ready-PR publication and post-merge verification.
 
 Correction business head:
 `fd77746c3eba301210fb9b7e9c4f4ab168f99b40`.
@@ -23,5 +24,5 @@ Committed evidence head:
 Primary evidence:
 `.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/FINAL_REPORT.md`.
 
-Next action: ChatGPT exact-head mathematical/semantic review, then final Human
-acceptance, rejection, or correction request.
+Next action: normal ready PR into bound `master@b3ee031`, merge commit, and full
+post-merge verification. No production trust or runtime activation is included.

@@ -1,13 +1,15 @@
 # Math Mentor Four-Node Certified Pilot — Consolidated Correction
 
 ```yaml
-packet_id: "codex-math-mentor-certified-pilot-correction-candidate-0002"
-status: "complete_awaiting_chatgpt_semantic_review"
+packet_id: "codex-math-mentor-certified-pilot-final-publication-0003"
+status: "human_accepted_publication_prepared"
 source_head: "b3ee031488be07748b1cbdfc19b8926b6caaa6db"
 work_branch: "codex/math-mentor-certified-pilot"
 prior_candidate_head: "e1f1be0eb9fba51ebfe36f4bd10de3d8d7b52520"
 correction_business_head: "fd77746c3eba301210fb9b7e9c4f4ab168f99b40"
 evidence_head: "7e4e915cdac282df5fdbda56a2e8dc018c28ac7e"
+accepted_candidate: "6830956ca9e7efff4d8c6d60602f462b0785b69a"
+pilot_certification_status: "human_accepted_pilot_scope"
 pilot_nodes:
   - "COMPLEX_ANALYSIS-418"
   - "PDE-487"
@@ -22,14 +24,15 @@ consumer_allowed_count: 0
 runtime_or_coordinator_activation: false
 source_or_master_publication: false
 pr_created: false
-human_gate: "required_after_chatgpt_exact_head_review"
+human_gate: "approved_for_normal_pr_merge_and_post_merge_verification"
 ```
 
 ## Outcome
 
-The Human-approved consolidated correction is implemented under the original
-task and branch. The candidate is ready for ChatGPT exact-head mathematical and
-semantic review; Codex does not issue final certification.
+The Human has accepted the four-node pilot at exact candidate
+`6830956ca9e7efff4d8c6d60602f462b0785b69a`. This source artifact records that
+pilot-scoped certification and prepares the same original task for a normal PR
+merge and post-merge verification. It does not create production admission.
 
 Human approved `n_487 -> PDE-487` and `n_486 -> PDE-486` as pilot semantic
 evidence. The dossiers retain the original P0 conflict IDs and explicitly state
@@ -99,7 +102,6 @@ dossiers is not production authentication and cannot enable a consumer.
 
 ```yaml
 avoided_extra_gates: []
-final_original_task_status: "complete_awaiting_chatgpt_semantic_review"
-remaining_real_human_decisions_only:
-  - "accept_reject_or_request_correction_after_chatgpt_exact_head_review"
+final_original_task_status: "human_accepted_publication_prepared_pending_normal_pr_merge"
+remaining_real_human_decisions_only: []
 ```

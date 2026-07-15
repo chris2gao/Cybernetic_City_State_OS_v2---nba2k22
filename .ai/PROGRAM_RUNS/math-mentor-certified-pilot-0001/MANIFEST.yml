@@ -1,13 +1,15 @@
 schema_version: "math_mentor.certified_pilot_manifest.v1"
 task_id: "math-mentor-certified-pilot-0001"
 packet_id: "codex-math-mentor-certified-pilot-correction-candidate-0002"
-status: "complete_awaiting_chatgpt_semantic_review"
+status: "human_accepted_publication_prepared"
 source_head: "b3ee031488be07748b1cbdfc19b8926b6caaa6db"
 work_branch: "codex/math-mentor-certified-pilot"
 node_repair_commit: "43e0396e7a12cfd2f6014b290dc1c15f1df9a5af"
 prior_evidence_head: "d6d2e5145b88b73a2abeb21cfefe580a10b5cc97"
 correction_business_head: "fd77746c3eba301210fb9b7e9c4f4ab168f99b40"
 evidence_head: "7e4e915cdac282df5fdbda56a2e8dc018c28ac7e"
+accepted_candidate: "6830956ca9e7efff4d8c6d60602f462b0785b69a"
+pilot_certification_status: "human_accepted_pilot_scope"
 pilot_nodes:
   - "COMPLEX_ANALYSIS-418"
   - "PDE-487"
@@ -40,4 +42,4 @@ test_maintenance:
 consumer_allowed_count: 0
 runtime_or_coordinator_activation: false
 source_or_master_publication: false
-human_gate: "required"
+human_gate: "approved_for_normal_pr_merge_and_post_merge_verification"
