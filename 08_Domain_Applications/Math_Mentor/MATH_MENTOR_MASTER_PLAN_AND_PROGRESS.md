@@ -6,17 +6,22 @@
 
 本总账只在以下三类事件后更新：获接受的 master 发布、重要 Human 架构决定、阶段或批次获接受。状态不能从旧报告标题或旧 `planned` 字样推断，必须重新核验当前 master。
 
+本文件与 [MATH_MENTOR_CURRENT_STATE.yml](MATH_MENTOR_CURRENT_STATE.yml) 和 [MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md](MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md) 构成三文件接管包。前者是机器可读新鲜度快照，后者定义 provider-neutral 角色、通讯 packet、接管和职责分离。三者都明确服从同一规则：**精确 Git 证据覆盖陈旧摘要文字。**
+
 ## 2. 一句话系统定义
 
-Math Mentor 是一个由 Human 治理、通过 ChatGPT/Claude 与学习者互动并由 Codex/Claude Code 执行后端任务、建立在经审计知识节点、明确学习合同和 fail-closed 控制边界之上的数学教学编排系统。
+Math Mentor 是一个由 Human 治理、由可替换前台教师直接教学、由可委派后台角色承担重型编排、分层语义审查与有界执行，并建立在经审计知识节点、明确学习合同和 fail-closed 控制边界之上的 provider-neutral 数学教学编排系统。
 
 ## 3. 架构地图
 
 | 层 | 当前权威与职责 | 当前成熟度 | 明确边界 |
 |---|---|---|---|
 | Plan 3 / Human Speaker | 宪法、Engine A/B 路由、最终语义与发布授权 | `accepted_published` | 模型输出不能取代 Human 授权；P3 默认关闭 |
-| 交互教学与编排层 | ChatGPT/Claude 直接面对学习者，诊断教学状态、选择教学动作、分派有界后端任务并审查返回资源 | `specified_manual_only` | 前台模型负责语义/教学准入；它不是 Human Speaker，也没有生产 writer 授权 |
-| 后端系统执行层 | Codex/Claude Code 读取仓库、生成教学资源、执行确定性计算/验证、维护证据与提交 | `specified_manual_only` | 后端输出只是候选执行证据，不能自行改变学习目标或取得教学权威 |
+| 前台教师 | ChatGPT/Claude 直接教学、讲解、引导提问、实时纠错并适配认知负荷 | `specified_manual_only` | 只保留轻量 delivery admission；不必重做完整编排或数学审计 |
+| 后台教学编排者 | Codex/Claude Code/ChatGPT/Claude 可从快照重建状态、提出下一教学动作、组织 lesson/exercise/exam/review/multi-node plan | `specified_manual_only` | 可委派但非 runtime；不得静默改变 Human 学习目标或声称未证实的持久状态 |
+| 后台语义审查者 | Codex/Claude Code/ChatGPT/Claude 按 SR0/SR1/SR2 审查数学、先修、类比边界、答案与 bridge candidate | `specified_manual_only` | SR2 只返回带证据升级；不得取代 Human/独立受权 gate，也不得把 Mode B 变成 machine proof |
+| 后台执行者 | Codex/Claude Code 读取仓库、生成资源、执行确定性计算/验证、维护证据与获准提交 | `specified_manual_only` | terminal 位置或模型品牌不产生授权；不得自行扩大 mutation scope |
+| 架构审查与任务分派者 | 四类兼容 agent 在完成 bootstrap 和显式 assumed-role 声明后均可接管 | `specified_manual_only` | 角色属于协议而非会话；受保护变更的作者/执行者不能自授最终接受或发布权 |
 | GitHub 证据与状态层 | task packet、exact-head handoff、validation evidence 与本总账 | `accepted_published` | Git 证据记录状态，不自动授权生产行为 |
 | 教学合同层 | 初始化、Lesson Plan、Prep/Socratic/Exam、复习与工具诚实性合同 | `specified_manual_only` | 文档与 prompt 存在不等于 agent runtime 存在 |
 | 知识语料层 | `Pure_Math_Intuition_DB` 根节点、roadmap 与历史资产 | `statically_validated_inactive`（结构） | 全语料数学正确性与教学就绪未获认证 |
@@ -24,13 +29,14 @@ Math Mentor 是一个由 Human 治理、通过 ChatGPT/Claude 与学习者互动
 | Bridge 层 | 14 个 legacy 内容资产与 canonical v1 合同 | `legacy_assets_unresolved` | legacy 不是 canonical typed edge，也不可被 Coordinator 正式消费 |
 | 未来运行数据面 | session runtime、Coordinator、持久化、scheduler writer、observability、rollback | `absent` / `blocked` | 未经新 Human gate 不得激活或写入 |
 
-控制关系是：Human Speaker 决定目标、权威与受保护边界；ChatGPT/Claude 承担学习者交互、教学诊断、任务编排与资源准入；Codex/Claude Code 只执行有界后端任务；GitHub 保存精确证据；语料和 P0 只提供经限定的静态证据；bridge 只有完成 endpoint 绑定、认证、验证与索引后才可能进入消费；未来 runtime 与 persistence 必须独立获批。
+控制关系是：Human Speaker 决定目标、歧义/跨域裁决与受保护边界；前台教师专注学习者互动并发出 `TeachingStateSnapshot`、`OrchestrationRequest`；后台编排者和语义审查者承担重型工作并返回已标注证据的 packet；前台只做目标、学生状态、review disposition 与 unresolved gate 的轻量准入；后台执行者完成有界工具/仓库工作；GitHub 保存精确证据。未来 runtime、persistence、bridge consumption 与 protected writer 必须独立获批。
 
 ## 4. 当前产品接口决定
 
-- 兼容的学习者前台教师/编排者是 **ChatGPT** 与 **Claude**；兼容的后端系统执行者是 **Codex** 与 **Claude Code**。
-- 前台教师可以在教学全生命周期中分派有界任务，包括 lesson resource、exercise、exam、multi-node synthesis、review material、deterministic check 与 resource repair；每个后端输出必须经前台教师的语义与教学适用性审查后才能进入教学。
-- 当前实现形态仍是 Human 治理的手工编排工作流，状态为 `specified_manual_only`；记录这套架构不激活 runtime、Coordinator 或受保护 writer。
+- 兼容的学习者前台教师是 **ChatGPT** 与 **Claude**。其主要推理预算用于直接教学、讲解、提问、纠错、节奏与认知负荷适配。
+- 重型教学编排和重型语义审查是第一类可委派后台角色；默认可由 **Codex/Claude Code** 承担，也允许完成相同 bootstrap/assumed-role 合同的 ChatGPT/Claude 接管。角色不绑定 provider、terminal 或当前会话。
+- 前台不重做完整计划或数学审计，只检查 packet 是否匹配当前学习目标与 learner state、semantic review disposition 是否可接受、是否仍有 blocker/Human gate，然后记录 `DeliveryAdmissionRecord`。
+- 当前实现形态仍是 Human 治理的手工通讯编排，所有角色状态为 `specified_manual_only`；记录架构不激活 runtime、Coordinator 或受保护 writer。
 - 独立 frontend/UI 状态为 `not_required`，不是 backlog blocker。
 - visualization 仍可作为可选、依赖工具的教学辅助，但不决定 Math Mentor 当前产品是否可交付。
 - 旧成熟度表中关于 UI 的 `blocked/absent` 描述已被本次 Human 产品决定覆盖；除非 Human 以后改变方向，不应恢复为必做项。
@@ -51,7 +57,7 @@ Math Mentor 是一个由 Human 治理、通过 ChatGPT/Claude 与学习者互动
 | LRP-06 Capability / Tool Truthfulness | `accepted_published` | `specified_manual_only` | 能力登记、工具诚实性与计算 handoff 已发布；工具 broker/runner 未实现 |
 | P0 control-plane hardening | `accepted_published` | `statically_validated_inactive` | PR #3 已合并；静态控制面 104/104；无生产 trust ingress、runtime 或 writer |
 | Four-node certified pilot | `accepted_published` | `pilot_accepted` | PR #4 发布四节点；PR #5 修复干净检出复现；范围只限 dossier 所声明证据，4/4 仍 `consumer_allowed=false` |
-| Teaching orchestration contract | `accepted_published` | `specified_manual_only` | Human 已指定 ChatGPT/Claude 前台与 Codex/Claude Code 后台角色；没有自治 dispatcher、runtime 或 writer |
+| Provider-neutral role/handoff correction | `specified_manual_only` | `specified_manual_only` | Human 已授权同任务 correction 候选；前台轻量准入、后台重编排/分层语义审查；尚未发布到 master，也没有自治 dispatcher、runtime 或 writer |
 
 LRP 的“已发布”表示合同与文档已经落在当前 master，不表示相应生产能力已运行。LRP-04 特别不能被描述为 executable runtime 或真实 E2E。P0 的 admission、authorization 与 identity 实现是静态、只读、未激活的控制平面。
 
@@ -149,55 +155,64 @@ Canonical policy key: `migrate_existing_before_new_generation`。
 5. **新生成是例外。** 只有 Human 复核确认没有可接受 legacy 资产表达目标数学连接时，才能提出从 `BRIDGE-015` 起的新 canonical bridge；landing 仍需独立 Human gate。
 6. **当前不实施。** 本任务不修改、生成、重命名、删除或索引任何 bridge。以后可以设计 Human 触发的 ChatGPT/Claude 手工 bridge 使用，但这不等于激活 production runtime。
 
-## 10. 教学编排生命周期与任务分类
+## 10. Provider-neutral 教学编排、语义审查与交付准入
 
-### 10.1 手工编排循环
+### 10.1 手工通讯循环
 
 ```text
 学习者互动
-  -> ChatGPT / Claude 诊断学习阶段、误解、负荷与下一目标
-  -> 选择讲解、提问、练习、考试、修复或多节点综合动作
-  -> 必要时形成有界 backend task packet
-  -> Codex / Claude Code 生成资源或执行确定性工作
-  -> 前台教师核验 provenance、确定性证据、语义正确性与教学适用性
-  -> 获准资源进入教学
-  -> exercise / Exam Agent 评估
-  -> 误解修复、多节点综合或 spaced-review 提案
-  -> accepted work 更新 GitHub 证据与本总账
+  -> 前台教师诊断并产生 TeachingStateSnapshot
+  -> 需要重型规划时发出 OrchestrationRequest
+  -> 后台教学编排者重建状态、选择候选动作并可分派 BackendResourceTaskPacket
+  -> 后台执行者生成资源、计算、验证与 provenance
+  -> 后台语义审查者按 SR0 / SR1 / SR2 返回 SemanticReviewPacket
+  -> 后台编排者汇总 TeachingActionPacket
+  -> 前台教师只做 lightweight DeliveryAdmissionRecord
+  -> 获准内容进入讲解、练习或 Exam；未获准内容 revise / block / escalate
+  -> accepted work 才能更新 GitHub 证据与本总账
 ```
-
-当前循环的能力状态为 `specified_manual_only`。它描述稳定角色和协议，不表示自治 dispatcher、production Coordinator、learning-state writer 或 scheduler writer 已存在。
 
 ```yaml
 teaching_orchestration_status: "specified_manual_only"
-learner_facing_orchestrators: ["ChatGPT", "Claude"]
-backend_system_workers: ["Codex", "Claude Code"]
-backend_output_requires_front_agent_review: true
+foreground_role: "teacher_with_lightweight_delivery_admission"
+backend_orchestration: "delegable_specified_manual_only"
+backend_semantic_review: "delegable_tiered_specified_manual_only"
+provider_lock_in: false
 runtime_activated: false
 ```
 
-### 10.2 何时分派后端任务
+### 10.2 角色分工
 
-只有当前教学动作需要新的或经过转换的资源、需要确定性计算/验证、发现语料缺口，或需要把已接受工作固化为可审计证据时，前台教师才分派任务。packet 必须固定学习目标、允许输入、期望输出、禁止项、证据要求、授权上下文与 Human gate；后端不得自行扩大目标或改变 learner state。
+- **前台教师**：直接教学、实时误解修复、节奏与认知负荷适配；发出快照/请求；只检查目标匹配、学生状态匹配、review 状态可接受和无 unresolved gate。
+- **后台教学编排者**：从快照和仓库证据重建状态，选择下一教学动作候选，组织 lesson/exercise/exam/review/multi-node plan，并分派有界 worker task。
+- **后台语义审查者**：审查定义、先修、数学正确性、类比边界、答案/rubric 与 bridge candidate，返回证据、局限和 disposition。
+- **后台执行者**：执行仓库读取、有界生成、确定性计算、tests/formatting/evidence 和获准 branch handoff。
+- **架构审查与任务分派者**：维护三文件接管包、核验 exact heads、形成 completion-preserving packet；任何兼容 agent 在 bootstrap 与 assumed-role 声明后可替换当前持有者。
 
-| 后端任务类 | 允许产物 | 进入教学前的最低准入 |
+详细 provider compatibility、packet 合同、职责分离和接管规则见 [MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md](MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md)。
+
+### 10.3 分层语义审查
+
+| Tier | 适用内容 | 后台 disposition | 前台工作 | 最终 gate |
+|---|---|---|---|---|
+| SR0 deterministic | 算术、声明假设内的符号等价、schema/reference checks | `tool_verified_candidate` | 只确认相关性与适用域 | 不产生 protected authority |
+| SR1 bounded routine math | lesson examples、exercise solutions、已接受节点合同内综合 | `accepted_for_delivery_candidate` / `revise` / `block` | 轻量 delivery admission，无需完整重审 | 仍服从当前任务授权 |
+| SR2 ambiguous/protected | 有争议定义/先修、新 bridge、Mode B 实质歧义、跨域裁决、identity conflict、目标改变 | `escalate_with_evidence` | 不得交付为已接受事实 | Human Speaker 或明确受权的独立架构/语义 gate |
+
+后台 reviewer 可以给强建议，但模型品牌、terminal 位置或 authored packet 不能自授权。Mode B review 不能被重新标成 machine proof。
+
+### 10.4 后端任务类与轻量准入
+
+| 后端任务类 | 允许产物 | 前台 delivery-admission 检查 |
 |---|---|---|
-| Lesson preparation | 从 accepted nodes/prerequisites 形成 lesson plan、例子、反例、diagram-as-data 与 code anchor | 精确节点身份、先修 disposition、前台教师语义/教学审查 |
-| Exercise generation | 难度分层、针对误解的练习、提示 | 覆盖目标与误解、无泄题、答案可验证 |
-| Answer key / rubric | 解答、评分规则、deterministic checks | 数学正确性复核；工具输出不越过适用域 |
-| Exam / classroom packet | Exam handoff、assessment set、trap evidence | 符合 Exam contract；结果不能直接等同 graduated |
-| Multi-node synthesis | 节点综合、bridge candidate evidence | identity/prerequisite 精确；不得把候选 bridge 当成 canonical edge |
-| Review material | 复习题、间隔建议、错误回访材料 | 只生成提案；没有 writer 时不得声称已排程或持久化 |
-| Deterministic work | 计算、格式化、validation、index diagnostics | 命令、输入、输出与边界可复现；机器证据不替代 Mode B Human 判断 |
-| Resource repair | 报告知识缺口、节点缺陷、缺失教学资产并准备有界修复 | 独立获准 mutation scope；受保护文件与语义决定仍走 Human gate |
-| Evidence maintenance | report、commit、exact-head handoff、总账更新 | 只记录已验证事实；GitHub pointer 不等于生产授权 |
+| lesson / example / counterexample | lesson plan、diagram-as-data、code anchor | 目标和 learner state 匹配；SR disposition 可接受 |
+| exercise / answer / rubric | 难度分层题、答案、评分规则、deterministic checks | 无 unresolved correctness/blocker；不泄漏当前 exam |
+| exam / classroom packet | assessment set、Exam handoff、trap evidence | 符合 Exam contract；不把 classroom pass 等同 graduated |
+| multi-node / bridge candidate | synthesis 与 candidate evidence | identity/prerequisite 精确；SR2 bridge gate 未绕过 |
+| review material | 复习题、错误回访、间隔建议 | 只作提案；无 writer 时不声称已排程 |
+| deterministic work / repair | 计算、validation、index diagnostics、缺口报告、获准修复 | provenance 可复现；mutation scope 与 Human gate 匹配 |
 
-### 10.3 语义准入与受保护边界
-
-- ChatGPT/Claude 必须审查后端资源的来源、目标一致性、数学语义、教学适用性与已声明局限；未经审查不得作为教学证据。
-- Human Speaker 保留学习目标、跨域语义、identity conflict、bridge landing、发布、生产 trust、writer 与 runtime 激活的最终决定权。
-- Codex/Claude Code 输出永远是候选执行证据，不能凭 payload 内自述 `human_gate` 获得写授权。
-- 当前合同不授权生产 Coordinator、nonce/persistence、learning-state write、scheduler write、consumer promotion 或 bridge mutation。
+当前合同不授权 production Coordinator、nonce/persistence、learning-state/scheduler write、consumer promotion、bridge mutation 或 source/master publication。
 
 ## 11. 下一认证节点批次提案
 
@@ -226,14 +241,17 @@ runtime_activated: false
 4. 不复制大型报告、registry 或 node body；指向精确文件和提交。
 5. 同一项目可同时有“交付状态”和“能力状态”，例如 LRP 为 `accepted_published` + `specified_manual_only`。
 6. 任何 unresolved identity、endpoint、authorization 或 prerequisite 必须保持 fail-closed。
+7. 接管者必须按 [MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md](MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md) 完成 bootstrap、物理核验、`assumed_role` 和 `actually_read_files` 声明；不得依赖隐藏聊天记忆。
+8. 每次 accepted 更新同步修改三文件包；机器快照见 [MATH_MENTOR_CURRENT_STATE.yml](MATH_MENTOR_CURRENT_STATE.yml)。
 
 ### Change log
 
 - 2026-07-15：在 `master@9e12064cbc51f61918dccfd48cf6915879adb962` 建立首版总账；校正 LRP、P0、pilot、UI 与 legacy bridge 当前状态；记录 ChatGPT/Claude 前台、Codex/Claude Code 后台的手工教学编排架构；提出四节点 prerequisite-frontier 批次。
+- 2026-07-15：同任务 correction 将角色改为 provider-neutral 可替换协议：前台教师专注教学与轻量准入，后台重型编排与 SR0/SR1/SR2 语义审查可委派；新增 current-state 与 role/handoff companion，并要求 zero-context takeover dry run。
 
 ## 13. 证据索引与未知项
 
-### 12.1 本次全文读取或直接核验的核心证据
+### 13.1 本次全文读取或直接核验的核心证据
 
 - 宪法与协议：`Plan 3 External Augmentation OS 总体架构设计方案 v0.1.md`、`06_Silicon_Index/AI_Bootstrap_Sequence.md`、`Universal_Layer_Execution_Protocol.md`、`.ai/PROTOCOL.md`。
 - 主计划与状态：`Math Mentor Teaching System Design implement plan.md`、`KNOWLEDGE_COMPLETION_PROGRAM.md`、`MATH_MENTOR_CAPABILITY_MATURITY.yml`、`POST_P2_EXECUTION_MEMORY.md`。
@@ -243,8 +261,9 @@ runtime_activated: false
 - Bridge：`BRIDGE_SCHEMA.md`、`BRIDGE_REGISTRY_AUDIT.md`、`知识图谱_节点映射索引.md`、当前 master 全部 14 个 tracked `BRIDGE-*.yaml`。
 - 下一批：四个推荐候选、四个被拒候选、四个已接受 pilot node body、三份 split roadmap；identity registry 只做对应记录的 metadata/targeted extraction，未声称全文语义读取大型 registry。
 - GitHub durable evidence：[PR #3](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---teacher/pull/3)、[PR #4](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---teacher/pull/4)、[PR #5](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---teacher/pull/5) 的 metadata、files 与 commits。
+- 接管包：[MATH_MENTOR_CURRENT_STATE.yml](MATH_MENTOR_CURRENT_STATE.yml)、[MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md](MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md)；correction authority 来自 `ai/review/latest` 上的 `chatgpt-math-mentor-master-plan-progress-ledger-correction-0002` signal/task。
 
-### 12.2 已知陈旧文字
+### 13.2 已知陈旧文字
 
 - `Math Mentor Teaching System Design.md` 与 implement plan 的旧 blocker/`planned` 是蓝图历史，已被 LRP 物理输出覆盖。
 - LRP 主报告中的 `completed_for_review` 是发布前历史状态。
@@ -253,7 +272,7 @@ runtime_activated: false
 - `MATH_MENTOR_CAPABILITY_MATURITY.yml` 基线早于当前 master，未含 pilot，且 UI 旧状态已被当前 Human 决定覆盖。
 - `POST_P2_EXECUTION_MEMORY.md` 自声明 historical；它不能授权新运行或 P3 bridge landing。
 
-### 12.3 仍未知或未获确认
+### 13.3 仍未知或未获确认
 
 - 667 个根节点的全量数学正确性、教学质量与先修闭包未被语义审读；不得声称已完成。
 - `topology_compactness.yaml` 的 strict identity 与 `n_521/522/523/530/533` 的 root binding 仍未解决。

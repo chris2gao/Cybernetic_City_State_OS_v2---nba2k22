@@ -1,46 +1,26 @@
-# Validation Report — Math Mentor Master Plan And Progress Ledger
-
-## Required outcomes
+# Validation Report — Math Mentor Master Plan Progress Ledger Correction
 
 | Check | Result |
 |---|---|
-| bound source `master@9e12064...` verified before mutation | pass |
-| 13 required ledger sections | pass |
-| current-master referenced paths | pass |
-| bridge physical inventory and duplicate IDs | pass |
-| legacy bridges described as present but non-canonical/non-consumable | pass |
-| LRP current-master status reconciled | pass |
-| no runtime inferred from documentation | pass |
-| ChatGPT/Claude front-agent and Codex/Claude Code backend roles | pass |
-| backend resource requires front-agent semantic/pedagogical review | pass |
-| UI marked `not_required` | pass |
-| next batch has 3–5 exact nodes and is proposal-only | pass (4) |
+| exact bound source and parent candidate | pass |
+| three required source outputs | pass (3/3) |
+| three-way cross-links | pass |
+| `MATH_MENTOR_CURRENT_STATE.yml` parse and required keys | pass |
+| provider-neutral roles and replacement rule | pass |
+| foreground teaching plus lightweight admission | pass |
+| backend teaching orchestration delegation | pass |
+| SR0/SR1/SR2 backend semantic review | pass |
+| SR2 Human/authorized independent gate | pass |
+| seven minimum packet contracts and common envelope | pass (7/7) |
+| separation of duties | pass |
+| zero-context takeover dry run | pass (13/13 assertions) |
+| no hidden-memory or sole-provider dependency | pass |
+| preserved bridge/UI/P0/pilot/LRP/KCP/next-batch findings | pass |
 | YAML/JSON parse | pass |
-| `git diff --check` | pass |
 | exact changed-path allowlist | pass |
+| `git diff --check` | pass |
 | high-confidence added-secret scan | pass |
 
-## Quantitative reproduction
+Dry-run evidence: `.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/VALIDATION/zero-context-takeover-dry-run.md`.
 
-```yaml
-root_candidates: 667
-staging_exclusions: 229
-unapproved_candidate_edges: 420
-explicit_alias_conflicts: 53
-pilot_accepted_nodes: 4
-consumer_allowed: 0
-p0_fresh_checkout_tests: "104/104"
-legacy_bridge_files: 14
-legacy_bridge_unique_ids: 10
-legacy_bridge_duplicate_ids: 4
-legacy_bridge_schema_families: 2
-legacy_bridge_indexed: 5
-legacy_bridge_unindexed: 9
-legacy_bridge_explicit_endpoint_resolved: 0
-legacy_bridge_unresolved: 14
-canonical_bridge_v1_files: 0
-```
-
-## Scope assertion
-
-Validation did not activate runtime, execute Coordinator, mutate teaching assets, generate/migrate bridges, promote consumers, create a PR, or publish to source/master.
+The validation does not constitute runtime execution. It proves only that a fresh compatible agent can reconstruct the architecture and continuation contract from bounded repository evidence.

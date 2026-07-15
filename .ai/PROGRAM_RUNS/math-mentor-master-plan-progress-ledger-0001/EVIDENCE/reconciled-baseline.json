@@ -1,6 +1,8 @@
 {
   "task_id": "math-mentor-master-plan-progress-ledger-0001",
+  "task_version": "1.2-correction",
   "source_head": "9e12064cbc51f61918dccfd48cf6915879adb962",
+  "parent_candidate": "1d3f6b9708db091632c1344fb8e9a3f9bc34b3db",
   "corpus": {
     "root_candidates": 667,
     "staging_exclusions": 229,
@@ -49,13 +51,28 @@
     "DIFF_GEO-653"
   ],
   "teaching_orchestration": {
-    "learner_facing_orchestrators": ["ChatGPT", "Claude"],
-    "backend_system_workers": ["Codex", "Claude Code"],
+    "foreground_teachers": ["ChatGPT", "Claude"],
+    "foreground_role": "teacher_with_lightweight_delivery_admission",
+    "backend_teaching_orchestrator_compatible_agents": ["Codex", "Claude Code", "ChatGPT", "Claude"],
+    "backend_orchestration": "delegable_specified_manual_only",
+    "backend_semantic_reviewer_compatible_agents": ["Codex", "Claude Code", "ChatGPT", "Claude"],
+    "backend_semantic_review": "delegable_tiered_specified_manual_only",
+    "backend_execution_workers": ["Codex", "Claude Code"],
+    "architecture_role_replaceable": true,
+    "semantic_review_tiers": ["SR0", "SR1", "SR2"],
     "evidence_backbone": "GitHub",
     "status": "specified_manual_only",
-    "backend_output_requires_front_agent_review": true,
+    "provider_lock_in": false,
+    "backend_output_requires_foreground_delivery_admission": true,
+    "SR2_requires_Human_or_authorized_independent_gate": true,
     "runtime_activated": false
   },
+  "takeover_bundle": [
+    "08_Domain_Applications/Math_Mentor/MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md",
+    "08_Domain_Applications/Math_Mentor/MATH_MENTOR_CURRENT_STATE.yml",
+    "08_Domain_Applications/Math_Mentor/MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md"
+  ],
+  "takeover_dry_run": "passed",
   "bridge_policy": "migrate_existing_before_new_generation",
   "ui_status": "not_required"
 }

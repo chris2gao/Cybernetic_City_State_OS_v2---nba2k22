@@ -1,0 +1,271 @@
+schema_version: "1.0"
+document_role: "machine_readable_math_mentor_takeover_snapshot"
+freshness_policy:
+  rule: "exact_git_evidence_overrides_stale_summary_prose"
+  verify_before_use: true
+  hidden_conversation_memory_required: false
+
+evidence_baseline:
+  source_branch: "master"
+  source_head: "9e12064cbc51f61918dccfd48cf6915879adb962"
+  work_branch: "codex/math-mentor-master-plan-progress-ledger"
+  parent_candidate: "1d3f6b9708db091632c1344fb8e9a3f9bc34b3db"
+  correction_candidate_resolution:
+    packet_id: "codex-math-mentor-master-plan-progress-ledger-correction-candidate-0002"
+    pointer_branch: "ai/review/latest"
+    pointer_file: ".ai/OUTBOX.md"
+    requirement: "verify exact development_head physically before takeover"
+
+takeover_bundle:
+  human_readable_plan: "08_Domain_Applications/Math_Mentor/MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md"
+  machine_state: "08_Domain_Applications/Math_Mentor/MATH_MENTOR_CURRENT_STATE.yml"
+  role_and_handoff_contract: "08_Domain_Applications/Math_Mentor/MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md"
+  bootstrap_authority_entrypoints:
+    - "Plan 3 External Augmentation OS 总体架构设计方案 v0.1.md"
+    - "06_Silicon_Index/AI_Bootstrap_Sequence.md"
+    - "08_Domain_Applications/Math_Mentor/Universal_Layer_Execution_Protocol.md"
+  read_order:
+    - "bootstrap_authority_entrypoints"
+    - "human_readable_plan"
+    - "machine_state"
+    - "role_and_handoff_contract"
+    - "physical_git_verification"
+    - "assumed_role_and_actually_read_files_declaration"
+
+product_decisions:
+  final_shape: "Human_governed_provider_neutral_mathematical_teaching_orchestration_system"
+  standalone_ui: "not_required"
+  learner_interfaces:
+    - "ChatGPT"
+    - "Claude"
+  backend_agents:
+    - "Codex"
+    - "Claude Code"
+  evidence_backbone: "GitHub"
+  provider_lock_in: false
+  runtime_activated: false
+
+current_milestones:
+  lrp_01_teacher_initialization:
+    delivery_status: "accepted_published"
+    capability_status: "specified_manual_only"
+  lrp_02_lesson_and_agent_contracts:
+    delivery_status: "accepted_published"
+    capability_status: "specified_manual_only"
+  lrp_03_prompt_consistency:
+    delivery_status: "accepted_published"
+    capability_status: "specified_manual_only"
+  lrp_04_test_harness_and_golden_cases:
+    delivery_status: "accepted_published"
+    capability_status: "specified_manual_only"
+    runtime_e2e_proven: false
+  lrp_05_learning_state_and_review:
+    delivery_status: "accepted_published"
+    capability_status: "specified_manual_only"
+    writer_present: false
+  lrp_06_capability_and_tool_truthfulness:
+    delivery_status: "accepted_published"
+    capability_status: "specified_manual_only"
+  p0_control_plane:
+    delivery_status: "accepted_published"
+    capability_status: "statically_validated_inactive"
+    final_fresh_checkout_tests: "104/104"
+    production_trust_ingress_present: false
+  four_node_pilot:
+    delivery_status: "accepted_published"
+    capability_status: "pilot_accepted"
+    accepted_node_ids:
+      - "COMPLEX_ANALYSIS-418"
+      - "PDE-487"
+      - "ABSTRACT_ALGEBRA-468"
+      - "ALG_TOPOLOGY-676"
+    consumer_allowed_count: 0
+  knowledge_completion_program:
+    stage_0: "statically_validated_inactive_historical_stale"
+    stage_1: "planned_with_pilot_subset_only"
+    stage_2: "planned"
+    stage_3: "planned"
+    stage_4: "planned"
+    stage_5: "planned"
+    stage_6: "planned"
+    stage_7: "planned_and_currently_prohibited"
+    stage_8: "absent_blocked"
+    stage_9: "planned"
+  provider_neutral_role_archive:
+    delivery_status: "correction_candidate_not_master_published"
+    capability_status: "specified_manual_only"
+
+current_capability_states:
+  foreground_teaching: "specified_manual_only"
+  foreground_lightweight_delivery_admission: "specified_manual_only"
+  backend_teaching_orchestration: "delegable_specified_manual_only"
+  backend_semantic_review: "delegable_tiered_specified_manual_only"
+  backend_execution: "specified_manual_only"
+  architecture_review_and_task_dispatch: "replaceable_after_repository_bootstrap"
+  p0_identity_normalization_authorization_admission: "statically_validated_inactive"
+  production_coordinator_runtime: "absent_blocked"
+  production_trust_ingress: "absent"
+  learning_state_writer: "absent_blocked"
+  spaced_review_scheduler_writer: "absent_blocked"
+  formal_bridge_consumption: "absent_blocked"
+  full_corpus_mathematical_certification: "absent"
+  standalone_ui: "not_required"
+
+quantitative_baseline:
+  root_candidates: 667
+  staging_exclusions: 229
+  unapproved_candidate_edges: 420
+  explicit_alias_conflicts: 53
+  deterministic_uuidv5: 667
+  strict_identity_records: 666
+  missing_strict_identity_records: 1
+  schema_eras:
+    E1: 143
+    E2: 496
+    E3: 8
+    E4: 20
+  conflict_records: 286
+  human_accepted_pilot_nodes: 4
+  consumer_allowed_count: 0
+
+legacy_bridge_state:
+  status: "legacy_assets_unresolved"
+  policy: "migrate_existing_before_new_generation"
+  tracked_files: 14
+  yaml_parse_success: 14
+  unique_ids: 10
+  duplicate_ids:
+    - "BRIDGE-001"
+    - "BRIDGE-002"
+    - "BRIDGE-003"
+    - "BRIDGE-004"
+  schema_families: 2
+  family_a_files: 9
+  family_b_files: 5
+  indexed_files: 5
+  unindexed_files: 9
+  explicit_endpoint_resolved_files: 0
+  unresolved_records: 14
+  canonical_v1_files: 0
+  formally_coordinator_consumable_files: 0
+
+active_or_latest_task:
+  task_id: "math-mentor-master-plan-progress-ledger-0001"
+  continuation_kind: "same_task_correction"
+  correction_signal: "chatgpt-math-mentor-master-plan-progress-ledger-correction-0002"
+  correction_ref: ".ai/TASKS/math-mentor-master-plan-progress-ledger-0001-role-replacement-correction.md"
+  status: "complete_awaiting_chatgpt_review"
+  mutation_scope: "three_file_takeover_bundle_and_task_evidence_only"
+  source_or_master_publication_authorized: false
+  pr_creation_authorized: false
+  runtime_or_coordinator_activation_authorized: false
+  bridge_mutation_or_generation_authorized: false
+
+next_task_candidates:
+  - candidate_id: "accepted_pilot_prerequisite_frontier_batch"
+    status: "proposal_only"
+    node_ids:
+      - "COMPLEX_ANALYSIS-417"
+      - "PDE-486"
+      - "ABSTRACT_ALGEBRA-467"
+      - "DIFF_GEO-653"
+    common_reason: "direct_prerequisite_frontier_of_the_four_accepted_pilot_nodes"
+    unresolved_decisions:
+      - "PDE-486 pilot-only identity binding reuse requires Human decision"
+      - "DIFF_GEO-653 topology roadmap identities n_521/n_522/n_523/n_530/n_533 have bound_nodes=0"
+    default_consumer_allowed: false
+
+known_human_gates:
+  - gate: "correction_candidate_exact_head_review"
+    owner: "ChatGPT independent review followed by Human gate"
+    status: "required"
+  - gate: "PDE-486 identity disposition"
+    owner: "Human Speaker"
+    status: "unresolved"
+  - gate: "DIFF_GEO-653 topology prerequisite strategy"
+    owner: "Human Speaker"
+    status: "unresolved"
+  - gate: "any SR2 ambiguous or protected semantic decision"
+    owner: "Human Speaker or explicitly authorized independent gate"
+    status: "required_when_triggered"
+  - gate: "bridge landing, production runtime, writer, consumer promotion, or master publication"
+    owner: "Human Speaker"
+    status: "not_authorized"
+
+role_defaults:
+  human_speaker:
+    default_actor: "Human Speaker"
+  foreground_teacher:
+    compatible_agents: ["ChatGPT", "Claude"]
+    default_focus: "direct_teaching_and_lightweight_delivery_admission"
+  backend_teaching_orchestrator:
+    compatible_agents: ["Codex", "Claude Code", "ChatGPT", "Claude"]
+    default_preference: ["Codex", "Claude Code"]
+  backend_semantic_reviewer:
+    compatible_agents: ["Codex", "Claude Code", "ChatGPT", "Claude"]
+    default_preference: ["Codex", "Claude Code"]
+  backend_execution_worker:
+    compatible_agents: ["Codex", "Claude Code"]
+  architecture_reviewer_and_task_dispatcher:
+    compatible_agents: ["ChatGPT", "Claude", "Codex", "Claude Code"]
+    replacement_requirement: "repository_bootstrap_plus_explicit_assumed_role_declaration"
+
+semantic_review_tiers:
+  SR0:
+    name: "deterministic"
+    backend_disposition: "tool_verified_candidate"
+    foreground_work: "confirm_relevance_and_declared_scope_only"
+  SR1:
+    name: "bounded_routine_math"
+    backend_disposition_values:
+      - "accepted_for_delivery_candidate"
+      - "revise"
+      - "block"
+    foreground_work: "lightweight_delivery_admission_without_full_reaudit"
+  SR2:
+    name: "ambiguous_or_protected"
+    backend_disposition: "escalate_with_evidence"
+    final_gate: "Human_Speaker_or_explicitly_authorized_independent_review"
+
+prohibited_inferences_and_actions:
+  - "documentation_implies_runtime"
+  - "terminal_or_model_brand_implies_authority"
+  - "backend_semantic_review_removes_SR2_Human_gate"
+  - "Mode_B_review_is_machine_proof"
+  - "classroom_pass_implies_graduated"
+  - "legacy_bridge_index_entry_implies_consumability"
+  - "model_payload_human_gate_authorizes_write"
+  - "pilot_acceptance_implies_full_corpus_certification"
+  - "consumer_allowed_promotion_without_separate_authority"
+
+known_unknowns:
+  - "full_corpus_mathematical_correctness_and_prerequisite_closure"
+  - "topology_compactness strict identity and n_521/n_522/n_523/n_530/n_533 root bindings"
+  - "53 explicit alias conflict dispositions"
+  - "420 candidate edge approvals"
+  - "legacy bridge mathematical selection, endpoint binding, and duplicate-ID dispositions"
+  - "production trust, persistence, scheduler, Coordinator, and bridge-consumption implementation"
+
+last_verified_at: "2026-07-14T23:52:42-07:00"
+
+evidence_refs:
+  - ref: "08_Domain_Applications/Math_Mentor/MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md"
+    role: "human_readable_plan_and_progress"
+  - ref: "08_Domain_Applications/Math_Mentor/MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md"
+    role: "provider_neutral_roles_packets_and_takeover"
+  - ref: ".ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/EVIDENCE/quantitative_findings.json"
+    role: "p0_quantitative_baseline"
+  - ref: ".ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/VALIDATION/validation_summary.json"
+    role: "p0_static_validation"
+  - ref: ".ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/FINAL_REPORT.md"
+    role: "pilot_scope_evidence"
+  - ref: "08_Domain_Applications/Math_Mentor/BRIDGE_REGISTRY_AUDIT.md"
+    role: "legacy_bridge_inventory_contract"
+  - ref: "08_Domain_Applications/Math_Mentor/BRIDGE_SCHEMA.md"
+    role: "canonical_bridge_contract"
+  - ref: "https://github.com/chris2gao/Cybernetic_City_State_OS_v2---teacher/pull/3"
+    role: "p0_publication"
+  - ref: "https://github.com/chris2gao/Cybernetic_City_State_OS_v2---teacher/pull/4"
+    role: "four_node_pilot_publication"
+  - ref: "https://github.com/chris2gao/Cybernetic_City_State_OS_v2---teacher/pull/5"
+    role: "fresh_checkout_reproducibility_repair"
