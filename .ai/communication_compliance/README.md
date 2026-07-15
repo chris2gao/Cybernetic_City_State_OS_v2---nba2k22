@@ -1,4 +1,4 @@
-# Human–AI Communication Compliance Gate v2
+# Human–AI Communication Compliance Gate v3
 
 This directory contains the repository-level, fail-closed evidence gate for
 material Human–AI workflow communications. It makes C1/C2 protocol obligations
@@ -55,9 +55,10 @@ The seven pointer fields and order remain frozen. `detail_ref` remains the only
 optional backend-to-foreground tail field. A Human always occupies
 `human_speaker`; a Human direct backend dispatch uses the communication
 direction's frozen `chatgpt_to_codex_v1` wire without impersonating a model
-role. The repository artifact cannot authenticate its own `provider: Human`
-claim, so a state-changing Human event additionally needs an externally
-injected `ActorOriginContext`.
+role. The repository artifact cannot authenticate its own provider/role claim.
+Every state-changing Human or model event therefore needs an externally
+injected `ActorOriginContext` bound to the exact event digest, provider, stable
+role, task, event, transition, and protocol release head.
 
 Production references are immutable `git_blob` objects with a full commit SHA,
 safe path, and exact SHA-256. Resolution verifies that the 40-hex object is a
@@ -77,11 +78,14 @@ multi-document YAML, tags, anchors, aliases, and merge keys fail closed.
    including every receipt file and required ref;
 3. resolves the physical pointer, checks its ordered canonical bytes and exact
    equality to the event pointer, and closes every non-null pointer `_ref`;
-4. derives task, event class, actual raw state, normalized state, transition ID,
-   target state, and release head from evidence and policy;
+4. derives task, event class, stable actor role, actual raw state, normalized
+   state, transition ID, target state, and release head from evidence and
+   enforces the edge's `allowed_actor_roles` matrix;
 5. if a durable validation artifact exists, requires exact canonical bytes and
    semantic identity with the fresh result; and
-6. only after the proof chain passes checks separately injected C2 authority.
+6. verifies separately injected actor origin for every state-changing edge and,
+   for C2, binds separate Human authority to both the exact event digest and the
+   actor-origin context digest.
 
 No supplied `result: pass`, claimed digest, claimed resolved status, descriptive
 gate, or request claim can authorize or replace fresh computation. The output
@@ -96,8 +100,18 @@ prefix, or prose-based normalization is forbidden.
 
 The standalone CLI has no trusted-host callback, so a trusted-looking JSON
 payload cannot certify itself. Test fixtures may use deterministic test-only
-contexts. A production host supplies verifiers, persists replay protection,
-atomically consumes C2 authority, and performs the final state-head CAS.
+contexts. A production host supplies separate state, actor-origin, and C2
+authority verifiers; persists separate replay protection; atomically consumes
+the applicable contexts; and performs the final state-head CAS.
+
+## Inherited regression evidence
+
+The immutable 79-case legacy suite is inventory, not an executed result. An
+immutable one-to-one coverage map names a unique current migrated case for each
+legacy case. The runner executes those migrated cases under the current
+validator and reports executed cases, inherited inventory, mapped behavioral
+coverage, and aggregate inventory as separate quantities; it never emits
+virtual inherited cases as passing outcomes.
 
 ## Drift history
 

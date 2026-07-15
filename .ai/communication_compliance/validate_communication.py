@@ -35,7 +35,7 @@ except Exception:  # pragma: no cover - exercised by dependency error contract
     Resource = None
 
 
-VALIDATOR_VERSION = "2.0.0"
+VALIDATOR_VERSION = "3.0.0"
 EXIT_PASS = 0
 EXIT_COMPLIANCE_FAIL = 1
 EXIT_INVOCATION = 2
@@ -437,6 +437,26 @@ def load_policy(path: Path, *, allow_unbound: bool = False) -> tuple[dict[str, A
         pass
     elif binding_status != "bound" or not re.fullmatch(r"[0-9a-f]{40}", str(release_head or "")):
         raise ConfigurationError("policy protocol release head is not bound")
+    stable_roles = {
+        config.get("occupied_role")
+        for config in policy["role_mapping"].values()
+        if isinstance(config, dict)
+    }
+    if None in stable_roles or not stable_roles:
+        raise ConfigurationError("policy stable role mapping is invalid")
+    for transition_id, transition in policy["transitions"].items():
+        if not isinstance(transition, dict):
+            raise ConfigurationError(f"transition policy is invalid: {transition_id}")
+        allowed_roles = transition.get("allowed_actor_roles")
+        if (
+            not isinstance(allowed_roles, list)
+            or not allowed_roles
+            or len(allowed_roles) != len(set(allowed_roles))
+            or not set(allowed_roles).issubset(stable_roles)
+        ):
+            raise ConfigurationError(
+                f"transition allowed-actor-role policy is invalid: {transition_id}"
+            )
     return policy, digest_object(policy, preserve_mapping_order=False)
 
 
@@ -1565,6 +1585,24 @@ def _context_is_trusted(
         return False
 
 
+def _context_anchor(context: Any, *, trusted: bool) -> dict[str, Any] | None:
+    """Return privacy-safe proof evidence for an externally injected context."""
+    if (
+        not trusted
+        or not isinstance(context, dict)
+        or not isinstance(context.get("context_id"), str)
+        or not isinstance(context.get("injection_source"), str)
+        or not isinstance(context.get("test_only"), bool)
+    ):
+        return None
+    return {
+        "context_id": context["context_id"],
+        "context_sha256": digest_object(context, preserve_mapping_order=False),
+        "injection_source": context["injection_source"],
+        "test_only": context["test_only"],
+    }
+
+
 def _transition_proof(
     *,
     request: dict[str, Any],
@@ -1576,12 +1614,14 @@ def _transition_proof(
     transition_id: str | None,
     target_status: str | None,
     state_context: Any,
+    actor_origin_anchor: Any,
+    authorization_anchor: Any,
     evidence: dict[str, Any],
     violations: Iterable[dict[str, str]],
 ) -> dict[str, Any]:
     final = sorted_findings(violations)
     result = {
-        "schema_version": "human_ai.communication_transition_proof.v2",
+        "schema_version": "human_ai.communication_transition_proof.v3",
         "request_id": nullable_string(request.get("request_id")),
         "result": "fail" if final else "pass",
         "protocol_release_head": policy["protocol_release_head"],
@@ -1596,6 +1636,8 @@ def _transition_proof(
         "derived_transition_id": transition_id,
         "derived_to_state": target_status,
         "active_state_anchor": copy.deepcopy(state_context) if isinstance(state_context, dict) else None,
+        "actor_origin_anchor": copy.deepcopy(actor_origin_anchor) if isinstance(actor_origin_anchor, dict) else None,
+        "authorization_anchor": copy.deepcopy(authorization_anchor) if isinstance(authorization_anchor, dict) else None,
         "evidence": evidence,
         "violations": final,
         "authorization_granted_by_validator": False,
@@ -1619,6 +1661,7 @@ def check_transition(
     actor_origin_mode: str = "none",
     test_mode: bool = False,
     consumed_context_ids: set[str] | None = None,
+    consumed_actor_origin_context_ids: set[str] | None = None,
     trusted_state_verifier: Callable[[dict[str, Any]], bool] | None = None,
     trusted_authority_verifier: Callable[[dict[str, Any]], bool] | None = None,
     trusted_actor_origin_verifier: Callable[[dict[str, Any]], bool] | None = None,
@@ -1785,6 +1828,12 @@ def check_transition(
     transition_id = proposed.get("transition_id") if isinstance(proposed, dict) and isinstance(proposed.get("transition_id"), str) else None
     transition_policy = policy["transitions"].get(transition_id)
     target_status = transition_policy.get("to_status") if isinstance(transition_policy, dict) else None
+    actor_role = fresh_validation.get("role") if isinstance(fresh_validation, dict) else None
+    event_input_sha = (
+        fresh_validation.get("input_sha256")
+        if isinstance(fresh_validation, dict)
+        else None
+    )
     if transition_policy is None:
         violations.append(finding("TRANSITION_ID_UNKNOWN", "event.proposed_transition.transition_id", "resolved event does not select a defined transition"))
     else:
@@ -1798,6 +1847,14 @@ def check_transition(
             violations.append(finding("TRANSITION_EVENT_TYPE_MISMATCH", "event.event_type", "event type is not allowed for the selected edge"))
         if event_class != transition_policy["required_event_class"]:
             violations.append(finding("TRANSITION_EVENT_CLASS_MISMATCH", "event.claimed_event_class", "freshly classified event class differs from the selected edge"))
+        if actor_role not in transition_policy["allowed_actor_roles"]:
+            violations.append(
+                finding(
+                    "TRANSITION_ACTOR_ROLE_FORBIDDEN",
+                    "event.occupied_role",
+                    "freshly validated actor role is not authorized for the selected state edge",
+                )
+            )
 
     if isinstance(event, dict) and isinstance(state, dict):
         active_task = state.get("active_task")
@@ -1823,7 +1880,14 @@ def check_transition(
         if field in request and request.get(field) != expected:
             violations.append(finding("TRANSITION_CLAIM_BINDING_MISMATCH", field, "non-authoritative transition claim differs from recomputed evidence"))
 
-    if isinstance(event, dict) and event.get("provider") == "Human":
+    origin_trusted = False
+    actor_origin_sha: str | None = None
+    state_changing_event = (
+        isinstance(event, dict)
+        and isinstance(transition_policy, dict)
+        and event_class in policy.get("material_event_classes", [])
+    )
+    if state_changing_event:
         _validate_schema_to(actor_origin_context, "actor_origin_context.schema.json", "ACTOR_ORIGIN_CONTEXT", violations)
         origin_trusted = _context_is_trusted(
             actor_origin_context,
@@ -1832,18 +1896,54 @@ def check_transition(
             verifier=trusted_actor_origin_verifier,
         )
         if not origin_trusted:
-            violations.append(finding("HUMAN_ORIGIN_ATTESTATION_REQUIRED", "actor_origin_context", "Human provider claim requires an authenticated external origin"))
+            violations.append(
+                finding(
+                    "ACTOR_ORIGIN_ATTESTATION_REQUIRED",
+                    "actor_origin_context",
+                    "state-changing event requires separately injected trusted actor origin",
+                )
+            )
         if isinstance(actor_origin_context, dict):
-            for key in ("event_id", "task_id"):
-                if actor_origin_context.get(key) != event.get(key):
-                    violations.append(finding("ACTOR_ORIGIN_BINDING_MISMATCH", f"actor_origin_context.{key}", "Human origin context is bound to a different event"))
+            actor_origin_sha = digest_object(
+                actor_origin_context, preserve_mapping_order=False
+            )
+            origin_bindings = {
+                "provider": event.get("provider"),
+                "occupied_role": actor_role,
+                "event_id": event.get("event_id"),
+                "task_id": event.get("task_id"),
+                "transition_id": transition_id,
+                "protocol_release_head": policy["protocol_release_head"],
+                "event_input_sha256": event_input_sha,
+            }
+            for key, expected in origin_bindings.items():
+                if actor_origin_context.get(key) != expected:
+                    violations.append(
+                        finding(
+                            "ACTOR_ORIGIN_BINDING_MISMATCH",
+                            f"actor_origin_context.{key}",
+                            "actor-origin context is bound to a different exact event or role",
+                        )
+                    )
+            if actor_origin_context.get("context_id") in (
+                consumed_actor_origin_context_ids or set()
+            ):
+                violations.append(
+                    finding(
+                        "ACTOR_ORIGIN_CONTEXT_REPLAYED",
+                        "actor_origin_context.context_id",
+                        "actor-origin context identifier is already consumed",
+                    )
+                )
 
+    authority_trusted = False
     if isinstance(transition_policy, dict) and transition_policy.get("external_human_authority_required"):
         if authority_context is None:
             violations.append(finding("AUTHENTICATED_HUMAN_AUTHORITY_UNAVAILABLE", "authorization_context", "C2 transition requires separately injected Human authority"))
         else:
             _validate_schema_to(authority_context, "authorization_context.schema.json", "AUTHORIZATION_CONTEXT", violations)
-            if not _context_is_trusted(authority_context, authority_mode, test_mode=test_mode, verifier=trusted_authority_verifier):
+            authority_trusted = _context_is_trusted(authority_context, authority_mode, test_mode=test_mode, verifier=trusted_authority_verifier)
+            if not authority_trusted:
                 violations.append(finding("AUTHORITY_CONTEXT_TRUST_BOUNDARY_INVALID", "authorization_context.injection_source", "authority context was not injected through the declared trusted boundary"))
             if isinstance(authority_context, dict) and isinstance(event, dict):
                 authority_bindings = {
@@ -1853,6 +1953,13 @@ def check_transition(
                     "action": event.get("event_type"),
                     "target": target_status,
                     "protocol_release_head": policy["protocol_release_head"],
+                    "event_input_sha256": event_input_sha,
+                    "actor_origin_context_id": (
+                        actor_origin_context.get("context_id")
+                        if isinstance(actor_origin_context, dict)
+                        else None
+                    ),
+                    "actor_origin_context_sha256": actor_origin_sha,
                 }
                 for key, expected in authority_bindings.items():
                     if authority_context.get(key) != expected:
@@ -1870,6 +1977,12 @@ def check_transition(
         transition_id=transition_id,
         target_status=target_status,
         state_context=active_state_context if state_context_valid else None,
+        actor_origin_anchor=_context_anchor(
+            actor_origin_context, trusted=origin_trusted
+        ),
+        authorization_anchor=_context_anchor(
+            authority_context, trusted=authority_trusted
+        ),
         evidence=evidence,
         violations=violations,
     )
@@ -2129,8 +2242,12 @@ def result_exit_code(result: dict[str, Any]) -> int:
     return EXIT_INPUT
 
 
-def _auto_authority_context(
-    context: Any, event: dict[str, Any], policy: dict[str, Any]
+def _auto_context(
+    context: Any,
+    event: dict[str, Any],
+    policy: dict[str, Any],
+    *,
+    actor_origin_context: Any = None,
 ) -> Any:
     if not isinstance(context, dict):
         return context
@@ -2142,11 +2259,67 @@ def _auto_authority_context(
         "AUTO_ACTION": event.get("event_type"),
         "AUTO_TARGET": (event.get("proposed_transition") or {}).get("to_state"),
         "AUTO_PROTOCOL_RELEASE_HEAD": policy["protocol_release_head"],
+        "AUTO_PROVIDER": event.get("provider"),
+        "AUTO_OCCUPIED_ROLE": event.get("occupied_role"),
+        "AUTO_EVENT_INPUT_SHA256": digest_object(event),
+        "AUTO_ACTOR_ORIGIN_CONTEXT_ID": (
+            actor_origin_context.get("context_id")
+            if isinstance(actor_origin_context, dict)
+            else None
+        ),
+        "AUTO_ACTOR_ORIGIN_CONTEXT_SHA256": (
+            digest_object(actor_origin_context, preserve_mapping_order=False)
+            if isinstance(actor_origin_context, dict)
+            else None
+        ),
+        "AUTO_ORIGIN_CONTEXT_ID": "fixture-actor-origin-" + str(event.get("event_id", "unknown")),
     }
     for key, value in list(result.items()):
         if value in replacements:
             result[key] = replacements[value]
     return result
+
+
+def _load_inherited_coverage_map(
+    suite: dict[str, Any],
+    cases: list[dict[str, Any]],
+    prior_case_ids: list[Any],
+    repo_root: Path,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    coverage_ref = suite.get("inherited_coverage_map_ref")
+    resolved, content, ref_findings = resolve_reference(
+        repo_root, coverage_ref, test_mode=False
+    )
+    coverage, parse_findings = _document_from_reference(
+        content, coverage_ref, "INHERITED_COVERAGE_MAP"
+    )
+    findings = list(ref_findings) + list(parse_findings)
+    if isinstance(coverage, dict):
+        findings.extend(
+            schema_findings(
+                coverage,
+                "inherited_fixture_coverage_map.schema.json",
+                "INHERITED_COVERAGE_MAP",
+            )
+        )
+    if findings or resolved.get("status") != "resolved" or not isinstance(coverage, dict):
+        raise InputDocumentError("immutable inherited fixture coverage map is invalid")
+    if coverage.get("prior_suite_ref") != suite.get("prior_suite_ref"):
+        raise InputDocumentError("coverage map names a different immutable prior suite")
+    mappings = coverage.get("mappings", [])
+    mapped_prior = [item.get("prior_case_id") for item in mappings]
+    mapped_current = [item.get("current_case_id") for item in mappings]
+    executed_ids = [item.get("id") for item in cases]
+    if (
+        mapped_prior != prior_case_ids
+        or len(mapped_prior) != len(set(mapped_prior))
+        or len(mapped_current) != len(set(mapped_current))
+        or not set(mapped_current).issubset(set(executed_ids))
+        or any(item.get("mapping_kind") != "one_to_one" for item in mappings)
+        or any(not str(item.get("rationale", "")).strip() for item in mappings)
+    ):
+        raise InputDocumentError("inherited fixture coverage mapping is incomplete or ambiguous")
+    return coverage, resolved
 
 
 def run_fixture_suite(
@@ -2182,20 +2355,9 @@ def run_fixture_suite(
         or len(actual_prior_ids) != len(set(actual_prior_ids))
     ):
         raise InputDocumentError("immutable prior fixture suite inventory is invalid")
-    for prior_id in actual_prior_ids:
-        case_outcomes.append(
-            {
-                "id": "inherited::" + str(prior_id),
-                "operation": "immutable_prior_suite_evidence",
-                "expected_result": "pass",
-                "actual_result": "pass",
-                "expected_exit_code": EXIT_PASS,
-                "actual_exit_code": EXIT_PASS,
-                "expected_violation_codes": [],
-                "actual_violation_codes": [],
-                "matched": True,
-            }
-        )
+    coverage, coverage_resolved = _load_inherited_coverage_map(
+        suite, cases, actual_prior_ids, repo_root
+    )
     for case in cases:
         if not isinstance(case, dict) or not isinstance(case.get("id"), str):
             raise InputDocumentError("fixture case is malformed")
@@ -2287,11 +2449,14 @@ def run_fixture_suite(
                     event_bytes, event_ref, "EVENT"
                 )
                 event_for_context = event_document if isinstance(event_document, dict) else {}
-                authority = _auto_authority_context(
-                    case.get("authorization_context"), event_for_context, policy
-                )
-                origin = _auto_authority_context(
+                origin = _auto_context(
                     case.get("actor_origin_context"), event_for_context, policy
+                )
+                authority = _auto_context(
+                    case.get("authorization_context"),
+                    event_for_context,
+                    policy,
+                    actor_origin_context=origin,
                 )
                 actual = check_transition(
                     request,
@@ -2306,6 +2471,9 @@ def run_fixture_suite(
                     actor_origin_mode=case.get("actor_origin_mode", "none"),
                     test_mode=True,
                     consumed_context_ids=set(case.get("consumed_context_ids", [])),
+                    consumed_actor_origin_context_ids=set(
+                        case.get("consumed_actor_origin_context_ids", [])
+                    ),
                     trusted_state_verifier=(
                         (lambda _context: True)
                         if case.get("trusted_state_verifier_result") is True
@@ -2333,6 +2501,9 @@ def run_fixture_suite(
                     )
                     event_document, _doc_findings = _document_from_reference(event_bytes, event_ref, "EVENT")
                     event_for_context = event_document if isinstance(event_document, dict) else {}
+                    origin = _auto_context(
+                        step.get("actor_origin_context"), event_for_context, policy
+                    )
                     step_results.append(
                         check_transition(
                             request,
@@ -2341,9 +2512,14 @@ def run_fixture_suite(
                             policy_sha,
                             active_state_context=step.get("active_state_context"),
                             state_context_mode="test-fixture",
-                            authority_context=_auto_authority_context(step.get("authorization_context"), event_for_context, policy),
+                            authority_context=_auto_context(
+                                step.get("authorization_context"),
+                                event_for_context,
+                                policy,
+                                actor_origin_context=origin,
+                            ),
                             authority_mode=step.get("authority_mode", "none"),
-                            actor_origin_context=_auto_authority_context(step.get("actor_origin_context"), event_for_context, policy),
+                            actor_origin_context=origin,
                             actor_origin_mode=step.get("actor_origin_mode", "none"),
                             test_mode=True,
                         )
@@ -2461,9 +2637,12 @@ def run_fixture_suite(
         "protocol_release_head": policy["protocol_release_head"],
         "policy_sha256": policy_sha,
         "suite_sha256": digest_object(suite, preserve_mapping_order=False),
-        "inherited_cases": len(actual_prior_ids),
-        "executed_cases": len(case_outcomes) - len(actual_prior_ids),
+        "inherited_inventory_cases": len(actual_prior_ids),
+        "inherited_behavioral_coverage": len(coverage["mappings"]),
+        "inherited_coverage_map_sha256": coverage_resolved["content_sha256"],
+        "executed_cases": len(case_outcomes),
         "total_cases": len(case_outcomes),
+        "aggregate_inventory_count": len(actual_prior_ids) + len(case_outcomes),
         "matched_cases": len(case_outcomes) - len(mismatches),
         "mismatch_count": len(mismatches),
         "cases": sorted(case_outcomes, key=lambda item: item["id"]),
@@ -2525,6 +2704,7 @@ def build_parser() -> JsonArgumentParser:
     )
     transition.add_argument("--test-mode", action="store_true")
     transition.add_argument("--consumed-context-ids", type=Path)
+    transition.add_argument("--consumed-actor-origin-context-ids", type=Path)
 
     ledger = subparsers.add_parser("validate-ledger")
     common(ledger)
@@ -2612,6 +2792,9 @@ def main(argv: list[str] | None = None) -> int:
                 actor_origin_mode=args.actor_origin_mode,
                 test_mode=args.test_mode,
                 consumed_context_ids=_read_consumed_ids(args.consumed_context_ids),
+                consumed_actor_origin_context_ids=_read_consumed_ids(
+                    args.consumed_actor_origin_context_ids
+                ),
             )
             exit_code = result_exit_code(result)
         elif args.command == "validate-drift":

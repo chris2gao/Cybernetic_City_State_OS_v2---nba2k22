@@ -105,9 +105,26 @@ class CommunicationComplianceGateTests(unittest.TestCase):
         self.assertEqual(aliases["awaiting_chatgpt_review"], "foreground_review_pending")
         self.assertNotIn("chatgpt_review", aliases)
 
+    def test_every_transition_has_exact_provider_neutral_actor_roles(self) -> None:
+        expected = {
+            "dispatch_to_backend": {"human_speaker", "foreground_review_and_task_dispatch"},
+            "backend_completion": {"backend_execution_and_handoff"},
+            "foreground_revision_dispatch": {"human_speaker", "foreground_review_and_task_dispatch"},
+            "foreground_acceptance": {"human_speaker", "foreground_review_and_task_dispatch"},
+            "publication_candidate": {"human_speaker", "foreground_review_and_task_dispatch"},
+            "protected_publication_entry": {"human_speaker", "foreground_review_and_task_dispatch"},
+        }
+        self.assertEqual(set(self.policy["transitions"]), set(expected))
+        for transition_id, roles in expected.items():
+            with self.subTest(transition_id=transition_id):
+                self.assertEqual(
+                    set(self.policy["transitions"][transition_id]["allowed_actor_roles"]),
+                    roles,
+                )
+
     def test_all_json_schemas_are_valid(self) -> None:
         schema_paths = sorted(GATE_DIR.glob("*.schema.json"))
-        self.assertGreaterEqual(len(schema_paths), 10)
+        self.assertGreaterEqual(len(schema_paths), 12)
         for path in schema_paths:
             gate.Draft202012Validator.check_schema(gate.load_document(path))
 
@@ -148,9 +165,16 @@ class CommunicationComplianceGateTests(unittest.TestCase):
         )
         self.assertEqual(exit_code, gate.EXIT_PASS, [case for case in result["cases"] if not case["matched"]])
         self.assertEqual(result["result"], "pass")
-        self.assertEqual(result["inherited_cases"], 79)
-        self.assertGreaterEqual(result["executed_cases"], 80)
+        self.assertEqual(result["inherited_inventory_cases"], 79)
+        self.assertEqual(result["inherited_behavioral_coverage"], 79)
+        self.assertGreaterEqual(result["executed_cases"], 170)
+        self.assertEqual(result["total_cases"], result["executed_cases"])
         self.assertEqual(result["matched_cases"], result["total_cases"])
+        self.assertEqual(
+            result["aggregate_inventory_count"],
+            result["inherited_inventory_cases"] + result["executed_cases"],
+        )
+        self.assertFalse(any(item["id"].startswith("inherited::") for item in result["cases"]))
 
     def test_fixture_inventory_covers_proof_chain_attacks(self) -> None:
         ids = {case["id"] for case in self.suite["cases"]}
@@ -168,6 +192,23 @@ class CommunicationComplianceGateTests(unittest.TestCase):
             "transition_state_task_mismatch",
             "transition_unreachable",
             "transition_full_real_workflow",
+            "transition_backend_self_acceptance_rejected",
+            "transition_backend_material_review_close_rejected",
+            "transition_backend_publication_candidate_rejected",
+            "transition_foreground_self_completion_rejected",
+            "transition_human_self_completion_rejected",
+            "transition_provider_role_edge_mismatch_rejected",
+            "transition_model_origin_missing",
+            "transition_actor_origin_wrong_provider",
+            "transition_actor_origin_wrong_role",
+            "transition_actor_origin_wrong_transition",
+            "transition_actor_origin_event_digest_transplant",
+            "transition_actor_origin_cross_event_transplant",
+            "transition_actor_origin_replay",
+            "transition_c2_authority_event_digest_mismatch",
+            "transition_c2_authority_cross_actor_transplant",
+            "transition_c2_trusted_host_verifiers_pass",
+            "transition_human_acceptance_pass",
             "transition_c2_no_authority",
             "transition_human_c2_no_authority",
             "transition_c2_authority_wrong_task",
@@ -181,9 +222,48 @@ class CommunicationComplianceGateTests(unittest.TestCase):
             "drift_ledger_sequence_rollback",
         }
         self.assertTrue(required.issubset(ids), sorted(required - ids))
+        migrated = {item["current_case_id"] for item in gate.load_document(GATE_DIR / "inherited_fixture_coverage_map.json")["mappings"]}
+        self.assertEqual(len(migrated), 79)
+        self.assertTrue(migrated.issubset(ids), sorted(migrated - ids))
         for label in ("event", "state", "pointer", "validation_artifact"):
             for attack in ("mutable", "missing", "tree", "digest_mismatch", "symlink", "submodule"):
                 self.assertIn(f"{label}_ref_{attack}_rejected", ids)
+
+    def test_actor_origin_and_authority_schemas_bind_exact_event(self) -> None:
+        origin = gate.load_schema("actor_origin_context.schema.json")
+        authority = gate.load_schema("authorization_context.schema.json")
+        origin_required = set(origin["required"])
+        authority_required = set(authority["required"])
+        self.assertTrue(
+            {
+                "provider",
+                "occupied_role",
+                "event_id",
+                "task_id",
+                "transition_id",
+                "protocol_release_head",
+                "event_input_sha256",
+                "replay_protected",
+            }.issubset(origin_required)
+        )
+        self.assertTrue(
+            {
+                "event_input_sha256",
+                "actor_origin_context_id",
+                "actor_origin_context_sha256",
+            }.issubset(authority_required)
+        )
+
+    def test_inherited_coverage_map_is_complete_one_to_one_source(self) -> None:
+        coverage = gate.load_document(GATE_DIR / "inherited_fixture_coverage_map.json")
+        gate.Draft202012Validator(
+            gate.load_schema("inherited_fixture_coverage_map.schema.json")
+        ).validate(coverage)
+        mappings = coverage["mappings"]
+        prior_ids = self.suite["prior_case_ids"]
+        self.assertEqual([item["prior_case_id"] for item in mappings], prior_ids)
+        self.assertEqual(len({item["current_case_id"] for item in mappings}), len(prior_ids))
+        self.assertTrue(all(item["mapping_kind"] == "one_to_one" for item in mappings))
 
     def test_git_reference_requires_commit_and_rejects_special_entries(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

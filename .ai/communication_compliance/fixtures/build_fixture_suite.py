@@ -18,8 +18,12 @@ FIXTURES = Path(__file__).resolve().parent
 ARTIFACTS = FIXTURES / "artifacts"
 RAW = FIXTURES / "raw"
 SUITE_PATH = FIXTURES / "fixture_suite.json"
+INHERITED_COVERAGE_PATH = (
+    ROOT / ".ai" / "communication_compliance" / "inherited_fixture_coverage_map.json"
+)
 POLICY_PATH = ROOT / ".ai" / "communication_compliance" / "material_event_policy.yml"
-PARENT_CANDIDATE = "4530b4f684f64cc7928884cf96d9a221aa5a2b8a"
+PARENT_CANDIDATE = "e6ca76bce8849f3a7a8bc498f66bfbd767aa4d0d"
+LEGACY_SUITE_HEAD = "4530b4f684f64cc7928884cf96d9a221aa5a2b8a"
 TASK_ID = "human-ai-communication-compliance-fixture"
 TASK_REF = ".ai/CODEX_TASK_INPUT_CONTRACT.md"
 PROTOCOL_REF = ".ai/PROTOCOL.md"
@@ -322,7 +326,7 @@ def transition_bundle(case_id: str, payload: dict[str, Any], status: str, *, act
 
 def authority_context() -> dict[str, Any]:
     return {
-        "schema_version": "human_ai.communication_authorization_context.v2",
+        "schema_version": "human_ai.communication_authorization_context.v3",
         "context_id": "fixture-authority",
         "injection_source": "deterministic_test_fixture",
         "test_only": True,
@@ -334,6 +338,9 @@ def authority_context() -> dict[str, Any]:
         "action": "AUTO_ACTION",
         "target": "AUTO_TARGET",
         "protocol_release_head": "AUTO_PROTOCOL_RELEASE_HEAD",
+        "event_input_sha256": "AUTO_EVENT_INPUT_SHA256",
+        "actor_origin_context_id": "AUTO_ACTOR_ORIGIN_CONTEXT_ID",
+        "actor_origin_context_sha256": "AUTO_ACTOR_ORIGIN_CONTEXT_SHA256",
         "revoked": False,
         "replay_protected": True,
     }
@@ -341,14 +348,19 @@ def authority_context() -> dict[str, Any]:
 
 def actor_origin_context() -> dict[str, Any]:
     return {
-        "schema_version": "human_ai.communication_actor_origin_context.v1",
-        "context_id": "fixture-human-origin",
+        "schema_version": "human_ai.communication_actor_origin_context.v2",
+        "context_id": "AUTO_ORIGIN_CONTEXT_ID",
         "injection_source": "deterministic_test_fixture",
         "test_only": True,
-        "provider": "Human",
+        "provider": "AUTO_PROVIDER",
+        "occupied_role": "AUTO_OCCUPIED_ROLE",
         "event_id": "AUTO_EVENT_ID",
         "task_id": "AUTO_TASK_ID",
+        "transition_id": "AUTO_TRANSITION_ID",
+        "protocol_release_head": "AUTO_PROTOCOL_RELEASE_HEAD",
+        "event_input_sha256": "AUTO_EVENT_INPUT_SHA256",
         "authenticated_channel": True,
+        "replay_protected": True,
     }
 
 
@@ -419,8 +431,10 @@ def rehash(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return result
 
 
-def add_transition(cases: list[dict[str, Any]], case_id: str, payload: dict[str, Any], status: str, *, result: str = "pass", codes: list[str] | None = None, active_task: str | None = TASK_ID, validation: bool = False, authority: dict[str, Any] | None = None, origin: dict[str, Any] | None = None, pointer_override: Any = None) -> tuple[dict[str, Any], dict[str, Any]]:
+def add_transition(cases: list[dict[str, Any]], case_id: str, payload: dict[str, Any], status: str, *, result: str = "pass", codes: list[str] | None = None, active_task: str | None = TASK_ID, validation: bool = False, authority: dict[str, Any] | None = None, origin: dict[str, Any] | None = None, include_origin: bool = True, consumed_actor_origin_context_ids: list[str] | None = None, pointer_override: Any = None) -> tuple[dict[str, Any], dict[str, Any]]:
     request, context = transition_bundle(case_id, payload, status, active_task=active_task, validation=validation, pointer_override=pointer_override)
+    if include_origin and origin is None:
+        origin = actor_origin_context()
     cases.append(
         case(
             case_id,
@@ -434,6 +448,7 @@ def add_transition(cases: list[dict[str, Any]], case_id: str, payload: dict[str,
             authority_mode="test-fixture" if authority else "none",
             actor_origin_context=origin,
             actor_origin_mode="test-fixture" if origin else "none",
+            consumed_actor_origin_context_ids=consumed_actor_origin_context_ids or [],
         )
     )
     return request, context
@@ -446,6 +461,24 @@ def write_raw_parser_fixtures() -> None:
     (RAW / "pointer_anchor_alias.yml").write_text("signal_id: &x one\ndecision: *x\n", encoding="utf-8", newline="\n")
 
 
+def migrate_inherited_cases(cases: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    coverage = json.loads(INHERITED_COVERAGE_PATH.read_text(encoding="utf-8"))
+    by_id = {item["id"]: item for item in cases}
+    if len(by_id) != len(cases):
+        raise RuntimeError("base fixture case identifiers are not unique")
+    migrated: list[dict[str, Any]] = []
+    for mapping in coverage["mappings"]:
+        template_id = mapping["template_case_id"]
+        if template_id not in by_id:
+            raise RuntimeError(f"coverage template is missing: {template_id}")
+        item = copy.deepcopy(by_id[template_id])
+        item["id"] = mapping["current_case_id"]
+        migrated.append(item)
+    if len({item["id"] for item in migrated}) != len(migrated):
+        raise RuntimeError("migrated fixture case identifiers are not unique")
+    return cases + migrated
+
+
 def build_cases() -> list[dict[str, Any]]:
     cases: list[dict[str, Any]] = []
     cases.append(case("classify_c0_ordinary", "classify", event_type="ordinary_discussion"))
@@ -456,6 +489,28 @@ def build_cases() -> list[dict[str, Any]]:
     wrong_wire = receipt("ChatGPT")
     wrong_wire["wire_schema"] = "codex_to_chatgpt_v1"
     cases.append(case("bootstrap_wrong_wire", "validate_bootstrap", payload=wrong_wire, result="fail", codes=["BOOTSTRAP_RECEIPT_SCHEMA_INVALID"]))
+    loaded_digest = receipt("ChatGPT")
+    loaded_digest["loaded_files"][0]["content_sha256"] = "0" * 64
+    cases.append(case("bootstrap_loaded_file_digest_mismatch", "validate_bootstrap", payload=loaded_digest, result="fail", codes=["BOOTSTRAP_REFERENCE_DIGEST_MISMATCH"]))
+    loaded_head = receipt("ChatGPT")
+    protocol_loaded = next(item for item in loaded_head["loaded_files"] if item["path"] == PROTOCOL_REF)
+    protocol_loaded["commit"] = SOURCE_BASE
+    protocol_loaded["content_sha256"] = sha256(git_show(PROTOCOL_REF, SOURCE_BASE))
+    cases.append(case("bootstrap_loaded_file_head_mismatch", "validate_bootstrap", payload=loaded_head, result="fail", codes=["BOOTSTRAP_LOADED_FILE_HEAD_MISMATCH"]))
+
+    c0_project = {
+        "schema_version": "human_ai.communication_event.v1",
+        "event_id": "c0-project-mention",
+        "task_id": TASK_ID,
+        "event_type": "ordinary_discussion",
+        "claimed_event_class": "C0",
+        "provider": "Human",
+    }
+    cases.append(case("c0_project_mention_pass", "validate_event", payload=c0_project))
+    c0_transition = copy.deepcopy(c0_project)
+    c0_transition["event_id"] = "c0-transition-forbidden"
+    c0_transition["proposed_transition"] = {"transition_id": "dispatch_to_backend"}
+    cases.append(case("c0_transition_fail_closed", "validate_event", payload=c0_transition, result="fail", codes=["C0_TRANSITION_FORBIDDEN"]))
 
     dispatch_transition = {"transition_id": "dispatch_to_backend", "from_state": "idle", "to_state": "awaiting_codex"}
     completion_transition = {"transition_id": "backend_completion", "from_state": "awaiting_codex", "to_state": "awaiting_chatgpt_review"}
@@ -472,6 +527,12 @@ def build_cases() -> list[dict[str, Any]]:
     protected = event("ChatGPT", "protected", "source_publication", "C2", dispatch=False, transition=protected_transition)
     for identifier, payload in (("event_dispatch_pass", dispatch), ("event_completion_pass", completion), ("event_revision_pass", revision), ("event_acceptance_pass", acceptance), ("event_candidate_pass", candidate), ("event_protected_pass", protected)):
         cases.append(case(identifier, "validate_event", payload=payload))
+    claude_dispatch = event("Claude", "claude-dispatch", "backend_dispatch", "C1", dispatch=True, transition=dispatch_transition)
+    claude_code_completion = event("Claude Code", "claude-code-completion", "completion_handoff", "C1", dispatch=False, transition=completion_transition)
+    material_review = event("ChatGPT", "material-review", "material_review", "C1", dispatch=False)
+    cases.append(case("event_claude_dispatch_pass", "validate_event", payload=claude_dispatch))
+    cases.append(case("event_claude_code_completion_pass", "validate_event", payload=claude_code_completion))
+    cases.append(case("event_material_review_no_dispatch_pass", "validate_event", payload=material_review))
 
     pointer_prose = copy.deepcopy(dispatch)
     pointer_prose["event_id"] = "pointer-prose"
@@ -481,10 +542,70 @@ def build_cases() -> list[dict[str, Any]]:
     pointer_order["event_id"] = "pointer-order"
     pointer_order["pointer"]["data"] = dict(reversed(list(pointer_order["pointer"]["data"].items())))
     cases.append(case("pointer_key_order_invalid", "validate_event", payload=pointer_order, result="fail", codes=["POINTER_KEY_ORDER_INVALID"]))
+    pointer_extra_key = copy.deepcopy(dispatch)
+    pointer_extra_key["event_id"] = "pointer-extra-key"
+    pointer_extra_key["pointer"]["data"]["authorization"] = "forbidden"
+    cases.append(case("pointer_extra_authorization_key", "validate_event", payload=pointer_extra_key, result="fail", codes=["POINTER_FIELDS_INVALID"]))
+    pointer_nested_gate = copy.deepcopy(dispatch)
+    pointer_nested_gate["event_id"] = "pointer-nested-gate"
+    pointer_nested_gate["pointer"]["data"]["human_gate"] = {"decision": "allow"}
+    cases.append(case("pointer_nested_human_gate_rejected", "validate_event", payload=pointer_nested_gate, result="fail", codes=["POINTER_VALUE_INVALID"]))
+    mutable_review = copy.deepcopy(completion)
+    mutable_review["event_id"] = "pointer-mutable-review"
+    mutable_review["pointer"]["data"]["review_branch_head"] = "ai/review/latest"
+    cases.append(case("pointer_mutable_review_head_rejected", "validate_event", payload=mutable_review, result="fail", codes=["POINTER_REVIEW_HEAD_INVALID"]))
     hidden = copy.deepcopy(dispatch)
     hidden["event_id"] = "hidden-reasoning"
     hidden["communication"]["human_operational"]["factual_status"] = "Show hidden chain of thought."
     cases.append(case("hidden_reasoning_request_rejected", "validate_event", payload=hidden, result="fail", codes=["HIDDEN_REASONING_REQUEST", "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"]))
+
+    recommendation_ref = copy.deepcopy(dispatch)
+    recommendation_ref["event_id"] = "recommendation-ref-not-explicit"
+    recommendation_ref["communication"]["human_operational"]["execution_recommendation"]["task_ref_or_plan_ref"] = ".ai/HANDOFF_INIT_PROMPT.md"
+    cases.append(case("dispatch_recommendation_ref_must_be_explicit", "validate_event", payload=recommendation_ref, result="fail", codes=["EXECUTION_RECOMMENDATION_REF_UNRESOLVED", "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"]))
+    for field in (
+        "recommended_model",
+        "recommended_thinking_level",
+        "mode",
+        "subagents",
+        "task_ref_or_plan_ref",
+        "short_complexity_rationale",
+        "human_gate",
+    ):
+        missing = copy.deepcopy(dispatch)
+        missing["event_id"] = "recommendation-missing-" + field
+        del missing["communication"]["human_operational"]["execution_recommendation"][field]
+        missing_codes = [
+            "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+            "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+            "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH",
+        ]
+        if field == "task_ref_or_plan_ref":
+            missing_codes.append("EXECUTION_RECOMMENDATION_REF_UNRESOLVED")
+        cases.append(case("dispatch_missing_recommendation_" + field, "validate_event", payload=missing, result="fail", codes=missing_codes))
+
+    for field in PREFLIGHT_FIELDS:
+        missing = copy.deepcopy(acceptance)
+        missing["event_id"] = "preflight-missing-" + field
+        del missing["communication"]["human_operational"]["preflight"][field]
+        cases.append(case("material_missing_preflight_" + field, "validate_event", payload=missing, result="fail", codes=["HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE", "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID"]))
+
+    short_expression = copy.deepcopy(acceptance)
+    short_expression["event_id"] = "expression-too-short"
+    short_expression["communication"]["human_operational"]["independent_expression"]["text"] = "Only one sentence."
+    cases.append(case("expression_sentence_count_invalid", "validate_event", payload=short_expression, result="fail", codes=["HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH", "INDEPENDENT_EXPRESSION_SENTENCE_COUNT"]))
+    authorizing_expression = copy.deepcopy(acceptance)
+    authorizing_expression["event_id"] = "expression-authorizes"
+    authorizing_expression["communication"]["human_operational"]["independent_expression"]["text"] = "I authorize publication. This sentence cannot make that valid."
+    cases.append(case("expression_cannot_authorize", "validate_event", payload=authorizing_expression, result="fail", codes=["EXPRESSION_FALSE_AUTHORIZATION", "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"]))
+    structured_expression = copy.deepcopy(acceptance)
+    structured_expression["event_id"] = "expression-structured-authority"
+    structured_expression["communication"]["human_operational"]["independent_expression"]["authorization"] = True
+    cases.append(case("expression_structured_authorization_rejected", "validate_event", payload=structured_expression, result="fail", codes=["HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH", "INDEPENDENT_EXPRESSION_FIELDS_INVALID"]))
+    structured_human = copy.deepcopy(acceptance)
+    structured_human["event_id"] = "human-content-structured-authority"
+    structured_human["communication"]["human_operational"]["authorization"] = True
+    cases.append(case("human_content_structured_authorization_rejected", "validate_event", payload=structured_human, result="fail", codes=["HUMAN_CONTENT_FIELDS_INVALID"]))
 
     human_dispatch = human_event(dispatch, "human-dispatch")
     cases.append(case("human_direct_dispatch_event_pass", "validate_event", payload=human_dispatch))
@@ -496,6 +617,43 @@ def build_cases() -> list[dict[str, Any]]:
     wrong_human_wire["event_id"] = "human-wrong-wire"
     wrong_human_wire["pointer"]["wire_schema"] = "codex_to_chatgpt_v1"
     cases.append(case("human_wrong_wire_rejected", "validate_event", payload=wrong_human_wire, result="fail", codes=["POINTER_WIRE_SCHEMA_MISMATCH"]))
+
+    complete_dispatch_path = ".ai/communication_compliance/fixtures/artifacts/complete_dispatch_brief.md"
+    incomplete_dispatch_path = ".ai/communication_compliance/fixtures/artifacts/incomplete_dispatch_brief.md"
+    complete_dispatch_ref = git_ref(complete_dispatch_path)
+    incomplete_dispatch_ref = git_ref(incomplete_dispatch_path)
+    nonseparable = copy.deepcopy(dispatch)
+    nonseparable["event_id"] = "mixed-nonseparable-complete"
+    nonseparable["required_refs"].append(complete_dispatch_ref)
+    nonseparable["communication"].update({
+        "recipient_mode": "mixed_nonseparable",
+        "channels_separated": False,
+        "human_operational": None,
+        "brief_artifact_ref": complete_dispatch_ref,
+    })
+    nonseparable["pointer"]["data"]["brief_ref"] = complete_dispatch_path
+    cases.append(case("mixed_nonseparable_complete_brief_pass", "validate_event", payload=nonseparable))
+    waiver_complete = copy.deepcopy(nonseparable)
+    waiver_complete["event_id"] = "mixed-waiver-complete"
+    waiver_complete["communication"]["recipient_mode"] = "mixed_separable"
+    waiver_complete["communication"]["channels_separated"] = True
+    waiver_complete["communication"]["human_pointer_only_waiver"] = True
+    cases.append(case("mixed_pointer_only_waiver_complete_brief_pass", "validate_event", payload=waiver_complete))
+    incomplete = copy.deepcopy(nonseparable)
+    incomplete["event_id"] = "mixed-nonseparable-incomplete"
+    incomplete["required_refs"][-1] = incomplete_dispatch_ref
+    incomplete["communication"]["brief_artifact_ref"] = incomplete_dispatch_ref
+    incomplete["pointer"]["data"]["brief_ref"] = incomplete_dispatch_path
+    cases.append(case("mixed_nonseparable_incomplete_brief", "validate_event", payload=incomplete, result="fail", codes=["EXECUTION_RECOMMENDATION_REQUIRED", "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH", "INDEPENDENT_EXPRESSION_REQUIRED"]))
+    missing_brief = copy.deepcopy(dispatch)
+    missing_brief["event_id"] = "pointer-waiver-missing-brief"
+    missing_brief["communication"]["human_pointer_only_waiver"] = True
+    missing_brief["communication"]["human_operational"] = None
+    missing_brief["communication"]["brief_artifact_ref"] = {
+        "path": ".ai/communication_compliance/fixtures/artifacts/missing-brief.md"
+    }
+    missing_brief["pointer"]["data"]["brief_ref"] = None
+    cases.append(case("pointer_only_waiver_missing_brief", "validate_event", payload=missing_brief, result="fail", codes=["DURABLE_BRIEF_FALLBACK_UNRESOLVED", "HUMAN_CONTENT_REQUIRED", "POINTER_BRIEF_REF_MISMATCH"]))
 
     dispatch_step = add_transition(cases, "transition_dispatch_pass", dispatch, "idle")
     accepted_dispatch = copy.deepcopy(dispatch)
@@ -515,21 +673,70 @@ def build_cases() -> list[dict[str, Any]]:
     completed_human_dispatch = copy.deepcopy(human_dispatch)
     completed_human_dispatch["proposed_transition"]["from_state"] = "completed"
     add_transition(cases, "transition_human_dispatch_pass", completed_human_dispatch, "completed", active_task=None, origin=actor_origin_context())
-    add_transition(cases, "transition_human_origin_missing", copy.deepcopy(human_dispatch), "idle", active_task=None, result="fail", codes=["ACTOR_ORIGIN_CONTEXT_SCHEMA_INVALID", "HUMAN_ORIGIN_ATTESTATION_REQUIRED"])
+    add_transition(cases, "transition_human_origin_missing", copy.deepcopy(human_dispatch), "idle", active_task=None, include_origin=False, result="fail", codes=["ACTOR_ORIGIN_ATTESTATION_REQUIRED", "ACTOR_ORIGIN_CONTEXT_SCHEMA_INVALID"])
     human_c2 = human_event(protected, "human-c2", human_only=True)
     add_transition(cases, "transition_human_c2_no_authority", human_c2, "awaiting_human_gate", origin=actor_origin_context(), result="fail", codes=["AUTHENTICATED_HUMAN_AUTHORITY_UNAVAILABLE"])
 
+    human_acceptance = human_event(acceptance, "human-acceptance", human_only=True)
+    add_transition(cases, "transition_human_acceptance_pass", human_acceptance, "awaiting_chatgpt_review")
+    backend_acceptance = event("Codex", "backend-self-acceptance", "significant_acceptance", "C1", dispatch=False, transition=acceptance_transition)
+    add_transition(cases, "transition_backend_self_acceptance_rejected", backend_acceptance, "awaiting_chatgpt_review", result="fail", codes=["TRANSITION_ACTOR_ROLE_FORBIDDEN"])
+    backend_material_review = event("Codex", "backend-material-review-close", "material_review", "C1", dispatch=False, transition=acceptance_transition)
+    add_transition(cases, "transition_backend_material_review_close_rejected", backend_material_review, "awaiting_chatgpt_review", result="fail", codes=["TRANSITION_ACTOR_ROLE_FORBIDDEN"])
+    backend_candidate = event("Claude Code", "backend-publication-candidate", "material_review", "C1", dispatch=False, transition=candidate_transition)
+    add_transition(cases, "transition_backend_publication_candidate_rejected", backend_candidate, "awaiting_chatgpt_review", result="fail", codes=["TRANSITION_ACTOR_ROLE_FORBIDDEN"])
+    foreground_completion = event("ChatGPT", "foreground-self-completion", "completion_handoff", "C1", dispatch=False, transition=completion_transition)
+    add_transition(cases, "transition_foreground_self_completion_rejected", foreground_completion, "awaiting_codex", result="fail", codes=["TRANSITION_ACTOR_ROLE_FORBIDDEN"])
+    human_completion = human_event(foreground_completion, "human-self-completion", human_only=True)
+    add_transition(cases, "transition_human_self_completion_rejected", human_completion, "awaiting_codex", result="fail", codes=["TRANSITION_ACTOR_ROLE_FORBIDDEN"])
+    role_impersonation = copy.deepcopy(dispatch)
+    role_impersonation["event_id"] = "transition-role-impersonation"
+    role_impersonation["occupied_role"] = "backend_execution_and_handoff"
+    add_transition(cases, "transition_provider_role_edge_mismatch_rejected", role_impersonation, "idle", result="fail", codes=["FRESH_EVENT_VALIDATION_FAILED", "TRANSITION_ACTOR_ROLE_FORBIDDEN"])
+
+    add_transition(cases, "transition_model_origin_missing", copy.deepcopy(dispatch), "idle", include_origin=False, result="fail", codes=["ACTOR_ORIGIN_ATTESTATION_REQUIRED", "ACTOR_ORIGIN_CONTEXT_SCHEMA_INVALID"])
+    wrong_origin_provider = actor_origin_context()
+    wrong_origin_provider["provider"] = "Codex"
+    add_transition(cases, "transition_actor_origin_wrong_provider", copy.deepcopy(dispatch), "idle", origin=wrong_origin_provider, result="fail", codes=["ACTOR_ORIGIN_BINDING_MISMATCH"])
+    wrong_origin_role = actor_origin_context()
+    wrong_origin_role["occupied_role"] = "backend_execution_and_handoff"
+    add_transition(cases, "transition_actor_origin_wrong_role", copy.deepcopy(dispatch), "idle", origin=wrong_origin_role, result="fail", codes=["ACTOR_ORIGIN_BINDING_MISMATCH"])
+    wrong_origin_transition = actor_origin_context()
+    wrong_origin_transition["transition_id"] = "foreground_acceptance"
+    add_transition(cases, "transition_actor_origin_wrong_transition", copy.deepcopy(dispatch), "idle", origin=wrong_origin_transition, result="fail", codes=["ACTOR_ORIGIN_BINDING_MISMATCH"])
+    wrong_origin_digest = actor_origin_context()
+    wrong_origin_digest["event_input_sha256"] = "0" * 64
+    add_transition(cases, "transition_actor_origin_event_digest_transplant", copy.deepcopy(dispatch), "idle", origin=wrong_origin_digest, result="fail", codes=["ACTOR_ORIGIN_BINDING_MISMATCH"])
+    cross_event_origin = actor_origin_context()
+    cross_event_origin["event_id"] = "another-event"
+    add_transition(cases, "transition_actor_origin_cross_event_transplant", copy.deepcopy(dispatch), "idle", origin=cross_event_origin, result="fail", codes=["ACTOR_ORIGIN_BINDING_MISMATCH"])
+    replay_origin = actor_origin_context()
+    add_transition(cases, "transition_actor_origin_replay", copy.deepcopy(dispatch), "idle", origin=replay_origin, consumed_actor_origin_context_ids=["fixture-actor-origin-dispatch"], result="fail", codes=["ACTOR_ORIGIN_CONTEXT_REPLAYED"])
+    forged_origin = actor_origin_context()
+    forged_origin["injection_source"] = "trusted_external_host"
+    forged_origin["test_only"] = False
+    origin_request, origin_state = transition_bundle("transition-actor-origin-forged-host", copy.deepcopy(dispatch), "idle")
+    cases.append(case("transition_actor_origin_forged_trusted_context", "transition", result="fail", codes=["ACTOR_ORIGIN_ATTESTATION_REQUIRED"], request=origin_request, active_state_context=origin_state, state_context_mode="test-fixture", actor_origin_context=forged_origin, actor_origin_mode="trusted-host"))
+
+    wrong_authority_digest = authority_context()
+    wrong_authority_digest["event_input_sha256"] = "0" * 64
+    add_transition(cases, "transition_c2_authority_event_digest_mismatch", copy.deepcopy(protected), "awaiting_human_gate", authority=wrong_authority_digest, result="fail", codes=["AUTHORITY_CONTEXT_BINDING_MISMATCH"])
+    cross_actor_authority = authority_context()
+    cross_actor_authority["actor_origin_context_id"] = "another-actor-origin"
+    cross_actor_authority["actor_origin_context_sha256"] = "0" * 64
+    add_transition(cases, "transition_c2_authority_cross_actor_transplant", copy.deepcopy(protected), "awaiting_human_gate", authority=cross_actor_authority, result="fail", codes=["AUTHORITY_CONTEXT_BINDING_MISMATCH"])
+
     wrong_task_request, wrong_task_context = transition_bundle("transition-state-task-mismatch", completion, "awaiting_codex", active_task="wrong-task")
-    cases.append(case("transition_state_task_mismatch", "transition", result="fail", codes=["STATE_TASK_BINDING_MISMATCH"], request=wrong_task_request, active_state_context=wrong_task_context, state_context_mode="test-fixture"))
+    cases.append(case("transition_state_task_mismatch", "transition", result="fail", codes=["STATE_TASK_BINDING_MISMATCH"], request=wrong_task_request, active_state_context=wrong_task_context, state_context_mode="test-fixture", actor_origin_context=actor_origin_context(), actor_origin_mode="test-fixture"))
     unreachable_request, unreachable_context = transition_bundle("transition-unreachable", dispatch, "awaiting_codex")
-    cases.append(case("transition_unreachable", "transition", result="fail", codes=["TRANSITION_FROM_STATE_EVIDENCE_MISMATCH", "TRANSITION_UNREACHABLE"], request=unreachable_request, active_state_context=unreachable_context, state_context_mode="test-fixture"))
+    cases.append(case("transition_unreachable", "transition", result="fail", codes=["TRANSITION_FROM_STATE_EVIDENCE_MISMATCH", "TRANSITION_UNREACHABLE"], request=unreachable_request, active_state_context=unreachable_context, state_context_mode="test-fixture", actor_origin_context=actor_origin_context(), actor_origin_mode="test-fixture"))
     claim_request, claim_context = transition_bundle("transition-claim-forgery", dispatch, "idle")
     claim_request["claimed_event_id"] = "forged"
-    cases.append(case("transition_claim_forgery", "transition", result="fail", codes=["TRANSITION_CLAIM_BINDING_MISMATCH"], request=claim_request, active_state_context=claim_context, state_context_mode="test-fixture"))
+    cases.append(case("transition_claim_forgery", "transition", result="fail", codes=["TRANSITION_CLAIM_BINDING_MISMATCH"], request=claim_request, active_state_context=claim_context, state_context_mode="test-fixture", actor_origin_context=actor_origin_context(), actor_origin_mode="test-fixture"))
     bad_pointer = copy.deepcopy(dispatch["pointer"])
     bad_pointer["data"]["decision"] = "forged"
     pointer_request, pointer_context = transition_bundle("transition-pointer-binding", dispatch, "idle", pointer_override=bad_pointer)
-    cases.append(case("transition_pointer_binding", "transition", result="fail", codes=["POINTER_ARTIFACT_BINDING_MISMATCH", "POINTER_ARTIFACT_BYTE_MISMATCH"], request=pointer_request, active_state_context=pointer_context, state_context_mode="test-fixture"))
+    cases.append(case("transition_pointer_binding", "transition", result="fail", codes=["POINTER_ARTIFACT_BINDING_MISMATCH", "POINTER_ARTIFACT_BYTE_MISMATCH"], request=pointer_request, active_state_context=pointer_context, state_context_mode="test-fixture", actor_origin_context=actor_origin_context(), actor_origin_mode="test-fixture"))
 
     mutated_request, mutated_context = transition_bundle("transition-event-mutation", copy.deepcopy(dispatch), "idle", validation=True)
     event_path = ROOT / mutated_request["event_ref"]["path"]
@@ -537,7 +744,7 @@ def build_cases() -> list[dict[str, Any]]:
     mutated["descriptive_human_gate"] = "mutated-after-validation"
     write_json(event_path, mutated, sort_keys=False)
     mutated_request["event_ref"] = fixture_ref(mutated_request["event_ref"]["path"])
-    cases.append(case("transition_event_mutation_after_result", "transition", result="fail", codes=["VALIDATION_ARTIFACT_BYTE_MISMATCH", "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"], request=mutated_request, active_state_context=mutated_context, state_context_mode="test-fixture"))
+    cases.append(case("transition_event_mutation_after_result", "transition", result="fail", codes=["VALIDATION_ARTIFACT_BYTE_MISMATCH", "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"], request=mutated_request, active_state_context=mutated_context, state_context_mode="test-fixture", actor_origin_context=actor_origin_context(), actor_origin_mode="test-fixture"))
     forged_event = copy.deepcopy(dispatch)
     forged_event["event_id"] = "forged-resolved-status-event"
     forged_event["required_refs"][0] = {
@@ -556,8 +763,8 @@ def build_cases() -> list[dict[str, Any]]:
     write_json(ROOT / fabricated_path, fabricated_pass)
     fabricated_request["validation_artifact_ref"] = fixture_ref(fabricated_path)
     fabricated_request["claimed_validation_artifact_sha256"] = fabricated_request["validation_artifact_ref"]["content_sha256"]
-    cases.append(case("transition_fabricated_pass_result", "transition", result="fail", codes=["FRESH_EVENT_VALIDATION_FAILED", "VALIDATION_ARTIFACT_BYTE_MISMATCH", "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"], request=fabricated_request, active_state_context=fabricated_context, state_context_mode="test-fixture"))
-    cases.append(case("transition_fabricated_resolved_status_rejected", "transition", result="fail", codes=["FRESH_EVENT_VALIDATION_FAILED", "VALIDATION_ARTIFACT_BYTE_MISMATCH", "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"], request=copy.deepcopy(fabricated_request), active_state_context=fabricated_context, state_context_mode="test-fixture"))
+    cases.append(case("transition_fabricated_pass_result", "transition", result="fail", codes=["FRESH_EVENT_VALIDATION_FAILED", "VALIDATION_ARTIFACT_BYTE_MISMATCH", "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"], request=fabricated_request, active_state_context=fabricated_context, state_context_mode="test-fixture", actor_origin_context=actor_origin_context(), actor_origin_mode="test-fixture"))
+    cases.append(case("transition_fabricated_resolved_status_rejected", "transition", result="fail", codes=["FRESH_EVENT_VALIDATION_FAILED", "VALIDATION_ARTIFACT_BYTE_MISMATCH", "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"], request=copy.deepcopy(fabricated_request), active_state_context=fabricated_context, state_context_mode="test-fixture", actor_origin_context=actor_origin_context(), actor_origin_mode="test-fixture"))
 
     other_event = copy.deepcopy(dispatch)
     other_event["event_id"] = "other-event"
@@ -566,29 +773,43 @@ def build_cases() -> list[dict[str, Any]]:
     other_validation_path = ".ai/communication_compliance/fixtures/artifacts/proof/transition-validation-from-other-event/validation.json"
     write_json(ROOT / other_validation_path, fabricated_pass)
     other_request["validation_artifact_ref"] = fixture_ref(other_validation_path)
-    cases.append(case("transition_validation_from_other_event_task", "transition", result="fail", codes=["VALIDATION_ARTIFACT_BYTE_MISMATCH", "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"], request=other_request, active_state_context=other_context, state_context_mode="test-fixture"))
+    cases.append(case("transition_validation_from_other_event_task", "transition", result="fail", codes=["VALIDATION_ARTIFACT_BYTE_MISMATCH", "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"], request=other_request, active_state_context=other_context, state_context_mode="test-fixture", actor_origin_context=actor_origin_context(), actor_origin_mode="test-fixture"))
 
     claimed_from_event = copy.deepcopy(dispatch)
     claimed_from_event["event_id"] = "claimed-from-state-mismatch"
     claimed_from_event["proposed_transition"]["from_state"] = "completed"
     claimed_from_request, claimed_from_context = transition_bundle("transition-claimed-from-mismatch", claimed_from_event, "idle")
-    cases.append(case("transition_claimed_from_state_mismatch", "transition", result="fail", codes=["TRANSITION_FROM_STATE_EVIDENCE_MISMATCH"], request=claimed_from_request, active_state_context=claimed_from_context, state_context_mode="test-fixture"))
+    cases.append(case("transition_claimed_from_state_mismatch", "transition", result="fail", codes=["TRANSITION_FROM_STATE_EVIDENCE_MISMATCH"], request=claimed_from_request, active_state_context=claimed_from_context, state_context_mode="test-fixture", actor_origin_context=actor_origin_context(), actor_origin_mode="test-fixture"))
 
     wrong_authority = authority_context()
     wrong_authority["task_id"] = "wrong-task"
     add_transition(cases, "transition_c2_authority_wrong_task", copy.deepcopy(protected), "awaiting_human_gate", authority=wrong_authority, result="fail", codes=["AUTHORITY_CONTEXT_BINDING_MISMATCH"])
     replay_authority = authority_context()
     replay_request, replay_context = transition_bundle("transition-c2-replay", copy.deepcopy(protected), "awaiting_human_gate")
-    cases.append(case("transition_c2_authority_replay", "transition", result="fail", codes=["AUTHORITY_CONTEXT_REPLAYED"], request=replay_request, active_state_context=replay_context, state_context_mode="test-fixture", authorization_context=replay_authority, authority_mode="test-fixture", consumed_context_ids=[replay_authority["context_id"]]))
+    cases.append(case("transition_c2_authority_replay", "transition", result="fail", codes=["AUTHORITY_CONTEXT_REPLAYED"], request=replay_request, active_state_context=replay_context, state_context_mode="test-fixture", authorization_context=replay_authority, authority_mode="test-fixture", actor_origin_context=actor_origin_context(), actor_origin_mode="test-fixture", consumed_context_ids=[replay_authority["context_id"]]))
     forged_trusted = authority_context()
     forged_trusted["injection_source"] = "trusted_external_host"
     forged_trusted["test_only"] = False
     trusted_request, trusted_context = transition_bundle("transition-c2-forged-trusted", copy.deepcopy(protected), "awaiting_human_gate")
-    cases.append(case("transition_c2_forged_trusted_context", "transition", result="fail", codes=["AUTHORITY_CONTEXT_TRUST_BOUNDARY_INVALID"], request=trusted_request, active_state_context=trusted_context, state_context_mode="test-fixture", authorization_context=forged_trusted, authority_mode="trusted-host"))
+    cases.append(case("transition_c2_forged_trusted_context", "transition", result="fail", codes=["AUTHORITY_CONTEXT_TRUST_BOUNDARY_INVALID"], request=trusted_request, active_state_context=trusted_context, state_context_mode="test-fixture", authorization_context=forged_trusted, authority_mode="trusted-host", actor_origin_context=actor_origin_context(), actor_origin_mode="test-fixture"))
+    trusted_origin = actor_origin_context()
+    trusted_origin["injection_source"] = "trusted_external_host"
+    trusted_origin["test_only"] = False
+    trusted_authority = authority_context()
+    trusted_authority["injection_source"] = "trusted_external_host"
+    trusted_authority["test_only"] = False
+    trusted_pass_request, trusted_pass_state = transition_bundle("transition-c2-trusted-host-pass", copy.deepcopy(protected), "awaiting_human_gate")
+    cases.append(case("transition_c2_trusted_host_verifiers_pass", "transition", request=trusted_pass_request, active_state_context=trusted_pass_state, state_context_mode="test-fixture", authorization_context=trusted_authority, authority_mode="trusted-host", actor_origin_context=trusted_origin, actor_origin_mode="trusted-host", trusted_host_verifier_result=True, trusted_actor_origin_verifier_result=True))
+
+    malformed_request, malformed_context = transition_bundle("transition-validation-malformed", copy.deepcopy(dispatch), "idle")
+    malformed_path = ".ai/communication_compliance/fixtures/artifacts/proof/transition-validation-malformed/validation.json"
+    write_json(ROOT / malformed_path, {"schema_version": "malformed"})
+    malformed_request["validation_artifact_ref"] = fixture_ref(malformed_path)
+    cases.append(case("transition_validation_artifact_malformed", "transition", result="fail", codes=["VALIDATION_ARTIFACT_BYTE_MISMATCH", "VALIDATION_ARTIFACT_SCHEMA_INVALID", "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"], request=malformed_request, active_state_context=malformed_context, state_context_mode="test-fixture", actor_origin_context=actor_origin_context(), actor_origin_mode="test-fixture"))
     missing_request, missing_context = transition_bundle("transition-missing-event", dispatch, "idle")
     missing_request["event_ref"] = {"kind": "test_fixture_blob", "path": ".ai/communication_compliance/fixtures/artifacts/missing-event.json", "content_sha256": "0" * 64, "test_only": True}
     cases.append(case("transition_missing_event_ref", "transition", result="fail", codes=["EVENT_REFERENCE_UNRESOLVED", "FRESH_EVENT_VALIDATION_FAILED", "TRANSITION_ID_UNKNOWN"], request=missing_request, active_state_context=missing_context, state_context_mode="test-fixture"))
-    cases.append(case("transition_full_real_workflow", "workflow_sequence", steps=[{"request": request, "active_state_context": context} for request, context in (dispatch_step, completion_step, revision_step, completion_two_step, acceptance_step)]))
+    cases.append(case("transition_full_real_workflow", "workflow_sequence", steps=[{"request": request, "active_state_context": context, "actor_origin_context": actor_origin_context(), "actor_origin_mode": "test-fixture"} for request, context in (dispatch_step, completion_step, revision_step, completion_two_step, acceptance_step)]))
 
     tree_head = subprocess.run(
         ["git", "-C", str(ROOT), "rev-parse", RELEASE + "^{tree}"],
@@ -615,6 +836,13 @@ def build_cases() -> list[dict[str, Any]]:
     mutable["regression_fixture_ref"] = ".ai/communication_compliance/fixtures/fixture_suite.json#pointer_extra_prose"
     mutable["record_sha256"] = "0" * 64
     cases.append(case("drift_mutable_fixture_rejected", "validate_drift", payload=mutable, prior_records=[first], result="fail", codes=["DRIFT_RECORD_HASH_MISMATCH", "DRIFT_RECORD_SCHEMA_INVALID", "DRIFT_RECURRENCE_FIXTURE_REQUIRED"]))
+    reviewed_exception = drift_record("fixture-drift-reviewed-exception", "NON_DETERMINISTIC_EXTERNAL_CHANNEL", [drift_record("fixture-drift-reviewed-first", "NON_DETERMINISTIC_EXTERNAL_CHANNEL", [])])
+    reviewed_exception["deterministic_fixture_impossible_reason"] = "The external authenticated channel cannot be replayed inside the repository validator."
+    reviewed_exception["foreground_review_required"] = True
+    review_path = ".ai/HUMAN_BRIEFS/human-ai-communication-compliance-gate-exact-head-review-0002.md"
+    reviewed_exception["foreground_review_ref"] = git_ref(review_path, "25e78c2932f9fa6157dee6e559f45c056379f5e2")
+    reviewed_exception["record_sha256"] = gate_module().digest_object({key: value for key, value in reviewed_exception.items() if key != "record_sha256"}, preserve_mapping_order=False)
+    cases.append(case("drift_deterministic_exception_with_review_pass", "validate_drift", payload=reviewed_exception, prior_records=[drift_record("fixture-drift-reviewed-first", "NON_DETERMINISTIC_EXTERNAL_CHANNEL", [])]))
 
     ledger_bytes = git_show(".ai/COMMUNICATION_DRIFT_LEDGER.yml", RELEASE)
     ledger = yaml.safe_load(ledger_bytes)
@@ -645,14 +873,14 @@ def build_cases() -> list[dict[str, Any]]:
 
     for name in ("pointer_duplicate_keys.yml", "pointer_multidoc.yml", "pointer_anchor_alias.yml"):
         cases.append(case("strict_parse_" + name.removesuffix(".yml"), "parse_document", result="error", codes=["INPUT_DOCUMENT_REJECTED"], input_ref=f".ai/communication_compliance/fixtures/raw/{name}"))
-    return cases
+    return migrate_inherited_cases(cases)
 
 
 def main() -> int:
     write_raw_parser_fixtures()
     prior_suite_bytes = git_show(
         ".ai/communication_compliance/fixtures/fixture_suite.json",
-        PARENT_CANDIDATE,
+        LEGACY_SUITE_HEAD,
     )
     prior_suite = json.loads(prior_suite_bytes)
     suite = {
@@ -661,11 +889,14 @@ def main() -> int:
         "protocol_release_head": RELEASE,
         "prior_suite_ref": {
             "kind": "git_blob",
-            "commit": PARENT_CANDIDATE,
+            "commit": LEGACY_SUITE_HEAD,
             "path": ".ai/communication_compliance/fixtures/fixture_suite.json",
             "content_sha256": sha256(prior_suite_bytes),
         },
         "prior_case_ids": [item["id"] for item in prior_suite["cases"]],
+        "inherited_coverage_map_ref": git_ref(
+            ".ai/communication_compliance/inherited_fixture_coverage_map.json"
+        ),
         "cases": build_cases(),
     }
     write_json(SUITE_PATH, suite, sort_keys=False)

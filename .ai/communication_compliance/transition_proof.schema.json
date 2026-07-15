@@ -1,10 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "human-ai-communication-transition-proof-v2",
+  "$id": "human-ai-communication-transition-proof-v3",
   "type": "object",
-  "required": ["schema_version", "request_id", "result", "protocol_release_head", "policy_sha256", "fresh_event_validation_sha256", "raw_state_status", "normalized_from_state", "derived_transition_id", "derived_to_state", "active_state_anchor", "evidence", "violations", "authorization_granted_by_validator"],
+  "required": ["schema_version", "request_id", "result", "protocol_release_head", "policy_sha256", "fresh_event_validation_sha256", "raw_state_status", "normalized_from_state", "derived_transition_id", "derived_to_state", "active_state_anchor", "actor_origin_anchor", "authorization_anchor", "evidence", "violations", "authorization_granted_by_validator"],
   "properties": {
-    "schema_version": {"const": "human_ai.communication_transition_proof.v2"},
+    "schema_version": {"const": "human_ai.communication_transition_proof.v3"},
     "request_id": {"type": ["string", "null"]},
     "result": {"enum": ["pass", "fail"]},
     "protocol_release_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
@@ -15,9 +15,24 @@
     "derived_transition_id": {"type": ["string", "null"]},
     "derived_to_state": {"type": ["string", "null"]},
     "active_state_anchor": {"type": ["object", "null"]},
+    "actor_origin_anchor": {"oneOf": [{"$ref": "#/$defs/context_anchor"}, {"type": "null"}]},
+    "authorization_anchor": {"oneOf": [{"$ref": "#/$defs/context_anchor"}, {"type": "null"}]},
     "evidence": {"type": "object"},
     "violations": {"type": "array"},
     "authorization_granted_by_validator": {"const": false}
+  },
+  "$defs": {
+    "context_anchor": {
+      "type": "object",
+      "required": ["context_id", "context_sha256", "injection_source", "test_only"],
+      "properties": {
+        "context_id": {"type": "string", "minLength": 1},
+        "context_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "injection_source": {"enum": ["trusted_external_host", "deterministic_test_fixture"]},
+        "test_only": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    }
   },
   "additionalProperties": false
 }

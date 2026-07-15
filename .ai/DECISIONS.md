@@ -43,6 +43,9 @@
 - Status: accepted for implementation and foreground review
 - Decision: Classify named communication events as C0/C1/C2 and require a deterministic, versioned, fail-closed validation result before any material C1/C2 workflow transition is eligible.
 - Evidence: Bootstrap receipts, immutable refs, pointer purity, complete Human content, transition bindings, and privacy-safe drift records use `.ai/communication_compliance/` schemas and validator.
+- Role authority: Every transition edge carries provider-neutral `allowed_actor_roles`; the role comes only from the freshly validated immutable event, so backend self-acceptance/publication and foreground self-completion fail closed.
+- Actor origin: Every state-changing Human/model event requires a separately injected trusted `ActorOriginContext` bound to provider, role, task, event, transition, release head, and exact event digest, with its own replay protection.
 - C0 boundary: Ordinary discussion is not forced through GitHub or durable validation; unknown event types fail closed.
-- C2 authority: A model-generated `human_gate`, pointer, expression, task packet, or validation result cannot authorize protected action. C2 requires a separately injected trusted-host Human `AuthorizationContext`, and the gate never performs the action.
+- C2 authority: A model-generated `human_gate`, pointer, expression, task packet, or validation result cannot authorize protected action. C2 requires a separately injected trusted-host Human `AuthorizationContext` bound to the exact event and actor-origin digest, and the gate never performs the action.
+- Regression evidence: Immutable legacy cases are inventory only. A release-bound one-to-one map names unique current migrated equivalents that are actually executed and reported separately from inherited inventory.
 - Runtime boundary: This is repository-level evidence enforcement. Live Communication Gateway, UI middleware, polling, runtime, Coordinator, or unattended activation remains separately Human-gated.

@@ -1,11 +1,11 @@
-policy_version: "human_ai.communication_material_event_policy.v2"
-validator_version: "2.0.0"
+policy_version: "human_ai.communication_material_event_policy.v3"
+validator_version: "3.0.0"
 
 # source_mailbox_base_head is only the neutral-mailbox comparison baseline.
 # protocol_release_head is bound in the second, binding-only release commit.
 source_mailbox_base_head: "d235e602c14250d16b91f2897cb8308e031cc13c"
-protocol_release_head: "65fb2a0a7b4979b887aa1ba2aef454bb7b783ca4"
-release_binding_status: "bound"
+protocol_release_head: null
+release_binding_status: "unbound"
 
 wire_schemas:
   chatgpt_to_codex_v1:
@@ -169,6 +169,9 @@ state_evidence:
 
 transitions:
   dispatch_to_backend:
+    allowed_actor_roles:
+      - human_speaker
+      - foreground_review_and_task_dispatch
     from_states:
       - closed
     to_state: backend_assigned
@@ -178,6 +181,8 @@ transitions:
     required_event_class: C1
     external_human_authority_required: false
   backend_completion:
+    allowed_actor_roles:
+      - backend_execution_and_handoff
     from_states:
       - backend_assigned
       - publication_in_progress
@@ -191,6 +196,9 @@ transitions:
     required_event_class: C1
     external_human_authority_required: false
   foreground_revision_dispatch:
+    allowed_actor_roles:
+      - human_speaker
+      - foreground_review_and_task_dispatch
     from_states:
       - foreground_review_pending
     to_state: backend_assigned
@@ -201,6 +209,9 @@ transitions:
     required_event_class: C1
     external_human_authority_required: false
   foreground_acceptance:
+    allowed_actor_roles:
+      - human_speaker
+      - foreground_review_and_task_dispatch
     from_states:
       - foreground_review_pending
       - published_pending_ack
@@ -212,6 +223,9 @@ transitions:
     required_event_class: C1
     external_human_authority_required: false
   publication_candidate:
+    allowed_actor_roles:
+      - human_speaker
+      - foreground_review_and_task_dispatch
     from_states:
       - foreground_review_pending
     to_state: human_gate_pending
@@ -222,6 +236,9 @@ transitions:
     required_event_class: C1
     external_human_authority_required: false
   protected_publication_entry:
+    allowed_actor_roles:
+      - human_speaker
+      - foreground_review_and_task_dispatch
     from_states:
       - human_gate_pending
     to_state: publication_in_progress
