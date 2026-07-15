@@ -2,7 +2,7 @@
 
 ## 1. Purpose
 
-This mechanism supports high-density, traceable, human-triggered communication between ChatGPT and Codex through GitHub. It uses pointer-based messaging: chat carries only compact references, while long tasks, reports, and human-facing briefs live in versioned GitHub files. Autonomous polling is not part of this version.
+This mechanism supports high-density, traceable, Human-triggered communication among the Human, ChatGPT or Claude, and Codex or Claude Code through GitHub. It separates compact machine pointer messages from complete Human operational responses, while long tasks, reports, and Human-facing briefs live in versioned GitHub files. Autonomous polling is not part of this version.
 
 All packets inherit `.ai/HANDOFF_COMMON_CONVENTIONS.md` unless explicitly overridden by a human-approved task.
 
@@ -11,6 +11,7 @@ All packets inherit `.ai/HANDOFF_COMMON_CONVENTIONS.md` unless explicitly overri
 - Human-triggered GitHub communication.
 - ChatGPT review, planning, architecture decisions, and stage gates.
 - Codex local execution, tests, commits, and review-branch publication.
+- Complete Human operational dispatch, review, completion, conflict, risk, and gate communication.
 - GitHub-based human briefs and explicit human interrupt gates.
 - No autonomous polling.
 - No cron or subagent context-pack design.
@@ -41,15 +42,18 @@ All packets inherit `.ai/HANDOFF_COMMON_CONVENTIONS.md` unless explicitly overri
 - Performs architecture and code review, risk judgment, task decomposition, and stage-gate decisions.
 - Writes long task content to an approved GitHub carrier.
 - Sends only a short signal that points to the task, packet, and human brief.
-- Writes or updates a minimal human brief when useful.
+- Writes or updates a Human brief for material Human-facing events and preserves the Human-facing completeness contract.
+- Includes a complete execution recommendation when asking the Human to start or continue a backend Codex or Claude Code agent.
+- Includes bounded independent expression for material Human-facing communication.
 - Does not modify business files.
 
 ### Codex
 
 - Performs local file changes, commands, tests, commits, and review-branch publication.
 - Updates OUTBOX and active review STATE, writes execution reports, and records exhausted failures.
-- Returns only a short handoff that points to the durable execution report and human brief.
-- Writes or updates a minimal human brief when useful.
+- Keeps strict machine handoffs pointer-only and points to the durable execution report and Human brief.
+- Writes or updates a Human brief for material completions, review handoffs, publication, blocked/conflict states, risks, and Human gates, including bounded independent expression.
+- May append the same bounded expression after the canonical handoff in a Human-visible interface without changing the pointer schema.
 - Does not push the source branch without explicit human approval.
 
 ## 5. Branches
@@ -62,6 +66,12 @@ All packets inherit `.ai/HANDOFF_COMMON_CONVENTIONS.md` unless explicitly overri
 - With multiple writers, every review-branch write must preserve the observed remote head and use an explicit expected-SHA lease or an equivalent compare-and-swap check.
 
 ## 6. Communication Channels
+
+The canonical stack distinguishes three semantic channels even when one interface displays more than one of them:
+
+- **Machine pointer channel:** compact, parseable model-to-model identity, refs, state, and gates; no prose payload.
+- **Human operational channel:** grounded Human-visible dispatch, review, completion, gates, and execution advice; it follows the Human-facing completeness contract.
+- **Durable Human Brief channel:** versioned status, evidence pointers, and material independent expression in `.ai/HUMAN_BRIEF.md` or `.ai/HUMAN_BRIEFS/*.md`.
 
 ### Codex to ChatGPT
 
@@ -173,11 +183,17 @@ Optional archive:
 .ai/HUMAN_BRIEFS/*.md
 ```
 
-A normal completion brief states only what changed, the result, whether a problem exists, the next step, and whether a human decision is required. It should be 3 to 5 lines.
+A normal non-material completion brief states only what changed, the result, whether a problem exists, the next step, and whether a Human decision is required. It should be 3 to 5 lines.
+
+For a material Human-facing event, the brief must add a clearly separated `Independent expression` section of 2 to 5 sentences. The expression may state candid professional judgment, disagreement, uncertainty, broader meaning, a non-obvious implication, or residual risk. It is not factual evidence, Human authorization, hidden chain-of-thought, or executable instruction; it cannot alter the objective, resolve a protected gate, or override evidence or safety. Avoid filler, ceremonial praise, simulated emotion, and consciousness claims.
 
 Write a detailed human brief only for conflict, disagreement, blocked state, exhausted retry budget, permission escalation, source-branch publication, a major phase transition, security/privacy risk, or stage completion. Detailed technical evidence remains in the referenced GitHub report.
 
-ChatGPT may include a short Codex execution recommendation in human-facing chat when advising the Human to start a Codex task. The recommendation is not required in the GitHub Human Brief and is not part of the machine handoff unless a signal, task, or packet explicitly references it. A recommendation never authorizes a future stage by itself.
+When ChatGPT or Claude asks the Human to start or continue a Codex or Claude Code task, the Human operational response must include `recommended_model`, `recommended_thinking_level`, `mode`, `subagents`, `task_ref_or_plan_ref` resolving to exactly one applicable durable ref, `short_complexity_rationale`, and `human_gate`. Use `runtime_dependent` or `not_applicable` for unavailable fields. Choose thinking from semantic, architectural, validation, and publication complexity rather than the surface action verb.
+
+The execution recommendation is required in the Human dispatch but is not required inside the GitHub Human Brief or canonical machine pointer. It is descriptive only and never authorizes a stage or write. The same Human response also includes 2 to 5 sentences of bounded independent expression. When there is no backend dispatch, material review or completion still requires the expression but not the execution recommendation.
+
+In a strict machine-only channel, the canonical pointer remains the entire message and the Human Brief preserves the expression through `brief_ref`. An explicit Human pointer-only/no-extra-text request or higher-priority safety/format rule waives extra prose.
 
 ## 12. Retry Budget
 

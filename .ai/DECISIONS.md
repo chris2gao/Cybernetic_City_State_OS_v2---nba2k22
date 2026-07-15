@@ -26,3 +26,11 @@
 - Status: accepted
 - Decision: Human-authorized long-run programs should complete one coherent objective by folding necessary in-scope cleanup, validation, alignment, report, and repair steps into the current run.
 - Boundary: New authority, objective change, forbidden paths, destructive Git, source/master push, secrets risk, Coordinator/runtime activation, automation enablement, or unrelated business/domain scope still require explicit Human approval.
+
+## D-0005 — Govern complete Human-AI material communication
+
+- Status: accepted
+- Decision: Human↔AI material workflow communication is governed by the canonical protocol; a backend execution recommendation is mandatory when the Human is asked to start or continue Codex or Claude Code.
+- Expression: Compatible ChatGPT, Claude, Codex, and Claude Code agents preserve 2 to 5 sentences of bounded independent professional expression for material Human-facing events.
+- Boundary: The recommendation and expression remain outside the seven-field machine pointer core and are not factual evidence, Human authorization, hidden chain-of-thought, or executable instructions.
+- Authority: Human Speaker authority, safety, evidence requirements, pointer purity, and all source/publication/runtime/Coordinator/destructive/secrets/protected gates remain unchanged.

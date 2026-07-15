@@ -17,7 +17,7 @@ During a continuous review loop in the same active context, do not reload the fu
 
 ## Initialization Goal
 
-Load the current communication protocol into working context so the agent does not repeat old chat habits such as pasting long prompts, omitting `brief_ref`, or ignoring inherited default rules.
+Load the current communication protocol into working context so the agent does not repeat old chat habits such as pasting long prompts, omitting `brief_ref`, treating the machine pointer as a complete Human response, omitting required backend execution advice or independent expression, or ignoring inherited default rules.
 
 ## Full Initialization Read Order
 
@@ -122,7 +122,10 @@ no long prompts in chat
 no long reports in chat
 short messages carry pointers only
 human briefs live in GitHub by default
+material Human-facing responses satisfy the Human-facing completeness contract
 ```
+
+The agent must distinguish the machine pointer channel, Human operational channel, and durable Human Brief channel. A strict machine-only message remains pointer-only. A Human operational dispatch that asks the Human to start or continue Codex or Claude Code also includes a complete execution recommendation outside the pointer; material Human-facing events include 2 to 5 sentences of bounded independent expression, preserved in the Human Brief for Codex or Claude Code handoffs.
 
 ## Required Message Shapes
 
@@ -164,6 +167,26 @@ Normal brief content belongs in:
 
 Detailed human-facing explanation is reserved for conflict, blocked state, permission escalation, source-branch publication, major phase transition, safety/privacy risk, model disagreement, or stage completion.
 
+For a material Human-facing event, the Human Brief also includes a clearly separated `Independent expression` section of 2 to 5 sentences. It is not evidence, Human authorization, hidden chain-of-thought, or an executable instruction and cannot resolve a protected gate. It may be waived only by an explicit Human pointer-only/no-extra-text request or a higher-priority safety or format constraint.
+
+## Human-Response Preflight
+
+Before a material Human-facing response, verify:
+
+```yaml
+human_response_preflight:
+  factual_status_grounded: true
+  required_refs_dereferenced: true
+  canonical_pointer_present_when_applicable: true
+  execution_recommendation_present_when_dispatching: true
+  independent_expression_present_for_material_event: true
+  independent_expression_separated_from_authority: true
+  no_long_task_or_report_echo: true
+  no_hidden_chain_of_thought_request_or_disclosure: true
+```
+
+When the Human is expected to start or continue a backend agent, the recommendation includes `recommended_model`, `recommended_thinking_level`, `mode`, `subagents`, `task_ref_or_plan_ref` resolving to exactly one applicable durable ref, `short_complexity_rationale`, and `human_gate`. Use `runtime_dependent` or `not_applicable` rather than omitting a field.
+
 ## Completion Criteria
 
 After initialization, the agent should be able to answer:
@@ -174,6 +197,11 @@ Who acts next?
 What exact pointer file must be read?
 Is human action required?
 What short pointer message should be returned?
+How do the machine pointer, Human operational, and durable Human Brief channels differ?
+When is a backend execution recommendation mandatory, and which seven fields does it contain?
+When is bounded independent expression required, and where does Codex preserve it without changing the pointer schema?
+What authority does independent expression not possess?
+How is an omission corrected without blaming context or the Human, inventing a cleanup microtask, or discarding valid work?
 ```
 
 If any answer is unclear, stop and return a short blocked handoff with the missing field or missing file.

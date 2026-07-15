@@ -106,11 +106,13 @@ Codex returns the canonical short handoff defined by `.ai/PROTOCOL.md`. ChatGPT 
 
 Long Codex output belongs in `.ai/CODEX_REPORTS/*.md`, `.ai/OUTBOX.md`, or another explicitly authorized path. Human-facing status belongs in `.ai/HUMAN_BRIEF.md`.
 
+Machine pointer output and Human operational output are separate channels. A material Human-facing response must provide grounded factual status, the canonical pointer when dispatching or handing off, bounded independent expression, and—when the Human is expected to start or continue Codex or Claude Code—a complete execution recommendation. The recommendation and expression remain outside the canonical seven-field pointer core.
+
 ## 9. Review-Gate Correction Loop
 
 Protocol adherence is enforced by review, not assumption.
 
-When a model misses required refs, writes outside scope, oversteps authority, emits low-value transcript output, uses the wrong task level, or violates the handoff schema, the reviewing model must:
+When a model misses required refs, writes outside scope, oversteps authority, emits low-value transcript output, uses the wrong task level, violates the handoff schema, omits a required backend execution recommendation, omits required independent expression, or fails to separate it from evidence and authority, the reviewing model must:
 
 1. mark the result `revise`, `blocked`, or `conflict` as appropriate;
 2. identify the exact violated rule and evidence;
@@ -119,6 +121,26 @@ When a model misses required refs, writes outside scope, oversteps authority, em
 5. require a new handoff before advancing the stage.
 
 Repeated protocol failure does not silently become accepted behavior.
+
+For a Human-facing completeness omission, acknowledge protocol drift plainly and correct the response in the same turn when possible. Do not blame context length or the Human. Do not create a fake cleanup/finalize microtask solely to restore an omitted chat section, and preserve valid repository work. If the durable source protocol itself is deficient, use one coherent reviewed protocol-correction task.
+
+### Human-Response Preflight
+
+Before sending a material Human-facing response, verify:
+
+```yaml
+human_response_preflight:
+  factual_status_grounded: true
+  required_refs_dereferenced: true
+  canonical_pointer_present_when_applicable: true
+  execution_recommendation_present_when_dispatching: true
+  independent_expression_present_for_material_event: true
+  independent_expression_separated_from_authority: true
+  no_long_task_or_report_echo: true
+  no_hidden_chain_of_thought_request_or_disclosure: true
+```
+
+The execution recommendation must contain `recommended_model`, `recommended_thinking_level`, `mode`, `subagents`, `task_ref_or_plan_ref` resolving to exactly one applicable durable ref, `short_complexity_rationale`, and `human_gate`; use `runtime_dependent` or `not_applicable` instead of omission. Independent expression is 2 to 5 sentences, visibly separated from evidence and authority, and possesses no authorization or gate-resolving force.
 
 ## 10. Minimal Audit Checklist
 
@@ -132,6 +154,10 @@ Before claiming completion or approval, verify:
 - [ ] validation matched the task level and definition of done;
 - [ ] mailbox artifacts and canonical short handoff were produced when required;
 - [ ] detailed output was written to durable files instead of pasted into chat.
+- [ ] the Human-response preflight passed for every material Human-facing event;
+- [ ] a backend execution recommendation contained every required field when the Human was asked to start or continue Codex or Claude Code;
+- [ ] bounded independent expression was present, separated from evidence/authority, and preserved through `brief_ref` when the machine channel had to stay pointer-only;
+- [ ] no hidden chain-of-thought was requested or disclosed;
 - [ ] a long-run task, if applicable, passed preflight, used an explicit permission pre-grant, remained local-only after launch, and produced its long-run log.
 
 ## 11. New Model Onboarding Test
@@ -146,6 +172,15 @@ A new independent model passes onboarding when, after reading `.ai/HANDOFF_INIT_
 6. every non-null ref that must be read;
 7. current Human gate;
 8. next required action, task level, and canonical response shape.
+
+It must also be able to answer:
+
+9. how the machine pointer, Human operational, and durable Human Brief channels differ;
+10. when a backend execution recommendation is mandatory and which seven fields it contains;
+11. when bounded independent expression is required and when it may be waived;
+12. where Codex or Claude Code preserves expression without changing the pointer schema;
+13. which authority independent expression does not possess;
+14. how to correct a Human-facing omission without inventing a cleanup microtask or discarding valid work.
 
 The model should summarize these items without executing the task. Failure to locate a required item produces a blocked onboarding result, not a guessed answer.
 

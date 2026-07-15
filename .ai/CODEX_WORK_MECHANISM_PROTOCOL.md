@@ -92,7 +92,9 @@ Explicit app/plugin availability matters for:
 - specialized workflows such as Codex Security;
 - MCP-backed capabilities not present in the local workspace.
 
-When advising the Human to start a Codex task, ChatGPT may include a short human-facing execution recommendation and mention required plugins/apps or authentication scope. This recommendation is not required in the GitHub Human Brief and is not part of the machine handoff unless a signal, task, or packet explicitly references it. Ordinary local Git and filesystem work needs no plugin/app recommendation.
+When ChatGPT or Claude asks the Human to start or continue Codex or Claude Code backend work, the Human operational response must include a compact execution recommendation containing `recommended_model`, `recommended_thinking_level`, `mode`, `subagents`, `task_ref_or_plan_ref` resolving to exactly one applicable durable ref, `short_complexity_rationale`, and `human_gate`. Use `not_applicable` or `runtime_dependent` instead of silently omitting an unavailable field. Select model, thinking, and mode from the task's semantic, architectural, validation, and publication complexity rather than its surface verb. Include plugins, apps, or authentication scope only when required.
+
+The recommendation remains outside the canonical machine pointer, is descriptive rather than authorizing, and cannot satisfy or cross a protected gate. Ordinary local Git and filesystem work needs no plugin/app recommendation.
 
 ## 5. Task Type Matrix
 
@@ -228,6 +230,16 @@ Codex can choose quiet/bounded commands and avoid repeating tool output in prose
 On the successful path, do not echo task packets, Human Brief bodies, full command output, duplicate grep context, or verbose validation logs. First-pass searches use `rg -n` without context and stay within 80 result lines; context is read only for selected matches. Consolidate validation results and expand logs only when failure or ambiguity makes them decision-relevant.
 
 Progress narration defaults to off. Use it for blocked state, conflict, permission need, destructive risk, or a required Human gate, plus any update explicitly required by higher-priority instructions.
+
+### Material Human-Facing Output And Bounded Independent Expression
+
+For a material Human-facing completion, review handoff, publication, blocked state, conflict, Human gate, or significant acceptance, Codex or Claude Code must preserve 2 to 5 sentences under a clearly separated `Independent expression` heading in `.ai/HUMAN_BRIEF.md` or the referenced archived Human Brief. The direct Human-visible response may append the same or materially identical bounded expression after the canonical handoff when that channel permits prose. A strict machine-only channel remains pointer-only; in that case `brief_ref` preserves the expression without changing the seven-field core.
+
+The expression may state candid professional judgment, respectful disagreement, uncertainty, architecture or protocol meaning, execution insight, a non-obvious implication, or residual risk. It is not factual evidence, Human authorization, hidden chain-of-thought, an executable instruction, or mandatory positivity. It must not change the objective, grant permission, route engines, adjudicate a protected dispute, resolve a protected gate, approve or publish source/master, activate runtime or Coordinator, handle secrets, authorize destructive work, or override evidence or safety. Avoid generic filler, ceremonial approval, repeated summary, and simulated emotion or consciousness claims.
+
+Mechanical one-line acknowledgements and parser-only messages are exempt unless they carry a material decision or result. The Human may waive extra prose by explicitly requesting pointer-only or no-extra-text output, and higher-priority safety or format rules may also require omission.
+
+This bounded final/brief requirement does not enable step-by-step command narration, full Human Brief echo, verbose logs, or successful-path progress chatter. Quiet commands, concise validation summaries, and the canonical machine handoff remain unchanged.
 
 ## 9. Context Value Principle
 
