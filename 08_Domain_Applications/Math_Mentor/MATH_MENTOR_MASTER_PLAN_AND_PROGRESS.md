@@ -4,6 +4,8 @@
 
 > **当前证据基线：** `master@9e12064cbc51f61918dccfd48cf6915879adb962`（2026-07-15 核验）。本文件是 Human 可读的进度索引，不替代 Plan 3 宪法、领域协议、精确 Git 历史或详细合同。Human Speaker 始终拥有最终语义、发布与激活权。若摘要文字与当前 Git 物理证据冲突，以精确提交、当前文件和获批 Human 决定为准。
 
+`9e12064...` 是本总账事实盘点的 **reconciled evidence/source baseline**，不是对发布后当前 master SHA 的预言。三文件包的发布状态按以下非自引用合同解析：accepted candidate `c461d252b4a86241745e438dd8c9cd9da6f14a72` 与 accepted review authority `0a832a28adf71eb96701ea1a98710eefe5c80193` 是输入证据；只有三文件通过正常 merged PR 实际存在于经物理核验的 current master 时，才是 `accepted_published`；最终 PR、merge commit 与 master SHA 记录在 `ai/review/latest` 的 final publication handoff，而不写进产生该 merge 的提交。
+
 本总账只在以下三类事件后更新：获接受的 master 发布、重要 Human 架构决定、阶段或批次获接受。状态不能从旧报告标题或旧 `planned` 字样推断，必须重新核验当前 master。
 
 本文件与 [MATH_MENTOR_CURRENT_STATE.yml](MATH_MENTOR_CURRENT_STATE.yml) 和 [MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md](MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md) 构成三文件接管包。前者是机器可读新鲜度快照，后者定义 provider-neutral 角色、通讯 packet、接管和职责分离。三者都明确服从同一规则：**精确 Git 证据覆盖陈旧摘要文字。**
@@ -57,7 +59,7 @@ Math Mentor 是一个由 Human 治理、由可替换前台教师直接教学、�
 | LRP-06 Capability / Tool Truthfulness | `accepted_published` | `specified_manual_only` | 能力登记、工具诚实性与计算 handoff 已发布；工具 broker/runner 未实现 |
 | P0 control-plane hardening | `accepted_published` | `statically_validated_inactive` | PR #3 已合并；静态控制面 104/104；无生产 trust ingress、runtime 或 writer |
 | Four-node certified pilot | `accepted_published` | `pilot_accepted` | PR #4 发布四节点；PR #5 修复干净检出复现；范围只限 dossier 所声明证据，4/4 仍 `consumer_allowed=false` |
-| Provider-neutral role/handoff correction | `specified_manual_only` | `specified_manual_only` | Human 已授权同任务 correction 候选；前台轻量准入、后台重编排/分层语义审查；尚未发布到 master，也没有自治 dispatcher、runtime 或 writer |
+| Provider-neutral role/handoff archive | `accepted_published` 仅当正常 merged PR 后三文件在经物理核验的 current master 上存在 | `specified_manual_only` | accepted candidate/review refs 固定；最终 PR/merge/master 从 final handoff 与 Git 物理状态解析；没有自治 dispatcher、runtime 或 writer |
 
 LRP 的“已发布”表示合同与文档已经落在当前 master，不表示相应生产能力已运行。LRP-04 特别不能被描述为 executable runtime 或真实 E2E。P0 的 admission、authorization 与 identity 实现是静态、只读、未激活的控制平面。
 
@@ -212,7 +214,7 @@ runtime_activated: false
 | review material | 复习题、错误回访、间隔建议 | 只作提案；无 writer 时不声称已排程 |
 | deterministic work / repair | 计算、validation、index diagnostics、缺口报告、获准修复 | provenance 可复现；mutation scope 与 Human gate 匹配 |
 
-当前合同不授权 production Coordinator、nonce/persistence、learning-state/scheduler write、consumer promotion、bridge mutation 或 source/master publication。
+当前角色合同本身不授权 production Coordinator、nonce/persistence、learning-state/scheduler write、consumer promotion、bridge mutation 或 source/master publication；三文件包的 source/master 发布仅来自独立的 Human-authorized normal-PR publication signal，不扩大其余权限。
 
 ## 11. 下一认证节点批次提案
 
@@ -248,6 +250,7 @@ runtime_activated: false
 
 - 2026-07-15：在 `master@9e12064cbc51f61918dccfd48cf6915879adb962` 建立首版总账；校正 LRP、P0、pilot、UI 与 legacy bridge 当前状态；记录 ChatGPT/Claude 前台、Codex/Claude Code 后台的手工教学编排架构；提出四节点 prerequisite-frontier 批次。
 - 2026-07-15：同任务 correction 将角色改为 provider-neutral 可替换协议：前台教师专注教学与轻量准入，后台重型编排与 SR0/SR1/SR2 语义审查可委派；新增 current-state 与 role/handoff companion，并要求 zero-context takeover dry run。
+- 2026-07-15：publication preparation 移除候选期“尚未发布”自陈述，改用 accepted candidate/review refs、merged normal PR、current-master 物理存在与 final review-branch handoff 解析发布状态；不预写未来 merge SHA。
 
 ## 13. 证据索引与未知项
 

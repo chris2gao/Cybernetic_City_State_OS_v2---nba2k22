@@ -8,13 +8,18 @@ freshness_policy:
 evidence_baseline:
   source_branch: "master"
   source_head: "9e12064cbc51f61918dccfd48cf6915879adb962"
+  source_head_role: "reconciled_evidence_baseline_not_future_current_master_prediction"
   work_branch: "codex/math-mentor-master-plan-progress-ledger"
   parent_candidate: "1d3f6b9708db091632c1344fb8e9a3f9bc34b3db"
-  correction_candidate_resolution:
-    packet_id: "codex-math-mentor-master-plan-progress-ledger-correction-candidate-0002"
-    pointer_branch: "ai/review/latest"
-    pointer_file: ".ai/OUTBOX.md"
-    requirement: "verify exact development_head physically before takeover"
+  accepted_candidate: "c461d252b4a86241745e438dd8c9cd9da6f14a72"
+  accepted_review_authority_head: "0a832a28adf71eb96701ea1a98710eefe5c80193"
+  accepted_review_ref: ".ai/HUMAN_BRIEFS/math-mentor-master-plan-progress-ledger-correction-exact-head-review-0002.md"
+  publication_resolution:
+    method: "normal_ready_PR_plus_normal_merge_commit_plus_physical_git_verification"
+    published_condition: "all_three_bundle_files_present_on_physically_verified_current_master_through_merged_PR"
+    exact_final_pointer_branch: "ai/review/latest"
+    exact_final_pointer_file: ".ai/OUTBOX.md"
+    hardcode_future_self_merge_sha: false
 
 takeover_bundle:
   human_readable_plan: "08_Domain_Applications/Math_Mentor/MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md"
@@ -92,7 +97,7 @@ current_milestones:
     stage_8: "absent_blocked"
     stage_9: "planned"
   provider_neutral_role_archive:
-    delivery_status: "correction_candidate_not_master_published"
+    delivery_status_resolution: "accepted_published_iff_publication_resolution_published_condition_is_true"
     capability_status: "specified_manual_only"
 
 current_capability_states:
@@ -151,13 +156,17 @@ legacy_bridge_state:
 
 active_or_latest_task:
   task_id: "math-mentor-master-plan-progress-ledger-0001"
-  continuation_kind: "same_task_correction"
-  correction_signal: "chatgpt-math-mentor-master-plan-progress-ledger-correction-0002"
-  correction_ref: ".ai/TASKS/math-mentor-master-plan-progress-ledger-0001-role-replacement-correction.md"
-  status: "complete_awaiting_chatgpt_review"
+  continuation_kind: "same_task_publication_continuation"
+  publication_signal: "chatgpt-math-mentor-master-plan-progress-ledger-publication-0003"
+  correction_ref: "ai/review/latest:.ai/TASKS/math-mentor-master-plan-progress-ledger-0001-role-replacement-correction.md"
+  publication_ref: "ai/review/latest:.ai/TASKS/math-mentor-master-plan-progress-ledger-0001-publication-continuation.md"
+  status_resolution: "complete_published_and_post_verified_iff_final_pointer_and_physical_current_master_agree"
   mutation_scope: "three_file_takeover_bundle_and_task_evidence_only"
-  source_or_master_publication_authorized: false
-  pr_creation_authorized: false
+  normal_ready_pr_authorized: true
+  normal_merge_commit_authorized: true
+  post_merge_verification_authorized: true
+  direct_master_push_authorized: false
+  force_push_authorized: false
   runtime_or_coordinator_activation_authorized: false
   bridge_mutation_or_generation_authorized: false
 
@@ -176,9 +185,9 @@ next_task_candidates:
     default_consumer_allowed: false
 
 known_human_gates:
-  - gate: "correction_candidate_exact_head_review"
-    owner: "ChatGPT independent review followed by Human gate"
-    status: "required"
+  - gate: "takeover_bundle_publication"
+    owner: "Human-authorized normal PR and normal merge workflow"
+    status_resolution: "completed_iff_final_publication_pointer_and_physical_current_master_agree"
   - gate: "PDE-486 identity disposition"
     owner: "Human Speaker"
     status: "unresolved"
@@ -188,7 +197,7 @@ known_human_gates:
   - gate: "any SR2 ambiguous or protected semantic decision"
     owner: "Human Speaker or explicitly authorized independent gate"
     status: "required_when_triggered"
-  - gate: "bridge landing, production runtime, writer, consumer promotion, or master publication"
+  - gate: "bridge landing, production runtime, writer, or consumer promotion"
     owner: "Human Speaker"
     status: "not_authorized"
 
@@ -246,13 +255,17 @@ known_unknowns:
   - "legacy bridge mathematical selection, endpoint binding, and duplicate-ID dispositions"
   - "production trust, persistence, scheduler, Coordinator, and bridge-consumption implementation"
 
-last_verified_at: "2026-07-14T23:52:42-07:00"
+last_verified_at: "2026-07-15T00:54:40-07:00"
 
 evidence_refs:
   - ref: "08_Domain_Applications/Math_Mentor/MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md"
     role: "human_readable_plan_and_progress"
   - ref: "08_Domain_Applications/Math_Mentor/MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md"
     role: "provider_neutral_roles_packets_and_takeover"
+  - ref: "ai/review/latest:.ai/HUMAN_BRIEFS/math-mentor-master-plan-progress-ledger-correction-exact-head-review-0002.md@0a832a28adf71eb96701ea1a98710eefe5c80193"
+    role: "accepted_exact_head_review"
+  - ref: "ai/review/latest:.ai/SIGNAL_CHATGPT_math-mentor-master-plan-progress-ledger-publication-0003.yml"
+    role: "normal_PR_merge_and_post_verify_publication_authority"
   - ref: ".ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/EVIDENCE/quantitative_findings.json"
     role: "p0_quantitative_baseline"
   - ref: ".ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/VALIDATION/validation_summary.json"

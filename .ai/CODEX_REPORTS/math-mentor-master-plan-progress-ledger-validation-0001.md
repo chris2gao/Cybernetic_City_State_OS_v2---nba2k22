@@ -1,26 +1,29 @@
-# Validation Report — Math Mentor Master Plan Progress Ledger Correction
+# Validation — Math Mentor Master Plan Publication Preparation
 
-| Check | Result |
-|---|---|
-| exact bound source and parent candidate | pass |
-| three required source outputs | pass (3/3) |
-| three-way cross-links | pass |
-| `MATH_MENTOR_CURRENT_STATE.yml` parse and required keys | pass |
-| provider-neutral roles and replacement rule | pass |
-| foreground teaching plus lightweight admission | pass |
-| backend teaching orchestration delegation | pass |
-| SR0/SR1/SR2 backend semantic review | pass |
-| SR2 Human/authorized independent gate | pass |
-| seven minimum packet contracts and common envelope | pass (7/7) |
-| separation of duties | pass |
-| zero-context takeover dry run | pass (13/13 assertions) |
-| no hidden-memory or sole-provider dependency | pass |
-| preserved bridge/UI/P0/pilot/LRP/KCP/next-batch findings | pass |
-| YAML/JSON parse | pass |
-| exact changed-path allowlist | pass |
-| `git diff --check` | pass |
-| high-confidence added-secret scan | pass |
+```yaml
+source_baseline_exact: true
+accepted_candidate_exact: true
+accepted_review_authority_exact: true
+publication_state_normalization: "pass"
+future_self_merge_sha_hardcoded: false
+takeover_bundle: "3/3"
+takeover_bundle_cross_links: "pass"
+current_state_yaml_parse: "pass"
+provider_neutral_roles: "pass"
+foreground_lightweight_admission: "pass"
+backend_orchestration_delegation: "pass"
+semantic_review_tiers: "SR0/SR1/SR2 pass"
+packet_contracts: "7/7"
+separation_of_duties: "pass"
+zero_context_takeover_dry_run: "publication-normalized pass"
+hidden_memory_dependency: false
+provider_lock_in: false
+development_changed_paths: 11
+git_diff_check: "pass"
+added_secret_scan: "pass"
+runtime_activation: false
+```
 
-Dry-run evidence: `.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/VALIDATION/zero-context-takeover-dry-run.md`.
+The exact publication-preparation head is resolved from the normal PR head after this normalization commit. The exact PR, normal merge commit, and final master are intentionally externalized to the final post-merge handoff.
 
-The validation does not constitute runtime execution. It proves only that a fresh compatible agent can reconstruct the architecture and continuation contract from bounded repository evidence.
+Preservation checks continue to cover P0 quantitative evidence, the 14-file legacy bridge inventory, `consumer_allowed=0`, `not_required` UI, four accepted pilot IDs, and the exact proposed four-node batch.

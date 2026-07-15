@@ -10,7 +10,9 @@ The three-file takeover bundle is:
 2. [MATH_MENTOR_CURRENT_STATE.yml](MATH_MENTOR_CURRENT_STATE.yml) — machine-readable freshness and current-state snapshot.
 3. [MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md](MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md) — this role, packet, delegation, and takeover contract.
 
-Evidence baseline: `master@9e12064cbc51f61918dccfd48cf6915879adb962`. Exact Git evidence overrides stale summary prose. Human Speaker remains final authority for learning goals, protected boundaries, ambiguous/cross-domain semantic adjudication, publication, and activation.
+Evidence baseline: `master@9e12064cbc51f61918dccfd48cf6915879adb962`. This is the reconciled source/evidence baseline, not a prediction of the master SHA after publication. Exact Git evidence overrides stale summary prose. Human Speaker remains final authority for learning goals, protected boundaries, ambiguous/cross-domain semantic adjudication, publication, and activation.
+
+Publication state is deliberately non-self-referential. Accepted candidate `c461d252b4a86241745e438dd8c9cd9da6f14a72` and accepted review authority `0a832a28adf71eb96701ea1a98710eefe5c80193` are fixed inputs. The bundle is published only when all three files are present on a physically verified current master through a merged normal PR. The exact PR, merge commit, and final master are resolved from physical Git plus the final `ai/review/latest` publication handoff; this contract never guesses its own future containing merge SHA.
 
 ## 2. Provider-neutral principles
 
@@ -331,4 +333,4 @@ Durable dry-run evidence is recorded at `.ai/PROGRAM_RUNS/math-mentor-master-pla
 
 ## 12. Current non-activation statement
 
-This contract and its packet shapes are documentation only. They do not implement or activate network transport, orchestration runtime, Coordinator, authentication, persistence, nonce handling, learning-state writer, scheduler writer, bridge generation/consumption, consumer promotion, UI, or source/master publication. Every future implementation requires a separately scoped Human-authorized task and the applicable independent review.
+This contract and its packet shapes are documentation only. Their presence on master through an authorized normal PR publishes documentation but does not implement or activate network transport, orchestration runtime, Coordinator, authentication, persistence, nonce handling, learning-state writer, scheduler writer, bridge generation/consumption, consumer promotion, or UI. Every future implementation requires a separately scoped Human-authorized task and the applicable independent review.

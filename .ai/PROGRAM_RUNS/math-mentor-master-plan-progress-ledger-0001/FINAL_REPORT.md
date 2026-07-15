@@ -1,8 +1,8 @@
-# Final Report — Math Mentor Master Plan And Progress Ledger Correction
+# Publication-Preparation Report — Math Mentor Master Plan And Progress Ledger
 
 ## Result
 
-The original candidate was corrected in the same task against exact source `master@9e12064cbc51f61918dccfd48cf6915879adb962` and parent candidate `1d3f6b9708db091632c1344fb8e9a3f9bc34b3db`.
+The provider-neutral takeover correction was accepted at exact candidate `c461d252b4a86241745e438dd8c9cd9da6f14a72` under review authority `0a832a28adf71eb96701ea1a98710eefe5c80193`. The same task then performed minimal publication-state normalization against reconciled source baseline `master@9e12064cbc51f61918dccfd48cf6915879adb962`.
 
 Provider-neutral takeover bundle:
 
@@ -12,7 +12,9 @@ Provider-neutral takeover bundle:
 
 The correction preserves the verified LRP, P0, pilot, KCP, bridge, UI, and next-batch findings. It replaces provider-coupled role language with stable protocol roles: ChatGPT/Claude foreground teachers focus on live teaching and lightweight delivery admission; heavy teaching orchestration and SR0/SR1/SR2 semantic review are delegable backend roles; Codex/Claude Code remain bounded execution workers; any compatible architecture reviewer can take over after bootstrap and explicit role declaration.
 
-A zero-context takeover dry run using only the three-file bundle and named bootstrap files passed. No hidden conversation memory or sole-provider assumption was needed.
+A zero-context takeover dry run using only the three-file bundle and named bootstrap files passed after publication-state normalization. No hidden conversation memory, sole-provider assumption, or guessed future merge SHA was needed.
+
+Publication status is resolved by the fixed accepted candidate/review inputs, presence of all three files on current master through a merged normal PR, physical Git verification, and the final `ai/review/latest` publication handoff. This report intentionally does not hard-code its own future containing merge SHA.
 
 ## Safety outcome
 
@@ -21,10 +23,11 @@ A zero-context takeover dry run using only the three-file bundle and named boots
 - no `consumer_allowed` promotion;
 - legacy bridges are recorded as present but unresolved and non-consumable;
 - exact identity/prerequisite conflicts remain fail-closed;
-- source/master publication and PR creation remain prohibited.
+- normal ready PR creation, normal merge commit, and post-merge verification are authorized by the publication continuation;
+- direct master push, force push, rebase/squash merge, and unrelated source mutation remain prohibited;
 - SR2/protected decisions remain Human or explicitly authorized independent-review gated;
 - the role and packet contracts remain manual specifications, not runtime transport or authorization.
 
-## Review status
+## Publication status resolution
 
-Candidate requires ChatGPT exact-head review and the subsequent Human gate.
+The accepted correction review is complete. The exact publication-preparation head, PR, merge commit, and final master must be physically resolved and recorded in the final review-branch handoff. The source report remains non-self-referential.
