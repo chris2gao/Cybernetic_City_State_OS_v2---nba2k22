@@ -1,0 +1,66 @@
+schema_version: "math_mentor.certified_pilot_dossier.v1"
+packet_id: "codex-math-mentor-certified-pilot-correction-candidate-0002"
+node_id: "COMPLEX_ANALYSIS-418"
+source:
+  repository: "chris2gao/Cybernetic_City_State_OS_v2---teacher"
+  base_head: "b3ee031488be07748b1cbdfc19b8926b6caaa6db"
+  path: "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-418.yaml"
+  blob_oid: "4f5ee7f664b42eb64ec8acf61179430632faf607"
+  sha256: "de2eece216fbee4703dc5514bc2eeaa5713896e8f5eafe0de490439db4795c20"
+  repair_commit: "43e0396e7a12cfd2f6014b290dc1c15f1df9a5af"
+identity:
+  canonical_uuid: "3d3305da-9ba0-5dea-beb0-ac1f2df1329e"
+  binding_status: "declared_consistent_unapproved"
+  approval_blocker: "human_identity_approval_required"
+  consumer_allowed: false
+roadmap:
+  alias: "n_418"
+  level: 4
+  title_match: true
+  binding_status: "explicit_claim_matches_split_roadmap_unapproved"
+domain: "complex_analysis"
+mode: "A"
+prerequisites:
+  - alias: "n_280"
+    node_id: "CALCULUS-280"
+    canonical_uuid: "c6ca03f4-214b-54dd-952c-ba7d593dc92b"
+    blob_oid: "af8290e9c70fe9558e7bae2de4e6bb15ee021074"
+    identity_status: "resolved_structurally_unapproved"
+    teaching_readiness: "legacy_manual_review_required"
+  - alias: "n_417"
+    node_id: "COMPLEX_ANALYSIS-417"
+    canonical_uuid: "e75b8557-6317-5a24-b7ba-2f35ceee6100"
+    blob_oid: "1fcb87920f0e89cf33fa495fee04b2ca24fae567"
+    identity_status: "resolved_structurally_unapproved"
+    teaching_readiness: "legacy_manual_review_required"
+validation:
+  sandbox_evaluator:
+    status: "passed"
+    exit_code: 0
+    message: "Executable sanity passed; this result does not establish mathematical correctness."
+    warnings: []
+  focused_properties:
+    - "Euler symbolic identity"
+    - "argument periodicity under theta -> theta + 2*pi"
+    - "multiplication law: moduli multiply and arguments add"
+    - "polar modulus property"
+    - "De Moivre integer-power case"
+  assumptions_checked:
+    - "theta, alpha, beta are real"
+    - "polar representation statement excludes z=0 and states theta modulo 2*pi"
+review:
+  executable_sanity: "passed"
+  mathematical_review: "human_accepted_pilot_scope"
+  teaching_readiness: "human_accepted_pilot_scope"
+  acceptance_head: "6830956ca9e7efff4d8c6d60602f462b0785b69a"
+  codex_evidence_finding: "Definitions, mapping boundary, and focused symbolic properties are internally consistent."
+  repair:
+    before_failure_class: "coverage_gap_argument_periodicity_not_directly_asserted"
+    changed_field: "v8_sanity_audit.sympy_pseudo_code"
+    changed_lines: "added one three-line symbolic periodicity assertion"
+    after_result: "sandbox_evaluator passed"
+    scope_basis: "approved narrow evidence repair; identity and mathematical scope unchanged"
+residual_risks:
+  - "Executable success is not proof of mathematical correctness or teaching quality."
+  - "Both prerequisites remain legacy/manual-review nodes."
+consumer_allowed: false

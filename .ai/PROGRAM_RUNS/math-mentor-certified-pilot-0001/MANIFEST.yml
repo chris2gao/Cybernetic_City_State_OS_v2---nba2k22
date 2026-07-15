@@ -1,0 +1,46 @@
+schema_version: "math_mentor.certified_pilot_manifest.v1"
+task_id: "math-mentor-certified-pilot-0001"
+packet_id: "codex-math-mentor-certified-pilot-correction-candidate-0002"
+status: "human_accepted_publication_prepared"
+source_head: "b3ee031488be07748b1cbdfc19b8926b6caaa6db"
+work_branch: "codex/math-mentor-certified-pilot"
+node_repair_commit: "43e0396e7a12cfd2f6014b290dc1c15f1df9a5af"
+prior_evidence_head: "d6d2e5145b88b73a2abeb21cfefe580a10b5cc97"
+correction_business_head: "fd77746c3eba301210fb9b7e9c4f4ab168f99b40"
+evidence_head: "7e4e915cdac282df5fdbda56a2e8dc018c28ac7e"
+accepted_candidate: "6830956ca9e7efff4d8c6d60602f462b0785b69a"
+pilot_certification_status: "human_accepted_pilot_scope"
+publication_preparation_validated_head: "1575c24b56c5db02a1874818c8c6ecc6abf5d428"
+pilot_nodes:
+  - "COMPLEX_ANALYSIS-418"
+  - "PDE-487"
+  - "ABSTRACT_ALGEBRA-468"
+  - "ALG_TOPOLOGY-676"
+artifacts:
+  dossiers: 4
+  identity_prerequisite_evidence: "EVIDENCE/identity-and-prerequisite-resolution.json"
+  validation_summary: "VALIDATION/validation-summary.json"
+  dossier_schema: "SCHEMAS/pilot-dossier.schema.json"
+  evidence_schema: "SCHEMAS/identity-prerequisite-resolution.schema.json"
+  validation_schema: "SCHEMAS/validation-summary.schema.json"
+historical_identity_conflicts:
+  - "PDE-487:missing_explicit_roadmap_alias:human_approved_pilot_semantic_binding:production_effect_none"
+  - "PDE-486:missing_explicit_roadmap_alias:human_approved_pilot_semantic_binding:production_effect_none"
+prerequisite_blockers: []
+successor_specialization_decisions:
+  - "n_676_to_n_667:pilot_evidence_only:production_effect_none"
+node_mutations:
+  - node_id: "COMPLEX_ANALYSIS-418"
+    field: "v8_sanity_audit.sympy_pseudo_code"
+    change: "add explicit theta + 2*pi periodicity assertion"
+  - node_id: "ALG_TOPOLOGY-676"
+    fields: ["sub_topics", "formal_definition", "prerequisite_nodes", "v9_semantic_audit.review_criteria"]
+    change: "separate structure and gauge semantics, state cocycle convention, cover tangent/normal bundles, and remove n_667 prerequisite"
+test_maintenance:
+  - path: "08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_normalization_corpus.py"
+    change: "replace obsolete fixed E3/E4 snapshot with per-path and evidence-derived provenance assertions"
+    result: "104_of_104_passed"
+consumer_allowed_count: 0
+runtime_or_coordinator_activation: false
+source_or_master_publication: false
+human_gate: "approved_for_normal_pr_merge_and_post_merge_verification"
