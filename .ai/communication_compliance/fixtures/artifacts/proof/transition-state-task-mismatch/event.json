@@ -1,0 +1,157 @@
+{
+  "schema_version": "human_ai.communication_event.v1",
+  "event_id": "completion",
+  "task_id": "human-ai-communication-compliance-fixture",
+  "event_type": "completion_handoff",
+  "claimed_event_class": "C1",
+  "provider": "Codex",
+  "occupied_role": "backend_execution_and_handoff",
+  "bootstrap_receipt": {
+    "schema_version": "human_ai.communication_bootstrap_receipt.v1",
+    "receipt_id": "fixture-receipt-codex",
+    "protocol_release_head": "65fb2a0a7b4979b887aa1ba2aef454bb7b783ca4",
+    "provider": "Codex",
+    "occupied_role": "backend_execution_and_handoff",
+    "wire_schema": "codex_to_chatgpt_v1",
+    "loaded_files": [
+      {
+        "commit": "65fb2a0a7b4979b887aa1ba2aef454bb7b783ca4",
+        "path": "06_Silicon_Index/AI_Bootstrap_Sequence.md",
+        "content_sha256": "9006f30e88cf17f1fc4f7cdfe5678c4b2f84923651234036c3ad9ec509b67281"
+      },
+      {
+        "commit": "65fb2a0a7b4979b887aa1ba2aef454bb7b783ca4",
+        "path": "AGENTS.md",
+        "content_sha256": "68fffd5bb629a73413ab71ea49ac78317cc10d246bc7dd03a9f7a199c66fa0ea"
+      },
+      {
+        "commit": "65fb2a0a7b4979b887aa1ba2aef454bb7b783ca4",
+        "path": ".ai/HANDOFF_INIT_PROMPT.md",
+        "content_sha256": "a490d470935861669ef7cef361e58bc17453cf5db8c711cc4d99c45e94b36fc5"
+      },
+      {
+        "commit": "65fb2a0a7b4979b887aa1ba2aef454bb7b783ca4",
+        "path": ".ai/PROTOCOL.md",
+        "content_sha256": "9cb7e54f87d3e79e3639e01a53deddc7374865d67aa8e72681c93e05b645ec56"
+      },
+      {
+        "commit": "65fb2a0a7b4979b887aa1ba2aef454bb7b783ca4",
+        "path": ".ai/PROTOCOL_ADHERENCE.md",
+        "content_sha256": "291d8aa2815a997affad958471b55c36f4bee24a7bf85fd99a2f33b708a824c0"
+      },
+      {
+        "commit": "65fb2a0a7b4979b887aa1ba2aef454bb7b783ca4",
+        "path": ".ai/HANDOFF_COMMON_CONVENTIONS.md",
+        "content_sha256": "3479f948dd1d52f061f1893a6fc6436b2b968dda6ac6d766688ef3f27f4554d7"
+      },
+      {
+        "commit": "65fb2a0a7b4979b887aa1ba2aef454bb7b783ca4",
+        "path": ".ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md",
+        "content_sha256": "dde68c78769af8454a3cf67350ce6b7322d7ea5f9f376f948d17686450622d34"
+      },
+      {
+        "commit": "65fb2a0a7b4979b887aa1ba2aef454bb7b783ca4",
+        "path": ".ai/CODEX_WORK_MECHANISM_PROTOCOL.md",
+        "content_sha256": "ceabd8fb6195abdf48a06d91d83a7bed580867bab6001c3c5e8c72b14e580f31"
+      },
+      {
+        "commit": "65fb2a0a7b4979b887aa1ba2aef454bb7b783ca4",
+        "path": ".ai/CODEX_TASK_INPUT_CONTRACT.md",
+        "content_sha256": "b7e6994e09eab1505128b1884373ab1c097ee64851da425e20e374726fb70b51"
+      }
+    ],
+    "inherited_on_demand": [
+      {
+        "path": ".ai/CODEX_WORK_MECHANISM_PROTOCOL.md",
+        "trigger": "backend mechanics",
+        "loaded": true
+      },
+      {
+        "path": ".ai/CODEX_TASK_INPUT_CONTRACT.md",
+        "trigger": "task parsing",
+        "loaded": true
+      },
+      {
+        "path": ".ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md",
+        "trigger": "separate long run",
+        "loaded": false
+      }
+    ],
+    "authority_boundary": {
+      "receipt_is_authorization": false,
+      "protected_actions_need_external_human": true
+    },
+    "onboarding_answers": {
+      "repository_and_source_state": true,
+      "role_and_authority": true,
+      "always_loaded_files": true,
+      "inherited_on_demand_files": true,
+      "workflow_state_and_signal": true,
+      "non_null_refs": true,
+      "human_gate": true,
+      "next_action_and_response_shape": true,
+      "communication_channels": true,
+      "execution_recommendation": true,
+      "independent_expression": true,
+      "expression_preservation": true,
+      "expression_authority_boundary": true,
+      "drift_correction": true,
+      "role_and_wire_schema": true,
+      "mixed_recipient_resolution": true,
+      "bootstrap_receipt_capability_boundary": true,
+      "c2_external_authority_origin": true
+    }
+  },
+  "pointer": {
+    "wire_schema": "codex_to_chatgpt_v1",
+    "data": {
+      "packet_id": "fixture-packet",
+      "status": "awaiting_chatgpt_review",
+      "report_ref": ".ai/PROTOCOL.md",
+      "brief_ref": null,
+      "source_head": "d235e602c14250d16b91f2897cb8308e031cc13c",
+      "review_branch_head": "65fb2a0a7b4979b887aa1ba2aef454bb7b783ca4",
+      "human_gate": "not_required"
+    },
+    "extra_text": ""
+  },
+  "required_refs": [
+    {
+      "kind": "git_blob",
+      "commit": "65fb2a0a7b4979b887aa1ba2aef454bb7b783ca4",
+      "path": ".ai/PROTOCOL.md",
+      "content_sha256": "9cb7e54f87d3e79e3639e01a53deddc7374865d67aa8e72681c93e05b645ec56"
+    }
+  ],
+  "communication": {
+    "recipient_mode": "mixed_separable",
+    "channels_separated": true,
+    "human_pointer_only_waiver": false,
+    "human_operational": {
+      "factual_status": "The durable fixture binds physical evidence before a state transition.",
+      "execution_recommendation": null,
+      "preflight": {
+        "factual_status_grounded": true,
+        "required_refs_dereferenced": true,
+        "canonical_pointer_present_when_applicable": true,
+        "execution_recommendation_present_when_dispatching": true,
+        "independent_expression_present_for_material_event": true,
+        "independent_expression_separated_from_authority": true,
+        "no_long_task_or_report_echo": true,
+        "no_hidden_chain_of_thought_request_or_disclosure": true
+      },
+      "independent_expression": {
+        "heading": "Independent expression",
+        "text": "Physical evidence makes omissions visible. It never grants protected authority.",
+        "separated_from_authority": true
+      }
+    },
+    "brief_artifact_ref": null
+  },
+  "proposed_transition": {
+    "transition_id": "backend_completion",
+    "from_state": "awaiting_codex",
+    "to_state": "awaiting_chatgpt_review"
+  },
+  "descriptive_human_gate": "descriptive_only"
+}

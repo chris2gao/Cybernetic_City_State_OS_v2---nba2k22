@@ -1,0 +1,76 @@
+{
+  "schema_version": "human_ai.communication_event.v1",
+  "event_id": "human-dispatch",
+  "task_id": "human-ai-communication-compliance-fixture",
+  "event_type": "backend_dispatch",
+  "claimed_event_class": "C1",
+  "provider": "Human",
+  "occupied_role": "human_speaker",
+  "bootstrap_receipt": null,
+  "pointer": {
+    "wire_schema": "chatgpt_to_codex_v1",
+    "data": {
+      "signal_id": "fixture-signal",
+      "decision": "start_task",
+      "task_ref": ".ai/CODEX_TASK_INPUT_CONTRACT.md",
+      "packet_ref": null,
+      "brief_ref": null,
+      "source_head": "d235e602c14250d16b91f2897cb8308e031cc13c",
+      "human_gate": "approved_to_start_implementation"
+    },
+    "extra_text": ""
+  },
+  "required_refs": [
+    {
+      "kind": "git_blob",
+      "commit": "65fb2a0a7b4979b887aa1ba2aef454bb7b783ca4",
+      "path": ".ai/PROTOCOL.md",
+      "content_sha256": "9cb7e54f87d3e79e3639e01a53deddc7374865d67aa8e72681c93e05b645ec56"
+    },
+    {
+      "kind": "git_blob",
+      "commit": "65fb2a0a7b4979b887aa1ba2aef454bb7b783ca4",
+      "path": ".ai/CODEX_TASK_INPUT_CONTRACT.md",
+      "content_sha256": "b7e6994e09eab1505128b1884373ab1c097ee64851da425e20e374726fb70b51"
+    }
+  ],
+  "communication": {
+    "recipient_mode": "mixed_separable",
+    "channels_separated": true,
+    "human_pointer_only_waiver": false,
+    "human_operational": {
+      "factual_status": "The durable fixture binds physical evidence before a state transition.",
+      "execution_recommendation": {
+        "recommended_model": "runtime_dependent",
+        "recommended_thinking_level": "xhigh",
+        "mode": "goal",
+        "subagents": "not_applicable",
+        "task_ref_or_plan_ref": ".ai/CODEX_TASK_INPUT_CONTRACT.md",
+        "short_complexity_rationale": "deterministic material-event fixture",
+        "human_gate": "not_required"
+      },
+      "preflight": {
+        "factual_status_grounded": true,
+        "required_refs_dereferenced": true,
+        "canonical_pointer_present_when_applicable": true,
+        "execution_recommendation_present_when_dispatching": true,
+        "independent_expression_present_for_material_event": true,
+        "independent_expression_separated_from_authority": true,
+        "no_long_task_or_report_echo": true,
+        "no_hidden_chain_of_thought_request_or_disclosure": true
+      },
+      "independent_expression": {
+        "heading": "Independent expression",
+        "text": "Physical evidence makes omissions visible. It never grants protected authority.",
+        "separated_from_authority": true
+      }
+    },
+    "brief_artifact_ref": null
+  },
+  "proposed_transition": {
+    "transition_id": "dispatch_to_backend",
+    "from_state": "completed",
+    "to_state": "awaiting_codex"
+  },
+  "descriptive_human_gate": "descriptive_only"
+}
