@@ -1,4 +1,5 @@
 {
+  "aggregate_inventory_count": 294,
   "cases": [
     {
       "actual_exit_code": 0,
@@ -48,6 +49,36 @@
       "actual_exit_code": 1,
       "actual_result": "fail",
       "actual_violation_codes": [
+        "BOOTSTRAP_REFERENCE_DIGEST_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "BOOTSTRAP_REFERENCE_DIGEST_MISMATCH"
+      ],
+      "id": "bootstrap_loaded_file_digest_mismatch",
+      "matched": true,
+      "operation": "validate_bootstrap"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "BOOTSTRAP_LOADED_FILE_HEAD_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "BOOTSTRAP_LOADED_FILE_HEAD_MISMATCH"
+      ],
+      "id": "bootstrap_loaded_file_head_mismatch",
+      "matched": true,
+      "operation": "validate_bootstrap"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
         "BOOTSTRAP_PROTOCOL_HEAD_STALE"
       ],
       "expected_exit_code": 1,
@@ -81,6 +112,32 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
+      "id": "c0_project_mention_pass",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "C0_TRANSITION_FORBIDDEN"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "C0_TRANSITION_FORBIDDEN"
+      ],
+      "id": "c0_transition_fail_closed",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 0,
+      "actual_result": "pass",
+      "actual_violation_codes": [],
+      "expected_exit_code": 0,
+      "expected_result": "pass",
+      "expected_violation_codes": [],
       "id": "classify_c0_ordinary",
       "matched": true,
       "operation": "classify"
@@ -99,6 +156,169 @@
       "id": "classify_unknown_fail_closed",
       "matched": true,
       "operation": "classify"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "id": "dispatch_missing_recommendation_human_gate",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "id": "dispatch_missing_recommendation_mode",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "id": "dispatch_missing_recommendation_recommended_model",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "id": "dispatch_missing_recommendation_recommended_thinking_level",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "id": "dispatch_missing_recommendation_short_complexity_rationale",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "id": "dispatch_missing_recommendation_subagents",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "EXECUTION_RECOMMENDATION_REF_UNRESOLVED",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "EXECUTION_RECOMMENDATION_REF_UNRESOLVED",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "id": "dispatch_missing_recommendation_task_ref_or_plan_ref",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "EXECUTION_RECOMMENDATION_REF_UNRESOLVED",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "EXECUTION_RECOMMENDATION_REF_UNRESOLVED",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "id": "dispatch_recommendation_ref_must_be_explicit",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 0,
+      "actual_result": "pass",
+      "actual_violation_codes": [],
+      "expected_exit_code": 0,
+      "expected_result": "pass",
+      "expected_violation_codes": [],
+      "id": "drift_deterministic_exception_with_review_pass",
+      "matched": true,
+      "operation": "validate_drift"
     },
     {
       "actual_exit_code": 0,
@@ -252,6 +472,28 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
+      "id": "event_claude_code_completion_pass",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 0,
+      "actual_result": "pass",
+      "actual_violation_codes": [],
+      "expected_exit_code": 0,
+      "expected_result": "pass",
+      "expected_violation_codes": [],
+      "id": "event_claude_dispatch_pass",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 0,
+      "actual_result": "pass",
+      "actual_violation_codes": [],
+      "expected_exit_code": 0,
+      "expected_result": "pass",
+      "expected_violation_codes": [],
       "id": "event_completion_pass",
       "matched": true,
       "operation": "validate_event"
@@ -264,6 +506,17 @@
       "expected_result": "pass",
       "expected_violation_codes": [],
       "id": "event_dispatch_pass",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 0,
+      "actual_result": "pass",
+      "actual_violation_codes": [],
+      "expected_exit_code": 0,
+      "expected_result": "pass",
+      "expected_violation_codes": [],
+      "id": "event_material_review_no_dispatch_pass",
       "matched": true,
       "operation": "validate_event"
     },
@@ -385,6 +638,57 @@
       "actual_exit_code": 1,
       "actual_result": "fail",
       "actual_violation_codes": [
+        "EXPRESSION_FALSE_AUTHORIZATION",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "EXPRESSION_FALSE_AUTHORIZATION",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "id": "expression_cannot_authorize",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH",
+        "INDEPENDENT_EXPRESSION_SENTENCE_COUNT"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH",
+        "INDEPENDENT_EXPRESSION_SENTENCE_COUNT"
+      ],
+      "id": "expression_sentence_count_invalid",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH",
+        "INDEPENDENT_EXPRESSION_FIELDS_INVALID"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH",
+        "INDEPENDENT_EXPRESSION_FIELDS_INVALID"
+      ],
+      "id": "expression_structured_authorization_rejected",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
         "HIDDEN_REASONING_REQUEST",
         "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
       ],
@@ -395,6 +699,21 @@
         "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
       ],
       "id": "hidden_reasoning_request_rejected",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_CONTENT_FIELDS_INVALID"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_CONTENT_FIELDS_INVALID"
+      ],
+      "id": "human_content_structured_authorization_rejected",
       "matched": true,
       "operation": "validate_event"
     },
@@ -446,9 +765,9 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::bootstrap_chatgpt_pass",
+      "id": "legacy_migrated__bootstrap_chatgpt_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_bootstrap"
     },
     {
       "actual_exit_code": 0,
@@ -457,9 +776,9 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::bootstrap_claude_code_pass",
+      "id": "legacy_migrated__bootstrap_claude_code_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_bootstrap"
     },
     {
       "actual_exit_code": 0,
@@ -468,9 +787,9 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::bootstrap_claude_pass",
+      "id": "legacy_migrated__bootstrap_claude_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_bootstrap"
     },
     {
       "actual_exit_code": 0,
@@ -479,53 +798,69 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::bootstrap_codex_pass",
+      "id": "legacy_migrated__bootstrap_codex_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_bootstrap"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::bootstrap_loaded_file_digest_mismatch",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "BOOTSTRAP_REFERENCE_DIGEST_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "BOOTSTRAP_REFERENCE_DIGEST_MISMATCH"
+      ],
+      "id": "legacy_migrated__bootstrap_loaded_file_digest_mismatch",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_bootstrap"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::bootstrap_loaded_file_head_mismatch",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "BOOTSTRAP_LOADED_FILE_HEAD_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "BOOTSTRAP_LOADED_FILE_HEAD_MISMATCH"
+      ],
+      "id": "legacy_migrated__bootstrap_loaded_file_head_mismatch",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_bootstrap"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::bootstrap_stale_protocol_head",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "BOOTSTRAP_PROTOCOL_HEAD_STALE"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "BOOTSTRAP_PROTOCOL_HEAD_STALE"
+      ],
+      "id": "legacy_migrated__bootstrap_stale_protocol_head",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_bootstrap"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::bootstrap_wrong_wire",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "BOOTSTRAP_RECEIPT_SCHEMA_INVALID"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "BOOTSTRAP_RECEIPT_SCHEMA_INVALID"
+      ],
+      "id": "legacy_migrated__bootstrap_wrong_wire",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_bootstrap"
     },
     {
       "actual_exit_code": 0,
@@ -534,20 +869,24 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::c0_project_mention_pass",
+      "id": "legacy_migrated__c0_project_mention_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::c0_transition_fail_closed",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "C0_TRANSITION_FORBIDDEN"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "C0_TRANSITION_FORBIDDEN"
+      ],
+      "id": "legacy_migrated__c0_transition_fail_closed",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
       "actual_exit_code": 0,
@@ -556,9 +895,9 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::chatgpt_dispatch_pass",
+      "id": "legacy_migrated__chatgpt_dispatch_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
       "actual_exit_code": 0,
@@ -567,20 +906,24 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::classify_c0_ordinary",
+      "id": "legacy_migrated__classify_c0_ordinary",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "classify"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::classify_unknown_fail_closed",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "UNKNOWN_EVENT_TYPE"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "UNKNOWN_EVENT_TYPE"
+      ],
+      "id": "legacy_migrated__classify_unknown_fail_closed",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "classify"
     },
     {
       "actual_exit_code": 0,
@@ -589,9 +932,9 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::claude_code_completion_pass",
+      "id": "legacy_migrated__claude_code_completion_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
       "actual_exit_code": 0,
@@ -600,9 +943,9 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::claude_dispatch_pass",
+      "id": "legacy_migrated__claude_dispatch_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
       "actual_exit_code": 0,
@@ -611,97 +954,161 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::codex_completion_pass",
+      "id": "legacy_migrated__codex_completion_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::dispatch_missing_recommendation_human_gate",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "id": "legacy_migrated__dispatch_missing_recommendation_human_gate",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::dispatch_missing_recommendation_mode",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "id": "legacy_migrated__dispatch_missing_recommendation_mode",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::dispatch_missing_recommendation_recommended_model",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "id": "legacy_migrated__dispatch_missing_recommendation_recommended_model",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::dispatch_missing_recommendation_recommended_thinking_level",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "id": "legacy_migrated__dispatch_missing_recommendation_recommended_thinking_level",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::dispatch_missing_recommendation_short_complexity_rationale",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "id": "legacy_migrated__dispatch_missing_recommendation_short_complexity_rationale",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::dispatch_missing_recommendation_subagents",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "id": "legacy_migrated__dispatch_missing_recommendation_subagents",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::dispatch_missing_recommendation_task_ref_or_plan_ref",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "EXECUTION_RECOMMENDATION_REF_UNRESOLVED",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "EXECUTION_RECOMMENDATION_FIELDS_INVALID",
+        "EXECUTION_RECOMMENDATION_FIELD_EMPTY",
+        "EXECUTION_RECOMMENDATION_REF_UNRESOLVED",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "id": "legacy_migrated__dispatch_missing_recommendation_task_ref_or_plan_ref",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::dispatch_recommendation_ref_must_be_explicit",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "EXECUTION_RECOMMENDATION_REF_UNRESOLVED",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "EXECUTION_RECOMMENDATION_REF_UNRESOLVED",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "id": "legacy_migrated__dispatch_recommendation_ref_must_be_explicit",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
       "actual_exit_code": 0,
@@ -710,9 +1117,9 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::drift_deterministic_exception_with_review_pass",
+      "id": "legacy_migrated__drift_deterministic_exception_with_review_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_drift"
     },
     {
       "actual_exit_code": 0,
@@ -721,31 +1128,47 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::drift_first_occurrence_pass",
+      "id": "legacy_migrated__drift_first_occurrence_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_drift"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::drift_recurring_fixture_mismatch",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "DRIFT_RECORD_HASH_MISMATCH",
+        "DRIFT_RECORD_SCHEMA_INVALID",
+        "DRIFT_RECURRENCE_FIXTURE_REQUIRED"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "DRIFT_RECORD_HASH_MISMATCH",
+        "DRIFT_RECORD_SCHEMA_INVALID",
+        "DRIFT_RECURRENCE_FIXTURE_REQUIRED"
+      ],
+      "id": "legacy_migrated__drift_recurring_fixture_mismatch",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_drift"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::drift_recurring_fixture_missing",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "DRIFT_RECORD_HASH_MISMATCH",
+        "DRIFT_RECORD_SCHEMA_INVALID",
+        "DRIFT_RECURRENCE_FIXTURE_REQUIRED"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "DRIFT_RECORD_HASH_MISMATCH",
+        "DRIFT_RECORD_SCHEMA_INVALID",
+        "DRIFT_RECURRENCE_FIXTURE_REQUIRED"
+      ],
+      "id": "legacy_migrated__drift_recurring_fixture_missing",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_drift"
     },
     {
       "actual_exit_code": 0,
@@ -754,42 +1177,60 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::drift_recurring_fixture_pass",
+      "id": "legacy_migrated__drift_recurring_fixture_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_drift"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::expression_cannot_authorize",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "EXPRESSION_FALSE_AUTHORIZATION",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "EXPRESSION_FALSE_AUTHORIZATION",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "id": "legacy_migrated__expression_cannot_authorize",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::expression_sentence_count_invalid",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH",
+        "INDEPENDENT_EXPRESSION_SENTENCE_COUNT"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH",
+        "INDEPENDENT_EXPRESSION_SENTENCE_COUNT"
+      ],
+      "id": "legacy_migrated__expression_sentence_count_invalid",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::expression_structured_authorization_rejected",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH",
+        "INDEPENDENT_EXPRESSION_FIELDS_INVALID"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH",
+        "INDEPENDENT_EXPRESSION_FIELDS_INVALID"
+      ],
+      "id": "legacy_migrated__expression_structured_authorization_rejected",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
       "actual_exit_code": 0,
@@ -798,119 +1239,177 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::foreground_acceptance_event_pass",
+      "id": "legacy_migrated__foreground_acceptance_event_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::hidden_reasoning_request_rejected",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HIDDEN_REASONING_REQUEST",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HIDDEN_REASONING_REQUEST",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH"
+      ],
+      "id": "legacy_migrated__hidden_reasoning_request_rejected",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::human_content_structured_authorization_rejected",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_CONTENT_FIELDS_INVALID"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_CONTENT_FIELDS_INVALID"
+      ],
+      "id": "legacy_migrated__human_content_structured_authorization_rejected",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::material_missing_preflight_canonical_pointer_present_when_applicable",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "id": "legacy_migrated__material_missing_preflight_canonical_pointer_present_when_applicable",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::material_missing_preflight_execution_recommendation_present_when_dispatching",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "id": "legacy_migrated__material_missing_preflight_execution_recommendation_present_when_dispatching",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::material_missing_preflight_factual_status_grounded",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "id": "legacy_migrated__material_missing_preflight_factual_status_grounded",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::material_missing_preflight_independent_expression_present_for_material_event",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "id": "legacy_migrated__material_missing_preflight_independent_expression_present_for_material_event",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::material_missing_preflight_independent_expression_separated_from_authority",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "id": "legacy_migrated__material_missing_preflight_independent_expression_separated_from_authority",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::material_missing_preflight_no_hidden_chain_of_thought_request_or_disclosure",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "id": "legacy_migrated__material_missing_preflight_no_hidden_chain_of_thought_request_or_disclosure",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::material_missing_preflight_no_long_task_or_report_echo",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "id": "legacy_migrated__material_missing_preflight_no_long_task_or_report_echo",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::material_missing_preflight_required_refs_dereferenced",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "id": "legacy_migrated__material_missing_preflight_required_refs_dereferenced",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
       "actual_exit_code": 0,
@@ -919,9 +1418,9 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::material_review_no_dispatch_pass",
+      "id": "legacy_migrated__material_review_no_dispatch_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
       "actual_exit_code": 0,
@@ -930,20 +1429,28 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::mixed_nonseparable_complete_brief_pass",
+      "id": "legacy_migrated__mixed_nonseparable_complete_brief_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::mixed_nonseparable_incomplete_brief",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "EXECUTION_RECOMMENDATION_REQUIRED",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH",
+        "INDEPENDENT_EXPRESSION_REQUIRED"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "EXECUTION_RECOMMENDATION_REQUIRED",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH",
+        "INDEPENDENT_EXPRESSION_REQUIRED"
+      ],
+      "id": "legacy_migrated__mixed_nonseparable_incomplete_brief",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
       "actual_exit_code": 0,
@@ -952,75 +1459,103 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::mixed_pointer_only_waiver_complete_brief_pass",
+      "id": "legacy_migrated__mixed_pointer_only_waiver_complete_brief_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::pointer_extra_authorization_key",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "POINTER_FIELDS_INVALID"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "POINTER_FIELDS_INVALID"
+      ],
+      "id": "legacy_migrated__pointer_extra_authorization_key",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::pointer_extra_prose",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "POINTER_PROSE_CONTAMINATION"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "POINTER_PROSE_CONTAMINATION"
+      ],
+      "id": "legacy_migrated__pointer_extra_prose",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::pointer_key_order_invalid",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "POINTER_KEY_ORDER_INVALID"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "POINTER_KEY_ORDER_INVALID"
+      ],
+      "id": "legacy_migrated__pointer_key_order_invalid",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::pointer_mutable_review_head_rejected",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "POINTER_REVIEW_HEAD_INVALID"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "POINTER_REVIEW_HEAD_INVALID"
+      ],
+      "id": "legacy_migrated__pointer_mutable_review_head_rejected",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::pointer_nested_human_gate_rejected",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "POINTER_VALUE_INVALID"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "POINTER_VALUE_INVALID"
+      ],
+      "id": "legacy_migrated__pointer_nested_human_gate_rejected",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::pointer_only_waiver_missing_brief",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "DURABLE_BRIEF_FALLBACK_UNRESOLVED",
+        "HUMAN_CONTENT_REQUIRED",
+        "POINTER_BRIEF_REF_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "DURABLE_BRIEF_FALLBACK_UNRESOLVED",
+        "HUMAN_CONTENT_REQUIRED",
+        "POINTER_BRIEF_REF_MISMATCH"
+      ],
+      "id": "legacy_migrated__pointer_only_waiver_missing_brief",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
       "actual_exit_code": 0,
@@ -1029,9 +1564,9 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::protected_publication_event_pass",
+      "id": "legacy_migrated__protected_publication_event_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
       "actual_exit_code": 0,
@@ -1040,42 +1575,54 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::publication_candidate_event_pass",
+      "id": "legacy_migrated__publication_candidate_event_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::strict_parse_pointer_anchor_alias",
+      "actual_exit_code": 3,
+      "actual_result": "error",
+      "actual_violation_codes": [
+        "INPUT_DOCUMENT_REJECTED"
+      ],
+      "expected_exit_code": 3,
+      "expected_result": "error",
+      "expected_violation_codes": [
+        "INPUT_DOCUMENT_REJECTED"
+      ],
+      "id": "legacy_migrated__strict_parse_pointer_anchor_alias",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "parse_document"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::strict_parse_pointer_duplicate_keys",
+      "actual_exit_code": 3,
+      "actual_result": "error",
+      "actual_violation_codes": [
+        "INPUT_DOCUMENT_REJECTED"
+      ],
+      "expected_exit_code": 3,
+      "expected_result": "error",
+      "expected_violation_codes": [
+        "INPUT_DOCUMENT_REJECTED"
+      ],
+      "id": "legacy_migrated__strict_parse_pointer_duplicate_keys",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "parse_document"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::strict_parse_pointer_multidoc",
+      "actual_exit_code": 3,
+      "actual_result": "error",
+      "actual_violation_codes": [
+        "INPUT_DOCUMENT_REJECTED"
+      ],
+      "expected_exit_code": 3,
+      "expected_result": "error",
+      "expected_violation_codes": [
+        "INPUT_DOCUMENT_REJECTED"
+      ],
+      "id": "legacy_migrated__strict_parse_pointer_multidoc",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "parse_document"
     },
     {
       "actual_exit_code": 0,
@@ -1084,42 +1631,54 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::transition_acceptance_pass",
+      "id": "legacy_migrated__transition_acceptance_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "transition"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::transition_c2_authority_binding_mismatch",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "AUTHORITY_CONTEXT_BINDING_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "AUTHORITY_CONTEXT_BINDING_MISMATCH"
+      ],
+      "id": "legacy_migrated__transition_c2_authority_binding_mismatch",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "transition"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::transition_c2_authority_replay",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "AUTHORITY_CONTEXT_REPLAYED"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "AUTHORITY_CONTEXT_REPLAYED"
+      ],
+      "id": "legacy_migrated__transition_c2_authority_replay",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "transition"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::transition_c2_payload_gate_not_authority",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "AUTHENTICATED_HUMAN_AUTHORITY_UNAVAILABLE"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "AUTHENTICATED_HUMAN_AUTHORITY_UNAVAILABLE"
+      ],
+      "id": "legacy_migrated__transition_c2_payload_gate_not_authority",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "transition"
     },
     {
       "actual_exit_code": 0,
@@ -1128,9 +1687,9 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::transition_c2_test_authority_pass",
+      "id": "legacy_migrated__transition_c2_test_authority_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "transition"
     },
     {
       "actual_exit_code": 0,
@@ -1139,9 +1698,9 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::transition_completion_pass",
+      "id": "legacy_migrated__transition_completion_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "transition"
     },
     {
       "actual_exit_code": 0,
@@ -1150,42 +1709,58 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::transition_dispatch_pass",
+      "id": "legacy_migrated__transition_dispatch_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "transition"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::transition_event_input_binding_mismatch",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "VALIDATION_ARTIFACT_BYTE_MISMATCH",
+        "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "VALIDATION_ARTIFACT_BYTE_MISMATCH",
+        "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"
+      ],
+      "id": "legacy_migrated__transition_event_input_binding_mismatch",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "transition"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::transition_forged_trusted_context_without_host_verifier",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "AUTHORITY_CONTEXT_TRUST_BOUNDARY_INVALID"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "AUTHORITY_CONTEXT_TRUST_BOUNDARY_INVALID"
+      ],
+      "id": "legacy_migrated__transition_forged_trusted_context_without_host_verifier",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "transition"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::transition_from_state_unsupported",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "TRANSITION_FROM_STATE_EVIDENCE_MISMATCH",
+        "TRANSITION_UNREACHABLE"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "TRANSITION_FROM_STATE_EVIDENCE_MISMATCH",
+        "TRANSITION_UNREACHABLE"
+      ],
+      "id": "legacy_migrated__transition_from_state_unsupported",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "transition"
     },
     {
       "actual_exit_code": 0,
@@ -1194,20 +1769,24 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::transition_publication_candidate_pass",
+      "id": "legacy_migrated__transition_publication_candidate_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "transition"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::transition_test_authority_forbidden_as_trusted_host",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "AUTHORITY_CONTEXT_TRUST_BOUNDARY_INVALID"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "AUTHORITY_CONTEXT_TRUST_BOUNDARY_INVALID"
+      ],
+      "id": "legacy_migrated__transition_test_authority_forbidden_as_trusted_host",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "transition"
     },
     {
       "actual_exit_code": 0,
@@ -1216,9 +1795,9 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::transition_test_harness_trusted_host_pass",
+      "id": "legacy_migrated__transition_test_harness_trusted_host_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "transition"
     },
     {
       "actual_exit_code": 0,
@@ -1227,64 +1806,266 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::transition_validation_absent",
+      "id": "legacy_migrated__transition_validation_absent",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "transition"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::transition_validation_digest_mismatch",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "VALIDATION_ARTIFACT_REFERENCE_DIGEST_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "VALIDATION_ARTIFACT_REFERENCE_DIGEST_MISMATCH"
+      ],
+      "id": "legacy_migrated__transition_validation_digest_mismatch",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "reference_attack"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::transition_validation_failing",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "FRESH_EVENT_VALIDATION_FAILED",
+        "VALIDATION_ARTIFACT_BYTE_MISMATCH",
+        "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "FRESH_EVENT_VALIDATION_FAILED",
+        "VALIDATION_ARTIFACT_BYTE_MISMATCH",
+        "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"
+      ],
+      "id": "legacy_migrated__transition_validation_failing",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "transition"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::transition_validation_malformed",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "VALIDATION_ARTIFACT_BYTE_MISMATCH",
+        "VALIDATION_ARTIFACT_SCHEMA_INVALID",
+        "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "VALIDATION_ARTIFACT_BYTE_MISMATCH",
+        "VALIDATION_ARTIFACT_SCHEMA_INVALID",
+        "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"
+      ],
+      "id": "legacy_migrated__transition_validation_malformed",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "transition"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::transition_validation_pass_with_violations",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "FRESH_EVENT_VALIDATION_FAILED",
+        "VALIDATION_ARTIFACT_BYTE_MISMATCH",
+        "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "FRESH_EVENT_VALIDATION_FAILED",
+        "VALIDATION_ARTIFACT_BYTE_MISMATCH",
+        "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"
+      ],
+      "id": "legacy_migrated__transition_validation_pass_with_violations",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "transition"
     },
     {
-      "actual_exit_code": 0,
-      "actual_result": "pass",
-      "actual_violation_codes": [],
-      "expected_exit_code": 0,
-      "expected_result": "pass",
-      "expected_violation_codes": [],
-      "id": "inherited::transition_validation_policy_binding_mismatch",
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "VALIDATION_ARTIFACT_BYTE_MISMATCH",
+        "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "VALIDATION_ARTIFACT_BYTE_MISMATCH",
+        "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"
+      ],
+      "id": "legacy_migrated__transition_validation_policy_binding_mismatch",
+      "matched": true,
+      "operation": "transition"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "VALIDATION_ARTIFACT_BYTE_MISMATCH",
+        "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "VALIDATION_ARTIFACT_BYTE_MISMATCH",
+        "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"
+      ],
+      "id": "legacy_migrated__transition_validation_stale",
+      "matched": true,
+      "operation": "transition"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "VALIDATION_ARTIFACT_REFERENCE_UNRESOLVED"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "VALIDATION_ARTIFACT_REFERENCE_UNRESOLVED"
+      ],
+      "id": "legacy_migrated__transition_validation_unresolved_ref",
+      "matched": true,
+      "operation": "reference_attack"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "id": "material_missing_preflight_canonical_pointer_present_when_applicable",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "id": "material_missing_preflight_execution_recommendation_present_when_dispatching",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "id": "material_missing_preflight_factual_status_grounded",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "id": "material_missing_preflight_independent_expression_present_for_material_event",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "id": "material_missing_preflight_independent_expression_separated_from_authority",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "id": "material_missing_preflight_no_hidden_chain_of_thought_request_or_disclosure",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "id": "material_missing_preflight_no_long_task_or_report_echo",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "HUMAN_RESPONSE_PREFLIGHT_FIELDS_INVALID",
+        "HUMAN_RESPONSE_PREFLIGHT_FIELD_FALSE"
+      ],
+      "id": "material_missing_preflight_required_refs_dereferenced",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
       "actual_exit_code": 0,
@@ -1293,20 +2074,54 @@
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::transition_validation_stale",
+      "id": "mixed_nonseparable_complete_brief_pass",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "EXECUTION_RECOMMENDATION_REQUIRED",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH",
+        "INDEPENDENT_EXPRESSION_REQUIRED"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "EXECUTION_RECOMMENDATION_REQUIRED",
+        "HUMAN_RESPONSE_PREFLIGHT_EVIDENCE_MISMATCH",
+        "INDEPENDENT_EXPRESSION_REQUIRED"
+      ],
+      "id": "mixed_nonseparable_incomplete_brief",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
       "actual_exit_code": 0,
       "actual_result": "pass",
       "actual_violation_codes": [],
       "expected_exit_code": 0,
       "expected_result": "pass",
       "expected_violation_codes": [],
-      "id": "inherited::transition_validation_unresolved_ref",
+      "id": "mixed_pointer_only_waiver_complete_brief_pass",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "POINTER_FIELDS_INVALID"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "POINTER_FIELDS_INVALID"
+      ],
+      "id": "pointer_extra_authorization_key",
       "matched": true,
-      "operation": "immutable_prior_suite_evidence"
+      "operation": "validate_event"
     },
     {
       "actual_exit_code": 1,
@@ -1335,6 +2150,55 @@
         "POINTER_KEY_ORDER_INVALID"
       ],
       "id": "pointer_key_order_invalid",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "POINTER_REVIEW_HEAD_INVALID"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "POINTER_REVIEW_HEAD_INVALID"
+      ],
+      "id": "pointer_mutable_review_head_rejected",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "POINTER_VALUE_INVALID"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "POINTER_VALUE_INVALID"
+      ],
+      "id": "pointer_nested_human_gate_rejected",
+      "matched": true,
+      "operation": "validate_event"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "DURABLE_BRIEF_FALLBACK_UNRESOLVED",
+        "HUMAN_CONTENT_REQUIRED",
+        "POINTER_BRIEF_REF_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "DURABLE_BRIEF_FALLBACK_UNRESOLVED",
+        "HUMAN_CONTENT_REQUIRED",
+        "POINTER_BRIEF_REF_MISMATCH"
+      ],
+      "id": "pointer_only_waiver_missing_brief",
       "matched": true,
       "operation": "validate_event"
     },
@@ -1579,6 +2443,186 @@
       "operation": "transition"
     },
     {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "ACTOR_ORIGIN_BINDING_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "ACTOR_ORIGIN_BINDING_MISMATCH"
+      ],
+      "id": "transition_actor_origin_cross_event_transplant",
+      "matched": true,
+      "operation": "transition"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "ACTOR_ORIGIN_BINDING_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "ACTOR_ORIGIN_BINDING_MISMATCH"
+      ],
+      "id": "transition_actor_origin_event_digest_transplant",
+      "matched": true,
+      "operation": "transition"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "ACTOR_ORIGIN_ATTESTATION_REQUIRED"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "ACTOR_ORIGIN_ATTESTATION_REQUIRED"
+      ],
+      "id": "transition_actor_origin_forged_trusted_context",
+      "matched": true,
+      "operation": "transition"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "ACTOR_ORIGIN_CONTEXT_REPLAYED"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "ACTOR_ORIGIN_CONTEXT_REPLAYED"
+      ],
+      "id": "transition_actor_origin_replay",
+      "matched": true,
+      "operation": "transition"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "ACTOR_ORIGIN_BINDING_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "ACTOR_ORIGIN_BINDING_MISMATCH"
+      ],
+      "id": "transition_actor_origin_wrong_provider",
+      "matched": true,
+      "operation": "transition"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "ACTOR_ORIGIN_BINDING_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "ACTOR_ORIGIN_BINDING_MISMATCH"
+      ],
+      "id": "transition_actor_origin_wrong_role",
+      "matched": true,
+      "operation": "transition"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "ACTOR_ORIGIN_BINDING_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "ACTOR_ORIGIN_BINDING_MISMATCH"
+      ],
+      "id": "transition_actor_origin_wrong_transition",
+      "matched": true,
+      "operation": "transition"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "TRANSITION_ACTOR_ROLE_FORBIDDEN"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "TRANSITION_ACTOR_ROLE_FORBIDDEN"
+      ],
+      "id": "transition_backend_material_review_close_rejected",
+      "matched": true,
+      "operation": "transition"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "TRANSITION_ACTOR_ROLE_FORBIDDEN"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "TRANSITION_ACTOR_ROLE_FORBIDDEN"
+      ],
+      "id": "transition_backend_publication_candidate_rejected",
+      "matched": true,
+      "operation": "transition"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "TRANSITION_ACTOR_ROLE_FORBIDDEN"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "TRANSITION_ACTOR_ROLE_FORBIDDEN"
+      ],
+      "id": "transition_backend_self_acceptance_rejected",
+      "matched": true,
+      "operation": "transition"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "AUTHORITY_CONTEXT_BINDING_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "AUTHORITY_CONTEXT_BINDING_MISMATCH"
+      ],
+      "id": "transition_c2_authority_cross_actor_transplant",
+      "matched": true,
+      "operation": "transition"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "AUTHORITY_CONTEXT_BINDING_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "AUTHORITY_CONTEXT_BINDING_MISMATCH"
+      ],
+      "id": "transition_c2_authority_event_digest_mismatch",
+      "matched": true,
+      "operation": "transition"
+    },
+    {
       "actual_exit_code": 0,
       "actual_result": "pass",
       "actual_violation_codes": [],
@@ -1646,6 +2690,17 @@
         "AUTHENTICATED_HUMAN_AUTHORITY_UNAVAILABLE"
       ],
       "id": "transition_c2_no_authority",
+      "matched": true,
+      "operation": "transition"
+    },
+    {
+      "actual_exit_code": 0,
+      "actual_result": "pass",
+      "actual_violation_codes": [],
+      "expected_exit_code": 0,
+      "expected_result": "pass",
+      "expected_violation_codes": [],
+      "id": "transition_c2_trusted_host_verifiers_pass",
       "matched": true,
       "operation": "transition"
     },
@@ -1790,6 +2845,21 @@
       "operation": "transition"
     },
     {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "TRANSITION_ACTOR_ROLE_FORBIDDEN"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "TRANSITION_ACTOR_ROLE_FORBIDDEN"
+      ],
+      "id": "transition_foreground_self_completion_rejected",
+      "matched": true,
+      "operation": "transition"
+    },
+    {
       "actual_exit_code": 0,
       "actual_result": "pass",
       "actual_violation_codes": [],
@@ -1799,6 +2869,17 @@
       "id": "transition_full_real_workflow",
       "matched": true,
       "operation": "workflow_sequence"
+    },
+    {
+      "actual_exit_code": 0,
+      "actual_result": "pass",
+      "actual_violation_codes": [],
+      "expected_exit_code": 0,
+      "expected_result": "pass",
+      "expected_violation_codes": [],
+      "id": "transition_human_acceptance_pass",
+      "matched": true,
+      "operation": "transition"
     },
     {
       "actual_exit_code": 1,
@@ -1830,16 +2911,31 @@
       "actual_exit_code": 1,
       "actual_result": "fail",
       "actual_violation_codes": [
-        "ACTOR_ORIGIN_CONTEXT_SCHEMA_INVALID",
-        "HUMAN_ORIGIN_ATTESTATION_REQUIRED"
+        "ACTOR_ORIGIN_ATTESTATION_REQUIRED",
+        "ACTOR_ORIGIN_CONTEXT_SCHEMA_INVALID"
       ],
       "expected_exit_code": 1,
       "expected_result": "fail",
       "expected_violation_codes": [
-        "ACTOR_ORIGIN_CONTEXT_SCHEMA_INVALID",
-        "HUMAN_ORIGIN_ATTESTATION_REQUIRED"
+        "ACTOR_ORIGIN_ATTESTATION_REQUIRED",
+        "ACTOR_ORIGIN_CONTEXT_SCHEMA_INVALID"
       ],
       "id": "transition_human_origin_missing",
+      "matched": true,
+      "operation": "transition"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "TRANSITION_ACTOR_ROLE_FORBIDDEN"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "TRANSITION_ACTOR_ROLE_FORBIDDEN"
+      ],
+      "id": "transition_human_self_completion_rejected",
       "matched": true,
       "operation": "transition"
     },
@@ -1866,6 +2962,23 @@
       "actual_exit_code": 1,
       "actual_result": "fail",
       "actual_violation_codes": [
+        "ACTOR_ORIGIN_ATTESTATION_REQUIRED",
+        "ACTOR_ORIGIN_CONTEXT_SCHEMA_INVALID"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "ACTOR_ORIGIN_ATTESTATION_REQUIRED",
+        "ACTOR_ORIGIN_CONTEXT_SCHEMA_INVALID"
+      ],
+      "id": "transition_model_origin_missing",
+      "matched": true,
+      "operation": "transition"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
         "POINTER_ARTIFACT_BINDING_MISMATCH",
         "POINTER_ARTIFACT_BYTE_MISMATCH"
       ],
@@ -1876,6 +2989,23 @@
         "POINTER_ARTIFACT_BYTE_MISMATCH"
       ],
       "id": "transition_pointer_binding",
+      "matched": true,
+      "operation": "transition"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "FRESH_EVENT_VALIDATION_FAILED",
+        "TRANSITION_ACTOR_ROLE_FORBIDDEN"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "FRESH_EVENT_VALIDATION_FAILED",
+        "TRANSITION_ACTOR_ROLE_FORBIDDEN"
+      ],
+      "id": "transition_provider_role_edge_mismatch_rejected",
       "matched": true,
       "operation": "transition"
     },
@@ -1919,6 +3049,25 @@
         "TRANSITION_UNREACHABLE"
       ],
       "id": "transition_unreachable",
+      "matched": true,
+      "operation": "transition"
+    },
+    {
+      "actual_exit_code": 1,
+      "actual_result": "fail",
+      "actual_violation_codes": [
+        "VALIDATION_ARTIFACT_BYTE_MISMATCH",
+        "VALIDATION_ARTIFACT_SCHEMA_INVALID",
+        "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"
+      ],
+      "expected_exit_code": 1,
+      "expected_result": "fail",
+      "expected_violation_codes": [
+        "VALIDATION_ARTIFACT_BYTE_MISMATCH",
+        "VALIDATION_ARTIFACT_SCHEMA_INVALID",
+        "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"
+      ],
+      "id": "transition_validation_artifact_malformed",
       "matched": true,
       "operation": "transition"
     },
@@ -2032,16 +3181,18 @@
       "operation": "reference_attack"
     }
   ],
-  "executed_cases": 82,
-  "inherited_cases": 79,
-  "matched_cases": 161,
+  "executed_cases": 215,
+  "inherited_behavioral_coverage": 79,
+  "inherited_coverage_map_sha256": "c7c70db64ec35f364eddfd18e84647bff774e404bae30da2f486eac6a7d05abe",
+  "inherited_inventory_cases": 79,
+  "matched_cases": 215,
   "mismatch_count": 0,
-  "policy_sha256": "5e781fe8687c6e6501e8ccb80ac971a7f3fa84ecb30fc63424b24e58d59fe447",
-  "protocol_release_head": "65fb2a0a7b4979b887aa1ba2aef454bb7b783ca4",
+  "policy_sha256": "21a22047626c39ea753cb69dc615caff79a396defa1e88ff9a654923f4b31fa6",
+  "protocol_release_head": "0145047d10b3163569a2eb068ebbc1bbc4c3e83a",
   "result": "pass",
   "schema_version": "human_ai.communication_fixture_result.v2",
   "source_mailbox_base_head": "d235e602c14250d16b91f2897cb8308e031cc13c",
-  "suite_sha256": "b06da5c9591187bb89ed44d2a2105926219a7685c92c90a717fdf925821a53b2",
-  "total_cases": 161,
-  "validator_version": "2.0.0"
+  "suite_sha256": "b2f844822ca81b6d48874d409c084b8b2447f754286b881b497f974ec3a25d49",
+  "total_cases": 215,
+  "validator_version": "3.0.0"
 }

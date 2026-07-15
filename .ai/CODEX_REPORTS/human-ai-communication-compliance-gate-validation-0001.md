@@ -2,42 +2,70 @@
 
 ## Release topology
 
-- parent: `4530b4f684f64cc7928884cf96d9a221aa5a2b8a`
-- semantics precursor: `c9f10d3bb311e51c082c25d885349ada35866aca`
-- final semantics: `65fb2a0a7b4979b887aa1ba2aef454bb7b783ca4`
-- binding: immediate child, exact SHA carried only by the external review pointer
-- policy `source_mailbox_base_head`: `d235e602c14250d16b91f2897cb8308e031cc13c`
-- policy `protocol_release_head`: `65fb2a0a7b4979b887aa1ba2aef454bb7b783ca4`
+- parent candidate: `e6ca76bce8849f3a7a8bc498f66bfbd767aa4d0d`
+- final semantics: `0145047d10b3163569a2eb068ebbc1bbc4c3e83a`
+- binding: immediate child; exact SHA carried only by the external review
+  pointer
+- policy `source_mailbox_base_head`:
+  `d235e602c14250d16b91f2897cb8308e031cc13c`
+- policy `protocol_release_head`:
+  `0145047d10b3163569a2eb068ebbc1bbc4c3e83a`
 
 ## Executed checks
 
-1. `python -m py_compile` for validator, generator and tests: pass.
-2. Draft 2020-12 validation for every local schema: pass.
-3. Deterministic fixture regeneration: aggregate generated digest
-   `80399fe788e519172a90b479da1cf49c4e683b7b8cbd918d09c76d3baa847e54`
+1. Python compilation: validator, fixture generator and test module `3/3`
+   pass.
+2. Draft 2020-12 schema validation: all local schemas `12/12` pass.
+3. Full actually executed fixture suite: `215/215` exact outcomes pass, with
+   zero mismatches.
+4. Legacy evidence: `79` immutable inventory IDs; `79/79` have complete,
+   ordered, one-to-one mappings to unique executed migrated cases. Aggregate
+   inventory is `294`; only `215` cases are reported as executed.
+5. Unit/CLI suite: `17/17` pass, including the exact role matrix, all-actor
+   origin requirements, event-content bindings, independent replay domains,
+   immutable coverage-map resolution and release topology.
+6. Generator repeatability: `138` generated files have aggregate SHA-256
+   `cca758ec49d21877fd3921c43b5f90670fd5672e04ed5e5bd731b2792497390b`
    on two consecutive runs.
-4. Full suite: `161/161`, comprising `79` immutable inherited parent cases and
-   `82` executed v2 cases; exact results, exit codes and violation sets match.
-5. Unit/CLI suite: `14/14` pass, including tree-object, symlink, submodule,
-   mutable test-fixture cache, state graph and release topology checks.
-6. Cross-environment suite stdout: SHA-256
-   `aad755419bf02fca47c15dba2284bc0c4f928bed93150608e7d87346d8f815c7`
-   for both UTC/hash-seed 1 and Pacific-Kiritimati/hash-seed 98765.
-7. Required proof attacks: schema-valid handcrafted pass with matching artifact
-   digest; fabricated resolved status; post-validation event mutation; another
-   event/task result; mutable/missing/tree/symlink/submodule/digest attacks for
-   event, STATE, validation and pointer refs; from-state mismatch; unreachable
-   edge; Human role impersonation; C2 missing/wrong/replayed/forged authority;
-   ledger deletion/mutation/reorder/rollback/mutable recurrence — all rejected.
-8. Positive flow: four release receipts, Human direct dispatch, exact optional
-   stored result, full dispatch/completion/revision/completion/acceptance loop,
-   C2 test-boundary authority and valid ledger append — all pass.
+7. Cross-environment fixture output: SHA-256
+   `c6cdb4b2d6e84c11a1d416039efb7125da06e058725f95287b46e8fa91dcff42`
+   for both UTC/hash-seed 1 and Pacific-Kiritimati/hash-seed 98765; bytes are
+   identical.
+8. Final fixture evidence: suite SHA-256
+   `b2f844822ca81b6d48874d409c084b8b2447f754286b881b497f974ec3a25d49`,
+   policy SHA-256
+   `21a22047626c39ea753cb69dc615caff79a396defa1e88ff9a654923f4b31fa6`,
+   coverage-map SHA-256
+   `c7c70db64ec35f364eddfd18e84647bff774e404bae30da2f486eac6a7d05abe`.
+
+## Required role and provenance regressions
+
+- Backend significant acceptance, material-review closure and publication
+  candidate creation are rejected.
+- Foreground and Human backend-completion impersonation are rejected.
+- Human/foreground dispatch, backend completion, Human/foreground acceptance,
+  correction loop and protected publication entry pass on valid role paths.
+- Missing, wrong-provider, wrong-role, wrong-transition, wrong-event-digest,
+  cross-event, replayed and forged-host actor-origin contexts are rejected.
+- C2 authority with a wrong event digest or transplanted actor-origin context
+  is rejected; valid trusted-host and deterministic test-boundary verifiers
+  pass only within their declared trust modes.
+- Earlier fabricated-result, stale-state, pointer, release, ledger and Human
+  direct-routing attacks remain actually executed and covered.
 
 ## Boundary assertions
 
 - Validation provenance is fresh repository evidence, not Human authority.
-- Human origin attestation authenticates an actor channel, not C2 permission.
-- `AuthorizationContext` is separately injected and never model-self-issued.
-- A transition proof is not an execution lock; host CAS and atomic authority
-  consumption remain required.
-- Repository validation does not intercept arbitrary live UI/model output.
+- Actor origin proves the exact originating channel and role, not currentness
+  or C2 permission.
+- `ActiveStateContext`, `ActorOriginContext` and `AuthorizationContext` are
+  separately injected and cannot substitute for one another.
+- A transition proof is not an execution lock; production hosts still require
+  atomic state CAS and single-use context consumption.
+- Repository validation does not intercept or activate arbitrary live
+  UI/model output.
+
+The final binding commit is additionally checked for binding/derived-only path
+scope, receipt-required semantics-blob identity, source-mailbox `4/4` identity,
+allowlist compliance, `git diff --check`, scoped secret scan, non-force remote
+read-back and unchanged source/master head before the review pointer is sent.
