@@ -17,7 +17,8 @@
     "claimed_event_class": {"enum": ["C1", "C2", null]},
     "claimed_from_state": {"type": ["string", "null"]},
     "claimed_to_state": {"type": ["string", "null"]},
-    "claimed_protocol_release_head": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"}
+    "claimed_protocol_release_head": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"},
+    "claimed_validation_artifact_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"}
   },
   "$defs": {
     "immutable_ref": {

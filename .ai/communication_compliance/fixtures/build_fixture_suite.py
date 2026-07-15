@@ -538,15 +538,74 @@ def build_cases() -> list[dict[str, Any]]:
     write_json(event_path, mutated, sort_keys=False)
     mutated_request["event_ref"] = fixture_ref(mutated_request["event_ref"]["path"])
     cases.append(case("transition_event_mutation_after_result", "transition", result="fail", codes=["VALIDATION_ARTIFACT_BYTE_MISMATCH", "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"], request=mutated_request, active_state_context=mutated_context, state_context_mode="test-fixture"))
-    fabricated_request, fabricated_context = transition_bundle("transition-fabricated-result", dispatch, "idle")
+    forged_event = copy.deepcopy(dispatch)
+    forged_event["event_id"] = "forged-resolved-status-event"
+    forged_event["required_refs"][0] = {
+        "kind": "test_fixture_blob",
+        "path": ".ai/communication_compliance/fixtures/artifacts/physically-missing-required-ref.md",
+        "content_sha256": "0" * 64,
+        "test_only": True,
+    }
+    fabricated_request, fabricated_context = transition_bundle("transition-fabricated-result", forged_event, "idle")
     fabricated_path = ".ai/communication_compliance/fixtures/artifacts/proof/transition-fabricated-result/validation.json"
-    write_json(ROOT / fabricated_path, {"schema_version": "human_ai.communication_validation.v2", "result": "pass", "resolved_refs": [{"status": "resolved"}]})
+    fixture_gate = gate_module()
+    fixture_policy, fixture_policy_sha = fixture_gate.load_policy(POLICY_PATH)
+    fabricated_pass = fixture_gate.validate_event(dispatch, ROOT, fixture_policy, fixture_policy_sha, test_mode=True)
+    if fabricated_pass["result"] != "pass":
+        raise RuntimeError("handcrafted-pass source event must validate")
+    write_json(ROOT / fabricated_path, fabricated_pass)
     fabricated_request["validation_artifact_ref"] = fixture_ref(fabricated_path)
-    cases.append(case("transition_fabricated_pass_result", "transition", result="fail", codes=["VALIDATION_ARTIFACT_BYTE_MISMATCH", "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"], request=fabricated_request, active_state_context=fabricated_context, state_context_mode="test-fixture"))
+    fabricated_request["claimed_validation_artifact_sha256"] = fabricated_request["validation_artifact_ref"]["content_sha256"]
+    cases.append(case("transition_fabricated_pass_result", "transition", result="fail", codes=["FRESH_EVENT_VALIDATION_FAILED", "VALIDATION_ARTIFACT_BYTE_MISMATCH", "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"], request=fabricated_request, active_state_context=fabricated_context, state_context_mode="test-fixture"))
+    cases.append(case("transition_fabricated_resolved_status_rejected", "transition", result="fail", codes=["FRESH_EVENT_VALIDATION_FAILED", "VALIDATION_ARTIFACT_BYTE_MISMATCH", "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"], request=copy.deepcopy(fabricated_request), active_state_context=fabricated_context, state_context_mode="test-fixture"))
+
+    other_event = copy.deepcopy(dispatch)
+    other_event["event_id"] = "other-event"
+    other_event["task_id"] = "other-task"
+    other_request, other_context = transition_bundle("transition-validation-from-other-event", other_event, "idle", active_task=None)
+    other_validation_path = ".ai/communication_compliance/fixtures/artifacts/proof/transition-validation-from-other-event/validation.json"
+    write_json(ROOT / other_validation_path, fabricated_pass)
+    other_request["validation_artifact_ref"] = fixture_ref(other_validation_path)
+    cases.append(case("transition_validation_from_other_event_task", "transition", result="fail", codes=["VALIDATION_ARTIFACT_BYTE_MISMATCH", "VALIDATION_ARTIFACT_SEMANTIC_MISMATCH"], request=other_request, active_state_context=other_context, state_context_mode="test-fixture"))
+
+    claimed_from_event = copy.deepcopy(dispatch)
+    claimed_from_event["event_id"] = "claimed-from-state-mismatch"
+    claimed_from_event["proposed_transition"]["from_state"] = "completed"
+    claimed_from_request, claimed_from_context = transition_bundle("transition-claimed-from-mismatch", claimed_from_event, "idle")
+    cases.append(case("transition_claimed_from_state_mismatch", "transition", result="fail", codes=["TRANSITION_FROM_STATE_EVIDENCE_MISMATCH"], request=claimed_from_request, active_state_context=claimed_from_context, state_context_mode="test-fixture"))
+
+    wrong_authority = authority_context()
+    wrong_authority["task_id"] = "wrong-task"
+    add_transition(cases, "transition_c2_authority_wrong_task", copy.deepcopy(protected), "awaiting_human_gate", authority=wrong_authority, result="fail", codes=["AUTHORITY_CONTEXT_BINDING_MISMATCH"])
+    replay_authority = authority_context()
+    replay_request, replay_context = transition_bundle("transition-c2-replay", copy.deepcopy(protected), "awaiting_human_gate")
+    cases.append(case("transition_c2_authority_replay", "transition", result="fail", codes=["AUTHORITY_CONTEXT_REPLAYED"], request=replay_request, active_state_context=replay_context, state_context_mode="test-fixture", authorization_context=replay_authority, authority_mode="test-fixture", consumed_context_ids=[replay_authority["context_id"]]))
+    forged_trusted = authority_context()
+    forged_trusted["injection_source"] = "trusted_external_host"
+    forged_trusted["test_only"] = False
+    trusted_request, trusted_context = transition_bundle("transition-c2-forged-trusted", copy.deepcopy(protected), "awaiting_human_gate")
+    cases.append(case("transition_c2_forged_trusted_context", "transition", result="fail", codes=["AUTHORITY_CONTEXT_TRUST_BOUNDARY_INVALID"], request=trusted_request, active_state_context=trusted_context, state_context_mode="test-fixture", authorization_context=forged_trusted, authority_mode="trusted-host"))
     missing_request, missing_context = transition_bundle("transition-missing-event", dispatch, "idle")
     missing_request["event_ref"] = {"kind": "test_fixture_blob", "path": ".ai/communication_compliance/fixtures/artifacts/missing-event.json", "content_sha256": "0" * 64, "test_only": True}
     cases.append(case("transition_missing_event_ref", "transition", result="fail", codes=["EVENT_REFERENCE_UNRESOLVED", "FRESH_EVENT_VALIDATION_FAILED", "TRANSITION_ID_UNKNOWN"], request=missing_request, active_state_context=missing_context, state_context_mode="test-fixture"))
     cases.append(case("transition_full_real_workflow", "workflow_sequence", steps=[{"request": request, "active_state_context": context} for request, context in (dispatch_step, completion_step, revision_step, completion_two_step, acceptance_step)]))
+
+    tree_head = subprocess.run(
+        ["git", "-C", str(ROOT), "rev-parse", RELEASE + "^{tree}"],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=True,
+        text=True,
+    ).stdout.strip()
+    valid_digest = sha256(git_show(PROTOCOL_REF, RELEASE))
+    for label in ("EVENT", "STATE", "POINTER", "VALIDATION_ARTIFACT"):
+        prefix = label.lower()
+        cases.append(case(prefix + "_ref_mutable_rejected", "reference_attack", result="fail", codes=[label + "_REFERENCE_COMMIT_INVALID", label + "_REFERENCE_UNRESOLVED"], label=label, attack="mutable", reference={"kind": "git_blob", "commit": "master", "path": PROTOCOL_REF, "content_sha256": valid_digest}))
+        cases.append(case(prefix + "_ref_missing_rejected", "reference_attack", result="fail", codes=[label + "_REFERENCE_UNRESOLVED"], label=label, attack="missing", reference={"kind": "git_blob", "commit": RELEASE, "path": ".ai/communication_compliance/fixtures/no-such-artifact.json", "content_sha256": "0" * 64}))
+        cases.append(case(prefix + "_ref_tree_rejected", "reference_attack", result="fail", codes=[label + "_REFERENCE_UNRESOLVED"], label=label, attack="tree", reference={"kind": "git_blob", "commit": tree_head, "path": PROTOCOL_REF, "content_sha256": valid_digest}))
+        cases.append(case(prefix + "_ref_digest_mismatch_rejected", "reference_attack", result="fail", codes=[label + "_REFERENCE_DIGEST_MISMATCH"], label=label, attack="digest", reference={"kind": "git_blob", "commit": RELEASE, "path": PROTOCOL_REF, "content_sha256": "0" * 64}))
+        cases.append(case(prefix + "_ref_symlink_rejected", "reference_attack", result="fail", codes=[label + "_REFERENCE_UNRESOLVED"], label=label, attack="symlink", reference={}))
+        cases.append(case(prefix + "_ref_submodule_rejected", "reference_attack", result="fail", codes=[label + "_REFERENCE_UNRESOLVED"], label=label, attack="submodule", reference={}))
 
     first = drift_record("fixture-drift-first", "POINTER_PROSE_CONTAMINATION", [])
     recurring = drift_record("fixture-drift-recurring", "POINTER_PROSE_CONTAMINATION", [first], fixture=immutable_parent_case("pointer_extra_prose"))
@@ -591,10 +650,22 @@ def build_cases() -> list[dict[str, Any]]:
 
 def main() -> int:
     write_raw_parser_fixtures()
+    prior_suite_bytes = git_show(
+        ".ai/communication_compliance/fixtures/fixture_suite.json",
+        PARENT_CANDIDATE,
+    )
+    prior_suite = json.loads(prior_suite_bytes)
     suite = {
         "schema_version": "human_ai.communication_fixture_suite.v2",
         "source_mailbox_base_head": SOURCE_BASE,
         "protocol_release_head": RELEASE,
+        "prior_suite_ref": {
+            "kind": "git_blob",
+            "commit": PARENT_CANDIDATE,
+            "path": ".ai/communication_compliance/fixtures/fixture_suite.json",
+            "content_sha256": sha256(prior_suite_bytes),
+        },
+        "prior_case_ids": [item["id"] for item in prior_suite["cases"]],
         "cases": build_cases(),
     }
     write_json(SUITE_PATH, suite, sort_keys=False)

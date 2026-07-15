@@ -148,7 +148,8 @@ class CommunicationComplianceGateTests(unittest.TestCase):
         )
         self.assertEqual(exit_code, gate.EXIT_PASS, [case for case in result["cases"] if not case["matched"]])
         self.assertEqual(result["result"], "pass")
-        self.assertGreaterEqual(result["total_cases"], 45)
+        self.assertEqual(result["inherited_cases"], 79)
+        self.assertGreaterEqual(result["executed_cases"], 80)
         self.assertEqual(result["matched_cases"], result["total_cases"])
 
     def test_fixture_inventory_covers_proof_chain_attacks(self) -> None:
@@ -160,12 +161,18 @@ class CommunicationComplianceGateTests(unittest.TestCase):
             "transition_exact_validation_artifact_pass",
             "transition_event_mutation_after_result",
             "transition_fabricated_pass_result",
+            "transition_fabricated_resolved_status_rejected",
+            "transition_validation_from_other_event_task",
+            "transition_claimed_from_state_mismatch",
             "transition_missing_event_ref",
             "transition_state_task_mismatch",
             "transition_unreachable",
             "transition_full_real_workflow",
             "transition_c2_no_authority",
             "transition_human_c2_no_authority",
+            "transition_c2_authority_wrong_task",
+            "transition_c2_authority_replay",
+            "transition_c2_forged_trusted_context",
             "drift_recurring_immutable_fixture_pass",
             "drift_mutable_fixture_rejected",
             "drift_ledger_delete_rejected",
@@ -174,6 +181,9 @@ class CommunicationComplianceGateTests(unittest.TestCase):
             "drift_ledger_sequence_rollback",
         }
         self.assertTrue(required.issubset(ids), sorted(required - ids))
+        for label in ("event", "state", "pointer", "validation_artifact"):
+            for attack in ("mutable", "missing", "tree", "digest_mismatch", "symlink", "submodule"):
+                self.assertIn(f"{label}_ref_{attack}_rejected", ids)
 
     def test_git_reference_requires_commit_and_rejects_special_entries(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

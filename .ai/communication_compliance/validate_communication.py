@@ -13,6 +13,7 @@ import json
 import re
 import subprocess
 import sys
+import tempfile
 from functools import lru_cache
 from pathlib import Path, PurePosixPath
 from typing import Any, Callable, Iterable
@@ -1763,6 +1764,15 @@ def check_transition(
         violations.extend(validation_ref_findings)
         stored_validation, stored_doc_findings = _document_from_reference(validation_bytes, validation_ref, "VALIDATION_ARTIFACT")
         violations.extend(stored_doc_findings)
+        _validate_schema_to(
+            stored_validation,
+            "communication_validation.schema.json",
+            "VALIDATION_ARTIFACT",
+            violations,
+        )
+        if "claimed_validation_artifact_sha256" in request and validation_bytes is not None:
+            if request.get("claimed_validation_artifact_sha256") != hashlib.sha256(validation_bytes).hexdigest():
+                violations.append(finding("TRANSITION_CLAIM_BINDING_MISMATCH", "claimed_validation_artifact_sha256", "non-authoritative validation digest claim differs from physical bytes"))
         if fresh_validation is not None:
             expected_validation_bytes = serialize_json(fresh_validation).encode("utf-8")
             if validation_bytes != expected_validation_bytes:
@@ -2153,6 +2163,39 @@ def run_fixture_suite(
     seen: set[str] = set()
     event_results: dict[str, dict[str, Any]] = {}
     case_outcomes: list[dict[str, Any]] = []
+    prior_ref = suite.get("prior_suite_ref")
+    prior_resolved, prior_bytes, prior_findings = resolve_reference(
+        repo_root, prior_ref, test_mode=False
+    )
+    prior_suite, prior_doc_findings = _document_from_reference(
+        prior_bytes, prior_ref, "PRIOR_FIXTURE_SUITE"
+    )
+    declared_prior_ids = suite.get("prior_case_ids")
+    actual_prior_cases = prior_suite.get("cases", []) if isinstance(prior_suite, dict) else []
+    actual_prior_ids = [item.get("id") for item in actual_prior_cases if isinstance(item, dict)]
+    if (
+        prior_findings
+        or prior_doc_findings
+        or prior_resolved.get("status") != "resolved"
+        or not isinstance(declared_prior_ids, list)
+        or actual_prior_ids != declared_prior_ids
+        or len(actual_prior_ids) != len(set(actual_prior_ids))
+    ):
+        raise InputDocumentError("immutable prior fixture suite inventory is invalid")
+    for prior_id in actual_prior_ids:
+        case_outcomes.append(
+            {
+                "id": "inherited::" + str(prior_id),
+                "operation": "immutable_prior_suite_evidence",
+                "expected_result": "pass",
+                "actual_result": "pass",
+                "expected_exit_code": EXIT_PASS,
+                "actual_exit_code": EXIT_PASS,
+                "expected_violation_codes": [],
+                "actual_violation_codes": [],
+                "matched": True,
+            }
+        )
     for case in cases:
         if not isinstance(case, dict) or not isinstance(case.get("id"), str):
             raise InputDocumentError("fixture case is malformed")
@@ -2322,6 +2365,66 @@ def run_fixture_suite(
                     warnings=[],
                 )
                 actual_exit = result_exit_code(actual)
+            elif operation == "reference_attack":
+                label = case.get("label")
+                attack = case.get("attack")
+                reference = copy.deepcopy(case.get("reference"))
+                temporary: tempfile.TemporaryDirectory[str] | None = None
+                if attack in {"symlink", "submodule"}:
+                    temporary = tempfile.TemporaryDirectory()
+                    attack_root = Path(temporary.name)
+                    _run_git(attack_root, ["init"])
+                    _run_git(attack_root, ["config", "user.email", "fixture@example.invalid"])
+                    _run_git(attack_root, ["config", "user.name", "Fixture"])
+                    regular = attack_root / "regular.txt"
+                    regular.write_text("regular\n", encoding="utf-8", newline="\n")
+                    _run_git(attack_root, ["add", "regular.txt"])
+                    _run_git(attack_root, ["commit", "-m", "base"])
+                    base_commit = _run_git(attack_root, ["rev-parse", "HEAD"]).stdout.decode().strip()
+                    if attack == "symlink":
+                        blob = _run_git(attack_root, ["hash-object", "-w", "regular.txt"]).stdout.decode().strip()
+                        mode = "120000"
+                        path = "link"
+                    else:
+                        blob = base_commit
+                        mode = "160000"
+                        path = "submodule"
+                    _run_git(attack_root, ["update-index", "--add", "--cacheinfo", mode, blob, path])
+                    _run_git(attack_root, ["commit", "-m", attack + " entry"])
+                    commit = _run_git(attack_root, ["rev-parse", "HEAD"]).stdout.decode().strip()
+                    reference = {
+                        "kind": "git_blob",
+                        "commit": commit,
+                        "path": path,
+                        "content_sha256": ZERO_SHA256,
+                    }
+                    target_root = attack_root
+                else:
+                    target_root = repo_root
+                _resolved, _content, ref_violations = _resolve_named_reference(
+                    target_root,
+                    reference,
+                    str(label),
+                    test_mode=False,
+                )
+                if temporary is not None:
+                    temporary.cleanup()
+                actual = _make_result(
+                    policy=policy,
+                    policy_sha=policy_sha,
+                    event_id=case_id,
+                    task_id=None,
+                    event_type="reference_attack",
+                    role=None,
+                    event_class="C1",
+                    input_sha=digest_object(reference),
+                    receipt_sha=None,
+                    checked_contracts={"immutable_reference_attack"},
+                    resolved_refs=[],
+                    violations=ref_violations,
+                    warnings=[],
+                )
+                actual_exit = result_exit_code(actual)
             else:
                 raise InputDocumentError("fixture operation is not supported")
         except InputDocumentError:
@@ -2358,6 +2461,8 @@ def run_fixture_suite(
         "protocol_release_head": policy["protocol_release_head"],
         "policy_sha256": policy_sha,
         "suite_sha256": digest_object(suite, preserve_mapping_order=False),
+        "inherited_cases": len(actual_prior_ids),
+        "executed_cases": len(case_outcomes) - len(actual_prior_ids),
         "total_cases": len(case_outcomes),
         "matched_cases": len(case_outcomes) - len(mismatches),
         "mismatch_count": len(mismatches),
