@@ -65,7 +65,7 @@ source_head: "<full-source-commit-sha>"
 human_gate: "not_required | required | approved"
 ```
 
-Optional routing metadata such as `protocol_version`, `from`, `to`, or a one-line `note` may be added. It must not carry the long task body.
+Optional routing metadata such as `protocol_version`, `from`, `to`, or a one-line `note` may be carried only in a separately labeled routing envelope adjacent to the canonical signal. It must not be added to the seven-key pointer mapping or carry the long task body. Validation-result and authorization-context refs likewise remain outside the frozen pointer core.
 
 Rules:
 
@@ -74,6 +74,7 @@ Rules:
 - `human_gate` must reflect authenticated approval state, not a model assumption;
 - every non-null ref is dereferenced before execution;
 - missing refs use the one-check fast-fail rule in `.ai/PROTOCOL.md`.
+- a material C1/C2 transition remains ineligible until the repository communication gate returns a passing result bound to the exact event and refs; C2 additionally requires separately injected trusted-host Human authority.
 
 ## 5. Canonical Long Task Packet
 

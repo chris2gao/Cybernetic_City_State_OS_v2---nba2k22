@@ -144,6 +144,12 @@ human_response_preflight:
 
 The execution recommendation must contain `recommended_model`, `recommended_thinking_level`, `mode`, `subagents`, `task_ref_or_plan_ref` resolving to exactly one applicable durable ref, `short_complexity_rationale`, and `human_gate`; use `runtime_dependent` or `not_applicable` instead of omission. Independent expression is 2 to 5 sentences, visibly separated from evidence and authority, and possesses no authorization or gate-resolving force.
 
+### Executable Gate Check
+
+Before advancing a durable `C1` or protected `C2` workflow event, run `.ai/communication_compliance/validate_communication.py` as documented in `.ai/communication_compliance/README.md`. The event must have a passing result bound to the current versioned policy, bootstrap receipt, input digest, and every immutable required ref. The transition check revalidates that result; missing, malformed, stale, failing, unresolved, or digest-mismatched evidence blocks advancement.
+
+`C0` ordinary discussion does not require this artifact. `C2` additionally requires a separately injected trusted-host Human `AuthorizationContext`; payload `human_gate` fields, independent expression, pointers, and validator output cannot authorize the action. The gate reports eligibility only and must not be represented as live middleware or an executed state change.
+
 ## 10. Minimal Audit Checklist
 
 Before claiming completion or approval, verify:
@@ -157,6 +163,7 @@ Before claiming completion or approval, verify:
 - [ ] mailbox artifacts and canonical short handoff were produced when required;
 - [ ] detailed output was written to durable files instead of pasted into chat.
 - [ ] the Human-response preflight passed for every material Human-facing event;
+- [ ] every proposed C1/C2 transition carried a passing, bound communication-gate result, and any C2 transition also carried external authenticated Human authority;
 - [ ] a backend execution recommendation contained every required field when the Human was asked to start or continue Codex or Claude Code;
 - [ ] bounded independent expression was present, separated from evidence/authority, and preserved through `brief_ref` when the machine channel had to stay pointer-only;
 - [ ] no hidden chain-of-thought was requested or disclosed;

@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "human-ai-communication-validation-v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "validator_version",
+    "event_id",
+    "task_id",
+    "event_type",
+    "result",
+    "violations",
+    "warnings",
+    "checked_contracts",
+    "protocol_head",
+    "role",
+    "event_class",
+    "resolved_refs",
+    "input_sha256",
+    "policy_sha256",
+    "bootstrap_receipt_sha256",
+    "transition_eligible",
+    "authorization_granted_by_validator"
+  ],
+  "properties": {
+    "schema_version": {"const": "human_ai.communication_validation.v1"},
+    "validator_version": {"type": "string", "minLength": 1},
+    "event_id": {"type": ["string", "null"]},
+    "task_id": {"type": ["string", "null"]},
+    "event_type": {"type": ["string", "null"]},
+    "result": {"enum": ["pass", "fail", "error"]},
+    "violations": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/finding"}
+    },
+    "warnings": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/finding"}
+    },
+    "checked_contracts": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "protocol_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "role": {"type": ["string", "null"]},
+    "event_class": {"enum": ["C0", "C1", "C2", "unknown"]},
+    "resolved_refs": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/resolved_ref"}
+    },
+    "input_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "policy_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "bootstrap_receipt_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "proposed_transition": {"type": ["object", "null"]},
+    "transition_eligible": {"type": "boolean"},
+    "authorization_granted_by_validator": {"const": false}
+  },
+  "$defs": {
+    "finding": {
+      "type": "object",
+      "required": ["code", "path", "message", "severity"],
+      "properties": {
+        "code": {"type": "string", "pattern": "^[A-Z0-9_]+$"},
+        "path": {"type": "string"},
+        "message": {"type": "string"},
+        "severity": {"enum": ["error", "warning"]}
+      },
+      "additionalProperties": false
+    },
+    "resolved_ref": {
+      "type": "object",
+      "required": ["kind", "path", "status", "content_sha256"],
+      "properties": {
+        "kind": {"enum": ["git_blob", "test_fixture_blob"]},
+        "commit": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"},
+        "path": {"type": "string"},
+        "blob_sha": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"},
+        "status": {"enum": ["resolved", "unresolved"]},
+        "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

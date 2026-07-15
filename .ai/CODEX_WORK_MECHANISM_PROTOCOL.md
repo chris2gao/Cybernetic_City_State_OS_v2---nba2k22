@@ -204,6 +204,8 @@ Do not create an isolated worktree merely for read-only inspection or a small `.
 
 If review publication fails because the branch advanced, fetch the new head and inspect only changed/overlapping paths. If there is no overlap, rebuild or retry with a new explicit lease. If overlap or ownership is uncertain, return `blocked` or `conflict` rather than forcing the update.
 
+For a material C1/C2 handoff, acceptance, or protected-entry proposal, produce and validate the versioned event before claiming the corresponding workflow transition is eligible. Use `.ai/communication_compliance/validate_communication.py`; retain the passing machine-readable result as durable evidence and run its transition check. A validation pass is evidence, not execution or authority. Protected C2 action still requires a separately injected trusted-host Human `AuthorizationContext`, and source publication/runtime/Coordinator gates remain unchanged.
+
 ## 7. File Channel Semantics
 
 - `.ai/USER_UPLOADS/`: Human/foreground-role-provided long task carriers and uploaded evidence.

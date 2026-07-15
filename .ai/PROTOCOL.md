@@ -193,6 +193,14 @@ human_response_preflight:
 
 If a reviewing model detects an omission, it acknowledges protocol drift plainly and corrects the Human-facing response in the same turn when possible. It does not blame context length or the Human, create a fake cleanup/finalize microtask solely for the omitted chat section, or discard otherwise valid repository work. If the durable source protocol itself lacks the rule, one coherent reviewed protocol-correction task may repair the stack.
 
+### Executable Repository Compliance Gate
+
+Material `C1` and protected `C2` workflow artifacts are validated by `.ai/communication_compliance/validate_communication.py` under the versioned policy and schemas in that directory. Ordinary `C0` discussion is not required to produce a durable artifact. Unknown event types fail closed and cannot self-declare as `C0`.
+
+A proposed transition into backend execution, backend completion review, foreground acceptance, publication-candidate state, or protected-publication entry is ineligible unless a machine-readable validation result is `pass`, its exact immutable refs resolve, and its event/policy/receipt digests remain bound. The validation result and any routing metadata remain outside the frozen seven-field pointer core. For `C2`, descriptive `human_gate` text is never authority: a separately injected, action-bound `AuthorizationContext` from a trusted external Human host is also required, and the validator only checks that evidence—it never grants or executes authorization.
+
+The current gate is repository-level enforcement, not live UI or model-output interception. Communication Gateway, middleware, polling, Coordinator, runtime, or unattended activation remains a separate Human-gated implementation. Drift records use `.ai/COMMUNICATION_DRIFT_LEDGER.yml`; the second occurrence of a stable violation class requires a matching negative fixture or a documented deterministic-impossibility exception with foreground semantic review.
+
 ## Canonical Instruction Authority And State Freshness
 
 Instruction authority and current-state freshness are separate systems. Fresh evidence can establish what state exists; it does not grant permission to mutate, publish, merge, activate, or override a durable rule.

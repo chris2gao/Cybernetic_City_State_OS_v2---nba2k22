@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "human-ai-communication-transition-request-v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "transition_id",
+    "event_id",
+    "task_id",
+    "event_type",
+    "event_class",
+    "from_state",
+    "to_state",
+    "protocol_head",
+    "event_input_sha256",
+    "validation_result_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": "human_ai.communication_transition_request.v1"},
+    "transition_id": {"type": "string", "minLength": 1},
+    "event_id": {"type": "string", "minLength": 1},
+    "task_id": {"type": "string", "minLength": 1},
+    "event_type": {"type": "string", "minLength": 1},
+    "event_class": {"enum": ["C1", "C2"]},
+    "from_state": {"type": "string", "minLength": 1},
+    "to_state": {"type": ["string", "null"]},
+    "protocol_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "event_input_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "validation_result_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "additionalProperties": false
+}

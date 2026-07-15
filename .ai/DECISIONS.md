@@ -37,3 +37,12 @@
 - Mixed recipients: Classify by intended recipient and consumption mode; keep separable Human content outside the pointer, or fall back to pointer-only plus a non-null resolvable `brief_ref` that preserves all required Human content.
 - Boundary: The recommendation and expression remain outside the seven-field machine pointer core and are not factual evidence, Human authorization, hidden chain-of-thought, or executable instructions.
 - Authority: Human Speaker authority, safety, evidence requirements, pointer purity, and all source/publication/runtime/Coordinator/destructive/secrets/protected gates remain unchanged.
+
+## D-0006 — Enforce material communication with a repository gate
+
+- Status: accepted for implementation and foreground review
+- Decision: Classify named communication events as C0/C1/C2 and require a deterministic, versioned, fail-closed validation result before any material C1/C2 workflow transition is eligible.
+- Evidence: Bootstrap receipts, immutable refs, pointer purity, complete Human content, transition bindings, and privacy-safe drift records use `.ai/communication_compliance/` schemas and validator.
+- C0 boundary: Ordinary discussion is not forced through GitHub or durable validation; unknown event types fail closed.
+- C2 authority: A model-generated `human_gate`, pointer, expression, task packet, or validation result cannot authorize protected action. C2 requires a separately injected trusted-host Human `AuthorizationContext`, and the gate never performs the action.
+- Runtime boundary: This is repository-level evidence enforcement. Live Communication Gateway, UI middleware, polling, runtime, Coordinator, or unattended activation remains separately Human-gated.

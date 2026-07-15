@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "human-ai-communication-drift-ledger-v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "policy_version",
+    "protocol_head",
+    "append_only",
+    "privacy",
+    "recurrence_policy",
+    "records"
+  ],
+  "properties": {
+    "schema_version": {"const": "human_ai.communication_drift_ledger.v1"},
+    "policy_version": {"const": "human_ai.communication_material_event_policy.v1"},
+    "protocol_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "append_only": {"const": true},
+    "privacy": {
+      "type": "object",
+      "required": ["contains_private_reasoning", "contains_secret_content"],
+      "properties": {
+        "contains_private_reasoning": {"const": false},
+        "contains_secret_content": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "recurrence_policy": {
+      "type": "object",
+      "required": ["threshold", "requirement"],
+      "properties": {
+        "threshold": {"const": 2},
+        "requirement": {
+          "const": "matching_negative_fixture_or_deterministic_impossibility_with_foreground_review"
+        }
+      },
+      "additionalProperties": false
+    },
+    "records": {
+      "type": "array",
+      "items": {"$ref": "drift_record.schema.json"}
+    }
+  },
+  "additionalProperties": false
+}
