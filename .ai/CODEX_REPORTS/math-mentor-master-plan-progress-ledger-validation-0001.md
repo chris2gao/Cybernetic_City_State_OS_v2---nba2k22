@@ -5,12 +5,14 @@
 | Check | Result |
 |---|---|
 | bound source `master@9e12064...` verified before mutation | pass |
-| 12 required ledger sections | pass |
+| 13 required ledger sections | pass |
 | current-master referenced paths | pass |
 | bridge physical inventory and duplicate IDs | pass |
 | legacy bridges described as present but non-canonical/non-consumable | pass |
 | LRP current-master status reconciled | pass |
 | no runtime inferred from documentation | pass |
+| ChatGPT/Claude front-agent and Codex/Claude Code backend roles | pass |
+| backend resource requires front-agent semantic/pedagogical review | pass |
 | UI marked `not_required` | pass |
 | next batch has 3–5 exact nodes and is proposal-only | pass (4) |
 | YAML/JSON parse | pass |

@@ -8,7 +8,7 @@ Primary output:
 
 - `08_Domain_Applications/Math_Mentor/MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md`
 
-The ledger reconciles LRP-01–06, P0, the four-node pilot, Knowledge Completion Program Stage 0–9, legacy bridge inventory, absent runtime/persistence layers, the current `not_required` UI decision, and one proposal-only four-node prerequisite-frontier batch.
+The ledger reconciles LRP-01–06, P0, the four-node pilot, Knowledge Completion Program Stage 0–9, legacy bridge inventory, absent runtime/persistence layers, the current `not_required` UI decision, the Human-specified ChatGPT/Claude front-agent and Codex/Claude Code backend orchestration contract, and one proposal-only four-node prerequisite-frontier batch.
 
 ## Safety outcome
 

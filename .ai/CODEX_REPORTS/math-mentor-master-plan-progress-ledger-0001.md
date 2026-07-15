@@ -14,12 +14,13 @@ next_batch_node_ids:
   - "DIFF_GEO-653"
 bridge_policy: "migrate_existing_before_new_generation"
 ui_status: "not_required"
+teaching_orchestration_status: "specified_manual_only"
 human_gate: "required_after_chatgpt_review"
 ```
 
 ## Outcome
 
-Created the single Human-readable Math Mentor master plan and current-progress ledger. It separates published documentation from activated capability, records P0 as static/inactive, preserves the four-node pilot's limited scope, verifies legacy bridges as existing but unresolved, and proposes one fail-closed four-node prerequisite-frontier batch.
+Created the single Human-readable Math Mentor master plan and current-progress ledger. It separates published documentation from activated capability, records the Human-specified ChatGPT/Claude learner-facing orchestration and Codex/Claude Code backend execution roles as `specified_manual_only`, records P0 as static/inactive, preserves the four-node pilot's limited scope, verifies legacy bridges as existing but unresolved, and proposes one fail-closed four-node prerequisite-frontier batch.
 
 No node, bridge, roadmap, crosswalk, identity overlay, registry, schema, prompt, test, runtime, UI, or consumer state was changed.
 
@@ -31,6 +32,7 @@ No node, bridge, roadmap, crosswalk, identity overlay, registry, schema, prompt,
 - KCP: Stage 0 is historical/stale static inventory; full-corpus Stages 1–6 remain planned; Stage 8 consumption is absent/blocked.
 - Bridges: 14 assets, 10 unique IDs, 4 duplicate IDs, 2 schema families, 5 indexed/9 unindexed, 0 explicit endpoint-resolved, 14 unresolved, 0 canonical v1.
 - UI: standalone UI is `not_required` by current Human decision.
+- Teaching orchestration: ChatGPT/Claude front agents must review every Codex/Claude Code resource before teaching use; documentation does not activate runtime or writers.
 
 ## Durable evidence
 

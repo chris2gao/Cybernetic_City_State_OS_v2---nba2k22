@@ -8,25 +8,29 @@
 
 ## 2. 一句话系统定义
 
-Math Mentor 是一个由 Human 治理、通过 ChatGPT 对话与 Codex 终端交付、建立在经审计知识节点、明确学习合同和 fail-closed 控制边界之上的数学教学系统。
+Math Mentor 是一个由 Human 治理、通过 ChatGPT/Claude 与学习者互动并由 Codex/Claude Code 执行后端任务、建立在经审计知识节点、明确学习合同和 fail-closed 控制边界之上的数学教学编排系统。
 
 ## 3. 架构地图
 
 | 层 | 当前权威与职责 | 当前成熟度 | 明确边界 |
 |---|---|---|---|
 | Plan 3 / Human Speaker | 宪法、Engine A/B 路由、最终语义与发布授权 | `accepted_published` | 模型输出不能取代 Human 授权；P3 默认关闭 |
+| 交互教学与编排层 | ChatGPT/Claude 直接面对学习者，诊断教学状态、选择教学动作、分派有界后端任务并审查返回资源 | `specified_manual_only` | 前台模型负责语义/教学准入；它不是 Human Speaker，也没有生产 writer 授权 |
+| 后端系统执行层 | Codex/Claude Code 读取仓库、生成教学资源、执行确定性计算/验证、维护证据与提交 | `specified_manual_only` | 后端输出只是候选执行证据，不能自行改变学习目标或取得教学权威 |
+| GitHub 证据与状态层 | task packet、exact-head handoff、validation evidence 与本总账 | `accepted_published` | Git 证据记录状态，不自动授权生产行为 |
 | 教学合同层 | 初始化、Lesson Plan、Prep/Socratic/Exam、复习与工具诚实性合同 | `specified_manual_only` | 文档与 prompt 存在不等于 agent runtime 存在 |
 | 知识语料层 | `Pure_Math_Intuition_DB` 根节点、roadmap 与历史资产 | `statically_validated_inactive`（结构） | 全语料数学正确性与教学就绪未获认证 |
 | P0 控制平面 | authority、identity、normalization、授权验证与 admission 的静态实现 | `statically_validated_inactive` | 只读、fail-closed；无生产 trust ingress、transport 或 writer |
 | Bridge 层 | 14 个 legacy 内容资产与 canonical v1 合同 | `legacy_assets_unresolved` | legacy 不是 canonical typed edge，也不可被 Coordinator 正式消费 |
-| 当前教学接口 | ChatGPT conversation、Codex terminal workflow | `accepted_published` | 当前为 Human 触发的手工交付，不是自治教学流水线 |
 | 未来运行数据面 | session runtime、Coordinator、持久化、scheduler writer、observability、rollback | `absent` / `blocked` | 未经新 Human gate 不得激活或写入 |
 
-控制关系是：Human Speaker 决定权威与边界；教学合同规定手工教学；语料和 P0 只提供经限定的静态证据；bridge 只有完成 endpoint 绑定、认证、验证与索引后才可能进入消费；未来 runtime 与 persistence 必须独立获批。
+控制关系是：Human Speaker 决定目标、权威与受保护边界；ChatGPT/Claude 承担学习者交互、教学诊断、任务编排与资源准入；Codex/Claude Code 只执行有界后端任务；GitHub 保存精确证据；语料和 P0 只提供经限定的静态证据；bridge 只有完成 endpoint 绑定、认证、验证与索引后才可能进入消费；未来 runtime 与 persistence 必须独立获批。
 
 ## 4. 当前产品接口决定
 
-- 当前充分接口是 **ChatGPT 对话** 与 **Codex 终端工作流**。
+- 兼容的学习者前台教师/编排者是 **ChatGPT** 与 **Claude**；兼容的后端系统执行者是 **Codex** 与 **Claude Code**。
+- 前台教师可以在教学全生命周期中分派有界任务，包括 lesson resource、exercise、exam、multi-node synthesis、review material、deterministic check 与 resource repair；每个后端输出必须经前台教师的语义与教学适用性审查后才能进入教学。
+- 当前实现形态仍是 Human 治理的手工编排工作流，状态为 `specified_manual_only`；记录这套架构不激活 runtime、Coordinator 或受保护 writer。
 - 独立 frontend/UI 状态为 `not_required`，不是 backlog blocker。
 - visualization 仍可作为可选、依赖工具的教学辅助，但不决定 Math Mentor 当前产品是否可交付。
 - 旧成熟度表中关于 UI 的 `blocked/absent` 描述已被本次 Human 产品决定覆盖；除非 Human 以后改变方向，不应恢复为必做项。
@@ -47,6 +51,7 @@ Math Mentor 是一个由 Human 治理、通过 ChatGPT 对话与 Codex 终端交
 | LRP-06 Capability / Tool Truthfulness | `accepted_published` | `specified_manual_only` | 能力登记、工具诚实性与计算 handoff 已发布；工具 broker/runner 未实现 |
 | P0 control-plane hardening | `accepted_published` | `statically_validated_inactive` | PR #3 已合并；静态控制面 104/104；无生产 trust ingress、runtime 或 writer |
 | Four-node certified pilot | `accepted_published` | `pilot_accepted` | PR #4 发布四节点；PR #5 修复干净检出复现；范围只限 dossier 所声明证据，4/4 仍 `consumer_allowed=false` |
+| Teaching orchestration contract | `accepted_published` | `specified_manual_only` | Human 已指定 ChatGPT/Claude 前台与 Codex/Claude Code 后台角色；没有自治 dispatcher、runtime 或 writer |
 
 LRP 的“已发布”表示合同与文档已经落在当前 master，不表示相应生产能力已运行。LRP-04 特别不能被描述为 executable runtime 或真实 E2E。P0 的 admission、authorization 与 identity 实现是静态、只读、未激活的控制平面。
 
@@ -142,9 +147,59 @@ Canonical policy key: `migrate_existing_before_new_generation`。
 3. **endpoint 必须显式认证。** canonical `from_nodes` 与 `to_nodes` 必须使用含 `node_id`、`file`、`title`、`status` 的 reference objects；裸字符串或主题相似度不够。
 4. **消费需要完整 gate。** endpoint present、prerequisite verified、lane-correct validation、indexed、learned-history satisfied 缺一不可。旧映射索引的 5 条记录只能作为 importer/audit 输入。
 5. **新生成是例外。** 只有 Human 复核确认没有可接受 legacy 资产表达目标数学连接时，才能提出从 `BRIDGE-015` 起的新 canonical bridge；landing 仍需独立 Human gate。
-6. **当前不实施。** 本任务不修改、生成、重命名、删除或索引任何 bridge。以后可以设计 Human 触发的 ChatGPT 手工 bridge 使用，但这不等于激活 production runtime。
+6. **当前不实施。** 本任务不修改、生成、重命名、删除或索引任何 bridge。以后可以设计 Human 触发的 ChatGPT/Claude 手工 bridge 使用，但这不等于激活 production runtime。
 
-## 10. 下一认证节点批次提案
+## 10. 教学编排生命周期与任务分类
+
+### 10.1 手工编排循环
+
+```text
+学习者互动
+  -> ChatGPT / Claude 诊断学习阶段、误解、负荷与下一目标
+  -> 选择讲解、提问、练习、考试、修复或多节点综合动作
+  -> 必要时形成有界 backend task packet
+  -> Codex / Claude Code 生成资源或执行确定性工作
+  -> 前台教师核验 provenance、确定性证据、语义正确性与教学适用性
+  -> 获准资源进入教学
+  -> exercise / Exam Agent 评估
+  -> 误解修复、多节点综合或 spaced-review 提案
+  -> accepted work 更新 GitHub 证据与本总账
+```
+
+当前循环的能力状态为 `specified_manual_only`。它描述稳定角色和协议，不表示自治 dispatcher、production Coordinator、learning-state writer 或 scheduler writer 已存在。
+
+```yaml
+teaching_orchestration_status: "specified_manual_only"
+learner_facing_orchestrators: ["ChatGPT", "Claude"]
+backend_system_workers: ["Codex", "Claude Code"]
+backend_output_requires_front_agent_review: true
+runtime_activated: false
+```
+
+### 10.2 何时分派后端任务
+
+只有当前教学动作需要新的或经过转换的资源、需要确定性计算/验证、发现语料缺口，或需要把已接受工作固化为可审计证据时，前台教师才分派任务。packet 必须固定学习目标、允许输入、期望输出、禁止项、证据要求、授权上下文与 Human gate；后端不得自行扩大目标或改变 learner state。
+
+| 后端任务类 | 允许产物 | 进入教学前的最低准入 |
+|---|---|---|
+| Lesson preparation | 从 accepted nodes/prerequisites 形成 lesson plan、例子、反例、diagram-as-data 与 code anchor | 精确节点身份、先修 disposition、前台教师语义/教学审查 |
+| Exercise generation | 难度分层、针对误解的练习、提示 | 覆盖目标与误解、无泄题、答案可验证 |
+| Answer key / rubric | 解答、评分规则、deterministic checks | 数学正确性复核；工具输出不越过适用域 |
+| Exam / classroom packet | Exam handoff、assessment set、trap evidence | 符合 Exam contract；结果不能直接等同 graduated |
+| Multi-node synthesis | 节点综合、bridge candidate evidence | identity/prerequisite 精确；不得把候选 bridge 当成 canonical edge |
+| Review material | 复习题、间隔建议、错误回访材料 | 只生成提案；没有 writer 时不得声称已排程或持久化 |
+| Deterministic work | 计算、格式化、validation、index diagnostics | 命令、输入、输出与边界可复现；机器证据不替代 Mode B Human 判断 |
+| Resource repair | 报告知识缺口、节点缺陷、缺失教学资产并准备有界修复 | 独立获准 mutation scope；受保护文件与语义决定仍走 Human gate |
+| Evidence maintenance | report、commit、exact-head handoff、总账更新 | 只记录已验证事实；GitHub pointer 不等于生产授权 |
+
+### 10.3 语义准入与受保护边界
+
+- ChatGPT/Claude 必须审查后端资源的来源、目标一致性、数学语义、教学适用性与已声明局限；未经审查不得作为教学证据。
+- Human Speaker 保留学习目标、跨域语义、identity conflict、bridge landing、发布、生产 trust、writer 与 runtime 激活的最终决定权。
+- Codex/Claude Code 输出永远是候选执行证据，不能凭 payload 内自述 `human_gate` 获得写授权。
+- 当前合同不授权生产 Coordinator、nonce/persistence、learning-state write、scheduler write、consumer promotion 或 bridge mutation。
+
+## 11. 下一认证节点批次提案
 
 ### 推荐：Accepted-pilot prerequisite frontier（4 节点）
 
@@ -163,7 +218,7 @@ Canonical policy key: `migrate_existing_before_new_generation`。
 
 拒绝按编号后继选择 `COMPLEX_ANALYSIS-419`、`PDE-488`、`ABSTRACT_ALGEBRA-469`、`ALG_TOPOLOGY-677`。它们没有已证明的 `prerequisite_nodes` graph edges，全部仍是 E2 且缺 formal definition/prerequisite/boundary；`PDE-488` 另有 open identity conflict，`ALG_TOPOLOGY-677` 的代码不能支撑谱序列页转换，`ABSTRACT_ALGEBRA-469` 的小群示例不能支撑 Galois 基本定理，`COMPLEX_ANALYSIS-419` 的标量相位差也不足以支撑 RoPE 的成对多频旋转。与修补已接受 pilot 的直接先修前沿相比，它会增加语义分散与重新取证成本。
 
-## 11. 更新协议
+## 12. 更新协议
 
 1. 只在 accepted master publication、重大 Human 架构决定或 stage/batch acceptance 后更新。
 2. 每次更新先固定 source SHA，复核物理文件、测试证据、PR/commit 与 mailbox；旧报告只作历史线索。
@@ -174,9 +229,9 @@ Canonical policy key: `migrate_existing_before_new_generation`。
 
 ### Change log
 
-- 2026-07-15：在 `master@9e12064cbc51f61918dccfd48cf6915879adb962` 建立首版总账；校正 LRP、P0、pilot、UI 与 legacy bridge 当前状态；提出四节点 prerequisite-frontier 批次。
+- 2026-07-15：在 `master@9e12064cbc51f61918dccfd48cf6915879adb962` 建立首版总账；校正 LRP、P0、pilot、UI 与 legacy bridge 当前状态；记录 ChatGPT/Claude 前台、Codex/Claude Code 后台的手工教学编排架构；提出四节点 prerequisite-frontier 批次。
 
-## 12. 证据索引与未知项
+## 13. 证据索引与未知项
 
 ### 12.1 本次全文读取或直接核验的核心证据
 
