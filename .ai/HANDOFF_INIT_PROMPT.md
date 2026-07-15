@@ -193,9 +193,9 @@ When the Human is expected to start or continue a backend agent, the recommendat
 
 ## Bootstrap Receipt And Executable Gate
 
-For the first durable `C1` or protected `C2` event after full initialization, emit a `bootstrap_receipt.schema.json`-conforming receipt through the event artifact. It binds the exact protocol head, occupied provider-neutral role, frozen wire schema, immutable loaded-file blobs and digests, authority boundary, and onboarding answers. The receipt proves those deterministic evidence claims; it does not prove cognition or grant permission.
+For the first durable `C1` or protected `C2` model event after full initialization, emit a `bootstrap_receipt.schema.json`-conforming receipt through the event artifact. It binds the exact `protocol_release_head`, occupied provider-neutral role, frozen wire schema, immutable loaded-file blobs and digests, authority boundary, and onboarding answers. The neutral `source_mailbox_base_head` is not a receipt head. The receipt proves deterministic byte claims; it does not prove cognition or grant permission. Human is not a model receipt provider and remains `human_speaker`.
 
-Before any C1/C2 transition is treated as eligible, use `.ai/communication_compliance/validate_communication.py` as documented in `.ai/communication_compliance/README.md`. `C0` ordinary chat is exempt. For C2, the model-generated payload and its descriptive `human_gate` remain non-authorizing; a trusted external host must inject the separately bound Human `AuthorizationContext`.
+Before any C1/C2 transition is treated as eligible, use `.ai/communication_compliance/validate_communication.py` as documented in `.ai/communication_compliance/README.md`. `C0` ordinary chat is exempt. Resolve immutable event/STATE/pointer evidence and inject a trusted current-state anchor outside the request. Human direct dispatch keeps the Human role, uses the frozen backend direction, and needs external origin attestation. For C2, the payload and descriptive `human_gate` remain non-authorizing; a trusted external host must additionally inject the separately bound Human `AuthorizationContext`.
 
 ## Completion Criteria
 

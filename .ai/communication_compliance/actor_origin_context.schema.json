@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "human-ai-communication-actor-origin-context-v1",
+  "type": "object",
+  "required": ["schema_version", "context_id", "injection_source", "test_only", "provider", "event_id", "task_id", "authenticated_channel"],
+  "properties": {
+    "schema_version": {"const": "human_ai.communication_actor_origin_context.v1"},
+    "context_id": {"type": "string", "minLength": 1},
+    "injection_source": {"enum": ["trusted_external_host", "deterministic_test_fixture"]},
+    "test_only": {"type": "boolean"},
+    "provider": {"const": "Human"},
+    "event_id": {"type": "string", "minLength": 1},
+    "task_id": {"type": "string", "minLength": 1},
+    "authenticated_channel": {"const": true}
+  },
+  "additionalProperties": false
+}

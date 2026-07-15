@@ -1,6 +1,11 @@
-policy_version: "human_ai.communication_material_event_policy.v1"
-validator_version: "1.0.0"
-protocol_head: "d235e602c14250d16b91f2897cb8308e031cc13c"
+policy_version: "human_ai.communication_material_event_policy.v2"
+validator_version: "2.0.0"
+
+# source_mailbox_base_head is only the neutral-mailbox comparison baseline.
+# protocol_release_head is bound in the second, binding-only release commit.
+source_mailbox_base_head: "d235e602c14250d16b91f2897cb8308e031cc13c"
+protocol_release_head: null
+release_binding_status: "unbound"
 
 wire_schemas:
   chatgpt_to_codex_v1:
@@ -29,6 +34,7 @@ role_mapping:
   Human:
     occupied_role: human_speaker
     wire_schema: null
+    direct_dispatch_wire_schema: chatgpt_to_codex_v1
   ChatGPT:
     occupied_role: foreground_review_and_task_dispatch
     wire_schema: chatgpt_to_codex_v1
@@ -134,26 +140,49 @@ reference_policy:
   test_only_kinds:
     - test_fixture_blob
   require_full_commit_sha: true
+  require_commit_object: true
   reject_symlinks: true
   reject_submodules: true
   reject_trees: true
   reject_mutable_refs: true
 
+state_evidence:
+  review_branch: ai/review/latest
+  state_path: .ai/STATE.yml
+  aliases:
+    neutral_baseline: closed
+    idle: closed
+    accepted_closed: closed
+    completed: closed
+    awaiting_codex: backend_assigned
+    authorized_awaiting_codex_execution: backend_assigned
+    awaiting_chatgpt_review: foreground_review_pending
+    awaiting_chatgpt_exact_head_review: foreground_review_pending
+    complete_awaiting_chatgpt_review: foreground_review_pending
+    complete_awaiting_chatgpt_semantic_review: foreground_review_pending
+    accepted_awaiting_human_publication_gate: human_gate_pending
+    awaiting_human_gate: human_gate_pending
+    publication_authorized_in_progress: publication_in_progress
+    complete_published_and_post_verified: published_pending_ack
+    blocked: blocked
+    blocked_awaiting_human_authority: blocked
+
 transitions:
   dispatch_to_backend:
     from_states:
-      - idle
-      - completed
-      - awaiting_human_gate
-    to_state: awaiting_codex
+      - closed
+    to_state: backend_assigned
+    to_status: awaiting_codex
     event_types:
       - backend_dispatch
     required_event_class: C1
     external_human_authority_required: false
   backend_completion:
     from_states:
-      - codex_running
-    to_state: awaiting_chatgpt_review
+      - backend_assigned
+      - publication_in_progress
+    to_state: foreground_review_pending
+    to_status: awaiting_chatgpt_review
     event_types:
       - completion_handoff
       - correction_handoff
@@ -161,10 +190,22 @@ transitions:
       - conflict_report
     required_event_class: C1
     external_human_authority_required: false
+  foreground_revision_dispatch:
+    from_states:
+      - foreground_review_pending
+    to_state: backend_assigned
+    to_status: awaiting_codex
+    event_types:
+      - backend_dispatch
+      - correction_handoff
+    required_event_class: C1
+    external_human_authority_required: false
   foreground_acceptance:
     from_states:
-      - chatgpt_reviewing
-    to_state: completed
+      - foreground_review_pending
+      - published_pending_ack
+    to_state: closed
+    to_status: completed
     event_types:
       - significant_acceptance
       - material_review
@@ -172,8 +213,9 @@ transitions:
     external_human_authority_required: false
   publication_candidate:
     from_states:
-      - chatgpt_reviewing
-    to_state: awaiting_human_gate
+      - foreground_review_pending
+    to_state: human_gate_pending
+    to_status: awaiting_human_gate
     event_types:
       - significant_acceptance
       - material_review
@@ -181,15 +223,15 @@ transitions:
     external_human_authority_required: false
   protected_publication_entry:
     from_states:
-      - awaiting_human_gate
-    to_state: null
+      - human_gate_pending
+    to_state: publication_in_progress
+    to_status: publication_authorized_in_progress
     event_types:
       - source_publication
       - master_publication
       - merge
     required_event_class: C2
     external_human_authority_required: true
-    eligibility_only: true
 
 protected_actions:
   - source_publication
@@ -210,6 +252,11 @@ protected_actions:
 
 drift_policy:
   recurrence_threshold: 2
-  fixture_requirement: "matching_negative_fixture_or_deterministic_impossibility_with_foreground_review"
+  fixture_requirement: "matching_immutable_negative_fixture_or_deterministic_impossibility_with_foreground_review"
+  migration_anchor:
+    kind: git_blob
+    commit: "4530b4f684f64cc7928884cf96d9a221aa5a2b8a"
+    path: .ai/COMMUNICATION_DRIFT_LEDGER.yml
+    content_sha256: "549be021da2313309055872c7cf95153be5ea8a4b5662ea7e4721745e5d0dc76"
   contains_private_reasoning: false
   contains_secret_content: false

@@ -74,7 +74,7 @@ Rules:
 - `human_gate` must reflect authenticated approval state, not a model assumption;
 - every non-null ref is dereferenced before execution;
 - missing refs use the one-check fast-fail rule in `.ai/PROTOCOL.md`.
-- a material C1/C2 transition remains ineligible until the repository communication gate returns a passing result bound to the exact event and refs; C2 additionally requires separately injected trusted-host Human authority.
+- a material C1/C2 transition remains ineligible until the repository gate freshly recomputes a passing proof from immutable event, actual STATE, ordered pointer and trusted current-head context; a stored result cannot self-authenticate, Human events require separate origin attestation, and C2 additionally requires separately injected trusted-host Human authority.
 
 ## 5. Canonical Long Task Packet
 

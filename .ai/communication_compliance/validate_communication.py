@@ -27,8 +27,14 @@ try:
 except Exception:  # pragma: no cover - exercised by dependency error contract
     Draft202012Validator = None
 
+try:
+    from referencing import Registry, Resource
+except Exception:  # pragma: no cover - exercised by dependency error contract
+    Registry = None
+    Resource = None
 
-VALIDATOR_VERSION = "1.0.0"
+
+VALIDATOR_VERSION = "2.0.0"
 EXIT_PASS = 0
 EXIT_COMPLIANCE_FAIL = 1
 EXIT_INVOCATION = 2
@@ -183,6 +189,11 @@ def serialize_json(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
 
 
+def serialize_ordered_json(value: Any) -> str:
+    """Serialize a frozen wire artifact without reordering its protocol keys."""
+    return json.dumps(value, ensure_ascii=False, indent=2, sort_keys=False) + "\n"
+
+
 def finding(code: str, path: str, message: str, severity: str = "error") -> dict[str, str]:
     return {"code": code, "path": path, "message": message, "severity": severity}
 
@@ -236,6 +247,9 @@ def _run_git(repo_root: Path, arguments: list[str]) -> subprocess.CompletedProce
 def _git_blob(repo_root: Path, commit: str, path: str) -> tuple[str, bytes] | None:
     if not re.fullmatch(r"[0-9a-f]{40}", commit):
         return None
+    object_type = _run_git(repo_root, ["cat-file", "-t", commit])
+    if object_type.returncode != 0 or object_type.stdout.strip() != b"commit":
+        return None
     tree = _run_git(repo_root, ["ls-tree", "-z", commit, "--", path])
     if tree.returncode != 0 or not tree.stdout.endswith(b"\x00"):
         return None
@@ -256,7 +270,6 @@ def _git_blob(repo_root: Path, commit: str, path: str) -> tuple[str, bytes] | No
     return object_sha, content.stdout
 
 
-@lru_cache(maxsize=512)
 def _fixture_blob(repo_root: Path, path: str) -> tuple[str, bytes] | None:
     candidate = repo_root.joinpath(*PurePosixPath(path).parts)
     try:
@@ -394,7 +407,7 @@ def resolve_reference(
     )
 
 
-def load_policy(path: Path) -> tuple[dict[str, Any], str]:
+def load_policy(path: Path, *, allow_unbound: bool = False) -> tuple[dict[str, Any], str]:
     if yaml is None or Draft202012Validator is None:
         raise ConfigurationError("PyYAML and jsonschema are required")
     policy = load_document(path)
@@ -403,7 +416,9 @@ def load_policy(path: Path) -> tuple[dict[str, Any], str]:
     required = {
         "policy_version",
         "validator_version",
-        "protocol_head",
+        "source_mailbox_base_head",
+        "protocol_release_head",
+        "release_binding_status",
         "wire_schemas",
         "role_mapping",
         "event_classes",
@@ -413,8 +428,14 @@ def load_policy(path: Path) -> tuple[dict[str, Any], str]:
         raise ConfigurationError("material-event policy is incomplete")
     if policy.get("validator_version") != VALIDATOR_VERSION:
         raise ConfigurationError("policy and validator versions differ")
-    if not re.fullmatch(r"[0-9a-f]{40}", str(policy.get("protocol_head", ""))):
-        raise ConfigurationError("policy protocol head is invalid")
+    if not re.fullmatch(r"[0-9a-f]{40}", str(policy.get("source_mailbox_base_head", ""))):
+        raise ConfigurationError("policy source-mailbox base head is invalid")
+    binding_status = policy.get("release_binding_status")
+    release_head = policy.get("protocol_release_head")
+    if binding_status == "unbound" and release_head is None and allow_unbound:
+        pass
+    elif binding_status != "bound" or not re.fullmatch(r"[0-9a-f]{40}", str(release_head or "")):
+        raise ConfigurationError("policy protocol release head is not bound")
     return policy, digest_object(policy, preserve_mapping_order=False)
 
 
@@ -437,7 +458,16 @@ def schema_findings(
     label: str,
 ) -> list[dict[str, str]]:
     schema = load_schema(schema_name)
-    validator = Draft202012Validator(schema)
+    if schema_name == "communication_drift_ledger.schema.json":
+        if Registry is None or Resource is None:
+            raise ConfigurationError("referencing is required for ledger schema validation")
+        registry = Registry().with_resource(
+            "drift_record.schema.json",
+            Resource.from_contents(load_schema("drift_record.schema.json")),
+        )
+        validator = Draft202012Validator(schema, registry=registry)
+    else:
+        validator = Draft202012Validator(schema)
     errors = sorted(
         validator.iter_errors(instance),
         key=lambda error: (
@@ -452,7 +482,7 @@ def schema_findings(
             finding(
                 f"{label}_SCHEMA_INVALID",
                 path,
-                f"{label.lower().replace('_', ' ')} does not conform to its v1 schema",
+                f"{label.lower().replace('_', ' ')} does not conform to its versioned schema",
             )
         )
     return findings
@@ -502,11 +532,11 @@ def validate_bootstrap_receipt(
     ):
         return violations, resolved_refs
     assert isinstance(receipt, dict)
-    if receipt["protocol_head"] != policy["protocol_head"]:
+    if receipt["protocol_release_head"] != policy["protocol_release_head"]:
         violations.append(
             finding(
                 "BOOTSTRAP_PROTOCOL_HEAD_STALE",
-                "bootstrap_receipt.protocol_head",
+                "bootstrap_receipt.protocol_release_head",
                 "bootstrap receipt is bound to a different protocol head",
             )
         )
@@ -531,7 +561,7 @@ def validate_bootstrap_receipt(
     loaded_paths: list[str] = []
     for loaded in receipt["loaded_files"]:
         loaded_paths.append(loaded["path"])
-        if loaded["commit"] != receipt["protocol_head"]:
+        if loaded["commit"] != receipt["protocol_release_head"]:
             violations.append(
                 finding(
                     "BOOTSTRAP_LOADED_FILE_HEAD_MISMATCH",
@@ -1095,7 +1125,7 @@ def _make_result(
     final_violations = sorted_findings(violations)
     result = "error" if error else ("fail" if final_violations else "pass")
     return {
-        "schema_version": "human_ai.communication_validation.v1",
+        "schema_version": "human_ai.communication_validation.v2",
         "validator_version": VALIDATOR_VERSION,
         "event_id": event_id,
         "task_id": task_id,
@@ -1104,7 +1134,7 @@ def _make_result(
         "violations": final_violations,
         "warnings": sorted_findings(warnings),
         "checked_contracts": sorted(set(checked_contracts)),
-        "protocol_head": policy["protocol_head"],
+        "protocol_release_head": policy["protocol_release_head"],
         "role": role,
         "event_class": event_class,
         "resolved_refs": sorted_resolved_refs(resolved_refs),
@@ -1318,6 +1348,8 @@ def validate_event(
         pointer = event.get("pointer")
         pointer_present = isinstance(pointer, dict)
         expected_wire = role_config.get("wire_schema") if role_config else None
+        if provider == "Human" and event_type == "backend_dispatch":
+            expected_wire = role_config.get("direct_dispatch_wire_schema") if role_config else None
         if pointer_applicable:
             violations.extend(
                 validate_pointer(
@@ -1474,302 +1506,363 @@ def _apply_mutations(value: Any, mutations: dict[str, Any]) -> Any:
     return target
 
 
+def _resolve_named_reference(
+    repo_root: Path,
+    reference: Any,
+    label: str,
+    *,
+    test_mode: bool,
+) -> tuple[dict[str, Any], bytes | None, list[dict[str, str]]]:
+    resolved, content, items = resolve_reference(repo_root, reference, test_mode=test_mode)
+    rewritten: list[dict[str, str]] = []
+    for item in items:
+        copy_item = dict(item)
+        copy_item["code"] = f"{label}_{item['code']}"
+        copy_item["path"] = label.lower() + "_ref"
+        rewritten.append(copy_item)
+    return resolved, content, rewritten
+
+
+def _document_from_reference(content: bytes | None, reference: Any, label: str) -> tuple[Any, list[dict[str, str]]]:
+    if content is None:
+        return None, []
+    path = reference.get("path", "") if isinstance(reference, dict) else ""
+    suffix = PurePosixPath(path).suffix or ".json"
+    try:
+        text = content.decode("utf-8-sig")
+        return load_text_document(text, suffix), []
+    except (UnicodeDecodeError, InputDocumentError):
+        return None, [finding(f"{label}_DOCUMENT_INVALID", label.lower() + "_ref", "referenced document failed strict UTF-8 parsing")]
+
+
+def _context_is_trusted(
+    context: Any,
+    mode: str,
+    *,
+    test_mode: bool,
+    verifier: Callable[[dict[str, Any]], bool] | None,
+) -> bool:
+    if not isinstance(context, dict):
+        return False
+    if mode == "test-fixture":
+        return bool(
+            test_mode
+            and context.get("injection_source") == "deterministic_test_fixture"
+            and context.get("test_only") is True
+        )
+    if mode != "trusted-host":
+        return False
+    trusted_shape = (
+        context.get("injection_source") == "trusted_external_host"
+        and context.get("test_only") is False
+    )
+    if not trusted_shape or verifier is None:
+        return False
+    try:
+        return bool(verifier(copy.deepcopy(context)))
+    except Exception:
+        return False
+
+
+def _transition_proof(
+    *,
+    request: dict[str, Any],
+    policy: dict[str, Any],
+    policy_sha: str,
+    fresh_validation: dict[str, Any] | None,
+    raw_state: str | None,
+    normalized_state: str | None,
+    transition_id: str | None,
+    target_status: str | None,
+    state_context: Any,
+    evidence: dict[str, Any],
+    violations: Iterable[dict[str, str]],
+) -> dict[str, Any]:
+    final = sorted_findings(violations)
+    result = {
+        "schema_version": "human_ai.communication_transition_proof.v2",
+        "request_id": nullable_string(request.get("request_id")),
+        "result": "fail" if final else "pass",
+        "protocol_release_head": policy["protocol_release_head"],
+        "policy_sha256": policy_sha,
+        "fresh_event_validation_sha256": (
+            hashlib.sha256(serialize_json(fresh_validation).encode("utf-8")).hexdigest()
+            if fresh_validation is not None
+            else None
+        ),
+        "raw_state_status": raw_state,
+        "normalized_from_state": normalized_state,
+        "derived_transition_id": transition_id,
+        "derived_to_state": target_status,
+        "active_state_anchor": copy.deepcopy(state_context) if isinstance(state_context, dict) else None,
+        "evidence": evidence,
+        "violations": final,
+        "authorization_granted_by_validator": False,
+    }
+    if schema_findings(result, "transition_proof.schema.json", "TRANSITION_PROOF"):
+        raise ConfigurationError("validator produced an invalid transition proof")
+    return result
+
+
 def check_transition(
     request: Any,
-    validation_result: Any,
     repo_root: Path,
     policy: dict[str, Any],
     policy_sha: str,
     *,
+    active_state_context: Any = None,
+    state_context_mode: str = "none",
     authority_context: Any = None,
     authority_mode: str = "none",
+    actor_origin_context: Any = None,
+    actor_origin_mode: str = "none",
     test_mode: bool = False,
     consumed_context_ids: set[str] | None = None,
+    trusted_state_verifier: Callable[[dict[str, Any]], bool] | None = None,
     trusted_authority_verifier: Callable[[dict[str, Any]], bool] | None = None,
+    trusted_actor_origin_verifier: Callable[[dict[str, Any]], bool] | None = None,
 ) -> dict[str, Any]:
-    del repo_root
+    """Recompute transition eligibility from physical evidence; never trust a supplied result."""
     violations: list[dict[str, str]] = []
-    checked = {"transition_policy", "validation_result_binding", "external_authority_boundary"}
-    request_sha = digest_object(request)
-    if validation_result is None:
-        violations.append(
-            finding(
-                "VALIDATION_RESULT_MISSING",
-                "validation_result",
-                "transition is ineligible without a machine-readable validation result",
-            )
-        )
-        if not isinstance(request, dict):
-            request = {}
-        result = _make_result(
-            policy=policy,
-            policy_sha=policy_sha,
-            event_id=nullable_string(request.get("event_id")),
-            task_id=nullable_string(request.get("task_id")),
-            event_type=nullable_string(request.get("event_type")),
-            role=None,
-            event_class=normalized_event_class(request.get("event_class")),
-            input_sha=request_sha,
-            receipt_sha=None,
-            checked_contracts=checked,
-            resolved_refs=[],
-            violations=violations,
-            warnings=[],
-            proposed_transition={
-                "transition_id": request.get("transition_id"),
-                "from_state": request.get("from_state"),
-                "to_state": request.get("to_state"),
-            },
-        )
-        ensure_result_schema(result)
-        return result
-    _validate_schema_to(
-        request, "transition_request.schema.json", "TRANSITION_REQUEST", violations
-    )
-    _validate_schema_to(
-        validation_result,
-        "communication_validation.schema.json",
-        "VALIDATION_RESULT",
-        violations,
-    )
     if not isinstance(request, dict):
         request = {}
-    if not isinstance(validation_result, dict):
-        validation_result = {}
-    validated_refs_value = validation_result.get("resolved_refs")
-    validated_refs = (
-        validated_refs_value
-        if isinstance(validated_refs_value, list)
-        and all(isinstance(item, dict) for item in validated_refs_value)
-        else []
-    )
-    validation_sha = digest_object(validation_result)
-    if request.get("validation_result_sha256") != validation_sha:
-        violations.append(
-            finding(
-                "VALIDATION_RESULT_DIGEST_MISMATCH",
-                "validation_result_sha256",
-                "transition request is not bound to the supplied validation result",
-            )
-        )
-    if validation_result.get("result") != "pass":
-        violations.append(
-            finding(
-                "VALIDATION_RESULT_NOT_PASS",
-                "validation_result.result",
-                "transition requires a passing communication validation result",
-            )
-        )
-    if validation_result.get("result") == "pass" and validation_result.get("violations"):
-        violations.append(
-            finding(
-                "VALIDATION_RESULT_INCONSISTENT",
-                "validation_result.violations",
-                "a passing validation result cannot contain violations",
-            )
-        )
-    if (
-        validation_result.get("validator_version") != VALIDATOR_VERSION
-        or validation_result.get("policy_sha256") != policy_sha
-    ):
-        violations.append(
-            finding(
-                "VALIDATION_POLICY_BINDING_MISMATCH",
-                "validation_result.policy_sha256",
-                "validation result is not bound to the active validator and policy",
-            )
-        )
-    if validation_result.get("protocol_head") != policy["protocol_head"] or request.get(
-        "protocol_head"
-    ) != policy["protocol_head"]:
-        violations.append(
-            finding(
-                "TRANSITION_PROTOCOL_HEAD_STALE",
-                "protocol_head",
-                "transition and validation must match the active policy protocol head",
-            )
-        )
-    bindings = {
-        "event_id": validation_result.get("event_id"),
-        "task_id": validation_result.get("task_id"),
-        "event_type": validation_result.get("event_type"),
-        "event_class": validation_result.get("event_class"),
-        "event_input_sha256": validation_result.get("input_sha256"),
-    }
-    for key, expected in bindings.items():
-        if request.get(key) != expected:
-            violations.append(
-                finding(
-                    "TRANSITION_VALIDATION_BINDING_MISMATCH",
-                    key,
-                    "transition request does not match its validation result",
-                )
-            )
-    if any(item.get("status") != "resolved" for item in validated_refs):
-        violations.append(
-            finding(
-                "TRANSITION_REF_UNRESOLVED",
-                "validation_result.resolved_refs",
-                "transition validation contains an unresolved required reference",
-            )
-        )
-    transition_id_value = request.get("transition_id")
-    transition_id = transition_id_value if isinstance(transition_id_value, str) else None
-    transition_policy = policy["transitions"].get(transition_id)
-    if transition_policy is None:
-        violations.append(
-            finding(
-                "TRANSITION_ID_UNKNOWN",
-                "transition_id",
-                "transition identifier is not defined by policy",
-            )
-        )
+    _validate_schema_to(request, "transition_request.schema.json", "TRANSITION_REQUEST", violations)
+
+    state_context_valid = False
+    if active_state_context is None:
+        violations.append(finding("ACTIVE_STATE_ANCHOR_UNAVAILABLE", "active_state_context", "a trusted current review-state anchor is required"))
     else:
-        if request.get("from_state") not in transition_policy["from_states"]:
-            violations.append(
-                finding(
-                    "TRANSITION_FROM_STATE_UNSUPPORTED",
-                    "from_state",
-                    "from-state is not eligible for this transition",
-                )
+        _validate_schema_to(active_state_context, "active_state_context.schema.json", "ACTIVE_STATE_CONTEXT", violations)
+        state_context_valid = _context_is_trusted(
+            active_state_context,
+            state_context_mode,
+            test_mode=test_mode,
+            verifier=trusted_state_verifier,
+        )
+        if not state_context_valid:
+            violations.append(finding("ACTIVE_STATE_CONTEXT_TRUST_BOUNDARY_INVALID", "active_state_context.injection_source", "active state was not injected through a trusted boundary"))
+
+    evidence: dict[str, Any] = {}
+    event_resolved, event_bytes, event_ref_findings = _resolve_named_reference(
+        repo_root, request.get("event_ref"), "EVENT", test_mode=test_mode
+    )
+    violations.extend(event_ref_findings)
+    evidence["event_ref"] = event_resolved
+    event, event_doc_findings = _document_from_reference(event_bytes, request.get("event_ref"), "EVENT")
+    violations.extend(event_doc_findings)
+
+    state_resolved, state_bytes, state_ref_findings = _resolve_named_reference(
+        repo_root, request.get("state_ref"), "STATE", test_mode=test_mode
+    )
+    violations.extend(state_ref_findings)
+    evidence["state_ref"] = state_resolved
+    state, state_doc_findings = _document_from_reference(state_bytes, request.get("state_ref"), "STATE")
+    violations.extend(state_doc_findings)
+
+    state_ref = request.get("state_ref") if isinstance(request.get("state_ref"), dict) else {}
+    if isinstance(active_state_context, dict):
+        if state_ref.get("path") != active_state_context.get("state_path"):
+            violations.append(finding("STATE_PATH_INVALID", "state_ref.path", "state evidence path differs from the trusted active-state path"))
+        if not test_mode and state_ref.get("path") != policy["state_evidence"]["state_path"]:
+            violations.append(finding("STATE_PATH_INVALID", "state_ref.path", "production state evidence must be the canonical review STATE path"))
+        if state_ref.get("kind") == "git_blob" and state_ref.get("commit") != active_state_context.get("observed_head"):
+            violations.append(finding("STATE_ACTIVE_HEAD_MISMATCH", "state_ref.commit", "immutable state is not the trusted currently observed review head"))
+        if active_state_context.get("review_branch") != policy["state_evidence"]["review_branch"]:
+            violations.append(finding("STATE_REVIEW_BRANCH_MISMATCH", "active_state_context.review_branch", "state anchor names a different review branch"))
+        observed_head = active_state_context.get("observed_head")
+        if isinstance(observed_head, str):
+            observed_type = _run_git(repo_root, ["cat-file", "-t", observed_head])
+            if observed_type.returncode != 0 or observed_type.stdout.strip() != b"commit":
+                violations.append(finding("ACTIVE_STATE_HEAD_UNRESOLVED", "active_state_context.observed_head", "trusted active-state head is not a commit object"))
+
+    raw_state = state.get("status") if isinstance(state, dict) and isinstance(state.get("status"), str) else None
+    normalized_state = policy["state_evidence"]["aliases"].get(raw_state)
+    if raw_state is None or normalized_state is None:
+        violations.append(finding("STATE_STATUS_UNSUPPORTED", "state.status", "state status is absent or not in the exact alias registry"))
+    if isinstance(state, dict):
+        if state.get("review_branch") not in {None, policy["state_evidence"]["review_branch"]}:
+            violations.append(finding("STATE_REVIEW_BRANCH_MISMATCH", "state.review_branch", "state names a different review branch"))
+        review_head = state.get("review_branch_head")
+        observed = active_state_context.get("observed_head") if isinstance(active_state_context, dict) else None
+        if review_head not in {None, "self", observed}:
+            violations.append(finding("STATE_REVIEW_HEAD_BINDING_MISMATCH", "state.review_branch_head", "state review head is not self or the trusted observed head"))
+
+    fresh_validation: dict[str, Any] | None = None
+    event_class = "unknown"
+    if isinstance(event, dict):
+        fresh_validation = validate_event(event, repo_root, policy, policy_sha, test_mode=test_mode)
+        event_class = fresh_validation.get("event_class", "unknown")
+        if fresh_validation.get("result") != "pass":
+            violations.append(finding("FRESH_EVENT_VALIDATION_FAILED", "event_ref", "fresh validation of the resolved event did not pass"))
+    else:
+        violations.append(finding("FRESH_EVENT_VALIDATION_FAILED", "event_ref", "no parsed event was available for fresh validation"))
+    evidence["fresh_event_validation"] = fresh_validation
+
+    communication = event.get("communication", {}) if isinstance(event, dict) else {}
+    machine_recipient = isinstance(communication, dict) and communication.get("recipient_mode") != "human_only"
+    pointer_ref = request.get("pointer_ref")
+    pointer_resolved: dict[str, Any] | None = None
+    pointer_bytes: bytes | None = None
+    if machine_recipient:
+        if not isinstance(pointer_ref, dict):
+            violations.append(finding("POINTER_ARTIFACT_REQUIRED", "pointer_ref", "machine-recipient transition requires a physical pointer artifact"))
+        else:
+            pointer_resolved, pointer_bytes, pointer_ref_findings = _resolve_named_reference(
+                repo_root, pointer_ref, "POINTER", test_mode=test_mode
             )
-        if request.get("to_state") != transition_policy.get("to_state"):
-            violations.append(
-                finding(
-                    "TRANSITION_TO_STATE_MISMATCH",
-                    "to_state",
-                    "to-state differs from the machine-readable transition policy",
-                )
-            )
-        if request.get("event_type") not in transition_policy["event_types"]:
-            violations.append(
-                finding(
-                    "TRANSITION_EVENT_TYPE_MISMATCH",
-                    "event_type",
-                    "event type is not allowed for this transition",
-                )
-            )
-        if request.get("event_class") != transition_policy["required_event_class"]:
-            violations.append(
-                finding(
-                    "TRANSITION_EVENT_CLASS_MISMATCH",
-                    "event_class",
-                    "event class is below or different from the transition policy requirement",
-                )
-            )
-        proposed = validation_result.get("proposed_transition")
-        expected_proposed = {
-            "transition_id": transition_id,
-            "from_state": request.get("from_state"),
-            "to_state": request.get("to_state"),
+            violations.extend(pointer_ref_findings)
+            pointer_doc, pointer_doc_findings = _document_from_reference(pointer_bytes, pointer_ref, "POINTER")
+            violations.extend(pointer_doc_findings)
+            if isinstance(event, dict) and pointer_doc != event.get("pointer"):
+                violations.append(finding("POINTER_ARTIFACT_BINDING_MISMATCH", "pointer_ref", "physical pointer mapping differs from the event pointer"))
+            if isinstance(event, dict) and pointer_bytes is not None:
+                expected_pointer_bytes = serialize_ordered_json(event.get("pointer")).encode("utf-8")
+                if pointer_bytes != expected_pointer_bytes:
+                    violations.append(finding("POINTER_ARTIFACT_BYTE_MISMATCH", "pointer_ref", "pointer artifact is not the exact canonical event-pointer bytes"))
+    elif pointer_ref is not None:
+        violations.append(finding("POINTER_ARTIFACT_UNEXPECTED", "pointer_ref", "human-only transition must not carry a machine pointer artifact"))
+    evidence["pointer_ref"] = pointer_resolved
+
+    if isinstance(event, dict) and isinstance(event.get("pointer"), dict):
+        pointer_data = event["pointer"].get("data", {})
+        required_paths = {
+            ref.get("path")
+            for ref in event.get("required_refs", [])
+            if isinstance(ref, dict) and isinstance(ref.get("path"), str)
         }
-        if proposed != expected_proposed:
-            violations.append(
-                finding(
-                    "PROPOSED_TRANSITION_BINDING_MISMATCH",
-                    "validation_result.proposed_transition",
-                    "validated event proposed a different transition",
-                )
-            )
+        resolved_paths = {
+            ref.get("path")
+            for ref in (fresh_validation or {}).get("resolved_refs", [])
+            if isinstance(ref, dict) and ref.get("status") == "resolved"
+        }
+        if isinstance(pointer_data, dict):
+            for key, value in pointer_data.items():
+                if key.endswith("_ref") and value is not None and (
+                    value not in required_paths or value not in resolved_paths
+                ):
+                    violations.append(finding("POINTER_REF_NOT_DEREFERENCED", f"event.pointer.data.{key}", "non-null pointer ref is not uniquely backed by a freshly resolved event reference"))
+            source_head = pointer_data.get("source_head")
+            if isinstance(source_head, str):
+                source_type = _run_git(repo_root, ["cat-file", "-t", source_head])
+                if source_type.returncode != 0 or source_type.stdout.strip() != b"commit":
+                    violations.append(finding("POINTER_SOURCE_HEAD_UNRESOLVED", "event.pointer.data.source_head", "pointer source head is not an immutable commit object"))
+            review_head = pointer_data.get("review_branch_head")
+            if isinstance(review_head, str) and review_head != "self":
+                review_type = _run_git(repo_root, ["cat-file", "-t", review_head])
+                if review_type.returncode != 0 or review_type.stdout.strip() != b"commit":
+                    violations.append(finding("POINTER_REVIEW_HEAD_UNRESOLVED", "event.pointer.data.review_branch_head", "pointer review head is not an immutable commit object"))
+            if isinstance(state, dict) and state.get("source_head") is not None and source_head != state.get("source_head"):
+                violations.append(finding("STATE_SOURCE_HEAD_BINDING_MISMATCH", "state.source_head", "event pointer and active state disagree on source head"))
 
-        if transition_policy.get("external_human_authority_required"):
-            if authority_context is None:
-                violations.append(
-                    finding(
-                        "AUTHENTICATED_HUMAN_AUTHORITY_UNAVAILABLE",
-                        "authorization_context",
-                        "C2 transition requires a separately injected Human authority context",
-                    )
-                )
-            else:
-                _validate_schema_to(
-                    authority_context,
-                    "authorization_context.schema.json",
-                    "AUTHORIZATION_CONTEXT",
-                    violations,
-                )
-                if isinstance(authority_context, dict):
-                    if authority_mode == "test-fixture":
-                        trusted = (
-                            test_mode
-                            and authority_context.get("injection_source")
-                            == "deterministic_test_fixture"
-                            and authority_context.get("test_only") is True
-                        )
-                    elif authority_mode == "trusted-host":
-                        trusted_shape = (
-                            authority_context.get("injection_source")
-                            == "trusted_external_host"
-                            and authority_context.get("test_only") is False
-                        )
-                        trusted = False
-                        if trusted_shape and trusted_authority_verifier is not None:
-                            try:
-                                trusted = bool(
-                                    trusted_authority_verifier(copy.deepcopy(authority_context))
-                                )
-                            except Exception:
-                                trusted = False
-                    else:
-                        trusted = False
-                    if not trusted:
-                        violations.append(
-                            finding(
-                                "AUTHORITY_CONTEXT_TRUST_BOUNDARY_INVALID",
-                                "authorization_context.injection_source",
-                                "authority context was not injected through the declared trusted boundary",
-                            )
-                        )
-                    target = request.get("to_state") or transition_id
-                    authority_bindings = {
-                        "task_id": request.get("task_id"),
-                        "event_id": request.get("event_id"),
-                        "transition_id": transition_id,
-                        "action": request.get("event_type"),
-                        "target": target,
-                        "protocol_head": policy["protocol_head"],
-                    }
-                    for key, expected in authority_bindings.items():
-                        if authority_context.get(key) != expected:
-                            violations.append(
-                                finding(
-                                    "AUTHORITY_CONTEXT_BINDING_MISMATCH",
-                                    f"authorization_context.{key}",
-                                    "authority context is bound to a different protected action",
-                                )
-                            )
-                    if authority_context.get("context_id") in (consumed_context_ids or set()):
-                        violations.append(
-                            finding(
-                                "AUTHORITY_CONTEXT_REPLAYED",
-                                "authorization_context.context_id",
-                                "authority context identifier is already consumed",
-                            )
-                        )
+    validation_ref = request.get("validation_artifact_ref")
+    validation_resolved: dict[str, Any] | None = None
+    if validation_ref is not None:
+        validation_resolved, validation_bytes, validation_ref_findings = _resolve_named_reference(
+            repo_root, validation_ref, "VALIDATION_ARTIFACT", test_mode=test_mode
+        )
+        violations.extend(validation_ref_findings)
+        stored_validation, stored_doc_findings = _document_from_reference(validation_bytes, validation_ref, "VALIDATION_ARTIFACT")
+        violations.extend(stored_doc_findings)
+        if fresh_validation is not None:
+            expected_validation_bytes = serialize_json(fresh_validation).encode("utf-8")
+            if validation_bytes != expected_validation_bytes:
+                violations.append(finding("VALIDATION_ARTIFACT_BYTE_MISMATCH", "validation_artifact_ref", "stored validation bytes differ from the fresh canonical result"))
+            if stored_validation != fresh_validation:
+                violations.append(finding("VALIDATION_ARTIFACT_SEMANTIC_MISMATCH", "validation_artifact_ref", "stored validation semantics differ from the fresh result"))
+    evidence["validation_artifact_ref"] = validation_resolved
 
-    result = _make_result(
+    proposed = event.get("proposed_transition") if isinstance(event, dict) else None
+    transition_id = proposed.get("transition_id") if isinstance(proposed, dict) and isinstance(proposed.get("transition_id"), str) else None
+    transition_policy = policy["transitions"].get(transition_id)
+    target_status = transition_policy.get("to_status") if isinstance(transition_policy, dict) else None
+    if transition_policy is None:
+        violations.append(finding("TRANSITION_ID_UNKNOWN", "event.proposed_transition.transition_id", "resolved event does not select a defined transition"))
+    else:
+        if normalized_state not in transition_policy["from_states"]:
+            violations.append(finding("TRANSITION_UNREACHABLE", "state.status", "policy has no edge from the actual normalized state"))
+        if not isinstance(proposed, dict) or proposed.get("from_state") != raw_state:
+            violations.append(finding("TRANSITION_FROM_STATE_EVIDENCE_MISMATCH", "event.proposed_transition.from_state", "event from-state does not exactly equal the immutable STATE status"))
+        if not isinstance(proposed, dict) or proposed.get("to_state") != target_status:
+            violations.append(finding("TRANSITION_TO_STATE_MISMATCH", "event.proposed_transition.to_state", "event target status differs from policy"))
+        if event.get("event_type") not in transition_policy["event_types"]:
+            violations.append(finding("TRANSITION_EVENT_TYPE_MISMATCH", "event.event_type", "event type is not allowed for the selected edge"))
+        if event_class != transition_policy["required_event_class"]:
+            violations.append(finding("TRANSITION_EVENT_CLASS_MISMATCH", "event.claimed_event_class", "freshly classified event class differs from the selected edge"))
+
+    if isinstance(event, dict) and isinstance(state, dict):
+        active_task = state.get("active_task")
+        closed_with_prior = raw_state in {"accepted_closed", "completed"}
+        if raw_state in {"neutral_baseline", "idle"} and active_task is not None:
+            violations.append(finding("STATE_TASK_BINDING_MISMATCH", "state.active_task", "initial closed state must not retain an active task"))
+        elif raw_state in {"neutral_baseline", "idle"}:
+            pass
+        elif not closed_with_prior and active_task != event.get("task_id"):
+            violations.append(finding("STATE_TASK_BINDING_MISMATCH", "state.active_task", "active state task differs from the resolved event task"))
+
+    claims = {
+        "claimed_transition_id": transition_id,
+        "claimed_event_id": event.get("event_id") if isinstance(event, dict) else None,
+        "claimed_task_id": event.get("task_id") if isinstance(event, dict) else None,
+        "claimed_event_type": event.get("event_type") if isinstance(event, dict) else None,
+        "claimed_event_class": event_class,
+        "claimed_from_state": raw_state,
+        "claimed_to_state": target_status,
+        "claimed_protocol_release_head": policy["protocol_release_head"],
+    }
+    for field, expected in claims.items():
+        if field in request and request.get(field) != expected:
+            violations.append(finding("TRANSITION_CLAIM_BINDING_MISMATCH", field, "non-authoritative transition claim differs from recomputed evidence"))
+
+    if isinstance(event, dict) and event.get("provider") == "Human":
+        _validate_schema_to(actor_origin_context, "actor_origin_context.schema.json", "ACTOR_ORIGIN_CONTEXT", violations)
+        origin_trusted = _context_is_trusted(
+            actor_origin_context,
+            actor_origin_mode,
+            test_mode=test_mode,
+            verifier=trusted_actor_origin_verifier,
+        )
+        if not origin_trusted:
+            violations.append(finding("HUMAN_ORIGIN_ATTESTATION_REQUIRED", "actor_origin_context", "Human provider claim requires an authenticated external origin"))
+        if isinstance(actor_origin_context, dict):
+            for key in ("event_id", "task_id"):
+                if actor_origin_context.get(key) != event.get(key):
+                    violations.append(finding("ACTOR_ORIGIN_BINDING_MISMATCH", f"actor_origin_context.{key}", "Human origin context is bound to a different event"))
+
+    if isinstance(transition_policy, dict) and transition_policy.get("external_human_authority_required"):
+        if authority_context is None:
+            violations.append(finding("AUTHENTICATED_HUMAN_AUTHORITY_UNAVAILABLE", "authorization_context", "C2 transition requires separately injected Human authority"))
+        else:
+            _validate_schema_to(authority_context, "authorization_context.schema.json", "AUTHORIZATION_CONTEXT", violations)
+            if not _context_is_trusted(authority_context, authority_mode, test_mode=test_mode, verifier=trusted_authority_verifier):
+                violations.append(finding("AUTHORITY_CONTEXT_TRUST_BOUNDARY_INVALID", "authorization_context.injection_source", "authority context was not injected through the declared trusted boundary"))
+            if isinstance(authority_context, dict) and isinstance(event, dict):
+                authority_bindings = {
+                    "task_id": event.get("task_id"),
+                    "event_id": event.get("event_id"),
+                    "transition_id": transition_id,
+                    "action": event.get("event_type"),
+                    "target": target_status,
+                    "protocol_release_head": policy["protocol_release_head"],
+                }
+                for key, expected in authority_bindings.items():
+                    if authority_context.get(key) != expected:
+                        violations.append(finding("AUTHORITY_CONTEXT_BINDING_MISMATCH", f"authorization_context.{key}", "authority context is bound to a different protected action"))
+                if authority_context.get("context_id") in (consumed_context_ids or set()):
+                    violations.append(finding("AUTHORITY_CONTEXT_REPLAYED", "authorization_context.context_id", "authority context identifier is already consumed"))
+
+    return _transition_proof(
+        request=request,
         policy=policy,
         policy_sha=policy_sha,
-        event_id=nullable_string(request.get("event_id")),
-        task_id=nullable_string(request.get("task_id")),
-        event_type=nullable_string(request.get("event_type")),
-        role=nullable_string(validation_result.get("role")),
-        event_class=normalized_event_class(request.get("event_class")),
-        input_sha=request_sha,
-        receipt_sha=nullable_sha256(validation_result.get("bootstrap_receipt_sha256")),
-        checked_contracts=checked,
-        resolved_refs=validated_refs,
+        fresh_validation=fresh_validation,
+        raw_state=raw_state,
+        normalized_state=normalized_state,
+        transition_id=transition_id,
+        target_status=target_status,
+        state_context=active_state_context if state_context_valid else None,
+        evidence=evidence,
         violations=violations,
-        warnings=[],
-        proposed_transition={
-            "transition_id": transition_id,
-            "from_state": request.get("from_state"),
-            "to_state": request.get("to_state"),
-        },
-        transition_eligible=not violations,
     )
-    ensure_result_schema(result)
-    return result
 
 
 def validate_drift_record(
@@ -1777,47 +1870,57 @@ def validate_drift_record(
     repo_root: Path,
     policy: dict[str, Any],
     policy_sha: str,
+    *,
+    prior_records: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     violations: list[dict[str, str]] = []
     warnings: list[dict[str, str]] = []
     _validate_schema_to(record, "drift_record.schema.json", "DRIFT_RECORD", violations)
     if not isinstance(record, dict):
         record = {}
+    history = prior_records or []
+    sequence = record.get("sequence")
+    if sequence != len(history) + 1:
+        violations.append(finding("DRIFT_RECORD_SEQUENCE_MISMATCH", "sequence", "record sequence must append immediately after immutable history"))
+    expected_previous = history[-1].get("record_sha256") if history else None
+    if record.get("previous_record_sha256") != expected_previous:
+        violations.append(finding("DRIFT_RECORD_CHAIN_MISMATCH", "previous_record_sha256", "record hash chain does not bind the previous record"))
+    unhashed = {key: value for key, value in record.items() if key != "record_sha256"}
+    if record.get("record_sha256") != digest_object(unhashed, preserve_mapping_order=False):
+        violations.append(finding("DRIFT_RECORD_HASH_MISMATCH", "record_sha256", "record hash does not match canonical record content"))
+    same_class = sum(1 for item in history if item.get("violation_class") == record.get("violation_class"))
+    if record.get("occurrence_count") != same_class + 1:
+        violations.append(finding("DRIFT_OCCURRENCE_SEQUENCE_MISMATCH", "occurrence_count", "occurrence count must be derived from immutable same-class history"))
     occurrence = record.get("occurrence_count")
     if isinstance(occurrence, int) and occurrence >= policy["drift_policy"][
         "recurrence_threshold"
     ]:
         fixture_ref = record.get("regression_fixture_ref")
-        if isinstance(fixture_ref, str):
-            path_text, separator, case_id = fixture_ref.partition("#")
-            safe = safe_repo_path(path_text)
-            if not separator or safe is None or not case_id:
-                violations.append(
-                    finding(
-                        "DRIFT_FIXTURE_REF_INVALID",
-                        "regression_fixture_ref",
-                        "recurring drift fixture ref must use safe-path#case-id",
-                    )
-                )
+        if isinstance(fixture_ref, dict):
+            suite_ref = fixture_ref.get("suite_ref")
+            resolved, suite_bytes, ref_findings = _resolve_named_reference(
+                repo_root, suite_ref, "DRIFT_FIXTURE", test_mode=False
+            )
+            del resolved
+            violations.extend(ref_findings)
+            suite, doc_findings = _document_from_reference(suite_bytes, suite_ref, "DRIFT_FIXTURE")
+            violations.extend(doc_findings)
+            cases = suite.get("cases", []) if isinstance(suite, dict) else []
+            matching = [case for case in cases if isinstance(case, dict) and case.get("id") == fixture_ref.get("case_id")]
+            if len(matching) == 0:
+                violations.append(finding("DRIFT_FIXTURE_CASE_NOT_FOUND", "regression_fixture_ref.case_id", "immutable suite does not contain the named case"))
+            elif len(matching) > 1:
+                violations.append(finding("DRIFT_FIXTURE_CASE_DUPLICATE", "regression_fixture_ref.case_id", "immutable suite contains duplicate named cases"))
             else:
-                suite_path = repo_root.joinpath(*PurePosixPath(safe).parts)
-                try:
-                    suite = load_document(suite_path)
-                    cases = suite.get("cases", []) if isinstance(suite, dict) else []
-                    matching = [case for case in cases if case.get("id") == case_id]
-                    codes = (
-                        matching[0].get("expected_violation_codes", []) if len(matching) == 1 else []
-                    )
-                    if record.get("violation_class") not in codes:
-                        raise InputDocumentError("fixture class mismatch")
-                except (InputDocumentError, OSError):
-                    violations.append(
-                        finding(
-                            "DRIFT_FIXTURE_UNRESOLVED",
-                            "regression_fixture_ref",
-                            "recurring drift fixture does not resolve to a matching negative case",
-                        )
-                    )
+                selected = matching[0]
+                if digest_object(selected, preserve_mapping_order=False) != fixture_ref.get("case_sha256"):
+                    violations.append(finding("DRIFT_FIXTURE_CASE_DIGEST_MISMATCH", "regression_fixture_ref.case_sha256", "named case body differs from the bound case digest"))
+                if (
+                    selected.get("expected_result") != "fail"
+                    or selected.get("expected_exit_code") != EXIT_COMPLIANCE_FAIL
+                    or record.get("violation_class") not in selected.get("expected_violation_codes", [])
+                ):
+                    violations.append(finding("DRIFT_FIXTURE_CLASS_MISMATCH", "regression_fixture_ref", "named suite case is not a matching deterministic negative"))
         elif record.get("deterministic_fixture_impossible_reason"):
             review_ref = record.get("foreground_review_ref")
             resolved, _content, ref_violations = resolve_reference(
@@ -1867,6 +1970,97 @@ def validate_drift_record(
     return result
 
 
+def _load_ledger_blob(repo_root: Path, ref: Any) -> tuple[dict[str, Any] | None, list[dict[str, str]]]:
+    _resolved, content, violations = _resolve_named_reference(
+        repo_root, ref, "DRIFT_PREVIOUS_LEDGER", test_mode=False
+    )
+    document, parse_violations = _document_from_reference(content, ref, "DRIFT_PREVIOUS_LEDGER")
+    violations.extend(parse_violations)
+    return document if isinstance(document, dict) else None, violations
+
+
+def validate_drift_ledger(
+    ledger: Any,
+    repo_root: Path,
+    policy: dict[str, Any],
+    policy_sha: str,
+    *,
+    expected_base_head: str | None = None,
+) -> dict[str, Any]:
+    violations: list[dict[str, str]] = []
+    _validate_schema_to(ledger, "communication_drift_ledger.schema.json", "DRIFT_LEDGER", violations)
+    if not isinstance(ledger, dict):
+        ledger = {}
+    records = ledger.get("records") if isinstance(ledger.get("records"), list) else []
+    prior, prior_findings = _load_ledger_blob(repo_root, ledger.get("previous_ledger_ref"))
+    violations.extend(prior_findings)
+    prior_records = prior.get("records", []) if isinstance(prior, dict) and isinstance(prior.get("records"), list) else []
+
+    migration = policy["drift_policy"].get("migration_anchor")
+    if isinstance(prior, dict) and prior.get("schema_version") == "human_ai.communication_drift_ledger.v1":
+        if ledger.get("previous_ledger_ref") != migration or prior_records:
+            violations.append(finding("DRIFT_LEDGER_MIGRATION_ANCHOR_MISMATCH", "previous_ledger_ref", "v1 to v2 migration must use the exact immutable empty-ledger anchor"))
+        if ledger.get("ledger_revision") != 1:
+            violations.append(finding("DRIFT_LEDGER_SEQUENCE_ROLLBACK", "ledger_revision", "first v2 ledger revision must be one"))
+    elif isinstance(prior, dict):
+        if ledger.get("ledger_revision") != prior.get("ledger_revision", 0) + 1:
+            violations.append(finding("DRIFT_LEDGER_SEQUENCE_ROLLBACK", "ledger_revision", "ledger revision must advance exactly once"))
+
+    if len(records) < len(prior_records):
+        violations.append(finding("DRIFT_LEDGER_PRIOR_RECORD_DELETED", "records", "candidate ledger deleted immutable prior records"))
+    else:
+        candidate_prefix = records[: len(prior_records)]
+        if candidate_prefix != prior_records:
+            prior_ids = [item.get("record_id") for item in prior_records if isinstance(item, dict)]
+            candidate_ids = [item.get("record_id") for item in candidate_prefix if isinstance(item, dict)]
+            if sorted(prior_ids) == sorted(candidate_ids) and prior_ids != candidate_ids:
+                code = "DRIFT_LEDGER_PRIOR_RECORD_REORDERED"
+            else:
+                code = "DRIFT_LEDGER_PRIOR_RECORD_MUTATED"
+            violations.append(finding(code, "records", "candidate ledger does not preserve the immutable prior-record prefix"))
+
+    if expected_base_head is not None:
+        base_blob = _git_blob(repo_root, expected_base_head, ".ai/COMMUNICATION_DRIFT_LEDGER.yml")
+        if base_blob is None:
+            violations.append(finding("DRIFT_PREVIOUS_LEDGER_HEAD_MISMATCH", "expected_base_head", "trusted base head does not resolve the canonical ledger"))
+        else:
+            try:
+                base_ledger = load_text_document(base_blob[1].decode("utf-8-sig"), ".yml")
+            except (UnicodeDecodeError, InputDocumentError):
+                base_ledger = None
+            if base_ledger != ledger and base_ledger != prior:
+                violations.append(finding("DRIFT_PREVIOUS_LEDGER_HEAD_MISMATCH", "previous_ledger_ref", "declared prior ledger is not the ledger content at the trusted candidate base head"))
+
+    seen_ids: set[str] = set()
+    for index, record in enumerate(records):
+        if isinstance(record, dict) and record.get("record_id") in seen_ids:
+            violations.append(finding("DRIFT_RECORD_ID_DUPLICATE", f"records.{index}.record_id", "drift record IDs must be unique"))
+        if isinstance(record, dict) and isinstance(record.get("record_id"), str):
+            seen_ids.add(record["record_id"])
+        record_result = validate_drift_record(
+            record, repo_root, policy, policy_sha, prior_records=records[:index]
+        )
+        violations.extend(record_result.get("violations", []))
+
+    result = _make_result(
+        policy=policy,
+        policy_sha=policy_sha,
+        event_id="communication-drift-ledger",
+        task_id=None,
+        event_type="drift_ledger",
+        role=None,
+        event_class="C1",
+        input_sha=digest_object(ledger),
+        receipt_sha=None,
+        checked_contracts={"drift_ledger_schema", "immutable_previous_ledger", "record_prefix", "record_hash_chain", "trusted_base_head"},
+        resolved_refs=[],
+        violations=violations,
+        warnings=[],
+    )
+    ensure_result_schema(result)
+    return result
+
+
 def bootstrap_result(
     receipt: Any,
     repo_root: Path,
@@ -1897,7 +2091,7 @@ def bootstrap_result(
 def error_result(code: str, message: str, *, error_class: str = "input") -> dict[str, Any]:
     del error_class
     policy = {
-        "protocol_head": ZERO_SHA1,
+        "protocol_release_head": ZERO_SHA1,
     }
     return _make_result(
         policy=policy,
@@ -1926,18 +2120,18 @@ def result_exit_code(result: dict[str, Any]) -> int:
 
 
 def _auto_authority_context(
-    context: Any, request: dict[str, Any], policy: dict[str, Any]
+    context: Any, event: dict[str, Any], policy: dict[str, Any]
 ) -> Any:
     if not isinstance(context, dict):
         return context
     result = copy.deepcopy(context)
     replacements = {
-        "AUTO_TASK_ID": request.get("task_id"),
-        "AUTO_EVENT_ID": request.get("event_id"),
-        "AUTO_TRANSITION_ID": request.get("transition_id"),
-        "AUTO_ACTION": request.get("event_type"),
-        "AUTO_TARGET": request.get("to_state") or request.get("transition_id"),
-        "AUTO_PROTOCOL_HEAD": policy["protocol_head"],
+        "AUTO_TASK_ID": event.get("task_id"),
+        "AUTO_EVENT_ID": event.get("event_id"),
+        "AUTO_TRANSITION_ID": (event.get("proposed_transition") or {}).get("transition_id"),
+        "AUTO_ACTION": event.get("event_type"),
+        "AUTO_TARGET": (event.get("proposed_transition") or {}).get("to_state"),
+        "AUTO_PROTOCOL_RELEASE_HEAD": policy["protocol_release_head"],
     }
     for key, value in list(result.items()):
         if value in replacements:
@@ -1951,7 +2145,7 @@ def run_fixture_suite(
     policy: dict[str, Any],
     policy_sha: str,
 ) -> tuple[dict[str, Any], int]:
-    if not isinstance(suite, dict) or suite.get("schema_version") != "human_ai.communication_fixture_suite.v1":
+    if not isinstance(suite, dict) or suite.get("schema_version") != "human_ai.communication_fixture_suite.v2":
         raise InputDocumentError("fixture suite contract is invalid")
     cases = suite.get("cases")
     if not isinstance(cases, list):
@@ -1980,7 +2174,17 @@ def run_fixture_suite(
                 actual_exit = result_exit_code(actual)
             elif operation == "validate_drift":
                 actual = validate_drift_record(
-                    case.get("payload"), repo_root, policy, policy_sha
+                    case.get("payload"), repo_root, policy, policy_sha,
+                    prior_records=case.get("prior_records", []),
+                )
+                actual_exit = result_exit_code(actual)
+            elif operation == "validate_ledger":
+                actual = validate_drift_ledger(
+                    case.get("payload"),
+                    repo_root,
+                    policy,
+                    policy_sha,
+                    expected_base_head=case.get("expected_base_head"),
                 )
                 actual_exit = result_exit_code(actual)
             elif operation == "classify":
@@ -2030,47 +2234,92 @@ def run_fixture_suite(
                     )
                     actual_exit = EXIT_INPUT
             elif operation == "transition":
-                source_id = case.get("event_case_id")
-                base_result = event_results.get(source_id) if source_id else None
-                if base_result is not None:
-                    validation_result = _apply_mutations(
-                        base_result, case.get("validation_result_mutations", {})
-                    )
-                else:
-                    validation_result = None
                 request = copy.deepcopy(case.get("request", {}))
-                if validation_result is not None:
-                    auto_values = {
-                        "AUTO_EVENT_ID": validation_result.get("event_id"),
-                        "AUTO_TASK_ID": validation_result.get("task_id"),
-                        "AUTO_EVENT_TYPE": validation_result.get("event_type"),
-                        "AUTO_EVENT_CLASS": validation_result.get("event_class"),
-                        "AUTO_EVENT_INPUT_SHA256": validation_result.get("input_sha256"),
-                        "AUTO_VALIDATION_SHA256": digest_object(validation_result),
-                        "AUTO_PROTOCOL_HEAD": policy["protocol_head"],
-                    }
-                    for key, value in list(request.items()):
-                        if value in auto_values:
-                            request[key] = auto_values[value]
                 request = _apply_mutations(request, case.get("request_mutations", {}))
+                event_ref = request.get("event_ref") if isinstance(request, dict) else None
+                _resolved_event, event_bytes, _event_ref_findings = resolve_reference(
+                    repo_root, event_ref, test_mode=True
+                )
+                event_document, _event_doc_findings = _document_from_reference(
+                    event_bytes, event_ref, "EVENT"
+                )
+                event_for_context = event_document if isinstance(event_document, dict) else {}
                 authority = _auto_authority_context(
-                    case.get("authorization_context"), request, policy
+                    case.get("authorization_context"), event_for_context, policy
+                )
+                origin = _auto_authority_context(
+                    case.get("actor_origin_context"), event_for_context, policy
                 )
                 actual = check_transition(
                     request,
-                    validation_result,
                     repo_root,
                     policy,
                     policy_sha,
+                    active_state_context=case.get("active_state_context"),
+                    state_context_mode=case.get("state_context_mode", "test-fixture"),
                     authority_context=authority,
                     authority_mode=case.get("authority_mode", "none"),
+                    actor_origin_context=origin,
+                    actor_origin_mode=case.get("actor_origin_mode", "none"),
                     test_mode=True,
                     consumed_context_ids=set(case.get("consumed_context_ids", [])),
+                    trusted_state_verifier=(
+                        (lambda _context: True)
+                        if case.get("trusted_state_verifier_result") is True
+                        else None
+                    ),
                     trusted_authority_verifier=(
                         (lambda _context: True)
                         if case.get("trusted_host_verifier_result") is True
                         else None
                     ),
+                    trusted_actor_origin_verifier=(
+                        (lambda _context: True)
+                        if case.get("trusted_actor_origin_verifier_result") is True
+                        else None
+                    ),
+                )
+                actual_exit = result_exit_code(actual)
+            elif operation == "workflow_sequence":
+                step_results = []
+                for step in case.get("steps", []):
+                    request = copy.deepcopy(step.get("request", {}))
+                    event_ref = request.get("event_ref")
+                    _resolved_event, event_bytes, _event_findings = resolve_reference(
+                        repo_root, event_ref, test_mode=True
+                    )
+                    event_document, _doc_findings = _document_from_reference(event_bytes, event_ref, "EVENT")
+                    event_for_context = event_document if isinstance(event_document, dict) else {}
+                    step_results.append(
+                        check_transition(
+                            request,
+                            repo_root,
+                            policy,
+                            policy_sha,
+                            active_state_context=step.get("active_state_context"),
+                            state_context_mode="test-fixture",
+                            authority_context=_auto_authority_context(step.get("authorization_context"), event_for_context, policy),
+                            authority_mode=step.get("authority_mode", "none"),
+                            actor_origin_context=_auto_authority_context(step.get("actor_origin_context"), event_for_context, policy),
+                            actor_origin_mode=step.get("actor_origin_mode", "none"),
+                            test_mode=True,
+                        )
+                    )
+                workflow_violations = [item for result in step_results for item in result.get("violations", [])]
+                actual = _make_result(
+                    policy=policy,
+                    policy_sha=policy_sha,
+                    event_id=case_id,
+                    task_id=None,
+                    event_type="workflow_sequence",
+                    role=None,
+                    event_class="C1",
+                    input_sha=digest_object(case.get("steps", [])),
+                    receipt_sha=None,
+                    checked_contracts={"complete_reachable_workflow"},
+                    resolved_refs=[],
+                    violations=workflow_violations,
+                    warnings=[],
                 )
                 actual_exit = result_exit_code(actual)
             else:
@@ -2102,10 +2351,13 @@ def run_fixture_suite(
         )
     mismatches = [item for item in case_outcomes if not item["matched"]]
     summary = {
-        "schema_version": "human_ai.communication_fixture_result.v1",
+        "schema_version": "human_ai.communication_fixture_result.v2",
         "result": "pass" if not mismatches else "fail",
         "validator_version": VALIDATOR_VERSION,
-        "protocol_head": policy["protocol_head"],
+        "source_mailbox_base_head": policy["source_mailbox_base_head"],
+        "protocol_release_head": policy["protocol_release_head"],
+        "policy_sha256": policy_sha,
+        "suite_sha256": digest_object(suite, preserve_mapping_order=False),
         "total_cases": len(case_outcomes),
         "matched_cases": len(case_outcomes) - len(mismatches),
         "mismatch_count": len(mismatches),
@@ -2148,15 +2400,31 @@ def build_parser() -> JsonArgumentParser:
     transition = subparsers.add_parser("transition")
     common(transition)
     transition.add_argument("--input", required=True, type=Path)
-    transition.add_argument("--validation-result", required=True, type=Path)
+    transition.add_argument("--active-state-context", required=True, type=Path)
+    transition.add_argument(
+        "--state-context-mode",
+        choices=["none", "trusted-host", "test-fixture"],
+        default="none",
+    )
     transition.add_argument("--authorization-context", type=Path)
     transition.add_argument(
         "--authority-mode",
         choices=["none", "trusted-host", "test-fixture"],
         default="none",
     )
+    transition.add_argument("--actor-origin-context", type=Path)
+    transition.add_argument(
+        "--actor-origin-mode",
+        choices=["none", "trusted-host", "test-fixture"],
+        default="none",
+    )
     transition.add_argument("--test-mode", action="store_true")
     transition.add_argument("--consumed-context-ids", type=Path)
+
+    ledger = subparsers.add_parser("validate-ledger")
+    common(ledger)
+    ledger.add_argument("--input", required=True, type=Path)
+    ledger.add_argument("--expected-base-head")
 
     drift = subparsers.add_parser("validate-drift")
     common(drift)
@@ -2221,14 +2489,22 @@ def main(argv: list[str] | None = None) -> int:
                 if args.authorization_context is not None
                 else None
             )
+            actor_origin = (
+                load_document(args.actor_origin_context)
+                if args.actor_origin_context is not None
+                else None
+            )
             result = check_transition(
                 load_document(args.input),
-                load_document(args.validation_result),
                 repo_root,
                 policy,
                 policy_sha,
+                active_state_context=load_document(args.active_state_context),
+                state_context_mode=args.state_context_mode,
                 authority_context=authority,
                 authority_mode=args.authority_mode,
+                actor_origin_context=actor_origin,
+                actor_origin_mode=args.actor_origin_mode,
                 test_mode=args.test_mode,
                 consumed_context_ids=_read_consumed_ids(args.consumed_context_ids),
             )
@@ -2236,6 +2512,15 @@ def main(argv: list[str] | None = None) -> int:
         elif args.command == "validate-drift":
             result = validate_drift_record(
                 load_document(args.input), repo_root, policy, policy_sha
+            )
+            exit_code = result_exit_code(result)
+        elif args.command == "validate-ledger":
+            result = validate_drift_ledger(
+                load_document(args.input),
+                repo_root,
+                policy,
+                policy_sha,
+                expected_base_head=args.expected_base_head,
             )
             exit_code = result_exit_code(result)
         elif args.command == "run-fixtures":

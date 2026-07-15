@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 import os
 import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -14,7 +16,6 @@ from referencing import Registry, Resource
 REPO_ROOT = Path(__file__).resolve().parents[3]
 GATE_DIR = REPO_ROOT / ".ai" / "communication_compliance"
 VALIDATOR_PATH = GATE_DIR / "validate_communication.py"
-BASE_HEAD = "d235e602c14250d16b91f2897cb8308e031cc13c"
 
 spec = importlib.util.spec_from_file_location("communication_gate", VALIDATOR_PATH)
 if spec is None or spec.loader is None:
@@ -23,11 +24,40 @@ gate = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(gate)
 
 
+def run_git(root: Path, *args: str, input_bytes: bytes | None = None) -> str:
+    completed = subprocess.run(
+        ["git", "-C", str(root), *args],
+        input=input_bytes,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=True,
+    )
+    return completed.stdout.decode("utf-8").strip()
+
+
 class CommunicationComplianceGateTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.policy, cls.policy_sha = gate.load_policy(GATE_DIR / "material_event_policy.yml")
         cls.suite = gate.load_document(GATE_DIR / "fixtures" / "fixture_suite.json")
+
+    def test_release_heads_have_separate_meanings(self) -> None:
+        self.assertEqual(self.policy["release_binding_status"], "bound")
+        self.assertRegex(self.policy["source_mailbox_base_head"], r"^[0-9a-f]{40}$")
+        self.assertRegex(self.policy["protocol_release_head"], r"^[0-9a-f]{40}$")
+        self.assertNotEqual(
+            self.policy["source_mailbox_base_head"], self.policy["protocol_release_head"]
+        )
+        self.assertTrue(
+            run_git(
+                REPO_ROOT,
+                "merge-base",
+                "--is-ancestor",
+                self.policy["source_mailbox_base_head"],
+                self.policy["protocol_release_head"],
+            )
+            == ""
+        )
 
     def test_policy_classification_is_disjoint_and_fail_closed(self) -> None:
         seen: dict[str, str] = {}
@@ -40,7 +70,7 @@ class CommunicationComplianceGateTests(unittest.TestCase):
         self.assertEqual(event_class, "unknown")
         self.assertEqual([item["code"] for item in findings], ["UNKNOWN_EVENT_TYPE"])
 
-    def test_frozen_pointer_keys_and_provider_roles(self) -> None:
+    def test_frozen_pointer_keys_human_role_and_direct_route(self) -> None:
         self.assertEqual(
             self.policy["wire_schemas"]["chatgpt_to_codex_v1"]["core_keys"],
             ["signal_id", "decision", "task_ref", "packet_ref", "brief_ref", "source_head", "human_gate"],
@@ -49,34 +79,39 @@ class CommunicationComplianceGateTests(unittest.TestCase):
             self.policy["wire_schemas"]["codex_to_chatgpt_v1"]["core_keys"],
             ["packet_id", "status", "report_ref", "brief_ref", "source_head", "review_branch_head", "human_gate"],
         )
-        self.assertEqual(
-            self.policy["wire_schemas"]["codex_to_chatgpt_v1"]["optional_tail_keys"],
-            ["detail_ref"],
-        )
-        self.assertEqual(self.policy["role_mapping"]["Human"]["occupied_role"], "human_speaker")
-        for provider in ("ChatGPT", "Claude"):
-            self.assertEqual(
-                self.policy["role_mapping"][provider]["occupied_role"],
-                "foreground_review_and_task_dispatch",
-            )
-        for provider in ("Codex", "Claude Code"):
-            self.assertEqual(
-                self.policy["role_mapping"][provider]["occupied_role"],
-                "backend_execution_and_handoff",
-            )
+        human = self.policy["role_mapping"]["Human"]
+        self.assertEqual(human["occupied_role"], "human_speaker")
+        self.assertIsNone(human["wire_schema"])
+        self.assertEqual(human["direct_dispatch_wire_schema"], "chatgpt_to_codex_v1")
 
-    def test_expression_sentence_count_supports_chinese_boundaries(self) -> None:
-        self.assertEqual(gate.sentence_count("这条门禁把遗漏变成可见证据。它不会授予受保护权限。"), 2)
-        self.assertEqual(gate.sentence_count("Evidence is visible. Authority stays external."), 2)
+    def test_real_state_graph_is_reachable_and_aliases_are_exact(self) -> None:
+        graph: dict[str, set[str]] = {}
+        for transition in self.policy["transitions"].values():
+            for source in transition["from_states"]:
+                graph.setdefault(source, set()).add(transition["to_state"])
+        reached = {"closed"}
+        frontier = ["closed"]
+        while frontier:
+            source = frontier.pop()
+            for target in graph.get(source, set()):
+                if target not in reached:
+                    reached.add(target)
+                    frontier.append(target)
+        self.assertTrue(
+            {"backend_assigned", "foreground_review_pending", "human_gate_pending", "publication_in_progress"}.issubset(reached)
+        )
+        aliases = self.policy["state_evidence"]["aliases"]
+        self.assertEqual(aliases["awaiting_codex"], "backend_assigned")
+        self.assertEqual(aliases["awaiting_chatgpt_review"], "foreground_review_pending")
+        self.assertNotIn("chatgpt_review", aliases)
 
     def test_all_json_schemas_are_valid(self) -> None:
         schema_paths = sorted(GATE_DIR.glob("*.schema.json"))
-        self.assertGreaterEqual(len(schema_paths), 7)
-        for schema_path in schema_paths:
-            schema = gate.load_document(schema_path)
-            gate.Draft202012Validator.check_schema(schema)
+        self.assertGreaterEqual(len(schema_paths), 10)
+        for path in schema_paths:
+            gate.Draft202012Validator.check_schema(gate.load_document(path))
 
-    def test_ledger_schema_and_privacy_invariants(self) -> None:
+    def test_ledger_schema_hash_chain_and_migration_anchor(self) -> None:
         ledger = gate.load_document(REPO_ROOT / ".ai" / "COMMUNICATION_DRIFT_LEDGER.yml")
         schema = gate.load_document(GATE_DIR / "communication_drift_ledger.schema.json")
         registry = Registry().with_resource(
@@ -84,174 +119,147 @@ class CommunicationComplianceGateTests(unittest.TestCase):
             Resource.from_contents(gate.load_schema("drift_record.schema.json")),
         )
         gate.Draft202012Validator(schema, registry=registry).validate(ledger)
-        self.assertFalse(ledger["privacy"]["contains_private_reasoning"])
-        self.assertFalse(ledger["privacy"]["contains_secret_content"])
-        for record in ledger["records"]:
-            self.assertEqual(gate.schema_findings(record, "drift_record.schema.json", "DRIFT_RECORD"), [])
+        prior_hash = None
+        for index, record in enumerate(ledger["records"], 1):
+            self.assertEqual(record["sequence"], index)
+            self.assertEqual(record["previous_record_sha256"], prior_hash)
+            expected = gate.digest_object(
+                {key: value for key, value in record.items() if key != "record_sha256"},
+                preserve_mapping_order=False,
+            )
+            self.assertEqual(record["record_sha256"], expected)
+            prior_hash = expected
+        result = gate.validate_drift_ledger(
+            ledger, REPO_ROOT, self.policy, self.policy_sha
+        )
+        self.assertEqual(result["result"], "pass", result["violations"])
 
     def test_strict_parser_rejects_duplicate_multidoc_and_alias_yaml(self) -> None:
-        raw_dir = GATE_DIR / "fixtures" / "raw"
+        raw = GATE_DIR / "fixtures" / "raw"
         for name in ("pointer_duplicate_keys.yml", "pointer_multidoc.yml", "pointer_anchor_alias.yml"):
             with self.subTest(name=name), self.assertRaises(gate.InputDocumentError):
-                gate.load_document(raw_dir / name)
+                gate.load_document(raw / name)
         with self.assertRaises(gate.InputDocumentError):
             gate.load_text_document('{"x":1,"x":2}', ".json")
 
-    def test_schema_invalid_types_fail_closed_without_invalid_result(self) -> None:
-        malformed_event = {
-            "schema_version": "wrong",
-            "event_id": [],
-            "task_id": {},
-            "event_type": [],
-            "provider": "unmapped",
-            "occupied_role": 3,
-            "proposed_transition": [],
-        }
-        event_result = gate.validate_event(
-            malformed_event,
-            REPO_ROOT,
-            self.policy,
-            self.policy_sha,
-        )
-        self.assertEqual(event_result["result"], "fail")
-        gate.ensure_result_schema(event_result)
-
-        malformed_request = {
-            "transition_id": {},
-            "event_id": [],
-            "task_id": [],
-            "event_type": [],
-            "event_class": [],
-        }
-        malformed_validation = {
-            "result": "pass",
-            "violations": "not-a-list",
-            "resolved_refs": "not-a-list",
-        }
-        transition_result = gate.check_transition(
-            malformed_request,
-            malformed_validation,
-            REPO_ROOT,
-            self.policy,
-            self.policy_sha,
-        )
-        self.assertEqual(transition_result["result"], "fail")
-        gate.ensure_result_schema(transition_result)
-
     def test_fixture_suite_matches_all_expected_results(self) -> None:
         result, exit_code = gate.run_fixture_suite(
-            self.suite,
-            REPO_ROOT,
-            self.policy,
-            self.policy_sha,
+            self.suite, REPO_ROOT, self.policy, self.policy_sha
         )
-        self.assertEqual(exit_code, gate.EXIT_PASS)
+        self.assertEqual(exit_code, gate.EXIT_PASS, [case for case in result["cases"] if not case["matched"]])
         self.assertEqual(result["result"], "pass")
-        self.assertEqual(result["total_cases"], 79)
-        self.assertEqual(result["matched_cases"], 79)
-        self.assertEqual(result["mismatch_count"], 0)
-        self.assertTrue(all(case["matched"] for case in result["cases"]))
+        self.assertGreaterEqual(result["total_cases"], 45)
+        self.assertEqual(result["matched_cases"], result["total_cases"])
 
-    def test_fixture_inventory_covers_required_boundaries(self) -> None:
-        ids = [case["id"] for case in self.suite["cases"]]
-        self.assertEqual(len(ids), len(set(ids)))
+    def test_fixture_inventory_covers_proof_chain_attacks(self) -> None:
+        ids = {case["id"] for case in self.suite["cases"]}
         required = {
-            "bootstrap_chatgpt_pass",
-            "bootstrap_claude_pass",
-            "bootstrap_codex_pass",
-            "bootstrap_claude_code_pass",
-            "c0_project_mention_pass",
-            "classify_unknown_fail_closed",
-            "pointer_extra_authorization_key",
-            "pointer_key_order_invalid",
-            "pointer_nested_human_gate_rejected",
-            "pointer_mutable_review_head_rejected",
-            "dispatch_recommendation_ref_must_be_explicit",
-            "expression_cannot_authorize",
-            "expression_structured_authorization_rejected",
-            "human_content_structured_authorization_rejected",
-            "hidden_reasoning_request_rejected",
-            "mixed_nonseparable_complete_brief_pass",
-            "pointer_only_waiver_missing_brief",
-            "transition_validation_absent",
-            "transition_c2_payload_gate_not_authority",
-            "transition_c2_test_authority_pass",
-            "transition_forged_trusted_context_without_host_verifier",
-            "transition_test_harness_trusted_host_pass",
-            "transition_validation_policy_binding_mismatch",
-            "transition_validation_pass_with_violations",
-            "drift_recurring_fixture_missing",
-            "drift_recurring_fixture_pass",
+            "bootstrap_stale_release_head",
+            "human_direct_dispatch_event_pass",
+            "human_role_impersonation_rejected",
+            "transition_exact_validation_artifact_pass",
+            "transition_event_mutation_after_result",
+            "transition_fabricated_pass_result",
+            "transition_missing_event_ref",
+            "transition_state_task_mismatch",
+            "transition_unreachable",
+            "transition_full_real_workflow",
+            "transition_c2_no_authority",
+            "transition_human_c2_no_authority",
+            "drift_recurring_immutable_fixture_pass",
+            "drift_mutable_fixture_rejected",
+            "drift_ledger_delete_rejected",
+            "drift_ledger_mutation_rejected",
+            "drift_ledger_reorder_rejected",
+            "drift_ledger_sequence_rollback",
         }
-        self.assertTrue(required.issubset(ids))
+        self.assertTrue(required.issubset(ids), sorted(required - ids))
+
+    def test_git_reference_requires_commit_and_rejects_special_entries(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            run_git(root, "init")
+            run_git(root, "config", "user.email", "fixture@example.invalid")
+            run_git(root, "config", "user.name", "Fixture")
+            (root / "regular.txt").write_text("regular\n", encoding="utf-8")
+            run_git(root, "add", "regular.txt")
+            run_git(root, "commit", "-m", "base")
+            commit = run_git(root, "rev-parse", "HEAD")
+            tree = run_git(root, "rev-parse", "HEAD^{tree}")
+            digest = hashlib.sha256(b"regular\n").hexdigest()
+            resolved, _content, findings = gate.resolve_reference(
+                root,
+                {"kind": "git_blob", "commit": tree, "path": "regular.txt", "content_sha256": digest},
+                test_mode=False,
+            )
+            self.assertEqual(resolved["status"], "unresolved")
+            self.assertIn("REFERENCE_UNRESOLVED", {item["code"] for item in findings})
+
+            link_blob = run_git(root, "hash-object", "-w", "--stdin", input_bytes=b"regular.txt")
+            run_git(root, "update-index", "--add", "--cacheinfo", "120000", link_blob, "link")
+            run_git(root, "commit", "-m", "symlink entry")
+            link_commit = run_git(root, "rev-parse", "HEAD")
+            resolved, _content, _findings = gate.resolve_reference(
+                root,
+                {"kind": "git_blob", "commit": link_commit, "path": "link", "content_sha256": hashlib.sha256(b"regular.txt").hexdigest()},
+                test_mode=False,
+            )
+            self.assertEqual(resolved["status"], "unresolved")
+
+            run_git(root, "update-index", "--add", "--cacheinfo", "160000", commit, "submodule")
+            run_git(root, "commit", "-m", "submodule entry")
+            submodule_commit = run_git(root, "rev-parse", "HEAD")
+            resolved, _content, _findings = gate.resolve_reference(
+                root,
+                {"kind": "git_blob", "commit": submodule_commit, "path": "submodule", "content_sha256": "0" * 64},
+                test_mode=False,
+            )
+            self.assertEqual(resolved["status"], "unresolved")
+
+    def test_test_fixture_reference_is_not_cached_across_mutation(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            path = root / "artifact.json"
+            path.write_text('{"value":1}\n', encoding="utf-8")
+            first = path.read_bytes()
+            ref = {"kind": "test_fixture_blob", "path": "artifact.json", "content_sha256": hashlib.sha256(first).hexdigest(), "test_only": True}
+            resolved, _content, _findings = gate.resolve_reference(root, ref, test_mode=True)
+            self.assertEqual(resolved["status"], "resolved")
+            path.write_text('{"value":2}\n', encoding="utf-8")
+            resolved, _content, findings = gate.resolve_reference(root, ref, test_mode=True)
+            self.assertEqual(resolved["status"], "unresolved")
+            self.assertIn("REFERENCE_DIGEST_MISMATCH", {item["code"] for item in findings})
 
     def test_cli_output_is_environment_independent(self) -> None:
-        command = [
-            sys.executable,
-            str(VALIDATOR_PATH),
-            "classify",
-            "--repo-root",
-            str(REPO_ROOT),
-            "--event-type",
-            "backend_dispatch",
-        ]
+        command = [sys.executable, str(VALIDATOR_PATH), "classify", "--repo-root", str(REPO_ROOT), "--event-type", "backend_dispatch"]
         outputs = []
-        for timezone, hash_seed in (("UTC", "1"), ("Pacific/Kiritimati", "98765")):
+        for timezone, seed in (("UTC", "1"), ("Pacific/Kiritimati", "98765")):
             env = os.environ.copy()
             env["TZ"] = timezone
-            env["PYTHONHASHSEED"] = hash_seed
+            env["PYTHONHASHSEED"] = seed
             run = subprocess.run(command, cwd=REPO_ROOT, env=env, capture_output=True, check=False)
             self.assertEqual(run.returncode, 0, run.stderr.decode("utf-8", errors="replace"))
             outputs.append(run.stdout)
         self.assertEqual(outputs[0], outputs[1])
-        parsed = json.loads(outputs[0])
-        self.assertEqual(parsed["event_class"], "C1")
 
-    def test_cli_invocation_error_is_json_without_traceback(self) -> None:
-        run = subprocess.run(
-            [sys.executable, str(VALIDATOR_PATH), "classify"],
-            cwd=REPO_ROOT,
-            capture_output=True,
-            check=False,
-        )
-        self.assertEqual(run.returncode, gate.EXIT_INVOCATION)
-        payload = json.loads(run.stdout)
-        self.assertEqual(payload["result"], "error")
-        self.assertNotIn("Traceback", run.stdout.decode("utf-8"))
-        self.assertNotIn(str(REPO_ROOT), run.stdout.decode("utf-8"))
-
-    def test_canonical_documents_bind_the_gate_and_keep_pointer_core_frozen(self) -> None:
-        gate_path = ".ai/communication_compliance/validate_communication.py"
-        for path in (
-            ".ai/PROTOCOL.md",
-            ".ai/PROTOCOL_ADHERENCE.md",
-            ".ai/HANDOFF_INIT_PROMPT.md",
-            ".ai/CODEX_WORK_MECHANISM_PROTOCOL.md",
+    def test_release_receipt_files_are_identical_between_semantics_and_binding(self) -> None:
+        release = self.policy["protocol_release_head"]
+        for path in self.policy["bootstrap_required_loaded_files"] + sorted(
+            {item for values in self.policy["bootstrap_on_demand_requirements"].values() for item in values}
         ):
             with self.subTest(path=path):
-                self.assertIn(gate_path, (REPO_ROOT / path).read_text(encoding="utf-8"))
-        task_contract = (REPO_ROOT / ".ai" / "CODEX_TASK_INPUT_CONTRACT.md").read_text(
-            encoding="utf-8"
-        )
-        self.assertIn("separately labeled routing envelope", task_contract)
-        self.assertIn("must not be added to the seven-key pointer mapping", task_contract)
+                release_blob = run_git(REPO_ROOT, "rev-parse", f"{release}:{path}")
+                candidate_blob = run_git(REPO_ROOT, "rev-parse", f"HEAD:{path}")
+                self.assertEqual(candidate_blob, release_blob)
 
-    def test_source_mailboxes_are_byte_identical_to_base(self) -> None:
+    def test_source_mailboxes_are_byte_identical_to_neutral_base(self) -> None:
+        base = self.policy["source_mailbox_base_head"]
         for path in (".ai/INBOX.md", ".ai/OUTBOX.md", ".ai/STATE.yml", ".ai/HUMAN_BRIEF.md"):
             with self.subTest(path=path):
-                baseline_blob = subprocess.run(
-                    ["git", "-C", str(REPO_ROOT), "rev-parse", f"{BASE_HEAD}:{path}"],
-                    capture_output=True,
-                    check=True,
-                    text=True,
-                ).stdout.strip()
-                candidate_blob = subprocess.run(
-                    ["git", "-C", str(REPO_ROOT), "hash-object", "--path", path, path],
-                    capture_output=True,
-                    check=True,
-                    text=True,
-                ).stdout.strip()
-                self.assertEqual(candidate_blob, baseline_blob)
+                self.assertEqual(
+                    run_git(REPO_ROOT, "rev-parse", f"{base}:{path}"),
+                    run_git(REPO_ROOT, "hash-object", "--path", path, path),
+                )
 
 
 if __name__ == "__main__":

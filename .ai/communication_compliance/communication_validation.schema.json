@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "human-ai-communication-validation-v1",
+  "$id": "human-ai-communication-validation-v2",
   "type": "object",
   "required": [
     "schema_version",
@@ -12,7 +12,7 @@
     "violations",
     "warnings",
     "checked_contracts",
-    "protocol_head",
+    "protocol_release_head",
     "role",
     "event_class",
     "resolved_refs",
@@ -23,7 +23,7 @@
     "authorization_granted_by_validator"
   ],
   "properties": {
-    "schema_version": {"const": "human_ai.communication_validation.v1"},
+    "schema_version": {"const": "human_ai.communication_validation.v2"},
     "validator_version": {"type": "string", "minLength": 1},
     "event_id": {"type": ["string", "null"]},
     "task_id": {"type": ["string", "null"]},
@@ -42,7 +42,7 @@
       "items": {"type": "string"},
       "uniqueItems": true
     },
-    "protocol_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "protocol_release_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
     "role": {"type": ["string", "null"]},
     "event_class": {"enum": ["C0", "C1", "C2", "unknown"]},
     "resolved_refs": {

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "human-ai-communication-active-state-context-v1",
+  "type": "object",
+  "required": ["schema_version", "context_id", "injection_source", "test_only", "review_branch", "observed_head", "state_path"],
+  "properties": {
+    "schema_version": {"const": "human_ai.communication_active_state_context.v1"},
+    "context_id": {"type": "string", "minLength": 1},
+    "injection_source": {"enum": ["trusted_external_host", "deterministic_test_fixture"]},
+    "test_only": {"type": "boolean"},
+    "review_branch": {"const": "ai/review/latest"},
+    "observed_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "state_path": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": false
+}

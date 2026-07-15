@@ -146,7 +146,7 @@ The execution recommendation must contain `recommended_model`, `recommended_thin
 
 ### Executable Gate Check
 
-Before advancing a durable `C1` or protected `C2` workflow event, run `.ai/communication_compliance/validate_communication.py` as documented in `.ai/communication_compliance/README.md`. The event must have a passing result bound to the current versioned policy, bootstrap receipt, input digest, and every immutable required ref. The transition check revalidates that result; missing, malformed, stale, failing, unresolved, or digest-mismatched evidence blocks advancement.
+Before advancing a durable `C1` or protected `C2` workflow event, run `.ai/communication_compliance/validate_communication.py` as documented in `.ai/communication_compliance/README.md`. Transition proof must physically resolve the immutable event, actual STATE and ordered pointer, bind STATE to a trusted externally observed current review head, and recompute event validation including receipts and every required ref. A stored result is optional comparison evidence and cannot self-authorize; if present it must equal the fresh result in canonical bytes and semantics. Human-origin context, active-state context, and C2 authorization context are externally injected, separate, and non-interchangeable.
 
 `C0` ordinary discussion does not require this artifact. `C2` additionally requires a separately injected trusted-host Human `AuthorizationContext`; payload `human_gate` fields, independent expression, pointers, and validator output cannot authorize the action. The gate reports eligibility only and must not be represented as live middleware or an executed state change.
 
@@ -163,7 +163,7 @@ Before claiming completion or approval, verify:
 - [ ] mailbox artifacts and canonical short handoff were produced when required;
 - [ ] detailed output was written to durable files instead of pasted into chat.
 - [ ] the Human-response preflight passed for every material Human-facing event;
-- [ ] every proposed C1/C2 transition carried a passing, bound communication-gate result, and any C2 transition also carried external authenticated Human authority;
+- [ ] every proposed C1/C2 transition carried a passing recomputed physical proof chain and trusted active-state anchor; Human events carried authenticated origin, and any C2 transition also carried separate external Human authority;
 - [ ] a backend execution recommendation contained every required field when the Human was asked to start or continue Codex or Claude Code;
 - [ ] bounded independent expression was present, separated from evidence/authority, and preserved through `brief_ref` when the machine channel had to stay pointer-only;
 - [ ] no hidden chain-of-thought was requested or disclosed;

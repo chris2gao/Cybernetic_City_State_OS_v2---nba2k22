@@ -5,7 +5,7 @@
   "required": [
     "schema_version",
     "receipt_id",
-    "protocol_head",
+    "protocol_release_head",
     "provider",
     "occupied_role",
     "wire_schema",
@@ -17,7 +17,7 @@
   "properties": {
     "schema_version": {"const": "human_ai.communication_bootstrap_receipt.v1"},
     "receipt_id": {"type": "string", "minLength": 1},
-    "protocol_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "protocol_release_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
     "provider": {"enum": ["ChatGPT", "Claude", "Codex", "Claude Code"]},
     "occupied_role": {
       "enum": ["foreground_review_and_task_dispatch", "backend_execution_and_handoff"]

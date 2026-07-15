@@ -1,0 +1,34 @@
+{
+  "schema_version": "human_ai.communication_proof_chain_review.v1",
+  "task_id": "human-ai-communication-compliance-gate-0001",
+  "decision": "implemented_awaiting_exact_head_review",
+  "validation_provenance": {
+    "source": "fresh resolution of immutable event, receipt files, required refs, actual state, and ordered pointer",
+    "stored_validation_role": "optional exact byte-and-semantic comparison only",
+    "grants_authority": false
+  },
+  "human_authority": {
+    "human_role": "human_speaker",
+    "direct_dispatch_wire": "chatgpt_to_codex_v1",
+    "actor_origin_context_external": true,
+    "c2_authorization_context_separate": true,
+    "validator_grants_authority": false
+  },
+  "state_freshness": {
+    "immutable_state_alone_is_current": false,
+    "trusted_active_state_context_required": true,
+    "executor_compare_and_swap_required": true
+  },
+  "release_binding": {
+    "source_mailbox_base_head_purpose": "neutral source mailbox comparison only",
+    "protocol_release_head_purpose": "immutable canonical semantics and receipt bytes",
+    "topology": "semantics_commit_then_immediate_binding_only_child"
+  },
+  "drift_history": {
+    "immutable_previous_ledger_required": true,
+    "exact_prior_prefix_required": true,
+    "record_hash_chain_required": true,
+    "immutable_suite_and_case_digest_required_for_recurrence": true
+  },
+  "self_authentication_prohibited": true
+}
