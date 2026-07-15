@@ -4,7 +4,11 @@
 task_id: human-ai-communication-expression-protocol-0001
 source_head: eb46be9dadf9672091883e4e69bcaaa70b0cb163
 parent_candidate: 8f0eec213484d16a97956d356a9ef1e163fc45fe
+accepted_candidate: 85e07c5d69c4cd02d275bce98574d7ddaf37f732
+review_authority_head: 3a9df808711c7f076bced512b41c582940ed0c1b
+review_ref: "ai/review/latest:.ai/HUMAN_BRIEFS/human-ai-communication-expression-protocol-correction-exact-head-review-0002.md"
 validation_scope: consolidated_provider_neutral_correction_validation
+publication_status: accepted_and_validated_for_normal_pr
 result: pass
 ```
 

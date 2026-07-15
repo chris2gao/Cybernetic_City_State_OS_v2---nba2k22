@@ -2,15 +2,24 @@
 
 ```yaml
 task_id: human-ai-communication-expression-protocol-0001
-status: complete_awaiting_chatgpt_review
+status: accepted_ready_for_normal_pr_publication
 source_branch: master
 source_head: eb46be9dadf9672091883e4e69bcaaa70b0cb163
 work_branch: codex/human-ai-communication-expression-protocol
 parent_candidate: 8f0eec213484d16a97956d356a9ef1e163fc45fe
 candidate_revision: provider_neutral_correction_0002
-source_or_master_publication_authorized: false
-pr_creation_authorized: false
-human_gate: required_after_chatgpt_review
+accepted_candidate: 85e07c5d69c4cd02d275bce98574d7ddaf37f732
+review_authority_head: 3a9df808711c7f076bced512b41c582940ed0c1b
+review_ref: "ai/review/latest:.ai/HUMAN_BRIEFS/human-ai-communication-expression-protocol-correction-exact-head-review-0002.md"
+publication_preparation_head: resolved_by_git_after_commit
+pull_request: resolved_in_final_review_handoff
+merge_commit: resolved_in_final_review_handoff
+final_master: resolved_in_final_review_handoff
+direct_source_or_master_push_authorized: false
+normal_ready_pr_authorized: true
+normal_merge_commit_authorized: true
+post_merge_verification_authorized: true
+human_gate: approved_for_complete_publication_scope
 ```
 
 ## Outcome
@@ -78,6 +87,6 @@ The same-task correction also used two task-authorized read-only reviewers for p
 - no source/master publication and no PR creation;
 - no unrelated protocol-version migration or legacy decision cleanup.
 
-## Review Request
+## Publication Status
 
-ChatGPT should review the corrected candidate for provider-neutral role occupancy, frozen wire-schema preservation, mixed-recipient fail-closed behavior, Human Speaker authority, and the validation evidence in `.ai/CODEX_REPORTS/human-ai-communication-expression-protocol-validation-0001.md`.
+ChatGPT exact-head review accepted candidate `85e07c5d69c4cd02d275bce98574d7ddaf37f732` without blockers at review authority `3a9df808711c7f076bced512b41c582940ed0c1b`. The Human authorized a ready PR, normal merge commit, and post-merge verification. Exact publication-preparation head, PR number, merge commit, and final master are resolved from physical Git/GitHub evidence and recorded in the final `ai/review/latest` handoff rather than self-referential source edits.

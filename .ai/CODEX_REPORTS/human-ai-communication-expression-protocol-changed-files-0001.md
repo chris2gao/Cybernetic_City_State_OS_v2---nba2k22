@@ -5,6 +5,10 @@ task_id: human-ai-communication-expression-protocol-0001
 source_head: eb46be9dadf9672091883e4e69bcaaa70b0cb163
 parent_candidate: 8f0eec213484d16a97956d356a9ef1e163fc45fe
 candidate_revision: provider_neutral_correction_0002
+accepted_candidate: 85e07c5d69c4cd02d275bce98574d7ddaf37f732
+review_authority_head: 3a9df808711c7f076bced512b41c582940ed0c1b
+review_ref: "ai/review/latest:.ai/HUMAN_BRIEFS/human-ai-communication-expression-protocol-correction-exact-head-review-0002.md"
+publication_status: accepted_ready_for_normal_pr
 expected_changed_path_count: 10
 actual_changed_path_count: 10
 outside_allowlist_count: 0
