@@ -34,3 +34,5 @@ source/master branch, or PR changed.
 Only existing pilot evidence/reports and the four source mailbox paths are
 updated. The five Human-accepted node/test files remain byte-identical to
 `6830956ca9e7efff4d8c6d60602f462b0785b69a`; source mailbox files are neutral.
+Publication preparation and full pre-PR validation were committed at
+`1575c24b56c5db02a1874818c8c6ecc6abf5d428`.

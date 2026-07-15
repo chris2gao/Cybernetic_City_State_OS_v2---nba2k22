@@ -10,6 +10,7 @@ correction_business_head: "fd77746c3eba301210fb9b7e9c4f4ab168f99b40"
 evidence_head: "7e4e915cdac282df5fdbda56a2e8dc018c28ac7e"
 accepted_candidate: "6830956ca9e7efff4d8c6d60602f462b0785b69a"
 pilot_certification_status: "human_accepted_pilot_scope"
+publication_preparation_validated_head: "1575c24b56c5db02a1874818c8c6ecc6abf5d428"
 pilot_nodes:
   - "COMPLEX_ANALYSIS-418"
   - "PDE-487"
