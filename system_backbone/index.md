@@ -3,7 +3,7 @@
 
 ## directory_role
 
-外部增强骨架：A2A registry、audit ledger、domain roadmap 与 symbolic task templates 入口
+外部增强骨架 system_backbone；registry/ledger/domain/template 原型未自动接入 runtime
 
 ## authority_and_usage_boundary
 
@@ -11,32 +11,32 @@
 
 ## recommended_reading_order
 
-1. [`system_backbone/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`system_backbone/apicurio_registry_hub/index.md`](apicurio_registry_hub/index.md) — 核验 Apicurio/A2A agent-card 模板、validator 与 registry docker-compose 配置目录 时进入；不得把目录存在本身当作 activation 或当前任务
-3. [`system_backbone/audit_ledger/index.md`](audit_ledger/index.md) — 核验 system_record.jsonl 审计事件账本目录；记录不等于 live state 或授权 时进入；不得把目录存在本身当作 activation 或当前任务
-4. [`system_backbone/domain_knowledge/index.md`](domain_knowledge/index.md) — 核验 系统骨架使用的数学知识路线图结构化 domain-knowledge 目录 时进入；不得把目录存在本身当作 activation 或当前任务
+1. [`system_backbone/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`system_backbone/apicurio_registry_hub/index.md`](apicurio_registry_hub/index.md) — 明确评估或修改 apicurio_registry_hub 中的外部 registry/ledger/domain/template 原型
+3. [`system_backbone/audit_ledger/index.md`](audit_ledger/index.md) — 明确评估或修改 audit_ledger 中的外部 registry/ledger/domain/template 原型
+4. [`system_backbone/domain_knowledge/index.md`](domain_knowledge/index.md) — 明确评估或修改 domain_knowledge 中的外部 registry/ledger/domain/template 原型
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 73797374656d5f6261636b626f6e652f617069637572696f5f72656769737472795f687562 -->
 - **path_or_link**: [`system_backbone/apicurio_registry_hub`](apicurio_registry_hub/index.md)
-  - **content_scope**: Apicurio/A2A agent-card 模板、validator 与 registry docker-compose 配置目录；tracked 后代文件数=5
-  - **when_to_enter**: 核验 Apicurio/A2A agent-card 模板、validator 与 registry docker-compose 配置目录 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: 外部增强骨架 apicurio_registry_hub；registry/ledger/domain/template 原型未自动接入 runtime；tracked 后代文件数=5
+  - **when_to_enter**: 明确评估或修改 apicurio_registry_hub 中的外部 registry/ledger/domain/template 原型
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 73797374656d5f6261636b626f6e652f61756469745f6c6564676572 -->
 - **path_or_link**: [`system_backbone/audit_ledger`](audit_ledger/index.md)
-  - **content_scope**: system_record.jsonl 审计事件账本目录；记录不等于 live state 或授权；tracked 后代文件数=2
-  - **when_to_enter**: 核验 system_record.jsonl 审计事件账本目录；记录不等于 live state 或授权 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: 外部增强骨架 audit_ledger；registry/ledger/domain/template 原型未自动接入 runtime；tracked 后代文件数=2
+  - **when_to_enter**: 明确评估或修改 audit_ledger 中的外部 registry/ledger/domain/template 原型
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 73797374656d5f6261636b626f6e652f646f6d61696e5f6b6e6f776c65646765 -->
 - **path_or_link**: [`system_backbone/domain_knowledge`](domain_knowledge/index.md)
-  - **content_scope**: 系统骨架使用的数学知识路线图结构化 domain-knowledge 目录；tracked 后代文件数=2
-  - **when_to_enter**: 核验 系统骨架使用的数学知识路线图结构化 domain-knowledge 目录 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: 外部增强骨架 domain_knowledge；registry/ledger/domain/template 原型未自动接入 runtime；tracked 后代文件数=2
+  - **when_to_enter**: 明确评估或修改 domain_knowledge 中的外部 registry/ledger/domain/template 原型
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 73797374656d5f6261636b626f6e652f6672616d65776f726b5f736b656c65746f6e -->
 - **path_or_link**: [`system_backbone/framework_skeleton`](framework_skeleton/index.md)
-  - **content_scope**: symbolic index 与 task template YAML 的 framework-skeleton 目录；tracked 后代文件数=3
-  - **when_to_enter**: 核验 symbolic index 与 task template YAML 的 framework-skeleton 目录 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: 外部增强骨架 framework_skeleton；registry/ledger/domain/template 原型未自动接入 runtime；tracked 后代文件数=3
+  - **when_to_enter**: 明确评估或修改 framework_skeleton 中的外部 registry/ledger/domain/template 原型
   - **load_policy**: `do_not_load_by_default`
 
 ## direct_files
@@ -44,10 +44,10 @@
 <!-- RIDX_FILE_HEX 73797374656d5f6261636b626f6e652f696e6465782e6d64 -->
 - **path_or_link**: [`system_backbone/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 system_backbone 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 system_backbone 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

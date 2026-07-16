@@ -3,7 +3,7 @@
 
 ## directory_role
 
-议会提案、裁决与归档证据区；归档内容仅用于历史追溯
+议会 Issue_011_V6_Debate_Mechanism_Enhancement 的 proposal、debate、review 与附件 provenance
 
 ## authority_and_usage_boundary
 
@@ -11,10 +11,10 @@
 
 ## recommended_reading_order
 
-1. [`04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/01-Antigravity-需求澄清与机制提议.md`](01-Antigravity-需求澄清与机制提议.md) — 用 01-Antigravity-需求澄清与机制提议.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-2. [`04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/02-Claude-辩论审查.md`](02-Claude-辩论审查.md) — 用 02-Claude-辩论审查.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-3. [`04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/03-Antigravity-最终合题与机制敲定.md`](03-Antigravity-最终合题与机制敲定.md) — 用 03-Antigravity-最终合题与机制敲定.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-4. [`04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
+1. [`04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/01-Antigravity-需求澄清与机制提议.md`](01-Antigravity-需求澄清与机制提议.md) — 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 01-Antigravity-需求澄清与机制提议.md（H1《01-Antigravity-需求澄清与机制提议：V6 辩论机制强化法案》；首个 H2《1. 系统背景与痛点 (Context)》）；提案/辩论不是现行宪章或已生效 verdict
+3. [`04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/02-Claude-辩论审查.md`](02-Claude-辩论审查.md) — 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 02-Claude-辩论审查.md（H1《02-Claude-辩论审查：对 V6 辩论机制强化法案的火力覆盖》）；提案/辩论不是现行宪章或已生效 verdict
+4. [`04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/03-Antigravity-最终合题与机制敲定.md`](03-Antigravity-最终合题与机制敲定.md) — 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 03-Antigravity-最终合题与机制敲定.md（H1《03-Antigravity-最终合题与机制敲定：V6 跨模型实体辩论协议 (最终修正案)》；首个 H2《1. 验尸与认罪 (Acknowledgement of Defeat)》）；提案/辩论不是现行宪章或已生效 verdict
 
 ## child_directories
 
@@ -25,35 +25,35 @@
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3031315f56365f4465626174655f4d656368616e69736d5f456e68616e63656d656e742f30312d416e7469677261766974792de99c80e6b182e6be84e6b885e4b88ee69cbae588b6e68f90e8aeae2e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/01-Antigravity-需求澄清与机制提议.md`](01-Antigravity-需求澄清与机制提议.md)
   - **content_summary**: H1《01-Antigravity-需求澄清与机制提议：V6 辩论机制强化法案》；首个 H2《1. 系统背景与痛点 (Context)》
-  - **role_and_use**: 用 01-Antigravity-需求澄清与机制提议.md 为 04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 01-Antigravity-需求澄清与机制提议.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 01-Antigravity-需求澄清与机制提议.md（H1《01-Antigravity-需求澄清与机制提议：V6 辩论机制强化法案》；首个 H2《1. 系统背景与痛点 (Context)》） 作为“议会提案/辩论 provenance”使用；提案/辩论不是现行宪章或已生效 verdict
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=parliament_proposal_or_debate；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；提案/辩论不是现行宪章或已生效 verdict
+  - **when_to_read**: 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 01-Antigravity-需求澄清与机制提议.md（H1《01-Antigravity-需求澄清与机制提议：V6 辩论机制强化法案》；首个 H2《1. 系统背景与痛点 (Context)》）；提案/辩论不是现行宪章或已生效 verdict
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3031315f56365f4465626174655f4d656368616e69736d5f456e68616e63656d656e742f30322d436c617564652de8bea9e8aebae5aea1e69fa52e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/02-Claude-辩论审查.md`](02-Claude-辩论审查.md)
   - **content_summary**: H1《02-Claude-辩论审查：对 V6 辩论机制强化法案的火力覆盖》
-  - **role_and_use**: 用 02-Claude-辩论审查.md 为 04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 02-Claude-辩论审查.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 02-Claude-辩论审查.md（H1《02-Claude-辩论审查：对 V6 辩论机制强化法案的火力覆盖》） 作为“议会提案/辩论 provenance”使用；提案/辩论不是现行宪章或已生效 verdict
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=parliament_proposal_or_debate；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；提案/辩论不是现行宪章或已生效 verdict
+  - **when_to_read**: 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 02-Claude-辩论审查.md（H1《02-Claude-辩论审查：对 V6 辩论机制强化法案的火力覆盖》）；提案/辩论不是现行宪章或已生效 verdict
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3031315f56365f4465626174655f4d656368616e69736d5f456e68616e63656d656e742f30332d416e7469677261766974792de69c80e7bb88e59088e9a298e4b88ee69cbae588b6e695b2e5ae9a2e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/03-Antigravity-最终合题与机制敲定.md`](03-Antigravity-最终合题与机制敲定.md)
   - **content_summary**: H1《03-Antigravity-最终合题与机制敲定：V6 跨模型实体辩论协议 (最终修正案)》；首个 H2《1. 验尸与认罪 (Acknowledgement of Defeat)》
-  - **role_and_use**: 用 03-Antigravity-最终合题与机制敲定.md 为 04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 03-Antigravity-最终合题与机制敲定.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 03-Antigravity-最终合题与机制敲定.md（H1《03-Antigravity-最终合题与机制敲定：V6 跨模型实体辩论协议 (最终修正案)》；首个 H2《1. 验尸与认罪 (Acknowledgement of Defeat)》） 作为“议会提案/辩论 provenance”使用；提案/辩论不是现行宪章或已生效 verdict
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=parliament_proposal_or_debate；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；提案/辩论不是现行宪章或已生效 verdict
+  - **when_to_read**: 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 03-Antigravity-最终合题与机制敲定.md（H1《03-Antigravity-最终合题与机制敲定：V6 跨模型实体辩论协议 (最终修正案)》；首个 H2《1. 验尸与认罪 (Acknowledgement of Defeat)》）；提案/辩论不是现行宪章或已生效 verdict
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3031315f56365f4465626174655f4d656368616e69736d5f456e68616e63656d656e742f696e6465782e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 
-- 无额外分组；仍应只读取当前任务明确需要的 direct artifact。
+- 默认不加载 3 个历史/测试/生成/用户或大型 direct artifacts：`04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/01-Antigravity-需求澄清与机制提议.md`, `04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/02-Claude-辩论审查.md`, `04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/03-Antigravity-最终合题与机制敲定.md`。
 
 ## generation_and_freshness_note
 

@@ -3,7 +3,7 @@
 
 ## directory_role
 
-AI handoff/control plane：source neutral mailbox、durable protocols、reports、program runs 与 review 路由
+AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信合规入口
 
 ## authority_and_usage_boundary
 
@@ -11,48 +11,45 @@ AI handoff/control plane：source neutral mailbox、durable protocols、reports�
 
 ## recommended_reading_order
 
-1. [`.ai/HANDOFF_INIT_PROMPT.md`](HANDOFF_INIT_PROMPT.md) — 新模型窗口或 handoff 初始化时，在 Bootstrap 之后按该提示建立上下文
-2. [`.ai/PROTOCOL.md`](PROTOCOL.md) — 执行 PROTOCOL.md 所辖协议、生成、验证或协作流程之前读取
-3. [`.ai/PROTOCOL_ADHERENCE.md`](PROTOCOL_ADHERENCE.md) — 执行 PROTOCOL_ADHERENCE.md 所辖协议、生成、验证或协作流程之前读取
-4. [`.ai/HANDOFF_COMMON_CONVENTIONS.md`](HANDOFF_COMMON_CONVENTIONS.md) — 执行 HANDOFF_COMMON_CONVENTIONS.md 所辖协议、生成、验证或协作流程之前读取
-5. [`.ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md`](AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md) — 执行 AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md 所辖协议、生成、验证或协作流程之前读取
-6. [`.ai/STATE.yml`](STATE.yml) — 用 STATE.yml 定位下一份任务相关权威；不得用该快照证明 live 状态
-7. [`.ai/INBOX.md`](INBOX.md) — 用 INBOX.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-8. [`.ai/CODEX_WORK_MECHANISM_PROTOCOL.md`](CODEX_WORK_MECHANISM_PROTOCOL.md) — 执行 CODEX_WORK_MECHANISM_PROTOCOL.md 所辖协议、生成、验证或协作流程之前读取
-9. [`.ai/CODEX_TASK_INPUT_CONTRACT.md`](CODEX_TASK_INPUT_CONTRACT.md) — 执行 CODEX_TASK_INPUT_CONTRACT.md 所辖协议、生成、验证或协作流程之前读取
-10. [`.ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md`](LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md) — 执行 LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md 所辖协议、生成、验证或协作流程之前读取
+1. [`.ai/PROTOCOL.md`](PROTOCOL.md) — 触发条件：执行其覆盖的通信、交接、长程运行或写入边界。读取 PROTOCOL.md（AI Handoff Protocol v0.3-core；定义 mailbox、packet、review/publication 与 Human gate 边界）；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
+2. [`.ai/STATE.yml`](STATE.yml) — 触发条件：证明 master 通信文件保持中性，或与 ai/review/latest 活动 pointer 做差异核验。读取 STATE.yml（source/master 的 neutral_baseline 状态记录；不得替代 ai/review/latest 活动 mailbox）；活动状态必须从 ai/review/latest 指针链读取，master 副本不得恢复任务
+3. [`.ai/INBOX.md`](INBOX.md) — 触发条件：证明 master 通信文件保持中性，或与 ai/review/latest 活动 pointer 做差异核验。读取 INBOX.md（H1《INBOX》）；活动状态必须从 ai/review/latest 指针链读取，master 副本不得恢复任务
+4. [`.ai/HANDOFF_INIT_PROMPT.md`](HANDOFF_INIT_PROMPT.md) — 触发条件：执行其覆盖的通信、交接、长程运行或写入边界。读取 HANDOFF_INIT_PROMPT.md（H1《Handoff Initialization Prompt》；首个 H2《Initialization Goal》）；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
+5. [`.ai/CODEX_WORK_MECHANISM_PROTOCOL.md`](CODEX_WORK_MECHANISM_PROTOCOL.md) — 触发条件：执行其覆盖的通信、交接、长程运行或写入边界。读取 CODEX_WORK_MECHANISM_PROTOCOL.md（H1《Codex Work Mechanism Protocol》；首个 H2《Scope And Authority》）；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
+6. [`.ai/CODEX_TASK_INPUT_CONTRACT.md`](CODEX_TASK_INPUT_CONTRACT.md) — 触发条件：执行其覆盖的通信、交接、长程运行或写入边界。读取 CODEX_TASK_INPUT_CONTRACT.md（H1《Codex Task Input Contract v1.0》；首个 H2《1. Purpose And Scope》）；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
+7. [`.ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md`](LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md) — 触发条件：执行其覆盖的通信、交接、长程运行或写入边界。读取 LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md（H1《Long-Run Autonomous Program Protocol》；首个 H2《1. Purpose And Authority》）；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 2e61692f434f4445585f5245504f525453 -->
 - **path_or_link**: [`.ai/CODEX_REPORTS`](CODEX_REPORTS/index.md)
-  - **content_scope**: Codex 持久任务报告库：保存 source-bound 实现、验证和 changed-files 证据；tracked 后代文件数=100
-  - **when_to_enter**: 查证特定 Codex source-bound 实现/验证/changed-files 报告时进入
+  - **content_scope**: 按 task/source head 保存 Codex 实现、验证与 changed-files 报告；tracked 后代文件数=103
+  - **when_to_enter**: 查证某个 task/source head 的实现、验证或 changed-files 报告
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f48554d414e5f425249454653 -->
 - **path_or_link**: [`.ai/HUMAN_BRIEFS`](HUMAN_BRIEFS/index.md)
-  - **content_scope**: Human-facing durable brief 目录；保存接受、授权与 publication 说明的 source-bound 快照；tracked 后代文件数=2
-  - **when_to_enter**: 核验 Human-facing durable brief 目录；保存接受、授权与 publication 说明的 source-bound 快照 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: 保存 Human-facing 接受、授权与 publication 决策快照；tracked 后代文件数=2
+  - **when_to_enter**: 查证具体 Human acceptance、authorization 或 publication brief
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f4c4f4e475f52554e5f4c4f4753 -->
 - **path_or_link**: [`.ai/LONG_RUN_LOGS`](LONG_RUN_LOGS/index.md)
-  - **content_scope**: 长程任务运行日志入口；保存可续跑 checkpoint 叙述而非 live authority；tracked 后代文件数=2
-  - **when_to_enter**: 核验 长程任务运行日志入口；保存可续跑 checkpoint 叙述而非 live authority 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: 保存长程任务 checkpoint 叙述和续跑 provenance；tracked 后代文件数=2
+  - **when_to_enter**: 续跑或审计某个 long-run checkpoint
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f50524f4752414d5f52554e53 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS`](PROGRAM_RUNS/index.md)
-  - **content_scope**: 可复现 program-run 证据根；按 run 隔离 manifest、input/output、checkpoint 与 validation；tracked 后代文件数=107
-  - **when_to_enter**: 核验 可复现 program-run 证据根；按 run 隔离 manifest、input/output、checkpoint 与 validation 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: 按 run ID 隔离冻结输入、checkpoint、输出、验证和报告；tracked 后代文件数=107
+  - **when_to_enter**: 按 exact run ID 复现输入、checkpoint、输出或验证
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f5441534b53 -->
 - **path_or_link**: [`.ai/TASKS`](TASKS/index.md)
-  - **content_scope**: 已发布任务合同与 LRP 工作包目录；历史 task 文件不自动恢复为活动任务；tracked 后代文件数=7
-  - **when_to_enter**: 核验 已发布任务合同与 LRP 工作包目录；历史 task 文件不自动恢复为活动任务 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: 保存已发布 task/LRP 合同；只有活动 pointer 能选择其中一项；tracked 后代文件数=7
+  - **when_to_enter**: 活动 pointer 精确引用某个 task contract；不得按目录批量恢复历史任务
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e6365 -->
 - **path_or_link**: [`.ai/communication_compliance`](communication_compliance/index.md)
-  - **content_scope**: Human-AI communication compliance 的 schema、validator、fixture 与 proof-chain 控制面；tracked 后代文件数=207
-  - **when_to_enter**: 验证 Human-AI communication schema、pointer 或 transition proof 时进入
+  - **content_scope**: Human-AI event/pointer/state schema、validator 与 fail-closed proof 控制面；tracked 后代文件数=207
+  - **when_to_enter**: 验证 event/pointer/state schema、validator 或 transition proof
   - **load_policy**: `task_triggered_lazy_load`
 
 ## direct_files
@@ -60,115 +57,115 @@ AI handoff/control plane：source neutral mailbox、durable protocols、reports�
 <!-- RIDX_FILE_HEX 2e61692f4155544f4e4f4d4f55535f48414e444f46465f434f4d4d554e49434154494f4e5f76302e312e6d64 -->
 - **path_or_link**: [`.ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md`](AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md)
   - **content_summary**: H1《Autonomous Handoff Communication v0.1》；首个 H2《1. Purpose》
-  - **role_and_use**: 以 AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md 约束 .ai 的执行或协作流程；执行相关动作前核对
+  - **role_and_use**: 将 AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md（H1《Autonomous Handoff Communication v0.1》；首个 H2《1. Purpose》） 作为“AI 通信/交接控制合同”使用；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md 所辖协议、生成、验证或协作流程之前读取
+  - **status_or_freshness**: semantic_profile=ai_protocol_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
+  - **when_to_read**: 触发条件：执行其覆盖的通信、交接、长程运行或写入边界。读取 AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md（H1《Autonomous Handoff Communication v0.1》；首个 H2《1. Purpose》）；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
 <!-- RIDX_FILE_HEX 2e61692f434f4445585f5441534b5f494e5055545f434f4e54524143542e6d64 -->
 - **path_or_link**: [`.ai/CODEX_TASK_INPUT_CONTRACT.md`](CODEX_TASK_INPUT_CONTRACT.md)
   - **content_summary**: H1《Codex Task Input Contract v1.0》；首个 H2《1. Purpose And Scope》
-  - **role_and_use**: 以 CODEX_TASK_INPUT_CONTRACT.md 约束 .ai 的执行或协作流程；执行相关动作前核对
+  - **role_and_use**: 将 CODEX_TASK_INPUT_CONTRACT.md（H1《Codex Task Input Contract v1.0》；首个 H2《1. Purpose And Scope》） 作为“AI 通信/交接控制合同”使用；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 CODEX_TASK_INPUT_CONTRACT.md 所辖协议、生成、验证或协作流程之前读取
+  - **status_or_freshness**: semantic_profile=ai_protocol_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
+  - **when_to_read**: 触发条件：执行其覆盖的通信、交接、长程运行或写入边界。读取 CODEX_TASK_INPUT_CONTRACT.md（H1《Codex Task Input Contract v1.0》；首个 H2《1. Purpose And Scope》）；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
 <!-- RIDX_FILE_HEX 2e61692f434f4445585f574f524b5f4d454348414e49534d5f50524f544f434f4c2e6d64 -->
 - **path_or_link**: [`.ai/CODEX_WORK_MECHANISM_PROTOCOL.md`](CODEX_WORK_MECHANISM_PROTOCOL.md)
   - **content_summary**: H1《Codex Work Mechanism Protocol》；首个 H2《Scope And Authority》
-  - **role_and_use**: 以 CODEX_WORK_MECHANISM_PROTOCOL.md 约束 .ai 的执行或协作流程；执行相关动作前核对
+  - **role_and_use**: 将 CODEX_WORK_MECHANISM_PROTOCOL.md（H1《Codex Work Mechanism Protocol》；首个 H2《Scope And Authority》） 作为“AI 通信/交接控制合同”使用；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 CODEX_WORK_MECHANISM_PROTOCOL.md 所辖协议、生成、验证或协作流程之前读取
+  - **status_or_freshness**: semantic_profile=ai_protocol_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
+  - **when_to_read**: 触发条件：执行其覆盖的通信、交接、长程运行或写入边界。读取 CODEX_WORK_MECHANISM_PROTOCOL.md（H1《Codex Work Mechanism Protocol》；首个 H2《Scope And Authority》）；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
 <!-- RIDX_FILE_HEX 2e61692f434f4d4d554e49434154494f4e5f44524946545f4c45444745522e796d6c -->
 - **path_or_link**: [`.ai/COMMUNICATION_DRIFT_LEDGER.yml`](COMMUNICATION_DRIFT_LEDGER.yml)
   - **content_summary**: YAML 结构，顶层键：schema_version, policy_version, ledger_revision, previous_ledger_ref, append_only, privacy, recurrence_policy, records；安全锚点：schema_version=human_ai.communication_drift…
-  - **role_and_use**: 保存 COMMUNICATION_DRIFT_LEDGER.yml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMMUNICATION_DRIFT_LEDGER.yml（schema_version=human_ai.communication_drift_ledger.v2） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMMUNICATION_DRIFT_LEDGER.yml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=implementation_artifact；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；可追踪实现不等于已激活、已验证或 production-ready
+  - **when_to_read**: 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 COMMUNICATION_DRIFT_LEDGER.yml（schema_version=human_ai.communication_drift_ledger.v2）；可追踪实现不等于已激活、已验证或 production-ready
 <!-- RIDX_FILE_HEX 2e61692f4445434953494f4e532e6d64 -->
 - **path_or_link**: [`.ai/DECISIONS.md`](DECISIONS.md)
   - **content_summary**: H1《AI Handoff Decisions》；首个 H2《D-0001 — Adopt AI Handoff Protocol v0.3-core》
-  - **role_and_use**: 用 DECISIONS.md 为 .ai 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 DECISIONS.md（H1《AI Handoff Decisions》；首个 H2《D-0001 — Adopt AI Handoff Protocol v0.3-core》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 DECISIONS.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 DECISIONS.md（H1《AI Handoff Decisions》；首个 H2《D-0001 — Adopt AI Handoff Protocol v0.3-core》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 2e61692f44454641554c545f4c415247455f5441534b5f455845435554494f4e5f50524f46494c452e6d64 -->
 - **path_or_link**: [`.ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md`](DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md)
   - **content_summary**: H1《Default Large-Task Execution Profile》；首个 H2《1. Purpose》
-  - **role_and_use**: 以 DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md 约束 .ai 的执行或协作流程；执行相关动作前核对
+  - **role_and_use**: 将 DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md（H1《Default Large-Task Execution Profile》；首个 H2《1. Purpose》） 作为“AI 通信/交接控制合同”使用；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md 所辖协议、生成、验证或协作流程之前读取
+  - **status_or_freshness**: semantic_profile=ai_protocol_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
+  - **when_to_read**: 触发条件：执行其覆盖的通信、交接、长程运行或写入边界。读取 DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md（H1《Default Large-Task Execution Profile》；首个 H2《1. Purpose》）；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
 <!-- RIDX_FILE_HEX 2e61692f48414e444f46465f434f4d4d4f4e5f434f4e56454e54494f4e532e6d64 -->
 - **path_or_link**: [`.ai/HANDOFF_COMMON_CONVENTIONS.md`](HANDOFF_COMMON_CONVENTIONS.md)
   - **content_summary**: H1《Handoff Common Conventions》；首个 H2《1. Role Defaults》
-  - **role_and_use**: 以 HANDOFF_COMMON_CONVENTIONS.md 约束 .ai 的执行或协作流程；执行相关动作前核对
+  - **role_and_use**: 将 HANDOFF_COMMON_CONVENTIONS.md（H1《Handoff Common Conventions》；首个 H2《1. Role Defaults》） 作为“AI 通信/交接控制合同”使用；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 HANDOFF_COMMON_CONVENTIONS.md 所辖协议、生成、验证或协作流程之前读取
+  - **status_or_freshness**: semantic_profile=ai_protocol_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
+  - **when_to_read**: 触发条件：执行其覆盖的通信、交接、长程运行或写入边界。读取 HANDOFF_COMMON_CONVENTIONS.md（H1《Handoff Common Conventions》；首个 H2《1. Role Defaults》）；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
 <!-- RIDX_FILE_HEX 2e61692f48414e444f46465f494e49545f50524f4d50542e6d64 -->
 - **path_or_link**: [`.ai/HANDOFF_INIT_PROMPT.md`](HANDOFF_INIT_PROMPT.md)
   - **content_summary**: H1《Handoff Initialization Prompt》；首个 H2《Initialization Goal》
-  - **role_and_use**: 以 HANDOFF_INIT_PROMPT.md 约束 .ai 的执行或协作流程；执行相关动作前核对
+  - **role_and_use**: 将 HANDOFF_INIT_PROMPT.md（H1《Handoff Initialization Prompt》；首个 H2《Initialization Goal》） 作为“AI 通信/交接控制合同”使用；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 新模型窗口或 handoff 初始化时，在 Bootstrap 之后按该提示建立上下文
+  - **status_or_freshness**: semantic_profile=ai_protocol_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
+  - **when_to_read**: 触发条件：执行其覆盖的通信、交接、长程运行或写入边界。读取 HANDOFF_INIT_PROMPT.md（H1《Handoff Initialization Prompt》；首个 H2《Initialization Goal》）；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
 <!-- RIDX_FILE_HEX 2e61692f48554d414e5f42524945462e6d64 -->
 - **path_or_link**: [`.ai/HUMAN_BRIEF.md`](HUMAN_BRIEF.md)
   - **content_summary**: H1《Human Brief》
-  - **role_and_use**: 用 HUMAN_BRIEF.md 为 .ai 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 HUMAN_BRIEF.md（H1《Human Brief》） 作为“master 中性邮箱基线”使用；活动状态必须从 ai/review/latest 指针链读取，master 副本不得恢复任务
   - **authority_class**: `routing`
-  - **status_or_freshness**: source/master neutral baseline；活动状态必须读 ai/review/latest
-  - **when_to_read**: 用 HUMAN_BRIEF.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=source_neutral_mailbox；authority=routing；evidence_basis=markdown_heading_or_visible_structure；活动状态必须从 ai/review/latest 指针链读取，master 副本不得恢复任务
+  - **when_to_read**: 触发条件：证明 master 通信文件保持中性，或与 ai/review/latest 活动 pointer 做差异核验。读取 HUMAN_BRIEF.md（H1《Human Brief》）；活动状态必须从 ai/review/latest 指针链读取，master 副本不得恢复任务
 <!-- RIDX_FILE_HEX 2e61692f494e424f582e6d64 -->
 - **path_or_link**: [`.ai/INBOX.md`](INBOX.md)
   - **content_summary**: H1《INBOX》
-  - **role_and_use**: 用 INBOX.md 为 .ai 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 INBOX.md（H1《INBOX》） 作为“master 中性邮箱基线”使用；活动状态必须从 ai/review/latest 指针链读取，master 副本不得恢复任务
   - **authority_class**: `routing`
-  - **status_or_freshness**: source/master neutral baseline；活动状态必须读 ai/review/latest
-  - **when_to_read**: 用 INBOX.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=source_neutral_mailbox；authority=routing；evidence_basis=markdown_heading_or_visible_structure；活动状态必须从 ai/review/latest 指针链读取，master 副本不得恢复任务
+  - **when_to_read**: 触发条件：证明 master 通信文件保持中性，或与 ai/review/latest 活动 pointer 做差异核验。读取 INBOX.md（H1《INBOX》）；活动状态必须从 ai/review/latest 指针链读取，master 副本不得恢复任务
 <!-- RIDX_FILE_HEX 2e61692f4c4f4e475f52554e5f4155544f4e4f4d4f55535f50524f4752414d5f50524f544f434f4c2e6d64 -->
 - **path_or_link**: [`.ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md`](LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md)
   - **content_summary**: H1《Long-Run Autonomous Program Protocol》；首个 H2《1. Purpose And Authority》
-  - **role_and_use**: 以 LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md 约束 .ai 的执行或协作流程；执行相关动作前核对
+  - **role_and_use**: 将 LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md（H1《Long-Run Autonomous Program Protocol》；首个 H2《1. Purpose And Authority》） 作为“AI 通信/交接控制合同”使用；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md 所辖协议、生成、验证或协作流程之前读取
+  - **status_or_freshness**: semantic_profile=ai_protocol_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
+  - **when_to_read**: 触发条件：执行其覆盖的通信、交接、长程运行或写入边界。读取 LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md（H1《Long-Run Autonomous Program Protocol》；首个 H2《1. Purpose And Authority》）；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
 <!-- RIDX_FILE_HEX 2e61692f4f5554424f582e6d64 -->
 - **path_or_link**: [`.ai/OUTBOX.md`](OUTBOX.md)
   - **content_summary**: 首行“packet_id: null”
-  - **role_and_use**: 用 OUTBOX.md 为 .ai 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 OUTBOX.md（首行“packet_id: null”） 作为“master 中性邮箱基线”使用；活动状态必须从 ai/review/latest 指针链读取，master 副本不得恢复任务
   - **authority_class**: `routing`
-  - **status_or_freshness**: source/master neutral baseline；活动状态必须读 ai/review/latest
-  - **when_to_read**: 用 OUTBOX.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=source_neutral_mailbox；authority=routing；evidence_basis=markdown_heading_or_visible_structure；活动状态必须从 ai/review/latest 指针链读取，master 副本不得恢复任务
+  - **when_to_read**: 触发条件：证明 master 通信文件保持中性，或与 ai/review/latest 活动 pointer 做差异核验。读取 OUTBOX.md（首行“packet_id: null”）；活动状态必须从 ai/review/latest 指针链读取，master 副本不得恢复任务
 <!-- RIDX_FILE_HEX 2e61692f50524f544f434f4c2e6d64 -->
 - **path_or_link**: [`.ai/PROTOCOL.md`](PROTOCOL.md)
   - **content_summary**: AI Handoff Protocol v0.3-core；定义 mailbox、packet、review/publication 与 Human gate 边界
-  - **role_and_use**: 以 PROTOCOL.md 约束 .ai 的执行或协作流程；执行相关动作前核对
+  - **role_and_use**: 将 PROTOCOL.md（AI Handoff Protocol v0.3-core；定义 mailbox、packet、review/publication 与 Human gate 边界） 作为“AI 通信/交接控制合同”使用；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 PROTOCOL.md 所辖协议、生成、验证或协作流程之前读取
+  - **status_or_freshness**: semantic_profile=ai_protocol_contract；authority=operational_contract；evidence_basis=curated_protocol_heading_and_sections；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
+  - **when_to_read**: 触发条件：执行其覆盖的通信、交接、长程运行或写入边界。读取 PROTOCOL.md（AI Handoff Protocol v0.3-core；定义 mailbox、packet、review/publication 与 Human gate 边界）；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
 <!-- RIDX_FILE_HEX 2e61692f50524f544f434f4c5f4144484552454e43452e6d64 -->
 - **path_or_link**: [`.ai/PROTOCOL_ADHERENCE.md`](PROTOCOL_ADHERENCE.md)
   - **content_summary**: H1《Protocol Adherence》；首个 H2《1. Purpose》
-  - **role_and_use**: 以 PROTOCOL_ADHERENCE.md 约束 .ai 的执行或协作流程；执行相关动作前核对
+  - **role_and_use**: 将 PROTOCOL_ADHERENCE.md（H1《Protocol Adherence》；首个 H2《1. Purpose》） 作为“AI 通信/交接控制合同”使用；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 PROTOCOL_ADHERENCE.md 所辖协议、生成、验证或协作流程之前读取
+  - **status_or_freshness**: semantic_profile=ai_protocol_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
+  - **when_to_read**: 触发条件：执行其覆盖的通信、交接、长程运行或写入边界。读取 PROTOCOL_ADHERENCE.md（H1《Protocol Adherence》；首个 H2《1. Purpose》）；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
 <!-- RIDX_FILE_HEX 2e61692f53544154452e796d6c -->
 - **path_or_link**: [`.ai/STATE.yml`](STATE.yml)
   - **content_summary**: source/master 的 neutral_baseline 状态记录；不得替代 ai/review/latest 活动 mailbox
-  - **role_and_use**: 用 STATE.yml 为 .ai 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 STATE.yml（source/master 的 neutral_baseline 状态记录；不得替代 ai/review/latest 活动 mailbox） 作为“master 中性邮箱基线”使用；活动状态必须从 ai/review/latest 指针链读取，master 副本不得恢复任务
   - **authority_class**: `routing`
-  - **status_or_freshness**: source/master neutral baseline；活动状态必须读 ai/review/latest
-  - **when_to_read**: 用 STATE.yml 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=source_neutral_mailbox；authority=routing；evidence_basis=curated_source_mailbox_contract；活动状态必须从 ai/review/latest 指针链读取，master 副本不得恢复任务
+  - **when_to_read**: 触发条件：证明 master 通信文件保持中性，或与 ai/review/latest 活动 pointer 做差异核验。读取 STATE.yml（source/master 的 neutral_baseline 状态记录；不得替代 ai/review/latest 活动 mailbox）；活动状态必须从 ai/review/latest 指针链读取，master 副本不得恢复任务
 <!-- RIDX_FILE_HEX 2e61692f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 .ai 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 .ai 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

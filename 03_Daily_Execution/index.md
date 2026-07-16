@@ -3,7 +3,7 @@
 
 ## directory_role
 
-日常执行事件日志与 V7 lesson-plan stress-test fixture 入口
+日常执行与 lesson-plan stress-test 证据区 03_Daily_Execution
 
 ## authority_and_usage_boundary
 
@@ -11,16 +11,16 @@
 
 ## recommended_reading_order
 
-1. [`03_Daily_Execution/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`03_Daily_Execution/activity.jsonl`](activity.jsonl) — 复核 activity.jsonl 所属 run、输出或验证结论时读取
-3. [`03_Daily_Execution/V7_Stress_Test/index.md`](V7_Stress_Test/index.md) — 核验 节点 n_15 的两版 lesson-plan stress-test JSON 对照目录 时进入；不得把目录存在本身当作 activation 或当前任务
+1. [`03_Daily_Execution/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`03_Daily_Execution/activity.jsonl`](activity.jsonl) — 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 activity.jsonl（records=17；parse_failures=0）；可追踪实现不等于已激活、已验证或 production-ready
+3. [`03_Daily_Execution/V7_Stress_Test/index.md`](V7_Stress_Test/index.md) — 复核 V7_Stress_Test 中的具体执行事件或 stress-test 对照
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 30335f4461696c795f457865637574696f6e2f56375f5374726573735f54657374 -->
 - **path_or_link**: [`03_Daily_Execution/V7_Stress_Test`](V7_Stress_Test/index.md)
-  - **content_scope**: 节点 n_15 的两版 lesson-plan stress-test JSON 对照目录；tracked 后代文件数=3
-  - **when_to_enter**: 核验 节点 n_15 的两版 lesson-plan stress-test JSON 对照目录 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: 日常执行与 lesson-plan stress-test 证据区 V7_Stress_Test；tracked 后代文件数=3
+  - **when_to_enter**: 复核 V7_Stress_Test 中的具体执行事件或 stress-test 对照
   - **load_policy**: `task_triggered_lazy_load`
 
 ## direct_files
@@ -28,21 +28,21 @@
 <!-- RIDX_FILE_HEX 30335f4461696c795f457865637574696f6e2f61637469766974792e6a736f6e6c -->
 - **path_or_link**: [`03_Daily_Execution/activity.jsonl`](activity.jsonl)
   - **content_summary**: JSONL，17 条可解析记录、0 条解析失败；安全字段：action_type, agent_role, content, issue_id, schema_version, timestamp
-  - **role_and_use**: 由 activity.jsonl 保存 03_Daily_Execution 的生成或验证结果；用于复现证据而非授予状态
-  - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 复核 activity.jsonl 所属 run、输出或验证结论时读取
+  - **role_and_use**: 将 activity.jsonl（records=17；parse_failures=0） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=implementation_artifact；authority=implementation；evidence_basis=jsonl_record_count_and_safe_keys；可追踪实现不等于已激活、已验证或 production-ready
+  - **when_to_read**: 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 activity.jsonl（records=17；parse_failures=0）；可追踪实现不等于已激活、已验证或 production-ready
 <!-- RIDX_FILE_HEX 30335f4461696c795f457865637574696f6e2f696e6465782e6d64 -->
 - **path_or_link**: [`03_Daily_Execution/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 03_Daily_Execution 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 03_Daily_Execution 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 
-- 默认不加载 1 个历史/测试/生成/用户或大型 direct artifacts：`03_Daily_Execution/activity.jsonl`。
+- 无额外分组；仍应只读取当前任务明确需要的 direct artifact。
 
 ## generation_and_freshness_note
 

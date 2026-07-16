@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Math Mentor Stage 0 历史清单证据；当前基线已过期，仅可 read/compare/read_only_import
+Program run math-mentor-knowledge-completion-stage-0-inventory-0001 的 inventory 证据分区；仅解释该 run 的对应阶段
 
 ## authority_and_usage_boundary
 
@@ -11,12 +11,12 @@ Math Mentor Stage 0 历史清单证据；当前基线已过期，仅可 read/com
 
 ## recommended_reading_order
 
-1. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/corpus_manifest.json`](corpus_manifest.json) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
-3. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/corpus_manifest.md`](corpus_manifest.md) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
-4. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/duplicates_missing_conflicts.json`](duplicates_missing_conflicts.json) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
-5. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/identity_aliases.json`](identity_aliases.json) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
-6. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/node_classification.json`](node_classification.json) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+1. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/corpus_manifest.json`](corpus_manifest.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 corpus_manifest.json（program_id=math-mentor-knowledge-completion-stage-0-inventory-0001）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+3. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/corpus_manifest.md`](corpus_manifest.md) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 corpus_manifest.md（H1《Stage 0 Corpus Manifest》；首个 H2《Counts》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+4. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/duplicates_missing_conflicts.json`](duplicates_missing_conflicts.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 duplicates_missing_conflicts.json（JSON object，顶层键：duplicate_filename_numbers, duplicate_ids, node_conflict_or_review_candidates, node_conflict_or_review_candidates_count, roadmap_aliases_without_root_node_candidate_count, roadmap_aliases_without_root_node_can…；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+5. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/identity_aliases.json`](identity_aliases.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 identity_aliases.json（id=ABSTRACT_ALGEBRA-464；id=ABSTRACT_ALGEBRA-465；id=ABSTRACT_ALGEBRA-466）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+6. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/node_classification.json`](node_classification.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 node_classification.json（id=ABSTRACT_ALGEBRA-464；id=ABSTRACT_ALGEBRA-465；id=ABSTRACT_ALGEBRA-466）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 
 ## child_directories
 
@@ -27,59 +27,59 @@ Math Mentor Stage 0 历史清单证据；当前基线已过期，仅可 read/com
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6b6e6f776c656467652d636f6d706c6574696f6e2d73746167652d302d696e76656e746f72792d303030312f696e76656e746f72792f636f727075735f6d616e69666573742e6a736f6e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/corpus_manifest.json`](corpus_manifest.json)
   - **content_summary**: JSON object，顶层键：counts_by_classification, files, generated_at, node_classification_counts, program_id, reconciliation, restricted_skips, scope；安全锚点：program_id=math-mentor-knowledg…
-  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
-  - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical_frozen 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **role_and_use**: 将 corpus_manifest.json（program_id=math-mentor-knowledge-completion-stage-0-inventory-0001） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **authority_class**: `generated_evidence`
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 corpus_manifest.json（program_id=math-mentor-knowledge-completion-stage-0-inventory-0001）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6b6e6f776c656467652d636f6d706c6574696f6e2d73746167652d302d696e76656e746f72792d303030312f696e76656e746f72792f636f727075735f6d616e69666573742e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/corpus_manifest.md`](corpus_manifest.md)
   - **content_summary**: H1《Stage 0 Corpus Manifest》；首个 H2《Counts》
-  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
-  - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical_frozen 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **role_and_use**: 将 corpus_manifest.md（H1《Stage 0 Corpus Manifest》；首个 H2《Counts》） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **authority_class**: `generated_evidence`
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=markdown_heading_or_visible_structure；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 corpus_manifest.md（H1《Stage 0 Corpus Manifest》；首个 H2《Counts》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6b6e6f776c656467652d636f6d706c6574696f6e2d73746167652d302d696e76656e746f72792d303030312f696e76656e746f72792f6475706c6963617465735f6d697373696e675f636f6e666c696374732e6a736f6e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/duplicates_missing_conflicts.json`](duplicates_missing_conflicts.json)
   - **content_summary**: JSON object，顶层键：duplicate_filename_numbers, duplicate_ids, node_conflict_or_review_candidates, node_conflict_or_review_candidates_count, roadmap_aliases_without_root_node_candidat…
-  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
-  - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical_frozen 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **role_and_use**: 将 duplicates_missing_conflicts.json（JSON object，顶层键：duplicate_filename_numbers, duplicate_ids, node_conflict_or_review_candidates, node_conflict_or_review_candidates_count, roadmap_aliases_without_root_node_candidate_count, roadmap_aliases_without_root_node_can… 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **authority_class**: `generated_evidence`
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 duplicates_missing_conflicts.json（JSON object，顶层键：duplicate_filename_numbers, duplicate_ids, node_conflict_or_review_candidates, node_conflict_or_review_candidates_count, roadmap_aliases_without_root_node_candidate_count, roadmap_aliases_without_root_node_can…；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6b6e6f776c656467652d636f6d706c6574696f6e2d73746167652d302d696e76656e746f72792d303030312f696e76656e746f72792f6964656e746974795f616c69617365732e6a736f6e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/identity_aliases.json`](identity_aliases.json)
   - **content_summary**: JSON object，顶层键：generated_at, node_filename_aliases, roadmap_alias_count, roadmap_aliases, split_roadmap_files_read；安全锚点：id=ABSTRACT_ALGEBRA-464, id=ABSTRACT_ALGEBRA-465, id=ABSTR…
-  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
-  - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical_frozen 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **role_and_use**: 将 identity_aliases.json（id=ABSTRACT_ALGEBRA-464；id=ABSTRACT_ALGEBRA-465；id=ABSTRACT_ALGEBRA-466） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **authority_class**: `generated_evidence`
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 identity_aliases.json（id=ABSTRACT_ALGEBRA-464；id=ABSTRACT_ALGEBRA-465；id=ABSTRACT_ALGEBRA-466）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6b6e6f776c656467652d636f6d706c6574696f6e2d73746167652d302d696e76656e746f72792d303030312f696e76656e746f72792f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6b6e6f776c656467652d636f6d706c6574696f6e2d73746167652d302d696e76656e746f72792d303030312f696e76656e746f72792f6e6f64655f636c617373696669636174696f6e2e6a736f6e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/node_classification.json`](node_classification.json)
   - **content_summary**: JSON object，顶层键：counts, generated_at, records；安全锚点：id=ABSTRACT_ALGEBRA-464, id=ABSTRACT_ALGEBRA-465, id=ABSTRACT_ALGEBRA-466
-  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
-  - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical_frozen 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **role_and_use**: 将 node_classification.json（id=ABSTRACT_ALGEBRA-464；id=ABSTRACT_ALGEBRA-465；id=ABSTRACT_ALGEBRA-466） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **authority_class**: `generated_evidence`
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 node_classification.json（id=ABSTRACT_ALGEBRA-464；id=ABSTRACT_ALGEBRA-465；id=ABSTRACT_ALGEBRA-466）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6b6e6f776c656467652d636f6d706c6574696f6e2d73746167652d302d696e76656e746f72792d303030312f696e76656e746f72792f70617273655f7265706f72742e6a736f6e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/parse_report.json`](parse_report.json)
   - **content_summary**: JSON object，顶层键：failures, generated_at, parse_fail, parse_pass, records, total_yaml_attempted, yaml_parser
-  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
-  - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical_frozen 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **role_and_use**: 将 parse_report.json（JSON object，顶层键：failures, generated_at, parse_fail, parse_pass, records, total_yaml_attempted, yaml_parser） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **authority_class**: `generated_evidence`
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 parse_report.json（JSON object，顶层键：failures, generated_at, parse_fail, parse_pass, records, total_yaml_attempted, yaml_parser）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6b6e6f776c656467652d636f6d706c6574696f6e2d73746167652d302d696e76656e746f72792d303030312f696e76656e746f72792f7374727563747572616c5f6578636c7573696f6e732e6a736f6e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/structural_exclusions.json`](structural_exclusions.json)
   - **content_summary**: JSON object，顶层键：count, generated_at, records
-  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
-  - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical_frozen 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **role_and_use**: 将 structural_exclusions.json（JSON object，顶层键：count, generated_at, records） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **authority_class**: `generated_evidence`
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 structural_exclusions.json（JSON object，顶层键：count, generated_at, records）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 
 ## do_not_load_by_default
 

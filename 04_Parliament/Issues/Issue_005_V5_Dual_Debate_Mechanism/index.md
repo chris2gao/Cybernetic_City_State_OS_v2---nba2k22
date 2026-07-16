@@ -3,7 +3,7 @@
 
 ## directory_role
 
-议会提案、裁决与归档证据区；归档内容仅用于历史追溯
+议会 Issue_005_V5_Dual_Debate_Mechanism 的 proposal、debate、review 与附件 provenance
 
 ## authority_and_usage_boundary
 
@@ -11,9 +11,9 @@
 
 ## recommended_reading_order
 
-1. [`04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism/01-Antigravity-提出议题.md`](01-Antigravity-提出议题.md) — 用 01-Antigravity-提出议题.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-2. [`04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism/02-独立专家-火力侦察与辩论报告.md`](02-独立专家-火力侦察与辩论报告.md) — 用 02-独立专家-火力侦察与辩论报告.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-3. [`04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
+1. [`04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism/01-Antigravity-提出议题.md`](01-Antigravity-提出议题.md) — 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 01-Antigravity-提出议题.md（H1《议题 005：关于引入 V5 双重辩论 CI/CD 协议的提案》；首个 H2《一、 核心痛点与背景 (The Problem)》）；提案/辩论不是现行宪章或已生效 verdict
+3. [`04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism/02-独立专家-火力侦察与辩论报告.md`](02-独立专家-火力侦察与辩论报告.md) — 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 02-独立专家-火力侦察与辩论报告.md（H1《独立专家模型：V5 双重辩论机制火力侦察与反驳报告》）；提案/辩论不是现行宪章或已生效 verdict
 
 ## child_directories
 
@@ -24,28 +24,28 @@
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3030355f56355f4475616c5f4465626174655f4d656368616e69736d2f30312d416e7469677261766974792de68f90e587bae8aeaee9a2982e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism/01-Antigravity-提出议题.md`](01-Antigravity-提出议题.md)
   - **content_summary**: H1《议题 005：关于引入 V5 双重辩论 CI/CD 协议的提案》；首个 H2《一、 核心痛点与背景 (The Problem)》
-  - **role_and_use**: 用 01-Antigravity-提出议题.md 为 04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 01-Antigravity-提出议题.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 01-Antigravity-提出议题.md（H1《议题 005：关于引入 V5 双重辩论 CI/CD 协议的提案》；首个 H2《一、 核心痛点与背景 (The Problem)》） 作为“议会提案/辩论 provenance”使用；提案/辩论不是现行宪章或已生效 verdict
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=parliament_proposal_or_debate；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；提案/辩论不是现行宪章或已生效 verdict
+  - **when_to_read**: 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 01-Antigravity-提出议题.md（H1《议题 005：关于引入 V5 双重辩论 CI/CD 协议的提案》；首个 H2《一、 核心痛点与背景 (The Problem)》）；提案/辩论不是现行宪章或已生效 verdict
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3030355f56355f4475616c5f4465626174655f4d656368616e69736d2f30322de78bace7ab8be4b893e5aeb62de781abe58a9be4bea6e5af9fe4b88ee8bea9e8aebae68aa5e5918a2e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism/02-独立专家-火力侦察与辩论报告.md`](02-独立专家-火力侦察与辩论报告.md)
   - **content_summary**: H1《独立专家模型：V5 双重辩论机制火力侦察与反驳报告》
-  - **role_and_use**: 用 02-独立专家-火力侦察与辩论报告.md 为 04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 02-独立专家-火力侦察与辩论报告.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 02-独立专家-火力侦察与辩论报告.md（H1《独立专家模型：V5 双重辩论机制火力侦察与反驳报告》） 作为“议会提案/辩论 provenance”使用；提案/辩论不是现行宪章或已生效 verdict
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=parliament_proposal_or_debate；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；提案/辩论不是现行宪章或已生效 verdict
+  - **when_to_read**: 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 02-独立专家-火力侦察与辩论报告.md（H1《独立专家模型：V5 双重辩论机制火力侦察与反驳报告》）；提案/辩论不是现行宪章或已生效 verdict
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3030355f56355f4475616c5f4465626174655f4d656368616e69736d2f696e6465782e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 
-- 无额外分组；仍应只读取当前任务明确需要的 direct artifact。
+- 默认不加载 2 个历史/测试/生成/用户或大型 direct artifacts：`04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism/01-Antigravity-提出议题.md`, `04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism/02-独立专家-火力侦察与辩论报告.md`。
 
 ## generation_and_freshness_note
 

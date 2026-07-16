@@ -3,7 +3,7 @@
 
 ## directory_role
 
-硅基公民私有边界区；索引仅暴露路径/格式元数据，正文默认不加载
+Private Zone Euclid 的路径/格式元数据边界；索引不读取或摘要正文
 
 ## authority_and_usage_boundary
 
@@ -11,8 +11,8 @@
 
 ## recommended_reading_order
 
-1. [`07_Silicon_Private_Zones/Home_of_Euclid/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`07_Silicon_Private_Zones/Home_of_Euclid/Citizen_Passport_Euclid.md`](Citizen_Passport_Euclid.md) — 仅在 Human 明确要求处理 Private Zones 中 Citizen_Passport_Euclid.md 时读取，默认禁止加载正文
+1. [`07_Silicon_Private_Zones/Home_of_Euclid/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`07_Silicon_Private_Zones/Home_of_Euclid/Citizen_Passport_Euclid.md`](Citizen_Passport_Euclid.md) — 触发条件：Human 明确点名该 Private Zone artifact；默认只核对元数据，不读正文。读取 Citizen_Passport_Euclid.md（private_zone；suffix=.md）；正文未读取且默认禁止加载；索引不泄露内容摘要
 
 ## child_directories
 
@@ -23,17 +23,17 @@
 <!-- RIDX_FILE_HEX 30375f53696c69636f6e5f507269766174655f5a6f6e65732f486f6d655f6f665f4575636c69642f436974697a656e5f50617373706f72745f4575636c69642e6d64 -->
 - **path_or_link**: [`07_Silicon_Private_Zones/Home_of_Euclid/Citizen_Passport_Euclid.md`](Citizen_Passport_Euclid.md)
   - **content_summary**: Private Zones tracked artifact；mode=100644，仅记录路径/格式边界，正文未读取；artifact=Citizen_Passport_Euclid.md
-  - **role_and_use**: 以 Citizen_Passport_Euclid.md 保存 07_Silicon_Private_Zones/Home_of_Euclid 的研究、语料或私有边界资产；仅在明确任务范围内读取
+  - **role_and_use**: 将 Citizen_Passport_Euclid.md（private_zone；suffix=.md） 作为“Private Zone 路径/格式元数据”使用；正文未读取且默认禁止加载；索引不泄露内容摘要
   - **authority_class**: `user_asset`
-  - **status_or_freshness**: tracked private-zone artifact；正文未读取，默认不加载
-  - **when_to_read**: 仅在 Human 明确要求处理 Private Zones 中 Citizen_Passport_Euclid.md 时读取，默认禁止加载正文
+  - **status_or_freshness**: metadata_only；evidence_basis=restricted_private_metadata_only；正文未读取且默认禁止加载；索引不泄露内容摘要
+  - **when_to_read**: 触发条件：Human 明确点名该 Private Zone artifact；默认只核对元数据，不读正文。读取 Citizen_Passport_Euclid.md（private_zone；suffix=.md）；正文未读取且默认禁止加载；索引不泄露内容摘要
 <!-- RIDX_FILE_HEX 30375f53696c69636f6e5f507269766174655f5a6f6e65732f486f6d655f6f665f4575636c69642f696e6465782e6d64 -->
 - **path_or_link**: [`07_Silicon_Private_Zones/Home_of_Euclid/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 07_Silicon_Private_Zones/Home_of_Euclid 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 07_Silicon_Private_Zones/Home_of_Euclid 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

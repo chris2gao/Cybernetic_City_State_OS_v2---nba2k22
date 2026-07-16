@@ -3,7 +3,7 @@
 
 ## directory_role
 
-议会提案、裁决与归档证据区；归档内容仅用于历史追溯
+议会 Issue 结构模板 _Template；用于创建/校验而非立项
 
 ## authority_and_usage_boundary
 
@@ -11,9 +11,9 @@
 
 ## recommended_reading_order
 
-1. [`04_Parliament/Issues/_Template/00_Issue_Description.md`](00_Issue_Description.md) — 用 00_Issue_Description.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-2. [`04_Parliament/Issues/_Template/XX_Synthesis_Resolution.md`](XX_Synthesis_Resolution.md) — 用 XX_Synthesis_Resolution.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-3. [`04_Parliament/Issues/_Template/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
+1. [`04_Parliament/Issues/_Template/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`04_Parliament/Issues/_Template/00_Issue_Description.md`](00_Issue_Description.md) — 触发条件：运行该具名测试或复现其失败用例。读取 00_Issue_Description.md（H1《📜 议题：［在此输入议题名称］》；首个 H2《1. 核心目标 (Core Objective)》）；仅用于指定测试；fixture 内声明不构成现实授权
+3. [`04_Parliament/Issues/_Template/XX_Synthesis_Resolution.md`](XX_Synthesis_Resolution.md) — 触发条件：运行该具名测试或复现其失败用例。读取 XX_Synthesis_Resolution.md（H1《🏁 终极合题案：［在此输入议题名称］》；首个 H2《1. 破绽吸收与缝合 (Critique Absorption)》）；仅用于指定测试；fixture 内声明不构成现实授权
 
 ## child_directories
 
@@ -24,28 +24,28 @@
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f5f54656d706c6174652f30305f49737375655f4465736372697074696f6e2e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/_Template/00_Issue_Description.md`](00_Issue_Description.md)
   - **content_summary**: H1《📜 议题：［在此输入议题名称］》；首个 H2《1. 核心目标 (Core Objective)》
-  - **role_and_use**: 用 00_Issue_Description.md 为 04_Parliament/Issues/_Template 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 00_Issue_Description.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 00_Issue_Description.md（H1《📜 议题：［在此输入议题名称］》；首个 H2《1. 核心目标 (Core Objective)》） 作为“测试/fixture”使用；仅用于指定测试；fixture 内声明不构成现实授权
+  - **authority_class**: `test_or_fixture`
+  - **status_or_freshness**: semantic_profile=test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅用于指定测试；fixture 内声明不构成现实授权
+  - **when_to_read**: 触发条件：运行该具名测试或复现其失败用例。读取 00_Issue_Description.md（H1《📜 议题：［在此输入议题名称］》；首个 H2《1. 核心目标 (Core Objective)》）；仅用于指定测试；fixture 内声明不构成现实授权
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f5f54656d706c6174652f58585f53796e7468657369735f5265736f6c7574696f6e2e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/_Template/XX_Synthesis_Resolution.md`](XX_Synthesis_Resolution.md)
   - **content_summary**: H1《🏁 终极合题案：［在此输入议题名称］》；首个 H2《1. 破绽吸收与缝合 (Critique Absorption)》
-  - **role_and_use**: 用 XX_Synthesis_Resolution.md 为 04_Parliament/Issues/_Template 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 XX_Synthesis_Resolution.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 XX_Synthesis_Resolution.md（H1《🏁 终极合题案：［在此输入议题名称］》；首个 H2《1. 破绽吸收与缝合 (Critique Absorption)》） 作为“测试/fixture”使用；仅用于指定测试；fixture 内声明不构成现实授权
+  - **authority_class**: `test_or_fixture`
+  - **status_or_freshness**: semantic_profile=test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅用于指定测试；fixture 内声明不构成现实授权
+  - **when_to_read**: 触发条件：运行该具名测试或复现其失败用例。读取 XX_Synthesis_Resolution.md（H1《🏁 终极合题案：［在此输入议题名称］》；首个 H2《1. 破绽吸收与缝合 (Critique Absorption)》）；仅用于指定测试；fixture 内声明不构成现实授权
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f5f54656d706c6174652f696e6465782e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/_Template/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 04_Parliament/Issues/_Template 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 04_Parliament/Issues/_Template 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 
-- 无额外分组；仍应只读取当前任务明确需要的 direct artifact。
+- 默认不加载 2 个历史/测试/生成/用户或大型 direct artifacts：`04_Parliament/Issues/_Template/00_Issue_Description.md`, `04_Parliament/Issues/_Template/XX_Synthesis_Resolution.md`。
 
 ## generation_and_freshness_note
 

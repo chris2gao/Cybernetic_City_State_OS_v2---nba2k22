@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Math Mentor 教学合同、控制面、prompt、bridge、节点语料与历史兼容资产
+Math Mentor 活动合同、静态控制面、教学 prompt、节点语料、测试与 legacy 边界根
 
 ## authority_and_usage_boundary
 
@@ -11,45 +11,44 @@ Math Mentor 教学合同、控制面、prompt、bridge、节点语料与历史�
 
 ## recommended_reading_order
 
-1. [`08_Domain_Applications/Math_Mentor/Universal_Layer_Execution_Protocol.md`](Universal_Layer_Execution_Protocol.md) — 当前 Math Mentor 任务触发 Universal_Layer_Execution_Protocol.md 所辖领域边界时，在执行前读取
-2. [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md`](MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md) — 用 MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-3. [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_CURRENT_STATE.yml`](MATH_MENTOR_CURRENT_STATE.yml) — 用 MATH_MENTOR_CURRENT_STATE.yml 定位下一份任务相关权威；不得用该快照证明 live 状态
-4. [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md`](MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md) — 执行 MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md 所辖协议、生成、验证或协作流程之前读取
-5. [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_AUTHORITY_REGISTRY.yml`](MATH_MENTOR_AUTHORITY_REGISTRY.yml) — 执行 MATH_MENTOR_AUTHORITY_REGISTRY.yml 所辖协议、生成、验证或协作流程之前读取
-6. [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_DEPRECATION_MAP.yml`](MATH_MENTOR_DEPRECATION_MAP.yml) — 执行 MATH_MENTOR_DEPRECATION_MAP.yml 所辖协议、生成、验证或协作流程之前读取
-7. [`08_Domain_Applications/Math_Mentor/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
+1. [`08_Domain_Applications/Math_Mentor/Universal_Layer_Execution_Protocol.md`](Universal_Layer_Execution_Protocol.md) — 触发条件：当前 Math Mentor 工作触及该合同规定的教学、质量、bridge 或 handoff 边界。读取 Universal_Layer_Execution_Protocol.md（H1《Universal Layer Execution Protocol (通用层级执行规范)》；首个 H2《Current Authority And Supersession Notice》）；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
+2. [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_CURRENT_STATE.yml`](MATH_MENTOR_CURRENT_STATE.yml) — 触发条件：接管 Math Mentor、确认静态成熟度或定位下一份精确证据。读取 MATH_MENTOR_CURRENT_STATE.yml（schema_version=1.0；status=legacy_assets_unresolved；task_id=math-mentor-master-plan-progress-ledger-0001）；exact Git 和活动 mailbox 优先；状态字段不激活 runtime/Coordinator
+3. [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md`](MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md) — 触发条件：进行 Math Mentor 窗口交接、主计划进度核验或角色边界审查。读取 MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md（H1《Math Mentor 主计划与当前进度总账》；首个 H2《1. 权威与新鲜度》）；用于接管和差异定位，不把计划完成度冒充运行能力
+4. [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md`](MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md) — 触发条件：进行 Math Mentor 窗口交接、主计划进度核验或角色边界审查。读取 MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md（H1《Math Mentor Provider-Neutral Role And Handoff Contract》；首个 H2《1. Authority, purpose, and freshness》）；用于接管和差异定位，不把计划完成度冒充运行能力
+5. [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_AUTHORITY_REGISTRY.yml`](MATH_MENTOR_AUTHORITY_REGISTRY.yml) — 触发条件：解析某项 Math Mentor authority/deprecation claim，并回溯其引用源。读取 MATH_MENTOR_AUTHORITY_REGISTRY.yml（schema_version=1.0.0；registry_id=math-mentor-authority-registry-v1）；registry_role 明示 non-authorizing/derived；必须回到其引用 authority 核验
+6. [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_DEPRECATION_MAP.yml`](MATH_MENTOR_DEPRECATION_MAP.yml) — 触发条件：解析某项 Math Mentor authority/deprecation claim，并回溯其引用源。读取 MATH_MENTOR_DEPRECATION_MAP.yml（schema_version=1.0.0；registry_id=math-mentor-deprecation-map-v1）；registry_role 明示 non-authorizing/derived；必须回到其引用 authority 核验
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f4442 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB`](Pure_Math_Intuition_DB/index.md)
-  - **content_scope**: Math Mentor 根数学概念语料库及 staging 分区；按节点 ID 懒加载，禁止全量摄入；tracked 后代文件数=917
-  - **when_to_enter**: Human 已将任务路由到对应领域并已读取领域合同后进入
+  - **content_scope**: Math Mentor 根候选语料与 staging 分区；按 exact ID 懒加载并先过 identity/admission/certification gate；tracked 后代文件数=917
+  - **when_to_enter**: 任务精确点名节点 ID；先完成 identity/admission/certification 核验
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f5f4152434849564544 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/_ARCHIVED`](_ARCHIVED/index.md)
-  - **content_scope**: Math Mentor historical_frozen 归档；仅可追溯、比较或带 provenance 引用；tracked 后代文件数=19
-  - **when_to_enter**: 仅在追溯旧裁决或迁移来源时进入
+  - **content_scope**: Math Mentor historical_frozen 归档；只读追溯，不恢复旧状态或 prompt；tracked 后代文件数=19
+  - **when_to_enter**: 追溯冻结 Math Mentor 设计、prompt 或状态来源
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f70305f636f6e74726f6c5f706c616e65 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/p0_control_plane`](p0_control_plane/index.md)
-  - **content_scope**: Math Mentor deterministic identity、alias、authorization 与 admission 静态控制面代码目录；未激活 runtime；tracked 后代文件数=17
-  - **when_to_enter**: 核验 Math Mentor deterministic identity、alias、authorization 与 admission 静态控制面代码目录；未激活 runtime 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: deterministic identity/alias/authorization/admission 静态控制面；runtime 未激活；tracked 后代文件数=17
+  - **when_to_enter**: 修改或静态验证 P0 identity/alias/authorization/admission 控制面
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f7465737473 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests`](tests/index.md)
-  - **content_scope**: Math Mentor 测试、fixture 与静态验证证据目录；tracked 后代文件数=26
-  - **when_to_enter**: 复现特定测试、proof case 或定位 validator 失败时进入
+  - **content_scope**: Math Mentor 测试分区 tests；fixture/verdict 不构成真实权限或 activation；tracked 后代文件数=26
+  - **when_to_enter**: 运行 tests 中的具名测试或复现 fixture 失败
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5a48de4b9a0e5b7a9e59bbae69c9f70726f6d7074 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/复习巩固期prompt`](复习巩固期prompt/index.md)
-  - **content_scope**: Math Mentor legacy review prompt compatibility library；只读 importer 证据，禁止执行、写入或状态提升；tracked 后代文件数=10
-  - **when_to_enter**: 仅在 legacy 对照或只读 importer 审查时进入；禁止激活 prompt、writer 或 status promotion
+  - **content_scope**: legacy review prompt/table 只读 importer 输入；旧毕业语义不得进入生产状态机；tracked 后代文件数=10
+  - **when_to_enter**: 设计只读 legacy importer 或核对旧 review/毕业语义冲突
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d7074 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt`](学习期prompt/index.md)
-  - **content_scope**: Math Mentor specified-manual teaching prompts、split roadmaps、topology map 与辅助语料入口；tracked 后代文件数=21
-  - **when_to_enter**: 核验 Math Mentor specified-manual teaching prompts、split roadmaps、topology map 与辅助语料入口 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: 人工教学 prompt、split roadmaps、topology map 与辅助语料入口；tracked 后代文件数=21
+  - **when_to_enter**: 人工教学或路线任务精确需要某个 prompt/split roadmap
   - **load_policy**: `task_triggered_lazy_load`
 
 ## direct_files
@@ -57,430 +56,430 @@ Math Mentor 教学合同、控制面、prompt、bridge、节点语料与历史�
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f30385f4d6174685f4d656e746f725f436f6f7264696e61746f725f50726f6d70742e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/08_Math_Mentor_Coordinator_Prompt.md`](08_Math_Mentor_Coordinator_Prompt.md)
   - **content_summary**: H1《Math Mentor OS Coordinator Prompt》；首个 H2《1. Authority And Namespace》
-  - **role_and_use**: 作为 Math Mentor tier-6 领域权威使用 08_Math_Mentor_Coordinator_Prompt.md；实际能力仍须由 runtime/evidence 单独证明
+  - **role_and_use**: 将 08_Math_Mentor_Coordinator_Prompt.md（H1《Math Mentor OS Coordinator Prompt》；首个 H2《1. Authority And Namespace》） 作为“Math Mentor 活动领域合同”使用；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: authority registry tier 6 domain contract；能力可能仅 specified/manual/inactive，文件存在不等于 runtime 或 Coordinator 激活
-  - **when_to_read**: 当前 Math Mentor 任务触发 08_Math_Mentor_Coordinator_Prompt.md 所辖领域边界时，在执行前读取
+  - **status_or_freshness**: semantic_profile=math_active_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
+  - **when_to_read**: 触发条件：当前 Math Mentor 工作触及该合同规定的教学、质量、bridge 或 handoff 边界。读取 08_Math_Mentor_Coordinator_Prompt.md（H1《Math Mentor OS Coordinator Prompt》；首个 H2《1. Authority And Namespace》）；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f414c4941535f434f4e464c4943545f52454749535452592e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/ALIAS_CONFLICT_REGISTRY.json`](ALIAS_CONFLICT_REGISTRY.json)
   - **content_summary**: JSON object，顶层键：$schema, conflicts, extraction_limitations, generator_version, namespace_uuid, payload_sha256, runtime_activation_performed, schema_version；安全锚点：status=open, statu…
-  - **role_and_use**: 复核 ALIAS_CONFLICT_REGISTRY.json 的静态 control-plane 结果；不得把派生记录当授权或 admission
+  - **role_and_use**: 将 ALIAS_CONFLICT_REGISTRY.json（status=open；status=open；status=open） 作为“Math Mentor 派生验证证据”使用；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: 静态 control-plane 派生证据；冲突、成熟度或 registry 记录不授权 admission、消费或状态提升
-  - **when_to_read**: 复核 ALIAS_CONFLICT_REGISTRY.json 对应的静态 identity/capability/corpus 证据时读取
+  - **status_or_freshness**: semantic_profile=math_generated_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
+  - **when_to_read**: 触发条件：核对该派生 registry/report 的生成输入、冲突或成熟度结论。读取 ALIAS_CONFLICT_REGISTRY.json（status=open；status=open；status=open）；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f415554484f52495a4154494f4e5f434f4e544558545f534348454d412e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/AUTHORIZATION_CONTEXT_SCHEMA.json`](AUTHORIZATION_CONTEXT_SCHEMA.json)
   - **content_summary**: JSON object，顶层键：$defs, $id, $schema, additionalProperties, description, properties, required, title；安全锚点：title=Verified Math Mentor Authorization Context
-  - **role_and_use**: 由 AUTHORIZATION_CONTEXT_SCHEMA.json 定义 08_Domain_Applications/Math_Mentor 数据结构；生成或验证对应 artifact 时使用
-  - **authority_class**: `schema`
-  - **status_or_freshness**: tracked schema；适用版本需由调用合同确认
-  - **when_to_read**: 创建、迁移或验证 AUTHORIZATION_CONTEXT_SCHEMA.json 对应结构化数据之前读取
+  - **role_and_use**: 将 AUTHORIZATION_CONTEXT_SCHEMA.json（title=Verified Math Mentor Authorization Context） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=implementation_artifact；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；可追踪实现不等于已激活、已验证或 production-ready
+  - **when_to_read**: 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 AUTHORIZATION_CONTEXT_SCHEMA.json（title=Verified Math Mentor Authorization Context）；可追踪实现不等于已激活、已验证或 production-ready
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4252494447455f52454749535452595f41554449542e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/BRIDGE_REGISTRY_AUDIT.md`](BRIDGE_REGISTRY_AUDIT.md)
   - **content_summary**: H1《Bridge Registry Audit》；首个 H2《1. Audit Scope》
-  - **role_and_use**: 复核 BRIDGE_REGISTRY_AUDIT.md 的静态 control-plane 结果；不得把派生记录当授权或 admission
+  - **role_and_use**: 将 BRIDGE_REGISTRY_AUDIT.md（H1《Bridge Registry Audit》；首个 H2《1. Audit Scope》） 作为“Math Mentor 派生验证证据”使用；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: 静态 control-plane 派生证据；冲突、成熟度或 registry 记录不授权 admission、消费或状态提升
-  - **when_to_read**: 复核 BRIDGE_REGISTRY_AUDIT.md 对应的静态 identity/capability/corpus 证据时读取
+  - **status_or_freshness**: semantic_profile=math_generated_evidence；authority=generated_evidence；evidence_basis=markdown_heading_or_visible_structure；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
+  - **when_to_read**: 触发条件：核对该派生 registry/report 的生成输入、冲突或成熟度结论。读取 BRIDGE_REGISTRY_AUDIT.md（H1《Bridge Registry Audit》；首个 H2《1. Audit Scope》）；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4252494447455f534348454d412e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/BRIDGE_SCHEMA.md`](BRIDGE_SCHEMA.md)
   - **content_summary**: H1《Math Mentor Canonical Bridge Schema》；首个 H2《1. Purpose》
-  - **role_and_use**: 作为 Math Mentor tier-6 领域权威使用 BRIDGE_SCHEMA.md；实际能力仍须由 runtime/evidence 单独证明
+  - **role_and_use**: 将 BRIDGE_SCHEMA.md（H1《Math Mentor Canonical Bridge Schema》；首个 H2《1. Purpose》） 作为“Math Mentor 活动数据合同”使用；只定义允许形状；写入仍需受信 host 注入 AuthorizationContext
   - **authority_class**: `schema`
-  - **status_or_freshness**: authority registry tier 6 domain contract；能力可能仅 specified/manual/inactive，文件存在不等于 runtime 或 Coordinator 激活
-  - **when_to_read**: 当前 Math Mentor 任务触发 BRIDGE_SCHEMA.md 所辖领域边界时，在执行前读取
+  - **status_or_freshness**: semantic_profile=math_active_schema；authority=schema；evidence_basis=markdown_heading_or_visible_structure；只定义允许形状；写入仍需受信 host 注入 AuthorizationContext
+  - **when_to_read**: 触发条件：创建、迁移或验证该 schema 所辖学习状态、review 或 bridge artifact。读取 BRIDGE_SCHEMA.md（H1《Math Mentor Canonical Bridge Schema》；首个 H2《1. Purpose》）；只定义允许形状；写入仍需受信 host 注入 AuthorizationContext
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4252494447455f534c4f545f5445414348494e475f434f4e54524143542e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/BRIDGE_SLOT_TEACHING_CONTRACT.md`](BRIDGE_SLOT_TEACHING_CONTRACT.md)
   - **content_summary**: H1《Bridge Slot Teaching Contract》；首个 H2《1. Purpose》
-  - **role_and_use**: 以 BRIDGE_SLOT_TEACHING_CONTRACT.md 约束 08_Domain_Applications/Math_Mentor 的执行或协作流程；执行相关动作前核对
+  - **role_and_use**: 将 BRIDGE_SLOT_TEACHING_CONTRACT.md（H1《Bridge Slot Teaching Contract》；首个 H2《1. Purpose》） 作为“执行合同”使用；执行前核验当前任务授权、精确 source head 与上位合同
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 BRIDGE_SLOT_TEACHING_CONTRACT.md 所辖协议、生成、验证或协作流程之前读取
+  - **status_or_freshness**: semantic_profile=operational_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；执行前核验当前任务授权、精确 source head 与上位合同
+  - **when_to_read**: 触发条件：当前动作落入该文件规定的协议或执行边界。读取 BRIDGE_SLOT_TEACHING_CONTRACT.md（H1《Bridge Slot Teaching Contract》；首个 H2《1. Purpose》）；执行前核验当前任务授权、精确 source head 与上位合同
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f43414e4f4e4943414c5f4e4f44455f43524f535357414c4b2e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/CANONICAL_NODE_CROSSWALK.json`](CANONICAL_NODE_CROSSWALK.json)
   - **content_summary**: JSON object，顶层键：$schema, extraction_limitations, generator_version, identity_model, inputs, namespace_uuid, nodes, payload_sha256；安全锚点：status=open, status=agree, status=agree, sta…
-  - **role_and_use**: 复核 CANONICAL_NODE_CROSSWALK.json 的静态 control-plane 结果；不得把派生记录当授权或 admission
+  - **role_and_use**: 将 CANONICAL_NODE_CROSSWALK.json（status=open；status=agree；status=agree） 作为“Math Mentor 派生验证证据”使用；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: 静态 control-plane 派生证据；冲突、成熟度或 registry 记录不授权 admission、消费或状态提升
-  - **when_to_read**: 复核 CANONICAL_NODE_CROSSWALK.json 对应的静态 identity/capability/corpus 证据时读取
+  - **status_or_freshness**: semantic_profile=math_generated_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
+  - **when_to_read**: 触发条件：核对该派生 registry/report 的生成输入、冲突或成熟度结论。读取 CANONICAL_NODE_CROSSWALK.json（status=open；status=agree；status=agree）；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f43414e4f4e4943414c5f4e4f44455f4944454e544954595f534348454d412e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/CANONICAL_NODE_IDENTITY_SCHEMA.md`](CANONICAL_NODE_IDENTITY_SCHEMA.md)
   - **content_summary**: H1《Canonical Node Identity Schema》；首个 H2《1. Purpose And Boundary》
-  - **role_and_use**: 由 CANONICAL_NODE_IDENTITY_SCHEMA.md 定义 08_Domain_Applications/Math_Mentor 数据结构；生成或验证对应 artifact 时使用
-  - **authority_class**: `schema`
-  - **status_or_freshness**: tracked schema；适用版本需由调用合同确认
-  - **when_to_read**: 创建、迁移或验证 CANONICAL_NODE_IDENTITY_SCHEMA.md 对应结构化数据之前读取
+  - **role_and_use**: 将 CANONICAL_NODE_IDENTITY_SCHEMA.md（H1《Canonical Node Identity Schema》；首个 H2《1. Purpose And Boundary》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **authority_class**: `routing`
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 CANONICAL_NODE_IDENTITY_SCHEMA.md（H1《Canonical Node Identity Schema》；首个 H2《1. Purpose And Boundary》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f44455445524d494e49535449435f43414c43554c4154494f4e5f48414e444f46462e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/DETERMINISTIC_CALCULATION_HANDOFF.md`](DETERMINISTIC_CALCULATION_HANDOFF.md)
   - **content_summary**: H1《Math Mentor Deterministic Calculation Handoff》；首个 H2《1. Purpose And No-Execution Boundary》
-  - **role_and_use**: 以 DETERMINISTIC_CALCULATION_HANDOFF.md 约束 08_Domain_Applications/Math_Mentor 的执行或协作流程；执行相关动作前核对
+  - **role_and_use**: 将 DETERMINISTIC_CALCULATION_HANDOFF.md（H1《Math Mentor Deterministic Calculation Handoff》；首个 H2《1. Purpose And No-Execution Boundary》） 作为“Math Mentor 活动领域合同”使用；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 DETERMINISTIC_CALCULATION_HANDOFF.md 所辖协议、生成、验证或协作流程之前读取
+  - **status_or_freshness**: semantic_profile=math_active_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
+  - **when_to_read**: 触发条件：当前 Math Mentor 工作触及该合同规定的教学、质量、bridge 或 handoff 边界。读取 DETERMINISTIC_CALCULATION_HANDOFF.md（H1《Math Mentor Deterministic Calculation Handoff》；首个 H2《1. Purpose And No-Execution Boundary》）；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4532455f5445414348494e475f53455353494f4e5f53494d554c4154494f4e2e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/E2E_TEACHING_SESSION_SIMULATION.md`](E2E_TEACHING_SESSION_SIMULATION.md)
   - **content_summary**: H1《Math Mentor E2E Teaching Session Simulation》；首个 H2《1. Boundary Statement》
-  - **role_and_use**: 作为 E2E_TEACHING_SESSION_SIMULATION.md 的测试/模拟输入；不得把 payload、verdict 或 prompt 当真实权限
+  - **role_and_use**: 将 E2E_TEACHING_SESSION_SIMULATION.md（H1《Math Mentor E2E Teaching Session Simulation》；首个 H2《1. Boundary Statement》） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行或审查 E2E_TEACHING_SESSION_SIMULATION.md 对应测试/模拟时读取；不得当作 authority
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 E2E_TEACHING_SESSION_SIMULATION.md（H1《Math Mentor E2E Teaching Session Simulation》；首个 H2《1. Boundary Statement》）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4558414d5f48414e444f46465f53544154455f564543544f525f534348454d412e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/EXAM_HANDOFF_STATE_VECTOR_SCHEMA.md`](EXAM_HANDOFF_STATE_VECTOR_SCHEMA.md)
   - **content_summary**: H1《Exam Handoff State Vector Schema》；首个 H2《1. Purpose》
-  - **role_and_use**: 由 EXAM_HANDOFF_STATE_VECTOR_SCHEMA.md 定义 08_Domain_Applications/Math_Mentor 数据结构；生成或验证对应 artifact 时使用
-  - **authority_class**: `schema`
-  - **status_or_freshness**: tracked schema；适用版本需由调用合同确认
-  - **when_to_read**: 创建、迁移或验证 EXAM_HANDOFF_STATE_VECTOR_SCHEMA.md 对应结构化数据之前读取
+  - **role_and_use**: 将 EXAM_HANDOFF_STATE_VECTOR_SCHEMA.md（H1《Exam Handoff State Vector Schema》；首个 H2《1. Purpose》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **authority_class**: `routing`
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 EXAM_HANDOFF_STATE_VECTOR_SCHEMA.md（H1《Exam Handoff State Vector Schema》；首个 H2《1. Purpose》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f47524144554154494f4e5f43524954455249412e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/GRADUATION_CRITERIA.md`](GRADUATION_CRITERIA.md)
   - **content_summary**: H1《Math Mentor Graduation Criteria》；首个 H2《1. Classroom Pass Boundary》
-  - **role_and_use**: 作为 Math Mentor tier-6 领域权威使用 GRADUATION_CRITERIA.md；实际能力仍须由 runtime/evidence 单独证明
+  - **role_and_use**: 将 GRADUATION_CRITERIA.md（H1《Math Mentor Graduation Criteria》；首个 H2《1. Classroom Pass Boundary》） 作为“Math Mentor 活动领域合同”使用；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: authority registry tier 6 domain contract；能力可能仅 specified/manual/inactive，文件存在不等于 runtime 或 Coordinator 激活
-  - **when_to_read**: 当前 Math Mentor 任务触发 GRADUATION_CRITERIA.md 所辖领域边界时，在执行前读取
+  - **status_or_freshness**: semantic_profile=math_active_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
+  - **when_to_read**: 触发条件：当前 Math Mentor 工作触及该合同规定的教学、质量、bridge 或 handoff 边界。读取 GRADUATION_CRITERIA.md（H1《Math Mentor Graduation Criteria》；首个 H2《1. Classroom Pass Boundary》）；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4b4e4f574c454447455f434f4d504c4554494f4e5f50524f4752414d2e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/KNOWLEDGE_COMPLETION_PROGRAM.md`](KNOWLEDGE_COMPLETION_PROGRAM.md)
   - **content_summary**: H1《Math Mentor Knowledge Completion Program》；首个 H2《0. Document Status And Authority》
-  - **role_and_use**: 作为 Math Mentor tier-6 领域权威使用 KNOWLEDGE_COMPLETION_PROGRAM.md；实际能力仍须由 runtime/evidence 单独证明
+  - **role_and_use**: 将 KNOWLEDGE_COMPLETION_PROGRAM.md（H1《Math Mentor Knowledge Completion Program》；首个 H2《0. Document Status And Authority》） 作为“Math Mentor 活动领域合同”使用；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: authority registry tier 6 domain contract；能力可能仅 specified/manual/inactive，文件存在不等于 runtime 或 Coordinator 激活
-  - **when_to_read**: 当前 Math Mentor 任务触发 KNOWLEDGE_COMPLETION_PROGRAM.md 所辖领域边界时，在执行前读取
+  - **status_or_freshness**: semantic_profile=math_active_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
+  - **when_to_read**: 触发条件：当前 Math Mentor 工作触及该合同规定的教学、质量、bridge 或 handoff 边界。读取 KNOWLEDGE_COMPLETION_PROGRAM.md（H1《Math Mentor Knowledge Completion Program》；首个 H2《0. Document Status And Authority》）；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4c4541524e45445f484953544f52595f52554c45532e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/LEARNED_HISTORY_RULES.md`](LEARNED_HISTORY_RULES.md)
   - **content_summary**: H1《Math Mentor Learned History Rules》；首个 H2《1. Evidence Priority Order》
-  - **role_and_use**: 用 LEARNED_HISTORY_RULES.md 为 08_Domain_Applications/Math_Mentor 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 LEARNED_HISTORY_RULES.md（H1《Math Mentor Learned History Rules》；首个 H2《1. Evidence Priority Order》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 LEARNED_HISTORY_RULES.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 LEARNED_HISTORY_RULES.md（H1《Math Mentor Learned History Rules》；首个 H2《1. Evidence Priority Order》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4c4553534f4e5f504c414e5f534348454d412e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/LESSON_PLAN_SCHEMA.md`](LESSON_PLAN_SCHEMA.md)
   - **content_summary**: H1《Math Mentor Lesson Plan Schema》；首个 H2《1. Purpose And Authority》
-  - **role_and_use**: 由 LESSON_PLAN_SCHEMA.md 定义 08_Domain_Applications/Math_Mentor 数据结构；生成或验证对应 artifact 时使用
-  - **authority_class**: `schema`
-  - **status_or_freshness**: tracked schema；适用版本需由调用合同确认
-  - **when_to_read**: 创建、迁移或验证 LESSON_PLAN_SCHEMA.md 对应结构化数据之前读取
+  - **role_and_use**: 将 LESSON_PLAN_SCHEMA.md（H1《Math Mentor Lesson Plan Schema》；首个 H2《1. Purpose And Authority》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **authority_class**: `routing`
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 LESSON_PLAN_SCHEMA.md（H1《Math Mentor Lesson Plan Schema》；首个 H2《1. Purpose And Authority》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4c4556454c345f365f4252494447455f434f4d504c4554494f4e5f504c414e2e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/LEVEL4_6_BRIDGE_COMPLETION_PLAN.md`](LEVEL4_6_BRIDGE_COMPLETION_PLAN.md)
   - **content_summary**: H1《Level 4-6 Bridge Completion Plan》；首个 H2《1. Current Goal》
-  - **role_and_use**: 用 LEVEL4_6_BRIDGE_COMPLETION_PLAN.md 为 08_Domain_Applications/Math_Mentor 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 LEVEL4_6_BRIDGE_COMPLETION_PLAN.md（H1《Level 4-6 Bridge Completion Plan》；首个 H2《1. Current Goal》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 LEVEL4_6_BRIDGE_COMPLETION_PLAN.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 LEVEL4_6_BRIDGE_COMPLETION_PLAN.md（H1《Level 4-6 Bridge Completion Plan》；首个 H2《1. Current Goal》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4d4154485f4d454e544f525f415554484f524954595f52454749535452592e796d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_AUTHORITY_REGISTRY.yml`](MATH_MENTOR_AUTHORITY_REGISTRY.yml)
   - **content_summary**: YAML 结构，顶层键：schema_version, registry_id, registry_role, operational_activation, baseline, decision_states, source_states, canonical_authority_order；安全锚点：schema_version=1.0.0, regi…
-  - **role_and_use**: 以 MATH_MENTOR_AUTHORITY_REGISTRY.yml 约束 08_Domain_Applications/Math_Mentor 的执行或协作流程；执行相关动作前核对
-  - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 MATH_MENTOR_AUTHORITY_REGISTRY.yml 所辖协议、生成、验证或协作流程之前读取
+  - **role_and_use**: 将 MATH_MENTOR_AUTHORITY_REGISTRY.yml（schema_version=1.0.0；registry_id=math-mentor-authority-registry-v1） 作为“Math Mentor 非授权派生路由表”使用；registry_role 明示 non-authorizing/derived；必须回到其引用 authority 核验
+  - **authority_class**: `routing`
+  - **status_or_freshness**: semantic_profile=math_derived_authority_router；authority=routing；evidence_basis=yaml_visible_keys_and_safe_fields；registry_role 明示 non-authorizing/derived；必须回到其引用 authority 核验
+  - **when_to_read**: 触发条件：解析某项 Math Mentor authority/deprecation claim，并回溯其引用源。读取 MATH_MENTOR_AUTHORITY_REGISTRY.yml（schema_version=1.0.0；registry_id=math-mentor-authority-registry-v1）；registry_role 明示 non-authorizing/derived；必须回到其引用 authority 核验
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4d4154485f4d454e544f525f4341504142494c4954595f4d415455524954592e796d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_CAPABILITY_MATURITY.yml`](MATH_MENTOR_CAPABILITY_MATURITY.yml)
   - **content_summary**: YAML 结构，顶层键：schema_version, registry_id, registry_role, operational_activation, baseline, evidence_tiers, maturity_states, lifecycle_states；安全锚点：schema_version=1.0.0, registry_id=…
-  - **role_and_use**: 复核 MATH_MENTOR_CAPABILITY_MATURITY.yml 的静态 control-plane 结果；不得把派生记录当授权或 admission
+  - **role_and_use**: 将 MATH_MENTOR_CAPABILITY_MATURITY.yml（schema_version=1.0.0；registry_id=math-mentor-capability-maturity-v1） 作为“Math Mentor 派生验证证据”使用；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: 静态 control-plane 派生证据；冲突、成熟度或 registry 记录不授权 admission、消费或状态提升
-  - **when_to_read**: 复核 MATH_MENTOR_CAPABILITY_MATURITY.yml 对应的静态 identity/capability/corpus 证据时读取
+  - **status_or_freshness**: semantic_profile=math_generated_evidence；authority=generated_evidence；evidence_basis=yaml_visible_keys_and_safe_fields；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
+  - **when_to_read**: 触发条件：核对该派生 registry/report 的生成输入、冲突或成熟度结论。读取 MATH_MENTOR_CAPABILITY_MATURITY.yml（schema_version=1.0.0；registry_id=math-mentor-capability-maturity-v1）；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4d4154485f4d454e544f525f4341504142494c4954595f52454749535452592e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_CAPABILITY_REGISTRY.md`](MATH_MENTOR_CAPABILITY_REGISTRY.md)
   - **content_summary**: H1《Math Mentor Capability Registry》；首个 H2《1. Purpose And Authority》
-  - **role_and_use**: 作为 Math Mentor tier-6 领域权威使用 MATH_MENTOR_CAPABILITY_REGISTRY.md；实际能力仍须由 runtime/evidence 单独证明
+  - **role_and_use**: 将 MATH_MENTOR_CAPABILITY_REGISTRY.md（H1《Math Mentor Capability Registry》；首个 H2《1. Purpose And Authority》） 作为“Math Mentor 活动领域合同”使用；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: authority registry tier 6 domain contract；能力可能仅 specified/manual/inactive，文件存在不等于 runtime 或 Coordinator 激活
-  - **when_to_read**: 当前 Math Mentor 任务触发 MATH_MENTOR_CAPABILITY_REGISTRY.md 所辖领域边界时，在执行前读取
+  - **status_or_freshness**: semantic_profile=math_active_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
+  - **when_to_read**: 触发条件：当前 Math Mentor 工作触及该合同规定的教学、质量、bridge 或 handoff 边界。读取 MATH_MENTOR_CAPABILITY_REGISTRY.md（H1《Math Mentor Capability Registry》；首个 H2《1. Purpose And Authority》）；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4d4154485f4d454e544f525f43555252454e545f53544154452e796d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_CURRENT_STATE.yml`](MATH_MENTOR_CURRENT_STATE.yml)
   - **content_summary**: YAML 结构，顶层键：schema_version, document_role, freshness_policy, evidence_baseline, takeover_bundle, product_decisions, current_milestones, current_capability_states；安全锚点：schema_versi…
-  - **role_and_use**: 用 MATH_MENTOR_CURRENT_STATE.yml 为 08_Domain_Applications/Math_Mentor 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 MATH_MENTOR_CURRENT_STATE.yml（schema_version=1.0；status=legacy_assets_unresolved；task_id=math-mentor-master-plan-progress-ledger-0001） 作为“Math Mentor 当前状态路由快照”使用；exact Git 和活动 mailbox 优先；状态字段不激活 runtime/Coordinator
   - **authority_class**: `routing`
-  - **status_or_freshness**: Math Mentor takeover bundle；exact Git 优先于陈旧摘要，文档不证明 runtime activation
-  - **when_to_read**: 用 MATH_MENTOR_CURRENT_STATE.yml 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=math_current_state_router；authority=routing；evidence_basis=yaml_visible_keys_and_safe_fields；exact Git 和活动 mailbox 优先；状态字段不激活 runtime/Coordinator
+  - **when_to_read**: 触发条件：接管 Math Mentor、确认静态成熟度或定位下一份精确证据。读取 MATH_MENTOR_CURRENT_STATE.yml（schema_version=1.0；status=legacy_assets_unresolved；task_id=math-mentor-master-plan-progress-ledger-0001）；exact Git 和活动 mailbox 优先；状态字段不激活 runtime/Coordinator
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4d4154485f4d454e544f525f4445505245434154494f4e5f4d41502e796d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_DEPRECATION_MAP.yml`](MATH_MENTOR_DEPRECATION_MAP.yml)
   - **content_summary**: YAML 结构，顶层键：schema_version, registry_id, registry_role, operational_activation, baseline, states, default_unlisted_behavior, global_invariants；安全锚点：schema_version=1.0.0, registry_…
-  - **role_and_use**: 以 MATH_MENTOR_DEPRECATION_MAP.yml 约束 08_Domain_Applications/Math_Mentor 的执行或协作流程；执行相关动作前核对
-  - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 MATH_MENTOR_DEPRECATION_MAP.yml 所辖协议、生成、验证或协作流程之前读取
+  - **role_and_use**: 将 MATH_MENTOR_DEPRECATION_MAP.yml（schema_version=1.0.0；registry_id=math-mentor-deprecation-map-v1） 作为“Math Mentor 非授权派生路由表”使用；registry_role 明示 non-authorizing/derived；必须回到其引用 authority 核验
+  - **authority_class**: `routing`
+  - **status_or_freshness**: semantic_profile=math_derived_authority_router；authority=routing；evidence_basis=yaml_visible_keys_and_safe_fields；registry_role 明示 non-authorizing/derived；必须回到其引用 authority 核验
+  - **when_to_read**: 触发条件：解析某项 Math Mentor authority/deprecation claim，并回溯其引用源。读取 MATH_MENTOR_DEPRECATION_MAP.yml（schema_version=1.0.0；registry_id=math-mentor-deprecation-map-v1）；registry_role 明示 non-authorizing/derived；必须回到其引用 authority 核验
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4d4154485f4d454e544f525f4d41535445525f504c414e5f414e445f50524f47524553532e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md`](MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md)
   - **content_summary**: H1《Math Mentor 主计划与当前进度总账》；首个 H2《1. 权威与新鲜度》
-  - **role_and_use**: 用 MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md 为 08_Domain_Applications/Math_Mentor 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md（H1《Math Mentor 主计划与当前进度总账》；首个 H2《1. 权威与新鲜度》） 作为“Math Mentor 接管与进度路由”使用；用于接管和差异定位，不把计划完成度冒充运行能力
   - **authority_class**: `routing`
-  - **status_or_freshness**: Math Mentor takeover bundle；exact Git 优先于陈旧摘要，文档不证明 runtime activation
-  - **when_to_read**: 用 MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=math_takeover_router；authority=routing；evidence_basis=markdown_heading_or_visible_structure；用于接管和差异定位，不把计划完成度冒充运行能力
+  - **when_to_read**: 触发条件：进行 Math Mentor 窗口交接、主计划进度核验或角色边界审查。读取 MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md（H1《Math Mentor 主计划与当前进度总账》；首个 H2《1. 权威与新鲜度》）；用于接管和差异定位，不把计划完成度冒充运行能力
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4d4154485f4d454e544f525f524f4c455f414e445f48414e444f46465f434f4e54524143542e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md`](MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md)
   - **content_summary**: H1《Math Mentor Provider-Neutral Role And Handoff Contract》；首个 H2《1. Authority, purpose, and freshness》
-  - **role_and_use**: 以 MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md 约束 08_Domain_Applications/Math_Mentor 的执行或协作流程；执行相关动作前核对
-  - **authority_class**: `operational_contract`
-  - **status_or_freshness**: Math Mentor takeover bundle；exact Git 优先于陈旧摘要，文档不证明 runtime activation
-  - **when_to_read**: 执行 MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md 所辖协议、生成、验证或协作流程之前读取
+  - **role_and_use**: 将 MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md（H1《Math Mentor Provider-Neutral Role And Handoff Contract》；首个 H2《1. Authority, purpose, and freshness》） 作为“Math Mentor 接管与进度路由”使用；用于接管和差异定位，不把计划完成度冒充运行能力
+  - **authority_class**: `routing`
+  - **status_or_freshness**: semantic_profile=math_takeover_router；authority=routing；evidence_basis=markdown_heading_or_visible_structure；用于接管和差异定位，不把计划完成度冒充运行能力
+  - **when_to_read**: 触发条件：进行 Math Mentor 窗口交接、主计划进度核验或角色边界审查。读取 MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md（H1《Math Mentor Provider-Neutral Role And Handoff Contract》；首个 H2《1. Authority, purpose, and freshness》）；用于接管和差异定位，不把计划完成度冒充运行能力
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4d617468204d656e746f72205465616368696e672053797374656d2044657369676e20696d706c656d656e7420706c616e2e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Math Mentor Teaching System Design implement plan.md`](Math%20Mentor%20Teaching%20System%20Design%20implement%20plan.md)
   - **content_summary**: 首个 H2《1. 当前判断》
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 Math Mentor Teaching System Design implement plan.md（首个 H2《1. 当前判断》） 作为“legacy review 只读输入”使用；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: superseded 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: superseded；evidence_basis=markdown_heading_or_visible_structure；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+  - **when_to_read**: 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 Math Mentor Teaching System Design implement plan.md（首个 H2《1. 当前判断》）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4d617468204d656e746f72205465616368696e672053797374656d2044657369676e2e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Math Mentor Teaching System Design.md`](Math%20Mentor%20Teaching%20System%20Design.md)
   - **content_summary**: H1《Math Mentor Teaching System 总体设计方案 v0.1》；首个 H2《0\. 文档定位》
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 Math Mentor Teaching System Design.md（H1《Math Mentor Teaching System 总体设计方案 v0.1》；首个 H2《0\. 文档定位》） 作为“legacy review 只读输入”使用；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: compatibility_only 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: compatibility_only；evidence_basis=markdown_heading_or_visible_structure；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+  - **when_to_read**: 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 Math Mentor Teaching System Design.md（H1《Math Mentor Teaching System 总体设计方案 v0.1》；首个 H2《0\. 文档定位》）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4d6174685f4d656e746f725f56392e315fe4bb8ee7949fe68890e588b0e69599e5ada6e79a84e5ae8ce695b4e6b581e7a88b2e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Math_Mentor_V9.1_从生成到教学的完整流程.md`](Math_Mentor_V9.1_从生成到教学的完整流程.md)
   - **content_summary**: H1《Math Mentor OS (V9.1) 从知识维护到手动教学的完整流程》；首个 H2《1. 文档边界》
-  - **role_and_use**: 用 Math_Mentor_V9.1_从生成到教学的完整流程.md 为 08_Domain_Applications/Math_Mentor 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 Math_Mentor_V9.1_从生成到教学的完整流程.md（H1《Math Mentor OS (V9.1) 从知识维护到手动教学的完整流程》；首个 H2《1. 文档边界》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 Math_Mentor_V9.1_从生成到教学的完整流程.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 Math_Mentor_V9.1_从生成到教学的完整流程.md（H1《Math Mentor OS (V9.1) 从知识维护到手动教学的完整流程》；首个 H2《1. 文档边界》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4e4f44455f5155414c4954595f41554449545f504c414e2e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/NODE_QUALITY_AUDIT_PLAN.md`](NODE_QUALITY_AUDIT_PLAN.md)
   - **content_summary**: H1《Math Mentor Node Quality Audit Plan》；首个 H2《1. Purpose》
-  - **role_and_use**: 作为 Math Mentor tier-6 领域权威使用 NODE_QUALITY_AUDIT_PLAN.md；实际能力仍须由 runtime/evidence 单独证明
+  - **role_and_use**: 将 NODE_QUALITY_AUDIT_PLAN.md（H1《Math Mentor Node Quality Audit Plan》；首个 H2《1. Purpose》） 作为“Math Mentor 活动领域合同”使用；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: authority registry tier 6 domain contract；能力可能仅 specified/manual/inactive，文件存在不等于 runtime 或 Coordinator 激活
-  - **when_to_read**: 当前 Math Mentor 任务触发 NODE_QUALITY_AUDIT_PLAN.md 所辖领域边界时，在执行前读取
+  - **status_or_freshness**: semantic_profile=math_active_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
+  - **when_to_read**: 触发条件：当前 Math Mentor 工作触及该合同规定的教学、质量、bridge 或 handoff 边界。读取 NODE_QUALITY_AUDIT_PLAN.md（H1《Math Mentor Node Quality Audit Plan》；首个 H2《1. Purpose》）；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4e4f44455f5155414c4954595f41554449545f53414d504c455f5041434b2e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/NODE_QUALITY_AUDIT_SAMPLE_PACK.md`](NODE_QUALITY_AUDIT_SAMPLE_PACK.md)
   - **content_summary**: H1《Math Mentor Node Quality Audit Sample Pack》；首个 H2《1. Purpose》
-  - **role_and_use**: 作为 NODE_QUALITY_AUDIT_SAMPLE_PACK.md 的测试/模拟输入；不得把 payload、verdict 或 prompt 当真实权限
+  - **role_and_use**: 将 NODE_QUALITY_AUDIT_SAMPLE_PACK.md（H1《Math Mentor Node Quality Audit Sample Pack》；首个 H2《1. Purpose》） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行或审查 NODE_QUALITY_AUDIT_SAMPLE_PACK.md 对应测试/模拟时读取；不得当作 authority
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 NODE_QUALITY_AUDIT_SAMPLE_PACK.md（H1《Math Mentor Node Quality Audit Sample Pack》；首个 H2《1. Purpose》）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4e4f44455f5245504149525f504c414e2e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/NODE_REPAIR_PLAN.md`](NODE_REPAIR_PLAN.md)
   - **content_summary**: H1《Math Mentor Targeted Node Repair Plan》；首个 H2《1. Current Understanding》
-  - **role_and_use**: 用 NODE_REPAIR_PLAN.md 为 08_Domain_Applications/Math_Mentor 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 NODE_REPAIR_PLAN.md（H1《Math Mentor Targeted Node Repair Plan》；首个 H2《1. Current Understanding》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 NODE_REPAIR_PLAN.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 NODE_REPAIR_PLAN.md（H1《Math Mentor Targeted Node Repair Plan》；首个 H2《1. Current Understanding》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4e4f524d414c495a45445f4e4f44455f534348454d412e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/NORMALIZED_NODE_SCHEMA.json`](NORMALIZED_NODE_SCHEMA.json)
   - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, description, properties, required, title, type；安全锚点：title=Math Mentor normalized node
-  - **role_and_use**: 由 NORMALIZED_NODE_SCHEMA.json 定义 08_Domain_Applications/Math_Mentor 数据结构；生成或验证对应 artifact 时使用
-  - **authority_class**: `schema`
-  - **status_or_freshness**: tracked schema；适用版本需由调用合同确认
-  - **when_to_read**: 创建、迁移或验证 NORMALIZED_NODE_SCHEMA.json 对应结构化数据之前读取
+  - **role_and_use**: 将 NORMALIZED_NODE_SCHEMA.json（title=Math Mentor normalized node） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=implementation_artifact；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；可追踪实现不等于已激活、已验证或 production-ready
+  - **when_to_read**: 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 NORMALIZED_NODE_SCHEMA.json（title=Math Mentor normalized node）；可追踪实现不等于已激活、已验证或 production-ready
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f504f53545f50325f455845435554494f4e5f4d454d4f52592e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/POST_P2_EXECUTION_MEMORY.md`](POST_P2_EXECUTION_MEMORY.md)
   - **content_summary**: H1《POST-P2 Execution Memory for Math Mentor》；首个 H2《0\. Purpose》
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 POST_P2_EXECUTION_MEMORY.md（H1《POST-P2 Execution Memory for Math Mentor》；首个 H2《0\. Purpose》） 作为“legacy review 只读输入”使用；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical_frozen 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: historical_frozen；evidence_basis=markdown_heading_or_visible_structure；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+  - **when_to_read**: 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 POST_P2_EXECUTION_MEMORY.md（H1《POST-P2 Execution Memory for Math Mentor》；首个 H2《0\. Purpose》）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f524541444d452e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/README.md`](README.md)
   - **content_summary**: README 标题/正文仍描述 02_Protocols 模板，与 Math_Mentor 实际目录不一致
-  - **role_and_use**: 用 README.md 为 08_Domain_Applications/Math_Mentor 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 README.md（README 标题/正文仍描述 02_Protocols 模板，与 Math_Mentor 实际目录不一致） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 README.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=curated_misaligned_readme_evidence；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 README.md（README 标题/正文仍描述 02_Protocols 模板，与 Math_Mentor 实际目录不一致）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f524f4f545f434f525055535f52454749535452592e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/ROOT_CORPUS_REGISTRY.json`](ROOT_CORPUS_REGISTRY.json)
   - **content_summary**: JSON object，顶层键：$schema, db_root, discovery_policy, excluded_assets, generator_version, inputs, namespace_uuid, nodes；安全锚点：validation_status=review_required, status=resolved, vali…
-  - **role_and_use**: 复核 ROOT_CORPUS_REGISTRY.json 的静态 control-plane 结果；不得把派生记录当授权或 admission
+  - **role_and_use**: 将 ROOT_CORPUS_REGISTRY.json（validation_status=review_required；status=resolved；validation_status=review_required） 作为“Math Mentor 派生验证证据”使用；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: 静态 control-plane 派生证据；冲突、成熟度或 registry 记录不授权 admission、消费或状态提升
-  - **when_to_read**: 复核 ROOT_CORPUS_REGISTRY.json 对应的静态 identity/capability/corpus 证据时读取
+  - **status_or_freshness**: semantic_profile=math_generated_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
+  - **when_to_read**: 触发条件：核对该派生 registry/report 的生成输入、冲突或成熟度结论。读取 ROOT_CORPUS_REGISTRY.json（validation_status=review_required；status=resolved；validation_status=review_required）；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f5350414345445f5245564945575f5343484544554c45525f534348454d412e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/SPACED_REVIEW_SCHEDULER_SCHEMA.md`](SPACED_REVIEW_SCHEDULER_SCHEMA.md)
   - **content_summary**: H1《Math Mentor Spaced Review Scheduler Schema》；首个 H2《1. Purpose And No-Runtime Boundary》
-  - **role_and_use**: 作为 Math Mentor tier-6 领域权威使用 SPACED_REVIEW_SCHEDULER_SCHEMA.md；实际能力仍须由 runtime/evidence 单独证明
+  - **role_and_use**: 将 SPACED_REVIEW_SCHEDULER_SCHEMA.md（H1《Math Mentor Spaced Review Scheduler Schema》；首个 H2《1. Purpose And No-Runtime Boundary》） 作为“Math Mentor 活动数据合同”使用；只定义允许形状；写入仍需受信 host 注入 AuthorizationContext
   - **authority_class**: `schema`
-  - **status_or_freshness**: authority registry tier 6 domain contract；能力可能仅 specified/manual/inactive，文件存在不等于 runtime 或 Coordinator 激活
-  - **when_to_read**: 当前 Math Mentor 任务触发 SPACED_REVIEW_SCHEDULER_SCHEMA.md 所辖领域边界时，在执行前读取
+  - **status_or_freshness**: semantic_profile=math_active_schema；authority=schema；evidence_basis=markdown_heading_or_visible_structure；只定义允许形状；写入仍需受信 host 注入 AuthorizationContext
+  - **when_to_read**: 触发条件：创建、迁移或验证该 schema 所辖学习状态、review 或 bridge artifact。读取 SPACED_REVIEW_SCHEDULER_SCHEMA.md（H1《Math Mentor Spaced Review Scheduler Schema》；首个 H2《1. Purpose And No-Runtime Boundary》）；只定义允许形状；写入仍需受信 host 注入 AuthorizationContext
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f53545544454e545f4c4541524e494e475f53544154455f534348454d412e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/STUDENT_LEARNING_STATE_SCHEMA.md`](STUDENT_LEARNING_STATE_SCHEMA.md)
   - **content_summary**: H1《Math Mentor Student Learning State Schema》；首个 H2《1. Purpose And Authority》
-  - **role_and_use**: 作为 Math Mentor tier-6 领域权威使用 STUDENT_LEARNING_STATE_SCHEMA.md；实际能力仍须由 runtime/evidence 单独证明
+  - **role_and_use**: 将 STUDENT_LEARNING_STATE_SCHEMA.md（H1《Math Mentor Student Learning State Schema》；首个 H2《1. Purpose And Authority》） 作为“Math Mentor 活动数据合同”使用；只定义允许形状；写入仍需受信 host 注入 AuthorizationContext
   - **authority_class**: `schema`
-  - **status_or_freshness**: authority registry tier 6 domain contract；能力可能仅 specified/manual/inactive，文件存在不等于 runtime 或 Coordinator 激活
-  - **when_to_read**: 当前 Math Mentor 任务触发 STUDENT_LEARNING_STATE_SCHEMA.md 所辖领域边界时，在执行前读取
+  - **status_or_freshness**: semantic_profile=math_active_schema；authority=schema；evidence_basis=markdown_heading_or_visible_structure；只定义允许形状；写入仍需受信 host 注入 AuthorizationContext
+  - **when_to_read**: 触发条件：创建、迁移或验证该 schema 所辖学习状态、review 或 bridge artifact。读取 STUDENT_LEARNING_STATE_SCHEMA.md（H1《Math Mentor Student Learning State Schema》；首个 H2《1. Purpose And Authority》）；只定义允许形状；写入仍需受信 host 注入 AuthorizationContext
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f544541434845525f434f4e544558545f4c4f4144494e475f52554c45532e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/TEACHER_CONTEXT_LOADING_RULES.md`](TEACHER_CONTEXT_LOADING_RULES.md)
   - **content_summary**: H1《Math Mentor Teacher Context Loading Rules》；首个 H2《1. Purpose》
-  - **role_and_use**: 以 TEACHER_CONTEXT_LOADING_RULES.md 约束 08_Domain_Applications/Math_Mentor 的执行或协作流程；执行相关动作前核对
+  - **role_and_use**: 将 TEACHER_CONTEXT_LOADING_RULES.md（H1《Math Mentor Teacher Context Loading Rules》；首个 H2《1. Purpose》） 作为“Math Mentor 活动领域合同”使用；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 TEACHER_CONTEXT_LOADING_RULES.md 所辖协议、生成、验证或协作流程之前读取
+  - **status_or_freshness**: semantic_profile=math_active_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
+  - **when_to_read**: 触发条件：当前 Math Mentor 工作触及该合同规定的教学、质量、bridge 或 handoff 边界。读取 TEACHER_CONTEXT_LOADING_RULES.md（H1《Math Mentor Teacher Context Loading Rules》；首个 H2《1. Purpose》）；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f544541434845525f494e495449414c495a4154494f4e5f4452595f52554e532e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/TEACHER_INITIALIZATION_DRY_RUNS.md`](TEACHER_INITIALIZATION_DRY_RUNS.md)
   - **content_summary**: H1《Math Mentor Teacher Initialization Dry Runs》；首个 H2《Fixture Format》
-  - **role_and_use**: 作为 TEACHER_INITIALIZATION_DRY_RUNS.md 的测试/模拟输入；不得把 payload、verdict 或 prompt 当真实权限
+  - **role_and_use**: 将 TEACHER_INITIALIZATION_DRY_RUNS.md（H1《Math Mentor Teacher Initialization Dry Runs》；首个 H2《Fixture Format》） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行或审查 TEACHER_INITIALIZATION_DRY_RUNS.md 对应测试/模拟时读取；不得当作 authority
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 TEACHER_INITIALIZATION_DRY_RUNS.md（H1《Math Mentor Teacher Initialization Dry Runs》；首个 H2《Fixture Format》）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f544541434845525f494e495449414c495a4154494f4e5f464c4f572e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/TEACHER_INITIALIZATION_FLOW.md`](TEACHER_INITIALIZATION_FLOW.md)
   - **content_summary**: H1《Math Mentor Teacher Initialization Flow》；首个 H2《1. Purpose》
-  - **role_and_use**: 作为 Math Mentor tier-6 领域权威使用 TEACHER_INITIALIZATION_FLOW.md；实际能力仍须由 runtime/evidence 单独证明
+  - **role_and_use**: 将 TEACHER_INITIALIZATION_FLOW.md（H1《Math Mentor Teacher Initialization Flow》；首个 H2《1. Purpose》） 作为“Math Mentor 活动领域合同”使用；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: authority registry tier 6 domain contract；能力可能仅 specified/manual/inactive，文件存在不等于 runtime 或 Coordinator 激活
-  - **when_to_read**: 当前 Math Mentor 任务触发 TEACHER_INITIALIZATION_FLOW.md 所辖领域边界时，在执行前读取
+  - **status_or_freshness**: semantic_profile=math_active_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
+  - **when_to_read**: 触发条件：当前 Math Mentor 工作触及该合同规定的教学、质量、bridge 或 handoff 边界。读取 TEACHER_INITIALIZATION_FLOW.md（H1《Math Mentor Teacher Initialization Flow》；首个 H2《1. Purpose》）；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f544541434845525f494e495449414c495a4154494f4e5f544553545f46495854555245532e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/TEACHER_INITIALIZATION_TEST_FIXTURES.md`](TEACHER_INITIALIZATION_TEST_FIXTURES.md)
   - **content_summary**: H1《Math Mentor Teacher Initialization Test Fixtures》；首个 H2《1. Purpose》
-  - **role_and_use**: 作为 TEACHER_INITIALIZATION_TEST_FIXTURES.md 的测试/模拟输入；不得把 payload、verdict 或 prompt 当真实权限
+  - **role_and_use**: 将 TEACHER_INITIALIZATION_TEST_FIXTURES.md（H1《Math Mentor Teacher Initialization Test Fixtures》；首个 H2《1. Purpose》） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行或审查 TEACHER_INITIALIZATION_TEST_FIXTURES.md 对应测试/模拟时读取；不得当作 authority
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 TEACHER_INITIALIZATION_TEST_FIXTURES.md（H1《Math Mentor Teacher Initialization Test Fixtures》；首个 H2《1. Purpose》）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f5445414348494e475f4147454e545f434f4e5452414354532e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/TEACHING_AGENT_CONTRACTS.md`](TEACHING_AGENT_CONTRACTS.md)
   - **content_summary**: H1《Math Mentor Teaching Agent Contracts》；首个 H2《1. Agent Boundary Model》
-  - **role_and_use**: 以 TEACHING_AGENT_CONTRACTS.md 约束 08_Domain_Applications/Math_Mentor 的执行或协作流程；执行相关动作前核对
+  - **role_and_use**: 将 TEACHING_AGENT_CONTRACTS.md（H1《Math Mentor Teaching Agent Contracts》；首个 H2《1. Agent Boundary Model》） 作为“执行合同”使用；执行前核验当前任务授权、精确 source head 与上位合同
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 TEACHING_AGENT_CONTRACTS.md 所辖协议、生成、验证或协作流程之前读取
+  - **status_or_freshness**: semantic_profile=operational_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；执行前核验当前任务授权、精确 source head 与上位合同
+  - **when_to_read**: 触发条件：当前动作落入该文件规定的协议或执行边界。读取 TEACHING_AGENT_CONTRACTS.md（H1《Math Mentor Teaching Agent Contracts》；首个 H2《1. Agent Boundary Model》）；执行前核验当前任务授权、精确 source head 与上位合同
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f5445414348494e475f474f4c44454e5f43415345532e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/TEACHING_GOLDEN_CASES.md`](TEACHING_GOLDEN_CASES.md)
   - **content_summary**: H1《Math Mentor Teaching Golden Cases》；首个 H2《1. Purpose》
-  - **role_and_use**: 作为 TEACHING_GOLDEN_CASES.md 的测试/模拟输入；不得把 payload、verdict 或 prompt 当真实权限
+  - **role_and_use**: 将 TEACHING_GOLDEN_CASES.md（H1《Math Mentor Teaching Golden Cases》；首个 H2《1. Purpose》） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行或审查 TEACHING_GOLDEN_CASES.md 对应测试/模拟时读取；不得当作 authority
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 TEACHING_GOLDEN_CASES.md（H1《Math Mentor Teaching Golden Cases》；首个 H2《1. Purpose》）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f5445414348494e475f50524f4d50545f434f4e53495354454e43595f41554449542e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/TEACHING_PROMPT_CONSISTENCY_AUDIT.md`](TEACHING_PROMPT_CONSISTENCY_AUDIT.md)
   - **content_summary**: H1《Teaching Prompt Consistency Audit》；首个 H2《1. Actually Read Files Summary》
-  - **role_and_use**: 用 TEACHING_PROMPT_CONSISTENCY_AUDIT.md 为 08_Domain_Applications/Math_Mentor 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 TEACHING_PROMPT_CONSISTENCY_AUDIT.md（H1《Teaching Prompt Consistency Audit》；首个 H2《1. Actually Read Files Summary》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 TEACHING_PROMPT_CONSISTENCY_AUDIT.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 TEACHING_PROMPT_CONSISTENCY_AUDIT.md（H1《Teaching Prompt Consistency Audit》；首个 H2《1. Actually Read Files Summary》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f5445414348494e475f53595354454d5f544553545f504c414e2e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/TEACHING_SYSTEM_TEST_PLAN.md`](TEACHING_SYSTEM_TEST_PLAN.md)
   - **content_summary**: H1《Math Mentor Teaching System Test Plan》；首个 H2《1. Purpose And Authority》
-  - **role_and_use**: 以 TEACHING_SYSTEM_TEST_PLAN.md 作为 08_Domain_Applications/Math_Mentor 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 TEACHING_SYSTEM_TEST_PLAN.md（H1《Math Mentor Teaching System Test Plan》；首个 H2《1. Purpose And Authority》） 作为“测试/fixture”使用；仅用于指定测试；fixture 内声明不构成现实授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 TEACHING_SYSTEM_TEST_PLAN.md 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅用于指定测试；fixture 内声明不构成现实授权
+  - **when_to_read**: 触发条件：运行该具名测试或复现其失败用例。读取 TEACHING_SYSTEM_TEST_PLAN.md（H1《Math Mentor Teaching System Test Plan》；首个 H2《1. Purpose And Authority》）；仅用于指定测试；fixture 内声明不构成现实授权
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f544f4f4c5f545255544846554c4e4553535f504f4c4943592e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/TOOL_TRUTHFULNESS_POLICY.md`](TOOL_TRUTHFULNESS_POLICY.md)
   - **content_summary**: H1《Math Mentor Tool Truthfulness Policy》；首个 H2《1. Purpose》
-  - **role_and_use**: 作为 Math Mentor tier-6 领域权威使用 TOOL_TRUTHFULNESS_POLICY.md；实际能力仍须由 runtime/evidence 单独证明
+  - **role_and_use**: 将 TOOL_TRUTHFULNESS_POLICY.md（H1《Math Mentor Tool Truthfulness Policy》；首个 H2《1. Purpose》） 作为“Math Mentor 活动领域合同”使用；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: authority registry tier 6 domain contract；能力可能仅 specified/manual/inactive，文件存在不等于 runtime 或 Coordinator 激活
-  - **when_to_read**: 当前 Math Mentor 任务触发 TOOL_TRUTHFULNESS_POLICY.md 所辖领域边界时，在执行前读取
+  - **status_or_freshness**: semantic_profile=math_active_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
+  - **when_to_read**: 触发条件：当前 Math Mentor 工作触及该合同规定的教学、质量、bridge 或 handoff 边界。读取 TOOL_TRUTHFULNESS_POLICY.md（H1《Math Mentor Tool Truthfulness Policy》；首个 H2《1. Purpose》）；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f546f7263685fe78eafe5a283e998bbe5a19ee5be85e5a48de9aa8ce6b885e58d952e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Torch_环境阻塞待复验清单.md`](Torch_环境阻塞待复验清单.md)
   - **content_summary**: H1《Torch CPU 环境复验记录》；首个 H2《当前结论》
-  - **role_and_use**: 用 Torch_环境阻塞待复验清单.md 为 08_Domain_Applications/Math_Mentor 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 Torch_环境阻塞待复验清单.md（H1《Torch CPU 环境复验记录》；首个 H2《当前结论》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 Torch_环境阻塞待复验清单.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 Torch_环境阻塞待复验清单.md（H1《Torch CPU 环境复验记录》；首个 H2《当前结论》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f556e6976657273616c5f4c617965725f457865637574696f6e5f50726f746f636f6c2e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Universal_Layer_Execution_Protocol.md`](Universal_Layer_Execution_Protocol.md)
   - **content_summary**: H1《Universal Layer Execution Protocol (通用层级执行规范)》；首个 H2《Current Authority And Supersession Notice》
-  - **role_and_use**: 作为 Math Mentor tier-6 领域权威使用 Universal_Layer_Execution_Protocol.md；实际能力仍须由 runtime/evidence 单独证明
+  - **role_and_use**: 将 Universal_Layer_Execution_Protocol.md（H1《Universal Layer Execution Protocol (通用层级执行规范)》；首个 H2《Current Authority And Supersession Notice》） 作为“Math Mentor 活动领域合同”使用；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: authority registry tier 6 domain contract；能力可能仅 specified/manual/inactive，文件存在不等于 runtime 或 Coordinator 激活
-  - **when_to_read**: 当前 Math Mentor 任务触发 Universal_Layer_Execution_Protocol.md 所辖领域边界时，在执行前读取
+  - **status_or_freshness**: semantic_profile=math_active_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
+  - **when_to_read**: 触发条件：当前 Math Mentor 工作触及该合同规定的教学、质量、bridge 或 handoff 边界。读取 Universal_Layer_Execution_Protocol.md（H1《Universal Layer Execution Protocol (通用层级执行规范)》；首个 H2《Current Authority And Supersession Notice》）；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f56392e315fe69599e5ada6e6b581e7a88be7b3bbe7bb9fe8a784e88c835f5465616368696e675f466c6f775f537065632e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/V9.1_教学流程系统规范_Teaching_Flow_Spec.md`](V9.1_教学流程系统规范_Teaching_Flow_Spec.md)
   - **content_summary**: H1《V9.1 教学流程系统规范 (Teaching Flow Specification)》；首个 H2《1. Authority And Namespace》
-  - **role_and_use**: 作为 Math Mentor tier-6 领域权威使用 V9.1_教学流程系统规范_Teaching_Flow_Spec.md；实际能力仍须由 runtime/evidence 单独证明
+  - **role_and_use**: 将 V9.1_教学流程系统规范_Teaching_Flow_Spec.md（H1《V9.1 教学流程系统规范 (Teaching Flow Specification)》；首个 H2《1. Authority And Namespace》） 作为“Math Mentor 活动领域合同”使用；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: authority registry tier 6 domain contract；能力可能仅 specified/manual/inactive，文件存在不等于 runtime 或 Coordinator 激活
-  - **when_to_read**: 当前 Math Mentor 任务触发 V9.1_教学流程系统规范_Teaching_Flow_Spec.md 所辖领域边界时，在执行前读取
+  - **status_or_freshness**: semantic_profile=math_active_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
+  - **when_to_read**: 触发条件：当前 Math Mentor 工作触及该合同规定的教学、质量、bridge 或 handoff 边界。读取 V9.1_教学流程系统规范_Teaching_Flow_Spec.md（H1《V9.1 教学流程系统规范 (Teaching Flow Specification)》；首个 H2《1. Authority And Namespace》）；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f56392e315fe7a59ee7bb8fe7aca6e58fb7e58f8ce6938ee998b2e5b4a9e6ba83e68c87e58d972e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/V9.1_神经符号双擎防崩溃指南.md`](V9.1_神经符号双擎防崩溃指南.md)
   - **content_summary**: H1《V9.1 神经符号双擎 (NeuroSymbolic Dual-Engine) 防崩溃指南》；首个 H2《系统崩溃诱因 (V7/V8 时代的血泪教训)》
-  - **role_and_use**: 用 V9.1_神经符号双擎防崩溃指南.md 为 08_Domain_Applications/Math_Mentor 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 V9.1_神经符号双擎防崩溃指南.md（H1《V9.1 神经符号双擎 (NeuroSymbolic Dual-Engine) 防崩溃指南》；首个 H2《系统崩溃诱因 (V7/V8 时代的血泪教训)》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 V9.1_神经符号双擎防崩溃指南.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 V9.1_神经符号双擎防崩溃指南.md（H1《V9.1 神经符号双擎 (NeuroSymbolic Dual-Engine) 防崩溃指南》；首个 H2《系统崩溃诱因 (V7/V8 时代的血泪教训)》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f56392e315fe8aea4e79fa5e698a0e5b084e5bc95e6938e5fe7bb88e69e81e5ae9ee8a385e8939de59bbe2e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/V9.1_认知映射引擎_终极实装蓝图.md`](V9.1_认知映射引擎_终极实装蓝图.md)
   - **content_summary**: H1《V9.1 认知映射引擎 (Cognitive Mapping Engine) 终极实装蓝图》；首个 H2《架构跃迁背景》
-  - **role_and_use**: 用 V9.1_认知映射引擎_终极实装蓝图.md 为 08_Domain_Applications/Math_Mentor 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 V9.1_认知映射引擎_终极实装蓝图.md（H1《V9.1 认知映射引擎 (Cognitive Mapping Engine) 终极实装蓝图》；首个 H2《架构跃迁背景》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 V9.1_认知映射引擎_终极实装蓝图.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 V9.1_认知映射引擎_终极实装蓝图.md（H1《V9.1 认知映射引擎 (Cognitive Mapping Engine) 终极实装蓝图》；首个 H2《架构跃迁背景》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f56392e315fe8b59be58d9ae59f8ee982a6e8aea4e79fa5e698a0e5b084e680bbe7babfe5ae9ee68898e8a7a3e58996e6898be5868c2e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/V9.1_赛博城邦认知映射总线实战解剖手册.md`](V9.1_赛博城邦认知映射总线实战解剖手册.md)
   - **content_summary**: H1《V9.1 赛博城邦认知映射总线 (Domain Classifier Bus) 实战解剖手册》；首个 H2《背景与危机》
-  - **role_and_use**: 用 V9.1_赛博城邦认知映射总线实战解剖手册.md 为 08_Domain_Applications/Math_Mentor 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 V9.1_赛博城邦认知映射总线实战解剖手册.md（H1《V9.1 赛博城邦认知映射总线 (Domain Classifier Bus) 实战解剖手册》；首个 H2《背景与危机》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 V9.1_赛博城邦认知映射总线实战解剖手册.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 V9.1_赛博城邦认知映射总线实战解剖手册.md（H1《V9.1 赛博城邦认知映射总线 (Domain Classifier Bus) 实战解剖手册》；首个 H2《背景与危机》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f56495355414c495a4154494f4e5f414e445f4150505f4341504142494c4954595f504c414e2e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/VISUALIZATION_AND_APP_CAPABILITY_PLAN.md`](VISUALIZATION_AND_APP_CAPABILITY_PLAN.md)
   - **content_summary**: H1《Math Mentor Visualization And App Capability Plan》；首个 H2《1. Purpose And No-Runtime Boundary》
-  - **role_and_use**: 用 VISUALIZATION_AND_APP_CAPABILITY_PLAN.md 为 08_Domain_Applications/Math_Mentor 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 VISUALIZATION_AND_APP_CAPABILITY_PLAN.md（H1《Math Mentor Visualization And App Capability Plan》；首个 H2《1. Purpose And No-Runtime Boundary》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 VISUALIZATION_AND_APP_CAPABILITY_PLAN.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 VISUALIZATION_AND_APP_CAPABILITY_PLAN.md（H1《Math Mentor Visualization And App Capability Plan》；首个 H2《1. Purpose And No-Runtime Boundary》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f696e6465782e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe4b889e6aca1e4bfaee5a48de4bb8de5a4b1e8b4a55fe5be85e5908ee7bbade5a484e790862e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/三次修复仍失败_待后续处理.md`](三次修复仍失败_待后续处理.md)
   - **content_summary**: H1《三次修复仍失败_待后续处理》；首个 H2《规则》
-  - **role_and_use**: 用 三次修复仍失败_待后续处理.md 为 08_Domain_Applications/Math_Mentor 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 三次修复仍失败_待后续处理.md（H1《三次修复仍失败_待后续处理》；首个 H2《规则》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 三次修复仍失败_待后续处理.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 三次修复仍失败_待后续处理.md（H1《三次修复仍失败_待后续处理》；首个 H2《规则》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5a48de4b9a0e5b7a9e59bbae69c9fe680bbe8b083e5baa670726f6d70742e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/复习巩固期总调度prompt.md`](复习巩固期总调度prompt.md)
   - **content_summary**: H1《Role：复习巩固期总调度引擎（Review Consolidation Master Scheduler）》；首个 H2《📊 遗忘追踪面板》
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 复习巩固期总调度prompt.md（H1《Role：复习巩固期总调度引擎（Review Consolidation Master Scheduler）》；首个 H2《📊 遗忘追踪面板》） 作为“legacy review 只读输入”使用；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical_frozen 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: historical_frozen；evidence_basis=markdown_heading_or_visible_structure；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+  - **when_to_read**: 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 复习巩固期总调度prompt.md（H1《Role：复习巩固期总调度引擎（Review Consolidation Master Scheduler）》；首个 H2《📊 遗忘追踪面板》）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5a48de4b9a0e689a7e8a18ce58d8fe8aeae2e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/复习执行协议.md`](复习执行协议.md)
   - **content_summary**: H1《Role：复习执行引擎（Review Execution Engine）》；首个 H2《回忆深度矩阵（按复习节点选择）》
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 复习执行协议.md（H1《Role：复习执行引擎（Review Execution Engine）》；首个 H2《回忆深度矩阵（按复习节点选择）》） 作为“legacy review 只读输入”使用；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical_frozen 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: historical_frozen；evidence_basis=markdown_heading_or_visible_structure；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+  - **when_to_read**: 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 复习执行协议.md（H1《Role：复习执行引擎（Review Execution Engine）》；首个 H2《回忆深度矩阵（按复习节点选择）》）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5b7b2e6af95e4b89ae79fa5e8af86e782b92e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/已毕业知识点.md`](已毕业知识点.md)
   - **content_summary**: H1《🎓 已毕业知识点归档（Graduated Knowledge Points Archive）》；首个 H2《📊 统计》
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 已毕业知识点.md（H1《🎓 已毕业知识点归档（Graduated Knowledge Points Archive）》；首个 H2《📊 统计》） 作为“legacy review 只读输入”使用；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical_frozen 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: historical_frozen；evidence_basis=markdown_heading_or_visible_structure；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+  - **when_to_read**: 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 已毕业知识点.md（H1《🎓 已毕业知识点归档（Graduated Knowledge Points Archive）》；首个 H2《📊 统计》）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe68b96e5bbb6e79fa5e8af86e782b9e6b885e58d952e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/拖延知识点清单.md`](拖延知识点清单.md)
   - **content_summary**: H1《📦 拖延知识点清单（Legacy Knowledge Points Queue）》；首个 H2《📊 统计》
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 拖延知识点清单.md（H1《📦 拖延知识点清单（Legacy Knowledge Points Queue）》；首个 H2《📊 统计》） 作为“legacy review 只读输入”使用；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical_frozen 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: historical_frozen；evidence_basis=markdown_heading_or_visible_structure；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+  - **when_to_read**: 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 拖延知识点清单.md（H1《📦 拖延知识点清单（Legacy Knowledge Points Queue）》；首个 H2《📊 统计》）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe695b0e5ada6e997b4e99a94e9878de5a48de8b083e5baa6e8a1a828e9809ae794a8e6a8a1e69dbf292e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/数学间隔重复调度表(通用模板).md`](数学间隔重复调度表%28通用模板%29.md)
   - **content_summary**: H1《数学逻辑专属间隔重复调度表 (5节点架构版 - 通用模板)》；首个 H2《🎯 今日复习速查 (YYYY-MM-DD)》；artifact=数学间隔重复调度表(通用模板).md
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 数学间隔重复调度表(通用模板).md（H1《数学逻辑专属间隔重复调度表 (5节点架构版 - 通用模板)》；首个 H2《🎯 今日复习速查 (YYYY-MM-DD)》） 作为“legacy review 只读输入”使用；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: compatibility_only 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: compatibility_only；evidence_basis=markdown_heading_or_visible_structure；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+  - **when_to_read**: 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 数学间隔重复调度表(通用模板).md（H1《数学逻辑专属间隔重复调度表 (5节点架构版 - 通用模板)》；首个 H2《🎯 今日复习速查 (YYYY-MM-DD)》）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe695b0e5ada6e997b4e99a94e9878de5a48de8b083e5baa6e8a1a82e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/数学间隔重复调度表.md`](数学间隔重复调度表.md)
   - **content_summary**: H1《数学逻辑专属间隔重复调度表 (5节点架构版)》；首个 H2《🎯 今日复习速查 (2026-05-26)》
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 数学间隔重复调度表.md（H1《数学逻辑专属间隔重复调度表 (5节点架构版)》；首个 H2《🎯 今日复习速查 (2026-05-26)》） 作为“legacy review 只读输入”使用；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical_frozen 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: historical_frozen；evidence_basis=markdown_heading_or_visible_structure；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+  - **when_to_read**: 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 数学间隔重复调度表.md（H1《数学逻辑专属间隔重复调度表 (5节点架构版)》；首个 H2《🎯 今日复习速查 (2026-05-26)》）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe79fa5e8af86e59bbee8b0b15fe88a82e782b9e698a0e5b084e7b4a2e5bc952e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/知识图谱_节点映射索引.md`](知识图谱_节点映射索引.md)
   - **content_summary**: H1《赛博城邦 Math Mentor OS 知识图谱映射索引》；首个 H2《命题逻辑 (Propositional Logic)》
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 知识图谱_节点映射索引.md（H1《赛博城邦 Math Mentor OS 知识图谱映射索引》；首个 H2《命题逻辑 (Propositional Logic)》） 作为“legacy review 只读输入”使用；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: compatibility_only 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: compatibility_only；evidence_basis=markdown_heading_or_visible_structure；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+  - **when_to_read**: 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 知识图谱_节点映射索引.md（H1《赛博城邦 Math Mentor OS 知识图谱映射索引》；首个 H2《命题逻辑 (Propositional Logic)》）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe7a6bbe695a3e695b0e5ada6e88a82e782b95fe5a496e58c85e789b9e5b7a5e68c87e4bba42e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/离散数学节点_外包特工指令.md`](离散数学节点_外包特工指令.md)
   - **content_summary**: H1《离散数学节点外包生成任务书 (Discrete Math Node Bounty)》；首个 H2《🎯 任务目标 (The Goal)》
-  - **role_and_use**: 用 离散数学节点_外包特工指令.md 为 08_Domain_Applications/Math_Mentor 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 离散数学节点_外包特工指令.md（H1《离散数学节点外包生成任务书 (Discrete Math Node Bounty)》；首个 H2《🎯 任务目标 (The Goal)》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 离散数学节点_外包特工指令.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 离散数学节点_外包特工指令.md（H1《离散数学节点外包生成任务书 (Discrete Math Node Bounty)》；首个 H2《🎯 任务目标 (The Goal)》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 
 ## do_not_load_by_default
 

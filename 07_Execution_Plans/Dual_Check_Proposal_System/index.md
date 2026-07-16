@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Dual-Check 的 global blueprint、routing nodes 与 sandbox loop 三阶段设计目录
+执行方案设计 provenance 区 Dual_Check_Proposal_System；方案存在不证明实现或授权
 
 ## authority_and_usage_boundary
 
@@ -11,10 +11,10 @@ Dual-Check 的 global blueprint、routing nodes 与 sandbox loop 三阶段设计
 
 ## recommended_reading_order
 
-1. [`07_Execution_Plans/Dual_Check_Proposal_System/Stage_1_Global_Blueprint_v4.3_Final.md`](Stage_1_Global_Blueprint_v4.3_Final.md) — 执行 Stage_1_Global_Blueprint_v4.3_Final.md 所辖协议、生成、验证或协作流程之前读取
-2. [`07_Execution_Plans/Dual_Check_Proposal_System/Stage_2_Routing_Nodes_Final.md`](Stage_2_Routing_Nodes_Final.md) — 执行 Stage_2_Routing_Nodes_Final.md 所辖协议、生成、验证或协作流程之前读取
-3. [`07_Execution_Plans/Dual_Check_Proposal_System/Stage_3_Sandbox_Evolutionary_Loop_Final.md`](Stage_3_Sandbox_Evolutionary_Loop_Final.md) — 执行 Stage_3_Sandbox_Evolutionary_Loop_Final.md 所辖协议、生成、验证或协作流程之前读取
-4. [`07_Execution_Plans/Dual_Check_Proposal_System/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
+1. [`07_Execution_Plans/Dual_Check_Proposal_System/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`07_Execution_Plans/Dual_Check_Proposal_System/Stage_1_Global_Blueprint_v4.3_Final.md`](Stage_1_Global_Blueprint_v4.3_Final.md) — 触发条件：比较该设计方案与现行实现，或追溯架构选择。读取 Stage_1_Global_Blueprint_v4.3_Final.md（H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 v4.3 (Stage 1 完结版)》；首个 H2《核心设计哲学 (Core Philosophy)》）；设计/复盘不是当前任务授权，也不证明对应系统已实现
+3. [`07_Execution_Plans/Dual_Check_Proposal_System/Stage_2_Routing_Nodes_Final.md`](Stage_2_Routing_Nodes_Final.md) — 触发条件：比较该设计方案与现行实现，或追溯架构选择。读取 Stage_2_Routing_Nodes_Final.md（H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 - Stage 2 实施计划 ［✅全线竣工］》；首个 H2《🎯 目标概述》）；设计/复盘不是当前任务授权，也不证明对应系统已实现
+4. [`07_Execution_Plans/Dual_Check_Proposal_System/Stage_3_Sandbox_Evolutionary_Loop_Final.md`](Stage_3_Sandbox_Evolutionary_Loop_Final.md) — 触发条件：比较该设计方案与现行实现，或追溯架构选择。读取 Stage_3_Sandbox_Evolutionary_Loop_Final.md（H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 - Stage 3 实施计划 (最终闭环) ［✅全线竣工］》；首个 H2《🎯 目标概述》）；设计/复盘不是当前任务授权，也不证明对应系统已实现
 
 ## child_directories
 
@@ -25,35 +25,35 @@ Dual-Check 的 global blueprint、routing nodes 与 sandbox loop 三阶段设计
 <!-- RIDX_FILE_HEX 30375f457865637574696f6e5f506c616e732f4475616c5f436865636b5f50726f706f73616c5f53797374656d2f53746167655f315f476c6f62616c5f426c75657072696e745f76342e335f46696e616c2e6d64 -->
 - **path_or_link**: [`07_Execution_Plans/Dual_Check_Proposal_System/Stage_1_Global_Blueprint_v4.3_Final.md`](Stage_1_Global_Blueprint_v4.3_Final.md)
   - **content_summary**: H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 v4.3 (Stage 1 完结版)》；首个 H2《核心设计哲学 (Core Philosophy)》
-  - **role_and_use**: 以 Stage_1_Global_Blueprint_v4.3_Final.md 约束 07_Execution_Plans/Dual_Check_Proposal_System 的执行或协作流程；执行相关动作前核对
-  - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 Stage_1_Global_Blueprint_v4.3_Final.md 所辖协议、生成、验证或协作流程之前读取
+  - **role_and_use**: 将 Stage_1_Global_Blueprint_v4.3_Final.md（H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 v4.3 (Stage 1 完结版)》；首个 H2《核心设计哲学 (Core Philosophy)》） 作为“执行方案设计 provenance”使用；设计/复盘不是当前任务授权，也不证明对应系统已实现
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=execution_plan_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；设计/复盘不是当前任务授权，也不证明对应系统已实现
+  - **when_to_read**: 触发条件：比较该设计方案与现行实现，或追溯架构选择。读取 Stage_1_Global_Blueprint_v4.3_Final.md（H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 v4.3 (Stage 1 完结版)》；首个 H2《核心设计哲学 (Core Philosophy)》）；设计/复盘不是当前任务授权，也不证明对应系统已实现
 <!-- RIDX_FILE_HEX 30375f457865637574696f6e5f506c616e732f4475616c5f436865636b5f50726f706f73616c5f53797374656d2f53746167655f325f526f7574696e675f4e6f6465735f46696e616c2e6d64 -->
 - **path_or_link**: [`07_Execution_Plans/Dual_Check_Proposal_System/Stage_2_Routing_Nodes_Final.md`](Stage_2_Routing_Nodes_Final.md)
   - **content_summary**: H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 - Stage 2 实施计划 ［✅全线竣工］》；首个 H2《🎯 目标概述》
-  - **role_and_use**: 以 Stage_2_Routing_Nodes_Final.md 约束 07_Execution_Plans/Dual_Check_Proposal_System 的执行或协作流程；执行相关动作前核对
-  - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 Stage_2_Routing_Nodes_Final.md 所辖协议、生成、验证或协作流程之前读取
+  - **role_and_use**: 将 Stage_2_Routing_Nodes_Final.md（H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 - Stage 2 实施计划 ［✅全线竣工］》；首个 H2《🎯 目标概述》） 作为“执行方案设计 provenance”使用；设计/复盘不是当前任务授权，也不证明对应系统已实现
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=execution_plan_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；设计/复盘不是当前任务授权，也不证明对应系统已实现
+  - **when_to_read**: 触发条件：比较该设计方案与现行实现，或追溯架构选择。读取 Stage_2_Routing_Nodes_Final.md（H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 - Stage 2 实施计划 ［✅全线竣工］》；首个 H2《🎯 目标概述》）；设计/复盘不是当前任务授权，也不证明对应系统已实现
 <!-- RIDX_FILE_HEX 30375f457865637574696f6e5f506c616e732f4475616c5f436865636b5f50726f706f73616c5f53797374656d2f53746167655f335f53616e64626f785f45766f6c7574696f6e6172795f4c6f6f705f46696e616c2e6d64 -->
 - **path_or_link**: [`07_Execution_Plans/Dual_Check_Proposal_System/Stage_3_Sandbox_Evolutionary_Loop_Final.md`](Stage_3_Sandbox_Evolutionary_Loop_Final.md)
   - **content_summary**: H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 - Stage 3 实施计划 (最终闭环) ［✅全线竣工］》；首个 H2《🎯 目标概述》
-  - **role_and_use**: 以 Stage_3_Sandbox_Evolutionary_Loop_Final.md 约束 07_Execution_Plans/Dual_Check_Proposal_System 的执行或协作流程；执行相关动作前核对
-  - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 Stage_3_Sandbox_Evolutionary_Loop_Final.md 所辖协议、生成、验证或协作流程之前读取
+  - **role_and_use**: 将 Stage_3_Sandbox_Evolutionary_Loop_Final.md（H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 - Stage 3 实施计划 (最终闭环) ［✅全线竣工］》；首个 H2《🎯 目标概述》） 作为“执行方案设计 provenance”使用；设计/复盘不是当前任务授权，也不证明对应系统已实现
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=execution_plan_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；设计/复盘不是当前任务授权，也不证明对应系统已实现
+  - **when_to_read**: 触发条件：比较该设计方案与现行实现，或追溯架构选择。读取 Stage_3_Sandbox_Evolutionary_Loop_Final.md（H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 - Stage 3 实施计划 (最终闭环) ［✅全线竣工］》；首个 H2《🎯 目标概述》）；设计/复盘不是当前任务授权，也不证明对应系统已实现
 <!-- RIDX_FILE_HEX 30375f457865637574696f6e5f506c616e732f4475616c5f436865636b5f50726f706f73616c5f53797374656d2f696e6465782e6d64 -->
 - **path_or_link**: [`07_Execution_Plans/Dual_Check_Proposal_System/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 07_Execution_Plans/Dual_Check_Proposal_System 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 07_Execution_Plans/Dual_Check_Proposal_System 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 
-- 无额外分组；仍应只读取当前任务明确需要的 direct artifact。
+- 默认不加载 3 个历史/测试/生成/用户或大型 direct artifacts：`07_Execution_Plans/Dual_Check_Proposal_System/Stage_1_Global_Blueprint_v4.3_Final.md`, `07_Execution_Plans/Dual_Check_Proposal_System/Stage_2_Routing_Nodes_Final.md`, `07_Execution_Plans/Dual_Check_Proposal_System/Stage_3_Sandbox_Evolutionary_Loop_Final.md`。
 
 ## generation_and_freshness_note
 

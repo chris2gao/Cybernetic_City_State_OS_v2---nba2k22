@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Math Mentor staging candidate pool；节点存在不等于已准入、已认证或可教学
+Math Mentor _Staging_Level5_Part2 候选池；只用于 root 对照、alias 冲突与 Human 语义裁决
 
 ## authority_and_usage_boundary
 
@@ -11,12 +11,12 @@ Math Mentor staging candidate pool；节点存在不等于已准入、已认证�
 
 ## recommended_reading_order
 
-1. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-576.yaml`](COMBINATORICS-576.yaml) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
-3. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-577.yaml`](COMBINATORICS-577.yaml) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
-4. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-578.yaml`](COMBINATORICS-578.yaml) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
-5. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-579.yaml`](COMBINATORICS-579.yaml) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
-6. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-580.yaml`](COMBINATORICS-580.yaml) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+1. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-576.yaml`](COMBINATORICS-576.yaml) — 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-576.yaml（id=COMBINATORICS-576）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+3. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-577.yaml`](COMBINATORICS-577.yaml) — 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-577.yaml（id=COMBINATORICS-577）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+4. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-578.yaml`](COMBINATORICS-578.yaml) — 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-578.yaml（id=COMBINATORICS-578）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+5. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-579.yaml`](COMBINATORICS-579.yaml) — 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-579.yaml（id=COMBINATORICS-579）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+6. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-580.yaml`](COMBINATORICS-580.yaml) — 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-580.yaml（id=COMBINATORICS-580）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 
 ## child_directories
 
@@ -27,409 +27,409 @@ Math Mentor staging candidate pool；节点存在不等于已准入、已认证�
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3537362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-576.yaml`](COMBINATORICS-576.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-576；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-576.yaml（id=COMBINATORICS-576） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-576.yaml（id=COMBINATORICS-576）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3537372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-577.yaml`](COMBINATORICS-577.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-577；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-577.yaml（id=COMBINATORICS-577） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-577.yaml（id=COMBINATORICS-577）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3537382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-578.yaml`](COMBINATORICS-578.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-578；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-578.yaml（id=COMBINATORICS-578） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-578.yaml（id=COMBINATORICS-578）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3537392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-579.yaml`](COMBINATORICS-579.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-579；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-579.yaml（id=COMBINATORICS-579） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-579.yaml（id=COMBINATORICS-579）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3538302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-580.yaml`](COMBINATORICS-580.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-580；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-580.yaml（id=COMBINATORICS-580） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-580.yaml（id=COMBINATORICS-580）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3538312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-581.yaml`](COMBINATORICS-581.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-581；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-581.yaml（id=COMBINATORICS-581） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-581.yaml（id=COMBINATORICS-581）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3538322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-582.yaml`](COMBINATORICS-582.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-582；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-582.yaml（id=COMBINATORICS-582） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-582.yaml（id=COMBINATORICS-582）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3538332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-583.yaml`](COMBINATORICS-583.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-583；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-583.yaml（id=COMBINATORICS-583） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-583.yaml（id=COMBINATORICS-583）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3538342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-584.yaml`](COMBINATORICS-584.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-584；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-584.yaml（id=COMBINATORICS-584） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-584.yaml（id=COMBINATORICS-584）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3538352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-585.yaml`](COMBINATORICS-585.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-585；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-585.yaml（id=COMBINATORICS-585） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-585.yaml（id=COMBINATORICS-585）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3538362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-586.yaml`](COMBINATORICS-586.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-586；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-586.yaml（id=COMBINATORICS-586） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-586.yaml（id=COMBINATORICS-586）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3538372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-587.yaml`](COMBINATORICS-587.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-587；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-587.yaml（id=COMBINATORICS-587） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-587.yaml（id=COMBINATORICS-587）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3538382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-588.yaml`](COMBINATORICS-588.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-588；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-588.yaml（id=COMBINATORICS-588） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-588.yaml（id=COMBINATORICS-588）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3538392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-589.yaml`](COMBINATORICS-589.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-589；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-589.yaml（id=COMBINATORICS-589） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-589.yaml（id=COMBINATORICS-589）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3539302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-590.yaml`](COMBINATORICS-590.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-590；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-590.yaml（id=COMBINATORICS-590） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-590.yaml（id=COMBINATORICS-590）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3539312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-591.yaml`](COMBINATORICS-591.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-591；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-591.yaml（id=COMBINATORICS-591） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-591.yaml（id=COMBINATORICS-591）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3539322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-592.yaml`](COMBINATORICS-592.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-592；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-592.yaml（id=COMBINATORICS-592） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-592.yaml（id=COMBINATORICS-592）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3539332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-593.yaml`](COMBINATORICS-593.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-593；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-593.yaml（id=COMBINATORICS-593） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-593.yaml（id=COMBINATORICS-593）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3539342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-594.yaml`](COMBINATORICS-594.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-594；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-594.yaml（id=COMBINATORICS-594） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-594.yaml（id=COMBINATORICS-594）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3539352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-595.yaml`](COMBINATORICS-595.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-595；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-595.yaml（id=COMBINATORICS-595） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-595.yaml（id=COMBINATORICS-595）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3539362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-596.yaml`](COMBINATORICS-596.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-596；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-596.yaml（id=COMBINATORICS-596） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-596.yaml（id=COMBINATORICS-596）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3539372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-597.yaml`](COMBINATORICS-597.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-597；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-597.yaml（id=COMBINATORICS-597） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-597.yaml（id=COMBINATORICS-597）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3539382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-598.yaml`](COMBINATORICS-598.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-598；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-598.yaml（id=COMBINATORICS-598） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-598.yaml（id=COMBINATORICS-598）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3539392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-599.yaml`](COMBINATORICS-599.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-599；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-599.yaml（id=COMBINATORICS-599） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-599.yaml（id=COMBINATORICS-599）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3630302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-600.yaml`](COMBINATORICS-600.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-600；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-600.yaml（id=COMBINATORICS-600） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-600.yaml（id=COMBINATORICS-600）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3630312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-601.yaml`](COMBINATORICS-601.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-601；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-601.yaml（id=COMBINATORICS-601） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-601.yaml（id=COMBINATORICS-601）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3630322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-602.yaml`](COMBINATORICS-602.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-602；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-602.yaml（id=COMBINATORICS-602） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-602.yaml（id=COMBINATORICS-602）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3630332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-603.yaml`](COMBINATORICS-603.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-603；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-603.yaml（id=COMBINATORICS-603） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-603.yaml（id=COMBINATORICS-603）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3630342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-604.yaml`](COMBINATORICS-604.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-604；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-604.yaml（id=COMBINATORICS-604） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-604.yaml（id=COMBINATORICS-604）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3630352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-605.yaml`](COMBINATORICS-605.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-605；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-605.yaml（id=COMBINATORICS-605） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-605.yaml（id=COMBINATORICS-605）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3630362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-606.yaml`](COMBINATORICS-606.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-606；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-606.yaml（id=COMBINATORICS-606） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-606.yaml（id=COMBINATORICS-606）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3630372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-607.yaml`](COMBINATORICS-607.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-607；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-607.yaml（id=COMBINATORICS-607） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-607.yaml（id=COMBINATORICS-607）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3630382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-608.yaml`](COMBINATORICS-608.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-608；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-608.yaml（id=COMBINATORICS-608） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-608.yaml（id=COMBINATORICS-608）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3630392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-609.yaml`](COMBINATORICS-609.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-609；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-609.yaml（id=COMBINATORICS-609） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-609.yaml（id=COMBINATORICS-609）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3631302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-610.yaml`](COMBINATORICS-610.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-610；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-610.yaml（id=COMBINATORICS-610） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-610.yaml（id=COMBINATORICS-610）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3631312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-611.yaml`](COMBINATORICS-611.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-611；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-611.yaml（id=COMBINATORICS-611） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-611.yaml（id=COMBINATORICS-611）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3631322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-612.yaml`](COMBINATORICS-612.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-612；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-612.yaml（id=COMBINATORICS-612） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-612.yaml（id=COMBINATORICS-612）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3631332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-613.yaml`](COMBINATORICS-613.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-613；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-613.yaml（id=COMBINATORICS-613） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-613.yaml（id=COMBINATORICS-613）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3631342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-614.yaml`](COMBINATORICS-614.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-614；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-614.yaml（id=COMBINATORICS-614） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-614.yaml（id=COMBINATORICS-614）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3631352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-615.yaml`](COMBINATORICS-615.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-615；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-615.yaml（id=COMBINATORICS-615） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-615.yaml（id=COMBINATORICS-615）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3631362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-616.yaml`](COMBINATORICS-616.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-616；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-616.yaml（id=COMBINATORICS-616） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-616.yaml（id=COMBINATORICS-616）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3631372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-617.yaml`](COMBINATORICS-617.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-617；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-617.yaml（id=COMBINATORICS-617） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-617.yaml（id=COMBINATORICS-617）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3631382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-618.yaml`](COMBINATORICS-618.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-618；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-618.yaml（id=COMBINATORICS-618） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-618.yaml（id=COMBINATORICS-618）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3631392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-619.yaml`](COMBINATORICS-619.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-619；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-619.yaml（id=COMBINATORICS-619） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-619.yaml（id=COMBINATORICS-619）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3632302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-620.yaml`](COMBINATORICS-620.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-620；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-620.yaml（id=COMBINATORICS-620） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-620.yaml（id=COMBINATORICS-620）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3632312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-621.yaml`](COMBINATORICS-621.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-621；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-621.yaml（id=COMBINATORICS-621） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-621.yaml（id=COMBINATORICS-621）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3632322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-622.yaml`](COMBINATORICS-622.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-622；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-622.yaml（id=COMBINATORICS-622） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-622.yaml（id=COMBINATORICS-622）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3632332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-623.yaml`](COMBINATORICS-623.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-623；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-623.yaml（id=COMBINATORICS-623） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-623.yaml（id=COMBINATORICS-623）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3632342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-624.yaml`](COMBINATORICS-624.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-624；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-624.yaml（id=COMBINATORICS-624） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-624.yaml（id=COMBINATORICS-624）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3632352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-625.yaml`](COMBINATORICS-625.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-625；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-625.yaml（id=COMBINATORICS-625） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-625.yaml（id=COMBINATORICS-625）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3632362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-626.yaml`](COMBINATORICS-626.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-626；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-626.yaml（id=COMBINATORICS-626） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-626.yaml（id=COMBINATORICS-626）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3632372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-627.yaml`](COMBINATORICS-627.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-627；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-627.yaml（id=COMBINATORICS-627） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-627.yaml（id=COMBINATORICS-627）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3632382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-628.yaml`](COMBINATORICS-628.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-628；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-628.yaml（id=COMBINATORICS-628） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-628.yaml（id=COMBINATORICS-628）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3632392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-629.yaml`](COMBINATORICS-629.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-629；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-629.yaml（id=COMBINATORICS-629） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-629.yaml（id=COMBINATORICS-629）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3633302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-630.yaml`](COMBINATORICS-630.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-630；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-630.yaml（id=COMBINATORICS-630） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-630.yaml（id=COMBINATORICS-630）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f434f4d42494e41544f524943532d3633312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/COMBINATORICS-631.yaml`](COMBINATORICS-631.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=COMBINATORICS-631；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 COMBINATORICS-631.yaml（id=COMBINATORICS-631） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 COMBINATORICS-631.yaml（id=COMBINATORICS-631）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f67656e2e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/gen.py`](gen.py)
   - **content_summary**: Python；public symbols=none；artifact=gen.py
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 gen.py（Python；public symbols=none） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=python_ast_docstring_and_symbols；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 gen.py（Python；public symbols=none）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f50617274322f696e6465782e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

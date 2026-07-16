@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Human-AI communication compliance 的 schema、validator、fixture 与 proof-chain 控制面
+通信合规测试层 fixtures；保存 raw/fixture/proof artifact，不承载现实授权
 
 ## authority_and_usage_boundary
 
@@ -11,24 +11,24 @@ Human-AI communication compliance 的 schema、validator、fixture 与 proof-cha
 
 ## recommended_reading_order
 
-1. [`.ai/communication_compliance/fixtures/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`.ai/communication_compliance/fixtures/build_fixture_suite.py`](build_fixture_suite.py) — 运行 build_fixture_suite.py 对应测试或定位特定失败用例时读取
-3. [`.ai/communication_compliance/fixtures/fixture_suite.json`](fixture_suite.json) — 运行 fixture_suite.json 对应测试或定位特定失败用例时读取
-4. [`.ai/communication_compliance/fixtures/latest_fixture_result.json`](latest_fixture_result.json) — 运行 latest_fixture_result.json 对应测试或定位特定失败用例时读取
-5. [`.ai/communication_compliance/fixtures/artifacts/index.md`](artifacts/index.md) — 复现特定测试、proof case 或定位 validator 失败时进入
-6. [`.ai/communication_compliance/fixtures/raw/index.md`](raw/index.md) — 复现特定测试、proof case 或定位 validator 失败时进入
+1. [`.ai/communication_compliance/fixtures/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`.ai/communication_compliance/fixtures/build_fixture_suite.py`](build_fixture_suite.py) — 触发条件：复现该具名 transition case 或定位相应 fail-closed 断言。读取 build_fixture_suite.py（Deterministically build release-bound Human-AI compliance fixtures.；gate_module；git_show）；fixture 内 actor、human_gate、verdict 均不是现实授权
+3. [`.ai/communication_compliance/fixtures/fixture_suite.json`](fixture_suite.json) — 触发条件：复现该具名 transition case 或定位相应 fail-closed 断言。读取 fixture_suite.json（id=classify_c0_ordinary；id=classify_unknown_fail_closed；id=bootstrap_chatgpt_pass）；fixture 内 actor、human_gate、verdict 均不是现实授权
+4. [`.ai/communication_compliance/fixtures/latest_fixture_result.json`](latest_fixture_result.json) — 触发条件：复现该具名 transition case 或定位相应 fail-closed 断言。读取 latest_fixture_result.json（id=bootstrap_chatgpt_pass；id=bootstrap_claude_code_pass；id=bootstrap_claude_pass）；fixture 内 actor、human_gate、verdict 均不是现实授权
+5. [`.ai/communication_compliance/fixtures/artifacts/index.md`](artifacts/index.md) — 运行通信合规的 artifacts 测试层
+6. [`.ai/communication_compliance/fixtures/raw/index.md`](raw/index.md) — 运行通信合规的 raw 测试层
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f66697874757265732f617274696661637473 -->
 - **path_or_link**: [`.ai/communication_compliance/fixtures/artifacts`](artifacts/index.md)
-  - **content_scope**: Human-AI communication compliance 的 schema、validator、fixture 与 proof-chain 控制面；tracked 后代文件数=179
-  - **when_to_enter**: 复现特定测试、proof case 或定位 validator 失败时进入
+  - **content_scope**: 通信合规测试层 artifacts；保存 raw/fixture/proof artifact，不承载现实授权；tracked 后代文件数=179
+  - **when_to_enter**: 运行通信合规的 artifacts 测试层
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f66697874757265732f726177 -->
 - **path_or_link**: [`.ai/communication_compliance/fixtures/raw`](raw/index.md)
-  - **content_scope**: Human-AI communication compliance 的 schema、validator、fixture 与 proof-chain 控制面；tracked 后代文件数=4
-  - **when_to_enter**: 复现特定测试、proof case 或定位 validator 失败时进入
+  - **content_scope**: 通信合规测试层 raw；保存 raw/fixture/proof artifact，不承载现实授权；tracked 后代文件数=4
+  - **when_to_enter**: 运行通信合规的 raw 测试层
   - **load_policy**: `do_not_load_by_default`
 
 ## direct_files
@@ -36,31 +36,31 @@ Human-AI communication compliance 的 schema、validator、fixture 与 proof-cha
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f66697874757265732f6275696c645f666978747572655f73756974652e7079 -->
 - **path_or_link**: [`.ai/communication_compliance/fixtures/build_fixture_suite.py`](build_fixture_suite.py)
   - **content_summary**: Python；module docstring“Deterministically build release-bound Human-AI compliance fixtures.”；public symbols=gate_module, git_show, sha256, git_ref, fixture_ref
-  - **role_and_use**: 以 build_fixture_suite.py 作为 .ai/communication_compliance/fixtures 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 build_fixture_suite.py（Deterministically build release-bound Human-AI compliance fixtures.；gate_module；git_show） 作为“通信 transition 测试/proof”使用；fixture 内 actor、human_gate、verdict 均不是现实授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 build_fixture_suite.py 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=communication_test_or_proof；authority=test_or_fixture；evidence_basis=python_ast_docstring_and_symbols；fixture 内 actor、human_gate、verdict 均不是现实授权
+  - **when_to_read**: 触发条件：复现该具名 transition case 或定位相应 fail-closed 断言。读取 build_fixture_suite.py（Deterministically build release-bound Human-AI compliance fixtures.；gate_module；git_show）；fixture 内 actor、human_gate、verdict 均不是现实授权
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f66697874757265732f666978747572655f73756974652e6a736f6e -->
 - **path_or_link**: [`.ai/communication_compliance/fixtures/fixture_suite.json`](fixture_suite.json)
   - **content_summary**: JSON object，顶层键：cases, inherited_coverage_map_ref, prior_case_ids, prior_suite_ref, protocol_release_head, schema_version, source_mailbox_base_head；安全锚点：id=classify_c0_ordinary, i…
-  - **role_and_use**: 以 fixture_suite.json 作为 .ai/communication_compliance/fixtures 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 fixture_suite.json（id=classify_c0_ordinary；id=classify_unknown_fail_closed；id=bootstrap_chatgpt_pass） 作为“通信 transition 测试/proof”使用；fixture 内 actor、human_gate、verdict 均不是现实授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 fixture_suite.json 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=communication_test_or_proof；authority=test_or_fixture；evidence_basis=json_strict_structure_and_safe_fields；fixture 内 actor、human_gate、verdict 均不是现实授权
+  - **when_to_read**: 触发条件：复现该具名 transition case 或定位相应 fail-closed 断言。读取 fixture_suite.json（id=classify_c0_ordinary；id=classify_unknown_fail_closed；id=bootstrap_chatgpt_pass）；fixture 内 actor、human_gate、verdict 均不是现实授权
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f66697874757265732f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/communication_compliance/fixtures/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 .ai/communication_compliance/fixtures 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 .ai/communication_compliance/fixtures 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f66697874757265732f6c61746573745f666978747572655f726573756c742e6a736f6e -->
 - **path_or_link**: [`.ai/communication_compliance/fixtures/latest_fixture_result.json`](latest_fixture_result.json)
   - **content_summary**: JSON object，顶层键：aggregate_inventory_count, cases, executed_cases, inherited_behavioral_coverage, inherited_coverage_map_sha256, inherited_inventory_cases, matched_cases, mismatch_…
-  - **role_and_use**: 以 latest_fixture_result.json 作为 .ai/communication_compliance/fixtures 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 latest_fixture_result.json（id=bootstrap_chatgpt_pass；id=bootstrap_claude_code_pass；id=bootstrap_claude_pass） 作为“通信 transition 测试/proof”使用；fixture 内 actor、human_gate、verdict 均不是现实授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 latest_fixture_result.json 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=communication_test_or_proof；authority=test_or_fixture；evidence_basis=json_strict_structure_and_safe_fields；fixture 内 actor、human_gate、verdict 均不是现实授权
+  - **when_to_read**: 触发条件：复现该具名 transition case 或定位相应 fail-closed 断言。读取 latest_fixture_result.json（id=bootstrap_chatgpt_pass；id=bootstrap_claude_code_pass；id=bootstrap_claude_pass）；fixture 内 actor、human_gate、verdict 均不是现实授权
 
 ## do_not_load_by_default
 

@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Program run `math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS` 的可复现 checkpoint、input/output、log 或验证证据目录
+Program run math-mentor-analytic-nt-foundation-batch-1-0001 的 CHECKPOINTS 证据分区；仅解释该 run 的对应阶段
 
 ## authority_and_usage_boundary
 
@@ -11,12 +11,12 @@ Program run `math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS` 的可
 
 ## recommended_reading_order
 
-1. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/launch.yml`](launch.yml) — 复核 launch.yml 所属 run、输出或验证结论时读取
-3. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/stage-1.yml`](stage-1.yml) — 复核 stage-1.yml 所属 run、输出或验证结论时读取
-4. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/stage-2.yml`](stage-2.yml) — 复核 stage-2.yml 所属 run、输出或验证结论时读取
-5. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/stage-3.yml`](stage-3.yml) — 复核 stage-3.yml 所属 run、输出或验证结论时读取
-6. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/stage-4.yml`](stage-4.yml) — 复核 stage-4.yml 所属 run、输出或验证结论时读取
+1. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/launch.yml`](launch.yml) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 launch.yml（status=accepted）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+3. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/stage-1.yml`](stage-1.yml) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 stage-1.yml（status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+4. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/stage-2.yml`](stage-2.yml) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 stage-2.yml（status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+5. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/stage-3.yml`](stage-3.yml) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 stage-3.yml（status=completed_with_manual_review_required）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+6. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/stage-4.yml`](stage-4.yml) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 stage-4.yml（status=completed_with_manual_review_required）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 
 ## child_directories
 
@@ -27,59 +27,59 @@ Program run `math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS` 的可
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f434845434b504f494e54532f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f434845434b504f494e54532f6c61756e63682e796d6c -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/launch.yml`](launch.yml)
   - **content_summary**: YAML 结构，顶层键：run_id, checkpoint, status, generated_at, input_head, output_head, rollback_base, work_branch；安全锚点：status=accepted
-  - **role_and_use**: 由 launch.yml 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 launch.yml（status=accepted） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 launch.yml 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=yaml_visible_keys_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 launch.yml（status=accepted）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f434845434b504f494e54532f73746167652d312e796d6c -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/stage-1.yml`](stage-1.yml)
   - **content_summary**: YAML 结构，顶层键：run_id, checkpoint, status, source_head, node_count, nodes, combined_roadmap_read, p3_reopened；安全锚点：status=passed
-  - **role_and_use**: 由 stage-1.yml 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 stage-1.yml（status=passed） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 stage-1.yml 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=yaml_visible_keys_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 stage-1.yml（status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f434845434b504f494e54532f73746167652d322e796d6c -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/stage-2.yml`](stage-2.yml)
   - **content_summary**: YAML 结构，顶层键：run_id, checkpoint, status, node_count, formal_definition_status, sub_topic_counts, bilingual_formal_content_present, approved_scope_preserved；安全锚点：status=passed
-  - **role_and_use**: 由 stage-2.yml 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 stage-2.yml（status=passed） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 stage-2.yml 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=yaml_visible_keys_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 stage-2.yml（status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f434845434b504f494e54532f73746167652d332e796d6c -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/stage-3.yml`](stage-3.yml)
   - **content_summary**: YAML 结构，顶层键：run_id, checkpoint, status, all_resolved_references_use_existing_ids, invented_prerequisite_ids, node_outcomes, combined_roadmap_read, human_gate；安全锚点：status=completed…
-  - **role_and_use**: 由 stage-3.yml 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 stage-3.yml（status=completed_with_manual_review_required） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 stage-3.yml 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=yaml_visible_keys_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 stage-3.yml（status=completed_with_manual_review_required）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f434845434b504f494e54532f73746167652d342e796d6c -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/stage-4.yml`](stage-4.yml)
   - **content_summary**: YAML 结构，顶层键：run_id, checkpoint, status, content_contract_present_for_all_nodes, content_contract_checks, official_static_validator_status, official_static_validator_test_count, of…
-  - **role_and_use**: 由 stage-4.yml 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 stage-4.yml（status=completed_with_manual_review_required） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 stage-4.yml 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=yaml_visible_keys_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 stage-4.yml（status=completed_with_manual_review_required）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f434845434b504f494e54532f73746167652d352e796d6c -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/stage-5.yml`](stage-5.yml)
   - **content_summary**: YAML 结构，顶层键：run_id, checkpoint, status, batch_validation_ref, node_audits, sandbox_evaluator_pass_count, durable_ref_sets_complete, finite_audits_claim_infinite_theorem_proof；安全锚点…
-  - **role_and_use**: 由 stage-5.yml 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 stage-5.yml（status=passed_for_declared_bounded_audits；status=passed；status=passed） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 stage-5.yml 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=yaml_visible_keys_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 stage-5.yml（status=passed_for_declared_bounded_audits；status=passed；status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f434845434b504f494e54532f73746167652d362e796d6c -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/stage-6.yml`](stage-6.yml)
   - **content_summary**: YAML 结构，顶层键：run_id, checkpoint, status, certified_endpoint_count, manual_review_required_count, node_outcomes, certification_ref, chatgpt_exact_candidate_acceptance_present；安全锚点：s…
-  - **role_and_use**: 由 stage-6.yml 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 stage-6.yml（status=completed_with_manual_review_required） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 stage-6.yml 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=yaml_visible_keys_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 stage-6.yml（status=completed_with_manual_review_required）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 
 ## do_not_load_by_default
 

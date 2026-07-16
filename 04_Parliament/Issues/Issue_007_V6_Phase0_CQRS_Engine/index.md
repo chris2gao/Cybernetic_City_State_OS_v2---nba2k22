@@ -3,7 +3,7 @@
 
 ## directory_role
 
-议会提案、裁决与归档证据区；归档内容仅用于历史追溯
+议会 Issue_007_V6_Phase0_CQRS_Engine 的 proposal、debate、review 与附件 provenance
 
 ## authority_and_usage_boundary
 
@@ -11,8 +11,8 @@
 
 ## recommended_reading_order
 
-1. [`04_Parliament/Issues/Issue_007_V6_Phase0_CQRS_Engine/00_需求澄清与反向问询_CQRS引擎.md`](00_需求澄清与反向问询_CQRS引擎.md) — 用 00_需求澄清与反向问询_CQRS引擎.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-2. [`04_Parliament/Issues/Issue_007_V6_Phase0_CQRS_Engine/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
+1. [`04_Parliament/Issues/Issue_007_V6_Phase0_CQRS_Engine/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`04_Parliament/Issues/Issue_007_V6_Phase0_CQRS_Engine/00_需求澄清与反向问询_CQRS引擎.md`](00_需求澄清与反向问询_CQRS引擎.md) — 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 00_需求澄清与反向问询_CQRS引擎.md（H1《需求澄清与反向问询：Issue 007 - V6 CQRS 投影同步引擎》；首个 H2《1. 原始需求载入》）；提案/辩论不是现行宪章或已生效 verdict
 
 ## child_directories
 
@@ -23,21 +23,21 @@
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3030375f56365f5068617365305f435152535f456e67696e652f30305fe99c80e6b182e6be84e6b885e4b88ee58f8de59091e997aee8afa25f43515253e5bc95e6938e2e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_007_V6_Phase0_CQRS_Engine/00_需求澄清与反向问询_CQRS引擎.md`](00_需求澄清与反向问询_CQRS引擎.md)
   - **content_summary**: H1《需求澄清与反向问询：Issue 007 - V6 CQRS 投影同步引擎》；首个 H2《1. 原始需求载入》
-  - **role_and_use**: 用 00_需求澄清与反向问询_CQRS引擎.md 为 04_Parliament/Issues/Issue_007_V6_Phase0_CQRS_Engine 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 00_需求澄清与反向问询_CQRS引擎.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 00_需求澄清与反向问询_CQRS引擎.md（H1《需求澄清与反向问询：Issue 007 - V6 CQRS 投影同步引擎》；首个 H2《1. 原始需求载入》） 作为“议会提案/辩论 provenance”使用；提案/辩论不是现行宪章或已生效 verdict
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=parliament_proposal_or_debate；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；提案/辩论不是现行宪章或已生效 verdict
+  - **when_to_read**: 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 00_需求澄清与反向问询_CQRS引擎.md（H1《需求澄清与反向问询：Issue 007 - V6 CQRS 投影同步引擎》；首个 H2《1. 原始需求载入》）；提案/辩论不是现行宪章或已生效 verdict
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3030375f56365f5068617365305f435152535f456e67696e652f696e6465782e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_007_V6_Phase0_CQRS_Engine/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 04_Parliament/Issues/Issue_007_V6_Phase0_CQRS_Engine 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 04_Parliament/Issues/Issue_007_V6_Phase0_CQRS_Engine 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 
-- 无额外分组；仍应只读取当前任务明确需要的 direct artifact。
+- 默认不加载 1 个历史/测试/生成/用户或大型 direct artifacts：`04_Parliament/Issues/Issue_007_V6_Phase0_CQRS_Engine/00_需求澄清与反向问询_CQRS引擎.md`。
 
 ## generation_and_freshness_note
 

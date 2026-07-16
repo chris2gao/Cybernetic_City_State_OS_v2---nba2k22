@@ -89,7 +89,7 @@ program_execution_order:
     human_decision: "preapproved_for_safe_to_merge_branches"
   - order: 3
     id: "repository-directory-index-system"
-    status: "published_awaiting_foreground_master_content_review_when_observed_on_master"
+    status: "semantic_audit_corrected_and_validated_pending_exact_master_publication"
     publication_head_resolution: "merge_commit_containing_the_complete_index_system"
     objective: "为根目录和各级 tracked 目录建立 index.md，支持模型懒加载。"
     scope:
@@ -114,6 +114,13 @@ program_execution_order:
       untracked_local_directories_indexed: 0
       deterministic_second_run_diff: 0
     human_decision: "preapproved"
+    semantic_audit_closeout:
+      baseline_head: "817039595e78a21356068d3854e380c73eed1417"
+      scope: "160 directory indexes / 1806 direct-file entries / 159 direct-child-directory entries"
+      result: "all baseline entries reviewed exactly once; deterministic generator corrections recorded"
+      audit_report: ".ai/CODEX_REPORTS/repository-directory-index-system-semantic-audit-0001.md"
+      validation_report: ".ai/CODEX_REPORTS/repository-directory-index-system-semantic-validation-0001.md"
+      changed_files_report: ".ai/CODEX_REPORTS/repository-directory-index-system-semantic-changed-files-0001.md"
   - order: 4
     id: "overall-plan-inspection-only"
     status: "blocked_by_phase_3_foreground_master_content_review"

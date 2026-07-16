@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Math Mentor 测试、fixture 与静态验证证据目录
+Math Mentor 测试分区 results；fixture/verdict 不构成真实权限或 activation
 
 ## authority_and_usage_boundary
 
@@ -11,11 +11,11 @@ Math Mentor 测试、fixture 与静态验证证据目录
 
 ## recommended_reading_order
 
-1. [`08_Domain_Applications/Math_Mentor/tests/results/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`08_Domain_Applications/Math_Mentor/tests/results/manual_test_05_calculus_265_ready_teaching_flow.json`](manual_test_05_calculus_265_ready_teaching_flow.json) — 运行 manual_test_05_calculus_265_ready_teaching_flow.json 对应测试或定位特定失败用例时读取
-3. [`08_Domain_Applications/Math_Mentor/tests/results/manual_test_05_calculus_265_ready_teaching_flow.md`](manual_test_05_calculus_265_ready_teaching_flow.md) — 运行 manual_test_05_calculus_265_ready_teaching_flow.md 对应测试或定位特定失败用例时读取
-4. [`08_Domain_Applications/Math_Mentor/tests/results/teaching_flow_static_validation_result.json`](teaching_flow_static_validation_result.json) — 运行 teaching_flow_static_validation_result.json 对应测试或定位特定失败用例时读取
-5. [`08_Domain_Applications/Math_Mentor/tests/results/teaching_flow_static_validation_result.md`](teaching_flow_static_validation_result.md) — 运行 teaching_flow_static_validation_result.md 对应测试或定位特定失败用例时读取
+1. [`08_Domain_Applications/Math_Mentor/tests/results/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`08_Domain_Applications/Math_Mentor/tests/results/manual_test_05_calculus_265_ready_teaching_flow.json`](manual_test_05_calculus_265_ready_teaching_flow.json) — 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 manual_test_05_calculus_265_ready_teaching_flow.json（schema_version=1.0；name=导数的物理意义与几何意义；schema_version=1.0）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+3. [`08_Domain_Applications/Math_Mentor/tests/results/manual_test_05_calculus_265_ready_teaching_flow.md`](manual_test_05_calculus_265_ready_teaching_flow.md) — 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 manual_test_05_calculus_265_ready_teaching_flow.md（H1《Manual Test 05: CALCULUS-265 Ready Teaching Flow》；首个 H2《Target》）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+4. [`08_Domain_Applications/Math_Mentor/tests/results/teaching_flow_static_validation_result.json`](teaching_flow_static_validation_result.json) — 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 teaching_flow_static_validation_result.json（JSON object，顶层键：coordinator_activation_performed, fixture_results, forbidden_actions_observed, learning_state_write_performed, overall_status, repo_head_assumed, runtime_activation_performed, scheduler_write_perform…；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+5. [`08_Domain_Applications/Math_Mentor/tests/results/teaching_flow_static_validation_result.md`](teaching_flow_static_validation_result.md) — 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 teaching_flow_static_validation_result.md（H1《Teaching Flow Static Validation Result》；首个 H2《Fixture Results》）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 
 ## child_directories
 
@@ -26,38 +26,38 @@ Math Mentor 测试、fixture 与静态验证证据目录
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f726573756c74732f696e6465782e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/results/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/tests/results 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/tests/results 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f726573756c74732f6d616e75616c5f746573745f30355f63616c63756c75735f3236355f72656164795f7465616368696e675f666c6f772e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/results/manual_test_05_calculus_265_ready_teaching_flow.json`](manual_test_05_calculus_265_ready_teaching_flow.json)
   - **content_summary**: JSON object，顶层键：actually_read_files, classroom_pass_claimed, coordinator_ready_state_dump, exam_agent_trap_test_capability, expected_behavior, external_tool_execution_performed, l…
-  - **role_and_use**: 以 manual_test_05_calculus_265_ready_teaching_flow.json 作为 08_Domain_Applications/Math_Mentor/tests/results 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 manual_test_05_calculus_265_ready_teaching_flow.json（schema_version=1.0；name=导数的物理意义与几何意义；schema_version=1.0） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 manual_test_05_calculus_265_ready_teaching_flow.json 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=json_strict_structure_and_safe_fields；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 manual_test_05_calculus_265_ready_teaching_flow.json（schema_version=1.0；name=导数的物理意义与几何意义；schema_version=1.0）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f726573756c74732f6d616e75616c5f746573745f30355f63616c63756c75735f3236355f72656164795f7465616368696e675f666c6f772e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/results/manual_test_05_calculus_265_ready_teaching_flow.md`](manual_test_05_calculus_265_ready_teaching_flow.md)
   - **content_summary**: H1《Manual Test 05: CALCULUS-265 Ready Teaching Flow》；首个 H2《Target》
-  - **role_and_use**: 以 manual_test_05_calculus_265_ready_teaching_flow.md 作为 08_Domain_Applications/Math_Mentor/tests/results 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 manual_test_05_calculus_265_ready_teaching_flow.md（H1《Manual Test 05: CALCULUS-265 Ready Teaching Flow》；首个 H2《Target》） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 manual_test_05_calculus_265_ready_teaching_flow.md 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 manual_test_05_calculus_265_ready_teaching_flow.md（H1《Manual Test 05: CALCULUS-265 Ready Teaching Flow》；首个 H2《Target》）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f726573756c74732f7465616368696e675f666c6f775f7374617469635f76616c69646174696f6e5f726573756c742e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/results/teaching_flow_static_validation_result.json`](teaching_flow_static_validation_result.json)
   - **content_summary**: JSON object，顶层键：coordinator_activation_performed, fixture_results, forbidden_actions_observed, learning_state_write_performed, overall_status, repo_head_assumed, runtime_activatio…
-  - **role_and_use**: 以 teaching_flow_static_validation_result.json 作为 08_Domain_Applications/Math_Mentor/tests/results 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 teaching_flow_static_validation_result.json（JSON object，顶层键：coordinator_activation_performed, fixture_results, forbidden_actions_observed, learning_state_write_performed, overall_status, repo_head_assumed, runtime_activation_performed, scheduler_write_perform… 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 teaching_flow_static_validation_result.json 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=json_strict_structure_and_safe_fields；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 teaching_flow_static_validation_result.json（JSON object，顶层键：coordinator_activation_performed, fixture_results, forbidden_actions_observed, learning_state_write_performed, overall_status, repo_head_assumed, runtime_activation_performed, scheduler_write_perform…；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f726573756c74732f7465616368696e675f666c6f775f7374617469635f76616c69646174696f6e5f726573756c742e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/results/teaching_flow_static_validation_result.md`](teaching_flow_static_validation_result.md)
   - **content_summary**: H1《Teaching Flow Static Validation Result》；首个 H2《Fixture Results》；artifact=teaching_flow_static_validation_result.md
-  - **role_and_use**: 以 teaching_flow_static_validation_result.md 作为 08_Domain_Applications/Math_Mentor/tests/results 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 teaching_flow_static_validation_result.md（H1《Teaching Flow Static Validation Result》；首个 H2《Fixture Results》） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 teaching_flow_static_validation_result.md 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 teaching_flow_static_validation_result.md（H1《Teaching Flow Static Validation Result》；首个 H2《Fixture Results》）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 
 ## do_not_load_by_default
 

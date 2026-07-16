@@ -3,7 +3,7 @@
 
 ## directory_role
 
-长程任务运行日志入口；保存可续跑 checkpoint 叙述而非 live authority
+保存长程任务 checkpoint 叙述和续跑 provenance
 
 ## authority_and_usage_boundary
 
@@ -11,8 +11,8 @@
 
 ## recommended_reading_order
 
-1. [`.ai/LONG_RUN_LOGS/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`.ai/LONG_RUN_LOGS/math-mentor-knowledge-completion-stage-0-inventory-0001.md`](math-mentor-knowledge-completion-stage-0-inventory-0001.md) — 复核 math-mentor-knowledge-completion-stage-0-inventory-0001.md 所属 run、输出或验证结论时读取
+1. [`.ai/LONG_RUN_LOGS/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`.ai/LONG_RUN_LOGS/math-mentor-knowledge-completion-stage-0-inventory-0001.md`](math-mentor-knowledge-completion-stage-0-inventory-0001.md) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 math-mentor-knowledge-completion-stage-0-inventory-0001.md（H1《Long Run Log: Stage 0 Inventory》；首个 H2《Mathematical Ambiguity Log》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 
 ## child_directories
 
@@ -23,17 +23,17 @@
 <!-- RIDX_FILE_HEX 2e61692f4c4f4e475f52554e5f4c4f47532f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/LONG_RUN_LOGS/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 .ai/LONG_RUN_LOGS 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 .ai/LONG_RUN_LOGS 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 2e61692f4c4f4e475f52554e5f4c4f47532f6d6174682d6d656e746f722d6b6e6f776c656467652d636f6d706c6574696f6e2d73746167652d302d696e76656e746f72792d303030312e6d64 -->
 - **path_or_link**: [`.ai/LONG_RUN_LOGS/math-mentor-knowledge-completion-stage-0-inventory-0001.md`](math-mentor-knowledge-completion-stage-0-inventory-0001.md)
   - **content_summary**: H1《Long Run Log: Stage 0 Inventory》；首个 H2《Mathematical Ambiguity Log》
-  - **role_and_use**: 由 math-mentor-knowledge-completion-stage-0-inventory-0001.md 保存 .ai/LONG_RUN_LOGS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 math-mentor-knowledge-completion-stage-0-inventory-0001.md（H1《Long Run Log: Stage 0 Inventory》；首个 H2《Mathematical Ambiguity Log》） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 math-mentor-knowledge-completion-stage-0-inventory-0001.md 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=markdown_heading_or_visible_structure；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 math-mentor-knowledge-completion-stage-0-inventory-0001.md（H1《Long Run Log: Stage 0 Inventory》；首个 H2《Mathematical Ambiguity Log》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 
 ## do_not_load_by_default
 

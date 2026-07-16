@@ -3,7 +3,7 @@
 
 ## directory_role
 
-碳基用户手册入口；现行 README 与旧版 Parliament/Citizen bootstrap 手册分区保存
+碳基用户手册区 05_Carbon_Index；区分现行说明与 archived bootstrap 手册
 
 ## authority_and_usage_boundary
 
@@ -11,16 +11,16 @@
 
 ## recommended_reading_order
 
-1. [`05_Carbon_Index/README.md`](README.md) — 用 README.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-2. [`05_Carbon_Index/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-3. [`05_Carbon_Index/_ARCHIVED/index.md`](_ARCHIVED/index.md) — 仅在追溯旧裁决或迁移来源时进入
+1. [`05_Carbon_Index/README.md`](README.md) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 README.md（H1《🌍 人类宿主/议长索引 (The Human Interface)》；首个 H2《🎯 你在这里可以得到什么？》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+2. [`05_Carbon_Index/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+3. [`05_Carbon_Index/_ARCHIVED/index.md`](_ARCHIVED/index.md) — 当前 Human 使用场景需要 _ARCHIVED 中的现行或 archived 手册
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 30355f436172626f6e5f496e6465782f5f4152434849564544 -->
 - **path_or_link**: [`05_Carbon_Index/_ARCHIVED`](_ARCHIVED/index.md)
-  - **content_scope**: `05_Carbon_Index/_ARCHIVED` 的历史归档；保留 provenance，不作为当前合同；tracked 后代文件数=3
-  - **when_to_enter**: 仅在追溯旧裁决或迁移来源时进入
+  - **content_scope**: 碳基用户手册区 _ARCHIVED；区分现行说明与 archived bootstrap 手册；tracked 后代文件数=3
+  - **when_to_enter**: 当前 Human 使用场景需要 _ARCHIVED 中的现行或 archived 手册
   - **load_policy**: `do_not_load_by_default`
 
 ## direct_files
@@ -28,17 +28,17 @@
 <!-- RIDX_FILE_HEX 30355f436172626f6e5f496e6465782f524541444d452e6d64 -->
 - **path_or_link**: [`05_Carbon_Index/README.md`](README.md)
   - **content_summary**: H1《🌍 人类宿主/议长索引 (The Human Interface)》；首个 H2《🎯 你在这里可以得到什么？》
-  - **role_and_use**: 用 README.md 为 05_Carbon_Index 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 README.md（H1《🌍 人类宿主/议长索引 (The Human Interface)》；首个 H2《🎯 你在这里可以得到什么？》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 README.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 README.md（H1《🌍 人类宿主/议长索引 (The Human Interface)》；首个 H2《🎯 你在这里可以得到什么？》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30355f436172626f6e5f496e6465782f696e6465782e6d64 -->
 - **path_or_link**: [`05_Carbon_Index/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 05_Carbon_Index 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 05_Carbon_Index 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

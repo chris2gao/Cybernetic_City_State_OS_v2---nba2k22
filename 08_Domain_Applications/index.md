@@ -3,7 +3,7 @@
 
 ## directory_role
 
-领域应用入口；按具体领域合同进入，不把领域实现提升为总体 OS 权威
+领域应用入口；领域合同不提升为总体 OS 宪章
 
 ## authority_and_usage_boundary
 
@@ -11,15 +11,15 @@
 
 ## recommended_reading_order
 
-1. [`08_Domain_Applications/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`08_Domain_Applications/Math_Mentor/index.md`](Math_Mentor/index.md) — Human 已将任务路由到对应领域并已读取领域合同后进入
+1. [`08_Domain_Applications/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`08_Domain_Applications/Math_Mentor/index.md`](Math_Mentor/index.md) — 当前任务属于 Math Mentor，并已先读 Universal Layer 与 current-state 路由
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f72 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor`](Math_Mentor/index.md)
-  - **content_scope**: Math Mentor 教学合同、控制面、prompt、bridge、节点语料与历史兼容资产；tracked 后代文件数=1071
-  - **when_to_enter**: Human 已将任务路由到对应领域并已读取领域合同后进入
+  - **content_scope**: Math Mentor 活动合同、静态控制面、教学 prompt、节点语料、测试与 legacy 边界根；tracked 后代文件数=1071
+  - **when_to_enter**: 当前任务属于 Math Mentor，并已先读 Universal Layer 与 current-state 路由
   - **load_policy**: `task_triggered_lazy_load`
 
 ## direct_files
@@ -27,10 +27,10 @@
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f696e6465782e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 08_Domain_Applications 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 08_Domain_Applications 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

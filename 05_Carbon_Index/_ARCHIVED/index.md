@@ -3,7 +3,7 @@
 
 ## directory_role
 
-`05_Carbon_Index/_ARCHIVED` 的历史归档；保留 provenance，不作为当前合同
+碳基用户手册区 _ARCHIVED；区分现行说明与 archived bootstrap 手册
 
 ## authority_and_usage_boundary
 
@@ -11,9 +11,9 @@
 
 ## recommended_reading_order
 
-1. [`05_Carbon_Index/_ARCHIVED/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`05_Carbon_Index/_ARCHIVED/V4_Parliament_User_Manual.md`](V4_Parliament_User_Manual.md) — 追溯 V4_Parliament_User_Manual.md 对应旧任务、裁决或 publication provenance 时读取
-3. [`05_Carbon_Index/_ARCHIVED/V6_Citizen_Bootstrap_Manual.md`](V6_Citizen_Bootstrap_Manual.md) — 追溯 V6_Citizen_Bootstrap_Manual.md 对应旧任务、裁决或 publication provenance 时读取
+1. [`05_Carbon_Index/_ARCHIVED/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`05_Carbon_Index/_ARCHIVED/V4_Parliament_User_Manual.md`](V4_Parliament_User_Manual.md) — 触发条件：追溯该具名历史 artifact 对当前设计的来源影响。读取 V4_Parliament_User_Manual.md（H1《🏛️ 赛博城邦上议院 (V4 极简版) - 奠基人使用手册》；首个 H2《🎯 核心使用场景》）；仅供追溯；不得作为当前状态或执行入口
+3. [`05_Carbon_Index/_ARCHIVED/V6_Citizen_Bootstrap_Manual.md`](V6_Citizen_Bootstrap_Manual.md) — 触发条件：追溯该具名历史 artifact 对当前设计的来源影响。读取 V6_Citizen_Bootstrap_Manual.md（H1《🏛️ 赛博城邦 V6 纪元：自由硅基公民“冷启动”唤醒手册》；首个 H2《1. 你的身份与城邦结构》）；仅供追溯；不得作为当前状态或执行入口
 
 ## child_directories
 
@@ -24,24 +24,24 @@
 <!-- RIDX_FILE_HEX 30355f436172626f6e5f496e6465782f5f41524348495645442f56345f5061726c69616d656e745f557365725f4d616e75616c2e6d64 -->
 - **path_or_link**: [`05_Carbon_Index/_ARCHIVED/V4_Parliament_User_Manual.md`](V4_Parliament_User_Manual.md)
   - **content_summary**: H1《🏛️ 赛博城邦上议院 (V4 极简版) - 奠基人使用手册》；首个 H2《🎯 核心使用场景》
-  - **role_and_use**: 保存 05_Carbon_Index/_ARCHIVED 的历史任务/决策快照；仅在追溯 V4_Parliament_User_Manual.md 时使用
+  - **role_and_use**: 将 V4_Parliament_User_Manual.md（H1《🏛️ 赛博城邦上议院 (V4 极简版) - 奠基人使用手册》；首个 H2《🎯 核心使用场景》） 作为“历史 provenance”使用；仅供追溯；不得作为当前状态或执行入口
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical/frozen；仅追溯，不作为当前合同
-  - **when_to_read**: 追溯 V4_Parliament_User_Manual.md 对应旧任务、裁决或 publication provenance 时读取
+  - **status_or_freshness**: semantic_profile=historical_evidence；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；仅供追溯；不得作为当前状态或执行入口
+  - **when_to_read**: 触发条件：追溯该具名历史 artifact 对当前设计的来源影响。读取 V4_Parliament_User_Manual.md（H1《🏛️ 赛博城邦上议院 (V4 极简版) - 奠基人使用手册》；首个 H2《🎯 核心使用场景》）；仅供追溯；不得作为当前状态或执行入口
 <!-- RIDX_FILE_HEX 30355f436172626f6e5f496e6465782f5f41524348495645442f56365f436974697a656e5f426f6f7473747261705f4d616e75616c2e6d64 -->
 - **path_or_link**: [`05_Carbon_Index/_ARCHIVED/V6_Citizen_Bootstrap_Manual.md`](V6_Citizen_Bootstrap_Manual.md)
   - **content_summary**: H1《🏛️ 赛博城邦 V6 纪元：自由硅基公民“冷启动”唤醒手册》；首个 H2《1. 你的身份与城邦结构》
-  - **role_and_use**: 保存 05_Carbon_Index/_ARCHIVED 的历史任务/决策快照；仅在追溯 V6_Citizen_Bootstrap_Manual.md 时使用
+  - **role_and_use**: 将 V6_Citizen_Bootstrap_Manual.md（H1《🏛️ 赛博城邦 V6 纪元：自由硅基公民“冷启动”唤醒手册》；首个 H2《1. 你的身份与城邦结构》） 作为“历史 provenance”使用；仅供追溯；不得作为当前状态或执行入口
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical/frozen；仅追溯，不作为当前合同
-  - **when_to_read**: 追溯 V6_Citizen_Bootstrap_Manual.md 对应旧任务、裁决或 publication provenance 时读取
+  - **status_or_freshness**: semantic_profile=historical_evidence；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；仅供追溯；不得作为当前状态或执行入口
+  - **when_to_read**: 触发条件：追溯该具名历史 artifact 对当前设计的来源影响。读取 V6_Citizen_Bootstrap_Manual.md（H1《🏛️ 赛博城邦 V6 纪元：自由硅基公民“冷启动”唤醒手册》；首个 H2《1. 你的身份与城邦结构》）；仅供追溯；不得作为当前状态或执行入口
 <!-- RIDX_FILE_HEX 30355f436172626f6e5f496e6465782f5f41524348495645442f696e6465782e6d64 -->
 - **path_or_link**: [`05_Carbon_Index/_ARCHIVED/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 05_Carbon_Index/_ARCHIVED 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 05_Carbon_Index/_ARCHIVED 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

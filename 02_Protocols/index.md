@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Engine A dispatch、主动压缩转生与模型路由/任务委派协议目录
+Engine dispatch、主动压缩转生、路由与委派协议库
 
 ## authority_and_usage_boundary
 
@@ -11,10 +11,10 @@ Engine A dispatch、主动压缩转生与模型路由/任务委派协议目录
 
 ## recommended_reading_order
 
-1. [`02_Protocols/Engine_A_Dispatch_Protocol.md`](Engine_A_Dispatch_Protocol.md) — 执行 Engine_A_Dispatch_Protocol.md 所辖协议、生成、验证或协作流程之前读取
-2. [`02_Protocols/Protocol_007_Active_Compression_Reincarnation.md`](Protocol_007_Active_Compression_Reincarnation.md) — 执行 Protocol_007_Active_Compression_Reincarnation.md 所辖协议、生成、验证或协作流程之前读取
-3. [`02_Protocols/Protocol_008_Model_Routing_and_Task_Delegation.md`](Protocol_008_Model_Routing_and_Task_Delegation.md) — 执行 Protocol_008_Model_Routing_and_Task_Delegation.md 所辖协议、生成、验证或协作流程之前读取
-4. [`02_Protocols/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
+1. [`02_Protocols/Engine_A_Dispatch_Protocol.md`](Engine_A_Dispatch_Protocol.md) — 触发条件：当前动作落入该文件规定的协议或执行边界。读取 Engine_A_Dispatch_Protocol.md（H1《引擎 A：原生调度总线协议 (Engine A Native Dispatch Protocol)》；首个 H2《阶段 1：架构凝视与白名单确立 (Ring 1: Architect Planning)》）；执行前核验当前任务授权、精确 source head 与上位合同
+2. [`02_Protocols/Protocol_007_Active_Compression_Reincarnation.md`](Protocol_007_Active_Compression_Reincarnation.md) — 触发条件：当前动作落入该文件规定的协议或执行边界。读取 Protocol_007_Active_Compression_Reincarnation.md（H1《📜 协议 007：黑盒代理主动压缩与高熵跨代轮回机制》；首个 H2《一、抢占式熔断：内容感知型水位估算 (Content-aware Heuristics)》）；执行前核验当前任务授权、精确 source head 与上位合同
+3. [`02_Protocols/Protocol_008_Model_Routing_and_Task_Delegation.md`](Protocol_008_Model_Routing_and_Task_Delegation.md) — 触发条件：当前动作落入该文件规定的协议或执行边界。读取 Protocol_008_Model_Routing_and_Task_Delegation.md（H1《Protocol 008: 异构模型动态路由与外包任务拆解协议 (Heterogeneous Model Routing &amp; Task Delegation)》；首个 H2《1. 核心理念 (Core Philosophy)》）；执行前核验当前任务授权、精确 source head 与上位合同
+4. [`02_Protocols/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## child_directories
 
@@ -25,31 +25,31 @@ Engine A dispatch、主动压缩转生与模型路由/任务委派协议目录
 <!-- RIDX_FILE_HEX 30325f50726f746f636f6c732f456e67696e655f415f44697370617463685f50726f746f636f6c2e6d64 -->
 - **path_or_link**: [`02_Protocols/Engine_A_Dispatch_Protocol.md`](Engine_A_Dispatch_Protocol.md)
   - **content_summary**: H1《引擎 A：原生调度总线协议 (Engine A Native Dispatch Protocol)》；首个 H2《阶段 1：架构凝视与白名单确立 (Ring 1: Architect Planning)》
-  - **role_and_use**: 以 Engine_A_Dispatch_Protocol.md 约束 02_Protocols 的执行或协作流程；执行相关动作前核对
+  - **role_and_use**: 将 Engine_A_Dispatch_Protocol.md（H1《引擎 A：原生调度总线协议 (Engine A Native Dispatch Protocol)》；首个 H2《阶段 1：架构凝视与白名单确立 (Ring 1: Architect Planning)》） 作为“执行合同”使用；执行前核验当前任务授权、精确 source head 与上位合同
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 Engine_A_Dispatch_Protocol.md 所辖协议、生成、验证或协作流程之前读取
+  - **status_or_freshness**: semantic_profile=operational_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；执行前核验当前任务授权、精确 source head 与上位合同
+  - **when_to_read**: 触发条件：当前动作落入该文件规定的协议或执行边界。读取 Engine_A_Dispatch_Protocol.md（H1《引擎 A：原生调度总线协议 (Engine A Native Dispatch Protocol)》；首个 H2《阶段 1：架构凝视与白名单确立 (Ring 1: Architect Planning)》）；执行前核验当前任务授权、精确 source head 与上位合同
 <!-- RIDX_FILE_HEX 30325f50726f746f636f6c732f50726f746f636f6c5f3030375f4163746976655f436f6d7072657373696f6e5f5265696e6361726e6174696f6e2e6d64 -->
 - **path_or_link**: [`02_Protocols/Protocol_007_Active_Compression_Reincarnation.md`](Protocol_007_Active_Compression_Reincarnation.md)
   - **content_summary**: H1《📜 协议 007：黑盒代理主动压缩与高熵跨代轮回机制》；首个 H2《一、抢占式熔断：内容感知型水位估算 (Content-aware Heuristics)》
-  - **role_and_use**: 以 Protocol_007_Active_Compression_Reincarnation.md 约束 02_Protocols 的执行或协作流程；执行相关动作前核对
+  - **role_and_use**: 将 Protocol_007_Active_Compression_Reincarnation.md（H1《📜 协议 007：黑盒代理主动压缩与高熵跨代轮回机制》；首个 H2《一、抢占式熔断：内容感知型水位估算 (Content-aware Heuristics)》） 作为“执行合同”使用；执行前核验当前任务授权、精确 source head 与上位合同
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 Protocol_007_Active_Compression_Reincarnation.md 所辖协议、生成、验证或协作流程之前读取
+  - **status_or_freshness**: semantic_profile=operational_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；执行前核验当前任务授权、精确 source head 与上位合同
+  - **when_to_read**: 触发条件：当前动作落入该文件规定的协议或执行边界。读取 Protocol_007_Active_Compression_Reincarnation.md（H1《📜 协议 007：黑盒代理主动压缩与高熵跨代轮回机制》；首个 H2《一、抢占式熔断：内容感知型水位估算 (Content-aware Heuristics)》）；执行前核验当前任务授权、精确 source head 与上位合同
 <!-- RIDX_FILE_HEX 30325f50726f746f636f6c732f50726f746f636f6c5f3030385f4d6f64656c5f526f7574696e675f616e645f5461736b5f44656c65676174696f6e2e6d64 -->
 - **path_or_link**: [`02_Protocols/Protocol_008_Model_Routing_and_Task_Delegation.md`](Protocol_008_Model_Routing_and_Task_Delegation.md)
   - **content_summary**: H1《Protocol 008: 异构模型动态路由与外包任务拆解协议 (Heterogeneous Model Routing &amp; Task Delegation)》；首个 H2《1. 核心理念 (Core Philosophy)》
-  - **role_and_use**: 以 Protocol_008_Model_Routing_and_Task_Delegation.md 约束 02_Protocols 的执行或协作流程；执行相关动作前核对
+  - **role_and_use**: 将 Protocol_008_Model_Routing_and_Task_Delegation.md（H1《Protocol 008: 异构模型动态路由与外包任务拆解协议 (Heterogeneous Model Routing &amp; Task Delegation)》；首个 H2《1. 核心理念 (Core Philosophy)》） 作为“执行合同”使用；执行前核验当前任务授权、精确 source head 与上位合同
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 Protocol_008_Model_Routing_and_Task_Delegation.md 所辖协议、生成、验证或协作流程之前读取
+  - **status_or_freshness**: semantic_profile=operational_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；执行前核验当前任务授权、精确 source head 与上位合同
+  - **when_to_read**: 触发条件：当前动作落入该文件规定的协议或执行边界。读取 Protocol_008_Model_Routing_and_Task_Delegation.md（H1《Protocol 008: 异构模型动态路由与外包任务拆解协议 (Heterogeneous Model Routing &amp; Task Delegation)》；首个 H2《1. 核心理念 (Core Philosophy)》）；执行前核验当前任务授权、精确 source head 与上位合同
 <!-- RIDX_FILE_HEX 30325f50726f746f636f6c732f696e6465782e6d64 -->
 - **path_or_link**: [`02_Protocols/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 02_Protocols 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 02_Protocols 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

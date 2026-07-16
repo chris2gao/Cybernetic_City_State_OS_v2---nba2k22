@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Human-facing durable brief 目录；保存接受、授权与 publication 说明的 source-bound 快照
+保存 Human-facing 接受、授权与 publication 决策快照
 
 ## authority_and_usage_boundary
 
@@ -11,8 +11,8 @@ Human-facing durable brief 目录；保存接受、授权与 publication 说明�
 
 ## recommended_reading_order
 
-1. [`.ai/HUMAN_BRIEFS/README.md`](README.md) — 用 README.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-2. [`.ai/HUMAN_BRIEFS/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
+1. [`.ai/HUMAN_BRIEFS/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`.ai/HUMAN_BRIEFS/README.md`](README.md) — 触发条件：查证该简报记录的 Human 决策、接受或 publication provenance。读取 README.md（H1《Human Brief Archive》；首个 H2《Policy》）；简报记录决策 provenance，不单独构成新的写入授权
 
 ## child_directories
 
@@ -23,21 +23,21 @@ Human-facing durable brief 目录；保存接受、授权与 publication 说明�
 <!-- RIDX_FILE_HEX 2e61692f48554d414e5f4252494546532f524541444d452e6d64 -->
 - **path_or_link**: [`.ai/HUMAN_BRIEFS/README.md`](README.md)
   - **content_summary**: H1《Human Brief Archive》；首个 H2《Policy》
-  - **role_and_use**: 用 README.md 为 .ai/HUMAN_BRIEFS 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: source-bound historical snapshot；当前适用性需用 Git/活动 mailbox 复核
-  - **when_to_read**: 用 README.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 README.md（H1《Human Brief Archive》；首个 H2《Policy》） 作为“Human-facing 决策简报”使用；简报记录决策 provenance，不单独构成新的写入授权
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=ai_human_brief_snapshot；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；简报记录决策 provenance，不单独构成新的写入授权
+  - **when_to_read**: 触发条件：查证该简报记录的 Human 决策、接受或 publication provenance。读取 README.md（H1《Human Brief Archive》；首个 H2《Policy》）；简报记录决策 provenance，不单独构成新的写入授权
 <!-- RIDX_FILE_HEX 2e61692f48554d414e5f4252494546532f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/HUMAN_BRIEFS/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 .ai/HUMAN_BRIEFS 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 .ai/HUMAN_BRIEFS 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 
-- 无额外分组；仍应只读取当前任务明确需要的 direct artifact。
+- 默认不加载 1 个历史/测试/生成/用户或大型 direct artifacts：`.ai/HUMAN_BRIEFS/README.md`。
 
 ## generation_and_freshness_note
 

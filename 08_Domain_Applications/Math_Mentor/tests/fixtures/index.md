@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Math Mentor 测试、fixture 与静态验证证据目录
+Math Mentor 测试分区 fixtures；fixture/verdict 不构成真实权限或 activation
 
 ## authority_and_usage_boundary
 
@@ -11,9 +11,9 @@ Math Mentor 测试、fixture 与静态验证证据目录
 
 ## recommended_reading_order
 
-1. [`08_Domain_Applications/Math_Mentor/tests/fixtures/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`08_Domain_Applications/Math_Mentor/tests/fixtures/calculus_265_expected.json`](calculus_265_expected.json) — 运行 calculus_265_expected.json 对应测试或定位特定失败用例时读取
-3. [`08_Domain_Applications/Math_Mentor/tests/fixtures/trig_006_expected.json`](trig_006_expected.json) — 运行 trig_006_expected.json 对应测试或定位特定失败用例时读取
+1. [`08_Domain_Applications/Math_Mentor/tests/fixtures/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`08_Domain_Applications/Math_Mentor/tests/fixtures/calculus_265_expected.json`](calculus_265_expected.json) — 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 calculus_265_expected.json（JSON object，顶层键：expected_exam_handoff_allowed_after_coverage, expected_handoff_status, expected_scheduler_write, expected_socratic_teaching_allowed, expected_tool_status, formal_definition_status, has_subtopics, lane）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+3. [`08_Domain_Applications/Math_Mentor/tests/fixtures/trig_006_expected.json`](trig_006_expected.json) — 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 trig_006_expected.json（JSON object，顶层键：expected_handoff_status, expected_scheduler_write, expected_tool_status, has_pure_math_definition, has_subtopics, lane, node_id, source_file）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 
 ## child_directories
 
@@ -24,24 +24,24 @@ Math Mentor 测试、fixture 与静态验证证据目录
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f66697874757265732f63616c63756c75735f3236355f65787065637465642e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/fixtures/calculus_265_expected.json`](calculus_265_expected.json)
   - **content_summary**: JSON object，顶层键：expected_exam_handoff_allowed_after_coverage, expected_handoff_status, expected_scheduler_write, expected_socratic_teaching_allowed, expected_tool_status, formal_d…
-  - **role_and_use**: 以 calculus_265_expected.json 作为 08_Domain_Applications/Math_Mentor/tests/fixtures 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 calculus_265_expected.json（JSON object，顶层键：expected_exam_handoff_allowed_after_coverage, expected_handoff_status, expected_scheduler_write, expected_socratic_teaching_allowed, expected_tool_status, formal_definition_status, has_subtopics, lane） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 calculus_265_expected.json 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=json_strict_structure_and_safe_fields；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 calculus_265_expected.json（JSON object，顶层键：expected_exam_handoff_allowed_after_coverage, expected_handoff_status, expected_scheduler_write, expected_socratic_teaching_allowed, expected_tool_status, formal_definition_status, has_subtopics, lane）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f66697874757265732f696e6465782e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/fixtures/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/tests/fixtures 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/tests/fixtures 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f66697874757265732f747269675f3030365f65787065637465642e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/fixtures/trig_006_expected.json`](trig_006_expected.json)
   - **content_summary**: JSON object，顶层键：expected_handoff_status, expected_scheduler_write, expected_tool_status, has_pure_math_definition, has_subtopics, lane, node_id, source_file
-  - **role_and_use**: 以 trig_006_expected.json 作为 08_Domain_Applications/Math_Mentor/tests/fixtures 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 trig_006_expected.json（JSON object，顶层键：expected_handoff_status, expected_scheduler_write, expected_tool_status, has_pure_math_definition, has_subtopics, lane, node_id, source_file） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 trig_006_expected.json 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=json_strict_structure_and_safe_fields；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 trig_006_expected.json（JSON object，顶层键：expected_handoff_status, expected_scheduler_write, expected_tool_status, has_pure_math_definition, has_subtopics, lane, node_id, source_file）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 
 ## do_not_load_by_default
 

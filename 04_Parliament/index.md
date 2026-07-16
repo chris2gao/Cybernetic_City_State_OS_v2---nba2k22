@@ -3,7 +3,7 @@
 
 ## directory_role
 
-议会提案、裁决与归档证据区；归档内容仅用于历史追溯
+议会 04_Parliament：组织 Issue、verdict 与归档 provenance，不等于现行宪章
 
 ## authority_and_usage_boundary
 
@@ -11,34 +11,34 @@
 
 ## recommended_reading_order
 
-1. [`04_Parliament/Engine_B_Court_Protocol.md`](Engine_B_Court_Protocol.md) — 执行 Engine_B_Court_Protocol.md 所辖协议、生成、验证或协作流程之前读取
-2. [`04_Parliament/README.md`](README.md) — 用 README.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-3. [`04_Parliament/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-4. [`04_Parliament/Issues/index.md`](Issues/index.md) — 定位具体议会 Issue 的 proposal、debate 与审查证据时进入
-5. [`04_Parliament/Verdicts/index.md`](Verdicts/index.md) — 查证议会 verdict 与裁决 provenance 时进入
-6. [`04_Parliament/_ARCHIVED/index.md`](_ARCHIVED/index.md) — 仅在追溯旧裁决或迁移来源时进入
+1. [`04_Parliament/Engine_B_Court_Protocol.md`](Engine_B_Court_Protocol.md) — 触发条件：当前动作落入该文件规定的协议或执行边界。读取 Engine_B_Court_Protocol.md（H1《引擎 B：元老院知识法庭操作法典 (Engine B Court Protocol)》；首个 H2《一、 法庭流转核心协议》）；执行前核验当前任务授权、精确 source head 与上位合同
+2. [`04_Parliament/README.md`](README.md) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 README.md（H1《📁 04_Parliament (议会 / 提案与辩论区)》；首个 H2《📄 目录结构》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+3. [`04_Parliament/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+4. [`04_Parliament/Issues/index.md`](Issues/index.md) — 定位议会 Issues 中的具体 Issue/verdict，并先区分 active 与 historical
+5. [`04_Parliament/Verdicts/index.md`](Verdicts/index.md) — 定位议会 Verdicts 中的具体 Issue/verdict，并先区分 active 与 historical
+6. [`04_Parliament/_ARCHIVED/index.md`](_ARCHIVED/index.md) — 追溯 _ARCHIVED 中已关闭裁决的来源或迁移影响
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 30345f5061726c69616d656e742f497373756573 -->
 - **path_or_link**: [`04_Parliament/Issues`](Issues/index.md)
-  - **content_scope**: 议会提案、裁决与归档证据区；归档内容仅用于历史追溯；tracked 后代文件数=40
-  - **when_to_enter**: 定位具体议会 Issue 的 proposal、debate 与审查证据时进入
+  - **content_scope**: 议会 Issues：组织 Issue、verdict 与归档 provenance，不等于现行宪章；tracked 后代文件数=40
+  - **when_to_enter**: 定位议会 Issues 中的具体 Issue/verdict，并先区分 active 与 historical
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30345f5061726c69616d656e742f5665726469637473 -->
 - **path_or_link**: [`04_Parliament/Verdicts`](Verdicts/index.md)
-  - **content_scope**: 议会提案、裁决与归档证据区；归档内容仅用于历史追溯；tracked 后代文件数=4
-  - **when_to_enter**: 查证议会 verdict 与裁决 provenance 时进入
+  - **content_scope**: 议会 Verdicts：组织 Issue、verdict 与归档 provenance，不等于现行宪章；tracked 后代文件数=4
+  - **when_to_enter**: 定位议会 Verdicts 中的具体 Issue/verdict，并先区分 active 与 historical
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30345f5061726c69616d656e742f5f4152434849564544 -->
 - **path_or_link**: [`04_Parliament/_ARCHIVED`](_ARCHIVED/index.md)
-  - **content_scope**: 议会提案、裁决与归档证据区；归档内容仅用于历史追溯；tracked 后代文件数=5
-  - **when_to_enter**: 仅在追溯旧裁决或迁移来源时进入
+  - **content_scope**: 议会冻结归档 _ARCHIVED；仅追溯已关闭裁决及迁移来源；tracked 后代文件数=5
+  - **when_to_enter**: 追溯 _ARCHIVED 中已关闭裁决的来源或迁移影响
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 30345f5061726c69616d656e742fe5b7b2e8a7a3e586b3e5bd92e6a1a3 -->
 - **path_or_link**: [`04_Parliament/已解决归档`](已解决归档/index.md)
-  - **content_scope**: 议会提案、裁决与归档证据区；归档内容仅用于历史追溯；tracked 后代文件数=11
-  - **when_to_enter**: 仅在追溯旧裁决或迁移来源时进入
+  - **content_scope**: 议会冻结归档 已解决归档；仅追溯已关闭裁决及迁移来源；tracked 后代文件数=11
+  - **when_to_enter**: 追溯 已解决归档 中已关闭裁决的来源或迁移影响
   - **load_policy**: `task_triggered_lazy_load`
 
 ## direct_files
@@ -46,24 +46,24 @@
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f456e67696e655f425f436f7572745f50726f746f636f6c2e6d64 -->
 - **path_or_link**: [`04_Parliament/Engine_B_Court_Protocol.md`](Engine_B_Court_Protocol.md)
   - **content_summary**: H1《引擎 B：元老院知识法庭操作法典 (Engine B Court Protocol)》；首个 H2《一、 法庭流转核心协议》
-  - **role_and_use**: 以 Engine_B_Court_Protocol.md 约束 04_Parliament 的执行或协作流程；执行相关动作前核对
+  - **role_and_use**: 将 Engine_B_Court_Protocol.md（H1《引擎 B：元老院知识法庭操作法典 (Engine B Court Protocol)》；首个 H2《一、 法庭流转核心协议》） 作为“执行合同”使用；执行前核验当前任务授权、精确 source head 与上位合同
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: tracked operational contract；执行前仍需核验任务授权与 source head
-  - **when_to_read**: 执行 Engine_B_Court_Protocol.md 所辖协议、生成、验证或协作流程之前读取
+  - **status_or_freshness**: semantic_profile=operational_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；执行前核验当前任务授权、精确 source head 与上位合同
+  - **when_to_read**: 触发条件：当前动作落入该文件规定的协议或执行边界。读取 Engine_B_Court_Protocol.md（H1《引擎 B：元老院知识法庭操作法典 (Engine B Court Protocol)》；首个 H2《一、 法庭流转核心协议》）；执行前核验当前任务授权、精确 source head 与上位合同
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f524541444d452e6d64 -->
 - **path_or_link**: [`04_Parliament/README.md`](README.md)
   - **content_summary**: H1《📁 04_Parliament (议会 / 提案与辩论区)》；首个 H2《📄 目录结构》
-  - **role_and_use**: 用 README.md 为 04_Parliament 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 README.md（H1《📁 04_Parliament (议会 / 提案与辩论区)》；首个 H2《📄 目录结构》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 README.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 README.md（H1《📁 04_Parliament (议会 / 提案与辩论区)》；首个 H2《📄 目录结构》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f696e6465782e6d64 -->
 - **path_or_link**: [`04_Parliament/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 04_Parliament 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 04_Parliament 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

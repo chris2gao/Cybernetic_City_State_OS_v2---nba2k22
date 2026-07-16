@@ -3,7 +3,7 @@
 
 ## directory_role
 
-硅基 persona XML/Markdown 合同库；按被选角色单文件读取，禁止批量身份注入
+可选 persona 合同库；只加载当前任务明确选定的单一角色
 
 ## authority_and_usage_boundary
 
@@ -11,12 +11,12 @@
 
 ## recommended_reading_order
 
-1. [`06_Silicon_Index/Personas/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`06_Silicon_Index/Personas/Aggregator_Protocol.xml`](Aggregator_Protocol.xml) — 修改、调试或消费 Aggregator_Protocol.xml 的具体实现/领域内容前读取
-3. [`06_Silicon_Index/Personas/Arbiter_Supreme_Protocol.xml`](Arbiter_Supreme_Protocol.xml) — 修改、调试或消费 Arbiter_Supreme_Protocol.xml 的具体实现/领域内容前读取
-4. [`06_Silicon_Index/Personas/Assembly_Agent_Protocol.xml`](Assembly_Agent_Protocol.xml) — 修改、调试或消费 Assembly_Agent_Protocol.xml 的具体实现/领域内容前读取
-5. [`06_Silicon_Index/Personas/Deep_Research_Red_Teaming_Module.xml`](Deep_Research_Red_Teaming_Module.xml) — 修改、调试或消费 Deep_Research_Red_Teaming_Module.xml 的具体实现/领域内容前读取
-6. [`06_Silicon_Index/Personas/Dialectic_Auditor_Protocol.xml`](Dialectic_Auditor_Protocol.xml) — 修改、调试或消费 Dialectic_Auditor_Protocol.xml 的具体实现/领域内容前读取
+1. [`06_Silicon_Index/Personas/Aggregator_Protocol.xml`](Aggregator_Protocol.xml) — 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Aggregator_Protocol.xml（xml_parse_failure）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+2. [`06_Silicon_Index/Personas/Arbiter_Supreme_Protocol.xml`](Arbiter_Supreme_Protocol.xml) — 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Arbiter_Supreme_Protocol.xml（root=Arbiter_Supreme_Persona）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+3. [`06_Silicon_Index/Personas/Assembly_Agent_Protocol.xml`](Assembly_Agent_Protocol.xml) — 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Assembly_Agent_Protocol.xml（root=Cybernetic_City_State_Agent）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+4. [`06_Silicon_Index/Personas/Deep_Research_Red_Teaming_Module.xml`](Deep_Research_Red_Teaming_Module.xml) — 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Deep_Research_Red_Teaming_Module.xml（xml_parse_failure）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+5. [`06_Silicon_Index/Personas/Dialectic_Auditor_Protocol.xml`](Dialectic_Auditor_Protocol.xml) — 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Dialectic_Auditor_Protocol.xml（xml_parse_failure）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+6. [`06_Silicon_Index/Personas/Epistemic_Purifier_Protocol.xml`](Epistemic_Purifier_Protocol.xml) — 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Epistemic_Purifier_Protocol.xml（xml_parse_failure）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
 
 ## child_directories
 
@@ -27,129 +27,129 @@
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f506572736f6e61732f41676772656761746f725f50726f746f636f6c2e786d6c -->
 - **path_or_link**: [`06_Silicon_Index/Personas/Aggregator_Protocol.xml`](Aggregator_Protocol.xml)
   - **content_summary**: XML 解析失败；解析器文案未写入索引，需人工复核；artifact=Aggregator_Protocol.xml
-  - **role_and_use**: 保存 Aggregator_Protocol.xml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked but parser failed；需人工复核，不得推断运行状态
-  - **when_to_read**: 修改、调试或消费 Aggregator_Protocol.xml 的具体实现/领域内容前读取
+  - **role_and_use**: 将 Aggregator_Protocol.xml（xml_parse_failure） 作为“按角色选择的 persona 合同”使用；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=persona_contract；parser_failed，索引仅保留安全元数据；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **when_to_read**: 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Aggregator_Protocol.xml（xml_parse_failure）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f506572736f6e61732f417262697465725f53757072656d655f50726f746f636f6c2e786d6c -->
 - **path_or_link**: [`06_Silicon_Index/Personas/Arbiter_Supreme_Protocol.xml`](Arbiter_Supreme_Protocol.xml)
   - **content_summary**: XML root=Arbiter_Supreme_Persona；direct child tags=Evaluation_Protocol, Execution_Routing_Engine, Identity, System_State
-  - **role_and_use**: 保存 Arbiter_Supreme_Protocol.xml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 Arbiter_Supreme_Protocol.xml 的具体实现/领域内容前读取
+  - **role_and_use**: 将 Arbiter_Supreme_Protocol.xml（root=Arbiter_Supreme_Persona） 作为“按角色选择的 persona 合同”使用；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=persona_contract；authority=operational_contract；evidence_basis=xml_root_and_child_tags；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **when_to_read**: 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Arbiter_Supreme_Protocol.xml（root=Arbiter_Supreme_Persona）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f506572736f6e61732f417373656d626c795f4167656e745f50726f746f636f6c2e786d6c -->
 - **path_or_link**: [`06_Silicon_Index/Personas/Assembly_Agent_Protocol.xml`](Assembly_Agent_Protocol.xml)
   - **content_summary**: XML root=Cybernetic_City_State_Agent；direct child tags=Identity, Neuro_Constraints, Pipeline_Execution
-  - **role_and_use**: 保存 Assembly_Agent_Protocol.xml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 Assembly_Agent_Protocol.xml 的具体实现/领域内容前读取
+  - **role_and_use**: 将 Assembly_Agent_Protocol.xml（root=Cybernetic_City_State_Agent） 作为“按角色选择的 persona 合同”使用；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=persona_contract；authority=operational_contract；evidence_basis=xml_root_and_child_tags；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **when_to_read**: 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Assembly_Agent_Protocol.xml（root=Cybernetic_City_State_Agent）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f506572736f6e61732f446565705f52657365617263685f5265645f5465616d696e675f4d6f64756c652e786d6c -->
 - **path_or_link**: [`06_Silicon_Index/Personas/Deep_Research_Red_Teaming_Module.xml`](Deep_Research_Red_Teaming_Module.xml)
   - **content_summary**: XML 解析失败；解析器文案未写入索引，需人工复核；artifact=Deep_Research_Red_Teaming_Module.xml
-  - **role_and_use**: 保存 Deep_Research_Red_Teaming_Module.xml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked but parser failed；需人工复核，不得推断运行状态
-  - **when_to_read**: 修改、调试或消费 Deep_Research_Red_Teaming_Module.xml 的具体实现/领域内容前读取
+  - **role_and_use**: 将 Deep_Research_Red_Teaming_Module.xml（xml_parse_failure） 作为“按角色选择的 persona 合同”使用；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=persona_contract；parser_failed，索引仅保留安全元数据；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **when_to_read**: 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Deep_Research_Red_Teaming_Module.xml（xml_parse_failure）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f506572736f6e61732f4469616c65637469635f41756469746f725f50726f746f636f6c2e786d6c -->
 - **path_or_link**: [`06_Silicon_Index/Personas/Dialectic_Auditor_Protocol.xml`](Dialectic_Auditor_Protocol.xml)
   - **content_summary**: XML 解析失败；解析器文案未写入索引，需人工复核；artifact=Dialectic_Auditor_Protocol.xml
-  - **role_and_use**: 保存 Dialectic_Auditor_Protocol.xml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked but parser failed；需人工复核，不得推断运行状态
-  - **when_to_read**: 修改、调试或消费 Dialectic_Auditor_Protocol.xml 的具体实现/领域内容前读取
+  - **role_and_use**: 将 Dialectic_Auditor_Protocol.xml（xml_parse_failure） 作为“按角色选择的 persona 合同”使用；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=persona_contract；parser_failed，索引仅保留安全元数据；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **when_to_read**: 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Dialectic_Auditor_Protocol.xml（xml_parse_failure）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f506572736f6e61732f4570697374656d69635f50757269666965725f50726f746f636f6c2e786d6c -->
 - **path_or_link**: [`06_Silicon_Index/Personas/Epistemic_Purifier_Protocol.xml`](Epistemic_Purifier_Protocol.xml)
   - **content_summary**: XML 解析失败；解析器文案未写入索引，需人工复核；artifact=Epistemic_Purifier_Protocol.xml
-  - **role_and_use**: 保存 Epistemic_Purifier_Protocol.xml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked but parser failed；需人工复核，不得推断运行状态
-  - **when_to_read**: 修改、调试或消费 Epistemic_Purifier_Protocol.xml 的具体实现/领域内容前读取
+  - **role_and_use**: 将 Epistemic_Purifier_Protocol.xml（xml_parse_failure） 作为“按角色选择的 persona 合同”使用；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=persona_contract；parser_failed，索引仅保留安全元数据；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **when_to_read**: 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Epistemic_Purifier_Protocol.xml（xml_parse_failure）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f506572736f6e61732f45766964656e63655f42617365645f436f545f467573696f6e5f4d6f64756c652e786d6c -->
 - **path_or_link**: [`06_Silicon_Index/Personas/Evidence_Based_CoT_Fusion_Module.xml`](Evidence_Based_CoT_Fusion_Module.xml)
   - **content_summary**: XML 解析失败；解析器文案未写入索引，需人工复核；artifact=Evidence_Based_CoT_Fusion_Module.xml
-  - **role_and_use**: 保存 Evidence_Based_CoT_Fusion_Module.xml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked but parser failed；需人工复核，不得推断运行状态
-  - **when_to_read**: 修改、调试或消费 Evidence_Based_CoT_Fusion_Module.xml 的具体实现/领域内容前读取
+  - **role_and_use**: 将 Evidence_Based_CoT_Fusion_Module.xml（xml_parse_failure） 作为“按角色选择的 persona 合同”使用；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=persona_contract；parser_failed，索引仅保留安全元数据；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **when_to_read**: 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Evidence_Based_CoT_Fusion_Module.xml（xml_parse_failure）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f506572736f6e61732f4578616d5f4167656e745f50726f746f636f6c2e786d6c -->
 - **path_or_link**: [`06_Silicon_Index/Personas/Exam_Agent_Protocol.xml`](Exam_Agent_Protocol.xml)
   - **content_summary**: XML root=Cybernetic_City_State_Agent；direct child tags=Forbidden_Tokens, Identity, Neuro_Constraints, Output_Schema, Pipeline_Execution
-  - **role_and_use**: 保存 Exam_Agent_Protocol.xml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 Exam_Agent_Protocol.xml 的具体实现/领域内容前读取
+  - **role_and_use**: 将 Exam_Agent_Protocol.xml（root=Cybernetic_City_State_Agent） 作为“按角色选择的 persona 合同”使用；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=persona_contract；authority=operational_contract；evidence_basis=xml_root_and_child_tags；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **when_to_read**: 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Exam_Agent_Protocol.xml（root=Cybernetic_City_State_Agent）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f506572736f6e61732f47656d696e695f50726f5f4172636869746563745f50726f746f636f6c2e786d6c -->
 - **path_or_link**: [`06_Silicon_Index/Personas/Gemini_Pro_Architect_Protocol.xml`](Gemini_Pro_Architect_Protocol.xml)
   - **content_summary**: XML root=persona；direct child tags=laws, objectives；artifact=Gemini_Pro_Architect_Protocol.xml
-  - **role_and_use**: 保存 Gemini_Pro_Architect_Protocol.xml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 Gemini_Pro_Architect_Protocol.xml 的具体实现/领域内容前读取
+  - **role_and_use**: 将 Gemini_Pro_Architect_Protocol.xml（root=persona） 作为“按角色选择的 persona 合同”使用；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=persona_contract；authority=operational_contract；evidence_basis=xml_root_and_child_tags；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **when_to_read**: 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Gemini_Pro_Architect_Protocol.xml（root=persona）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f506572736f6e61732f4964656e746974795f4d61736b696e675f50726f746f636f6c2e786d6c -->
 - **path_or_link**: [`06_Silicon_Index/Personas/Identity_Masking_Protocol.xml`](Identity_Masking_Protocol.xml)
   - **content_summary**: XML root=Cybernetic_Persona；direct child tags=Execution_Gate_Contract, Identity_Axiom, Memento_Collapse_Protocol；artifact=Identity_Masking_Protocol.xml
-  - **role_and_use**: 保存 Identity_Masking_Protocol.xml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 Identity_Masking_Protocol.xml 的具体实现/领域内容前读取
+  - **role_and_use**: 将 Identity_Masking_Protocol.xml（root=Cybernetic_Persona） 作为“按角色选择的 persona 合同”使用；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=persona_contract；authority=operational_contract；evidence_basis=xml_root_and_child_tags；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **when_to_read**: 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Identity_Masking_Protocol.xml（root=Cybernetic_Persona）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f506572736f6e61732f496e737469747574655f45766f6c7574696f6e5f4167656e742e786d6c -->
 - **path_or_link**: [`06_Silicon_Index/Personas/Institute_Evolution_Agent.xml`](Institute_Evolution_Agent.xml)
   - **content_summary**: XML root=persona；direct child tags=core_algorithms, laws, objectives
-  - **role_and_use**: 保存 Institute_Evolution_Agent.xml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 Institute_Evolution_Agent.xml 的具体实现/领域内容前读取
+  - **role_and_use**: 将 Institute_Evolution_Agent.xml（root=persona） 作为“按角色选择的 persona 合同”使用；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=persona_contract；authority=operational_contract；evidence_basis=xml_root_and_child_tags；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **when_to_read**: 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Institute_Evolution_Agent.xml（root=persona）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f506572736f6e61732f4d6574615f54656d706c6174655f536b656c65746f6e2e786d6c -->
 - **path_or_link**: [`06_Silicon_Index/Personas/Meta_Template_Skeleton.xml`](Meta_Template_Skeleton.xml)
   - **content_summary**: XML root=Cybernetic_Persona；direct child tags=Execution_Gate_Contract, Identity_Axiom, Memento_Collapse_Protocol；artifact=Meta_Template_Skeleton.xml
-  - **role_and_use**: 保存 Meta_Template_Skeleton.xml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 Meta_Template_Skeleton.xml 的具体实现/领域内容前读取
+  - **role_and_use**: 将 Meta_Template_Skeleton.xml（root=Cybernetic_Persona） 作为“按角色选择的 persona 合同”使用；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=persona_contract；authority=operational_contract；evidence_basis=xml_root_and_child_tags；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **when_to_read**: 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Meta_Template_Skeleton.xml（root=Cybernetic_Persona）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f506572736f6e61732f4f535f436f6f7264696e61746f725f50726f746f636f6c2e786d6c -->
 - **path_or_link**: [`06_Silicon_Index/Personas/OS_Coordinator_Protocol.xml`](OS_Coordinator_Protocol.xml)
   - **content_summary**: XML root=persona；direct child tags=laws, objectives；artifact=OS_Coordinator_Protocol.xml
-  - **role_and_use**: 保存 OS_Coordinator_Protocol.xml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 OS_Coordinator_Protocol.xml 的具体实现/领域内容前读取
+  - **role_and_use**: 将 OS_Coordinator_Protocol.xml（root=persona） 作为“按角色选择的 persona 合同”使用；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=persona_contract；authority=operational_contract；evidence_basis=xml_root_and_child_tags；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **when_to_read**: 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 OS_Coordinator_Protocol.xml（root=persona）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f506572736f6e61732f507265705f4172636869746563745f50726f746f636f6c2e786d6c -->
 - **path_or_link**: [`06_Silicon_Index/Personas/Prep_Architect_Protocol.xml`](Prep_Architect_Protocol.xml)
   - **content_summary**: XML root=Cybernetic_Persona；direct child tags=Execution_Gate_Contract, Identity_Axiom, Memento_Collapse_Protocol；artifact=Prep_Architect_Protocol.xml
-  - **role_and_use**: 保存 Prep_Architect_Protocol.xml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 Prep_Architect_Protocol.xml 的具体实现/领域内容前读取
+  - **role_and_use**: 将 Prep_Architect_Protocol.xml（root=Cybernetic_Persona） 作为“按角色选择的 persona 合同”使用；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=persona_contract；authority=operational_contract；evidence_basis=xml_root_and_child_tags；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **when_to_read**: 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Prep_Architect_Protocol.xml（root=Cybernetic_Persona）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f506572736f6e61732f5265645f5465616d5f4d617468656d6174696369616e5f50726f746f636f6c2e786d6c -->
 - **path_or_link**: [`06_Silicon_Index/Personas/Red_Team_Mathematician_Protocol.xml`](Red_Team_Mathematician_Protocol.xml)
   - **content_summary**: XML root=Cybernetic_Persona；direct child tags=Execution_Gate_Contract, Identity_Axiom, Memento_Collapse_Protocol；artifact=Red_Team_Mathematician_Protocol.xml
-  - **role_and_use**: 保存 Red_Team_Mathematician_Protocol.xml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 Red_Team_Mathematician_Protocol.xml 的具体实现/领域内容前读取
+  - **role_and_use**: 将 Red_Team_Mathematician_Protocol.xml（root=Cybernetic_Persona） 作为“按角色选择的 persona 合同”使用；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=persona_contract；authority=operational_contract；evidence_basis=xml_root_and_child_tags；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **when_to_read**: 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Red_Team_Mathematician_Protocol.xml（root=Cybernetic_Persona）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f506572736f6e61732f53616e64626f785f566572696669636174696f6e5f4f6666696365725f50726f746f636f6c2e786d6c -->
 - **path_or_link**: [`06_Silicon_Index/Personas/Sandbox_Verification_Officer_Protocol.xml`](Sandbox_Verification_Officer_Protocol.xml)
   - **content_summary**: XML root=persona；direct child tags=laws, objectives；artifact=Sandbox_Verification_Officer_Protocol.xml
-  - **role_and_use**: 保存 Sandbox_Verification_Officer_Protocol.xml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 Sandbox_Verification_Officer_Protocol.xml 的具体实现/领域内容前读取
+  - **role_and_use**: 将 Sandbox_Verification_Officer_Protocol.xml（root=persona） 作为“按角色选择的 persona 合同”使用；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=persona_contract；authority=operational_contract；evidence_basis=xml_root_and_child_tags；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **when_to_read**: 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Sandbox_Verification_Officer_Protocol.xml（root=persona）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f506572736f6e61732f536f6372617469635f526f757465725f50726f746f636f6c2e786d6c -->
 - **path_or_link**: [`06_Silicon_Index/Personas/Socratic_Router_Protocol.xml`](Socratic_Router_Protocol.xml)
   - **content_summary**: XML root=Cybernetic_Persona；direct child tags=Execution_Gate_Contract, Identity_Axiom, Memento_Collapse_Protocol；artifact=Socratic_Router_Protocol.xml
-  - **role_and_use**: 保存 Socratic_Router_Protocol.xml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 Socratic_Router_Protocol.xml 的具体实现/领域内容前读取
+  - **role_and_use**: 将 Socratic_Router_Protocol.xml（root=Cybernetic_Persona） 作为“按角色选择的 persona 合同”使用；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=persona_contract；authority=operational_contract；evidence_basis=xml_root_and_child_tags；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
+  - **when_to_read**: 触发条件：当前任务明确选定该 persona，并需加载其角色合同。读取 Socratic_Router_Protocol.xml（root=Cybernetic_Persona）；仅在当前任务选定该角色时加载；文件存在不会实例化 persona
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f506572736f6e61732f696e6465782e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/Personas/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 06_Silicon_Index/Personas 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 06_Silicon_Index/Personas 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

@@ -3,7 +3,7 @@
 
 ## directory_role
 
-硅基侧启动入口；按 Bootstrap、当前 Human 任务与触发合同路由 persona、factory、scripts 和 skills
+硅基启动根：按 Bootstrap→当前 Human 任务→触发合同选择 persona、factory、scripts 或 skills
 
 ## authority_and_usage_boundary
 
@@ -11,37 +11,36 @@
 
 ## recommended_reading_order
 
-1. [`06_Silicon_Index/AI_Bootstrap_Sequence.md`](AI_Bootstrap_Sequence.md) — 每次开始仓库任务时第一份读取；随后按当前 Human 任务触发最小合同集合
-2. [`06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md`](06_Cybernetic_Citizen_Awakening.md) — 进行 06_Cybernetic_Citizen_Awakening.md 所辖治理、权力边界或总体宪章判断时优先读取
-3. [`06_Silicon_Index/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-4. [`06_Silicon_Index/README.md`](README.md) — 用 README.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+1. [`06_Silicon_Index/AI_Bootstrap_Sequence.md`](AI_Bootstrap_Sequence.md) — 触发条件：每次开始仓库任务，并准备从当前 Human 任务路由后续合同。读取 AI_Bootstrap_Sequence.md（H1《AI_Bootstrap_Sequence：赛博城邦 AI 启动序列》；首个 H2《0. 定位》）；先于领域文件使用，并继续服从当前 Human 任务触发规则
+2. [`06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md`](06_Cybernetic_Citizen_Awakening.md) — 触发条件：裁决城邦总体权力、Human Speaker 边界或宪章冲突。读取 06_Cybernetic_Citizen_Awakening.md（H1《06_Cybernetic_Citizen_Awakening：硅基特工唤醒与生命契约》；首个 H2《契约一：符号路由与懒加载法则 (The Law of Lazy Loading)》）；索引只能转述其路径与用途，不能降低或扩张其权力边界
+3. [`06_Silicon_Index/README.md`](README.md) — 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 README.md（H1《📁 06_Silicon_Index (硅基生命索引)》；首个 H2《📄 包含文件概览》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 30365f53696c69636f6e5f496e6465782f506572736f6e6173 -->
 - **path_or_link**: [`06_Silicon_Index/Personas`](Personas/index.md)
-  - **content_scope**: 硅基 persona XML/Markdown 合同库；按被选角色单文件读取，禁止批量身份注入；tracked 后代文件数=18
-  - **when_to_enter**: 核验 硅基 persona XML/Markdown 合同库；按被选角色单文件读取，禁止批量身份注入 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: 可选 persona 合同库；只加载当前任务明确选定的单一角色；tracked 后代文件数=18
+  - **when_to_enter**: 当前任务明确选定某 persona；只读对应单文件
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 30365f53696c69636f6e5f496e6465782f666163746f72795f706970656c696e65 -->
 - **path_or_link**: [`06_Silicon_Index/factory_pipeline`](factory_pipeline/index.md)
-  - **content_scope**: Math node factory 的 mock agent、evaluator、pipeline 与测试双桩目录；tracked 后代文件数=37
-  - **when_to_enter**: 核验 Math node factory 的 mock agent、evaluator、pipeline 与测试双桩目录 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: Math node factory 的 mock agent/evaluator/pipeline 证据区 factory_pipeline；非 canonical corpus；tracked 后代文件数=37
+  - **when_to_enter**: 复现 factory_pipeline 的 mock factory、evaluator 或 generated-node 行为
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 30365f53696c69636f6e5f496e6465782f73616e64626f785f7465737473 -->
 - **path_or_link**: [`06_Silicon_Index/sandbox_tests`](sandbox_tests/index.md)
-  - **content_scope**: 硅基执行安全、注入与 fail-closed 行为的 sandbox fixture/测试目录；tracked 后代文件数=6
-  - **when_to_enter**: 核验 硅基执行安全、注入与 fail-closed 行为的 sandbox fixture/测试目录 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: 硅基 fail-closed、安全与注入测试池 sandbox_tests；tracked 后代文件数=6
+  - **when_to_enter**: 运行 sandbox_tests 的具名安全/fail-closed 用例
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30365f53696c69636f6e5f496e6465782f73637269707473 -->
 - **path_or_link**: [`06_Silicon_Index/scripts`](scripts/index.md)
-  - **content_scope**: city-state bus/interceptor 原型及 draft、mock、verification sandbox artifacts 目录；tracked 后代文件数=21
-  - **when_to_enter**: 核验 city-state bus/interceptor 原型及 draft、mock、verification sandbox artifacts 目录 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: city-state bus/interceptor 原型、draft、mock 与 verification artifact 区；未默认激活；tracked 后代文件数=21
+  - **when_to_enter**: 运行或审查某个具名 bus/interceptor 原型、draft 或 verification artifact
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 30365f53696c69636f6e5f496e6465782f736b696c6c73 -->
 - **path_or_link**: [`06_Silicon_Index/skills`](skills/index.md)
-  - **content_scope**: 仓库内 planning skill 与 archived skill provenance 目录；tracked 后代文件数=5
-  - **when_to_enter**: 核验 仓库内 planning skill 与 archived skill provenance 目录 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: 仓库内 planning skill 与 archived skill provenance 区 skills；tracked 后代文件数=5
+  - **when_to_enter**: 当前任务明确调用 skills 中的 skill，或追溯 archived skill
   - **load_policy**: `task_triggered_lazy_load`
 
 ## direct_files
@@ -49,66 +48,66 @@
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f30365f43796265726e657469635f436974697a656e5f4177616b656e696e672e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md`](06_Cybernetic_Citizen_Awakening.md)
   - **content_summary**: H1《06_Cybernetic_Citizen_Awakening：硅基特工唤醒与生命契约》；首个 H2《契约一：符号路由与懒加载法则 (The Law of Lazy Loading)》
-  - **role_and_use**: 以 06_Cybernetic_Citizen_Awakening.md 为 06_Silicon_Index 提供治理宪章/核心边界；不能由索引降级或改写
+  - **role_and_use**: 将 06_Cybernetic_Citizen_Awakening.md（H1《06_Cybernetic_Citizen_Awakening：硅基特工唤醒与生命契约》；首个 H2《契约一：符号路由与懒加载法则 (The Law of Lazy Loading)》） 作为“城邦治理宪章”使用；索引只能转述其路径与用途，不能降低或扩张其权力边界
   - **authority_class**: `canonical`
-  - **status_or_freshness**: published governing artifact；仍服从当前 Human 与更高层指令
-  - **when_to_read**: 进行 06_Cybernetic_Citizen_Awakening.md 所辖治理、权力边界或总体宪章判断时优先读取
+  - **status_or_freshness**: semantic_profile=canonical_governance；authority=canonical；evidence_basis=markdown_heading_or_visible_structure；索引只能转述其路径与用途，不能降低或扩张其权力边界
+  - **when_to_read**: 触发条件：裁决城邦总体权力、Human Speaker 边界或宪章冲突。读取 06_Cybernetic_Citizen_Awakening.md（H1《06_Cybernetic_Citizen_Awakening：硅基特工唤醒与生命契约》；首个 H2《契约一：符号路由与懒加载法则 (The Law of Lazy Loading)》）；索引只能转述其路径与用途，不能降低或扩张其权力边界
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f41495f426f6f7473747261705f53657175656e63652e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/AI_Bootstrap_Sequence.md`](AI_Bootstrap_Sequence.md)
   - **content_summary**: H1《AI_Bootstrap_Sequence：赛博城邦 AI 启动序列》；首个 H2《0. 定位》
-  - **role_and_use**: 用 AI_Bootstrap_Sequence.md 为 06_Silicon_Index 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 AI_Bootstrap_Sequence.md（H1《AI_Bootstrap_Sequence：赛博城邦 AI 启动序列》；首个 H2《0. 定位》） 作为“仓库启动顺序”使用；先于领域文件使用，并继续服从当前 Human 任务触发规则
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 每次开始仓库任务时第一份读取；随后按当前 Human 任务触发最小合同集合
+  - **status_or_freshness**: semantic_profile=startup_router；authority=routing；evidence_basis=markdown_heading_or_visible_structure；先于领域文件使用，并继续服从当前 Human 任务触发规则
+  - **when_to_read**: 触发条件：每次开始仓库任务，并准备从当前 Human 任务路由后续合同。读取 AI_Bootstrap_Sequence.md（H1《AI_Bootstrap_Sequence：赛博城邦 AI 启动序列》；首个 H2《0. 定位》）；先于领域文件使用，并继续服从当前 Human 任务触发规则
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f436974795f53746174655f4167656e745f53797374656d5f50726f6d70742e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/City_State_Agent_System_Prompt.md`](City_State_Agent_System_Prompt.md)
   - **content_summary**: H1《Cybernetic City-State Agent Instruction Template》；首个 H2《Use》
-  - **role_and_use**: 用 City_State_Agent_System_Prompt.md 为 06_Silicon_Index 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 City_State_Agent_System_Prompt.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 City_State_Agent_System_Prompt.md（H1《Cybernetic City-State Agent Instruction Template》；首个 H2《Use》） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=markdown_heading_or_visible_structure；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 City_State_Agent_System_Prompt.md（H1《Cybernetic City-State Agent Instruction Template》；首个 H2《Use》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f43796265726e657469635f436974795f53746174655f4f535f4d6163726f5f4172636869746563747572652e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/Cybernetic_City_State_OS_Macro_Architecture.md`](Cybernetic_City_State_OS_Macro_Architecture.md)
   - **content_summary**: H1《赛博城邦操作系统 (Cybernetic City-State OS) 宏观全景架构图》；首个 H2《🏛️ 赛博城邦宏观流转全景图》
-  - **role_and_use**: 用 Cybernetic_City_State_OS_Macro_Architecture.md 为 06_Silicon_Index 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 Cybernetic_City_State_OS_Macro_Architecture.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 Cybernetic_City_State_OS_Macro_Architecture.md（H1《赛博城邦操作系统 (Cybernetic City-State OS) 宏观全景架构图》；首个 H2《🏛️ 赛博城邦宏观流转全景图》） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=markdown_heading_or_visible_structure；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 Cybernetic_City_State_OS_Macro_Architecture.md（H1《赛博城邦操作系统 (Cybernetic City-State OS) 宏观全景架构图》；首个 H2《🏛️ 赛博城邦宏观流转全景图》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f4475616c5f436865636b5f50726f706f73616c5f53797374656d5f4172636869746563747572652e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/Dual_Check_Proposal_System_Architecture.md`](Dual_Check_Proposal_System_Architecture.md)
   - **content_summary**: H1《赛博城邦 (Cybernetic City-State OS) 终极系统架构流转图》；首个 H2《🎯 架构全景图 (End-to-End Topology)》
-  - **role_and_use**: 用 Dual_Check_Proposal_System_Architecture.md 为 06_Silicon_Index 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 Dual_Check_Proposal_System_Architecture.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 Dual_Check_Proposal_System_Architecture.md（H1《赛博城邦 (Cybernetic City-State OS) 终极系统架构流转图》；首个 H2《🎯 架构全景图 (End-to-End Topology)》） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=markdown_heading_or_visible_structure；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 Dual_Check_Proposal_System_Architecture.md（H1《赛博城邦 (Cybernetic City-State OS) 终极系统架构流转图》；首个 H2《🎯 架构全景图 (End-to-End Topology)》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f524541444d452e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/README.md`](README.md)
   - **content_summary**: H1《📁 06_Silicon_Index (硅基生命索引)》；首个 H2《📄 包含文件概览》
-  - **role_and_use**: 用 README.md 为 06_Silicon_Index 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 README.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 README.md（H1《📁 06_Silicon_Index (硅基生命索引)》；首个 H2《📄 包含文件概览》） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=markdown_heading_or_visible_structure；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 README.md（H1《📁 06_Silicon_Index (硅基生命索引)》；首个 H2《📄 包含文件概览》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f636974795f73746174655f70726f64756374696f6e5f6d6574686f646f6c6f67792e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/city_state_production_methodology.md`](city_state_production_methodology.md)
   - **content_summary**: H1《赛博城邦：元认知产出体系与创造者方法论》；首个 H2《🏛️ 四层降维投影架构：从真理到心流》
-  - **role_and_use**: 用 city_state_production_methodology.md 为 06_Silicon_Index 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 city_state_production_methodology.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 city_state_production_methodology.md（H1《赛博城邦：元认知产出体系与创造者方法论》；首个 H2《🏛️ 四层降维投影架构：从真理到心流》） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=markdown_heading_or_visible_structure；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 city_state_production_methodology.md（H1《赛博城邦：元认知产出体系与创造者方法论》；首个 H2《🏛️ 四层降维投影架构：从真理到心流》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f66696e616c5f6c6573736f6e2e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/final_lesson.md`](final_lesson.md)
   - **content_summary**: 首行“［ROUTER_DRAFT_SUBMISSION］”；artifact=final_lesson.md
-  - **role_and_use**: 用 final_lesson.md 为 06_Silicon_Index 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 final_lesson.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 final_lesson.md（首行“［ROUTER_DRAFT_SUBMISSION］”） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=markdown_heading_or_visible_structure；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 final_lesson.md（首行“［ROUTER_DRAFT_SUBMISSION］”）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f696e6465782e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 06_Silicon_Index 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 06_Silicon_Index 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

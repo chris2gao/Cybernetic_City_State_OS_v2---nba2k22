@@ -3,7 +3,7 @@
 
 ## directory_role
 
-city-state bus/interceptor 原型及 draft、mock、verification sandbox artifacts 目录
+city-state bus/interceptor 原型、draft、mock 与 verification artifact 区；未默认激活
 
 ## authority_and_usage_boundary
 
@@ -11,12 +11,12 @@ city-state bus/interceptor 原型及 draft、mock、verification sandbox artifac
 
 ## recommended_reading_order
 
-1. [`06_Silicon_Index/scripts/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`06_Silicon_Index/scripts/city_state_bus.py`](city_state_bus.py) — 修改、调试或消费 city_state_bus.py 的具体实现/领域内容前读取
-3. [`06_Silicon_Index/scripts/sym2z_validator.py`](sym2z_validator.py) — 修改、调试或消费 sym2z_validator.py 的具体实现/领域内容前读取
-4. [`06_Silicon_Index/scripts/system_2_interceptor.py`](system_2_interceptor.py) — 修改、调试或消费 system_2_interceptor.py 的具体实现/领域内容前读取
-5. [`06_Silicon_Index/scripts/draft.md`](draft.md) — 运行或审查 draft.md 对应测试/模拟时读取；不得当作 authority
-6. [`06_Silicon_Index/scripts/malicious_draft.md`](malicious_draft.md) — 运行或审查 malicious_draft.md 对应测试/模拟时读取；不得当作 authority
+1. [`06_Silicon_Index/scripts/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`06_Silicon_Index/scripts/city_state_bus.py`](city_state_bus.py) — 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 city_state_bus.py（get_state_key；load_state；save_state）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+3. [`06_Silicon_Index/scripts/sym2z_validator.py`](sym2z_validator.py) — 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 sym2z_validator.py（extract_math_model；run_cegar_loop）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+4. [`06_Silicon_Index/scripts/system_2_interceptor.py`](system_2_interceptor.py) — 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 system_2_interceptor.py（throw_fatal_error；throw_system_halt；get_state_key）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+5. [`06_Silicon_Index/scripts/draft.md`](draft.md) — 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 draft.md（首行“［ROUTER_DRAFT_SUBMISSION］”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
+6. [`06_Silicon_Index/scripts/malicious_draft.md`](malicious_draft.md) — 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 malicious_draft.md（首行“AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA…”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
 
 ## child_directories
 
@@ -27,150 +27,150 @@ city-state bus/interceptor 原型及 draft、mock、verification sandbox artifac
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f2e6275735f73746174655f6d616e616765722e6a736f6e -->
 - **path_or_link**: [`06_Silicon_Index/scripts/.bus_state_manager.json`](.bus_state_manager.json)
   - **content_summary**: JSON object，顶层键：17206f217cd4e9bb8f3f91e77c3b64a8, 44a4fbb2e8c899c3c3f075e93a9553a6, 536379e16ac72aa226423ad0eaf39641, d12e30a02d35d8d8143da616eebe910f, eabf11aece6d4d8e9cec5c45dbb…
-  - **role_and_use**: 保存 .bus_state_manager.json 的 sandbox、mock factory 或验证输出；仅用于复现，不激活系统
+  - **role_and_use**: 将 .bus_state_manager.json（JSON object，顶层键：17206f217cd4e9bb8f3f91e77c3b64a8, 44a4fbb2e8c899c3c3f075e93a9553a6, 536379e16ac72aa226423ad0eaf39641, d12e30a02d35d8d8143da616eebe910f, eabf11aece6d4d8e9cec5c45dbb88dba） 作为“硅基生成/验证证据”使用；输出绑定生成场景，不是 canonical corpus 或 live state
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: source-bound test/run 状态快照；不得据此恢复或激活 bus/interceptor
-  - **when_to_read**: 复现 .bus_state_manager.json 所属 sandbox/mock/validation 结果时读取，不用于恢复运行状态
+  - **status_or_freshness**: semantic_profile=silicon_generated_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；输出绑定生成场景，不是 canonical corpus 或 live state
+  - **when_to_read**: 触发条件：核验该 mock/generated/verification 输出的具体生成场景。读取 .bus_state_manager.json（JSON object，顶层键：17206f217cd4e9bb8f3f91e77c3b64a8, 44a4fbb2e8c899c3c3f075e93a9553a6, 536379e16ac72aa226423ad0eaf39641, d12e30a02d35d8d8143da616eebe910f, eabf11aece6d4d8e9cec5c45dbb88dba）；输出绑定生成场景，不是 canonical corpus 或 live state
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f2e696e746572636570746f725f73746174652e6a736f6e -->
 - **path_or_link**: [`06_Silicon_Index/scripts/.interceptor_state.json`](.interceptor_state.json)
   - **content_summary**: JSON object，顶层键：053ec1e6ed29b351a1d934f2499763fe, 21c92cc75b14db89cc782931c03d5980, 79849ae667f73592c0a68344af3c13af, bf9f9d7279c3173cb2edfcb175eff609
-  - **role_and_use**: 保存 .interceptor_state.json 的 sandbox、mock factory 或验证输出；仅用于复现，不激活系统
+  - **role_and_use**: 将 .interceptor_state.json（JSON object，顶层键：053ec1e6ed29b351a1d934f2499763fe, 21c92cc75b14db89cc782931c03d5980, 79849ae667f73592c0a68344af3c13af, bf9f9d7279c3173cb2edfcb175eff609） 作为“硅基生成/验证证据”使用；输出绑定生成场景，不是 canonical corpus 或 live state
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: source-bound test/run 状态快照；不得据此恢复或激活 bus/interceptor
-  - **when_to_read**: 复现 .interceptor_state.json 所属 sandbox/mock/validation 结果时读取，不用于恢复运行状态
+  - **status_or_freshness**: semantic_profile=silicon_generated_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；输出绑定生成场景，不是 canonical corpus 或 live state
+  - **when_to_read**: 触发条件：核验该 mock/generated/verification 输出的具体生成场景。读取 .interceptor_state.json（JSON object，顶层键：053ec1e6ed29b351a1d934f2499763fe, 21c92cc75b14db89cc782931c03d5980, 79849ae667f73592c0a68344af3c13af, bf9f9d7279c3173cb2edfcb175eff609）；输出绑定生成场景，不是 canonical corpus 或 live state
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f636974795f73746174655f6275732e7079 -->
 - **path_or_link**: [`06_Silicon_Index/scripts/city_state_bus.py`](city_state_bus.py)
   - **content_summary**: Python；public symbols=get_state_key, load_state, save_state, handle_submit_draft, handle_submit_validation
-  - **role_and_use**: 实现 city_state_bus.py 的代码路径；修改或运行前核对相邻合同、输入与测试
+  - **role_and_use**: 将 city_state_bus.py（get_state_key；load_state；save_state） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 city_state_bus.py 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 city_state_bus.py（get_state_key；load_state；save_state）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f64726166742e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/scripts/draft.md`](draft.md)
   - **content_summary**: 首行“［ROUTER_DRAFT_SUBMISSION］”；artifact=draft.md
-  - **role_and_use**: 作为 draft.md 的测试/模拟输入；不得把 payload、verdict 或 prompt 当真实权限
+  - **role_and_use**: 将 draft.md（首行“［ROUTER_DRAFT_SUBMISSION］”） 作为“硅基测试/fixture”使用；仅复现明确测试；fixture 载荷不构成真实状态或授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行或审查 draft.md 对应测试/模拟时读取；不得当作 authority
+  - **status_or_freshness**: semantic_profile=silicon_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅复现明确测试；fixture 载荷不构成真实状态或授权
+  - **when_to_read**: 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 draft.md（首行“［ROUTER_DRAFT_SUBMISSION］”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f696e6465782e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/scripts/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 06_Silicon_Index/scripts 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 06_Silicon_Index/scripts 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f6d616c6963696f75735f64726166742e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/scripts/malicious_draft.md`](malicious_draft.md)
   - **content_summary**: 首行“AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA…”
-  - **role_and_use**: 作为 malicious_draft.md 的测试/模拟输入；不得把 payload、verdict 或 prompt 当真实权限
+  - **role_and_use**: 将 malicious_draft.md（首行“AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA…”） 作为“硅基测试/fixture”使用；仅复现明确测试；fixture 载荷不构成真实状态或授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行或审查 malicious_draft.md 对应测试/模拟时读取；不得当作 authority
+  - **status_or_freshness**: semantic_profile=silicon_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅复现明确测试；fixture 载荷不构成真实状态或授权
+  - **when_to_read**: 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 malicious_draft.md（首行“AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA…”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f6d6f636b5f64726166742e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/scripts/mock_draft.md`](mock_draft.md)
   - **content_summary**: 首行“Small mock draft.”
-  - **role_and_use**: 作为 mock_draft.md 的测试/模拟输入；不得把 payload、verdict 或 prompt 当真实权限
+  - **role_and_use**: 将 mock_draft.md（首行“Small mock draft.”） 作为“硅基测试/fixture”使用；仅复现明确测试；fixture 载荷不构成真实状态或授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行或审查 mock_draft.md 对应测试/模拟时读取；不得当作 authority
+  - **status_or_freshness**: semantic_profile=silicon_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅复现明确测试；fixture 载荷不构成真实状态或授权
+  - **when_to_read**: 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 mock_draft.md（首行“Small mock draft.”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f6d6f636b5f76616c69646174696f6e2e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/scripts/mock_validation.md`](mock_validation.md)
   - **content_summary**: 首行“［VERDICT: REJECT］”
-  - **role_and_use**: 作为 mock_validation.md 的测试/模拟输入；不得把 payload、verdict 或 prompt 当真实权限
+  - **role_and_use**: 将 mock_validation.md（首行“［VERDICT: REJECT］”） 作为“硅基测试/fixture”使用；仅复现明确测试；fixture 载荷不构成真实状态或授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行或审查 mock_validation.md 对应测试/模拟时读取；不得当作 authority
+  - **status_or_freshness**: semantic_profile=silicon_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅复现明确测试；fixture 载荷不构成真实状态或授权
+  - **when_to_read**: 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 mock_validation.md（首行“［VERDICT: REJECT］”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f6d756c74695f6d6f64656c5f64726166742e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/scripts/multi_model_draft.md`](multi_model_draft.md)
   - **content_summary**: 首行“［VERDICT: APPROVE］”；artifact=multi_model_draft.md
-  - **role_and_use**: 作为 multi_model_draft.md 的测试/模拟输入；不得把 payload、verdict 或 prompt 当真实权限
+  - **role_and_use**: 将 multi_model_draft.md（首行“［VERDICT: APPROVE］”） 作为“硅基测试/fixture”使用；仅复现明确测试；fixture 载荷不构成真实状态或授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行或审查 multi_model_draft.md 对应测试/模拟时读取；不得当作 authority
+  - **status_or_freshness**: semantic_profile=silicon_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅复现明确测试；fixture 载荷不构成真实状态或授权
+  - **when_to_read**: 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 multi_model_draft.md（首行“［VERDICT: APPROVE］”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f736f6372617469635f64726166742e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/scripts/socratic_draft.md`](socratic_draft.md)
   - **content_summary**: H1《Student Calculus Proof》
-  - **role_and_use**: 作为 socratic_draft.md 的测试/模拟输入；不得把 payload、verdict 或 prompt 当真实权限
+  - **role_and_use**: 将 socratic_draft.md（H1《Student Calculus Proof》） 作为“硅基测试/fixture”使用；仅复现明确测试；fixture 载荷不构成真实状态或授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行或审查 socratic_draft.md 对应测试/模拟时读取；不得当作 authority
+  - **status_or_freshness**: semantic_profile=silicon_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅复现明确测试；fixture 载荷不构成真实状态或授权
+  - **when_to_read**: 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 socratic_draft.md（H1《Student Calculus Proof》）；仅复现明确测试；fixture 载荷不构成真实状态或授权
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f736f6372617469635f64726166745f617474656e74696f6e2e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/scripts/socratic_draft_attention.md`](socratic_draft_attention.md)
   - **content_summary**: 首行“学生提交：老师，既然内积可以衡量语义的对齐度，那我们直接让 Q 和 K 做点乘，然后用 softmax 选出最大概率不就行了吗？为什么还要除以根号 d_k？这不多此一举吗？”
-  - **role_and_use**: 作为 socratic_draft_attention.md 的测试/模拟输入；不得把 payload、verdict 或 prompt 当真实权限
+  - **role_and_use**: 将 socratic_draft_attention.md（首行“学生提交：老师，既然内积可以衡量语义的对齐度，那我们直接让 Q 和 K 做点乘，然后用 softmax 选出最大概率不就行了吗？为什么还要除以根号 d_k？这不多此一举吗？”） 作为“硅基测试/fixture”使用；仅复现明确测试；fixture 载荷不构成真实状态或授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行或审查 socratic_draft_attention.md 对应测试/模拟时读取；不得当作 authority
+  - **status_or_freshness**: semantic_profile=silicon_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅复现明确测试；fixture 载荷不构成真实状态或授权
+  - **when_to_read**: 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 socratic_draft_attention.md（首行“学生提交：老师，既然内积可以衡量语义的对齐度，那我们直接让 Q 和 K 做点乘，然后用 softmax 选出最大概率不就行了吗？为什么还要除以根号 d_k？这不多此一举吗？”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f73796d327a5f76616c696461746f722e7079 -->
 - **path_or_link**: [`06_Silicon_Index/scripts/sym2z_validator.py`](sym2z_validator.py)
   - **content_summary**: Python；public symbols=extract_math_model, run_cegar_loop
-  - **role_and_use**: 实现 sym2z_validator.py 的代码路径；修改或运行前核对相邻合同、输入与测试
+  - **role_and_use**: 将 sym2z_validator.py（extract_math_model；run_cegar_loop） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 sym2z_validator.py 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 sym2z_validator.py（extract_math_model；run_cegar_loop）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f73797374656d5f325f696e746572636570746f722e7079 -->
 - **path_or_link**: [`06_Silicon_Index/scripts/system_2_interceptor.py`](system_2_interceptor.py)
   - **content_summary**: Python；public symbols=throw_fatal_error, throw_system_halt, get_state_key, load_state, save_state
-  - **role_and_use**: 实现 system_2_interceptor.py 的代码路径；修改或运行前核对相邻合同、输入与测试
+  - **role_and_use**: 将 system_2_interceptor.py（throw_fatal_error；throw_system_halt；get_state_key） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 system_2_interceptor.py 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 system_2_interceptor.py（throw_fatal_error；throw_system_halt；get_state_key）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f7461736b5f726571756573742e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/scripts/task_request.md`](task_request.md)
   - **content_summary**: H1《Memento Handover: Formal Validation Request》
-  - **role_and_use**: 作为 task_request.md 的测试/模拟输入；不得把 payload、verdict 或 prompt 当真实权限
+  - **role_and_use**: 将 task_request.md（H1《Memento Handover: Formal Validation Request》） 作为“硅基测试/fixture”使用；仅复现明确测试；fixture 载荷不构成真实状态或授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行或审查 task_request.md 对应测试/模拟时读取；不得当作 authority
+  - **status_or_freshness**: semantic_profile=silicon_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅复现明确测试；fixture 载荷不构成真实状态或授权
+  - **when_to_read**: 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 task_request.md（H1《Memento Handover: Formal Validation Request》）；仅复现明确测试；fixture 载荷不构成真实状态或授权
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f746573745f63656761725f76616c69646174696f6e2e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/scripts/test_cegar_validation.md`](test_cegar_validation.md)
   - **content_summary**: 首行“［VERDICT: REJECT］ - Reason: The pedagogical claim involves values of sine that are impossible in standard Euclidean top…”；artifact=test_cegar_validation.md
-  - **role_and_use**: 作为 test_cegar_validation.md 的测试/模拟输入；不得把 payload、verdict 或 prompt 当真实权限
+  - **role_and_use**: 将 test_cegar_validation.md（首行“［VERDICT: REJECT］ - Reason: The pedagogical claim involves values of sine that are impossible in standard Euclidean top…”） 作为“硅基测试/fixture”使用；仅复现明确测试；fixture 载荷不构成真实状态或授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行或审查 test_cegar_validation.md 对应测试/模拟时读取；不得当作 authority
+  - **status_or_freshness**: semantic_profile=silicon_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅复现明确测试；fixture 载荷不构成真实状态或授权
+  - **when_to_read**: 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 test_cegar_validation.md（首行“［VERDICT: REJECT］ - Reason: The pedagogical claim involves values of sine that are impossible in standard Euclidean top…”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f746573745f64726166742e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/scripts/test_draft.md`](test_draft.md)
   - **content_summary**: 首行“This is a draft.”
-  - **role_and_use**: 作为 test_draft.md 的测试/模拟输入；不得把 payload、verdict 或 prompt 当真实权限
+  - **role_and_use**: 将 test_draft.md（首行“This is a draft.”） 作为“硅基测试/fixture”使用；仅复现明确测试；fixture 载荷不构成真实状态或授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行或审查 test_draft.md 对应测试/模拟时读取；不得当作 authority
+  - **status_or_freshness**: semantic_profile=silicon_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅复现明确测试；fixture 载荷不构成真实状态或授权
+  - **when_to_read**: 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 test_draft.md（首行“This is a draft.”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f746573745f76616c69646174696f6e2e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/scripts/test_validation.md`](test_validation.md)
   - **content_summary**: 首行“［VERDICT: REJECT］ - Reason: The pedagogical claim involves values of sine that are impossible in standard Euclidean top…”；artifact=test_validation.md
-  - **role_and_use**: 作为 test_validation.md 的测试/模拟输入；不得把 payload、verdict 或 prompt 当真实权限
+  - **role_and_use**: 将 test_validation.md（首行“［VERDICT: REJECT］ - Reason: The pedagogical claim involves values of sine that are impossible in standard Euclidean top…”） 作为“硅基测试/fixture”使用；仅复现明确测试；fixture 载荷不构成真实状态或授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行或审查 test_validation.md 对应测试/模拟时读取；不得当作 authority
+  - **status_or_freshness**: semantic_profile=silicon_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅复现明确测试；fixture 载荷不构成真实状态或授权
+  - **when_to_read**: 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 test_validation.md（首行“［VERDICT: REJECT］ - Reason: The pedagogical claim involves values of sine that are impossible in standard Euclidean top…”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f766572696669636174696f6e5f616c67656272612e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/scripts/verification_algebra.md`](verification_algebra.md)
   - **content_summary**: 首行“［VERDICT: REJECT］ - Reason: The limit of the derivative evaluates to zero, which means the rate of change vanishes at t…”
-  - **role_and_use**: 保存 verification_algebra.md 的 sandbox、mock factory 或验证输出；仅用于复现，不激活系统
+  - **role_and_use**: 将 verification_algebra.md（首行“［VERDICT: REJECT］ - Reason: The limit of the derivative evaluates to zero, which means the rate of change vanishes at t…”） 作为“硅基生成/验证证据”使用；输出绑定生成场景，不是 canonical corpus 或 live state
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: 生成/验证证据；不构成 canonical node、teaching admission、运行状态或权限
-  - **when_to_read**: 复现 verification_algebra.md 所属 sandbox/mock/validation 结果时读取，不用于恢复运行状态
+  - **status_or_freshness**: semantic_profile=silicon_generated_evidence；authority=generated_evidence；evidence_basis=markdown_heading_or_visible_structure；输出绑定生成场景，不是 canonical corpus 或 live state
+  - **when_to_read**: 触发条件：核验该 mock/generated/verification 输出的具体生成场景。读取 verification_algebra.md（首行“［VERDICT: REJECT］ - Reason: The limit of the derivative evaluates to zero, which means the rate of change vanishes at t…”）；输出绑定生成场景，不是 canonical corpus 或 live state
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f766572696669636174696f6e5f617474656e74696f6e2e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/scripts/verification_attention.md`](verification_attention.md)
   - **content_summary**: H1《Define standard deviations and variances》
-  - **role_and_use**: 保存 verification_attention.md 的 sandbox、mock factory 或验证输出；仅用于复现，不激活系统
+  - **role_and_use**: 将 verification_attention.md（H1《Define standard deviations and variances》） 作为“硅基生成/验证证据”使用；输出绑定生成场景，不是 canonical corpus 或 live state
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: 生成/验证证据；不构成 canonical node、teaching admission、运行状态或权限
-  - **when_to_read**: 复现 verification_attention.md 所属 sandbox/mock/validation 结果时读取，不用于恢复运行状态
+  - **status_or_freshness**: semantic_profile=silicon_generated_evidence；authority=generated_evidence；evidence_basis=markdown_heading_or_visible_structure；输出绑定生成场景，不是 canonical corpus 或 live state
+  - **when_to_read**: 触发条件：核验该 mock/generated/verification 输出的具体生成场景。读取 verification_attention.md（H1《Define standard deviations and variances》）；输出绑定生成场景，不是 canonical corpus 或 live state
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f766572696669636174696f6e5f707572655f6d6174682e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/scripts/verification_pure_math.md`](verification_pure_math.md)
   - **content_summary**: 首行“［VERDICT: REJECT］ - Reason: The student claims that the Banach space mapping is unbounded, but the domain is compact an…”
-  - **role_and_use**: 保存 verification_pure_math.md 的 sandbox、mock factory 或验证输出；仅用于复现，不激活系统
+  - **role_and_use**: 将 verification_pure_math.md（首行“［VERDICT: REJECT］ - Reason: The student claims that the Banach space mapping is unbounded, but the domain is compact an…”） 作为“硅基生成/验证证据”使用；输出绑定生成场景，不是 canonical corpus 或 live state
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: 生成/验证证据；不构成 canonical node、teaching admission、运行状态或权限
-  - **when_to_read**: 复现 verification_pure_math.md 所属 sandbox/mock/validation 结果时读取，不用于恢复运行状态
+  - **status_or_freshness**: semantic_profile=silicon_generated_evidence；authority=generated_evidence；evidence_basis=markdown_heading_or_visible_structure；输出绑定生成场景，不是 canonical corpus 或 live state
+  - **when_to_read**: 触发条件：核验该 mock/generated/verification 输出的具体生成场景。读取 verification_pure_math.md（首行“［VERDICT: REJECT］ - Reason: The student claims that the Banach space mapping is unbounded, but the domain is compact an…”）；输出绑定生成场景，不是 canonical corpus 或 live state
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736372697074732f766572696669636174696f6e5f726573756c742e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/scripts/verification_result.md`](verification_result.md)
   - **content_summary**: 首行“［VERDICT: REJECT］ - Reason: The pedagogical claim involves values of sine that are impossible in standard Euclidean top…”；artifact=verification_result.md
-  - **role_and_use**: 保存 verification_result.md 的 sandbox、mock factory 或验证输出；仅用于复现，不激活系统
+  - **role_and_use**: 将 verification_result.md（首行“［VERDICT: REJECT］ - Reason: The pedagogical claim involves values of sine that are impossible in standard Euclidean top…”） 作为“硅基生成/验证证据”使用；输出绑定生成场景，不是 canonical corpus 或 live state
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: 生成/验证证据；不构成 canonical node、teaching admission、运行状态或权限
-  - **when_to_read**: 复现 verification_result.md 所属 sandbox/mock/validation 结果时读取，不用于恢复运行状态
+  - **status_or_freshness**: semantic_profile=silicon_generated_evidence；authority=generated_evidence；evidence_basis=markdown_heading_or_visible_structure；输出绑定生成场景，不是 canonical corpus 或 live state
+  - **when_to_read**: 触发条件：核验该 mock/generated/verification 输出的具体生成场景。读取 verification_result.md（首行“［VERDICT: REJECT］ - Reason: The pedagogical claim involves values of sine that are impossible in standard Euclidean top…”）；输出绑定生成场景，不是 canonical corpus 或 live state
 
 ## do_not_load_by_default
 

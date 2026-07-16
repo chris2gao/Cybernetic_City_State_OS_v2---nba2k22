@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Math Mentor specified-manual teaching prompts、split roadmaps、topology map 与辅助语料入口
+人工教学 prompt、split roadmaps、topology map 与辅助语料入口
 
 ## authority_and_usage_boundary
 
@@ -11,20 +11,20 @@ Math Mentor specified-manual teaching prompts、split roadmaps、topology map �
 
 ## recommended_reading_order
 
-1. [`08_Domain_Applications/Math_Mentor/学习期prompt/Exam_Agent_Prompt.md`](Exam_Agent_Prompt.md) — 前台人工教学明确采用 Exam_Agent_Prompt.md 的角色时读取；不用于 runtime activation
-2. [`08_Domain_Applications/Math_Mentor/学习期prompt/Prep_Architect_Prompt.md`](Prep_Architect_Prompt.md) — 前台人工教学明确采用 Prep_Architect_Prompt.md 的角色时读取；不用于 runtime activation
-3. [`08_Domain_Applications/Math_Mentor/学习期prompt/Socratic_Router_Prompt_v7.0.md`](Socratic_Router_Prompt_v7.0.md) — 前台人工教学明确采用 Socratic_Router_Prompt_v7.0.md 的角色时读取；不用于 runtime activation
-4. [`08_Domain_Applications/Math_Mentor/学习期prompt/The Mathematical Architecture of Large Language Models.md`](The%20Mathematical%20Architecture%20of%20Large%20Language%20Models.md) — 用 The Mathematical Architecture of Large Language Models.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-5. [`08_Domain_Applications/Math_Mentor/学习期prompt/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-6. [`08_Domain_Applications/Math_Mentor/学习期prompt/大模型解剖图：深入解析.md`](大模型解剖图：深入解析.md) — 用 大模型解剖图：深入解析.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-7. [`08_Domain_Applications/Math_Mentor/学习期prompt/backup/index.md`](backup/index.md) — 核验 学习期 prompt/语料的 historical backup 副本；仅作 provenance，不作为当前合同 时进入；不得把目录存在本身当作 activation 或当前任务
+1. [`08_Domain_Applications/Math_Mentor/学习期prompt/Exam_Agent_Prompt.md`](Exam_Agent_Prompt.md) — 触发条件：Human 明确启动对应前台人工教学角色。读取 Exam_Agent_Prompt.md（H1《Role: Exam_Agent》；首个 H2《1. Input Payload》）；仅支持 specified_manual_only 前台流程，不授予后台写入/激活能力
+2. [`08_Domain_Applications/Math_Mentor/学习期prompt/Prep_Architect_Prompt.md`](Prep_Architect_Prompt.md) — 触发条件：Human 明确启动对应前台人工教学角色。读取 Prep_Architect_Prompt.md（H1《Role: Prep_Architect》；首个 H2《1. Authority And Namespace》）；仅支持 specified_manual_only 前台流程，不授予后台写入/激活能力
+3. [`08_Domain_Applications/Math_Mentor/学习期prompt/Socratic_Router_Prompt_v7.0.md`](Socratic_Router_Prompt_v7.0.md) — 触发条件：Human 明确启动对应前台人工教学角色。读取 Socratic_Router_Prompt_v7.0.md（H1《Role: Guided Socratic Router》；首个 H2《1. Input Contract》）；仅支持 specified_manual_only 前台流程，不授予后台写入/激活能力
+4. [`08_Domain_Applications/Math_Mentor/学习期prompt/The Mathematical Architecture of Large Language Models.md`](The%20Mathematical%20Architecture%20of%20Large%20Language%20Models.md) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 The Mathematical Architecture of Large Language Models.md（首行“**构建从 0 开始的数学通天塔：基于发生学与认知流形的大模型数学演进路线图**”）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+5. [`08_Domain_Applications/Math_Mentor/学习期prompt/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+6. [`08_Domain_Applications/Math_Mentor/学习期prompt/大模型解剖图：深入解析.md`](大模型解剖图：深入解析.md) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 大模型解剖图：深入解析.md（H1《**大语言模型底层数学架构与多模态演进史：从物理表征到强化推理引擎的深度解剖**》；首个 H2《**第一层：数据吞吐与底层表征（感知世界的基础）**》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+7. [`08_Domain_Applications/Math_Mentor/学习期prompt/backup/index.md`](backup/index.md) — 追溯现行学习材料的历史副本来源
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742f6261636b7570 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/backup`](backup/index.md)
-  - **content_scope**: 学习期 prompt/语料的 historical backup 副本；仅作 provenance，不作为当前合同；tracked 后代文件数=4
-  - **when_to_enter**: 核验 学习期 prompt/语料的 historical backup 副本；仅作 provenance，不作为当前合同 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: 学习期 prompt/语料历史备份；只作 provenance，不作为当前合同；tracked 后代文件数=4
+  - **when_to_enter**: 追溯现行学习材料的历史副本来源
   - **load_policy**: `do_not_load_by_default`
 
 ## direct_files
@@ -32,122 +32,122 @@ Math Mentor specified-manual teaching prompts、split roadmaps、topology map �
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742f4578616d5f4167656e745f50726f6d70742e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/Exam_Agent_Prompt.md`](Exam_Agent_Prompt.md)
   - **content_summary**: H1《Role: Exam_Agent》；首个 H2《1. Input Payload》
-  - **role_and_use**: 约束 Exam_Agent_Prompt.md 的前台人工教学角色；不授予 writer、Coordinator 或后台执行能力
+  - **role_and_use**: 将 Exam_Agent_Prompt.md（H1《Role: Exam_Agent》；首个 H2《1. Input Payload》） 作为“Math Mentor 人工教学角色 prompt”使用；仅支持 specified_manual_only 前台流程，不授予后台写入/激活能力
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: active specified_manual_only teaching prompt；允许前台人工教学，不证明 backend runtime、writer 或 Coordinator 已激活
-  - **when_to_read**: 前台人工教学明确采用 Exam_Agent_Prompt.md 的角色时读取；不用于 runtime activation
+  - **status_or_freshness**: semantic_profile=math_manual_teaching_prompt；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；仅支持 specified_manual_only 前台流程，不授予后台写入/激活能力
+  - **when_to_read**: 触发条件：Human 明确启动对应前台人工教学角色。读取 Exam_Agent_Prompt.md（H1《Role: Exam_Agent》；首个 H2《1. Input Payload》）；仅支持 specified_manual_only 前台流程，不授予后台写入/激活能力
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742f507265705f4172636869746563745f50726f6d70742e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/Prep_Architect_Prompt.md`](Prep_Architect_Prompt.md)
   - **content_summary**: H1《Role: Prep_Architect》；首个 H2《1. Authority And Namespace》
-  - **role_and_use**: 约束 Prep_Architect_Prompt.md 的前台人工教学角色；不授予 writer、Coordinator 或后台执行能力
+  - **role_and_use**: 将 Prep_Architect_Prompt.md（H1《Role: Prep_Architect》；首个 H2《1. Authority And Namespace》） 作为“Math Mentor 人工教学角色 prompt”使用；仅支持 specified_manual_only 前台流程，不授予后台写入/激活能力
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: active specified_manual_only teaching prompt；允许前台人工教学，不证明 backend runtime、writer 或 Coordinator 已激活
-  - **when_to_read**: 前台人工教学明确采用 Prep_Architect_Prompt.md 的角色时读取；不用于 runtime activation
+  - **status_or_freshness**: semantic_profile=math_manual_teaching_prompt；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；仅支持 specified_manual_only 前台流程，不授予后台写入/激活能力
+  - **when_to_read**: 触发条件：Human 明确启动对应前台人工教学角色。读取 Prep_Architect_Prompt.md（H1《Role: Prep_Architect》；首个 H2《1. Authority And Namespace》）；仅支持 specified_manual_only 前台流程，不授予后台写入/激活能力
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742f536f6372617469635f526f757465725f50726f6d70745f76372e302e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/Socratic_Router_Prompt_v7.0.md`](Socratic_Router_Prompt_v7.0.md)
   - **content_summary**: H1《Role: Guided Socratic Router》；首个 H2《1. Input Contract》
-  - **role_and_use**: 约束 Socratic_Router_Prompt_v7.0.md 的前台人工教学角色；不授予 writer、Coordinator 或后台执行能力
+  - **role_and_use**: 将 Socratic_Router_Prompt_v7.0.md（H1《Role: Guided Socratic Router》；首个 H2《1. Input Contract》） 作为“Math Mentor 人工教学角色 prompt”使用；仅支持 specified_manual_only 前台流程，不授予后台写入/激活能力
   - **authority_class**: `operational_contract`
-  - **status_or_freshness**: active specified_manual_only teaching prompt；允许前台人工教学，不证明 backend runtime、writer 或 Coordinator 已激活
-  - **when_to_read**: 前台人工教学明确采用 Socratic_Router_Prompt_v7.0.md 的角色时读取；不用于 runtime activation
+  - **status_or_freshness**: semantic_profile=math_manual_teaching_prompt；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；仅支持 specified_manual_only 前台流程，不授予后台写入/激活能力
+  - **when_to_read**: 触发条件：Human 明确启动对应前台人工教学角色。读取 Socratic_Router_Prompt_v7.0.md（H1《Role: Guided Socratic Router》；首个 H2《1. Input Contract》）；仅支持 specified_manual_only 前台流程，不授予后台写入/激活能力
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742f546865204d617468656d61746963616c20417263686974656374757265206f66204c61726765204c616e6775616765204d6f64656c732e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/The Mathematical Architecture of Large Language Models.md`](The%20Mathematical%20Architecture%20of%20Large%20Language%20Models.md)
   - **content_summary**: 首行“**构建从 0 开始的数学通天塔：基于发生学与认知流形的大模型数学演进路线图**”
-  - **role_and_use**: 用 The Mathematical Architecture of Large Language Models.md 为 08_Domain_Applications/Math_Mentor/学习期prompt 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 The Mathematical Architecture of Large Language Models.md（首行“**构建从 0 开始的数学通天塔：基于发生学与认知流形的大模型数学演进路线图**”） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 The Mathematical Architecture of Large Language Models.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 The Mathematical Architecture of Large Language Models.md（首行“**构建从 0 开始的数学通天塔：基于发生学与认知流形的大模型数学演进路线图**”）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742f696e6465782e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/学习期prompt 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/学习期prompt 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742f746f706f6c6f67795f726f757465725f6d61702e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/topology_router_map.json`](topology_router_map.json)
   - **content_summary**: JSON object，顶层键：n_1, n_10, n_100, n_101, n_102, n_103, n_104, n_105
-  - **role_and_use**: 保存 topology_router_map.json 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 topology_router_map.json（JSON object，顶层键：n_1, n_10, n_100, n_101, n_102, n_103, n_104, n_105） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 topology_router_map.json 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=implementation_artifact；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；可追踪实现不等于已激活、已验证或 production-ready
+  - **when_to_read**: 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 topology_router_map.json（JSON object，顶层键：n_1, n_10, n_100, n_101, n_102, n_103, n_104, n_105）；可追踪实现不等于已激活、已验证或 production-ready
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742fe5a4a7e6a8a1e59e8be8a7a3e58996e59bbeefbc9ae6b7b1e585a5e8a7a3e69e902e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/大模型解剖图：深入解析.md`](大模型解剖图：深入解析.md)
   - **content_summary**: H1《**大语言模型底层数学架构与多模态演进史：从物理表征到强化推理引擎的深度解剖**》；首个 H2《**第一层：数据吞吐与底层表征（感知世界的基础）**》；artifact=大模型解剖图：深入解析.md
-  - **role_and_use**: 用 大模型解剖图：深入解析.md 为 08_Domain_Applications/Math_Mentor/学习期prompt 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 大模型解剖图：深入解析.md（H1《**大语言模型底层数学架构与多模态演进史：从物理表征到强化推理引擎的深度解剖**》；首个 H2《**第一层：数据吞吐与底层表征（感知世界的基础）**》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 大模型解剖图：深入解析.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 大模型解剖图：深入解析.md（H1《**大语言模型底层数学架构与多模态演进史：从物理表征到强化推理引擎的深度解剖**》；首个 H2《**第一层：数据吞吐与底层表征（感知世界的基础）**》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742fe5a4a7e8afade8a880e6a8a1e59e8be695b0e5ada6e5ba95e5b182e69eb6e69e84e585a8e998b6e6aeb5e6b7b1e5baa6e8a7a3e69e90e695b4e59088e68aa5e5918a2e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/大语言模型数学底层架构全阶段深度解析整合报告.md`](大语言模型数学底层架构全阶段深度解析整合报告.md)
   - **content_summary**: 首行“大语言模型（LLM）的演进路径已超越了早期的统计预测范式，正加速向 **正向形式化验证（Forward Formal Verification）** 、\*\*语义流形几何分析（Manifold Geometric Analysis） *…”；artifact=大语言模型数学底层架构全阶段深度解析整合报告.md
-  - **role_and_use**: 用 大语言模型数学底层架构全阶段深度解析整合报告.md 为 08_Domain_Applications/Math_Mentor/学习期prompt 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 大语言模型数学底层架构全阶段深度解析整合报告.md（首行“大语言模型（LLM）的演进路径已超越了早期的统计预测范式，正加速向 **正向形式化验证（Forward Formal Verification）** 、\*\*语义流形几何分析（Manifold Geometric Analysis） *…”） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 大语言模型数学底层架构全阶段深度解析整合报告.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 大语言模型数学底层架构全阶段深度解析整合报告.md（首行“大语言模型（LLM）的演进路径已超越了早期的统计预测范式，正加速向 **正向形式化验证（Forward Formal Verification）** 、\*\*语义流形几何分析（Manifold Geometric Analysis） *…”）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742fe68b93e68991e99bb7e8bebee8a7a3e69e90e599a850726f6d70742e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/拓扑雷达解析器Prompt.md`](拓扑雷达解析器Prompt.md)
   - **content_summary**: H1《Role: 拓扑雷达解析器 (Topological Radar Parser)》；首个 H2《📥 输入环境 (Inputs)》
-  - **role_and_use**: 用 拓扑雷达解析器Prompt.md 为 08_Domain_Applications/Math_Mentor/学习期prompt 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 拓扑雷达解析器Prompt.md（H1《Role: 拓扑雷达解析器 (Topological Radar Parser)》；首个 H2《📥 输入环境 (Inputs)》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 拓扑雷达解析器Prompt.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 拓扑雷达解析器Prompt.md（H1《Role: 拓扑雷达解析器 (Topological Radar Parser)》；首个 H2《📥 输入环境 (Inputs)》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742fe695b0e5ada6e79fa5e8af86e8b7afe7babfe59bbe5f20e7acace4ba8ce5b182e6a0b8e5bf83e59fbae7a1802e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/数学知识路线图_ 第二层核心基础.yaml`](数学知识路线图_%20第二层核心基础.yaml)
   - **content_summary**: YAML 结构，顶层键：未识别；artifact=数学知识路线图_ 第二层核心基础.yaml
-  - **role_and_use**: 以 数学知识路线图_ 第二层核心基础.yaml 提供分层数学路线与 ID claim 路由；identity/admission 必须由独立 registry/gate 证明
+  - **role_and_use**: 将 数学知识路线图_ 第二层核心基础.yaml（top_keys=none） 作为“Math Mentor 分片路线图”使用；roadmap ID/title 是 claim，不等于 canonical identity、admission 或 certification
   - **authority_class**: `routing`
-  - **status_or_freshness**: explicit_split_roadmap routing claim；roadmap ID 不等于 canonical identity、node admission/certification 或 consumer_allowed
-  - **when_to_read**: 按分层路线定位 数学知识路线图_ 第二层核心基础.yaml 中的知识点 claim 时读取；不得据此自动准入节点
+  - **status_or_freshness**: semantic_profile=math_split_roadmap；authority=routing；evidence_basis=yaml_visible_keys_and_safe_fields；roadmap ID/title 是 claim，不等于 canonical identity、admission 或 certification
+  - **when_to_read**: 触发条件：在指定 Level 分片中定位 ID/title claim 或检查 roadmap-node 对齐。读取 数学知识路线图_ 第二层核心基础.yaml（top_keys=none）；roadmap ID/title 是 claim，不等于 canonical identity、admission 或 certification
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742fe695b0e5ada6e79fa5e8af86e8b7afe7babfe59bbe5fe585a8e983a82e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/数学知识路线图_全部.yaml`](数学知识路线图_全部.yaml)
   - **content_summary**: 受 AGENTS 读取限制的完整数学路线图 YAML；仅确认 tracked 路径/格式，优先使用分级路线图
-  - **role_and_use**: 用 数学知识路线图_全部.yaml 为 08_Domain_Applications/Math_Mentor/学习期prompt 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 数学知识路线图_全部.yaml（restricted_full_roadmap；yaml） 作为“受限全图路线元数据”使用；本轮未读正文；常规任务必须改用 split roadmaps
   - **authority_class**: `routing`
-  - **status_or_freshness**: tracked restricted roadmap；正文未读取，完整图分析需独立授权理由
-  - **when_to_read**: 仅在确需完整图分析且无法使用 split roadmaps 时，依据 AGENTS 规则另行读取
+  - **status_or_freshness**: metadata_only；evidence_basis=restricted_roadmap_metadata_only；本轮未读正文；常规任务必须改用 split roadmaps
+  - **when_to_read**: 触发条件：仅核验受限文件存在/路径/格式；若需正文必须满足独立全图任务门槛。读取 数学知识路线图_全部.yaml（restricted_full_roadmap；yaml）；本轮未读正文；常规任务必须改用 split roadmaps
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742fe695b0e5ada6e79fa5e8af86e8b7afe7babfe59bbe5fe7acace4b880e5b182e59fbae7a180e5b7a5e585b72e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/数学知识路线图_第一层基础工具.yaml`](数学知识路线图_第一层基础工具.yaml)
   - **content_summary**: YAML 结构，顶层键：未识别；artifact=数学知识路线图_第一层基础工具.yaml
-  - **role_and_use**: 以 数学知识路线图_第一层基础工具.yaml 提供分层数学路线与 ID claim 路由；identity/admission 必须由独立 registry/gate 证明
+  - **role_and_use**: 将 数学知识路线图_第一层基础工具.yaml（top_keys=none） 作为“Math Mentor 分片路线图”使用；roadmap ID/title 是 claim，不等于 canonical identity、admission 或 certification
   - **authority_class**: `routing`
-  - **status_or_freshness**: explicit_split_roadmap routing claim；roadmap ID 不等于 canonical identity、node admission/certification 或 consumer_allowed
-  - **when_to_read**: 按分层路线定位 数学知识路线图_第一层基础工具.yaml 中的知识点 claim 时读取；不得据此自动准入节点
+  - **status_or_freshness**: semantic_profile=math_split_roadmap；authority=routing；evidence_basis=yaml_visible_keys_and_safe_fields；roadmap ID/title 是 claim，不等于 canonical identity、admission 或 certification
+  - **when_to_read**: 触发条件：在指定 Level 分片中定位 ID/title claim 或检查 roadmap-node 对齐。读取 数学知识路线图_第一层基础工具.yaml（top_keys=none）；roadmap ID/title 是 claim，不等于 canonical identity、admission 或 certification
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742fe695b0e5ada6e79fa5e8af86e8b7afe7babfe59bbe5fe7acace4b889e5b182e5a4a7e5ada6e6a0b8e5bf832e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/数学知识路线图_第三层大学核心.yaml`](数学知识路线图_第三层大学核心.yaml)
   - **content_summary**: YAML 结构，顶层键：未识别；artifact=数学知识路线图_第三层大学核心.yaml
-  - **role_and_use**: 以 数学知识路线图_第三层大学核心.yaml 提供分层数学路线与 ID claim 路由；identity/admission 必须由独立 registry/gate 证明
+  - **role_and_use**: 将 数学知识路线图_第三层大学核心.yaml（top_keys=none） 作为“Math Mentor 分片路线图”使用；roadmap ID/title 是 claim，不等于 canonical identity、admission 或 certification
   - **authority_class**: `routing`
-  - **status_or_freshness**: explicit_split_roadmap routing claim；roadmap ID 不等于 canonical identity、node admission/certification 或 consumer_allowed
-  - **when_to_read**: 按分层路线定位 数学知识路线图_第三层大学核心.yaml 中的知识点 claim 时读取；不得据此自动准入节点
+  - **status_or_freshness**: semantic_profile=math_split_roadmap；authority=routing；evidence_basis=yaml_visible_keys_and_safe_fields；roadmap ID/title 是 claim，不等于 canonical identity、admission 或 certification
+  - **when_to_read**: 触发条件：在指定 Level 分片中定位 ID/title claim 或检查 roadmap-node 对齐。读取 数学知识路线图_第三层大学核心.yaml（top_keys=none）；roadmap ID/title 是 claim，不等于 canonical identity、admission 或 certification
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742fe695b0e5ada6e79fa5e8af86e8b7afe7babfe59bbe5fe7acace4ba94e5b182e4b893e4b89ae696b9e590912e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/数学知识路线图_第五层专业方向.yaml`](数学知识路线图_第五层专业方向.yaml)
   - **content_summary**: YAML 结构，顶层键：未识别；artifact=数学知识路线图_第五层专业方向.yaml
-  - **role_and_use**: 以 数学知识路线图_第五层专业方向.yaml 提供分层数学路线与 ID claim 路由；identity/admission 必须由独立 registry/gate 证明
+  - **role_and_use**: 将 数学知识路线图_第五层专业方向.yaml（top_keys=none） 作为“Math Mentor 分片路线图”使用；roadmap ID/title 是 claim，不等于 canonical identity、admission 或 certification
   - **authority_class**: `routing`
-  - **status_or_freshness**: explicit_split_roadmap routing claim；roadmap ID 不等于 canonical identity、node admission/certification 或 consumer_allowed
-  - **when_to_read**: 按分层路线定位 数学知识路线图_第五层专业方向.yaml 中的知识点 claim 时读取；不得据此自动准入节点
+  - **status_or_freshness**: semantic_profile=math_split_roadmap；authority=routing；evidence_basis=yaml_visible_keys_and_safe_fields；roadmap ID/title 是 claim，不等于 canonical identity、admission 或 certification
+  - **when_to_read**: 触发条件：在指定 Level 分片中定位 ID/title claim 或检查 roadmap-node 对齐。读取 数学知识路线图_第五层专业方向.yaml（top_keys=none）；roadmap ID/title 是 claim，不等于 canonical identity、admission 或 certification
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742fe695b0e5ada6e79fa5e8af86e8b7afe7babfe59bbe5fe7acace585ade5b182e5898de6b2bfe9a286e59f9f2e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/数学知识路线图_第六层前沿领域.yaml`](数学知识路线图_第六层前沿领域.yaml)
   - **content_summary**: YAML 结构，顶层键：未识别；artifact=数学知识路线图_第六层前沿领域.yaml
-  - **role_and_use**: 以 数学知识路线图_第六层前沿领域.yaml 提供分层数学路线与 ID claim 路由；identity/admission 必须由独立 registry/gate 证明
+  - **role_and_use**: 将 数学知识路线图_第六层前沿领域.yaml（top_keys=none） 作为“Math Mentor 分片路线图”使用；roadmap ID/title 是 claim，不等于 canonical identity、admission 或 certification
   - **authority_class**: `routing`
-  - **status_or_freshness**: explicit_split_roadmap routing claim；roadmap ID 不等于 canonical identity、node admission/certification 或 consumer_allowed
-  - **when_to_read**: 按分层路线定位 数学知识路线图_第六层前沿领域.yaml 中的知识点 claim 时读取；不得据此自动准入节点
+  - **status_or_freshness**: semantic_profile=math_split_roadmap；authority=routing；evidence_basis=yaml_visible_keys_and_safe_fields；roadmap ID/title 是 claim，不等于 canonical identity、admission 或 certification
+  - **when_to_read**: 触发条件：在指定 Level 分片中定位 ID/title claim 或检查 roadmap-node 对齐。读取 数学知识路线图_第六层前沿领域.yaml（top_keys=none）；roadmap ID/title 是 claim，不等于 canonical identity、admission 或 certification
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742fe695b0e5ada6e79fa5e8af86e8b7afe7babfe59bbe5fe7acace59b9be5b182e8bf9be998b6e58886e69e902e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/数学知识路线图_第四层进阶分析.yaml`](数学知识路线图_第四层进阶分析.yaml)
   - **content_summary**: YAML 结构，顶层键：未识别；artifact=数学知识路线图_第四层进阶分析.yaml
-  - **role_and_use**: 以 数学知识路线图_第四层进阶分析.yaml 提供分层数学路线与 ID claim 路由；identity/admission 必须由独立 registry/gate 证明
+  - **role_and_use**: 将 数学知识路线图_第四层进阶分析.yaml（top_keys=none） 作为“Math Mentor 分片路线图”使用；roadmap ID/title 是 claim，不等于 canonical identity、admission 或 certification
   - **authority_class**: `routing`
-  - **status_or_freshness**: explicit_split_roadmap routing claim；roadmap ID 不等于 canonical identity、node admission/certification 或 consumer_allowed
-  - **when_to_read**: 按分层路线定位 数学知识路线图_第四层进阶分析.yaml 中的知识点 claim 时读取；不得据此自动准入节点
+  - **status_or_freshness**: semantic_profile=math_split_roadmap；authority=routing；evidence_basis=yaml_visible_keys_and_safe_fields；roadmap ID/title 是 claim，不等于 canonical identity、admission 或 certification
+  - **when_to_read**: 触发条件：在指定 Level 分片中定位 ID/title claim 或检查 roadmap-node 对齐。读取 数学知识路线图_第四层进阶分析.yaml（top_keys=none）；roadmap ID/title 是 claim，不等于 canonical identity、admission 或 certification
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742fe88bb1e8afade7ae97e5ad90e79bb4e8a789e4b88ee8afade4b989e69eb6e69e84e7b4a2e5bc952e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/英语算子直觉与语义架构索引.md`](英语算子直觉与语义架构索引.md)
   - **content_summary**: H1《**英语符号直觉与语义架构索引库：基于认知物理意义与交际情绪的全局深度解析**》；首个 H2《**引言：认知语法、力阵动力学与具身语义学的理论范式重构**》；artifact=英语算子直觉与语义架构索引.md
-  - **role_and_use**: 用 英语算子直觉与语义架构索引.md 为 08_Domain_Applications/Math_Mentor/学习期prompt 提供导航或状态路由；物理 Git/活动指针优先
+  - **role_and_use**: 将 英语算子直觉与语义架构索引.md（H1《**英语符号直觉与语义架构索引库：基于认知物理意义与交际情绪的全局深度解析**》；首个 H2《**引言：认知语法、力阵动力学与具身语义学的理论范式重构**》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 英语算子直觉与语义架构索引.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 英语算子直觉与语义架构索引.md（H1《**英语符号直觉与语义架构索引库：基于认知物理意义与交际情绪的全局深度解析**》；首个 H2《**引言：认知语法、力阵动力学与具身语义学的理论范式重构**》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 
 ## do_not_load_by_default
 

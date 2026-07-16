@@ -3,7 +3,7 @@
 
 ## directory_role
 
-symbolic index 与 task template YAML 的 framework-skeleton 目录
+外部增强骨架 framework_skeleton；registry/ledger/domain/template 原型未自动接入 runtime
 
 ## authority_and_usage_boundary
 
@@ -11,9 +11,9 @@ symbolic index 与 task template YAML 的 framework-skeleton 目录
 
 ## recommended_reading_order
 
-1. [`system_backbone/framework_skeleton/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`system_backbone/framework_skeleton/symbolic_index.yaml`](symbolic_index.yaml) — 修改、调试或消费 symbolic_index.yaml 的具体实现/领域内容前读取
-3. [`system_backbone/framework_skeleton/task_templates.yaml`](task_templates.yaml) — 修改、调试或消费 task_templates.yaml 的具体实现/领域内容前读取
+1. [`system_backbone/framework_skeleton/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`system_backbone/framework_skeleton/symbolic_index.yaml`](symbolic_index.yaml) — 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 symbolic_index.yaml（top_keys=version,symbolic_routing）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
+3. [`system_backbone/framework_skeleton/task_templates.yaml`](task_templates.yaml) — 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 task_templates.yaml（top_keys=templates）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
 
 ## child_directories
 
@@ -24,24 +24,24 @@ symbolic index 与 task template YAML 的 framework-skeleton 目录
 <!-- RIDX_FILE_HEX 73797374656d5f6261636b626f6e652f6672616d65776f726b5f736b656c65746f6e2f696e6465782e6d64 -->
 - **path_or_link**: [`system_backbone/framework_skeleton/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 system_backbone/framework_skeleton 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 system_backbone/framework_skeleton 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 73797374656d5f6261636b626f6e652f6672616d65776f726b5f736b656c65746f6e2f73796d626f6c69635f696e6465782e79616d6c -->
 - **path_or_link**: [`system_backbone/framework_skeleton/symbolic_index.yaml`](symbolic_index.yaml)
   - **content_summary**: YAML 结构，顶层键：version, symbolic_routing
-  - **role_and_use**: 保存 symbolic_index.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 symbolic_index.yaml（top_keys=version,symbolic_routing） 作为“外部增强骨架原型”使用；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 symbolic_index.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=system_backbone_artifact；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
+  - **when_to_read**: 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 symbolic_index.yaml（top_keys=version,symbolic_routing）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
 <!-- RIDX_FILE_HEX 73797374656d5f6261636b626f6e652f6672616d65776f726b5f736b656c65746f6e2f7461736b5f74656d706c617465732e79616d6c -->
 - **path_or_link**: [`system_backbone/framework_skeleton/task_templates.yaml`](task_templates.yaml)
   - **content_summary**: YAML 结构，顶层键：templates
-  - **role_and_use**: 保存 task_templates.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 task_templates.yaml（top_keys=templates） 作为“外部增强骨架原型”使用；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 task_templates.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=system_backbone_artifact；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
+  - **when_to_read**: 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 task_templates.yaml（top_keys=templates）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
 
 ## do_not_load_by_default
 

@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Apicurio/A2A agent-card 模板、validator 与 registry docker-compose 配置目录
+外部增强骨架 apicurio_registry_hub；registry/ledger/domain/template 原型未自动接入 runtime
 
 ## authority_and_usage_boundary
 
@@ -11,11 +11,11 @@ Apicurio/A2A agent-card 模板、validator 与 registry docker-compose 配置目
 
 ## recommended_reading_order
 
-1. [`system_backbone/apicurio_registry_hub/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`system_backbone/apicurio_registry_hub/AGENT_CARD_TEMPLATE.json`](AGENT_CARD_TEMPLATE.json) — 修改、调试或消费 AGENT_CARD_TEMPLATE.json 的具体实现/领域内容前读取
-3. [`system_backbone/apicurio_registry_hub/AgentCard_Gemini_3_1_Pro.json`](AgentCard_Gemini_3_1_Pro.json) — 修改、调试或消费 AgentCard_Gemini_3_1_Pro.json 的具体实现/领域内容前读取
-4. [`system_backbone/apicurio_registry_hub/a2a-protocol-validator.yaml`](a2a-protocol-validator.yaml) — 修改、调试或消费 a2a-protocol-validator.yaml 的具体实现/领域内容前读取
-5. [`system_backbone/apicurio_registry_hub/docker-compose.yml`](docker-compose.yml) — 修改、调试或消费 docker-compose.yml 的具体实现/领域内容前读取
+1. [`system_backbone/apicurio_registry_hub/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`system_backbone/apicurio_registry_hub/AGENT_CARD_TEMPLATE.json`](AGENT_CARD_TEMPLATE.json) — 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 AGENT_CARD_TEMPLATE.json（title=Agent Capability Card）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
+3. [`system_backbone/apicurio_registry_hub/AgentCard_Gemini_3_1_Pro.json`](AgentCard_Gemini_3_1_Pro.json) — 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 AgentCard_Gemini_3_1_Pro.json（JSON object，顶层键：$schema, agent_role, capabilities, did, hardware_tier, max_context_window, verifiable_credentials）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
+4. [`system_backbone/apicurio_registry_hub/a2a-protocol-validator.yaml`](a2a-protocol-validator.yaml) — 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 a2a-protocol-validator.yaml（name=hardware-tier-verifier）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
+5. [`system_backbone/apicurio_registry_hub/docker-compose.yml`](docker-compose.yml) — 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 docker-compose.yml（top_keys=version,services）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
 
 ## child_directories
 
@@ -26,38 +26,38 @@ Apicurio/A2A agent-card 模板、validator 与 registry docker-compose 配置目
 <!-- RIDX_FILE_HEX 73797374656d5f6261636b626f6e652f617069637572696f5f72656769737472795f6875622f4147454e545f434152445f54454d504c4154452e6a736f6e -->
 - **path_or_link**: [`system_backbone/apicurio_registry_hub/AGENT_CARD_TEMPLATE.json`](AGENT_CARD_TEMPLATE.json)
   - **content_summary**: JSON object，顶层键：$schema, properties, required, title, type；安全锚点：title=Agent Capability Card
-  - **role_and_use**: 保存 AGENT_CARD_TEMPLATE.json 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 AGENT_CARD_TEMPLATE.json（title=Agent Capability Card） 作为“外部增强骨架原型”使用；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 AGENT_CARD_TEMPLATE.json 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=system_backbone_artifact；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
+  - **when_to_read**: 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 AGENT_CARD_TEMPLATE.json（title=Agent Capability Card）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
 <!-- RIDX_FILE_HEX 73797374656d5f6261636b626f6e652f617069637572696f5f72656769737472795f6875622f4167656e74436172645f47656d696e695f335f315f50726f2e6a736f6e -->
 - **path_or_link**: [`system_backbone/apicurio_registry_hub/AgentCard_Gemini_3_1_Pro.json`](AgentCard_Gemini_3_1_Pro.json)
   - **content_summary**: JSON object，顶层键：$schema, agent_role, capabilities, did, hardware_tier, max_context_window, verifiable_credentials
-  - **role_and_use**: 保存 AgentCard_Gemini_3_1_Pro.json 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 AgentCard_Gemini_3_1_Pro.json（JSON object，顶层键：$schema, agent_role, capabilities, did, hardware_tier, max_context_window, verifiable_credentials） 作为“外部增强骨架原型”使用；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 AgentCard_Gemini_3_1_Pro.json 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=system_backbone_artifact；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
+  - **when_to_read**: 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 AgentCard_Gemini_3_1_Pro.json（JSON object，顶层键：$schema, agent_role, capabilities, did, hardware_tier, max_context_window, verifiable_credentials）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
 <!-- RIDX_FILE_HEX 73797374656d5f6261636b626f6e652f617069637572696f5f72656769737472795f6875622f6132612d70726f746f636f6c2d76616c696461746f722e79616d6c -->
 - **path_or_link**: [`system_backbone/apicurio_registry_hub/a2a-protocol-validator.yaml`](a2a-protocol-validator.yaml)
   - **content_summary**: YAML 结构，顶层键：interceptor；安全锚点：name=hardware-tier-verifier
-  - **role_and_use**: 保存 a2a-protocol-validator.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 a2a-protocol-validator.yaml（name=hardware-tier-verifier） 作为“外部增强骨架原型”使用；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 a2a-protocol-validator.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=system_backbone_artifact；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
+  - **when_to_read**: 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 a2a-protocol-validator.yaml（name=hardware-tier-verifier）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
 <!-- RIDX_FILE_HEX 73797374656d5f6261636b626f6e652f617069637572696f5f72656769737472795f6875622f646f636b65722d636f6d706f73652e796d6c -->
 - **path_or_link**: [`system_backbone/apicurio_registry_hub/docker-compose.yml`](docker-compose.yml)
   - **content_summary**: YAML 结构，顶层键：version, services
-  - **role_and_use**: 保存 docker-compose.yml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 docker-compose.yml（top_keys=version,services） 作为“外部增强骨架原型”使用；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 docker-compose.yml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=system_backbone_artifact；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
+  - **when_to_read**: 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 docker-compose.yml（top_keys=version,services）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
 <!-- RIDX_FILE_HEX 73797374656d5f6261636b626f6e652f617069637572696f5f72656769737472795f6875622f696e6465782e6d64 -->
 - **path_or_link**: [`system_backbone/apicurio_registry_hub/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 system_backbone/apicurio_registry_hub 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 system_backbone/apicurio_registry_hub 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

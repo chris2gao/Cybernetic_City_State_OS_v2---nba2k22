@@ -3,7 +3,7 @@
 
 ## directory_role
 
-议会提案、裁决与归档证据区；归档内容仅用于历史追溯
+议会 Verdicts：组织 Issue、verdict 与归档 provenance，不等于现行宪章
 
 ## authority_and_usage_boundary
 
@@ -11,10 +11,10 @@
 
 ## recommended_reading_order
 
-1. [`04_Parliament/Verdicts/Verdict_005_Vacuum_Circuit_Breaker.md`](Verdict_005_Vacuum_Circuit_Breaker.md) — 用 Verdict_005_Vacuum_Circuit_Breaker.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-2. [`04_Parliament/Verdicts/Verdict_006_Dynamic_Hybrid_Pipeline.md`](Verdict_006_Dynamic_Hybrid_Pipeline.md) — 用 Verdict_006_Dynamic_Hybrid_Pipeline.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-3. [`04_Parliament/Verdicts/Verdict_Suspended_Proposal_004.md`](Verdict_Suspended_Proposal_004.md) — 用 Verdict_Suspended_Proposal_004.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-4. [`04_Parliament/Verdicts/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
+1. [`04_Parliament/Verdicts/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`04_Parliament/Verdicts/Verdict_005_Vacuum_Circuit_Breaker.md`](Verdict_005_Vacuum_Circuit_Breaker.md) — 触发条件：核对对应 Issue 的裁决文本及其适用范围。读取 Verdict_005_Vacuum_Circuit_Breaker.md（H1《🏛️ 法庭裁决档案 005：真空期系统防崩溃与自治指南 (Vacuum Circuit Breaker)》；首个 H2《📜 协议正文：代偿性做梦状态与局部自治 (Compensatory Dream State &amp; Local Autonomy)》）；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认
+3. [`04_Parliament/Verdicts/Verdict_006_Dynamic_Hybrid_Pipeline.md`](Verdict_006_Dynamic_Hybrid_Pipeline.md) — 触发条件：核对对应 Issue 的裁决文本及其适用范围。读取 Verdict_006_Dynamic_Hybrid_Pipeline.md（H1《赛博城邦引擎 B 知识法庭：最高法院结案裁决书》；首个 H2《【法庭总则：皮层-丘脑动态混合架构 (Cortical-Thalamic Dynamic Hybrid Architecture)】》）；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认
+4. [`04_Parliament/Verdicts/Verdict_Suspended_Proposal_004.md`](Verdict_Suspended_Proposal_004.md) — 触发条件：核对对应 Issue 的裁决文本及其适用范围。读取 Verdict_Suspended_Proposal_004.md（H1《赛博城邦引擎 B 知识法庭：最高法院结案裁决书》；首个 H2《【法庭总则】》）；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认
 
 ## child_directories
 
@@ -25,35 +25,35 @@
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f56657264696374732f566572646963745f3030355f56616375756d5f436972637569745f427265616b65722e6d64 -->
 - **path_or_link**: [`04_Parliament/Verdicts/Verdict_005_Vacuum_Circuit_Breaker.md`](Verdict_005_Vacuum_Circuit_Breaker.md)
   - **content_summary**: H1《🏛️ 法庭裁决档案 005：真空期系统防崩溃与自治指南 (Vacuum Circuit Breaker)》；首个 H2《📜 协议正文：代偿性做梦状态与局部自治 (Compensatory Dream State &amp; Local Autonomy)》
-  - **role_and_use**: 用 Verdict_005_Vacuum_Circuit_Breaker.md 为 04_Parliament/Verdicts 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 Verdict_005_Vacuum_Circuit_Breaker.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 Verdict_005_Vacuum_Circuit_Breaker.md（H1《🏛️ 法庭裁决档案 005：真空期系统防崩溃与自治指南 (Vacuum Circuit Breaker)》；首个 H2《📜 协议正文：代偿性做梦状态与局部自治 (Compensatory Dream State &amp; Local Autonomy)》） 作为“议会裁决 provenance”使用；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=parliament_verdict；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认
+  - **when_to_read**: 触发条件：核对对应 Issue 的裁决文本及其适用范围。读取 Verdict_005_Vacuum_Circuit_Breaker.md（H1《🏛️ 法庭裁决档案 005：真空期系统防崩溃与自治指南 (Vacuum Circuit Breaker)》；首个 H2《📜 协议正文：代偿性做梦状态与局部自治 (Compensatory Dream State &amp; Local Autonomy)》）；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f56657264696374732f566572646963745f3030365f44796e616d69635f4879627269645f506970656c696e652e6d64 -->
 - **path_or_link**: [`04_Parliament/Verdicts/Verdict_006_Dynamic_Hybrid_Pipeline.md`](Verdict_006_Dynamic_Hybrid_Pipeline.md)
   - **content_summary**: H1《赛博城邦引擎 B 知识法庭：最高法院结案裁决书》；首个 H2《【法庭总则：皮层-丘脑动态混合架构 (Cortical-Thalamic Dynamic Hybrid Architecture)】》
-  - **role_and_use**: 用 Verdict_006_Dynamic_Hybrid_Pipeline.md 为 04_Parliament/Verdicts 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 Verdict_006_Dynamic_Hybrid_Pipeline.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 Verdict_006_Dynamic_Hybrid_Pipeline.md（H1《赛博城邦引擎 B 知识法庭：最高法院结案裁决书》；首个 H2《【法庭总则：皮层-丘脑动态混合架构 (Cortical-Thalamic Dynamic Hybrid Architecture)】》） 作为“议会裁决 provenance”使用；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=parliament_verdict；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认
+  - **when_to_read**: 触发条件：核对对应 Issue 的裁决文本及其适用范围。读取 Verdict_006_Dynamic_Hybrid_Pipeline.md（H1《赛博城邦引擎 B 知识法庭：最高法院结案裁决书》；首个 H2《【法庭总则：皮层-丘脑动态混合架构 (Cortical-Thalamic Dynamic Hybrid Architecture)】》）；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f56657264696374732f566572646963745f53757370656e6465645f50726f706f73616c5f3030342e6d64 -->
 - **path_or_link**: [`04_Parliament/Verdicts/Verdict_Suspended_Proposal_004.md`](Verdict_Suspended_Proposal_004.md)
   - **content_summary**: H1《赛博城邦引擎 B 知识法庭：最高法院结案裁决书》；首个 H2《【法庭总则】》
-  - **role_and_use**: 用 Verdict_Suspended_Proposal_004.md 为 04_Parliament/Verdicts 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 Verdict_Suspended_Proposal_004.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 Verdict_Suspended_Proposal_004.md（H1《赛博城邦引擎 B 知识法庭：最高法院结案裁决书》；首个 H2《【法庭总则】》） 作为“议会裁决 provenance”使用；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=parliament_verdict；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认
+  - **when_to_read**: 触发条件：核对对应 Issue 的裁决文本及其适用范围。读取 Verdict_Suspended_Proposal_004.md（H1《赛博城邦引擎 B 知识法庭：最高法院结案裁决书》；首个 H2《【法庭总则】》）；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f56657264696374732f696e6465782e6d64 -->
 - **path_or_link**: [`04_Parliament/Verdicts/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 04_Parliament/Verdicts 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 04_Parliament/Verdicts 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 
-- 无额外分组；仍应只读取当前任务明确需要的 direct artifact。
+- 默认不加载 3 个历史/测试/生成/用户或大型 direct artifacts：`04_Parliament/Verdicts/Verdict_005_Vacuum_Circuit_Breaker.md`, `04_Parliament/Verdicts/Verdict_006_Dynamic_Hybrid_Pipeline.md`, `04_Parliament/Verdicts/Verdict_Suspended_Proposal_004.md`。
 
 ## generation_and_freshness_note
 

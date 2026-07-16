@@ -3,7 +3,7 @@
 
 ## directory_role
 
-campaign manifest schema/template 入口；用于声明战役元数据而非激活任务
+campaign manifest schema/template；声明形状不构成任务激活
 
 ## authority_and_usage_boundary
 
@@ -11,8 +11,8 @@ campaign manifest schema/template 入口；用于声明战役元数据而非激�
 
 ## recommended_reading_order
 
-1. [`campaigns/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`campaigns/campaign_manifest_template.yaml`](campaign_manifest_template.yaml) — 修改、调试或消费 campaign_manifest_template.yaml 的具体实现/领域内容前读取
+1. [`campaigns/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`campaigns/campaign_manifest_template.yaml`](campaign_manifest_template.yaml) — 触发条件：创建或验证 campaign manifest，不用于激活 campaign。读取 campaign_manifest_template.yaml（status=negotiating）；模板/schema 只约束声明形状，不创建或激活 campaign
 
 ## child_directories
 
@@ -23,17 +23,17 @@ campaign manifest schema/template 入口；用于声明战役元数据而非激�
 <!-- RIDX_FILE_HEX 63616d706169676e732f63616d706169676e5f6d616e69666573745f74656d706c6174652e79616d6c -->
 - **path_or_link**: [`campaigns/campaign_manifest_template.yaml`](campaign_manifest_template.yaml)
   - **content_summary**: YAML 结构，顶层键：campaign_id, target_goal, status, active_route, available_routes, failure_aware_transitions, dag_nodes, factual_gains；安全锚点：status=negotiating
-  - **role_and_use**: 保存 campaign_manifest_template.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 campaign_manifest_template.yaml 的具体实现/领域内容前读取
+  - **role_and_use**: 将 campaign_manifest_template.yaml（status=negotiating） 作为“campaign 声明模板/schema”使用；模板/schema 只约束声明形状，不创建或激活 campaign
+  - **authority_class**: `schema`
+  - **status_or_freshness**: semantic_profile=campaign_template；authority=schema；evidence_basis=yaml_visible_keys_and_safe_fields；模板/schema 只约束声明形状，不创建或激活 campaign
+  - **when_to_read**: 触发条件：创建或验证 campaign manifest，不用于激活 campaign。读取 campaign_manifest_template.yaml（status=negotiating）；模板/schema 只约束声明形状，不创建或激活 campaign
 <!-- RIDX_FILE_HEX 63616d706169676e732f696e6465782e6d64 -->
 - **path_or_link**: [`campaigns/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 campaigns 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 campaigns 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

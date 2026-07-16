@@ -3,7 +3,7 @@
 
 ## directory_role
 
-议会提案、裁决与归档证据区；归档内容仅用于历史追溯
+议会 Issues：组织 Issue、verdict 与归档 provenance，不等于现行宪章
 
 ## authority_and_usage_boundary
 
@@ -11,72 +11,72 @@
 
 ## recommended_reading_order
 
-1. [`04_Parliament/Issues/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`04_Parliament/Issues/Issue_003_Deep_Research_Roadmap/index.md`](Issue_003_Deep_Research_Roadmap/index.md) — 审查 `Issue_003_Deep_Research_Roadmap` 的具体提案/辩论/证据时进入
-3. [`04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/index.md`](Issue_004_System_Prompt_v6_Architecture_Upgrade/index.md) — 审查 `Issue_004_System_Prompt_v6_Architecture_Upgrade` 的具体提案/辩论/证据时进入
-4. [`04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism/index.md`](Issue_005_V5_Dual_Debate_Mechanism/index.md) — 审查 `Issue_005_V5_Dual_Debate_Mechanism` 的具体提案/辩论/证据时进入
+1. [`04_Parliament/Issues/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`04_Parliament/Issues/Issue_003_Deep_Research_Roadmap/index.md`](Issue_003_Deep_Research_Roadmap/index.md) — 追溯 Issue_003_Deep_Research_Roadmap 的 proposal/debate/review provenance 时进入
+3. [`04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/index.md`](Issue_004_System_Prompt_v6_Architecture_Upgrade/index.md) — 追溯 Issue_004_System_Prompt_v6_Architecture_Upgrade 的 proposal/debate/review provenance 时进入
+4. [`04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism/index.md`](Issue_005_V5_Dual_Debate_Mechanism/index.md) — 追溯 Issue_005_V5_Dual_Debate_Mechanism 的 proposal/debate/review provenance 时进入
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3030335f446565705f52657365617263685f526f61646d6170 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_003_Deep_Research_Roadmap`](Issue_003_Deep_Research_Roadmap/index.md)
-  - **content_scope**: 议会提案、裁决与归档证据区；归档内容仅用于历史追溯；tracked 后代文件数=2
-  - **when_to_enter**: 审查 `Issue_003_Deep_Research_Roadmap` 的具体提案/辩论/证据时进入
+  - **content_scope**: 议会 Issue_003_Deep_Research_Roadmap 的 proposal、debate、review 与附件 provenance；tracked 后代文件数=2
+  - **when_to_enter**: 追溯 Issue_003_Deep_Research_Roadmap 的 proposal/debate/review provenance 时进入
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3030345f53797374656d5f50726f6d70745f76365f4172636869746563747572655f55706772616465 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade`](Issue_004_System_Prompt_v6_Architecture_Upgrade/index.md)
-  - **content_scope**: 议会提案、裁决与归档证据区；归档内容仅用于历史追溯；tracked 后代文件数=4
-  - **when_to_enter**: 审查 `Issue_004_System_Prompt_v6_Architecture_Upgrade` 的具体提案/辩论/证据时进入
+  - **content_scope**: 议会 Issue_004_System_Prompt_v6_Architecture_Upgrade 的 proposal、debate、review 与附件 provenance；tracked 后代文件数=4
+  - **when_to_enter**: 追溯 Issue_004_System_Prompt_v6_Architecture_Upgrade 的 proposal/debate/review provenance 时进入
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3030355f56355f4475616c5f4465626174655f4d656368616e69736d -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism`](Issue_005_V5_Dual_Debate_Mechanism/index.md)
-  - **content_scope**: 议会提案、裁决与归档证据区；归档内容仅用于历史追溯；tracked 后代文件数=3
-  - **when_to_enter**: 审查 `Issue_005_V5_Dual_Debate_Mechanism` 的具体提案/辩论/证据时进入
+  - **content_scope**: 议会 Issue_005_V5_Dual_Debate_Mechanism 的 proposal、debate、review 与附件 provenance；tracked 后代文件数=3
+  - **when_to_enter**: 追溯 Issue_005_V5_Dual_Debate_Mechanism 的 proposal/debate/review provenance 时进入
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3030365f466c79776865656c5f53656c665f4f7074696d697a6174696f6e -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_006_Flywheel_Self_Optimization`](Issue_006_Flywheel_Self_Optimization/index.md)
-  - **content_scope**: 议会提案、裁决与归档证据区；归档内容仅用于历史追溯；tracked 后代文件数=5
-  - **when_to_enter**: 审查 `Issue_006_Flywheel_Self_Optimization` 的具体提案/辩论/证据时进入
+  - **content_scope**: 议会 Issue_006_Flywheel_Self_Optimization 的 proposal、debate、review 与附件 provenance；tracked 后代文件数=5
+  - **when_to_enter**: 追溯 Issue_006_Flywheel_Self_Optimization 的 proposal/debate/review provenance 时进入
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3030375f56365f5068617365305f435152535f456e67696e65 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_007_V6_Phase0_CQRS_Engine`](Issue_007_V6_Phase0_CQRS_Engine/index.md)
-  - **content_scope**: 议会提案、裁决与归档证据区；归档内容仅用于历史追溯；tracked 后代文件数=2
-  - **when_to_enter**: 审查 `Issue_007_V6_Phase0_CQRS_Engine` 的具体提案/辩论/证据时进入
+  - **content_scope**: 议会 Issue_007_V6_Phase0_CQRS_Engine 的 proposal、debate、review 与附件 provenance；tracked 后代文件数=2
+  - **when_to_enter**: 追溯 Issue_007_V6_Phase0_CQRS_Engine 的 proposal/debate/review provenance 时进入
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3030385f56365f5068617365305f4c6174746963655f53616e64626f78 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_008_V6_Phase0_Lattice_Sandbox`](Issue_008_V6_Phase0_Lattice_Sandbox/index.md)
-  - **content_scope**: 议会提案、裁决与归档证据区；归档内容仅用于历史追溯；tracked 后代文件数=2
-  - **when_to_enter**: 审查 `Issue_008_V6_Phase0_Lattice_Sandbox` 的具体提案/辩论/证据时进入
+  - **content_scope**: 议会 Issue_008_V6_Phase0_Lattice_Sandbox 的 proposal、debate、review 与附件 provenance；tracked 后代文件数=2
+  - **when_to_enter**: 追溯 Issue_008_V6_Phase0_Lattice_Sandbox 的 proposal/debate/review provenance 时进入
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3030395f56365f5068617365305f46757a7a696e675f47617465776179 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_009_V6_Phase0_Fuzzing_Gateway`](Issue_009_V6_Phase0_Fuzzing_Gateway/index.md)
-  - **content_scope**: 议会提案、裁决与归档证据区；归档内容仅用于历史追溯；tracked 后代文件数=2
-  - **when_to_enter**: 审查 `Issue_009_V6_Phase0_Fuzzing_Gateway` 的具体提案/辩论/证据时进入
+  - **content_scope**: 议会 Issue_009_V6_Phase0_Fuzzing_Gateway 的 proposal、debate、review 与附件 provenance；tracked 后代文件数=2
+  - **when_to_enter**: 追溯 Issue_009_V6_Phase0_Fuzzing_Gateway 的 proposal/debate/review provenance 时进入
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3031305f56365f4c65676163795f436c65616e75705f616e645f446f6d61696e5f4d6967726174696f6e -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_010_V6_Legacy_Cleanup_and_Domain_Migration`](Issue_010_V6_Legacy_Cleanup_and_Domain_Migration/index.md)
-  - **content_scope**: 议会提案、裁决与归档证据区；归档内容仅用于历史追溯；tracked 后代文件数=2
-  - **when_to_enter**: 审查 `Issue_010_V6_Legacy_Cleanup_and_Domain_Migration` 的具体提案/辩论/证据时进入
+  - **content_scope**: 议会 Issue_010_V6_Legacy_Cleanup_and_Domain_Migration 的 proposal、debate、review 与附件 provenance；tracked 后代文件数=2
+  - **when_to_enter**: 追溯 Issue_010_V6_Legacy_Cleanup_and_Domain_Migration 的 proposal/debate/review provenance 时进入
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3031315f56365f4465626174655f4d656368616e69736d5f456e68616e63656d656e74 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement`](Issue_011_V6_Debate_Mechanism_Enhancement/index.md)
-  - **content_scope**: 议会提案、裁决与归档证据区；归档内容仅用于历史追溯；tracked 后代文件数=4
-  - **when_to_enter**: 审查 `Issue_011_V6_Debate_Mechanism_Enhancement` 的具体提案/辩论/证据时进入
+  - **content_scope**: 议会 Issue_011_V6_Debate_Mechanism_Enhancement 的 proposal、debate、review 与附件 provenance；tracked 后代文件数=4
+  - **when_to_enter**: 追溯 Issue_011_V6_Debate_Mechanism_Enhancement 的 proposal/debate/review provenance 时进入
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3031325f4d617468656d61746963616c5f466c79776865656c5f49676e6974696f6e -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition`](Issue_012_Mathematical_Flywheel_Ignition/index.md)
-  - **content_scope**: 议会提案、裁决与归档证据区；归档内容仅用于历史追溯；tracked 后代文件数=6
-  - **when_to_enter**: 审查 `Issue_012_Mathematical_Flywheel_Ignition` 的具体提案/辩论/证据时进入
+  - **content_scope**: 议会 Issue_012_Mathematical_Flywheel_Ignition 的 proposal、debate、review 与附件 provenance；tracked 后代文件数=6
+  - **when_to_enter**: 追溯 Issue_012_Mathematical_Flywheel_Ignition 的 proposal/debate/review provenance 时进入
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30345f5061726c69616d656e742f4973737565732f54656d706c61746573 -->
 - **path_or_link**: [`04_Parliament/Issues/Templates`](Templates/index.md)
-  - **content_scope**: 议会提案、裁决与归档证据区；归档内容仅用于历史追溯；tracked 后代文件数=4
-  - **when_to_enter**: 创建或校验议会 Issue 结构时进入；模板不代表已立项
+  - **content_scope**: 议会 Issue 结构模板 Templates；用于创建/校验而非立项；tracked 后代文件数=4
+  - **when_to_enter**: 创建或校验 Templates 的 Issue 结构；模板不代表已立项
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30345f5061726c69616d656e742f4973737565732f5f54656d706c617465 -->
 - **path_or_link**: [`04_Parliament/Issues/_Template`](_Template/index.md)
-  - **content_scope**: 议会提案、裁决与归档证据区；归档内容仅用于历史追溯；tracked 后代文件数=3
-  - **when_to_enter**: 创建或校验议会 Issue 结构时进入；模板不代表已立项
+  - **content_scope**: 议会 Issue 结构模板 _Template；用于创建/校验而非立项；tracked 后代文件数=3
+  - **when_to_enter**: 创建或校验 _Template 的 Issue 结构；模板不代表已立项
   - **load_policy**: `task_triggered_lazy_load`
 
 ## direct_files
@@ -84,10 +84,10 @@
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f696e6465782e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 04_Parliament/Issues 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 04_Parliament/Issues 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

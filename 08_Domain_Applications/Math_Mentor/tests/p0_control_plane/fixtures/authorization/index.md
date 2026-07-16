@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Math Mentor 测试、fixture 与静态验证证据目录
+Math Mentor 测试分区 authorization；fixture/verdict 不构成真实权限或 activation
 
 ## authority_and_usage_boundary
 
@@ -11,8 +11,8 @@ Math Mentor 测试、fixture 与静态验证证据目录
 
 ## recommended_reading_order
 
-1. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/authorization/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/authorization/base_cases.json`](base_cases.json) — 运行 base_cases.json 对应测试或定位特定失败用例时读取
+1. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/authorization/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/authorization/base_cases.json`](base_cases.json) — 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 base_cases.json（task_id=math-mentor-p0-control-plane-hardening-0001；schema_version=math_mentor.trusted_human_grant.v1；schema_version=math_mentor.authorization_request.v1）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 
 ## child_directories
 
@@ -23,17 +23,17 @@ Math Mentor 测试、fixture 与静态验证证据目录
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f70305f636f6e74726f6c5f706c616e652f66697874757265732f617574686f72697a6174696f6e2f626173655f63617365732e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/authorization/base_cases.json`](base_cases.json)
   - **content_summary**: JSON object，顶层键：grant, now, request；安全锚点：task_id=math-mentor-p0-control-plane-hardening-0001, schema_version=math_mentor.trusted_human_grant.v1, schema_version=math_mentor.authori…
-  - **role_and_use**: 以 base_cases.json 作为 08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/authorization 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 base_cases.json（task_id=math-mentor-p0-control-plane-hardening-0001；schema_version=math_mentor.trusted_human_grant.v1；schema_version=math_mentor.authorization_request.v1） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 base_cases.json 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=json_strict_structure_and_safe_fields；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 base_cases.json（task_id=math-mentor-p0-control-plane-hardening-0001；schema_version=math_mentor.trusted_human_grant.v1；schema_version=math_mentor.authorization_request.v1）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f70305f636f6e74726f6c5f706c616e652f66697874757265732f617574686f72697a6174696f6e2f696e6465782e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/authorization/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/authorization 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/authorization 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

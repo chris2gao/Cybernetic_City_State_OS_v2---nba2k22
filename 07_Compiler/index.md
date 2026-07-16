@@ -3,7 +3,7 @@
 
 ## directory_role
 
-CQRS projector、lattice sandbox、fuzz gateway 与 YAML topology compiler 原型/测试目录
+CQRS projector、lattice、fuzz gateway 与 YAML topology compiler 原型/测试区
 
 ## authority_and_usage_boundary
 
@@ -11,12 +11,12 @@ CQRS projector、lattice sandbox、fuzz gateway 与 YAML topology compiler 原�
 
 ## recommended_reading_order
 
-1. [`07_Compiler/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`07_Compiler/CQRS_Projector.py`](CQRS_Projector.py) — 修改、调试或消费 CQRS_Projector.py 的具体实现/领域内容前读取
-3. [`07_Compiler/Lattice_Sandbox.py`](Lattice_Sandbox.py) — 修改、调试或消费 Lattice_Sandbox.py 的具体实现/领域内容前读取
-4. [`07_Compiler/QuartetFuzz_Gateway.py`](QuartetFuzz_Gateway.py) — 修改、调试或消费 QuartetFuzz_Gateway.py 的具体实现/领域内容前读取
-5. [`07_Compiler/yaml_topology_compiler.py`](yaml_topology_compiler.py) — 修改、调试或消费 yaml_topology_compiler.py 的具体实现/领域内容前读取
-6. [`07_Compiler/test_cqrs.py`](test_cqrs.py) — 运行 test_cqrs.py 对应测试或定位特定失败用例时读取
+1. [`07_Compiler/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`07_Compiler/CQRS_Projector.py`](CQRS_Projector.py) — 触发条件：修改或测试对应 projector、compiler、lattice 或 fuzz 原型。读取 CQRS_Projector.py（CQRSProjector）；原型能力须由对应测试证明，不能从文件名推断 production readiness
+3. [`07_Compiler/Lattice_Sandbox.py`](Lattice_Sandbox.py) — 触发条件：修改或测试对应 projector、compiler、lattice 或 fuzz 原型。读取 Lattice_Sandbox.py（get_iso_time；to_event；SandboxStrategy）；原型能力须由对应测试证明，不能从文件名推断 production readiness
+4. [`07_Compiler/QuartetFuzz_Gateway.py`](QuartetFuzz_Gateway.py) — 触发条件：修改或测试对应 projector、compiler、lattice 或 fuzz 原型。读取 QuartetFuzz_Gateway.py（MutationEngine；CrashDeduplicator；BaselineValidator）；原型能力须由对应测试证明，不能从文件名推断 production readiness
+5. [`07_Compiler/test_cqrs.py`](test_cqrs.py) — 触发条件：修改或测试对应 projector、compiler、lattice 或 fuzz 原型。读取 test_cqrs.py（reset；test_idempotency；test_dirty_data_downgrade）；原型能力须由对应测试证明，不能从文件名推断 production readiness
+6. [`07_Compiler/test_fuzzing.py`](test_fuzzing.py) — 触发条件：修改或测试对应 projector、compiler、lattice 或 fuzz 原型。读取 test_fuzzing.py（test_deduplicator；test_baseline_block；test_mutation_kill）；原型能力须由对应测试证明，不能从文件名推断 production readiness
 
 ## child_directories
 
@@ -27,63 +27,63 @@ CQRS projector、lattice sandbox、fuzz gateway 与 YAML topology compiler 原�
 <!-- RIDX_FILE_HEX 30375f436f6d70696c65722f435152535f50726f6a6563746f722e7079 -->
 - **path_or_link**: [`07_Compiler/CQRS_Projector.py`](CQRS_Projector.py)
   - **content_summary**: Python；public symbols=CQRSProjector
-  - **role_and_use**: 实现 CQRS_Projector.py 的代码路径；修改或运行前核对相邻合同、输入与测试
+  - **role_and_use**: 将 CQRS_Projector.py（CQRSProjector） 作为“编译器/投影器原型”使用；原型能力须由对应测试证明，不能从文件名推断 production readiness
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CQRS_Projector.py 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=compiler_implementation；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；原型能力须由对应测试证明，不能从文件名推断 production readiness
+  - **when_to_read**: 触发条件：修改或测试对应 projector、compiler、lattice 或 fuzz 原型。读取 CQRS_Projector.py（CQRSProjector）；原型能力须由对应测试证明，不能从文件名推断 production readiness
 <!-- RIDX_FILE_HEX 30375f436f6d70696c65722f4c6174746963655f53616e64626f782e7079 -->
 - **path_or_link**: [`07_Compiler/Lattice_Sandbox.py`](Lattice_Sandbox.py)
   - **content_summary**: Python；public symbols=get_iso_time, to_event, SandboxStrategy, DockerStrategy, WSL2Strategy
-  - **role_and_use**: 实现 Lattice_Sandbox.py 的代码路径；修改或运行前核对相邻合同、输入与测试
+  - **role_and_use**: 将 Lattice_Sandbox.py（get_iso_time；to_event；SandboxStrategy） 作为“编译器/投影器原型”使用；原型能力须由对应测试证明，不能从文件名推断 production readiness
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 Lattice_Sandbox.py 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=compiler_implementation；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；原型能力须由对应测试证明，不能从文件名推断 production readiness
+  - **when_to_read**: 触发条件：修改或测试对应 projector、compiler、lattice 或 fuzz 原型。读取 Lattice_Sandbox.py（get_iso_time；to_event；SandboxStrategy）；原型能力须由对应测试证明，不能从文件名推断 production readiness
 <!-- RIDX_FILE_HEX 30375f436f6d70696c65722f5175617274657446757a7a5f476174657761792e7079 -->
 - **path_or_link**: [`07_Compiler/QuartetFuzz_Gateway.py`](QuartetFuzz_Gateway.py)
   - **content_summary**: Python；public symbols=MutationEngine, CrashDeduplicator, BaselineValidator, CampaignController
-  - **role_and_use**: 实现 QuartetFuzz_Gateway.py 的代码路径；修改或运行前核对相邻合同、输入与测试
+  - **role_and_use**: 将 QuartetFuzz_Gateway.py（MutationEngine；CrashDeduplicator；BaselineValidator） 作为“编译器/投影器原型”使用；原型能力须由对应测试证明，不能从文件名推断 production readiness
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 QuartetFuzz_Gateway.py 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=compiler_implementation；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；原型能力须由对应测试证明，不能从文件名推断 production readiness
+  - **when_to_read**: 触发条件：修改或测试对应 projector、compiler、lattice 或 fuzz 原型。读取 QuartetFuzz_Gateway.py（MutationEngine；CrashDeduplicator；BaselineValidator）；原型能力须由对应测试证明，不能从文件名推断 production readiness
 <!-- RIDX_FILE_HEX 30375f436f6d70696c65722f696e6465782e6d64 -->
 - **path_or_link**: [`07_Compiler/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 07_Compiler 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 07_Compiler 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 30375f436f6d70696c65722f746573745f637172732e7079 -->
 - **path_or_link**: [`07_Compiler/test_cqrs.py`](test_cqrs.py)
   - **content_summary**: Python；public symbols=reset, test_idempotency, test_dirty_data_downgrade, test_structural_crash
-  - **role_and_use**: 以 test_cqrs.py 作为 07_Compiler 的测试输入/断言；不得把 fixture payload 当真实权限
-  - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 test_cqrs.py 对应测试或定位特定失败用例时读取
+  - **role_and_use**: 将 test_cqrs.py（reset；test_idempotency；test_dirty_data_downgrade） 作为“编译器/投影器原型”使用；原型能力须由对应测试证明，不能从文件名推断 production readiness
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=compiler_implementation；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；原型能力须由对应测试证明，不能从文件名推断 production readiness
+  - **when_to_read**: 触发条件：修改或测试对应 projector、compiler、lattice 或 fuzz 原型。读取 test_cqrs.py（reset；test_idempotency；test_dirty_data_downgrade）；原型能力须由对应测试证明，不能从文件名推断 production readiness
 <!-- RIDX_FILE_HEX 30375f436f6d70696c65722f746573745f66757a7a696e672e7079 -->
 - **path_or_link**: [`07_Compiler/test_fuzzing.py`](test_fuzzing.py)
   - **content_summary**: Python；public symbols=test_deduplicator, test_baseline_block, test_mutation_kill
-  - **role_and_use**: 以 test_fuzzing.py 作为 07_Compiler 的测试输入/断言；不得把 fixture payload 当真实权限
-  - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 test_fuzzing.py 对应测试或定位特定失败用例时读取
+  - **role_and_use**: 将 test_fuzzing.py（test_deduplicator；test_baseline_block；test_mutation_kill） 作为“编译器/投影器原型”使用；原型能力须由对应测试证明，不能从文件名推断 production readiness
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=compiler_implementation；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；原型能力须由对应测试证明，不能从文件名推断 production readiness
+  - **when_to_read**: 触发条件：修改或测试对应 projector、compiler、lattice 或 fuzz 原型。读取 test_fuzzing.py（test_deduplicator；test_baseline_block；test_mutation_kill）；原型能力须由对应测试证明，不能从文件名推断 production readiness
 <!-- RIDX_FILE_HEX 30375f436f6d70696c65722f746573745f73616e64626f782e7079 -->
 - **path_or_link**: [`07_Compiler/test_sandbox.py`](test_sandbox.py)
   - **content_summary**: Python；public symbols=test_network_isolation, test_file_access_violation, test_oom_memory_bomb_timeout_fallback, test_escape_attempt, test_two_stage_kill
-  - **role_and_use**: 以 test_sandbox.py 作为 07_Compiler 的测试输入/断言；不得把 fixture payload 当真实权限
-  - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 test_sandbox.py 对应测试或定位特定失败用例时读取
+  - **role_and_use**: 将 test_sandbox.py（test_network_isolation；test_file_access_violation；test_oom_memory_bomb_timeout_fallback） 作为“编译器/投影器原型”使用；原型能力须由对应测试证明，不能从文件名推断 production readiness
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=compiler_implementation；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；原型能力须由对应测试证明，不能从文件名推断 production readiness
+  - **when_to_read**: 触发条件：修改或测试对应 projector、compiler、lattice 或 fuzz 原型。读取 test_sandbox.py（test_network_isolation；test_file_access_violation；test_oom_memory_bomb_timeout_fallback）；原型能力须由对应测试证明，不能从文件名推断 production readiness
 <!-- RIDX_FILE_HEX 30375f436f6d70696c65722f79616d6c5f746f706f6c6f67795f636f6d70696c65722e7079 -->
 - **path_or_link**: [`07_Compiler/yaml_topology_compiler.py`](yaml_topology_compiler.py)
   - **content_summary**: Python；public symbols=ASTNode, YamlTopologyCompiler
-  - **role_and_use**: 实现 yaml_topology_compiler.py 的代码路径；修改或运行前核对相邻合同、输入与测试
+  - **role_and_use**: 将 yaml_topology_compiler.py（ASTNode；YamlTopologyCompiler） 作为“编译器/投影器原型”使用；原型能力须由对应测试证明，不能从文件名推断 production readiness
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 yaml_topology_compiler.py 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=compiler_implementation；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；原型能力须由对应测试证明，不能从文件名推断 production readiness
+  - **when_to_read**: 触发条件：修改或测试对应 projector、compiler、lattice 或 fuzz 原型。读取 yaml_topology_compiler.py（ASTNode；YamlTopologyCompiler）；原型能力须由对应测试证明，不能从文件名推断 production readiness
 
 ## do_not_load_by_default
 
-- 默认不加载 3 个历史/测试/生成/用户或大型 direct artifacts：`07_Compiler/test_cqrs.py`, `07_Compiler/test_fuzzing.py`, `07_Compiler/test_sandbox.py`。
+- 无额外分组；仍应只读取当前任务明确需要的 direct artifact。
 
 ## generation_and_freshness_note
 

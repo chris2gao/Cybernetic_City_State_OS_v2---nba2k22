@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Dual-Check 分阶段设计及 distributed-pipeline/context-collapse 历史复盘目录
+执行方案设计 provenance 区 07_Execution_Plans；方案存在不证明实现或授权
 
 ## authority_and_usage_boundary
 
@@ -11,17 +11,17 @@ Dual-Check 分阶段设计及 distributed-pipeline/context-collapse 历史复盘
 
 ## recommended_reading_order
 
-1. [`07_Execution_Plans/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`07_Execution_Plans/Task_001_Distributed_Pipeline_Mapping.md`](Task_001_Distributed_Pipeline_Mapping.md) — 追溯 Task_001_Distributed_Pipeline_Mapping.md 对应旧任务、裁决或 publication provenance 时读取
-3. [`07_Execution_Plans/Task_003_Context_Collapse_Resistance.md`](Task_003_Context_Collapse_Resistance.md) — 追溯 Task_003_Context_Collapse_Resistance.md 对应旧任务、裁决或 publication provenance 时读取
-4. [`07_Execution_Plans/Dual_Check_Proposal_System/index.md`](Dual_Check_Proposal_System/index.md) — 核验 Dual-Check 的 global blueprint、routing nodes 与 sandbox loop 三阶段设计目录 时进入；不得把目录存在本身当作 activation 或当前任务
+1. [`07_Execution_Plans/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`07_Execution_Plans/Task_001_Distributed_Pipeline_Mapping.md`](Task_001_Distributed_Pipeline_Mapping.md) — 触发条件：比较该设计方案与现行实现，或追溯架构选择。读取 Task_001_Distributed_Pipeline_Mapping.md（H1《🛡️ 战役复盘：Task-001 V5.6至V7.x 分布式数学管线架构拆分实装》；首个 H2《🛑 1. 痛点溯源 (Problem Proposition)》）；设计/复盘不是当前任务授权，也不证明对应系统已实现
+3. [`07_Execution_Plans/Task_003_Context_Collapse_Resistance.md`](Task_003_Context_Collapse_Resistance.md) — 触发条件：比较该设计方案与现行实现，或追溯架构选择。读取 Task_003_Context_Collapse_Resistance.md（H1《🛡️ 战役复盘：Task-003 长周期代理上下文抗坍塌与极限熔断机制》；首个 H2《🛑 1. 痛点溯源 (Problem Proposition)》）；设计/复盘不是当前任务授权，也不证明对应系统已实现
+4. [`07_Execution_Plans/Dual_Check_Proposal_System/index.md`](Dual_Check_Proposal_System/index.md) — 比较 Dual_Check_Proposal_System 中的设计方案与现行实现，或追溯架构来源
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 30375f457865637574696f6e5f506c616e732f4475616c5f436865636b5f50726f706f73616c5f53797374656d -->
 - **path_or_link**: [`07_Execution_Plans/Dual_Check_Proposal_System`](Dual_Check_Proposal_System/index.md)
-  - **content_scope**: Dual-Check 的 global blueprint、routing nodes 与 sandbox loop 三阶段设计目录；tracked 后代文件数=4
-  - **when_to_enter**: 核验 Dual-Check 的 global blueprint、routing nodes 与 sandbox loop 三阶段设计目录 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: 执行方案设计 provenance 区 Dual_Check_Proposal_System；方案存在不证明实现或授权；tracked 后代文件数=4
+  - **when_to_enter**: 比较 Dual_Check_Proposal_System 中的设计方案与现行实现，或追溯架构来源
   - **load_policy**: `task_triggered_lazy_load`
 
 ## direct_files
@@ -29,24 +29,24 @@ Dual-Check 分阶段设计及 distributed-pipeline/context-collapse 历史复盘
 <!-- RIDX_FILE_HEX 30375f457865637574696f6e5f506c616e732f5461736b5f3030315f44697374726962757465645f506970656c696e655f4d617070696e672e6d64 -->
 - **path_or_link**: [`07_Execution_Plans/Task_001_Distributed_Pipeline_Mapping.md`](Task_001_Distributed_Pipeline_Mapping.md)
   - **content_summary**: H1《🛡️ 战役复盘：Task-001 V5.6至V7.x 分布式数学管线架构拆分实装》；首个 H2《🛑 1. 痛点溯源 (Problem Proposition)》
-  - **role_and_use**: 保存 07_Execution_Plans 的历史任务/决策快照；仅在追溯 Task_001_Distributed_Pipeline_Mapping.md 时使用
+  - **role_and_use**: 将 Task_001_Distributed_Pipeline_Mapping.md（H1《🛡️ 战役复盘：Task-001 V5.6至V7.x 分布式数学管线架构拆分实装》；首个 H2《🛑 1. 痛点溯源 (Problem Proposition)》） 作为“执行方案设计 provenance”使用；设计/复盘不是当前任务授权，也不证明对应系统已实现
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: 历史战役复盘；仅作 provenance，不是当前执行合同
-  - **when_to_read**: 追溯 Task_001_Distributed_Pipeline_Mapping.md 对应旧任务、裁决或 publication provenance 时读取
+  - **status_or_freshness**: semantic_profile=execution_plan_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；设计/复盘不是当前任务授权，也不证明对应系统已实现
+  - **when_to_read**: 触发条件：比较该设计方案与现行实现，或追溯架构选择。读取 Task_001_Distributed_Pipeline_Mapping.md（H1《🛡️ 战役复盘：Task-001 V5.6至V7.x 分布式数学管线架构拆分实装》；首个 H2《🛑 1. 痛点溯源 (Problem Proposition)》）；设计/复盘不是当前任务授权，也不证明对应系统已实现
 <!-- RIDX_FILE_HEX 30375f457865637574696f6e5f506c616e732f5461736b5f3030335f436f6e746578745f436f6c6c617073655f526573697374616e63652e6d64 -->
 - **path_or_link**: [`07_Execution_Plans/Task_003_Context_Collapse_Resistance.md`](Task_003_Context_Collapse_Resistance.md)
   - **content_summary**: H1《🛡️ 战役复盘：Task-003 长周期代理上下文抗坍塌与极限熔断机制》；首个 H2《🛑 1. 痛点溯源 (Problem Proposition)》
-  - **role_and_use**: 保存 07_Execution_Plans 的历史任务/决策快照；仅在追溯 Task_003_Context_Collapse_Resistance.md 时使用
+  - **role_and_use**: 将 Task_003_Context_Collapse_Resistance.md（H1《🛡️ 战役复盘：Task-003 长周期代理上下文抗坍塌与极限熔断机制》；首个 H2《🛑 1. 痛点溯源 (Problem Proposition)》） 作为“执行方案设计 provenance”使用；设计/复盘不是当前任务授权，也不证明对应系统已实现
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: 历史战役复盘；仅作 provenance，不是当前执行合同
-  - **when_to_read**: 追溯 Task_003_Context_Collapse_Resistance.md 对应旧任务、裁决或 publication provenance 时读取
+  - **status_or_freshness**: semantic_profile=execution_plan_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；设计/复盘不是当前任务授权，也不证明对应系统已实现
+  - **when_to_read**: 触发条件：比较该设计方案与现行实现，或追溯架构选择。读取 Task_003_Context_Collapse_Resistance.md（H1《🛡️ 战役复盘：Task-003 长周期代理上下文抗坍塌与极限熔断机制》；首个 H2《🛑 1. 痛点溯源 (Problem Proposition)》）；设计/复盘不是当前任务授权，也不证明对应系统已实现
 <!-- RIDX_FILE_HEX 30375f457865637574696f6e5f506c616e732f696e6465782e6d64 -->
 - **path_or_link**: [`07_Execution_Plans/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 07_Execution_Plans 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 07_Execution_Plans 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

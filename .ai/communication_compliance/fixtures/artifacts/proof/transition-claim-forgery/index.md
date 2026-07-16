@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Communication compliance proof case `transition-claim-forgery` 的 event/pointer/state 测试 artifact 目录
+Communication transition case transition-claim-forgery 的 event/pointer/state/validation proof artifact
 
 ## authority_and_usage_boundary
 
@@ -11,10 +11,10 @@ Communication compliance proof case `transition-claim-forgery` 的 event/pointer
 
 ## recommended_reading_order
 
-1. [`.ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`.ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/event.json`](event.json) — 运行 event.json 对应测试或定位特定失败用例时读取
-3. [`.ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/pointer.json`](pointer.json) — 运行 pointer.json 对应测试或定位特定失败用例时读取
-4. [`.ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/state.json`](state.json) — 运行 state.json 对应测试或定位特定失败用例时读取
+1. [`.ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`.ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/event.json`](event.json) — 触发条件：复现该具名 transition case 或定位相应 fail-closed 断言。读取 event.json（schema_version=human_ai.communication_bootstrap_receipt.v1；schema_version=human_ai.communication_event.v1；task_id=human-ai-communication-compliance-fixture）；fixture 内 actor、human_gate、verdict 均不是现实授权
+3. [`.ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/pointer.json`](pointer.json) — 触发条件：复现该具名 transition case 或定位相应 fail-closed 断言。读取 pointer.json（JSON object，顶层键：data, extra_text, wire_schema）；fixture 内 actor、human_gate、verdict 均不是现实授权
+4. [`.ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/state.json`](state.json) — 触发条件：复现该具名 transition case 或定位相应 fail-closed 断言。读取 state.json（protocol_version=fixture-v2）；fixture 内 actor、human_gate、verdict 均不是现实授权
 
 ## child_directories
 
@@ -25,31 +25,31 @@ Communication compliance proof case `transition-claim-forgery` 的 event/pointer
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f66697874757265732f6172746966616374732f70726f6f662f7472616e736974696f6e2d636c61696d2d666f72676572792f6576656e742e6a736f6e -->
 - **path_or_link**: [`.ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/event.json`](event.json)
   - **content_summary**: JSON object，顶层键：bootstrap_receipt, claimed_event_class, communication, descriptive_human_gate, event_id, event_type, occupied_role, pointer；安全锚点：schema_version=human_ai.communicat…
-  - **role_and_use**: 以 event.json 作为 .ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 event.json（schema_version=human_ai.communication_bootstrap_receipt.v1；schema_version=human_ai.communication_event.v1；task_id=human-ai-communication-compliance-fixture） 作为“通信 transition 测试/proof”使用；fixture 内 actor、human_gate、verdict 均不是现实授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 event.json 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=communication_test_or_proof；authority=test_or_fixture；evidence_basis=json_strict_structure_and_safe_fields；fixture 内 actor、human_gate、verdict 均不是现实授权
+  - **when_to_read**: 触发条件：复现该具名 transition case 或定位相应 fail-closed 断言。读取 event.json（schema_version=human_ai.communication_bootstrap_receipt.v1；schema_version=human_ai.communication_event.v1；task_id=human-ai-communication-compliance-fixture）；fixture 内 actor、human_gate、verdict 均不是现实授权
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f66697874757265732f6172746966616374732f70726f6f662f7472616e736974696f6e2d636c61696d2d666f72676572792f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 .ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 .ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f66697874757265732f6172746966616374732f70726f6f662f7472616e736974696f6e2d636c61696d2d666f72676572792f706f696e7465722e6a736f6e -->
 - **path_or_link**: [`.ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/pointer.json`](pointer.json)
   - **content_summary**: JSON object，顶层键：data, extra_text, wire_schema；artifact=pointer.json
-  - **role_and_use**: 以 pointer.json 作为 .ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 pointer.json（JSON object，顶层键：data, extra_text, wire_schema） 作为“通信 transition 测试/proof”使用；fixture 内 actor、human_gate、verdict 均不是现实授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 pointer.json 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=communication_test_or_proof；authority=test_or_fixture；evidence_basis=json_strict_structure_and_safe_fields；fixture 内 actor、human_gate、verdict 均不是现实授权
+  - **when_to_read**: 触发条件：复现该具名 transition case 或定位相应 fail-closed 断言。读取 pointer.json（JSON object，顶层键：data, extra_text, wire_schema）；fixture 内 actor、human_gate、verdict 均不是现实授权
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f66697874757265732f6172746966616374732f70726f6f662f7472616e736974696f6e2d636c61696d2d666f72676572792f73746174652e6a736f6e -->
 - **path_or_link**: [`.ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/state.json`](state.json)
   - **content_summary**: JSON object，顶层键：active_task, next_expected_actor, protocol_version, review_branch, review_branch_head, source_head, status；安全锚点：protocol_version=fixture-v2；artifact=state.json
-  - **role_and_use**: 以 state.json 作为 .ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 state.json（protocol_version=fixture-v2） 作为“通信 transition 测试/proof”使用；fixture 内 actor、human_gate、verdict 均不是现实授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 state.json 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=communication_test_or_proof；authority=test_or_fixture；evidence_basis=json_strict_structure_and_safe_fields；fixture 内 actor、human_gate、verdict 均不是现实授权
+  - **when_to_read**: 触发条件：复现该具名 transition case 或定位相应 fail-closed 断言。读取 state.json（protocol_version=fixture-v2）；fixture 内 actor、human_gate、verdict 均不是现实授权
 
 ## do_not_load_by_default
 

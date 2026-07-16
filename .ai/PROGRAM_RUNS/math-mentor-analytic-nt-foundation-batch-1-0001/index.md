@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Program run `math-mentor-analytic-nt-foundation-batch-1-0001` 的可复现 checkpoint、input/output、log 或验证证据目录
+Program run math-mentor-analytic-nt-foundation-batch-1-0001 的独立 provenance 根；隔离 manifest、证据、输出与验证
 
 ## authority_and_usage_boundary
 
@@ -11,51 +11,51 @@ Program run `math-mentor-analytic-nt-foundation-batch-1-0001` 的可复现 check
 
 ## recommended_reading_order
 
-1. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/FAILURES.md`](FAILURES.md) — 复核 FAILURES.md 所属 run、输出或验证结论时读取
-3. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/FINAL_REPORT.md`](FINAL_REPORT.md) — 复核 FINAL_REPORT.md 所属 run、输出或验证结论时读取
-4. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/MANIFEST.yml`](MANIFEST.yml) — 复核 MANIFEST.yml 所属 run、输出或验证结论时读取
-5. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/RUN_LOG.md`](RUN_LOG.md) — 复核 RUN_LOG.md 所属 run、输出或验证结论时读取
-6. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/AUDITS/index.md`](AUDITS/index.md) — 复核本 run 的审计脚本与节点级检查时进入
-7. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/index.md`](CHECKPOINTS/index.md) — 核验本 run 的阶段 checkpoint 与续跑边界时进入
-8. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/ENVIRONMENT/index.md`](ENVIRONMENT/index.md) — 复现本 run 的声明环境时进入
+1. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/FAILURES.md`](FAILURES.md) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 FAILURES.md（H1《ANALYTIC_NT Foundation Batch 1 Failure Ledger》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+3. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/FINAL_REPORT.md`](FINAL_REPORT.md) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 FINAL_REPORT.md（H1《ANALYTIC_NT Foundation Batch 1 Final Local Report》；首个 H2《Outcome》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+4. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/MANIFEST.yml`](MANIFEST.yml) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 MANIFEST.yml（program_id=math-mentor-analytic-nt-foundation-batch-1-0001；status=local_candidate_validated；task_id=math-mentor-analytic-nt-foundation-batch-1-completion-0001）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+5. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/RUN_LOG.md`](RUN_LOG.md) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 RUN_LOG.md（H1《ANALYTIC_NT Foundation Batch 1 Run Ledger》；首个 H2《Mathematical Ambiguity Log》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+6. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/AUDITS/index.md`](AUDITS/index.md) — 只在复核 run math-mentor-analytic-nt-foundation-batch-1-0001 的 AUDITS 输入/输出/证据时进入
+7. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/index.md`](CHECKPOINTS/index.md) — 只在复核 run math-mentor-analytic-nt-foundation-batch-1-0001 的 CHECKPOINTS 输入/输出/证据时进入
+8. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/ENVIRONMENT/index.md`](ENVIRONMENT/index.md) — 只在复核 run math-mentor-analytic-nt-foundation-batch-1-0001 的 ENVIRONMENT 输入/输出/证据时进入
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f415544495453 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/AUDITS`](AUDITS/index.md)
-  - **content_scope**: Program run `math-mentor-analytic-nt-foundation-batch-1-0001/AUDITS` 的可复现 checkpoint、input/output、log 或验证证据目录；tracked 后代文件数=6
-  - **when_to_enter**: 复核本 run 的审计脚本与节点级检查时进入
+  - **content_scope**: Program run math-mentor-analytic-nt-foundation-batch-1-0001 的 AUDITS 证据分区；仅解释该 run 的对应阶段；tracked 后代文件数=6
+  - **when_to_enter**: 只在复核 run math-mentor-analytic-nt-foundation-batch-1-0001 的 AUDITS 输入/输出/证据时进入
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f434845434b504f494e5453 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS`](CHECKPOINTS/index.md)
-  - **content_scope**: Program run `math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS` 的可复现 checkpoint、input/output、log 或验证证据目录；tracked 后代文件数=8
-  - **when_to_enter**: 核验本 run 的阶段 checkpoint 与续跑边界时进入
+  - **content_scope**: Program run math-mentor-analytic-nt-foundation-batch-1-0001 的 CHECKPOINTS 证据分区；仅解释该 run 的对应阶段；tracked 后代文件数=8
+  - **when_to_enter**: 只在复核 run math-mentor-analytic-nt-foundation-batch-1-0001 的 CHECKPOINTS 输入/输出/证据时进入
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f454e5649524f4e4d454e54 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/ENVIRONMENT`](ENVIRONMENT/index.md)
-  - **content_scope**: Program run `math-mentor-analytic-nt-foundation-batch-1-0001/ENVIRONMENT` 的可复现 checkpoint、input/output、log 或验证证据目录；tracked 后代文件数=2
-  - **when_to_enter**: 复现本 run 的声明环境时进入
+  - **content_scope**: Program run math-mentor-analytic-nt-foundation-batch-1-0001 的 ENVIRONMENT 证据分区；仅解释该 run 的对应阶段；tracked 后代文件数=2
+  - **when_to_enter**: 只在复核 run math-mentor-analytic-nt-foundation-batch-1-0001 的 ENVIRONMENT 输入/输出/证据时进入
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f494e50555453 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/INPUTS`](INPUTS/index.md)
-  - **content_scope**: Program run `math-mentor-analytic-nt-foundation-batch-1-0001/INPUTS` 的可复现 checkpoint、input/output、log 或验证证据目录；tracked 后代文件数=5
-  - **when_to_enter**: 复核本 run 的冻结输入时进入
+  - **content_scope**: Program run math-mentor-analytic-nt-foundation-batch-1-0001 的 INPUTS 证据分区；仅解释该 run 的对应阶段；tracked 后代文件数=5
+  - **when_to_enter**: 只在复核 run math-mentor-analytic-nt-foundation-batch-1-0001 的 INPUTS 输入/输出/证据时进入
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f4c4f4753 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS`](LOGS/index.md)
-  - **content_scope**: Program run `math-mentor-analytic-nt-foundation-batch-1-0001/LOGS` 的可复现 checkpoint、input/output、log 或验证证据目录；tracked 后代文件数=7
-  - **when_to_enter**: 定位本 run 的执行/验证日志时进入
+  - **content_scope**: Program run math-mentor-analytic-nt-foundation-batch-1-0001 的 LOGS 证据分区；仅解释该 run 的对应阶段；tracked 后代文件数=7
+  - **when_to_enter**: 只在复核 run math-mentor-analytic-nt-foundation-batch-1-0001 的 LOGS 输入/输出/证据时进入
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f4f555450555453 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS`](OUTPUTS/index.md)
-  - **content_scope**: Program run `math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS` 的可复现 checkpoint、input/output、log 或验证证据目录；tracked 后代文件数=9
-  - **when_to_enter**: 复核本 run 的生成输出，不据此推断 activation时进入
+  - **content_scope**: Program run math-mentor-analytic-nt-foundation-batch-1-0001 的 OUTPUTS 证据分区；仅解释该 run 的对应阶段；tracked 后代文件数=9
+  - **when_to_enter**: 只在复核 run math-mentor-analytic-nt-foundation-batch-1-0001 的 OUTPUTS 输入/输出/证据时进入
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f5245504f525453 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS`](REPORTS/index.md)
-  - **content_scope**: Program run `math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS` 的可复现 checkpoint、input/output、log 或验证证据目录；tracked 后代文件数=6
-  - **when_to_enter**: 阅读本 run 的汇总、认证与 changed-files 报告时进入
+  - **content_scope**: Program run math-mentor-analytic-nt-foundation-batch-1-0001 的 REPORTS 证据分区；仅解释该 run 的对应阶段；tracked 后代文件数=6
+  - **when_to_enter**: 只在复核 run math-mentor-analytic-nt-foundation-batch-1-0001 的 REPORTS 输入/输出/证据时进入
   - **load_policy**: `do_not_load_by_default`
 
 ## direct_files
@@ -63,38 +63,38 @@ Program run `math-mentor-analytic-nt-foundation-batch-1-0001` 的可复现 check
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f4641494c555245532e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/FAILURES.md`](FAILURES.md)
   - **content_summary**: H1《ANALYTIC_NT Foundation Batch 1 Failure Ledger》
-  - **role_and_use**: 由 FAILURES.md 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 FAILURES.md（H1《ANALYTIC_NT Foundation Batch 1 Failure Ledger》） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 FAILURES.md 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=markdown_heading_or_visible_structure；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 FAILURES.md（H1《ANALYTIC_NT Foundation Batch 1 Failure Ledger》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f46494e414c5f5245504f52542e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/FINAL_REPORT.md`](FINAL_REPORT.md)
   - **content_summary**: H1《ANALYTIC_NT Foundation Batch 1 Final Local Report》；首个 H2《Outcome》
-  - **role_and_use**: 由 FINAL_REPORT.md 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 FINAL_REPORT.md（H1《ANALYTIC_NT Foundation Batch 1 Final Local Report》；首个 H2《Outcome》） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 FINAL_REPORT.md 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=markdown_heading_or_visible_structure；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 FINAL_REPORT.md（H1《ANALYTIC_NT Foundation Batch 1 Final Local Report》；首个 H2《Outcome》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f4d414e49464553542e796d6c -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/MANIFEST.yml`](MANIFEST.yml)
   - **content_summary**: YAML 结构，顶层键：program_id, program_ref, program_version, status, generated_at, local_validation_completed_at, source_branch, source_head；安全锚点：program_id=math-mentor-analytic-nt-found…
-  - **role_and_use**: 由 MANIFEST.yml 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 MANIFEST.yml（program_id=math-mentor-analytic-nt-foundation-batch-1-0001；status=local_candidate_validated；task_id=math-mentor-analytic-nt-foundation-batch-1-completion-0001） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 MANIFEST.yml 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=yaml_visible_keys_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 MANIFEST.yml（program_id=math-mentor-analytic-nt-foundation-batch-1-0001；status=local_candidate_validated；task_id=math-mentor-analytic-nt-foundation-batch-1-completion-0001）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f52554e5f4c4f472e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/RUN_LOG.md`](RUN_LOG.md)
   - **content_summary**: H1《ANALYTIC_NT Foundation Batch 1 Run Ledger》；首个 H2《Mathematical Ambiguity Log》
-  - **role_and_use**: 由 RUN_LOG.md 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 RUN_LOG.md（H1《ANALYTIC_NT Foundation Batch 1 Run Ledger》；首个 H2《Mathematical Ambiguity Log》） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 RUN_LOG.md 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=markdown_heading_or_visible_structure；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 RUN_LOG.md（H1《ANALYTIC_NT Foundation Batch 1 Run Ledger》；首个 H2《Mathematical Ambiguity Log》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

@@ -3,7 +3,7 @@
 
 ## directory_role
 
-仓库内 planning skill 与 archived skill provenance 目录
+仓库内 planning skill 与 archived skill provenance 区 skills
 
 ## authority_and_usage_boundary
 
@@ -11,17 +11,17 @@
 
 ## recommended_reading_order
 
-1. [`06_Silicon_Index/skills/AI_Planning_Methodology.md`](AI_Planning_Methodology.md) — 用 AI_Planning_Methodology.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-2. [`06_Silicon_Index/skills/firecrawl.md`](firecrawl.md) — 用 firecrawl.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-3. [`06_Silicon_Index/skills/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-4. [`06_Silicon_Index/skills/_ARCHIVED/index.md`](_ARCHIVED/index.md) — 仅在追溯旧裁决或迁移来源时进入
+1. [`06_Silicon_Index/skills/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`06_Silicon_Index/skills/AI_Planning_Methodology.md`](AI_Planning_Methodology.md) — 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 AI_Planning_Methodology.md（H1《🧠 硅基六步递归推演协议 (Silicon 6-Step Recursive Deduction Protocol)》；首个 H2《⚡ 最高权限声明 (Supreme Emergence Directive)》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+3. [`06_Silicon_Index/skills/firecrawl.md`](firecrawl.md) — 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 firecrawl.md（H1《Firecrawl》；首个 H2《Install》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+4. [`06_Silicon_Index/skills/_ARCHIVED/index.md`](_ARCHIVED/index.md) — 当前任务明确调用 _ARCHIVED 中的 skill，或追溯 archived skill
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 30365f53696c69636f6e5f496e6465782f736b696c6c732f5f4152434849564544 -->
 - **path_or_link**: [`06_Silicon_Index/skills/_ARCHIVED`](_ARCHIVED/index.md)
-  - **content_scope**: AI 侧 bootstrap、运行契约、persona、工具、factory pipeline 与安全测试索引区；tracked 后代文件数=2
-  - **when_to_enter**: 仅在追溯旧裁决或迁移来源时进入
+  - **content_scope**: 仓库内 planning skill 与 archived skill provenance 区 _ARCHIVED；tracked 后代文件数=2
+  - **when_to_enter**: 当前任务明确调用 _ARCHIVED 中的 skill，或追溯 archived skill
   - **load_policy**: `do_not_load_by_default`
 
 ## direct_files
@@ -29,24 +29,24 @@
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736b696c6c732f41495f506c616e6e696e675f4d6574686f646f6c6f67792e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/skills/AI_Planning_Methodology.md`](AI_Planning_Methodology.md)
   - **content_summary**: H1《🧠 硅基六步递归推演协议 (Silicon 6-Step Recursive Deduction Protocol)》；首个 H2《⚡ 最高权限声明 (Supreme Emergence Directive)》
-  - **role_and_use**: 用 AI_Planning_Methodology.md 为 06_Silicon_Index/skills 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 AI_Planning_Methodology.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 AI_Planning_Methodology.md（H1《🧠 硅基六步递归推演协议 (Silicon 6-Step Recursive Deduction Protocol)》；首个 H2《⚡ 最高权限声明 (Supreme Emergence Directive)》） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=markdown_heading_or_visible_structure；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 AI_Planning_Methodology.md（H1《🧠 硅基六步递归推演协议 (Silicon 6-Step Recursive Deduction Protocol)》；首个 H2《⚡ 最高权限声明 (Supreme Emergence Directive)》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736b696c6c732f66697265637261776c2e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/skills/firecrawl.md`](firecrawl.md)
   - **content_summary**: H1《Firecrawl》；首个 H2《Install》
-  - **role_and_use**: 用 firecrawl.md 为 06_Silicon_Index/skills 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 firecrawl.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 firecrawl.md（H1《Firecrawl》；首个 H2《Install》） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=markdown_heading_or_visible_structure；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 firecrawl.md（H1《Firecrawl》；首个 H2《Install》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f736b696c6c732f696e6465782e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/skills/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 06_Silicon_Index/skills 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 06_Silicon_Index/skills 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Math Mentor 测试、fixture 与静态验证证据目录
+Math Mentor 测试分区 fixtures；fixture/verdict 不构成真实权限或 activation
 
 ## authority_and_usage_boundary
 
@@ -11,21 +11,21 @@ Math Mentor 测试、fixture 与静态验证证据目录
 
 ## recommended_reading_order
 
-1. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/admission/index.md`](admission/index.md) — 复现特定测试、proof case 或定位 validator 失败时进入
-3. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/authorization/index.md`](authorization/index.md) — 复现特定测试、proof case 或定位 validator 失败时进入
+1. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/admission/index.md`](admission/index.md) — 运行 admission 中的具名测试或复现 fixture 失败
+3. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/authorization/index.md`](authorization/index.md) — 运行 authorization 中的具名测试或复现 fixture 失败
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f70305f636f6e74726f6c5f706c616e652f66697874757265732f61646d697373696f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/admission`](admission/index.md)
-  - **content_scope**: Math Mentor 测试、fixture 与静态验证证据目录；tracked 后代文件数=2
-  - **when_to_enter**: 复现特定测试、proof case 或定位 validator 失败时进入
+  - **content_scope**: Math Mentor 测试分区 admission；fixture/verdict 不构成真实权限或 activation；tracked 后代文件数=2
+  - **when_to_enter**: 运行 admission 中的具名测试或复现 fixture 失败
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f70305f636f6e74726f6c5f706c616e652f66697874757265732f617574686f72697a6174696f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/authorization`](authorization/index.md)
-  - **content_scope**: Math Mentor 测试、fixture 与静态验证证据目录；tracked 后代文件数=2
-  - **when_to_enter**: 复现特定测试、proof case 或定位 validator 失败时进入
+  - **content_scope**: Math Mentor 测试分区 authorization；fixture/verdict 不构成真实权限或 activation；tracked 后代文件数=2
+  - **when_to_enter**: 运行 authorization 中的具名测试或复现 fixture 失败
   - **load_policy**: `do_not_load_by_default`
 
 ## direct_files
@@ -33,10 +33,10 @@ Math Mentor 测试、fixture 与静态验证证据目录
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f70305f636f6e74726f6c5f706c616e652f66697874757265732f696e6465782e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

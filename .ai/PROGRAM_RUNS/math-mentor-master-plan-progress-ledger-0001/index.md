@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Program run `math-mentor-master-plan-progress-ledger-0001` 的可复现 checkpoint、input/output、log 或验证证据目录
+Program run math-mentor-master-plan-progress-ledger-0001 的独立 provenance 根；隔离 manifest、证据、输出与验证
 
 ## authority_and_usage_boundary
 
@@ -11,23 +11,23 @@ Program run `math-mentor-master-plan-progress-ledger-0001` 的可复现 checkpoi
 
 ## recommended_reading_order
 
-1. [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/FINAL_REPORT.md`](FINAL_REPORT.md) — 复核 FINAL_REPORT.md 所属 run、输出或验证结论时读取
-3. [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/MANIFEST.yml`](MANIFEST.yml) — 复核 MANIFEST.yml 所属 run、输出或验证结论时读取
-4. [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/EVIDENCE/index.md`](EVIDENCE/index.md) — 核验本 run 的机器证据与 provenance时进入
-5. [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/VALIDATION/index.md`](VALIDATION/index.md) — 复核本 run 的验证结论与失败边界时进入
+1. [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/FINAL_REPORT.md`](FINAL_REPORT.md) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 FINAL_REPORT.md（H1《Publication-Preparation Report — Math Mentor Master Plan And Progress Ledger》；首个 H2《Result》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+3. [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/MANIFEST.yml`](MANIFEST.yml) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 MANIFEST.yml（task_id=math-mentor-master-plan-progress-ledger-0001；status=accepted_for_normal_PR_publication_with_physical_resolution）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+4. [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/EVIDENCE/index.md`](EVIDENCE/index.md) — 只在复核 run math-mentor-master-plan-progress-ledger-0001 的 EVIDENCE 输入/输出/证据时进入
+5. [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/VALIDATION/index.md`](VALIDATION/index.md) — 只在复核 run math-mentor-master-plan-progress-ledger-0001 的 VALIDATION 输入/输出/证据时进入
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6d61737465722d706c616e2d70726f67726573732d6c65646765722d303030312f45564944454e4345 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/EVIDENCE`](EVIDENCE/index.md)
-  - **content_scope**: Program run `math-mentor-master-plan-progress-ledger-0001/EVIDENCE` 的可复现 checkpoint、input/output、log 或验证证据目录；tracked 后代文件数=2
-  - **when_to_enter**: 核验本 run 的机器证据与 provenance时进入
+  - **content_scope**: Program run math-mentor-master-plan-progress-ledger-0001 的 EVIDENCE 证据分区；仅解释该 run 的对应阶段；tracked 后代文件数=2
+  - **when_to_enter**: 只在复核 run math-mentor-master-plan-progress-ledger-0001 的 EVIDENCE 输入/输出/证据时进入
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6d61737465722d706c616e2d70726f67726573732d6c65646765722d303030312f56414c49444154494f4e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/VALIDATION`](VALIDATION/index.md)
-  - **content_scope**: Program run `math-mentor-master-plan-progress-ledger-0001/VALIDATION` 的可复现 checkpoint、input/output、log 或验证证据目录；tracked 后代文件数=3
-  - **when_to_enter**: 复核本 run 的验证结论与失败边界时进入
+  - **content_scope**: Program run math-mentor-master-plan-progress-ledger-0001 的 VALIDATION 证据分区；仅解释该 run 的对应阶段；tracked 后代文件数=3
+  - **when_to_enter**: 只在复核 run math-mentor-master-plan-progress-ledger-0001 的 VALIDATION 输入/输出/证据时进入
   - **load_policy**: `do_not_load_by_default`
 
 ## direct_files
@@ -35,24 +35,24 @@ Program run `math-mentor-master-plan-progress-ledger-0001` 的可复现 checkpoi
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6d61737465722d706c616e2d70726f67726573732d6c65646765722d303030312f46494e414c5f5245504f52542e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/FINAL_REPORT.md`](FINAL_REPORT.md)
   - **content_summary**: H1《Publication-Preparation Report — Math Mentor Master Plan And Progress Ledger》；首个 H2《Result》
-  - **role_and_use**: 由 FINAL_REPORT.md 保存 .ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 FINAL_REPORT.md（H1《Publication-Preparation Report — Math Mentor Master Plan And Progress Ledger》；首个 H2《Result》） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 FINAL_REPORT.md 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=markdown_heading_or_visible_structure；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 FINAL_REPORT.md（H1《Publication-Preparation Report — Math Mentor Master Plan And Progress Ledger》；首个 H2《Result》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6d61737465722d706c616e2d70726f67726573732d6c65646765722d303030312f4d414e49464553542e796d6c -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/MANIFEST.yml`](MANIFEST.yml)
   - **content_summary**: YAML 结构，顶层键：task_id, task_version, run_type, source_branch, source_head, work_branch, parent_candidate, accepted_candidate；安全锚点：task_id=math-mentor-master-plan-progress-ledger-000…
-  - **role_and_use**: 由 MANIFEST.yml 保存 .ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 MANIFEST.yml（task_id=math-mentor-master-plan-progress-ledger-0001；status=accepted_for_normal_PR_publication_with_physical_resolution） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 MANIFEST.yml 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=yaml_visible_keys_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 MANIFEST.yml（task_id=math-mentor-master-plan-progress-ledger-0001；status=accepted_for_normal_PR_publication_with_physical_resolution）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6d61737465722d706c616e2d70726f67726573732d6c65646765722d303030312f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

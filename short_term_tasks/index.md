@@ -3,7 +3,7 @@
 
 ## directory_role
 
-已取代的 Math Mentor outsourcing 与 task-template provenance 根；不得恢复旧 pending 任务
+已取代 outsourcing/task provenance 区 short_term_tasks；旧 pending 不恢复任务
 
 ## authority_and_usage_boundary
 
@@ -11,33 +11,33 @@
 
 ## recommended_reading_order
 
-1. [`short_term_tasks/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`short_term_tasks/task_template.json`](task_template.json) — 追溯 task_template.json 的 superseded outsourcing/task provenance 时读取
-3. [`short_term_tasks/Level4_Outsourcing/index.md`](Level4_Outsourcing/index.md) — 核验 Level 4 复变/常微分与计算代数/数论 outsourcing 历史指令目录 时进入；不得把目录存在本身当作 activation 或当前任务
-4. [`short_term_tasks/Level5_Outsourcing/index.md`](Level5_Outsourcing/index.md) — 核验 Level 5 PDE/随机过程与组合数学/局部几何 outsourcing 历史指令目录 时进入；不得把目录存在本身当作 activation 或当前任务
-5. [`short_term_tasks/Level6_Outsourcing/index.md`](Level6_Outsourcing/index.md) — 核验 Level 6 椭圆曲线密码学 outsourcing 历史指令目录 时进入；不得把目录存在本身当作 activation 或当前任务
+1. [`short_term_tasks/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`short_term_tasks/task_template.json`](task_template.json) — 触发条件：追溯该旧 outsourcing/task 请求及其被取代边界。读取 task_template.json（status=pending；task_id=template_micro_task_001）；旧 pending/outsourcing 字段不得恢复任务、合并或 publication
+3. [`short_term_tasks/Level4_Outsourcing/index.md`](Level4_Outsourcing/index.md) — 追溯 Level4_Outsourcing 中旧 outsourcing/task 请求及其 superseded 边界
+4. [`short_term_tasks/Level5_Outsourcing/index.md`](Level5_Outsourcing/index.md) — 追溯 Level5_Outsourcing 中旧 outsourcing/task 请求及其 superseded 边界
+5. [`short_term_tasks/Level6_Outsourcing/index.md`](Level6_Outsourcing/index.md) — 追溯 Level6_Outsourcing 中旧 outsourcing/task 请求及其 superseded 边界
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 73686f72745f7465726d5f7461736b732f4c6576656c345f4f7574736f757263696e67 -->
 - **path_or_link**: [`short_term_tasks/Level4_Outsourcing`](Level4_Outsourcing/index.md)
-  - **content_scope**: Level 4 复变/常微分与计算代数/数论 outsourcing 历史指令目录；tracked 后代文件数=3
-  - **when_to_enter**: 核验 Level 4 复变/常微分与计算代数/数论 outsourcing 历史指令目录 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: 已取代 outsourcing/task provenance 区 Level4_Outsourcing；旧 pending 不恢复任务；tracked 后代文件数=3
+  - **when_to_enter**: 追溯 Level4_Outsourcing 中旧 outsourcing/task 请求及其 superseded 边界
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 73686f72745f7465726d5f7461736b732f4c6576656c355f4f7574736f757263696e67 -->
 - **path_or_link**: [`short_term_tasks/Level5_Outsourcing`](Level5_Outsourcing/index.md)
-  - **content_scope**: Level 5 PDE/随机过程与组合数学/局部几何 outsourcing 历史指令目录；tracked 后代文件数=3
-  - **when_to_enter**: 核验 Level 5 PDE/随机过程与组合数学/局部几何 outsourcing 历史指令目录 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: 已取代 outsourcing/task provenance 区 Level5_Outsourcing；旧 pending 不恢复任务；tracked 后代文件数=3
+  - **when_to_enter**: 追溯 Level5_Outsourcing 中旧 outsourcing/task 请求及其 superseded 边界
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 73686f72745f7465726d5f7461736b732f4c6576656c365f4f7574736f757263696e67 -->
 - **path_or_link**: [`short_term_tasks/Level6_Outsourcing`](Level6_Outsourcing/index.md)
-  - **content_scope**: Level 6 椭圆曲线密码学 outsourcing 历史指令目录；tracked 后代文件数=2
-  - **when_to_enter**: 核验 Level 6 椭圆曲线密码学 outsourcing 历史指令目录 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: 已取代 outsourcing/task provenance 区 Level6_Outsourcing；旧 pending 不恢复任务；tracked 后代文件数=2
+  - **when_to_enter**: 追溯 Level6_Outsourcing 中旧 outsourcing/task 请求及其 superseded 边界
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 73686f72745f7465726d5f7461736b732f7461736b5f67656e65726174655f6c6576656c345f6d6f646541 -->
 - **path_or_link**: [`short_term_tasks/task_generate_level4_modeA`](task_generate_level4_modeA/index.md)
-  - **content_scope**: 旧 Level 4 Mode A task.json 生成请求 provenance 目录；tracked 后代文件数=2
-  - **when_to_enter**: 核验 旧 Level 4 Mode A task.json 生成请求 provenance 目录 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: 已取代 outsourcing/task provenance 区 task_generate_level4_modeA；旧 pending 不恢复任务；tracked 后代文件数=2
+  - **when_to_enter**: 追溯 task_generate_level4_modeA 中旧 outsourcing/task 请求及其 superseded 边界
   - **load_policy**: `do_not_load_by_default`
 
 ## direct_files
@@ -45,17 +45,17 @@
 <!-- RIDX_FILE_HEX 73686f72745f7465726d5f7461736b732f696e6465782e6d64 -->
 - **path_or_link**: [`short_term_tasks/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 short_term_tasks 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 short_term_tasks 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 73686f72745f7465726d5f7461736b732f7461736b5f74656d706c6174652e6a736f6e -->
 - **path_or_link**: [`short_term_tasks/task_template.json`](task_template.json)
   - **content_summary**: JSON object，顶层键：execution_log, recovery_feedback, status, task_id；安全锚点：status=pending, task_id=template_micro_task_001
-  - **role_and_use**: 保存 task_template.json 的已取代外包/任务 provenance；禁止恢复为活动任务
+  - **role_and_use**: 将 task_template.json（status=pending；task_id=template_micro_task_001） 作为“已取代短任务 provenance”使用；旧 pending/outsourcing 字段不得恢复任务、合并或 publication
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: superseded legacy outsourcing/task evidence；不得依据旧 pending 字段恢复任务或合并
-  - **when_to_read**: 追溯 task_template.json 的 superseded outsourcing/task provenance 时读取
+  - **status_or_freshness**: semantic_profile=legacy_task_history；authority=historical_evidence；evidence_basis=json_strict_structure_and_safe_fields；旧 pending/outsourcing 字段不得恢复任务、合并或 publication
+  - **when_to_read**: 触发条件：追溯该旧 outsourcing/task 请求及其被取代边界。读取 task_template.json（status=pending；task_id=template_micro_task_001）；旧 pending/outsourcing 字段不得恢复任务、合并或 publication
 
 ## do_not_load_by_default
 

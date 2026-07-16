@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Math Mentor deterministic identity、alias、authorization 与 admission 静态控制面代码目录；未激活 runtime
+deterministic identity/alias/authorization/admission 静态控制面；runtime 未激活
 
 ## authority_and_usage_boundary
 
@@ -11,20 +11,20 @@ Math Mentor deterministic identity、alias、authorization 与 admission 静态�
 
 ## recommended_reading_order
 
-1. [`08_Domain_Applications/Math_Mentor/p0_control_plane/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`08_Domain_Applications/Math_Mentor/p0_control_plane/__init__.py`](__init__.py) — 修改、调试或消费 __init__.py 的具体实现/领域内容前读取
-3. [`08_Domain_Applications/Math_Mentor/p0_control_plane/admission.py`](admission.py) — 修改、调试或消费 admission.py 的具体实现/领域内容前读取
-4. [`08_Domain_Applications/Math_Mentor/p0_control_plane/admission_evidence.py`](admission_evidence.py) — 修改、调试或消费 admission_evidence.py 的具体实现/领域内容前读取
-5. [`08_Domain_Applications/Math_Mentor/p0_control_plane/authorization.py`](authorization.py) — 修改、调试或消费 authorization.py 的具体实现/领域内容前读取
-6. [`08_Domain_Applications/Math_Mentor/p0_control_plane/identity.py`](identity.py) — 修改、调试或消费 identity.py 的具体实现/领域内容前读取
-7. [`08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/index.md`](schemas/index.md) — 核验 P0 identity/crosswalk/conflict/root-corpus/authorization/admission JSON schema 目录 时进入；不得把目录存在本身当作 activation 或当前任务
+1. [`08_Domain_Applications/Math_Mentor/p0_control_plane/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`08_Domain_Applications/Math_Mentor/p0_control_plane/__init__.py`](__init__.py) — 触发条件：修改或静态验证该 P0 identity/alias/admission/authorization 模块。读取 __init__.py（Math Mentor P0 control-plane primitives. This package is deliberately stateless. It does not activa…）；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
+3. [`08_Domain_Applications/Math_Mentor/p0_control_plane/admission.py`](admission.py) — 触发条件：修改或静态验证该 P0 identity/alias/admission/authorization 模块。读取 admission.py（Pure, fail-closed admission evaluation for Math Mentor assets. Admission answers whether an exact a…；AdmissionInputError；AdmissionRequest）；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
+4. [`08_Domain_Applications/Math_Mentor/p0_control_plane/admission_evidence.py`](admission_evidence.py) — 触发条件：修改或静态验证该 P0 identity/alias/admission/authorization 模块。读取 admission_evidence.py（Sealed evidence boundary for Math Mentor admission. All fields on &#96;&#96;AdmissionRequest&#96;&amp;#…；AdmissionEvidenceError；TrustedAdmissionEvidence）；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
+5. [`08_Domain_Applications/Math_Mentor/p0_control_plane/authorization.py`](authorization.py) — 触发条件：修改或静态验证该 P0 identity/alias/admission/authorization 模块。读取 authorization.py（Fail-closed authorization primitives for the Math Mentor P0 control plane. Business payloads are un…；AuthorizationInputError；TrustBoundaryError）；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
+6. [`08_Domain_Applications/Math_Mentor/p0_control_plane/identity.py`](identity.py) — 触发条件：修改或静态验证该 P0 identity/alias/admission/authorization 模块。读取 identity.py（Deterministic identity primitives for the Math Mentor control plane. This module deliberately separ…；IdentityError；IdentityHit）；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
+7. [`08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/index.md`](schemas/index.md) — 验证具名 P0 registry/crosswalk/authorization/admission artifact
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f70305f636f6e74726f6c5f706c616e652f736368656d6173 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/p0_control_plane/schemas`](schemas/index.md)
-  - **content_scope**: P0 identity/crosswalk/conflict/root-corpus/authorization/admission JSON schema 目录；tracked 后代文件数=5
-  - **when_to_enter**: 核验 P0 identity/crosswalk/conflict/root-corpus/authorization/admission JSON schema 目录 时进入；不得把目录存在本身当作 activation 或当前任务
+  - **content_scope**: P0 registry/crosswalk/conflict/root-corpus/authorization/admission JSON schema 库；tracked 后代文件数=5
+  - **when_to_enter**: 验证具名 P0 registry/crosswalk/authorization/admission artifact
   - **load_policy**: `task_triggered_lazy_load`
 
 ## direct_files
@@ -32,87 +32,87 @@ Math Mentor deterministic identity、alias、authorization 与 admission 静态�
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f70305f636f6e74726f6c5f706c616e652f5f5f696e69745f5f2e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/p0_control_plane/__init__.py`](__init__.py)
   - **content_summary**: Python；module docstring“Math Mentor P0 control-plane primitives. This package is deliberately stateless. It does not activa…”；public symbols=none
-  - **role_and_use**: 实现 __init__.py 的代码路径；修改或运行前核对相邻合同、输入与测试
+  - **role_and_use**: 将 __init__.py（Math Mentor P0 control-plane primitives. This package is deliberately stateless. It does not activa…） 作为“未激活 P0 静态控制面实现”使用；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 __init__.py 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_control_plane_implementation；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
+  - **when_to_read**: 触发条件：修改或静态验证该 P0 identity/alias/admission/authorization 模块。读取 __init__.py（Math Mentor P0 control-plane primitives. This package is deliberately stateless. It does not activa…）；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f70305f636f6e74726f6c5f706c616e652f61646d697373696f6e2e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/p0_control_plane/admission.py`](admission.py)
   - **content_summary**: Python；module docstring“Pure, fail-closed admission evaluation for Math Mentor assets. Admission answers whether an exact a…”；public symbols=AdmissionInputError, AdmissionRequest,…
-  - **role_and_use**: 实现 admission.py 的代码路径；修改或运行前核对相邻合同、输入与测试
+  - **role_and_use**: 将 admission.py（Pure, fail-closed admission evaluation for Math Mentor assets. Admission answers whether an exact a…；AdmissionInputError；AdmissionRequest） 作为“未激活 P0 静态控制面实现”使用；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 admission.py 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_control_plane_implementation；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
+  - **when_to_read**: 触发条件：修改或静态验证该 P0 identity/alias/admission/authorization 模块。读取 admission.py（Pure, fail-closed admission evaluation for Math Mentor assets. Admission answers whether an exact a…；AdmissionInputError；AdmissionRequest）；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f70305f636f6e74726f6c5f706c616e652f61646d697373696f6e5f65766964656e63652e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/p0_control_plane/admission_evidence.py`](admission_evidence.py)
   - **content_summary**: Python；module docstring“Sealed evidence boundary for Math Mentor admission. All fields on &#96;&#96;AdmissionRequest&#96;&amp;#…”；public symbols=AdmissionEvidenceError, TrustedAdm…
-  - **role_and_use**: 实现 admission_evidence.py 的代码路径；修改或运行前核对相邻合同、输入与测试
+  - **role_and_use**: 将 admission_evidence.py（Sealed evidence boundary for Math Mentor admission. All fields on &#96;&#96;AdmissionRequest&#96;&amp;#…；AdmissionEvidenceError；TrustedAdmissionEvidence） 作为“未激活 P0 静态控制面实现”使用；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 admission_evidence.py 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_control_plane_implementation；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
+  - **when_to_read**: 触发条件：修改或静态验证该 P0 identity/alias/admission/authorization 模块。读取 admission_evidence.py（Sealed evidence boundary for Math Mentor admission. All fields on &#96;&#96;AdmissionRequest&#96;&amp;#…；AdmissionEvidenceError；TrustedAdmissionEvidence）；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f70305f636f6e74726f6c5f706c616e652f617574686f72697a6174696f6e2e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/p0_control_plane/authorization.py`](authorization.py)
   - **content_summary**: Python；module docstring“Fail-closed authorization primitives for the Math Mentor P0 control plane. Business payloads are un…”；public symbols=AuthorizationInputError, TrustBoundary…
-  - **role_and_use**: 实现 authorization.py 的代码路径；修改或运行前核对相邻合同、输入与测试
+  - **role_and_use**: 将 authorization.py（Fail-closed authorization primitives for the Math Mentor P0 control plane. Business payloads are un…；AuthorizationInputError；TrustBoundaryError） 作为“未激活 P0 静态控制面实现”使用；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 authorization.py 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_control_plane_implementation；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
+  - **when_to_read**: 触发条件：修改或静态验证该 P0 identity/alias/admission/authorization 模块。读取 authorization.py（Fail-closed authorization primitives for the Math Mentor P0 control plane. Business payloads are un…；AuthorizationInputError；TrustBoundaryError）；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f70305f636f6e74726f6c5f706c616e652f6964656e746974792e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/p0_control_plane/identity.py`](identity.py)
   - **content_summary**: Python；module docstring“Deterministic identity primitives for the Math Mentor control plane. This module deliberately separ…”；public symbols=IdentityError, IdentityHit, StrictIden…
-  - **role_and_use**: 实现 identity.py 的代码路径；修改或运行前核对相邻合同、输入与测试
+  - **role_and_use**: 将 identity.py（Deterministic identity primitives for the Math Mentor control plane. This module deliberately separ…；IdentityError；IdentityHit） 作为“未激活 P0 静态控制面实现”使用；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 identity.py 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_control_plane_implementation；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
+  - **when_to_read**: 触发条件：修改或静态验证该 P0 identity/alias/admission/authorization 模块。读取 identity.py（Deterministic identity primitives for the Math Mentor control plane. This module deliberately separ…；IdentityError；IdentityHit）；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f70305f636f6e74726f6c5f706c616e652f6964656e746974795f6e616d6573706163652e796d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/p0_control_plane/identity_namespace.yml`](identity_namespace.yml)
   - **content_summary**: YAML 结构，顶层键：schema_version, namespace_name, namespace_uuid, uuid_algorithm, scope_root, db_root, baseline, stage0_inventory；安全锚点：schema_version=1.0.0
-  - **role_and_use**: 保存 identity_namespace.yml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 identity_namespace.yml（schema_version=1.0.0） 作为“未激活 P0 静态控制面实现”使用；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 identity_namespace.yml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_control_plane_implementation；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
+  - **when_to_read**: 触发条件：修改或静态验证该 P0 identity/alias/admission/authorization 模块。读取 identity_namespace.yml（schema_version=1.0.0）；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f70305f636f6e74726f6c5f706c616e652f6964656e746974795f7265736f6c7574696f6e732e796d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/p0_control_plane/identity_resolutions.yml`](identity_resolutions.yml)
   - **content_summary**: YAML 结构，顶层键：schema_version, namespace_uuid, resolutions；安全锚点：schema_version=1.0.0
-  - **role_and_use**: 保存 identity_resolutions.yml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 identity_resolutions.yml（schema_version=1.0.0） 作为“未激活 P0 静态控制面实现”使用；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 identity_resolutions.yml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_control_plane_implementation；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
+  - **when_to_read**: 触发条件：修改或静态验证该 P0 identity/alias/admission/authorization 模块。读取 identity_resolutions.yml（schema_version=1.0.0）；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f70305f636f6e74726f6c5f706c616e652f696e6465782e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/p0_control_plane/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/p0_control_plane 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/p0_control_plane 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f70305f636f6e74726f6c5f706c616e652f6e6f726d616c697a6174696f6e2e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/p0_control_plane/normalization.py`](normalization.py)
   - **content_summary**: Python；module docstring“Read-only normalization for the four observed Math Mentor schema eras. Normalization copies structu…”；public symbols=detect_schema_era, normalize_node, par…
-  - **role_and_use**: 实现 normalization.py 的代码路径；修改或运行前核对相邻合同、输入与测试
+  - **role_and_use**: 将 normalization.py（Read-only normalization for the four observed Math Mentor schema eras. Normalization copies structu…；detect_schema_era；normalize_node） 作为“未激活 P0 静态控制面实现”使用；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 normalization.py 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_control_plane_implementation；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
+  - **when_to_read**: 触发条件：修改或静态验证该 P0 identity/alias/admission/authorization 模块。读取 normalization.py（Read-only normalization for the four observed Math Mentor schema eras. Normalization copies structu…；detect_schema_era；normalize_node）；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f70305f636f6e74726f6c5f706c616e652f72656769737472795f6275696c6465722e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/p0_control_plane/registry_builder.py`](registry_builder.py)
   - **content_summary**: Python；module docstring“Build deterministic, fail-closed Math Mentor P0 control-plane registries. Only tracked YAML files d…”；public symbols=BuildError, ForbiddenInputError, Stage…
-  - **role_and_use**: 实现 registry_builder.py 的代码路径；修改或运行前核对相邻合同、输入与测试
+  - **role_and_use**: 将 registry_builder.py（Build deterministic, fail-closed Math Mentor P0 control-plane registries. Only tracked YAML files d…；BuildError；ForbiddenInputError） 作为“未激活 P0 静态控制面实现”使用；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 registry_builder.py 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_control_plane_implementation；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
+  - **when_to_read**: 触发条件：修改或静态验证该 P0 identity/alias/admission/authorization 模块。读取 registry_builder.py（Build deterministic, fail-closed Math Mentor P0 control-plane registries. Only tracked YAML files d…；BuildError；ForbiddenInputError）；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f70305f636f6e74726f6c5f706c616e652f73746167696e675f646961676e6f73746963732e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/p0_control_plane/staging_diagnostics.py`](staging_diagnostics.py)
   - **content_summary**: Python；module docstring“Read-only diagnostics for the excluded Math Mentor staging corpus.”；public symbols=scan_staging, main
-  - **role_and_use**: 实现 staging_diagnostics.py 的代码路径；修改或运行前核对相邻合同、输入与测试
+  - **role_and_use**: 将 staging_diagnostics.py（Read-only diagnostics for the excluded Math Mentor staging corpus.；scan_staging；main） 作为“未激活 P0 静态控制面实现”使用；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 staging_diagnostics.py 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_control_plane_implementation；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
+  - **when_to_read**: 触发条件：修改或静态验证该 P0 identity/alias/admission/authorization 模块。读取 staging_diagnostics.py（Read-only diagnostics for the excluded Math Mentor staging corpus.；scan_staging；main）；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f70305f636f6e74726f6c5f706c616e652f76616c69646174652e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/p0_control_plane/validate.py`](validate.py)
   - **content_summary**: Python；module docstring“Validate the deterministic Math Mentor P0 control-plane materialization. This module is intentional…”；public symbols=ValidationError, validate_control_plan…
-  - **role_and_use**: 实现 validate.py 的代码路径；修改或运行前核对相邻合同、输入与测试
+  - **role_and_use**: 将 validate.py（Validate the deterministic Math Mentor P0 control-plane materialization. This module is intentional…；ValidationError；validate_control_plane） 作为“未激活 P0 静态控制面实现”使用；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 validate.py 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_control_plane_implementation；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
+  - **when_to_read**: 触发条件：修改或静态验证该 P0 identity/alias/admission/authorization 模块。读取 validate.py（Validate the deterministic Math Mentor P0 control-plane materialization. This module is intentional…；ValidationError；validate_control_plane）；静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host
 
 ## do_not_load_by_default
 

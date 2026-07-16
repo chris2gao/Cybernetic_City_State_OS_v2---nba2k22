@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Math Mentor 测试、fixture 与静态验证证据目录
+Math Mentor 测试分区 tests；fixture/verdict 不构成真实权限或 activation
 
 ## authority_and_usage_boundary
 
@@ -11,29 +11,29 @@ Math Mentor 测试、fixture 与静态验证证据目录
 
 ## recommended_reading_order
 
-1. [`08_Domain_Applications/Math_Mentor/tests/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`08_Domain_Applications/Math_Mentor/tests/README.md`](README.md) — 运行 README.md 对应测试或定位特定失败用例时读取
-3. [`08_Domain_Applications/Math_Mentor/tests/teaching_flow_static_validator.py`](teaching_flow_static_validator.py) — 运行 teaching_flow_static_validator.py 对应测试或定位特定失败用例时读取
-4. [`08_Domain_Applications/Math_Mentor/tests/fixtures/index.md`](fixtures/index.md) — 复现特定测试、proof case 或定位 validator 失败时进入
-5. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/index.md`](p0_control_plane/index.md) — 复现特定测试、proof case 或定位 validator 失败时进入
-6. [`08_Domain_Applications/Math_Mentor/tests/results/index.md`](results/index.md) — 复现特定测试、proof case 或定位 validator 失败时进入
+1. [`08_Domain_Applications/Math_Mentor/tests/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`08_Domain_Applications/Math_Mentor/tests/README.md`](README.md) — 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 README.md（H1《Math Mentor Teaching Flow Static Tests》；首个 H2《Scope》）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+3. [`08_Domain_Applications/Math_Mentor/tests/teaching_flow_static_validator.py`](teaching_flow_static_validator.py) — 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 teaching_flow_static_validator.py（Deterministic no-runtime validation for Math Mentor teaching-flow prompts. This script intentionall…；CheckResult；repo_path）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+4. [`08_Domain_Applications/Math_Mentor/tests/fixtures/index.md`](fixtures/index.md) — 运行 fixtures 中的具名测试或复现 fixture 失败
+5. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/index.md`](p0_control_plane/index.md) — 运行 p0_control_plane 中的具名测试或复现 fixture 失败
+6. [`08_Domain_Applications/Math_Mentor/tests/results/index.md`](results/index.md) — 运行 results 中的具名测试或复现 fixture 失败
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f6669787475726573 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/fixtures`](fixtures/index.md)
-  - **content_scope**: Math Mentor 测试、fixture 与静态验证证据目录；tracked 后代文件数=3
-  - **when_to_enter**: 复现特定测试、proof case 或定位 validator 失败时进入
+  - **content_scope**: Math Mentor 测试分区 fixtures；fixture/verdict 不构成真实权限或 activation；tracked 后代文件数=3
+  - **when_to_enter**: 运行 fixtures 中的具名测试或复现 fixture 失败
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f70305f636f6e74726f6c5f706c616e65 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane`](p0_control_plane/index.md)
-  - **content_scope**: Math Mentor 测试、fixture 与静态验证证据目录；tracked 后代文件数=15
-  - **when_to_enter**: 复现特定测试、proof case 或定位 validator 失败时进入
+  - **content_scope**: Math Mentor 测试分区 p0_control_plane；fixture/verdict 不构成真实权限或 activation；tracked 后代文件数=15
+  - **when_to_enter**: 运行 p0_control_plane 中的具名测试或复现 fixture 失败
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f726573756c7473 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/results`](results/index.md)
-  - **content_scope**: Math Mentor 测试、fixture 与静态验证证据目录；tracked 后代文件数=5
-  - **when_to_enter**: 复现特定测试、proof case 或定位 validator 失败时进入
+  - **content_scope**: Math Mentor 测试分区 results；fixture/verdict 不构成真实权限或 activation；tracked 后代文件数=5
+  - **when_to_enter**: 运行 results 中的具名测试或复现 fixture 失败
   - **load_policy**: `do_not_load_by_default`
 
 ## direct_files
@@ -41,24 +41,24 @@ Math Mentor 测试、fixture 与静态验证证据目录
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f524541444d452e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/README.md`](README.md)
   - **content_summary**: H1《Math Mentor Teaching Flow Static Tests》；首个 H2《Scope》
-  - **role_and_use**: 以 README.md 作为 08_Domain_Applications/Math_Mentor/tests 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 README.md（H1《Math Mentor Teaching Flow Static Tests》；首个 H2《Scope》） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 README.md 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 README.md（H1《Math Mentor Teaching Flow Static Tests》；首个 H2《Scope》）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f696e6465782e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/tests 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/tests 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f7465616368696e675f666c6f775f7374617469635f76616c696461746f722e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/teaching_flow_static_validator.py`](teaching_flow_static_validator.py)
   - **content_summary**: Python；module docstring“Deterministic no-runtime validation for Math Mentor teaching-flow prompts. This script intentionall…”；public symbols=CheckResult, repo_path, read_text, nor…
-  - **role_and_use**: 以 teaching_flow_static_validator.py 作为 08_Domain_Applications/Math_Mentor/tests 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 teaching_flow_static_validator.py（Deterministic no-runtime validation for Math Mentor teaching-flow prompts. This script intentionall…；CheckResult；repo_path） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 teaching_flow_static_validator.py 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=python_ast_docstring_and_symbols；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 teaching_flow_static_validator.py（Deterministic no-runtime validation for Math Mentor teaching-flow prompts. This script intentionall…；CheckResult；repo_path）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 
 ## do_not_load_by_default
 

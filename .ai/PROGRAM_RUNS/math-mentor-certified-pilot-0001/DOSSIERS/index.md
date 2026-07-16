@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Program run `math-mentor-certified-pilot-0001/DOSSIERS` 的可复现 checkpoint、input/output、log 或验证证据目录
+Program run math-mentor-certified-pilot-0001 的 DOSSIERS 证据分区；仅解释该 run 的对应阶段
 
 ## authority_and_usage_boundary
 
@@ -11,11 +11,11 @@ Program run `math-mentor-certified-pilot-0001/DOSSIERS` 的可复现 checkpoint�
 
 ## recommended_reading_order
 
-1. [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS/ABSTRACT_ALGEBRA-468.yml`](ABSTRACT_ALGEBRA-468.yml) — 复核 ABSTRACT_ALGEBRA-468.yml 所属 run、输出或验证结论时读取
-3. [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS/ALG_TOPOLOGY-676.yml`](ALG_TOPOLOGY-676.yml) — 复核 ALG_TOPOLOGY-676.yml 所属 run、输出或验证结论时读取
-4. [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS/COMPLEX_ANALYSIS-418.yml`](COMPLEX_ANALYSIS-418.yml) — 复核 COMPLEX_ANALYSIS-418.yml 所属 run、输出或验证结论时读取
-5. [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS/PDE-487.yml`](PDE-487.yml) — 复核 PDE-487.yml 所属 run、输出或验证结论时读取
+1. [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS/ABSTRACT_ALGEBRA-468.yml`](ABSTRACT_ALGEBRA-468.yml) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ABSTRACT_ALGEBRA-468.yml（schema_version=math_mentor.certified_pilot_dossier.v1；domain=abstract_algebra；status=review_required）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+3. [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS/ALG_TOPOLOGY-676.yml`](ALG_TOPOLOGY-676.yml) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ALG_TOPOLOGY-676.yml（schema_version=math_mentor.certified_pilot_dossier.v1；domain=algebraic_topology；status=review_required）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+4. [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS/COMPLEX_ANALYSIS-418.yml`](COMPLEX_ANALYSIS-418.yml) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 COMPLEX_ANALYSIS-418.yml（schema_version=math_mentor.certified_pilot_dossier.v1；domain=complex_analysis；status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+5. [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS/PDE-487.yml`](PDE-487.yml) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 PDE-487.yml（schema_version=math_mentor.certified_pilot_dossier.v1；domain=partial_differential_equations；status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 
 ## child_directories
 
@@ -26,38 +26,38 @@ Program run `math-mentor-certified-pilot-0001/DOSSIERS` 的可复现 checkpoint�
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6365727469666965642d70696c6f742d303030312f444f5353494552532f41425354524143545f414c47454252412d3436382e796d6c -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS/ABSTRACT_ALGEBRA-468.yml`](ABSTRACT_ALGEBRA-468.yml)
   - **content_summary**: YAML 结构，顶层键：schema_version, packet_id, node_id, source, identity, roadmap, domain, mode；安全锚点：schema_version=math_mentor.certified_pilot_dossier.v1, domain=abstract_algebra, status…
-  - **role_and_use**: 由 ABSTRACT_ALGEBRA-468.yml 保存 .ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 ABSTRACT_ALGEBRA-468.yml（schema_version=math_mentor.certified_pilot_dossier.v1；domain=abstract_algebra；status=review_required） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 ABSTRACT_ALGEBRA-468.yml 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=yaml_visible_keys_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ABSTRACT_ALGEBRA-468.yml（schema_version=math_mentor.certified_pilot_dossier.v1；domain=abstract_algebra；status=review_required）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6365727469666965642d70696c6f742d303030312f444f5353494552532f414c475f544f504f4c4f47592d3637362e796d6c -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS/ALG_TOPOLOGY-676.yml`](ALG_TOPOLOGY-676.yml)
   - **content_summary**: YAML 结构，顶层键：schema_version, packet_id, node_id, source, identity, roadmap, domain, mode；安全锚点：schema_version=math_mentor.certified_pilot_dossier.v1, domain=algebraic_topology, stat…
-  - **role_and_use**: 由 ALG_TOPOLOGY-676.yml 保存 .ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 ALG_TOPOLOGY-676.yml（schema_version=math_mentor.certified_pilot_dossier.v1；domain=algebraic_topology；status=review_required） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 ALG_TOPOLOGY-676.yml 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=yaml_visible_keys_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ALG_TOPOLOGY-676.yml（schema_version=math_mentor.certified_pilot_dossier.v1；domain=algebraic_topology；status=review_required）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6365727469666965642d70696c6f742d303030312f444f5353494552532f434f4d504c45585f414e414c595349532d3431382e796d6c -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS/COMPLEX_ANALYSIS-418.yml`](COMPLEX_ANALYSIS-418.yml)
   - **content_summary**: YAML 结构，顶层键：schema_version, packet_id, node_id, source, identity, roadmap, domain, mode；安全锚点：schema_version=math_mentor.certified_pilot_dossier.v1, domain=complex_analysis, status…
-  - **role_and_use**: 由 COMPLEX_ANALYSIS-418.yml 保存 .ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-418.yml（schema_version=math_mentor.certified_pilot_dossier.v1；domain=complex_analysis；status=passed） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 COMPLEX_ANALYSIS-418.yml 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=yaml_visible_keys_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 COMPLEX_ANALYSIS-418.yml（schema_version=math_mentor.certified_pilot_dossier.v1；domain=complex_analysis；status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6365727469666965642d70696c6f742d303030312f444f5353494552532f5044452d3438372e796d6c -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS/PDE-487.yml`](PDE-487.yml)
   - **content_summary**: YAML 结构，顶层键：schema_version, packet_id, node_id, source, identity, roadmap, domain, mode；安全锚点：schema_version=math_mentor.certified_pilot_dossier.v1, domain=partial_differential_equ…
-  - **role_and_use**: 由 PDE-487.yml 保存 .ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 PDE-487.yml（schema_version=math_mentor.certified_pilot_dossier.v1；domain=partial_differential_equations；status=passed） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 PDE-487.yml 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=yaml_visible_keys_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 PDE-487.yml（schema_version=math_mentor.certified_pilot_dossier.v1；domain=partial_differential_equations；status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6365727469666965642d70696c6f742d303030312f444f5353494552532f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

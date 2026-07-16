@@ -3,7 +3,7 @@
 
 ## directory_role
 
-议会提案、裁决与归档证据区；归档内容仅用于历史追溯
+议会 Issue_012_Mathematical_Flywheel_Ignition 的 proposal、debate、review 与附件 provenance
 
 ## authority_and_usage_boundary
 
@@ -11,12 +11,12 @@
 
 ## recommended_reading_order
 
-1. [`04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/01-Antigravity-初始议题提案.md`](01-Antigravity-初始议题提案.md) — 用 01-Antigravity-初始议题提案.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-2. [`04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/02-Feynman-反题审查.md`](02-Feynman-反题审查.md) — 用 02-Feynman-反题审查.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-3. [`04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/03-Euclid-反题审查.md`](03-Euclid-反题审查.md) — 用 03-Euclid-反题审查.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-4. [`04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/04-Turing-物理绞杀报告.md`](04-Turing-物理绞杀报告.md) — 用 04-Turing-物理绞杀报告.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-5. [`04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/XX-最终合题：傅里叶变换全景指南.md`](XX-最终合题：傅里叶变换全景指南.md) — 用 XX-最终合题：傅里叶变换全景指南.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-6. [`04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
+1. [`04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/01-Antigravity-初始议题提案.md`](01-Antigravity-初始议题提案.md) — 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 01-Antigravity-初始议题提案.md（H1《01-Antigravity-初始议题提案：解构“傅里叶变换 (Fourier Transform)”》；首个 H2《1. 提议背景 (Context)》）；提案/辩论不是现行宪章或已生效 verdict
+3. [`04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/02-Feynman-反题审查.md`](02-Feynman-反题审查.md) — 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 02-Feynman-反题审查.md（H1《02-Feynman-反题审查：物理直觉的降维重构》）；提案/辩论不是现行宪章或已生效 verdict
+4. [`04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/03-Euclid-反题审查.md`](03-Euclid-反题审查.md) — 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 03-Euclid-反题审查.md（H1《03-Euclid-反题审查：对形式主义底座的绝对捍卫》）；提案/辩论不是现行宪章或已生效 verdict
+5. [`04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/04-Turing-物理绞杀报告.md`](04-Turing-物理绞杀报告.md) — 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 04-Turing-物理绞杀报告.md（H1《04-Turing-物理绞杀报告：离散现实的残酷审判》）；提案/辩论不是现行宪章或已生效 verdict
+6. [`04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/XX-最终合题：傅里叶变换全景指南.md`](XX-最终合题：傅里叶变换全景指南.md) — 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 XX-最终合题：傅里叶变换全景指南.md（H1《XX-最终合题：傅里叶变换 (Fourier Transform) 全景解构指南》；首个 H2《1. 直觉降维层 (The Physical Intuition - Feynman)》）；提案/辩论不是现行宪章或已生效 verdict
 
 ## child_directories
 
@@ -27,49 +27,49 @@
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3031325f4d617468656d61746963616c5f466c79776865656c5f49676e6974696f6e2f30312d416e7469677261766974792de5889de5a78be8aeaee9a298e68f90e6a1882e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/01-Antigravity-初始议题提案.md`](01-Antigravity-初始议题提案.md)
   - **content_summary**: H1《01-Antigravity-初始议题提案：解构“傅里叶变换 (Fourier Transform)”》；首个 H2《1. 提议背景 (Context)》
-  - **role_and_use**: 用 01-Antigravity-初始议题提案.md 为 04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 01-Antigravity-初始议题提案.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 01-Antigravity-初始议题提案.md（H1《01-Antigravity-初始议题提案：解构“傅里叶变换 (Fourier Transform)”》；首个 H2《1. 提议背景 (Context)》） 作为“议会提案/辩论 provenance”使用；提案/辩论不是现行宪章或已生效 verdict
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=parliament_proposal_or_debate；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；提案/辩论不是现行宪章或已生效 verdict
+  - **when_to_read**: 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 01-Antigravity-初始议题提案.md（H1《01-Antigravity-初始议题提案：解构“傅里叶变换 (Fourier Transform)”》；首个 H2《1. 提议背景 (Context)》）；提案/辩论不是现行宪章或已生效 verdict
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3031325f4d617468656d61746963616c5f466c79776865656c5f49676e6974696f6e2f30322d4665796e6d616e2de58f8de9a298e5aea1e69fa52e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/02-Feynman-反题审查.md`](02-Feynman-反题审查.md)
   - **content_summary**: H1《02-Feynman-反题审查：物理直觉的降维重构》
-  - **role_and_use**: 用 02-Feynman-反题审查.md 为 04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 02-Feynman-反题审查.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 02-Feynman-反题审查.md（H1《02-Feynman-反题审查：物理直觉的降维重构》） 作为“议会提案/辩论 provenance”使用；提案/辩论不是现行宪章或已生效 verdict
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=parliament_proposal_or_debate；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；提案/辩论不是现行宪章或已生效 verdict
+  - **when_to_read**: 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 02-Feynman-反题审查.md（H1《02-Feynman-反题审查：物理直觉的降维重构》）；提案/辩论不是现行宪章或已生效 verdict
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3031325f4d617468656d61746963616c5f466c79776865656c5f49676e6974696f6e2f30332d4575636c69642de58f8de9a298e5aea1e69fa52e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/03-Euclid-反题审查.md`](03-Euclid-反题审查.md)
   - **content_summary**: H1《03-Euclid-反题审查：对形式主义底座的绝对捍卫》
-  - **role_and_use**: 用 03-Euclid-反题审查.md 为 04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 03-Euclid-反题审查.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 03-Euclid-反题审查.md（H1《03-Euclid-反题审查：对形式主义底座的绝对捍卫》） 作为“议会提案/辩论 provenance”使用；提案/辩论不是现行宪章或已生效 verdict
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=parliament_proposal_or_debate；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；提案/辩论不是现行宪章或已生效 verdict
+  - **when_to_read**: 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 03-Euclid-反题审查.md（H1《03-Euclid-反题审查：对形式主义底座的绝对捍卫》）；提案/辩论不是现行宪章或已生效 verdict
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3031325f4d617468656d61746963616c5f466c79776865656c5f49676e6974696f6e2f30342d547572696e672de789a9e79086e7bb9ee69d80e68aa5e5918a2e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/04-Turing-物理绞杀报告.md`](04-Turing-物理绞杀报告.md)
   - **content_summary**: H1《04-Turing-物理绞杀报告：离散现实的残酷审判》
-  - **role_and_use**: 用 04-Turing-物理绞杀报告.md 为 04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 04-Turing-物理绞杀报告.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 04-Turing-物理绞杀报告.md（H1《04-Turing-物理绞杀报告：离散现实的残酷审判》） 作为“议会提案/辩论 provenance”使用；提案/辩论不是现行宪章或已生效 verdict
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=parliament_proposal_or_debate；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；提案/辩论不是现行宪章或已生效 verdict
+  - **when_to_read**: 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 04-Turing-物理绞杀报告.md（H1《04-Turing-物理绞杀报告：离散现实的残酷审判》）；提案/辩论不是现行宪章或已生效 verdict
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3031325f4d617468656d61746963616c5f466c79776865656c5f49676e6974696f6e2f58582de69c80e7bb88e59088e9a298efbc9ae58285e9878ce58fb6e58f98e68da2e585a8e699afe68c87e58d972e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/XX-最终合题：傅里叶变换全景指南.md`](XX-最终合题：傅里叶变换全景指南.md)
   - **content_summary**: H1《XX-最终合题：傅里叶变换 (Fourier Transform) 全景解构指南》；首个 H2《1. 直觉降维层 (The Physical Intuition - Feynman)》
-  - **role_and_use**: 用 XX-最终合题：傅里叶变换全景指南.md 为 04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 XX-最终合题：傅里叶变换全景指南.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 XX-最终合题：傅里叶变换全景指南.md（H1《XX-最终合题：傅里叶变换 (Fourier Transform) 全景解构指南》；首个 H2《1. 直觉降维层 (The Physical Intuition - Feynman)》） 作为“议会提案/辩论 provenance”使用；提案/辩论不是现行宪章或已生效 verdict
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=parliament_proposal_or_debate；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；提案/辩论不是现行宪章或已生效 verdict
+  - **when_to_read**: 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 XX-最终合题：傅里叶变换全景指南.md（H1《XX-最终合题：傅里叶变换 (Fourier Transform) 全景解构指南》；首个 H2《1. 直觉降维层 (The Physical Intuition - Feynman)》）；提案/辩论不是现行宪章或已生效 verdict
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3031325f4d617468656d61746963616c5f466c79776865656c5f49676e6974696f6e2f696e6465782e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 
-- 无额外分组；仍应只读取当前任务明确需要的 direct artifact。
+- 默认不加载 5 个历史/测试/生成/用户或大型 direct artifacts：`04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/01-Antigravity-初始议题提案.md`, `04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/02-Feynman-反题审查.md`, `04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/03-Euclid-反题审查.md`, `04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/04-Turing-物理绞杀报告.md`, `04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/XX-最终合题：傅里叶变换全景指南.md`。
 
 ## generation_and_freshness_note
 

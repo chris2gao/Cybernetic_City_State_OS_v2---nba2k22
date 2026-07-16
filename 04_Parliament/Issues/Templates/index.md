@@ -3,7 +3,7 @@
 
 ## directory_role
 
-议会提案、裁决与归档证据区；归档内容仅用于历史追溯
+议会 Issue 结构模板 Templates；用于创建/校验而非立项
 
 ## authority_and_usage_boundary
 
@@ -11,10 +11,10 @@
 
 ## recommended_reading_order
 
-1. [`04_Parliament/Issues/Templates/00_需求澄清与反向问询模板_V6.md`](00_需求澄清与反向问询模板_V6.md) — 用 00_需求澄清与反向问询模板_V6.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-2. [`04_Parliament/Issues/Templates/01_事前提案模板_L3专用.md`](01_事前提案模板_L3专用.md) — 用 01_事前提案模板_L3专用.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-3. [`04_Parliament/Issues/Templates/02_事后验收模板_L2L3通用.md`](02_事后验收模板_L2L3通用.md) — 用 02_事后验收模板_L2L3通用.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-4. [`04_Parliament/Issues/Templates/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
+1. [`04_Parliament/Issues/Templates/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`04_Parliament/Issues/Templates/00_需求澄清与反向问询模板_V6.md`](00_需求澄清与反向问询模板_V6.md) — 触发条件：运行该具名测试或复现其失败用例。读取 00_需求澄清与反向问询模板_V6.md（H1《需求澄清与反向问询模板 (V6 Requirement Interception)》；首个 H2《1. 原始需求载入》）；仅用于指定测试；fixture 内声明不构成现实授权
+3. [`04_Parliament/Issues/Templates/01_事前提案模板_L3专用.md`](01_事前提案模板_L3专用.md) — 触发条件：运行该具名测试或复现其失败用例。读取 01_事前提案模板_L3专用.md（H1《事前提案：［填入任务简述］ (Pre-Task Feasibility Proposal)》；首个 H2《1. 提案背景与问题触发点 (The Problem &amp; Trigger)》）；仅用于指定测试；fixture 内声明不构成现实授权
+4. [`04_Parliament/Issues/Templates/02_事后验收模板_L2L3通用.md`](02_事后验收模板_L2L3通用.md) — 触发条件：运行该具名测试或复现其失败用例。读取 02_事后验收模板_L2L3通用.md（H1《事后验收案：［填入任务简述］ (Post-Task Acceptance Review)》；首个 H2《1. 承诺-交付比对矩阵 (Commitment vs Delivery Matrix)》）；仅用于指定测试；fixture 内声明不构成现实授权
 
 ## child_directories
 
@@ -25,35 +25,35 @@
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f54656d706c617465732f30305fe99c80e6b182e6be84e6b885e4b88ee58f8de59091e997aee8afa2e6a8a1e69dbf5f56362e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Templates/00_需求澄清与反向问询模板_V6.md`](00_需求澄清与反向问询模板_V6.md)
   - **content_summary**: H1《需求澄清与反向问询模板 (V6 Requirement Interception)》；首个 H2《1. 原始需求载入》
-  - **role_and_use**: 用 00_需求澄清与反向问询模板_V6.md 为 04_Parliament/Issues/Templates 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 00_需求澄清与反向问询模板_V6.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 00_需求澄清与反向问询模板_V6.md（H1《需求澄清与反向问询模板 (V6 Requirement Interception)》；首个 H2《1. 原始需求载入》） 作为“测试/fixture”使用；仅用于指定测试；fixture 内声明不构成现实授权
+  - **authority_class**: `test_or_fixture`
+  - **status_or_freshness**: semantic_profile=test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅用于指定测试；fixture 内声明不构成现实授权
+  - **when_to_read**: 触发条件：运行该具名测试或复现其失败用例。读取 00_需求澄清与反向问询模板_V6.md（H1《需求澄清与反向问询模板 (V6 Requirement Interception)》；首个 H2《1. 原始需求载入》）；仅用于指定测试；fixture 内声明不构成现实授权
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f54656d706c617465732f30315fe4ba8be5898de68f90e6a188e6a8a1e69dbf5f4c33e4b893e794a82e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Templates/01_事前提案模板_L3专用.md`](01_事前提案模板_L3专用.md)
   - **content_summary**: H1《事前提案：［填入任务简述］ (Pre-Task Feasibility Proposal)》；首个 H2《1. 提案背景与问题触发点 (The Problem &amp; Trigger)》
-  - **role_and_use**: 用 01_事前提案模板_L3专用.md 为 04_Parliament/Issues/Templates 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 01_事前提案模板_L3专用.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 01_事前提案模板_L3专用.md（H1《事前提案：［填入任务简述］ (Pre-Task Feasibility Proposal)》；首个 H2《1. 提案背景与问题触发点 (The Problem &amp; Trigger)》） 作为“测试/fixture”使用；仅用于指定测试；fixture 内声明不构成现实授权
+  - **authority_class**: `test_or_fixture`
+  - **status_or_freshness**: semantic_profile=test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅用于指定测试；fixture 内声明不构成现实授权
+  - **when_to_read**: 触发条件：运行该具名测试或复现其失败用例。读取 01_事前提案模板_L3专用.md（H1《事前提案：［填入任务简述］ (Pre-Task Feasibility Proposal)》；首个 H2《1. 提案背景与问题触发点 (The Problem &amp; Trigger)》）；仅用于指定测试；fixture 内声明不构成现实授权
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f54656d706c617465732f30325fe4ba8be5908ee9aa8ce694b6e6a8a1e69dbf5f4c324c33e9809ae794a82e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Templates/02_事后验收模板_L2L3通用.md`](02_事后验收模板_L2L3通用.md)
   - **content_summary**: H1《事后验收案：［填入任务简述］ (Post-Task Acceptance Review)》；首个 H2《1. 承诺-交付比对矩阵 (Commitment vs Delivery Matrix)》
-  - **role_and_use**: 用 02_事后验收模板_L2L3通用.md 为 04_Parliament/Issues/Templates 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 02_事后验收模板_L2L3通用.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 02_事后验收模板_L2L3通用.md（H1《事后验收案：［填入任务简述］ (Post-Task Acceptance Review)》；首个 H2《1. 承诺-交付比对矩阵 (Commitment vs Delivery Matrix)》） 作为“测试/fixture”使用；仅用于指定测试；fixture 内声明不构成现实授权
+  - **authority_class**: `test_or_fixture`
+  - **status_or_freshness**: semantic_profile=test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅用于指定测试；fixture 内声明不构成现实授权
+  - **when_to_read**: 触发条件：运行该具名测试或复现其失败用例。读取 02_事后验收模板_L2L3通用.md（H1《事后验收案：［填入任务简述］ (Post-Task Acceptance Review)》；首个 H2《1. 承诺-交付比对矩阵 (Commitment vs Delivery Matrix)》）；仅用于指定测试；fixture 内声明不构成现实授权
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f54656d706c617465732f696e6465782e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Templates/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 04_Parliament/Issues/Templates 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 04_Parliament/Issues/Templates 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 
-- 无额外分组；仍应只读取当前任务明确需要的 direct artifact。
+- 默认不加载 3 个历史/测试/生成/用户或大型 direct artifacts：`04_Parliament/Issues/Templates/00_需求澄清与反向问询模板_V6.md`, `04_Parliament/Issues/Templates/01_事前提案模板_L3专用.md`, `04_Parliament/Issues/Templates/02_事后验收模板_L2L3通用.md`。
 
 ## generation_and_freshness_note
 

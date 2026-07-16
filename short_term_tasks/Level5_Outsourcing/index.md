@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Level 5 PDE/随机过程与组合数学/局部几何 outsourcing 历史指令目录
+已取代 outsourcing/task provenance 区 Level5_Outsourcing；旧 pending 不恢复任务
 
 ## authority_and_usage_boundary
 
@@ -11,9 +11,9 @@ Level 5 PDE/随机过程与组合数学/局部几何 outsourcing 历史指令目
 
 ## recommended_reading_order
 
-1. [`short_term_tasks/Level5_Outsourcing/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`short_term_tasks/Level5_Outsourcing/第五层_第一阶段_PDE与随机过程_外包特工指令.md`](第五层_第一阶段_PDE与随机过程_外包特工指令.md) — 追溯 第五层_第一阶段_PDE与随机过程_外包特工指令.md 的 superseded outsourcing/task provenance 时读取
-3. [`short_term_tasks/Level5_Outsourcing/第五层_第二阶段_组合数学与局部几何_外包特工指令.md`](第五层_第二阶段_组合数学与局部几何_外包特工指令.md) — 追溯 第五层_第二阶段_组合数学与局部几何_外包特工指令.md 的 superseded outsourcing/task provenance 时读取
+1. [`short_term_tasks/Level5_Outsourcing/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`short_term_tasks/Level5_Outsourcing/第五层_第一阶段_PDE与随机过程_外包特工指令.md`](第五层_第一阶段_PDE与随机过程_外包特工指令.md) — 触发条件：追溯该旧 outsourcing/task 请求及其被取代边界。读取 第五层_第一阶段_PDE与随机过程_外包特工指令.md（H1《第五层 Mode A (第一阶段) 外包特工生成指令》；首个 H2《身份与任务定义》）；旧 pending/outsourcing 字段不得恢复任务、合并或 publication
+3. [`short_term_tasks/Level5_Outsourcing/第五层_第二阶段_组合数学与局部几何_外包特工指令.md`](第五层_第二阶段_组合数学与局部几何_外包特工指令.md) — 触发条件：追溯该旧 outsourcing/task 请求及其被取代边界。读取 第五层_第二阶段_组合数学与局部几何_外包特工指令.md（H1《第五层 Mode A (第二阶段) 外包特工生成指令》；首个 H2《身份与任务定义》）；旧 pending/outsourcing 字段不得恢复任务、合并或 publication
 
 ## child_directories
 
@@ -24,24 +24,24 @@ Level 5 PDE/随机过程与组合数学/局部几何 outsourcing 历史指令目
 <!-- RIDX_FILE_HEX 73686f72745f7465726d5f7461736b732f4c6576656c355f4f7574736f757263696e672f696e6465782e6d64 -->
 - **path_or_link**: [`short_term_tasks/Level5_Outsourcing/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 short_term_tasks/Level5_Outsourcing 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 short_term_tasks/Level5_Outsourcing 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 73686f72745f7465726d5f7461736b732f4c6576656c355f4f7574736f757263696e672fe7acace4ba94e5b1825fe7acace4b880e998b6e6aeb55f504445e4b88ee99a8fe69cbae8bf87e7a88b5fe5a496e58c85e789b9e5b7a5e68c87e4bba42e6d64 -->
 - **path_or_link**: [`short_term_tasks/Level5_Outsourcing/第五层_第一阶段_PDE与随机过程_外包特工指令.md`](第五层_第一阶段_PDE与随机过程_外包特工指令.md)
   - **content_summary**: H1《第五层 Mode A (第一阶段) 外包特工生成指令》；首个 H2《身份与任务定义》
-  - **role_and_use**: 保存 第五层_第一阶段_PDE与随机过程_外包特工指令.md 的已取代外包/任务 provenance；禁止恢复为活动任务
+  - **role_and_use**: 将 第五层_第一阶段_PDE与随机过程_外包特工指令.md（H1《第五层 Mode A (第一阶段) 外包特工生成指令》；首个 H2《身份与任务定义》） 作为“已取代短任务 provenance”使用；旧 pending/outsourcing 字段不得恢复任务、合并或 publication
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: superseded legacy outsourcing/task evidence；不得依据旧 pending 字段恢复任务或合并
-  - **when_to_read**: 追溯 第五层_第一阶段_PDE与随机过程_外包特工指令.md 的 superseded outsourcing/task provenance 时读取
+  - **status_or_freshness**: semantic_profile=legacy_task_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；旧 pending/outsourcing 字段不得恢复任务、合并或 publication
+  - **when_to_read**: 触发条件：追溯该旧 outsourcing/task 请求及其被取代边界。读取 第五层_第一阶段_PDE与随机过程_外包特工指令.md（H1《第五层 Mode A (第一阶段) 外包特工生成指令》；首个 H2《身份与任务定义》）；旧 pending/outsourcing 字段不得恢复任务、合并或 publication
 <!-- RIDX_FILE_HEX 73686f72745f7465726d5f7461736b732f4c6576656c355f4f7574736f757263696e672fe7acace4ba94e5b1825fe7acace4ba8ce998b6e6aeb55fe7bb84e59088e695b0e5ada6e4b88ee5b180e983a8e587a0e4bd955fe5a496e58c85e789b9e5b7a5e68c87e4bba42e6d64 -->
 - **path_or_link**: [`short_term_tasks/Level5_Outsourcing/第五层_第二阶段_组合数学与局部几何_外包特工指令.md`](第五层_第二阶段_组合数学与局部几何_外包特工指令.md)
   - **content_summary**: H1《第五层 Mode A (第二阶段) 外包特工生成指令》；首个 H2《身份与任务定义》
-  - **role_and_use**: 保存 第五层_第二阶段_组合数学与局部几何_外包特工指令.md 的已取代外包/任务 provenance；禁止恢复为活动任务
+  - **role_and_use**: 将 第五层_第二阶段_组合数学与局部几何_外包特工指令.md（H1《第五层 Mode A (第二阶段) 外包特工生成指令》；首个 H2《身份与任务定义》） 作为“已取代短任务 provenance”使用；旧 pending/outsourcing 字段不得恢复任务、合并或 publication
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: superseded legacy outsourcing/task evidence；不得依据旧 pending 字段恢复任务或合并
-  - **when_to_read**: 追溯 第五层_第二阶段_组合数学与局部几何_外包特工指令.md 的 superseded outsourcing/task provenance 时读取
+  - **status_or_freshness**: semantic_profile=legacy_task_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；旧 pending/outsourcing 字段不得恢复任务、合并或 publication
+  - **when_to_read**: 触发条件：追溯该旧 outsourcing/task 请求及其被取代边界。读取 第五层_第二阶段_组合数学与局部几何_外包特工指令.md（H1《第五层 Mode A (第二阶段) 外包特工生成指令》；首个 H2《身份与任务定义》）；旧 pending/outsourcing 字段不得恢复任务、合并或 publication
 
 ## do_not_load_by_default
 

@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Program run `math-mentor-analytic-nt-foundation-batch-1-0001/LOGS` 的可复现 checkpoint、input/output、log 或验证证据目录
+Program run math-mentor-analytic-nt-foundation-batch-1-0001 的 LOGS 证据分区；仅解释该 run 的对应阶段
 
 ## authority_and_usage_boundary
 
@@ -11,12 +11,12 @@ Program run `math-mentor-analytic-nt-foundation-batch-1-0001/LOGS` 的可复现 
 
 ## recommended_reading_order
 
-1. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/ANALYTIC_NT-684.log`](ANALYTIC_NT-684.log) — 复核 ANALYTIC_NT-684.log 所属 run、输出或验证结论时读取
-3. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/ANALYTIC_NT-687.log`](ANALYTIC_NT-687.log) — 复核 ANALYTIC_NT-687.log 所属 run、输出或验证结论时读取
-4. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/ANALYTIC_NT-688.log`](ANALYTIC_NT-688.log) — 复核 ANALYTIC_NT-688.log 所属 run、输出或验证结论时读取
-5. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/ANALYTIC_NT-692.log`](ANALYTIC_NT-692.log) — 复核 ANALYTIC_NT-692.log 所属 run、输出或验证结论时读取
-6. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/batch-validation.log`](batch-validation.log) — 复核 batch-validation.log 所属 run、输出或验证结论时读取
+1. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/ANALYTIC_NT-684.log`](ANALYTIC_NT-684.log) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-684.log（nonempty_lines=163）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+3. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/ANALYTIC_NT-687.log`](ANALYTIC_NT-687.log) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-687.log（nonempty_lines=28）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+4. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/ANALYTIC_NT-688.log`](ANALYTIC_NT-688.log) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-688.log（nonempty_lines=263）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+5. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/ANALYTIC_NT-692.log`](ANALYTIC_NT-692.log) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-692.log（nonempty_lines=141）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+6. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/batch-validation.log`](batch-validation.log) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 batch-validation.log（nonempty_lines=124）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 
 ## child_directories
 
@@ -27,52 +27,52 @@ Program run `math-mentor-analytic-nt-foundation-batch-1-0001/LOGS` 的可复现 
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f4c4f47532f414e414c595449435f4e542d3638342e6c6f67 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/ANALYTIC_NT-684.log`](ANALYTIC_NT-684.log)
   - **content_summary**: 日志文本，163 个非空行；为避免复制 message/traceback，仅记录结构计数
-  - **role_and_use**: 由 ANALYTIC_NT-684.log 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 ANALYTIC_NT-684.log（nonempty_lines=163） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 ANALYTIC_NT-684.log 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=log_line_count_metadata_only；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-684.log（nonempty_lines=163）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f4c4f47532f414e414c595449435f4e542d3638372e6c6f67 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/ANALYTIC_NT-687.log`](ANALYTIC_NT-687.log)
   - **content_summary**: 日志文本，28 个非空行；为避免复制 message/traceback，仅记录结构计数
-  - **role_and_use**: 由 ANALYTIC_NT-687.log 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 ANALYTIC_NT-687.log（nonempty_lines=28） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 ANALYTIC_NT-687.log 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=log_line_count_metadata_only；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-687.log（nonempty_lines=28）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f4c4f47532f414e414c595449435f4e542d3638382e6c6f67 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/ANALYTIC_NT-688.log`](ANALYTIC_NT-688.log)
   - **content_summary**: 日志文本，263 个非空行；为避免复制 message/traceback，仅记录结构计数
-  - **role_and_use**: 由 ANALYTIC_NT-688.log 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 ANALYTIC_NT-688.log（nonempty_lines=263） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 ANALYTIC_NT-688.log 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=log_line_count_metadata_only；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-688.log（nonempty_lines=263）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f4c4f47532f414e414c595449435f4e542d3639322e6c6f67 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/ANALYTIC_NT-692.log`](ANALYTIC_NT-692.log)
   - **content_summary**: 日志文本，141 个非空行；为避免复制 message/traceback，仅记录结构计数
-  - **role_and_use**: 由 ANALYTIC_NT-692.log 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 ANALYTIC_NT-692.log（nonempty_lines=141） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 ANALYTIC_NT-692.log 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=log_line_count_metadata_only；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-692.log（nonempty_lines=141）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f4c4f47532f62617463682d76616c69646174696f6e2e6c6f67 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/batch-validation.log`](batch-validation.log)
   - **content_summary**: 日志文本，124 个非空行；为避免复制 message/traceback，仅记录结构计数
-  - **role_and_use**: 由 batch-validation.log 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 batch-validation.log（nonempty_lines=124） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 batch-validation.log 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=log_line_count_metadata_only；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 batch-validation.log（nonempty_lines=124）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f4c4f47532f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f4c4f47532f7465616368696e672d666c6f772d7374617469632d76616c696461746f722e6c6f67 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/teaching-flow-static-validator.log`](teaching-flow-static-validator.log)
   - **content_summary**: 日志文本，3 个非空行；为避免复制 message/traceback，仅记录结构计数
-  - **role_and_use**: 由 teaching-flow-static-validator.log 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 teaching-flow-static-validator.log（nonempty_lines=3） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 teaching-flow-static-validator.log 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=log_line_count_metadata_only；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 teaching-flow-static-validator.log（nonempty_lines=3）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 
 ## do_not_load_by_default
 

@@ -3,7 +3,7 @@
 
 ## directory_role
 
-议会提案、裁决与归档证据区；归档内容仅用于历史追溯
+议会冻结归档 _ARCHIVED；仅追溯已关闭裁决及迁移来源
 
 ## authority_and_usage_boundary
 
@@ -11,11 +11,11 @@
 
 ## recommended_reading_order
 
-1. [`04_Parliament/_ARCHIVED/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`04_Parliament/_ARCHIVED/Challenger_Guidelines.md`](Challenger_Guidelines.md) — 追溯 Challenger_Guidelines.md 对应旧任务、裁决或 publication provenance 时读取
-3. [`04_Parliament/_ARCHIVED/V4_Emergence_Debate_Protocol.md`](V4_Emergence_Debate_Protocol.md) — 追溯 V4_Emergence_Debate_Protocol.md 对应旧任务、裁决或 publication provenance 时读取
-4. [`04_Parliament/_ARCHIVED/V6_Autonomous_DAG_Protocol.md`](V6_Autonomous_DAG_Protocol.md) — 追溯 V6_Autonomous_DAG_Protocol.md 对应旧任务、裁决或 publication provenance 时读取
-5. [`04_Parliament/_ARCHIVED/V6_Multi_Model_Debate_Protocol.md`](V6_Multi_Model_Debate_Protocol.md) — 追溯 V6_Multi_Model_Debate_Protocol.md 对应旧任务、裁决或 publication provenance 时读取
+1. [`04_Parliament/_ARCHIVED/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`04_Parliament/_ARCHIVED/Challenger_Guidelines.md`](Challenger_Guidelines.md) — 触发条件：追溯已关闭 Issue 的决策来源或迁移影响。读取 Challenger_Guidelines.md（H1《双重辩论机制：挑战方与审核方指导原则 (Challenger &amp; Auditor Guidelines)》；首个 H2《一、 核心底线 (The Prime Directive)》）；冻结历史不得冒充 active Issue、verdict 或任务
+3. [`04_Parliament/_ARCHIVED/V4_Emergence_Debate_Protocol.md`](V4_Emergence_Debate_Protocol.md) — 触发条件：追溯已关闭 Issue 的决策来源或迁移影响。读取 V4_Emergence_Debate_Protocol.md（H1《🏛️ 赛博城邦最高宪章：多智能体议事系统 (The V4 Parliament Mechanism)》；首个 H2《🌐 机制概述 (The Mechanism)》）；冻结历史不得冒充 active Issue、verdict 或任务
+4. [`04_Parliament/_ARCHIVED/V6_Autonomous_DAG_Protocol.md`](V6_Autonomous_DAG_Protocol.md) — 触发条件：追溯已关闭 Issue 的决策来源或迁移影响。读取 V6_Autonomous_DAG_Protocol.md（H1《📜 赛博城邦最高宪章：V6 自治有向无环图协议 (V6 Autonomous DAG Protocol)》；首个 H2《第一卷：流程规范层 (The Workflow Layer)》）；冻结历史不得冒充 active Issue、verdict 或任务
+5. [`04_Parliament/_ARCHIVED/V6_Multi_Model_Debate_Protocol.md`](V6_Multi_Model_Debate_Protocol.md) — 触发条件：追溯已关闭 Issue 的决策来源或迁移影响。读取 V6_Multi_Model_Debate_Protocol.md（H1《⚔️ 赛博城邦 V6：跨模型实体辩论协议 (Multi-Model Physical Debate Protocol)》；首个 H2《🎭 角色定义矩阵》）；冻结历史不得冒充 active Issue、verdict 或任务
 
 ## child_directories
 
@@ -26,38 +26,38 @@
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f5f41524348495645442f4368616c6c656e6765725f47756964656c696e65732e6d64 -->
 - **path_or_link**: [`04_Parliament/_ARCHIVED/Challenger_Guidelines.md`](Challenger_Guidelines.md)
   - **content_summary**: H1《双重辩论机制：挑战方与审核方指导原则 (Challenger &amp; Auditor Guidelines)》；首个 H2《一、 核心底线 (The Prime Directive)》
-  - **role_and_use**: 保存 04_Parliament/_ARCHIVED 的历史任务/决策快照；仅在追溯 Challenger_Guidelines.md 时使用
+  - **role_and_use**: 将 Challenger_Guidelines.md（H1《双重辩论机制：挑战方与审核方指导原则 (Challenger &amp; Auditor Guidelines)》；首个 H2《一、 核心底线 (The Prime Directive)》） 作为“议会冻结归档”使用；冻结历史不得冒充 active Issue、verdict 或任务
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical/frozen；仅追溯，不作为当前合同
-  - **when_to_read**: 追溯 Challenger_Guidelines.md 对应旧任务、裁决或 publication provenance 时读取
+  - **status_or_freshness**: semantic_profile=parliament_historical_archive；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；冻结历史不得冒充 active Issue、verdict 或任务
+  - **when_to_read**: 触发条件：追溯已关闭 Issue 的决策来源或迁移影响。读取 Challenger_Guidelines.md（H1《双重辩论机制：挑战方与审核方指导原则 (Challenger &amp; Auditor Guidelines)》；首个 H2《一、 核心底线 (The Prime Directive)》）；冻结历史不得冒充 active Issue、verdict 或任务
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f5f41524348495645442f56345f456d657267656e63655f4465626174655f50726f746f636f6c2e6d64 -->
 - **path_or_link**: [`04_Parliament/_ARCHIVED/V4_Emergence_Debate_Protocol.md`](V4_Emergence_Debate_Protocol.md)
   - **content_summary**: H1《🏛️ 赛博城邦最高宪章：多智能体议事系统 (The V4 Parliament Mechanism)》；首个 H2《🌐 机制概述 (The Mechanism)》
-  - **role_and_use**: 保存 04_Parliament/_ARCHIVED 的历史任务/决策快照；仅在追溯 V4_Emergence_Debate_Protocol.md 时使用
+  - **role_and_use**: 将 V4_Emergence_Debate_Protocol.md（H1《🏛️ 赛博城邦最高宪章：多智能体议事系统 (The V4 Parliament Mechanism)》；首个 H2《🌐 机制概述 (The Mechanism)》） 作为“议会冻结归档”使用；冻结历史不得冒充 active Issue、verdict 或任务
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical/frozen；仅追溯，不作为当前合同
-  - **when_to_read**: 追溯 V4_Emergence_Debate_Protocol.md 对应旧任务、裁决或 publication provenance 时读取
+  - **status_or_freshness**: semantic_profile=parliament_historical_archive；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；冻结历史不得冒充 active Issue、verdict 或任务
+  - **when_to_read**: 触发条件：追溯已关闭 Issue 的决策来源或迁移影响。读取 V4_Emergence_Debate_Protocol.md（H1《🏛️ 赛博城邦最高宪章：多智能体议事系统 (The V4 Parliament Mechanism)》；首个 H2《🌐 机制概述 (The Mechanism)》）；冻结历史不得冒充 active Issue、verdict 或任务
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f5f41524348495645442f56365f4175746f6e6f6d6f75735f4441475f50726f746f636f6c2e6d64 -->
 - **path_or_link**: [`04_Parliament/_ARCHIVED/V6_Autonomous_DAG_Protocol.md`](V6_Autonomous_DAG_Protocol.md)
   - **content_summary**: H1《📜 赛博城邦最高宪章：V6 自治有向无环图协议 (V6 Autonomous DAG Protocol)》；首个 H2《第一卷：流程规范层 (The Workflow Layer)》
-  - **role_and_use**: 保存 04_Parliament/_ARCHIVED 的历史任务/决策快照；仅在追溯 V6_Autonomous_DAG_Protocol.md 时使用
+  - **role_and_use**: 将 V6_Autonomous_DAG_Protocol.md（H1《📜 赛博城邦最高宪章：V6 自治有向无环图协议 (V6 Autonomous DAG Protocol)》；首个 H2《第一卷：流程规范层 (The Workflow Layer)》） 作为“议会冻结归档”使用；冻结历史不得冒充 active Issue、verdict 或任务
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical/frozen；仅追溯，不作为当前合同
-  - **when_to_read**: 追溯 V6_Autonomous_DAG_Protocol.md 对应旧任务、裁决或 publication provenance 时读取
+  - **status_or_freshness**: semantic_profile=parliament_historical_archive；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；冻结历史不得冒充 active Issue、verdict 或任务
+  - **when_to_read**: 触发条件：追溯已关闭 Issue 的决策来源或迁移影响。读取 V6_Autonomous_DAG_Protocol.md（H1《📜 赛博城邦最高宪章：V6 自治有向无环图协议 (V6 Autonomous DAG Protocol)》；首个 H2《第一卷：流程规范层 (The Workflow Layer)》）；冻结历史不得冒充 active Issue、verdict 或任务
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f5f41524348495645442f56365f4d756c74695f4d6f64656c5f4465626174655f50726f746f636f6c2e6d64 -->
 - **path_or_link**: [`04_Parliament/_ARCHIVED/V6_Multi_Model_Debate_Protocol.md`](V6_Multi_Model_Debate_Protocol.md)
   - **content_summary**: H1《⚔️ 赛博城邦 V6：跨模型实体辩论协议 (Multi-Model Physical Debate Protocol)》；首个 H2《🎭 角色定义矩阵》
-  - **role_and_use**: 保存 04_Parliament/_ARCHIVED 的历史任务/决策快照；仅在追溯 V6_Multi_Model_Debate_Protocol.md 时使用
+  - **role_and_use**: 将 V6_Multi_Model_Debate_Protocol.md（H1《⚔️ 赛博城邦 V6：跨模型实体辩论协议 (Multi-Model Physical Debate Protocol)》；首个 H2《🎭 角色定义矩阵》） 作为“议会冻结归档”使用；冻结历史不得冒充 active Issue、verdict 或任务
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical/frozen；仅追溯，不作为当前合同
-  - **when_to_read**: 追溯 V6_Multi_Model_Debate_Protocol.md 对应旧任务、裁决或 publication provenance 时读取
+  - **status_or_freshness**: semantic_profile=parliament_historical_archive；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；冻结历史不得冒充 active Issue、verdict 或任务
+  - **when_to_read**: 触发条件：追溯已关闭 Issue 的决策来源或迁移影响。读取 V6_Multi_Model_Debate_Protocol.md（H1《⚔️ 赛博城邦 V6：跨模型实体辩论协议 (Multi-Model Physical Debate Protocol)》；首个 H2《🎭 角色定义矩阵》）；冻结历史不得冒充 active Issue、verdict 或任务
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f5f41524348495645442f696e6465782e6d64 -->
 - **path_or_link**: [`04_Parliament/_ARCHIVED/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 04_Parliament/_ARCHIVED 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 04_Parliament/_ARCHIVED 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

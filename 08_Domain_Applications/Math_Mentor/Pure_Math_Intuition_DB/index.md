@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Math Mentor 根数学概念语料库及 staging 分区；按节点 ID 懒加载，禁止全量摄入
+Math Mentor 根候选语料与 staging 分区；按 exact ID 懒加载并先过 identity/admission/certification gate
 
 ## authority_and_usage_boundary
 
@@ -11,37 +11,37 @@ Math Mentor 根数学概念语料库及 staging 分区；按节点 ID 懒加载�
 
 ## recommended_reading_order
 
-1. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/schema.yaml`](schema.yaml) — 创建、迁移或验证 schema.yaml 对应结构化数据之前读取
-3. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-464.yaml`](ABSTRACT_ALGEBRA-464.yaml) — 修改、调试或消费 ABSTRACT_ALGEBRA-464.yaml 的具体实现/领域内容前读取
-4. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-465.yaml`](ABSTRACT_ALGEBRA-465.yaml) — 修改、调试或消费 ABSTRACT_ALGEBRA-465.yaml 的具体实现/领域内容前读取
-5. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-466.yaml`](ABSTRACT_ALGEBRA-466.yaml) — 修改、调试或消费 ABSTRACT_ALGEBRA-466.yaml 的具体实现/领域内容前读取
-6. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-467.yaml`](ABSTRACT_ALGEBRA-467.yaml) — 修改、调试或消费 ABSTRACT_ALGEBRA-467.yaml 的具体实现/领域内容前读取
-7. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/index.md`](_Staging_Level5_Part2/index.md) — 处理明确 staging candidate 且已核验 admission 边界时进入
-8. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part1/index.md`](_Staging_Level6_Part1/index.md) — 处理明确 staging candidate 且已核验 admission 边界时进入
-9. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/index.md`](_Staging_Level6_Part2/index.md) — 处理明确 staging candidate 且已核验 admission 边界时进入
+1. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/schema.yaml`](schema.yaml) — 触发条件：创建、迁移或验证该结构定义对应的数据。读取 schema.yaml（id=String. Unique identifier.；validation_status=manual_review_required；name=String. Human readable name.）；结构有效不等于业务有效、授权有效或已持久化
+3. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-464.yaml`](ABSTRACT_ALGEBRA-464.yaml) — 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ABSTRACT_ALGEBRA-464.yaml（id=ABSTRACT_ALGEBRA-464；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+4. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-465.yaml`](ABSTRACT_ALGEBRA-465.yaml) — 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ABSTRACT_ALGEBRA-465.yaml（id=ABSTRACT_ALGEBRA-465；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+5. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-466.yaml`](ABSTRACT_ALGEBRA-466.yaml) — 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ABSTRACT_ALGEBRA-466.yaml（id=ABSTRACT_ALGEBRA-466；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+6. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-467.yaml`](ABSTRACT_ALGEBRA-467.yaml) — 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ABSTRACT_ALGEBRA-467.yaml（id=ABSTRACT_ALGEBRA-467；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+7. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/index.md`](_Staging_Level5_Part2/index.md) — 对 _Staging_Level5_Part2 中具名候选进行 root 对照、alias 冲突或 Human 裁决
+8. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part1/index.md`](_Staging_Level6_Part1/index.md) — 对 _Staging_Level6_Part1 中具名候选进行 root 对照、alias 冲突或 Human 裁决
+9. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/index.md`](_Staging_Level6_Part2/index.md) — 对 _Staging_Level6_Part2 中具名候选进行 root 对照、alias 冲突或 Human 裁决
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c355f5061727432 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2`](_Staging_Level5_Part2/index.md)
-  - **content_scope**: Math Mentor staging candidate pool；节点存在不等于已准入、已认证或可教学；tracked 后代文件数=58
-  - **when_to_enter**: 处理明确 staging candidate 且已核验 admission 边界时进入
+  - **content_scope**: Math Mentor _Staging_Level5_Part2 候选池；只用于 root 对照、alias 冲突与 Human 语义裁决；tracked 后代文件数=58
+  - **when_to_enter**: 对 _Staging_Level5_Part2 中具名候选进行 root 对照、alias 冲突或 Human 裁决
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f5061727431 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part1`](_Staging_Level6_Part1/index.md)
-  - **content_scope**: Math Mentor staging candidate pool；节点存在不等于已准入、已认证或可教学；tracked 后代文件数=86
-  - **when_to_enter**: 处理明确 staging candidate 且已核验 admission 边界时进入
+  - **content_scope**: Math Mentor _Staging_Level6_Part1 候选池；只用于 root 对照、alias 冲突与 Human 语义裁决；tracked 后代文件数=86
+  - **when_to_enter**: 对 _Staging_Level6_Part1 中具名候选进行 root 对照、alias 冲突或 Human 裁决
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f5061727432 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2`](_Staging_Level6_Part2/index.md)
-  - **content_scope**: Math Mentor staging candidate pool；节点存在不等于已准入、已认证或可教学；tracked 后代文件数=51
-  - **when_to_enter**: 处理明确 staging candidate 且已核验 admission 边界时进入
+  - **content_scope**: Math Mentor _Staging_Level6_Part2 候选池；只用于 root 对照、alias 冲突与 Human 语义裁决；tracked 后代文件数=51
+  - **when_to_enter**: 对 _Staging_Level6_Part2 中具名候选进行 root 对照、alias 冲突或 Human 裁决
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f5061727433 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part3`](_Staging_Level6_Part3/index.md)
-  - **content_scope**: Math Mentor staging candidate pool；节点存在不等于已准入、已认证或可教学；tracked 后代文件数=38
-  - **when_to_enter**: 处理明确 staging candidate 且已核验 admission 边界时进入
+  - **content_scope**: Math Mentor _Staging_Level6_Part3 候选池；只用于 root 对照、alias 冲突与 Human 语义裁决；tracked 后代文件数=38
+  - **when_to_enter**: 对 _Staging_Level6_Part3 中具名候选进行 root 对照、alias 冲突或 Human 裁决
   - **load_policy**: `do_not_load_by_default`
 
 ## direct_files
@@ -49,4791 +49,4791 @@ Math Mentor 根数学概念语料库及 staging 分区；按节点 ID 懒加载�
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f41425354524143545f414c47454252412d3436342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-464.yaml`](ABSTRACT_ALGEBRA-464.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ABSTRACT_ALG…
-  - **role_and_use**: 保存 ABSTRACT_ALGEBRA-464.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ABSTRACT_ALGEBRA-464.yaml（id=ABSTRACT_ALGEBRA-464；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ABSTRACT_ALGEBRA-464.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ABSTRACT_ALGEBRA-464.yaml（id=ABSTRACT_ALGEBRA-464；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f41425354524143545f414c47454252412d3436352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-465.yaml`](ABSTRACT_ALGEBRA-465.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ABSTRACT_ALG…
-  - **role_and_use**: 保存 ABSTRACT_ALGEBRA-465.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ABSTRACT_ALGEBRA-465.yaml（id=ABSTRACT_ALGEBRA-465；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ABSTRACT_ALGEBRA-465.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ABSTRACT_ALGEBRA-465.yaml（id=ABSTRACT_ALGEBRA-465；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f41425354524143545f414c47454252412d3436362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-466.yaml`](ABSTRACT_ALGEBRA-466.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ABSTRACT_ALG…
-  - **role_and_use**: 保存 ABSTRACT_ALGEBRA-466.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ABSTRACT_ALGEBRA-466.yaml（id=ABSTRACT_ALGEBRA-466；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ABSTRACT_ALGEBRA-466.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ABSTRACT_ALGEBRA-466.yaml（id=ABSTRACT_ALGEBRA-466；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f41425354524143545f414c47454252412d3436372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-467.yaml`](ABSTRACT_ALGEBRA-467.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ABSTRACT_ALG…
-  - **role_and_use**: 保存 ABSTRACT_ALGEBRA-467.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ABSTRACT_ALGEBRA-467.yaml（id=ABSTRACT_ALGEBRA-467；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ABSTRACT_ALGEBRA-467.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ABSTRACT_ALGEBRA-467.yaml（id=ABSTRACT_ALGEBRA-467；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f41425354524143545f414c47454252412d3436382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-468.yaml`](ABSTRACT_ALGEBRA-468.yaml)
   - **content_summary**: YAML 结构，顶层键：id, domain, mode, concept_name, sub_topics, formal_definition, prerequisite_nodes, llm_physical_mapping；安全锚点：id=ABSTRACT_ALGEBRA-468, domain=abstract_algebra, status=r…
-  - **role_and_use**: 保存 ABSTRACT_ALGEBRA-468.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ABSTRACT_ALGEBRA-468.yaml（id=ABSTRACT_ALGEBRA-468；domain=abstract_algebra；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ABSTRACT_ALGEBRA-468.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ABSTRACT_ALGEBRA-468.yaml（id=ABSTRACT_ALGEBRA-468；domain=abstract_algebra；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f41425354524143545f414c47454252412d3436392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-469.yaml`](ABSTRACT_ALGEBRA-469.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ABSTRACT_ALG…
-  - **role_and_use**: 保存 ABSTRACT_ALGEBRA-469.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ABSTRACT_ALGEBRA-469.yaml（id=ABSTRACT_ALGEBRA-469；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ABSTRACT_ALGEBRA-469.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ABSTRACT_ALGEBRA-469.yaml（id=ABSTRACT_ALGEBRA-469；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f41425354524143545f414c47454252412d3437302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-470.yaml`](ABSTRACT_ALGEBRA-470.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ABSTRACT_ALG…
-  - **role_and_use**: 保存 ABSTRACT_ALGEBRA-470.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ABSTRACT_ALGEBRA-470.yaml（id=ABSTRACT_ALGEBRA-470；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ABSTRACT_ALGEBRA-470.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ABSTRACT_ALGEBRA-470.yaml（id=ABSTRACT_ALGEBRA-470；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f41425354524143545f414c47454252412d3437312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-471.yaml`](ABSTRACT_ALGEBRA-471.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ABSTRACT_ALG…
-  - **role_and_use**: 保存 ABSTRACT_ALGEBRA-471.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ABSTRACT_ALGEBRA-471.yaml（id=ABSTRACT_ALGEBRA-471；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ABSTRACT_ALGEBRA-471.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ABSTRACT_ALGEBRA-471.yaml（id=ABSTRACT_ALGEBRA-471；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f41425354524143545f414c47454252412d3437322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-472.yaml`](ABSTRACT_ALGEBRA-472.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ABSTRACT_ALG…
-  - **role_and_use**: 保存 ABSTRACT_ALGEBRA-472.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ABSTRACT_ALGEBRA-472.yaml（id=ABSTRACT_ALGEBRA-472；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ABSTRACT_ALGEBRA-472.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ABSTRACT_ALGEBRA-472.yaml（id=ABSTRACT_ALGEBRA-472；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f41425354524143545f414c47454252412d3437332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-473.yaml`](ABSTRACT_ALGEBRA-473.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ABSTRACT_ALG…
-  - **role_and_use**: 保存 ABSTRACT_ALGEBRA-473.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ABSTRACT_ALGEBRA-473.yaml（id=ABSTRACT_ALGEBRA-473；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ABSTRACT_ALGEBRA-473.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ABSTRACT_ALGEBRA-473.yaml（id=ABSTRACT_ALGEBRA-473；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f41425354524143545f414c47454252412d3437342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-474.yaml`](ABSTRACT_ALGEBRA-474.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ABSTRACT_ALG…
-  - **role_and_use**: 保存 ABSTRACT_ALGEBRA-474.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ABSTRACT_ALGEBRA-474.yaml（id=ABSTRACT_ALGEBRA-474；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ABSTRACT_ALGEBRA-474.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ABSTRACT_ALGEBRA-474.yaml（id=ABSTRACT_ALGEBRA-474；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f41425354524143545f414c47454252412d3437352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-475.yaml`](ABSTRACT_ALGEBRA-475.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ABSTRACT_ALG…
-  - **role_and_use**: 保存 ABSTRACT_ALGEBRA-475.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ABSTRACT_ALGEBRA-475.yaml（id=ABSTRACT_ALGEBRA-475；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ABSTRACT_ALGEBRA-475.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ABSTRACT_ALGEBRA-475.yaml（id=ABSTRACT_ALGEBRA-475；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f41425354524143545f414c47454252412d3437362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-476.yaml`](ABSTRACT_ALGEBRA-476.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ABSTRACT_ALG…
-  - **role_and_use**: 保存 ABSTRACT_ALGEBRA-476.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ABSTRACT_ALGEBRA-476.yaml（id=ABSTRACT_ALGEBRA-476；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ABSTRACT_ALGEBRA-476.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ABSTRACT_ALGEBRA-476.yaml（id=ABSTRACT_ALGEBRA-476；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f41425354524143545f414c47454252412d3437372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-477.yaml`](ABSTRACT_ALGEBRA-477.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ABSTRACT_ALG…
-  - **role_and_use**: 保存 ABSTRACT_ALGEBRA-477.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ABSTRACT_ALGEBRA-477.yaml（id=ABSTRACT_ALGEBRA-477；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ABSTRACT_ALGEBRA-477.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ABSTRACT_ALGEBRA-477.yaml（id=ABSTRACT_ALGEBRA-477；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f41425354524143545f414c47454252412d3437382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-478.yaml`](ABSTRACT_ALGEBRA-478.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ABSTRACT_ALG…
-  - **role_and_use**: 保存 ABSTRACT_ALGEBRA-478.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ABSTRACT_ALGEBRA-478.yaml（id=ABSTRACT_ALGEBRA-478；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ABSTRACT_ALGEBRA-478.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ABSTRACT_ALGEBRA-478.yaml（id=ABSTRACT_ALGEBRA-478；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f41425354524143545f414c47454252412d3437392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ABSTRACT_ALGEBRA-479.yaml`](ABSTRACT_ALGEBRA-479.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ABSTRACT_ALG…
-  - **role_and_use**: 保存 ABSTRACT_ALGEBRA-479.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ABSTRACT_ALGEBRA-479.yaml（id=ABSTRACT_ALGEBRA-479；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ABSTRACT_ALGEBRA-479.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ABSTRACT_ALGEBRA-479.yaml（id=ABSTRACT_ALGEBRA-479；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c47454252412d3030315f4162736f6c7574655f56616c75652e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRA-001_Absolute_Value.yaml`](ALGEBRA-001_Absolute_Value.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=ALGEBRA-001, validation_status=review_required, name=绝对值与根式 (absolute_value_and_radicals) - 绝对值的几何意义（数轴上的物理距离） (n_107)；sub_topics=4
-  - **role_and_use**: 保存 ALGEBRA-001_Absolute_Value.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRA-001_Absolute_Value.yaml（id=ALGEBRA-001；validation_status=review_required；name=绝对值与根式 (absolute_value_and_radicals) - 绝对值的几何意义（数轴上的物理距离） (n_107)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRA-001_Absolute_Value.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRA-001_Absolute_Value.yaml（id=ALGEBRA-001；validation_status=review_required；name=绝对值与根式 (absolute_value_and_radicals) - 绝对值的几何意义（数轴上的物理距离） (n_107)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c47454252412d3030322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRA-002.yaml`](ALGEBRA-002.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=ALGEBRA-002, validation_status=review_required；sub_topics=4
-  - **role_and_use**: 保存 ALGEBRA-002.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRA-002.yaml（id=ALGEBRA-002；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRA-002.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRA-002.yaml（id=ALGEBRA-002；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c47454252412d3030332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRA-003.yaml`](ALGEBRA-003.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=ALGEBRA-003, validation_status=review_required, title=绝对值与根式 (absolute_value_and_radicals) - 二次根式与高次根式的化简、同类二次根式的合并 (n_109)；sub_topics=4
-  - **role_and_use**: 保存 ALGEBRA-003.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRA-003.yaml（id=ALGEBRA-003；validation_status=review_required；title=绝对值与根式 (absolute_value_and_radicals) - 二次根式与高次根式的化简、同类二次根式的合并 (n_109)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRA-003.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRA-003.yaml（id=ALGEBRA-003；validation_status=review_required；title=绝对值与根式 (absolute_value_and_radicals) - 二次根式与高次根式的化简、同类二次根式的合并 (n_109)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c47454252412d3030342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRA-004.yaml`](ALGEBRA-004.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=ALGEBRA-004, validation_status=review_required, name=绝对值与根式 (absolute_value_and_radicals) - 分母有理化（利用平方差公式消除分母无理数） (n_110)；sub_topics=4
-  - **role_and_use**: 保存 ALGEBRA-004.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRA-004.yaml（id=ALGEBRA-004；validation_status=review_required；name=绝对值与根式 (absolute_value_and_radicals) - 分母有理化（利用平方差公式消除分母无理数） (n_110)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRA-004.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRA-004.yaml（id=ALGEBRA-004；validation_status=review_required；name=绝对值与根式 (absolute_value_and_radicals) - 分母有理化（利用平方差公式消除分母无理数） (n_110)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3633322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-632.yaml`](ALGEBRAIC_GEO-632.yaml)
   - **content_summary**: YAML 结构，顶层键：id, domain, mode, concept_name, sub_topics, formal_definition, prerequisite_nodes, llm_physical_mapping；安全锚点：id=ALGEBRAIC_GEO-632, domain=algebraic_geometry, status=re…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-632.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-632.yaml（id=ALGEBRAIC_GEO-632；domain=algebraic_geometry；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-632.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-632.yaml（id=ALGEBRAIC_GEO-632；domain=algebraic_geometry；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3633332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-633.yaml`](ALGEBRAIC_GEO-633.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALGEBRAIC_GE…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-633.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-633.yaml（id=ALGEBRAIC_GEO-633；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-633.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-633.yaml（id=ALGEBRAIC_GEO-633；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3633342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-634.yaml`](ALGEBRAIC_GEO-634.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALGEBRAIC_GE…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-634.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-634.yaml（id=ALGEBRAIC_GEO-634；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-634.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-634.yaml（id=ALGEBRAIC_GEO-634；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3633352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-635.yaml`](ALGEBRAIC_GEO-635.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALGEBRAIC_GE…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-635.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-635.yaml（id=ALGEBRAIC_GEO-635；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-635.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-635.yaml（id=ALGEBRAIC_GEO-635；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3633362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-636.yaml`](ALGEBRAIC_GEO-636.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALGEBRAIC_GE…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-636.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-636.yaml（id=ALGEBRAIC_GEO-636；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-636.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-636.yaml（id=ALGEBRAIC_GEO-636；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3633372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-637.yaml`](ALGEBRAIC_GEO-637.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALGEBRAIC_GE…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-637.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-637.yaml（id=ALGEBRAIC_GEO-637；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-637.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-637.yaml（id=ALGEBRAIC_GEO-637；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3633382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-638.yaml`](ALGEBRAIC_GEO-638.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALGEBRAIC_GE…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-638.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-638.yaml（id=ALGEBRAIC_GEO-638；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-638.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-638.yaml（id=ALGEBRAIC_GEO-638；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3633392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-639.yaml`](ALGEBRAIC_GEO-639.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALGEBRAIC_GE…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-639.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-639.yaml（id=ALGEBRAIC_GEO-639；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-639.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-639.yaml（id=ALGEBRAIC_GEO-639；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3634302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-640.yaml`](ALGEBRAIC_GEO-640.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALGEBRAIC_GE…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-640.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-640.yaml（id=ALGEBRAIC_GEO-640；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-640.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-640.yaml（id=ALGEBRAIC_GEO-640；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3634312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-641.yaml`](ALGEBRAIC_GEO-641.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALGEBRAIC_GE…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-641.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-641.yaml（id=ALGEBRAIC_GEO-641；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-641.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-641.yaml（id=ALGEBRAIC_GEO-641；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3634322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-642.yaml`](ALGEBRAIC_GEO-642.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALGEBRAIC_GE…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-642.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-642.yaml（id=ALGEBRAIC_GEO-642；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-642.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-642.yaml（id=ALGEBRAIC_GEO-642；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3634332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-643.yaml`](ALGEBRAIC_GEO-643.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALGEBRAIC_GE…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-643.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-643.yaml（id=ALGEBRAIC_GEO-643；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-643.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-643.yaml（id=ALGEBRAIC_GEO-643；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3634342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-644.yaml`](ALGEBRAIC_GEO-644.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALGEBRAIC_GE…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-644.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-644.yaml（id=ALGEBRAIC_GEO-644；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-644.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-644.yaml（id=ALGEBRAIC_GEO-644；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3634352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-645.yaml`](ALGEBRAIC_GEO-645.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALGEBRAIC_GE…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-645.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-645.yaml（id=ALGEBRAIC_GEO-645；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-645.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-645.yaml（id=ALGEBRAIC_GEO-645；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3634362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-646.yaml`](ALGEBRAIC_GEO-646.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALGEBRAIC_GE…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-646.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-646.yaml（id=ALGEBRAIC_GEO-646；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-646.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-646.yaml（id=ALGEBRAIC_GEO-646；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3634372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-647.yaml`](ALGEBRAIC_GEO-647.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALGEBRAIC_GE…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-647.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-647.yaml（id=ALGEBRAIC_GEO-647；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-647.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-647.yaml（id=ALGEBRAIC_GEO-647；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3634382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-648.yaml`](ALGEBRAIC_GEO-648.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALGEBRAIC_GE…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-648.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-648.yaml（id=ALGEBRAIC_GEO-648；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-648.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-648.yaml（id=ALGEBRAIC_GEO-648；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3634392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-649.yaml`](ALGEBRAIC_GEO-649.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALGEBRAIC_GE…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-649.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-649.yaml（id=ALGEBRAIC_GEO-649；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-649.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-649.yaml（id=ALGEBRAIC_GEO-649；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3635302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-650.yaml`](ALGEBRAIC_GEO-650.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALGEBRAIC_GE…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-650.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-650.yaml（id=ALGEBRAIC_GEO-650；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-650.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-650.yaml（id=ALGEBRAIC_GEO-650；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3635312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-651.yaml`](ALGEBRAIC_GEO-651.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALGEBRAIC_GE…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-651.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-651.yaml（id=ALGEBRAIC_GEO-651；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-651.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-651.yaml（id=ALGEBRAIC_GEO-651；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c474542524149435f47454f2d3635322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALGEBRAIC_GEO-652.yaml`](ALGEBRAIC_GEO-652.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALGEBRAIC_GE…
-  - **role_and_use**: 保存 ALGEBRAIC_GEO-652.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALGEBRAIC_GEO-652.yaml（id=ALGEBRAIC_GEO-652；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALGEBRAIC_GEO-652.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALGEBRAIC_GEO-652.yaml（id=ALGEBRAIC_GEO-652；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c475f544f504f4c4f47592d3636392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALG_TOPOLOGY-669.yaml`](ALG_TOPOLOGY-669.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALG_TOPOLOGY…
-  - **role_and_use**: 保存 ALG_TOPOLOGY-669.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALG_TOPOLOGY-669.yaml（id=ALG_TOPOLOGY-669；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALG_TOPOLOGY-669.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALG_TOPOLOGY-669.yaml（id=ALG_TOPOLOGY-669；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c475f544f504f4c4f47592d3637302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALG_TOPOLOGY-670.yaml`](ALG_TOPOLOGY-670.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALG_TOPOLOGY…
-  - **role_and_use**: 保存 ALG_TOPOLOGY-670.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALG_TOPOLOGY-670.yaml（id=ALG_TOPOLOGY-670；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALG_TOPOLOGY-670.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALG_TOPOLOGY-670.yaml（id=ALG_TOPOLOGY-670；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c475f544f504f4c4f47592d3637312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALG_TOPOLOGY-671.yaml`](ALG_TOPOLOGY-671.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALG_TOPOLOGY…
-  - **role_and_use**: 保存 ALG_TOPOLOGY-671.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALG_TOPOLOGY-671.yaml（id=ALG_TOPOLOGY-671；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALG_TOPOLOGY-671.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALG_TOPOLOGY-671.yaml（id=ALG_TOPOLOGY-671；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c475f544f504f4c4f47592d3637322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALG_TOPOLOGY-672.yaml`](ALG_TOPOLOGY-672.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALG_TOPOLOGY…
-  - **role_and_use**: 保存 ALG_TOPOLOGY-672.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALG_TOPOLOGY-672.yaml（id=ALG_TOPOLOGY-672；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALG_TOPOLOGY-672.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALG_TOPOLOGY-672.yaml（id=ALG_TOPOLOGY-672；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c475f544f504f4c4f47592d3637332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALG_TOPOLOGY-673.yaml`](ALG_TOPOLOGY-673.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALG_TOPOLOGY…
-  - **role_and_use**: 保存 ALG_TOPOLOGY-673.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALG_TOPOLOGY-673.yaml（id=ALG_TOPOLOGY-673；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALG_TOPOLOGY-673.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALG_TOPOLOGY-673.yaml（id=ALG_TOPOLOGY-673；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c475f544f504f4c4f47592d3637342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALG_TOPOLOGY-674.yaml`](ALG_TOPOLOGY-674.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALG_TOPOLOGY…
-  - **role_and_use**: 保存 ALG_TOPOLOGY-674.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALG_TOPOLOGY-674.yaml（id=ALG_TOPOLOGY-674；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALG_TOPOLOGY-674.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALG_TOPOLOGY-674.yaml（id=ALG_TOPOLOGY-674；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c475f544f504f4c4f47592d3637352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALG_TOPOLOGY-675.yaml`](ALG_TOPOLOGY-675.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALG_TOPOLOGY…
-  - **role_and_use**: 保存 ALG_TOPOLOGY-675.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALG_TOPOLOGY-675.yaml（id=ALG_TOPOLOGY-675；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALG_TOPOLOGY-675.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALG_TOPOLOGY-675.yaml（id=ALG_TOPOLOGY-675；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c475f544f504f4c4f47592d3637362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALG_TOPOLOGY-676.yaml`](ALG_TOPOLOGY-676.yaml)
   - **content_summary**: YAML 结构，顶层键：id, domain, mode, concept_name, sub_topics, formal_definition, prerequisite_nodes, llm_physical_mapping；安全锚点：id=ALG_TOPOLOGY-676, domain=algebraic_topology, status=rev…
-  - **role_and_use**: 保存 ALG_TOPOLOGY-676.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALG_TOPOLOGY-676.yaml（id=ALG_TOPOLOGY-676；domain=algebraic_topology；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALG_TOPOLOGY-676.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALG_TOPOLOGY-676.yaml（id=ALG_TOPOLOGY-676；domain=algebraic_topology；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c475f544f504f4c4f47592d3637372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALG_TOPOLOGY-677.yaml`](ALG_TOPOLOGY-677.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALG_TOPOLOGY…
-  - **role_and_use**: 保存 ALG_TOPOLOGY-677.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALG_TOPOLOGY-677.yaml（id=ALG_TOPOLOGY-677；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALG_TOPOLOGY-677.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALG_TOPOLOGY-677.yaml（id=ALG_TOPOLOGY-677；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c475f544f504f4c4f47592d3637382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALG_TOPOLOGY-678.yaml`](ALG_TOPOLOGY-678.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALG_TOPOLOGY…
-  - **role_and_use**: 保存 ALG_TOPOLOGY-678.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALG_TOPOLOGY-678.yaml（id=ALG_TOPOLOGY-678；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALG_TOPOLOGY-678.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALG_TOPOLOGY-678.yaml（id=ALG_TOPOLOGY-678；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c475f544f504f4c4f47592d3637392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALG_TOPOLOGY-679.yaml`](ALG_TOPOLOGY-679.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALG_TOPOLOGY…
-  - **role_and_use**: 保存 ALG_TOPOLOGY-679.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALG_TOPOLOGY-679.yaml（id=ALG_TOPOLOGY-679；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALG_TOPOLOGY-679.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALG_TOPOLOGY-679.yaml（id=ALG_TOPOLOGY-679；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c475f544f504f4c4f47592d3638302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALG_TOPOLOGY-680.yaml`](ALG_TOPOLOGY-680.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALG_TOPOLOGY…
-  - **role_and_use**: 保存 ALG_TOPOLOGY-680.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALG_TOPOLOGY-680.yaml（id=ALG_TOPOLOGY-680；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALG_TOPOLOGY-680.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALG_TOPOLOGY-680.yaml（id=ALG_TOPOLOGY-680；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c475f544f504f4c4f47592d3638312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALG_TOPOLOGY-681.yaml`](ALG_TOPOLOGY-681.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALG_TOPOLOGY…
-  - **role_and_use**: 保存 ALG_TOPOLOGY-681.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALG_TOPOLOGY-681.yaml（id=ALG_TOPOLOGY-681；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALG_TOPOLOGY-681.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALG_TOPOLOGY-681.yaml（id=ALG_TOPOLOGY-681；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c475f544f504f4c4f47592d3638322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALG_TOPOLOGY-682.yaml`](ALG_TOPOLOGY-682.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALG_TOPOLOGY…
-  - **role_and_use**: 保存 ALG_TOPOLOGY-682.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALG_TOPOLOGY-682.yaml（id=ALG_TOPOLOGY-682；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALG_TOPOLOGY-682.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALG_TOPOLOGY-682.yaml（id=ALG_TOPOLOGY-682；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414c475f544f504f4c4f47592d3638332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ALG_TOPOLOGY-683.yaml`](ALG_TOPOLOGY-683.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ALG_TOPOLOGY…
-  - **role_and_use**: 保存 ALG_TOPOLOGY-683.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ALG_TOPOLOGY-683.yaml（id=ALG_TOPOLOGY-683；validation_status=review_required；status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ALG_TOPOLOGY-683.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ALG_TOPOLOGY-683.yaml（id=ALG_TOPOLOGY-683；validation_status=review_required；status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f47454f2d3337332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_GEO-373.yaml`](ANALYTIC_GEO-373.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_GEO…
-  - **role_and_use**: 保存 ANALYTIC_GEO-373.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_GEO-373.yaml（id=ANALYTIC_GEO-373；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_GEO-373.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_GEO-373.yaml（id=ANALYTIC_GEO-373；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f47454f2d3337342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_GEO-374.yaml`](ANALYTIC_GEO-374.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_GEO…
-  - **role_and_use**: 保存 ANALYTIC_GEO-374.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_GEO-374.yaml（id=ANALYTIC_GEO-374；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_GEO-374.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_GEO-374.yaml（id=ANALYTIC_GEO-374；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f47454f2d3337352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_GEO-375.yaml`](ANALYTIC_GEO-375.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_GEO…
-  - **role_and_use**: 保存 ANALYTIC_GEO-375.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_GEO-375.yaml（id=ANALYTIC_GEO-375；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_GEO-375.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_GEO-375.yaml（id=ANALYTIC_GEO-375；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f47454f2d3337362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_GEO-376.yaml`](ANALYTIC_GEO-376.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_GEO…
-  - **role_and_use**: 保存 ANALYTIC_GEO-376.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_GEO-376.yaml（id=ANALYTIC_GEO-376；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_GEO-376.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_GEO-376.yaml（id=ANALYTIC_GEO-376；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f47454f2d3337372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_GEO-377.yaml`](ANALYTIC_GEO-377.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_GEO…
-  - **role_and_use**: 保存 ANALYTIC_GEO-377.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_GEO-377.yaml（id=ANALYTIC_GEO-377；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_GEO-377.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_GEO-377.yaml（id=ANALYTIC_GEO-377；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f47454f2d3337382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_GEO-378.yaml`](ANALYTIC_GEO-378.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_GEO…
-  - **role_and_use**: 保存 ANALYTIC_GEO-378.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_GEO-378.yaml（id=ANALYTIC_GEO-378；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_GEO-378.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_GEO-378.yaml（id=ANALYTIC_GEO-378；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f47454f2d3337392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_GEO-379.yaml`](ANALYTIC_GEO-379.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_GEO…
-  - **role_and_use**: 保存 ANALYTIC_GEO-379.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_GEO-379.yaml（id=ANALYTIC_GEO-379；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_GEO-379.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_GEO-379.yaml（id=ANALYTIC_GEO-379；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f47454f2d3338302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_GEO-380.yaml`](ANALYTIC_GEO-380.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_GEO…
-  - **role_and_use**: 保存 ANALYTIC_GEO-380.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_GEO-380.yaml（id=ANALYTIC_GEO-380；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_GEO-380.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_GEO-380.yaml（id=ANALYTIC_GEO-380；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f47454f2d3338312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_GEO-381.yaml`](ANALYTIC_GEO-381.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_GEO…
-  - **role_and_use**: 保存 ANALYTIC_GEO-381.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_GEO-381.yaml（id=ANALYTIC_GEO-381；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_GEO-381.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_GEO-381.yaml（id=ANALYTIC_GEO-381；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f47454f2d3338322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_GEO-382.yaml`](ANALYTIC_GEO-382.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_GEO…
-  - **role_and_use**: 保存 ANALYTIC_GEO-382.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_GEO-382.yaml（id=ANALYTIC_GEO-382；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_GEO-382.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_GEO-382.yaml（id=ANALYTIC_GEO-382；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f47454f2d3338332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_GEO-383.yaml`](ANALYTIC_GEO-383.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_GEO…
-  - **role_and_use**: 保存 ANALYTIC_GEO-383.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_GEO-383.yaml（id=ANALYTIC_GEO-383；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_GEO-383.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_GEO-383.yaml（id=ANALYTIC_GEO-383；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f47454f2d3338342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_GEO-384.yaml`](ANALYTIC_GEO-384.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_GEO…
-  - **role_and_use**: 保存 ANALYTIC_GEO-384.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_GEO-384.yaml（id=ANALYTIC_GEO-384；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_GEO-384.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_GEO-384.yaml（id=ANALYTIC_GEO-384；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f47454f2d3338352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_GEO-385.yaml`](ANALYTIC_GEO-385.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_GEO…
-  - **role_and_use**: 保存 ANALYTIC_GEO-385.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_GEO-385.yaml（id=ANALYTIC_GEO-385；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_GEO-385.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_GEO-385.yaml（id=ANALYTIC_GEO-385；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f47454f2d3338362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_GEO-386.yaml`](ANALYTIC_GEO-386.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_GEO…
-  - **role_and_use**: 保存 ANALYTIC_GEO-386.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_GEO-386.yaml（id=ANALYTIC_GEO-386；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_GEO-386.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_GEO-386.yaml（id=ANALYTIC_GEO-386；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f47454f2d3338372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_GEO-387.yaml`](ANALYTIC_GEO-387.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_GEO…
-  - **role_and_use**: 保存 ANALYTIC_GEO-387.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_GEO-387.yaml（id=ANALYTIC_GEO-387；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_GEO-387.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_GEO-387.yaml（id=ANALYTIC_GEO-387；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f47454f2d3338382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_GEO-388.yaml`](ANALYTIC_GEO-388.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_GEO…
-  - **role_and_use**: 保存 ANALYTIC_GEO-388.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_GEO-388.yaml（id=ANALYTIC_GEO-388；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_GEO-388.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_GEO-388.yaml（id=ANALYTIC_GEO-388；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f47454f2d3338392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_GEO-389.yaml`](ANALYTIC_GEO-389.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_GEO…
-  - **role_and_use**: 保存 ANALYTIC_GEO-389.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_GEO-389.yaml（id=ANALYTIC_GEO-389；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_GEO-389.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_GEO-389.yaml（id=ANALYTIC_GEO-389；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3638342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-684.yaml`](ANALYTIC_NT-684.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, city_state_engine, mode, math_lane, mode_routing_status, formal_definition_status, prerequisites_status；安全锚点：id=ANALYTIC_NT-684, validation_status=run_wit…
-  - **role_and_use**: 保存 ANALYTIC_NT-684.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_NT-684.yaml（id=ANALYTIC_NT-684；validation_status=run_with_log；status=manual_review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_NT-684.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-684.yaml（id=ANALYTIC_NT-684；validation_status=run_with_log；status=manual_review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3638352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-685.yaml`](ANALYTIC_NT-685.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_NT-…
-  - **role_and_use**: 保存 ANALYTIC_NT-685.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_NT-685.yaml（id=ANALYTIC_NT-685；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_NT-685.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-685.yaml（id=ANALYTIC_NT-685；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3638362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-686.yaml`](ANALYTIC_NT-686.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_NT-…
-  - **role_and_use**: 保存 ANALYTIC_NT-686.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_NT-686.yaml（id=ANALYTIC_NT-686；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_NT-686.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-686.yaml（id=ANALYTIC_NT-686；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3638372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-687.yaml`](ANALYTIC_NT-687.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, city_state_engine, mode, math_lane, mode_routing_status, formal_definition_status, prerequisites_status；安全锚点：id=ANALYTIC_NT-687, validation_status=run_wit…
-  - **role_and_use**: 保存 ANALYTIC_NT-687.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_NT-687.yaml（id=ANALYTIC_NT-687；validation_status=run_with_log；status=manual_review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_NT-687.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-687.yaml（id=ANALYTIC_NT-687；validation_status=run_with_log；status=manual_review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3638382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-688.yaml`](ANALYTIC_NT-688.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, city_state_engine, mode, math_lane, mode_routing_status, formal_definition_status, prerequisites_status；安全锚点：id=ANALYTIC_NT-688, validation_status=run_wit…
-  - **role_and_use**: 保存 ANALYTIC_NT-688.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_NT-688.yaml（id=ANALYTIC_NT-688；validation_status=run_with_log；status=manual_review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_NT-688.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-688.yaml（id=ANALYTIC_NT-688；validation_status=run_with_log；status=manual_review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3638392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-689.yaml`](ANALYTIC_NT-689.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_NT-…
-  - **role_and_use**: 保存 ANALYTIC_NT-689.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_NT-689.yaml（id=ANALYTIC_NT-689；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_NT-689.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-689.yaml（id=ANALYTIC_NT-689；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3639302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-690.yaml`](ANALYTIC_NT-690.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_NT-…
-  - **role_and_use**: 保存 ANALYTIC_NT-690.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_NT-690.yaml（id=ANALYTIC_NT-690；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_NT-690.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-690.yaml（id=ANALYTIC_NT-690；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3639312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-691.yaml`](ANALYTIC_NT-691.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_NT-…
-  - **role_and_use**: 保存 ANALYTIC_NT-691.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_NT-691.yaml（id=ANALYTIC_NT-691；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_NT-691.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-691.yaml（id=ANALYTIC_NT-691；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3639322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-692.yaml`](ANALYTIC_NT-692.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, city_state_engine, mode, math_lane, mode_routing_status, formal_definition_status, prerequisites_status；安全锚点：id=ANALYTIC_NT-692, validation_status=run_wit…
-  - **role_and_use**: 保存 ANALYTIC_NT-692.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_NT-692.yaml（id=ANALYTIC_NT-692；validation_status=run_with_log；status=manual_review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_NT-692.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-692.yaml（id=ANALYTIC_NT-692；validation_status=run_with_log；status=manual_review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3639332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-693.yaml`](ANALYTIC_NT-693.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_NT-…
-  - **role_and_use**: 保存 ANALYTIC_NT-693.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_NT-693.yaml（id=ANALYTIC_NT-693；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_NT-693.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-693.yaml（id=ANALYTIC_NT-693；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3639342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-694.yaml`](ANALYTIC_NT-694.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_NT-…
-  - **role_and_use**: 保存 ANALYTIC_NT-694.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_NT-694.yaml（id=ANALYTIC_NT-694；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_NT-694.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-694.yaml（id=ANALYTIC_NT-694；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3639352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-695.yaml`](ANALYTIC_NT-695.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_NT-…
-  - **role_and_use**: 保存 ANALYTIC_NT-695.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_NT-695.yaml（id=ANALYTIC_NT-695；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_NT-695.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-695.yaml（id=ANALYTIC_NT-695；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3639362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-696.yaml`](ANALYTIC_NT-696.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_NT-…
-  - **role_and_use**: 保存 ANALYTIC_NT-696.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_NT-696.yaml（id=ANALYTIC_NT-696；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_NT-696.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-696.yaml（id=ANALYTIC_NT-696；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3639372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-697.yaml`](ANALYTIC_NT-697.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_NT-…
-  - **role_and_use**: 保存 ANALYTIC_NT-697.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_NT-697.yaml（id=ANALYTIC_NT-697；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_NT-697.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-697.yaml（id=ANALYTIC_NT-697；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3639382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-698.yaml`](ANALYTIC_NT-698.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_NT-…
-  - **role_and_use**: 保存 ANALYTIC_NT-698.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_NT-698.yaml（id=ANALYTIC_NT-698；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_NT-698.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-698.yaml（id=ANALYTIC_NT-698；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3639392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-699.yaml`](ANALYTIC_NT-699.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_NT-…
-  - **role_and_use**: 保存 ANALYTIC_NT-699.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ANALYTIC_NT-699.yaml（id=ANALYTIC_NT-699；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ANALYTIC_NT-699.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-699.yaml（id=ANALYTIC_NT-699；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f41524954484d455449432d3030312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ARITHMETIC-001.yaml`](ARITHMETIC-001.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=ARITHMETIC-001, validation_status=review_required, title=加法与乘法的基本定律（交换律、结合律、分配律）, domain=integer_arithmetic；sub_topics=5
-  - **role_and_use**: 保存 ARITHMETIC-001.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ARITHMETIC-001.yaml（id=ARITHMETIC-001；validation_status=review_required；title=加法与乘法的基本定律（交换律、结合律、分配律）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ARITHMETIC-001.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ARITHMETIC-001.yaml（id=ARITHMETIC-001；validation_status=review_required；title=加法与乘法的基本定律（交换律、结合律、分配律））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f41524954484d455449432d3030322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ARITHMETIC-002.yaml`](ARITHMETIC-002.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=ARITHMETIC-002, validation_status=review_required, name=整数四则运算 (integer_arithmetic) - 减法与除法的逆运算性质（作为加法与乘法的逆向操作） (n_55)；sub_topics=4
-  - **role_and_use**: 保存 ARITHMETIC-002.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ARITHMETIC-002.yaml（id=ARITHMETIC-002；validation_status=review_required；name=整数四则运算 (integer_arithmetic) - 减法与除法的逆运算性质（作为加法与乘法的逆向操作） (n_55)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ARITHMETIC-002.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ARITHMETIC-002.yaml（id=ARITHMETIC-002；validation_status=review_required；name=整数四则运算 (integer_arithmetic) - 减法与除法的逆运算性质（作为加法与乘法的逆向操作） (n_55)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f41524954484d455449432d3030332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ARITHMETIC-003.yaml`](ARITHMETIC-003.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=ARITHMETIC-003, validation_status=review_required, title=运算优先级法则 (BODMAS/PEMDAS) 的逻辑基础 (n_56), domain=integer_arithmetic；sub_topics=4
-  - **role_and_use**: 保存 ARITHMETIC-003.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ARITHMETIC-003.yaml（id=ARITHMETIC-003；validation_status=review_required；title=运算优先级法则 (BODMAS/PEMDAS) 的逻辑基础 (n_56)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ARITHMETIC-003.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ARITHMETIC-003.yaml（id=ARITHMETIC-003；validation_status=review_required；title=运算优先级法则 (BODMAS/PEMDAS) 的逻辑基础 (n_56)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f42494e4f4d49414c2d3030312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BINOMIAL-001.yaml`](BINOMIAL-001.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=BINOMIAL-001, validation_status=review_required；sub_topics=4
-  - **role_and_use**: 保存 BINOMIAL-001.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 BINOMIAL-001.yaml（id=BINOMIAL-001；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 BINOMIAL-001.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 BINOMIAL-001.yaml（id=BINOMIAL-001；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f42494e4f4d49414c2d3030322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BINOMIAL-002.yaml`](BINOMIAL-002.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=BINOMIAL-002, validation_status=review_required, name=二项式定理 (binomial_theorem) - 组合数与二项式系数的等价映射 (n_115)；sub_topics=4
-  - **role_and_use**: 保存 BINOMIAL-002.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 BINOMIAL-002.yaml（id=BINOMIAL-002；validation_status=review_required；name=二项式定理 (binomial_theorem) - 组合数与二项式系数的等价映射 (n_115)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 BINOMIAL-002.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 BINOMIAL-002.yaml（id=BINOMIAL-002；validation_status=review_required；name=二项式定理 (binomial_theorem) - 组合数与二项式系数的等价映射 (n_115)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f42494e4f4d49414c2d3030332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BINOMIAL-003.yaml`](BINOMIAL-003.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=BINOMIAL-003, validation_status=review_required, domain=binomial_theorem；sub_topics=4
-  - **role_and_use**: 保存 BINOMIAL-003.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 BINOMIAL-003.yaml（id=BINOMIAL-003；validation_status=review_required；domain=binomial_theorem） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 BINOMIAL-003.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 BINOMIAL-003.yaml（id=BINOMIAL-003；validation_status=review_required；domain=binomial_theorem）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f424f4f4c45414e2d3030312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BOOLEAN-001.yaml`](BOOLEAN-001.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=BOOLEAN-001, validation_status=review_required, name=布尔代数基础 - 布尔代数的公理系统（Huntington公理）, domain=boolean_algebra；sub_topics=4
-  - **role_and_use**: 保存 BOOLEAN-001.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 BOOLEAN-001.yaml（id=BOOLEAN-001；validation_status=review_required；name=布尔代数基础 - 布尔代数的公理系统（Huntington公理）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 BOOLEAN-001.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 BOOLEAN-001.yaml（id=BOOLEAN-001；validation_status=review_required；name=布尔代数基础 - 布尔代数的公理系统（Huntington公理））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f424f4f4c45414e2d3030322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BOOLEAN-002.yaml`](BOOLEAN-002.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=BOOLEAN-002, validation_status=review_required, title=布尔代数基础 - 布尔表达式与规范型, domain=boolean_algebra；sub_topics=4
-  - **role_and_use**: 保存 BOOLEAN-002.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 BOOLEAN-002.yaml（id=BOOLEAN-002；validation_status=review_required；title=布尔代数基础 - 布尔表达式与规范型） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 BOOLEAN-002.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 BOOLEAN-002.yaml（id=BOOLEAN-002；validation_status=review_required；title=布尔代数基础 - 布尔表达式与规范型）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f424f4f4c45414e2d3030332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BOOLEAN-003.yaml`](BOOLEAN-003.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=BOOLEAN-003, validation_status=review_required, domain=boolean_algebra, title=逻辑门电路与布尔代数的同构 (n_51)；sub_topics=4
-  - **role_and_use**: 保存 BOOLEAN-003.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 BOOLEAN-003.yaml（id=BOOLEAN-003；validation_status=review_required；domain=boolean_algebra） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 BOOLEAN-003.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 BOOLEAN-003.yaml（id=BOOLEAN-003；validation_status=review_required；domain=boolean_algebra）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f424f4f4c45414e2d3030342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BOOLEAN-004.yaml`](BOOLEAN-004.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=BOOLEAN-004, validation_status=review_required, domain=boolean_algebra, name=斯通表示定理 (Stone's Representation Theorem) 简介；sub_topics=4
-  - **role_and_use**: 保存 BOOLEAN-004.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 BOOLEAN-004.yaml（id=BOOLEAN-004；validation_status=review_required；domain=boolean_algebra） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 BOOLEAN-004.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 BOOLEAN-004.yaml（id=BOOLEAN-004；validation_status=review_required；domain=boolean_algebra）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f424f4f4c45414e2d3030352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BOOLEAN-005.yaml`](BOOLEAN-005.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=BOOLEAN-005, validation_status=review_required, domain=布尔代数基础 (boolean_algebra), title=布尔环 (Boolean Ring) 与布尔代数的转换；sub_topics=4
-  - **role_and_use**: 保存 BOOLEAN-005.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 BOOLEAN-005.yaml（id=BOOLEAN-005；validation_status=review_required；domain=布尔代数基础 (boolean_algebra)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 BOOLEAN-005.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 BOOLEAN-005.yaml（id=BOOLEAN-005；validation_status=review_required；domain=布尔代数基础 (boolean_algebra)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4252494447452d3030312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BRIDGE-001.yaml`](BRIDGE-001.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=BRIDGE-001；sub_topics=3
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 BRIDGE-001.yaml（id=BRIDGE-001） 作为“未裁决 legacy bridge”使用；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: legacy_unresolved 只读证据；禁止执行、写入、endpoint/teaching admission 或 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: legacy_unresolved；evidence_basis=yaml_visible_keys_and_safe_fields；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
+  - **when_to_read**: 触发条件：审计该 bridge 的 endpoint、重复 ID 或迁移冲突。读取 BRIDGE-001.yaml（id=BRIDGE-001）；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4252494447452d3030315f4c6f6769635f616e645f536574732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BRIDGE-001_Logic_and_Sets.yaml`](BRIDGE-001_Logic_and_Sets.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=BRIDGE-001, name=逻辑与集合的同构 (Logic ↔ Sets), domain=cross_domain_bridge；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 BRIDGE-001_Logic_and_Sets.yaml（id=BRIDGE-001；name=逻辑与集合的同构 (Logic ↔ Sets)；domain=cross_domain_bridge） 作为“未裁决 legacy bridge”使用；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: legacy_unresolved 只读证据；禁止执行、写入、endpoint/teaching admission 或 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: legacy_unresolved；evidence_basis=yaml_visible_keys_and_safe_fields；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
+  - **when_to_read**: 触发条件：审计该 bridge 的 endpoint、重复 ID 或迁移冲突。读取 BRIDGE-001_Logic_and_Sets.yaml（id=BRIDGE-001；name=逻辑与集合的同构 (Logic ↔ Sets)；domain=cross_domain_bridge）；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4252494447452d3030322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BRIDGE-002.yaml`](BRIDGE-002.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=BRIDGE-002；sub_topics=3
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 BRIDGE-002.yaml（id=BRIDGE-002） 作为“未裁决 legacy bridge”使用；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: legacy_unresolved 只读证据；禁止执行、写入、endpoint/teaching admission 或 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: legacy_unresolved；evidence_basis=yaml_visible_keys_and_safe_fields；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
+  - **when_to_read**: 触发条件：审计该 bridge 的 endpoint、重复 ID 或迁移冲突。读取 BRIDGE-002.yaml（id=BRIDGE-002）；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4252494447452d3030325f52656c6174696f6e735f616e645f506f736574732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BRIDGE-002_Relations_and_Posets.yaml`](BRIDGE-002_Relations_and_Posets.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=BRIDGE-002, title=等价关系与偏序集 (Relations ↔ Posets), domain=cross_domain_bridge；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 BRIDGE-002_Relations_and_Posets.yaml（id=BRIDGE-002；title=等价关系与偏序集 (Relations ↔ Posets)；domain=cross_domain_bridge） 作为“未裁决 legacy bridge”使用；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: legacy_unresolved 只读证据；禁止执行、写入、endpoint/teaching admission 或 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: legacy_unresolved；evidence_basis=yaml_visible_keys_and_safe_fields；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
+  - **when_to_read**: 触发条件：审计该 bridge 的 endpoint、重复 ID 或迁移冲突。读取 BRIDGE-002_Relations_and_Posets.yaml（id=BRIDGE-002；title=等价关系与偏序集 (Relations ↔ Posets)；domain=cross_domain_bridge）；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4252494447452d3030332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BRIDGE-003.yaml`](BRIDGE-003.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=BRIDGE-003；sub_topics=3
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 BRIDGE-003.yaml（id=BRIDGE-003） 作为“未裁决 legacy bridge”使用；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: legacy_unresolved 只读证据；禁止执行、写入、endpoint/teaching admission 或 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: legacy_unresolved；evidence_basis=yaml_visible_keys_and_safe_fields；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
+  - **when_to_read**: 触发条件：审计该 bridge 的 endpoint、重复 ID 或迁移冲突。读取 BRIDGE-003.yaml（id=BRIDGE-003）；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4252494447452d3030335f46756e6374696f6e735f616e645f43617264696e616c6974792e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BRIDGE-003_Functions_and_Cardinality.yaml`](BRIDGE-003_Functions_and_Cardinality.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=BRIDGE-003, domain=cross_domain_bridge, name=映射与基数 (Mappings ↔ Cardinality)；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 BRIDGE-003_Functions_and_Cardinality.yaml（id=BRIDGE-003；domain=cross_domain_bridge；name=映射与基数 (Mappings ↔ Cardinality)） 作为“未裁决 legacy bridge”使用；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: legacy_unresolved 只读证据；禁止执行、写入、endpoint/teaching admission 或 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: legacy_unresolved；evidence_basis=yaml_visible_keys_and_safe_fields；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
+  - **when_to_read**: 触发条件：审计该 bridge 的 endpoint、重复 ID 或迁移冲突。读取 BRIDGE-003_Functions_and_Cardinality.yaml（id=BRIDGE-003；domain=cross_domain_bridge；name=映射与基数 (Mappings ↔ Cardinality)）；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4252494447452d3030342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BRIDGE-004.yaml`](BRIDGE-004.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=BRIDGE-004；sub_topics=3
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 BRIDGE-004.yaml（id=BRIDGE-004） 作为“未裁决 legacy bridge”使用；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: legacy_unresolved 只读证据；禁止执行、写入、endpoint/teaching admission 或 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: legacy_unresolved；evidence_basis=yaml_visible_keys_and_safe_fields；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
+  - **when_to_read**: 触发条件：审计该 bridge 的 endpoint、重复 ID 或迁移冲突。读取 BRIDGE-004.yaml（id=BRIDGE-004）；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4252494447452d3030345f52757373656c6c5f616e645f5a46432e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BRIDGE-004_Russell_and_ZFC.yaml`](BRIDGE-004_Russell_and_ZFC.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=BRIDGE-004, title=理发师悖论与ZFC正则公理 (Russell ↔ ZFC), domain=cross_domain_bridge；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 BRIDGE-004_Russell_and_ZFC.yaml（id=BRIDGE-004；title=理发师悖论与ZFC正则公理 (Russell ↔ ZFC)；domain=cross_domain_bridge） 作为“未裁决 legacy bridge”使用；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: legacy_unresolved 只读证据；禁止执行、写入、endpoint/teaching admission 或 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: legacy_unresolved；evidence_basis=yaml_visible_keys_and_safe_fields；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
+  - **when_to_read**: 触发条件：审计该 bridge 的 endpoint、重复 ID 或迁移冲突。读取 BRIDGE-004_Russell_and_ZFC.yaml（id=BRIDGE-004；title=理发师悖论与ZFC正则公理 (Russell ↔ ZFC)；domain=cross_domain_bridge）；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4252494447452d3030355f476f64656c5f616e645f446961676f6e616c697a6174696f6e2e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BRIDGE-005_Godel_and_Diagonalization.yaml`](BRIDGE-005_Godel_and_Diagonalization.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=BRIDGE-005, domain=cross_domain_bridge, name=对角线论证与哥德尔定理 (Infinity ↔ Godel)；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 BRIDGE-005_Godel_and_Diagonalization.yaml（id=BRIDGE-005；domain=cross_domain_bridge；name=对角线论证与哥德尔定理 (Infinity ↔ Godel)） 作为“未裁决 legacy bridge”使用；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: legacy_unresolved 只读证据；禁止执行、写入、endpoint/teaching admission 或 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: legacy_unresolved；evidence_basis=yaml_visible_keys_and_safe_fields；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
+  - **when_to_read**: 触发条件：审计该 bridge 的 endpoint、重复 ID 或迁移冲突。读取 BRIDGE-005_Godel_and_Diagonalization.yaml（id=BRIDGE-005；domain=cross_domain_bridge；name=对角线论证与哥德尔定理 (Infinity ↔ Godel)）；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4252494447452d3030362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BRIDGE-006.yaml`](BRIDGE-006.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=BRIDGE-006；sub_topics=3
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 BRIDGE-006.yaml（id=BRIDGE-006） 作为“未裁决 legacy bridge”使用；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: legacy_unresolved 只读证据；禁止执行、写入、endpoint/teaching admission 或 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: legacy_unresolved；evidence_basis=yaml_visible_keys_and_safe_fields；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
+  - **when_to_read**: 触发条件：审计该 bridge 的 endpoint、重复 ID 或迁移冲突。读取 BRIDGE-006.yaml（id=BRIDGE-006）；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4252494447452d3030372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BRIDGE-007.yaml`](BRIDGE-007.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=BRIDGE-007；sub_topics=3
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 BRIDGE-007.yaml（id=BRIDGE-007） 作为“未裁决 legacy bridge”使用；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: legacy_unresolved 只读证据；禁止执行、写入、endpoint/teaching admission 或 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: legacy_unresolved；evidence_basis=yaml_visible_keys_and_safe_fields；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
+  - **when_to_read**: 触发条件：审计该 bridge 的 endpoint、重复 ID 或迁移冲突。读取 BRIDGE-007.yaml（id=BRIDGE-007）；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4252494447452d3030382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BRIDGE-008.yaml`](BRIDGE-008.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=BRIDGE-008；sub_topics=3
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 BRIDGE-008.yaml（id=BRIDGE-008） 作为“未裁决 legacy bridge”使用；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: legacy_unresolved 只读证据；禁止执行、写入、endpoint/teaching admission 或 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: legacy_unresolved；evidence_basis=yaml_visible_keys_and_safe_fields；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
+  - **when_to_read**: 触发条件：审计该 bridge 的 endpoint、重复 ID 或迁移冲突。读取 BRIDGE-008.yaml（id=BRIDGE-008）；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4252494447452d3030392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BRIDGE-009.yaml`](BRIDGE-009.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=BRIDGE-009；sub_topics=3
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 BRIDGE-009.yaml（id=BRIDGE-009） 作为“未裁决 legacy bridge”使用；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: legacy_unresolved 只读证据；禁止执行、写入、endpoint/teaching admission 或 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: legacy_unresolved；evidence_basis=yaml_visible_keys_and_safe_fields；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
+  - **when_to_read**: 触发条件：审计该 bridge 的 endpoint、重复 ID 或迁移冲突。读取 BRIDGE-009.yaml（id=BRIDGE-009）；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4252494447452d3031302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BRIDGE-010.yaml`](BRIDGE-010.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=BRIDGE-010；sub_topics=3
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 BRIDGE-010.yaml（id=BRIDGE-010） 作为“未裁决 legacy bridge”使用；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: legacy_unresolved 只读证据；禁止执行、写入、endpoint/teaching admission 或 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: legacy_unresolved；evidence_basis=yaml_visible_keys_and_safe_fields；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
+  - **when_to_read**: 触发条件：审计该 bridge 的 endpoint、重复 ID 或迁移冲突。读取 BRIDGE-010.yaml（id=BRIDGE-010）；endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3236322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-262.yaml`](CALCULUS-262.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-262…
-  - **role_and_use**: 保存 CALCULUS-262.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-262.yaml（id=CALCULUS-262；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-262.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-262.yaml（id=CALCULUS-262；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3236332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-263.yaml`](CALCULUS-263.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-263…
-  - **role_and_use**: 保存 CALCULUS-263.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-263.yaml（id=CALCULUS-263；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-263.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-263.yaml（id=CALCULUS-263；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3236342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-264.yaml`](CALCULUS-264.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-264…
-  - **role_and_use**: 保存 CALCULUS-264.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-264.yaml（id=CALCULUS-264；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-264.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-264.yaml（id=CALCULUS-264；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3236352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-265.yaml`](CALCULUS-265.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-265…
-  - **role_and_use**: 保存 CALCULUS-265.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-265.yaml（id=CALCULUS-265；validation_status=semantic_ready_for_manual_teaching；status=present） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-265.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-265.yaml（id=CALCULUS-265；validation_status=semantic_ready_for_manual_teaching；status=present）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3236362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-266.yaml`](CALCULUS-266.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-266…
-  - **role_and_use**: 保存 CALCULUS-266.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-266.yaml（id=CALCULUS-266；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-266.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-266.yaml（id=CALCULUS-266；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3236372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-267.yaml`](CALCULUS-267.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-267…
-  - **role_and_use**: 保存 CALCULUS-267.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-267.yaml（id=CALCULUS-267；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-267.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-267.yaml（id=CALCULUS-267；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3236382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-268.yaml`](CALCULUS-268.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-268…
-  - **role_and_use**: 保存 CALCULUS-268.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-268.yaml（id=CALCULUS-268；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-268.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-268.yaml（id=CALCULUS-268；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3236392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-269.yaml`](CALCULUS-269.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-269…
-  - **role_and_use**: 保存 CALCULUS-269.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-269.yaml（id=CALCULUS-269；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-269.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-269.yaml（id=CALCULUS-269；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3237302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-270.yaml`](CALCULUS-270.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-270…
-  - **role_and_use**: 保存 CALCULUS-270.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-270.yaml（id=CALCULUS-270；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-270.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-270.yaml（id=CALCULUS-270；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3237312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-271.yaml`](CALCULUS-271.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-271…
-  - **role_and_use**: 保存 CALCULUS-271.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-271.yaml（id=CALCULUS-271；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-271.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-271.yaml（id=CALCULUS-271；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3237322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-272.yaml`](CALCULUS-272.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-272…
-  - **role_and_use**: 保存 CALCULUS-272.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-272.yaml（id=CALCULUS-272；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-272.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-272.yaml（id=CALCULUS-272；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3237332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-273.yaml`](CALCULUS-273.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-273…
-  - **role_and_use**: 保存 CALCULUS-273.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-273.yaml（id=CALCULUS-273；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-273.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-273.yaml（id=CALCULUS-273；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3237342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-274.yaml`](CALCULUS-274.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-274…
-  - **role_and_use**: 保存 CALCULUS-274.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-274.yaml（id=CALCULUS-274；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-274.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-274.yaml（id=CALCULUS-274；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3237352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-275.yaml`](CALCULUS-275.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-275…
-  - **role_and_use**: 保存 CALCULUS-275.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-275.yaml（id=CALCULUS-275；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-275.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-275.yaml（id=CALCULUS-275；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3237362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-276.yaml`](CALCULUS-276.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-276…
-  - **role_and_use**: 保存 CALCULUS-276.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-276.yaml（id=CALCULUS-276；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-276.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-276.yaml（id=CALCULUS-276；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3237372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-277.yaml`](CALCULUS-277.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-277…
-  - **role_and_use**: 保存 CALCULUS-277.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-277.yaml（id=CALCULUS-277；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-277.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-277.yaml（id=CALCULUS-277；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3237382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-278.yaml`](CALCULUS-278.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-278…
-  - **role_and_use**: 保存 CALCULUS-278.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-278.yaml（id=CALCULUS-278；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-278.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-278.yaml（id=CALCULUS-278；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3237392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-279.yaml`](CALCULUS-279.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-279…
-  - **role_and_use**: 保存 CALCULUS-279.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-279.yaml（id=CALCULUS-279；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-279.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-279.yaml（id=CALCULUS-279；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3238302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-280.yaml`](CALCULUS-280.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-280…
-  - **role_and_use**: 保存 CALCULUS-280.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-280.yaml（id=CALCULUS-280；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-280.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-280.yaml（id=CALCULUS-280；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3238312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-281.yaml`](CALCULUS-281.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-281…
-  - **role_and_use**: 保存 CALCULUS-281.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-281.yaml（id=CALCULUS-281；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-281.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-281.yaml（id=CALCULUS-281；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3238322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-282.yaml`](CALCULUS-282.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-282…
-  - **role_and_use**: 保存 CALCULUS-282.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-282.yaml（id=CALCULUS-282；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-282.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-282.yaml（id=CALCULUS-282；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3238332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-283.yaml`](CALCULUS-283.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-283…
-  - **role_and_use**: 保存 CALCULUS-283.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-283.yaml（id=CALCULUS-283；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-283.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-283.yaml（id=CALCULUS-283；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3238342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-284.yaml`](CALCULUS-284.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-284…
-  - **role_and_use**: 保存 CALCULUS-284.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-284.yaml（id=CALCULUS-284；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-284.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-284.yaml（id=CALCULUS-284；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3238352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-285.yaml`](CALCULUS-285.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-285…
-  - **role_and_use**: 保存 CALCULUS-285.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-285.yaml（id=CALCULUS-285；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-285.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-285.yaml（id=CALCULUS-285；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3238362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-286.yaml`](CALCULUS-286.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-286…
-  - **role_and_use**: 保存 CALCULUS-286.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-286.yaml（id=CALCULUS-286；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-286.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-286.yaml（id=CALCULUS-286；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3238372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-287.yaml`](CALCULUS-287.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-287…
-  - **role_and_use**: 保存 CALCULUS-287.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-287.yaml（id=CALCULUS-287；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-287.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-287.yaml（id=CALCULUS-287；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3238382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-288.yaml`](CALCULUS-288.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-288…
-  - **role_and_use**: 保存 CALCULUS-288.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-288.yaml（id=CALCULUS-288；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-288.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-288.yaml（id=CALCULUS-288；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3238392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-289.yaml`](CALCULUS-289.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-289…
-  - **role_and_use**: 保存 CALCULUS-289.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-289.yaml（id=CALCULUS-289；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-289.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-289.yaml（id=CALCULUS-289；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3239302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-290.yaml`](CALCULUS-290.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-290…
-  - **role_and_use**: 保存 CALCULUS-290.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-290.yaml（id=CALCULUS-290；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-290.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-290.yaml（id=CALCULUS-290；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3239312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-291.yaml`](CALCULUS-291.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-291…
-  - **role_and_use**: 保存 CALCULUS-291.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-291.yaml（id=CALCULUS-291；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-291.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-291.yaml（id=CALCULUS-291；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3239322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-292.yaml`](CALCULUS-292.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-292…
-  - **role_and_use**: 保存 CALCULUS-292.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-292.yaml（id=CALCULUS-292；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-292.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-292.yaml（id=CALCULUS-292；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3239332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-293.yaml`](CALCULUS-293.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-293…
-  - **role_and_use**: 保存 CALCULUS-293.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-293.yaml（id=CALCULUS-293；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-293.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-293.yaml（id=CALCULUS-293；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3239342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-294.yaml`](CALCULUS-294.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-294…
-  - **role_and_use**: 保存 CALCULUS-294.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-294.yaml（id=CALCULUS-294；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-294.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-294.yaml（id=CALCULUS-294；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3239352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-295.yaml`](CALCULUS-295.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-295…
-  - **role_and_use**: 保存 CALCULUS-295.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-295.yaml（id=CALCULUS-295；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-295.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-295.yaml（id=CALCULUS-295；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3239362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-296.yaml`](CALCULUS-296.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-296…
-  - **role_and_use**: 保存 CALCULUS-296.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-296.yaml（id=CALCULUS-296；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-296.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-296.yaml（id=CALCULUS-296；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3239372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-297.yaml`](CALCULUS-297.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-297…
-  - **role_and_use**: 保存 CALCULUS-297.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-297.yaml（id=CALCULUS-297；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-297.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-297.yaml（id=CALCULUS-297；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3239382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-298.yaml`](CALCULUS-298.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-298…
-  - **role_and_use**: 保存 CALCULUS-298.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-298.yaml（id=CALCULUS-298；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-298.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-298.yaml（id=CALCULUS-298；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3239392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-299.yaml`](CALCULUS-299.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-299…
-  - **role_and_use**: 保存 CALCULUS-299.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-299.yaml（id=CALCULUS-299；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-299.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-299.yaml（id=CALCULUS-299；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3330302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-300.yaml`](CALCULUS-300.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-300…
-  - **role_and_use**: 保存 CALCULUS-300.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-300.yaml（id=CALCULUS-300；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-300.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-300.yaml（id=CALCULUS-300；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3330312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-301.yaml`](CALCULUS-301.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-301…
-  - **role_and_use**: 保存 CALCULUS-301.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-301.yaml（id=CALCULUS-301；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-301.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-301.yaml（id=CALCULUS-301；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3330322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-302.yaml`](CALCULUS-302.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-302…
-  - **role_and_use**: 保存 CALCULUS-302.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-302.yaml（id=CALCULUS-302；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-302.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-302.yaml（id=CALCULUS-302；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3330332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-303.yaml`](CALCULUS-303.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-303…
-  - **role_and_use**: 保存 CALCULUS-303.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-303.yaml（id=CALCULUS-303；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-303.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-303.yaml（id=CALCULUS-303；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3330342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-304.yaml`](CALCULUS-304.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-304…
-  - **role_and_use**: 保存 CALCULUS-304.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-304.yaml（id=CALCULUS-304；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-304.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-304.yaml（id=CALCULUS-304；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3330352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-305.yaml`](CALCULUS-305.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-305…
-  - **role_and_use**: 保存 CALCULUS-305.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CALCULUS-305.yaml（id=CALCULUS-305；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CALCULUS-305.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-305.yaml（id=CALCULUS-305；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43415244494e414c532d3030312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CARDINALS-001.yaml`](CARDINALS-001.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=CARDINALS-001, name=基数与序数 - 集合的等势 (Equinumerosity) (n_21), domain=Set_Theory, status=review_required；sub_topics=4
-  - **role_and_use**: 保存 CARDINALS-001.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CARDINALS-001.yaml（id=CARDINALS-001；name=基数与序数 - 集合的等势 (Equinumerosity) (n_21)；domain=Set_Theory） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CARDINALS-001.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CARDINALS-001.yaml（id=CARDINALS-001；name=基数与序数 - 集合的等势 (Equinumerosity) (n_21)；domain=Set_Theory）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43415244494e414c532d3030322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CARDINALS-002.yaml`](CARDINALS-002.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=CARDINALS-002, validation_status=review_required, title=基数的定义与比较 (n_22), domain=Set_Theory, status=review_required；sub_topics=4
-  - **role_and_use**: 保存 CARDINALS-002.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CARDINALS-002.yaml（id=CARDINALS-002；validation_status=review_required；title=基数的定义与比较 (n_22)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CARDINALS-002.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CARDINALS-002.yaml（id=CARDINALS-002；validation_status=review_required；title=基数的定义与比较 (n_22)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43415244494e414c532d3030332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CARDINALS-003.yaml`](CARDINALS-003.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=CARDINALS-003, validation_status=review_required, domain=Set_Theory, status=review_required；sub_topics=4
-  - **role_and_use**: 保存 CARDINALS-003.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CARDINALS-003.yaml（id=CARDINALS-003；validation_status=review_required；domain=Set_Theory） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CARDINALS-003.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CARDINALS-003.yaml（id=CARDINALS-003；validation_status=review_required；domain=Set_Theory）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43415244494e414c532d3030342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CARDINALS-004.yaml`](CARDINALS-004.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=CARDINALS-004, validation_status=review_required, title=有限集与戴德金无限 (Finite Sets and Dedekind Infinity), domain=Set_Theory, status=review_required；s…
-  - **role_and_use**: 保存 CARDINALS-004.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CARDINALS-004.yaml（id=CARDINALS-004；validation_status=review_required；title=有限集与戴德金无限 (Finite Sets and Dedekind Infinity)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CARDINALS-004.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CARDINALS-004.yaml（id=CARDINALS-004；validation_status=review_required；title=有限集与戴德金无限 (Finite Sets and Dedekind Infinity)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43415244494e414c532d3030352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CARDINALS-005.yaml`](CARDINALS-005.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=CARDINALS-005, validation_status=review_required, name=序数的概念与良序集 (Ordinals and Well-Ordered Sets), domain=Set_Theory, status=review_required；sub_t…
-  - **role_and_use**: 保存 CARDINALS-005.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CARDINALS-005.yaml（id=CARDINALS-005；validation_status=review_required；name=序数的概念与良序集 (Ordinals and Well-Ordered Sets)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CARDINALS-005.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CARDINALS-005.yaml（id=CARDINALS-005；validation_status=review_required；name=序数的概念与良序集 (Ordinals and Well-Ordered Sets)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43415244494e414c532d3030362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CARDINALS-006.yaml`](CARDINALS-006.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=CARDINALS-006, validation_status=review_required, name=超限归纳法 (Transfinite Induction), domain=Set_Theory, status=review_required；sub_topics=4
-  - **role_and_use**: 保存 CARDINALS-006.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CARDINALS-006.yaml（id=CARDINALS-006；validation_status=review_required；name=超限归纳法 (Transfinite Induction)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CARDINALS-006.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CARDINALS-006.yaml（id=CARDINALS-006；validation_status=review_required；name=超限归纳法 (Transfinite Induction)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3537362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-576.yaml`](COMBINATORICS-576.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-576.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-576.yaml（id=COMBINATORICS-576；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-576.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-576.yaml（id=COMBINATORICS-576；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3537372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-577.yaml`](COMBINATORICS-577.yaml)
   - **content_summary**: YAML 结构，顶层键：id, domain, mode, concept_name, sub_topics, formal_definition, prerequisite_nodes, llm_physical_mapping；安全锚点：id=COMBINATORICS-577, domain=combinatorics；sub_topics=4
-  - **role_and_use**: 保存 COMBINATORICS-577.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-577.yaml（id=COMBINATORICS-577；domain=combinatorics） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-577.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-577.yaml（id=COMBINATORICS-577；domain=combinatorics）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3537382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-578.yaml`](COMBINATORICS-578.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-578.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-578.yaml（id=COMBINATORICS-578；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-578.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-578.yaml（id=COMBINATORICS-578；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3537392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-579.yaml`](COMBINATORICS-579.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-579.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-579.yaml（id=COMBINATORICS-579；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-579.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-579.yaml（id=COMBINATORICS-579；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3538302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-580.yaml`](COMBINATORICS-580.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-580.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-580.yaml（id=COMBINATORICS-580；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-580.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-580.yaml（id=COMBINATORICS-580；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3538312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-581.yaml`](COMBINATORICS-581.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-581.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-581.yaml（id=COMBINATORICS-581；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-581.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-581.yaml（id=COMBINATORICS-581；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3538322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-582.yaml`](COMBINATORICS-582.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-582.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-582.yaml（id=COMBINATORICS-582；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-582.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-582.yaml（id=COMBINATORICS-582；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3538332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-583.yaml`](COMBINATORICS-583.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-583.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-583.yaml（id=COMBINATORICS-583；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-583.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-583.yaml（id=COMBINATORICS-583；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3538342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-584.yaml`](COMBINATORICS-584.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-584.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-584.yaml（id=COMBINATORICS-584；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-584.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-584.yaml（id=COMBINATORICS-584；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3538352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-585.yaml`](COMBINATORICS-585.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-585.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-585.yaml（id=COMBINATORICS-585；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-585.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-585.yaml（id=COMBINATORICS-585；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3538362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-586.yaml`](COMBINATORICS-586.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-586.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-586.yaml（id=COMBINATORICS-586；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-586.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-586.yaml（id=COMBINATORICS-586；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3538372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-587.yaml`](COMBINATORICS-587.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-587.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-587.yaml（id=COMBINATORICS-587；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-587.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-587.yaml（id=COMBINATORICS-587；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3538382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-588.yaml`](COMBINATORICS-588.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-588.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-588.yaml（id=COMBINATORICS-588；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-588.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-588.yaml（id=COMBINATORICS-588；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3538392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-589.yaml`](COMBINATORICS-589.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-589.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-589.yaml（id=COMBINATORICS-589；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-589.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-589.yaml（id=COMBINATORICS-589；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3539302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-590.yaml`](COMBINATORICS-590.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-590.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-590.yaml（id=COMBINATORICS-590；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-590.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-590.yaml（id=COMBINATORICS-590；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3539312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-591.yaml`](COMBINATORICS-591.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-591.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-591.yaml（id=COMBINATORICS-591；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-591.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-591.yaml（id=COMBINATORICS-591；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3539322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-592.yaml`](COMBINATORICS-592.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-592.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-592.yaml（id=COMBINATORICS-592；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-592.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-592.yaml（id=COMBINATORICS-592；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3539332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-593.yaml`](COMBINATORICS-593.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-593.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-593.yaml（id=COMBINATORICS-593；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-593.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-593.yaml（id=COMBINATORICS-593；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3539342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-594.yaml`](COMBINATORICS-594.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-594.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-594.yaml（id=COMBINATORICS-594；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-594.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-594.yaml（id=COMBINATORICS-594；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3539352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-595.yaml`](COMBINATORICS-595.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-595.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-595.yaml（id=COMBINATORICS-595；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-595.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-595.yaml（id=COMBINATORICS-595；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3539362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-596.yaml`](COMBINATORICS-596.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-596.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-596.yaml（id=COMBINATORICS-596；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-596.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-596.yaml（id=COMBINATORICS-596；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3539372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-597.yaml`](COMBINATORICS-597.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-597.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-597.yaml（id=COMBINATORICS-597；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-597.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-597.yaml（id=COMBINATORICS-597；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3539382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-598.yaml`](COMBINATORICS-598.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-598.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-598.yaml（id=COMBINATORICS-598；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-598.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-598.yaml（id=COMBINATORICS-598；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3539392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-599.yaml`](COMBINATORICS-599.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-599.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-599.yaml（id=COMBINATORICS-599；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-599.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-599.yaml（id=COMBINATORICS-599；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3630302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-600.yaml`](COMBINATORICS-600.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-600.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-600.yaml（id=COMBINATORICS-600；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-600.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-600.yaml（id=COMBINATORICS-600；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3630312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-601.yaml`](COMBINATORICS-601.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-601.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-601.yaml（id=COMBINATORICS-601；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-601.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-601.yaml（id=COMBINATORICS-601；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3630322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-602.yaml`](COMBINATORICS-602.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-602.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-602.yaml（id=COMBINATORICS-602；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-602.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-602.yaml（id=COMBINATORICS-602；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3630332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-603.yaml`](COMBINATORICS-603.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-603.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-603.yaml（id=COMBINATORICS-603；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-603.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-603.yaml（id=COMBINATORICS-603；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3630342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-604.yaml`](COMBINATORICS-604.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-604.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-604.yaml（id=COMBINATORICS-604；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-604.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-604.yaml（id=COMBINATORICS-604；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3630352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-605.yaml`](COMBINATORICS-605.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-605.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-605.yaml（id=COMBINATORICS-605；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-605.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-605.yaml（id=COMBINATORICS-605；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3630362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-606.yaml`](COMBINATORICS-606.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-606.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-606.yaml（id=COMBINATORICS-606；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-606.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-606.yaml（id=COMBINATORICS-606；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3630372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-607.yaml`](COMBINATORICS-607.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-607.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-607.yaml（id=COMBINATORICS-607；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-607.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-607.yaml（id=COMBINATORICS-607；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3630382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-608.yaml`](COMBINATORICS-608.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-608.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-608.yaml（id=COMBINATORICS-608；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-608.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-608.yaml（id=COMBINATORICS-608；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3630392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-609.yaml`](COMBINATORICS-609.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-609.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-609.yaml（id=COMBINATORICS-609；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-609.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-609.yaml（id=COMBINATORICS-609；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3631302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-610.yaml`](COMBINATORICS-610.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-610.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-610.yaml（id=COMBINATORICS-610；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-610.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-610.yaml（id=COMBINATORICS-610；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3631312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-611.yaml`](COMBINATORICS-611.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-611.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-611.yaml（id=COMBINATORICS-611；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-611.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-611.yaml（id=COMBINATORICS-611；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3631322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-612.yaml`](COMBINATORICS-612.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-612.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-612.yaml（id=COMBINATORICS-612；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-612.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-612.yaml（id=COMBINATORICS-612；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3631332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-613.yaml`](COMBINATORICS-613.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-613.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-613.yaml（id=COMBINATORICS-613；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-613.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-613.yaml（id=COMBINATORICS-613；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3631342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-614.yaml`](COMBINATORICS-614.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-614.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-614.yaml（id=COMBINATORICS-614；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-614.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-614.yaml（id=COMBINATORICS-614；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3631352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-615.yaml`](COMBINATORICS-615.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-615.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-615.yaml（id=COMBINATORICS-615；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-615.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-615.yaml（id=COMBINATORICS-615；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3631362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-616.yaml`](COMBINATORICS-616.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-616.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-616.yaml（id=COMBINATORICS-616；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-616.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-616.yaml（id=COMBINATORICS-616；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3631372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-617.yaml`](COMBINATORICS-617.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-617.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-617.yaml（id=COMBINATORICS-617；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-617.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-617.yaml（id=COMBINATORICS-617；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3631382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-618.yaml`](COMBINATORICS-618.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-618.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-618.yaml（id=COMBINATORICS-618；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-618.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-618.yaml（id=COMBINATORICS-618；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3631392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-619.yaml`](COMBINATORICS-619.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-619.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-619.yaml（id=COMBINATORICS-619；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-619.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-619.yaml（id=COMBINATORICS-619；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3632302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-620.yaml`](COMBINATORICS-620.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-620.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-620.yaml（id=COMBINATORICS-620；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-620.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-620.yaml（id=COMBINATORICS-620；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3632312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-621.yaml`](COMBINATORICS-621.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-621.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-621.yaml（id=COMBINATORICS-621；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-621.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-621.yaml（id=COMBINATORICS-621；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3632322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-622.yaml`](COMBINATORICS-622.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-622.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-622.yaml（id=COMBINATORICS-622；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-622.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-622.yaml（id=COMBINATORICS-622；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3632332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-623.yaml`](COMBINATORICS-623.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-623.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-623.yaml（id=COMBINATORICS-623；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-623.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-623.yaml（id=COMBINATORICS-623；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3632342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-624.yaml`](COMBINATORICS-624.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-624.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-624.yaml（id=COMBINATORICS-624；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-624.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-624.yaml（id=COMBINATORICS-624；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3632352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-625.yaml`](COMBINATORICS-625.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-625.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-625.yaml（id=COMBINATORICS-625；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-625.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-625.yaml（id=COMBINATORICS-625；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3632362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-626.yaml`](COMBINATORICS-626.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-626.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-626.yaml（id=COMBINATORICS-626；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-626.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-626.yaml（id=COMBINATORICS-626；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3632372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-627.yaml`](COMBINATORICS-627.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-627.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-627.yaml（id=COMBINATORICS-627；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-627.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-627.yaml（id=COMBINATORICS-627；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3632382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-628.yaml`](COMBINATORICS-628.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-628.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-628.yaml（id=COMBINATORICS-628；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-628.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-628.yaml（id=COMBINATORICS-628；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3632392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-629.yaml`](COMBINATORICS-629.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-629.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-629.yaml（id=COMBINATORICS-629；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-629.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-629.yaml（id=COMBINATORICS-629；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3633302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-630.yaml`](COMBINATORICS-630.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-630.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-630.yaml（id=COMBINATORICS-630；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-630.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-630.yaml（id=COMBINATORICS-630；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d42494e41544f524943532d3633312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMBINATORICS-631.yaml`](COMBINATORICS-631.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMBINATORIC…
-  - **role_and_use**: 保存 COMBINATORICS-631.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMBINATORICS-631.yaml（id=COMBINATORICS-631；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMBINATORICS-631.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMBINATORICS-631.yaml（id=COMBINATORICS-631；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3431372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-417.yaml`](COMPLEX_ANALYSIS-417.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMPLEX_ANAL…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-417.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-417.yaml（id=COMPLEX_ANALYSIS-417；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-417.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-417.yaml（id=COMPLEX_ANALYSIS-417；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3431382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-418.yaml`](COMPLEX_ANALYSIS-418.yaml)
   - **content_summary**: YAML 结构，顶层键：id, domain, mode, concept_name, sub_topics, formal_definition, prerequisite_nodes, llm_physical_mapping；安全锚点：id=COMPLEX_ANALYSIS-418, domain=complex_analysis；sub_topic…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-418.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-418.yaml（id=COMPLEX_ANALYSIS-418；domain=complex_analysis） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-418.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-418.yaml（id=COMPLEX_ANALYSIS-418；domain=complex_analysis）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3431392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-419.yaml`](COMPLEX_ANALYSIS-419.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMPLEX_ANAL…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-419.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-419.yaml（id=COMPLEX_ANALYSIS-419；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-419.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-419.yaml（id=COMPLEX_ANALYSIS-419；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3432302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-420.yaml`](COMPLEX_ANALYSIS-420.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMPLEX_ANAL…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-420.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-420.yaml（id=COMPLEX_ANALYSIS-420；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-420.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-420.yaml（id=COMPLEX_ANALYSIS-420；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3432312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-421.yaml`](COMPLEX_ANALYSIS-421.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMPLEX_ANAL…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-421.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-421.yaml（id=COMPLEX_ANALYSIS-421；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-421.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-421.yaml（id=COMPLEX_ANALYSIS-421；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3432322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-422.yaml`](COMPLEX_ANALYSIS-422.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMPLEX_ANAL…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-422.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-422.yaml（id=COMPLEX_ANALYSIS-422；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-422.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-422.yaml（id=COMPLEX_ANALYSIS-422；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3432332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-423.yaml`](COMPLEX_ANALYSIS-423.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMPLEX_ANAL…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-423.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-423.yaml（id=COMPLEX_ANALYSIS-423；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-423.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-423.yaml（id=COMPLEX_ANALYSIS-423；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3432342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-424.yaml`](COMPLEX_ANALYSIS-424.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMPLEX_ANAL…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-424.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-424.yaml（id=COMPLEX_ANALYSIS-424；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-424.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-424.yaml（id=COMPLEX_ANALYSIS-424；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3432352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-425.yaml`](COMPLEX_ANALYSIS-425.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMPLEX_ANAL…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-425.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-425.yaml（id=COMPLEX_ANALYSIS-425；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-425.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-425.yaml（id=COMPLEX_ANALYSIS-425；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3432362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-426.yaml`](COMPLEX_ANALYSIS-426.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMPLEX_ANAL…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-426.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-426.yaml（id=COMPLEX_ANALYSIS-426；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-426.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-426.yaml（id=COMPLEX_ANALYSIS-426；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3432372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-427.yaml`](COMPLEX_ANALYSIS-427.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMPLEX_ANAL…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-427.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-427.yaml（id=COMPLEX_ANALYSIS-427；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-427.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-427.yaml（id=COMPLEX_ANALYSIS-427；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3432382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-428.yaml`](COMPLEX_ANALYSIS-428.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMPLEX_ANAL…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-428.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-428.yaml（id=COMPLEX_ANALYSIS-428；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-428.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-428.yaml（id=COMPLEX_ANALYSIS-428；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3432392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-429.yaml`](COMPLEX_ANALYSIS-429.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMPLEX_ANAL…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-429.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-429.yaml（id=COMPLEX_ANALYSIS-429；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-429.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-429.yaml（id=COMPLEX_ANALYSIS-429；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3433302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-430.yaml`](COMPLEX_ANALYSIS-430.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMPLEX_ANAL…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-430.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-430.yaml（id=COMPLEX_ANALYSIS-430；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-430.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-430.yaml（id=COMPLEX_ANALYSIS-430；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3433312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-431.yaml`](COMPLEX_ANALYSIS-431.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMPLEX_ANAL…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-431.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-431.yaml（id=COMPLEX_ANALYSIS-431；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-431.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-431.yaml（id=COMPLEX_ANALYSIS-431；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3433322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-432.yaml`](COMPLEX_ANALYSIS-432.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMPLEX_ANAL…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-432.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-432.yaml（id=COMPLEX_ANALYSIS-432；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-432.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-432.yaml（id=COMPLEX_ANALYSIS-432；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3433332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-433.yaml`](COMPLEX_ANALYSIS-433.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMPLEX_ANAL…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-433.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-433.yaml（id=COMPLEX_ANALYSIS-433；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-433.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-433.yaml（id=COMPLEX_ANALYSIS-433；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3433342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-434.yaml`](COMPLEX_ANALYSIS-434.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMPLEX_ANAL…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-434.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-434.yaml（id=COMPLEX_ANALYSIS-434；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-434.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-434.yaml（id=COMPLEX_ANALYSIS-434；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3433352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-435.yaml`](COMPLEX_ANALYSIS-435.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMPLEX_ANAL…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-435.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-435.yaml（id=COMPLEX_ANALYSIS-435；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-435.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-435.yaml（id=COMPLEX_ANALYSIS-435；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3433362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-436.yaml`](COMPLEX_ANALYSIS-436.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMPLEX_ANAL…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-436.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-436.yaml（id=COMPLEX_ANALYSIS-436；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-436.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-436.yaml（id=COMPLEX_ANALYSIS-436；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f434f4d504c45585f414e414c595349532d3433372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/COMPLEX_ANALYSIS-437.yaml`](COMPLEX_ANALYSIS-437.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=COMPLEX_ANAL…
-  - **role_and_use**: 保存 COMPLEX_ANALYSIS-437.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 COMPLEX_ANALYSIS-437.yaml（id=COMPLEX_ANALYSIS-437；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 COMPLEX_ANALYSIS-437.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 COMPLEX_ANALYSIS-437.yaml（id=COMPLEX_ANALYSIS-437；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43525950544f5f4d4154482d3733342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CRYPTO_MATH-734.yaml`](CRYPTO_MATH-734.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CRYPTO_MATH-…
-  - **role_and_use**: 保存 CRYPTO_MATH-734.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CRYPTO_MATH-734.yaml（id=CRYPTO_MATH-734；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CRYPTO_MATH-734.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CRYPTO_MATH-734.yaml（id=CRYPTO_MATH-734；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43525950544f5f4d4154482d3733352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CRYPTO_MATH-735.yaml`](CRYPTO_MATH-735.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CRYPTO_MATH-…
-  - **role_and_use**: 保存 CRYPTO_MATH-735.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CRYPTO_MATH-735.yaml（id=CRYPTO_MATH-735；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CRYPTO_MATH-735.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CRYPTO_MATH-735.yaml（id=CRYPTO_MATH-735；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43525950544f5f4d4154482d3733362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CRYPTO_MATH-736.yaml`](CRYPTO_MATH-736.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CRYPTO_MATH-…
-  - **role_and_use**: 保存 CRYPTO_MATH-736.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CRYPTO_MATH-736.yaml（id=CRYPTO_MATH-736；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CRYPTO_MATH-736.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CRYPTO_MATH-736.yaml（id=CRYPTO_MATH-736；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43525950544f5f4d4154482d3733372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CRYPTO_MATH-737.yaml`](CRYPTO_MATH-737.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CRYPTO_MATH-…
-  - **role_and_use**: 保存 CRYPTO_MATH-737.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CRYPTO_MATH-737.yaml（id=CRYPTO_MATH-737；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CRYPTO_MATH-737.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CRYPTO_MATH-737.yaml（id=CRYPTO_MATH-737；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43525950544f5f4d4154482d3733382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CRYPTO_MATH-738.yaml`](CRYPTO_MATH-738.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CRYPTO_MATH-…
-  - **role_and_use**: 保存 CRYPTO_MATH-738.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CRYPTO_MATH-738.yaml（id=CRYPTO_MATH-738；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CRYPTO_MATH-738.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CRYPTO_MATH-738.yaml（id=CRYPTO_MATH-738；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43525950544f5f4d4154482d3733392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CRYPTO_MATH-739.yaml`](CRYPTO_MATH-739.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CRYPTO_MATH-…
-  - **role_and_use**: 保存 CRYPTO_MATH-739.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CRYPTO_MATH-739.yaml（id=CRYPTO_MATH-739；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CRYPTO_MATH-739.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CRYPTO_MATH-739.yaml（id=CRYPTO_MATH-739；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43525950544f5f4d4154482d3734302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CRYPTO_MATH-740.yaml`](CRYPTO_MATH-740.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CRYPTO_MATH-…
-  - **role_and_use**: 保存 CRYPTO_MATH-740.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CRYPTO_MATH-740.yaml（id=CRYPTO_MATH-740；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CRYPTO_MATH-740.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CRYPTO_MATH-740.yaml（id=CRYPTO_MATH-740；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43525950544f5f4d4154482d3734312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CRYPTO_MATH-741.yaml`](CRYPTO_MATH-741.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CRYPTO_MATH-…
-  - **role_and_use**: 保存 CRYPTO_MATH-741.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CRYPTO_MATH-741.yaml（id=CRYPTO_MATH-741；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CRYPTO_MATH-741.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CRYPTO_MATH-741.yaml（id=CRYPTO_MATH-741；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43525950544f5f4d4154482d3734322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CRYPTO_MATH-742.yaml`](CRYPTO_MATH-742.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CRYPTO_MATH-…
-  - **role_and_use**: 保存 CRYPTO_MATH-742.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CRYPTO_MATH-742.yaml（id=CRYPTO_MATH-742；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CRYPTO_MATH-742.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CRYPTO_MATH-742.yaml（id=CRYPTO_MATH-742；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43525950544f5f4d4154482d3734332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CRYPTO_MATH-743.yaml`](CRYPTO_MATH-743.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CRYPTO_MATH-…
-  - **role_and_use**: 保存 CRYPTO_MATH-743.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CRYPTO_MATH-743.yaml（id=CRYPTO_MATH-743；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CRYPTO_MATH-743.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CRYPTO_MATH-743.yaml（id=CRYPTO_MATH-743；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43525950544f5f4d4154482d3734342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CRYPTO_MATH-744.yaml`](CRYPTO_MATH-744.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CRYPTO_MATH-…
-  - **role_and_use**: 保存 CRYPTO_MATH-744.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CRYPTO_MATH-744.yaml（id=CRYPTO_MATH-744；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CRYPTO_MATH-744.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CRYPTO_MATH-744.yaml（id=CRYPTO_MATH-744；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43525950544f5f4d4154482d3734352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CRYPTO_MATH-745.yaml`](CRYPTO_MATH-745.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CRYPTO_MATH-…
-  - **role_and_use**: 保存 CRYPTO_MATH-745.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CRYPTO_MATH-745.yaml（id=CRYPTO_MATH-745；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CRYPTO_MATH-745.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CRYPTO_MATH-745.yaml（id=CRYPTO_MATH-745；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43525950544f5f4d4154482d3734362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CRYPTO_MATH-746.yaml`](CRYPTO_MATH-746.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CRYPTO_MATH-…
-  - **role_and_use**: 保存 CRYPTO_MATH-746.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CRYPTO_MATH-746.yaml（id=CRYPTO_MATH-746；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CRYPTO_MATH-746.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CRYPTO_MATH-746.yaml（id=CRYPTO_MATH-746；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43525950544f5f4d4154482d3734372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CRYPTO_MATH-747.yaml`](CRYPTO_MATH-747.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CRYPTO_MATH-…
-  - **role_and_use**: 保存 CRYPTO_MATH-747.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CRYPTO_MATH-747.yaml（id=CRYPTO_MATH-747；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CRYPTO_MATH-747.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CRYPTO_MATH-747.yaml（id=CRYPTO_MATH-747；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43525950544f5f4d4154482d3734382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CRYPTO_MATH-748.yaml`](CRYPTO_MATH-748.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CRYPTO_MATH-…
-  - **role_and_use**: 保存 CRYPTO_MATH-748.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CRYPTO_MATH-748.yaml（id=CRYPTO_MATH-748；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CRYPTO_MATH-748.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CRYPTO_MATH-748.yaml（id=CRYPTO_MATH-748；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43525950544f5f4d4154482d3734392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CRYPTO_MATH-749.yaml`](CRYPTO_MATH-749.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CRYPTO_MATH-…
-  - **role_and_use**: 保存 CRYPTO_MATH-749.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CRYPTO_MATH-749.yaml（id=CRYPTO_MATH-749；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CRYPTO_MATH-749.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CRYPTO_MATH-749.yaml（id=CRYPTO_MATH-749；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43525950544f5f4d4154482d3735302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CRYPTO_MATH-750.yaml`](CRYPTO_MATH-750.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CRYPTO_MATH-…
-  - **role_and_use**: 保存 CRYPTO_MATH-750.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 CRYPTO_MATH-750.yaml（id=CRYPTO_MATH-750；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 CRYPTO_MATH-750.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CRYPTO_MATH-750.yaml（id=CRYPTO_MATH-750；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f444946465f47454f2d3635332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DIFF_GEO-653.yaml`](DIFF_GEO-653.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, math_lane, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=DIFF_GEO-653, validation_s…
-  - **role_and_use**: 保存 DIFF_GEO-653.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DIFF_GEO-653.yaml（id=DIFF_GEO-653；validation_status=semantic_only；status=one_node_semantic_pilot_applied） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DIFF_GEO-653.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DIFF_GEO-653.yaml（id=DIFF_GEO-653；validation_status=semantic_only；status=one_node_semantic_pilot_applied）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f444946465f47454f2d3635342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DIFF_GEO-654.yaml`](DIFF_GEO-654.yaml)
   - **content_summary**: YAML 结构，顶层键：id, city_state_engine, mode, math_lane, mode_routing_status, validation_status, tool_status, bridge_readiness_status；安全锚点：id=DIFF_GEO-654, validation_status=semantic_o…
-  - **role_and_use**: 保存 DIFF_GEO-654.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DIFF_GEO-654.yaml（id=DIFF_GEO-654；validation_status=semantic_only） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DIFF_GEO-654.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DIFF_GEO-654.yaml（id=DIFF_GEO-654；validation_status=semantic_only）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f444946465f47454f2d3635352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DIFF_GEO-655.yaml`](DIFF_GEO-655.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, math_lane, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=DIFF_GEO-655, validation_s…
-  - **role_and_use**: 保存 DIFF_GEO-655.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DIFF_GEO-655.yaml（id=DIFF_GEO-655；validation_status=semantic_only） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DIFF_GEO-655.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DIFF_GEO-655.yaml（id=DIFF_GEO-655；validation_status=semantic_only）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f444946465f47454f2d3635362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DIFF_GEO-656.yaml`](DIFF_GEO-656.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, math_lane, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=DIFF_GEO-656, validation_s…
-  - **role_and_use**: 保存 DIFF_GEO-656.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DIFF_GEO-656.yaml（id=DIFF_GEO-656；validation_status=semantic_only） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DIFF_GEO-656.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DIFF_GEO-656.yaml（id=DIFF_GEO-656；validation_status=semantic_only）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f444946465f47454f2d3635372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DIFF_GEO-657.yaml`](DIFF_GEO-657.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, math_lane, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=DIFF_GEO-657, validation_s…
-  - **role_and_use**: 保存 DIFF_GEO-657.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DIFF_GEO-657.yaml（id=DIFF_GEO-657；validation_status=semantic_only） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DIFF_GEO-657.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DIFF_GEO-657.yaml（id=DIFF_GEO-657；validation_status=semantic_only）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f444946465f47454f2d3635382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DIFF_GEO-658.yaml`](DIFF_GEO-658.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, math_lane, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=DIFF_GEO-658, validation_s…
-  - **role_and_use**: 保存 DIFF_GEO-658.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DIFF_GEO-658.yaml（id=DIFF_GEO-658；validation_status=semantic_only） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DIFF_GEO-658.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DIFF_GEO-658.yaml（id=DIFF_GEO-658；validation_status=semantic_only）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f444946465f47454f2d3635392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DIFF_GEO-659.yaml`](DIFF_GEO-659.yaml)
   - **content_summary**: YAML 结构，顶层键：id, city_state_engine, mode, math_lane, mode_routing_status, validation_status, tool_status, bridge_readiness_status；安全锚点：id=DIFF_GEO-659, validation_status=semantic_o…
-  - **role_and_use**: 保存 DIFF_GEO-659.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DIFF_GEO-659.yaml（id=DIFF_GEO-659；validation_status=semantic_only） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DIFF_GEO-659.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DIFF_GEO-659.yaml（id=DIFF_GEO-659；validation_status=semantic_only）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f444946465f47454f2d3636302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DIFF_GEO-660.yaml`](DIFF_GEO-660.yaml)
   - **content_summary**: YAML 结构，顶层键：id, city_state_engine, mode, math_lane, mode_routing_status, validation_status, tool_status, bridge_readiness_status；安全锚点：id=DIFF_GEO-660, validation_status=semantic_o…
-  - **role_and_use**: 保存 DIFF_GEO-660.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DIFF_GEO-660.yaml（id=DIFF_GEO-660；validation_status=semantic_only） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DIFF_GEO-660.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DIFF_GEO-660.yaml（id=DIFF_GEO-660；validation_status=semantic_only）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f444946465f47454f2d3636312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DIFF_GEO-661.yaml`](DIFF_GEO-661.yaml)
   - **content_summary**: YAML 结构，顶层键：id, city_state_engine, mode, math_lane, mode_routing_status, validation_status, tool_status, bridge_readiness_status；安全锚点：id=DIFF_GEO-661, validation_status=semantic_o…
-  - **role_and_use**: 保存 DIFF_GEO-661.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DIFF_GEO-661.yaml（id=DIFF_GEO-661；validation_status=semantic_only） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DIFF_GEO-661.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DIFF_GEO-661.yaml（id=DIFF_GEO-661；validation_status=semantic_only）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f444946465f47454f2d3636322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DIFF_GEO-662.yaml`](DIFF_GEO-662.yaml)
   - **content_summary**: YAML 结构，顶层键：id, city_state_engine, mode, math_lane, mode_routing_status, validation_status, tool_status, bridge_readiness_status；安全锚点：id=DIFF_GEO-662, validation_status=semantic_o…
-  - **role_and_use**: 保存 DIFF_GEO-662.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DIFF_GEO-662.yaml（id=DIFF_GEO-662；validation_status=semantic_only） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DIFF_GEO-662.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DIFF_GEO-662.yaml（id=DIFF_GEO-662；validation_status=semantic_only）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f444946465f47454f2d3636332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DIFF_GEO-663.yaml`](DIFF_GEO-663.yaml)
   - **content_summary**: YAML 结构，顶层键：id, city_state_engine, mode, math_lane, mode_routing_status, validation_status, tool_status, bridge_readiness_status；安全锚点：id=DIFF_GEO-663, validation_status=semantic_o…
-  - **role_and_use**: 保存 DIFF_GEO-663.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DIFF_GEO-663.yaml（id=DIFF_GEO-663；validation_status=semantic_only） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DIFF_GEO-663.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DIFF_GEO-663.yaml（id=DIFF_GEO-663；validation_status=semantic_only）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f444946465f47454f2d3636342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DIFF_GEO-664.yaml`](DIFF_GEO-664.yaml)
   - **content_summary**: YAML 结构，顶层键：id, city_state_engine, mode, math_lane, mode_routing_status, validation_status, tool_status, bridge_readiness_status；安全锚点：id=DIFF_GEO-664, validation_status=semantic_o…
-  - **role_and_use**: 保存 DIFF_GEO-664.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DIFF_GEO-664.yaml（id=DIFF_GEO-664；validation_status=semantic_only） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DIFF_GEO-664.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DIFF_GEO-664.yaml（id=DIFF_GEO-664；validation_status=semantic_only）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f444946465f47454f2d3636352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DIFF_GEO-665.yaml`](DIFF_GEO-665.yaml)
   - **content_summary**: YAML 结构，顶层键：id, city_state_engine, mode, math_lane, mode_routing_status, validation_status, tool_status, bridge_readiness_status；安全锚点：id=DIFF_GEO-665, validation_status=semantic_o…
-  - **role_and_use**: 保存 DIFF_GEO-665.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DIFF_GEO-665.yaml（id=DIFF_GEO-665；validation_status=semantic_only） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DIFF_GEO-665.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DIFF_GEO-665.yaml（id=DIFF_GEO-665；validation_status=semantic_only）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f444946465f47454f2d3636362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DIFF_GEO-666.yaml`](DIFF_GEO-666.yaml)
   - **content_summary**: YAML 结构，顶层键：id, city_state_engine, mode, math_lane, mode_routing_status, validation_status, tool_status, bridge_readiness_status；安全锚点：id=DIFF_GEO-666, validation_status=semantic_o…
-  - **role_and_use**: 保存 DIFF_GEO-666.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DIFF_GEO-666.yaml（id=DIFF_GEO-666；validation_status=semantic_only） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DIFF_GEO-666.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DIFF_GEO-666.yaml（id=DIFF_GEO-666；validation_status=semantic_only）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f444946465f47454f2d3636372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DIFF_GEO-667.yaml`](DIFF_GEO-667.yaml)
   - **content_summary**: YAML 结构，顶层键：id, city_state_engine, mode, math_lane, mode_routing_status, validation_status, tool_status, bridge_readiness_status；安全锚点：id=DIFF_GEO-667, validation_status=semantic_o…
-  - **role_and_use**: 保存 DIFF_GEO-667.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DIFF_GEO-667.yaml（id=DIFF_GEO-667；validation_status=semantic_only） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DIFF_GEO-667.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DIFF_GEO-667.yaml（id=DIFF_GEO-667；validation_status=semantic_only）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f444946465f47454f2d3636382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DIFF_GEO-668.yaml`](DIFF_GEO-668.yaml)
   - **content_summary**: YAML 结构，顶层键：id, city_state_engine, mode, math_lane, mode_routing_status, validation_status, tool_status, bridge_readiness_status；安全锚点：id=DIFF_GEO-668, validation_status=semantic_o…
-  - **role_and_use**: 保存 DIFF_GEO-668.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DIFF_GEO-668.yaml（id=DIFF_GEO-668；validation_status=semantic_only） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DIFF_GEO-668.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DIFF_GEO-668.yaml（id=DIFF_GEO-668；validation_status=semantic_only）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3232332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-223.yaml`](DISCRETE-223.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-223…
-  - **role_and_use**: 保存 DISCRETE-223.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-223.yaml（id=DISCRETE-223；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-223.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-223.yaml（id=DISCRETE-223；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3232342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-224.yaml`](DISCRETE-224.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-224…
-  - **role_and_use**: 保存 DISCRETE-224.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-224.yaml（id=DISCRETE-224；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-224.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-224.yaml（id=DISCRETE-224；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3232352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-225.yaml`](DISCRETE-225.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-225…
-  - **role_and_use**: 保存 DISCRETE-225.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-225.yaml（id=DISCRETE-225；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-225.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-225.yaml（id=DISCRETE-225；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3232362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-226.yaml`](DISCRETE-226.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-226…
-  - **role_and_use**: 保存 DISCRETE-226.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-226.yaml（id=DISCRETE-226；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-226.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-226.yaml（id=DISCRETE-226；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3232372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-227.yaml`](DISCRETE-227.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-227…
-  - **role_and_use**: 保存 DISCRETE-227.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-227.yaml（id=DISCRETE-227；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-227.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-227.yaml（id=DISCRETE-227；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3232382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-228.yaml`](DISCRETE-228.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-228…
-  - **role_and_use**: 保存 DISCRETE-228.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-228.yaml（id=DISCRETE-228；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-228.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-228.yaml（id=DISCRETE-228；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3232392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-229.yaml`](DISCRETE-229.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-229…
-  - **role_and_use**: 保存 DISCRETE-229.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-229.yaml（id=DISCRETE-229；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-229.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-229.yaml（id=DISCRETE-229；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3233302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-230.yaml`](DISCRETE-230.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-230…
-  - **role_and_use**: 保存 DISCRETE-230.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-230.yaml（id=DISCRETE-230；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-230.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-230.yaml（id=DISCRETE-230；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3233312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-231.yaml`](DISCRETE-231.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-231…
-  - **role_and_use**: 保存 DISCRETE-231.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-231.yaml（id=DISCRETE-231；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-231.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-231.yaml（id=DISCRETE-231；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3233322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-232.yaml`](DISCRETE-232.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-232…
-  - **role_and_use**: 保存 DISCRETE-232.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-232.yaml（id=DISCRETE-232；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-232.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-232.yaml（id=DISCRETE-232；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3233332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-233.yaml`](DISCRETE-233.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-233…
-  - **role_and_use**: 保存 DISCRETE-233.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-233.yaml（id=DISCRETE-233；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-233.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-233.yaml（id=DISCRETE-233；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3233342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-234.yaml`](DISCRETE-234.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-234…
-  - **role_and_use**: 保存 DISCRETE-234.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-234.yaml（id=DISCRETE-234；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-234.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-234.yaml（id=DISCRETE-234；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3233352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-235.yaml`](DISCRETE-235.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-235…
-  - **role_and_use**: 保存 DISCRETE-235.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-235.yaml（id=DISCRETE-235；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-235.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-235.yaml（id=DISCRETE-235；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3233362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-236.yaml`](DISCRETE-236.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-236…
-  - **role_and_use**: 保存 DISCRETE-236.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-236.yaml（id=DISCRETE-236；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-236.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-236.yaml（id=DISCRETE-236；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3233372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-237.yaml`](DISCRETE-237.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-237…
-  - **role_and_use**: 保存 DISCRETE-237.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-237.yaml（id=DISCRETE-237；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-237.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-237.yaml（id=DISCRETE-237；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3233382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-238.yaml`](DISCRETE-238.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-238…
-  - **role_and_use**: 保存 DISCRETE-238.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-238.yaml（id=DISCRETE-238；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-238.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-238.yaml（id=DISCRETE-238；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3233392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-239.yaml`](DISCRETE-239.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-239…
-  - **role_and_use**: 保存 DISCRETE-239.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-239.yaml（id=DISCRETE-239；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-239.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-239.yaml（id=DISCRETE-239；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3234302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-240.yaml`](DISCRETE-240.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-240…
-  - **role_and_use**: 保存 DISCRETE-240.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-240.yaml（id=DISCRETE-240；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-240.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-240.yaml（id=DISCRETE-240；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3234312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-241.yaml`](DISCRETE-241.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-241…
-  - **role_and_use**: 保存 DISCRETE-241.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-241.yaml（id=DISCRETE-241；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-241.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-241.yaml（id=DISCRETE-241；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3234322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-242.yaml`](DISCRETE-242.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-242…
-  - **role_and_use**: 保存 DISCRETE-242.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-242.yaml（id=DISCRETE-242；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-242.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-242.yaml（id=DISCRETE-242；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3234332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-243.yaml`](DISCRETE-243.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-243…
-  - **role_and_use**: 保存 DISCRETE-243.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-243.yaml（id=DISCRETE-243；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-243.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-243.yaml（id=DISCRETE-243；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3234342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-244.yaml`](DISCRETE-244.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-244…
-  - **role_and_use**: 保存 DISCRETE-244.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-244.yaml（id=DISCRETE-244；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-244.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-244.yaml（id=DISCRETE-244；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3234352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-245.yaml`](DISCRETE-245.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-245…
-  - **role_and_use**: 保存 DISCRETE-245.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-245.yaml（id=DISCRETE-245；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-245.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-245.yaml（id=DISCRETE-245；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3234362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-246.yaml`](DISCRETE-246.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-246…
-  - **role_and_use**: 保存 DISCRETE-246.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-246.yaml（id=DISCRETE-246；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-246.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-246.yaml（id=DISCRETE-246；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3234372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-247.yaml`](DISCRETE-247.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-247…
-  - **role_and_use**: 保存 DISCRETE-247.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-247.yaml（id=DISCRETE-247；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-247.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-247.yaml（id=DISCRETE-247；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3234382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-248.yaml`](DISCRETE-248.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-248…
-  - **role_and_use**: 保存 DISCRETE-248.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-248.yaml（id=DISCRETE-248；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-248.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-248.yaml（id=DISCRETE-248；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3234392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-249.yaml`](DISCRETE-249.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-249…
-  - **role_and_use**: 保存 DISCRETE-249.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-249.yaml（id=DISCRETE-249；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-249.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-249.yaml（id=DISCRETE-249；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3235302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-250.yaml`](DISCRETE-250.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-250…
-  - **role_and_use**: 保存 DISCRETE-250.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-250.yaml（id=DISCRETE-250；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-250.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-250.yaml（id=DISCRETE-250；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3235312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-251.yaml`](DISCRETE-251.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-251…
-  - **role_and_use**: 保存 DISCRETE-251.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-251.yaml（id=DISCRETE-251；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-251.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-251.yaml（id=DISCRETE-251；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3235322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-252.yaml`](DISCRETE-252.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-252…
-  - **role_and_use**: 保存 DISCRETE-252.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-252.yaml（id=DISCRETE-252；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-252.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-252.yaml（id=DISCRETE-252；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3235332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-253.yaml`](DISCRETE-253.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-253…
-  - **role_and_use**: 保存 DISCRETE-253.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-253.yaml（id=DISCRETE-253；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-253.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-253.yaml（id=DISCRETE-253；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3235342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-254.yaml`](DISCRETE-254.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-254…
-  - **role_and_use**: 保存 DISCRETE-254.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-254.yaml（id=DISCRETE-254；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-254.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-254.yaml（id=DISCRETE-254；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3235352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-255.yaml`](DISCRETE-255.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-255…
-  - **role_and_use**: 保存 DISCRETE-255.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-255.yaml（id=DISCRETE-255；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-255.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-255.yaml（id=DISCRETE-255；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3235362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-256.yaml`](DISCRETE-256.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-256…
-  - **role_and_use**: 保存 DISCRETE-256.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-256.yaml（id=DISCRETE-256；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-256.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-256.yaml（id=DISCRETE-256；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3235372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-257.yaml`](DISCRETE-257.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-257…
-  - **role_and_use**: 保存 DISCRETE-257.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-257.yaml（id=DISCRETE-257；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-257.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-257.yaml（id=DISCRETE-257；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3235382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-258.yaml`](DISCRETE-258.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-258…
-  - **role_and_use**: 保存 DISCRETE-258.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-258.yaml（id=DISCRETE-258；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-258.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-258.yaml（id=DISCRETE-258；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3235392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-259.yaml`](DISCRETE-259.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-259…
-  - **role_and_use**: 保存 DISCRETE-259.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-259.yaml（id=DISCRETE-259；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-259.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-259.yaml（id=DISCRETE-259；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3236302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-260.yaml`](DISCRETE-260.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-260…
-  - **role_and_use**: 保存 DISCRETE-260.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-260.yaml（id=DISCRETE-260；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-260.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-260.yaml（id=DISCRETE-260；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f44495343524554452d3236312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/DISCRETE-261.yaml`](DISCRETE-261.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=DISCRETE-261…
-  - **role_and_use**: 保存 DISCRETE-261.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 DISCRETE-261.yaml（id=DISCRETE-261；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 DISCRETE-261.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 DISCRETE-261.yaml（id=DISCRETE-261；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4551554154494f4e2d3030312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/EQUATION-001.yaml`](EQUATION-001.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=EQUATION-001, validation_status=manual_review_required, name=等式的基本性质与代数运算保持平衡的直觉 (n_64), domain=方程与不等式 (equations_and_inequalities)；sub_topics=4
-  - **role_and_use**: 保存 EQUATION-001.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 EQUATION-001.yaml（id=EQUATION-001；validation_status=manual_review_required；name=等式的基本性质与代数运算保持平衡的直觉 (n_64)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 EQUATION-001.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 EQUATION-001.yaml（id=EQUATION-001；validation_status=manual_review_required；name=等式的基本性质与代数运算保持平衡的直觉 (n_64)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4558504f4e454e54532d3030312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/EXPONENTS-001.yaml`](EXPONENTS-001.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=EXPONENTS-001, validation_status=manual_review_required；sub_topics=4
-  - **role_and_use**: 保存 EXPONENTS-001.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 EXPONENTS-001.yaml（id=EXPONENTS-001；validation_status=manual_review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 EXPONENTS-001.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 EXPONENTS-001.yaml（id=EXPONENTS-001；validation_status=manual_review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4558504f4e454e54532d3030322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/EXPONENTS-002.yaml`](EXPONENTS-002.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=EXPONENTS-002, validation_status=manual_review_required, title=逻辑延伸：零指数与负整数指数幂的物理意义与代数推导（消除公式断层）, domain=rational_exponents_and_power_functions；su…
-  - **role_and_use**: 保存 EXPONENTS-002.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 EXPONENTS-002.yaml（id=EXPONENTS-002；validation_status=manual_review_required；title=逻辑延伸：零指数与负整数指数幂的物理意义与代数推导（消除公式断层）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 EXPONENTS-002.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 EXPONENTS-002.yaml（id=EXPONENTS-002；validation_status=manual_review_required；title=逻辑延伸：零指数与负整数指数幂的物理意义与代数推导（消除公式断层））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4558504f4e454e54532d3030332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/EXPONENTS-003.yaml`](EXPONENTS-003.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=EXPONENTS-003, validation_status=manual_review_required, title=分数指数幂的定义与根式的等价转换 (n_113), domain=有理指数与幂函数 (rational_exponents_and_power_functions)；…
-  - **role_and_use**: 保存 EXPONENTS-003.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 EXPONENTS-003.yaml（id=EXPONENTS-003；validation_status=manual_review_required；title=分数指数幂的定义与根式的等价转换 (n_113)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 EXPONENTS-003.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 EXPONENTS-003.yaml（id=EXPONENTS-003；validation_status=manual_review_required；title=分数指数幂的定义与根式的等价转换 (n_113)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4652414354494f4e532d3030312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/FRACTIONS-001.yaml`](FRACTIONS-001.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=FRACTIONS-001, validation_status=review_required；sub_topics=5
-  - **role_and_use**: 保存 FRACTIONS-001.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 FRACTIONS-001.yaml（id=FRACTIONS-001；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 FRACTIONS-001.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 FRACTIONS-001.yaml（id=FRACTIONS-001；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4652414354494f4e532d3030322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/FRACTIONS-002.yaml`](FRACTIONS-002.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=FRACTIONS-002, validation_status=review_required, title=分数与小数 (fractions_and_decimals) - 分数的四则运算逻辑推导 (n_58)；sub_topics=4
-  - **role_and_use**: 保存 FRACTIONS-002.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 FRACTIONS-002.yaml（id=FRACTIONS-002；validation_status=review_required；title=分数与小数 (fractions_and_decimals) - 分数的四则运算逻辑推导 (n_58)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 FRACTIONS-002.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 FRACTIONS-002.yaml（id=FRACTIONS-002；validation_status=review_required；title=分数与小数 (fractions_and_decimals) - 分数的四则运算逻辑推导 (n_58)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4652414354494f4e532d3030332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/FRACTIONS-003.yaml`](FRACTIONS-003.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=FRACTIONS-003, validation_status=review_required, name=分数与小数 (fractions_and_decimals) - 十进制的位值原理 (Place Value) (n_59), domain=Math；sub_topics=4
-  - **role_and_use**: 保存 FRACTIONS-003.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 FRACTIONS-003.yaml（id=FRACTIONS-003；validation_status=review_required；name=分数与小数 (fractions_and_decimals) - 十进制的位值原理 (Place Value) (n_59)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 FRACTIONS-003.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 FRACTIONS-003.yaml（id=FRACTIONS-003；validation_status=review_required；name=分数与小数 (fractions_and_decimals) - 十进制的位值原理 (Place Value) (n_59)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4652414354494f4e532d3030342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/FRACTIONS-004.yaml`](FRACTIONS-004.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=FRACTIONS-004, validation_status=review_required；sub_topics=5
-  - **role_and_use**: 保存 FRACTIONS-004.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 FRACTIONS-004.yaml（id=FRACTIONS-004；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 FRACTIONS-004.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 FRACTIONS-004.yaml（id=FRACTIONS-004；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f46554e4354494f4e2d3030312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/FUNCTION-001.yaml`](FUNCTION-001.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=FUNCTION-001, validation_status=review_required, title=映射与函数：作为“输入-输出物理机器”的严格定义；sub_topics=4
-  - **role_and_use**: 保存 FUNCTION-001.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 FUNCTION-001.yaml（id=FUNCTION-001；validation_status=review_required；title=映射与函数：作为“输入-输出物理机器”的严格定义） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 FUNCTION-001.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 FUNCTION-001.yaml（id=FUNCTION-001；validation_status=review_required；title=映射与函数：作为“输入-输出物理机器”的严格定义）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f46554e4354494f4e2d3030322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/FUNCTION-002.yaml`](FUNCTION-002.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=FUNCTION-002, validation_status=review_required, title=函数概念初步（定义域/值域/复合/反函数） (function_concepts_intro) - 定义域与值域的边界求解 (n_118)；sub_topics=4
-  - **role_and_use**: 保存 FUNCTION-002.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 FUNCTION-002.yaml（id=FUNCTION-002；validation_status=review_required；title=函数概念初步（定义域/值域/复合/反函数） (function_concepts_intro) - 定义域与值域的边界求解 (n_118)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 FUNCTION-002.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 FUNCTION-002.yaml（id=FUNCTION-002；validation_status=review_required；title=函数概念初步（定义域/值域/复合/反函数） (function_concepts_intro) - 定义域与值域的边界求解 (n_118)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f46554e4354494f4e2d3030332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/FUNCTION-003.yaml`](FUNCTION-003.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=FUNCTION-003, validation_status=review_required；sub_topics=4
-  - **role_and_use**: 保存 FUNCTION-003.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 FUNCTION-003.yaml（id=FUNCTION-003；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 FUNCTION-003.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 FUNCTION-003.yaml（id=FUNCTION-003；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f46554e4354494f4e2d3030342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/FUNCTION-004.yaml`](FUNCTION-004.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=FUNCTION-004, validation_status=review_required, title=函数概念初步（定义域/值域/复合/反函数） (function_concepts_intro) - 反函数：输入输出互换的代数求解过程及其在坐标系中关于 y=…；sub_topics…
-  - **role_and_use**: 保存 FUNCTION-004.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 FUNCTION-004.yaml（id=FUNCTION-004；validation_status=review_required；title=函数概念初步（定义域/值域/复合/反函数） (function_concepts_intro) - 反函数：输入输出互换的代数求解过程及其在坐标系中关于 y=…） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 FUNCTION-004.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 FUNCTION-004.yaml（id=FUNCTION-004；validation_status=review_required；title=函数概念初步（定义域/值域/复合/反函数） (function_concepts_intro) - 反函数：输入输出互换的代数求解过程及其在坐标系中关于 y=…）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3030315f41627374726163745f456c656d656e74732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-001_Abstract_Elements.yaml`](GEOMETRY-001_Abstract_Elements.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-001, validation_status=review_required, title=欧氏几何公理 - 发生学溯源：点（无大小）、线（无粗细）、面（无厚度）的极致物理抽象 (n_121)；sub_topics=5
-  - **role_and_use**: 保存 GEOMETRY-001_Abstract_Elements.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-001_Abstract_Elements.yaml（id=GEOMETRY-001；validation_status=review_required；title=欧氏几何公理 - 发生学溯源：点（无大小）、线（无粗细）、面（无厚度）的极致物理抽象 (n_121)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-001_Abstract_Elements.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-001_Abstract_Elements.yaml（id=GEOMETRY-001；validation_status=review_required；title=欧氏几何公理 - 发生学溯源：点（无大小）、线（无粗细）、面（无厚度）的极致物理抽象 (n_121)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3030325f466976655f506f7374756c617465732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-002_Five_Postulates.yaml`](GEOMETRY-002_Five_Postulates.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-002, validation_status=review_required, title=欧氏几何公理 - 欧几里得的五大公设与公理化思维体系（从不证自明的假设出发构建宇宙） (n_122)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-002_Five_Postulates.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-002_Five_Postulates.yaml（id=GEOMETRY-002；validation_status=review_required；title=欧氏几何公理 - 欧几里得的五大公设与公理化思维体系（从不证自明的假设出发构建宇宙） (n_122)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-002_Five_Postulates.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-002_Five_Postulates.yaml（id=GEOMETRY-002；validation_status=review_required；title=欧氏几何公理 - 欧几里得的五大公设与公理化思维体系（从不证自明的假设出发构建宇宙） (n_122)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3030335f4e6f6e4575636c696465616e2e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-003_NonEuclidean.yaml`](GEOMETRY-003_NonEuclidean.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-003, validation_status=review_required, title=欧氏几何公理 - 第五公设（平行公设）的特殊性危机与非欧几何直觉 (n_123)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-003_NonEuclidean.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-003_NonEuclidean.yaml（id=GEOMETRY-003；validation_status=review_required；title=欧氏几何公理 - 第五公设（平行公设）的特殊性危机与非欧几何直觉 (n_123)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-003_NonEuclidean.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-003_NonEuclidean.yaml（id=GEOMETRY-003；validation_status=review_required；title=欧氏几何公理 - 第五公设（平行公设）的特殊性危机与非欧几何直觉 (n_123)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3030345f50726f6f665f5374727563747572652e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-004_Proof_Structure.yaml`](GEOMETRY-004_Proof_Structure.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-004, validation_status=review_required, title=欧氏几何公理 - 命题、定理、证明的严格逻辑结构（条件与结论的映射） (n_124)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-004_Proof_Structure.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-004_Proof_Structure.yaml（id=GEOMETRY-004；validation_status=review_required；title=欧氏几何公理 - 命题、定理、证明的严格逻辑结构（条件与结论的映射） (n_124)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-004_Proof_Structure.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-004_Proof_Structure.yaml（id=GEOMETRY-004；validation_status=review_required；title=欧氏几何公理 - 命题、定理、证明的严格逻辑结构（条件与结论的映射） (n_124)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3030352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-005.yaml`](GEOMETRY-005.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-005, name=三角形内角和为 180° 的证明；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-005.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-005.yaml（id=GEOMETRY-005；name=三角形内角和为 180° 的证明） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-005.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-005.yaml（id=GEOMETRY-005；name=三角形内角和为 180° 的证明）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3030362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-006.yaml`](GEOMETRY-006.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-006, validation_status=review_required, title=三角形（全等/相似） - 三角形不等式（两边之和大于第三边：空间两点间直线最短）；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-006.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-006.yaml（id=GEOMETRY-006；validation_status=review_required；title=三角形（全等/相似） - 三角形不等式（两边之和大于第三边：空间两点间直线最短）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-006.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-006.yaml（id=GEOMETRY-006；validation_status=review_required；title=三角形（全等/相似） - 三角形不等式（两边之和大于第三边：空间两点间直线最短））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3030372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-007.yaml`](GEOMETRY-007.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-007, validation_status=review_required, name=三角形（全等/相似） - 全等三角形 (Congruence) 的判定公理与定理（SAS, SSS, ASA, AAS, HL）；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-007.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-007.yaml（id=GEOMETRY-007；validation_status=review_required；name=三角形（全等/相似） - 全等三角形 (Congruence) 的判定公理与定理（SAS, SSS, ASA, AAS, HL）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-007.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-007.yaml（id=GEOMETRY-007；validation_status=review_required；name=三角形（全等/相似） - 全等三角形 (Congruence) 的判定公理与定理（SAS, SSS, ASA, AAS, HL））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3030382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-008.yaml`](GEOMETRY-008.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-008, validation_status=review_required；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-008.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-008.yaml（id=GEOMETRY-008；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-008.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-008.yaml（id=GEOMETRY-008；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3030392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-009.yaml`](GEOMETRY-009.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-009, validation_status=review_required, title=三角形（全等/相似） - 相似比与面积比/体积比的平方/立方关系 (n_129)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-009.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-009.yaml（id=GEOMETRY-009；validation_status=review_required；title=三角形（全等/相似） - 相似比与面积比/体积比的平方/立方关系 (n_129)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-009.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-009.yaml（id=GEOMETRY-009；validation_status=review_required；title=三角形（全等/相似） - 相似比与面积比/体积比的平方/立方关系 (n_129)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3031302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-010.yaml`](GEOMETRY-010.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-010, validation_status=review_required, title=圆与多边形 - 多边形内角和公式 (n-2)*180° 的推导（将复杂多边形分割为三角形） (n_130)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-010.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-010.yaml（id=GEOMETRY-010；validation_status=review_required；title=圆与多边形 - 多边形内角和公式 (n-2)*180° 的推导（将复杂多边形分割为三角形） (n_130)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-010.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-010.yaml（id=GEOMETRY-010；validation_status=review_required；title=圆与多边形 - 多边形内角和公式 (n-2)*180° 的推导（将复杂多边形分割为三角形） (n_130)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3031315f436972636c652e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-011_Circle.yaml`](GEOMETRY-011_Circle.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-011, validation_status=review_required, name=圆与多边形 - 圆的严格定义（平面上到定点的距离等于定长的所有点的集合） (n_131)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-011_Circle.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-011_Circle.yaml（id=GEOMETRY-011；validation_status=review_required；name=圆与多边形 - 圆的严格定义（平面上到定点的距离等于定长的所有点的集合） (n_131)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-011_Circle.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-011_Circle.yaml（id=GEOMETRY-011；validation_status=review_required；name=圆与多边形 - 圆的严格定义（平面上到定点的距离等于定长的所有点的集合） (n_131)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3031322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-012.yaml`](GEOMETRY-012.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-012, validation_status=review_required, title=圆与多边形 - 圆心角、圆周角定理（分类推导：圆周角等于圆心角的一半）；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-012.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-012.yaml（id=GEOMETRY-012；validation_status=review_required；title=圆与多边形 - 圆心角、圆周角定理（分类推导：圆周角等于圆心角的一半）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-012.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-012.yaml（id=GEOMETRY-012；validation_status=review_required；title=圆与多边形 - 圆心角、圆周角定理（分类推导：圆周角等于圆心角的一半））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3031332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-013.yaml`](GEOMETRY-013.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-013, validation_status=review_required, name=圆与多边形 - 垂径定理（对称性应用）与切线的性质（垂直于半径）, domain=Math_Mentor；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-013.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-013.yaml（id=GEOMETRY-013；validation_status=review_required；name=圆与多边形 - 垂径定理（对称性应用）与切线的性质（垂直于半径）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-013.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-013.yaml（id=GEOMETRY-013；validation_status=review_required；name=圆与多边形 - 垂径定理（对称性应用）与切线的性质（垂直于半径））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3031342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-014.yaml`](GEOMETRY-014.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-014, validation_status=review_required, name=面积与体积 - 面积的公理化定义（可加性、运动不变性） (n_134)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-014.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-014.yaml（id=GEOMETRY-014；validation_status=review_required；name=面积与体积 - 面积的公理化定义（可加性、运动不变性） (n_134)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-014.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-014.yaml（id=GEOMETRY-014；validation_status=review_required；name=面积与体积 - 面积的公理化定义（可加性、运动不变性） (n_134)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3031352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-015.yaml`](GEOMETRY-015.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-015, validation_status=review_required, title=面积与体积 - 面积公式的推导演进链条：矩形 → 平行四边形 → 三角形 → 梯形 (n_135)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-015.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-015.yaml（id=GEOMETRY-015；validation_status=review_required；title=面积与体积 - 面积公式的推导演进链条：矩形 → 平行四边形 → 三角形 → 梯形 (n_135)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-015.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-015.yaml（id=GEOMETRY-015；validation_status=review_required；title=面积与体积 - 面积公式的推导演进链条：矩形 → 平行四边形 → 三角形 → 梯形 (n_135)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3031362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-016.yaml`](GEOMETRY-016.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-016, validation_status=review_required, name=面积与体积 - 圆的周长与面积公式（引入极限逼近思想：分割拼补为近似矩形） (n_136)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-016.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-016.yaml（id=GEOMETRY-016；validation_status=review_required；name=面积与体积 - 圆的周长与面积公式（引入极限逼近思想：分割拼补为近似矩形） (n_136)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-016.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-016.yaml（id=GEOMETRY-016；validation_status=review_required；name=面积与体积 - 圆的周长与面积公式（引入极限逼近思想：分割拼补为近似矩形） (n_136)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3031372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-017.yaml`](GEOMETRY-017.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-017, validation_status=review_required, title=面积与体积 - 祖暅原理（卡瓦列里原理）：截面积处处相等则体积相等的等效思维 (n_137)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-017.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-017.yaml（id=GEOMETRY-017；validation_status=review_required；title=面积与体积 - 祖暅原理（卡瓦列里原理）：截面积处处相等则体积相等的等效思维 (n_137)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-017.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-017.yaml（id=GEOMETRY-017；validation_status=review_required；title=面积与体积 - 祖暅原理（卡瓦列里原理）：截面积处处相等则体积相等的等效思维 (n_137)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3031382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-018.yaml`](GEOMETRY-018.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-018, validation_status=review_required, name=坐标几何初步 - 发生学溯源：笛卡尔坐标系——代数与几何的伟大桥梁；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-018.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-018.yaml（id=GEOMETRY-018；validation_status=review_required；name=坐标几何初步 - 发生学溯源：笛卡尔坐标系——代数与几何的伟大桥梁） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-018.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-018.yaml（id=GEOMETRY-018；validation_status=review_required；name=坐标几何初步 - 发生学溯源：笛卡尔坐标系——代数与几何的伟大桥梁）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3031392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-019.yaml`](GEOMETRY-019.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-019, validation_status=review_required, name=坐标几何初步 - 两点间距离公式（勾股定理在坐标系上的翻译）；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-019.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-019.yaml（id=GEOMETRY-019；validation_status=review_required；name=坐标几何初步 - 两点间距离公式（勾股定理在坐标系上的翻译）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-019.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-019.yaml（id=GEOMETRY-019；validation_status=review_required；name=坐标几何初步 - 两点间距离公式（勾股定理在坐标系上的翻译））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3032302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-020.yaml`](GEOMETRY-020.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-020, validation_status=review_required, name=坐标几何初步 - 线段的中点坐标公式；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-020.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-020.yaml（id=GEOMETRY-020；validation_status=review_required；name=坐标几何初步 - 线段的中点坐标公式） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-020.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-020.yaml（id=GEOMETRY-020；validation_status=review_required；name=坐标几何初步 - 线段的中点坐标公式）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3032312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-021.yaml`](GEOMETRY-021.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-021, validation_status=review_required, name=坐标几何初步 - 直线的斜率 (Slope) 的物理意义与点斜式、截距式方程雏形；sub_topics=5
-  - **role_and_use**: 保存 GEOMETRY-021.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-021.yaml（id=GEOMETRY-021；validation_status=review_required；name=坐标几何初步 - 直线的斜率 (Slope) 的物理意义与点斜式、截距式方程雏形） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-021.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-021.yaml（id=GEOMETRY-021；validation_status=review_required；name=坐标几何初步 - 直线的斜率 (Slope) 的物理意义与点斜式、截距式方程雏形）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3032322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-022.yaml`](GEOMETRY-022.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-022, validation_status=review_required, title=向量初步 - 发生学溯源：为了同时描述物理力的大小与方向而发明的“带箭头的线段” (n_142)；sub_topics=5
-  - **role_and_use**: 保存 GEOMETRY-022.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-022.yaml（id=GEOMETRY-022；validation_status=review_required；title=向量初步 - 发生学溯源：为了同时描述物理力的大小与方向而发明的“带箭头的线段” (n_142)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-022.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-022.yaml（id=GEOMETRY-022；validation_status=review_required；title=向量初步 - 发生学溯源：为了同时描述物理力的大小与方向而发明的“带箭头的线段” (n_142)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3032332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-023.yaml`](GEOMETRY-023.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-023, validation_status=review_required, title=向量初步 - 向量的几何加减法（三角形法则与平行四边形法则）；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-023.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-023.yaml（id=GEOMETRY-023；validation_status=review_required；title=向量初步 - 向量的几何加减法（三角形法则与平行四边形法则）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-023.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-023.yaml（id=GEOMETRY-023；validation_status=review_required；title=向量初步 - 向量的几何加减法（三角形法则与平行四边形法则））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3032342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-024.yaml`](GEOMETRY-024.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-024, validation_status=review_required, title=向量的数乘运算与向量平行的条件；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-024.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-024.yaml（id=GEOMETRY-024；validation_status=review_required；title=向量的数乘运算与向量平行的条件） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-024.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-024.yaml（id=GEOMETRY-024；validation_status=review_required；title=向量的数乘运算与向量平行的条件）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3032352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-025.yaml`](GEOMETRY-025.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-025, validation_status=review_required, name=向量初步 - 坐标系中的向量表示与简单分量计算（可选前置）；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-025.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-025.yaml（id=GEOMETRY-025；validation_status=review_required；name=向量初步 - 坐标系中的向量表示与简单分量计算（可选前置）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-025.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-025.yaml（id=GEOMETRY-025；validation_status=review_required；name=向量初步 - 坐标系中的向量表示与简单分量计算（可选前置））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3032362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-026.yaml`](GEOMETRY-026.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-026, validation_status=review_required, name=直线与角（平行线/垂线/角的性质） - 角的度量与分类（锐角、直角、钝角、平角、周角）；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-026.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-026.yaml（id=GEOMETRY-026；validation_status=review_required；name=直线与角（平行线/垂线/角的性质） - 角的度量与分类（锐角、直角、钝角、平角、周角）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-026.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-026.yaml（id=GEOMETRY-026；validation_status=review_required；name=直线与角（平行线/垂线/角的性质） - 角的度量与分类（锐角、直角、钝角、平角、周角））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3032372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-027.yaml`](GEOMETRY-027.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-027, validation_status=review_required, title=直线与角（平行线/垂线/角的性质） - 相交线与对顶角相等定理的逻辑推导（利用平角 180° 的过渡） (n_147)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-027.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-027.yaml（id=GEOMETRY-027；validation_status=review_required；title=直线与角（平行线/垂线/角的性质） - 相交线与对顶角相等定理的逻辑推导（利用平角 180° 的过渡） (n_147)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-027.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-027.yaml（id=GEOMETRY-027；validation_status=review_required；title=直线与角（平行线/垂线/角的性质） - 相交线与对顶角相等定理的逻辑推导（利用平角 180° 的过渡） (n_147)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3032382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-028.yaml`](GEOMETRY-028.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-028, validation_status=review_required, title=直线与角（平行线/垂线/角的性质） - 平行线的判定与性质（同位角、内错角、同旁内角的转换关系） (n_148)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-028.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-028.yaml（id=GEOMETRY-028；validation_status=review_required；title=直线与角（平行线/垂线/角的性质） - 平行线的判定与性质（同位角、内错角、同旁内角的转换关系） (n_148)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-028.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-028.yaml（id=GEOMETRY-028；validation_status=review_required；title=直线与角（平行线/垂线/角的性质） - 平行线的判定与性质（同位角、内错角、同旁内角的转换关系） (n_148)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3032392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-029.yaml`](GEOMETRY-029.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-029, validation_status=review_required, title=直线与角（平行线/垂线/角的性质） - 垂线段最短原理（点到直线距离的物理意义） (n_149)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-029.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-029.yaml（id=GEOMETRY-029；validation_status=review_required；title=直线与角（平行线/垂线/角的性质） - 垂线段最短原理（点到直线距离的物理意义） (n_149)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-029.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-029.yaml（id=GEOMETRY-029；validation_status=review_required；title=直线与角（平行线/垂线/角的性质） - 垂线段最短原理（点到直线距离的物理意义） (n_149)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3033302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-030.yaml`](GEOMETRY-030.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-030, validation_status=review_required, title=勾股定理及其逆定理 - 发生学溯源：古代土地测量（结绳法）与建筑直角的工程危机 (n_150)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-030.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-030.yaml（id=GEOMETRY-030；validation_status=review_required；title=勾股定理及其逆定理 - 发生学溯源：古代土地测量（结绳法）与建筑直角的工程危机 (n_150)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-030.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-030.yaml（id=GEOMETRY-030；validation_status=review_required；title=勾股定理及其逆定理 - 发生学溯源：古代土地测量（结绳法）与建筑直角的工程危机 (n_150)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3033312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-031.yaml`](GEOMETRY-031.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-031, validation_status=review_required, name=勾股定理的几何面积拼图证明（如赵爽弦图或欧几里得面积转换）, domain=Geometry；sub_topics=5
-  - **role_and_use**: 保存 GEOMETRY-031.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-031.yaml（id=GEOMETRY-031；validation_status=review_required；name=勾股定理的几何面积拼图证明（如赵爽弦图或欧几里得面积转换）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-031.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-031.yaml（id=GEOMETRY-031；validation_status=review_required；name=勾股定理的几何面积拼图证明（如赵爽弦图或欧几里得面积转换））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3033322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-032.yaml`](GEOMETRY-032.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-032, validation_status=review_required, name=勾股定理及其逆定理 - 勾股逆定理的应用（已知三边长度反推直角，作为验证空间的工具） (n_152)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-032.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-032.yaml（id=GEOMETRY-032；validation_status=review_required；name=勾股定理及其逆定理 - 勾股逆定理的应用（已知三边长度反推直角，作为验证空间的工具） (n_152)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-032.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-032.yaml（id=GEOMETRY-032；validation_status=review_required；name=勾股定理及其逆定理 - 勾股逆定理的应用（已知三边长度反推直角，作为验证空间的工具） (n_152)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3033332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-033.yaml`](GEOMETRY-033.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-033, validation_status=review_required, name=勾股定理及其逆定理 - 勾股数（毕达哥拉斯三元组）初步 (n_153)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-033.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-033.yaml（id=GEOMETRY-033；validation_status=review_required；name=勾股定理及其逆定理 - 勾股数（毕达哥拉斯三元组）初步 (n_153)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-033.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-033.yaml（id=GEOMETRY-033；validation_status=review_required；name=勾股定理及其逆定理 - 勾股数（毕达哥拉斯三元组）初步 (n_153)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3033342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-034.yaml`](GEOMETRY-034.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-034, validation_status=review_required, name=几何变换（平移/旋转/反射/缩放） - 等距变换 (Rigid Motions)：平移、旋转、反射（保持长度与角度绝对不变）；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-034.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-034.yaml（id=GEOMETRY-034；validation_status=review_required；name=几何变换（平移/旋转/反射/缩放） - 等距变换 (Rigid Motions)：平移、旋转、反射（保持长度与角度绝对不变）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-034.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-034.yaml（id=GEOMETRY-034；validation_status=review_required；name=几何变换（平移/旋转/反射/缩放） - 等距变换 (Rigid Motions)：平移、旋转、反射（保持长度与角度绝对不变））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3033352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-035.yaml`](GEOMETRY-035.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-035, validation_status=review_required, name=几何变换（平移/旋转/反射/缩放） - 全等图形与等距变换的等价性（全等本质上是一个或多个等距变换的复合） (n_155)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-035.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-035.yaml（id=GEOMETRY-035；validation_status=review_required；name=几何变换（平移/旋转/反射/缩放） - 全等图形与等距变换的等价性（全等本质上是一个或多个等距变换的复合） (n_155)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-035.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-035.yaml（id=GEOMETRY-035；validation_status=review_required；name=几何变换（平移/旋转/反射/缩放） - 全等图形与等距变换的等价性（全等本质上是一个或多个等距变换的复合） (n_155)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3033362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-036.yaml`](GEOMETRY-036.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-036, validation_status=review_required, name=几何变换（平移/旋转/反射/缩放） - 非等距变换：缩放/位似变换 (Dilation) 与相似图形的等价性 (n_156)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-036.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-036.yaml（id=GEOMETRY-036；validation_status=review_required；name=几何变换（平移/旋转/反射/缩放） - 非等距变换：缩放/位似变换 (Dilation) 与相似图形的等价性 (n_156)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-036.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-036.yaml（id=GEOMETRY-036；validation_status=review_required；name=几何变换（平移/旋转/反射/缩放） - 非等距变换：缩放/位似变换 (Dilation) 与相似图形的等价性 (n_156)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3033372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-037.yaml`](GEOMETRY-037.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-037, validation_status=review_required, title=几何变换（平移/旋转/反射/缩放） - 变换的复合（洋葱模型的执行栈：顺序对结果的影响）；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-037.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-037.yaml（id=GEOMETRY-037；validation_status=review_required；title=几何变换（平移/旋转/反射/缩放） - 变换的复合（洋葱模型的执行栈：顺序对结果的影响）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-037.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-037.yaml（id=GEOMETRY-037；validation_status=review_required；title=几何变换（平移/旋转/反射/缩放） - 变换的复合（洋葱模型的执行栈：顺序对结果的影响））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3033382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-038.yaml`](GEOMETRY-038.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-038, validation_status=review_required, title=立体几何基础（棱柱/棱锥/球体），尺规作图基础 - 空间位置关系：点、直线、平面的空间状态（平行、相交、异面） (n_158)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-038.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-038.yaml（id=GEOMETRY-038；validation_status=review_required；title=立体几何基础（棱柱/棱锥/球体），尺规作图基础 - 空间位置关系：点、直线、平面的空间状态（平行、相交、异面） (n_158)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-038.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-038.yaml（id=GEOMETRY-038；validation_status=review_required；title=立体几何基础（棱柱/棱锥/球体），尺规作图基础 - 空间位置关系：点、直线、平面的空间状态（平行、相交、异面） (n_158)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3033392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-039.yaml`](GEOMETRY-039.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-039, validation_status=review_required, name=立体几何基础（棱柱/棱锥/球体），尺规作图基础 - 经典三维图形（棱柱、棱锥、球体等）的表面积与体积直觉（展开图与截面图） (n_159)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-039.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-039.yaml（id=GEOMETRY-039；validation_status=review_required；name=立体几何基础（棱柱/棱锥/球体），尺规作图基础 - 经典三维图形（棱柱、棱锥、球体等）的表面积与体积直觉（展开图与截面图） (n_159)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-039.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-039.yaml（id=GEOMETRY-039；validation_status=review_required；name=立体几何基础（棱柱/棱锥/球体），尺规作图基础 - 经典三维图形（棱柱、棱锥、球体等）的表面积与体积直觉（展开图与截面图） (n_159)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3034302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-040.yaml`](GEOMETRY-040.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-040, validation_status=review_required, name=立体几何基础（棱柱/棱锥/球体），尺规作图基础 - 尺规作图的哲学限制：只允许使用没有刻度的直尺（造线）和圆规（造圆） (n_160)；sub_topics=4
-  - **role_and_use**: 保存 GEOMETRY-040.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-040.yaml（id=GEOMETRY-040；validation_status=review_required；name=立体几何基础（棱柱/棱锥/球体），尺规作图基础 - 尺规作图的哲学限制：只允许使用没有刻度的直尺（造线）和圆规（造圆） (n_160)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-040.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-040.yaml（id=GEOMETRY-040；validation_status=review_required；name=立体几何基础（棱柱/棱锥/球体），尺规作图基础 - 尺规作图的哲学限制：只允许使用没有刻度的直尺（造线）和圆规（造圆） (n_160)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f47454f4d455452592d3034312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GEOMETRY-041.yaml`](GEOMETRY-041.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GEOMETRY-041, validation_status=review_required, name=立体几何基础与尺规作图基础；sub_topics=5
-  - **role_and_use**: 保存 GEOMETRY-041.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GEOMETRY-041.yaml（id=GEOMETRY-041；validation_status=review_required；name=立体几何基础与尺规作图基础） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GEOMETRY-041.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GEOMETRY-041.yaml（id=GEOMETRY-041；validation_status=review_required；name=立体几何基础与尺规作图基础）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f474f44454c2d3030312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GODEL-001.yaml`](GODEL-001.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GODEL-001, validation_status=review_required, name=Gödel不完备性定理初步 - 形式系统与一致性、完备性, domain=Mathematical_Logic, status=review_required；sub_topics=4
-  - **role_and_use**: 保存 GODEL-001.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GODEL-001.yaml（id=GODEL-001；validation_status=review_required；name=Gödel不完备性定理初步 - 形式系统与一致性、完备性） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GODEL-001.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GODEL-001.yaml（id=GODEL-001；validation_status=review_required；name=Gödel不完备性定理初步 - 形式系统与一致性、完备性）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f474f44454c2d3030322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GODEL-002.yaml`](GODEL-002.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GODEL-002, validation_status=review_required, title=哥德尔数 (Gödel numbering) 编码机制 (n_46), domain=Gödel不完备性定理初步 (goedel_incompleteness), status=revie…
-  - **role_and_use**: 保存 GODEL-002.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GODEL-002.yaml（id=GODEL-002；validation_status=review_required；title=哥德尔数 (Gödel numbering) 编码机制 (n_46)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GODEL-002.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GODEL-002.yaml（id=GODEL-002；validation_status=review_required；title=哥德尔数 (Gödel numbering) 编码机制 (n_46)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f474f44454c2d3030332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GODEL-003.yaml`](GODEL-003.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GODEL-003, validation_status=review_required, domain=Gödel不完备性定理初步 (goedel_incompleteness), title=第一不完备性定理（“本命题不可证”） (n_47), status=review_require…
-  - **role_and_use**: 保存 GODEL-003.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GODEL-003.yaml（id=GODEL-003；validation_status=review_required；domain=Gödel不完备性定理初步 (goedel_incompleteness)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GODEL-003.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GODEL-003.yaml（id=GODEL-003；validation_status=review_required；domain=Gödel不完备性定理初步 (goedel_incompleteness)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f474f44454c2d3030342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/GODEL-004.yaml`](GODEL-004.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=GODEL-004, validation_status=review_required, title=第二不完备性定理（系统不能证明自身的一致性）, domain=goedel_incompleteness, status=review_required；sub_topics=4
-  - **role_and_use**: 保存 GODEL-004.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 GODEL-004.yaml（id=GODEL-004；validation_status=review_required；title=第二不完备性定理（系统不能证明自身的一致性）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 GODEL-004.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 GODEL-004.yaml（id=GODEL-004；validation_status=review_required；title=第二不完备性定理（系统不能证明自身的一致性））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e46494e4954592d3030315f436f756e7461626c652e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFINITY-001_Countable.yaml`](INFINITY-001_Countable.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=INFINITY-001, validation_status=review_required, name=可数集的严格定义 (Strict Definition of Countable Sets), domain=Set_Theory, status=review_required；su…
-  - **role_and_use**: 保存 INFINITY-001_Countable.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFINITY-001_Countable.yaml（id=INFINITY-001；validation_status=review_required；name=可数集的严格定义 (Strict Definition of Countable Sets)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFINITY-001_Countable.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFINITY-001_Countable.yaml（id=INFINITY-001；validation_status=review_required；name=可数集的严格定义 (Strict Definition of Countable Sets)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e46494e4954592d3030325f526174696f6e616c732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFINITY-002_Rationals.yaml`](INFINITY-002_Rationals.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=INFINITY-002, validation_status=review_required, title=有理数集的可数性证明 (Countability of Rationals), domain=Set_Theory, status=review_required；sub_topic…
-  - **role_and_use**: 保存 INFINITY-002_Rationals.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFINITY-002_Rationals.yaml（id=INFINITY-002；validation_status=review_required；title=有理数集的可数性证明 (Countability of Rationals)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFINITY-002_Rationals.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFINITY-002_Rationals.yaml（id=INFINITY-002；validation_status=review_required；title=有理数集的可数性证明 (Countability of Rationals)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e46494e4954592d3030335f446961676f6e616c697a6174696f6e2e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFINITY-003_Diagonalization.yaml`](INFINITY-003_Diagonalization.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=INFINITY-003, validation_status=review_required, name=康托尔对角线法则 (Cantor's Diagonal Argument), domain=Set_Theory, status=review_required；sub_topics=4
-  - **role_and_use**: 保存 INFINITY-003_Diagonalization.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFINITY-003_Diagonalization.yaml（id=INFINITY-003；validation_status=review_required；name=康托尔对角线法则 (Cantor's Diagonal Argument)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFINITY-003_Diagonalization.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFINITY-003_Diagonalization.yaml（id=INFINITY-003；validation_status=review_required；name=康托尔对角线法则 (Cantor's Diagonal Argument)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e46494e4954592d3030345f556e636f756e7461626c655f5265616c732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFINITY-004_Uncountable_Reals.yaml`](INFINITY-004_Uncountable_Reals.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=INFINITY-004, validation_status=review_required, title=实数集的不可数性 (Uncountability of Real Numbers), domain=Set_Theory, status=review_required；sub_to…
-  - **role_and_use**: 保存 INFINITY-004_Uncountable_Reals.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFINITY-004_Uncountable_Reals.yaml（id=INFINITY-004；validation_status=review_required；title=实数集的不可数性 (Uncountability of Real Numbers)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFINITY-004_Uncountable_Reals.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFINITY-004_Uncountable_Reals.yaml（id=INFINITY-004；validation_status=review_required；title=实数集的不可数性 (Uncountability of Real Numbers)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e46494e4954592d3030355f436f6e74696e75756d5f4879706f7468657369732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFINITY-005_Continuum_Hypothesis.yaml`](INFINITY-005_Continuum_Hypothesis.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=INFINITY-005, validation_status=review_required, name=连续统假设 (Continuum Hypothesis), domain=Set_Theory, status=review_required；sub_topics=5
-  - **role_and_use**: 保存 INFINITY-005_Continuum_Hypothesis.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFINITY-005_Continuum_Hypothesis.yaml（id=INFINITY-005；validation_status=review_required；name=连续统假设 (Continuum Hypothesis)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFINITY-005_Continuum_Hypothesis.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFINITY-005_Continuum_Hypothesis.yaml（id=INFINITY-005；validation_status=review_required；name=连续统假设 (Continuum Hypothesis)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e464f5f5448454f52592d3730302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFO_THEORY-700.yaml`](INFO_THEORY-700.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=INFO_THEORY-…
-  - **role_and_use**: 保存 INFO_THEORY-700.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFO_THEORY-700.yaml（id=INFO_THEORY-700；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFO_THEORY-700.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFO_THEORY-700.yaml（id=INFO_THEORY-700；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e464f5f5448454f52592d3730312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFO_THEORY-701.yaml`](INFO_THEORY-701.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=INFO_THEORY-…
-  - **role_and_use**: 保存 INFO_THEORY-701.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFO_THEORY-701.yaml（id=INFO_THEORY-701；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFO_THEORY-701.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFO_THEORY-701.yaml（id=INFO_THEORY-701；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e464f5f5448454f52592d3730322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFO_THEORY-702.yaml`](INFO_THEORY-702.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=INFO_THEORY-…
-  - **role_and_use**: 保存 INFO_THEORY-702.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFO_THEORY-702.yaml（id=INFO_THEORY-702；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFO_THEORY-702.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFO_THEORY-702.yaml（id=INFO_THEORY-702；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e464f5f5448454f52592d3730332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFO_THEORY-703.yaml`](INFO_THEORY-703.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=INFO_THEORY-…
-  - **role_and_use**: 保存 INFO_THEORY-703.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFO_THEORY-703.yaml（id=INFO_THEORY-703；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFO_THEORY-703.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFO_THEORY-703.yaml（id=INFO_THEORY-703；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e464f5f5448454f52592d3730342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFO_THEORY-704.yaml`](INFO_THEORY-704.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=INFO_THEORY-…
-  - **role_and_use**: 保存 INFO_THEORY-704.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFO_THEORY-704.yaml（id=INFO_THEORY-704；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFO_THEORY-704.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFO_THEORY-704.yaml（id=INFO_THEORY-704；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e464f5f5448454f52592d3730352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFO_THEORY-705.yaml`](INFO_THEORY-705.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=INFO_THEORY-…
-  - **role_and_use**: 保存 INFO_THEORY-705.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFO_THEORY-705.yaml（id=INFO_THEORY-705；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFO_THEORY-705.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFO_THEORY-705.yaml（id=INFO_THEORY-705；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e464f5f5448454f52592d3730362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFO_THEORY-706.yaml`](INFO_THEORY-706.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=INFO_THEORY-…
-  - **role_and_use**: 保存 INFO_THEORY-706.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFO_THEORY-706.yaml（id=INFO_THEORY-706；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFO_THEORY-706.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFO_THEORY-706.yaml（id=INFO_THEORY-706；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e464f5f5448454f52592d3730372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFO_THEORY-707.yaml`](INFO_THEORY-707.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=INFO_THEORY-…
-  - **role_and_use**: 保存 INFO_THEORY-707.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFO_THEORY-707.yaml（id=INFO_THEORY-707；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFO_THEORY-707.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFO_THEORY-707.yaml（id=INFO_THEORY-707；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e464f5f5448454f52592d3730382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFO_THEORY-708.yaml`](INFO_THEORY-708.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=INFO_THEORY-…
-  - **role_and_use**: 保存 INFO_THEORY-708.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFO_THEORY-708.yaml（id=INFO_THEORY-708；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFO_THEORY-708.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFO_THEORY-708.yaml（id=INFO_THEORY-708；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e464f5f5448454f52592d3730392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFO_THEORY-709.yaml`](INFO_THEORY-709.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=INFO_THEORY-…
-  - **role_and_use**: 保存 INFO_THEORY-709.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFO_THEORY-709.yaml（id=INFO_THEORY-709；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFO_THEORY-709.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFO_THEORY-709.yaml（id=INFO_THEORY-709；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e464f5f5448454f52592d3731302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFO_THEORY-710.yaml`](INFO_THEORY-710.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=INFO_THEORY-…
-  - **role_and_use**: 保存 INFO_THEORY-710.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFO_THEORY-710.yaml（id=INFO_THEORY-710；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFO_THEORY-710.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFO_THEORY-710.yaml（id=INFO_THEORY-710；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e464f5f5448454f52592d3731312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFO_THEORY-711.yaml`](INFO_THEORY-711.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=INFO_THEORY-…
-  - **role_and_use**: 保存 INFO_THEORY-711.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFO_THEORY-711.yaml（id=INFO_THEORY-711；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFO_THEORY-711.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFO_THEORY-711.yaml（id=INFO_THEORY-711；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e464f5f5448454f52592d3731322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFO_THEORY-712.yaml`](INFO_THEORY-712.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=INFO_THEORY-…
-  - **role_and_use**: 保存 INFO_THEORY-712.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFO_THEORY-712.yaml（id=INFO_THEORY-712；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFO_THEORY-712.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFO_THEORY-712.yaml（id=INFO_THEORY-712；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e464f5f5448454f52592d3731332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFO_THEORY-713.yaml`](INFO_THEORY-713.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=INFO_THEORY-…
-  - **role_and_use**: 保存 INFO_THEORY-713.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFO_THEORY-713.yaml（id=INFO_THEORY-713；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFO_THEORY-713.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFO_THEORY-713.yaml（id=INFO_THEORY-713；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e464f5f5448454f52592d3731342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFO_THEORY-714.yaml`](INFO_THEORY-714.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=INFO_THEORY-…
-  - **role_and_use**: 保存 INFO_THEORY-714.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFO_THEORY-714.yaml（id=INFO_THEORY-714；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFO_THEORY-714.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFO_THEORY-714.yaml（id=INFO_THEORY-714；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e464f5f5448454f52592d3731352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFO_THEORY-715.yaml`](INFO_THEORY-715.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=INFO_THEORY-…
-  - **role_and_use**: 保存 INFO_THEORY-715.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFO_THEORY-715.yaml（id=INFO_THEORY-715；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFO_THEORY-715.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFO_THEORY-715.yaml（id=INFO_THEORY-715；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f494e464f5f5448454f52592d3731362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/INFO_THEORY-716.yaml`](INFO_THEORY-716.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=INFO_THEORY-…
-  - **role_and_use**: 保存 INFO_THEORY-716.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 INFO_THEORY-716.yaml（id=INFO_THEORY-716；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 INFO_THEORY-716.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 INFO_THEORY-716.yaml（id=INFO_THEORY-716；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3330362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-306.yaml`](LINEAR_ALGEBRA-306.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-306.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-306.yaml（id=LINEAR_ALGEBRA-306；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-306.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-306.yaml（id=LINEAR_ALGEBRA-306；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3330372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-307.yaml`](LINEAR_ALGEBRA-307.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-307.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-307.yaml（id=LINEAR_ALGEBRA-307；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-307.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-307.yaml（id=LINEAR_ALGEBRA-307；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3330382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-308.yaml`](LINEAR_ALGEBRA-308.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-308.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-308.yaml（id=LINEAR_ALGEBRA-308；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-308.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-308.yaml（id=LINEAR_ALGEBRA-308；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3330392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-309.yaml`](LINEAR_ALGEBRA-309.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-309.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-309.yaml（id=LINEAR_ALGEBRA-309；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-309.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-309.yaml（id=LINEAR_ALGEBRA-309；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3331302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-310.yaml`](LINEAR_ALGEBRA-310.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-310.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-310.yaml（id=LINEAR_ALGEBRA-310；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-310.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-310.yaml（id=LINEAR_ALGEBRA-310；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3331312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-311.yaml`](LINEAR_ALGEBRA-311.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-311.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-311.yaml（id=LINEAR_ALGEBRA-311；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-311.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-311.yaml（id=LINEAR_ALGEBRA-311；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3331322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-312.yaml`](LINEAR_ALGEBRA-312.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-312.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-312.yaml（id=LINEAR_ALGEBRA-312；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-312.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-312.yaml（id=LINEAR_ALGEBRA-312；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3331332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-313.yaml`](LINEAR_ALGEBRA-313.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-313.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-313.yaml（id=LINEAR_ALGEBRA-313；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-313.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-313.yaml（id=LINEAR_ALGEBRA-313；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3331342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-314.yaml`](LINEAR_ALGEBRA-314.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-314.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-314.yaml（id=LINEAR_ALGEBRA-314；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-314.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-314.yaml（id=LINEAR_ALGEBRA-314；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3331352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-315.yaml`](LINEAR_ALGEBRA-315.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-315.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-315.yaml（id=LINEAR_ALGEBRA-315；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-315.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-315.yaml（id=LINEAR_ALGEBRA-315；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3331362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-316.yaml`](LINEAR_ALGEBRA-316.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-316.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-316.yaml（id=LINEAR_ALGEBRA-316；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-316.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-316.yaml（id=LINEAR_ALGEBRA-316；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3331372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-317.yaml`](LINEAR_ALGEBRA-317.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-317.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-317.yaml（id=LINEAR_ALGEBRA-317；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-317.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-317.yaml（id=LINEAR_ALGEBRA-317；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3331382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-318.yaml`](LINEAR_ALGEBRA-318.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-318.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-318.yaml（id=LINEAR_ALGEBRA-318；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-318.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-318.yaml（id=LINEAR_ALGEBRA-318；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3331392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-319.yaml`](LINEAR_ALGEBRA-319.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-319.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-319.yaml（id=LINEAR_ALGEBRA-319；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-319.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-319.yaml（id=LINEAR_ALGEBRA-319；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3332302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-320.yaml`](LINEAR_ALGEBRA-320.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-320.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-320.yaml（id=LINEAR_ALGEBRA-320；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-320.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-320.yaml（id=LINEAR_ALGEBRA-320；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3332312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-321.yaml`](LINEAR_ALGEBRA-321.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-321.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-321.yaml（id=LINEAR_ALGEBRA-321；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-321.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-321.yaml（id=LINEAR_ALGEBRA-321；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3332322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-322.yaml`](LINEAR_ALGEBRA-322.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-322.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-322.yaml（id=LINEAR_ALGEBRA-322；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-322.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-322.yaml（id=LINEAR_ALGEBRA-322；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3332332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-323.yaml`](LINEAR_ALGEBRA-323.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-323.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-323.yaml（id=LINEAR_ALGEBRA-323；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-323.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-323.yaml（id=LINEAR_ALGEBRA-323；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3332342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-324.yaml`](LINEAR_ALGEBRA-324.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-324.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-324.yaml（id=LINEAR_ALGEBRA-324；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-324.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-324.yaml（id=LINEAR_ALGEBRA-324；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3332352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-325.yaml`](LINEAR_ALGEBRA-325.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-325.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-325.yaml（id=LINEAR_ALGEBRA-325；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-325.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-325.yaml（id=LINEAR_ALGEBRA-325；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3332362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-326.yaml`](LINEAR_ALGEBRA-326.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-326.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-326.yaml（id=LINEAR_ALGEBRA-326；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-326.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-326.yaml（id=LINEAR_ALGEBRA-326；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3332372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-327.yaml`](LINEAR_ALGEBRA-327.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-327.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-327.yaml（id=LINEAR_ALGEBRA-327；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-327.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-327.yaml（id=LINEAR_ALGEBRA-327；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3332382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-328.yaml`](LINEAR_ALGEBRA-328.yaml)
   - **content_summary**: YAML 结构，顶层键：id, domain, mode, concept_name, sub_topics, formal_definition, prerequisite_nodes, llm_physical_mapping；安全锚点：id=LINEAR_ALGEBRA-328, domain=linear_algebra；sub_topics=4
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-328.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-328.yaml（id=LINEAR_ALGEBRA-328；domain=linear_algebra） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-328.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-328.yaml（id=LINEAR_ALGEBRA-328；domain=linear_algebra）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3332392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-329.yaml`](LINEAR_ALGEBRA-329.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-329.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-329.yaml（id=LINEAR_ALGEBRA-329；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-329.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-329.yaml（id=LINEAR_ALGEBRA-329；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3333302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-330.yaml`](LINEAR_ALGEBRA-330.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-330.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-330.yaml（id=LINEAR_ALGEBRA-330；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-330.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-330.yaml（id=LINEAR_ALGEBRA-330；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3333312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-331.yaml`](LINEAR_ALGEBRA-331.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-331.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-331.yaml（id=LINEAR_ALGEBRA-331；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-331.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-331.yaml（id=LINEAR_ALGEBRA-331；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3333322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-332.yaml`](LINEAR_ALGEBRA-332.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-332.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-332.yaml（id=LINEAR_ALGEBRA-332；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-332.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-332.yaml（id=LINEAR_ALGEBRA-332；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3333332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-333.yaml`](LINEAR_ALGEBRA-333.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-333.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-333.yaml（id=LINEAR_ALGEBRA-333；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-333.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-333.yaml（id=LINEAR_ALGEBRA-333；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3333342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-334.yaml`](LINEAR_ALGEBRA-334.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-334.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-334.yaml（id=LINEAR_ALGEBRA-334；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-334.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-334.yaml（id=LINEAR_ALGEBRA-334；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3333352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-335.yaml`](LINEAR_ALGEBRA-335.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-335.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-335.yaml（id=LINEAR_ALGEBRA-335；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-335.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-335.yaml（id=LINEAR_ALGEBRA-335；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3333362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-336.yaml`](LINEAR_ALGEBRA-336.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-336.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-336.yaml（id=LINEAR_ALGEBRA-336；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-336.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-336.yaml（id=LINEAR_ALGEBRA-336；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3333372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-337.yaml`](LINEAR_ALGEBRA-337.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-337.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-337.yaml（id=LINEAR_ALGEBRA-337；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-337.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-337.yaml（id=LINEAR_ALGEBRA-337；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3333382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-338.yaml`](LINEAR_ALGEBRA-338.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-338.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-338.yaml（id=LINEAR_ALGEBRA-338；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-338.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-338.yaml（id=LINEAR_ALGEBRA-338；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3333392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-339.yaml`](LINEAR_ALGEBRA-339.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-339.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-339.yaml（id=LINEAR_ALGEBRA-339；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-339.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-339.yaml（id=LINEAR_ALGEBRA-339；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3334302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-340.yaml`](LINEAR_ALGEBRA-340.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-340.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-340.yaml（id=LINEAR_ALGEBRA-340；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-340.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-340.yaml（id=LINEAR_ALGEBRA-340；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3334312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-341.yaml`](LINEAR_ALGEBRA-341.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-341.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-341.yaml（id=LINEAR_ALGEBRA-341；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-341.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-341.yaml（id=LINEAR_ALGEBRA-341；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3334322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-342.yaml`](LINEAR_ALGEBRA-342.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-342.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-342.yaml（id=LINEAR_ALGEBRA-342；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-342.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-342.yaml（id=LINEAR_ALGEBRA-342；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4c494e4541525f414c47454252412d3334332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/LINEAR_ALGEBRA-343.yaml`](LINEAR_ALGEBRA-343.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=LINEAR_ALGEB…
-  - **role_and_use**: 保存 LINEAR_ALGEBRA-343.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 LINEAR_ALGEBRA-343.yaml（id=LINEAR_ALGEBRA-343；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 LINEAR_ALGEBRA-343.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 LINEAR_ALGEBRA-343.yaml（id=LINEAR_ALGEBRA-343；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d415050494e472d3030315f43617274657369616e5f50726f647563742e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/MAPPING-001_Cartesian_Product.yaml`](MAPPING-001_Cartesian_Product.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=MAPPING-001, validation_status=review_required, name=Cartesian Product (笛卡尔积), domain=Mappings and Relations (映射与关系)
-  - **role_and_use**: 保存 MAPPING-001_Cartesian_Product.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 MAPPING-001_Cartesian_Product.yaml（id=MAPPING-001；validation_status=review_required；name=Cartesian Product (笛卡尔积)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 MAPPING-001_Cartesian_Product.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 MAPPING-001_Cartesian_Product.yaml（id=MAPPING-001；validation_status=review_required；name=Cartesian Product (笛卡尔积)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d415050494e472d3030325f46756e6374696f6e732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/MAPPING-002_Functions.yaml`](MAPPING-002_Functions.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=MAPPING-002, validation_status=review_required, title=Strict Definition of a Function (函数的严格定义)
-  - **role_and_use**: 保存 MAPPING-002_Functions.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 MAPPING-002_Functions.yaml（id=MAPPING-002；validation_status=review_required；title=Strict Definition of a Function (函数的严格定义)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 MAPPING-002_Functions.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 MAPPING-002_Functions.yaml（id=MAPPING-002；validation_status=review_required；title=Strict Definition of a Function (函数的严格定义)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d415050494e472d3030335f496e6a656374696f6e735f5375726a656374696f6e732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/MAPPING-003_Injections_Surjections.yaml`](MAPPING-003_Injections_Surjections.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=MAPPING-003, validation_status=review_required, title=Injective, Surjective, and Bijective (单射、满射、双射)
-  - **role_and_use**: 保存 MAPPING-003_Injections_Surjections.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 MAPPING-003_Injections_Surjections.yaml（id=MAPPING-003；validation_status=review_required；title=Injective, Surjective, and Bijective (单射、满射、双射)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 MAPPING-003_Injections_Surjections.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 MAPPING-003_Injections_Surjections.yaml（id=MAPPING-003；validation_status=review_required；title=Injective, Surjective, and Bijective (单射、满射、双射)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d415050494e472d3030342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/MAPPING-004.yaml`](MAPPING-004.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=MAPPING-004, validation_status=review_required, domain=Mappings and Relations, name=映射的像与原像 (Image and Preimage)；sub_topics=4
-  - **role_and_use**: 保存 MAPPING-004.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 MAPPING-004.yaml（id=MAPPING-004；validation_status=review_required；domain=Mappings and Relations） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 MAPPING-004.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 MAPPING-004.yaml（id=MAPPING-004；validation_status=review_required；domain=Mappings and Relations）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d415050494e472d3030352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/MAPPING-005.yaml`](MAPPING-005.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=MAPPING-005, validation_status=review_required, domain=mappings_and_relations；sub_topics=4
-  - **role_and_use**: 保存 MAPPING-005.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 MAPPING-005.yaml（id=MAPPING-005；validation_status=review_required；domain=mappings_and_relations） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 MAPPING-005.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 MAPPING-005.yaml（id=MAPPING-005；validation_status=review_required；domain=mappings_and_relations）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d415050494e472d3030362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/MAPPING-006.yaml`](MAPPING-006.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=MAPPING-006, validation_status=review_required, domain=mappings_and_relations, name=逆映射 (Inverse mapping) (n_14)；sub_topics=4
-  - **role_and_use**: 保存 MAPPING-006.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 MAPPING-006.yaml（id=MAPPING-006；validation_status=review_required；domain=mappings_and_relations） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 MAPPING-006.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 MAPPING-006.yaml（id=MAPPING-006；validation_status=review_required；domain=mappings_and_relations）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d4c5f4d4154482d3735312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ML_MATH-751.yaml`](ML_MATH-751.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ML_MATH-751,…
-  - **role_and_use**: 保存 ML_MATH-751.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ML_MATH-751.yaml（id=ML_MATH-751；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ML_MATH-751.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ML_MATH-751.yaml（id=ML_MATH-751；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d4c5f4d4154482d3735322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ML_MATH-752.yaml`](ML_MATH-752.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ML_MATH-752,…
-  - **role_and_use**: 保存 ML_MATH-752.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ML_MATH-752.yaml（id=ML_MATH-752；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ML_MATH-752.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ML_MATH-752.yaml（id=ML_MATH-752；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d4c5f4d4154482d3735332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ML_MATH-753.yaml`](ML_MATH-753.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ML_MATH-753,…
-  - **role_and_use**: 保存 ML_MATH-753.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ML_MATH-753.yaml（id=ML_MATH-753；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ML_MATH-753.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ML_MATH-753.yaml（id=ML_MATH-753；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d4c5f4d4154482d3735342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ML_MATH-754.yaml`](ML_MATH-754.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ML_MATH-754,…
-  - **role_and_use**: 保存 ML_MATH-754.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ML_MATH-754.yaml（id=ML_MATH-754；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ML_MATH-754.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ML_MATH-754.yaml（id=ML_MATH-754；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d4c5f4d4154482d3735352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ML_MATH-755.yaml`](ML_MATH-755.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ML_MATH-755,…
-  - **role_and_use**: 保存 ML_MATH-755.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ML_MATH-755.yaml（id=ML_MATH-755；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ML_MATH-755.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ML_MATH-755.yaml（id=ML_MATH-755；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d4c5f4d4154482d3735362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ML_MATH-756.yaml`](ML_MATH-756.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ML_MATH-756,…
-  - **role_and_use**: 保存 ML_MATH-756.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ML_MATH-756.yaml（id=ML_MATH-756；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ML_MATH-756.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ML_MATH-756.yaml（id=ML_MATH-756；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d4c5f4d4154482d3735372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ML_MATH-757.yaml`](ML_MATH-757.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ML_MATH-757,…
-  - **role_and_use**: 保存 ML_MATH-757.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ML_MATH-757.yaml（id=ML_MATH-757；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ML_MATH-757.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ML_MATH-757.yaml（id=ML_MATH-757；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d4c5f4d4154482d3735382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ML_MATH-758.yaml`](ML_MATH-758.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ML_MATH-758,…
-  - **role_and_use**: 保存 ML_MATH-758.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ML_MATH-758.yaml（id=ML_MATH-758；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ML_MATH-758.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ML_MATH-758.yaml（id=ML_MATH-758；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d4c5f4d4154482d3735392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ML_MATH-759.yaml`](ML_MATH-759.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ML_MATH-759,…
-  - **role_and_use**: 保存 ML_MATH-759.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ML_MATH-759.yaml（id=ML_MATH-759；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ML_MATH-759.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ML_MATH-759.yaml（id=ML_MATH-759；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d4c5f4d4154482d3736302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ML_MATH-760.yaml`](ML_MATH-760.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ML_MATH-760,…
-  - **role_and_use**: 保存 ML_MATH-760.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ML_MATH-760.yaml（id=ML_MATH-760；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ML_MATH-760.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ML_MATH-760.yaml（id=ML_MATH-760；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d4c5f4d4154482d3736312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ML_MATH-761.yaml`](ML_MATH-761.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ML_MATH-761,…
-  - **role_and_use**: 保存 ML_MATH-761.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ML_MATH-761.yaml（id=ML_MATH-761；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ML_MATH-761.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ML_MATH-761.yaml（id=ML_MATH-761；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d4c5f4d4154482d3736322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ML_MATH-762.yaml`](ML_MATH-762.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ML_MATH-762,…
-  - **role_and_use**: 保存 ML_MATH-762.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ML_MATH-762.yaml（id=ML_MATH-762；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ML_MATH-762.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ML_MATH-762.yaml（id=ML_MATH-762；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d4c5f4d4154482d3736332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ML_MATH-763.yaml`](ML_MATH-763.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ML_MATH-763,…
-  - **role_and_use**: 保存 ML_MATH-763.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ML_MATH-763.yaml（id=ML_MATH-763；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ML_MATH-763.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ML_MATH-763.yaml（id=ML_MATH-763；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d4c5f4d4154482d3736342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ML_MATH-764.yaml`](ML_MATH-764.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ML_MATH-764,…
-  - **role_and_use**: 保存 ML_MATH-764.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ML_MATH-764.yaml（id=ML_MATH-764；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ML_MATH-764.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ML_MATH-764.yaml（id=ML_MATH-764；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d4c5f4d4154482d3736352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ML_MATH-765.yaml`](ML_MATH-765.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ML_MATH-765,…
-  - **role_and_use**: 保存 ML_MATH-765.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ML_MATH-765.yaml（id=ML_MATH-765；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ML_MATH-765.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ML_MATH-765.yaml（id=ML_MATH-765；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d4c5f4d4154482d3736362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ML_MATH-766.yaml`](ML_MATH-766.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ML_MATH-766,…
-  - **role_and_use**: 保存 ML_MATH-766.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ML_MATH-766.yaml（id=ML_MATH-766；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ML_MATH-766.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ML_MATH-766.yaml（id=ML_MATH-766；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d4c5f4d4154482d3736372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ML_MATH-767.yaml`](ML_MATH-767.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ML_MATH-767,…
-  - **role_and_use**: 保存 ML_MATH-767.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ML_MATH-767.yaml（id=ML_MATH-767；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ML_MATH-767.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ML_MATH-767.yaml（id=ML_MATH-767；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d4c5f4d4154482d3736382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ML_MATH-768.yaml`](ML_MATH-768.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ML_MATH-768,…
-  - **role_and_use**: 保存 ML_MATH-768.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ML_MATH-768.yaml（id=ML_MATH-768；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ML_MATH-768.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ML_MATH-768.yaml（id=ML_MATH-768；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d4c5f4d4154482d3736392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ML_MATH-769.yaml`](ML_MATH-769.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ML_MATH-769,…
-  - **role_and_use**: 保存 ML_MATH-769.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ML_MATH-769.yaml（id=ML_MATH-769；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ML_MATH-769.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ML_MATH-769.yaml（id=ML_MATH-769；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4d4c5f4d4154482d3737302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ML_MATH-770.yaml`](ML_MATH-770.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ML_MATH-770,…
-  - **role_and_use**: 保存 ML_MATH-770.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ML_MATH-770.yaml（id=ML_MATH-770；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ML_MATH-770.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ML_MATH-770.yaml（id=ML_MATH-770；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3030312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-001.yaml`](NUM_THEORY-001.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=NUM_THEORY-0…
-  - **role_and_use**: 保存 NUM_THEORY-001.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-001.yaml（id=NUM_THEORY-001；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-001.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-001.yaml（id=NUM_THEORY-001；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3030322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-002.yaml`](NUM_THEORY-002.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=NUM_THEORY-002, validation_s…
-  - **role_and_use**: 保存 NUM_THEORY-002.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-002.yaml（id=NUM_THEORY-002；validation_status=review_required；domain=Number Theory） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-002.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-002.yaml（id=NUM_THEORY-002；validation_status=review_required；domain=Number Theory）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3030332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-003.yaml`](NUM_THEORY-003.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=NUM_THEORY-0…
-  - **role_and_use**: 保存 NUM_THEORY-003.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-003.yaml（id=NUM_THEORY-003；validation_status=review_required；title=整除与素数 - 素数与合数的定义，以及欧几里得素数无限性的经典反证法（构造 p1p2...pn + 1）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-003.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-003.yaml（id=NUM_THEORY-003；validation_status=review_required；title=整除与素数 - 素数与合数的定义，以及欧几里得素数无限性的经典反证法（构造 p1p2...pn + 1））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3030342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-004.yaml`](NUM_THEORY-004.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=NUM_THEORY-0…
-  - **role_and_use**: 保存 NUM_THEORY-004.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-004.yaml（id=NUM_THEORY-004；validation_status=review_required；title=整除与素数 - 算术基本定理（唯一分解定理）在数论中的公理化地位 (n_198)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-004.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-004.yaml（id=NUM_THEORY-004；validation_status=review_required；title=整除与素数 - 算术基本定理（唯一分解定理）在数论中的公理化地位 (n_198)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3030352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-005.yaml`](NUM_THEORY-005.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=NUM_THEORY-0…
-  - **role_and_use**: 保存 NUM_THEORY-005.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-005.yaml（id=NUM_THEORY-005；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-005.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-005.yaml（id=NUM_THEORY-005；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3030362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-006.yaml`](NUM_THEORY-006.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=NUM_THEORY-006, validation_status=review_required, title=最大公因数/最小公倍数 - 互质的概念及其在分数简化中的应用 (n_200), domain=number_theory；sub_topics=4
-  - **role_and_use**: 保存 NUM_THEORY-006.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-006.yaml（id=NUM_THEORY-006；validation_status=review_required；title=最大公因数/最小公倍数 - 互质的概念及其在分数简化中的应用 (n_200)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-006.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-006.yaml（id=NUM_THEORY-006；validation_status=review_required；title=最大公因数/最小公倍数 - 互质的概念及其在分数简化中的应用 (n_200)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3030372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-007.yaml`](NUM_THEORY-007.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=NUM_THEORY-0…
-  - **role_and_use**: 保存 NUM_THEORY-007.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-007.yaml（id=NUM_THEORY-007；validation_status=review_required；title=同余 - 发生学溯源：钟表算术与齿轮的循环咬合——将无限线性整数轴卷曲为有限闭合圆环） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-007.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-007.yaml（id=NUM_THEORY-007；validation_status=review_required；title=同余 - 发生学溯源：钟表算术与齿轮的循环咬合——将无限线性整数轴卷曲为有限闭合圆环）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3030382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-008.yaml`](NUM_THEORY-008.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=NUM_THEORY-008, validation_s…
-  - **role_and_use**: 保存 NUM_THEORY-008.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-008.yaml（id=NUM_THEORY-008；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-008.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-008.yaml（id=NUM_THEORY-008；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3030392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-009.yaml`](NUM_THEORY-009.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=NUM_THEORY-0…
-  - **role_and_use**: 保存 NUM_THEORY-009.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-009.yaml（id=NUM_THEORY-009；validation_status=review_required；domain=Number Theory） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-009.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-009.yaml（id=NUM_THEORY-009；validation_status=review_required；domain=Number Theory）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3031302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-010.yaml`](NUM_THEORY-010.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=NUM_THEORY-0…
-  - **role_and_use**: 保存 NUM_THEORY-010.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-010.yaml（id=NUM_THEORY-010；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-010.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-010.yaml（id=NUM_THEORY-010；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3031312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-011.yaml`](NUM_THEORY-011.yaml)
   - **content_summary**: YAML 结构，顶层键：node_meta, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=NUM_THEORY-011, title=中国剩余定理 - 发生学溯源：中国古代“韩信点兵（物不知数）”的工程调度问题 (n_205)；sub_topi…
-  - **role_and_use**: 保存 NUM_THEORY-011.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-011.yaml（id=NUM_THEORY-011；title=中国剩余定理 - 发生学溯源：中国古代“韩信点兵（物不知数）”的工程调度问题 (n_205)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-011.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-011.yaml（id=NUM_THEORY-011；title=中国剩余定理 - 发生学溯源：中国古代“韩信点兵（物不知数）”的工程调度问题 (n_205)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3031322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-012.yaml`](NUM_THEORY-012.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=NUM_THEORY-012, validation_s…
-  - **role_and_use**: 保存 NUM_THEORY-012.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-012.yaml（id=NUM_THEORY-012；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-012.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-012.yaml（id=NUM_THEORY-012；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3031332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-013.yaml`](NUM_THEORY-013.yaml)
   - **content_summary**: YAML 结构，顶层键：version, concept_node；安全锚点：id=NUM_THEORY-013, validation_status=review_required, name=费马小定理 - 作为欧拉定理在 n 为素数 p 时的必然特例（a^(p-1) ≡ 1 (mod p)）；sub_topics=4
-  - **role_and_use**: 保存 NUM_THEORY-013.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-013.yaml（id=NUM_THEORY-013；validation_status=review_required；name=费马小定理 - 作为欧拉定理在 n 为素数 p 时的必然特例（a^(p-1) ≡ 1 (mod p)）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-013.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-013.yaml（id=NUM_THEORY-013；validation_status=review_required；name=费马小定理 - 作为欧拉定理在 n 为素数 p 时的必然特例（a^(p-1) ≡ 1 (mod p)））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3031342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-014.yaml`](NUM_THEORY-014.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=NUM_THEORY-0…
-  - **role_and_use**: 保存 NUM_THEORY-014.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-014.yaml（id=NUM_THEORY-014；validation_status=review_required；title=费马小定理 - 费马小定理在素性测试中的物理作用 (n_208)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-014.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-014.yaml（id=NUM_THEORY-014；validation_status=review_required；title=费马小定理 - 费马小定理在素性测试中的物理作用 (n_208)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3031352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-015.yaml`](NUM_THEORY-015.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=NUM_THEORY-015, validation_s…
-  - **role_and_use**: 保存 NUM_THEORY-015.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-015.yaml（id=NUM_THEORY-015；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-015.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-015.yaml（id=NUM_THEORY-015；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3031362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-016.yaml`](NUM_THEORY-016.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=NUM_THEORY-0…
-  - **role_and_use**: 保存 NUM_THEORY-016.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-016.yaml（id=NUM_THEORY-016；validation_status=review_required；title=二次剩余 - 勒让德符号 (Legendre Symbol) 定义与欧拉判别法 (a^((p-1)/2) ≡ ±1 (mod p)) 推导 (n_210)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-016.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-016.yaml（id=NUM_THEORY-016；validation_status=review_required；title=二次剩余 - 勒让德符号 (Legendre Symbol) 定义与欧拉判别法 (a^((p-1)/2) ≡ ±1 (mod p)) 推导 (n_210)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3031372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-017.yaml`](NUM_THEORY-017.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=NUM_THEORY-0…
-  - **role_and_use**: 保存 NUM_THEORY-017.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-017.yaml（id=NUM_THEORY-017；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-017.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-017.yaml（id=NUM_THEORY-017；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3031382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-018.yaml`](NUM_THEORY-018.yaml)
   - **content_summary**: YAML 结构，顶层键：version, node_metadata, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=NUM_THEORY-018, title=欧几里得算法（辗转相除法） - 消除奇迹步骤：欧几里得算法的几何面积分割直觉（用小正方形填满大长方形的物理过…
-  - **role_and_use**: 保存 NUM_THEORY-018.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-018.yaml（id=NUM_THEORY-018；title=欧几里得算法（辗转相除法） - 消除奇迹步骤：欧几里得算法的几何面积分割直觉（用小正方形填满大长方形的物理过程） (n_212)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-018.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-018.yaml（id=NUM_THEORY-018；title=欧几里得算法（辗转相除法） - 消除奇迹步骤：欧几里得算法的几何面积分割直觉（用小正方形填满大长方形的物理过程） (n_212)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3031392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-019.yaml`](NUM_THEORY-019.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=NUM_THEORY-019, validation_status=review_required, name=欧几里得算法（辗转相除法） - 利用欧几里得算法反向推导裴蜀定理 (Bézout's identity)：存在整数 x, y 使得 ax + by = gcd…, domain=N…
-  - **role_and_use**: 保存 NUM_THEORY-019.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-019.yaml（id=NUM_THEORY-019；validation_status=review_required；name=欧几里得算法（辗转相除法） - 利用欧几里得算法反向推导裴蜀定理 (Bézout's identity)：存在整数 x, y 使得 ax + by = gcd…） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-019.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-019.yaml（id=NUM_THEORY-019；validation_status=review_required；name=欧几里得算法（辗转相除法） - 利用欧几里得算法反向推导裴蜀定理 (Bézout's identity)：存在整数 x, y 使得 ax + by = gcd…）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3032302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-020.yaml`](NUM_THEORY-020.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=NUM_THEORY-0…
-  - **role_and_use**: 保存 NUM_THEORY-020.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-020.yaml（id=NUM_THEORY-020；validation_status=review_required；name=欧几里得算法（辗转相除法） - 裴蜀定理作为所有线性同余方程可解的底层钥匙） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-020.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-020.yaml（id=NUM_THEORY-020；validation_status=review_required；name=欧几里得算法（辗转相除法） - 裴蜀定理作为所有线性同余方程可解的底层钥匙）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3032312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-021.yaml`](NUM_THEORY-021.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=NUM_THEORY-0…
-  - **role_and_use**: 保存 NUM_THEORY-021.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-021.yaml（id=NUM_THEORY-021；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-021.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-021.yaml（id=NUM_THEORY-021；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3032322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-022.yaml`](NUM_THEORY-022.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=NUM_THEORY-0…
-  - **role_and_use**: 保存 NUM_THEORY-022.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-022.yaml（id=NUM_THEORY-022；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-022.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-022.yaml（id=NUM_THEORY-022；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3032332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-023.yaml`](NUM_THEORY-023.yaml)
   - **content_summary**: YAML 结构，顶层键：version, concept_node；安全锚点：id=NUM_THEORY-023, validation_status=review_required, name=欧拉定理 - 欧拉定理 (a^φ(n) ≡ 1 (mod n)) 的缩系（既约同余类）重排证明法 (n_217), domain=Number Theory；su…
-  - **role_and_use**: 保存 NUM_THEORY-023.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-023.yaml（id=NUM_THEORY-023；validation_status=review_required；name=欧拉定理 - 欧拉定理 (a^φ(n) ≡ 1 (mod n)) 的缩系（既约同余类）重排证明法 (n_217)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-023.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-023.yaml（id=NUM_THEORY-023；validation_status=review_required；name=欧拉定理 - 欧拉定理 (a^φ(n) ≡ 1 (mod n)) 的缩系（既约同余类）重排证明法 (n_217)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3032342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-024.yaml`](NUM_THEORY-024.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=NUM_THEORY-0…
-  - **role_and_use**: 保存 NUM_THEORY-024.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-024.yaml（id=NUM_THEORY-024；validation_status=review_required；name=威尔逊定理 - 定理内容：(p-1)! ≡ -1 (mod p) 当且仅当 p 为素数 (n_218)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-024.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-024.yaml（id=NUM_THEORY-024；validation_status=review_required；name=威尔逊定理 - 定理内容：(p-1)! ≡ -1 (mod p) 当且仅当 p 为素数 (n_218)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3032352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-025.yaml`](NUM_THEORY-025.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=NUM_THEORY-0…
-  - **role_and_use**: 保存 NUM_THEORY-025.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-025.yaml（id=NUM_THEORY-025；validation_status=review_required；title=威尔逊定理 - 消除奇迹步骤：在剩余系中将元素与其模逆元两两配对，利用抵消性质证明 (n_219)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-025.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-025.yaml（id=NUM_THEORY-025；validation_status=review_required；title=威尔逊定理 - 消除奇迹步骤：在剩余系中将元素与其模逆元两两配对，利用抵消性质证明 (n_219)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3032362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-026.yaml`](NUM_THEORY-026.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=NUM_THEORY-026, validation_s…
-  - **role_and_use**: 保存 NUM_THEORY-026.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-026.yaml（id=NUM_THEORY-026；validation_status=review_required；title=Order of an Integer Modulo m） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-026.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-026.yaml（id=NUM_THEORY-026；validation_status=review_required；title=Order of an Integer Modulo m）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3032372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-027.yaml`](NUM_THEORY-027.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=NUM_THEORY-0…
-  - **role_and_use**: 保存 NUM_THEORY-027.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-027.yaml（id=NUM_THEORY-027；validation_status=review_required；title=原根与离散对数初步 - 原根 (Primitive Root)：当阶 k = φ(m) 时生成整个既约剩余系 (n_221)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-027.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-027.yaml（id=NUM_THEORY-027；validation_status=review_required；title=原根与离散对数初步 - 原根 (Primitive Root)：当阶 k = φ(m) 时生成整个既约剩余系 (n_221)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4e554d5f5448454f52592d3032382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/NUM_THEORY-028.yaml`](NUM_THEORY-028.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=NUM_THEORY-0…
-  - **role_and_use**: 保存 NUM_THEORY-028.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 NUM_THEORY-028.yaml（id=NUM_THEORY-028；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 NUM_THEORY-028.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 NUM_THEORY-028.yaml（id=NUM_THEORY-028；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3433382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-438.yaml`](ODE-438.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-438, val…
-  - **role_and_use**: 保存 ODE-438.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-438.yaml（id=ODE-438；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-438.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-438.yaml（id=ODE-438；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3433392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-439.yaml`](ODE-439.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-439, val…
-  - **role_and_use**: 保存 ODE-439.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-439.yaml（id=ODE-439；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-439.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-439.yaml（id=ODE-439；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3434302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-440.yaml`](ODE-440.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-440, val…
-  - **role_and_use**: 保存 ODE-440.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-440.yaml（id=ODE-440；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-440.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-440.yaml（id=ODE-440；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3434312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-441.yaml`](ODE-441.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-441, val…
-  - **role_and_use**: 保存 ODE-441.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-441.yaml（id=ODE-441；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-441.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-441.yaml（id=ODE-441；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3434322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-442.yaml`](ODE-442.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-442, val…
-  - **role_and_use**: 保存 ODE-442.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-442.yaml（id=ODE-442；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-442.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-442.yaml（id=ODE-442；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3434332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-443.yaml`](ODE-443.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-443, val…
-  - **role_and_use**: 保存 ODE-443.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-443.yaml（id=ODE-443；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-443.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-443.yaml（id=ODE-443；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3434342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-444.yaml`](ODE-444.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-444, val…
-  - **role_and_use**: 保存 ODE-444.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-444.yaml（id=ODE-444；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-444.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-444.yaml（id=ODE-444；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3434352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-445.yaml`](ODE-445.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-445, val…
-  - **role_and_use**: 保存 ODE-445.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-445.yaml（id=ODE-445；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-445.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-445.yaml（id=ODE-445；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3434362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-446.yaml`](ODE-446.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-446, val…
-  - **role_and_use**: 保存 ODE-446.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-446.yaml（id=ODE-446；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-446.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-446.yaml（id=ODE-446；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3434372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-447.yaml`](ODE-447.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-447, val…
-  - **role_and_use**: 保存 ODE-447.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-447.yaml（id=ODE-447；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-447.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-447.yaml（id=ODE-447；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3434382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-448.yaml`](ODE-448.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-448, val…
-  - **role_and_use**: 保存 ODE-448.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-448.yaml（id=ODE-448；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-448.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-448.yaml（id=ODE-448；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3434392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-449.yaml`](ODE-449.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-449, val…
-  - **role_and_use**: 保存 ODE-449.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-449.yaml（id=ODE-449；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-449.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-449.yaml（id=ODE-449；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3435302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-450.yaml`](ODE-450.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-450, val…
-  - **role_and_use**: 保存 ODE-450.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-450.yaml（id=ODE-450；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-450.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-450.yaml（id=ODE-450；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3435312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-451.yaml`](ODE-451.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-451, val…
-  - **role_and_use**: 保存 ODE-451.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-451.yaml（id=ODE-451；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-451.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-451.yaml（id=ODE-451；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3435322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-452.yaml`](ODE-452.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-452, val…
-  - **role_and_use**: 保存 ODE-452.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-452.yaml（id=ODE-452；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-452.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-452.yaml（id=ODE-452；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3435332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-453.yaml`](ODE-453.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-453, val…
-  - **role_and_use**: 保存 ODE-453.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-453.yaml（id=ODE-453；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-453.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-453.yaml（id=ODE-453；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3435342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-454.yaml`](ODE-454.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-454, val…
-  - **role_and_use**: 保存 ODE-454.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-454.yaml（id=ODE-454；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-454.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-454.yaml（id=ODE-454；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3435352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-455.yaml`](ODE-455.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-455, val…
-  - **role_and_use**: 保存 ODE-455.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-455.yaml（id=ODE-455；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-455.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-455.yaml（id=ODE-455；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3435362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-456.yaml`](ODE-456.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-456, val…
-  - **role_and_use**: 保存 ODE-456.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-456.yaml（id=ODE-456；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-456.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-456.yaml（id=ODE-456；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3435372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-457.yaml`](ODE-457.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-457, val…
-  - **role_and_use**: 保存 ODE-457.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-457.yaml（id=ODE-457；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-457.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-457.yaml（id=ODE-457；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3435382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-458.yaml`](ODE-458.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-458, val…
-  - **role_and_use**: 保存 ODE-458.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-458.yaml（id=ODE-458；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-458.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-458.yaml（id=ODE-458；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3435392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-459.yaml`](ODE-459.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-459, val…
-  - **role_and_use**: 保存 ODE-459.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-459.yaml（id=ODE-459；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-459.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-459.yaml（id=ODE-459；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3436302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-460.yaml`](ODE-460.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-460, val…
-  - **role_and_use**: 保存 ODE-460.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-460.yaml（id=ODE-460；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-460.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-460.yaml（id=ODE-460；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3436312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-461.yaml`](ODE-461.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-461, val…
-  - **role_and_use**: 保存 ODE-461.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-461.yaml（id=ODE-461；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-461.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-461.yaml（id=ODE-461；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3436322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-462.yaml`](ODE-462.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-462, val…
-  - **role_and_use**: 保存 ODE-462.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-462.yaml（id=ODE-462；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-462.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-462.yaml（id=ODE-462；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f44452d3436332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ODE-463.yaml`](ODE-463.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ODE-463, val…
-  - **role_and_use**: 保存 ODE-463.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ODE-463.yaml（id=ODE-463；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ODE-463.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ODE-463.yaml（id=ODE-463；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f5054494d495a4154494f4e2d3731372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/OPTIMIZATION-717.yaml`](OPTIMIZATION-717.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=OPTIMIZATION…
-  - **role_and_use**: 保存 OPTIMIZATION-717.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 OPTIMIZATION-717.yaml（id=OPTIMIZATION-717；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 OPTIMIZATION-717.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 OPTIMIZATION-717.yaml（id=OPTIMIZATION-717；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f5054494d495a4154494f4e2d3731382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/OPTIMIZATION-718.yaml`](OPTIMIZATION-718.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=OPTIMIZATION…
-  - **role_and_use**: 保存 OPTIMIZATION-718.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 OPTIMIZATION-718.yaml（id=OPTIMIZATION-718；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 OPTIMIZATION-718.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 OPTIMIZATION-718.yaml（id=OPTIMIZATION-718；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f5054494d495a4154494f4e2d3731392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/OPTIMIZATION-719.yaml`](OPTIMIZATION-719.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=OPTIMIZATION…
-  - **role_and_use**: 保存 OPTIMIZATION-719.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 OPTIMIZATION-719.yaml（id=OPTIMIZATION-719；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 OPTIMIZATION-719.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 OPTIMIZATION-719.yaml（id=OPTIMIZATION-719；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f5054494d495a4154494f4e2d3732302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/OPTIMIZATION-720.yaml`](OPTIMIZATION-720.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=OPTIMIZATION…
-  - **role_and_use**: 保存 OPTIMIZATION-720.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 OPTIMIZATION-720.yaml（id=OPTIMIZATION-720；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 OPTIMIZATION-720.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 OPTIMIZATION-720.yaml（id=OPTIMIZATION-720；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f5054494d495a4154494f4e2d3732312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/OPTIMIZATION-721.yaml`](OPTIMIZATION-721.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=OPTIMIZATION…
-  - **role_and_use**: 保存 OPTIMIZATION-721.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 OPTIMIZATION-721.yaml（id=OPTIMIZATION-721；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 OPTIMIZATION-721.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 OPTIMIZATION-721.yaml（id=OPTIMIZATION-721；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f5054494d495a4154494f4e2d3732322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/OPTIMIZATION-722.yaml`](OPTIMIZATION-722.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=OPTIMIZATION…
-  - **role_and_use**: 保存 OPTIMIZATION-722.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 OPTIMIZATION-722.yaml（id=OPTIMIZATION-722；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 OPTIMIZATION-722.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 OPTIMIZATION-722.yaml（id=OPTIMIZATION-722；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f5054494d495a4154494f4e2d3732332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/OPTIMIZATION-723.yaml`](OPTIMIZATION-723.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=OPTIMIZATION…
-  - **role_and_use**: 保存 OPTIMIZATION-723.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 OPTIMIZATION-723.yaml（id=OPTIMIZATION-723；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 OPTIMIZATION-723.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 OPTIMIZATION-723.yaml（id=OPTIMIZATION-723；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f5054494d495a4154494f4e2d3732342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/OPTIMIZATION-724.yaml`](OPTIMIZATION-724.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=OPTIMIZATION…
-  - **role_and_use**: 保存 OPTIMIZATION-724.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 OPTIMIZATION-724.yaml（id=OPTIMIZATION-724；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 OPTIMIZATION-724.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 OPTIMIZATION-724.yaml（id=OPTIMIZATION-724；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f5054494d495a4154494f4e2d3732352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/OPTIMIZATION-725.yaml`](OPTIMIZATION-725.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=OPTIMIZATION…
-  - **role_and_use**: 保存 OPTIMIZATION-725.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 OPTIMIZATION-725.yaml（id=OPTIMIZATION-725；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 OPTIMIZATION-725.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 OPTIMIZATION-725.yaml（id=OPTIMIZATION-725；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f5054494d495a4154494f4e2d3732362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/OPTIMIZATION-726.yaml`](OPTIMIZATION-726.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=OPTIMIZATION…
-  - **role_and_use**: 保存 OPTIMIZATION-726.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 OPTIMIZATION-726.yaml（id=OPTIMIZATION-726；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 OPTIMIZATION-726.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 OPTIMIZATION-726.yaml（id=OPTIMIZATION-726；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f5054494d495a4154494f4e2d3732372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/OPTIMIZATION-727.yaml`](OPTIMIZATION-727.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=OPTIMIZATION…
-  - **role_and_use**: 保存 OPTIMIZATION-727.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 OPTIMIZATION-727.yaml（id=OPTIMIZATION-727；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 OPTIMIZATION-727.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 OPTIMIZATION-727.yaml（id=OPTIMIZATION-727；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f5054494d495a4154494f4e2d3732382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/OPTIMIZATION-728.yaml`](OPTIMIZATION-728.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=OPTIMIZATION…
-  - **role_and_use**: 保存 OPTIMIZATION-728.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 OPTIMIZATION-728.yaml（id=OPTIMIZATION-728；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 OPTIMIZATION-728.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 OPTIMIZATION-728.yaml（id=OPTIMIZATION-728；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f5054494d495a4154494f4e2d3732392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/OPTIMIZATION-729.yaml`](OPTIMIZATION-729.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=OPTIMIZATION…
-  - **role_and_use**: 保存 OPTIMIZATION-729.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 OPTIMIZATION-729.yaml（id=OPTIMIZATION-729；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 OPTIMIZATION-729.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 OPTIMIZATION-729.yaml（id=OPTIMIZATION-729；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f5054494d495a4154494f4e2d3733302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/OPTIMIZATION-730.yaml`](OPTIMIZATION-730.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=OPTIMIZATION…
-  - **role_and_use**: 保存 OPTIMIZATION-730.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 OPTIMIZATION-730.yaml（id=OPTIMIZATION-730；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 OPTIMIZATION-730.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 OPTIMIZATION-730.yaml（id=OPTIMIZATION-730；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f5054494d495a4154494f4e2d3733312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/OPTIMIZATION-731.yaml`](OPTIMIZATION-731.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=OPTIMIZATION…
-  - **role_and_use**: 保存 OPTIMIZATION-731.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 OPTIMIZATION-731.yaml（id=OPTIMIZATION-731；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 OPTIMIZATION-731.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 OPTIMIZATION-731.yaml（id=OPTIMIZATION-731；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f5054494d495a4154494f4e2d3733322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/OPTIMIZATION-732.yaml`](OPTIMIZATION-732.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=OPTIMIZATION…
-  - **role_and_use**: 保存 OPTIMIZATION-732.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 OPTIMIZATION-732.yaml（id=OPTIMIZATION-732；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 OPTIMIZATION-732.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 OPTIMIZATION-732.yaml（id=OPTIMIZATION-732；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f4f5054494d495a4154494f4e2d3733332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/OPTIMIZATION-733.yaml`](OPTIMIZATION-733.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=OPTIMIZATION…
-  - **role_and_use**: 保存 OPTIMIZATION-733.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 OPTIMIZATION-733.yaml（id=OPTIMIZATION-733；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 OPTIMIZATION-733.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 OPTIMIZATION-733.yaml（id=OPTIMIZATION-733；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3438302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-480.yaml`](PDE-480.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-480, val…
-  - **role_and_use**: 保存 PDE-480.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-480.yaml（id=PDE-480；validation_status=review_required；name=经典方程（热/波/Laplace） - 热传导方程 (Heat Equation)：描述能量不可逆消散，扩散模型加噪物理引擎 (n_480)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-480.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-480.yaml（id=PDE-480；validation_status=review_required；name=经典方程（热/波/Laplace） - 热传导方程 (Heat Equation)：描述能量不可逆消散，扩散模型加噪物理引擎 (n_480)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3438312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-481.yaml`](PDE-481.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-481, val…
-  - **role_and_use**: 保存 PDE-481.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-481.yaml（id=PDE-481；validation_status=review_required；name=经典方程（热/波/Laplace） - 波动方程 (Wave Equation)：描述时空中有限速度传播的波动与因果光锥 (n_481)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-481.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-481.yaml（id=PDE-481；validation_status=review_required；name=经典方程（热/波/Laplace） - 波动方程 (Wave Equation)：描述时空中有限速度传播的波动与因果光锥 (n_481)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3438322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-482.yaml`](PDE-482.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-482, val…
-  - **role_and_use**: 保存 PDE-482.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-482.yaml（id=PDE-482；validation_status=review_required；name=经典方程（热/波/Laplace） - 拉普拉斯方程 (Laplace Equation)：描述空间达到绝对平衡的稳态场 (n_482)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-482.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-482.yaml（id=PDE-482；validation_status=review_required；name=经典方程（热/波/Laplace） - 拉普拉斯方程 (Laplace Equation)：描述空间达到绝对平衡的稳态场 (n_482)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3438332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-483.yaml`](PDE-483.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-483, val…
-  - **role_and_use**: 保存 PDE-483.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-483.yaml（id=PDE-483；validation_status=review_required；name=特征线法 - 物理直觉：在偏微分流体中寻找“顺流而下”的特殊曲线，将 PDE 坍缩为 ODE (n_483)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-483.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-483.yaml（id=PDE-483；validation_status=review_required；name=特征线法 - 物理直觉：在偏微分流体中寻找“顺流而下”的特殊曲线，将 PDE 坍缩为 ODE (n_483)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3438342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-484.yaml`](PDE-484.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-484, val…
-  - **role_and_use**: 保存 PDE-484.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-484.yaml（id=PDE-484；validation_status=review_required；name=特征线法 - 应用于一阶拟线性方程的解析求解 (n_484)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-484.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-484.yaml（id=PDE-484；validation_status=review_required；name=特征线法 - 应用于一阶拟线性方程的解析求解 (n_484)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3438352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-485.yaml`](PDE-485.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-485, val…
-  - **role_and_use**: 保存 PDE-485.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-485.yaml（id=PDE-485；validation_status=review_required；name=分离变量 - 将时空耦合多元函数撕裂为空间函数与时间函数的乘积，实现降维打击 (n_485)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-485.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-485.yaml（id=PDE-485；validation_status=review_required；name=分离变量 - 将时空耦合多元函数撕裂为空间函数与时间函数的乘积，实现降维打击 (n_485)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3438362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-486.yaml`](PDE-486.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-486, val…
-  - **role_and_use**: 保存 PDE-486.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-486.yaml（id=PDE-486；validation_status=review_required；name=分离变量 - 结合本征值问题的解析解构造 (n_486)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-486.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-486.yaml（id=PDE-486；validation_status=review_required；name=分离变量 - 结合本征值问题的解析解构造 (n_486)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3438372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-487.yaml`](PDE-487.yaml)
   - **content_summary**: YAML 结构，顶层键：id, domain, mode, name, sub_topics, formal_definition, prerequisite_nodes, llm_physical_mapping；安全锚点：id=PDE-487, domain=partial_differential_equations, name=Fourier方法…
-  - **role_and_use**: 保存 PDE-487.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-487.yaml（id=PDE-487；domain=partial_differential_equations；name=Fourier方法 - 大模型映射：将空间域微分转化为频域代数乘法，傅里叶神经算子 (FNO) 的数学底座 (n_487)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-487.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-487.yaml（id=PDE-487；domain=partial_differential_equations；name=Fourier方法 - 大模型映射：将空间域微分转化为频域代数乘法，傅里叶神经算子 (FNO) 的数学底座 (n_487)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3438382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-488.yaml`](PDE-488.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-488, val…
-  - **role_and_use**: 保存 PDE-488.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-488.yaml（id=PDE-488；validation_status=review_required；name=Fourier方法 - 利用傅里叶变换/级数处理无限上下文积分的 O(N log N) 复杂度优化 (n_488)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-488.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-488.yaml（id=PDE-488；validation_status=review_required；name=Fourier方法 - 利用傅里叶变换/级数处理无限上下文积分的 O(N log N) 复杂度优化 (n_488)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3438392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-489.yaml`](PDE-489.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-489, val…
-  - **role_and_use**: 保存 PDE-489.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-489.yaml（id=PDE-489；validation_status=review_required；name=弱解与分布 - 逻辑跃迁：当物理场存在尖锐边缘或不连续时，将导数概念转移到光滑测试函数上 (n_489)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-489.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-489.yaml（id=PDE-489；validation_status=review_required；name=弱解与分布 - 逻辑跃迁：当物理场存在尖锐边缘或不连续时，将导数概念转移到光滑测试函数上 (n_489)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3439302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-490.yaml`](PDE-490.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-490, val…
-  - **role_and_use**: 保存 PDE-490.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-490.yaml（id=PDE-490；validation_status=review_required；name=经典方程（热/波/Laplace） - 波动方程 (Wave Equation)：描述能量无损耗的有限速传播，特征线与反射物理引擎 (n_490)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-490.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-490.yaml（id=PDE-490；validation_status=review_required；name=经典方程（热/波/Laplace） - 波动方程 (Wave Equation)：描述能量无损耗的有限速传播，特征线与反射物理引擎 (n_490)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3439312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-491.yaml`](PDE-491.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-491, val…
-  - **role_and_use**: 保存 PDE-491.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-491.yaml（id=PDE-491；validation_status=review_required；name=经典方程（热/波/Laplace） - 拉普拉斯方程 (Laplace Equation)：稳态平衡场，描述没有任何净流量的终极势能态。 (n_491)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-491.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-491.yaml（id=PDE-491；validation_status=review_required；name=经典方程（热/波/Laplace） - 拉普拉斯方程 (Laplace Equation)：稳态平衡场，描述没有任何净流量的终极势能态。 (n_491)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3439322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-492.yaml`](PDE-492.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-492, val…
-  - **role_and_use**: 保存 PDE-492.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-492.yaml（id=PDE-492；validation_status=review_required；name=有限元方法初步 - 将无限连续流形离散化为微小网格，现代工程仿真与视觉分块机制 (ViT Patching) 的前置思想 (n_492)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-492.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-492.yaml（id=PDE-492；validation_status=review_required；name=有限元方法初步 - 将无限连续流形离散化为微小网格，现代工程仿真与视觉分块机制 (ViT Patching) 的前置思想 (n_492)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3439332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-493.yaml`](PDE-493.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-493, val…
-  - **role_and_use**: 保存 PDE-493.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-493.yaml（id=PDE-493；validation_status=review_required；name=PDE的分类（椭圆/抛物/双曲） - 消除奇迹步骤：通过圆锥曲线判别式联系物理特性（稳态/扩散/波动） (n_493)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-493.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-493.yaml（id=PDE-493；validation_status=review_required；name=PDE的分类（椭圆/抛物/双曲） - 消除奇迹步骤：通过圆锥曲线判别式联系物理特性（稳态/扩散/波动） (n_493)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3439342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-494.yaml`](PDE-494.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-494, val…
-  - **role_and_use**: 保存 PDE-494.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-494.yaml（id=PDE-494；validation_status=review_required；name=PDE的分类（椭圆/抛物/双曲） - 椭圆型（稳态平衡）、抛物型（不可逆消散）、双曲型（有限速传播）的分类直觉 (n_494)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-494.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-494.yaml（id=PDE-494；validation_status=review_required；name=PDE的分类（椭圆/抛物/双曲） - 椭圆型（稳态平衡）、抛物型（不可逆消散）、双曲型（有限速传播）的分类直觉 (n_494)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3439352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-495.yaml`](PDE-495.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-495, val…
-  - **role_and_use**: 保存 PDE-495.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-495.yaml（id=PDE-495；validation_status=review_required；name=Green函数方法 - 发生学溯源：点脉冲响应的积分叠加，卷积注意力机制的连续空间祖先 (n_495)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-495.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-495.yaml（id=PDE-495；validation_status=review_required；name=Green函数方法 - 发生学溯源：点脉冲响应的积分叠加，卷积注意力机制的连续空间祖先 (n_495)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3439362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-496.yaml`](PDE-496.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-496, val…
-  - **role_and_use**: 保存 PDE-496.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-496.yaml（id=PDE-496；validation_status=review_required；name=Green函数方法 - 利用基本解构造任意复杂源项下的场分布 (n_496)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-496.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-496.yaml（id=PDE-496；validation_status=review_required；name=Green函数方法 - 利用基本解构造任意复杂源项下的场分布 (n_496)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3439372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-497.yaml`](PDE-497.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-497, val…
-  - **role_and_use**: 保存 PDE-497.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-497.yaml（id=PDE-497；validation_status=review_required；name=变分原理（最小作用量） - 【核心 AI 映射】：物理场自发极小化总能量泛函，梯度下降与 Loss 极小化的泛函同构 (n_497)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-497.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-497.yaml（id=PDE-497；validation_status=review_required；name=变分原理（最小作用量） - 【核心 AI 映射】：物理场自发极小化总能量泛函，梯度下降与 Loss 极小化的泛函同构 (n_497)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3439382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-498.yaml`](PDE-498.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-498, val…
-  - **role_and_use**: 保存 PDE-498.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-498.yaml（id=PDE-498；validation_status=review_required；name=变分原理（最小作用量） - 欧拉-拉格朗日方程的推导与应用 (n_498)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-498.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-498.yaml（id=PDE-498；validation_status=review_required；name=变分原理（最小作用量） - 欧拉-拉格朗日方程的推导与应用 (n_498)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3439392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-499.yaml`](PDE-499.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-499, val…
-  - **role_and_use**: 保存 PDE-499.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-499.yaml（id=PDE-499；validation_status=review_required；name=最大值原理 - 消除奇迹步骤：证明稳态与扩散场极值必在边界取得，内部无局部最优陷阱 (n_499)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-499.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-499.yaml（id=PDE-499；validation_status=review_required；name=最大值原理 - 消除奇迹步骤：证明稳态与扩散场极值必在边界取得，内部无局部最优陷阱 (n_499)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3530302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-500.yaml`](PDE-500.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-500, val…
-  - **role_and_use**: 保存 PDE-500.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-500.yaml（id=PDE-500；validation_status=review_required；name=非线性PDE简介（Hamilton-Jacobi方程） - 大模型映射：最优控制理论核心，引导模型从噪声精确坍缩至语义流形的动力学方程 (n_500)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-500.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-500.yaml（id=PDE-500；validation_status=review_required；name=非线性PDE简介（Hamilton-Jacobi方程） - 大模型映射：最优控制理论核心，引导模型从噪声精确坍缩至语义流形的动力学方程 (n_500)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5044452d3530312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PDE-501.yaml`](PDE-501.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PDE-501, val…
-  - **role_and_use**: 保存 PDE-501.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PDE-501.yaml（id=PDE-501；validation_status=review_required；name=非线性PDE简介（Hamilton-Jacobi方程） - Fokker-Planck 方程与概率流演化的深度关联 (n_501)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PDE-501.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PDE-501.yaml（id=PDE-501；validation_status=review_required；name=非线性PDE简介（Hamilton-Jacobi方程） - Fokker-Planck 方程与概率流演化的深度关联 (n_501)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f504f534554532d3030312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/POSETS-001.yaml`](POSETS-001.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=POSETS-001, validation_status=review_required, domain=posets_and_lattices；sub_topics=4
-  - **role_and_use**: 保存 POSETS-001.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 POSETS-001.yaml（id=POSETS-001；validation_status=review_required；domain=posets_and_lattices） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 POSETS-001.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 POSETS-001.yaml（id=POSETS-001；validation_status=review_required；domain=posets_and_lattices）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f504f534554532d3030322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/POSETS-002.yaml`](POSETS-002.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=POSETS-002, validation_status=review_required, name=哈斯图 (Hasse Diagram), domain=posets_and_lattices；sub_topics=4
-  - **role_and_use**: 保存 POSETS-002.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 POSETS-002.yaml（id=POSETS-002；validation_status=review_required；name=哈斯图 (Hasse Diagram)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 POSETS-002.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 POSETS-002.yaml（id=POSETS-002；validation_status=review_required；name=哈斯图 (Hasse Diagram)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f504f534554532d3030332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/POSETS-003.yaml`](POSETS-003.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=POSETS-003, validation_status=review_required, name=极大/极小元、最大/最小元, domain=posets_and_lattices；sub_topics=4
-  - **role_and_use**: 保存 POSETS-003.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 POSETS-003.yaml（id=POSETS-003；validation_status=review_required；name=极大/极小元、最大/最小元） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 POSETS-003.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 POSETS-003.yaml（id=POSETS-003；validation_status=review_required；name=极大/极小元、最大/最小元）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f504f534554532d3030342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/POSETS-004.yaml`](POSETS-004.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=POSETS-004, validation_status=review_required, name=上界/下界与上确界/下确界 (Supremum &amp; Infimum), domain=posets_and_lattices；sub_topics=4
-  - **role_and_use**: 保存 POSETS-004.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 POSETS-004.yaml（id=POSETS-004；validation_status=review_required；name=上界/下界与上确界/下确界 (Supremum &amp; Infimum)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 POSETS-004.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 POSETS-004.yaml（id=POSETS-004；validation_status=review_required；name=上界/下界与上确界/下确界 (Supremum &amp; Infimum)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f504f534554532d3030352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/POSETS-005.yaml`](POSETS-005.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=POSETS-005, validation_status=review_required, name=格的定义与代数性质, domain=posets_and_lattices；sub_topics=5
-  - **role_and_use**: 保存 POSETS-005.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 POSETS-005.yaml（id=POSETS-005；validation_status=review_required；name=格的定义与代数性质） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 POSETS-005.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 POSETS-005.yaml（id=POSETS-005；validation_status=review_required；name=格的定义与代数性质）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f504f534554532d3030362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/POSETS-006.yaml`](POSETS-006.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=POSETS-006, validation_status=review_required, domain=posets_and_lattices；sub_topics=5
-  - **role_and_use**: 保存 POSETS-006.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 POSETS-006.yaml（id=POSETS-006；validation_status=review_required；domain=posets_and_lattices） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 POSETS-006.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 POSETS-006.yaml（id=POSETS-006；validation_status=review_required；domain=posets_and_lattices）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f505245445f4c4f4749432d3030315f5175616e746966696572732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PRED_LOGIC-001_Quantifiers.yaml`](PRED_LOGIC-001_Quantifiers.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=PRED_LOGIC-001, name=Quantifiers (量词 ∀ / ∃)
-  - **role_and_use**: 保存 PRED_LOGIC-001_Quantifiers.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PRED_LOGIC-001_Quantifiers.yaml（id=PRED_LOGIC-001；name=Quantifiers (量词 ∀ / ∃)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PRED_LOGIC-001_Quantifiers.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PRED_LOGIC-001_Quantifiers.yaml（id=PRED_LOGIC-001；name=Quantifiers (量词 ∀ / ∃)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f505245445f4c4f4749432d3030325f5661726961626c65732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PRED_LOGIC-002_Variables.yaml`](PRED_LOGIC-002_Variables.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=PRED_LOGIC-002, title=Bound and Free Variables (约束变元与自由变元), domain=Predicate Logic
-  - **role_and_use**: 保存 PRED_LOGIC-002_Variables.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PRED_LOGIC-002_Variables.yaml（id=PRED_LOGIC-002；title=Bound and Free Variables (约束变元与自由变元)；domain=Predicate Logic） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PRED_LOGIC-002_Variables.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PRED_LOGIC-002_Variables.yaml（id=PRED_LOGIC-002；title=Bound and Free Variables (约束变元与自由变元)；domain=Predicate Logic）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f505245445f4c4f4749432d3030335f5746462e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PRED_LOGIC-003_WFF.yaml`](PRED_LOGIC-003_WFF.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=PRED_LOGIC-003, validation_status=review_required, name=Well-Formed Formulas, domain=Predicate Logic
-  - **role_and_use**: 保存 PRED_LOGIC-003_WFF.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PRED_LOGIC-003_WFF.yaml（id=PRED_LOGIC-003；validation_status=review_required；name=Well-Formed Formulas） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PRED_LOGIC-003_WFF.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PRED_LOGIC-003_WFF.yaml（id=PRED_LOGIC-003；validation_status=review_required；name=Well-Formed Formulas）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3334342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-344.yaml`](PROB_STAT-344.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-34…
-  - **role_and_use**: 保存 PROB_STAT-344.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-344.yaml（id=PROB_STAT-344；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-344.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-344.yaml（id=PROB_STAT-344；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3334352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-345.yaml`](PROB_STAT-345.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-34…
-  - **role_and_use**: 保存 PROB_STAT-345.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-345.yaml（id=PROB_STAT-345；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-345.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-345.yaml（id=PROB_STAT-345；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3334362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-346.yaml`](PROB_STAT-346.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-34…
-  - **role_and_use**: 保存 PROB_STAT-346.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-346.yaml（id=PROB_STAT-346；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-346.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-346.yaml（id=PROB_STAT-346；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3334372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-347.yaml`](PROB_STAT-347.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-34…
-  - **role_and_use**: 保存 PROB_STAT-347.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-347.yaml（id=PROB_STAT-347；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-347.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-347.yaml（id=PROB_STAT-347；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3334382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-348.yaml`](PROB_STAT-348.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-34…
-  - **role_and_use**: 保存 PROB_STAT-348.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-348.yaml（id=PROB_STAT-348；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-348.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-348.yaml（id=PROB_STAT-348；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3334392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-349.yaml`](PROB_STAT-349.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-34…
-  - **role_and_use**: 保存 PROB_STAT-349.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-349.yaml（id=PROB_STAT-349；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-349.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-349.yaml（id=PROB_STAT-349；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3335302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-350.yaml`](PROB_STAT-350.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-35…
-  - **role_and_use**: 保存 PROB_STAT-350.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-350.yaml（id=PROB_STAT-350；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-350.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-350.yaml（id=PROB_STAT-350；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3335312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-351.yaml`](PROB_STAT-351.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-35…
-  - **role_and_use**: 保存 PROB_STAT-351.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-351.yaml（id=PROB_STAT-351；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-351.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-351.yaml（id=PROB_STAT-351；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3335322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-352.yaml`](PROB_STAT-352.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-35…
-  - **role_and_use**: 保存 PROB_STAT-352.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-352.yaml（id=PROB_STAT-352；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-352.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-352.yaml（id=PROB_STAT-352；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3335332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-353.yaml`](PROB_STAT-353.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-35…
-  - **role_and_use**: 保存 PROB_STAT-353.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-353.yaml（id=PROB_STAT-353；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-353.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-353.yaml（id=PROB_STAT-353；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3335342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-354.yaml`](PROB_STAT-354.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-35…
-  - **role_and_use**: 保存 PROB_STAT-354.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-354.yaml（id=PROB_STAT-354；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-354.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-354.yaml（id=PROB_STAT-354；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3335352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-355.yaml`](PROB_STAT-355.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-35…
-  - **role_and_use**: 保存 PROB_STAT-355.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-355.yaml（id=PROB_STAT-355；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-355.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-355.yaml（id=PROB_STAT-355；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3335362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-356.yaml`](PROB_STAT-356.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-35…
-  - **role_and_use**: 保存 PROB_STAT-356.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-356.yaml（id=PROB_STAT-356；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-356.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-356.yaml（id=PROB_STAT-356；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3335372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-357.yaml`](PROB_STAT-357.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-35…
-  - **role_and_use**: 保存 PROB_STAT-357.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-357.yaml（id=PROB_STAT-357；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-357.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-357.yaml（id=PROB_STAT-357；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3335382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-358.yaml`](PROB_STAT-358.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-35…
-  - **role_and_use**: 保存 PROB_STAT-358.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-358.yaml（id=PROB_STAT-358；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-358.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-358.yaml（id=PROB_STAT-358；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3335392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-359.yaml`](PROB_STAT-359.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-35…
-  - **role_and_use**: 保存 PROB_STAT-359.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-359.yaml（id=PROB_STAT-359；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-359.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-359.yaml（id=PROB_STAT-359；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3336302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-360.yaml`](PROB_STAT-360.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-36…
-  - **role_and_use**: 保存 PROB_STAT-360.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-360.yaml（id=PROB_STAT-360；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-360.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-360.yaml（id=PROB_STAT-360；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3336312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-361.yaml`](PROB_STAT-361.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-36…
-  - **role_and_use**: 保存 PROB_STAT-361.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-361.yaml（id=PROB_STAT-361；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-361.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-361.yaml（id=PROB_STAT-361；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3336322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-362.yaml`](PROB_STAT-362.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-36…
-  - **role_and_use**: 保存 PROB_STAT-362.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-362.yaml（id=PROB_STAT-362；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-362.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-362.yaml（id=PROB_STAT-362；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3336332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-363.yaml`](PROB_STAT-363.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-36…
-  - **role_and_use**: 保存 PROB_STAT-363.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-363.yaml（id=PROB_STAT-363；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-363.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-363.yaml（id=PROB_STAT-363；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3336342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-364.yaml`](PROB_STAT-364.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-36…
-  - **role_and_use**: 保存 PROB_STAT-364.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-364.yaml（id=PROB_STAT-364；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-364.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-364.yaml（id=PROB_STAT-364；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3336352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-365.yaml`](PROB_STAT-365.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-36…
-  - **role_and_use**: 保存 PROB_STAT-365.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-365.yaml（id=PROB_STAT-365；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-365.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-365.yaml（id=PROB_STAT-365；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3336362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-366.yaml`](PROB_STAT-366.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-36…
-  - **role_and_use**: 保存 PROB_STAT-366.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-366.yaml（id=PROB_STAT-366；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-366.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-366.yaml（id=PROB_STAT-366；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3336372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-367.yaml`](PROB_STAT-367.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-36…
-  - **role_and_use**: 保存 PROB_STAT-367.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-367.yaml（id=PROB_STAT-367；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-367.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-367.yaml（id=PROB_STAT-367；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3336382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-368.yaml`](PROB_STAT-368.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-36…
-  - **role_and_use**: 保存 PROB_STAT-368.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-368.yaml（id=PROB_STAT-368；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-368.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-368.yaml（id=PROB_STAT-368；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3336392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-369.yaml`](PROB_STAT-369.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-36…
-  - **role_and_use**: 保存 PROB_STAT-369.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-369.yaml（id=PROB_STAT-369；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-369.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-369.yaml（id=PROB_STAT-369；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3337302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-370.yaml`](PROB_STAT-370.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-37…
-  - **role_and_use**: 保存 PROB_STAT-370.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-370.yaml（id=PROB_STAT-370；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-370.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-370.yaml（id=PROB_STAT-370；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3337312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-371.yaml`](PROB_STAT-371.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-37…
-  - **role_and_use**: 保存 PROB_STAT-371.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-371.yaml（id=PROB_STAT-371；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-371.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-371.yaml（id=PROB_STAT-371；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f425f535441542d3337322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROB_STAT-372.yaml`](PROB_STAT-372.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=PROB_STAT-37…
-  - **role_and_use**: 保存 PROB_STAT-372.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROB_STAT-372.yaml（id=PROB_STAT-372；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROB_STAT-372.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROB_STAT-372.yaml（id=PROB_STAT-372；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f4f465f4d4554484f44532d3030312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROOF_METHODS-001.yaml`](PROOF_METHODS-001.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=PROOF_METHODS-001, validation_status=manual_review_required, domain=证明方法（直接/反证/归纳） (proof_methods) - 直接证明法 (n_1)
-  - **role_and_use**: 保存 PROOF_METHODS-001.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROOF_METHODS-001.yaml（id=PROOF_METHODS-001；validation_status=manual_review_required；domain=证明方法（直接/反证/归纳） (proof_methods) - 直接证明法 (n_1)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROOF_METHODS-001.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROOF_METHODS-001.yaml（id=PROOF_METHODS-001；validation_status=manual_review_required；domain=证明方法（直接/反证/归纳） (proof_methods) - 直接证明法 (n_1)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f4f465f4d4554484f44532d3030322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROOF_METHODS-002.yaml`](PROOF_METHODS-002.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=PROOF_METHODS-002, validation_status=manual_review_required, domain=proof_methods, name=逆否证明法 (Contrapositive)；sub_topics=4
-  - **role_and_use**: 保存 PROOF_METHODS-002.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROOF_METHODS-002.yaml（id=PROOF_METHODS-002；validation_status=manual_review_required；domain=proof_methods） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROOF_METHODS-002.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROOF_METHODS-002.yaml（id=PROOF_METHODS-002；validation_status=manual_review_required；domain=proof_methods）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f4f465f4d4554484f44532d3030332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROOF_METHODS-003.yaml`](PROOF_METHODS-003.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=PROOF_METHODS-003, validation_status=manual_review_required, domain=证明方法（直接/反证/归纳） (proof_methods) - 反证法 (Contradiction)；sub_topics=4
-  - **role_and_use**: 保存 PROOF_METHODS-003.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROOF_METHODS-003.yaml（id=PROOF_METHODS-003；validation_status=manual_review_required；domain=证明方法（直接/反证/归纳） (proof_methods) - 反证法 (Contradiction)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROOF_METHODS-003.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROOF_METHODS-003.yaml（id=PROOF_METHODS-003；validation_status=manual_review_required；domain=证明方法（直接/反证/归纳） (proof_methods) - 反证法 (Contradiction)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f4f465f4d4554484f44532d3030342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROOF_METHODS-004.yaml`](PROOF_METHODS-004.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=PROOF_METHODS-004, validation_status=manual_review_required, domain=proof_methods, name=数学归纳法（第一/第二归纳法） (n_4)；sub_topics=5
-  - **role_and_use**: 保存 PROOF_METHODS-004.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROOF_METHODS-004.yaml（id=PROOF_METHODS-004；validation_status=manual_review_required；domain=proof_methods） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROOF_METHODS-004.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROOF_METHODS-004.yaml（id=PROOF_METHODS-004；validation_status=manual_review_required；domain=proof_methods）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f4f465f4d4554484f44532d3030352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROOF_METHODS-005.yaml`](PROOF_METHODS-005.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=PROOF_METHODS-005, validation_status=manual_review_required, domain=proof_methods, name=良基归纳法 (Well-founded induction)；sub_topics=4
-  - **role_and_use**: 保存 PROOF_METHODS-005.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROOF_METHODS-005.yaml（id=PROOF_METHODS-005；validation_status=manual_review_required；domain=proof_methods） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROOF_METHODS-005.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROOF_METHODS-005.yaml（id=PROOF_METHODS-005；validation_status=manual_review_required；domain=proof_methods）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f505f4c4f4749432d3030315f436f6e6e656374697665732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROP_LOGIC-001_Connectives.yaml`](PROP_LOGIC-001_Connectives.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=PROP_LOGIC-001, validation_status=review_required, name=Propositional Logic Connectives (命题逻辑与逻辑联结词), domain=Mathematical Logic (数理逻辑) / Propositi…
-  - **role_and_use**: 保存 PROP_LOGIC-001_Connectives.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROP_LOGIC-001_Connectives.yaml（id=PROP_LOGIC-001；validation_status=review_required；name=Propositional Logic Connectives (命题逻辑与逻辑联结词)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROP_LOGIC-001_Connectives.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROP_LOGIC-001_Connectives.yaml（id=PROP_LOGIC-001；validation_status=review_required；name=Propositional Logic Connectives (命题逻辑与逻辑联结词)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f505f4c4f4749432d3030325f54727574685f5461626c65732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROP_LOGIC-002_Truth_Tables.yaml`](PROP_LOGIC-002_Truth_Tables.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=PROP_LOGIC-002, validation_status=review_required, name=Truth Tables &amp; Logical Equivalence (真值表与逻辑等价), domain=Mathematical Logic (数理逻辑) / Prop…
-  - **role_and_use**: 保存 PROP_LOGIC-002_Truth_Tables.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROP_LOGIC-002_Truth_Tables.yaml（id=PROP_LOGIC-002；validation_status=review_required；name=Truth Tables &amp; Logical Equivalence (真值表与逻辑等价)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROP_LOGIC-002_Truth_Tables.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROP_LOGIC-002_Truth_Tables.yaml（id=PROP_LOGIC-002；validation_status=review_required；name=Truth Tables &amp; Logical Equivalence (真值表与逻辑等价)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f505f4c4f4749432d3030335f44655f4d6f7267616e735f4c6177732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROP_LOGIC-003_De_Morgans_Laws.yaml`](PROP_LOGIC-003_De_Morgans_Laws.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=PROP_LOGIC-003, validation_status=review_required, name=De Morgan's Laws (德·摩根定律), domain=Mathematical Logic (数理逻辑) / Propositional Calculus
-  - **role_and_use**: 保存 PROP_LOGIC-003_De_Morgans_Laws.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROP_LOGIC-003_De_Morgans_Laws.yaml（id=PROP_LOGIC-003；validation_status=review_required；name=De Morgan's Laws (德·摩根定律)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROP_LOGIC-003_De_Morgans_Laws.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROP_LOGIC-003_De_Morgans_Laws.yaml（id=PROP_LOGIC-003；validation_status=review_required；name=De Morgan's Laws (德·摩根定律)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f505f4c4f4749432d3030345f546175746f6c6f676965732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROP_LOGIC-004_Tautologies.yaml`](PROP_LOGIC-004_Tautologies.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=PROP_LOGIC-004, title=Tautologies and Contradictions (永真式与矛盾式), domain=Propositional Logic
-  - **role_and_use**: 保存 PROP_LOGIC-004_Tautologies.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROP_LOGIC-004_Tautologies.yaml（id=PROP_LOGIC-004；title=Tautologies and Contradictions (永真式与矛盾式)；domain=Propositional Logic） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROP_LOGIC-004_Tautologies.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROP_LOGIC-004_Tautologies.yaml（id=PROP_LOGIC-004；title=Tautologies and Contradictions (永真式与矛盾式)；domain=Propositional Logic）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f50524f505f4c4f4749432d3030355f4e6f726d616c5f466f726d732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROP_LOGIC-005_Normal_Forms.yaml`](PROP_LOGIC-005_Normal_Forms.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=PROP_LOGIC-005, validation_status=review_required, title=Normal Forms (主析取范式 DNF 与主合取范式 CNF), domain=Propositional Logic
-  - **role_and_use**: 保存 PROP_LOGIC-005_Normal_Forms.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 PROP_LOGIC-005_Normal_Forms.yaml（id=PROP_LOGIC-005；validation_status=review_required；title=Normal Forms (主析取范式 DNF 与主合取范式 CNF)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 PROP_LOGIC-005_Normal_Forms.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 PROP_LOGIC-005_Normal_Forms.yaml（id=PROP_LOGIC-005；validation_status=review_required；title=Normal Forms (主析取范式 DNF 与主合取范式 CNF)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f524154494f2d3030312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/RATIO-001.yaml`](RATIO-001.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=RATIO-001, validation_status=review_required, name=比值与比例的严格定义及基本性质, domain=ratios_and_percentages；sub_topics=4
-  - **role_and_use**: 保存 RATIO-001.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 RATIO-001.yaml（id=RATIO-001；validation_status=review_required；name=比值与比例的严格定义及基本性质） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 RATIO-001.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 RATIO-001.yaml（id=RATIO-001；validation_status=review_required；name=比值与比例的严格定义及基本性质）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f524154494f2d3030322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/RATIO-002.yaml`](RATIO-002.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=RATIO-002, validation_status=review_required, title=比例与百分比 (ratios_and_percentages) - 正比例与反比例函数的雏形 (n_62)；sub_topics=4
-  - **role_and_use**: 保存 RATIO-002.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 RATIO-002.yaml（id=RATIO-002；validation_status=review_required；title=比例与百分比 (ratios_and_percentages) - 正比例与反比例函数的雏形 (n_62)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 RATIO-002.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 RATIO-002.yaml（id=RATIO-002；validation_status=review_required；title=比例与百分比 (ratios_and_percentages) - 正比例与反比例函数的雏形 (n_62)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f524154494f2d3030332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/RATIO-003.yaml`](RATIO-003.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=RATIO-003, validation_status=review_required, name=百分比的基数转换、连续变化及复合增长率（复利）计算, domain=ratios_and_percentages, status=active；sub_topics=4
-  - **role_and_use**: 保存 RATIO-003.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 RATIO-003.yaml（id=RATIO-003；validation_status=review_required；name=百分比的基数转换、连续变化及复合增长率（复利）计算） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 RATIO-003.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 RATIO-003.yaml（id=RATIO-003；validation_status=review_required；name=百分比的基数转换、连续变化及复合增长率（复利）计算）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5245414c5f4e554d424552532d3030312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/REAL_NUMBERS-001.yaml`](REAL_NUMBERS-001.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=REAL_NUMBERS-001, validation_status=review_required, title=实数轴的连续性与无理数的无限不循环特征 (n_106)；sub_topics=4
-  - **role_and_use**: 保存 REAL_NUMBERS-001.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 REAL_NUMBERS-001.yaml（id=REAL_NUMBERS-001；validation_status=review_required；title=实数轴的连续性与无理数的无限不循环特征 (n_106)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 REAL_NUMBERS-001.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 REAL_NUMBERS-001.yaml（id=REAL_NUMBERS-001；validation_status=review_required；title=实数轴的连续性与无理数的无限不循环特征 (n_106)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f52454c4154494f4e2d3030315f446566696e6974696f6e2e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/RELATION-001_Definition.yaml`](RELATION-001_Definition.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=RELATION-001, validation_status=review_required, name=Definition of a Relation
-  - **role_and_use**: 保存 RELATION-001_Definition.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 RELATION-001_Definition.yaml（id=RELATION-001；validation_status=review_required；name=Definition of a Relation） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 RELATION-001_Definition.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 RELATION-001_Definition.yaml（id=RELATION-001；validation_status=review_required；name=Definition of a Relation）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f52454c4154494f4e2d3030325f50726f706572746965732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/RELATION-002_Properties.yaml`](RELATION-002_Properties.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=RELATION-002, validation_status=review_required, title=Relation Properties (关系的性质 - 自反、对称、传递)
-  - **role_and_use**: 保存 RELATION-002_Properties.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 RELATION-002_Properties.yaml（id=RELATION-002；validation_status=review_required；title=Relation Properties (关系的性质 - 自反、对称、传递)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 RELATION-002_Properties.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 RELATION-002_Properties.yaml（id=RELATION-002；validation_status=review_required；title=Relation Properties (关系的性质 - 自反、对称、传递)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f52454c4154494f4e2d3030335f4571756976616c656e63652e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/RELATION-003_Equivalence.yaml`](RELATION-003_Equivalence.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=RELATION-003, validation_status=review_required, title=Equivalence Relations and Classes (等价关系与等价类)
-  - **role_and_use**: 保存 RELATION-003_Equivalence.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 RELATION-003_Equivalence.yaml（id=RELATION-003；validation_status=review_required；title=Equivalence Relations and Classes (等价关系与等价类)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 RELATION-003_Equivalence.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 RELATION-003_Equivalence.yaml（id=RELATION-003；validation_status=review_required；title=Equivalence Relations and Classes (等价关系与等价类)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f52454c4154494f4e2d3030342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/RELATION-004.yaml`](RELATION-004.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=RELATION-004, validation_status=review_required, domain=Discrete Mathematics / Abstract Algebra, name=等价关系 - 等价类构成的商集 (Quotient Set)；sub_topics=4
-  - **role_and_use**: 保存 RELATION-004.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 RELATION-004.yaml（id=RELATION-004；validation_status=review_required；domain=Discrete Mathematics / Abstract Algebra） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 RELATION-004.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 RELATION-004.yaml（id=RELATION-004；validation_status=review_required；domain=Discrete Mathematics / Abstract Algebra）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f52555353454c4c2d3030312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/RUSSELL-001.yaml`](RUSSELL-001.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=RUSSELL-001, validation_status=manual_review_required, domain=Set Theory &amp; Type Theory；sub_topics=4
-  - **role_and_use**: 保存 RUSSELL-001.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 RUSSELL-001.yaml（id=RUSSELL-001；validation_status=manual_review_required；domain=Set Theory &amp; Type Theory） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 RUSSELL-001.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 RUSSELL-001.yaml（id=RUSSELL-001；validation_status=manual_review_required；domain=Set Theory &amp; Type Theory）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f52555353454c4c2d3030322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/RUSSELL-002.yaml`](RUSSELL-002.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=RUSSELL-002, validation_status=manual_review_required, domain=Set Theory and Logic, title=Russell悖论与类型论 (russell_and_type_theory) - 简单类型论 (Simple…
-  - **role_and_use**: 保存 RUSSELL-002.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 RUSSELL-002.yaml（id=RUSSELL-002；validation_status=manual_review_required；domain=Set Theory and Logic） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 RUSSELL-002.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 RUSSELL-002.yaml（id=RUSSELL-002；validation_status=manual_review_required；domain=Set Theory and Logic）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f52555353454c4c2d3030332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/RUSSELL-003.yaml`](RUSSELL-003.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=RUSSELL-003, validation_status=manual_review_required, domain=Logic &amp; Foundations, title=Russell悖论与类型论 (russell_and_type_theory) - 类型系统的层级避免悖论…
-  - **role_and_use**: 保存 RUSSELL-003.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 RUSSELL-003.yaml（id=RUSSELL-003；validation_status=manual_review_required；domain=Logic &amp; Foundations） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 RUSSELL-003.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 RUSSELL-003.yaml（id=RUSSELL-003；validation_status=manual_review_required；domain=Logic &amp; Foundations）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5345545f5448454f52592d3030315f5375627365742e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/SET_THEORY-001_Subset.yaml`](SET_THEORY-001_Subset.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=SET_THEORY-001, validation_status=review_required, name=Subset and Set Operations (集合与子集), domain=Set Theory (集合论)
-  - **role_and_use**: 保存 SET_THEORY-001_Subset.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 SET_THEORY-001_Subset.yaml（id=SET_THEORY-001；validation_status=review_required；name=Subset and Set Operations (集合与子集)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 SET_THEORY-001_Subset.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 SET_THEORY-001_Subset.yaml（id=SET_THEORY-001；validation_status=review_required；name=Subset and Set Operations (集合与子集)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5345545f5448454f52592d3030325f4f7065726174696f6e732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/SET_THEORY-002_Operations.yaml`](SET_THEORY-002_Operations.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=SET_THEORY-002, validation_status=review_required, name=Core Set Operations (交、并、差、补), domain=Set Theory (集合论)
-  - **role_and_use**: 保存 SET_THEORY-002_Operations.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 SET_THEORY-002_Operations.yaml（id=SET_THEORY-002；validation_status=review_required；name=Core Set Operations (交、并、差、补)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 SET_THEORY-002_Operations.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 SET_THEORY-002_Operations.yaml（id=SET_THEORY-002；validation_status=review_required；name=Core Set Operations (交、并、差、补)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5345545f5448454f52592d3030335f44655f4d6f7267616e2e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/SET_THEORY-003_De_Morgan.yaml`](SET_THEORY-003_De_Morgan.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=SET_THEORY-003, validation_status=review_required, name=De Morgan's Laws for Sets (集合版德·摩根定律), domain=Set Theory (集合论)
-  - **role_and_use**: 保存 SET_THEORY-003_De_Morgan.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 SET_THEORY-003_De_Morgan.yaml（id=SET_THEORY-003；validation_status=review_required；name=De Morgan's Laws for Sets (集合版德·摩根定律)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 SET_THEORY-003_De_Morgan.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 SET_THEORY-003_De_Morgan.yaml（id=SET_THEORY-003；validation_status=review_required；name=De Morgan's Laws for Sets (集合版德·摩根定律)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5345545f5448454f52592d3030342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/SET_THEORY-004.yaml`](SET_THEORY-004.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=SET_THEORY-004, validation_status=review_required, domain=set_operations, name=集合的对称差 (Symmetric Difference) (n_8)
-  - **role_and_use**: 保存 SET_THEORY-004.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 SET_THEORY-004.yaml（id=SET_THEORY-004；validation_status=review_required；domain=set_operations） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 SET_THEORY-004.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 SET_THEORY-004.yaml（id=SET_THEORY-004；validation_status=review_required；domain=set_operations）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5345545f5448454f52592d3030352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/SET_THEORY-005.yaml`](SET_THEORY-005.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=SET_THEORY-005, validation_status=review_required, domain=set_operations
-  - **role_and_use**: 保存 SET_THEORY-005.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 SET_THEORY-005.yaml（id=SET_THEORY-005；validation_status=review_required；domain=set_operations） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 SET_THEORY-005.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 SET_THEORY-005.yaml（id=SET_THEORY-005；validation_status=review_required；domain=set_operations）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3534392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-549.yaml`](STOCHASTIC-549.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-549.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-549.yaml（id=STOCHASTIC-549；validation_status=review_required；name=Markov链（离散/连续） - 发生学溯源：如果为了预测明天天气必须回溯到宇宙大爆炸的所有数据，计算将瘫痪。马尔可夫提出：只要知道“今天”，过去对于预测“明…） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-549.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-549.yaml（id=STOCHASTIC-549；validation_status=review_required；name=Markov链（离散/连续） - 发生学溯源：如果为了预测明天天气必须回溯到宇宙大爆炸的所有数据，计算将瘫痪。马尔可夫提出：只要知道“今天”，过去对于预测“明…）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3535302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-550.yaml`](STOCHASTIC-550.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-550.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-550.yaml（id=STOCHASTIC-550；validation_status=review_required；name=Markov链（离散/连续） - 无后效性（Memorylessness）的严格概率定义：$P(X_{n+1}&#124;X_n, \dots, X_1) =…） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-550.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-550.yaml（id=STOCHASTIC-550；validation_status=review_required；name=Markov链（离散/连续） - 无后效性（Memorylessness）的严格概率定义：$P(X_{n+1}&#124;X_n, \dots, X_1) =…）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3535312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-551.yaml`](STOCHASTIC-551.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-551.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-551.yaml（id=STOCHASTIC-551；validation_status=review_required；name=Markov链（离散/连续） - 【核心大模型映射】：自回归生成（Autoregressive）及强化学习 MDP 的基石。推理时仅依赖 KV Cache 隐…） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-551.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-551.yaml（id=STOCHASTIC-551；validation_status=review_required；name=Markov链（离散/连续） - 【核心大模型映射】：自回归生成（Autoregressive）及强化学习 MDP 的基石。推理时仅依赖 KV Cache 隐…）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3535322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-552.yaml`](STOCHASTIC-552.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-552.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-552.yaml（id=STOCHASTIC-552；validation_status=review_required；name=泊松过程 - 发生学溯源：在连续时间轴上，“极度稀有但必定会发生”事件的爆发计数器。 (n_552)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-552.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-552.yaml（id=STOCHASTIC-552；validation_status=review_required；name=泊松过程 - 发生学溯源：在连续时间轴上，“极度稀有但必定会发生”事件的爆发计数器。 (n_552)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3535332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-553.yaml`](STOCHASTIC-553.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-553.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-553.yaml（id=STOCHASTIC-553；validation_status=review_required；name=泊松过程 - 到达时间的指数分布与独立增量属性。 (n_553)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-553.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-553.yaml（id=STOCHASTIC-553；validation_status=review_required；name=泊松过程 - 到达时间的指数分布与独立增量属性。 (n_553)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3535342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-554.yaml`](STOCHASTIC-554.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-554.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-554.yaml（id=STOCHASTIC-554；validation_status=review_required；name=更新过程 - 研究事件发生间隔时间为任意分布的随机计数系统。 (n_554)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-554.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-554.yaml（id=STOCHASTIC-554；validation_status=review_required；name=更新过程 - 研究事件发生间隔时间为任意分布的随机计数系统。 (n_554)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3535352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-555.yaml`](STOCHASTIC-555.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-555.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-555.yaml（id=STOCHASTIC-555；validation_status=review_required；name=更新过程 - 认知跃迁：作为泊松过程在时间间隔分布上的广义泛化。 (n_555)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-555.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-555.yaml（id=STOCHASTIC-555；validation_status=review_required；name=更新过程 - 认知跃迁：作为泊松过程在时间间隔分布上的广义泛化。 (n_555)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3535362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-556.yaml`](STOCHASTIC-556.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-556.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-556.yaml（id=STOCHASTIC-556；validation_status=review_required；name=鞅论基础 - 发生学溯源：起源于对“绝对公平抛硬币赌博”的数学抽象。核心法则：对未来的期望预测值永远等于现在的实际值。 (n_556)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-556.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-556.yaml（id=STOCHASTIC-556；validation_status=review_required；name=鞅论基础 - 发生学溯源：起源于对“绝对公平抛硬币赌博”的数学抽象。核心法则：对未来的期望预测值永远等于现在的实际值。 (n_556)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3535372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-557.yaml`](STOCHASTIC-557.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-557.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-557.yaml（id=STOCHASTIC-557；validation_status=review_required；name=鞅论基础 - 强化学习映射：在 PPO/GRPO 算法中保证价值函数估计的无偏收敛，确保探索不坠入伪奖励黑洞。 (n_557)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-557.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-557.yaml（id=STOCHASTIC-557；validation_status=review_required；name=鞅论基础 - 强化学习映射：在 PPO/GRPO 算法中保证价值函数估计的无偏收敛，确保探索不坠入伪奖励黑洞。 (n_557)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3535382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-558.yaml`](STOCHASTIC-558.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-558.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-558.yaml（id=STOCHASTIC-558；validation_status=review_required；name=布朗运动 - 数学病态奇观：路径连续但在任何点都绝对不可导（无瞬时速度）。位移 $dW_t$ 的尺度是 $\\sqrt{dt}$，导致速度趋向无穷。 (n_5…） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-558.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-558.yaml（id=STOCHASTIC-558；validation_status=review_required；name=布朗运动 - 数学病态奇观：路径连续但在任何点都绝对不可导（无瞬时速度）。位移 $dW_t$ 的尺度是 $\\sqrt{dt}$，导致速度趋向无穷。 (n_5…）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3535392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-559.yaml`](STOCHASTIC-559.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-559.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-559.yaml（id=STOCHASTIC-559；validation_status=review_required；name=布朗运动 - 大模型映射：扩散模型（Diffusion Models）前向加噪的纯白噪声底座。 (n_559)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-559.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-559.yaml（id=STOCHASTIC-559；validation_status=review_required；name=布朗运动 - 大模型映射：扩散模型（Diffusion Models）前向加噪的纯白噪声底座。 (n_559)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3536302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-560.yaml`](STOCHASTIC-560.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-560.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-560.yaml（id=STOCHASTIC-560；validation_status=review_required；name=Itô积分 - 消除奇迹步骤：利用伊藤引理——随机世界的泰勒展开！引出反直觉真理：$(dW_t)^2 = dt$。 (n_560)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-560.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-560.yaml（id=STOCHASTIC-560；validation_status=review_required；name=Itô积分 - 消除奇迹步骤：利用伊藤引理——随机世界的泰勒展开！引出反直觉真理：$(dW_t)^2 = dt$。 (n_560)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3536312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-561.yaml`](STOCHASTIC-561.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-561.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-561.yaml（id=STOCHASTIC-561；validation_status=review_required；name=Itô积分 - 物理意义：随机噪音的二次方不再是无穷小，而是结实的时间增量，重塑了随机微积分的链式法则。 (n_561)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-561.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-561.yaml（id=STOCHASTIC-561；validation_status=review_required；name=Itô积分 - 物理意义：随机噪音的二次方不再是无穷小，而是结实的时间增量，重塑了随机微积分的链式法则。 (n_561)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3536322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-562.yaml`](STOCHASTIC-562.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-562.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-562.yaml（id=STOCHASTIC-562；validation_status=review_required；name=随机微分方程 - 标准形式 $d\\mathbf{x}_t = \\mathbf{f} dt + g d\\mathbf{w}_t$：确定性物理拉扯（漂移项）…） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-562.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-562.yaml（id=STOCHASTIC-562；validation_status=review_required；name=随机微分方程 - 标准形式 $d\\mathbf{x}_t = \\mathbf{f} dt + g d\\mathbf{w}_t$：确定性物理拉扯（漂移项）…）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3536332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-563.yaml`](STOCHASTIC-563.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-563.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-563.yaml（id=STOCHASTIC-563；validation_status=review_required；name=随机微分方程 - 【终极 AI 映射】：连续流匹配（Flow Matching）的绝对法则，将 SDE 降维近似为概率流 ODE 实现稳定生成。 (n_563)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-563.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-563.yaml（id=STOCHASTIC-563；validation_status=review_required；name=随机微分方程 - 【终极 AI 映射】：连续流匹配（Flow Matching）的绝对法则，将 SDE 降维近似为概率流 ODE 实现稳定生成。 (n_563)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3536342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-564.yaml`](STOCHASTIC-564.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-564.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-564.yaml（id=STOCHASTIC-564；validation_status=review_required；name=遍历理论 - 认知跃迁：对于经历无限岁月的系统，“时间平均”绝对等于“空间平均”。 (n_564)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-564.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-564.yaml（id=STOCHASTIC-564；validation_status=review_required；name=遍历理论 - 认知跃迁：对于经历无限岁月的系统，“时间平均”绝对等于“空间平均”。 (n_564)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3536352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-565.yaml`](STOCHASTIC-565.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-565.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-565.yaml（id=STOCHASTIC-565；validation_status=review_required；name=遍历理论 - 采样地基：保证大模型长程 MCTS 搜索中，单条轨迹的经历足以代表整个庞大语义空间的分布全貌。 (n_565)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-565.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-565.yaml（id=STOCHASTIC-565；validation_status=review_required；name=遍历理论 - 采样地基：保证大模型长程 MCTS 搜索中，单条轨迹的经历足以代表整个庞大语义空间的分布全貌。 (n_565)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3536362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-566.yaml`](STOCHASTIC-566.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-566.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-566.yaml（id=STOCHASTIC-566；validation_status=review_required；name=平稳过程与自相关函数 - 物理直觉：虽然单次轨迹不可测，但震荡幅度（方差）与延迟相似度（自相关）在时间中保持永恒不变。 (n_566)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-566.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-566.yaml（id=STOCHASTIC-566；validation_status=review_required；name=平稳过程与自相关函数 - 物理直觉：虽然单次轨迹不可测，但震荡幅度（方差）与延迟相似度（自相关）在时间中保持永恒不变。 (n_566)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3536372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-567.yaml`](STOCHASTIC-567.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-567.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-567.yaml（id=STOCHASTIC-567；validation_status=review_required；name=平稳过程与自相关函数 - 作为信号处理中功率谱预估的时域地基。 (n_567)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-567.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-567.yaml（id=STOCHASTIC-567；validation_status=review_required；name=平稳过程与自相关函数 - 作为信号处理中功率谱预估的时域地基。 (n_567)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3536382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-568.yaml`](STOCHASTIC-568.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-568.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-568.yaml（id=STOCHASTIC-568；validation_status=review_required；name=高斯过程 - 定义：任何有限维子集都服从联合正态分布的随机过程。 (n_568)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-568.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-568.yaml（id=STOCHASTIC-568；validation_status=review_required；name=高斯过程 - 定义：任何有限维子集都服从联合正态分布的随机过程。 (n_568)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3536392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-569.yaml`](STOCHASTIC-569.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-569.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-569.yaml（id=STOCHASTIC-569；validation_status=review_required；name=高斯过程 - 在贝叶斯优化与小样本学习中，作为具备完美解析性的不确定性度量工具。 (n_569)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-569.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-569.yaml（id=STOCHASTIC-569；validation_status=review_required；name=高斯过程 - 在贝叶斯优化与小样本学习中，作为具备完美解析性的不确定性度量工具。 (n_569)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3537302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-570.yaml`](STOCHASTIC-570.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-570.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-570.yaml（id=STOCHASTIC-570；validation_status=review_required；name=Girsanov定理（测度变换） - 逆天黑魔法：通过 Radon-Nikodym 导数，凭空改变布朗运动的漂移方向却不改变其随机本质。 (n_570)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-570.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-570.yaml（id=STOCHASTIC-570；validation_status=review_required；name=Girsanov定理（测度变换） - 逆天黑魔法：通过 Radon-Nikodym 导数，凭空改变布朗运动的漂移方向却不改变其随机本质。 (n_570)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3537312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-571.yaml`](STOCHASTIC-571.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-571.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-571.yaml（id=STOCHASTIC-571；validation_status=review_required；name=Girsanov定理（测度变换） - 【核心大模型映射】：RLHF/GRPO 中重要性采样与策略梯度裁剪的底层靠山，执行从 ODE 到 SDE 的探索性空间注…） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-571.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-571.yaml（id=STOCHASTIC-571；validation_status=review_required；name=Girsanov定理（测度变换） - 【核心大模型映射】：RLHF/GRPO 中重要性采样与策略梯度裁剪的底层靠山，执行从 ODE 到 SDE 的探索性空间注…）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3537322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-572.yaml`](STOCHASTIC-572.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-572.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-572.yaml（id=STOCHASTIC-572；validation_status=review_required；name=Feynman-Kac公式 - 认知大统一：证明求解宏观偏微分方程（PDE）等价于计算无数条微观随机 SDE 粒子路径的期望总和。 (n_572)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-572.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-572.yaml（id=STOCHASTIC-572；validation_status=review_required；name=Feynman-Kac公式 - 认知大统一：证明求解宏观偏微分方程（PDE）等价于计算无数条微观随机 SDE 粒子路径的期望总和。 (n_572)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3537332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-573.yaml`](STOCHASTIC-573.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-573.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-573.yaml（id=STOCHASTIC-573；validation_status=review_required；name=Feynman-Kac公式 - 蒙特卡洛模拟代替死板网格计算的数学通行证。） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-573.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-573.yaml（id=STOCHASTIC-573；validation_status=review_required；name=Feynman-Kac公式 - 蒙特卡洛模拟代替死板网格计算的数学通行证。）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3537342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-574.yaml`](STOCHASTIC-574.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-574.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-574.yaml（id=STOCHASTIC-574；validation_status=review_required；name=随机过程的谱分析 - 维纳-辛钦定理：将自相关函数映射为频域功率谱密度（傅里叶变换）。） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-574.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-574.yaml（id=STOCHASTIC-574；validation_status=review_required；name=随机过程的谱分析 - 维纳-辛钦定理：将自相关函数映射为频域功率谱密度（傅里叶变换）。）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f53544f434841535449432d3537352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/STOCHASTIC-575.yaml`](STOCHASTIC-575.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=STOCHASTIC-5…
-  - **role_and_use**: 保存 STOCHASTIC-575.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 STOCHASTIC-575.yaml（id=STOCHASTIC-575；validation_status=review_required；name=随机过程的谱分析 - 为海量语音/视觉信号提供频率特征提取的数学引擎。） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 STOCHASTIC-575.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 STOCHASTIC-575.yaml（id=STOCHASTIC-575；validation_status=review_required；name=随机过程的谱分析 - 为海量语音/视觉信号提供频率特征提取的数学引擎。）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3030312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-001.yaml`](TRIG-001.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=TRIG-001, va…
-  - **role_and_use**: 保存 TRIG-001.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-001.yaml（id=TRIG-001；validation_status=review_required；title=三角函数定义 - 发生学溯源：古希腊天文学家测量仰角计算距离的“弦表” (n_162)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-001.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-001.yaml（id=TRIG-001；validation_status=review_required；title=三角函数定义 - 发生学溯源：古希腊天文学家测量仰角计算距离的“弦表” (n_162)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3030322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-002.yaml`](TRIG-002.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=TRIG-002, validation_status=…
-  - **role_and_use**: 保存 TRIG-002.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-002.yaml（id=TRIG-002；validation_status=review_required；title=三角函数定义 - 直角三角形中的静态比值定义（正弦、余弦、正切）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-002.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-002.yaml（id=TRIG-002；validation_status=review_required；title=三角函数定义 - 直角三角形中的静态比值定义（正弦、余弦、正切））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3030332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-003.yaml`](TRIG-003.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=TRIG-003, va…
-  - **role_and_use**: 保存 TRIG-003.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-003.yaml（id=TRIG-003；validation_status=review_required；name=三角函数定义 - 认知升级：从直角三角形的“锐角约束”推广到坐标系中“任意角”的必要性 (n_164)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-003.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-003.yaml（id=TRIG-003；validation_status=review_required；name=三角函数定义 - 认知升级：从直角三角形的“锐角约束”推广到坐标系中“任意角”的必要性 (n_164)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3030342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-004.yaml`](TRIG-004.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=TRIG-004, va…
-  - **role_and_use**: 保存 TRIG-004.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-004.yaml（id=TRIG-004；validation_status=review_required；name=单位圆 - 消除奇迹步骤：单位圆作为“动态旋转机器”将三角函数解放为圆上动点坐标 (x=cosθ, y=sinθ) (n_165)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-004.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-004.yaml（id=TRIG-004；validation_status=review_required；name=单位圆 - 消除奇迹步骤：单位圆作为“动态旋转机器”将三角函数解放为圆上动点坐标 (x=cosθ, y=sinθ) (n_165)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3030352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-005.yaml`](TRIG-005.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=TRIG-005, validation_status=…
-  - **role_and_use**: 保存 TRIG-005.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-005.yaml（id=TRIG-005；validation_status=review_required；title=单位圆 - 三角函数在四个象限的符号正负（通过坐标正负自然推导，严禁死记口诀）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-005.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-005.yaml（id=TRIG-005；validation_status=review_required；title=单位圆 - 三角函数在四个象限的符号正负（通过坐标正负自然推导，严禁死记口诀））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3030362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-006.yaml`](TRIG-006.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=TRIG-006, validation_status=review_required, name=单位圆 - 界限角（0, π/2, π, 3π/2）的极值计算 (n_167), domain=Trigonometry；sub_topics=4
-  - **role_and_use**: 保存 TRIG-006.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-006.yaml（id=TRIG-006；validation_status=review_required；name=单位圆 - 界限角（0, π/2, π, 3π/2）的极值计算 (n_167)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-006.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-006.yaml（id=TRIG-006；validation_status=review_required；name=单位圆 - 界限角（0, π/2, π, 3π/2）的极值计算 (n_167)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3030372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-007.yaml`](TRIG-007.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=TRIG-007, validation_status=…
-  - **role_and_use**: 保存 TRIG-007.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-007.yaml（id=TRIG-007；validation_status=review_required；name=三角恒等式 - 消除奇迹步骤：平方关系 sin²θ + cos²θ = 1 是“勾股定理”在单位圆上的代数翻译 (n_168)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-007.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-007.yaml（id=TRIG-007；validation_status=review_required；name=三角恒等式 - 消除奇迹步骤：平方关系 sin²θ + cos²θ = 1 是“勾股定理”在单位圆上的代数翻译 (n_168)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3030382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-008.yaml`](TRIG-008.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=TRIG-008, va…
-  - **role_and_use**: 保存 TRIG-008.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-008.yaml（id=TRIG-008；validation_status=review_required；name=三角恒等式 - 商数关系（tanθ = sinθ/cosθ）与倒数关系（sec, csc, cot） (n_169)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-008.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-008.yaml（id=TRIG-008；validation_status=review_required；name=三角恒等式 - 商数关系（tanθ = sinθ/cosθ）与倒数关系（sec, csc, cot） (n_169)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3030392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-009.yaml`](TRIG-009.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=TRIG-009, va…
-  - **role_and_use**: 保存 TRIG-009.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-009.yaml（id=TRIG-009；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-009.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-009.yaml（id=TRIG-009；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3031302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-010.yaml`](TRIG-010.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=TRIG-010, va…
-  - **role_and_use**: 保存 TRIG-010.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-010.yaml（id=TRIG-010；validation_status=review_required；name=反三角函数 - 逻辑危机引发：周期性导致非单射，违背函数定义法则 (n_171)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-010.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-010.yaml（id=TRIG-010；validation_status=review_required；name=反三角函数 - 逻辑危机引发：周期性导致非单射，违背函数定义法则 (n_171)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3031312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-011.yaml`](TRIG-011.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=TRIG-011, va…
-  - **role_and_use**: 保存 TRIG-011.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-011.yaml（id=TRIG-011；validation_status=review_required；title=反三角函数 - 主值区间的引入：为人为制造“双射”而进行的严苛定义域截断 (n_172)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-011.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-011.yaml（id=TRIG-011；validation_status=review_required；title=反三角函数 - 主值区间的引入：为人为制造“双射”而进行的严苛定义域截断 (n_172)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3031322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-012.yaml`](TRIG-012.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=TRIG-012, validation_status=…
-  - **role_and_use**: 保存 TRIG-012.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-012.yaml（id=TRIG-012；validation_status=review_required；title=反三角函数 - arcsin, arccos, arctan 的定义域与值域限制 (n_173)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-012.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-012.yaml（id=TRIG-012；validation_status=review_required；title=反三角函数 - arcsin, arccos, arctan 的定义域与值域限制 (n_173)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3031332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-013.yaml`](TRIG-013.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=TRIG-013, validation_status=…
-  - **role_and_use**: 保存 TRIG-013.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-013.yaml（id=TRIG-013；validation_status=review_required；name=正弦/余弦定理 - 发生学溯源：航海与测量中非直角三角形无法直接使用三角函数的工程危机 (n_174)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-013.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-013.yaml（id=TRIG-013；validation_status=review_required；name=正弦/余弦定理 - 发生学溯源：航海与测量中非直角三角形无法直接使用三角函数的工程危机 (n_174)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3031342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-014.yaml`](TRIG-014.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=TRIG-014, va…
-  - **role_and_use**: 保存 TRIG-014.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-014.yaml（id=TRIG-014；validation_status=review_required；title=正弦/余弦定理 - 余弦定理推导：勾股定理在非正交空间下的“广义修正版”及物理补偿项意义 (n_175)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-014.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-014.yaml（id=TRIG-014；validation_status=review_required；title=正弦/余弦定理 - 余弦定理推导：勾股定理在非正交空间下的“广义修正版”及物理补偿项意义 (n_175)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3031352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-015.yaml`](TRIG-015.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=TRIG-015, va…
-  - **role_and_use**: 保存 TRIG-015.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-015.yaml（id=TRIG-015；validation_status=review_required；name=正弦/余弦定理 - 正弦定理推导：利用面积等价或外接圆直径进行严密代数推演 (n_176)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-015.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-015.yaml（id=TRIG-015；validation_status=review_required；name=正弦/余弦定理 - 正弦定理推导：利用面积等价或外接圆直径进行严密代数推演 (n_176)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3031362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-016.yaml`](TRIG-016.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=TRIG-016, validation_status=…
-  - **role_and_use**: 保存 TRIG-016.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-016.yaml（id=TRIG-016；validation_status=review_required；title=和差化积 - 发生学溯源：声学与波动物理中波叠加产生的“拍频（Beats）”现象 (n_177)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-016.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-016.yaml（id=TRIG-016；validation_status=review_required；title=和差化积 - 发生学溯源：声学与波动物理中波叠加产生的“拍频（Beats）”现象 (n_177)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3031372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-017.yaml`](TRIG-017.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=TRIG-017, va…
-  - **role_and_use**: 保存 TRIG-017.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-017.yaml（id=TRIG-017；validation_status=review_required；title=和差化积 - 严格代数推导（利用两角和与两角差展开式的加减消元） (n_178)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-017.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-017.yaml（id=TRIG-017；validation_status=review_required；title=和差化积 - 严格代数推导（利用两角和与两角差展开式的加减消元） (n_178)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3031382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-018.yaml`](TRIG-018.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=TRIG-018, va…
-  - **role_and_use**: 保存 TRIG-018.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-018.yaml（id=TRIG-018；validation_status=review_required；title=三角方程 - 简单三角方程求解与周期性多态解（通解形式 +2kπ） (n_179)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-018.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-018.yaml（id=TRIG-018；validation_status=review_required；title=三角方程 - 简单三角方程求解与周期性多态解（通解形式 +2kπ） (n_179)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3031392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-019.yaml`](TRIG-019.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=TRIG-019, validation_status=…
-  - **role_and_use**: 保存 TRIG-019.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-019.yaml（id=TRIG-019；validation_status=review_required；name=三角方程 - 利用单位圆旋转对称性理解解集的物理分布 (n_180)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-019.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-019.yaml（id=TRIG-019；validation_status=review_required；name=三角方程 - 利用单位圆旋转对称性理解解集的物理分布 (n_180)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3032302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-020.yaml`](TRIG-020.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=TRIG-020, validation_status=…
-  - **role_and_use**: 保存 TRIG-020.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-020.yaml（id=TRIG-020；validation_status=review_required；title=三角方程 - 复杂三角方程的代数降维求解（如利用恒等式降阶） (n_181)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-020.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-020.yaml（id=TRIG-020；validation_status=review_required；title=三角方程 - 复杂三角方程的代数降维求解（如利用恒等式降阶） (n_181)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3032312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-021.yaml`](TRIG-021.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=TRIG-021, validation_status=…
-  - **role_and_use**: 保存 TRIG-021.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-021.yaml（id=TRIG-021；validation_status=review_required；title=角度与弧度的转换 - 发生学溯源：古巴比伦 360 度系统的局限性 (n_182)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-021.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-021.yaml（id=TRIG-021；validation_status=review_required；title=角度与弧度的转换 - 发生学溯源：古巴比伦 360 度系统的局限性 (n_182)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3032322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-022.yaml`](TRIG-022.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=TRIG-022, va…
-  - **role_and_use**: 保存 TRIG-022.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-022.yaml（id=TRIG-022；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-022.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-022.yaml（id=TRIG-022；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3032332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-023.yaml`](TRIG-023.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=TRIG-023, va…
-  - **role_and_use**: 保存 TRIG-023.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-023.yaml（id=TRIG-023；validation_status=review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-023.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-023.yaml（id=TRIG-023；validation_status=review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3032342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-024.yaml`](TRIG-024.yaml)
   - **content_summary**: YAML 结构，顶层键：metadata, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=TRIG-024, title=角度与弧度的转换 - 弧度与角度的代数换算推导（π rad = 180°） (n_185)；sub_topics=4
-  - **role_and_use**: 保存 TRIG-024.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-024.yaml（id=TRIG-024；title=角度与弧度的转换 - 弧度与角度的代数换算推导（π rad = 180°） (n_185)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-024.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-024.yaml（id=TRIG-024；title=角度与弧度的转换 - 弧度与角度的代数换算推导（π rad = 180°） (n_185)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3032352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-025.yaml`](TRIG-025.yaml)
   - **content_summary**: YAML 结构，顶层键：version, node_id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：validation_status=review_r…
-  - **role_and_use**: 保存 TRIG-025.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-025.yaml（validation_status=review_required；title=三角函数图像 - 正弦与余弦的波形图（振幅 A、角频率 ω、初相 φ 的物理演化机制）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-025.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-025.yaml（validation_status=review_required；title=三角函数图像 - 正弦与余弦的波形图（振幅 A、角频率 ω、初相 φ 的物理演化机制））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3032362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-026.yaml`](TRIG-026.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=TRIG-026, va…
-  - **role_and_use**: 保存 TRIG-026.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-026.yaml（id=TRIG-026；validation_status=review_required；name=三角函数图像 - 正切与余切的渐近线图与周期 π 的代数解释 (n_187)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-026.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-026.yaml（id=TRIG-026；validation_status=review_required；name=三角函数图像 - 正切与余切的渐近线图与周期 π 的代数解释 (n_187)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3032372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-027.yaml`](TRIG-027.yaml)
   - **content_summary**: YAML 结构，顶层键：node_meta, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：domain=Math_Mentor, id=TRIG-027, name=倍角公式 - 二倍角公式的推导（和角公式的自叠加）及升幂与降幂物理意义 (n_188…
-  - **role_and_use**: 保存 TRIG-027.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-027.yaml（domain=Math_Mentor；id=TRIG-027；name=倍角公式 - 二倍角公式的推导（和角公式的自叠加）及升幂与降幂物理意义 (n_188)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-027.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-027.yaml（domain=Math_Mentor；id=TRIG-027；name=倍角公式 - 二倍角公式的推导（和角公式的自叠加）及升幂与降幂物理意义 (n_188)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3032382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-028.yaml`](TRIG-028.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=TRIG-028, va…
-  - **role_and_use**: 保存 TRIG-028.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-028.yaml（id=TRIG-028；validation_status=review_required；title=半角公式 - 根号的引入与象限对符号的选择性剪枝 (n_189)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-028.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-028.yaml（id=TRIG-028；validation_status=review_required；title=半角公式 - 根号的引入与象限对符号的选择性剪枝 (n_189)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3032392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-029.yaml`](TRIG-029.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=TRIG-029, va…
-  - **role_and_use**: 保存 TRIG-029.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-029.yaml（id=TRIG-029；validation_status=review_required；name=积化和差公式 - 利用振幅调制（AM）理解包络线与高频载波的乘积物理意义） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-029.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-029.yaml（id=TRIG-029；validation_status=review_required；name=积化和差公式 - 利用振幅调制（AM）理解包络线与高频载波的乘积物理意义）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3033302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-030.yaml`](TRIG-030.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=TRIG-030, va…
-  - **role_and_use**: 保存 TRIG-030.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-030.yaml（id=TRIG-030；validation_status=review_required；title=辅助角公式 - Asin x + Bcos x = √(A²+B²) sin(x + φ)：正交波的终极合并） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-030.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-030.yaml（id=TRIG-030；validation_status=review_required；title=辅助角公式 - Asin x + Bcos x = √(A²+B²) sin(x + φ)：正交波的终极合并）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3033312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-031.yaml`](TRIG-031.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=TRIG-031, validation_status=…
-  - **role_and_use**: 保存 TRIG-031.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-031.yaml（id=TRIG-031；validation_status=review_required；title=正弦型函数 y = Asin(ωx + φ) 的整体平移与伸缩变换法则） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-031.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-031.yaml（id=TRIG-031；validation_status=review_required；title=正弦型函数 y = Asin(ωx + φ) 的整体平移与伸缩变换法则）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3033322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-032.yaml`](TRIG-032.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status；安全锚点：id=TRIG-032, validation_status=…
-  - **role_and_use**: 保存 TRIG-032.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-032.yaml（id=TRIG-032；validation_status=review_required；name=解三角形进阶 - 海伦公式（已知三边求面积）的代数证明及物理极端情况分析） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-032.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-032.yaml（id=TRIG-032；validation_status=review_required；name=解三角形进阶 - 海伦公式（已知三边求面积）的代数证明及物理极端情况分析）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f545249472d3033332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/TRIG-033.yaml`](TRIG-033.yaml)
   - **content_summary**: YAML 结构，顶层键：version, node_metadata, pedagogical_context, cognitive_anchoring, code_implementation, v8_sanity_audit；安全锚点：id=TRIG-033；sub_topics=4
-  - **role_and_use**: 保存 TRIG-033.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 TRIG-033.yaml（id=TRIG-033） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 TRIG-033.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 TRIG-033.yaml（id=TRIG-033）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5a46432d3030312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ZFC-001.yaml`](ZFC-001.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=ZFC-001, name=朴素集合论的危机 (The Crisis of Naive Set Theory), domain=axiomatic_set_theory, status=review_required；sub_topics=4
-  - **role_and_use**: 保存 ZFC-001.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ZFC-001.yaml（id=ZFC-001；name=朴素集合论的危机 (The Crisis of Naive Set Theory)；domain=axiomatic_set_theory） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ZFC-001.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ZFC-001.yaml（id=ZFC-001；name=朴素集合论的危机 (The Crisis of Naive Set Theory)；domain=axiomatic_set_theory）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5a46432d3030322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ZFC-002.yaml`](ZFC-002.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=ZFC-002, validation_status=review_required, title=ZF八大公理（外延、空集、配对、并集、幂集、分离、替换、无穷、正则）, domain=axiomatic_set_theory, status=review_required；sub_topi…
-  - **role_and_use**: 保存 ZFC-002.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ZFC-002.yaml（id=ZFC-002；validation_status=review_required；title=ZF八大公理（外延、空集、配对、并集、幂集、分离、替换、无穷、正则）） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ZFC-002.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ZFC-002.yaml（id=ZFC-002；validation_status=review_required；title=ZF八大公理（外延、空集、配对、并集、幂集、分离、替换、无穷、正则））；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5a46432d3030332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ZFC-003.yaml`](ZFC-003.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=ZFC-003, validation_status=review_required, name=选择公理 (Axiom of Choice), domain=axiomatic_set_theory, status=review_required；sub_topics=4
-  - **role_and_use**: 保存 ZFC-003.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ZFC-003.yaml（id=ZFC-003；validation_status=review_required；name=选择公理 (Axiom of Choice)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ZFC-003.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ZFC-003.yaml（id=ZFC-003；validation_status=review_required；name=选择公理 (Axiom of Choice)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5a46432d3030342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ZFC-004.yaml`](ZFC-004.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=ZFC-004, validation_status=review_required, domain=axiomatic_set_theory, status=review_required；sub_topics=4
-  - **role_and_use**: 保存 ZFC-004.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 ZFC-004.yaml（id=ZFC-004；validation_status=review_required；domain=axiomatic_set_theory） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 ZFC-004.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ZFC-004.yaml（id=ZFC-004；validation_status=review_required；domain=axiomatic_set_theory）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f61627374726163745f616c67656272615f656d62656464696e67732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/abstract_algebra_embeddings.yaml`](abstract_algebra_embeddings.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=ALG-001, validation_status=manual_review_required, name=Group Theory &amp; Vector Translation (群论与向量平移), domain=Abstract Algebra (抽象代数)
-  - **role_and_use**: 保存 abstract_algebra_embeddings.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 abstract_algebra_embeddings.yaml（id=ALG-001；validation_status=manual_review_required；name=Group Theory &amp; Vector Translation (群论与向量平移)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 abstract_algebra_embeddings.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 abstract_algebra_embeddings.yaml（id=ALG-001；validation_status=manual_review_required；name=Group Theory &amp; Vector Translation (群论与向量平移)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f66756e6374696f6e616c5f616e616c797369735f617474656e74696f6e2e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/functional_analysis_attention.yaml`](functional_analysis_attention.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=FA-001, validation_status=review_required, name=Inner Product (内积), domain=Functional Analysis (泛函分析) / Hilbert Space, status=review_required
-  - **role_and_use**: 保存 functional_analysis_attention.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 functional_analysis_attention.yaml（id=FA-001；validation_status=review_required；name=Inner Product (内积)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 functional_analysis_attention.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 functional_analysis_attention.yaml（id=FA-001；validation_status=review_required；name=Inner Product (内积)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f696e6465782e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f736368656d612e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/schema.yaml`](schema.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=String. Unique identifier., validation_status=manual_review_required, name=String. Human readable name., domain=String. The mathematical branch.；s…
-  - **role_and_use**: 由 schema.yaml 定义 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB 数据结构；生成或验证对应 artifact 时使用
+  - **role_and_use**: 将 schema.yaml（id=String. Unique identifier.；validation_status=manual_review_required；name=String. Human readable name.） 作为“结构定义”使用；结构有效不等于业务有效、授权有效或已持久化
   - **authority_class**: `schema`
-  - **status_or_freshness**: tracked schema；适用版本需由调用合同确认
-  - **when_to_read**: 创建、迁移或验证 schema.yaml 对应结构化数据之前读取
+  - **status_or_freshness**: semantic_profile=schema_definition；authority=schema；evidence_basis=yaml_visible_keys_and_safe_fields；结构有效不等于业务有效、授权有效或已持久化
+  - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 schema.yaml（id=String. Unique identifier.；validation_status=manual_review_required；name=String. Human readable name.）；结构有效不等于业务有效、授权有效或已持久化
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f746573745f79616d6c5f7061727365722e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/test_yaml_parser.py`](test_yaml_parser.py)
   - **content_summary**: Python；public symbols=none；artifact=test_yaml_parser.py
-  - **role_and_use**: 以 test_yaml_parser.py 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 test_yaml_parser.py（Python；public symbols=none） 作为“测试/fixture”使用；仅用于指定测试；fixture 内声明不构成现实授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 test_yaml_parser.py 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=test_or_fixture；authority=test_or_fixture；evidence_basis=python_ast_docstring_and_symbols；仅用于指定测试；fixture 内声明不构成现实授权
+  - **when_to_read**: 触发条件：运行该具名测试或复现其失败用例。读取 test_yaml_parser.py（Python；public symbols=none）；仅用于指定测试；fixture 内声明不构成现实授权
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f746f706f6c6f67795f636f6d706163746e6573732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/topology_compactness.yaml`](topology_compactness.yaml)
   - **content_summary**: YAML 结构，顶层键：Concept, Dialectical_Flow, Subconscious_V8_Hook
-  - **role_and_use**: 保存 topology_compactness.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 topology_compactness.yaml（top_keys=Concept,Dialectical_Flow,Subconscious_V8_Hook） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 topology_compactness.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 topology_compactness.yaml（top_keys=Concept,Dialectical_Flow,Subconscious_V8_Hook）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f746f706f6c6f67795f7472616e73666f726d6572732e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/topology_transformers.yaml`](topology_transformers.yaml)
   - **content_summary**: YAML 结构，顶层键：concept_node；安全锚点：id=TOP-001, validation_status=manual_review_required, name=Topological Manifolds &amp; Continuous Deformation (拓扑流形与连续形变), domain=Topology (拓扑学) / Ma…
-  - **role_and_use**: 保存 topology_transformers.yaml 的结构化配置或领域数据；存在不代表激活、认证或当前状态
+  - **role_and_use**: 将 topology_transformers.yaml（id=TOP-001；validation_status=manual_review_required；name=Topological Manifolds &amp; Continuous Deformation (拓扑流形与连续形变)） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
-  - **status_or_freshness**: tracked implementation/content；存在不等于已激活、已认证或 production-ready
-  - **when_to_read**: 修改、调试或消费 topology_transformers.yaml 的具体实现/领域内容前读取
+  - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 topology_transformers.yaml（id=TOP-001；validation_status=manual_review_required；name=Topological Manifolds &amp; Continuous Deformation (拓扑流形与连续形变)）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 
 ## do_not_load_by_default
 

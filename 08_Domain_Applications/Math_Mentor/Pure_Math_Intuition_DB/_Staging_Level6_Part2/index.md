@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Math Mentor staging candidate pool；节点存在不等于已准入、已认证或可教学
+Math Mentor _Staging_Level6_Part2 候选池；只用于 root 对照、alias 冲突与 Human 语义裁决
 
 ## authority_and_usage_boundary
 
@@ -11,12 +11,12 @@ Math Mentor staging candidate pool；节点存在不等于已准入、已认证�
 
 ## recommended_reading_order
 
-1. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-684.yaml`](ANALYTIC_NT-684.yaml) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
-3. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-685.yaml`](ANALYTIC_NT-685.yaml) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
-4. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-686.yaml`](ANALYTIC_NT-686.yaml) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
-5. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-687.yaml`](ANALYTIC_NT-687.yaml) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
-6. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-688.yaml`](ANALYTIC_NT-688.yaml) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+1. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-684.yaml`](ANALYTIC_NT-684.yaml) — 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-684.yaml（id=ANALYTIC_NT-684）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+3. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-685.yaml`](ANALYTIC_NT-685.yaml) — 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-685.yaml（id=ANALYTIC_NT-685）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+4. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-686.yaml`](ANALYTIC_NT-686.yaml) — 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-686.yaml（id=ANALYTIC_NT-686）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+5. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-687.yaml`](ANALYTIC_NT-687.yaml) — 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-687.yaml（id=ANALYTIC_NT-687）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+6. [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-688.yaml`](ANALYTIC_NT-688.yaml) — 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-688.yaml（id=ANALYTIC_NT-688）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 
 ## child_directories
 
@@ -27,360 +27,360 @@ Math Mentor staging candidate pool；节点存在不等于已准入、已认证�
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f414e414c595449435f4e542d3638342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-684.yaml`](ANALYTIC_NT-684.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=ANALYTIC_NT-684；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 ANALYTIC_NT-684.yaml（id=ANALYTIC_NT-684） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-684.yaml（id=ANALYTIC_NT-684）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f414e414c595449435f4e542d3638352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-685.yaml`](ANALYTIC_NT-685.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=ANALYTIC_NT-685；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 ANALYTIC_NT-685.yaml（id=ANALYTIC_NT-685） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-685.yaml（id=ANALYTIC_NT-685）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f414e414c595449435f4e542d3638362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-686.yaml`](ANALYTIC_NT-686.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=ANALYTIC_NT-686；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 ANALYTIC_NT-686.yaml（id=ANALYTIC_NT-686） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-686.yaml（id=ANALYTIC_NT-686）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f414e414c595449435f4e542d3638372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-687.yaml`](ANALYTIC_NT-687.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=ANALYTIC_NT-687；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 ANALYTIC_NT-687.yaml（id=ANALYTIC_NT-687） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-687.yaml（id=ANALYTIC_NT-687）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f414e414c595449435f4e542d3638382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-688.yaml`](ANALYTIC_NT-688.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=ANALYTIC_NT-688；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 ANALYTIC_NT-688.yaml（id=ANALYTIC_NT-688） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-688.yaml（id=ANALYTIC_NT-688）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f414e414c595449435f4e542d3638392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-689.yaml`](ANALYTIC_NT-689.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=ANALYTIC_NT-689；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 ANALYTIC_NT-689.yaml（id=ANALYTIC_NT-689） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-689.yaml（id=ANALYTIC_NT-689）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f414e414c595449435f4e542d3639302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-690.yaml`](ANALYTIC_NT-690.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=ANALYTIC_NT-690；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 ANALYTIC_NT-690.yaml（id=ANALYTIC_NT-690） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-690.yaml（id=ANALYTIC_NT-690）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f414e414c595449435f4e542d3639312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-691.yaml`](ANALYTIC_NT-691.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=ANALYTIC_NT-691；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 ANALYTIC_NT-691.yaml（id=ANALYTIC_NT-691） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-691.yaml（id=ANALYTIC_NT-691）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f414e414c595449435f4e542d3639322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-692.yaml`](ANALYTIC_NT-692.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=ANALYTIC_NT-692；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 ANALYTIC_NT-692.yaml（id=ANALYTIC_NT-692） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-692.yaml（id=ANALYTIC_NT-692）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f414e414c595449435f4e542d3639332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-693.yaml`](ANALYTIC_NT-693.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=ANALYTIC_NT-693；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 ANALYTIC_NT-693.yaml（id=ANALYTIC_NT-693） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-693.yaml（id=ANALYTIC_NT-693）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f414e414c595449435f4e542d3639342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-694.yaml`](ANALYTIC_NT-694.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=ANALYTIC_NT-694；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 ANALYTIC_NT-694.yaml（id=ANALYTIC_NT-694） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-694.yaml（id=ANALYTIC_NT-694）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f414e414c595449435f4e542d3639352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-695.yaml`](ANALYTIC_NT-695.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=ANALYTIC_NT-695；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 ANALYTIC_NT-695.yaml（id=ANALYTIC_NT-695） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-695.yaml（id=ANALYTIC_NT-695）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f414e414c595449435f4e542d3639362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-696.yaml`](ANALYTIC_NT-696.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=ANALYTIC_NT-696；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 ANALYTIC_NT-696.yaml（id=ANALYTIC_NT-696） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-696.yaml（id=ANALYTIC_NT-696）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f414e414c595449435f4e542d3639372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-697.yaml`](ANALYTIC_NT-697.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=ANALYTIC_NT-697；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 ANALYTIC_NT-697.yaml（id=ANALYTIC_NT-697） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-697.yaml（id=ANALYTIC_NT-697）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f414e414c595449435f4e542d3639382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-698.yaml`](ANALYTIC_NT-698.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=ANALYTIC_NT-698；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 ANALYTIC_NT-698.yaml（id=ANALYTIC_NT-698） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-698.yaml（id=ANALYTIC_NT-698）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f414e414c595449435f4e542d3639392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-699.yaml`](ANALYTIC_NT-699.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=ANALYTIC_NT-699；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 ANALYTIC_NT-699.yaml（id=ANALYTIC_NT-699） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 ANALYTIC_NT-699.yaml（id=ANALYTIC_NT-699）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f494e464f5f5448454f52592d3730302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/INFO_THEORY-700.yaml`](INFO_THEORY-700.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=INFO_THEORY-700；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 INFO_THEORY-700.yaml（id=INFO_THEORY-700） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 INFO_THEORY-700.yaml（id=INFO_THEORY-700）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f494e464f5f5448454f52592d3730312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/INFO_THEORY-701.yaml`](INFO_THEORY-701.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=INFO_THEORY-701；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 INFO_THEORY-701.yaml（id=INFO_THEORY-701） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 INFO_THEORY-701.yaml（id=INFO_THEORY-701）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f494e464f5f5448454f52592d3730322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/INFO_THEORY-702.yaml`](INFO_THEORY-702.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=INFO_THEORY-702；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 INFO_THEORY-702.yaml（id=INFO_THEORY-702） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 INFO_THEORY-702.yaml（id=INFO_THEORY-702）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f494e464f5f5448454f52592d3730332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/INFO_THEORY-703.yaml`](INFO_THEORY-703.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=INFO_THEORY-703；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 INFO_THEORY-703.yaml（id=INFO_THEORY-703） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 INFO_THEORY-703.yaml（id=INFO_THEORY-703）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f494e464f5f5448454f52592d3730342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/INFO_THEORY-704.yaml`](INFO_THEORY-704.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=INFO_THEORY-704；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 INFO_THEORY-704.yaml（id=INFO_THEORY-704） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 INFO_THEORY-704.yaml（id=INFO_THEORY-704）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f494e464f5f5448454f52592d3730352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/INFO_THEORY-705.yaml`](INFO_THEORY-705.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=INFO_THEORY-705；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 INFO_THEORY-705.yaml（id=INFO_THEORY-705） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 INFO_THEORY-705.yaml（id=INFO_THEORY-705）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f494e464f5f5448454f52592d3730362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/INFO_THEORY-706.yaml`](INFO_THEORY-706.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=INFO_THEORY-706；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 INFO_THEORY-706.yaml（id=INFO_THEORY-706） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 INFO_THEORY-706.yaml（id=INFO_THEORY-706）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f494e464f5f5448454f52592d3730372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/INFO_THEORY-707.yaml`](INFO_THEORY-707.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=INFO_THEORY-707；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 INFO_THEORY-707.yaml（id=INFO_THEORY-707） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 INFO_THEORY-707.yaml（id=INFO_THEORY-707）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f494e464f5f5448454f52592d3730382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/INFO_THEORY-708.yaml`](INFO_THEORY-708.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=INFO_THEORY-708；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 INFO_THEORY-708.yaml（id=INFO_THEORY-708） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 INFO_THEORY-708.yaml（id=INFO_THEORY-708）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f494e464f5f5448454f52592d3730392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/INFO_THEORY-709.yaml`](INFO_THEORY-709.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=INFO_THEORY-709；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 INFO_THEORY-709.yaml（id=INFO_THEORY-709） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 INFO_THEORY-709.yaml（id=INFO_THEORY-709）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f494e464f5f5448454f52592d3731302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/INFO_THEORY-710.yaml`](INFO_THEORY-710.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=INFO_THEORY-710；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 INFO_THEORY-710.yaml（id=INFO_THEORY-710） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 INFO_THEORY-710.yaml（id=INFO_THEORY-710）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f494e464f5f5448454f52592d3731312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/INFO_THEORY-711.yaml`](INFO_THEORY-711.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=INFO_THEORY-711；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 INFO_THEORY-711.yaml（id=INFO_THEORY-711） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 INFO_THEORY-711.yaml（id=INFO_THEORY-711）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f494e464f5f5448454f52592d3731322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/INFO_THEORY-712.yaml`](INFO_THEORY-712.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=INFO_THEORY-712；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 INFO_THEORY-712.yaml（id=INFO_THEORY-712） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 INFO_THEORY-712.yaml（id=INFO_THEORY-712）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f494e464f5f5448454f52592d3731332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/INFO_THEORY-713.yaml`](INFO_THEORY-713.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=INFO_THEORY-713；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 INFO_THEORY-713.yaml（id=INFO_THEORY-713） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 INFO_THEORY-713.yaml（id=INFO_THEORY-713）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f494e464f5f5448454f52592d3731342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/INFO_THEORY-714.yaml`](INFO_THEORY-714.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=INFO_THEORY-714；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 INFO_THEORY-714.yaml（id=INFO_THEORY-714） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 INFO_THEORY-714.yaml（id=INFO_THEORY-714）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f494e464f5f5448454f52592d3731352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/INFO_THEORY-715.yaml`](INFO_THEORY-715.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=INFO_THEORY-715；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 INFO_THEORY-715.yaml（id=INFO_THEORY-715） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 INFO_THEORY-715.yaml（id=INFO_THEORY-715）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f494e464f5f5448454f52592d3731362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/INFO_THEORY-716.yaml`](INFO_THEORY-716.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=INFO_THEORY-716；sub_topics=8
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 INFO_THEORY-716.yaml（id=INFO_THEORY-716） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 INFO_THEORY-716.yaml（id=INFO_THEORY-716）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f4f5054494d495a4154494f4e2d3731372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/OPTIMIZATION-717.yaml`](OPTIMIZATION-717.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=OPTIMIZATION-717；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 OPTIMIZATION-717.yaml（id=OPTIMIZATION-717） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 OPTIMIZATION-717.yaml（id=OPTIMIZATION-717）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f4f5054494d495a4154494f4e2d3731382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/OPTIMIZATION-718.yaml`](OPTIMIZATION-718.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=OPTIMIZATION-718；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 OPTIMIZATION-718.yaml（id=OPTIMIZATION-718） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 OPTIMIZATION-718.yaml（id=OPTIMIZATION-718）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f4f5054494d495a4154494f4e2d3731392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/OPTIMIZATION-719.yaml`](OPTIMIZATION-719.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=OPTIMIZATION-719；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 OPTIMIZATION-719.yaml（id=OPTIMIZATION-719） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 OPTIMIZATION-719.yaml（id=OPTIMIZATION-719）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f4f5054494d495a4154494f4e2d3732302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/OPTIMIZATION-720.yaml`](OPTIMIZATION-720.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=OPTIMIZATION-720；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 OPTIMIZATION-720.yaml（id=OPTIMIZATION-720） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 OPTIMIZATION-720.yaml（id=OPTIMIZATION-720）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f4f5054494d495a4154494f4e2d3732312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/OPTIMIZATION-721.yaml`](OPTIMIZATION-721.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=OPTIMIZATION-721；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 OPTIMIZATION-721.yaml（id=OPTIMIZATION-721） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 OPTIMIZATION-721.yaml（id=OPTIMIZATION-721）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f4f5054494d495a4154494f4e2d3732322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/OPTIMIZATION-722.yaml`](OPTIMIZATION-722.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=OPTIMIZATION-722；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 OPTIMIZATION-722.yaml（id=OPTIMIZATION-722） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 OPTIMIZATION-722.yaml（id=OPTIMIZATION-722）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f4f5054494d495a4154494f4e2d3732332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/OPTIMIZATION-723.yaml`](OPTIMIZATION-723.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=OPTIMIZATION-723；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 OPTIMIZATION-723.yaml（id=OPTIMIZATION-723） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 OPTIMIZATION-723.yaml（id=OPTIMIZATION-723）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f4f5054494d495a4154494f4e2d3732342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/OPTIMIZATION-724.yaml`](OPTIMIZATION-724.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=OPTIMIZATION-724；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 OPTIMIZATION-724.yaml（id=OPTIMIZATION-724） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 OPTIMIZATION-724.yaml（id=OPTIMIZATION-724）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f4f5054494d495a4154494f4e2d3732352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/OPTIMIZATION-725.yaml`](OPTIMIZATION-725.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=OPTIMIZATION-725；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 OPTIMIZATION-725.yaml（id=OPTIMIZATION-725） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 OPTIMIZATION-725.yaml（id=OPTIMIZATION-725）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f4f5054494d495a4154494f4e2d3732362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/OPTIMIZATION-726.yaml`](OPTIMIZATION-726.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=OPTIMIZATION-726；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 OPTIMIZATION-726.yaml（id=OPTIMIZATION-726） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 OPTIMIZATION-726.yaml（id=OPTIMIZATION-726）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f4f5054494d495a4154494f4e2d3732372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/OPTIMIZATION-727.yaml`](OPTIMIZATION-727.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=OPTIMIZATION-727；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 OPTIMIZATION-727.yaml（id=OPTIMIZATION-727） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 OPTIMIZATION-727.yaml（id=OPTIMIZATION-727）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f4f5054494d495a4154494f4e2d3732382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/OPTIMIZATION-728.yaml`](OPTIMIZATION-728.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=OPTIMIZATION-728；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 OPTIMIZATION-728.yaml（id=OPTIMIZATION-728） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 OPTIMIZATION-728.yaml（id=OPTIMIZATION-728）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f4f5054494d495a4154494f4e2d3732392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/OPTIMIZATION-729.yaml`](OPTIMIZATION-729.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=OPTIMIZATION-729；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 OPTIMIZATION-729.yaml（id=OPTIMIZATION-729） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 OPTIMIZATION-729.yaml（id=OPTIMIZATION-729）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f4f5054494d495a4154494f4e2d3733302e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/OPTIMIZATION-730.yaml`](OPTIMIZATION-730.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=OPTIMIZATION-730；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 OPTIMIZATION-730.yaml（id=OPTIMIZATION-730） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 OPTIMIZATION-730.yaml（id=OPTIMIZATION-730）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f4f5054494d495a4154494f4e2d3733312e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/OPTIMIZATION-731.yaml`](OPTIMIZATION-731.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=OPTIMIZATION-731；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 OPTIMIZATION-731.yaml（id=OPTIMIZATION-731） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 OPTIMIZATION-731.yaml（id=OPTIMIZATION-731）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f4f5054494d495a4154494f4e2d3733322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/OPTIMIZATION-732.yaml`](OPTIMIZATION-732.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=OPTIMIZATION-732；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 OPTIMIZATION-732.yaml（id=OPTIMIZATION-732） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 OPTIMIZATION-732.yaml（id=OPTIMIZATION-732）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f4f5054494d495a4154494f4e2d3733332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/OPTIMIZATION-733.yaml`](OPTIMIZATION-733.yaml)
   - **content_summary**: YAML 结构，顶层键：id, concept_name, sub_topics, llm_physical_mapping, code_implementation, v8_sanity_audit；安全锚点：id=OPTIMIZATION-733；sub_topics=4
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 OPTIMIZATION-733.yaml（id=OPTIMIZATION-733） 作为“staging 候选节点”使用；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: candidate_only；存在不代表已准入、已认证、可教学或可被 Coordinator 消费
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: candidate_only；evidence_basis=yaml_visible_keys_and_safe_fields；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
+  - **when_to_read**: 触发条件：对该候选做 root 对照、alias 冲突或 Human 语义裁决。读取 OPTIMIZATION-733.yaml（id=OPTIMIZATION-733）；只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f5f53746167696e675f4c6576656c365f50617274322f696e6465782e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

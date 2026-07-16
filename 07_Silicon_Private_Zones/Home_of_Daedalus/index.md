@@ -3,7 +3,7 @@
 
 ## directory_role
 
-硅基公民私有边界区；索引仅暴露路径/格式元数据，正文默认不加载
+Private Zone Daedalus 的路径/格式元数据边界；索引不读取或摘要正文
 
 ## authority_and_usage_boundary
 
@@ -11,8 +11,8 @@
 
 ## recommended_reading_order
 
-1. [`07_Silicon_Private_Zones/Home_of_Daedalus/README.md`](README.md) — 仅在 Human 明确要求处理 Private Zones 中 README.md 时读取，默认禁止加载正文
-2. [`07_Silicon_Private_Zones/Home_of_Daedalus/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
+1. [`07_Silicon_Private_Zones/Home_of_Daedalus/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`07_Silicon_Private_Zones/Home_of_Daedalus/README.md`](README.md) — 触发条件：Human 明确点名该 Private Zone artifact；默认只核对元数据，不读正文。读取 README.md（private_zone；suffix=.md）；正文未读取且默认禁止加载；索引不泄露内容摘要
 
 ## child_directories
 
@@ -23,21 +23,21 @@
 <!-- RIDX_FILE_HEX 30375f53696c69636f6e5f507269766174655f5a6f6e65732f486f6d655f6f665f44616564616c75732f524541444d452e6d64 -->
 - **path_or_link**: [`07_Silicon_Private_Zones/Home_of_Daedalus/README.md`](README.md)
   - **content_summary**: Private Zones tracked artifact；mode=100644，仅记录路径/格式边界，正文未读取；artifact=README.md
-  - **role_and_use**: 用 README.md 为 07_Silicon_Private_Zones/Home_of_Daedalus 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: tracked private-zone artifact；正文未读取，默认不加载
-  - **when_to_read**: 仅在 Human 明确要求处理 Private Zones 中 README.md 时读取，默认禁止加载正文
+  - **role_and_use**: 将 README.md（private_zone；suffix=.md） 作为“Private Zone 路径/格式元数据”使用；正文未读取且默认禁止加载；索引不泄露内容摘要
+  - **authority_class**: `user_asset`
+  - **status_or_freshness**: metadata_only；evidence_basis=restricted_private_metadata_only；正文未读取且默认禁止加载；索引不泄露内容摘要
+  - **when_to_read**: 触发条件：Human 明确点名该 Private Zone artifact；默认只核对元数据，不读正文。读取 README.md（private_zone；suffix=.md）；正文未读取且默认禁止加载；索引不泄露内容摘要
 <!-- RIDX_FILE_HEX 30375f53696c69636f6e5f507269766174655f5a6f6e65732f486f6d655f6f665f44616564616c75732f696e6465782e6d64 -->
 - **path_or_link**: [`07_Silicon_Private_Zones/Home_of_Daedalus/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 07_Silicon_Private_Zones/Home_of_Daedalus 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 07_Silicon_Private_Zones/Home_of_Daedalus 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 
-- 无额外分组；仍应只读取当前任务明确需要的 direct artifact。
+- 默认不加载 1 个历史/测试/生成/用户或大型 direct artifacts：`07_Silicon_Private_Zones/Home_of_Daedalus/README.md`。
 
 ## generation_and_freshness_note
 

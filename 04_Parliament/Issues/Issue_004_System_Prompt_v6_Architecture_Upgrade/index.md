@@ -3,7 +3,7 @@
 
 ## directory_role
 
-议会提案、裁决与归档证据区；归档内容仅用于历史追溯
+议会 Issue_004_System_Prompt_v6_Architecture_Upgrade 的 proposal、debate、review 与附件 provenance
 
 ## authority_and_usage_boundary
 
@@ -11,10 +11,10 @@
 
 ## recommended_reading_order
 
-1. [`04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/01-Antigravity-提出议题.md`](01-Antigravity-提出议题.md) — 用 01-Antigravity-提出议题.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-2. [`04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/02-Atlas-审查.md`](02-Atlas-审查.md) — 用 02-Atlas-审查.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-3. [`04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/02-Atlas-审查意见.md`](02-Atlas-审查意见.md) — 用 02-Atlas-审查意见.md 定位下一份任务相关权威；不得用该快照证明 live 状态
-4. [`04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
+1. [`04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/01-Antigravity-提出议题.md`](01-Antigravity-提出议题.md) — 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 01-Antigravity-提出议题.md（H1《🏛️ 议会议案 (Issue)》；首个 H2《1. 背景与核心危机 (Context &amp; Core Crisis)》）；提案/辩论不是现行宪章或已生效 verdict
+3. [`04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/02-Atlas-审查.md`](02-Atlas-审查.md) — 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 02-Atlas-审查.md（H1《🏛️ 议会审查决议 (Review Resolution)》；首个 H2《1. 审查核心意见 (Core Review Comments)》）；提案/辩论不是现行宪章或已生效 verdict
+4. [`04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/02-Atlas-审查意见.md`](02-Atlas-审查意见.md) — 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 02-Atlas-审查意见.md（H1《🏛️ 审查修正备忘录 (Reviewer's Memo)》；首个 H2《🛑 核心审视 (Critical Review)》）；提案/辩论不是现行宪章或已生效 verdict
 
 ## child_directories
 
@@ -25,35 +25,35 @@
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3030345f53797374656d5f50726f6d70745f76365f4172636869746563747572655f557067726164652f30312d416e7469677261766974792de68f90e587bae8aeaee9a2982e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/01-Antigravity-提出议题.md`](01-Antigravity-提出议题.md)
   - **content_summary**: H1《🏛️ 议会议案 (Issue)》；首个 H2《1. 背景与核心危机 (Context &amp; Core Crisis)》
-  - **role_and_use**: 用 01-Antigravity-提出议题.md 为 04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 01-Antigravity-提出议题.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 01-Antigravity-提出议题.md（H1《🏛️ 议会议案 (Issue)》；首个 H2《1. 背景与核心危机 (Context &amp; Core Crisis)》） 作为“议会提案/辩论 provenance”使用；提案/辩论不是现行宪章或已生效 verdict
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=parliament_proposal_or_debate；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；提案/辩论不是现行宪章或已生效 verdict
+  - **when_to_read**: 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 01-Antigravity-提出议题.md（H1《🏛️ 议会议案 (Issue)》；首个 H2《1. 背景与核心危机 (Context &amp; Core Crisis)》）；提案/辩论不是现行宪章或已生效 verdict
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3030345f53797374656d5f50726f6d70745f76365f4172636869746563747572655f557067726164652f30322d41746c61732de5aea1e69fa52e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/02-Atlas-审查.md`](02-Atlas-审查.md)
   - **content_summary**: H1《🏛️ 议会审查决议 (Review Resolution)》；首个 H2《1. 审查核心意见 (Core Review Comments)》
-  - **role_and_use**: 用 02-Atlas-审查.md 为 04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 02-Atlas-审查.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 02-Atlas-审查.md（H1《🏛️ 议会审查决议 (Review Resolution)》；首个 H2《1. 审查核心意见 (Core Review Comments)》） 作为“议会提案/辩论 provenance”使用；提案/辩论不是现行宪章或已生效 verdict
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=parliament_proposal_or_debate；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；提案/辩论不是现行宪章或已生效 verdict
+  - **when_to_read**: 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 02-Atlas-审查.md（H1《🏛️ 议会审查决议 (Review Resolution)》；首个 H2《1. 审查核心意见 (Core Review Comments)》）；提案/辩论不是现行宪章或已生效 verdict
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3030345f53797374656d5f50726f6d70745f76365f4172636869746563747572655f557067726164652f30322d41746c61732de5aea1e69fa5e6848fe8a7812e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/02-Atlas-审查意见.md`](02-Atlas-审查意见.md)
   - **content_summary**: H1《🏛️ 审查修正备忘录 (Reviewer's Memo)》；首个 H2《🛑 核心审视 (Critical Review)》
-  - **role_and_use**: 用 02-Atlas-审查意见.md 为 04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade 提供导航或状态路由；物理 Git/活动指针优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: routing snapshot；不得替代实时 Git、Human 指令或活动 mailbox
-  - **when_to_read**: 用 02-Atlas-审查意见.md 定位下一份任务相关权威；不得用该快照证明 live 状态
+  - **role_and_use**: 将 02-Atlas-审查意见.md（H1《🏛️ 审查修正备忘录 (Reviewer's Memo)》；首个 H2《🛑 核心审视 (Critical Review)》） 作为“议会提案/辩论 provenance”使用；提案/辩论不是现行宪章或已生效 verdict
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=parliament_proposal_or_debate；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；提案/辩论不是现行宪章或已生效 verdict
+  - **when_to_read**: 触发条件：追溯对应 Issue 的提案、反驳或审查演化。读取 02-Atlas-审查意见.md（H1《🏛️ 审查修正备忘录 (Reviewer's Memo)》；首个 H2《🛑 核心审视 (Critical Review)》）；提案/辩论不是现行宪章或已生效 verdict
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f4973737565732f49737375655f3030345f53797374656d5f50726f6d70745f76365f4172636869746563747572655f557067726164652f696e6465782e6d64 -->
 - **path_or_link**: [`04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 
-- 无额外分组；仍应只读取当前任务明确需要的 direct artifact。
+- 默认不加载 3 个历史/测试/生成/用户或大型 direct artifacts：`04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/01-Antigravity-提出议题.md`, `04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/02-Atlas-审查.md`, `04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/02-Atlas-审查意见.md`。
 
 ## generation_and_freshness_note
 

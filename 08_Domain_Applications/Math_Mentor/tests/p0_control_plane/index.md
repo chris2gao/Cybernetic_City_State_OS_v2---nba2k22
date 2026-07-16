@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Math Mentor 测试、fixture 与静态验证证据目录
+Math Mentor 测试分区 p0_control_plane；fixture/verdict 不构成真实权限或 activation
 
 ## authority_and_usage_boundary
 
@@ -11,20 +11,20 @@ Math Mentor 测试、fixture 与静态验证证据目录
 
 ## recommended_reading_order
 
-1. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_admission.py`](test_admission.py) — 运行 test_admission.py 对应测试或定位特定失败用例时读取
-3. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_authorization.py`](test_authorization.py) — 运行 test_authorization.py 对应测试或定位特定失败用例时读取
-4. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_identity.py`](test_identity.py) — 运行 test_identity.py 对应测试或定位特定失败用例时读取
-5. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_normalization.py`](test_normalization.py) — 运行 test_normalization.py 对应测试或定位特定失败用例时读取
-6. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_normalization_corpus.py`](test_normalization_corpus.py) — 运行 test_normalization_corpus.py 对应测试或定位特定失败用例时读取
-7. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/index.md`](fixtures/index.md) — 复现特定测试、proof case 或定位 validator 失败时进入
+1. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_admission.py`](test_admission.py) — 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 test_admission.py（AdmissionTests）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+3. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_authorization.py`](test_authorization.py) — 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 test_authorization.py（AuthorizationTests）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+4. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_identity.py`](test_identity.py) — 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 test_identity.py（IdentityPrimitiveTests）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+5. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_normalization.py`](test_normalization.py) — 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 test_normalization.py（NormalizationTests）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+6. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_normalization_corpus.py`](test_normalization_corpus.py) — 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 test_normalization_corpus.py（LiveCorpusNormalizationTests）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+7. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/index.md`](fixtures/index.md) — 运行 fixtures 中的具名测试或复现 fixture 失败
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f70305f636f6e74726f6c5f706c616e652f6669787475726573 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures`](fixtures/index.md)
-  - **content_scope**: Math Mentor 测试、fixture 与静态验证证据目录；tracked 后代文件数=5
-  - **when_to_enter**: 复现特定测试、proof case 或定位 validator 失败时进入
+  - **content_scope**: Math Mentor 测试分区 fixtures；fixture/verdict 不构成真实权限或 activation；tracked 后代文件数=5
+  - **when_to_enter**: 运行 fixtures 中的具名测试或复现 fixture 失败
   - **load_policy**: `do_not_load_by_default`
 
 ## direct_files
@@ -32,73 +32,73 @@ Math Mentor 测试、fixture 与静态验证证据目录
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f70305f636f6e74726f6c5f706c616e652f696e6465782e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/tests/p0_control_plane 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/tests/p0_control_plane 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f70305f636f6e74726f6c5f706c616e652f746573745f61646d697373696f6e2e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_admission.py`](test_admission.py)
   - **content_summary**: Python；public symbols=AdmissionTests
-  - **role_and_use**: 以 test_admission.py 作为 08_Domain_Applications/Math_Mentor/tests/p0_control_plane 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 test_admission.py（AdmissionTests） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 test_admission.py 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=python_ast_docstring_and_symbols；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 test_admission.py（AdmissionTests）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f70305f636f6e74726f6c5f706c616e652f746573745f617574686f72697a6174696f6e2e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_authorization.py`](test_authorization.py)
   - **content_summary**: Python；public symbols=AuthorizationTests
-  - **role_and_use**: 以 test_authorization.py 作为 08_Domain_Applications/Math_Mentor/tests/p0_control_plane 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 test_authorization.py（AuthorizationTests） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 test_authorization.py 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=python_ast_docstring_and_symbols；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 test_authorization.py（AuthorizationTests）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f70305f636f6e74726f6c5f706c616e652f746573745f6964656e746974792e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_identity.py`](test_identity.py)
   - **content_summary**: Python；public symbols=IdentityPrimitiveTests
-  - **role_and_use**: 以 test_identity.py 作为 08_Domain_Applications/Math_Mentor/tests/p0_control_plane 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 test_identity.py（IdentityPrimitiveTests） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 test_identity.py 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=python_ast_docstring_and_symbols；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 test_identity.py（IdentityPrimitiveTests）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f70305f636f6e74726f6c5f706c616e652f746573745f6e6f726d616c697a6174696f6e2e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_normalization.py`](test_normalization.py)
   - **content_summary**: Python；public symbols=NormalizationTests
-  - **role_and_use**: 以 test_normalization.py 作为 08_Domain_Applications/Math_Mentor/tests/p0_control_plane 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 test_normalization.py（NormalizationTests） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 test_normalization.py 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=python_ast_docstring_and_symbols；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 test_normalization.py（NormalizationTests）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f70305f636f6e74726f6c5f706c616e652f746573745f6e6f726d616c697a6174696f6e5f636f727075732e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_normalization_corpus.py`](test_normalization_corpus.py)
   - **content_summary**: Python；public symbols=LiveCorpusNormalizationTests
-  - **role_and_use**: 以 test_normalization_corpus.py 作为 08_Domain_Applications/Math_Mentor/tests/p0_control_plane 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 test_normalization_corpus.py（LiveCorpusNormalizationTests） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 test_normalization_corpus.py 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=python_ast_docstring_and_symbols；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 test_normalization_corpus.py（LiveCorpusNormalizationTests）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f70305f636f6e74726f6c5f706c616e652f746573745f72656769737472795f6275696c6465722e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_registry_builder.py`](test_registry_builder.py)
   - **content_summary**: Python；public symbols=RegistryBuilderTests
-  - **role_and_use**: 以 test_registry_builder.py 作为 08_Domain_Applications/Math_Mentor/tests/p0_control_plane 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 test_registry_builder.py（RegistryBuilderTests） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 test_registry_builder.py 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=python_ast_docstring_and_symbols；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 test_registry_builder.py（RegistryBuilderTests）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f70305f636f6e74726f6c5f706c616e652f746573745f73746167696e675f646961676e6f73746963732e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_staging_diagnostics.py`](test_staging_diagnostics.py)
   - **content_summary**: Python；public symbols=StagingDiagnosticsTests
-  - **role_and_use**: 以 test_staging_diagnostics.py 作为 08_Domain_Applications/Math_Mentor/tests/p0_control_plane 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 test_staging_diagnostics.py（StagingDiagnosticsTests） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: candidate_only；存在不代表已准入或已认证
-  - **when_to_read**: 运行 test_staging_diagnostics.py 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=python_ast_docstring_and_symbols；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 test_staging_diagnostics.py（StagingDiagnosticsTests）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f70305f636f6e74726f6c5f706c616e652f746573745f7374617469635f726567697374726965732e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_static_registries.py`](test_static_registries.py)
   - **content_summary**: Python；public symbols=load_yaml, by_id, StaticRegistryTests
-  - **role_and_use**: 以 test_static_registries.py 作为 08_Domain_Applications/Math_Mentor/tests/p0_control_plane 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 test_static_registries.py（load_yaml；by_id；StaticRegistryTests） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 test_static_registries.py 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=python_ast_docstring_and_symbols；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 test_static_registries.py（load_yaml；by_id；StaticRegistryTests）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f70305f636f6e74726f6c5f706c616e652f746573745f76616c69646174652e7079 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/test_validate.py`](test_validate.py)
   - **content_summary**: Python；public symbols=ControlPlaneValidationTests
-  - **role_and_use**: 以 test_validate.py 作为 08_Domain_Applications/Math_Mentor/tests/p0_control_plane 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 test_validate.py（ControlPlaneValidationTests） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 test_validate.py 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=python_ast_docstring_and_symbols；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 test_validate.py（ControlPlaneValidationTests）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 
 ## do_not_load_by_default
 

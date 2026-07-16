@@ -3,7 +3,7 @@
 
 ## directory_role
 
-议会提案、裁决与归档证据区；归档内容仅用于历史追溯
+议会冻结归档 Issue_003_Deep_Research_Roadmap；仅追溯已关闭裁决及迁移来源
 
 ## authority_and_usage_boundary
 
@@ -11,9 +11,9 @@
 
 ## recommended_reading_order
 
-1. [`04_Parliament/已解决归档/Issue_003_Deep_Research_Roadmap/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`04_Parliament/已解决归档/Issue_003_Deep_Research_Roadmap/01-Antigravity-提出议题.md`](01-Antigravity-提出议题.md) — 追溯 01-Antigravity-提出议题.md 对应旧任务、裁决或 publication provenance 时读取
-3. [`04_Parliament/已解决归档/Issue_003_Deep_Research_Roadmap/02-Atlas-审查.md`](02-Atlas-审查.md) — 追溯 02-Atlas-审查.md 对应旧任务、裁决或 publication provenance 时读取
+1. [`04_Parliament/已解决归档/Issue_003_Deep_Research_Roadmap/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`04_Parliament/已解决归档/Issue_003_Deep_Research_Roadmap/01-Antigravity-提出议题.md`](01-Antigravity-提出议题.md) — 触发条件：追溯已关闭 Issue 的决策来源或迁移影响。读取 01-Antigravity-提出议题.md（H1《议案：教学系统全域边界测试与深度研究规划 (Deep Research Roadmap)》；首个 H2《1. 提案背景》）；冻结历史不得冒充 active Issue、verdict 或任务
+3. [`04_Parliament/已解决归档/Issue_003_Deep_Research_Roadmap/02-Atlas-审查.md`](02-Atlas-审查.md) — 触发条件：追溯已关闭 Issue 的决策来源或迁移影响。读取 02-Atlas-审查.md（H1《审查官 Atlas 的审核报告》；首个 H2《1. 辩论与逻辑审查 (Debate &amp; Logic Review)》）；冻结历史不得冒充 active Issue、verdict 或任务
 
 ## child_directories
 
@@ -24,24 +24,24 @@
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742fe5b7b2e8a7a3e586b3e5bd92e6a1a32f49737375655f3030335f446565705f52657365617263685f526f61646d61702f30312d416e7469677261766974792de68f90e587bae8aeaee9a2982e6d64 -->
 - **path_or_link**: [`04_Parliament/已解决归档/Issue_003_Deep_Research_Roadmap/01-Antigravity-提出议题.md`](01-Antigravity-提出议题.md)
   - **content_summary**: H1《议案：教学系统全域边界测试与深度研究规划 (Deep Research Roadmap)》；首个 H2《1. 提案背景》
-  - **role_and_use**: 保存 04_Parliament/已解决归档/Issue_003_Deep_Research_Roadmap 的历史任务/决策快照；仅在追溯 01-Antigravity-提出议题.md 时使用
+  - **role_and_use**: 将 01-Antigravity-提出议题.md（H1《议案：教学系统全域边界测试与深度研究规划 (Deep Research Roadmap)》；首个 H2《1. 提案背景》） 作为“议会冻结归档”使用；冻结历史不得冒充 active Issue、verdict 或任务
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical/frozen；仅追溯，不作为当前合同
-  - **when_to_read**: 追溯 01-Antigravity-提出议题.md 对应旧任务、裁决或 publication provenance 时读取
+  - **status_or_freshness**: semantic_profile=parliament_historical_archive；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；冻结历史不得冒充 active Issue、verdict 或任务
+  - **when_to_read**: 触发条件：追溯已关闭 Issue 的决策来源或迁移影响。读取 01-Antigravity-提出议题.md（H1《议案：教学系统全域边界测试与深度研究规划 (Deep Research Roadmap)》；首个 H2《1. 提案背景》）；冻结历史不得冒充 active Issue、verdict 或任务
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742fe5b7b2e8a7a3e586b3e5bd92e6a1a32f49737375655f3030335f446565705f52657365617263685f526f61646d61702f30322d41746c61732de5aea1e69fa52e6d64 -->
 - **path_or_link**: [`04_Parliament/已解决归档/Issue_003_Deep_Research_Roadmap/02-Atlas-审查.md`](02-Atlas-审查.md)
   - **content_summary**: H1《审查官 Atlas 的审核报告》；首个 H2《1. 辩论与逻辑审查 (Debate &amp; Logic Review)》
-  - **role_and_use**: 保存 04_Parliament/已解决归档/Issue_003_Deep_Research_Roadmap 的历史任务/决策快照；仅在追溯 02-Atlas-审查.md 时使用
+  - **role_and_use**: 将 02-Atlas-审查.md（H1《审查官 Atlas 的审核报告》；首个 H2《1. 辩论与逻辑审查 (Debate &amp; Logic Review)》） 作为“议会冻结归档”使用；冻结历史不得冒充 active Issue、verdict 或任务
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical/frozen；仅追溯，不作为当前合同
-  - **when_to_read**: 追溯 02-Atlas-审查.md 对应旧任务、裁决或 publication provenance 时读取
+  - **status_or_freshness**: semantic_profile=parliament_historical_archive；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；冻结历史不得冒充 active Issue、verdict 或任务
+  - **when_to_read**: 触发条件：追溯已关闭 Issue 的决策来源或迁移影响。读取 02-Atlas-审查.md（H1《审查官 Atlas 的审核报告》；首个 H2《1. 辩论与逻辑审查 (Debate &amp; Logic Review)》）；冻结历史不得冒充 active Issue、verdict 或任务
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742fe5b7b2e8a7a3e586b3e5bd92e6a1a32f49737375655f3030335f446565705f52657365617263685f526f61646d61702f696e6465782e6d64 -->
 - **path_or_link**: [`04_Parliament/已解决归档/Issue_003_Deep_Research_Roadmap/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 04_Parliament/已解决归档/Issue_003_Deep_Research_Roadmap 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 04_Parliament/已解决归档/Issue_003_Deep_Research_Roadmap 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

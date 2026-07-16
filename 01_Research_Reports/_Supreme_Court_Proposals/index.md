@@ -3,7 +3,7 @@
 
 ## directory_role
 
-研究报告与来源材料区；可能含 N=1/健康/用户资产，默认不做批量加载
+研究来源区 _Supreme_Court_Proposals；可能包含健康、N=1 或用户资产，默认按单文件加载
 
 ## authority_and_usage_boundary
 
@@ -11,9 +11,9 @@
 
 ## recommended_reading_order
 
-1. [`01_Research_Reports/_Supreme_Court_Proposals/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`01_Research_Reports/_Supreme_Court_Proposals/04_Lossless_Dimensional_Elevation_Proposal.md`](04_Lossless_Dimensional_Elevation_Proposal.md) — 任务明确需要 04_Lossless_Dimensional_Elevation_Proposal.md 的研究、语料或用户资产时按隐私边界读取
-3. [`01_Research_Reports/_Supreme_Court_Proposals/05_Representation_Engineering_Control_Vectors_Proposal.md`](05_Representation_Engineering_Control_Vectors_Proposal.md) — 任务明确需要 05_Representation_Engineering_Control_Vectors_Proposal.md 的研究、语料或用户资产时按隐私边界读取
+1. [`01_Research_Reports/_Supreme_Court_Proposals/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`01_Research_Reports/_Supreme_Court_Proposals/04_Lossless_Dimensional_Elevation_Proposal.md`](04_Lossless_Dimensional_Elevation_Proposal.md) — 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 04_Lossless_Dimensional_Elevation_Proposal.md（H1《提案：无损升维协议与全息论文交接 (Lossless Dimensional Elevation Protocol)》；首个 H2《触发背景》）；只在明确研究问题、来源和隐私范围内单文件读取
+3. [`01_Research_Reports/_Supreme_Court_Proposals/05_Representation_Engineering_Control_Vectors_Proposal.md`](05_Representation_Engineering_Control_Vectors_Proposal.md) — 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 05_Representation_Engineering_Control_Vectors_Proposal.md（H1《提案：表征工程与物理对数概率验证 (Representation Engineering &amp; Log-Probability Verification)》；首个 H2《触发背景》）；只在明确研究问题、来源和隐私范围内单文件读取
 
 ## child_directories
 
@@ -24,24 +24,24 @@
 <!-- RIDX_FILE_HEX 30315f52657365617263685f5265706f7274732f5f53757072656d655f436f7572745f50726f706f73616c732f30345f4c6f73736c6573735f44696d656e73696f6e616c5f456c65766174696f6e5f50726f706f73616c2e6d64 -->
 - **path_or_link**: [`01_Research_Reports/_Supreme_Court_Proposals/04_Lossless_Dimensional_Elevation_Proposal.md`](04_Lossless_Dimensional_Elevation_Proposal.md)
   - **content_summary**: H1《提案：无损升维协议与全息论文交接 (Lossless Dimensional Elevation Protocol)》；首个 H2《触发背景》
-  - **role_and_use**: 以 04_Lossless_Dimensional_Elevation_Proposal.md 保存 01_Research_Reports/_Supreme_Court_Proposals 的研究、语料或私有边界资产；仅在明确任务范围内读取
+  - **role_and_use**: 将 04_Lossless_Dimensional_Elevation_Proposal.md（H1《提案：无损升维协议与全息论文交接 (Lossless Dimensional Elevation Protocol)》；首个 H2《触发背景》） 作为“研究或用户来源资产”使用；只在明确研究问题、来源和隐私范围内单文件读取
   - **authority_class**: `user_asset`
-  - **status_or_freshness**: tracked user/research asset；内容成熟度和隐私边界需按任务确认
-  - **when_to_read**: 任务明确需要 04_Lossless_Dimensional_Elevation_Proposal.md 的研究、语料或用户资产时按隐私边界读取
+  - **status_or_freshness**: semantic_profile=research_or_user_asset；authority=user_asset；evidence_basis=markdown_heading_or_visible_structure；只在明确研究问题、来源和隐私范围内单文件读取
+  - **when_to_read**: 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 04_Lossless_Dimensional_Elevation_Proposal.md（H1《提案：无损升维协议与全息论文交接 (Lossless Dimensional Elevation Protocol)》；首个 H2《触发背景》）；只在明确研究问题、来源和隐私范围内单文件读取
 <!-- RIDX_FILE_HEX 30315f52657365617263685f5265706f7274732f5f53757072656d655f436f7572745f50726f706f73616c732f30355f526570726573656e746174696f6e5f456e67696e656572696e675f436f6e74726f6c5f566563746f72735f50726f706f73616c2e6d64 -->
 - **path_or_link**: [`01_Research_Reports/_Supreme_Court_Proposals/05_Representation_Engineering_Control_Vectors_Proposal.md`](05_Representation_Engineering_Control_Vectors_Proposal.md)
   - **content_summary**: H1《提案：表征工程与物理对数概率验证 (Representation Engineering &amp; Log-Probability Verification)》；首个 H2《触发背景》
-  - **role_and_use**: 以 05_Representation_Engineering_Control_Vectors_Proposal.md 保存 01_Research_Reports/_Supreme_Court_Proposals 的研究、语料或私有边界资产；仅在明确任务范围内读取
+  - **role_and_use**: 将 05_Representation_Engineering_Control_Vectors_Proposal.md（H1《提案：表征工程与物理对数概率验证 (Representation Engineering &amp; Log-Probability Verification)》；首个 H2《触发背景》） 作为“研究或用户来源资产”使用；只在明确研究问题、来源和隐私范围内单文件读取
   - **authority_class**: `user_asset`
-  - **status_or_freshness**: tracked user/research asset；内容成熟度和隐私边界需按任务确认
-  - **when_to_read**: 任务明确需要 05_Representation_Engineering_Control_Vectors_Proposal.md 的研究、语料或用户资产时按隐私边界读取
+  - **status_or_freshness**: semantic_profile=research_or_user_asset；authority=user_asset；evidence_basis=markdown_heading_or_visible_structure；只在明确研究问题、来源和隐私范围内单文件读取
+  - **when_to_read**: 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 05_Representation_Engineering_Control_Vectors_Proposal.md（H1《提案：表征工程与物理对数概率验证 (Representation Engineering &amp; Log-Probability Verification)》；首个 H2《触发背景》）；只在明确研究问题、来源和隐私范围内单文件读取
 <!-- RIDX_FILE_HEX 30315f52657365617263685f5265706f7274732f5f53757072656d655f436f7572745f50726f706f73616c732f696e6465782e6d64 -->
 - **path_or_link**: [`01_Research_Reports/_Supreme_Court_Proposals/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 01_Research_Reports/_Supreme_Court_Proposals 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 01_Research_Reports/_Supreme_Court_Proposals 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 
 ## do_not_load_by_default
 

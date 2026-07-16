@@ -3,7 +3,7 @@
 
 ## directory_role
 
-学习期 prompt/语料的 historical backup 副本；仅作 provenance，不作为当前合同
+学习期 prompt/语料历史备份；只作 provenance，不作为当前合同
 
 ## authority_and_usage_boundary
 
@@ -11,10 +11,10 @@
 
 ## recommended_reading_order
 
-1. [`08_Domain_Applications/Math_Mentor/学习期prompt/backup/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`08_Domain_Applications/Math_Mentor/学习期prompt/backup/大模型解剖图：深入解析.md`](大模型解剖图：深入解析.md) — 追溯 大模型解剖图：深入解析.md 对应旧任务、裁决或 publication provenance 时读取
-3. [`08_Domain_Applications/Math_Mentor/学习期prompt/backup/大语言模型数学底层架构全阶段深度解析整合报告.md`](大语言模型数学底层架构全阶段深度解析整合报告.md) — 追溯 大语言模型数学底层架构全阶段深度解析整合报告.md 对应旧任务、裁决或 publication provenance 时读取
-4. [`08_Domain_Applications/Math_Mentor/学习期prompt/backup/英语算子直觉与语义架构索引.md`](英语算子直觉与语义架构索引.md) — 追溯 英语算子直觉与语义架构索引.md 对应旧任务、裁决或 publication provenance 时读取
+1. [`08_Domain_Applications/Math_Mentor/学习期prompt/backup/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`08_Domain_Applications/Math_Mentor/学习期prompt/backup/大模型解剖图：深入解析.md`](大模型解剖图：深入解析.md) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 大模型解剖图：深入解析.md（H1《**大语言模型底层数学架构与多模态演进史：从物理表征到强化推理引擎的深度解剖**》；首个 H2《**第一层：数据吞吐与底层表征（感知世界的基础）**》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+3. [`08_Domain_Applications/Math_Mentor/学习期prompt/backup/大语言模型数学底层架构全阶段深度解析整合报告.md`](大语言模型数学底层架构全阶段深度解析整合报告.md) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 大语言模型数学底层架构全阶段深度解析整合报告.md（首行“大语言模型（LLM）的演进路径已超越了早期的统计预测范式，正加速向 **正向形式化验证（Forward Formal Verification）** 、\*\*语义流形几何分析（Manifold Geometric Analysis） *…”）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+4. [`08_Domain_Applications/Math_Mentor/学习期prompt/backup/英语算子直觉与语义架构索引.md`](英语算子直觉与语义架构索引.md) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 英语算子直觉与语义架构索引.md（H1《**英语符号直觉与语义架构索引库：基于认知物理意义与交际情绪的全局深度解析**》；首个 H2《**引言：认知语法、力阵动力学与具身语义学的理论范式重构**》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 
 ## child_directories
 
@@ -25,35 +25,35 @@
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742f6261636b75702f696e6465782e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/backup/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/学习期prompt/backup 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/学习期prompt/backup 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742f6261636b75702fe5a4a7e6a8a1e59e8be8a7a3e58996e59bbeefbc9ae6b7b1e585a5e8a7a3e69e902e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/backup/大模型解剖图：深入解析.md`](大模型解剖图：深入解析.md)
   - **content_summary**: H1《**大语言模型底层数学架构与多模态演进史：从物理表征到强化推理引擎的深度解剖**》；首个 H2《**第一层：数据吞吐与底层表征（感知世界的基础）**》；artifact=大模型解剖图：深入解析.md
-  - **role_and_use**: 保存 08_Domain_Applications/Math_Mentor/学习期prompt/backup 的历史任务/决策快照；仅在追溯 大模型解剖图：深入解析.md 时使用
-  - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical backup/superseded copy；仅作 provenance，不作为当前 prompt 或合同
-  - **when_to_read**: 追溯 大模型解剖图：深入解析.md 对应旧任务、裁决或 publication provenance 时读取
+  - **role_and_use**: 将 大模型解剖图：深入解析.md（H1《**大语言模型底层数学架构与多模态演进史：从物理表征到强化推理引擎的深度解剖**》；首个 H2《**第一层：数据吞吐与底层表征（感知世界的基础）**》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **authority_class**: `routing`
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 大模型解剖图：深入解析.md（H1《**大语言模型底层数学架构与多模态演进史：从物理表征到强化推理引擎的深度解剖**》；首个 H2《**第一层：数据吞吐与底层表征（感知世界的基础）**》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742f6261636b75702fe5a4a7e8afade8a880e6a8a1e59e8be695b0e5ada6e5ba95e5b182e69eb6e69e84e585a8e998b6e6aeb5e6b7b1e5baa6e8a7a3e69e90e695b4e59088e68aa5e5918a2e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/backup/大语言模型数学底层架构全阶段深度解析整合报告.md`](大语言模型数学底层架构全阶段深度解析整合报告.md)
   - **content_summary**: 首行“大语言模型（LLM）的演进路径已超越了早期的统计预测范式，正加速向 **正向形式化验证（Forward Formal Verification）** 、\*\*语义流形几何分析（Manifold Geometric Analysis） *…”；artifact=大语言模型数学底层架构全阶段深度解析整合报告.md
-  - **role_and_use**: 保存 08_Domain_Applications/Math_Mentor/学习期prompt/backup 的历史任务/决策快照；仅在追溯 大语言模型数学底层架构全阶段深度解析整合报告.md 时使用
-  - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical backup/superseded copy；仅作 provenance，不作为当前 prompt 或合同
-  - **when_to_read**: 追溯 大语言模型数学底层架构全阶段深度解析整合报告.md 对应旧任务、裁决或 publication provenance 时读取
+  - **role_and_use**: 将 大语言模型数学底层架构全阶段深度解析整合报告.md（首行“大语言模型（LLM）的演进路径已超越了早期的统计预测范式，正加速向 **正向形式化验证（Forward Formal Verification）** 、\*\*语义流形几何分析（Manifold Geometric Analysis） *…”） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **authority_class**: `routing`
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 大语言模型数学底层架构全阶段深度解析整合报告.md（首行“大语言模型（LLM）的演进路径已超越了早期的统计预测范式，正加速向 **正向形式化验证（Forward Formal Verification）** 、\*\*语义流形几何分析（Manifold Geometric Analysis） *…”）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5ada6e4b9a0e69c9f70726f6d70742f6261636b75702fe88bb1e8afade7ae97e5ad90e79bb4e8a789e4b88ee8afade4b989e69eb6e69e84e7b4a2e5bc952e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/学习期prompt/backup/英语算子直觉与语义架构索引.md`](英语算子直觉与语义架构索引.md)
   - **content_summary**: H1《**英语符号直觉与语义架构索引库：基于认知物理意义与交际情绪的全局深度解析**》；首个 H2《**引言：认知语法、力阵动力学与具身语义学的理论范式重构**》；artifact=英语算子直觉与语义架构索引.md
-  - **role_and_use**: 保存 08_Domain_Applications/Math_Mentor/学习期prompt/backup 的历史任务/决策快照；仅在追溯 英语算子直觉与语义架构索引.md 时使用
-  - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical backup/superseded copy；仅作 provenance，不作为当前 prompt 或合同
-  - **when_to_read**: 追溯 英语算子直觉与语义架构索引.md 对应旧任务、裁决或 publication provenance 时读取
+  - **role_and_use**: 将 英语算子直觉与语义架构索引.md（H1《**英语符号直觉与语义架构索引库：基于认知物理意义与交际情绪的全局深度解析**》；首个 H2《**引言：认知语法、力阵动力学与具身语义学的理论范式重构**》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **authority_class**: `routing`
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 英语算子直觉与语义架构索引.md（H1《**英语符号直觉与语义架构索引库：基于认知物理意义与交际情绪的全局深度解析**》；首个 H2《**引言：认知语法、力阵动力学与具身语义学的理论范式重构**》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 
 ## do_not_load_by_default
 
-- 默认不加载 3 个历史/测试/生成/用户或大型 direct artifacts：`08_Domain_Applications/Math_Mentor/学习期prompt/backup/大模型解剖图：深入解析.md`, `08_Domain_Applications/Math_Mentor/学习期prompt/backup/大语言模型数学底层架构全阶段深度解析整合报告.md`, `08_Domain_Applications/Math_Mentor/学习期prompt/backup/英语算子直觉与语义架构索引.md`。
+- 无额外分组；仍应只读取当前任务明确需要的 direct artifact。
 
 ## generation_and_freshness_note
 

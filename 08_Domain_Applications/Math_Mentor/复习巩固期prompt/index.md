@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Math Mentor legacy review prompt compatibility library；只读 importer 证据，禁止执行、写入或状态提升
+legacy review prompt/table 只读 importer 输入；旧毕业语义不得进入生产状态机
 
 ## authority_and_usage_boundary
 
@@ -11,12 +11,12 @@ Math Mentor legacy review prompt compatibility library；只读 importer 证据�
 
 ## recommended_reading_order
 
-1. [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/README.md`](README.md) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
-3. [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/万能辩证学习提示词（人话）.md`](万能辩证学习提示词（人话）.md) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
-4. [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/万能辩证学习提示词（修辞）.md`](万能辩证学习提示词（修辞）.md) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
-5. [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/交互式演化引擎生成提示词.md`](交互式演化引擎生成提示词.md) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
-6. [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/交叉练习提示词.md`](交叉练习提示词.md) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+1. [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/README.md`](README.md) — 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 README.md（README 标题仍描述 03_Daily_Execution 模板，与复习巩固 prompt 目录不一致）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+3. [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/万能辩证学习提示词（人话）.md`](万能辩证学习提示词（人话）.md) — 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 万能辩证学习提示词（人话）.md（首个 H2《**交互指令：提出测试题后，请立即停止输出！把舞台交给我，等待我的回答。如果我答错了，请用极其直白的日常逻辑点醒我。**》）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+4. [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/万能辩证学习提示词（修辞）.md`](万能辩证学习提示词（修辞）.md) — 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 万能辩证学习提示词（修辞）.md（首行“【角色与任务定义】”）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+5. [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/交互式演化引擎生成提示词.md`](交互式演化引擎生成提示词.md) — 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 交互式演化引擎生成提示词.md（首行“【角色与任务定义】”）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+6. [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/交叉练习提示词.md`](交叉练习提示词.md) — 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 交叉练习提示词.md（H1《Role》）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
 
 ## child_directories
 
@@ -27,73 +27,73 @@ Math Mentor legacy review prompt compatibility library；只读 importer 证据�
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5a48de4b9a0e5b7a9e59bbae69c9f70726f6d70742f524541444d452e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/README.md`](README.md)
   - **content_summary**: README 标题仍描述 03_Daily_Execution 模板，与复习巩固 prompt 目录不一致
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/复习巩固期prompt 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 README.md（README 标题仍描述 03_Daily_Execution 模板，与复习巩固 prompt 目录不一致） 作为“legacy review 只读输入”使用；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: compatibility_only 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: compatibility_only；evidence_basis=curated_misaligned_readme_evidence；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+  - **when_to_read**: 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 README.md（README 标题仍描述 03_Daily_Execution 模板，与复习巩固 prompt 目录不一致）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5a48de4b9a0e5b7a9e59bbae69c9f70726f6d70742f696e6465782e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/复习巩固期prompt 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/复习巩固期prompt 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5a48de4b9a0e5b7a9e59bbae69c9f70726f6d70742fe4b887e883bde8bea9e8af81e5ada6e4b9a0e68f90e7a4bae8af8defbc88e4babae8af9defbc892e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/万能辩证学习提示词（人话）.md`](万能辩证学习提示词（人话）.md)
   - **content_summary**: 首个 H2《**交互指令：提出测试题后，请立即停止输出！把舞台交给我，等待我的回答。如果我答错了，请用极其直白的日常逻辑点醒我。**》
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/复习巩固期prompt 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 万能辩证学习提示词（人话）.md（首个 H2《**交互指令：提出测试题后，请立即停止输出！把舞台交给我，等待我的回答。如果我答错了，请用极其直白的日常逻辑点醒我。**》） 作为“legacy review 只读输入”使用；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: compatibility_only 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: compatibility_only；evidence_basis=markdown_heading_or_visible_structure；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+  - **when_to_read**: 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 万能辩证学习提示词（人话）.md（首个 H2《**交互指令：提出测试题后，请立即停止输出！把舞台交给我，等待我的回答。如果我答错了，请用极其直白的日常逻辑点醒我。**》）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5a48de4b9a0e5b7a9e59bbae69c9f70726f6d70742fe4b887e883bde8bea9e8af81e5ada6e4b9a0e68f90e7a4bae8af8defbc88e4bfaee8be9eefbc892e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/万能辩证学习提示词（修辞）.md`](万能辩证学习提示词（修辞）.md)
   - **content_summary**: 首行“【角色与任务定义】”；artifact=万能辩证学习提示词（修辞）.md
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/复习巩固期prompt 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 万能辩证学习提示词（修辞）.md（首行“【角色与任务定义】”） 作为“legacy review 只读输入”使用；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: compatibility_only 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: compatibility_only；evidence_basis=markdown_heading_or_visible_structure；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+  - **when_to_read**: 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 万能辩证学习提示词（修辞）.md（首行“【角色与任务定义】”）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5a48de4b9a0e5b7a9e59bbae69c9f70726f6d70742fe4baa4e4ba92e5bc8fe6bc94e58c96e5bc95e6938ee7949fe68890e68f90e7a4bae8af8d2e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/交互式演化引擎生成提示词.md`](交互式演化引擎生成提示词.md)
   - **content_summary**: 首行“【角色与任务定义】”；artifact=交互式演化引擎生成提示词.md
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/复习巩固期prompt 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 交互式演化引擎生成提示词.md（首行“【角色与任务定义】”） 作为“legacy review 只读输入”使用；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: compatibility_only 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: compatibility_only；evidence_basis=markdown_heading_or_visible_structure；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+  - **when_to_read**: 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 交互式演化引擎生成提示词.md（首行“【角色与任务定义】”）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5a48de4b9a0e5b7a9e59bbae69c9f70726f6d70742fe4baa4e58f89e7bb83e4b9a0e68f90e7a4bae8af8d2e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/交叉练习提示词.md`](交叉练习提示词.md)
   - **content_summary**: H1《Role》；artifact=交叉练习提示词.md
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/复习巩固期prompt 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 交叉练习提示词.md（H1《Role》） 作为“legacy review 只读输入”使用；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: compatibility_only 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: compatibility_only；evidence_basis=markdown_heading_or_visible_structure；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+  - **when_to_read**: 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 交叉练习提示词.md（H1《Role》）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5a48de4b9a0e5b7a9e59bbae69c9f70726f6d70742fe58db3e697b6e7bc96e7a081e695b0e5ada6e9a2982e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/即时编码数学题.md`](即时编码数学题.md)
   - **content_summary**: H1《Role》；artifact=即时编码数学题.md
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/复习巩固期prompt 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 即时编码数学题.md（H1《Role》） 作为“legacy review 只读输入”使用；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: compatibility_only 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: compatibility_only；evidence_basis=markdown_heading_or_visible_structure；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+  - **when_to_read**: 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 即时编码数学题.md（H1《Role》）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5a48de4b9a0e5b7a9e59bbae69c9f70726f6d70742fe5ada6e4b9a0e7ac94e8aeb0e7949fe6889028e7aca6e58fb7e789887632292e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/学习笔记生成(符号版v2).md`](学习笔记生成%28符号版v2%29.md)
   - **content_summary**: H1《Role》；artifact=学习笔记生成(符号版v2).md
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/复习巩固期prompt 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 学习笔记生成(符号版v2).md（H1《Role》） 作为“legacy review 只读输入”使用；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: compatibility_only 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: compatibility_only；evidence_basis=markdown_heading_or_visible_structure；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+  - **when_to_read**: 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 学习笔记生成(符号版v2).md（H1《Role》）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5a48de4b9a0e5b7a9e59bbae69c9f70726f6d70742fe695b0e5ada6e997b4e99a94e9878de5a48de8b083e5baa6e8a1a828e9809ae794a8e6a8a1e69dbf292e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/数学间隔重复调度表(通用模板).md`](数学间隔重复调度表%28通用模板%29.md)
   - **content_summary**: H1《数学逻辑专属间隔重复调度表 (5节点架构版 - 通用模板)》；首个 H2《🎯 今日复习速查 (YYYY-MM-DD)》；artifact=数学间隔重复调度表(通用模板).md
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/复习巩固期prompt 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 数学间隔重复调度表(通用模板).md（H1《数学逻辑专属间隔重复调度表 (5节点架构版 - 通用模板)》；首个 H2《🎯 今日复习速查 (YYYY-MM-DD)》） 作为“legacy review 只读输入”使用；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: compatibility_only 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: compatibility_only；evidence_basis=markdown_heading_or_visible_structure；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+  - **when_to_read**: 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 数学间隔重复调度表(通用模板).md（H1《数学逻辑专属间隔重复调度表 (5节点架构版 - 通用模板)》；首个 H2《🎯 今日复习速查 (YYYY-MM-DD)》）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722fe5a48de4b9a0e5b7a9e59bbae69c9f70726f6d70742fe6a380e7b4a2e4bc98e58588e5a48de4b9a0e68f90e7a4bae8af8d2e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/复习巩固期prompt/检索优先复习提示词.md`](检索优先复习提示词.md)
   - **content_summary**: H1《Role》；artifact=检索优先复习提示词.md
-  - **role_and_use**: 作为 08_Domain_Applications/Math_Mentor/复习巩固期prompt 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
+  - **role_and_use**: 将 检索优先复习提示词.md（H1《Role》） 作为“legacy review 只读输入”使用；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
   - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: compatibility_only 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **status_or_freshness**: compatibility_only；evidence_basis=markdown_heading_or_visible_structure；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
+  - **when_to_read**: 触发条件：设计只读 legacy importer，或对照旧 review/毕业语义冲突。读取 检索优先复习提示词.md（H1《Role》）；只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机
 
 ## do_not_load_by_default
 

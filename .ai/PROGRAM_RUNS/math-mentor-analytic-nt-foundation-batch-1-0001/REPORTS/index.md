@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Program run `math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS` 的可复现 checkpoint、input/output、log 或验证证据目录
+Program run math-mentor-analytic-nt-foundation-batch-1-0001 的 REPORTS 证据分区；仅解释该 run 的对应阶段
 
 ## authority_and_usage_boundary
 
@@ -11,12 +11,12 @@ Program run `math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS` 的可复�
 
 ## recommended_reading_order
 
-1. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS/actually-read-files.md`](actually-read-files.md) — 复核 actually-read-files.md 所属 run、输出或验证结论时读取
-3. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS/certification.md`](certification.md) — 复核 certification.md 所属 run、输出或验证结论时读取
-4. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS/changed-files.txt`](changed-files.txt) — 复核 changed-files.txt 所属 run、输出或验证结论时读取
-5. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS/preflight.md`](preflight.md) — 复核 preflight.md 所属 run、输出或验证结论时读取
-6. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS/validation.md`](validation.md) — 复核 validation.md 所属 run、输出或验证结论时读取
+1. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS/actually-read-files.md`](actually-read-files.md) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 actually-read-files.md（H1《ANALYTIC_NT Foundation Batch 1 Read Ledger》；首个 H2《Fully loaded control and authority files》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+3. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS/certification.md`](certification.md) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 certification.md（H1《ANALYTIC_NT Foundation Batch 1 Stage 6 Certification》；首个 H2《Decision》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+4. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS/changed-files.txt`](changed-files.txt) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 changed-files.txt（nonempty_lines=43；.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/AUDITS/ANALYTIC_NT-684.py）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+5. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS/preflight.md`](preflight.md) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 preflight.md（H1《ANALYTIC_NT Foundation Batch 1 Preflight》；首个 H2《Result》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+6. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS/validation.md`](validation.md) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 validation.md（H1《ANALYTIC_NT Foundation Batch 1 Validation》；首个 H2《Outcome》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 
 ## child_directories
 
@@ -27,45 +27,45 @@ Program run `math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS` 的可复�
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f5245504f5254532f61637475616c6c792d726561642d66696c65732e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS/actually-read-files.md`](actually-read-files.md)
   - **content_summary**: H1《ANALYTIC_NT Foundation Batch 1 Read Ledger》；首个 H2《Fully loaded control and authority files》
-  - **role_and_use**: 由 actually-read-files.md 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 actually-read-files.md（H1《ANALYTIC_NT Foundation Batch 1 Read Ledger》；首个 H2《Fully loaded control and authority files》） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 actually-read-files.md 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=markdown_heading_or_visible_structure；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 actually-read-files.md（H1《ANALYTIC_NT Foundation Batch 1 Read Ledger》；首个 H2《Fully loaded control and authority files》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f5245504f5254532f63657274696669636174696f6e2e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS/certification.md`](certification.md)
   - **content_summary**: H1《ANALYTIC_NT Foundation Batch 1 Stage 6 Certification》；首个 H2《Decision》
-  - **role_and_use**: 由 certification.md 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 certification.md（H1《ANALYTIC_NT Foundation Batch 1 Stage 6 Certification》；首个 H2《Decision》） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 certification.md 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=markdown_heading_or_visible_structure；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 certification.md（H1《ANALYTIC_NT Foundation Batch 1 Stage 6 Certification》；首个 H2《Decision》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f5245504f5254532f6368616e6765642d66696c65732e747874 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS/changed-files.txt`](changed-files.txt)
   - **content_summary**: 纯文本，43 个非空行；首行“.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/AUDITS/ANALYTIC_NT-684.py”
-  - **role_and_use**: 由 changed-files.txt 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 changed-files.txt（nonempty_lines=43；.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/AUDITS/ANALYTIC_NT-684.py） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 changed-files.txt 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=text_line_count_and_first_visible_line；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 changed-files.txt（nonempty_lines=43；.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/AUDITS/ANALYTIC_NT-684.py）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f5245504f5254532f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f5245504f5254532f707265666c696768742e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS/preflight.md`](preflight.md)
   - **content_summary**: H1《ANALYTIC_NT Foundation Batch 1 Preflight》；首个 H2《Result》
-  - **role_and_use**: 由 preflight.md 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 preflight.md（H1《ANALYTIC_NT Foundation Batch 1 Preflight》；首个 H2《Result》） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 preflight.md 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=markdown_heading_or_visible_structure；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 preflight.md（H1《ANALYTIC_NT Foundation Batch 1 Preflight》；首个 H2《Result》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f5245504f5254532f76616c69646174696f6e2e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS/validation.md`](validation.md)
   - **content_summary**: H1《ANALYTIC_NT Foundation Batch 1 Validation》；首个 H2《Outcome》
-  - **role_and_use**: 由 validation.md 保存 .ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 validation.md（H1《ANALYTIC_NT Foundation Batch 1 Validation》；首个 H2《Outcome》） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 validation.md 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=markdown_heading_or_visible_structure；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 validation.md（H1《ANALYTIC_NT Foundation Batch 1 Validation》；首个 H2《Outcome》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 
 ## do_not_load_by_default
 

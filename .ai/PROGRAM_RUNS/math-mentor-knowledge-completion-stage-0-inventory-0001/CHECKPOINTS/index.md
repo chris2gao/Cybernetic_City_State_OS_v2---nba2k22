@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Math Mentor Stage 0 历史清单证据；当前基线已过期，仅可 read/compare/read_only_import
+Program run math-mentor-knowledge-completion-stage-0-inventory-0001 的 CHECKPOINTS 证据分区；仅解释该 run 的对应阶段
 
 ## authority_and_usage_boundary
 
@@ -11,8 +11,8 @@ Math Mentor Stage 0 历史清单证据；当前基线已过期，仅可 read/com
 
 ## recommended_reading_order
 
-1. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/CHECKPOINTS/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/CHECKPOINTS/stage-0.yml`](stage-0.yml) — 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+1. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/CHECKPOINTS/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/CHECKPOINTS/stage-0.yml`](stage-0.yml) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 stage-0.yml（program_id=math-mentor-knowledge-completion-stage-0-inventory-0001；status=completed_with_review_log）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 
 ## child_directories
 
@@ -23,17 +23,17 @@ Math Mentor Stage 0 历史清单证据；当前基线已过期，仅可 read/com
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6b6e6f776c656467652d636f6d706c6574696f6e2d73746167652d302d696e76656e746f72792d303030312f434845434b504f494e54532f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/CHECKPOINTS/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/CHECKPOINTS 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/CHECKPOINTS 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6b6e6f776c656467652d636f6d706c6574696f6e2d73746167652d302d696e76656e746f72792d303030312f434845434b504f494e54532f73746167652d302e796d6c -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/CHECKPOINTS/stage-0.yml`](stage-0.yml)
   - **content_summary**: YAML 结构，顶层键：program_id, stage, status, generated_at, source_head, work_branch, rollback_base, checkpoint_ref；安全锚点：program_id=math-mentor-knowledge-completion-stage-0-inventory-000…
-  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/CHECKPOINTS 的只读兼容/迁移证据；不得执行、写入、激活运行时或提升学习/毕业状态
-  - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: historical_frozen 只读兼容证据；仅可 read/compare/read_only_import，禁止执行、写入、runtime/state/scheduler write 或 status promotion
-  - **when_to_read**: 仅在历史对照或明确的只读 importer/migration 审查中读取；不得执行或据此提升状态
+  - **role_and_use**: 将 stage-0.yml（program_id=math-mentor-knowledge-completion-stage-0-inventory-0001；status=completed_with_review_log） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **authority_class**: `generated_evidence`
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=yaml_visible_keys_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 stage-0.yml（program_id=math-mentor-knowledge-completion-stage-0-inventory-0001；status=completed_with_review_log）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 
 ## do_not_load_by_default
 

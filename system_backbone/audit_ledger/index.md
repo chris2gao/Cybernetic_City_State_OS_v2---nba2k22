@@ -3,7 +3,7 @@
 
 ## directory_role
 
-system_record.jsonl 审计事件账本目录；记录不等于 live state 或授权
+外部增强骨架 audit_ledger；registry/ledger/domain/template 原型未自动接入 runtime
 
 ## authority_and_usage_boundary
 
@@ -11,8 +11,8 @@ system_record.jsonl 审计事件账本目录；记录不等于 live state 或授
 
 ## recommended_reading_order
 
-1. [`system_backbone/audit_ledger/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`system_backbone/audit_ledger/system_record.jsonl`](system_record.jsonl) — 复核 system_record.jsonl 所属 run、输出或验证结论时读取
+1. [`system_backbone/audit_ledger/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`system_backbone/audit_ledger/system_record.jsonl`](system_record.jsonl) — 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 system_record.jsonl（records=1；parse_failures=0）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
 
 ## child_directories
 
@@ -23,21 +23,21 @@ system_record.jsonl 审计事件账本目录；记录不等于 live state 或授
 <!-- RIDX_FILE_HEX 73797374656d5f6261636b626f6e652f61756469745f6c65646765722f696e6465782e6d64 -->
 - **path_or_link**: [`system_backbone/audit_ledger/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 system_backbone/audit_ledger 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 system_backbone/audit_ledger 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 73797374656d5f6261636b626f6e652f61756469745f6c65646765722f73797374656d5f7265636f72642e6a736f6e6c -->
 - **path_or_link**: [`system_backbone/audit_ledger/system_record.jsonl`](system_record.jsonl)
   - **content_summary**: JSONL，1 条可解析记录、0 条解析失败；安全字段：event_type, message, status, timestamp
-  - **role_and_use**: 由 system_record.jsonl 保存 system_backbone/audit_ledger 的生成或验证结果；用于复现证据而非授予状态
-  - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 复核 system_record.jsonl 所属 run、输出或验证结论时读取
+  - **role_and_use**: 将 system_record.jsonl（records=1；parse_failures=0） 作为“外部增强骨架原型”使用；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=system_backbone_artifact；authority=implementation；evidence_basis=jsonl_record_count_and_safe_keys；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
+  - **when_to_read**: 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 system_record.jsonl（records=1；parse_failures=0）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
 
 ## do_not_load_by_default
 
-- 默认不加载 1 个历史/测试/生成/用户或大型 direct artifacts：`system_backbone/audit_ledger/system_record.jsonl`。
+- 无额外分组；仍应只读取当前任务明确需要的 direct artifact。
 
 ## generation_and_freshness_note
 

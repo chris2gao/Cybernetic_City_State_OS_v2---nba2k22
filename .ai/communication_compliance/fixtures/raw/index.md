@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Human-AI communication compliance 的 schema、validator、fixture 与 proof-chain 控制面
+通信合规测试层 raw；保存 raw/fixture/proof artifact，不承载现实授权
 
 ## authority_and_usage_boundary
 
@@ -11,10 +11,10 @@ Human-AI communication compliance 的 schema、validator、fixture 与 proof-cha
 
 ## recommended_reading_order
 
-1. [`.ai/communication_compliance/fixtures/raw/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`.ai/communication_compliance/fixtures/raw/pointer_anchor_alias.yml`](pointer_anchor_alias.yml) — 运行 pointer_anchor_alias.yml 对应测试或定位特定失败用例时读取
-3. [`.ai/communication_compliance/fixtures/raw/pointer_duplicate_keys.yml`](pointer_duplicate_keys.yml) — 运行 pointer_duplicate_keys.yml 对应测试或定位特定失败用例时读取
-4. [`.ai/communication_compliance/fixtures/raw/pointer_multidoc.yml`](pointer_multidoc.yml) — 运行 pointer_multidoc.yml 对应测试或定位特定失败用例时读取
+1. [`.ai/communication_compliance/fixtures/raw/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`.ai/communication_compliance/fixtures/raw/pointer_anchor_alias.yml`](pointer_anchor_alias.yml) — 触发条件：复现该具名 transition case 或定位相应 fail-closed 断言。读取 pointer_anchor_alias.yml（top_keys=signal_id,decision）；fixture 内 actor、human_gate、verdict 均不是现实授权
+3. [`.ai/communication_compliance/fixtures/raw/pointer_duplicate_keys.yml`](pointer_duplicate_keys.yml) — 触发条件：复现该具名 transition case 或定位相应 fail-closed 断言。读取 pointer_duplicate_keys.yml（top_keys=signal_id）；fixture 内 actor、human_gate、verdict 均不是现实授权
+4. [`.ai/communication_compliance/fixtures/raw/pointer_multidoc.yml`](pointer_multidoc.yml) — 触发条件：复现该具名 transition case 或定位相应 fail-closed 断言。读取 pointer_multidoc.yml（top_keys=signal_id）；fixture 内 actor、human_gate、verdict 均不是现实授权
 
 ## child_directories
 
@@ -25,31 +25,31 @@ Human-AI communication compliance 的 schema、validator、fixture 与 proof-cha
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f66697874757265732f7261772f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/communication_compliance/fixtures/raw/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 .ai/communication_compliance/fixtures/raw 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 .ai/communication_compliance/fixtures/raw 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f66697874757265732f7261772f706f696e7465725f616e63686f725f616c6961732e796d6c -->
 - **path_or_link**: [`.ai/communication_compliance/fixtures/raw/pointer_anchor_alias.yml`](pointer_anchor_alias.yml)
   - **content_summary**: YAML 结构，顶层键：signal_id, decision
-  - **role_and_use**: 以 pointer_anchor_alias.yml 作为 .ai/communication_compliance/fixtures/raw 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 pointer_anchor_alias.yml（top_keys=signal_id,decision） 作为“通信 transition 测试/proof”使用；fixture 内 actor、human_gate、verdict 均不是现实授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 pointer_anchor_alias.yml 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=communication_test_or_proof；authority=test_or_fixture；evidence_basis=yaml_visible_keys_and_safe_fields；fixture 内 actor、human_gate、verdict 均不是现实授权
+  - **when_to_read**: 触发条件：复现该具名 transition case 或定位相应 fail-closed 断言。读取 pointer_anchor_alias.yml（top_keys=signal_id,decision）；fixture 内 actor、human_gate、verdict 均不是现实授权
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f66697874757265732f7261772f706f696e7465725f6475706c69636174655f6b6579732e796d6c -->
 - **path_or_link**: [`.ai/communication_compliance/fixtures/raw/pointer_duplicate_keys.yml`](pointer_duplicate_keys.yml)
   - **content_summary**: YAML 结构，顶层键：signal_id；artifact=pointer_duplicate_keys.yml
-  - **role_and_use**: 以 pointer_duplicate_keys.yml 作为 .ai/communication_compliance/fixtures/raw 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 pointer_duplicate_keys.yml（top_keys=signal_id） 作为“通信 transition 测试/proof”使用；fixture 内 actor、human_gate、verdict 均不是现实授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 pointer_duplicate_keys.yml 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=communication_test_or_proof；authority=test_or_fixture；evidence_basis=yaml_visible_keys_and_safe_fields；fixture 内 actor、human_gate、verdict 均不是现实授权
+  - **when_to_read**: 触发条件：复现该具名 transition case 或定位相应 fail-closed 断言。读取 pointer_duplicate_keys.yml（top_keys=signal_id）；fixture 内 actor、human_gate、verdict 均不是现实授权
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f66697874757265732f7261772f706f696e7465725f6d756c7469646f632e796d6c -->
 - **path_or_link**: [`.ai/communication_compliance/fixtures/raw/pointer_multidoc.yml`](pointer_multidoc.yml)
   - **content_summary**: YAML 结构，顶层键：signal_id；artifact=pointer_multidoc.yml
-  - **role_and_use**: 以 pointer_multidoc.yml 作为 .ai/communication_compliance/fixtures/raw 的测试输入/断言；不得把 fixture payload 当真实权限
+  - **role_and_use**: 将 pointer_multidoc.yml（top_keys=signal_id） 作为“通信 transition 测试/proof”使用；fixture 内 actor、human_gate、verdict 均不是现实授权
   - **authority_class**: `test_or_fixture`
-  - **status_or_freshness**: 验证/生成证据；payload 内状态或 human_gate 不构成授权
-  - **when_to_read**: 运行 pointer_multidoc.yml 对应测试或定位特定失败用例时读取
+  - **status_or_freshness**: semantic_profile=communication_test_or_proof；authority=test_or_fixture；evidence_basis=yaml_visible_keys_and_safe_fields；fixture 内 actor、human_gate、verdict 均不是现实授权
+  - **when_to_read**: 触发条件：复现该具名 transition case 或定位相应 fail-closed 断言。读取 pointer_multidoc.yml（top_keys=signal_id）；fixture 内 actor、human_gate、verdict 均不是现实授权
 
 ## do_not_load_by_default
 

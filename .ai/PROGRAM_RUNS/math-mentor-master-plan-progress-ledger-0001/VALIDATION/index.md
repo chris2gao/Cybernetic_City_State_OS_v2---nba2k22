@@ -3,7 +3,7 @@
 
 ## directory_role
 
-Program run `math-mentor-master-plan-progress-ledger-0001/VALIDATION` 的可复现 checkpoint、input/output、log 或验证证据目录
+Program run math-mentor-master-plan-progress-ledger-0001 的 VALIDATION 证据分区；仅解释该 run 的对应阶段
 
 ## authority_and_usage_boundary
 
@@ -11,9 +11,9 @@ Program run `math-mentor-master-plan-progress-ledger-0001/VALIDATION` 的可复�
 
 ## recommended_reading_order
 
-1. [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/VALIDATION/index.md`](index.md) — 进入本目录时先读，用它选择后续最小文件集合
-2. [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/VALIDATION/validation-summary.json`](validation-summary.json) — 复核 validation-summary.json 所属 run、输出或验证结论时读取
-3. [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/VALIDATION/zero-context-takeover-dry-run.md`](zero-context-takeover-dry-run.md) — 复核 zero-context-takeover-dry-run.md 所属 run、输出或验证结论时读取
+1. [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/VALIDATION/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+2. [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/VALIDATION/validation-summary.json`](validation-summary.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 validation-summary.json（status=validated_for_normal_PR_publication_with_physical_resolution；task_id=math-mentor-master-plan-progress-ledger-0001）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+3. [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/VALIDATION/zero-context-takeover-dry-run.md`](zero-context-takeover-dry-run.md) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 zero-context-takeover-dry-run.md（H1《Zero-Context Takeover Dry Run》；首个 H2《Run identity》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 
 ## child_directories
 
@@ -24,24 +24,24 @@ Program run `math-mentor-master-plan-progress-ledger-0001/VALIDATION` 的可复�
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6d61737465722d706c616e2d70726f67726573732d6c65646765722d303030312f56414c49444154494f4e2f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/VALIDATION/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
-  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/VALIDATION 的懒加载入口，枚举直接文件与直接子目录
+  - **role_and_use**: 作为 .ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/VALIDATION 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件
   - **authority_class**: `routing`
-  - **status_or_freshness**: 由确定性生成器和 coverage manifest 生成；不替代业务权威
-  - **when_to_read**: 进入本目录时先读，用它选择后续最小文件集合
+  - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
+  - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6d61737465722d706c616e2d70726f67726573732d6c65646765722d303030312f56414c49444154494f4e2f76616c69646174696f6e2d73756d6d6172792e6a736f6e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/VALIDATION/validation-summary.json`](validation-summary.json)
   - **content_summary**: JSON object，顶层键：accepted_candidate, accepted_review_authority_head, added_secret_scan, backend_orchestration_delegable, backend_output_foreground_delivery_admission_required, back…
-  - **role_and_use**: 由 validation-summary.json 保存 .ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/VALIDATION 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 validation-summary.json（status=validated_for_normal_PR_publication_with_physical_resolution；task_id=math-mentor-master-plan-progress-ledger-0001） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 validation-summary.json 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 validation-summary.json（status=validated_for_normal_PR_publication_with_physical_resolution；task_id=math-mentor-master-plan-progress-ledger-0001）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6d61737465722d706c616e2d70726f67726573732d6c65646765722d303030312f56414c49444154494f4e2f7a65726f2d636f6e746578742d74616b656f7665722d6472792d72756e2e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/VALIDATION/zero-context-takeover-dry-run.md`](zero-context-takeover-dry-run.md)
   - **content_summary**: H1《Zero-Context Takeover Dry Run》；首个 H2《Run identity》
-  - **role_and_use**: 由 zero-context-takeover-dry-run.md 保存 .ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/VALIDATION 的生成或验证结果；用于复现证据而非授予状态
+  - **role_and_use**: 将 zero-context-takeover-dry-run.md（H1《Zero-Context Takeover Dry Run》；首个 H2《Run identity》） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: generated evidence；仅证明所属 run 的记录，不授予权限
-  - **when_to_read**: 复核 zero-context-takeover-dry-run.md 所属 run、输出或验证结论时读取
+  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=markdown_heading_or_visible_structure；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 zero-context-takeover-dry-run.md（H1《Zero-Context Takeover Dry Run》；首个 H2《Run identity》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 
 ## do_not_load_by_default
 
