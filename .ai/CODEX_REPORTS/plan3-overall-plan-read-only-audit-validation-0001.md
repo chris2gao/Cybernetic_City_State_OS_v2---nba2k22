@@ -4,7 +4,7 @@
 task_id: plan3-overall-plan-read-only-audit-0001
 source_head: 7f3ce241f6822326093887b00f31a98382951dee
 validation_scope: report_only_audit_and_deterministic_index_consequences
-status: candidate_validation_pass_with_disclosed_existing_cross_platform_gate_defect
+status: candidate_validation_pass_with_disclosed_cross_platform_artifact_defects
 ```
 
 ## 1. Start-state proof
@@ -173,8 +173,36 @@ git_diff_check: pass
 changed_path_allowlist: pass_8_paths
 implementation_source_mutations: 0
 source_mailbox_changes: 0
-candidate_tree_equals_merge_tree: verified_after_normal_merge_and_reported_in_exact_head_handoff
-local_master_equals_origin_and_github_master: verified_after_pull_and_reported_in_exact_head_handoff
+initial_candidate_tree_equals_merge_tree: pass_at_7f750e9d2c7249d9572dad1af85ca96d069d8a19
+initial_local_master_equals_origin_and_github_master: pass_at_7f750e9d2c7249d9572dad1af85ca96d069d8a19
+final_correction_merge_and_local_equality: verified_and_reported_in_exact_head_handoff
 ```
 
-The final manifest and bundle hashes are deliberately not embedded here: the manifest includes tracked report blob identities, so writing its hash back into this tracked report would change the manifest again and create an impossible self-reference. The stable external snapshot values are captured after the report is frozen and carried in the exact-head handoff. The disclosed 16/17 communication suite result is an audited pre-existing cross-checkout defect, not a mutation introduced by this report candidate. All validation required for the report/memo/index candidate itself passed. Post-merge fields cannot self-contain their future merge SHA; they are verified physically after merge and carried in the exact-head review-branch handoff.
+The final manifest and bundle hashes are deliberately not embedded here: the manifest includes tracked report blob identities, so writing its hash back into this tracked report would change the manifest again and create an impossible self-reference. The stable external snapshot values are captured after the report is frozen and carried in the exact-head handoff. The disclosed communication and index EOL results are audited pre-existing cross-checkout defects, not mutations introduced by this report candidate. All validation required for the report/memo/index candidate itself passed after canonical LF materialization. Post-merge fields that would self-reference a future correction merge are verified physically and carried in the exact-head review-branch handoff.
+
+## 9. Post-merge fresh-checkout correction evidence
+
+Initial report publication used ready PR #11 and normal merge commit `7f750e9d2c7249d9572dad1af85ca96d069d8a19`. Its parents were exact base `7f3ce241f6822326093887b00f31a98382951dee` and candidate `03284d9f62b213e5e39c9aff4336019f75fab576`; both trees were `9ae9522129860ec4b48051ced52517d83e667efe`.
+
+After `git switch master && git pull origin master`, local, origin and GitHub master all equaled `7f750e9...`. Immediate post-pull index `check` failed on exactly:
+
+1. `.ai/CODEX_REPORTS/index.md`
+2. `.ai/index.md`
+3. `index.md`
+4. `repository_index_manifest.json`
+
+Physical evidence:
+
+```yaml
+host_core_autocrlf: true
+post_pull_eol: i/lf_w/crlf_attr_unspecified
+initial_check: fail_4_paths
+generate_changed_outputs: 4
+post_generate_eol: i/lf_w/lf_attr_unspecified
+post_generate_check: pass_161_outputs
+post_generate_validate: pass_1812_files_160_directories
+filtered_blob_equality_to_master: true_for_all_4
+semantic_git_diff: 0
+```
+
+The generator rematerialization initially left stat/worktree `M` markers even though filtered and raw LF blob hashes equaled HEAD; explicitly adding the four byte-identical paths refreshed the index stat cache and produced no staged diff. This correction updates only audit evidence and the memo; it does not modify the generator, fixtures, `.gitattributes` or any implementation source.
