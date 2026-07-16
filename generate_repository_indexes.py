@@ -678,6 +678,8 @@ def extract_markdown(path: str, text: str) -> dict[str, Any]:
 
 
 SAFE_STRUCTURED_KEYS = {
+    "$id",
+    "$schema",
     "id",
     "title",
     "name",
@@ -696,6 +698,36 @@ SAFE_STRUCTURED_KEYS = {
     "bridge_status",
 }
 
+SCHEMA_SHAPE_KEYS = {
+    "$defs",
+    "$id",
+    "$schema",
+    "additionalProperties",
+    "allOf",
+    "anyOf",
+    "definitions",
+    "items",
+    "oneOf",
+    "properties",
+    "required",
+    "type",
+}
+
+SCHEMA_CORE_KEYS = {
+    "$defs",
+    "allOf",
+    "anyOf",
+    "definitions",
+    "items",
+    "oneOf",
+    "properties",
+}
+
+JSON_SCHEMA_DIALECT_RE = re.compile(
+    r"^https?://(?:www\.)?json-schema\.org/(?:draft(?:-|/)|schema|draft/2020-12/schema)",
+    re.IGNORECASE,
+)
+
 
 def safe_structured_scalar(key: str, value: Any, *, fixture: bool) -> str | None:
     if key not in SAFE_STRUCTURED_KEYS or SECRET_KEY_RE.search(key):
@@ -708,27 +740,161 @@ def safe_structured_scalar(key: str, value: Any, *, fixture: bool) -> str | None
     return None
 
 
-def json_anchors(value: Any, *, fixture: bool) -> list[str]:
-    anchors: list[str] = []
+def schema_filename_variant(path: str) -> bool:
+    name = PurePosixPath(path).name.casefold()
+    stem = PurePosixPath(name).stem
+    tokens = [token for token in re.split(r"[._-]+", stem) if token]
+    return "schema" in tokens
 
-    def visit(node: Any, depth: int) -> None:
-        if depth > 3 or len(anchors) >= 6:
+
+def schema_structure_evidence(
+    path: str,
+    *,
+    top_keys: Iterable[str],
+    all_keys: Iterable[str],
+    dialect: Any,
+) -> dict[str, Any]:
+    top = {str(key) for key in top_keys}
+    all_seen = {str(key) for key in all_keys}
+    shape_keys = sorted(all_seen & SCHEMA_SHAPE_KEYS, key=unicode_sort_key)
+    recognized_dialect = (
+        isinstance(dialect, str)
+        and JSON_SCHEMA_DIALECT_RE.search(dialect.strip()) is not None
+    )
+    dialect_shape = recognized_dialect and bool(top & SCHEMA_CORE_KEYS)
+    named_shape = (
+        schema_filename_variant(path)
+        and "type" in all_seen
+        and bool(all_seen & SCHEMA_CORE_KEYS)
+        and bool(
+            all_seen
+            & {
+                "$defs",
+                "allOf",
+                "anyOf",
+                "definitions",
+                "items",
+                "oneOf",
+                "properties",
+            }
+        )
+    )
+    schema_shape = bool(dialect_shape or named_shape)
+    if dialect_shape:
+        mode = "recognized_json_schema_dialect_and_root_shape"
+    elif named_shape:
+        mode = "schema_name_variant_and_structural_shape"
+    else:
+        mode = "not_schema_shaped"
+    evidence = []
+    if recognized_dialect:
+        evidence.append(f"dialect={safe_text(dialect, 120)}")
+    if shape_keys:
+        evidence.append("shape_keys=" + ",".join(shape_keys))
+    if schema_filename_variant(path):
+        evidence.append("schema_name_variant=true")
+    return {
+        "schema_shape": schema_shape,
+        "schema_detection": mode,
+        "schema_evidence": evidence,
+    }
+
+
+def safe_structured_path(path: tuple[str | int, ...]) -> str:
+    rendered = ""
+    for segment in path:
+        if isinstance(segment, int):
+            rendered += f"[{segment}]"
+            continue
+        clean_parts = []
+        for char in str(segment):
+            if char.isalnum() or char in "_$-":
+                clean_parts.append(char)
+            else:
+                clean_parts.extend(
+                    f"%{byte:02X}" for byte in char.encode("utf-8")
+                )
+        clean = safe_text("".join(clean_parts), 60) or "_"
+        if rendered:
+            rendered += "."
+        rendered += clean
+    return rendered
+
+
+def finalize_structured_anchors(
+    records: Iterable[tuple[tuple[str | int, ...], str, str]],
+    *,
+    limit: int = 6,
+) -> list[str]:
+    unique: list[tuple[tuple[str | int, ...], str, str]] = []
+    seen_pairs: set[tuple[str, str]] = set()
+    values_by_key: dict[str, set[str]] = defaultdict(set)
+    for path, key, scalar in records:
+        pair = (key, scalar)
+        if pair in seen_pairs:
+            continue
+        seen_pairs.add(pair)
+        values_by_key[key].add(scalar)
+        unique.append((path, key, scalar))
+    anchors: list[str] = []
+    seen_anchors: set[str] = set()
+    for path, key, scalar in unique:
+        label = safe_structured_path(path) if len(values_by_key[key]) > 1 else key
+        anchor = f"{label}={scalar}"
+        if anchor in seen_anchors:
+            continue
+        seen_anchors.add(anchor)
+        anchors.append(anchor)
+        if len(anchors) >= limit:
+            break
+    return anchors
+
+
+def json_anchors(value: Any, *, fixture: bool) -> list[str]:
+    records: list[tuple[tuple[str | int, ...], str, str]] = []
+
+    def visit(node: Any, depth: int, path: tuple[str | int, ...]) -> None:
+        if depth > 4 or len(records) >= 96:
             return
         if isinstance(node, dict):
             for key in sorted(node, key=lambda item: unicode_sort_key(str(item))):
-                scalar = safe_structured_scalar(str(key), node[key], fixture=fixture)
+                key_text = str(key)
+                if SECRET_KEY_RE.search(key_text):
+                    continue
+                child_path = (*path, key_text)
+                scalar = safe_structured_scalar(key_text, node[key], fixture=fixture)
                 if scalar is not None:
-                    anchors.append(f"{key}={scalar}")
+                    records.append((child_path, key_text, scalar))
                 elif isinstance(node[key], (dict, list)):
-                    visit(node[key], depth + 1)
-                if len(anchors) >= 6:
+                    visit(node[key], depth + 1, child_path)
+                if len(records) >= 96:
                     break
         elif isinstance(node, list):
-            for item in node[:3]:
-                visit(item, depth + 1)
+            for index, item in enumerate(node[:12]):
+                visit(item, depth + 1, (*path, index))
 
-    visit(value, 0)
-    return anchors
+    visit(value, 0, ())
+    return finalize_structured_anchors(records)
+
+
+def nested_mapping_keys(value: Any, *, max_nodes: int = 4096) -> set[str]:
+    keys: set[str] = set()
+    pending = [value]
+    visited = 0
+    while pending and visited < max_nodes:
+        node = pending.pop()
+        visited += 1
+        if isinstance(node, dict):
+            for key, child in node.items():
+                key_text = str(key)
+                if SECRET_KEY_RE.search(key_text):
+                    continue
+                keys.add(key_text)
+                if isinstance(child, (dict, list)):
+                    pending.append(child)
+        elif isinstance(node, list):
+            pending.extend(reversed(node[:64]))
+    return keys
 
 
 def extract_json(path: str, text: str) -> dict[str, Any]:
@@ -742,22 +908,44 @@ def extract_json(path: str, text: str) -> dict[str, Any]:
             "anchors": [f"parse_error_line={exc.lineno}"],
             "encoding": "utf8",
             "parse_failure": True,
+            "structured_format": "json",
+            "schema_shape": False,
+            "schema_detection": "parse_failed_fail_closed",
+            "schema_evidence": [],
         }
     if isinstance(value, dict):
         keys = sorted((str(key) for key in value), key=unicode_sort_key)
         shape = f"JSON object，顶层键：{', '.join(keys[:8])}"
+        schema_info = schema_structure_evidence(
+            path,
+            top_keys=keys,
+            all_keys=nested_mapping_keys(value),
+            dialect=value.get("$schema"),
+        )
     elif isinstance(value, list):
         item_types = sorted({type(item).__name__ for item in value})
         shape = f"JSON array，{len(value)} 项，item types={','.join(item_types)}"
+        schema_info = schema_structure_evidence(
+            path, top_keys=(), all_keys=nested_mapping_keys(value), dialect=None
+        )
     else:
         shape = f"JSON scalar，类型={type(value).__name__}"
+        schema_info = schema_structure_evidence(
+            path, top_keys=(), all_keys=(), dialect=None
+        )
     anchors = json_anchors(value, fixture=fixture)
     summary = shape + ("；安全锚点：" + ", ".join(anchors) if anchors else "")
     return {
         "summary": safe_text(summary),
-        "description_basis": "json_strict_structure_and_safe_fields",
+        "description_basis": (
+            "json_schema_structure_and_safe_fields"
+            if schema_info["schema_shape"]
+            else "json_strict_structure_and_safe_fields"
+        ),
         "anchors": anchors or [shape],
         "encoding": "utf8",
+        "structured_format": "json",
+        **schema_info,
     }
 
 
@@ -799,26 +987,80 @@ def yaml_scalar(value: str) -> str | None:
     return safe_text(value.split(" #", 1)[0], 80)
 
 
-def extract_yaml(path: str, text: str) -> dict[str, Any]:
-    fixture = is_test_or_fixture_path(path)
+def yaml_structure_records(
+    text: str, *, fixture: bool
+) -> tuple[
+    list[str],
+    set[str],
+    list[tuple[tuple[str | int, ...], str, str]],
+    str | None,
+]:
     top_keys: list[str] = []
-    anchors: list[str] = []
-    lines = text.splitlines()
-    for line in lines:
-        if not line.strip() or line.lstrip().startswith("#"):
+    all_keys: set[str] = set()
+    records: list[tuple[tuple[str | int, ...], str, str]] = []
+    container_stack: list[tuple[int, tuple[str | int, ...]]] = []
+    list_context: dict[int, tuple[tuple[str | int, ...], int]] = {}
+    sequence_counts: dict[tuple[tuple[str | int, ...], int], int] = defaultdict(int)
+    dialect: str | None = None
+    for line in text.splitlines():
+        if not line.strip() or line.lstrip().startswith(("#", "---", "...")):
             continue
-        match = re.match(r"^(\s*)([A-Za-z0-9_\-]+):(?:\s*(.*))?$", line)
+        match = re.match(
+            r"^( *)(-\s+)?([A-Za-z0-9_$-]+):(?:\s*(.*))?$", line
+        )
         if not match:
             continue
-        indent, key, raw_value = match.groups()
-        if not indent and key not in top_keys:
+        indent_text, dash, key, raw_value = match.groups()
+        indent = len(indent_text)
+        while container_stack and container_stack[-1][0] >= indent:
+            container_stack.pop()
+        for level in list(list_context):
+            if level > indent or indent == 0:
+                list_context.pop(level, None)
+        base_parent = container_stack[-1][1] if container_stack else ()
+        if dash:
+            counter_key = (base_parent, indent)
+            index = sequence_counts[counter_key]
+            sequence_counts[counter_key] += 1
+            list_context[indent] = (base_parent, index)
+            parent = (*base_parent, index)
+        else:
+            matching_levels = [
+                level
+                for level, (context_parent, _) in list_context.items()
+                if level <= indent and context_parent == base_parent
+            ]
+            if matching_levels:
+                context_level = max(matching_levels)
+                parent = (*base_parent, list_context[context_level][1])
+            else:
+                parent = base_parent
+        path = (*parent, key)
+        all_keys.add(key)
+        if indent == 0 and key not in top_keys:
             top_keys.append(key)
         value = yaml_scalar(raw_value or "")
-        if value and key in SAFE_STRUCTURED_KEYS and not SECRET_KEY_RE.search(key):
-            if not (fixture and key in {"status", "signal_id"}):
-                anchors.append(f"{key}={value}")
-        if len(anchors) >= 6 and len(top_keys) >= 8:
-            break
+        if key == "$schema" and value:
+            dialect = value
+        if not SECRET_KEY_RE.search(key):
+            scalar = safe_structured_scalar(key, value, fixture=fixture)
+            if scalar is not None:
+                records.append((path, key, scalar))
+        if not (raw_value or "").strip():
+            container_stack.append((indent, path))
+    return top_keys, all_keys, records, dialect
+
+
+def extract_yaml(path: str, text: str) -> dict[str, Any]:
+    fixture = is_test_or_fixture_path(path)
+    top_keys, all_keys, anchor_records, dialect = yaml_structure_records(
+        text, fixture=fixture
+    )
+    anchors = finalize_structured_anchors(anchor_records)
+    lines = text.splitlines()
+    schema_info = schema_structure_evidence(
+        path, top_keys=top_keys, all_keys=all_keys, dialect=dialect
+    )
     subtopic_count = 0
     for idx, line in enumerate(lines):
         match = re.match(r"^(\s*)sub_topics:\s*$", line)
@@ -841,9 +1083,15 @@ def extract_yaml(path: str, text: str) -> dict[str, Any]:
         parts.append(f"sub_topics={subtopic_count}")
     return {
         "summary": safe_text("；".join(parts)),
-        "description_basis": "yaml_visible_keys_and_safe_fields",
+        "description_basis": (
+            "yaml_schema_structure_and_safe_fields"
+            if schema_info["schema_shape"]
+            else "yaml_visible_keys_and_safe_fields"
+        ),
         "anchors": anchors or [f"top_keys={','.join(top_keys[:8]) or 'none'}"],
         "encoding": "utf8",
+        "structured_format": "yaml",
+        **schema_info,
     }
 
 
@@ -1165,7 +1413,7 @@ def directory_is_nondefault(directory: str) -> bool:
     )
 
 
-def semantic_profile(path: str) -> str:
+def semantic_profile(path: str, metadata: dict[str, Any] | None = None) -> str:
     """Assign every indexed file to one deterministic semantic use class."""
     name = PurePosixPath(path).name
     suffix = PurePosixPath(path).suffix.casefold()
@@ -1178,6 +1426,16 @@ def semantic_profile(path: str) -> str:
         return "repository_index"
     if path == MANIFEST_PATH:
         return "repository_manifest"
+    if path in RESTRICTED_METADATA_ONLY:
+        return "math_restricted_roadmap_metadata"
+    if path_is_private(path):
+        return "private_zone_metadata"
+    if path in ACTIVE_DOMAIN_SCHEMA_PATHS:
+        return "math_active_schema"
+    if path.startswith(f"{math_root}/p0_control_plane/schemas/"):
+        return "math_control_plane_schema"
+    if metadata and metadata.get("schema_shape") is True:
+        return "schema_definition"
     if path in CANONICAL_PATHS:
         return "canonical_governance"
     if path == "06_Silicon_Index/AI_Bootstrap_Sequence.md":
@@ -1363,8 +1621,8 @@ PROFILE_AUTHORITY = {
 }
 
 
-def authority_class(path: str) -> str:
-    profile = semantic_profile(path)
+def authority_class(path: str, metadata: dict[str, Any] | None = None) -> str:
+    profile = semantic_profile(path, metadata)
     if profile not in PROFILE_AUTHORITY:
         raise IndexErrorDetail(f"Semantic profile lacks authority mapping: {path} -> {profile}")
     return PROFILE_AUTHORITY[profile]
@@ -1493,7 +1751,7 @@ def semantic_boundary(profile: str) -> str:
 
 
 def status_or_freshness(path: str, authority: str, metadata: dict[str, Any]) -> str:
-    profile = semantic_profile(path)
+    profile = semantic_profile(path, metadata)
     if metadata.get("parse_failure"):
         return f"semantic_profile={profile}；parser_failed，索引仅保留安全元数据；{semantic_boundary(profile)}"
     if profile == "math_staging_candidate":
@@ -1512,7 +1770,7 @@ def status_or_freshness(path: str, authority: str, metadata: dict[str, Any]) -> 
 
 
 def role_and_use(path: str, authority: str, metadata: dict[str, Any]) -> str:
-    profile = semantic_profile(path)
+    profile = semantic_profile(path, metadata)
     subject = semantic_subject(path, metadata)
     if profile == "repository_index":
         parent = parent_directory(path) or "repository root"
@@ -1523,7 +1781,7 @@ def role_and_use(path: str, authority: str, metadata: dict[str, Any]) -> str:
 
 
 def when_to_read(path: str, authority: str, metadata: dict[str, Any]) -> str:
-    profile = semantic_profile(path)
+    profile = semantic_profile(path, metadata)
     subject = semantic_subject(path, metadata)
     if profile == "repository_index":
         return "进入该目录时先读；依据当前任务只选择一个最小后续文件集合"
@@ -1583,10 +1841,55 @@ def when_to_read(path: str, authority: str, metadata: dict[str, Any]) -> str:
     return f"触发条件：{triggers[profile]}。读取 {subject}；{semantic_boundary(profile)}"
 
 
+def enrich_structured_classification(
+    path: str, data: bytes | None, metadata: dict[str, Any]
+) -> dict[str, Any]:
+    suffix = PurePosixPath(path).suffix.casefold()
+    if suffix not in {".json", ".yaml", ".yml"}:
+        return metadata
+    if path_is_private(path) or path in RESTRICTED_METADATA_ONLY:
+        return metadata
+    if metadata.get("structured_format"):
+        return metadata
+    result = dict(metadata)
+    if data is None:
+        result.update(
+            {
+                "structured_format": "json" if suffix == ".json" else "yaml",
+                "schema_shape": False,
+                "schema_detection": "missing_blob_fail_closed",
+                "schema_evidence": [],
+            }
+        )
+        return result
+    text, _ = decode_utf8(path, data)
+    if text is None:
+        result.update(
+            {
+                "structured_format": "json" if suffix == ".json" else "yaml",
+                "schema_shape": False,
+                "schema_detection": "non_utf8_fail_closed",
+                "schema_evidence": [],
+            }
+        )
+        return result
+    structural = extract_json(path, text) if suffix == ".json" else extract_yaml(path, text)
+    for key in (
+        "structured_format",
+        "schema_shape",
+        "schema_detection",
+        "schema_evidence",
+    ):
+        result[key] = structural[key]
+    return result
+
+
 def file_record(entry: GitEntry, data: bytes | None) -> dict[str, Any]:
-    metadata = extract_file_metadata(entry, data)
-    profile = semantic_profile(entry.path)
-    authority = authority_class(entry.path)
+    metadata = enrich_structured_classification(
+        entry.path, data, extract_file_metadata(entry, data)
+    )
+    profile = semantic_profile(entry.path, metadata)
+    authority = authority_class(entry.path, metadata)
     record = {
         "path": entry.path,
         "entry_id": hashlib.sha256(entry.path.encode("utf-8")).hexdigest(),
@@ -1607,9 +1910,71 @@ def file_record(entry: GitEntry, data: bytes | None) -> dict[str, Any]:
         "safe_anchors": [safe_text(value, 100) for value in metadata.get("anchors", [])[:8]],
         "encoding_or_format": metadata.get("encoding", "unknown"),
     }
+    if metadata.get("structured_format"):
+        record.update(
+            {
+                "structured_format": metadata["structured_format"],
+                "schema_shape_detected": bool(metadata.get("schema_shape")),
+                "schema_detection": metadata.get(
+                    "schema_detection", "not_schema_shaped"
+                ),
+                "schema_evidence": [
+                    safe_text(value, 160)
+                    for value in metadata.get("schema_evidence", [])
+                ],
+            }
+        )
     if metadata.get("byte_size") is not None:
         record["byte_size"] = metadata["byte_size"]
     return record
+
+
+def repeated_anchor_fragments(record: dict[str, Any]) -> list[str]:
+    findings: list[str] = []
+    anchors = list(dict.fromkeys(str(value) for value in record.get("safe_anchors", [])))
+    for field in (
+        "content_summary",
+        "role_and_use",
+        "status_or_freshness",
+        "when_to_read",
+    ):
+        text = str(record.get(field, ""))
+        for anchor in anchors:
+            pattern = re.compile(
+                rf"(?<![A-Za-z0-9_$]){re.escape(anchor)}(?![A-Za-z0-9_])"
+            )
+            if anchor and len(pattern.findall(text)) > 1:
+                findings.append(f"{field}:{anchor}")
+    return findings
+
+
+def validate_structured_record(record: dict[str, Any]) -> None:
+    anchors = [str(value) for value in record.get("safe_anchors", [])]
+    if len(anchors) != len(set(anchors)):
+        raise IndexErrorDetail(f"Duplicate exact structured anchors: {record['path']}")
+    if repeated_anchor_fragments(record):
+        raise IndexErrorDetail(
+            f"Repeated rendered anchor fragments: {record['path']} -> "
+            f"{repeated_anchor_fragments(record)[:3]}"
+        )
+    if record.get("schema_shape_detected"):
+        if record.get("authority_class") != "schema":
+            raise IndexErrorDetail(
+                f"Schema-shaped artifact is not classified as schema: {record['path']}"
+            )
+        if record.get("semantic_profile") not in {
+            "schema_definition",
+            "math_active_schema",
+            "math_control_plane_schema",
+            "campaign_template",
+        }:
+            raise IndexErrorDetail(
+                f"Schema-shaped artifact has non-schema profile: {record['path']}"
+            )
+        if not record.get("schema_evidence"):
+            raise IndexErrorDetail(
+                f"Schema-shaped artifact lacks structural evidence: {record['path']}"
+            )
 
 
 def directory_descendant_paths(directory: str, all_paths: Iterable[str]) -> list[str]:
@@ -2379,6 +2744,31 @@ def build_expected(ref: str | None) -> tuple[dict[str, bytes], dict[str, Any]]:
         for record in directory_records
         for child in record["child_directories"]
     )
+    structured_records = [
+        record
+        for record in file_records.values()
+        if record.get("structured_format")
+    ]
+    for record in structured_records:
+        validate_structured_record(record)
+    schema_records = [
+        record for record in structured_records if record.get("schema_shape_detected")
+    ]
+    protected_structured_exclusions = [
+        record
+        for record in file_records.values()
+        if record.get("metadata_only_boundary")
+        and PurePosixPath(record["path"]).suffix.casefold()
+        in {".json", ".yaml", ".yml"}
+    ]
+    path_qualified_anchors = sum(
+        any(
+            "." in anchor.split("=", 1)[0]
+            or "[" in anchor.split("=", 1)[0]
+            for anchor in record.get("safe_anchors", [])
+        )
+        for record in structured_records
+    )
     manifest = {
         "schema_version": SCHEMA_VERSION,
         "task_id": TASK_ID,
@@ -2442,13 +2832,80 @@ def build_expected(ref: str | None) -> tuple[dict[str, bytes], dict[str, Any]]:
                 for record in file_records.values()
             ),
             "private_or_restricted_body_reads": 0,
+            "structured_artifact_audit": {
+                "readable_json_yaml_artifacts_scanned": len(structured_records),
+                "metadata_only_json_yaml_exclusions": len(
+                    protected_structured_exclusions
+                ),
+                "schema_shaped_artifacts": len(schema_records),
+                "schema_shaped_classified_as_schema": sum(
+                    record["authority_class"] == "schema"
+                    for record in schema_records
+                ),
+                "structured_artifacts_classified_as_schema": sum(
+                    record["authority_class"] == "schema"
+                    for record in structured_records
+                ),
+                "schema_name_variants_scanned": sum(
+                    schema_filename_variant(record["path"])
+                    for record in structured_records
+                ),
+                "schema_name_variants_classified_as_schema": sum(
+                    schema_filename_variant(record["path"])
+                    and record["authority_class"] == "schema"
+                    for record in structured_records
+                ),
+                "explicit_non_json_schema_contracts": [
+                    record["path"]
+                    for record in structured_records
+                    if record["authority_class"] == "schema"
+                    and not record.get("schema_shape_detected")
+                ],
+                "known_schema_misclassifications": sum(
+                    record["authority_class"] != "schema"
+                    for record in schema_records
+                ),
+                "schema_detection_counts": dict(
+                    sorted(
+                        Counter(
+                            record["schema_detection"]
+                            for record in structured_records
+                        ).items()
+                    )
+                ),
+                "exact_duplicate_safe_anchors": sum(
+                    len(record.get("safe_anchors", []))
+                    - len(set(record.get("safe_anchors", [])))
+                    for record in structured_records
+                ),
+                "records_with_path_qualified_anchors": path_qualified_anchors,
+                "repeated_rendered_anchor_fragments": sum(
+                    len(repeated_anchor_fragments(record))
+                    for record in structured_records
+                ),
+                "confirmed_regressions": {
+                    "08_Domain_Applications/Math_Mentor/AUTHORIZATION_CONTEXT_SCHEMA.json": {
+                        "semantic_profile": file_records[
+                            "08_Domain_Applications/Math_Mentor/AUTHORIZATION_CONTEXT_SCHEMA.json"
+                        ]["semantic_profile"],
+                        "authority_class": file_records[
+                            "08_Domain_Applications/Math_Mentor/AUTHORIZATION_CONTEXT_SCHEMA.json"
+                        ]["authority_class"],
+                    },
+                    "08_Domain_Applications/Math_Mentor/ALIAS_CONFLICT_REGISTRY.json": {
+                        "safe_anchors": file_records[
+                            "08_Domain_Applications/Math_Mentor/ALIAS_CONFLICT_REGISTRY.json"
+                        ]["safe_anchors"],
+                    },
+                },
+            },
             "baseline_correction_summary": {
                 "file_entries_passed_without_change": 0,
                 "file_entries_corrected": 1806,
                 "directory_roles_corrected": 160,
                 "child_directory_roles_or_triggers_corrected": 159,
                 "reading_order_sequences_corrected": 3,
-                "authority_classes_corrected": 112,
+                "authority_classes_corrected": 102,
                 "freshness_labels_corrected": 1806,
                 "read_triggers_corrected": 1806,
                 "baseline_entries_with_repeated_semantic_text_removed": 1803,
@@ -2654,6 +3111,8 @@ def validate_outputs(ref: str | None) -> dict[str, Any]:
                 raise IndexErrorDetail(
                     f"Unknown entry lacks explicit review reason: {item['path']}"
                 )
+            if item.get("structured_format"):
+                validate_structured_record(item)
         for item in record["direct_files"]:
             target = item["path"]
             relative = posixpath.relpath(target, directory or ".")
@@ -2707,6 +3166,55 @@ def validate_outputs(ref: str | None) -> dict[str, Any]:
         raise IndexErrorDetail("Semantic audit left unresolved unknown entries")
     if semantic_audit.get("private_or_restricted_body_reads") != 0:
         raise IndexErrorDetail("Semantic audit claims a restricted/private body read")
+    structured_audit = semantic_audit.get("structured_artifact_audit", {})
+    structured_paths = {
+        path
+        for path in all_file_paths
+        if PurePosixPath(path).suffix.casefold() in {".json", ".yaml", ".yml"}
+    }
+    if (
+        structured_audit.get("readable_json_yaml_artifacts_scanned", 0)
+        + structured_audit.get("metadata_only_json_yaml_exclusions", 0)
+        != len(structured_paths)
+    ):
+        raise IndexErrorDetail(
+            "Structured artifact scan does not cover every tracked JSON/YAML path"
+        )
+    if structured_audit.get("known_schema_misclassifications") != 0:
+        raise IndexErrorDetail("Schema-shaped artifacts remain misclassified")
+    if structured_audit.get("schema_shaped_artifacts") != structured_audit.get(
+        "schema_shaped_classified_as_schema"
+    ):
+        raise IndexErrorDetail("Schema-shaped artifact coverage is incomplete")
+    if structured_audit.get("schema_name_variants_scanned") != structured_audit.get(
+        "schema_name_variants_classified_as_schema"
+    ):
+        raise IndexErrorDetail("Schema filename variants are not consistently classified")
+    if structured_audit.get("explicit_non_json_schema_contracts") != [
+        "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/schema.yaml",
+        "campaigns/campaign_manifest_template.yaml",
+    ]:
+        raise IndexErrorDetail("Explicit structured schema contract registry drifted")
+    if structured_audit.get("structured_artifacts_classified_as_schema") != (
+        structured_audit.get("schema_shaped_artifacts", 0)
+        + len(structured_audit.get("explicit_non_json_schema_contracts", []))
+    ):
+        raise IndexErrorDetail("Structured schema authority accounting is inconsistent")
+    if structured_audit.get("exact_duplicate_safe_anchors") != 0:
+        raise IndexErrorDetail("Structured anchors contain exact duplicates")
+    if structured_audit.get("repeated_rendered_anchor_fragments") != 0:
+        raise IndexErrorDetail("Rendered semantic fields repeat anchor fragments")
+    if structured_audit.get("confirmed_regressions", {}).get(
+        "08_Domain_Applications/Math_Mentor/AUTHORIZATION_CONTEXT_SCHEMA.json"
+    ) != {"semantic_profile": "schema_definition", "authority_class": "schema"}:
+        raise IndexErrorDetail("AuthorizationContext schema regression returned")
+    alias_anchors = structured_audit.get("confirmed_regressions", {}).get(
+        "08_Domain_Applications/Math_Mentor/ALIAS_CONFLICT_REGISTRY.json", {}
+    ).get("safe_anchors", [])
+    if len(alias_anchors) != len(set(alias_anchors)) or alias_anchors.count(
+        "status=open"
+    ) > 1:
+        raise IndexErrorDetail("Alias conflict anchor dedup regression returned")
     if semantic_audit.get("baseline_scope") != {
         "directory_indexes": 160,
         "direct_file_entries": 1806,
@@ -2719,7 +3227,7 @@ def validate_outputs(ref: str | None) -> dict[str, Any]:
         "directory_roles_corrected": 160,
         "child_directory_roles_or_triggers_corrected": 159,
         "reading_order_sequences_corrected": 3,
-        "authority_classes_corrected": 112,
+        "authority_classes_corrected": 102,
         "freshness_labels_corrected": 1806,
         "read_triggers_corrected": 1806,
         "baseline_entries_with_repeated_semantic_text_removed": 1803,
@@ -2790,6 +3298,19 @@ def validate_outputs(ref: str | None) -> dict[str, Any]:
         "unknown_requires_review": semantic_audit["unknown_requires_review"],
         "private_or_restricted_body_reads": semantic_audit[
             "private_or_restricted_body_reads"
+        ],
+        "readable_json_yaml_artifacts_scanned": structured_audit[
+            "readable_json_yaml_artifacts_scanned"
+        ],
+        "schema_shaped_artifacts": structured_audit["schema_shaped_artifacts"],
+        "known_schema_misclassifications": structured_audit[
+            "known_schema_misclassifications"
+        ],
+        "exact_duplicate_safe_anchors": structured_audit[
+            "exact_duplicate_safe_anchors"
+        ],
+        "repeated_rendered_anchor_fragments": structured_audit[
+            "repeated_rendered_anchor_fragments"
         ],
         "manual_index_sections": manifest["counts"]["manual_index_sections"],
         "hashes": manifest["hashes"],
@@ -2997,6 +3518,123 @@ def self_test() -> dict[str, Any]:
     }
     for path, expected in semantic_cases.items():
         assert (semantic_profile(path), authority_class(path)) == expected
+    schema_document = {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://example.invalid/MIXED_CONTEXT_SCHEMA.json",
+        "type": "object",
+        "properties": {"status": {"type": "string"}},
+        "required": ["status"],
+        "$defs": {"status": {"type": "string"}},
+    }
+    schema_metadata = extract_json(
+        "MIXED_CONTEXT_SCHEMA.JsOn", json.dumps(schema_document)
+    )
+    assert schema_metadata["schema_shape"] is True
+    assert schema_metadata["schema_detection"] == (
+        "recognized_json_schema_dialect_and_root_shape"
+    )
+    assert (
+        semantic_profile("MIXED_CONTEXT_SCHEMA.JsOn", schema_metadata),
+        authority_class("MIXED_CONTEXT_SCHEMA.JsOn", schema_metadata),
+    ) == ("schema_definition", "schema")
+    assert all(
+        schema_filename_variant(path)
+        for path in (
+            "AUTHORIZATION_CONTEXT_SCHEMA.json",
+            "Authorization.Context.Schema.JSON",
+            "authorization-context-schema.yaml",
+        )
+    )
+    yaml_schema_metadata = extract_yaml(
+        "MIXED_CONTEXT_SCHEMA.YAML",
+        "$schema: https://json-schema.org/draft/2020-12/schema\n"
+        "type: object\nproperties:\n  status:\n    type: string\n",
+    )
+    assert yaml_schema_metadata["schema_shape"] is True
+    exact_duplicate_anchors = json_anchors(
+        {"items": [{"status": "open"}, {"status": "open"}]}, fixture=False
+    )
+    assert exact_duplicate_anchors == ["status=open"]
+    assert json_anchors(
+        {"items": [{"status": "open"}, {"status": "open"}]}, fixture=False
+    ) == exact_duplicate_anchors
+    distinct_anchors = json_anchors(
+        {
+            "items": [
+                {"status": "open"},
+                {"status": "closed"},
+                {"status": "open"},
+            ]
+        },
+        fixture=False,
+    )
+    assert distinct_anchors == [
+        "items[0].status=open",
+        "items[1].status=closed",
+    ]
+    assert json_anchors(
+        {
+            "items": [
+                {"status": "open"},
+                {"status": "closed"},
+                {"status": "open"},
+            ]
+        },
+        fixture=False,
+    ) == distinct_anchors
+    yaml_distinct_anchors = finalize_structured_anchors(
+        yaml_structure_records(
+            "items:\n  - status: open\n  - status: closed\n", fixture=False
+        )[2]
+    )
+    assert yaml_distinct_anchors == distinct_anchors
+    regression_record = {
+        "path": "MIXED_CONTEXT_SCHEMA.JsOn",
+        "safe_anchors": schema_metadata["anchors"],
+        "content_summary": schema_metadata["summary"],
+        "role_and_use": role_and_use(
+            "MIXED_CONTEXT_SCHEMA.JsOn", "schema", schema_metadata
+        ),
+        "status_or_freshness": status_or_freshness(
+            "MIXED_CONTEXT_SCHEMA.JsOn", "schema", schema_metadata
+        ),
+        "when_to_read": when_to_read(
+            "MIXED_CONTEXT_SCHEMA.JsOn", "schema", schema_metadata
+        ),
+        "schema_shape_detected": True,
+        "schema_evidence": schema_metadata["schema_evidence"],
+        "semantic_profile": "schema_definition",
+        "authority_class": "schema",
+    }
+    validate_structured_record(regression_record)
+    bad_duplicate = dict(regression_record)
+    bad_duplicate["safe_anchors"] = ["status=open", "status=open"]
+    expect_error(validate_structured_record, bad_duplicate)
+    bad_render = dict(regression_record)
+    bad_render["safe_anchors"] = ["status=open"]
+    bad_render["role_and_use"] = "status=open；status=open"
+    expect_error(validate_structured_record, bad_render)
+    bad_schema_class = dict(regression_record)
+    bad_schema_class["authority_class"] = "implementation"
+    expect_error(validate_structured_record, bad_schema_class)
+    authorization_path = (
+        "08_Domain_Applications/Math_Mentor/AUTHORIZATION_CONTEXT_SCHEMA.json"
+    )
+    authorization_metadata = extract_json(
+        authorization_path,
+        (ROOT / PurePosixPath(authorization_path)).read_text(encoding="utf-8"),
+    )
+    assert authorization_metadata["schema_shape"] is True
+    assert (
+        semantic_profile(authorization_path, authorization_metadata),
+        authority_class(authorization_path, authorization_metadata),
+    ) == ("schema_definition", "schema")
+    alias_path = "08_Domain_Applications/Math_Mentor/ALIAS_CONFLICT_REGISTRY.json"
+    alias_metadata = extract_json(
+        alias_path, (ROOT / PurePosixPath(alias_path)).read_text(encoding="utf-8")
+    )
+    assert len(alias_metadata["anchors"]) == len(set(alias_metadata["anchors"]))
+    assert alias_metadata["anchors"].count("status=open") == 1
     assert directory_semantic_profile(
         ".ai/communication_compliance/fixtures/artifacts/proof/transition-c2-replay"
     ) == "communication_proof_case"
@@ -3115,6 +3753,9 @@ def self_test() -> dict[str, Any]:
         "git_environment_sanitization_cases": 1,
         "semantic_file_boundary_cases": len(semantic_cases),
         "semantic_directory_boundary_cases": 2,
+        "schema_structure_regression_cases": 8,
+        "structured_anchor_regression_cases": 7,
+        "confirmed_repository_regression_samples": 2,
     }
 
 

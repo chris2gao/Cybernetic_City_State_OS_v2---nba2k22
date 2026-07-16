@@ -14,7 +14,7 @@ Math node factory 的 mock agent/evaluator/pipeline 证据区 factory_pipeline�
 1. [`06_Silicon_Index/factory_pipeline/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 2. [`06_Silicon_Index/factory_pipeline/autonomous_factory_agent.py`](autonomous_factory_agent.py) — 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 autonomous_factory_agent.py（extract_dag；load_state；save_state）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 3. [`06_Silicon_Index/factory_pipeline/bulk_evaluator.py`](bulk_evaluator.py) — 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 bulk_evaluator.py（parse_evaluator_result；run_bulk_evaluation；main）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
-4. [`06_Silicon_Index/factory_pipeline/calculus_micro_graph.yaml`](calculus_micro_graph.yaml) — 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 calculus_micro_graph.yaml（name=Limit of a Sequence (数列极限)；name=Limit of a Function (函数极限)；name=Continuity (连续性)）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+4. [`06_Silicon_Index/factory_pipeline/calculus_micro_graph.yaml`](calculus_micro_graph.yaml) — 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 calculus_micro_graph.yaml（nodes［0］.id=CALC-01；nodes［0］.name=Limit of a Sequence (数列极限)；nodes［1］.id=CALC-02）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 5. [`06_Silicon_Index/factory_pipeline/debug_json.py`](debug_json.py) — 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 debug_json.py（Python；public symbols=none）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 6. [`06_Silicon_Index/factory_pipeline/debug_json2.py`](debug_json2.py) — 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 debug_json2.py（Python；public symbols=none）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 7. [`06_Silicon_Index/factory_pipeline/generated_nodes/index.md`](generated_nodes/index.md) — 复现 generated_nodes 的 mock factory、evaluator 或 generated-node 行为
@@ -52,11 +52,11 @@ Math node factory 的 mock agent/evaluator/pipeline 证据区 factory_pipeline�
   - **when_to_read**: 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 calculus_factory_mock.py（build_calculus_pipeline）；仅复现明确测试；fixture 载荷不构成真实状态或授权
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f666163746f72795f706970656c696e652f63616c63756c75735f6d6963726f5f67726170682e79616d6c -->
 - **path_or_link**: [`06_Silicon_Index/factory_pipeline/calculus_micro_graph.yaml`](calculus_micro_graph.yaml)
-  - **content_summary**: YAML 结构，顶层键：nodes；安全锚点：name=Limit of a Sequence (数列极限), name=Limit of a Function (函数极限), name=Continuity (连续性), name=Derivative (导数), name=Differentiability (可微性)
-  - **role_and_use**: 将 calculus_micro_graph.yaml（name=Limit of a Sequence (数列极限)；name=Limit of a Function (函数极限)；name=Continuity (连续性)） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **content_summary**: YAML 结构，顶层键：nodes；安全锚点：nodes［0］.id=CALC-01, nodes［0］.name=Limit of a Sequence (数列极限), nodes［1］.id=CALC-02, nodes［1］.name=Limit of a Function (函数极限), nodes［2］.id=CALC-03, nodes［2］.…
+  - **role_and_use**: 将 calculus_micro_graph.yaml（nodes［0］.id=CALC-01；nodes［0］.name=Limit of a Sequence (数列极限)；nodes［1］.id=CALC-02） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
   - **authority_class**: `implementation`
   - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
-  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 calculus_micro_graph.yaml（name=Limit of a Sequence (数列极限)；name=Limit of a Function (函数极限)；name=Continuity (连续性)）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 calculus_micro_graph.yaml（nodes［0］.id=CALC-01；nodes［0］.name=Limit of a Sequence (数列极限)；nodes［1］.id=CALC-02）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f666163746f72795f706970656c696e652f64656275675f6a736f6e2e7079 -->
 - **path_or_link**: [`06_Silicon_Index/factory_pipeline/debug_json.py`](debug_json.py)
   - **content_summary**: Python；public symbols=none；artifact=debug_json.py
@@ -150,11 +150,11 @@ Math node factory 的 mock agent/evaluator/pipeline 证据区 factory_pipeline�
   - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 master_synthesis_agent.py（extract_dag）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f666163746f72795f706970656c696e652f6d696e695f67726170682e79616d6c -->
 - **path_or_link**: [`06_Silicon_Index/factory_pipeline/mini_graph.yaml`](mini_graph.yaml)
-  - **content_summary**: YAML 结构，顶层键：nodes；安全锚点：name=Vector Addition (向量加法), name=Scalar Multiplication (标量乘法), name=Linear Combination (线性组合), name=Linear Independence (线性无关)
-  - **role_and_use**: 将 mini_graph.yaml（name=Vector Addition (向量加法)；name=Scalar Multiplication (标量乘法)；name=Linear Combination (线性组合)） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **content_summary**: YAML 结构，顶层键：nodes；安全锚点：nodes［0］.id=MINI-01, nodes［0］.name=Vector Addition (向量加法), nodes［1］.id=MINI-02, nodes［1］.name=Scalar Multiplication (标量乘法), nodes［2］.id=MINI-03, nodes［2］.na…
+  - **role_and_use**: 将 mini_graph.yaml（nodes［0］.id=MINI-01；nodes［0］.name=Vector Addition (向量加法)；nodes［1］.id=MINI-02） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
   - **authority_class**: `implementation`
   - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
-  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 mini_graph.yaml（name=Vector Addition (向量加法)；name=Scalar Multiplication (标量乘法)；name=Linear Combination (线性组合)）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 mini_graph.yaml（nodes［0］.id=MINI-01；nodes［0］.name=Vector Addition (向量加法)；nodes［1］.id=MINI-02）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f666163746f72795f706970656c696e652f7265736375655f72656d61696e696e672e7079 -->
 - **path_or_link**: [`06_Silicon_Index/factory_pipeline/rescue_remaining.py`](rescue_remaining.py)
   - **content_summary**: Python；public symbols=traverse；artifact=rescue_remaining.py

@@ -12,7 +12,7 @@ Math Mentor 活动合同、静态控制面、教学 prompt、节点语料、测�
 ## recommended_reading_order
 
 1. [`08_Domain_Applications/Math_Mentor/Universal_Layer_Execution_Protocol.md`](Universal_Layer_Execution_Protocol.md) — 触发条件：当前 Math Mentor 工作触及该合同规定的教学、质量、bridge 或 handoff 边界。读取 Universal_Layer_Execution_Protocol.md（H1《Universal Layer Execution Protocol (通用层级执行规范)》；首个 H2《Current Authority And Supersession Notice》）；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
-2. [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_CURRENT_STATE.yml`](MATH_MENTOR_CURRENT_STATE.yml) — 触发条件：接管 Math Mentor、确认静态成熟度或定位下一份精确证据。读取 MATH_MENTOR_CURRENT_STATE.yml（schema_version=1.0；status=legacy_assets_unresolved；task_id=math-mentor-master-plan-progress-ledger-0001）；exact Git 和活动 mailbox 优先；状态字段不激活 runtime/Coordinator
+2. [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_CURRENT_STATE.yml`](MATH_MENTOR_CURRENT_STATE.yml) — 触发条件：接管 Math Mentor、确认静态成熟度或定位下一份精确证据。读取 MATH_MENTOR_CURRENT_STATE.yml（schema_version=1.0；legacy_bridge_state.status=legacy_assets_unresolved；task_id=math-mentor-master-plan-progress-ledger-0001）；exact Git 和活动 mailbox 优先；状态字段不激活 runtime/Coordinator
 3. [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md`](MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md) — 触发条件：进行 Math Mentor 窗口交接、主计划进度核验或角色边界审查。读取 MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md（H1《Math Mentor 主计划与当前进度总账》；首个 H2《1. 权威与新鲜度》）；用于接管和差异定位，不把计划完成度冒充运行能力
 4. [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md`](MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md) — 触发条件：进行 Math Mentor 窗口交接、主计划进度核验或角色边界审查。读取 MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md（H1《Math Mentor Provider-Neutral Role And Handoff Contract》；首个 H2《1. Authority, purpose, and freshness》）；用于接管和差异定位，不把计划完成度冒充运行能力
 5. [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_AUTHORITY_REGISTRY.yml`](MATH_MENTOR_AUTHORITY_REGISTRY.yml) — 触发条件：解析某项 Math Mentor authority/deprecation claim，并回溯其引用源。读取 MATH_MENTOR_AUTHORITY_REGISTRY.yml（schema_version=1.0.0；registry_id=math-mentor-authority-registry-v1）；registry_role 明示 non-authorizing/derived；必须回到其引用 authority 核验
@@ -62,18 +62,18 @@ Math Mentor 活动合同、静态控制面、教学 prompt、节点语料、测�
   - **when_to_read**: 触发条件：当前 Math Mentor 工作触及该合同规定的教学、质量、bridge 或 handoff 边界。读取 08_Math_Mentor_Coordinator_Prompt.md（H1《Math Mentor OS Coordinator Prompt》；首个 H2《1. Authority And Namespace》）；合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f414c4941535f434f4e464c4943545f52454749535452592e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/ALIAS_CONFLICT_REGISTRY.json`](ALIAS_CONFLICT_REGISTRY.json)
-  - **content_summary**: JSON object，顶层键：$schema, conflicts, extraction_limitations, generator_version, namespace_uuid, payload_sha256, runtime_activation_performed, schema_version；安全锚点：status=open, statu…
-  - **role_and_use**: 将 ALIAS_CONFLICT_REGISTRY.json（status=open；status=open；status=open） 作为“Math Mentor 派生验证证据”使用；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
+  - **content_summary**: JSON object，顶层键：$schema, conflicts, extraction_limitations, generator_version, namespace_uuid, payload_sha256, runtime_activation_performed, schema_version；安全锚点：$schema=08_Domain_…
+  - **role_and_use**: 将 ALIAS_CONFLICT_REGISTRY.json（$schema=08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/alias_conflict_regi…；status=open；schema_version=1.0.0） 作为“Math Mentor 派生验证证据”使用；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
   - **authority_class**: `generated_evidence`
   - **status_or_freshness**: semantic_profile=math_generated_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
-  - **when_to_read**: 触发条件：核对该派生 registry/report 的生成输入、冲突或成熟度结论。读取 ALIAS_CONFLICT_REGISTRY.json（status=open；status=open；status=open）；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
+  - **when_to_read**: 触发条件：核对该派生 registry/report 的生成输入、冲突或成熟度结论。读取 ALIAS_CONFLICT_REGISTRY.json（$schema=08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/alias_conflict_regi…；status=open；schema_version=1.0.0）；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f415554484f52495a4154494f4e5f434f4e544558545f534348454d412e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/AUTHORIZATION_CONTEXT_SCHEMA.json`](AUTHORIZATION_CONTEXT_SCHEMA.json)
-  - **content_summary**: JSON object，顶层键：$defs, $id, $schema, additionalProperties, description, properties, required, title；安全锚点：title=Verified Math Mentor Authorization Context
-  - **role_and_use**: 将 AUTHORIZATION_CONTEXT_SCHEMA.json（title=Verified Math Mentor Authorization Context） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: semantic_profile=implementation_artifact；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；可追踪实现不等于已激活、已验证或 production-ready
-  - **when_to_read**: 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 AUTHORIZATION_CONTEXT_SCHEMA.json（title=Verified Math Mentor Authorization Context）；可追踪实现不等于已激活、已验证或 production-ready
+  - **content_summary**: JSON object，顶层键：$defs, $id, $schema, additionalProperties, description, properties, required, title；安全锚点：$id=https://cybernetic-city-state.local/math-mentor/AUTHORIZATION_CONTEXT_…
+  - **role_and_use**: 将 AUTHORIZATION_CONTEXT_SCHEMA.json（$id=https://cybernetic-city-state.local/math-mentor/AUTHORIZATION_CONTEXT_SCHEMA.js…；$schema=https://json-schema.org/draft/2020-12/schema；title=Verified Math Mentor Authorization Context） 作为“结构定义”使用；结构有效不等于业务有效、授权有效或已持久化
+  - **authority_class**: `schema`
+  - **status_or_freshness**: semantic_profile=schema_definition；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；结构有效不等于业务有效、授权有效或已持久化
+  - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 AUTHORIZATION_CONTEXT_SCHEMA.json（$id=https://cybernetic-city-state.local/math-mentor/AUTHORIZATION_CONTEXT_SCHEMA.js…；$schema=https://json-schema.org/draft/2020-12/schema；title=Verified Math Mentor Authorization Context）；结构有效不等于业务有效、授权有效或已持久化
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4252494447455f52454749535452595f41554449542e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/BRIDGE_REGISTRY_AUDIT.md`](BRIDGE_REGISTRY_AUDIT.md)
   - **content_summary**: H1《Bridge Registry Audit》；首个 H2《1. Audit Scope》
@@ -97,11 +97,11 @@ Math Mentor 活动合同、静态控制面、教学 prompt、节点语料、测�
   - **when_to_read**: 触发条件：当前动作落入该文件规定的协议或执行边界。读取 BRIDGE_SLOT_TEACHING_CONTRACT.md（H1《Bridge Slot Teaching Contract》；首个 H2《1. Purpose》）；执行前核验当前任务授权、精确 source head 与上位合同
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f43414e4f4e4943414c5f4e4f44455f43524f535357414c4b2e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/CANONICAL_NODE_CROSSWALK.json`](CANONICAL_NODE_CROSSWALK.json)
-  - **content_summary**: JSON object，顶层键：$schema, extraction_limitations, generator_version, identity_model, inputs, namespace_uuid, nodes, payload_sha256；安全锚点：status=open, status=agree, status=agree, sta…
-  - **role_and_use**: 将 CANONICAL_NODE_CROSSWALK.json（status=open；status=agree；status=agree） 作为“Math Mentor 派生验证证据”使用；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
+  - **content_summary**: JSON object，顶层键：$schema, extraction_limitations, generator_version, identity_model, inputs, namespace_uuid, nodes, payload_sha256；安全锚点：$schema=08_Domain_Applications/Math_Mentor/p…
+  - **role_and_use**: 将 CANONICAL_NODE_CROSSWALK.json（$schema=08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/canonical_node_cros…；extraction_limitations［0］.status=open；nodes［0］.alias_comparison.status=agree） 作为“Math Mentor 派生验证证据”使用；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
   - **authority_class**: `generated_evidence`
   - **status_or_freshness**: semantic_profile=math_generated_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
-  - **when_to_read**: 触发条件：核对该派生 registry/report 的生成输入、冲突或成熟度结论。读取 CANONICAL_NODE_CROSSWALK.json（status=open；status=agree；status=agree）；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
+  - **when_to_read**: 触发条件：核对该派生 registry/report 的生成输入、冲突或成熟度结论。读取 CANONICAL_NODE_CROSSWALK.json（$schema=08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/canonical_node_cros…；extraction_limitations［0］.status=open；nodes［0］.alias_comparison.status=agree）；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f43414e4f4e4943414c5f4e4f44455f4944454e544954595f534348454d412e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/CANONICAL_NODE_IDENTITY_SCHEMA.md`](CANONICAL_NODE_IDENTITY_SCHEMA.md)
   - **content_summary**: H1《Canonical Node Identity Schema》；首个 H2《1. Purpose And Boundary》
@@ -189,10 +189,10 @@ Math Mentor 活动合同、静态控制面、教学 prompt、节点语料、测�
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4d4154485f4d454e544f525f43555252454e545f53544154452e796d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_CURRENT_STATE.yml`](MATH_MENTOR_CURRENT_STATE.yml)
   - **content_summary**: YAML 结构，顶层键：schema_version, document_role, freshness_policy, evidence_baseline, takeover_bundle, product_decisions, current_milestones, current_capability_states；安全锚点：schema_versi…
-  - **role_and_use**: 将 MATH_MENTOR_CURRENT_STATE.yml（schema_version=1.0；status=legacy_assets_unresolved；task_id=math-mentor-master-plan-progress-ledger-0001） 作为“Math Mentor 当前状态路由快照”使用；exact Git 和活动 mailbox 优先；状态字段不激活 runtime/Coordinator
+  - **role_and_use**: 将 MATH_MENTOR_CURRENT_STATE.yml（schema_version=1.0；legacy_bridge_state.status=legacy_assets_unresolved；task_id=math-mentor-master-plan-progress-ledger-0001） 作为“Math Mentor 当前状态路由快照”使用；exact Git 和活动 mailbox 优先；状态字段不激活 runtime/Coordinator
   - **authority_class**: `routing`
   - **status_or_freshness**: semantic_profile=math_current_state_router；authority=routing；evidence_basis=yaml_visible_keys_and_safe_fields；exact Git 和活动 mailbox 优先；状态字段不激活 runtime/Coordinator
-  - **when_to_read**: 触发条件：接管 Math Mentor、确认静态成熟度或定位下一份精确证据。读取 MATH_MENTOR_CURRENT_STATE.yml（schema_version=1.0；status=legacy_assets_unresolved；task_id=math-mentor-master-plan-progress-ledger-0001）；exact Git 和活动 mailbox 优先；状态字段不激活 runtime/Coordinator
+  - **when_to_read**: 触发条件：接管 Math Mentor、确认静态成熟度或定位下一份精确证据。读取 MATH_MENTOR_CURRENT_STATE.yml（schema_version=1.0；legacy_bridge_state.status=legacy_assets_unresolved；task_id=math-mentor-master-plan-progress-ledger-0001）；exact Git 和活动 mailbox 优先；状态字段不激活 runtime/Coordinator
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4d4154485f4d454e544f525f4445505245434154494f4e5f4d41502e796d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/MATH_MENTOR_DEPRECATION_MAP.yml`](MATH_MENTOR_DEPRECATION_MAP.yml)
   - **content_summary**: YAML 结构，顶层键：schema_version, registry_id, registry_role, operational_activation, baseline, states, default_unlisted_behavior, global_invariants；安全锚点：schema_version=1.0.0, registry_…
@@ -258,11 +258,11 @@ Math Mentor 活动合同、静态控制面、教学 prompt、节点语料、测�
   - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 NODE_REPAIR_PLAN.md（H1《Math Mentor Targeted Node Repair Plan》；首个 H2《1. Current Understanding》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f4e4f524d414c495a45445f4e4f44455f534348454d412e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/NORMALIZED_NODE_SCHEMA.json`](NORMALIZED_NODE_SCHEMA.json)
-  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, description, properties, required, title, type；安全锚点：title=Math Mentor normalized node
-  - **role_and_use**: 将 NORMALIZED_NODE_SCHEMA.json（title=Math Mentor normalized node） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: semantic_profile=implementation_artifact；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；可追踪实现不等于已激活、已验证或 production-ready
-  - **when_to_read**: 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 NORMALIZED_NODE_SCHEMA.json（title=Math Mentor normalized node）；可追踪实现不等于已激活、已验证或 production-ready
+  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, description, properties, required, title, type；安全锚点：$id=https://github.com/chris2gao/Cybernetic_City_State_OS_v2---teacher/sche…
+  - **role_and_use**: 将 NORMALIZED_NODE_SCHEMA.json（$id=https://github.com/chris2gao/Cybernetic_City_State_OS_v2---teacher/schemas/math…；$schema=https://json-schema.org/draft/2020-12/schema；title=Math Mentor normalized node） 作为“结构定义”使用；结构有效不等于业务有效、授权有效或已持久化
+  - **authority_class**: `schema`
+  - **status_or_freshness**: semantic_profile=schema_definition；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；结构有效不等于业务有效、授权有效或已持久化
+  - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 NORMALIZED_NODE_SCHEMA.json（$id=https://github.com/chris2gao/Cybernetic_City_State_OS_v2---teacher/schemas/math…；$schema=https://json-schema.org/draft/2020-12/schema；title=Math Mentor normalized node）；结构有效不等于业务有效、授权有效或已持久化
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f504f53545f50325f455845435554494f4e5f4d454d4f52592e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/POST_P2_EXECUTION_MEMORY.md`](POST_P2_EXECUTION_MEMORY.md)
   - **content_summary**: H1《POST-P2 Execution Memory for Math Mentor》；首个 H2《0\. Purpose》
@@ -279,11 +279,11 @@ Math Mentor 活动合同、静态控制面、教学 prompt、节点语料、测�
   - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 README.md（README 标题/正文仍描述 02_Protocols 模板，与 Math_Mentor 实际目录不一致）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f524f4f545f434f525055535f52454749535452592e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/ROOT_CORPUS_REGISTRY.json`](ROOT_CORPUS_REGISTRY.json)
-  - **content_summary**: JSON object，顶层键：$schema, db_root, discovery_policy, excluded_assets, generator_version, inputs, namespace_uuid, nodes；安全锚点：validation_status=review_required, status=resolved, vali…
-  - **role_and_use**: 将 ROOT_CORPUS_REGISTRY.json（validation_status=review_required；status=resolved；validation_status=review_required） 作为“Math Mentor 派生验证证据”使用；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
+  - **content_summary**: JSON object，顶层键：$schema, db_root, discovery_policy, excluded_assets, generator_version, inputs, namespace_uuid, nodes；安全锚点：$schema=08_Domain_Applications/Math_Mentor/p0_control_pl…
+  - **role_and_use**: 将 ROOT_CORPUS_REGISTRY.json（$schema=08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/root_corpus_registr…；validation_status=review_required；nodes［0］.strict_identity.status=resolved） 作为“Math Mentor 派生验证证据”使用；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
   - **authority_class**: `generated_evidence`
   - **status_or_freshness**: semantic_profile=math_generated_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
-  - **when_to_read**: 触发条件：核对该派生 registry/report 的生成输入、冲突或成熟度结论。读取 ROOT_CORPUS_REGISTRY.json（validation_status=review_required；status=resolved；validation_status=review_required）；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
+  - **when_to_read**: 触发条件：核对该派生 registry/report 的生成输入、冲突或成熟度结论。读取 ROOT_CORPUS_REGISTRY.json（$schema=08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/root_corpus_registr…；validation_status=review_required；nodes［0］.strict_identity.status=resolved）；派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f5350414345445f5245564945575f5343484544554c45525f534348454d412e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/SPACED_REVIEW_SCHEDULER_SCHEMA.md`](SPACED_REVIEW_SCHEDULER_SCHEMA.md)
   - **content_summary**: H1《Math Mentor Spaced Review Scheduler Schema》；首个 H2《1. Purpose And No-Runtime Boundary》

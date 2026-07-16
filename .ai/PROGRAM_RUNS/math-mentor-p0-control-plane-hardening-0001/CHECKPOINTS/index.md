@@ -12,9 +12,9 @@ Program run math-mentor-p0-control-plane-hardening-0001 的 CHECKPOINTS 证据�
 ## recommended_reading_order
 
 1. [`.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/CHECKPOINTS/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-2. [`.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/CHECKPOINTS/correction-validated.yml`](correction-validated.yml) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 correction-validated.yml（task_id=math-mentor-p0-control-plane-hardening-0001；status=implemented_pending_exact_head_review；status=implemented_pending_exact_head_review）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-3. [`.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/CHECKPOINTS/implementation-validated.yml`](implementation-validated.yml) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 implementation-validated.yml（program_id=math-mentor-p0-control-plane-hardening-0001；status=passed；status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-4. [`.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/CHECKPOINTS/post-integration-validated.yml`](post-integration-validated.yml) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 post-integration-validated.yml（task_id=math-mentor-p0-control-plane-hardening-0001；status=preserved_exact_git_blobs；status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+2. [`.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/CHECKPOINTS/correction-validated.yml`](correction-validated.yml) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 correction-validated.yml（task_id=math-mentor-p0-control-plane-hardening-0001；independent_review_corrections.authority_precedence.status=implemented_pending_exact_head_review；consolidated_validator.status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+3. [`.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/CHECKPOINTS/implementation-validated.yml`](implementation-validated.yml) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 implementation-validated.yml（program_id=math-mentor-p0-control-plane-hardening-0001；status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+4. [`.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/CHECKPOINTS/post-integration-validated.yml`](post-integration-validated.yml) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 post-integration-validated.yml（task_id=math-mentor-p0-control-plane-hardening-0001；parallel_master_files.status=preserved_exact_git_blobs；consolidated_validator.status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 5. [`.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/CHECKPOINTS/preflight.yml`](preflight.yml) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 preflight.yml（program_id=math-mentor-p0-control-plane-hardening-0001；status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 
 ## child_directories
@@ -26,17 +26,17 @@ Program run math-mentor-p0-control-plane-hardening-0001 的 CHECKPOINTS 证据�
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d70302d636f6e74726f6c2d706c616e652d68617264656e696e672d303030312f434845434b504f494e54532f636f7272656374696f6e2d76616c6964617465642e796d6c -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/CHECKPOINTS/correction-validated.yml`](correction-validated.yml)
   - **content_summary**: YAML 结构，顶层键：checkpoint_id, task_id, state, validation_scope, source_head, historical_validated_head, corrected_implementation_head, final_candidate_head；安全锚点：task_id=math-mentor-p…
-  - **role_and_use**: 将 correction-validated.yml（task_id=math-mentor-p0-control-plane-hardening-0001；status=implemented_pending_exact_head_review；status=implemented_pending_exact_head_review） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **role_and_use**: 将 correction-validated.yml（task_id=math-mentor-p0-control-plane-hardening-0001；independent_review_corrections.authority_precedence.status=implemented_pending_exact_head_review；consolidated_validator.status=passed） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
   - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=yaml_visible_keys_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 correction-validated.yml（task_id=math-mentor-p0-control-plane-hardening-0001；status=implemented_pending_exact_head_review；status=implemented_pending_exact_head_review）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 correction-validated.yml（task_id=math-mentor-p0-control-plane-hardening-0001；independent_review_corrections.authority_precedence.status=implemented_pending_exact_head_review；consolidated_validator.status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d70302d636f6e74726f6c2d706c616e652d68617264656e696e672d303030312f434845434b504f494e54532f696d706c656d656e746174696f6e2d76616c6964617465642e796d6c -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/CHECKPOINTS/implementation-validated.yml`](implementation-validated.yml)
   - **content_summary**: YAML 结构，顶层键：program_id, checkpoint, status, record_status, superseded_by, supersession_note, source_head, validated_implementation_head；安全锚点：program_id=math-mentor-p0-control-plan…
-  - **role_and_use**: 将 implementation-validated.yml（program_id=math-mentor-p0-control-plane-hardening-0001；status=passed；status=passed） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **role_and_use**: 将 implementation-validated.yml（program_id=math-mentor-p0-control-plane-hardening-0001；status=passed） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
   - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=yaml_visible_keys_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 implementation-validated.yml（program_id=math-mentor-p0-control-plane-hardening-0001；status=passed；status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 implementation-validated.yml（program_id=math-mentor-p0-control-plane-hardening-0001；status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d70302d636f6e74726f6c2d706c616e652d68617264656e696e672d303030312f434845434b504f494e54532f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/CHECKPOINTS/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
@@ -46,11 +46,11 @@ Program run math-mentor-p0-control-plane-hardening-0001 的 CHECKPOINTS 证据�
   - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d70302d636f6e74726f6c2d706c616e652d68617264656e696e672d303030312f434845434b504f494e54532f706f73742d696e746567726174696f6e2d76616c6964617465642e796d6c -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/CHECKPOINTS/post-integration-validated.yml`](post-integration-validated.yml)
-  - **content_summary**: YAML 结构，顶层键：checkpoint_id, task_id, state, validation_scope, heads, integration, parallel_master_files, tests；安全锚点：task_id=math-mentor-p0-control-plane-hardening-0001, status=pres…
-  - **role_and_use**: 将 post-integration-validated.yml（task_id=math-mentor-p0-control-plane-hardening-0001；status=preserved_exact_git_blobs；status=passed） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **content_summary**: YAML 结构，顶层键：checkpoint_id, task_id, state, validation_scope, heads, integration, parallel_master_files, tests；安全锚点：task_id=math-mentor-p0-control-plane-hardening-0001, parallel_ma…
+  - **role_and_use**: 将 post-integration-validated.yml（task_id=math-mentor-p0-control-plane-hardening-0001；parallel_master_files.status=preserved_exact_git_blobs；consolidated_validator.status=passed） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
   - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=yaml_visible_keys_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 post-integration-validated.yml（task_id=math-mentor-p0-control-plane-hardening-0001；status=preserved_exact_git_blobs；status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 post-integration-validated.yml（task_id=math-mentor-p0-control-plane-hardening-0001；parallel_master_files.status=preserved_exact_git_blobs；consolidated_validator.status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d70302d636f6e74726f6c2d706c616e652d68617264656e696e672d303030312f434845434b504f494e54532f707265666c696768742e796d6c -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/CHECKPOINTS/preflight.yml`](preflight.yml)
   - **content_summary**: YAML 结构，顶层键：program_id, checkpoint, status, source_branch, expected_source_head, observed_initial_head, observed_remote_master_before_launch, observed_local_master_ref；安全锚点：progra…

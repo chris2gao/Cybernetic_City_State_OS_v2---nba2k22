@@ -12,7 +12,7 @@ Program run math-mentor-p0-control-plane-hardening-0001 的 VALIDATION 证据分
 ## recommended_reading_order
 
 1. [`.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/VALIDATION/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-2. [`.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/VALIDATION/validation_summary.json`](validation_summary.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 validation_summary.json（status=passed；status=accepted_at_abb40db；status=accepted_at_abb40db）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+2. [`.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/VALIDATION/validation_summary.json`](validation_summary.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 validation_summary.json（consolidated_validator.status=passed；independent_review_corrections.admission_trust_sealing.status=accepted_at_abb40db；schema_version=1.2.0）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 
 ## child_directories
 
@@ -30,10 +30,10 @@ Program run math-mentor-p0-control-plane-hardening-0001 的 VALIDATION 证据分
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d70302d636f6e74726f6c2d706c616e652d68617264656e696e672d303030312f56414c49444154494f4e2f76616c69646174696f6e5f73756d6d6172792e6a736f6e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/VALIDATION/validation_summary.json`](validation_summary.json)
   - **content_summary**: JSON object，顶层键：accepted_candidate_head, avoided_extra_gates, consolidated_validator, corrected_implementation_head, drift_cause, environment, explicit_format_and_schema_validatio…
-  - **role_and_use**: 将 validation_summary.json（status=passed；status=accepted_at_abb40db；status=accepted_at_abb40db） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **role_and_use**: 将 validation_summary.json（consolidated_validator.status=passed；independent_review_corrections.admission_trust_sealing.status=accepted_at_abb40db；schema_version=1.2.0） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
   - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 validation_summary.json（status=passed；status=accepted_at_abb40db；status=accepted_at_abb40db）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 validation_summary.json（consolidated_validator.status=passed；independent_review_corrections.admission_trust_sealing.status=accepted_at_abb40db；schema_version=1.2.0）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 
 ## do_not_load_by_default
 

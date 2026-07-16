@@ -560,10 +560,10 @@ Math Mentor 根候选语料与 staging 分区；按 exact ID 懒加载并先过 
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3638342e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-684.yaml`](ANALYTIC_NT-684.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, city_state_engine, mode, math_lane, mode_routing_status, formal_definition_status, prerequisites_status；安全锚点：id=ANALYTIC_NT-684, validation_status=run_wit…
-  - **role_and_use**: 将 ANALYTIC_NT-684.yaml（id=ANALYTIC_NT-684；validation_status=run_with_log；status=manual_review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **role_and_use**: 将 ANALYTIC_NT-684.yaml（id=ANALYTIC_NT-684；validation_status=run_with_log；required_prerequisites.status=manual_review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
   - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
-  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-684.yaml（id=ANALYTIC_NT-684；validation_status=run_with_log；status=manual_review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-684.yaml（id=ANALYTIC_NT-684；validation_status=run_with_log；required_prerequisites.status=manual_review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3638352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-685.yaml`](ANALYTIC_NT-685.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_NT-…
@@ -581,17 +581,17 @@ Math Mentor 根候选语料与 staging 分区；按 exact ID 懒加载并先过 
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3638372e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-687.yaml`](ANALYTIC_NT-687.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, city_state_engine, mode, math_lane, mode_routing_status, formal_definition_status, prerequisites_status；安全锚点：id=ANALYTIC_NT-687, validation_status=run_wit…
-  - **role_and_use**: 将 ANALYTIC_NT-687.yaml（id=ANALYTIC_NT-687；validation_status=run_with_log；status=manual_review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **role_and_use**: 将 ANALYTIC_NT-687.yaml（id=ANALYTIC_NT-687；validation_status=run_with_log；required_prerequisites.status=manual_review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
   - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
-  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-687.yaml（id=ANALYTIC_NT-687；validation_status=run_with_log；status=manual_review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-687.yaml（id=ANALYTIC_NT-687；validation_status=run_with_log；required_prerequisites.status=manual_review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3638382e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-688.yaml`](ANALYTIC_NT-688.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, city_state_engine, mode, math_lane, mode_routing_status, formal_definition_status, prerequisites_status；安全锚点：id=ANALYTIC_NT-688, validation_status=run_wit…
-  - **role_and_use**: 将 ANALYTIC_NT-688.yaml（id=ANALYTIC_NT-688；validation_status=run_with_log；status=manual_review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **role_and_use**: 将 ANALYTIC_NT-688.yaml（id=ANALYTIC_NT-688；validation_status=run_with_log；required_prerequisites.status=manual_review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
   - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
-  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-688.yaml（id=ANALYTIC_NT-688；validation_status=run_with_log；status=manual_review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-688.yaml（id=ANALYTIC_NT-688；validation_status=run_with_log；required_prerequisites.status=manual_review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3638392e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-689.yaml`](ANALYTIC_NT-689.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_NT-…
@@ -616,10 +616,10 @@ Math Mentor 根候选语料与 staging 分区；按 exact ID 懒加载并先过 
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3639322e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-692.yaml`](ANALYTIC_NT-692.yaml)
   - **content_summary**: YAML 结构，顶层键：version, id, city_state_engine, mode, math_lane, mode_routing_status, formal_definition_status, prerequisites_status；安全锚点：id=ANALYTIC_NT-692, validation_status=run_wit…
-  - **role_and_use**: 将 ANALYTIC_NT-692.yaml（id=ANALYTIC_NT-692；validation_status=run_with_log；status=manual_review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **role_and_use**: 将 ANALYTIC_NT-692.yaml（id=ANALYTIC_NT-692；validation_status=run_with_log；required_prerequisites.status=manual_review_required） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
   - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
-  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-692.yaml（id=ANALYTIC_NT-692；validation_status=run_with_log；status=manual_review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 ANALYTIC_NT-692.yaml（id=ANALYTIC_NT-692；validation_status=run_with_log；required_prerequisites.status=manual_review_required）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f414e414c595449435f4e542d3639332e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ANALYTIC_NT-693.yaml`](ANALYTIC_NT-693.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=ANALYTIC_NT-…
@@ -868,10 +868,10 @@ Math Mentor 根候选语料与 staging 分区；按 exact ID 懒加载并先过 
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3236352e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-265.yaml`](CALCULUS-265.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-265…
-  - **role_and_use**: 将 CALCULUS-265.yaml（id=CALCULUS-265；validation_status=semantic_ready_for_manual_teaching；status=present） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **role_and_use**: 将 CALCULUS-265.yaml（id=CALCULUS-265；validation_status=semantic_ready_for_manual_teaching；mapping_boundary.status=present） 作为“根语料候选节点”使用；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
   - **authority_class**: `implementation`
   - **status_or_freshness**: semantic_profile=math_root_candidate_node；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
-  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-265.yaml（id=CALCULUS-265；validation_status=semantic_ready_for_manual_teaching；status=present）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
+  - **when_to_read**: 触发条件：教学或质量任务精确点名该节点，并先核验 identity/admission/certification。读取 CALCULUS-265.yaml（id=CALCULUS-265；validation_status=semantic_ready_for_manual_teaching；mapping_boundary.status=present）；根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f507572655f4d6174685f496e74756974696f6e5f44422f43414c43554c55532d3236362e79616d6c -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/CALCULUS-266.yaml`](CALCULUS-266.yaml)
   - **content_summary**: YAML 结构，顶层键：id, mode, mode_routing_status, validation_status, bridge_readiness_status, formal_definition_status, prerequisites_status, mapping_boundary_status；安全锚点：id=CALCULUS-266…

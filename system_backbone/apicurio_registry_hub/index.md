@@ -12,8 +12,8 @@
 ## recommended_reading_order
 
 1. [`system_backbone/apicurio_registry_hub/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-2. [`system_backbone/apicurio_registry_hub/AGENT_CARD_TEMPLATE.json`](AGENT_CARD_TEMPLATE.json) — 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 AGENT_CARD_TEMPLATE.json（title=Agent Capability Card）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
-3. [`system_backbone/apicurio_registry_hub/AgentCard_Gemini_3_1_Pro.json`](AgentCard_Gemini_3_1_Pro.json) — 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 AgentCard_Gemini_3_1_Pro.json（JSON object，顶层键：$schema, agent_role, capabilities, did, hardware_tier, max_context_window, verifiable_credentials）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
+2. [`system_backbone/apicurio_registry_hub/AGENT_CARD_TEMPLATE.json`](AGENT_CARD_TEMPLATE.json) — 触发条件：创建、迁移或验证该结构定义对应的数据。读取 AGENT_CARD_TEMPLATE.json（$schema=http://json-schema.org/draft-07/schema#；title=Agent Capability Card）；结构有效不等于业务有效、授权有效或已持久化
+3. [`system_backbone/apicurio_registry_hub/AgentCard_Gemini_3_1_Pro.json`](AgentCard_Gemini_3_1_Pro.json) — 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 AgentCard_Gemini_3_1_Pro.json（$schema=http://json-schema.org/draft-07/schema#）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
 4. [`system_backbone/apicurio_registry_hub/a2a-protocol-validator.yaml`](a2a-protocol-validator.yaml) — 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 a2a-protocol-validator.yaml（name=hardware-tier-verifier）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
 5. [`system_backbone/apicurio_registry_hub/docker-compose.yml`](docker-compose.yml) — 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 docker-compose.yml（top_keys=version,services）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
 
@@ -25,18 +25,18 @@
 
 <!-- RIDX_FILE_HEX 73797374656d5f6261636b626f6e652f617069637572696f5f72656769737472795f6875622f4147454e545f434152445f54454d504c4154452e6a736f6e -->
 - **path_or_link**: [`system_backbone/apicurio_registry_hub/AGENT_CARD_TEMPLATE.json`](AGENT_CARD_TEMPLATE.json)
-  - **content_summary**: JSON object，顶层键：$schema, properties, required, title, type；安全锚点：title=Agent Capability Card
-  - **role_and_use**: 将 AGENT_CARD_TEMPLATE.json（title=Agent Capability Card） 作为“外部增强骨架原型”使用；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: semantic_profile=system_backbone_artifact；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
-  - **when_to_read**: 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 AGENT_CARD_TEMPLATE.json（title=Agent Capability Card）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
+  - **content_summary**: JSON object，顶层键：$schema, properties, required, title, type；安全锚点：$schema=http://json-schema.org/draft-07/schema#, title=Agent Capability Card
+  - **role_and_use**: 将 AGENT_CARD_TEMPLATE.json（$schema=http://json-schema.org/draft-07/schema#；title=Agent Capability Card） 作为“结构定义”使用；结构有效不等于业务有效、授权有效或已持久化
+  - **authority_class**: `schema`
+  - **status_or_freshness**: semantic_profile=schema_definition；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；结构有效不等于业务有效、授权有效或已持久化
+  - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 AGENT_CARD_TEMPLATE.json（$schema=http://json-schema.org/draft-07/schema#；title=Agent Capability Card）；结构有效不等于业务有效、授权有效或已持久化
 <!-- RIDX_FILE_HEX 73797374656d5f6261636b626f6e652f617069637572696f5f72656769737472795f6875622f4167656e74436172645f47656d696e695f335f315f50726f2e6a736f6e -->
 - **path_or_link**: [`system_backbone/apicurio_registry_hub/AgentCard_Gemini_3_1_Pro.json`](AgentCard_Gemini_3_1_Pro.json)
-  - **content_summary**: JSON object，顶层键：$schema, agent_role, capabilities, did, hardware_tier, max_context_window, verifiable_credentials
-  - **role_and_use**: 将 AgentCard_Gemini_3_1_Pro.json（JSON object，顶层键：$schema, agent_role, capabilities, did, hardware_tier, max_context_window, verifiable_credentials） 作为“外部增强骨架原型”使用；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
+  - **content_summary**: JSON object，顶层键：$schema, agent_role, capabilities, did, hardware_tier, max_context_window, verifiable_credentials；安全锚点：$schema=http://json-schema.org/draft-07/schema#
+  - **role_and_use**: 将 AgentCard_Gemini_3_1_Pro.json（$schema=http://json-schema.org/draft-07/schema#） 作为“外部增强骨架原型”使用；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
   - **authority_class**: `implementation`
   - **status_or_freshness**: semantic_profile=system_backbone_artifact；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
-  - **when_to_read**: 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 AgentCard_Gemini_3_1_Pro.json（JSON object，顶层键：$schema, agent_role, capabilities, did, hardware_tier, max_context_window, verifiable_credentials）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
+  - **when_to_read**: 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 AgentCard_Gemini_3_1_Pro.json（$schema=http://json-schema.org/draft-07/schema#）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
 <!-- RIDX_FILE_HEX 73797374656d5f6261636b626f6e652f617069637572696f5f72656769737472795f6875622f6132612d70726f746f636f6c2d76616c696461746f722e79616d6c -->
 - **path_or_link**: [`system_backbone/apicurio_registry_hub/a2a-protocol-validator.yaml`](a2a-protocol-validator.yaml)
   - **content_summary**: YAML 结构，顶层键：interceptor；安全锚点：name=hardware-tier-verifier

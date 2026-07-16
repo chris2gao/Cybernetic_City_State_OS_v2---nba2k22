@@ -12,11 +12,11 @@ Program run math-mentor-analytic-nt-foundation-batch-1-0001 的 OUTPUTS 证据�
 ## recommended_reading_order
 
 1. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-2. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/ANALYTIC_NT-684.json`](ANALYTIC_NT-684.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-684.json（id=approximation-x-10；id=approximation-x-100；id=approximation-x-1000）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+2. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/ANALYTIC_NT-684.json`](ANALYTIC_NT-684.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-684.json（declared_approximation_table［0］.id=approximation-x-10；declared_approximation_table［1］.id=approximation-x-100；declared_approximation_table［2］.id=approximation-x-1000）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 3. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/ANALYTIC_NT-687.json`](ANALYTIC_NT-687.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-687.json（status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-4. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/ANALYTIC_NT-688.json`](ANALYTIC_NT-688.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-688.json（id=edge-N1；id=edge-integral-alpha-zero；id=edge-integral-alpha-positive）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-5. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/ANALYTIC_NT-692.json`](ANALYTIC_NT-692.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-692.json（id=identity-real-s；id=zero-polynomial；id=complex-coefficients-and-s）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-6. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/batch-validation.json`](batch-validation.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 batch-validation.json（status=passed；status=pass；validation_id=math-mentor-analytic-nt-foundation-batch-1-validation-0001）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+4. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/ANALYTIC_NT-688.json`](ANALYTIC_NT-688.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-688.json（edge_cases［0］.id=edge-N1；edge_cases［1］.id=edge-integral-alpha-zero；edge_cases［2］.id=edge-integral-alpha-positive）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+5. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/ANALYTIC_NT-692.json`](ANALYTIC_NT-692.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-692.json（cases［0］.id=identity-real-s；cases［1］.id=zero-polynomial；cases［2］.id=complex-coefficients-and-s）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+6. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/batch-validation.json`](batch-validation.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 batch-validation.json（status=passed；teaching_flow_static_validator.status=pass；validation_id=math-mentor-analytic-nt-foundation-batch-1-validation-0001）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 7. [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/teaching-flow-static/index.md`](teaching-flow-static/index.md) — 只在复核 run math-mentor-analytic-nt-foundation-batch-1-0001 的 OUTPUTS/teaching-flow-static 输入/输出/证据时进入
 
 ## child_directories
@@ -31,11 +31,11 @@ Program run math-mentor-analytic-nt-foundation-batch-1-0001 的 OUTPUTS 证据�
 
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f4f5554505554532f414e414c595449435f4e542d3638342e6a736f6e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/ANALYTIC_NT-684.json`](ANALYTIC_NT-684.json)
-  - **content_summary**: JSON object，顶层键：audit_id, declared_approximation_table, environment, exact_case_count, exact_prime_count_cases, execution, explicitly_not_validated, finite_assertion_only；安全锚点：id=…
-  - **role_and_use**: 将 ANALYTIC_NT-684.json（id=approximation-x-10；id=approximation-x-100；id=approximation-x-1000） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **content_summary**: JSON object，顶层键：audit_id, declared_approximation_table, environment, exact_case_count, exact_prime_count_cases, execution, explicitly_not_validated, finite_assertion_only；安全锚点：dec…
+  - **role_and_use**: 将 ANALYTIC_NT-684.json（declared_approximation_table［0］.id=approximation-x-10；declared_approximation_table［1］.id=approximation-x-100；declared_approximation_table［2］.id=approximation-x-1000） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
   - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-684.json（id=approximation-x-10；id=approximation-x-100；id=approximation-x-1000）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-684.json（declared_approximation_table［0］.id=approximation-x-10；declared_approximation_table［1］.id=approximation-x-100；declared_approximation_table［2］.id=approximation-x-1000）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f4f5554505554532f414e414c595449435f4e542d3638372e6a736f6e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/ANALYTIC_NT-687.json`](ANALYTIC_NT-687.json)
   - **content_summary**: JSON object，顶层键：audit_id, catalan_partial_sum, complete_multiplicativity, declared_value_cases, environment, explicitly_not_validated, modulus, periodicity；安全锚点：status=passed
@@ -45,25 +45,25 @@ Program run math-mentor-analytic-nt-foundation-batch-1-0001 的 OUTPUTS 证据�
   - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-687.json（status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f4f5554505554532f414e414c595449435f4e542d3638382e6a736f6e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/ANALYTIC_NT-688.json`](ANALYTIC_NT-688.json)
-  - **content_summary**: JSON object，顶层键：audit_id, case_count, category_counts, convention, edge_cases, environment, explicitly_not_validated, geometric_identity_cases；安全锚点：id=edge-N1, id=edge-integral-al…
-  - **role_and_use**: 将 ANALYTIC_NT-688.json（id=edge-N1；id=edge-integral-alpha-zero；id=edge-integral-alpha-positive） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **content_summary**: JSON object，顶层键：audit_id, case_count, category_counts, convention, edge_cases, environment, explicitly_not_validated, geometric_identity_cases；安全锚点：edge_cases［0］.id=edge-N1, edge_…
+  - **role_and_use**: 将 ANALYTIC_NT-688.json（edge_cases［0］.id=edge-N1；edge_cases［1］.id=edge-integral-alpha-zero；edge_cases［2］.id=edge-integral-alpha-positive） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
   - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-688.json（id=edge-N1；id=edge-integral-alpha-zero；id=edge-integral-alpha-positive）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-688.json（edge_cases［0］.id=edge-N1；edge_cases［1］.id=edge-integral-alpha-zero；edge_cases［2］.id=edge-integral-alpha-positive）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f4f5554505554532f414e414c595449435f4e542d3639322e6a736f6e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/ANALYTIC_NT-692.json`](ANALYTIC_NT-692.json)
-  - **content_summary**: JSON object，顶层键：audit_id, case_count, cases, environment, explicitly_not_validated, scope, status, timestamp；安全锚点：id=identity-real-s, id=zero-polynomial, id=complex-coefficients-a…
-  - **role_and_use**: 将 ANALYTIC_NT-692.json（id=identity-real-s；id=zero-polynomial；id=complex-coefficients-and-s） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **content_summary**: JSON object，顶层键：audit_id, case_count, cases, environment, explicitly_not_validated, scope, status, timestamp；安全锚点：cases［0］.id=identity-real-s, cases［1］.id=zero-polynomial, cases［2…
+  - **role_and_use**: 将 ANALYTIC_NT-692.json（cases［0］.id=identity-real-s；cases［1］.id=zero-polynomial；cases［2］.id=complex-coefficients-and-s） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
   - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-692.json（id=identity-real-s；id=zero-polynomial；id=complex-coefficients-and-s）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 ANALYTIC_NT-692.json（cases［0］.id=identity-real-s；cases［1］.id=zero-polynomial；cases［2］.id=complex-coefficients-and-s）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f4f5554505554532f62617463682d76616c69646174696f6e2e6a736f6e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/batch-validation.json`](batch-validation.json)
-  - **content_summary**: JSON object，顶层键：commit_topology, environment, forbidden_runtime_side_effects_observed, limitations, node_count, nodes, source_head, status；安全锚点：status=passed, status=pass, validat…
-  - **role_and_use**: 将 batch-validation.json（status=passed；status=pass；validation_id=math-mentor-analytic-nt-foundation-batch-1-validation-0001） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **content_summary**: JSON object，顶层键：commit_topology, environment, forbidden_runtime_side_effects_observed, limitations, node_count, nodes, source_head, status；安全锚点：status=passed, teaching_flow_static…
+  - **role_and_use**: 将 batch-validation.json（status=passed；teaching_flow_static_validator.status=pass；validation_id=math-mentor-analytic-nt-foundation-batch-1-validation-0001） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
   - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 batch-validation.json（status=passed；status=pass；validation_id=math-mentor-analytic-nt-foundation-batch-1-validation-0001）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 batch-validation.json（status=passed；teaching_flow_static_validator.status=pass；validation_id=math-mentor-analytic-nt-foundation-batch-1-validation-0001）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f4f5554505554532f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories

@@ -12,9 +12,9 @@ Program run math-mentor-certified-pilot-0001 的 SCHEMAS 证据分区；仅解�
 ## recommended_reading_order
 
 1. [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/SCHEMAS/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-2. [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/SCHEMAS/identity-prerequisite-resolution.schema.json`](identity-prerequisite-resolution.schema.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 identity-prerequisite-resolution.schema.json（JSON object，顶层键：$defs, $id, $schema, properties, required, type）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-3. [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/SCHEMAS/pilot-dossier.schema.json`](pilot-dossier.schema.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 pilot-dossier.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-4. [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/SCHEMAS/validation-summary.schema.json`](validation-summary.schema.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 validation-summary.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+2. [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/SCHEMAS/identity-prerequisite-resolution.schema.json`](identity-prerequisite-resolution.schema.json) — 触发条件：创建、迁移或验证该结构定义对应的数据。读取 identity-prerequisite-resolution.schema.json（$id=math-mentor-certified-pilot-identity-evidence-v1；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
+3. [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/SCHEMAS/pilot-dossier.schema.json`](pilot-dossier.schema.json) — 触发条件：创建、迁移或验证该结构定义对应的数据。读取 pilot-dossier.schema.json（$id=math-mentor-certified-pilot-dossier-v1；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
+4. [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/SCHEMAS/validation-summary.schema.json`](validation-summary.schema.json) — 触发条件：创建、迁移或验证该结构定义对应的数据。读取 validation-summary.schema.json（$id=math-mentor-certified-pilot-validation-v1；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
 
 ## child_directories
 
@@ -24,11 +24,11 @@ Program run math-mentor-certified-pilot-0001 的 SCHEMAS 证据分区；仅解�
 
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6365727469666965642d70696c6f742d303030312f534348454d41532f6964656e746974792d7072657265717569736974652d7265736f6c7574696f6e2e736368656d612e6a736f6e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/SCHEMAS/identity-prerequisite-resolution.schema.json`](identity-prerequisite-resolution.schema.json)
-  - **content_summary**: JSON object，顶层键：$defs, $id, $schema, properties, required, type
-  - **role_and_use**: 将 identity-prerequisite-resolution.schema.json（JSON object，顶层键：$defs, $id, $schema, properties, required, type） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-  - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 identity-prerequisite-resolution.schema.json（JSON object，顶层键：$defs, $id, $schema, properties, required, type）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **content_summary**: JSON object，顶层键：$defs, $id, $schema, properties, required, type；安全锚点：$id=math-mentor-certified-pilot-identity-evidence-v1, $schema=https://json-schema.org/draft/2020-12/schema
+  - **role_and_use**: 将 identity-prerequisite-resolution.schema.json（$id=math-mentor-certified-pilot-identity-evidence-v1；$schema=https://json-schema.org/draft/2020-12/schema） 作为“结构定义”使用；结构有效不等于业务有效、授权有效或已持久化
+  - **authority_class**: `schema`
+  - **status_or_freshness**: semantic_profile=schema_definition；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；结构有效不等于业务有效、授权有效或已持久化
+  - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 identity-prerequisite-resolution.schema.json（$id=math-mentor-certified-pilot-identity-evidence-v1；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6365727469666965642d70696c6f742d303030312f534348454d41532f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/SCHEMAS/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
@@ -38,22 +38,22 @@ Program run math-mentor-certified-pilot-0001 的 SCHEMAS 证据分区；仅解�
   - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6365727469666965642d70696c6f742d303030312f534348454d41532f70696c6f742d646f73736965722e736368656d612e6a736f6e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/SCHEMAS/pilot-dossier.schema.json`](pilot-dossier.schema.json)
-  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type；artifact=pilot-dossier.schema.json
-  - **role_and_use**: 将 pilot-dossier.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-  - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 pilot-dossier.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type；安全锚点：$id=math-mentor-certified-pilot-dossier-v1, $schema=https://json-schema.org/draft/2020-12/schema
+  - **role_and_use**: 将 pilot-dossier.schema.json（$id=math-mentor-certified-pilot-dossier-v1；$schema=https://json-schema.org/draft/2020-12/schema） 作为“结构定义”使用；结构有效不等于业务有效、授权有效或已持久化
+  - **authority_class**: `schema`
+  - **status_or_freshness**: semantic_profile=schema_definition；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；结构有效不等于业务有效、授权有效或已持久化
+  - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 pilot-dossier.schema.json（$id=math-mentor-certified-pilot-dossier-v1；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6365727469666965642d70696c6f742d303030312f534348454d41532f76616c69646174696f6e2d73756d6d6172792e736368656d612e6a736f6e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/SCHEMAS/validation-summary.schema.json`](validation-summary.schema.json)
-  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type；artifact=validation-summary.schema.json
-  - **role_and_use**: 将 validation-summary.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-  - **authority_class**: `generated_evidence`
-  - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 validation-summary.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type；安全锚点：$id=math-mentor-certified-pilot-validation-v1, $schema=https://json-schema.org/draft/2020-12/sc…
+  - **role_and_use**: 将 validation-summary.schema.json（$id=math-mentor-certified-pilot-validation-v1；$schema=https://json-schema.org/draft/2020-12/schema） 作为“结构定义”使用；结构有效不等于业务有效、授权有效或已持久化
+  - **authority_class**: `schema`
+  - **status_or_freshness**: semantic_profile=schema_definition；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；结构有效不等于业务有效、授权有效或已持久化
+  - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 validation-summary.schema.json（$id=math-mentor-certified-pilot-validation-v1；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
 
 ## do_not_load_by_default
 
-- 默认不加载 3 个历史/测试/生成/用户或大型 direct artifacts：`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/SCHEMAS/identity-prerequisite-resolution.schema.json`, `.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/SCHEMAS/pilot-dossier.schema.json`, `.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/SCHEMAS/validation-summary.schema.json`。
+- 无额外分组；仍应只读取当前任务明确需要的 direct artifact。
 
 ## generation_and_freshness_note
 

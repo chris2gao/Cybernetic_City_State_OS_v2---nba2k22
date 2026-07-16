@@ -12,7 +12,7 @@ Program run math-mentor-certified-pilot-0001 的 EVIDENCE 证据分区；仅解�
 ## recommended_reading_order
 
 1. [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/EVIDENCE/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-2. [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/EVIDENCE/identity-and-prerequisite-resolution.json`](identity-and-prerequisite-resolution.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 identity-and-prerequisite-resolution.json（schema_version=math_mentor.identity_prerequisite_evidence.v1）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+2. [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/EVIDENCE/identity-and-prerequisite-resolution.json`](identity-and-prerequisite-resolution.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 identity-and-prerequisite-resolution.json（status=open；schema_version=math_mentor.identity_prerequisite_evidence.v1）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 
 ## child_directories
 
@@ -22,11 +22,11 @@ Program run math-mentor-certified-pilot-0001 的 EVIDENCE 证据分区；仅解�
 
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6365727469666965642d70696c6f742d303030312f45564944454e43452f6964656e746974792d616e642d7072657265717569736974652d7265736f6c7574696f6e2e6a736f6e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/EVIDENCE/identity-and-prerequisite-resolution.json`](identity-and-prerequisite-resolution.json)
-  - **content_summary**: JSON object，顶层键：conflict_authority, conflicts, identity_authority, pilots, prerequisites, resolution_overlay, schema_version, source_head；安全锚点：schema_version=math_mentor.identity_…
-  - **role_and_use**: 将 identity-and-prerequisite-resolution.json（schema_version=math_mentor.identity_prerequisite_evidence.v1） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **content_summary**: JSON object，顶层键：conflict_authority, conflicts, identity_authority, pilots, prerequisites, resolution_overlay, schema_version, source_head；安全锚点：status=open, schema_version=math_men…
+  - **role_and_use**: 将 identity-and-prerequisite-resolution.json（status=open；schema_version=math_mentor.identity_prerequisite_evidence.v1） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
   - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 identity-and-prerequisite-resolution.json（schema_version=math_mentor.identity_prerequisite_evidence.v1）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 identity-and-prerequisite-resolution.json（status=open；schema_version=math_mentor.identity_prerequisite_evidence.v1）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6365727469666965642d70696c6f742d303030312f45564944454e43452f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/EVIDENCE/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories

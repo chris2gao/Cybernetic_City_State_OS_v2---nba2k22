@@ -12,11 +12,11 @@ Human-AI event/pointer/state schema、validator 与 fail-closed proof 控制面
 ## recommended_reading_order
 
 1. [`.ai/communication_compliance/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-2. [`.ai/communication_compliance/README.md`](README.md) — 触发条件：修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则。读取 README.md（H1《Human–AI Communication Compliance Gate v3》；首个 H2《Release binding》）；不得从模型生成 payload 推导 trusted-host 权限
-3. [`.ai/communication_compliance/active_state_context.schema.json`](active_state_context.schema.json) — 触发条件：修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则。读取 active_state_context.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type）；不得从模型生成 payload 推导 trusted-host 权限
-4. [`.ai/communication_compliance/actor_origin_context.schema.json`](actor_origin_context.schema.json) — 触发条件：修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则。读取 actor_origin_context.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type）；不得从模型生成 payload 推导 trusted-host 权限
-5. [`.ai/communication_compliance/authorization_context.schema.json`](authorization_context.schema.json) — 触发条件：修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则。读取 authorization_context.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type）；不得从模型生成 payload 推导 trusted-host 权限
-6. [`.ai/communication_compliance/bootstrap_receipt.schema.json`](bootstrap_receipt.schema.json) — 触发条件：修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则。读取 bootstrap_receipt.schema.json（JSON object，顶层键：$defs, $id, $schema, additionalProperties, allOf, properties, required, type）；不得从模型生成 payload 推导 trusted-host 权限
+2. [`.ai/communication_compliance/active_state_context.schema.json`](active_state_context.schema.json) — 触发条件：创建、迁移或验证该结构定义对应的数据。读取 active_state_context.schema.json（$id=human-ai-communication-active-state-context-v1；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
+3. [`.ai/communication_compliance/actor_origin_context.schema.json`](actor_origin_context.schema.json) — 触发条件：创建、迁移或验证该结构定义对应的数据。读取 actor_origin_context.schema.json（$id=human-ai-communication-actor-origin-context-v2；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
+4. [`.ai/communication_compliance/authorization_context.schema.json`](authorization_context.schema.json) — 触发条件：创建、迁移或验证该结构定义对应的数据。读取 authorization_context.schema.json（$id=human-ai-communication-authorization-context-v3；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
+5. [`.ai/communication_compliance/bootstrap_receipt.schema.json`](bootstrap_receipt.schema.json) — 触发条件：创建、迁移或验证该结构定义对应的数据。读取 bootstrap_receipt.schema.json（$id=human-ai-communication-bootstrap-receipt-v1；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
+6. [`.ai/communication_compliance/communication_drift_ledger.schema.json`](communication_drift_ledger.schema.json) — 触发条件：创建、迁移或验证该结构定义对应的数据。读取 communication_drift_ledger.schema.json（$id=human-ai-communication-drift-ledger-v2；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
 7. [`.ai/communication_compliance/fixtures/index.md`](fixtures/index.md) — 运行通信合规的 fixtures 测试层
 8. [`.ai/communication_compliance/tests/index.md`](tests/index.md) — 运行通信合规的 tests 测试层
 
@@ -44,60 +44,60 @@ Human-AI event/pointer/state schema、validator 与 fail-closed proof 控制面
   - **when_to_read**: 触发条件：修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则。读取 README.md（H1《Human–AI Communication Compliance Gate v3》；首个 H2《Release binding》）；不得从模型生成 payload 推导 trusted-host 权限
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f6163746976655f73746174655f636f6e746578742e736368656d612e6a736f6e -->
 - **path_or_link**: [`.ai/communication_compliance/active_state_context.schema.json`](active_state_context.schema.json)
-  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type；artifact=active_state_context.schema.json
-  - **role_and_use**: 将 active_state_context.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type） 作为“通信合规实现/合同”使用；不得从模型生成 payload 推导 trusted-host 权限
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: semantic_profile=communication_contract_or_implementation；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；不得从模型生成 payload 推导 trusted-host 权限
-  - **when_to_read**: 触发条件：修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则。读取 active_state_context.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type）；不得从模型生成 payload 推导 trusted-host 权限
+  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type；安全锚点：$id=human-ai-communication-active-state-context-v1, $schema=https://json-schema.org/draft/2020-…
+  - **role_and_use**: 将 active_state_context.schema.json（$id=human-ai-communication-active-state-context-v1；$schema=https://json-schema.org/draft/2020-12/schema） 作为“结构定义”使用；结构有效不等于业务有效、授权有效或已持久化
+  - **authority_class**: `schema`
+  - **status_or_freshness**: semantic_profile=schema_definition；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；结构有效不等于业务有效、授权有效或已持久化
+  - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 active_state_context.schema.json（$id=human-ai-communication-active-state-context-v1；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f6163746f725f6f726967696e5f636f6e746578742e736368656d612e6a736f6e -->
 - **path_or_link**: [`.ai/communication_compliance/actor_origin_context.schema.json`](actor_origin_context.schema.json)
-  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type；artifact=actor_origin_context.schema.json
-  - **role_and_use**: 将 actor_origin_context.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type） 作为“通信合规实现/合同”使用；不得从模型生成 payload 推导 trusted-host 权限
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: semantic_profile=communication_contract_or_implementation；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；不得从模型生成 payload 推导 trusted-host 权限
-  - **when_to_read**: 触发条件：修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则。读取 actor_origin_context.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type）；不得从模型生成 payload 推导 trusted-host 权限
+  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type；安全锚点：$id=human-ai-communication-actor-origin-context-v2, $schema=https://json-schema.org/draft/2020-…
+  - **role_and_use**: 将 actor_origin_context.schema.json（$id=human-ai-communication-actor-origin-context-v2；$schema=https://json-schema.org/draft/2020-12/schema） 作为“结构定义”使用；结构有效不等于业务有效、授权有效或已持久化
+  - **authority_class**: `schema`
+  - **status_or_freshness**: semantic_profile=schema_definition；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；结构有效不等于业务有效、授权有效或已持久化
+  - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 actor_origin_context.schema.json（$id=human-ai-communication-actor-origin-context-v2；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f617574686f72697a6174696f6e5f636f6e746578742e736368656d612e6a736f6e -->
 - **path_or_link**: [`.ai/communication_compliance/authorization_context.schema.json`](authorization_context.schema.json)
-  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type；artifact=authorization_context.schema.json
-  - **role_and_use**: 将 authorization_context.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type） 作为“通信合规实现/合同”使用；不得从模型生成 payload 推导 trusted-host 权限
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: semantic_profile=communication_contract_or_implementation；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；不得从模型生成 payload 推导 trusted-host 权限
-  - **when_to_read**: 触发条件：修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则。读取 authorization_context.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type）；不得从模型生成 payload 推导 trusted-host 权限
+  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type；安全锚点：$id=human-ai-communication-authorization-context-v3, $schema=https://json-schema.org/draft/2020…
+  - **role_and_use**: 将 authorization_context.schema.json（$id=human-ai-communication-authorization-context-v3；$schema=https://json-schema.org/draft/2020-12/schema） 作为“结构定义”使用；结构有效不等于业务有效、授权有效或已持久化
+  - **authority_class**: `schema`
+  - **status_or_freshness**: semantic_profile=schema_definition；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；结构有效不等于业务有效、授权有效或已持久化
+  - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 authorization_context.schema.json（$id=human-ai-communication-authorization-context-v3；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f626f6f7473747261705f726563656970742e736368656d612e6a736f6e -->
 - **path_or_link**: [`.ai/communication_compliance/bootstrap_receipt.schema.json`](bootstrap_receipt.schema.json)
-  - **content_summary**: JSON object，顶层键：$defs, $id, $schema, additionalProperties, allOf, properties, required, type
-  - **role_and_use**: 将 bootstrap_receipt.schema.json（JSON object，顶层键：$defs, $id, $schema, additionalProperties, allOf, properties, required, type） 作为“通信合规实现/合同”使用；不得从模型生成 payload 推导 trusted-host 权限
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: semantic_profile=communication_contract_or_implementation；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；不得从模型生成 payload 推导 trusted-host 权限
-  - **when_to_read**: 触发条件：修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则。读取 bootstrap_receipt.schema.json（JSON object，顶层键：$defs, $id, $schema, additionalProperties, allOf, properties, required, type）；不得从模型生成 payload 推导 trusted-host 权限
+  - **content_summary**: JSON object，顶层键：$defs, $id, $schema, additionalProperties, allOf, properties, required, type；安全锚点：$id=human-ai-communication-bootstrap-receipt-v1, $schema=https://json-schema.org/…
+  - **role_and_use**: 将 bootstrap_receipt.schema.json（$id=human-ai-communication-bootstrap-receipt-v1；$schema=https://json-schema.org/draft/2020-12/schema） 作为“结构定义”使用；结构有效不等于业务有效、授权有效或已持久化
+  - **authority_class**: `schema`
+  - **status_or_freshness**: semantic_profile=schema_definition；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；结构有效不等于业务有效、授权有效或已持久化
+  - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 bootstrap_receipt.schema.json（$id=human-ai-communication-bootstrap-receipt-v1；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f636f6d6d756e69636174696f6e5f64726966745f6c65646765722e736368656d612e6a736f6e -->
 - **path_or_link**: [`.ai/communication_compliance/communication_drift_ledger.schema.json`](communication_drift_ledger.schema.json)
-  - **content_summary**: JSON object，顶层键：$defs, $id, $schema, additionalProperties, properties, required, type；artifact=communication_drift_ledger.schema.json
-  - **role_and_use**: 将 communication_drift_ledger.schema.json（JSON object，顶层键：$defs, $id, $schema, additionalProperties, properties, required, type） 作为“通信合规实现/合同”使用；不得从模型生成 payload 推导 trusted-host 权限
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: semantic_profile=communication_contract_or_implementation；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；不得从模型生成 payload 推导 trusted-host 权限
-  - **when_to_read**: 触发条件：修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则。读取 communication_drift_ledger.schema.json（JSON object，顶层键：$defs, $id, $schema, additionalProperties, properties, required, type）；不得从模型生成 payload 推导 trusted-host 权限
+  - **content_summary**: JSON object，顶层键：$defs, $id, $schema, additionalProperties, properties, required, type；安全锚点：$id=human-ai-communication-drift-ledger-v2, $schema=https://json-schema.org/draft/2020-1…
+  - **role_and_use**: 将 communication_drift_ledger.schema.json（$id=human-ai-communication-drift-ledger-v2；$schema=https://json-schema.org/draft/2020-12/schema） 作为“结构定义”使用；结构有效不等于业务有效、授权有效或已持久化
+  - **authority_class**: `schema`
+  - **status_or_freshness**: semantic_profile=schema_definition；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；结构有效不等于业务有效、授权有效或已持久化
+  - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 communication_drift_ledger.schema.json（$id=human-ai-communication-drift-ledger-v2；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f636f6d6d756e69636174696f6e5f6576656e742e736368656d612e6a736f6e -->
 - **path_or_link**: [`.ai/communication_compliance/communication_event.schema.json`](communication_event.schema.json)
-  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type；artifact=communication_event.schema.json
-  - **role_and_use**: 将 communication_event.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type） 作为“通信合规实现/合同”使用；不得从模型生成 payload 推导 trusted-host 权限
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: semantic_profile=communication_contract_or_implementation；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；不得从模型生成 payload 推导 trusted-host 权限
-  - **when_to_read**: 触发条件：修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则。读取 communication_event.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type）；不得从模型生成 payload 推导 trusted-host 权限
+  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type；安全锚点：$id=human-ai-communication-event-v1, $schema=https://json-schema.org/draft/2020-12/schema
+  - **role_and_use**: 将 communication_event.schema.json（$id=human-ai-communication-event-v1；$schema=https://json-schema.org/draft/2020-12/schema） 作为“结构定义”使用；结构有效不等于业务有效、授权有效或已持久化
+  - **authority_class**: `schema`
+  - **status_or_freshness**: semantic_profile=schema_definition；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；结构有效不等于业务有效、授权有效或已持久化
+  - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 communication_event.schema.json（$id=human-ai-communication-event-v1；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f636f6d6d756e69636174696f6e5f76616c69646174696f6e2e736368656d612e6a736f6e -->
 - **path_or_link**: [`.ai/communication_compliance/communication_validation.schema.json`](communication_validation.schema.json)
-  - **content_summary**: JSON object，顶层键：$defs, $id, $schema, additionalProperties, properties, required, type；artifact=communication_validation.schema.json
-  - **role_and_use**: 将 communication_validation.schema.json（JSON object，顶层键：$defs, $id, $schema, additionalProperties, properties, required, type） 作为“通信合规实现/合同”使用；不得从模型生成 payload 推导 trusted-host 权限
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: semantic_profile=communication_contract_or_implementation；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；不得从模型生成 payload 推导 trusted-host 权限
-  - **when_to_read**: 触发条件：修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则。读取 communication_validation.schema.json（JSON object，顶层键：$defs, $id, $schema, additionalProperties, properties, required, type）；不得从模型生成 payload 推导 trusted-host 权限
+  - **content_summary**: JSON object，顶层键：$defs, $id, $schema, additionalProperties, properties, required, type；安全锚点：$id=human-ai-communication-validation-v2, $schema=https://json-schema.org/draft/2020-12/…
+  - **role_and_use**: 将 communication_validation.schema.json（$id=human-ai-communication-validation-v2；$schema=https://json-schema.org/draft/2020-12/schema） 作为“结构定义”使用；结构有效不等于业务有效、授权有效或已持久化
+  - **authority_class**: `schema`
+  - **status_or_freshness**: semantic_profile=schema_definition；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；结构有效不等于业务有效、授权有效或已持久化
+  - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 communication_validation.schema.json（$id=human-ai-communication-validation-v2；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f64726966745f7265636f72642e736368656d612e6a736f6e -->
 - **path_or_link**: [`.ai/communication_compliance/drift_record.schema.json`](drift_record.schema.json)
-  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, allOf, properties, required, type
-  - **role_and_use**: 将 drift_record.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, allOf, properties, required, type） 作为“通信合规实现/合同”使用；不得从模型生成 payload 推导 trusted-host 权限
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: semantic_profile=communication_contract_or_implementation；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；不得从模型生成 payload 推导 trusted-host 权限
-  - **when_to_read**: 触发条件：修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则。读取 drift_record.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, allOf, properties, required, type）；不得从模型生成 payload 推导 trusted-host 权限
+  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, allOf, properties, required, type；安全锚点：$id=human-ai-communication-drift-record-v2, $schema=https://json-schema.org/draft/2020-1…
+  - **role_and_use**: 将 drift_record.schema.json（$id=human-ai-communication-drift-record-v2；$schema=https://json-schema.org/draft/2020-12/schema） 作为“结构定义”使用；结构有效不等于业务有效、授权有效或已持久化
+  - **authority_class**: `schema`
+  - **status_or_freshness**: semantic_profile=schema_definition；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；结构有效不等于业务有效、授权有效或已持久化
+  - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 drift_record.schema.json（$id=human-ai-communication-drift-record-v2；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/communication_compliance/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
@@ -114,11 +114,11 @@ Human-AI event/pointer/state schema、validator 与 fail-closed proof 控制面
   - **when_to_read**: 触发条件：修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则。读取 inherited_fixture_coverage_map.json（schema_version=human_ai.communication_inherited_fixture_coverage_map.v1）；不得从模型生成 payload 推导 trusted-host 权限
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f696e686572697465645f666978747572655f636f7665726167655f6d61702e736368656d612e6a736f6e -->
 - **path_or_link**: [`.ai/communication_compliance/inherited_fixture_coverage_map.schema.json`](inherited_fixture_coverage_map.schema.json)
-  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type；artifact=inherited_fixture_coverage_map.schema.json
-  - **role_and_use**: 将 inherited_fixture_coverage_map.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type） 作为“通信合规实现/合同”使用；不得从模型生成 payload 推导 trusted-host 权限
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: semantic_profile=communication_contract_or_implementation；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；不得从模型生成 payload 推导 trusted-host 权限
-  - **when_to_read**: 触发条件：修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则。读取 inherited_fixture_coverage_map.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type）；不得从模型生成 payload 推导 trusted-host 权限
+  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type；安全锚点：$id=human-ai-communication-inherited-fixture-coverage-map-v1, $schema=https://json-schema.org/d…
+  - **role_and_use**: 将 inherited_fixture_coverage_map.schema.json（$id=human-ai-communication-inherited-fixture-coverage-map-v1；$schema=https://json-schema.org/draft/2020-12/schema） 作为“结构定义”使用；结构有效不等于业务有效、授权有效或已持久化
+  - **authority_class**: `schema`
+  - **status_or_freshness**: semantic_profile=schema_definition；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；结构有效不等于业务有效、授权有效或已持久化
+  - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 inherited_fixture_coverage_map.schema.json（$id=human-ai-communication-inherited-fixture-coverage-map-v1；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f6d6174657269616c5f6576656e745f706f6c6963792e796d6c -->
 - **path_or_link**: [`.ai/communication_compliance/material_event_policy.yml`](material_event_policy.yml)
   - **content_summary**: YAML 结构，顶层键：policy_version, validator_version, source_mailbox_base_head, protocol_release_head, release_binding_status, wire_schemas, role_mapping, event_classes
@@ -135,25 +135,25 @@ Human-AI event/pointer/state schema、validator 与 fail-closed proof 控制面
   - **when_to_read**: 触发条件：修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则。读取 proof_chain_review.json（schema_version=human_ai.communication_proof_chain_review.v2；task_id=human-ai-communication-compliance-gate-0001）；不得从模型生成 payload 推导 trusted-host 权限
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f70726f6f665f636861696e5f7265766965772e736368656d612e6a736f6e -->
 - **path_or_link**: [`.ai/communication_compliance/proof_chain_review.schema.json`](proof_chain_review.schema.json)
-  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type；artifact=proof_chain_review.schema.json
-  - **role_and_use**: 将 proof_chain_review.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type） 作为“通信合规实现/合同”使用；不得从模型生成 payload 推导 trusted-host 权限
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: semantic_profile=communication_contract_or_implementation；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；不得从模型生成 payload 推导 trusted-host 权限
-  - **when_to_read**: 触发条件：修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则。读取 proof_chain_review.schema.json（JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type）；不得从模型生成 payload 推导 trusted-host 权限
+  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, properties, required, type；安全锚点：$id=human-ai-communication-proof-chain-review-v2, $schema=https://json-schema.org/draft/2020-12…
+  - **role_and_use**: 将 proof_chain_review.schema.json（$id=human-ai-communication-proof-chain-review-v2；$schema=https://json-schema.org/draft/2020-12/schema） 作为“结构定义”使用；结构有效不等于业务有效、授权有效或已持久化
+  - **authority_class**: `schema`
+  - **status_or_freshness**: semantic_profile=schema_definition；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；结构有效不等于业务有效、授权有效或已持久化
+  - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 proof_chain_review.schema.json（$id=human-ai-communication-proof-chain-review-v2；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f7472616e736974696f6e5f70726f6f662e736368656d612e6a736f6e -->
 - **path_or_link**: [`.ai/communication_compliance/transition_proof.schema.json`](transition_proof.schema.json)
-  - **content_summary**: JSON object，顶层键：$defs, $id, $schema, additionalProperties, properties, required, type；artifact=transition_proof.schema.json
-  - **role_and_use**: 将 transition_proof.schema.json（JSON object，顶层键：$defs, $id, $schema, additionalProperties, properties, required, type） 作为“通信合规实现/合同”使用；不得从模型生成 payload 推导 trusted-host 权限
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: semantic_profile=communication_contract_or_implementation；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；不得从模型生成 payload 推导 trusted-host 权限
-  - **when_to_read**: 触发条件：修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则。读取 transition_proof.schema.json（JSON object，顶层键：$defs, $id, $schema, additionalProperties, properties, required, type）；不得从模型生成 payload 推导 trusted-host 权限
+  - **content_summary**: JSON object，顶层键：$defs, $id, $schema, additionalProperties, properties, required, type；安全锚点：$id=human-ai-communication-transition-proof-v3, $schema=https://json-schema.org/draft/20…
+  - **role_and_use**: 将 transition_proof.schema.json（$id=human-ai-communication-transition-proof-v3；$schema=https://json-schema.org/draft/2020-12/schema） 作为“结构定义”使用；结构有效不等于业务有效、授权有效或已持久化
+  - **authority_class**: `schema`
+  - **status_or_freshness**: semantic_profile=schema_definition；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；结构有效不等于业务有效、授权有效或已持久化
+  - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 transition_proof.schema.json（$id=human-ai-communication-transition-proof-v3；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f7472616e736974696f6e5f726571756573742e736368656d612e6a736f6e -->
 - **path_or_link**: [`.ai/communication_compliance/transition_request.schema.json`](transition_request.schema.json)
-  - **content_summary**: JSON object，顶层键：$defs, $id, $schema, additionalProperties, properties, required, type；artifact=transition_request.schema.json
-  - **role_and_use**: 将 transition_request.schema.json（JSON object，顶层键：$defs, $id, $schema, additionalProperties, properties, required, type） 作为“通信合规实现/合同”使用；不得从模型生成 payload 推导 trusted-host 权限
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: semantic_profile=communication_contract_or_implementation；authority=implementation；evidence_basis=json_strict_structure_and_safe_fields；不得从模型生成 payload 推导 trusted-host 权限
-  - **when_to_read**: 触发条件：修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则。读取 transition_request.schema.json（JSON object，顶层键：$defs, $id, $schema, additionalProperties, properties, required, type）；不得从模型生成 payload 推导 trusted-host 权限
+  - **content_summary**: JSON object，顶层键：$defs, $id, $schema, additionalProperties, properties, required, type；安全锚点：$id=human-ai-communication-transition-request-v2, $schema=https://json-schema.org/draft/…
+  - **role_and_use**: 将 transition_request.schema.json（$id=human-ai-communication-transition-request-v2；$schema=https://json-schema.org/draft/2020-12/schema） 作为“结构定义”使用；结构有效不等于业务有效、授权有效或已持久化
+  - **authority_class**: `schema`
+  - **status_or_freshness**: semantic_profile=schema_definition；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；结构有效不等于业务有效、授权有效或已持久化
+  - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 transition_request.schema.json（$id=human-ai-communication-transition-request-v2；$schema=https://json-schema.org/draft/2020-12/schema）；结构有效不等于业务有效、授权有效或已持久化
 <!-- RIDX_FILE_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e63652f76616c69646174655f636f6d6d756e69636174696f6e2e7079 -->
 - **path_or_link**: [`.ai/communication_compliance/validate_communication.py`](validate_communication.py)
   - **content_summary**: Python；module docstring“Deterministic repository-level Human-AI communication compliance gate. The gate validates durable C…”；public symbols=ComplianceError, InvocationError, Inpu…

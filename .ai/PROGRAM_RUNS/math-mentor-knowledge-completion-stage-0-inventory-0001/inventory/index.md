@@ -15,8 +15,8 @@ Program run math-mentor-knowledge-completion-stage-0-inventory-0001 的 inventor
 2. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/corpus_manifest.json`](corpus_manifest.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 corpus_manifest.json（program_id=math-mentor-knowledge-completion-stage-0-inventory-0001）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 3. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/corpus_manifest.md`](corpus_manifest.md) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 corpus_manifest.md（H1《Stage 0 Corpus Manifest》；首个 H2《Counts》）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 4. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/duplicates_missing_conflicts.json`](duplicates_missing_conflicts.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 duplicates_missing_conflicts.json（JSON object，顶层键：duplicate_filename_numbers, duplicate_ids, node_conflict_or_review_candidates, node_conflict_or_review_candidates_count, roadmap_aliases_without_root_node_candidate_count, roadmap_aliases_without_root_node_can…；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-5. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/identity_aliases.json`](identity_aliases.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 identity_aliases.json（id=ABSTRACT_ALGEBRA-464；id=ABSTRACT_ALGEBRA-465；id=ABSTRACT_ALGEBRA-466）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-6. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/node_classification.json`](node_classification.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 node_classification.json（id=ABSTRACT_ALGEBRA-464；id=ABSTRACT_ALGEBRA-465；id=ABSTRACT_ALGEBRA-466）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+5. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/identity_aliases.json`](identity_aliases.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 identity_aliases.json（node_filename_aliases［0］.id=ABSTRACT_ALGEBRA-464；node_filename_aliases［1］.id=ABSTRACT_ALGEBRA-465；node_filename_aliases［2］.id=ABSTRACT_ALGEBRA-466）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+6. [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/node_classification.json`](node_classification.json) — 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 node_classification.json（records［0］.id=ABSTRACT_ALGEBRA-464；records［1］.id=ABSTRACT_ALGEBRA-465；records［2］.id=ABSTRACT_ALGEBRA-466）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 
 ## child_directories
 
@@ -47,11 +47,11 @@ Program run math-mentor-knowledge-completion-stage-0-inventory-0001 的 inventor
   - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 duplicates_missing_conflicts.json（JSON object，顶层键：duplicate_filename_numbers, duplicate_ids, node_conflict_or_review_candidates, node_conflict_or_review_candidates_count, roadmap_aliases_without_root_node_candidate_count, roadmap_aliases_without_root_node_can…；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6b6e6f776c656467652d636f6d706c6574696f6e2d73746167652d302d696e76656e746f72792d303030312f696e76656e746f72792f6964656e746974795f616c69617365732e6a736f6e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/identity_aliases.json`](identity_aliases.json)
-  - **content_summary**: JSON object，顶层键：generated_at, node_filename_aliases, roadmap_alias_count, roadmap_aliases, split_roadmap_files_read；安全锚点：id=ABSTRACT_ALGEBRA-464, id=ABSTRACT_ALGEBRA-465, id=ABSTR…
-  - **role_and_use**: 将 identity_aliases.json（id=ABSTRACT_ALGEBRA-464；id=ABSTRACT_ALGEBRA-465；id=ABSTRACT_ALGEBRA-466） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **content_summary**: JSON object，顶层键：generated_at, node_filename_aliases, roadmap_alias_count, roadmap_aliases, split_roadmap_files_read；安全锚点：node_filename_aliases［0］.id=ABSTRACT_ALGEBRA-464, node_fil…
+  - **role_and_use**: 将 identity_aliases.json（node_filename_aliases［0］.id=ABSTRACT_ALGEBRA-464；node_filename_aliases［1］.id=ABSTRACT_ALGEBRA-465；node_filename_aliases［2］.id=ABSTRACT_ALGEBRA-466） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
   - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 identity_aliases.json（id=ABSTRACT_ALGEBRA-464；id=ABSTRACT_ALGEBRA-465；id=ABSTRACT_ALGEBRA-466）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 identity_aliases.json（node_filename_aliases［0］.id=ABSTRACT_ALGEBRA-464；node_filename_aliases［1］.id=ABSTRACT_ALGEBRA-465；node_filename_aliases［2］.id=ABSTRACT_ALGEBRA-466）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6b6e6f776c656467652d636f6d706c6574696f6e2d73746167652d302d696e76656e746f72792d303030312f696e76656e746f72792f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
@@ -61,11 +61,11 @@ Program run math-mentor-knowledge-completion-stage-0-inventory-0001 的 inventor
   - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6b6e6f776c656467652d636f6d706c6574696f6e2d73746167652d302d696e76656e746f72792d303030312f696e76656e746f72792f6e6f64655f636c617373696669636174696f6e2e6a736f6e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/node_classification.json`](node_classification.json)
-  - **content_summary**: JSON object，顶层键：counts, generated_at, records；安全锚点：id=ABSTRACT_ALGEBRA-464, id=ABSTRACT_ALGEBRA-465, id=ABSTRACT_ALGEBRA-466
-  - **role_and_use**: 将 node_classification.json（id=ABSTRACT_ALGEBRA-464；id=ABSTRACT_ALGEBRA-465；id=ABSTRACT_ALGEBRA-466） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **content_summary**: JSON object，顶层键：counts, generated_at, records；安全锚点：records［0］.id=ABSTRACT_ALGEBRA-464, records［1］.id=ABSTRACT_ALGEBRA-465, records［2］.id=ABSTRACT_ALGEBRA-466, records［3］.id=ABSTRA…
+  - **role_and_use**: 将 node_classification.json（records［0］.id=ABSTRACT_ALGEBRA-464；records［1］.id=ABSTRACT_ALGEBRA-465；records［2］.id=ABSTRACT_ALGEBRA-466） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
   - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=json_strict_structure_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 node_classification.json（id=ABSTRACT_ALGEBRA-464；id=ABSTRACT_ALGEBRA-465；id=ABSTRACT_ALGEBRA-466）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 node_classification.json（records［0］.id=ABSTRACT_ALGEBRA-464；records［1］.id=ABSTRACT_ALGEBRA-465；records［2］.id=ABSTRACT_ALGEBRA-466）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d6b6e6f776c656467652d636f6d706c6574696f6e2d73746167652d302d696e76656e746f72792d303030312f696e76656e746f72792f70617273655f7265706f72742e6a736f6e -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/parse_report.json`](parse_report.json)
   - **content_summary**: JSON object，顶层键：failures, generated_at, parse_fail, parse_pass, records, total_yaml_attempted, yaml_parser

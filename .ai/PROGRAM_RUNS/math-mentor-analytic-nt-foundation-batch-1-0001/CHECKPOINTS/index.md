@@ -69,10 +69,10 @@ Program run math-mentor-analytic-nt-foundation-batch-1-0001 的 CHECKPOINTS 证�
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f434845434b504f494e54532f73746167652d352e796d6c -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/stage-5.yml`](stage-5.yml)
   - **content_summary**: YAML 结构，顶层键：run_id, checkpoint, status, batch_validation_ref, node_audits, sandbox_evaluator_pass_count, durable_ref_sets_complete, finite_audits_claim_infinite_theorem_proof；安全锚点…
-  - **role_and_use**: 将 stage-5.yml（status=passed_for_declared_bounded_audits；status=passed；status=passed） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **role_and_use**: 将 stage-5.yml（status=passed_for_declared_bounded_audits；node_audits.ANALYTIC_NT-684.status=passed） 作为“可复现 program-run 证据”使用；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
   - **authority_class**: `generated_evidence`
   - **status_or_freshness**: semantic_profile=ai_program_run_evidence；authority=generated_evidence；evidence_basis=yaml_visible_keys_and_safe_fields；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
-  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 stage-5.yml（status=passed_for_declared_bounded_audits；status=passed；status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
+  - **when_to_read**: 触发条件：复现该 run 的特定输入、checkpoint、输出或验证结论。读取 stage-5.yml（status=passed_for_declared_bounded_audits；node_audits.ANALYTIC_NT-684.status=passed）；只证明所属 run 的输入/输出/验证，不授予 activation 或写权限
 <!-- RIDX_FILE_HEX 2e61692f50524f4752414d5f52554e532f6d6174682d6d656e746f722d616e616c797469632d6e742d666f756e646174696f6e2d62617463682d312d303030312f434845434b504f494e54532f73746167652d362e796d6c -->
 - **path_or_link**: [`.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/stage-6.yml`](stage-6.yml)
   - **content_summary**: YAML 结构，顶层键：run_id, checkpoint, status, certified_endpoint_count, manual_review_required_count, node_outcomes, certification_ref, chatgpt_exact_candidate_acceptance_present；安全锚点：s…

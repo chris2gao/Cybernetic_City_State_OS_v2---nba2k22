@@ -89,7 +89,7 @@ program_execution_order:
     human_decision: "preapproved_for_safe_to_merge_branches"
   - order: 3
     id: "repository-directory-index-system"
-    status: "semantic_audit_corrected_and_validated_pending_exact_master_publication"
+    status: "schema_anchor_correction_validated_pending_exact_master_publication"
     publication_head_resolution: "merge_commit_containing_the_complete_index_system"
     objective: "为根目录和各级 tracked 目录建立 index.md，支持模型懒加载。"
     scope:
@@ -121,6 +121,7 @@ program_execution_order:
       audit_report: ".ai/CODEX_REPORTS/repository-directory-index-system-semantic-audit-0001.md"
       validation_report: ".ai/CODEX_REPORTS/repository-directory-index-system-semantic-validation-0001.md"
       changed_files_report: ".ai/CODEX_REPORTS/repository-directory-index-system-semantic-changed-files-0001.md"
+      correction_0003: "full JSON/YAML structural schema classification and deterministic structured-anchor normalization complete; awaiting exact master publication and final acceptance review"
   - order: 4
     id: "overall-plan-inspection-only"
     status: "blocked_by_phase_3_foreground_master_content_review"

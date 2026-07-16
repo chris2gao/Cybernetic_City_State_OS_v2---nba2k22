@@ -19,7 +19,7 @@
 6. [`.ai/index.md`](.ai/index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 7. [`06_Silicon_Index/index.md`](06_Silicon_Index/index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 8. [`08_Domain_Applications/index.md`](08_Domain_Applications/index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-9. [`未完成任务备忘录.yml`](未完成任务备忘录.yml) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 未完成任务备忘录.yml（schema_version=plan3_unfinished_task_memo.v3；document_name=未完成任务备忘录；id=finish-current-compliance-gate）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+9. [`未完成任务备忘录.yml`](未完成任务备忘录.yml) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 未完成任务备忘录.yml（schema_version=plan3_unfinished_task_memo.v3；document_name=未完成任务备忘录；program_execution_order［0］.id=finish-current-compliance-gate）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 10. [`开发分支与合并进度总账.md`](开发分支与合并进度总账.md) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 开发分支与合并进度总账.md（H1《开发分支与合并进度总账》；首个 H2《authority_and_freshness》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 
 ## child_directories
@@ -204,11 +204,11 @@
   - **when_to_read**: 触发条件：当前动作落入该文件规定的协议或执行边界。读取 True_Fork_Protocol.md（H1《赛博城邦协议：物理 Fork 与单向同步拓扑建立 (True Fork Protocol)》；首个 H2《🧙‍♂️ 标准架构提示词 (Prompt Template)》）；执行前核验当前任务授权、精确 source head 与上位合同
 <!-- RIDX_FILE_HEX 6162737472616374732e6a736f6e -->
 - **path_or_link**: [`abstracts.json`](abstracts.json)
-  - **content_summary**: JSON array，2 项，item types=dict；安全锚点：title=Exerkines and long-term synaptic potentiation: Mechanisms of exercise-induced n…, title=LTP and LTD: an embarrassment of riches.
-  - **role_and_use**: 将 abstracts.json（title=Exerkines and long-term synaptic potentiation: Mechanisms of exercise-induced n…；title=LTP and LTD: an embarrassment of riches.） 作为“研究或用户来源资产”使用；只在明确研究问题、来源和隐私范围内单文件读取
+  - **content_summary**: JSON array，2 项，item types=dict；安全锚点：［0］.title=Exerkines and long-term synaptic potentiation: Mechanisms of exercise-induced n…, ［1］.title=LTP and LTD: an embarrassment of riches.
+  - **role_and_use**: 将 abstracts.json（［0］.title=Exerkines and long-term synaptic potentiation: Mechanisms of exercise-induced n…；［1］.title=LTP and LTD: an embarrassment of riches.） 作为“研究或用户来源资产”使用；只在明确研究问题、来源和隐私范围内单文件读取
   - **authority_class**: `user_asset`
   - **status_or_freshness**: semantic_profile=research_or_user_asset；authority=user_asset；evidence_basis=json_strict_structure_and_safe_fields；只在明确研究问题、来源和隐私范围内单文件读取
-  - **when_to_read**: 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 abstracts.json（title=Exerkines and long-term synaptic potentiation: Mechanisms of exercise-induced n…；title=LTP and LTD: an embarrassment of riches.）；只在明确研究问题、来源和隐私范围内单文件读取
+  - **when_to_read**: 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 abstracts.json（［0］.title=Exerkines and long-term synaptic potentiation: Mechanisms of exercise-induced n…；［1］.title=LTP and LTD: an embarrassment of riches.）；只在明确研究问题、来源和隐私范围内单文件读取
 <!-- RIDX_FILE_HEX 67656e65726174655f7265706f7369746f72795f696e64657865732e7079 -->
 - **path_or_link**: [`generate_repository_indexes.py`](generate_repository_indexes.py)
   - **content_summary**: Python；module docstring“Deterministically generate and validate repository directory indexes. The Git index (or an explicit…”；public symbols=IndexErrorDetail, GitEntry, sanitized_…
@@ -254,10 +254,10 @@
 <!-- RIDX_FILE_HEX e69caae5ae8ce68890e4bbbbe58aa1e5a487e5bf98e5bd952e796d6c -->
 - **path_or_link**: [`未完成任务备忘录.yml`](未完成任务备忘录.yml)
   - **content_summary**: YAML 结构，顶层键：schema_version, document_name, document_role, last_architecture_review_date, source_baseline, authority_and_freshness, current_human_program_authorization, program_exe…
-  - **role_and_use**: 将 未完成任务备忘录.yml（schema_version=plan3_unfinished_task_memo.v3；document_name=未完成任务备忘录；id=finish-current-compliance-gate） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **role_and_use**: 将 未完成任务备忘录.yml（schema_version=plan3_unfinished_task_memo.v3；document_name=未完成任务备忘录；program_execution_order［0］.id=finish-current-compliance-gate） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
   - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=yaml_visible_keys_and_safe_fields；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 未完成任务备忘录.yml（schema_version=plan3_unfinished_task_memo.v3；document_name=未完成任务备忘录；id=finish-current-compliance-gate）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 未完成任务备忘录.yml（schema_version=plan3_unfinished_task_memo.v3；document_name=未完成任务备忘录；program_execution_order［0］.id=finish-current-compliance-gate）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 
 ## do_not_load_by_default
 

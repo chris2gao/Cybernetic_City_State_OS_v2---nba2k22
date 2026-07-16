@@ -12,7 +12,7 @@
 ## recommended_reading_order
 
 1. [`system_backbone/domain_knowledge/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-2. [`system_backbone/domain_knowledge/数学知识路线图_知识点版.yaml`](数学知识路线图_知识点版.yaml) — 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 数学知识路线图_知识点版.yaml（domain=复变函数 (Complex Analysis)；domain=常微分方程 (ODE)；domain=抽象代数-计算分支 (Abstract Algebra)）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
+2. [`system_backbone/domain_knowledge/数学知识路线图_知识点版.yaml`](数学知识路线图_知识点版.yaml) — 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 数学知识路线图_知识点版.yaml（nodes［0］.id=n390；nodes［0］.domain=复变函数 (Complex Analysis)；nodes［1］.id=n395）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
 
 ## child_directories
 
@@ -29,11 +29,11 @@
   - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 73797374656d5f6261636b626f6e652f646f6d61696e5f6b6e6f776c656467652fe695b0e5ada6e79fa5e8af86e8b7afe7babfe59bbe5fe79fa5e8af86e782b9e789882e79616d6c -->
 - **path_or_link**: [`system_backbone/domain_knowledge/数学知识路线图_知识点版.yaml`](数学知识路线图_知识点版.yaml)
-  - **content_summary**: YAML 结构，顶层键：roadmap_version, target_layer, nodes；安全锚点：domain=复变函数 (Complex Analysis), domain=常微分方程 (ODE), domain=抽象代数-计算分支 (Abstract Algebra), domain=数论 (Number Theory), domain=实分…
-  - **role_and_use**: 将 数学知识路线图_知识点版.yaml（domain=复变函数 (Complex Analysis)；domain=常微分方程 (ODE)；domain=抽象代数-计算分支 (Abstract Algebra)） 作为“外部增强骨架原型”使用；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
+  - **content_summary**: YAML 结构，顶层键：roadmap_version, target_layer, nodes；安全锚点：nodes［0］.id=n390, nodes［0］.domain=复变函数 (Complex Analysis), nodes［1］.id=n395, nodes［1］.domain=常微分方程 (ODE), nodes［2］.id=n405, n…
+  - **role_and_use**: 将 数学知识路线图_知识点版.yaml（nodes［0］.id=n390；nodes［0］.domain=复变函数 (Complex Analysis)；nodes［1］.id=n395） 作为“外部增强骨架原型”使用；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
   - **authority_class**: `implementation`
   - **status_or_freshness**: semantic_profile=system_backbone_artifact；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
-  - **when_to_read**: 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 数学知识路线图_知识点版.yaml（domain=复变函数 (Complex Analysis)；domain=常微分方程 (ODE)；domain=抽象代数-计算分支 (Abstract Algebra)）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
+  - **when_to_read**: 触发条件：明确评估或修改对应外部 registry/ledger/domain/template 骨架。读取 数学知识路线图_知识点版.yaml（nodes［0］.id=n390；nodes［0］.domain=复变函数 (Complex Analysis)；nodes［1］.id=n395）；外部骨架未自动接入城邦 runtime，不得据目录存在宣称集成
 
 ## do_not_load_by_default
 

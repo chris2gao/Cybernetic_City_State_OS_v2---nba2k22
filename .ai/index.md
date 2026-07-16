@@ -78,10 +78,10 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
 <!-- RIDX_FILE_HEX 2e61692f434f4d4d554e49434154494f4e5f44524946545f4c45444745522e796d6c -->
 - **path_or_link**: [`.ai/COMMUNICATION_DRIFT_LEDGER.yml`](COMMUNICATION_DRIFT_LEDGER.yml)
   - **content_summary**: YAML 结构，顶层键：schema_version, policy_version, ledger_revision, previous_ledger_ref, append_only, privacy, recurrence_policy, records；安全锚点：schema_version=human_ai.communication_drift…
-  - **role_and_use**: 将 COMMUNICATION_DRIFT_LEDGER.yml（schema_version=human_ai.communication_drift_ledger.v2） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready
+  - **role_and_use**: 将 COMMUNICATION_DRIFT_LEDGER.yml（schema_version=human_ai.communication_drift_ledger.v2；records［0］.schema_version=human_ai.communication_drift_record.v2） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready
   - **authority_class**: `implementation`
   - **status_or_freshness**: semantic_profile=implementation_artifact；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；可追踪实现不等于已激活、已验证或 production-ready
-  - **when_to_read**: 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 COMMUNICATION_DRIFT_LEDGER.yml（schema_version=human_ai.communication_drift_ledger.v2）；可追踪实现不等于已激活、已验证或 production-ready
+  - **when_to_read**: 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 COMMUNICATION_DRIFT_LEDGER.yml（schema_version=human_ai.communication_drift_ledger.v2；records［0］.schema_version=human_ai.communication_drift_record.v2）；可追踪实现不等于已激活、已验证或 production-ready
 <!-- RIDX_FILE_HEX 2e61692f4445434953494f4e532e6d64 -->
 - **path_or_link**: [`.ai/DECISIONS.md`](DECISIONS.md)
   - **content_summary**: H1《AI Handoff Decisions》；首个 H2《D-0001 — Adopt AI Handoff Protocol v0.3-core》

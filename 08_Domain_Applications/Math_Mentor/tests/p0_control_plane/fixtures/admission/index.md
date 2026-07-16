@@ -12,7 +12,7 @@ Math Mentor 测试分区 admission；fixture/verdict 不构成真实权限或 ac
 ## recommended_reading_order
 
 1. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/admission/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-2. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/admission/base_cases.json`](base_cases.json) — 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 base_cases.json（schema_version=math_mentor.admission_request.v1；schema_version=math_mentor.admission_request.v1）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+2. [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/admission/base_cases.json`](base_cases.json) — 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 base_cases.json（schema_version=math_mentor.admission_request.v1）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 
 ## child_directories
 
@@ -22,11 +22,11 @@ Math Mentor 测试分区 admission；fixture/verdict 不构成真实权限或 ac
 
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f70305f636f6e74726f6c5f706c616e652f66697874757265732f61646d697373696f6e2f626173655f63617365732e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/admission/base_cases.json`](base_cases.json)
-  - **content_summary**: JSON object，顶层键：authorization_allow, authorization_deny, canonical_request, legacy_r5_request；安全锚点：schema_version=math_mentor.admission_request.v1, schema_version=math_mentor.admi…
-  - **role_and_use**: 将 base_cases.json（schema_version=math_mentor.admission_request.v1；schema_version=math_mentor.admission_request.v1） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **content_summary**: JSON object，顶层键：authorization_allow, authorization_deny, canonical_request, legacy_r5_request；安全锚点：schema_version=math_mentor.admission_request.v1
+  - **role_and_use**: 将 base_cases.json（schema_version=math_mentor.admission_request.v1） 作为“Math Mentor 测试/fixture”使用；模拟 verdict/human_gate/状态不构成真实权限或能力证据
   - **authority_class**: `test_or_fixture`
   - **status_or_freshness**: semantic_profile=math_test_or_fixture；authority=test_or_fixture；evidence_basis=json_strict_structure_and_safe_fields；模拟 verdict/human_gate/状态不构成真实权限或能力证据
-  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 base_cases.json（schema_version=math_mentor.admission_request.v1；schema_version=math_mentor.admission_request.v1）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
+  - **when_to_read**: 触发条件：运行该具名 Math Mentor 测试或复现其 fixture 失败。读取 base_cases.json（schema_version=math_mentor.admission_request.v1）；模拟 verdict/human_gate/状态不构成真实权限或能力证据
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f74657374732f70305f636f6e74726f6c5f706c616e652f66697874757265732f61646d697373696f6e2f696e6465782e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/admission/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories

@@ -12,10 +12,10 @@ P0 registry/crosswalk/conflict/root-corpus/authorization/admission JSON schema �
 ## recommended_reading_order
 
 1. [`08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-2. [`08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/alias_conflict_registry.schema.json`](alias_conflict_registry.schema.json) — 触发条件：验证相应 P0 registry、crosswalk、authorization 或 admission artifact。读取 alias_conflict_registry.schema.json（title=Math Mentor Alias Conflict Registry）；只验证静态 artifact 形状，不签发身份、权限或 admission
-3. [`08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/canonical_node_crosswalk.schema.json`](canonical_node_crosswalk.schema.json) — 触发条件：验证相应 P0 registry、crosswalk、authorization 或 admission artifact。读取 canonical_node_crosswalk.schema.json（title=Math Mentor Canonical Node Crosswalk）；只验证静态 artifact 形状，不签发身份、权限或 admission
-4. [`08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/identity_resolutions.schema.json`](identity_resolutions.schema.json) — 触发条件：验证相应 P0 registry、crosswalk、authorization 或 admission artifact。读取 identity_resolutions.schema.json（title=Human Speaker Identity Resolution Overlay）；只验证静态 artifact 形状，不签发身份、权限或 admission
-5. [`08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/root_corpus_registry.schema.json`](root_corpus_registry.schema.json) — 触发条件：验证相应 P0 registry、crosswalk、authorization 或 admission artifact。读取 root_corpus_registry.schema.json（title=Math Mentor Root Corpus Registry）；只验证静态 artifact 形状，不签发身份、权限或 admission
+2. [`08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/alias_conflict_registry.schema.json`](alias_conflict_registry.schema.json) — 触发条件：验证相应 P0 registry、crosswalk、authorization 或 admission artifact。读取 alias_conflict_registry.schema.json（$id=alias_conflict_registry.schema.json；$schema=https://json-schema.org/draft/2020-12/schema；title=Math Mentor Alias Conflict Registry）；只验证静态 artifact 形状，不签发身份、权限或 admission
+3. [`08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/canonical_node_crosswalk.schema.json`](canonical_node_crosswalk.schema.json) — 触发条件：验证相应 P0 registry、crosswalk、authorization 或 admission artifact。读取 canonical_node_crosswalk.schema.json（$id=canonical_node_crosswalk.schema.json；$schema=https://json-schema.org/draft/2020-12/schema；title=Math Mentor Canonical Node Crosswalk）；只验证静态 artifact 形状，不签发身份、权限或 admission
+4. [`08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/identity_resolutions.schema.json`](identity_resolutions.schema.json) — 触发条件：验证相应 P0 registry、crosswalk、authorization 或 admission artifact。读取 identity_resolutions.schema.json（$id=identity_resolutions.schema.json；$schema=https://json-schema.org/draft/2020-12/schema；title=Human Speaker Identity Resolution Overlay）；只验证静态 artifact 形状，不签发身份、权限或 admission
+5. [`08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/root_corpus_registry.schema.json`](root_corpus_registry.schema.json) — 触发条件：验证相应 P0 registry、crosswalk、authorization 或 admission artifact。读取 root_corpus_registry.schema.json（$id=root_corpus_registry.schema.json；$schema=https://json-schema.org/draft/2020-12/schema；title=Math Mentor Root Corpus Registry）；只验证静态 artifact 形状，不签发身份、权限或 admission
 
 ## child_directories
 
@@ -25,25 +25,25 @@ P0 registry/crosswalk/conflict/root-corpus/authorization/admission JSON schema �
 
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f70305f636f6e74726f6c5f706c616e652f736368656d61732f616c6961735f636f6e666c6963745f72656769737472792e736368656d612e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/alias_conflict_registry.schema.json`](alias_conflict_registry.schema.json)
-  - **content_summary**: JSON object，顶层键：$id, $schema, properties, required, title, type；安全锚点：title=Math Mentor Alias Conflict Registry
-  - **role_and_use**: 将 alias_conflict_registry.schema.json（title=Math Mentor Alias Conflict Registry） 作为“P0 静态控制面 schema”使用；只验证静态 artifact 形状，不签发身份、权限或 admission
+  - **content_summary**: JSON object，顶层键：$id, $schema, properties, required, title, type；安全锚点：$id=alias_conflict_registry.schema.json, $schema=https://json-schema.org/draft/2020-12/schema, title=Math Ment…
+  - **role_and_use**: 将 alias_conflict_registry.schema.json（$id=alias_conflict_registry.schema.json；$schema=https://json-schema.org/draft/2020-12/schema；title=Math Mentor Alias Conflict Registry） 作为“P0 静态控制面 schema”使用；只验证静态 artifact 形状，不签发身份、权限或 admission
   - **authority_class**: `schema`
-  - **status_or_freshness**: semantic_profile=math_control_plane_schema；authority=schema；evidence_basis=json_strict_structure_and_safe_fields；只验证静态 artifact 形状，不签发身份、权限或 admission
-  - **when_to_read**: 触发条件：验证相应 P0 registry、crosswalk、authorization 或 admission artifact。读取 alias_conflict_registry.schema.json（title=Math Mentor Alias Conflict Registry）；只验证静态 artifact 形状，不签发身份、权限或 admission
+  - **status_or_freshness**: semantic_profile=math_control_plane_schema；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；只验证静态 artifact 形状，不签发身份、权限或 admission
+  - **when_to_read**: 触发条件：验证相应 P0 registry、crosswalk、authorization 或 admission artifact。读取 alias_conflict_registry.schema.json（$id=alias_conflict_registry.schema.json；$schema=https://json-schema.org/draft/2020-12/schema；title=Math Mentor Alias Conflict Registry）；只验证静态 artifact 形状，不签发身份、权限或 admission
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f70305f636f6e74726f6c5f706c616e652f736368656d61732f63616e6f6e6963616c5f6e6f64655f63726f737377616c6b2e736368656d612e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/canonical_node_crosswalk.schema.json`](canonical_node_crosswalk.schema.json)
-  - **content_summary**: JSON object，顶层键：$defs, $id, $schema, properties, required, title, type；安全锚点：title=Math Mentor Canonical Node Crosswalk
-  - **role_and_use**: 将 canonical_node_crosswalk.schema.json（title=Math Mentor Canonical Node Crosswalk） 作为“P0 静态控制面 schema”使用；只验证静态 artifact 形状，不签发身份、权限或 admission
+  - **content_summary**: JSON object，顶层键：$defs, $id, $schema, properties, required, title, type；安全锚点：$id=canonical_node_crosswalk.schema.json, $schema=https://json-schema.org/draft/2020-12/schema, title=M…
+  - **role_and_use**: 将 canonical_node_crosswalk.schema.json（$id=canonical_node_crosswalk.schema.json；$schema=https://json-schema.org/draft/2020-12/schema；title=Math Mentor Canonical Node Crosswalk） 作为“P0 静态控制面 schema”使用；只验证静态 artifact 形状，不签发身份、权限或 admission
   - **authority_class**: `schema`
-  - **status_or_freshness**: semantic_profile=math_control_plane_schema；authority=schema；evidence_basis=json_strict_structure_and_safe_fields；只验证静态 artifact 形状，不签发身份、权限或 admission
-  - **when_to_read**: 触发条件：验证相应 P0 registry、crosswalk、authorization 或 admission artifact。读取 canonical_node_crosswalk.schema.json（title=Math Mentor Canonical Node Crosswalk）；只验证静态 artifact 形状，不签发身份、权限或 admission
+  - **status_or_freshness**: semantic_profile=math_control_plane_schema；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；只验证静态 artifact 形状，不签发身份、权限或 admission
+  - **when_to_read**: 触发条件：验证相应 P0 registry、crosswalk、authorization 或 admission artifact。读取 canonical_node_crosswalk.schema.json（$id=canonical_node_crosswalk.schema.json；$schema=https://json-schema.org/draft/2020-12/schema；title=Math Mentor Canonical Node Crosswalk）；只验证静态 artifact 形状，不签发身份、权限或 admission
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f70305f636f6e74726f6c5f706c616e652f736368656d61732f6964656e746974795f7265736f6c7574696f6e732e736368656d612e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/identity_resolutions.schema.json`](identity_resolutions.schema.json)
-  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, properties, required, title, type；安全锚点：title=Human Speaker Identity Resolution Overlay
-  - **role_and_use**: 将 identity_resolutions.schema.json（title=Human Speaker Identity Resolution Overlay） 作为“P0 静态控制面 schema”使用；只验证静态 artifact 形状，不签发身份、权限或 admission
+  - **content_summary**: JSON object，顶层键：$id, $schema, additionalProperties, properties, required, title, type；安全锚点：$id=identity_resolutions.schema.json, $schema=https://json-schema.org/draft/2020-12/sche…
+  - **role_and_use**: 将 identity_resolutions.schema.json（$id=identity_resolutions.schema.json；$schema=https://json-schema.org/draft/2020-12/schema；title=Human Speaker Identity Resolution Overlay） 作为“P0 静态控制面 schema”使用；只验证静态 artifact 形状，不签发身份、权限或 admission
   - **authority_class**: `schema`
-  - **status_or_freshness**: semantic_profile=math_control_plane_schema；authority=schema；evidence_basis=json_strict_structure_and_safe_fields；只验证静态 artifact 形状，不签发身份、权限或 admission
-  - **when_to_read**: 触发条件：验证相应 P0 registry、crosswalk、authorization 或 admission artifact。读取 identity_resolutions.schema.json（title=Human Speaker Identity Resolution Overlay）；只验证静态 artifact 形状，不签发身份、权限或 admission
+  - **status_or_freshness**: semantic_profile=math_control_plane_schema；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；只验证静态 artifact 形状，不签发身份、权限或 admission
+  - **when_to_read**: 触发条件：验证相应 P0 registry、crosswalk、authorization 或 admission artifact。读取 identity_resolutions.schema.json（$id=identity_resolutions.schema.json；$schema=https://json-schema.org/draft/2020-12/schema；title=Human Speaker Identity Resolution Overlay）；只验证静态 artifact 形状，不签发身份、权限或 admission
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f70305f636f6e74726f6c5f706c616e652f736368656d61732f696e6465782e6d64 -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
@@ -53,11 +53,11 @@ P0 registry/crosswalk/conflict/root-corpus/authorization/admission JSON schema �
   - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 <!-- RIDX_FILE_HEX 30385f446f6d61696e5f4170706c69636174696f6e732f4d6174685f4d656e746f722f70305f636f6e74726f6c5f706c616e652f736368656d61732f726f6f745f636f727075735f72656769737472792e736368656d612e6a736f6e -->
 - **path_or_link**: [`08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/root_corpus_registry.schema.json`](root_corpus_registry.schema.json)
-  - **content_summary**: JSON object，顶层键：$defs, $id, $schema, properties, required, title, type；安全锚点：title=Math Mentor Root Corpus Registry
-  - **role_and_use**: 将 root_corpus_registry.schema.json（title=Math Mentor Root Corpus Registry） 作为“P0 静态控制面 schema”使用；只验证静态 artifact 形状，不签发身份、权限或 admission
+  - **content_summary**: JSON object，顶层键：$defs, $id, $schema, properties, required, title, type；安全锚点：$id=root_corpus_registry.schema.json, $schema=https://json-schema.org/draft/2020-12/schema, title=Math…
+  - **role_and_use**: 将 root_corpus_registry.schema.json（$id=root_corpus_registry.schema.json；$schema=https://json-schema.org/draft/2020-12/schema；title=Math Mentor Root Corpus Registry） 作为“P0 静态控制面 schema”使用；只验证静态 artifact 形状，不签发身份、权限或 admission
   - **authority_class**: `schema`
-  - **status_or_freshness**: semantic_profile=math_control_plane_schema；authority=schema；evidence_basis=json_strict_structure_and_safe_fields；只验证静态 artifact 形状，不签发身份、权限或 admission
-  - **when_to_read**: 触发条件：验证相应 P0 registry、crosswalk、authorization 或 admission artifact。读取 root_corpus_registry.schema.json（title=Math Mentor Root Corpus Registry）；只验证静态 artifact 形状，不签发身份、权限或 admission
+  - **status_or_freshness**: semantic_profile=math_control_plane_schema；authority=schema；evidence_basis=json_schema_structure_and_safe_fields；只验证静态 artifact 形状，不签发身份、权限或 admission
+  - **when_to_read**: 触发条件：验证相应 P0 registry、crosswalk、authorization 或 admission artifact。读取 root_corpus_registry.schema.json（$id=root_corpus_registry.schema.json；$schema=https://json-schema.org/draft/2020-12/schema；title=Math Mentor Root Corpus Registry）；只验证静态 artifact 形状，不签发身份、权限或 admission
 
 ## do_not_load_by_default
 

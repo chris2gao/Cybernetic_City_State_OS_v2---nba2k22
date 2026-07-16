@@ -2,7 +2,7 @@
 
 ## Decision
 
-`accepted_after_required_semantic_corrections`
+`required_schema_anchor_revision_complete_awaiting_final_acceptance`
 
 The published mechanical index was complete, but its generator collapsed materially different artifacts into broad suffix/authority templates. This correction audits the complete baseline scope at `master@817039595e78a21356068d3854e380c73eed1417` and makes the generator preserve semantic distinctions on every regeneration.
 
@@ -16,7 +16,7 @@ The published mechanical index was complete, but its generator collapsed materia
 - directory roles corrected: 160
 - child-directory roles or entry triggers corrected: 159
 - recommended-reading-order sequences corrected: 3 (`.ai`, `06_Silicon_Index`, Math Mentor)
-- authority classes corrected: 112
+- authority classes corrected: 102
 - freshness labels corrected: 1,806
 - concrete read triggers corrected: 1,806
 - baseline entries containing at least one repeated semantic string removed: 1,803
@@ -44,9 +44,17 @@ The evidence ladder was path identity, safe structural metadata already extracte
 - Parliament Issues, verdicts, execution-plan designs, archived material, program-run evidence, tests/fixtures, and Private Zones now have distinct authority/freshness/read boundaries.
 - every read trigger includes a concrete task condition and safe subject anchor; directory triggers identify the exact run, proof case, issue, owner, staging pool, test partition, or subsystem.
 
+## Schema and structured-anchor correction
+
+The correction-0003 scan parsed every readable tracked JSON/YAML artifact instead of special-casing the two reported files. It scanned 1,169 readable artifacts while preserving one metadata-only structured exclusion. Parsed dialect and root-shape evidence identified 22 physical schema-shaped artifacts; all 22 now have schema authority. The same full scan found 22 schema filename variants (including case, underscore, dot, and hyphen forms), and all 22 are classified as schema. The manifest records 24 structured schema-authority artifacts in total: the 22 physical schemas plus the explicit non-JSON-Schema contracts `Pure_Math_Intuition_DB/schema.yaml` and `campaigns/campaign_manifest_template.yaml`.
+
+Relative to the previously published master, 18 physical schemas changed from implementation or generated-evidence profiles to `schema_definition / schema`: 12 communication schemas, three program-run schemas, two Math Mentor root schemas, and one system-backbone schema. This is a structural classifier correction, not a filename-only allowlist.
+
+The previously published manifest contains exact duplicate anchors in 17 structured files. Anchor finalization now preserves first-seen deterministic order, deduplicates exact key/value pairs before applying the six-anchor display cap, and qualifies safe structural paths only when one key has multiple distinct rendered values. The final full scan has zero exact duplicate anchors, zero repeated rendered anchor fragments, and 72 records with path-qualified anchors. The two reported regressions are confirmed fixed: `AUTHORIZATION_CONTEXT_SCHEMA.json` is `schema_definition / schema`, while `ALIAS_CONFLICT_REGISTRY.json` contains one `status=open` anchor and no duplicate anchors.
+
 ## Generator durability
 
-The large curated directory-entry template has been removed from the active path. Semantic classification is deterministic, exhaustive, fail-closed, manifest-accounted, and covered by validation invariants. Validation rejects absent/unrecognized profiles, incomplete audit markers, metadata-boundary drift, old generic phrases, authority regressions on critical registries/mailboxes, profile-count drift, nonzero unknowns, and any claim of protected-body reads.
+The large curated directory-entry template has been removed from the active path. Semantic classification is deterministic, exhaustive, fail-closed, manifest-accounted, and covered by validation invariants. Validation rejects absent/unrecognized profiles, incomplete audit markers, metadata-boundary drift, old generic phrases, authority regressions on critical registries/mailboxes, profile-count drift, nonzero unknowns, any schema-shaped artifact lacking schema authority and evidence, duplicate structured anchors, repeated rendered anchor fragments, and any claim of protected-body reads.
 
 ## Scope boundaries
 
