@@ -18,7 +18,7 @@ human_gate: preapproved_for_report_only_normal_publication
 
 Plan 3 is a coherent Human-governed external-augmentation architecture, and its foundation is not merely aspirational. The repository contains a published constitution, an operational bootstrap and lazy-loading contract, a distributed task/handoff protocol stack, durable Git/document memory, a strong deterministic directory-index control plane, and a substantial repository-level communication validator.
 
-It is not yet a complete External Augmentation OS. The unified Context Memory, Task Type/Execution, Drift Recovery, Capability Registry, and Plan 3 v0.2 architecture files are physically absent. The communication validator is statically implemented and has historical 215/215 fixture evidence, but its current Windows checkout replay is not mechanically reproducible because test-fixture byte hashes bind LF while Git checks the files out as CRLF. No trusted production host, live Gateway, atomic writer/CAS, scheduler, poller, Coordinator, or runtime is configured or activated. The correct architectural classification is therefore “published Human-governed document control plane with partial executable controls,” not “activated OS runtime.”
+It is not yet a complete External Augmentation OS. The unified Context Memory, Task Type/Execution, Drift Recovery, Capability Registry, and Plan 3 v0.2 architecture files are physically absent. The communication validator is statically implemented and has historical 215/215 fixture evidence, but its current Windows checkout replay is not mechanically reproducible because test-fixture byte hashes bind LF while Git checks the files out as CRLF. Post-merge verification found the same fresh-checkout EOL defect in the directory-index `check`: four canonical LF outputs are checked out as CRLF and fail byte comparison until `generate` rematerializes LF. No trusted production host, live Gateway, atomic writer/CAS, scheduler, poller, Coordinator, or runtime is configured or activated. The correct architectural classification is therefore “published Human-governed document control plane with partial executable controls,” not “activated OS runtime.”
 
 The most important truthful distinction is this:
 
@@ -155,7 +155,7 @@ The line-49 XML chain-of-thought wording is an authority conflict, not an ambigu
 | L4 Loading and Drift Recovery | several contracts; unified file absent | distributed | bootstrap/reload/handoff procedures | index recovery path validates; no full drift-recovery E2E | manual/new-window workflow | no drift monitor | yes | `partially_implemented` |
 | L5 Capability Registry | target file absent | categories only in v0.1 | scattered prototypes/index metadata | prototype-specific tests not globally revalidated | no authority registry/config binding | no capability broker | scattered | `physically_missing` as global control plane |
 | Human-AI communication protocol | yes | strong/canonical | schemas/policy/validator | historical 215/215; current 16/17 unit tests | invoked manually; no live transport hook | no Gateway/writer | yes | published contract; executable gate has current repeatability defect |
-| Directory index control plane | yes | strong | deterministic generator/manifest | self-test/check/validate/snapshot all pass | manually regenerated from Git index | no watcher/hook/CI activation proven | yes | `implemented_and_mechanically_validated` |
+| Directory index control plane | yes | strong | deterministic generator/manifest | passes after canonical LF generation; fresh Windows checkout `check` fails on CRLF materialization | manually regenerated from Git index | no watcher/hook/CI activation proven | yes | implemented/validated with cross-checkout repeatability defect |
 | GitHub Human brief | yes | strong | mailbox/report workflow | exact blob/head checks | actively used through review branch | no unattended publisher | yes | `published_operational_contract` |
 | Obsidian Human brief | no | planned category only | none found | none | none | none | no current evidence | `physically_missing`/planned |
 | runtime/Coordinator/Gateway/writer/scheduler/polling | prototype names and contracts exist | boundaries specified | isolated prototypes only | no production E2E evidence | none proven | explicitly inactive | historical/candidate only | `protected_inactive` |
@@ -204,7 +204,7 @@ At the audited base before adding this report:
 - `validate`: 160 tracked/indexed directories, 1,809 tracked/direct-file entries, 159 child-directory edges, 0 missing, duplicate or orphan entries, 0 broken/unsafe links, 0 secret findings, 0 private/restricted body reads, pass.
 - `snapshot`: manifest SHA-256 `8db0fbfad85421cf5f2815aa9096b379f0c91ac17fc48090eaf6cc2c7ccc97c9`; output bundle SHA-256 `bef50d624b77eadf8b7f5096d5f7244fce608116a270223253a1f4256a41e9ff`.
 
-This proves deterministic static control-plane maturity. It does not prove a watcher, CI gate or runtime router is activated; regeneration remains an explicit workflow action.
+The candidate build proves deterministic static control-plane maturity after the generator has materialized canonical LF bytes. Post-merge `git pull` at `master@7f750e9d2c7249d9572dad1af85ca96d069d8a19` then exposed a fresh-checkout qualification: host `core.autocrlf=true` produced `i/lf w/crlf attr/` for `.ai/CODEX_REPORTS/index.md`, `.ai/index.md`, `index.md` and `repository_index_manifest.json`; immediate `check` failed on exactly those four paths. Running `generate` changed only their working-tree EOL materialization, after which `check`/`validate` passed and each filtered Git blob equaled master. Therefore path/content determinism is strong, but fresh Windows checkout byte-repeatability is not yet achieved. It also does not prove a watcher, CI gate or runtime router is activated; regeneration remains an explicit workflow action.
 
 ## 8. Completion and gap classifications
 
@@ -214,7 +214,7 @@ This proves deterministic static control-plane maturity. It does not prove a wat
 - L1 bootstrap, lazy-loading and physical-verification operational contract.
 - Provider-neutral pointer-based communication and Human Brief contract.
 - Completion-preserving large-task/task-input/work-mechanism contracts.
-- Deterministic repository directory-index generator, indexes and manifest.
+- Deterministic repository directory-index generator, indexes and manifest after canonical LF materialization.
 - Neutral source mailbox discipline and active review-branch pointer workflow.
 
 ### Partial
@@ -223,6 +223,7 @@ This proves deterministic static control-plane maturity. It does not prove a wat
 - L3 Task Execution: strong distributed contracts, no unified task taxonomy/control plane.
 - L4 Drift Recovery: documented procedures and index recovery, no unified runbook/service/E2E evaluator.
 - Executable communication compliance: strong implementation and historical pass, current Windows repeatability failure, no live host integration.
+- Directory-index fresh checkout: generated content is stable, but byte-level `check` is EOL-dependent on this Windows host until `generate` runs.
 - Capability completion: local/session tools and prototypes exist, but no durable global truth registry.
 
 ### Planned or physically missing
@@ -265,7 +266,8 @@ Current substitutes are the v0.1 architecture, Bootstrap, `.ai` protocol stack, 
 1. **Memo Phase 3/4:** the memo still says Phase 3 awaits exact publication and Phase 4 is blocked. Active mailbox evidence says Phase 3 is accepted/closed at exact `7f3ce241...` and dispatches this Phase 4 audit.
 2. **Branch ledger:** the ledger records the three candidates as 111 commits behind and available as local/origin logical branches. Current `fetch --prune` shows all three origin refs absent; only local refs remain, and master is now 117 commits ahead of their common merge base.
 3. **Communication validation:** historical fixture evidence says 215/215 pass, but the current Windows worktree replay fails because of LF/CRLF byte materialization. Both facts are true at different evidence times/environments.
-4. **Publication topology:** Phase 3 began with normal PR #10 at merge `8170395...`, followed by single-parent correction commits `2ec6f5...` and `7f3ce24...`. Active review accepted exact `7f3ce24...`; the memo had not yet recorded that newer physical topology.
+4. **Directory-index post-merge check:** candidate-generation evidence passed, while a fresh Windows checkout at merge `7f750e9...` failed `check` on four CRLF-materialized generated outputs until canonical LF regeneration. This is an environment-freshness/reproducibility conflict, not a different Git tree.
+5. **Publication topology:** Phase 3 began with normal PR #10 at merge `8170395...`, followed by single-parent correction commits `2ec6f5...` and `7f3ce24...`. Active review accepted exact `7f3ce24...`; the memo had not yet recorded that newer physical topology.
 
 These freshness issues do not create new authority. Current Human instruction, physical Git and validated active mailbox remain ahead of routing snapshots.
 
@@ -297,7 +299,8 @@ None is a global Plan 3 implementation source. They remain local historical/cand
 | P2 | Distributed Context/Task/Drift contracts can drift | three unified files absent; overlapping `.ai` contracts | consolidate references without duplicating authority; add invariants and cross-document validation | Plan 3 documentation/control-plane engineering |
 | P2 | Routing snapshots age faster than physical Git | memo and branch ledger stale at current head | bind snapshots to exact audited heads; state self-resolving publication conditions; refresh only on defined triggers | repository maintainers |
 | P2 | Historical hidden-CoT sentence creates unsafe onboarding ambiguity | `3号方案.md` line 49 conflicts with current authority | future Human-authorized constitutional erratum, preserving history while clearly superseding the instruction | Human Speaker |
-| P2 | Directory indexes are mechanically strong but manually refreshed | generator passes; no CI/hook integration proven | keep explicit validation in publication workflows; optional future non-activating CI design after Human approval | repository engineering |
+| P1 | Canonical generated artifacts and communication fixtures are fresh-checkout EOL-dependent | communication 16/17; post-merge index `check` failed on four `i/lf w/crlf` outputs until regeneration | future narrow task should establish repository EOL policy or byte-resolution semantics and prove LF/CRLF fresh-checkout repeatability without weakening exact-byte guarantees | repository engineering; Human authorizes mutation |
+| P2 | Directory indexes are mechanically strong but manually refreshed | generator passes after LF materialization; no CI/hook integration proven | keep explicit generate/check validation in publication workflows; optional future non-activating CI design after Human approval | repository engineering |
 | P3 | Obsidian goal is unimplemented | no matching tracked implementation | design privacy/publication boundary before choosing a connector or workspace | Human + product/privacy owner |
 | P3 | Three local-only historical branches may be mistaken for active work | remote refs absent; large divergence | retain as evidence only; require a new current-base semantic task before consuming any unique path | Human + domain owner |
 
@@ -348,7 +351,7 @@ stop_conditions:
   - communication compliance repeatability remains a required publication gate and fails
 ```
 
-The cross-platform communication fixture defect should be repaired under its own narrow authorization or made an explicit precondition of this future task; it should not be hidden inside the five-document change.
+The cross-platform deterministic-artifact defect affects both communication fixtures and fresh-checkout directory-index verification. It should be repaired under its own narrow authorization or made an explicit precondition of this future task; it should not be hidden inside the five-document change.
 
 ## 13. Cannot confirm, unread and protected evidence
 
@@ -361,7 +364,7 @@ The cross-platform communication fixture defect should be repaired under its own
 
 ## 14. Remaining real Human decisions only
 
-1. Whether and when to authorize a narrow cross-platform communication fixture-repeatability repair.
+1. Whether and when to authorize a narrow cross-platform deterministic-artifact repeatability repair covering communication fixtures and generated-index fresh checkouts.
 2. Whether to authorize the recommended five-document Plan 3 v0.2 control-plane task after choosing an exact then-current master base.
 3. Whether to issue a constitutional erratum for the historical XML hidden-CoT sentence.
 4. Whether any one of the three local-only reconciliation branches deserves a future domain-specific semantic recovery task; none should be merged wholesale.

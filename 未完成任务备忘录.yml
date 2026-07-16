@@ -123,6 +123,7 @@ program_execution_order:
       validation_report: ".ai/CODEX_REPORTS/repository-directory-index-system-semantic-validation-0001.md"
       changed_files_report: ".ai/CODEX_REPORTS/repository-directory-index-system-semantic-changed-files-0001.md"
       correction_0003: "full JSON/YAML structural schema classification and deterministic structured-anchor normalization accepted and closed at exact master 7f3ce241f6822326093887b00f31a98382951dee"
+      postmerge_fresh_checkout_validation: "在 master 7f750e9d2c7249d9572dad1af85ca96d069d8a19 的 Windows fresh checkout 上，core.autocrlf=true 将四个 canonical LF 生成物物化为 CRLF，导致首次 check 失败；generate 仅重写这四项为 LF 后 check/validate 通过且过滤后的 blob 与 master 相同。Phase 3 接受状态不变，但跨 checkout byte-repeatability 仍需未来独立授权修复。"
   - order: 4
     id: "overall-plan-inspection-only"
     status: "audited_published_when_observed_on_master"
