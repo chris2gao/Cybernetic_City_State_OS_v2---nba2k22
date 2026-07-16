@@ -1,0 +1,184 @@
+# Repository Directory Index System 0001 — Exact Changed Files
+
+The final candidate is restricted to:
+
+- every generated `index.md` proven by `repository_index_manifest.json`;
+- root `generate_repository_indexes.py`;
+- root `repository_index_manifest.json`;
+- the four required `.ai/CODEX_REPORTS/repository-directory-index-system-*` reports;
+- the minimal Phase 3 update to `未完成任务备忘录.yml`.
+
+The final deterministic candidate contains exactly `167` paths. No source
+mailbox, business, prompt, node, bridge, schema, runtime, Coordinator, Gateway,
+writer, polling, cron, or Plan 3 implementation path is authorized in this
+candidate.
+
+## Exact sorted paths
+
+- `.ai/CODEX_REPORTS/index.md`
+- `.ai/CODEX_REPORTS/repository-directory-index-system-0001.md`
+- `.ai/CODEX_REPORTS/repository-directory-index-system-changed-files-0001.md`
+- `.ai/CODEX_REPORTS/repository-directory-index-system-coverage-0001.md`
+- `.ai/CODEX_REPORTS/repository-directory-index-system-validation-0001.md`
+- `.ai/HUMAN_BRIEFS/index.md`
+- `.ai/LONG_RUN_LOGS/index.md`
+- `.ai/PROGRAM_RUNS/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/AUDITS/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/CHECKPOINTS/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/ENVIRONMENT/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/INPUTS/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/LOGS/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/OUTPUTS/teaching-flow-static/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/REPORTS/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-analytic-nt-foundation-batch-1-0001/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/DOSSIERS/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/EVIDENCE/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/SCHEMAS/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/VALIDATION/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-certified-pilot-0001/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/CHECKPOINTS/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/REPORTS/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/inventory/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/EVIDENCE/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/VALIDATION/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-master-plan-progress-ledger-0001/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/CHECKPOINTS/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/EVIDENCE/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/REPORTS/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/VALIDATION/index.md`
+- `.ai/PROGRAM_RUNS/math-mentor-p0-control-plane-hardening-0001/index.md`
+- `.ai/TASKS/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition-actor-origin-forged-host/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition-c2-forged-trusted/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition-c2-replay/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition-c2-trusted-host-pass/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition-claimed-from-mismatch/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition-event-mutation/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition-fabricated-result/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition-missing-event/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition-pointer-binding/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition-state-task-mismatch/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition-unreachable/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition-validation-from-other-event/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition-validation-malformed/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_acceptance_pass/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_cross_event_transplant/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_event_digest_transplant/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_replay/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_provider/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_role/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_transition/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_backend_material_review_close_rejected/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_backend_publication_candidate_rejected/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_backend_self_acceptance_rejected/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_cross_actor_transplant/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_event_digest_mismatch/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_pass/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_wrong_task/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_c2_no_authority/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_candidate_pass/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_completion_pass/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_completion_two_pass/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_dispatch_pass/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_exact_validation_artifact_pass/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_foreground_self_completion_rejected/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_human_acceptance_pass/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_human_c2_no_authority/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_human_dispatch_pass/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_human_origin_missing/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_human_self_completion_rejected/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_model_origin_missing/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_provider_role_edge_mismatch_rejected/index.md`
+- `.ai/communication_compliance/fixtures/artifacts/proof/transition_revision_loop_pass/index.md`
+- `.ai/communication_compliance/fixtures/index.md`
+- `.ai/communication_compliance/fixtures/raw/index.md`
+- `.ai/communication_compliance/index.md`
+- `.ai/communication_compliance/tests/index.md`
+- `.ai/index.md`
+- `01_Research_Reports/_Supreme_Court_Proposals/index.md`
+- `01_Research_Reports/index.md`
+- `02_Protocols/index.md`
+- `03_Daily_Execution/V7_Stress_Test/index.md`
+- `03_Daily_Execution/index.md`
+- `04_Parliament/Issues/Issue_003_Deep_Research_Roadmap/index.md`
+- `04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/index.md`
+- `04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism/index.md`
+- `04_Parliament/Issues/Issue_006_Flywheel_Self_Optimization/index.md`
+- `04_Parliament/Issues/Issue_007_V6_Phase0_CQRS_Engine/index.md`
+- `04_Parliament/Issues/Issue_008_V6_Phase0_Lattice_Sandbox/index.md`
+- `04_Parliament/Issues/Issue_009_V6_Phase0_Fuzzing_Gateway/index.md`
+- `04_Parliament/Issues/Issue_010_V6_Legacy_Cleanup_and_Domain_Migration/index.md`
+- `04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/index.md`
+- `04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/index.md`
+- `04_Parliament/Issues/Templates/index.md`
+- `04_Parliament/Issues/_Template/index.md`
+- `04_Parliament/Issues/index.md`
+- `04_Parliament/Verdicts/index.md`
+- `04_Parliament/_ARCHIVED/index.md`
+- `04_Parliament/index.md`
+- `04_Parliament/已解决归档/Issue_001_Path_Refactor/index.md`
+- `04_Parliament/已解决归档/Issue_002_Tutor_Skill/index.md`
+- `04_Parliament/已解决归档/Issue_003_Deep_Research_Roadmap/index.md`
+- `04_Parliament/已解决归档/index.md`
+- `05_Carbon_Index/_ARCHIVED/index.md`
+- `05_Carbon_Index/index.md`
+- `06_Silicon_Index/Personas/index.md`
+- `06_Silicon_Index/factory_pipeline/generated_nodes/index.md`
+- `06_Silicon_Index/factory_pipeline/index.md`
+- `06_Silicon_Index/index.md`
+- `06_Silicon_Index/sandbox_tests/index.md`
+- `06_Silicon_Index/scripts/index.md`
+- `06_Silicon_Index/skills/_ARCHIVED/index.md`
+- `06_Silicon_Index/skills/index.md`
+- `07_Compiler/index.md`
+- `07_Execution_Plans/Dual_Check_Proposal_System/index.md`
+- `07_Execution_Plans/index.md`
+- `07_Silicon_Private_Zones/Antigravity/index.md`
+- `07_Silicon_Private_Zones/Home_of_Antigravity/index.md`
+- `07_Silicon_Private_Zones/Home_of_Atlas/index.md`
+- `07_Silicon_Private_Zones/Home_of_Daedalus/index.md`
+- `07_Silicon_Private_Zones/Home_of_Euclid/index.md`
+- `07_Silicon_Private_Zones/Home_of_Feynman/index.md`
+- `07_Silicon_Private_Zones/Home_of_Hyperion/index.md`
+- `07_Silicon_Private_Zones/Home_of_Turing/index.md`
+- `07_Silicon_Private_Zones/index.md`
+- `08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level5_Part2/index.md`
+- `08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part1/index.md`
+- `08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/index.md`
+- `08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part3/index.md`
+- `08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/index.md`
+- `08_Domain_Applications/Math_Mentor/_ARCHIVED/index.md`
+- `08_Domain_Applications/Math_Mentor/index.md`
+- `08_Domain_Applications/Math_Mentor/p0_control_plane/index.md`
+- `08_Domain_Applications/Math_Mentor/p0_control_plane/schemas/index.md`
+- `08_Domain_Applications/Math_Mentor/tests/fixtures/index.md`
+- `08_Domain_Applications/Math_Mentor/tests/index.md`
+- `08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/admission/index.md`
+- `08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/authorization/index.md`
+- `08_Domain_Applications/Math_Mentor/tests/p0_control_plane/fixtures/index.md`
+- `08_Domain_Applications/Math_Mentor/tests/p0_control_plane/index.md`
+- `08_Domain_Applications/Math_Mentor/tests/results/index.md`
+- `08_Domain_Applications/Math_Mentor/复习巩固期prompt/index.md`
+- `08_Domain_Applications/Math_Mentor/学习期prompt/backup/index.md`
+- `08_Domain_Applications/Math_Mentor/学习期prompt/index.md`
+- `08_Domain_Applications/index.md`
+- `campaigns/index.md`
+- `generate_repository_indexes.py`
+- `index.md`
+- `repository_index_manifest.json`
+- `short_term_tasks/Level4_Outsourcing/index.md`
+- `short_term_tasks/Level5_Outsourcing/index.md`
+- `short_term_tasks/Level6_Outsourcing/index.md`
+- `short_term_tasks/index.md`
+- `short_term_tasks/task_generate_level4_modeA/index.md`
+- `system_backbone/apicurio_registry_hub/index.md`
+- `system_backbone/audit_ledger/index.md`
+- `system_backbone/domain_knowledge/index.md`
+- `system_backbone/framework_skeleton/index.md`
+- `system_backbone/index.md`
+- `未完成任务备忘录.yml`

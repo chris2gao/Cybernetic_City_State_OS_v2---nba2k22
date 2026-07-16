@@ -89,7 +89,8 @@ program_execution_order:
     human_decision: "preapproved_for_safe_to_merge_branches"
   - order: 3
     id: "repository-directory-index-system"
-    status: "ready_next_after_phase_2_publication"
+    status: "published_awaiting_foreground_master_content_review_when_observed_on_master"
+    publication_head_resolution: "merge_commit_containing_the_complete_index_system"
     objective: "为根目录和各级 tracked 目录建立 index.md，支持模型懒加载。"
     scope:
       include: "repository tracked tree"
@@ -115,7 +116,7 @@ program_execution_order:
     human_decision: "preapproved"
   - order: 4
     id: "overall-plan-inspection-only"
-    status: "blocked_by_order_3"
+    status: "blocked_by_phase_3_foreground_master_content_review"
     objective: "基于最新 master 和新目录索引重新检查总体方案。"
     mode: "read_only_audit"
     must_do:
@@ -341,9 +342,10 @@ completed_foundation_milestones:
 
 next_overall_plan_sequence:
   - order: 1
-    objective: "建立 repository-wide directory index.md system。"
-    reason: "让新模型通过目录级索引进行懒加载，不再依赖全仓摄入。"
-    human_gate: "preapproved"
+    objective: "在 published master 上前台审查 repository-wide directory index.md system。"
+    reason: "首次完整索引先通过正常 PR/merge 发布，再在稳定最终树上检查自然语言路由质量。"
+    human_gate: "preapproved_for_master_index_content_correction_after_review"
+    implementation_status: "published_awaiting_foreground_master_content_review"
   - order: 2
     objective: "只读检查 Plan 3 总体方案。"
     deliverables:
@@ -410,11 +412,12 @@ refresh_contract:
     - "所有路径使用 repository-relative path。"
     - "本文件只维护高层索引和进度；详细合同留在目标文件，避免重复产生第二套权威。"
   latest_refresh:
-    task_id: "branch-consolidation-and-repository-ledger-0001"
-    audited_start_master: "22cf4731cd29a2ebe271fe67fd561df1d0701d01"
-    publication_head_resolution: "merge_commit_containing_this_refresh"
+    task_id: "repository-directory-index-system-0001"
+    audited_start_master: "d8c8766258038f40a3a4b16da1f6a760b2f54920"
+    publication_head_resolution: "merge_commit_containing_the_complete_index_system"
     branch_ledger: "开发分支与合并进度总账.md"
-    next_program_step: "repository-directory-index-system"
+    directory_index_manifest: "repository_index_manifest.json"
+    next_program_step: "foreground-review-published-directory-index-content"
 
 historical_tasks:
   - id: "T-20260607-001"
