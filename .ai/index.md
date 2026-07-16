@@ -23,7 +23,7 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
 
 <!-- RIDX_DIR_HEX 2e61692f434f4445585f5245504f525453 -->
 - **path_or_link**: [`.ai/CODEX_REPORTS`](CODEX_REPORTS/index.md)
-  - **content_scope**: 按 task/source head 保存 Codex 实现、验证与 changed-files 报告；tracked 后代文件数=103
+  - **content_scope**: 按 task/source head 保存 Codex 实现、验证与 changed-files 报告；tracked 后代文件数=106
   - **when_to_enter**: 查证某个 task/source head 的实现、验证或 changed-files 报告
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f48554d414e5f425249454653 -->

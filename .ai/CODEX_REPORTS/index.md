@@ -675,6 +675,27 @@
   - **authority_class**: `historical_evidence`
   - **status_or_freshness**: semantic_profile=ai_report_snapshot；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
   - **when_to_read**: 触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 plan3-master-bootstrap-guidance-system-0001.md（H1《Plan 3 Master Bootstrap Guidance System 0001》；首个 H2《Scope》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+<!-- RIDX_FILE_HEX 2e61692f434f4445585f5245504f5254532f706c616e332d6f766572616c6c2d706c616e2d726561642d6f6e6c792d61756469742d303030312e6d64 -->
+- **path_or_link**: [`.ai/CODEX_REPORTS/plan3-overall-plan-read-only-audit-0001.md`](plan3-overall-plan-read-only-audit-0001.md)
+  - **content_summary**: H1《Plan 3 Overall Plan Read-Only Audit 0001》；首个 H2《1. Executive conclusion》
+  - **role_and_use**: 将 plan3-overall-plan-read-only-audit-0001.md（H1《Plan 3 Overall Plan Read-Only Audit 0001》；首个 H2《1. Executive conclusion》） 作为“Codex source-bound 报告”使用；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=ai_report_snapshot；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+  - **when_to_read**: 触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 plan3-overall-plan-read-only-audit-0001.md（H1《Plan 3 Overall Plan Read-Only Audit 0001》；首个 H2《1. Executive conclusion》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+<!-- RIDX_FILE_HEX 2e61692f434f4445585f5245504f5254532f706c616e332d6f766572616c6c2d706c616e2d726561642d6f6e6c792d61756469742d6368616e6765642d66696c65732d303030312e6d64 -->
+- **path_or_link**: [`.ai/CODEX_REPORTS/plan3-overall-plan-read-only-audit-changed-files-0001.md`](plan3-overall-plan-read-only-audit-changed-files-0001.md)
+  - **content_summary**: H1《Plan 3 Overall Plan Read-Only Audit — Changed Files 0001》；首个 H2《Intended authored paths》
+  - **role_and_use**: 将 plan3-overall-plan-read-only-audit-changed-files-0001.md（H1《Plan 3 Overall Plan Read-Only Audit — Changed Files 0001》；首个 H2《Intended authored paths》） 作为“Codex source-bound 报告”使用；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=ai_report_snapshot；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+  - **when_to_read**: 触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 plan3-overall-plan-read-only-audit-changed-files-0001.md（H1《Plan 3 Overall Plan Read-Only Audit — Changed Files 0001》；首个 H2《Intended authored paths》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+<!-- RIDX_FILE_HEX 2e61692f434f4445585f5245504f5254532f706c616e332d6f766572616c6c2d706c616e2d726561642d6f6e6c792d61756469742d76616c69646174696f6e2d303030312e6d64 -->
+- **path_or_link**: [`.ai/CODEX_REPORTS/plan3-overall-plan-read-only-audit-validation-0001.md`](plan3-overall-plan-read-only-audit-validation-0001.md)
+  - **content_summary**: H1《Plan 3 Overall Plan Read-Only Audit — Validation 0001》；首个 H2《1. Start-state proof》
+  - **role_and_use**: 将 plan3-overall-plan-read-only-audit-validation-0001.md（H1《Plan 3 Overall Plan Read-Only Audit — Validation 0001》；首个 H2《1. Start-state proof》） 作为“Codex source-bound 报告”使用；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=ai_report_snapshot；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+  - **when_to_read**: 触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 plan3-overall-plan-read-only-audit-validation-0001.md（H1《Plan 3 Overall Plan Read-Only Audit — Validation 0001》；首个 H2《1. Start-state proof》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
 <!-- RIDX_FILE_HEX 2e61692f434f4445585f5245504f5254532f706f73742d70322d657865637574696f6e2d6d656d6f72792d70332d6f6e776172642d7265706c616e2d303030312e6d64 -->
 - **path_or_link**: [`.ai/CODEX_REPORTS/post-p2-execution-memory-p3-onward-replan-0001.md`](post-p2-execution-memory-p3-onward-replan-0001.md)
   - **content_summary**: H1《POST-P2 Execution Memory P3 Onward Replan Review》；首个 H2《Task Profile》
@@ -748,7 +769,7 @@
 
 ## do_not_load_by_default
 
-- 默认不加载 102 个历史/测试/生成/用户或大型 direct artifacts：`.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-0001.md`, `.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-changed-files-0001.md`, `.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-validation-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-changed-files-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-validation-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-expression-protocol-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-expression-protocol-changed-files-0001.md`，另有 94 个见 direct_files。
+- 默认不加载 105 个历史/测试/生成/用户或大型 direct artifacts：`.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-0001.md`, `.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-changed-files-0001.md`, `.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-validation-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-changed-files-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-validation-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-expression-protocol-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-expression-protocol-changed-files-0001.md`，另有 97 个见 direct_files。
 
 ## generation_and_freshness_note
 

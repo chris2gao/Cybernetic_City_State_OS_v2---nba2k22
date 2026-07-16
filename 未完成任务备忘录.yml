@@ -1,13 +1,13 @@
 schema_version: "plan3_unfinished_task_memo.v3"
 document_name: "未完成任务备忘录"
 document_role: "Plan 3 总体方案接管索引、进度总账与未完成任务路由"
-last_architecture_review_date: "2026-07-15"
+last_architecture_review_date: "2026-07-16"
 source_baseline:
   branch: "master"
-  audited_start_head: "22cf4731cd29a2ebe271fe67fd561df1d0701d01"
+  audited_start_head: "7f3ce241f6822326093887b00f31a98382951dee"
   refreshed_publication_head: "merge_commit_containing_this_refresh"
   note: >
-    audited_start_head 是 branch-consolidation-and-repository-ledger-0001 开始时物理核验的
+    audited_start_head 是 plan3-overall-plan-read-only-audit-0001 开始时物理核验的
     published master。refreshed_publication_head 使用自解析标记，因为 Git 提交不能在其
     自身内容中预先写入自己的 SHA；在 master 上读取本文件时，以包含本次刷新内容的
     normal merge commit 为准确发布 head，并继续用物理 Git 和活动 review mailbox 复核。
@@ -89,8 +89,9 @@ program_execution_order:
     human_decision: "preapproved_for_safe_to_merge_branches"
   - order: 3
     id: "repository-directory-index-system"
-    status: "schema_anchor_correction_validated_pending_exact_master_publication"
-    publication_head_resolution: "merge_commit_containing_the_complete_index_system"
+    status: "accepted_closed"
+    accepted_head: "7f3ce241f6822326093887b00f31a98382951dee"
+    publication_head_resolution: "exact accepted correction head 7f3ce241f6822326093887b00f31a98382951dee"
     objective: "为根目录和各级 tracked 目录建立 index.md，支持模型懒加载。"
     scope:
       include: "repository tracked tree"
@@ -121,10 +122,13 @@ program_execution_order:
       audit_report: ".ai/CODEX_REPORTS/repository-directory-index-system-semantic-audit-0001.md"
       validation_report: ".ai/CODEX_REPORTS/repository-directory-index-system-semantic-validation-0001.md"
       changed_files_report: ".ai/CODEX_REPORTS/repository-directory-index-system-semantic-changed-files-0001.md"
-      correction_0003: "full JSON/YAML structural schema classification and deterministic structured-anchor normalization complete; awaiting exact master publication and final acceptance review"
+      correction_0003: "full JSON/YAML structural schema classification and deterministic structured-anchor normalization accepted and closed at exact master 7f3ce241f6822326093887b00f31a98382951dee"
   - order: 4
     id: "overall-plan-inspection-only"
-    status: "blocked_by_phase_3_foreground_master_content_review"
+    status: "audited_published_when_observed_on_master"
+    work_branch: "codex/plan3-overall-plan-read-only-audit"
+    work_branch_status: "read_only_audit_in_progress_until_normal_merge"
+    publication_head_resolution: "normal merge commit containing the three plan3-overall-plan-read-only-audit-0001 reports and this memo refresh"
     objective: "基于最新 master 和新目录索引重新检查总体方案。"
     mode: "read_only_audit"
     must_do:
@@ -138,6 +142,10 @@ program_execution_order:
       - "不激活 runtime、Coordinator、Gateway、writer 或 automation。"
     human_decision: "preapproved_for_inspection_only"
     implementation_resume: "paused_until_new_explicit_human_instruction"
+    reports:
+      - ".ai/CODEX_REPORTS/plan3-overall-plan-read-only-audit-0001.md"
+      - ".ai/CODEX_REPORTS/plan3-overall-plan-read-only-audit-validation-0001.md"
+      - ".ai/CODEX_REPORTS/plan3-overall-plan-read-only-audit-changed-files-0001.md"
 
 new_model_takeover:
   objective: >
@@ -296,6 +304,7 @@ architecture_progress:
     remaining:
       - "gate 是 repository-level fail-closed validator；production trusted host、writer、poller、Coordinator 和 Gateway 仍需独立设计与 Human 授权。"
       - "不得用模型生成的 human_gate 字段或 fixture 代替真实外部授权。"
+      - "2026-07-16 当前 Windows checkout 回归为 16/17：fixture exact-byte hashes 绑定 LF，而 core.autocrlf=true 物化为 CRLF；历史 215/215 证据仍保留，但跨 checkout 可重复性需要未来独立授权修复。"
   - layer: "L7 Capability registry"
     status: "absent"
     evidence:
@@ -318,7 +327,7 @@ architecture_progress:
       - "production trusted host、identity/signature、atomic state CAS、replay store、runtime、Coordinator、Gateway、scheduler/writer、observability 和 rollback 均需独立设计与 Human 授权。"
 
 verified_missing_planned_files_on_master:
-  checked_at_head: "22cf4731cd29a2ebe271fe67fd561df1d0701d01"
+  checked_at_head: "7f3ce241f6822326093887b00f31a98382951dee"
   files:
     - path: "06_Silicon_Index/Plan3_External_Augmentation_OS_Architecture.md"
       status: "absent"
@@ -353,7 +362,7 @@ next_overall_plan_sequence:
     objective: "在 published master 上前台审查 repository-wide directory index.md system。"
     reason: "首次完整索引先通过正常 PR/merge 发布，再在稳定最终树上检查自然语言路由质量。"
     human_gate: "preapproved_for_master_index_content_correction_after_review"
-    implementation_status: "published_awaiting_foreground_master_content_review"
+    implementation_status: "accepted_closed_at_7f3ce241f6822326093887b00f31a98382951dee"
   - order: 2
     objective: "只读检查 Plan 3 总体方案。"
     deliverables:
@@ -362,7 +371,7 @@ next_overall_plan_sequence:
       - "建议的下一完整实现任务"
     reason: "Human 当前要求先检查，不继续实现。"
     human_gate: "preapproved_for_inspection_only"
-    implementation_status: "paused_until_new_explicit_human_instruction"
+    implementation_status: "audited_published_when_observed_on_master; Plan 3 implementation remains paused_until_new_explicit_human_instruction"
 
 domain_reference_indexes:
   math_mentor:
@@ -420,12 +429,13 @@ refresh_contract:
     - "所有路径使用 repository-relative path。"
     - "本文件只维护高层索引和进度；详细合同留在目标文件，避免重复产生第二套权威。"
   latest_refresh:
-    task_id: "repository-directory-index-system-0001"
-    audited_start_master: "d8c8766258038f40a3a4b16da1f6a760b2f54920"
-    publication_head_resolution: "merge_commit_containing_the_complete_index_system"
+    task_id: "plan3-overall-plan-read-only-audit-0001"
+    audited_start_master: "7f3ce241f6822326093887b00f31a98382951dee"
+    publication_head_resolution: "normal merge commit containing this audit and memo refresh"
     branch_ledger: "开发分支与合并进度总账.md"
     directory_index_manifest: "repository_index_manifest.json"
-    next_program_step: "foreground-review-published-directory-index-content"
+    audit_report: ".ai/CODEX_REPORTS/plan3-overall-plan-read-only-audit-0001.md"
+    next_program_step: "paused_until_new_explicit_human_instruction"
 
 historical_tasks:
   - id: "T-20260607-001"
