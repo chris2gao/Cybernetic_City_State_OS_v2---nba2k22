@@ -696,6 +696,27 @@
   - **authority_class**: `historical_evidence`
   - **status_or_freshness**: semantic_profile=ai_report_snapshot；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
   - **when_to_read**: 触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 plan3-overall-plan-read-only-audit-validation-0001.md（H1《Plan 3 Overall Plan Read-Only Audit — Validation 0001》；首个 H2《1. Start-state proof》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+<!-- RIDX_FILE_HEX 2e61692f434f4445585f5245504f5254532f706c616e332d76302d322d756e69666965642d636f6e74726f6c2d706c616e652d636f6e7472616374732d303030312e6d64 -->
+- **path_or_link**: [`.ai/CODEX_REPORTS/plan3-v0-2-unified-control-plane-contracts-0001.md`](plan3-v0-2-unified-control-plane-contracts-0001.md)
+  - **content_summary**: H1《Plan 3 v0.2 Unified Control-Plane Contracts — Implementation Report》；首个 H2《Outcome》
+  - **role_and_use**: 将 plan3-v0-2-unified-control-plane-contracts-0001.md（H1《Plan 3 v0.2 Unified Control-Plane Contracts — Implementation Report》；首个 H2《Outcome》） 作为“Codex source-bound 报告”使用；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=ai_report_snapshot；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+  - **when_to_read**: 触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 plan3-v0-2-unified-control-plane-contracts-0001.md（H1《Plan 3 v0.2 Unified Control-Plane Contracts — Implementation Report》；首个 H2《Outcome》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+<!-- RIDX_FILE_HEX 2e61692f434f4445585f5245504f5254532f706c616e332d76302d322d756e69666965642d636f6e74726f6c2d706c616e652d636f6e7472616374732d6368616e6765642d66696c65732d303030312e6d64 -->
+- **path_or_link**: [`.ai/CODEX_REPORTS/plan3-v0-2-unified-control-plane-contracts-changed-files-0001.md`](plan3-v0-2-unified-control-plane-contracts-changed-files-0001.md)
+  - **content_summary**: H1《Plan 3 v0.2 Unified Control-Plane Contracts — Changed Files》；首个 H2《Exact candidate allowlist》
+  - **role_and_use**: 将 plan3-v0-2-unified-control-plane-contracts-changed-files-0001.md（H1《Plan 3 v0.2 Unified Control-Plane Contracts — Changed Files》；首个 H2《Exact candidate allowlist》） 作为“Codex source-bound 报告”使用；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=ai_report_snapshot；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+  - **when_to_read**: 触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 plan3-v0-2-unified-control-plane-contracts-changed-files-0001.md（H1《Plan 3 v0.2 Unified Control-Plane Contracts — Changed Files》；首个 H2《Exact candidate allowlist》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+<!-- RIDX_FILE_HEX 2e61692f434f4445585f5245504f5254532f706c616e332d76302d322d756e69666965642d636f6e74726f6c2d706c616e652d636f6e7472616374732d76616c69646174696f6e2d303030312e6d64 -->
+- **path_or_link**: [`.ai/CODEX_REPORTS/plan3-v0-2-unified-control-plane-contracts-validation-0001.md`](plan3-v0-2-unified-control-plane-contracts-validation-0001.md)
+  - **content_summary**: H1《Plan 3 v0.2 Unified Control-Plane Contracts — Validation》；首个 H2《Structural contract checks》
+  - **role_and_use**: 将 plan3-v0-2-unified-control-plane-contracts-validation-0001.md（H1《Plan 3 v0.2 Unified Control-Plane Contracts — Validation》；首个 H2《Structural contract checks》） 作为“Codex source-bound 报告”使用；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=ai_report_snapshot；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+  - **when_to_read**: 触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 plan3-v0-2-unified-control-plane-contracts-validation-0001.md（H1《Plan 3 v0.2 Unified Control-Plane Contracts — Validation》；首个 H2《Structural contract checks》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
 <!-- RIDX_FILE_HEX 2e61692f434f4445585f5245504f5254532f706f73742d70322d657865637574696f6e2d6d656d6f72792d70332d6f6e776172642d7265706c616e2d303030312e6d64 -->
 - **path_or_link**: [`.ai/CODEX_REPORTS/post-p2-execution-memory-p3-onward-replan-0001.md`](post-p2-execution-memory-p3-onward-replan-0001.md)
   - **content_summary**: H1《POST-P2 Execution Memory P3 Onward Replan Review》；首个 H2《Task Profile》
@@ -776,7 +797,7 @@
 
 ## do_not_load_by_default
 
-- 默认不加载 106 个历史/测试/生成/用户或大型 direct artifacts：`.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-0001.md`, `.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-changed-files-0001.md`, `.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-validation-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-changed-files-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-validation-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-expression-protocol-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-expression-protocol-changed-files-0001.md`，另有 98 个见 direct_files。
+- 默认不加载 109 个历史/测试/生成/用户或大型 direct artifacts：`.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-0001.md`, `.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-changed-files-0001.md`, `.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-validation-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-changed-files-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-validation-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-expression-protocol-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-expression-protocol-changed-files-0001.md`，另有 101 个见 direct_files。
 
 ## generation_and_freshness_note
 

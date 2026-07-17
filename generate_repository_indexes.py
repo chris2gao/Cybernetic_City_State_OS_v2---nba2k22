@@ -326,6 +326,14 @@ OPERATIONAL_CONTRACT_PATHS = {
     "08_Domain_Applications/Math_Mentor/MATH_MENTOR_AUTHORITY_REGISTRY.yml",
 }
 
+PLAN3_V0_2_CONTROL_PLANE_PATHS = {
+    "06_Silicon_Index/Plan3_External_Augmentation_OS_Architecture.md",
+    "06_Silicon_Index/Context_Memory_System.md",
+    "06_Silicon_Index/Task_Type_And_Execution_Model.md",
+    "06_Silicon_Index/Context_Loading_And_Drift_Recovery.md",
+    "06_Silicon_Index/Capability_Registry.md",
+}
+
 ROUTING_PATHS = {
     "README.md",
     "ARCHITECTURE.md",
@@ -1440,6 +1448,10 @@ def semantic_profile(path: str, metadata: dict[str, Any] | None = None) -> str:
         return "canonical_governance"
     if path == "06_Silicon_Index/AI_Bootstrap_Sequence.md":
         return "startup_router"
+    if path in PLAN3_V0_2_CONTROL_PLANE_PATHS:
+        return "operational_contract"
+    if path == "06_Silicon_Index/README.md":
+        return "routing_snapshot"
     if path in {".ai/STATE.yml", ".ai/INBOX.md", ".ai/OUTBOX.md", ".ai/HUMAN_BRIEF.md"}:
         return "source_neutral_mailbox"
     if path.startswith(".ai/communication_compliance/"):
@@ -2343,6 +2355,7 @@ DIRECTORY_READING_ORDERS = {
         "06_Silicon_Index/AI_Bootstrap_Sequence.md",
         "06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md",
         "06_Silicon_Index/README.md",
+        "06_Silicon_Index/Plan3_External_Augmentation_OS_Architecture.md",
     ),
     ".ai": (
         ".ai/PROTOCOL.md",
@@ -3515,6 +3528,11 @@ def self_test() -> dict[str, Any]:
             "schema_definition",
             "schema",
         ),
+        "06_Silicon_Index/README.md": ("routing_snapshot", "routing"),
+        **{
+            path: ("operational_contract", "operational_contract")
+            for path in PLAN3_V0_2_CONTROL_PLANE_PATHS
+        },
     }
     for path, expected in semantic_cases.items():
         assert (semantic_profile(path), authority_class(path)) == expected
