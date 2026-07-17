@@ -171,9 +171,12 @@ program_execution_order:
     boundary: "master-only single-branch clone cannot resolve two immutable proof commits hosted on review history; normal all-branch fetch passes 17/17. This is a pre-existing proof-reachability boundary, not an EOL relaxation."
   - order: 6
     id: "plan3-v0-2-unified-control-plane-contracts-0001"
-    status: "implemented_in_review"
+    status: "accepted_published"
     source_base: "2d73781621ed856e414ca7839ff61eb4d8722d35"
     work_branch: "codex/plan3-v0.2-control-plane-implementation"
+    accepted_candidate: "f2f4369012a060f69ea9fd1c7c688291b6b632a7"
+    initial_publication_head: "7701b6f4a49595beb1a3489f92890fb28d3d280c"
+    publication_evidence: "ready PR #16; normal merge; merge tree equals candidate tree 93bbf9220d3075d4245929f2d0451d628a2a095b; post-merge fresh-checkout verification passed"
     objective: "建立五份统一 v0.2 控制面合同、修复失效 README 路由并刷新本备忘录，不激活 L9。"
     business_files:
       - "06_Silicon_Index/Plan3_External_Augmentation_OS_Architecture.md"
@@ -181,7 +184,7 @@ program_execution_order:
       - "06_Silicon_Index/Task_Type_And_Execution_Model.md"
       - "06_Silicon_Index/Context_Loading_And_Drift_Recovery.md"
       - "06_Silicon_Index/Capability_Registry.md"
-    publication_head_resolution: "normal merge commit containing the validated candidate; until then status remains implemented_in_review"
+    final_status_correction_head_resolution: "normal merge commit containing this closeout refresh; initial business publication remains 7701b6f4a49595beb1a3489f92890fb28d3d280c"
     protected_inactive:
       - "runtime"
       - "Coordinator"
@@ -290,18 +293,18 @@ architecture_progress:
       - "06_Silicon_Index/README.md"
       - ".ai/HANDOFF_INIT_PROMPT.md"
     remaining:
-      - "06_Silicon_Index/README.md 的 v0.2 路由与失效 Silicon_Git_and_Parliament_Guide.md 引用修复当前为 implemented_in_review，待正常发布和 post-merge verification。"
+      - "06_Silicon_Index/README.md 的 v0.2 路由与失效 Silicon_Git_and_Parliament_Guide.md 引用修复已发布并通过 post-merge verification。"
   - layer: "L2 Context memory"
-    status: "implemented_in_review"
+    status: "accepted_published"
     evidence:
       - "06_Silicon_Index/Context_Memory_System.md"
       - ".ai/STATE.yml / INBOX.md / OUTBOX.md / HUMAN_BRIEF.md"
       - ".ai/CODEX_REPORTS/**"
     remaining:
-      - "统一 L0/L1/L2、source-bound checkpoint、Codex local/foreground recovery 合同已形成候选；待正常发布和 post-merge verification。"
+      - "统一 L0/L1/L2、source-bound checkpoint、Codex local/foreground recovery 合同已发布并通过 post-merge verification。"
       - "autonomous memory service、自动 checkpoint writer、retention worker 和 Obsidian sync 未实现。"
   - layer: "L3 Task execution model"
-    status: "implemented_in_review"
+    status: "accepted_published"
     evidence:
       - "06_Silicon_Index/Task_Type_And_Execution_Model.md"
       - ".ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md"
@@ -309,10 +312,10 @@ architecture_progress:
       - ".ai/CODEX_TASK_INPUT_CONTRACT.md"
       - ".ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md"
     remaining:
-      - "统一任务 registry、state/evidence/stop/Human-gate 表已形成候选；待正常发布和 post-merge verification。"
+      - "统一任务 registry、state/evidence/stop/Human-gate 表已发布并通过 post-merge verification。"
       - "task daemon、自动执行 state machine 和 Coordinator 未实现。"
   - layer: "L4 Context loading and drift recovery"
-    status: "implemented_in_review"
+    status: "accepted_published"
     evidence:
       - "06_Silicon_Index/Context_Loading_And_Drift_Recovery.md"
       - "06_Silicon_Index/AI_Bootstrap_Sequence.md"
@@ -320,15 +323,15 @@ architecture_progress:
       - ".ai/HANDOFF_INIT_PROMPT.md"
       - ".ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md"
     remaining:
-      - "六类 recovery mode 与 fail-closed runbook 已形成候选；待正常发布和 post-merge verification。"
+      - "八类 recovery mode 与 fail-closed runbook 已发布并通过 post-merge verification。"
       - "自动 context loader、drift monitor、watcher 和 polling worker 未实现。"
   - layer: "L5 Capability registry"
-    status: "implemented_in_review"
+    status: "accepted_published"
     evidence:
       - "06_Silicon_Index/Capability_Registry.md"
       - "08_Domain_Applications/Math_Mentor/MATH_MENTOR_CAPABILITY_MATURITY.yml（领域参考，不是总体授权）"
     remaining:
-      - "全局 fail-closed capability snapshot 已形成候选；待正常发布和 post-merge verification。"
+      - "全局 fail-closed capability snapshot 已发布并通过 post-merge verification。"
       - "capability broker、trusted identity/authorization host 与 L9 integration 未实现。"
   - layer: "L6 Human-AI communication and handoff"
     status: "accepted_published"
@@ -369,18 +372,21 @@ architecture_progress:
 historical_missing_planned_files_at_audit:
   checked_at_head: "7f3ce241f6822326093887b00f31a98382951dee"
   historical_result: "以下五文件在审计 head 上全部 absent；该事实保留为历史证据。"
-  current_candidate_base: "2d73781621ed856e414ca7839ff61eb4d8722d35"
+  resolved_publication:
+    source_base: "2d73781621ed856e414ca7839ff61eb4d8722d35"
+    accepted_candidate: "f2f4369012a060f69ea9fd1c7c688291b6b632a7"
+    initial_publication_head: "7701b6f4a49595beb1a3489f92890fb28d3d280c"
   files:
     - path: "06_Silicon_Index/Plan3_External_Augmentation_OS_Architecture.md"
-      status: "implemented_in_review"
+      status: "accepted_published"
     - path: "06_Silicon_Index/Context_Memory_System.md"
-      status: "implemented_in_review"
+      status: "accepted_published"
     - path: "06_Silicon_Index/Task_Type_And_Execution_Model.md"
-      status: "implemented_in_review"
+      status: "accepted_published"
     - path: "06_Silicon_Index/Context_Loading_And_Drift_Recovery.md"
-      status: "implemented_in_review"
+      status: "accepted_published"
     - path: "06_Silicon_Index/Capability_Registry.md"
-      status: "implemented_in_review"
+      status: "accepted_published"
 
 completed_foundation_milestones:
   - id: "plan3-constitution-and-bootstrap"
@@ -419,7 +425,7 @@ next_overall_plan_sequence:
       - "README/memo routing correction、validation、normal publication 与 exact-head handoff"
     reason: "Human 已接受审计并明确授权优先决策 2；EOL 前置已经完成。"
     human_gate: "preauthorized_for_original_task_completion_and_normal_publication"
-    implementation_status: "implemented_in_review_until_normal_merge_and_postverify"
+    implementation_status: "accepted_published_at_initial_merge_7701b6f4a49595beb1a3489f92890fb28d3d280c; status-closeout correction resolves to its containing normal merge"
 
 domain_reference_indexes:
   math_mentor:
@@ -455,7 +461,7 @@ known_conflicts_and_supersession:
   - id: "missing-silicon-git-parliament-guide-route"
     location: "06_Silicon_Index/README.md"
     issue: "旧 README 引用了 tracked tree 中不存在的 Silicon_Git_and_Parliament_Guide.md。"
-    resolution: "v0.2 候选删除该失效引用，并路由到 AGENTS.md、.ai/CODEX_WORK_MECHANISM_PROTOCOL.md、.ai/PROTOCOL.md、.ai/PROTOCOL_ADHERENCE.md 与 .ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md。"
+    resolution: "published v0.2 README 已删除该失效引用，并路由到 AGENTS.md、.ai/CODEX_WORK_MECHANISM_PROTOCOL.md、.ai/PROTOCOL.md、.ai/PROTOCOL_ADHERENCE.md 与 .ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md。"
 
 takeover_acceptance_questions:
   - "这个系统的一句话定义是什么？"
@@ -490,7 +496,7 @@ refresh_contract:
     directory_index_manifest: "repository_index_manifest.json"
     audit_report: ".ai/CODEX_REPORTS/plan3-overall-plan-read-only-audit-0001.md"
     implementation_report: ".ai/CODEX_REPORTS/plan3-v0-2-unified-control-plane-contracts-0001.md"
-    next_program_step: "validate_publish_postverify_and_handoff_original_task"
+    next_program_step: "publish_status_closeout_correction_postverify_and_handoff_original_task"
 
 historical_tasks:
   - id: "T-20260607-001"
