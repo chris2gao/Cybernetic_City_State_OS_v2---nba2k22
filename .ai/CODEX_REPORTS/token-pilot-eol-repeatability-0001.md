@@ -17,7 +17,7 @@ The fix keeps Git's automatic binary detection and declares canonical LF checkou
 
 Baseline reproduced both accepted audit findings under `core.autocrlf=true`: communication compliance ran 17 tests with 16 pass/1 fail, and the repository-index `check` failed before generation. A detached temporary Git worktree created from the candidate index materialized the representative fixtures and generated outputs as `i/lf w/lf attr/text=auto eol=lf`; the unchanged communication suite then passed 17/17.
 
-Repository-index `check`, `validate`, and `self-test` passed; two consecutive `generate` runs produced no worktree diff. The full `core.autocrlf=true` fresh worktree passed communication 17/17, index direct `check`/`validate`, two no-diff generations, zero tracked CRLF files, and zero tracked worktree changes. No existing fixture, validator, schema, policy, protocol, or business/domain content changed; the generator gained only the explicit `.gitattributes` operational-contract classification required by its fail-closed semantic audit.
+Repository-index `check`, `validate`, and `self-test` passed; two consecutive `generate` runs produced no worktree diff. The full `core.autocrlf=true` fresh worktree passed communication 17/17, index direct `check`/`validate`, two no-diff generations, zero tracked CRLF files, and zero tracked worktree changes. Post-merge remote-clone verification also passed after fetching all remote branch refs. No existing fixture, validator, schema, policy, protocol, or business/domain content changed; the generator gained only the explicit `.gitattributes` operational-contract classification required by its fail-closed semantic audit.
 
 ## Decision rationale
 
@@ -34,6 +34,7 @@ communication_candidate_fresh_worktree: "17/17"
 index_generate_check_validate_self_test: "pass"
 second_generate_diff: "zero"
 fresh_core_autocrlf_true_checkout: "pass; tracked CRLF count 0; tracked status count 0"
+post_merge_remote_clone: "pass after all remote branch refs were fetched"
 changed_path_allowlist: "pass; .gitattributes, generator classification, report, three generated index.md files, manifest"
 ```
 
@@ -47,5 +48,8 @@ Full command output is retained outside the repository under `C:/Users/gk/AppDat
 | baseline index check | 1 | `b592e963f8a29d87899bf8411e55644cab8aaa9e49f1873dc203efe8862099e7` |
 | candidate fresh-worktree communication suite | 0 | `e6a3cfcdc1a0c5b7879a10710f8bdb3ce0fef6c57f71e504bd47b334035901ca` |
 | final consolidated validation bundle | 0 | `1e4bbe99697dfa56a121fe4d4cffa10a5b0f79178fe7cb83687a4ae30e440512` |
+| post-merge full-clone communication suite | 0 | `e832c0e75201fbd6efac62cac1559d8d965b5fe9c0eebba04e12dd6ac0a5d844` |
 
 One candidate-validation retry was required because the first raw `GIT_WORK_TREE` simulation leaked the parent repository's `GIT_DIR` into a nested temporary-repository test. That harness created six local-only fixture commits and changed `core.worktree`; the configuration was restored, no remote was touched, the contaminated branch was preserved at `8df7087d1048f1511d305784b101701b439ea95d`, and a recovery branch was recreated from the exact approved base without branch deletion or history rewrite. Replacing the harness with a real detached Git worktree removed the contamination and did not change product code or validation semantics.
+
+Residual risk: a `--single-branch master` clone cannot resolve fixture review commit `25e78c2932f9fa6157dee6e559f45c056379f5e2`, which lives in review-branch history, so two drift-review cases fail closed with `DRIFT_FOREGROUND_REVIEW_UNRESOLVED`. A normal clone with all remote branches fetched resolves the immutable proof and passes 17/17. This is a pre-existing cross-branch proof-reachability constraint, not an EOL defect; changing that proof contract was outside this task's authorized semantics.
