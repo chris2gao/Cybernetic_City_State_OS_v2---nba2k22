@@ -13,7 +13,8 @@
 
 1. [`06_Silicon_Index/AI_Bootstrap_Sequence.md`](AI_Bootstrap_Sequence.md) — 触发条件：每次开始仓库任务，并准备从当前 Human 任务路由后续合同。读取 AI_Bootstrap_Sequence.md（H1《AI_Bootstrap_Sequence：赛博城邦 AI 启动序列》；首个 H2《0. 定位》）；先于领域文件使用，并继续服从当前 Human 任务触发规则
 2. [`06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md`](06_Cybernetic_Citizen_Awakening.md) — 触发条件：裁决城邦总体权力、Human Speaker 边界或宪章冲突。读取 06_Cybernetic_Citizen_Awakening.md（H1《06_Cybernetic_Citizen_Awakening：硅基特工唤醒与生命契约》；首个 H2《契约一：符号路由与懒加载法则 (The Law of Lazy Loading)》）；索引只能转述其路径与用途，不能降低或扩张其权力边界
-3. [`06_Silicon_Index/README.md`](README.md) — 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 README.md（H1《📁 06_Silicon_Index (硅基生命索引)》；首个 H2《📄 包含文件概览》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+3. [`06_Silicon_Index/README.md`](README.md) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 README.md（H1《📁 06_Silicon_Index (硅基生命索引)》；首个 H2《📄 包含文件概览》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+4. [`06_Silicon_Index/Plan3_External_Augmentation_OS_Architecture.md`](Plan3_External_Augmentation_OS_Architecture.md) — 触发条件：当前动作落入该文件规定的协议或执行边界。读取 Plan3_External_Augmentation_OS_Architecture.md（H1《Plan 3 External Augmentation OS Architecture v0.2》；首个 H2《1. Purpose and scope》）；执行前核验当前任务授权、精确 source head 与上位合同
 
 ## child_directories
 
@@ -59,6 +60,13 @@
   - **authority_class**: `routing`
   - **status_or_freshness**: semantic_profile=startup_router；authority=routing；evidence_basis=markdown_heading_or_visible_structure；先于领域文件使用，并继续服从当前 Human 任务触发规则
   - **when_to_read**: 触发条件：每次开始仓库任务，并准备从当前 Human 任务路由后续合同。读取 AI_Bootstrap_Sequence.md（H1《AI_Bootstrap_Sequence：赛博城邦 AI 启动序列》；首个 H2《0. 定位》）；先于领域文件使用，并继续服从当前 Human 任务触发规则
+<!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f4361706162696c6974795f52656769737472792e6d64 -->
+- **path_or_link**: [`06_Silicon_Index/Capability_Registry.md`](Capability_Registry.md)
+  - **content_summary**: H1《Capability Registry v0.2》；首个 H2《1. Purpose》
+  - **role_and_use**: 将 Capability_Registry.md（H1《Capability Registry v0.2》；首个 H2《1. Purpose》） 作为“执行合同”使用；执行前核验当前任务授权、精确 source head 与上位合同
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=operational_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；执行前核验当前任务授权、精确 source head 与上位合同
+  - **when_to_read**: 触发条件：当前动作落入该文件规定的协议或执行边界。读取 Capability_Registry.md（H1《Capability Registry v0.2》；首个 H2《1. Purpose》）；执行前核验当前任务授权、精确 source head 与上位合同
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f436974795f53746174655f4167656e745f53797374656d5f50726f6d70742e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/City_State_Agent_System_Prompt.md`](City_State_Agent_System_Prompt.md)
   - **content_summary**: H1《Cybernetic City-State Agent Instruction Template》；首个 H2《Use》
@@ -66,6 +74,20 @@
   - **authority_class**: `implementation`
   - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=markdown_heading_or_visible_structure；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
   - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 City_State_Agent_System_Prompt.md（H1《Cybernetic City-State Agent Instruction Template》；首个 H2《Use》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+<!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f436f6e746578745f4c6f6164696e675f416e645f44726966745f5265636f766572792e6d64 -->
+- **path_or_link**: [`06_Silicon_Index/Context_Loading_And_Drift_Recovery.md`](Context_Loading_And_Drift_Recovery.md)
+  - **content_summary**: H1《Context Loading and Drift Recovery v0.2》；首个 H2《1. Purpose》
+  - **role_and_use**: 将 Context_Loading_And_Drift_Recovery.md（H1《Context Loading and Drift Recovery v0.2》；首个 H2《1. Purpose》） 作为“执行合同”使用；执行前核验当前任务授权、精确 source head 与上位合同
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=operational_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；执行前核验当前任务授权、精确 source head 与上位合同
+  - **when_to_read**: 触发条件：当前动作落入该文件规定的协议或执行边界。读取 Context_Loading_And_Drift_Recovery.md（H1《Context Loading and Drift Recovery v0.2》；首个 H2《1. Purpose》）；执行前核验当前任务授权、精确 source head 与上位合同
+<!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f436f6e746578745f4d656d6f72795f53797374656d2e6d64 -->
+- **path_or_link**: [`06_Silicon_Index/Context_Memory_System.md`](Context_Memory_System.md)
+  - **content_summary**: H1《Context Memory System v0.2》；首个 H2《1. Purpose》
+  - **role_and_use**: 将 Context_Memory_System.md（H1《Context Memory System v0.2》；首个 H2《1. Purpose》） 作为“执行合同”使用；执行前核验当前任务授权、精确 source head 与上位合同
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=operational_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；执行前核验当前任务授权、精确 source head 与上位合同
+  - **when_to_read**: 触发条件：当前动作落入该文件规定的协议或执行边界。读取 Context_Memory_System.md（H1《Context Memory System v0.2》；首个 H2《1. Purpose》）；执行前核验当前任务授权、精确 source head 与上位合同
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f43796265726e657469635f436974795f53746174655f4f535f4d6163726f5f4172636869746563747572652e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/Cybernetic_City_State_OS_Macro_Architecture.md`](Cybernetic_City_State_OS_Macro_Architecture.md)
   - **content_summary**: H1《赛博城邦操作系统 (Cybernetic City-State OS) 宏观全景架构图》；首个 H2《🏛️ 赛博城邦宏观流转全景图》
@@ -80,13 +102,27 @@
   - **authority_class**: `implementation`
   - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=markdown_heading_or_visible_structure；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
   - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 Dual_Check_Proposal_System_Architecture.md（H1《赛博城邦 (Cybernetic City-State OS) 终极系统架构流转图》；首个 H2《🎯 架构全景图 (End-to-End Topology)》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+<!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f506c616e335f45787465726e616c5f4175676d656e746174696f6e5f4f535f4172636869746563747572652e6d64 -->
+- **path_or_link**: [`06_Silicon_Index/Plan3_External_Augmentation_OS_Architecture.md`](Plan3_External_Augmentation_OS_Architecture.md)
+  - **content_summary**: H1《Plan 3 External Augmentation OS Architecture v0.2》；首个 H2《1. Purpose and scope》
+  - **role_and_use**: 将 Plan3_External_Augmentation_OS_Architecture.md（H1《Plan 3 External Augmentation OS Architecture v0.2》；首个 H2《1. Purpose and scope》） 作为“执行合同”使用；执行前核验当前任务授权、精确 source head 与上位合同
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=operational_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；执行前核验当前任务授权、精确 source head 与上位合同
+  - **when_to_read**: 触发条件：当前动作落入该文件规定的协议或执行边界。读取 Plan3_External_Augmentation_OS_Architecture.md（H1《Plan 3 External Augmentation OS Architecture v0.2》；首个 H2《1. Purpose and scope》）；执行前核验当前任务授权、精确 source head 与上位合同
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f524541444d452e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/README.md`](README.md)
   - **content_summary**: H1《📁 06_Silicon_Index (硅基生命索引)》；首个 H2《📄 包含文件概览》
-  - **role_and_use**: 将 README.md（H1《📁 06_Silicon_Index (硅基生命索引)》；首个 H2《📄 包含文件概览》） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
-  - **authority_class**: `implementation`
-  - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=markdown_heading_or_visible_structure；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
-  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 README.md（H1《📁 06_Silicon_Index (硅基生命索引)》；首个 H2《📄 包含文件概览》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **role_and_use**: 将 README.md（H1《📁 06_Silicon_Index (硅基生命索引)》；首个 H2《📄 包含文件概览》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **authority_class**: `routing`
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 README.md（H1《📁 06_Silicon_Index (硅基生命索引)》；首个 H2《📄 包含文件概览》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+<!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f5461736b5f547970655f416e645f457865637574696f6e5f4d6f64656c2e6d64 -->
+- **path_or_link**: [`06_Silicon_Index/Task_Type_And_Execution_Model.md`](Task_Type_And_Execution_Model.md)
+  - **content_summary**: H1《Task Type and Execution Model v0.2》；首个 H2《1. Purpose》
+  - **role_and_use**: 将 Task_Type_And_Execution_Model.md（H1《Task Type and Execution Model v0.2》；首个 H2《1. Purpose》） 作为“执行合同”使用；执行前核验当前任务授权、精确 source head 与上位合同
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=operational_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；执行前核验当前任务授权、精确 source head 与上位合同
+  - **when_to_read**: 触发条件：当前动作落入该文件规定的协议或执行边界。读取 Task_Type_And_Execution_Model.md（H1《Task Type and Execution Model v0.2》；首个 H2《1. Purpose》）；执行前核验当前任务授权、精确 source head 与上位合同
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f636974795f73746174655f70726f64756374696f6e5f6d6574686f646f6c6f67792e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/city_state_production_methodology.md`](city_state_production_methodology.md)
   - **content_summary**: H1《赛博城邦：元认知产出体系与创造者方法论》；首个 H2《🏛️ 四层降维投影架构：从真理到心流》

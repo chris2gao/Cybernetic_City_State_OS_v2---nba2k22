@@ -5,6 +5,7 @@ last_architecture_review_date: "2026-07-16"
 source_baseline:
   branch: "master"
   audited_start_head: "7f3ce241f6822326093887b00f31a98382951dee"
+  v0_2_implementation_start_head: "2d73781621ed856e414ca7839ff61eb4d8722d35"
   refreshed_publication_head: "merge_commit_containing_this_refresh"
   note: >
     audited_start_head 是 plan3-overall-plan-read-only-audit-0001 开始时物理核验的
@@ -29,29 +30,35 @@ authority_and_freshness:
     - "未验证，不宣告成功。"
     - "README、PROJECT_CONTEXT、索引和本文件只用于路由，不能代替目标文件和 Git 证据。"
 
-current_human_program_authorization:
+human_program_authorization:
   granted_at: "2026-07-15"
-  authorization_status: "preapproved_for_program_scope"
+  latest_extension_at: "2026-07-16"
+  authorization_status: "extended_for_eol_repair_and_plan3_v0_2_control_plane"
   scope:
     - "完成 human-ai-communication-compliance-gate-0001 的范围内修正、exact-head review、正常 PR、normal merge commit、master publication 与 post-merge verification。"
     - "审计远端开发分支，并将确认仍有效、无冲突、无安全问题且可以进入 master 的分支通过正常 PR/merge 合并。"
     - "在根目录建立开发分支与合并进度总账，记录已合并、未合并、被替代、历史保留和 blocked 分支。"
     - "在本地切换到 master 后直接 git pull，使本地代码等于服务器最新合并后的 master。"
     - "除 Git 内部数据目录外，为 repository tracked tree 的根目录和各级目录建立或更新 index.md。"
-    - "在最新 master 上重新检查总体方案，但暂停继续实现总体方案。"
+    - "历史阶段：在当时最新 master 上重新检查总体方案，并暂停继续实现总体方案；该暂停已由 2026-07-16 新 Human 指令在下列精确范围内 supersede。"
+    - "完成 token-pilot-eol-repeatability-0001 的跨平台 EOL/CRLF 窄修复、验证、正常 PR/merge、post-merge verification 与 handoff。"
+    - "完成 plan3-v0-2-unified-control-plane-contracts-0001 的五份控制面文件、最小 memo/routing 修正、验证、正常 PR/merge、post-merge verification 与 handoff。"
   no_repeat_human_gate_required_for:
     - "原任务范围内的修正、验证、报告、commit、开发分支 push、正常 PR、normal merge 和 post-merge verification。"
     - "经审计确认 safe_to_merge 的开发分支正常发布。"
     - "分支总账、目录索引生成器、index.md 生成与验证。"
     - "总体方案只读检查和审计报告。"
+    - "已授权 EOL/CRLF 窄修复与五份 Plan 3 v0.2 控制面文件的原任务内修正、验证、报告、commit、开发分支 push、正常 PR、normal merge 和 post-merge verification。"
   still_fail_closed_for:
     - "secret、凭证、隐私或安全风险。"
     - "force push、destructive Git、历史重写或不可恢复数据损坏。"
     - "无法自动解决的语义冲突、多个候选权威冲突或目标变化。"
-    - "runtime、Coordinator、Communication Gateway、production writer 或 unattended automation 激活；这些不属于当前程序范围。"
+    - "runtime、Coordinator、Communication Gateway、production writer、scheduler、polling 或 unattended automation 激活；这些不属于当前程序范围。"
+    - "3号方案.md 的宪法正文勘误；Human 接受了冲突判断，但本次明确授权的是优先决策 1 和 2，宪法文件本身保持未改。"
   precedence_note: >
-    “总体方案只检查、不继续实现”是当前更具体的 Human 指令，覆盖此前索引中
-    “检查后继续实现 v0.2”的默认路线。恢复实现必须等待未来新的明确 Human 指令。
+    2026-07-15 的“总体方案只检查、不继续实现”曾覆盖默认实现路线；2026-07-16
+    Human 接受独立审计并明确授权优先决策 1（EOL 窄修复）和 2（五文件 v0.2 控制面），
+    因而该暂停只在这两个精确范围内被 supersede。其他受保护能力和宪法正文勘误仍不从中推导授权。
 
 program_execution_order:
   - order: 1
@@ -123,13 +130,13 @@ program_execution_order:
       validation_report: ".ai/CODEX_REPORTS/repository-directory-index-system-semantic-validation-0001.md"
       changed_files_report: ".ai/CODEX_REPORTS/repository-directory-index-system-semantic-changed-files-0001.md"
       correction_0003: "full JSON/YAML structural schema classification and deterministic structured-anchor normalization accepted and closed at exact master 7f3ce241f6822326093887b00f31a98382951dee"
-      postmerge_fresh_checkout_validation: "在 master 7f750e9d2c7249d9572dad1af85ca96d069d8a19 的 Windows fresh checkout 上，core.autocrlf=true 将四个 canonical LF 生成物物化为 CRLF，导致首次 check 失败；generate 仅重写这四项为 LF 后 check/validate 通过且过滤后的 blob 与 master 相同。Phase 3 接受状态不变，但跨 checkout byte-repeatability 仍需未来独立授权修复。"
+      postmerge_fresh_checkout_validation: "历史上 master 7f750e9d2c7249d9572dad1af85ca96d069d8a19 的 Windows fresh checkout 暴露 CRLF repeatability 缺陷；该风险已由 token-pilot-eol-repeatability-0001 在最终 master 2d73781621ed856e414ca7839ff61eb4d8722d35 窄修复并 fresh-checkout 验证关闭。"
   - order: 4
     id: "overall-plan-inspection-only"
-    status: "audited_published_when_observed_on_master"
+    status: "accepted_published"
     work_branch: "codex/plan3-overall-plan-read-only-audit"
-    work_branch_status: "read_only_audit_in_progress_until_normal_merge"
-    publication_head_resolution: "normal merge commit containing the three plan3-overall-plan-read-only-audit-0001 reports and this memo refresh"
+    work_branch_status: "merged_and_postverified"
+    publication_head: "386749b386c542d2d17fd21447b882fd6b4a296a"
     objective: "基于最新 master 和新目录索引重新检查总体方案。"
     mode: "read_only_audit"
     must_do:
@@ -141,12 +148,46 @@ program_execution_order:
       - "不创建 Plan 3 v0.2 控制面实现。"
       - "不创建 Context Memory、Task Type、Drift Recovery 或 Capability Registry 的正式实现文件。"
       - "不激活 runtime、Coordinator、Gateway、writer 或 automation。"
-    human_decision: "preapproved_for_inspection_only"
-    implementation_resume: "paused_until_new_explicit_human_instruction"
+    human_decision: "accepted; recommendations 1 and 2 later authorized"
+    implementation_resume: "resumed_for_exact_authorized_v0_2_scope"
     reports:
       - ".ai/CODEX_REPORTS/plan3-overall-plan-read-only-audit-0001.md"
       - ".ai/CODEX_REPORTS/plan3-overall-plan-read-only-audit-validation-0001.md"
       - ".ai/CODEX_REPORTS/plan3-overall-plan-read-only-audit-changed-files-0001.md"
+  - order: 5
+    id: "token-pilot-eol-repeatability-0001"
+    status: "accepted_published"
+    objective: "在不削弱 exact-byte 证明的前提下，使通信 fixture 与生成索引在 Windows core.autocrlf=true fresh checkout 上可重复。"
+    source_base: "386749b386c542d2d17fd21447b882fd6b4a296a"
+    initial_candidate: "7e1b46adc9dc4c6f03f3e4d16ae268e7103e6474"
+    final_publication_head: "2d73781621ed856e414ca7839ff61eb4d8722d35"
+    publication_evidence:
+      - "ready PR #14; normal merge 77e87df3c15657761fd74b16aff93f7f2c00a172"
+      - "same-task report correction ready PR #15; final normal merge 2d73781621ed856e414ca7839ff61eb4d8722d35"
+    validation:
+      - "fresh Windows checkout with core.autocrlf=true: communication 17/17"
+      - "index check/validate pass; two generate runs have zero diff"
+      - "tracked CRLF count 0; tracked status count 0"
+    boundary: "master-only single-branch clone cannot resolve two immutable proof commits hosted on review history; normal all-branch fetch passes 17/17. This is a pre-existing proof-reachability boundary, not an EOL relaxation."
+  - order: 6
+    id: "plan3-v0-2-unified-control-plane-contracts-0001"
+    status: "implemented_in_review"
+    source_base: "2d73781621ed856e414ca7839ff61eb4d8722d35"
+    work_branch: "codex/plan3-v0.2-control-plane-implementation"
+    objective: "建立五份统一 v0.2 控制面合同、修复失效 README 路由并刷新本备忘录，不激活 L9。"
+    business_files:
+      - "06_Silicon_Index/Plan3_External_Augmentation_OS_Architecture.md"
+      - "06_Silicon_Index/Context_Memory_System.md"
+      - "06_Silicon_Index/Task_Type_And_Execution_Model.md"
+      - "06_Silicon_Index/Context_Loading_And_Drift_Recovery.md"
+      - "06_Silicon_Index/Capability_Registry.md"
+    publication_head_resolution: "normal merge commit containing the validated candidate; until then status remains implemented_in_review"
+    protected_inactive:
+      - "runtime"
+      - "Coordinator"
+      - "Communication Gateway"
+      - "writer/CAS/replay store"
+      - "scheduler/polling/watcher"
 
 new_model_takeover:
   objective: >
@@ -241,7 +282,7 @@ architecture_progress:
       - "06_Silicon_Index/AI_Bootstrap_Sequence.md"
       - "06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md"
     remaining:
-      - "清理 3号方案.md 中要求暴露 XML chain-of-thought 的历史措辞；当前平台规则和 published communication protocol 优先。"
+      - "3号方案.md 中要求暴露 XML chain-of-thought 的历史措辞已由当前平台规则和 published communication protocol supersede；宪法正文勘误仍是独立 Human 决策，本次未修改。"
   - layer: "L1 Bootstrap and lazy loading"
     status: "accepted_published"
     evidence:
@@ -249,40 +290,47 @@ architecture_progress:
       - "06_Silicon_Index/README.md"
       - ".ai/HANDOFF_INIT_PROMPT.md"
     remaining:
-      - "把总体方案接管索引正式接入 bootstrap 路由。"
+      - "06_Silicon_Index/README.md 的 v0.2 路由与失效 Silicon_Git_and_Parliament_Guide.md 引用修复当前为 implemented_in_review，待正常发布和 post-merge verification。"
   - layer: "L2 Context memory"
-    status: "partially_implemented"
+    status: "implemented_in_review"
     evidence:
+      - "06_Silicon_Index/Context_Memory_System.md"
       - ".ai/STATE.yml / INBOX.md / OUTBOX.md / HUMAN_BRIEF.md"
       - ".ai/CODEX_REPORTS/**"
-      - "PROJECT_CONTEXT.md"
-      - "08_Domain_Applications/Math_Mentor/MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md"
-      - "08_Domain_Applications/Math_Mentor/MATH_MENTOR_CURRENT_STATE.yml"
     remaining:
-      - "缺少统一 06_Silicon_Index/Context_Memory_System.md。"
-      - "缺少跨领域 L0 current state、L1 decision/roadmap、L2 evidence/report 的统一 registry。"
-      - "缺少 Codex local context memory branch 的正式规范。"
+      - "统一 L0/L1/L2、source-bound checkpoint、Codex local/foreground recovery 合同已形成候选；待正常发布和 post-merge verification。"
+      - "autonomous memory service、自动 checkpoint writer、retention worker 和 Obsidian sync 未实现。"
   - layer: "L3 Task execution model"
-    status: "partially_implemented"
+    status: "implemented_in_review"
     evidence:
+      - "06_Silicon_Index/Task_Type_And_Execution_Model.md"
       - ".ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md"
       - ".ai/CODEX_WORK_MECHANISM_PROTOCOL.md"
       - ".ai/CODEX_TASK_INPUT_CONTRACT.md"
       - ".ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md"
     remaining:
-      - "缺少统一 06_Silicon_Index/Task_Type_And_Execution_Model.md。"
-      - "需要把 read_only_review、planning、short_goal、long_run、protocol_patch、publication、drift_recovery、Engine B court 等类型汇总为一个机器可读索引。"
+      - "统一任务 registry、state/evidence/stop/Human-gate 表已形成候选；待正常发布和 post-merge verification。"
+      - "task daemon、自动执行 state machine 和 Coordinator 未实现。"
   - layer: "L4 Context loading and drift recovery"
-    status: "partially_implemented"
+    status: "implemented_in_review"
     evidence:
+      - "06_Silicon_Index/Context_Loading_And_Drift_Recovery.md"
       - "06_Silicon_Index/AI_Bootstrap_Sequence.md"
       - ".ai/PROTOCOL_ADHERENCE.md"
       - ".ai/HANDOFF_INIT_PROMPT.md"
       - ".ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md"
     remaining:
-      - "缺少统一 06_Silicon_Index/Context_Loading_And_Drift_Recovery.md。"
-      - "需要统一 same-window fast path、context-boundary reload、drift recovery、new-window reset、Codex local recovery 和 ChatGPT GitHub-only recovery。"
-  - layer: "L5 Human-AI communication and handoff"
+      - "六类 recovery mode 与 fail-closed runbook 已形成候选；待正常发布和 post-merge verification。"
+      - "自动 context loader、drift monitor、watcher 和 polling worker 未实现。"
+  - layer: "L5 Capability registry"
+    status: "implemented_in_review"
+    evidence:
+      - "06_Silicon_Index/Capability_Registry.md"
+      - "08_Domain_Applications/Math_Mentor/MATH_MENTOR_CAPABILITY_MATURITY.yml（领域参考，不是总体授权）"
+    remaining:
+      - "全局 fail-closed capability snapshot 已形成候选；待正常发布和 post-merge verification。"
+      - "capability broker、trusted identity/authorization host 与 L9 integration 未实现。"
+  - layer: "L6 Human-AI communication and handoff"
     status: "accepted_published"
     evidence:
       - ".ai/PROTOCOL.md"
@@ -292,29 +340,20 @@ architecture_progress:
     remaining:
       - "published protocol 已定义 provider-neutral roles、冻结七字段 pointer、Human Brief、execution recommendation 和 bounded independent expression。"
       - "repository compliance gate 已发布，但 trusted host、production transport 和 unattended runtime 仍未激活。"
-  - layer: "L6 Executable communication compliance gate"
-    status: "accepted_published"
-    publication_evidence: "ready PR #8; normal merge commit 22cf4731cd29a2ebe271fe67fd561df1d0701d01"
-    snapshot:
-      task_id: "human-ai-communication-compliance-gate-0001"
-      review_state: "accepted_published"
-      accepted_candidate: "17f97d1b3378ff1040e8fd498849743445217c44"
-      work_branch: "codex/human-ai-communication-compliance-gate"
-      publication_authorized: true
-      activation_authorized: false
-    remaining:
       - "gate 是 repository-level fail-closed validator；production trusted host、writer、poller、Coordinator 和 Gateway 仍需独立设计与 Human 授权。"
       - "不得用模型生成的 human_gate 字段或 fixture 代替真实外部授权。"
-      - "2026-07-16 当前 Windows checkout 回归为 16/17：fixture exact-byte hashes 绑定 LF，而 core.autocrlf=true 物化为 CRLF；历史 215/215 证据仍保留，但跨 checkout 可重复性需要未来独立授权修复。"
-  - layer: "L7 Capability registry"
-    status: "absent"
+      - "EOL/CRLF 窄修复已在 master 2d73781621ed856e414ca7839ff61eb4d8722d35 发布；fresh all-branch checkout communication 17/17，exact-byte checks 未削弱。"
+  - layer: "L7 Repository index and provenance"
+    status: "accepted_published"
     evidence:
-      - "总体架构 v0.1 中定义了 terminal、GitHub、deterministic calculation、web、Obsidian、app/plugin/MCP、domain skill、runtime/Coordinator 类别。"
+      - "generate_repository_indexes.py"
+      - "repository_index_manifest.json"
+      - "root and per-directory index.md"
     remaining:
-      - "缺少统一 06_Silicon_Index/Capability_Registry.md。"
-      - "需要为每项能力记录 implemented/planned/forbidden、可用 actor、auth scope、风险、验证与 fallback。"
+      - "EOL policy 已使 fresh Windows core.autocrlf=true checkout 的 check/validate 与 second-run zero diff 通过。"
+      - "仍是显式/手动生成；无 watcher、poller 或 CI activation 证明。"
   - layer: "L8 Human brief and external knowledge workspace"
-    status: "planned"
+    status: "partially_implemented"
     evidence:
       - "GitHub Human Brief 已存在于 .ai 通信协议。"
     remaining:
@@ -327,19 +366,21 @@ architecture_progress:
     remaining:
       - "production trusted host、identity/signature、atomic state CAS、replay store、runtime、Coordinator、Gateway、scheduler/writer、observability 和 rollback 均需独立设计与 Human 授权。"
 
-verified_missing_planned_files_on_master:
+historical_missing_planned_files_at_audit:
   checked_at_head: "7f3ce241f6822326093887b00f31a98382951dee"
+  historical_result: "以下五文件在审计 head 上全部 absent；该事实保留为历史证据。"
+  current_candidate_base: "2d73781621ed856e414ca7839ff61eb4d8722d35"
   files:
     - path: "06_Silicon_Index/Plan3_External_Augmentation_OS_Architecture.md"
-      status: "absent"
+      status: "implemented_in_review"
     - path: "06_Silicon_Index/Context_Memory_System.md"
-      status: "absent"
+      status: "implemented_in_review"
     - path: "06_Silicon_Index/Task_Type_And_Execution_Model.md"
-      status: "absent"
+      status: "implemented_in_review"
     - path: "06_Silicon_Index/Context_Loading_And_Drift_Recovery.md"
-      status: "absent"
+      status: "implemented_in_review"
     - path: "06_Silicon_Index/Capability_Registry.md"
-      status: "absent"
+      status: "implemented_in_review"
 
 completed_foundation_milestones:
   - id: "plan3-constitution-and-bootstrap"
@@ -357,22 +398,28 @@ completed_foundation_milestones:
   - id: "human-ai-communication-compliance-gate"
     status: "accepted_published"
     result: "repository gate 已经 ready PR #8 和 normal merge commit 22cf4731cd29a2ebe271fe67fd561df1d0701d01 发布；production runtime 仍受保护且未激活。"
+  - id: "token-pilot-eol-repeatability"
+    status: "accepted_published"
+    result: "跨 checkout EOL/CRLF 缺陷已在最终 master 2d73781621ed856e414ca7839ff61eb4d8722d35 修复；communication 17/17、index check/validate、second-run zero diff 和 tracked CRLF=0 均在 fresh Windows checkout 通过。"
 
 next_overall_plan_sequence:
   - order: 1
-    objective: "在 published master 上前台审查 repository-wide directory index.md system。"
-    reason: "首次完整索引先通过正常 PR/merge 发布，再在稳定最终树上检查自然语言路由质量。"
-    human_gate: "preapproved_for_master_index_content_correction_after_review"
-    implementation_status: "accepted_closed_at_7f3ce241f6822326093887b00f31a98382951dee"
+    objective: "关闭跨平台 EOL/CRLF 可重复性缺陷。"
+    reason: "它是五文件 v0.2 发布验证的前置条件。"
+    human_gate: "authorized_and_completed"
+    implementation_status: "accepted_published_at_2d73781621ed856e414ca7839ff61eb4d8722d35"
   - order: 2
-    objective: "只读检查 Plan 3 总体方案。"
+    objective: "发布五份 Plan 3 v0.2 统一控制面合同。"
     deliverables:
-      - "总体方案现状审计报告"
-      - "缺口、风险和优先级"
-      - "建议的下一完整实现任务"
-    reason: "Human 当前要求先检查，不继续实现。"
-    human_gate: "preapproved_for_inspection_only"
-    implementation_status: "audited_published_when_observed_on_master; Plan 3 implementation remains paused_until_new_explicit_human_instruction"
+      - "Plan3_External_Augmentation_OS_Architecture.md"
+      - "Context_Memory_System.md"
+      - "Task_Type_And_Execution_Model.md"
+      - "Context_Loading_And_Drift_Recovery.md"
+      - "Capability_Registry.md"
+      - "README/memo routing correction、validation、normal publication 与 exact-head handoff"
+    reason: "Human 已接受审计并明确授权优先决策 2；EOL 前置已经完成。"
+    human_gate: "preauthorized_for_original_task_completion_and_normal_publication"
+    implementation_status: "implemented_in_review_until_normal_merge_and_postverify"
 
 domain_reference_indexes:
   math_mentor:
@@ -405,6 +452,10 @@ known_conflicts_and_supersession:
   - id: "local-absolute-paths"
     location: "旧版未完成任务备忘录.yml"
     resolution: "旧 Windows/Gemini absolute paths 不可移植，只作为历史记录；新索引必须使用 repository-relative paths。"
+  - id: "missing-silicon-git-parliament-guide-route"
+    location: "06_Silicon_Index/README.md"
+    issue: "旧 README 引用了 tracked tree 中不存在的 Silicon_Git_and_Parliament_Guide.md。"
+    resolution: "v0.2 候选删除该失效引用，并路由到 AGENTS.md、.ai/CODEX_WORK_MECHANISM_PROTOCOL.md、.ai/PROTOCOL.md、.ai/PROTOCOL_ADHERENCE.md 与 .ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md。"
 
 takeover_acceptance_questions:
   - "这个系统的一句话定义是什么？"
@@ -412,7 +463,7 @@ takeover_acceptance_questions:
   - "Engine A 与 Engine B 的边界是什么？"
   - "总体 OS 各层目前是 published、partial、in-review、planned、absent 还是 protected inactive？"
   - "当前活动任务从哪里读取，为什么不能相信 master neutral mailbox 或本文件快照？"
-  - "当前四阶段程序的顺序、授权和暂停边界是什么？"
+  - "当前程序的顺序、授权、候选状态和 protected boundary 是什么？"
   - "哪些能力明确未激活，哪些动作不属于当前授权范围？"
   - "哪些历史文字已被当前安全/通信协议 supersede？"
 
@@ -422,6 +473,8 @@ refresh_contract:
     - "开发分支审计、合并与分支总账完成。"
     - "repository-wide index.md system 完成。"
     - "总体方案只读审计完成。"
+    - "EOL/CRLF repeatability 修复发布。"
+    - "五份 Plan 3 v0.2 控制面候选、发布或 supersession。"
     - "Human 作出影响总体路线、产品边界或 protected activation 的新决定。"
   update_rules:
     - "先核验 current master 和 ai/review/latest；不得只改文字日期。"
@@ -430,13 +483,14 @@ refresh_contract:
     - "所有路径使用 repository-relative path。"
     - "本文件只维护高层索引和进度；详细合同留在目标文件，避免重复产生第二套权威。"
   latest_refresh:
-    task_id: "plan3-overall-plan-read-only-audit-0001"
-    audited_start_master: "7f3ce241f6822326093887b00f31a98382951dee"
-    publication_head_resolution: "normal merge commit containing this audit and memo refresh"
+    task_id: "plan3-v0-2-unified-control-plane-contracts-0001"
+    audited_start_master: "2d73781621ed856e414ca7839ff61eb4d8722d35"
+    publication_head_resolution: "normal merge commit containing the five v0.2 files, routing refresh, task reports and deterministic index consequences"
     branch_ledger: "开发分支与合并进度总账.md"
     directory_index_manifest: "repository_index_manifest.json"
     audit_report: ".ai/CODEX_REPORTS/plan3-overall-plan-read-only-audit-0001.md"
-    next_program_step: "paused_until_new_explicit_human_instruction"
+    implementation_report: ".ai/CODEX_REPORTS/plan3-v0-2-unified-control-plane-contracts-0001.md"
+    next_program_step: "validate_publish_postverify_and_handoff_original_task"
 
 historical_tasks:
   - id: "T-20260607-001"

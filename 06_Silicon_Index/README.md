@@ -20,8 +20,15 @@
   * 它用于帮助新会话快速建立城邦语境，不是仓库宪法，也不覆盖平台、system、developer 或当前 Human 指令。
 * **`city_state_production_methodology.md`**：城邦生产者工作法。
   * 教导 AI 如何建立“降维投影架构”，如何利用“认知卸载”原则来保护碳基宿主脆弱的前额叶。
-* **`Silicon_Git_and_Parliament_Guide.md`**：硅基生命运作指南（原城邦大宪章）。
-  * 手把手指导 AI：怎么使用 Git 开辟独立的分支（私域）、公域和私域里分别该放什么东西、以及如何利用议会（提交 PR）来修改公域规则。
+* **`Plan3_External_Augmentation_OS_Architecture.md`**：Plan 3 v0.2 控制面总图与唯一权威/新鲜度交叉表。
+  * 它路由以下四份统一合同，但不产生授权或激活 runtime：
+    * `Context_Memory_System.md`：L0/L1/L2 文档记忆、checkpoint 与 provenance。
+    * `Task_Type_And_Execution_Model.md`：任务类型、状态、证据、停止条件与 Human gate。
+    * `Context_Loading_And_Drift_Recovery.md`：按需加载、漂移检测和同窗口/新窗口恢复。
+    * `Capability_Registry.md`：能力成熟度、使用者、授权范围、风险、验证、fallback 与激活边界。
+* **Git、议会与模型通信的实际规范**：不存在单独的 `Silicon_Git_and_Parliament_Guide.md`；不要继续引用或猜测其内容。
+  * 本地 Git 与任务级工作流：repository root `AGENTS.md`、`.ai/CODEX_WORK_MECHANISM_PROTOCOL.md`。
+  * GitHub pointer handoff、review/publication 与 Human gate：`.ai/PROTOCOL.md`、`.ai/PROTOCOL_ADHERENCE.md`、`.ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md`。
 
 ## 启动顺序
 
