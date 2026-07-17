@@ -1542,7 +1542,7 @@ def semantic_profile(path: str, metadata: dict[str, Any] | None = None) -> str:
     if path.startswith("01_Research_Reports/") or path in ROOT_RESEARCH_ASSET_PATHS:
         return "research_or_user_asset"
 
-    if path in OPERATIONAL_CONTRACT_PATHS or path == ".gitignore":
+    if path in OPERATIONAL_CONTRACT_PATHS or path in {".gitignore", ".gitattributes"}:
         return "operational_contract"
     if path in ROUTING_PATHS or name.casefold() in {"readme.md", "architecture.md", "project_context.md"}:
         return "routing_snapshot"

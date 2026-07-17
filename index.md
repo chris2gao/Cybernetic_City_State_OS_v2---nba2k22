@@ -26,7 +26,7 @@
 
 <!-- RIDX_DIR_HEX 2e6169 -->
 - **path_or_link**: [`.ai`](.ai/index.md)
-  - **content_scope**: AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信合规入口；tracked 后代文件数=447
+  - **content_scope**: AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信合规入口；tracked 后代文件数=448
   - **when_to_enter**: 执行 handoff、任务接管、review/publication 或查证历史 run
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30315f52657365617263685f5265706f727473 -->
@@ -97,6 +97,13 @@
 
 ## direct_files
 
+<!-- RIDX_FILE_HEX 2e67697461747472696275746573 -->
+- **path_or_link**: [`.gitattributes`](.gitattributes)
+  - **content_summary**: 纯文本，2 个非空行；首行“# Keep tracked text byte-stable across platforms; auto-detected binary files remain binary.”
+  - **role_and_use**: 将 .gitattributes（nonempty_lines=2；# Keep tracked text byte-stable across platforms; auto-detected binary files remain binary.） 作为“执行合同”使用；执行前核验当前任务授权、精确 source head 与上位合同
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=operational_contract；authority=operational_contract；evidence_basis=text_line_count_and_first_visible_line；执行前核验当前任务授权、精确 source head 与上位合同
+  - **when_to_read**: 触发条件：当前动作落入该文件规定的协议或执行边界。读取 .gitattributes（nonempty_lines=2；# Keep tracked text byte-stable across platforms; auto-detected binary files remain binary.）；执行前核验当前任务授权、精确 source head 与上位合同
 <!-- RIDX_FILE_HEX 2e67697469676e6f7265 -->
 - **path_or_link**: [`.gitignore`](.gitignore)
   - **content_summary**: Git ignore 规则 11 条；样例：__pycache__/, *.pyc, *.pyo, .DS_Store, Thumbs.db, *.tmp
