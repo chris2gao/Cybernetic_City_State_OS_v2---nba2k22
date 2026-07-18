@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "citystate-cooperative-lane-envelope-v1",
+  "title": "Cooperative C0/C1 lane envelope",
+  "description": "Descriptive write-ownership metadata. It grants no authority and provides no identity authentication or replay protection.",
+  "type": "object",
+  "required": [
+    "lane_instance_id",
+    "environment_class",
+    "protocol_role",
+    "load_profile_id",
+    "message_seq",
+    "lane_protocol_epoch",
+    "base_review_head",
+    "written_at"
+  ],
+  "properties": {
+    "lane_instance_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*-[0-9a-f]{6,32}$"
+    },
+    "environment_class": {
+      "enum": ["claude_desktop", "chatgpt_web", "codex_desktop", "codex_cli", "claude_code_cli"]
+    },
+    "protocol_role": {
+      "description": "Descriptive only; never authorizes a write or transition.",
+      "enum": ["human_speaker", "foreground_review_and_task_dispatch", "backend_execution_and_handoff"]
+    },
+    "load_profile_id": {
+      "enum": ["foreground_planner", "foreground_independent_reviewer", "backend_executor", "math_mentor_teacher"]
+    },
+    "message_seq": {"type": "integer", "minimum": 1},
+    "lane_protocol_epoch": {
+      "description": "Must equal the currently bound lane protocol release head.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "base_review_head": {
+      "description": "ai/review/latest head observed before the durable write; no self-reference is required.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "written_at": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": false
+}

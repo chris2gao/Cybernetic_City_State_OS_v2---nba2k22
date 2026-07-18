@@ -48,6 +48,12 @@ Authority comes from the assumed protocol role together with current Human/task 
 
 This compatibility mapping adds no pointer field, changes no key order, and authorizes no new action. The stable role names remain `human_speaker`, `foreground_review_and_task_dispatch`, and `backend_execution_and_handoff` even if compatible providers change later.
 
+Initialization additionally records three orthogonal, non-authorizing dimensions:
+`environment_class` (`claude_desktop`, `chatgpt_web`, `codex_desktop`, `codex_cli`, or
+`claude_code_cli`), a self-declared local `lane_instance_id`, and a routing-only
+`load_profile_id`. Load profiles in `.ai/load_profiles/` point to canonical sources;
+they never copy or replace protocol, token, constitutional, or domain authority.
+
 ## Canonical Human-AI Communication Completeness
 
 ### Three Distinct Communication Channels
@@ -241,9 +247,12 @@ Freshness establishes current state only. Git HEAD, mailbox recency, timestamps,
 
 - Performs approved local edits and tests.
 - Creates business commits on the source branch.
-- Writes `STATE.yml` and `OUTBOX.md`.
+- After lane cutover, appends only to its own lane and does not write canonical
+  `STATE.yml`, latest `.ai/HUMAN_BRIEF.md`, or legacy shared `OUTBOX.md`.
 - Returns a short pointer handoff instead of pasting execution reports into chat.
-- Writes or updates a Human-facing brief for material completions, review handoffs, publication, blocked/conflict states, risks, or Human gates, including bounded independent expression.
+- Writes an immutable `.ai/HUMAN_BRIEFS/<task-id>/<lane-instance-id>-<message-seq>.md` for material completions,
+  review handoffs, publication, blocked/conflict states, risks, or Human gates,
+  including bounded independent expression.
 - Publishes disposable review snapshots when authorized by this protocol.
 - Does not push the source branch without explicit human approval.
 
@@ -253,6 +262,8 @@ Freshness establishes current state only. Git HEAD, mailbox recency, timestamps,
 - Performs review, writes long tasks to approved GitHub paths, and sends only a short pointer signal.
 - Writes or updates a Human-facing brief for material Human-facing events and applies the complete Human operational response contract.
 - May write back only to approved `.ai` communication paths.
+- Solely owns canonical `.ai/STATE.yml` reduction and the latest
+  `.ai/HUMAN_BRIEF.md` pointer/summary surface.
 - Must not write business files.
 
 ### Human Speaker (`Human`; sole compatible occupant)
@@ -270,12 +281,45 @@ Freshness establishes current state only. Git HEAD, mailbox recency, timestamps,
 - `CODEX_TASK_INPUT_CONTRACT.md`: canonical task signal and long-packet input requirements.
 - `STATE.yml`: current machine-readable handoff state.
 - `INBOX.md`: optional pointer/index for the current signal, packet, task, or brief.
-- `OUTBOX.md`: durable backend-role report and handoff target.
+- `OUTBOX.md`: source-neutral mailbox and legacy read-only backend compatibility input after lane cutover.
 - `DECISIONS.md`: compact long-lived handoff decisions, not a turn log.
 - `HUMAN_BRIEF.md`: latest human-facing brief.
 - `HUMAN_BRIEFS/*.md`: optional archive for significant human-facing briefs.
+- `load_profiles/*.md`: routing-only initialization manifests.
+- `lanes/`: cooperative per-instance append layout, schema, reducer, and durable lane events.
 
 The source branch stores the stable protocol and neutral mailbox baseline. Active per-turn state is published on `ai/review/latest` and must not be merged back into the source branch.
+
+## Cooperative Lane Epoch And Migration
+
+`lane_required_after_protocol_release_head` is the bound value in
+`.ai/lanes/lane_epoch.yml` for the release that introduces this section. From that
+one-way epoch onward, backend durable
+receipts use `.ai/lanes/<lane_instance_id>/events/`; legacy shared `.ai/OUTBOX.md` is
+read-only compatibility input. Cutover is atomic: no event is dual-written and one
+task may not mix legacy and lane delivery. Either condition fails closed.
+
+The epoch may be bound and published only when no backend task is in flight and every
+old backend session has completed or stopped. After publication, every environment
+must reload the protocol before its next durable write; otherwise cutover is blocked.
+
+The lane envelope is an independent artifact conforming to
+`.ai/lanes/lane_envelope.schema.json` and appears in the communication event's
+`required_refs`, never inside the frozen seven-field pointer. The event carries the
+role-appropriate seven-field signal or handoff. Its role and environment fields are
+descriptive and grant no authority. `lane_protocol_epoch` must equal the bound current
+epoch; `base_review_head` is the review head observed before writing and is not a
+self-reference. Each lane appends only its own events; cross-lane writes are rejected
+under the cooperative threat model.
+
+Foreground deterministically takes the greatest sequence per lane, sorts by lane ID
+and sequence, ignores events with a different `lane_protocol_epoch`, and writes
+optional `lane_inputs` provenance to canonical STATE. Each input carries immutable
+event/envelope commit, path, and SHA-256 evidence. Lane tests validate this routing and
+traceability; the existing communication gate, policy semantics, validator, fixtures,
+canonical event, pointer, and STATE transition rules receive no lane behavior. This
+adds no transition authorization, CAS, ActorOrigin binding, formal proof, scheduler,
+polling, Gateway, or runtime. Source/master neutral mailbox rules remain unchanged.
 
 ## Durable Protocol And Active Mailbox Separation
 
@@ -292,6 +336,12 @@ Durable protocol files include:
 - `.ai/CODEX_TASK_INPUT_CONTRACT.md`
 - `.ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md`
 - `.ai/DECISIONS.md`
+- `.ai/load_profiles/*.md`
+- `.ai/lanes/index.md`
+- `.ai/lanes/lane_envelope.schema.json`
+- `.ai/lanes/lane_meta.schema.json`
+- `.ai/lanes/lane_epoch.yml`
+- `.ai/lanes/reduce-lanes.ps1`
 
 Active mailbox files include:
 
@@ -346,7 +396,7 @@ Codex-to-ChatGPT handoffs contain these seven required core fields:
 
 `detail_ref` is an optional eighth field. Include it when a separate long backend-role report, plan, analysis, or execution detail exists; omit it when `report_ref` is sufficient. Backend-role-generated long details live under the historical `.ai/CODEX_REPORTS/*.md` namespace unless the task names another approved backend-owned path.
 
-Detailed execution reports live in `.ai/CODEX_REPORTS/*.md`, `.ai/OUTBOX.md`, or `.ai/STATE.yml`. IDs prevent duplicate consumption, source heads bind messages to business state, reference fields identify the durable content to read, and `brief_ref` points to the human-facing summary.
+Detailed execution reports live in `.ai/CODEX_REPORTS/*.md`; legacy `.ai/OUTBOX.md` is read-only after lane cutover. IDs prevent duplicate consumption, source heads bind messages to business state, reference fields identify the durable content to read, and `brief_ref` points to the immutable per-task Human Brief.
 
 A source-branch baseline may use `review_branch_head: null`. An active committed review artifact uses `review_branch_head: "self"` because a commit cannot embed its own SHA; the post-publication short handoff resolves it to the actual remote SHA.
 
@@ -428,7 +478,7 @@ If a referenced file is missing, stale, malformed, or contradictory, the agent m
 - Keep human-facing chat minimal; prefer `brief_ref`.
 - Every non-null ref must still be dereferenced. Token limits govern how evidence is read, not whether required evidence is read.
 - For large files, prefer `rg`, headings, summaries, and targeted line ranges. Do not load multiple large evidence files with a single `Get-Content -Raw` operation.
-- Keep `OUTBOX.md` short and place detailed execution logs in `.ai/CODEX_REPORTS/*.md`.
+- Keep legacy `OUTBOX.md` read-only after lane cutover and place detailed execution logs in `.ai/CODEX_REPORTS/*.md`.
 
 The canonical context budget is inherited from `.ai/HANDOFF_COMMON_CONVENTIONS.md`. Similar planning tasks should target approximately 12k to 18k visible tokens. Full protocol initialization is required only at a context boundary or when the protocol head changes; otherwise use the fast path.
 
@@ -509,7 +559,7 @@ ChatGPT communication writeback has been tested and human-approved for `.ai` com
 - Model-to-model chat uses pointer-based messages rather than long prompts or reports.
 - Long foreground-role tasks use `.ai/TASKS/*.md` or a Human-approved carrier under the historical `.ai/USER_UPLOADS/` namespace.
 - Short foreground-role decisions use the historical `.ai/SIGNAL_CHATGPT_*.yml` namespace and the canonical pointer signal with `brief_ref`.
-- Backend-role responses use the canonical pointer handoff with `brief_ref` and point to `.ai/OUTBOX.md` or the historical `.ai/CODEX_REPORTS/*.md` namespace.
+- Backend-role responses use the canonical pointer handoff with `brief_ref`, point to `.ai/CODEX_REPORTS/*.md`, and publish through their instance lane after cutover.
 - `.ai/INBOX.md` may serve as an index or pointer and is not the only long-packet carrier.
 - Human-facing summaries should be read through `.ai/HUMAN_BRIEF.md` or `.ai/HUMAN_BRIEFS/*.md`.
 

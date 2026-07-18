@@ -23,12 +23,12 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
 
 <!-- RIDX_DIR_HEX 2e61692f434f4445585f5245504f525453 -->
 - **path_or_link**: [`.ai/CODEX_REPORTS`](CODEX_REPORTS/index.md)
-  - **content_scope**: 按 task/source head 保存 Codex 实现、验证与 changed-files 报告；tracked 后代文件数=114
+  - **content_scope**: 按 task/source head 保存 Codex 实现、验证与 changed-files 报告；tracked 后代文件数=115
   - **when_to_enter**: 查证某个 task/source head 的实现、验证或 changed-files 报告
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f48554d414e5f425249454653 -->
 - **path_or_link**: [`.ai/HUMAN_BRIEFS`](HUMAN_BRIEFS/index.md)
-  - **content_scope**: 保存 Human-facing 接受、授权与 publication 决策快照；tracked 后代文件数=3
+  - **content_scope**: 保存 Human-facing 接受、授权与 publication 决策快照；tracked 后代文件数=5
   - **when_to_enter**: 查证具体 Human acceptance、authorization 或 publication brief
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f4c4f4e475f52554e5f4c4f4753 -->
@@ -50,6 +50,16 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
 - **path_or_link**: [`.ai/communication_compliance`](communication_compliance/index.md)
   - **content_scope**: Human-AI event/pointer/state schema、validator 与 fail-closed proof 控制面；tracked 后代文件数=207
   - **when_to_enter**: 验证 event/pointer/state schema、validator 或 transition proof
+  - **load_policy**: `task_triggered_lazy_load`
+<!-- RIDX_DIR_HEX 2e61692f6c616e6573 -->
+- **path_or_link**: [`.ai/lanes`](lanes/index.md)
+  - **content_scope**: Human-AI event/pointer/state schema、validator 与 fail-closed proof 控制面；tracked 后代文件数=8
+  - **when_to_enter**: 验证 event/pointer/state schema、validator 或 transition proof
+  - **load_policy**: `task_triggered_lazy_load`
+<!-- RIDX_DIR_HEX 2e61692f6c6f61645f70726f66696c6573 -->
+- **path_or_link**: [`.ai/load_profiles`](load_profiles/index.md)
+  - **content_scope**: AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信合规入口；tracked 后代文件数=5
+  - **when_to_enter**: 执行 handoff、任务接管、review/publication 或查证历史 run
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 2e61692f72756e73 -->
 - **path_or_link**: [`.ai/runs`](runs/index.md)

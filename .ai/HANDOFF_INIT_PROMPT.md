@@ -19,13 +19,17 @@ During a continuous review loop in the same active context, do not reload the fu
 
 Load the current communication protocol into working context so the agent does not repeat old chat habits such as pasting long prompts, omitting `brief_ref`, treating the machine pointer as a complete Human response, omitting required backend execution advice or independent expression, or ignoring inherited default rules.
 
-The initializing instance identifies its stable role before acting: ChatGPT or Claude occupies `foreground_review_and_task_dispatch`; Codex or Claude Code occupies `backend_execution_and_handoff`; Human alone occupies `human_speaker`. Authority follows role plus Human/task authorization, never provider brand.
+The initializing instance identifies four separate dimensions before acting: stable `protocol_role`, descriptive `environment_class`, self-declared local `lane_instance_id`, and routing-only `load_profile_id`. ChatGPT or Claude occupies `foreground_review_and_task_dispatch`; Codex or Claude Code occupies `backend_execution_and_handoff`; Human alone occupies `human_speaker`. Environment, lane, profile, and model metadata grant no authority.
 
 ## Full Initialization Read Order
 
-At a context boundary, read these always-loaded files from the active GitHub handoff branch before acting:
+At a context boundary, start with the role-aware routing surface from the active GitHub handoff branch:
 
 ```text
+06_Silicon_Index/AI_Bootstrap_Sequence.md
+AGENTS.md
+06_Silicon_Index/CONSTITUTION_DIGEST.md
+.ai/load_profiles/<selected-profile>.md
 .ai/PROTOCOL.md
 .ai/PROTOCOL_ADHERENCE.md
 .ai/HANDOFF_COMMON_CONVENTIONS.md
@@ -34,7 +38,7 @@ At a context boundary, read these always-loaded files from the active GitHub han
 .ai/INBOX.md
 ```
 
-`PROTOCOL_ADHERENCE.md` defines the independent-model bootstrap audit, fast path, mandatory dereference behavior, task-input compliance, and review correction loop. Do not assume prior chat memory in place of this stack.
+The selected profile is a routing manifest, not authority. Follow its canonical pointers and triggers; its digests detect drift but do not replace the referenced files. `PROTOCOL_ADHERENCE.md` defines the independent-model bootstrap audit, fast path, mandatory dereference behavior, task-input compliance, and review correction loop. Do not assume prior chat memory in place of this stack.
 
 Record these separately as inherited-on-demand protocols. A model must know they govern applicable tasks, but onboarding-only initialization does not require reading them in full:
 
@@ -115,6 +119,17 @@ Freshness establishes state only; it does not grant mutation or publication auth
 
 Current mode is human-triggered GitHub communication.
 
+After `lane_required_after_protocol_release_head`, backend receipts are appended under
+the instance's `.ai/lanes/<lane_instance_id>/events/` path. The existing seven-field
+pointer remains unchanged and the communication event carries the independent lane
+envelope through `required_refs`. Legacy shared OUTBOX is read-only compatibility;
+dual-write or mixed delivery for one task fails closed. Foreground alone reduces lane
+inputs into canonical STATE and updates `.ai/HUMAN_BRIEF.md`.
+
+Cutover is allowed only with no in-flight backend task, every old backend session
+completed or stopped, and all environments committed to reload the protocol before
+their next durable write. The bound epoch is `.ai/lanes/lane_epoch.yml`.
+
 Default rules:
 
 ```text
@@ -150,8 +165,8 @@ Codex-to-ChatGPT handoff (frozen backend-to-foreground wire label, used by Codex
 ```yaml
 packet_id: "codex-xxxx"
 status: "completed | awaiting_review | blocked | conflict"
-report_ref: ".ai/OUTBOX.md | .ai/CODEX_REPORTS/xxx.md"
-brief_ref: ".ai/HUMAN_BRIEF.md | null"
+report_ref: ".ai/CODEX_REPORTS/xxx.md"
+brief_ref: ".ai/HUMAN_BRIEFS/<task-id>/<lane-instance-id>-<message-seq>.md | null"
 source_head: "<commit>"
 review_branch_head: "<commit>"
 human_gate: "not_required | required"
@@ -161,7 +176,9 @@ human_gate: "not_required | required"
 
 Do not paste normal human briefs into model-to-model chat.
 
-Use `brief_ref` instead.
+Use `brief_ref` instead. Backend instances create immutable event briefs at
+`.ai/HUMAN_BRIEFS/<task-id>/<lane-instance-id>-<message-seq>.md`; the foreground-owned `.ai/HUMAN_BRIEF.md` is the
+latest pointer/summary surface.
 
 Normal brief content belongs in:
 

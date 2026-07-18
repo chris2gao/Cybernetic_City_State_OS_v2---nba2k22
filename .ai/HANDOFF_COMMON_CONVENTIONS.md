@@ -8,6 +8,11 @@ Human-authorized long-run programs additionally follow `.ai/LONG_RUN_AUTONOMOUS_
 
 ## 1. Role Defaults
 
+Keep `protocol_role`, `environment_class`, `lane_instance_id`, and `load_profile_id`
+orthogonal. Only the stable role combined with current Human/task authority governs
+permission. The other three fields describe environment, cooperative write ownership,
+and routing; they never authorize.
+
 - `human_speaker` (Human): sets goals and boundaries, resolves conflicts, approves source-branch publication, and makes final decisions for major stage transitions.
 - `foreground_review_and_task_dispatch` (ChatGPT or Claude): performs review, planning, architecture decisions, risk judgment, task dispatch, and stage gates.
 - `backend_execution_and_handoff` (Codex or Claude Code): performs local execution, tests, commits, review-branch handoff, and execution reporting.
@@ -45,7 +50,7 @@ Unless explicitly enabled by a human-approved task:
 - Model-to-model chat carries only short pointer messages.
 - Human operational responses carry grounded status and, for material events, the completeness elements defined in `.ai/PROTOCOL.md`; they are distinct from machine pointer messages.
 - Long foreground-role task packets live in `.ai/USER_UPLOADS/*.md` or `.ai/TASKS/*.md`.
-- Backend-role detailed reports live in `.ai/CODEX_REPORTS/*.md`, `.ai/OUTBOX.md`, or `.ai/STATE.yml`.
+- Backend-role detailed reports live in `.ai/CODEX_REPORTS/*.md`; shared `.ai/OUTBOX.md` is legacy read-only compatibility after lane cutover.
 - `.ai/USER_UPLOADS/` is owned by Human/foreground-role long input carriers; `.ai/CODEX_REPORTS/` is owned by backend-role reports, plans, and analysis; `.ai/TASKS/` contains reusable task templates.
 - `.ai/HUMAN_BRIEF.md` is the latest Human-facing brief.
 - Latest machine state lives in `.ai/STATE.yml`.
@@ -67,6 +72,11 @@ Unless explicitly enabled by a human-approved task:
 - Retry a missing ref only after the review head changes or a new signal appears. Missing protocol input does not consume the three-attempt execution repair budget.
 
 ## 6. Human Brief Defaults
+
+After lane cutover, backend authors use immutable
+`.ai/HUMAN_BRIEFS/<task-id>/<lane-instance-id>-<message-seq>.md` briefs. Only foreground updates the latest
+`.ai/HUMAN_BRIEF.md` surface. This ownership split does not change `brief_ref` or Human
+authority.
 
 - Human-facing brief text lives in GitHub, not in model-to-model chat, by default.
 - The latest brief lives in `.ai/HUMAN_BRIEF.md`.
@@ -93,8 +103,8 @@ human_gate: "not_required"
 ```yaml
 packet_id: "codex-0001"
 status: "completed"
-report_ref: ".ai/OUTBOX.md"
-brief_ref: ".ai/HUMAN_BRIEF.md"
+report_ref: ".ai/CODEX_REPORTS/<task>.md"
+brief_ref: ".ai/HUMAN_BRIEFS/<task-id>/<lane-instance-id>-<message-seq>.md"
 source_head: "<commit>"
 review_branch_head: "<commit>"
 human_gate: "not_required"
@@ -114,11 +124,21 @@ In a Human-visible operational channel, keep factual status compact, include the
 
 ## 10. Token And Context Defaults
 
+Select exactly one `.ai/load_profiles/*.md` routing manifest at a context boundary and
+follow its triggers. `.ai/TOKEN_USAGE_PROFILE.md` is the default v0.2 operating
+discipline for backend execution; token economy never permits skipping decisive
+primary evidence, validation, or required refs.
+
+Every C1/C2 action reads the current Human instruction, current STATE/current signal,
+and all applicable non-null refs. Lane cutover additionally requires no in-flight
+backend task, all old backend sessions completed/stopped, and protocol reload by every
+environment before its next durable write.
+
 - Short model-to-model handoffs should normally stay below approximately 300 tokens.
 - Dereference every non-null ref, but read large artifacts by heading, summary, `rg`, or targeted line range before expanding scope.
 - Do not use one `Get-Content -Raw` operation to load multiple large evidence files.
-- Read the full protocol stack only at a context boundary or when the protocol head changes. Otherwise use the fast path through `STATE.yml`, the current signal or `INBOX.md`, `OUTBOX.md`, and `HUMAN_BRIEF.md`.
-- Keep `.ai/OUTBOX.md` concise. Put detailed execution logs in `.ai/CODEX_REPORTS/*.md` and point to them.
+- Read the full protocol stack only at a context boundary or when the protocol head changes. Otherwise use the fast path through `STATE.yml`, the current signal or `INBOX.md`, its exact report/brief refs, and current lane inputs.
+- Keep legacy `.ai/OUTBOX.md` read-only after cutover. Put detailed execution logs in `.ai/CODEX_REPORTS/*.md` and point to them.
 - For repeated planning tasks of similar scope, target approximately 12k to 18k visible tokens. This is an operating target, not a correctness guarantee or a reason to skip required evidence.
 
 ```yaml

@@ -34,6 +34,13 @@ Freshness establishes state only; it does not grant mutation or publication auth
 
 ## 3. Bootstrap Procedure
 
+At a context boundary, identify `protocol_role`, descriptive `environment_class`, a
+self-declared local `lane_instance_id`, and one routing-only `load_profile_id`. Read
+the Bootstrap, `AGENTS.md`, constitutional digest, and selected profile first. Follow
+that manifest's canonical pointers and triggers; profile metadata never authorizes an
+action. Protected actions or constitutional conflicts fail closed to the full
+constitution and Awakening contract.
+
 At a new model, thread, session, or uncertain context boundary:
 
 1. read `.ai/HANDOFF_INIT_PROMPT.md` first;
@@ -102,9 +109,19 @@ An authorized Long-Run Autonomous Program follows `.ai/LONG_RUN_AUTONOMOUS_PROGR
 
 ## 8. Output Schema Compliance
 
+After the lane epoch, a backend durable event is appended only to its own instance
+lane and carries an independent lane-envelope artifact in `required_refs`; the frozen
+seven-field pointer is unchanged. Backend writes an immutable per-task Human Brief.
+Foreground alone writes canonical STATE and `.ai/HUMAN_BRIEF.md`. Legacy/lane dual
+write, cross-lane write, or mixed mode for one task fails closed.
+
+Before epoch publication, verify that no backend task is in flight and all old backend
+sessions completed or stopped. Every environment reloads the protocol before its next
+durable write. Envelope epochs that differ from `.ai/lanes/lane_epoch.yml` are stale.
+
 The backend execution-and-handoff occupant returns the canonical Codex-to-ChatGPT wire handoff defined by `.ai/PROTOCOL.md`. The foreground review-and-task-dispatch occupant returns the canonical ChatGPT-to-Codex wire signal or review decision. Claude and Claude Code use those frozen schemas according to role. Normal model-to-model chat contains pointers, not task bodies, reports, command logs, full diffs, or Human Brief text.
 
-Long backend-role output belongs in `.ai/CODEX_REPORTS/*.md`, `.ai/OUTBOX.md`, or another explicitly authorized path. Human-facing status belongs in `.ai/HUMAN_BRIEF.md`.
+Long backend-role output belongs in `.ai/CODEX_REPORTS/*.md` or another explicitly authorized path. Backend Human-facing status belongs in an immutable event path `.ai/HUMAN_BRIEFS/<task-id>/<lane-instance-id>-<message-seq>.md`; foreground alone updates latest `.ai/HUMAN_BRIEF.md`. Legacy `.ai/OUTBOX.md` is read-only after lane cutover.
 
 Machine pointer output and Human operational output are separate channels. Classify mixed-recipient output by intended recipient and consumption mode, not UI/provider brand. When Human and machine recipients share an interface, keep the canonical pointer block byte-structurally separate and append Human operational content outside it. If safe separation is impossible, publish the Human Brief first, emit pointer-only with a non-null resolvable `brief_ref`, and preserve every required Human element there—including a complete recommendation for backend dispatch; otherwise return blocked.
 
@@ -162,6 +179,7 @@ Before claiming completion or approval, verify:
 - [ ] validation matched the task level and definition of done;
 - [ ] mailbox artifacts and canonical short handoff were produced when required;
 - [ ] detailed output was written to durable files instead of pasted into chat.
+- [ ] environment, lane instance, and load profile were explicit and treated as descriptive/routing-only;
 - [ ] the Human-response preflight passed for every material Human-facing event;
 - [ ] every proposed C1/C2 transition carried a passing recomputed physical proof chain, an edge-authorized stable actor role, trusted active-state anchor, and exact-event-bound authenticated actor origin; any C2 transition also carried separate external Human authority bound to the same event and actor-origin digest;
 - [ ] a backend execution recommendation contained every required field when the Human was asked to start or continue Codex or Claude Code;

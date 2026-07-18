@@ -101,6 +101,13 @@
   - **authority_class**: `routing`
   - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
   - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+<!-- RIDX_FILE_HEX 2e61692f434f4445585f5245504f5254532f696e69742d616e642d636f6d6d732d756e69666965642d696d706c2d303030312e6d64 -->
+- **path_or_link**: [`.ai/CODEX_REPORTS/init-and-comms-unified-impl-0001.md`](init-and-comms-unified-impl-0001.md)
+  - **content_summary**: H1《Initialization and multi-environment communications v0.2 — implementation report》；首个 H2《Executive core》
+  - **role_and_use**: 将 init-and-comms-unified-impl-0001.md（H1《Initialization and multi-environment communications v0.2 — implementation report》；首个 H2《Executive core》） 作为“Codex source-bound 报告”使用；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=ai_report_snapshot；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+  - **when_to_read**: 触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 init-and-comms-unified-impl-0001.md（H1《Initialization and multi-environment communications v0.2 — implementation report》；首个 H2《Executive core》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
 <!-- RIDX_FILE_HEX 2e61692f434f4445585f5245504f5254532f6d61737465722d6c65676163792d696e746567726174696f6e2d646966662d61756469742d303030312e6d64 -->
 - **path_or_link**: [`.ai/CODEX_REPORTS/master-legacy-integration-diff-audit-0001.md`](master-legacy-integration-diff-audit-0001.md)
   - **content_summary**: H1《Master Legacy Integration Diff Audit 0001》；首个 H2《Scope Verdict》
@@ -825,7 +832,7 @@
 
 ## do_not_load_by_default
 
-- 默认不加载 113 个历史/测试/生成/用户或大型 direct artifacts：`.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-0001.md`, `.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-changed-files-0001.md`, `.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-validation-0001.md`, `.ai/CODEX_REPORTS/cli-runner-harness-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-changed-files-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-validation-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-expression-protocol-0001.md`，另有 105 个见 direct_files。
+- 默认不加载 114 个历史/测试/生成/用户或大型 direct artifacts：`.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-0001.md`, `.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-changed-files-0001.md`, `.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-validation-0001.md`, `.ai/CODEX_REPORTS/cli-runner-harness-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-changed-files-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-validation-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-expression-protocol-0001.md`，另有 106 个见 direct_files。
 
 ## generation_and_freshness_note
 

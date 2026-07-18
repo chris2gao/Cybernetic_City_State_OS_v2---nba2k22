@@ -36,7 +36,7 @@ Canonical definition 位于 `.ai/PROTOCOL.md#canonical-instruction-authority-and
 
 ## 1. 宪法锚点与运行契约
 
-启动序列继承两个核心文件：
+日常路由先读 `06_Silicon_Index/CONSTITUTION_DIGEST.md`。该摘要无授权力，也不替代以下两份完整来源：
 
 1. `3号方案.md`：Plan 3 人类中心双引擎宪章。它定义 Human Speaker 是城邦的绝对总线、跨域翻译者、首席裁决者和最终授权门。
 2. `06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md`：硅基公民运行时生命契约。它定义懒加载、算力自证、物理验证、业务红线和并发上限。
@@ -52,19 +52,22 @@ Canonical definition 位于 `.ai/PROTOCOL.md#canonical-instruction-authority-and
 
 1. 读取本文件。
 2. 读取当前用户任务、当前 handoff packet、或当前明确的人类指令。
-3. 读取 `3号方案.md` 与 `06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md` 的任务相关部分。
-4. 判断当前任务属于 Engine A、Engine B，或需要 Human Speaker 先裁定。
-5. 只加载完成当前任务所需的最小文档集合。
+3. 读取 `06_Silicon_Index/CONSTITUTION_DIGEST.md`，选择 `.ai/load_profiles/` 中与任务相符的一个 profile。
+4. 只有 protected action、宪法冲突或 profile 明示触发时，读取 `3号方案.md` 与 Awakening 的相关完整正文。
+5. 判断当前任务属于 Engine A、Engine B，或需要 Human Speaker 先裁定，只加载 profile 与任务触发的最小 canonical 文档集合。
 
 禁止为了“了解背景”全量预读仓库、全量预读 `system_backbone/`，或把 README / 目录索引当成事实来源替代物理读取。
 
 ### 2.1 完整初始化与同上下文快速路径
 
-完整 context-boundary 初始化适用于新线程、上下文丢失、协议变更、指针冲突或 Human 明确要求重新初始化。此时读取本文件、宪法/运行契约、`AGENTS.md`，并按 `.ai/HANDOFF_INIT_PROMPT.md` 加载常驻协议栈和当前角色触发的 on-demand 协议。
+完整 context-boundary 初始化适用于新线程、上下文丢失、协议变更、指针冲突或 Human 明确要求重新初始化。此时读取本文件、`AGENTS.md`、宪法摘要、所选 load profile，并按 `.ai/HANDOFF_INIT_PROMPT.md` 加载该 profile 指向的 canonical 文档。完整宪法/运行契约仅按上述 fail-closed 触发加载。
 
 同一上下文且协议未变化时走 fast path：读取当前 Human 指令、`.ai/STATE.yml`、需要时的 `.ai/INBOX.md`，以及最新 signal 中所有非空引用。不得每回合重复加载完整协议栈。
 
 完整协议初始化仍然不是全仓库摄入许可。它只加载启动与通信控制面；业务目录和领域材料继续按任务懒加载。
+
+任何 C1/C2 行为都必须读取当前 Human 指令、当前 STATE/current signal，并解引用
+所有适用的非空 refs。Load profile 只负责路由，不复制或替代协议正文。
 
 ## 3. 懒加载法则
 
@@ -112,10 +115,16 @@ Human Speaker 是：
 
 ## 6. 不同 AI 的初始化方式
 
+先区分四个互不替代的维度：stable `protocol_role`、描述性的
+`environment_class`、自声明的本地 `lane_instance_id`，以及只负责加载路由的
+`load_profile_id`。后三者不授予协议权限。可选 profile 为
+`foreground_planner`、`foreground_independent_reviewer`、`backend_executor`、
+`math_mentor_teacher`。
+
 ### Codex 执行器
 
 1. 读取本文件。
-2. 读取 `AGENTS.md`。
+2. 读取 `AGENTS.md`、宪法摘要与 `.ai/load_profiles/backend_executor.md`。
 3. 若任务涉及 handoff，读取 `.ai/PROTOCOL.md` 和 `.ai/STATE.yml`。
 4. 若任务是目标稳定、边界可预先锁定的多步骤大型任务，读取 `.ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md`，并按该配置懒加载必要的工作机制、任务输入和 Long-Run 协议。
 5. 读取任务指定文件和必要领域协议。
@@ -123,7 +132,7 @@ Human Speaker 是：
 
 ### ChatGPT 审查者
 
-1. 读取本文件或其摘要。
+1. 读取本文件、宪法摘要，并按任务选择 `foreground_planner` 或 `foreground_independent_reviewer` profile。
 2. 读取 handoff 指向的报告、brief、diff 范围或任务包。
 3. 按 Human Speaker 授权进行审查、裁决建议和下一轮信号生成。
 4. 不直接修改业务文件，除非 Human 明确授权 `.ai` 通信文件写回。
@@ -150,6 +159,8 @@ Human Speaker 是：
 如果当前任务是 `.ai` handoff 或 Codex 执行任务，继续按需读取：
 
 - `.ai/PROTOCOL.md`：canonical authority、freshness、handoff 和 publication boundary。
+- `.ai/load_profiles/*.md`：无授权力的角色/任务加载清单；只指向 canonical sources。
+- `.ai/lanes/lane_epoch.yml`：合作式 lane 的绑定 epoch 与 cutover 前置条件；不授予权限。
 - `.ai/HANDOFF_INIT_PROMPT.md`：完整初始化入口与角色触发的协议加载。
 - `.ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md`：目标稳定、边界可预先锁定的多步骤大型任务默认统一入口。
 - `.ai/CODEX_WORK_MECHANISM_PROTOCOL.md`：Goal mode、Git workflow level、执行、验证与 review handoff 机制。
