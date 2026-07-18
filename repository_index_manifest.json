@@ -1,19 +1,19 @@
 {
   "counts": {
-    "direct_child_directory_edges": 159,
-    "direct_file_edges": 1823,
-    "index_files": 160,
+    "direct_child_directory_edges": 161,
+    "direct_file_edges": 1832,
+    "index_files": 162,
     "manual_index_sections": 0,
     "submodules": 0,
     "symlinks": 0,
-    "tracked_directories": 160,
-    "tracked_files_final": 1823
+    "tracked_directories": 162,
+    "tracked_files_final": 1832
   },
   "directories": [
     {
       "child_directories": [
         {
-          "content_scope": "AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信合规入口；tracked 后代文件数=452",
+          "content_scope": "AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信合规入口；tracked 后代文件数=461",
           "entry_id": "96862139c0db47cac9562c51fc3046008d2cb6064d891b94785efe108d4e5f72",
           "load_policy": "task_triggered_lazy_load",
           "path": ".ai",
@@ -315,7 +315,7 @@
         },
         {
           "authority_class": "operational_contract",
-          "byte_size": 3082,
+          "byte_size": 3178,
           "content_summary": "H1《Agent Collaboration Guide》；首个 H2《Startup Rules》",
           "description_basis": "markdown_heading_or_visible_structure",
           "encoding_or_format": "utf8",
@@ -507,7 +507,7 @@
         },
         {
           "authority_class": "implementation",
-          "byte_size": 169684,
+          "byte_size": 170138,
           "content_summary": "Python；module docstring“Deterministically generate and validate repository directory indexes. The Git index (or an explicit…”；public symbols=IndexErrorDetail, GitEntry, sanitized_…",
           "description_basis": "python_ast_docstring_and_symbols",
           "encoding_or_format": "utf8",
@@ -675,7 +675,7 @@
     {
       "child_directories": [
         {
-          "content_scope": "按 task/source head 保存 Codex 实现、验证与 changed-files 报告；tracked 后代文件数=111",
+          "content_scope": "按 task/source head 保存 Codex 实现、验证与 changed-files 报告；tracked 后代文件数=112",
           "entry_id": "fa70027b932ce9b218d71e04fc96d07e41e264b8c5cc02e49b4b2758cdc04c36",
           "load_policy": "do_not_load_by_default",
           "path": ".ai/CODEX_REPORTS",
@@ -727,6 +727,15 @@
           "semantic_audit_status": "reviewed",
           "semantic_profile": "communication_control_plane",
           "when_to_enter": "验证 event/pointer/state schema、validator 或 transition proof"
+        },
+        {
+          "content_scope": "Token profile token_profile 的本地计量聚合、C0 chat 与单元测试；不承载 prompt 或状态权威；tracked 后代文件数=6",
+          "entry_id": "bb2205a13bf88eb532f05e7262d7a6b96d04dd2a477299482a0137b94710f6c3",
+          "load_policy": "task_triggered_lazy_load",
+          "path": ".ai/token_profile",
+          "semantic_audit_status": "reviewed",
+          "semantic_profile": "ai_token_profile_tools",
+          "when_to_enter": "执行已批准的 token profile 工具、验证其测试，或汇总本地去标识化 run 记录"
         }
       ],
       "direct_files": [
@@ -1047,6 +1056,48 @@
           "status_or_freshness": "semantic_profile=source_neutral_mailbox；authority=routing；evidence_basis=curated_source_mailbox_contract；活动状态必须从 ai/review/latest 指针链读取，master 副本不得恢复任务",
           "structured_format": "yaml",
           "when_to_read": "触发条件：证明 master 通信文件保持中性，或与 ai/review/latest 活动 pointer 做差异核验。读取 STATE.yml（source/master 的 neutral_baseline 状态记录；不得替代 ai/review/latest 活动 mailbox）；活动状态必须从 ai/review/latest 指针链读取，master 副本不得恢复任务"
+        },
+        {
+          "authority_class": "routing",
+          "byte_size": 2746,
+          "content_summary": "H1《Token Usage Operational Norms — Annex A》；首个 H2《Roles and invocation》",
+          "description_basis": "markdown_heading_or_visible_structure",
+          "encoding_or_format": "utf8",
+          "entry_id": "d989f2d37e6b51b396ad16dba322c7035f6c35df42729e0f96fffcb9d85fd1ec",
+          "git_mode": "100644",
+          "metadata_only_boundary": false,
+          "object_type": "blob",
+          "path": ".ai/TOKEN_USAGE_OPERATIONAL_NORMS.md",
+          "role_and_use": "将 TOKEN_USAGE_OPERATIONAL_NORMS.md（H1《Token Usage Operational Norms — Annex A》；首个 H2《Roles and invocation》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先",
+          "safe_anchors": [
+            "H1《Token Usage Operational Norms — Annex A》",
+            "首个 H2《Roles and invocation》"
+          ],
+          "semantic_audit_status": "reviewed",
+          "semantic_profile": "routing_snapshot",
+          "status_or_freshness": "semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先",
+          "when_to_read": "触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 TOKEN_USAGE_OPERATIONAL_NORMS.md（H1《Token Usage Operational Norms — Annex A》；首个 H2《Roles and invocation》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先"
+        },
+        {
+          "authority_class": "routing",
+          "byte_size": 3705,
+          "content_summary": "H1《Token Usage Profile v0.2》；首个 H2《Layer 1 — operating discipline》",
+          "description_basis": "markdown_heading_or_visible_structure",
+          "encoding_or_format": "utf8",
+          "entry_id": "e5df280a2ecd5028d468ab89864b6658703b5113d17fe8212712ef56b105fcdf",
+          "git_mode": "100644",
+          "metadata_only_boundary": false,
+          "object_type": "blob",
+          "path": ".ai/TOKEN_USAGE_PROFILE.md",
+          "role_and_use": "将 TOKEN_USAGE_PROFILE.md（H1《Token Usage Profile v0.2》；首个 H2《Layer 1 — operating discipline》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先",
+          "safe_anchors": [
+            "H1《Token Usage Profile v0.2》",
+            "首个 H2《Layer 1 — operating discipline》"
+          ],
+          "semantic_audit_status": "reviewed",
+          "semantic_profile": "routing_snapshot",
+          "status_or_freshness": "semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先",
+          "when_to_read": "触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 TOKEN_USAGE_PROFILE.md（H1《Token Usage Profile v0.2》；首个 H2《Layer 1 — operating discipline》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先"
         },
         {
           "authority_class": "routing",
@@ -3392,6 +3443,27 @@
           "semantic_profile": "ai_report_snapshot",
           "status_or_freshness": "semantic_profile=ai_report_snapshot；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核",
           "when_to_read": "触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 token-pilot-eol-repeatability-0001.md（H1《Token Pilot EOL Repeatability — &#96;token-pilot-eol-repeatability-0001&#96;》；首个 H2《Executive core》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核"
+        },
+        {
+          "authority_class": "historical_evidence",
+          "byte_size": 2520,
+          "content_summary": "H1《Token scheme implementation 0001 — execution report》；首个 H2《Executive core》",
+          "description_basis": "markdown_heading_or_visible_structure",
+          "encoding_or_format": "utf8",
+          "entry_id": "8ad04a80097d5d88e7e9b8ecef7a2ee67fb5da85fb68b94c0a4c9f75fd3a5f62",
+          "git_mode": "100644",
+          "metadata_only_boundary": false,
+          "object_type": "blob",
+          "path": ".ai/CODEX_REPORTS/token-scheme-implementation-0001.md",
+          "role_and_use": "将 token-scheme-implementation-0001.md（H1《Token scheme implementation 0001 — execution report》；首个 H2《Executive core》） 作为“Codex source-bound 报告”使用；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核",
+          "safe_anchors": [
+            "H1《Token scheme implementation 0001 — execution report》",
+            "首个 H2《Executive core》"
+          ],
+          "semantic_audit_status": "reviewed",
+          "semantic_profile": "ai_report_snapshot",
+          "status_or_freshness": "semantic_profile=ai_report_snapshot；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核",
+          "when_to_read": "触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 token-scheme-implementation-0001.md（H1《Token scheme implementation 0001 — execution report》；首个 H2《Executive core》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核"
         }
       ],
       "directory_role": "按 task/source head 保存 Codex 实现、验证与 changed-files 报告",
@@ -12396,6 +12468,164 @@
       "path": ".ai/communication_compliance/tests",
       "semantic_audit_status": "reviewed",
       "semantic_profile": "communication_fixture_pool"
+    },
+    {
+      "child_directories": [
+        {
+          "content_scope": "Token profile tests 的本地计量聚合、C0 chat 与单元测试；不承载 prompt 或状态权威；tracked 后代文件数=3",
+          "entry_id": "cc03820d6dd1ec13f9d15cea42baf3a7cb4dd9aeef5f2be24bd14a88e2d39942",
+          "load_policy": "do_not_load_by_default",
+          "path": ".ai/token_profile/tests",
+          "semantic_audit_status": "reviewed",
+          "semantic_profile": "ai_token_profile_tools",
+          "when_to_enter": "执行已批准的 token profile 工具、验证其测试，或汇总本地去标识化 run 记录"
+        }
+      ],
+      "direct_files": [
+        {
+          "authority_class": "implementation",
+          "byte_size": 4552,
+          "content_summary": "Python；module docstring“C0-only local chat channel with monotonic, atomically-published messages.”；public symbols=check, atomic_write, channel, acquire, release",
+          "description_basis": "python_ast_docstring_and_symbols",
+          "encoding_or_format": "utf8",
+          "entry_id": "4321e8898b35241c10fb9d27bc2b33e78af36f4825171a1c97aa534355be88c6",
+          "git_mode": "100644",
+          "metadata_only_boundary": false,
+          "object_type": "blob",
+          "path": ".ai/token_profile/chat_channel.py",
+          "role_and_use": "将 chat_channel.py（C0-only local chat channel with monotonic, atomically-published messages.；check；atomic_write） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready",
+          "safe_anchors": [
+            "C0-only local chat channel with monotonic, atomically-published messages.",
+            "check",
+            "atomic_write",
+            "channel",
+            "acquire",
+            "release"
+          ],
+          "semantic_audit_status": "reviewed",
+          "semantic_profile": "implementation_artifact",
+          "status_or_freshness": "semantic_profile=implementation_artifact；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；可追踪实现不等于已激活、已验证或 production-ready",
+          "when_to_read": "触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 chat_channel.py（C0-only local chat channel with monotonic, atomically-published messages.；check；atomic_write）；可追踪实现不等于已激活、已验证或 production-ready"
+        },
+        {
+          "authority_class": "implementation",
+          "byte_size": 3649,
+          "content_summary": "Python；module docstring“Safely aggregate de-identified token_profile_run.v1 records.”；public symbols=atomic_write, valid_record, aggregate, main",
+          "description_basis": "python_ast_docstring_and_symbols",
+          "encoding_or_format": "utf8",
+          "entry_id": "e7dfa754044c7fa0338ad83339705a4d9767af0d52b3e0c022e51310b1d4e27f",
+          "git_mode": "100644",
+          "metadata_only_boundary": false,
+          "object_type": "blob",
+          "path": ".ai/token_profile/consolidate_ledger.py",
+          "role_and_use": "将 consolidate_ledger.py（Safely aggregate de-identified token_profile_run.v1 records.；atomic_write；valid_record） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready",
+          "safe_anchors": [
+            "Safely aggregate de-identified token_profile_run.v1 records.",
+            "atomic_write",
+            "valid_record",
+            "aggregate",
+            "main"
+          ],
+          "semantic_audit_status": "reviewed",
+          "semantic_profile": "implementation_artifact",
+          "status_or_freshness": "semantic_profile=implementation_artifact；authority=implementation；evidence_basis=python_ast_docstring_and_symbols；可追踪实现不等于已激活、已验证或 production-ready",
+          "when_to_read": "触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 consolidate_ledger.py（Safely aggregate de-identified token_profile_run.v1 records.；atomic_write；valid_record）；可追踪实现不等于已激活、已验证或 production-ready"
+        },
+        {
+          "authority_class": "routing",
+          "content_summary": "本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories",
+          "description_basis": "synthetic_index_self_entry",
+          "encoding_or_format": "utf8_generated",
+          "entry_id": "676bf027e6601346eab803a7b3aa28489e058c84dc992ba3c4dfc051b87c47c1",
+          "git_mode": "100644",
+          "metadata_only_boundary": false,
+          "object_type": "blob",
+          "path": ".ai/token_profile/index.md",
+          "role_and_use": "作为 .ai/token_profile 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件",
+          "safe_anchors": [
+            "repository_index_self"
+          ],
+          "semantic_audit_status": "reviewed",
+          "semantic_profile": "repository_index",
+          "status_or_freshness": "semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力",
+          "when_to_read": "进入该目录时先读；依据当前任务只选择一个最小后续文件集合"
+        }
+      ],
+      "directory_role": "Token profile token_profile 的本地计量聚合、C0 chat 与单元测试；不承载 prompt 或状态权威",
+      "index_path": ".ai/token_profile/index.md",
+      "path": ".ai/token_profile",
+      "semantic_audit_status": "reviewed",
+      "semantic_profile": "ai_token_profile_tools"
+    },
+    {
+      "child_directories": [],
+      "direct_files": [
+        {
+          "authority_class": "routing",
+          "content_summary": "本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories",
+          "description_basis": "synthetic_index_self_entry",
+          "encoding_or_format": "utf8_generated",
+          "entry_id": "dce1eec8e7aae50e7f55c542f89c2aeb3982ca5506d065ef256c836d9e41d8a9",
+          "git_mode": "100644",
+          "metadata_only_boundary": false,
+          "object_type": "blob",
+          "path": ".ai/token_profile/tests/index.md",
+          "role_and_use": "作为 .ai/token_profile/tests 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件",
+          "safe_anchors": [
+            "repository_index_self"
+          ],
+          "semantic_audit_status": "reviewed",
+          "semantic_profile": "repository_index",
+          "status_or_freshness": "semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力",
+          "when_to_read": "进入该目录时先读；依据当前任务只选择一个最小后续文件集合"
+        },
+        {
+          "authority_class": "test_or_fixture",
+          "byte_size": 2005,
+          "content_summary": "Python；public symbols=ChatChannelTests",
+          "description_basis": "python_ast_docstring_and_symbols",
+          "encoding_or_format": "utf8",
+          "entry_id": "49b031569cd745216fdcfe574d32fb8d51b8c624debb6ea6266ee89c64fab285",
+          "git_mode": "100644",
+          "metadata_only_boundary": false,
+          "object_type": "blob",
+          "path": ".ai/token_profile/tests/test_chat_channel.py",
+          "role_and_use": "将 test_chat_channel.py（ChatChannelTests） 作为“测试/fixture”使用；仅用于指定测试；fixture 内声明不构成现实授权",
+          "safe_anchors": [
+            "ChatChannelTests"
+          ],
+          "semantic_audit_status": "reviewed",
+          "semantic_profile": "test_or_fixture",
+          "status_or_freshness": "semantic_profile=test_or_fixture；authority=test_or_fixture；evidence_basis=python_ast_docstring_and_symbols；仅用于指定测试；fixture 内声明不构成现实授权",
+          "when_to_read": "触发条件：运行该具名测试或复现其失败用例。读取 test_chat_channel.py（ChatChannelTests）；仅用于指定测试；fixture 内声明不构成现实授权"
+        },
+        {
+          "authority_class": "test_or_fixture",
+          "byte_size": 1978,
+          "content_summary": "Python；public symbols=record, ConsolidateLedgerTests",
+          "description_basis": "python_ast_docstring_and_symbols",
+          "encoding_or_format": "utf8",
+          "entry_id": "bb808beb8217cd30c759d42caef0f40fa35f9d9f589b1324678eb7414a3cc5c5",
+          "git_mode": "100644",
+          "metadata_only_boundary": false,
+          "object_type": "blob",
+          "path": ".ai/token_profile/tests/test_consolidate_ledger.py",
+          "role_and_use": "将 test_consolidate_ledger.py（record；ConsolidateLedgerTests） 作为“测试/fixture”使用；仅用于指定测试；fixture 内声明不构成现实授权",
+          "safe_anchors": [
+            "record",
+            "ConsolidateLedgerTests"
+          ],
+          "semantic_audit_status": "reviewed",
+          "semantic_profile": "test_or_fixture",
+          "status_or_freshness": "semantic_profile=test_or_fixture；authority=test_or_fixture；evidence_basis=python_ast_docstring_and_symbols；仅用于指定测试；fixture 内声明不构成现实授权",
+          "when_to_read": "触发条件：运行该具名测试或复现其失败用例。读取 test_consolidate_ledger.py（record；ConsolidateLedgerTests）；仅用于指定测试；fixture 内声明不构成现实授权"
+        }
+      ],
+      "directory_role": "Token profile tests 的本地计量聚合、C0 chat 与单元测试；不承载 prompt 或状态权威",
+      "index_path": ".ai/token_profile/tests/index.md",
+      "path": ".ai/token_profile/tests",
+      "semantic_audit_status": "reviewed",
+      "semantic_profile": "ai_token_profile_tools"
     },
     {
       "child_directories": [
@@ -45957,10 +46187,10 @@
   },
   "generator_path": "generate_repository_indexes.py",
   "hashes": {
-    "coverage_edges_sha256": "5a8c0ed2317eb854e75b4fcfee97ff1d38573680deeda6641cb2dc84cda9b963",
-    "directory_set_sha256": "e174f7f0a54ff3d0b24b9faed089af79a9dad18c3352ad88281a74420528a293",
-    "generated_indexes_sha256": "a12b67eb91f51e9c225cca3f15e9f2dfa6c677ae778ae8e8c3d648f50c0218a2",
-    "tracked_pathset_sha256": "3f9216f4d5766ceeb6d2c3321eb62e15d7326206545b0b7011e63956b26712da"
+    "coverage_edges_sha256": "ed273181f2d8c6afeda30eb154cc8959da2abda25c6543ca3c65c7eed69927ca",
+    "directory_set_sha256": "cd6432c4b327b5f43359a064ca8a08984ee5c0944523494e136520c11aa284dc",
+    "generated_indexes_sha256": "ef083022db7bd83b3a5aa1b319d868a4cc271fbd5213c08cb30cd998ef11de54",
+    "tracked_pathset_sha256": "2d3e7598066dcfc684ac7354d3ae9051652f311ddc93694d05047a7483b5452c"
   },
   "inventory_source": "NUL-delimited tracked Git tree (ls-files/ls-tree)",
   "manual_index_preservation": {
@@ -45997,6 +46227,7 @@
       "ai_program_run_root": 1,
       "ai_report_library": 1,
       "ai_task_library": 1,
+      "ai_token_profile_tools": 2,
       "campaign_template_library": 1,
       "carbon_manual_library": 2,
       "communication_control_plane": 1,
@@ -46041,6 +46272,7 @@
       "ai_program_run_root": 1,
       "ai_report_library": 1,
       "ai_task_library": 1,
+      "ai_token_profile_tools": 2,
       "campaign_template_library": 1,
       "carbon_manual_library": 2,
       "communication_control_plane": 1,
@@ -46081,7 +46313,7 @@
       "ai_human_brief_snapshot": 1,
       "ai_program_run_evidence": 78,
       "ai_protocol_contract": 9,
-      "ai_report_snapshot": 110,
+      "ai_report_snapshot": 111,
       "ai_task_or_signal_history": 6,
       "campaign_template": 1,
       "canonical_governance": 2,
@@ -46090,7 +46322,7 @@
       "compiler_implementation": 7,
       "execution_plan_history": 5,
       "historical_evidence": 2,
-      "implementation_artifact": 6,
+      "implementation_artifact": 8,
       "legacy_task_history": 7,
       "math_active_contract": 11,
       "math_active_schema": 3,
@@ -46115,10 +46347,10 @@
       "parliament_verdict": 3,
       "persona_contract": 17,
       "private_zone_metadata": 13,
-      "repository_index": 160,
+      "repository_index": 162,
       "repository_manifest": 1,
       "research_or_user_asset": 33,
-      "routing_snapshot": 42,
+      "routing_snapshot": 44,
       "schema_definition": 19,
       "silicon_generated_evidence": 15,
       "silicon_implementation": 32,
@@ -46126,13 +46358,13 @@
       "source_neutral_mailbox": 4,
       "startup_router": 1,
       "system_backbone_artifact": 7,
-      "test_or_fixture": 7
+      "test_or_fixture": 9
     },
     "final_entries_reviewed_exactly_once": true,
     "final_scope": {
-      "direct_child_directory_entries": 159,
-      "direct_file_entries": 1823,
-      "directory_indexes": 160
+      "direct_child_directory_entries": 161,
+      "direct_file_entries": 1832,
+      "directory_indexes": 162
     },
     "metadata_only_file_entries": 14,
     "private_or_restricted_body_reads": 0,

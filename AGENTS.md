@@ -3,6 +3,7 @@
 ## Startup Rules
 
 - The first repository read is `06_Silicon_Index/AI_Bootstrap_Sequence.md`.
+- Before executing a task, read `.ai/TOKEN_USAGE_PROFILE.md` and follow its Layer 1 discipline.
 - After Bootstrap, read the current Human task and only the constitutional, handoff, or domain files triggered by that task.
 - `README.md`, `PROJECT_CONTEXT.md`, and `ARCHITECTURE.md` are routing/navigation snapshots. Load them when they help locate scope or architecture; do not load them unconditionally and do not treat branch/task claims in them as current without Git or active-mailbox verification.
 - For AI handoff or model-to-model coordination tasks, read `.ai/PROTOCOL.md` and `.ai/STATE.yml` before acting when these files exist.

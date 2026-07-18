@@ -23,7 +23,7 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
 
 <!-- RIDX_DIR_HEX 2e61692f434f4445585f5245504f525453 -->
 - **path_or_link**: [`.ai/CODEX_REPORTS`](CODEX_REPORTS/index.md)
-  - **content_scope**: 按 task/source head 保存 Codex 实现、验证与 changed-files 报告；tracked 后代文件数=111
+  - **content_scope**: 按 task/source head 保存 Codex 实现、验证与 changed-files 报告；tracked 后代文件数=112
   - **when_to_enter**: 查证某个 task/source head 的实现、验证或 changed-files 报告
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f48554d414e5f425249454653 -->
@@ -50,6 +50,11 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
 - **path_or_link**: [`.ai/communication_compliance`](communication_compliance/index.md)
   - **content_scope**: Human-AI event/pointer/state schema、validator 与 fail-closed proof 控制面；tracked 后代文件数=207
   - **when_to_enter**: 验证 event/pointer/state schema、validator 或 transition proof
+  - **load_policy**: `task_triggered_lazy_load`
+<!-- RIDX_DIR_HEX 2e61692f746f6b656e5f70726f66696c65 -->
+- **path_or_link**: [`.ai/token_profile`](token_profile/index.md)
+  - **content_scope**: Token profile token_profile 的本地计量聚合、C0 chat 与单元测试；不承载 prompt 或状态权威；tracked 后代文件数=6
+  - **when_to_enter**: 执行已批准的 token profile 工具、验证其测试，或汇总本地去标识化 run 记录
   - **load_policy**: `task_triggered_lazy_load`
 
 ## direct_files
@@ -159,6 +164,20 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
   - **authority_class**: `routing`
   - **status_or_freshness**: semantic_profile=source_neutral_mailbox；authority=routing；evidence_basis=curated_source_mailbox_contract；活动状态必须从 ai/review/latest 指针链读取，master 副本不得恢复任务
   - **when_to_read**: 触发条件：证明 master 通信文件保持中性，或与 ai/review/latest 活动 pointer 做差异核验。读取 STATE.yml（source/master 的 neutral_baseline 状态记录；不得替代 ai/review/latest 活动 mailbox）；活动状态必须从 ai/review/latest 指针链读取，master 副本不得恢复任务
+<!-- RIDX_FILE_HEX 2e61692f544f4b454e5f55534147455f4f5045524154494f4e414c5f4e4f524d532e6d64 -->
+- **path_or_link**: [`.ai/TOKEN_USAGE_OPERATIONAL_NORMS.md`](TOKEN_USAGE_OPERATIONAL_NORMS.md)
+  - **content_summary**: H1《Token Usage Operational Norms — Annex A》；首个 H2《Roles and invocation》
+  - **role_and_use**: 将 TOKEN_USAGE_OPERATIONAL_NORMS.md（H1《Token Usage Operational Norms — Annex A》；首个 H2《Roles and invocation》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **authority_class**: `routing`
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 TOKEN_USAGE_OPERATIONAL_NORMS.md（H1《Token Usage Operational Norms — Annex A》；首个 H2《Roles and invocation》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+<!-- RIDX_FILE_HEX 2e61692f544f4b454e5f55534147455f50524f46494c452e6d64 -->
+- **path_or_link**: [`.ai/TOKEN_USAGE_PROFILE.md`](TOKEN_USAGE_PROFILE.md)
+  - **content_summary**: H1《Token Usage Profile v0.2》；首个 H2《Layer 1 — operating discipline》
+  - **role_and_use**: 将 TOKEN_USAGE_PROFILE.md（H1《Token Usage Profile v0.2》；首个 H2《Layer 1 — operating discipline》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **authority_class**: `routing`
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 TOKEN_USAGE_PROFILE.md（H1《Token Usage Profile v0.2》；首个 H2《Layer 1 — operating discipline》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 2e61692f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
