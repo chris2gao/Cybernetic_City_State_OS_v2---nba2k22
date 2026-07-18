@@ -26,7 +26,7 @@
 
 <!-- RIDX_DIR_HEX 2e6169 -->
 - **path_or_link**: [`.ai`](.ai/index.md)
-  - **content_scope**: AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信合规入口；tracked 后代文件数=462
+  - **content_scope**: AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信合规入口；tracked 后代文件数=477
   - **when_to_enter**: 执行 handoff、任务接管、review/publication 或查证历史 run
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30315f52657365617263685f5265706f727473 -->
@@ -216,6 +216,27 @@
   - **authority_class**: `user_asset`
   - **status_or_freshness**: semantic_profile=research_or_user_asset；authority=user_asset；evidence_basis=json_strict_structure_and_safe_fields；只在明确研究问题、来源和隐私范围内单文件读取
   - **when_to_read**: 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 abstracts.json（［0］.title=Exerkines and long-term synaptic potentiation: Mechanisms of exercise-induced n…；［1］.title=LTP and LTD: an embarrassment of riches.）；只在明确研究问题、来源和隐私范围内单文件读取
+<!-- RIDX_FILE_HEX 6167656e742d72756e2e707331 -->
+- **path_or_link**: [`agent-run.ps1`](agent-run.ps1)
+  - **content_summary**: 纯文本，155 个非空行；首行“［CmdletBinding()］”
+  - **role_and_use**: 将 agent-run.ps1（nonempty_lines=155；［CmdletBinding()］） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=implementation_artifact；authority=implementation；evidence_basis=text_line_count_and_first_visible_line；可追踪实现不等于已激活、已验证或 production-ready
+  - **when_to_read**: 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 agent-run.ps1（nonempty_lines=155；［CmdletBinding()］）；可追踪实现不等于已激活、已验证或 production-ready
+<!-- RIDX_FILE_HEX 6167656e742d7374617475732e707331 -->
+- **path_or_link**: [`agent-status.ps1`](agent-status.ps1)
+  - **content_summary**: 纯文本，28 个非空行；首行“［CmdletBinding()］”
+  - **role_and_use**: 将 agent-status.ps1（nonempty_lines=28；［CmdletBinding()］） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=implementation_artifact；authority=implementation；evidence_basis=text_line_count_and_first_visible_line；可追踪实现不等于已激活、已验证或 production-ready
+  - **when_to_read**: 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 agent-status.ps1（nonempty_lines=28；［CmdletBinding()］）；可追踪实现不等于已激活、已验证或 production-ready
+<!-- RIDX_FILE_HEX 6167656e742d73746f702e707331 -->
+- **path_or_link**: [`agent-stop.ps1`](agent-stop.ps1)
+  - **content_summary**: 纯文本，45 个非空行；首行“［CmdletBinding()］”
+  - **role_and_use**: 将 agent-stop.ps1（nonempty_lines=45；［CmdletBinding()］） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=implementation_artifact；authority=implementation；evidence_basis=text_line_count_and_first_visible_line；可追踪实现不等于已激活、已验证或 production-ready
+  - **when_to_read**: 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 agent-stop.ps1（nonempty_lines=45；［CmdletBinding()］）；可追踪实现不等于已激活、已验证或 production-ready
 <!-- RIDX_FILE_HEX 67656e65726174655f7265706f7369746f72795f696e64657865732e7079 -->
 - **path_or_link**: [`generate_repository_indexes.py`](generate_repository_indexes.py)
   - **content_summary**: Python；module docstring“Deterministically generate and validate repository directory indexes. The Git index (or an explicit…”；public symbols=IndexErrorDetail, GitEntry, sanitized_…

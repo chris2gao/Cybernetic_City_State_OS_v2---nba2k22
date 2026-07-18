@@ -117,6 +117,7 @@ DIRECTORY_SEMANTIC_PROFILES = {
     "ai_human_brief_library",
     "ai_task_library",
     "ai_token_profile_tools",
+    "ai_runner_control_plane",
     "ai_long_run_library",
     "ai_program_run_root",
     "ai_program_run",
@@ -1555,7 +1556,7 @@ def semantic_profile(path: str, metadata: dict[str, Any] | None = None) -> str:
     if path.startswith("01_Research_Reports/") or path in ROOT_RESEARCH_ASSET_PATHS:
         return "research_or_user_asset"
 
-    if path in OPERATIONAL_CONTRACT_PATHS or path in {".gitignore", ".gitattributes"}:
+    if path in OPERATIONAL_CONTRACT_PATHS or name.casefold() in {".gitignore", ".gitattributes"}:
         return "operational_contract"
     if path in ROUTING_PATHS or name.casefold() in {"readme.md", "architecture.md", "project_context.md"}:
         return "routing_snapshot"
@@ -1569,7 +1570,7 @@ def semantic_profile(path: str, metadata: dict[str, Any] | None = None) -> str:
         return "historical_evidence"
     if suffix == ".docx":
         return "user_asset"
-    if suffix in {".py", ".yaml", ".yml", ".json", ".xml", ".bat", ".jsonl"}:
+    if suffix in {".py", ".ps1", ".yaml", ".yml", ".json", ".xml", ".bat", ".jsonl"}:
         return "implementation_artifact"
     if suffix == ".md" and ("protocol" in lower or "contract" in lower):
         return "operational_contract"
@@ -2006,6 +2007,7 @@ def directory_semantic_profile(directory: str) -> str:
         ".ai/PROGRAM_RUNS": "ai_program_run_root",
         ".ai/TASKS": "ai_task_library",
         ".ai/token_profile": "ai_token_profile_tools",
+        ".ai/runs": "ai_runner_control_plane",
         "01_Research_Reports": "research_library",
         "01_Research_Reports/_Supreme_Court_Proposals": "research_library",
         "02_Protocols": "protocol_library",
@@ -2047,6 +2049,8 @@ def directory_semantic_profile(directory: str) -> str:
         return "ai_program_run" if "/" not in remainder else "ai_program_run_component"
     if directory.startswith(".ai/token_profile/"):
         return "ai_token_profile_tools"
+    if directory.startswith(".ai/runs/"):
+        return "ai_runner_control_plane"
     if directory == ".ai/communication_compliance":
         return "communication_control_plane"
     if directory.startswith(".ai/communication_compliance/fixtures/artifacts/proof/"):
@@ -2082,6 +2086,7 @@ def directory_role(directory: str, descendant_files: list[str]) -> str:
         "ai_human_brief_library": "保存 Human-facing 接受、授权与 publication 决策快照",
         "ai_task_library": "保存已发布 task/LRP 合同；只有活动 pointer 能选择其中一项",
         "ai_token_profile_tools": f"Token profile {leaf} 的本地计量聚合、C0 chat 与单元测试；不承载 prompt 或状态权威",
+        "ai_runner_control_plane": f"Windows CLI runner {leaf} 的进程监督、证据 schema 与测试；不承载任务或发布权威",
         "ai_long_run_library": "保存长程任务 checkpoint 叙述和续跑 provenance",
         "ai_program_run_root": "按 run ID 隔离冻结输入、checkpoint、输出、验证和报告",
         "communication_control_plane": "Human-AI event/pointer/state schema、validator 与 fail-closed proof 控制面",
@@ -2143,6 +2148,7 @@ def when_to_enter_directory(directory: str) -> str:
         "ai_human_brief_library": "查证具体 Human acceptance、authorization 或 publication brief",
         "ai_task_library": "活动 pointer 精确引用某个 task contract；不得按目录批量恢复历史任务",
         "ai_token_profile_tools": "执行已批准的 token profile 工具、验证其测试，或汇总本地去标识化 run 记录",
+        "ai_runner_control_plane": "启动、查询、停止或验证已批准的 Windows CLI worker，并核对其本地运行证据",
         "ai_long_run_library": "续跑或审计某个 long-run checkpoint",
         "ai_program_run_root": "按 exact run ID 复现输入、checkpoint、输出或验证",
         "communication_control_plane": "验证 event/pointer/state schema、validator 或 transition proof",

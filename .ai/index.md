@@ -23,7 +23,7 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
 
 <!-- RIDX_DIR_HEX 2e61692f434f4445585f5245504f525453 -->
 - **path_or_link**: [`.ai/CODEX_REPORTS`](CODEX_REPORTS/index.md)
-  - **content_scope**: 按 task/source head 保存 Codex 实现、验证与 changed-files 报告；tracked 后代文件数=112
+  - **content_scope**: 按 task/source head 保存 Codex 实现、验证与 changed-files 报告；tracked 后代文件数=113
   - **when_to_enter**: 查证某个 task/source head 的实现、验证或 changed-files 报告
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f48554d414e5f425249454653 -->
@@ -50,6 +50,11 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
 - **path_or_link**: [`.ai/communication_compliance`](communication_compliance/index.md)
   - **content_scope**: Human-AI event/pointer/state schema、validator 与 fail-closed proof 控制面；tracked 后代文件数=207
   - **when_to_enter**: 验证 event/pointer/state schema、validator 或 transition proof
+  - **load_policy**: `task_triggered_lazy_load`
+<!-- RIDX_DIR_HEX 2e61692f72756e73 -->
+- **path_or_link**: [`.ai/runs`](runs/index.md)
+  - **content_scope**: Windows CLI runner runs 的进程监督、证据 schema 与测试；不承载任务或发布权威；tracked 后代文件数=13
+  - **when_to_enter**: 启动、查询、停止或验证已批准的 Windows CLI worker，并核对其本地运行证据
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 2e61692f746f6b656e5f70726f66696c65 -->
 - **path_or_link**: [`.ai/token_profile`](token_profile/index.md)
@@ -157,6 +162,13 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
   - **authority_class**: `operational_contract`
   - **status_or_freshness**: semantic_profile=ai_protocol_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
   - **when_to_read**: 触发条件：执行其覆盖的通信、交接、长程运行或写入边界。读取 PROTOCOL_ADHERENCE.md（H1《Protocol Adherence》；首个 H2《1. Purpose》）；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
+<!-- RIDX_FILE_HEX 2e61692f52554e4e45522e6d64 -->
+- **path_or_link**: [`.ai/RUNNER.md`](RUNNER.md)
+  - **content_summary**: H1《Windows CLI Runner Harness (&#96;agent-run&#96;)》；首个 H2《Purpose and authority》
+  - **role_and_use**: 将 RUNNER.md（H1《Windows CLI Runner Harness (&#96;agent-run&#96;)》；首个 H2《Purpose and authority》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **authority_class**: `routing`
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 RUNNER.md（H1《Windows CLI Runner Harness (&#96;agent-run&#96;)》；首个 H2《Purpose and authority》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 2e61692f53544154452e796d6c -->
 - **path_or_link**: [`.ai/STATE.yml`](STATE.yml)
   - **content_summary**: source/master 的 neutral_baseline 状态记录；不得替代 ai/review/latest 活动 mailbox

@@ -15,8 +15,8 @@
 2. [`.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-0001.md`](branch-consolidation-and-repository-ledger-0001.md) — 触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 branch-consolidation-and-repository-ledger-0001.md（H1《Branch Consolidation and Repository Ledger Report》；首个 H2《Outcome》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
 3. [`.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-changed-files-0001.md`](branch-consolidation-and-repository-ledger-changed-files-0001.md) — 触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 branch-consolidation-and-repository-ledger-changed-files-0001.md（H1《Branch Consolidation and Repository Ledger — Exact Changed Files》；首个 H2《Source publication allowlist》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
 4. [`.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-validation-0001.md`](branch-consolidation-and-repository-ledger-validation-0001.md) — 触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 branch-consolidation-and-repository-ledger-validation-0001.md（H1《Branch Consolidation and Repository Ledger Validation》；首个 H2《Validation target》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
-5. [`.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-0001.md`](human-ai-communication-compliance-gate-0001.md) — 触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 human-ai-communication-compliance-gate-0001.md（H1《Human–AI Communication Compliance Gate — role/origin correction》；首个 H2《Status》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
-6. [`.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-changed-files-0001.md`](human-ai-communication-compliance-gate-changed-files-0001.md) — 触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 human-ai-communication-compliance-gate-changed-files-0001.md（H1《Human–AI Communication Compliance Gate — exact changed paths》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+5. [`.ai/CODEX_REPORTS/cli-runner-harness-0001.md`](cli-runner-harness-0001.md) — 触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 cli-runner-harness-0001.md（H1《CLI Runner Harness 0001 — implementation report》；首个 H2《Executive core》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+6. [`.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-0001.md`](human-ai-communication-compliance-gate-0001.md) — 触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 human-ai-communication-compliance-gate-0001.md（H1《Human–AI Communication Compliance Gate — role/origin correction》；首个 H2《Status》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
 
 ## child_directories
 
@@ -45,6 +45,13 @@
   - **authority_class**: `historical_evidence`
   - **status_or_freshness**: semantic_profile=ai_report_snapshot；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
   - **when_to_read**: 触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 branch-consolidation-and-repository-ledger-validation-0001.md（H1《Branch Consolidation and Repository Ledger Validation》；首个 H2《Validation target》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+<!-- RIDX_FILE_HEX 2e61692f434f4445585f5245504f5254532f636c692d72756e6e65722d6861726e6573732d303030312e6d64 -->
+- **path_or_link**: [`.ai/CODEX_REPORTS/cli-runner-harness-0001.md`](cli-runner-harness-0001.md)
+  - **content_summary**: H1《CLI Runner Harness 0001 — implementation report》；首个 H2《Executive core》
+  - **role_and_use**: 将 cli-runner-harness-0001.md（H1《CLI Runner Harness 0001 — implementation report》；首个 H2《Executive core》） 作为“Codex source-bound 报告”使用；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=ai_report_snapshot；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+  - **when_to_read**: 触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 cli-runner-harness-0001.md（H1《CLI Runner Harness 0001 — implementation report》；首个 H2《Executive core》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
 <!-- RIDX_FILE_HEX 2e61692f434f4445585f5245504f5254532f68756d616e2d61692d636f6d6d756e69636174696f6e2d636f6d706c69616e63652d676174652d303030312e6d64 -->
 - **path_or_link**: [`.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-0001.md`](human-ai-communication-compliance-gate-0001.md)
   - **content_summary**: H1《Human–AI Communication Compliance Gate — role/origin correction》；首个 H2《Status》
@@ -811,7 +818,7 @@
 
 ## do_not_load_by_default
 
-- 默认不加载 111 个历史/测试/生成/用户或大型 direct artifacts：`.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-0001.md`, `.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-changed-files-0001.md`, `.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-validation-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-changed-files-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-validation-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-expression-protocol-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-expression-protocol-changed-files-0001.md`，另有 103 个见 direct_files。
+- 默认不加载 112 个历史/测试/生成/用户或大型 direct artifacts：`.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-0001.md`, `.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-changed-files-0001.md`, `.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-validation-0001.md`, `.ai/CODEX_REPORTS/cli-runner-harness-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-changed-files-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-validation-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-expression-protocol-0001.md`，另有 104 个见 direct_files。
 
 ## generation_and_freshness_note
 
