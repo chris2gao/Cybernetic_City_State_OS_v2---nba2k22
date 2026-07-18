@@ -1450,6 +1450,14 @@ def semantic_profile(path: str, metadata: dict[str, Any] | None = None) -> str:
         return "canonical_governance"
     if path == "06_Silicon_Index/AI_Bootstrap_Sequence.md":
         return "startup_router"
+    if path in {"06_Silicon_Index/CONSTITUTION_DIGEST.md", "CLAUDE.md"}:
+        return "routing_snapshot"
+    if path.startswith(".ai/load_profiles/"):
+        return "routing_snapshot"
+    if path.startswith(".ai/lanes/tests/"):
+        return "test_or_fixture"
+    if path == ".ai/lanes/reduce-lanes.ps1":
+        return "implementation_artifact"
     if path in PLAN3_V0_2_CONTROL_PLANE_PATHS:
         return "operational_contract"
     if path == "06_Silicon_Index/README.md":
@@ -2008,6 +2016,9 @@ def directory_semantic_profile(directory: str) -> str:
         ".ai/TASKS": "ai_task_library",
         ".ai/token_profile": "ai_token_profile_tools",
         ".ai/runs": "ai_runner_control_plane",
+        ".ai/load_profiles": "ai_control_plane",
+        ".ai/lanes": "communication_control_plane",
+        ".ai/lanes/tests": "communication_fixture_pool",
         "01_Research_Reports": "research_library",
         "01_Research_Reports/_Supreme_Court_Proposals": "research_library",
         "02_Protocols": "protocol_library",

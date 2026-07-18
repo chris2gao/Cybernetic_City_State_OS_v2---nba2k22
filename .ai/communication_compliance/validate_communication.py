@@ -1603,6 +1603,99 @@ def _context_anchor(context: Any, *, trusted: bool) -> dict[str, Any] | None:
     }
 
 
+def _validate_state_lane_inputs(
+    state: Any,
+    repo_root: Path,
+    *,
+    test_mode: bool,
+) -> tuple[list[dict[str, str]], list[dict[str, Any]]]:
+    """Resolve optional cooperative-lane provenance without granting authority."""
+    if not isinstance(state, dict) or "lane_inputs" not in state:
+        return [], []
+    findings: list[dict[str, str]] = []
+    evidence: list[dict[str, Any]] = []
+    inputs = state.get("lane_inputs")
+    if not isinstance(inputs, list):
+        return [finding("STATE_LANE_INPUTS_INVALID", "state.lane_inputs", "lane_inputs must be a list")], []
+
+    expected_order: list[tuple[str, int]] = []
+    seen_lanes: set[str] = set()
+    schema_path = repo_root / ".ai" / "lanes" / "lane_envelope.schema.json"
+    try:
+        lane_schema = load_document(schema_path)
+        Draft202012Validator.check_schema(lane_schema)
+    except Exception as exc:
+        raise ConfigurationError(f"lane envelope schema is invalid: {exc}") from exc
+
+    for index, item in enumerate(inputs):
+        base = f"state.lane_inputs[{index}]"
+        if not isinstance(item, dict):
+            findings.append(finding("STATE_LANE_INPUT_INVALID", base, "lane input must be a mapping"))
+            continue
+        required = {"lane_instance_id", "message_seq", "task_id", "event_ref", "envelope_ref"}
+        if set(item) != required:
+            findings.append(finding("STATE_LANE_INPUT_FIELDS_INVALID", base, "lane input fields must match the canonical provenance shape"))
+            continue
+        lane_id = item.get("lane_instance_id")
+        message_seq = item.get("message_seq")
+        if not isinstance(lane_id, str) or not re.fullmatch(r"[a-z][a-z0-9_-]*-[0-9a-f]{6,32}", lane_id):
+            findings.append(finding("STATE_LANE_ID_INVALID", f"{base}.lane_instance_id", "lane instance id is invalid"))
+            continue
+        if not isinstance(message_seq, int) or isinstance(message_seq, bool) or message_seq < 1:
+            findings.append(finding("STATE_LANE_SEQUENCE_INVALID", f"{base}.message_seq", "lane sequence must be a positive integer"))
+            continue
+        expected_order.append((lane_id, message_seq))
+        if lane_id in seen_lanes:
+            findings.append(finding("STATE_LANE_DUPLICATE", base, "canonical STATE may include only the latest event for each lane"))
+        seen_lanes.add(lane_id)
+
+        resolved_docs: dict[str, tuple[dict[str, Any], Any]] = {}
+        for ref_name in ("event_ref", "envelope_ref"):
+            resolved, content, ref_findings = resolve_reference(
+                repo_root, item.get(ref_name), test_mode=test_mode
+            )
+            for ref_finding in ref_findings:
+                adjusted = dict(ref_finding)
+                adjusted["code"] = "STATE_LANE_" + adjusted["code"]
+                adjusted["path"] = f"{base}.{ref_name}"
+                findings.append(adjusted)
+            document, document_findings = _document_from_reference(
+                content, item.get(ref_name), f"STATE_LANE_{ref_name.upper()}"
+            )
+            findings.extend(document_findings)
+            resolved_docs[ref_name] = (resolved, document)
+
+        event_resolved, event_doc = resolved_docs["event_ref"]
+        envelope_resolved, envelope_doc = resolved_docs["envelope_ref"]
+        if isinstance(envelope_doc, dict):
+            for error in sorted(Draft202012Validator(lane_schema).iter_errors(envelope_doc), key=lambda value: list(value.path)):
+                findings.append(finding("STATE_LANE_ENVELOPE_SCHEMA_INVALID", f"{base}.envelope_ref", error.message))
+            if envelope_doc.get("lane_instance_id") != lane_id or envelope_doc.get("message_seq") != message_seq:
+                findings.append(finding("STATE_LANE_ENVELOPE_BINDING_MISMATCH", base, "STATE lane identity or sequence differs from its envelope"))
+        if isinstance(event_doc, dict):
+            if event_doc.get("task_id") != item.get("task_id"):
+                findings.append(finding("STATE_LANE_TASK_BINDING_MISMATCH", base, "STATE task differs from its lane event"))
+            required_refs = event_doc.get("required_refs", [])
+            expected_envelope = item.get("envelope_ref")
+            if not isinstance(required_refs, list) or expected_envelope not in required_refs:
+                findings.append(finding("STATE_LANE_REQUIRED_REF_MISSING", f"{base}.event_ref", "lane event does not carry the exact envelope required_ref"))
+        expected_event_path = f".ai/lanes/{lane_id}/events/{message_seq:03d}.yml"
+        if event_resolved.get("path") != expected_event_path:
+            findings.append(finding("STATE_LANE_EVENT_PATH_MISMATCH", f"{base}.event_ref.path", "lane event path differs from lane identity and sequence"))
+        evidence.append(
+            {
+                "lane_instance_id": lane_id,
+                "message_seq": message_seq,
+                "event_ref": event_resolved,
+                "envelope_ref": envelope_resolved,
+            }
+        )
+
+    if expected_order != sorted(expected_order):
+        findings.append(finding("STATE_LANE_ORDER_INVALID", "state.lane_inputs", "lane inputs must be sorted by lane id and sequence"))
+    return sorted_findings(findings), evidence
+
+
 def _transition_proof(
     *,
     request: dict[str, Any],
@@ -1702,6 +1795,11 @@ def check_transition(
     evidence["state_ref"] = state_resolved
     state, state_doc_findings = _document_from_reference(state_bytes, request.get("state_ref"), "STATE")
     violations.extend(state_doc_findings)
+    lane_state_findings, lane_state_evidence = _validate_state_lane_inputs(
+        state, repo_root, test_mode=test_mode
+    )
+    violations.extend(lane_state_findings)
+    evidence["state_lane_refs"] = lane_state_evidence
 
     state_ref = request.get("state_ref") if isinstance(request.get("state_ref"), dict) else {}
     if isinstance(active_state_context, dict):

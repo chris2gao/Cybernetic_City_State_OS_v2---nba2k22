@@ -23,6 +23,19 @@
       "enum": ["foreground_review_and_task_dispatch", "backend_execution_and_handoff"]
     },
     "wire_schema": {"enum": ["chatgpt_to_codex_v1", "codex_to_chatgpt_v1"]},
+    "environment_class": {
+      "description": "Optional descriptive environment metadata; never authority.",
+      "enum": ["claude_desktop", "chatgpt_web", "codex_desktop", "codex_cli", "claude_code_cli"]
+    },
+    "lane_instance_id": {
+      "description": "Optional self-declared cooperative lane identity; never authentication.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*-[0-9a-f]{6,32}$"
+    },
+    "load_profile_id": {
+      "description": "Optional routing manifest identity; never authority.",
+      "enum": ["foreground_planner", "foreground_independent_reviewer", "backend_executor", "math_mentor_teacher"]
+    },
     "loaded_files": {
       "type": "array",
       "minItems": 1,

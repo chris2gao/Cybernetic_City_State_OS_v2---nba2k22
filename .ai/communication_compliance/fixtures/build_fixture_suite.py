@@ -40,17 +40,7 @@ ROLE_MAP = {
     "Codex": ("backend_execution_and_handoff", "codex_to_chatgpt_v1"),
     "Claude Code": ("backend_execution_and_handoff", "codex_to_chatgpt_v1"),
 }
-LOADED_PATHS = [
-    "06_Silicon_Index/AI_Bootstrap_Sequence.md",
-    "AGENTS.md",
-    ".ai/HANDOFF_INIT_PROMPT.md",
-    ".ai/PROTOCOL.md",
-    ".ai/PROTOCOL_ADHERENCE.md",
-    ".ai/HANDOFF_COMMON_CONVENTIONS.md",
-    ".ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md",
-    ".ai/CODEX_WORK_MECHANISM_PROTOCOL.md",
-    ".ai/CODEX_TASK_INPUT_CONTRACT.md",
-]
+ALWAYS_LOADED_PATHS = POLICY["bootstrap_required_loaded_files"]
 PREFLIGHT_FIELDS = [
     "factual_status_grounded",
     "required_refs_dereferenced",
@@ -138,6 +128,8 @@ def write_json(path: Path, value: Any, *, sort_keys: bool = True) -> None:
 
 def receipt(provider: str, head: str = RELEASE) -> dict[str, Any]:
     role, wire = ROLE_MAP[provider]
+    role_paths = POLICY["bootstrap_on_demand_requirements"].get(role, [])
+    loaded_paths = list(dict.fromkeys(ALWAYS_LOADED_PATHS + role_paths))
     return {
         "schema_version": "human_ai.communication_bootstrap_receipt.v1",
         "receipt_id": "fixture-receipt-" + provider.lower().replace(" ", "-"),
@@ -147,11 +139,12 @@ def receipt(provider: str, head: str = RELEASE) -> dict[str, Any]:
         "wire_schema": wire,
         "loaded_files": [
             {"commit": head, "path": path, "content_sha256": sha256(git_show(path, head))}
-            for path in LOADED_PATHS
+            for path in loaded_paths
         ],
         "inherited_on_demand": [
-            {"path": ".ai/CODEX_WORK_MECHANISM_PROTOCOL.md", "trigger": "backend mechanics", "loaded": True},
-            {"path": ".ai/CODEX_TASK_INPUT_CONTRACT.md", "trigger": "task parsing", "loaded": True},
+            {"path": path, "trigger": "role/load-profile routing", "loaded": True}
+            for path in role_paths
+        ] + [
             {"path": ".ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md", "trigger": "separate long run", "loaded": False},
         ],
         "authority_boundary": {
