@@ -130,6 +130,7 @@ def receipt(provider: str, head: str = RELEASE) -> dict[str, Any]:
     role, wire = ROLE_MAP[provider]
     role_paths = POLICY["bootstrap_on_demand_requirements"].get(role, [])
     loaded_paths = list(dict.fromkeys(ALWAYS_LOADED_PATHS + role_paths))
+    evidence_head = RELEASE
     return {
         "schema_version": "human_ai.communication_bootstrap_receipt.v1",
         "receipt_id": "fixture-receipt-" + provider.lower().replace(" ", "-"),
@@ -138,7 +139,7 @@ def receipt(provider: str, head: str = RELEASE) -> dict[str, Any]:
         "occupied_role": role,
         "wire_schema": wire,
         "loaded_files": [
-            {"commit": head, "path": path, "content_sha256": sha256(git_show(path, head))}
+            {"commit": evidence_head, "path": path, "content_sha256": sha256(git_show(path, evidence_head))}
             for path in loaded_paths
         ],
         "inherited_on_demand": [
@@ -478,7 +479,7 @@ def build_cases() -> list[dict[str, Any]]:
     cases.append(case("classify_unknown_fail_closed", "classify", result="fail", codes=["UNKNOWN_EVENT_TYPE"], event_type="future_unknown_transition"))
     for provider in ROLE_MAP:
         cases.append(case("bootstrap_" + provider.lower().replace(" ", "_") + "_pass", "validate_bootstrap", payload=receipt(provider)))
-    cases.append(case("bootstrap_stale_release_head", "validate_bootstrap", payload=receipt("ChatGPT", SOURCE_BASE), result="fail", codes=["BOOTSTRAP_PROTOCOL_HEAD_STALE"]))
+    cases.append(case("bootstrap_stale_release_head", "validate_bootstrap", payload=receipt("ChatGPT", SOURCE_BASE), result="fail", codes=["BOOTSTRAP_LOADED_FILE_HEAD_MISMATCH", "BOOTSTRAP_PROTOCOL_HEAD_STALE"]))
     wrong_wire = receipt("ChatGPT")
     wrong_wire["wire_schema"] = "codex_to_chatgpt_v1"
     cases.append(case("bootstrap_wrong_wire", "validate_bootstrap", payload=wrong_wire, result="fail", codes=["BOOTSTRAP_RECEIPT_SCHEMA_INVALID"]))
