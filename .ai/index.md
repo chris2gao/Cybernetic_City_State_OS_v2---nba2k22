@@ -28,7 +28,7 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f48554d414e5f425249454653 -->
 - **path_or_link**: [`.ai/HUMAN_BRIEFS`](HUMAN_BRIEFS/index.md)
-  - **content_scope**: 保存 Human-facing 接受、授权与 publication 决策快照；tracked 后代文件数=2
+  - **content_scope**: 保存 Human-facing 接受、授权与 publication 决策快照；tracked 后代文件数=3
   - **when_to_enter**: 查证具体 Human acceptance、authorization 或 publication brief
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f4c4f4e475f52554e5f4c4f4753 -->
