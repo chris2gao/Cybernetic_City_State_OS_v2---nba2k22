@@ -47,9 +47,12 @@ function Get-StagingMap([string]$StagingRoot) {
         $items += [ordered]@{ Source = $file.FullName; Destination = $relative }
     }
     if ($items.Count -eq 0) { throw 'staging contains no files' }
-    $duplicates = @($items | Group-Object Destination | Where-Object Count -gt 1)
+    # Windows PowerShell does not reliably bind a property-name argument against
+    # OrderedDictionary pipeline values. Use scriptblocks so distinct destinations
+    # are neither collapsed into one empty group nor returned in unstable order.
+    $duplicates = @($items | Group-Object { $_.Destination } | Where-Object Count -gt 1)
     if ($duplicates.Count -gt 0) { throw 'staging maps more than one file to the same destination' }
-    return @($items | Sort-Object Destination)
+    return @($items | Sort-Object { $_.Destination })
 }
 
 function Remove-TemporaryWorktree([string]$Path, [string]$Branch) {
