@@ -14,6 +14,10 @@ canonical_ref_digests:
 
 Routing manifest only; a domain persona grants no protocol or Human authority.
 
+Before any C1/C2 behavior, read the current Human instruction, current STATE/current
+signal, and dereference every applicable non-null ref. This profile only routes; it
+does not copy or replace protocol text.
+
 Load the constitutional digest, V9.1 teaching flow, lesson-plan schema, teaching-agent
 contracts, tool-truthfulness policy, and the exact target node evidence. Read the node
 body before teaching it; do not substitute an index, manifest, or schema for that body.

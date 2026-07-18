@@ -60,6 +60,13 @@
   - **authority_class**: `routing`
   - **status_or_freshness**: semantic_profile=startup_router；authority=routing；evidence_basis=markdown_heading_or_visible_structure；先于领域文件使用，并继续服从当前 Human 任务触发规则
   - **when_to_read**: 触发条件：每次开始仓库任务，并准备从当前 Human 任务路由后续合同。读取 AI_Bootstrap_Sequence.md（H1《AI_Bootstrap_Sequence：赛博城邦 AI 启动序列》；首个 H2《0. 定位》）；先于领域文件使用，并继续服从当前 Human 任务触发规则
+<!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f434f4e535449545554494f4e5f4449474553542e6d64 -->
+- **path_or_link**: [`06_Silicon_Index/CONSTITUTION_DIGEST.md`](CONSTITUTION_DIGEST.md)
+  - **content_summary**: H1《Constitutional Routing Digest》
+  - **role_and_use**: 将 CONSTITUTION_DIGEST.md（H1《Constitutional Routing Digest》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **authority_class**: `routing`
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 CONSTITUTION_DIGEST.md（H1《Constitutional Routing Digest》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f4361706162696c6974795f52656769737472792e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/Capability_Registry.md`](Capability_Registry.md)
   - **content_summary**: H1《Capability Registry v0.2》；首个 H2《1. Purpose》

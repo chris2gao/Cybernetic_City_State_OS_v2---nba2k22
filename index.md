@@ -26,7 +26,7 @@
 
 <!-- RIDX_DIR_HEX 2e6169 -->
 - **path_or_link**: [`.ai`](.ai/index.md)
-  - **content_scope**: AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信合规入口；tracked 后代文件数=478
+  - **content_scope**: AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信合规入口；tracked 后代文件数=494
   - **when_to_enter**: 执行 handoff、任务接管、review/publication 或查证历史 run
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30315f52657365617263685f5265706f727473 -->
@@ -56,7 +56,7 @@
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30365f53696c69636f6e5f496e646578 -->
 - **path_or_link**: [`06_Silicon_Index`](06_Silicon_Index/index.md)
-  - **content_scope**: 硅基启动根：按 Bootstrap→当前 Human 任务→触发合同选择 persona、factory、scripts 或 skills；tracked 后代文件数=101
+  - **content_scope**: 硅基启动根：按 Bootstrap→当前 Human 任务→触发合同选择 persona、factory、scripts 或 skills；tracked 后代文件数=102
   - **when_to_enter**: 完成 Bootstrap 后，当前任务明确触发 persona、factory、scripts 或 skills 子区
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30375f436f6d70696c6572 -->
@@ -174,6 +174,13 @@
   - **authority_class**: `routing`
   - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 CHANGELOG_AI.md（H1《AI Changelog》；首个 H2《2026-06-17》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+<!-- RIDX_FILE_HEX 434c415544452e6d64 -->
+- **path_or_link**: [`CLAUDE.md`](CLAUDE.md)
+  - **content_summary**: H1《Claude Code onboarding router》
+  - **role_and_use**: 将 CLAUDE.md（H1《Claude Code onboarding router》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **authority_class**: `routing`
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 CLAUDE.md（H1《Claude Code onboarding router》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 494e5354414e43455f434f4e4649472e6d64 -->
 - **path_or_link**: [`INSTANCE_CONFIG.md`](INSTANCE_CONFIG.md)
   - **content_summary**: H1《🏷️ 城邦实例配置 (Instance Configuration)》；首个 H2《基本信息》

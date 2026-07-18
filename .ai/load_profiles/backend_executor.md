@@ -13,6 +13,10 @@ canonical_ref_digests:
 
 Routing manifest only; it grants no role, write access, publication, or Human authority.
 
+Before any C1/C2 behavior, read the current Human instruction, current STATE/current
+signal, and dereference every applicable non-null ref. This profile only routes; it
+does not copy or replace protocol text.
+
 Load the constitutional digest, `AGENTS.md`, `.ai/TOKEN_USAGE_PROFILE.md`, the backend
 work-mechanism protocol, and the exact current task packet. The token profile is a lazy
 canonical pointer here; this manifest does not copy its discipline. Dereference every

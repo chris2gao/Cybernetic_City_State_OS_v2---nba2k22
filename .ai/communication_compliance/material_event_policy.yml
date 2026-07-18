@@ -4,8 +4,8 @@ validator_version: "3.0.0"
 # source_mailbox_base_head is only the neutral-mailbox comparison baseline.
 # protocol_release_head is bound in the second, binding-only release commit.
 source_mailbox_base_head: "d235e602c14250d16b91f2897cb8308e031cc13c"
-protocol_release_head: "028b64bec90d889a27f2f5070d689231b7884599"
-release_binding_status: "bound"
+protocol_release_head: null
+release_binding_status: "unbound"
 
 wire_schemas:
   chatgpt_to_codex_v1:
@@ -88,7 +88,6 @@ unknown_event_policy: fail_closed
 bootstrap_required_loaded_files:
   - "06_Silicon_Index/AI_Bootstrap_Sequence.md"
   - "AGENTS.md"
-  - "06_Silicon_Index/CONSTITUTION_DIGEST.md"
   - ".ai/HANDOFF_INIT_PROMPT.md"
   - ".ai/PROTOCOL.md"
   - ".ai/PROTOCOL_ADHERENCE.md"
@@ -96,12 +95,8 @@ bootstrap_required_loaded_files:
   - ".ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md"
 bootstrap_on_demand_requirements:
   foreground_review_and_task_dispatch:
-    - ".ai/load_profiles/foreground_planner.md"
-    - ".ai/load_profiles/foreground_independent_reviewer.md"
     - ".ai/CODEX_TASK_INPUT_CONTRACT.md"
   backend_execution_and_handoff:
-    - ".ai/load_profiles/backend_executor.md"
-    - ".ai/TOKEN_USAGE_PROFILE.md"
     - ".ai/CODEX_WORK_MECHANISM_PROTOCOL.md"
     - ".ai/CODEX_TASK_INPUT_CONTRACT.md"
 dispatch_event_types:

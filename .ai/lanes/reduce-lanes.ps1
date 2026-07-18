@@ -3,9 +3,8 @@ param(
     [string]$RepositoryRoot = (Resolve-Path (Join-Path $PSScriptRoot "../..")),
     [string]$LaneRoot = (Join-Path $PSScriptRoot "."),
     [string]$StatePath = (Join-Path $PSScriptRoot "../STATE.yml"),
-    [Parameter(Mandatory = $true)]
-    [ValidatePattern('^[0-9a-f]{40}$')]
-    [string]$LaneRequiredAfterProtocolReleaseHead,
+    [ValidatePattern('^$|^[0-9a-f]{40}$')]
+    [string]$CurrentLaneProtocolEpoch = '',
     [ValidateSet('foreground_review_and_task_dispatch')]
     [string]$WriterProtocolRole = 'foreground_review_and_task_dispatch',
     [string]$StateStatus = 'neutral_baseline',
@@ -66,16 +65,15 @@ function Resolve-ImmutableRef($Reference, [string]$Label) {
     return @{ Bytes = $bytes; Digest = $digest }
 }
 
-function Test-AtOrAfterEpoch([string]$ReviewHead) {
-    if ($ReviewHead -notmatch '^[0-9a-f]{40}$') { throw 'reflects_review_head is invalid' }
-    & git -C $RepositoryRoot merge-base --is-ancestor $LaneRequiredAfterProtocolReleaseHead $ReviewHead
-    if ($LASTEXITCODE -eq 0) { return $true }
-    if ($LASTEXITCODE -eq 1) { return $false }
-    throw 'could not compare lane epoch with reflected review head'
-}
-
 $head = (& git -C $RepositoryRoot rev-parse HEAD).Trim()
 if ($LASTEXITCODE -ne 0 -or $head -notmatch '^[0-9a-f]{40}$') { throw 'HEAD is unavailable' }
+if (-not $CurrentLaneProtocolEpoch) {
+    $epochPath = Join-Path $PSScriptRoot 'lane_epoch.yml'
+    $epoch = Get-Content -LiteralPath $epochPath -Raw | ConvertFrom-Json
+    if ($epoch.release_binding_status -ne 'bound') { throw 'lane protocol epoch is not bound' }
+    $CurrentLaneProtocolEpoch = [string]$epoch.lane_required_after_protocol_release_head
+}
+if ($CurrentLaneProtocolEpoch -notmatch '^[0-9a-f]{40}$') { throw 'current lane protocol epoch is invalid' }
 
 $inputs = @()
 $seenEvents = @{}
@@ -112,7 +110,10 @@ foreach ($lane in $laneDirectories) {
     if ($envelope.protocol_role -notin @('human_speaker','foreground_review_and_task_dispatch','backend_execution_and_handoff')) { throw 'lane protocol role is invalid' }
     if ($envelope.environment_class -notin @('claude_desktop','chatgpt_web','codex_desktop','codex_cli','claude_code_cli')) { throw 'lane environment class is invalid' }
     if ($envelope.load_profile_id -notin @('foreground_planner','foreground_independent_reviewer','backend_executor','math_mentor_teacher')) { throw 'lane load profile is invalid' }
-    if (-not (Test-AtOrAfterEpoch ([string]$envelope.reflects_review_head))) { continue }
+    if ($envelope.lane_protocol_epoch -ne $CurrentLaneProtocolEpoch) { continue }
+    if ($envelope.base_review_head -notmatch '^[0-9a-f]{40}$') { throw 'base_review_head is invalid' }
+    & git -C $RepositoryRoot cat-file -e ($envelope.base_review_head + '^{commit}')
+    if ($LASTEXITCODE -ne 0) { throw 'base_review_head is not a commit object' }
 
     $taskId = [string]$event.task_id
     if ($LegacyTaskIds -contains $taskId) { throw 'mixed legacy/lane delivery for one task is forbidden' }
@@ -143,7 +144,7 @@ $state = [ordered]@{
     active_task = $(if ($ActiveTask) { $ActiveTask } else { $null })
     review_branch = 'ai/review/latest'
     review_branch_head = $head
-    lane_required_after_protocol_release_head = $LaneRequiredAfterProtocolReleaseHead
+    lane_required_after_protocol_release_head = $CurrentLaneProtocolEpoch
     lane_inputs = @($inputs | Sort-Object lane_instance_id, message_seq)
     human_gate = 'not_required'
 }

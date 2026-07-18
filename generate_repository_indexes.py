@@ -1458,6 +1458,8 @@ def semantic_profile(path: str, metadata: dict[str, Any] | None = None) -> str:
         return "test_or_fixture"
     if path == ".ai/lanes/reduce-lanes.ps1":
         return "implementation_artifact"
+    if path == ".ai/lanes/lane_epoch.yml":
+        return "operational_contract"
     if path in PLAN3_V0_2_CONTROL_PLANE_PATHS:
         return "operational_contract"
     if path == "06_Silicon_Index/README.md":
@@ -2058,6 +2060,8 @@ def directory_semantic_profile(directory: str) -> str:
     if directory.startswith(".ai/PROGRAM_RUNS/"):
         remainder = directory.split(".ai/PROGRAM_RUNS/", 1)[1]
         return "ai_program_run" if "/" not in remainder else "ai_program_run_component"
+    if directory.startswith(".ai/HUMAN_BRIEFS/"):
+        return "ai_human_brief_library"
     if directory.startswith(".ai/token_profile/"):
         return "ai_token_profile_tools"
     if directory.startswith(".ai/runs/"):

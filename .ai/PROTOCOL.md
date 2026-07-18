@@ -250,7 +250,7 @@ Freshness establishes current state only. Git HEAD, mailbox recency, timestamps,
 - After lane cutover, appends only to its own lane and does not write canonical
   `STATE.yml`, latest `.ai/HUMAN_BRIEF.md`, or legacy shared `OUTBOX.md`.
 - Returns a short pointer handoff instead of pasting execution reports into chat.
-- Writes an immutable `.ai/HUMAN_BRIEFS/<lane>-<task>.md` for material completions,
+- Writes an immutable `.ai/HUMAN_BRIEFS/<task-id>/<lane-instance-id>-<message-seq>.md` for material completions,
   review handoffs, publication, blocked/conflict states, risks, or Human gates,
   including bounded independent expression.
 - Publishes disposable review snapshots when authorized by this protocol.
@@ -292,26 +292,34 @@ The source branch stores the stable protocol and neutral mailbox baseline. Activ
 
 ## Cooperative Lane Epoch And Migration
 
-`lane_required_after_protocol_release_head` is the bound
-`.ai/communication_compliance/material_event_policy.yml#protocol_release_head` for the
-release that introduces this section. From that one-way epoch onward, backend durable
+`lane_required_after_protocol_release_head` is the bound value in
+`.ai/lanes/lane_epoch.yml` for the release that introduces this section. From that
+one-way epoch onward, backend durable
 receipts use `.ai/lanes/<lane_instance_id>/events/`; legacy shared `.ai/OUTBOX.md` is
 read-only compatibility input. Cutover is atomic: no event is dual-written and one
 task may not mix legacy and lane delivery. Either condition fails closed.
 
+The epoch may be bound and published only when no backend task is in flight and every
+old backend session has completed or stopped. After publication, every environment
+must reload the protocol before its next durable write; otherwise cutover is blocked.
+
 The lane envelope is an independent artifact conforming to
 `.ai/lanes/lane_envelope.schema.json` and appears in the communication event's
-`required_refs`, never inside the frozen seven-field pointer. Its role and environment
-fields are descriptive and grant no authority. Each lane appends only its own events;
-cross-lane writes are rejected under the cooperative threat model.
+`required_refs`, never inside the frozen seven-field pointer. The event carries the
+role-appropriate seven-field signal or handoff. Its role and environment fields are
+descriptive and grant no authority. `lane_protocol_epoch` must equal the bound current
+epoch; `base_review_head` is the review head observed before writing and is not a
+self-reference. Each lane appends only its own events; cross-lane writes are rejected
+under the cooperative threat model.
 
 Foreground deterministically takes the greatest sequence per lane, sorts by lane ID
-and sequence, ignores pre-epoch events, and writes optional `lane_inputs` provenance
-to canonical STATE. Each input carries immutable event/envelope commit, path, and
-SHA-256 evidence. The existing gate only parses and resolves these refs. This adds no
-validator/policy version, transition authorization, CAS, ActorOrigin binding, formal
-proof, scheduler, polling, Gateway, or runtime. Source/master neutral mailbox rules
-remain unchanged.
+and sequence, ignores events with a different `lane_protocol_epoch`, and writes
+optional `lane_inputs` provenance to canonical STATE. Each input carries immutable
+event/envelope commit, path, and SHA-256 evidence. Lane tests validate this routing and
+traceability; the existing communication gate, policy semantics, validator, fixtures,
+canonical event, pointer, and STATE transition rules receive no lane behavior. This
+adds no transition authorization, CAS, ActorOrigin binding, formal proof, scheduler,
+polling, Gateway, or runtime. Source/master neutral mailbox rules remain unchanged.
 
 ## Durable Protocol And Active Mailbox Separation
 
@@ -331,6 +339,8 @@ Durable protocol files include:
 - `.ai/load_profiles/*.md`
 - `.ai/lanes/index.md`
 - `.ai/lanes/lane_envelope.schema.json`
+- `.ai/lanes/lane_meta.schema.json`
+- `.ai/lanes/lane_epoch.yml`
 - `.ai/lanes/reduce-lanes.ps1`
 
 Active mailbox files include:

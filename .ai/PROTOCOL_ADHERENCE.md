@@ -115,9 +115,13 @@ seven-field pointer is unchanged. Backend writes an immutable per-task Human Bri
 Foreground alone writes canonical STATE and `.ai/HUMAN_BRIEF.md`. Legacy/lane dual
 write, cross-lane write, or mixed mode for one task fails closed.
 
+Before epoch publication, verify that no backend task is in flight and all old backend
+sessions completed or stopped. Every environment reloads the protocol before its next
+durable write. Envelope epochs that differ from `.ai/lanes/lane_epoch.yml` are stale.
+
 The backend execution-and-handoff occupant returns the canonical Codex-to-ChatGPT wire handoff defined by `.ai/PROTOCOL.md`. The foreground review-and-task-dispatch occupant returns the canonical ChatGPT-to-Codex wire signal or review decision. Claude and Claude Code use those frozen schemas according to role. Normal model-to-model chat contains pointers, not task bodies, reports, command logs, full diffs, or Human Brief text.
 
-Long backend-role output belongs in `.ai/CODEX_REPORTS/*.md` or another explicitly authorized path. Backend Human-facing status belongs in an immutable per-task `.ai/HUMAN_BRIEFS/<lane>-<task>.md`; foreground alone updates latest `.ai/HUMAN_BRIEF.md`. Legacy `.ai/OUTBOX.md` is read-only after lane cutover.
+Long backend-role output belongs in `.ai/CODEX_REPORTS/*.md` or another explicitly authorized path. Backend Human-facing status belongs in an immutable event path `.ai/HUMAN_BRIEFS/<task-id>/<lane-instance-id>-<message-seq>.md`; foreground alone updates latest `.ai/HUMAN_BRIEF.md`. Legacy `.ai/OUTBOX.md` is read-only after lane cutover.
 
 Machine pointer output and Human operational output are separate channels. Classify mixed-recipient output by intended recipient and consumption mode, not UI/provider brand. When Human and machine recipients share an interface, keep the canonical pointer block byte-structurally separate and append Human operational content outside it. If safe separation is impossible, publish the Human Brief first, emit pointer-only with a non-null resolvable `brief_ref`, and preserve every required Human element there—including a complete recommendation for backend dispatch; otherwise return blocked.
 

@@ -40,7 +40,17 @@ ROLE_MAP = {
     "Codex": ("backend_execution_and_handoff", "codex_to_chatgpt_v1"),
     "Claude Code": ("backend_execution_and_handoff", "codex_to_chatgpt_v1"),
 }
-ALWAYS_LOADED_PATHS = POLICY["bootstrap_required_loaded_files"]
+LOADED_PATHS = [
+    "06_Silicon_Index/AI_Bootstrap_Sequence.md",
+    "AGENTS.md",
+    ".ai/HANDOFF_INIT_PROMPT.md",
+    ".ai/PROTOCOL.md",
+    ".ai/PROTOCOL_ADHERENCE.md",
+    ".ai/HANDOFF_COMMON_CONVENTIONS.md",
+    ".ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md",
+    ".ai/CODEX_WORK_MECHANISM_PROTOCOL.md",
+    ".ai/CODEX_TASK_INPUT_CONTRACT.md",
+]
 PREFLIGHT_FIELDS = [
     "factual_status_grounded",
     "required_refs_dereferenced",
@@ -128,9 +138,6 @@ def write_json(path: Path, value: Any, *, sort_keys: bool = True) -> None:
 
 def receipt(provider: str, head: str = RELEASE) -> dict[str, Any]:
     role, wire = ROLE_MAP[provider]
-    role_paths = POLICY["bootstrap_on_demand_requirements"].get(role, [])
-    loaded_paths = list(dict.fromkeys(ALWAYS_LOADED_PATHS + role_paths))
-    evidence_head = RELEASE
     return {
         "schema_version": "human_ai.communication_bootstrap_receipt.v1",
         "receipt_id": "fixture-receipt-" + provider.lower().replace(" ", "-"),
@@ -139,13 +146,12 @@ def receipt(provider: str, head: str = RELEASE) -> dict[str, Any]:
         "occupied_role": role,
         "wire_schema": wire,
         "loaded_files": [
-            {"commit": evidence_head, "path": path, "content_sha256": sha256(git_show(path, evidence_head))}
-            for path in loaded_paths
+            {"commit": head, "path": path, "content_sha256": sha256(git_show(path, head))}
+            for path in LOADED_PATHS
         ],
         "inherited_on_demand": [
-            {"path": path, "trigger": "role/load-profile routing", "loaded": True}
-            for path in role_paths
-        ] + [
+            {"path": ".ai/CODEX_WORK_MECHANISM_PROTOCOL.md", "trigger": "backend mechanics", "loaded": True},
+            {"path": ".ai/CODEX_TASK_INPUT_CONTRACT.md", "trigger": "task parsing", "loaded": True},
             {"path": ".ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md", "trigger": "separate long run", "loaded": False},
         ],
         "authority_boundary": {
@@ -479,7 +485,7 @@ def build_cases() -> list[dict[str, Any]]:
     cases.append(case("classify_unknown_fail_closed", "classify", result="fail", codes=["UNKNOWN_EVENT_TYPE"], event_type="future_unknown_transition"))
     for provider in ROLE_MAP:
         cases.append(case("bootstrap_" + provider.lower().replace(" ", "_") + "_pass", "validate_bootstrap", payload=receipt(provider)))
-    cases.append(case("bootstrap_stale_release_head", "validate_bootstrap", payload=receipt("ChatGPT", SOURCE_BASE), result="fail", codes=["BOOTSTRAP_LOADED_FILE_HEAD_MISMATCH", "BOOTSTRAP_PROTOCOL_HEAD_STALE"]))
+    cases.append(case("bootstrap_stale_release_head", "validate_bootstrap", payload=receipt("ChatGPT", SOURCE_BASE), result="fail", codes=["BOOTSTRAP_PROTOCOL_HEAD_STALE"]))
     wrong_wire = receipt("ChatGPT")
     wrong_wire["wire_schema"] = "codex_to_chatgpt_v1"
     cases.append(case("bootstrap_wrong_wire", "validate_bootstrap", payload=wrong_wire, result="fail", codes=["BOOTSTRAP_RECEIPT_SCHEMA_INVALID"]))

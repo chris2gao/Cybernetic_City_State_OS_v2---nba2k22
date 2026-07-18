@@ -126,6 +126,10 @@ envelope through `required_refs`. Legacy shared OUTBOX is read-only compatibilit
 dual-write or mixed delivery for one task fails closed. Foreground alone reduces lane
 inputs into canonical STATE and updates `.ai/HUMAN_BRIEF.md`.
 
+Cutover is allowed only with no in-flight backend task, every old backend session
+completed or stopped, and all environments committed to reload the protocol before
+their next durable write. The bound epoch is `.ai/lanes/lane_epoch.yml`.
+
 Default rules:
 
 ```text
@@ -162,7 +166,7 @@ Codex-to-ChatGPT handoff (frozen backend-to-foreground wire label, used by Codex
 packet_id: "codex-xxxx"
 status: "completed | awaiting_review | blocked | conflict"
 report_ref: ".ai/CODEX_REPORTS/xxx.md"
-brief_ref: ".ai/HUMAN_BRIEFS/<lane>-<task>.md | null"
+brief_ref: ".ai/HUMAN_BRIEFS/<task-id>/<lane-instance-id>-<message-seq>.md | null"
 source_head: "<commit>"
 review_branch_head: "<commit>"
 human_gate: "not_required | required"
@@ -172,8 +176,8 @@ human_gate: "not_required | required"
 
 Do not paste normal human briefs into model-to-model chat.
 
-Use `brief_ref` instead. Backend instances create immutable task briefs at
-`.ai/HUMAN_BRIEFS/<lane>-<task>.md`; the foreground-owned `.ai/HUMAN_BRIEF.md` is the
+Use `brief_ref` instead. Backend instances create immutable event briefs at
+`.ai/HUMAN_BRIEFS/<task-id>/<lane-instance-id>-<message-seq>.md`; the foreground-owned `.ai/HUMAN_BRIEF.md` is the
 latest pointer/summary surface.
 
 Normal brief content belongs in:
@@ -206,7 +210,7 @@ When the Human is expected to start or continue a backend agent, the recommendat
 
 ## Bootstrap Receipt And Executable Gate
 
-For the first durable `C1` or protected `C2` model event after full initialization, emit a `bootstrap_receipt.schema.json`-conforming receipt through the event artifact. It binds the exact `protocol_release_head`, occupied provider-neutral role, frozen wire schema, immutable loaded-file blobs and digests, authority boundary, and onboarding answers. Optional environment, lane, and load-profile fields are descriptive only. The neutral `source_mailbox_base_head` is not a receipt head. The receipt proves deterministic byte claims; it does not prove cognition or grant permission. Human is not a model receipt provider and remains `human_speaker`.
+For the first durable `C1` or protected `C2` model event after full initialization, emit a `bootstrap_receipt.schema.json`-conforming receipt through the event artifact. It binds the exact `protocol_release_head`, occupied provider-neutral role, frozen wire schema, immutable loaded-file blobs and digests, authority boundary, and onboarding answers. The neutral `source_mailbox_base_head` is not a receipt head. The receipt proves deterministic byte claims; it does not prove cognition or grant permission. Human is not a model receipt provider and remains `human_speaker`.
 
 Before any C1/C2 transition is treated as eligible, use `.ai/communication_compliance/validate_communication.py` as documented in `.ai/communication_compliance/README.md`. `C0` ordinary chat is exempt. Resolve immutable event/STATE/pointer evidence, inject a trusted current-state anchor outside the request, enforce the selected edge's stable-role matrix, and require exact-event-bound external actor-origin attestation for Human and model events alike. Human direct dispatch keeps the Human role and uses the frozen backend direction. For C2, the payload and descriptive `human_gate` remain non-authorizing; a trusted external host must additionally inject a Human `AuthorizationContext` bound to the same event and actor-origin digest.
 

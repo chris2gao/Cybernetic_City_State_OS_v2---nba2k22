@@ -10,7 +10,8 @@
     "protocol_role",
     "load_profile_id",
     "message_seq",
-    "reflects_review_head",
+    "lane_protocol_epoch",
+    "base_review_head",
     "written_at"
   ],
   "properties": {
@@ -29,7 +30,16 @@
       "enum": ["foreground_planner", "foreground_independent_reviewer", "backend_executor", "math_mentor_teacher"]
     },
     "message_seq": {"type": "integer", "minimum": 1},
-    "reflects_review_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "lane_protocol_epoch": {
+      "description": "Must equal the currently bound lane protocol release head.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "base_review_head": {
+      "description": "ai/review/latest head observed before the durable write; no self-reference is required.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
     "written_at": {"type": "string", "format": "date-time"}
   },
   "additionalProperties": false

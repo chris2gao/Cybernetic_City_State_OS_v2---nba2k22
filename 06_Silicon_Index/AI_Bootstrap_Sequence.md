@@ -66,6 +66,9 @@ Canonical definition 位于 `.ai/PROTOCOL.md#canonical-instruction-authority-and
 
 完整协议初始化仍然不是全仓库摄入许可。它只加载启动与通信控制面；业务目录和领域材料继续按任务懒加载。
 
+任何 C1/C2 行为都必须读取当前 Human 指令、当前 STATE/current signal，并解引用
+所有适用的非空 refs。Load profile 只负责路由，不复制或替代协议正文。
+
 ## 3. 懒加载法则
 
 默认规则：
@@ -157,6 +160,7 @@ Human Speaker 是：
 
 - `.ai/PROTOCOL.md`：canonical authority、freshness、handoff 和 publication boundary。
 - `.ai/load_profiles/*.md`：无授权力的角色/任务加载清单；只指向 canonical sources。
+- `.ai/lanes/lane_epoch.yml`：合作式 lane 的绑定 epoch 与 cutover 前置条件；不授予权限。
 - `.ai/HANDOFF_INIT_PROMPT.md`：完整初始化入口与角色触发的协议加载。
 - `.ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md`：目标稳定、边界可预先锁定的多步骤大型任务默认统一入口。
 - `.ai/CODEX_WORK_MECHANISM_PROTOCOL.md`：Goal mode、Git workflow level、执行、验证与 review handoff 机制。

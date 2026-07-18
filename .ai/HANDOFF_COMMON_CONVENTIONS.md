@@ -74,7 +74,7 @@ Unless explicitly enabled by a human-approved task:
 ## 6. Human Brief Defaults
 
 After lane cutover, backend authors use immutable
-`.ai/HUMAN_BRIEFS/<lane>-<task>.md` briefs. Only foreground updates the latest
+`.ai/HUMAN_BRIEFS/<task-id>/<lane-instance-id>-<message-seq>.md` briefs. Only foreground updates the latest
 `.ai/HUMAN_BRIEF.md` surface. This ownership split does not change `brief_ref` or Human
 authority.
 
@@ -104,7 +104,7 @@ human_gate: "not_required"
 packet_id: "codex-0001"
 status: "completed"
 report_ref: ".ai/CODEX_REPORTS/<task>.md"
-brief_ref: ".ai/HUMAN_BRIEFS/<lane>-<task>.md"
+brief_ref: ".ai/HUMAN_BRIEFS/<task-id>/<lane-instance-id>-<message-seq>.md"
 source_head: "<commit>"
 review_branch_head: "<commit>"
 human_gate: "not_required"
@@ -128,6 +128,11 @@ Select exactly one `.ai/load_profiles/*.md` routing manifest at a context bounda
 follow its triggers. `.ai/TOKEN_USAGE_PROFILE.md` is the default v0.2 operating
 discipline for backend execution; token economy never permits skipping decisive
 primary evidence, validation, or required refs.
+
+Every C1/C2 action reads the current Human instruction, current STATE/current signal,
+and all applicable non-null refs. Lane cutover additionally requires no in-flight
+backend task, all old backend sessions completed/stopped, and protocol reload by every
+environment before its next durable write.
 
 - Short model-to-model handoffs should normally stay below approximately 300 tokens.
 - Dereference every non-null ref, but read large artifacts by heading, summary, `rg`, or targeted line range before expanding scope.

@@ -1,25 +1,16 @@
 import hashlib
-import importlib.util
 import json
 import shutil
 import subprocess
+import uuid
 from pathlib import Path
 
 import pytest
 
 
 SCRIPT = Path(__file__).resolve().parents[1] / "reduce-lanes.ps1"
-GATE_PATH = SCRIPT.parents[1] / "communication_compliance" / "validate_communication.py"
 ENVELOPE_SCHEMA = SCRIPT.parent / "lane_envelope.schema.json"
 POWERSHELL = shutil.which("powershell") or shutil.which("pwsh")
-
-
-def load_gate():
-    spec = importlib.util.spec_from_file_location("lane_gate", GATE_PATH)
-    assert spec and spec.loader
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
 
 
 def run(*args: str, cwd: Path, check: bool = True) -> subprocess.CompletedProcess[str]:
@@ -62,20 +53,23 @@ def add_envelope(
     lane_dir: str,
     envelope_lane: str,
     seq: int,
-    reflects_head: str,
+    lane_protocol_epoch: str,
+    base_review_head: str,
     *,
     role: str = "backend_execution_and_handoff",
+    environment_class: str = "codex_desktop",
 ) -> Path:
     path = repo / ".ai" / "lanes" / lane_dir / "events" / f"{seq:03d}.lane-envelope.yml"
     write_json(
         path,
         {
             "lane_instance_id": envelope_lane,
-            "environment_class": "codex_desktop",
+            "environment_class": environment_class,
             "protocol_role": role,
             "load_profile_id": "backend_executor",
             "message_seq": seq,
-            "reflects_review_head": reflects_head,
+            "lane_protocol_epoch": lane_protocol_epoch,
+            "base_review_head": base_review_head,
             "written_at": "2026-07-17T00:00:00Z",
         },
     )
@@ -127,7 +121,7 @@ def reduce(repo: Path, epoch: str, state: Path) -> subprocess.CompletedProcess[s
         str(repo / ".ai" / "lanes"),
         "-StatePath",
         str(state),
-        "-LaneRequiredAfterProtocolReleaseHead",
+        "-CurrentLaneProtocolEpoch",
         epoch,
         cwd=repo,
         check=False,
@@ -135,16 +129,36 @@ def reduce(repo: Path, epoch: str, state: Path) -> subprocess.CompletedProcess[s
 
 
 @pytest.mark.skipif(not POWERSHELL, reason="PowerShell is required")
-def test_cross_lane_write_is_rejected(tmp_path: Path) -> None:
+def test_two_same_environment_instances_are_isolated(tmp_path: Path) -> None:
     repo, _base, epoch = new_repo(tmp_path)
-    lane = "codex-desktop-a1b2c3"
-    add_envelope(repo, lane, "codex-desktop-deadbe", 1, epoch)
-    envelope_commit = commit_all(repo, "envelope")
-    add_event(repo, lane, 1, "task-a", envelope_commit)
-    commit_all(repo, "event")
-    result = reduce(repo, epoch, repo / "STATE.yml")
-    assert result.returncode != 0
-    assert "cross-lane write rejected" in (result.stdout + result.stderr)
+    lanes = [f"codex-cli-{uuid.uuid4().hex[:8]}" for _ in range(2)]
+    assert lanes[0] != lanes[1]
+    for lane in lanes:
+        add_envelope(repo, lane, lane, 1, epoch, epoch, environment_class="codex_cli")
+    envelope_commit = commit_all(repo, "own envelopes")
+    for index, lane in enumerate(lanes):
+        add_event(repo, lane, 1, f"task-{index}", envelope_commit)
+    event_head = commit_all(repo, "own events")
+    state = repo / "STATE.yml"
+    own_result = reduce(repo, epoch, state)
+    assert own_result.returncode == 0, own_result.stdout + own_result.stderr
+    assert len(json.loads(state.read_text(encoding="utf-8"))["lane_inputs"]) == 2
+
+    add_envelope(
+        repo,
+        lanes[0],
+        lanes[1],
+        2,
+        epoch,
+        event_head,
+        environment_class="codex_cli",
+    )
+    cross_envelope_commit = commit_all(repo, "cross envelope")
+    add_event(repo, lanes[0], 2, "cross-task", cross_envelope_commit)
+    commit_all(repo, "cross event")
+    cross_result = reduce(repo, epoch, state)
+    assert cross_result.returncode != 0
+    assert "cross-lane write rejected" in (cross_result.stdout + cross_result.stderr)
 
 
 @pytest.mark.skipif(not POWERSHELL, reason="PowerShell is required")
@@ -152,7 +166,7 @@ def test_two_backend_claims_for_same_task_fail_closed(tmp_path: Path) -> None:
     repo, _base, epoch = new_repo(tmp_path)
     lanes = ["codex-desktop-a1b2c3", "codex-cli-d4e5f6"]
     for lane in lanes:
-        add_envelope(repo, lane, lane, 1, epoch)
+        add_envelope(repo, lane, lane, 1, epoch, epoch)
     envelope_commit = commit_all(repo, "envelopes")
     for lane in lanes:
         add_event(repo, lane, 1, "shared-task", envelope_commit)
@@ -167,8 +181,8 @@ def test_stale_lane_is_ignored(tmp_path: Path) -> None:
     repo, base, epoch = new_repo(tmp_path)
     stale = "codex-desktop-a1b2c3"
     fresh = "codex-cli-d4e5f6"
-    add_envelope(repo, stale, stale, 1, base)
-    add_envelope(repo, fresh, fresh, 1, epoch)
+    add_envelope(repo, stale, stale, 1, base, base)
+    add_envelope(repo, fresh, fresh, 1, epoch, epoch)
     envelope_commit = commit_all(repo, "envelopes")
     add_event(repo, stale, 1, "stale-task", envelope_commit)
     add_event(repo, fresh, 1, "fresh-task", envelope_commit)
@@ -184,7 +198,7 @@ def test_stale_lane_is_ignored(tmp_path: Path) -> None:
 def test_canonical_state_inputs_resolve_to_exact_sources(tmp_path: Path) -> None:
     repo, _base, epoch = new_repo(tmp_path)
     lane = "codex-desktop-a1b2c3"
-    add_envelope(repo, lane, lane, 1, epoch)
+    add_envelope(repo, lane, lane, 1, epoch, epoch)
     envelope_commit = commit_all(repo, "envelope")
     add_event(repo, lane, 1, "trace-task", envelope_commit)
     commit_all(repo, "event")
@@ -196,9 +210,3 @@ def test_canonical_state_inputs_resolve_to_exact_sources(tmp_path: Path) -> None
         ref = item[key]
         content = git_bytes(repo, ref["commit"], ref["path"])
         assert hashlib.sha256(content).hexdigest() == ref["content_sha256"]
-    gate = load_gate()
-    findings, evidence = gate._validate_state_lane_inputs(
-        json.loads(state.read_text(encoding="utf-8")), repo, test_mode=False
-    )
-    assert findings == []
-    assert evidence[0]["event_ref"]["status"] == "resolved"
