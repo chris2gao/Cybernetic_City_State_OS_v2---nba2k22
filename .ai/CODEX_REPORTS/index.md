@@ -815,10 +815,17 @@
   - **authority_class**: `historical_evidence`
   - **status_or_freshness**: semantic_profile=ai_report_snapshot；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
   - **when_to_read**: 触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 token-scheme-implementation-0001.md（H1《Token scheme implementation 0001 — execution report》；首个 H2《Executive core》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+<!-- RIDX_FILE_HEX 2e61692f434f4445585f5245504f5254532f766572696669636174696f6e2d6469766973696f6e2d6e6f726d732d303030312e6d64 -->
+- **path_or_link**: [`.ai/CODEX_REPORTS/verification-division-norms-0001.md`](verification-division-norms-0001.md)
+  - **content_summary**: H1《Verification Division Norms 0001 — execution report》；首个 H2《Executive core》
+  - **role_and_use**: 将 verification-division-norms-0001.md（H1《Verification Division Norms 0001 — execution report》；首个 H2《Executive core》） 作为“Codex source-bound 报告”使用；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=ai_report_snapshot；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
+  - **when_to_read**: 触发条件：查证该 source-bound 报告的实现、验证或 changed-files 结论。读取 verification-division-norms-0001.md（H1《Verification Division Norms 0001 — execution report》；首个 H2《Executive core》）；结论绑定其 source head；当前适用性必须用 Git 与活动 mailbox 复核
 
 ## do_not_load_by_default
 
-- 默认不加载 112 个历史/测试/生成/用户或大型 direct artifacts：`.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-0001.md`, `.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-changed-files-0001.md`, `.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-validation-0001.md`, `.ai/CODEX_REPORTS/cli-runner-harness-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-changed-files-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-validation-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-expression-protocol-0001.md`，另有 104 个见 direct_files。
+- 默认不加载 113 个历史/测试/生成/用户或大型 direct artifacts：`.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-0001.md`, `.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-changed-files-0001.md`, `.ai/CODEX_REPORTS/branch-consolidation-and-repository-ledger-validation-0001.md`, `.ai/CODEX_REPORTS/cli-runner-harness-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-changed-files-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-compliance-gate-validation-0001.md`, `.ai/CODEX_REPORTS/human-ai-communication-expression-protocol-0001.md`，另有 105 个见 direct_files。
 
 ## generation_and_freshness_note
 
