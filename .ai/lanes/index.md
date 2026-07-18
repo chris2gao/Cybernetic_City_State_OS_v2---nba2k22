@@ -144,11 +144,11 @@ Human-AI event/pointer/state schema、validator 与 fail-closed proof 控制面
   - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 lane_meta.schema.json（$id=citystate-cooperative-lane-meta-v1；$schema=https://json-schema.org/draft/2020-12/schema；title=Cooperative C0/C1 lane metadata）；结构有效不等于业务有效、授权有效或已持久化
 <!-- RIDX_FILE_HEX 2e61692f6c616e65732f7075626c6973682d7265766965772e707331 -->
 - **path_or_link**: [`.ai/lanes/publish-review.ps1`](publish-review.ps1)
-  - **content_summary**: 纯文本，152 个非空行；首行“［CmdletBinding()］”
-  - **role_and_use**: 将 publish-review.ps1（nonempty_lines=152；［CmdletBinding()］） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready
+  - **content_summary**: 纯文本，155 个非空行；首行“［CmdletBinding()］”；artifact=publish-review.ps1
+  - **role_and_use**: 将 publish-review.ps1（nonempty_lines=155；［CmdletBinding()］） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready
   - **authority_class**: `implementation`
   - **status_or_freshness**: semantic_profile=implementation_artifact；authority=implementation；evidence_basis=text_line_count_and_first_visible_line；可追踪实现不等于已激活、已验证或 production-ready
-  - **when_to_read**: 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 publish-review.ps1（nonempty_lines=152；［CmdletBinding()］）；可追踪实现不等于已激活、已验证或 production-ready
+  - **when_to_read**: 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 publish-review.ps1（nonempty_lines=155；［CmdletBinding()］）；可追踪实现不等于已激活、已验证或 production-ready
 <!-- RIDX_FILE_HEX 2e61692f6c616e65732f7265647563652d6c616e65732e707331 -->
 - **path_or_link**: [`.ai/lanes/reduce-lanes.ps1`](reduce-lanes.ps1)
   - **content_summary**: 纯文本，204 个非空行；首行“［CmdletBinding()］”
