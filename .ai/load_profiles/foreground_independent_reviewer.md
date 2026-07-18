@@ -21,6 +21,8 @@ diff, task definition, report, and exact validation evidence. Local machine exec
 instructions may be skipped when irrelevant, but runner, test, security, provenance,
 and release evidence that supports the candidate must never be skipped.
 
+Load `.ai/role_memory/core.md` plus `.ai/role_memory/reviewer.md` as routing-only memory.
+
 Load full constitutional sources for protected-action adjudication or constitutional
 conflict. Treat summaries as routing and independently read every decisive primary
 artifact before accepting a claim.

@@ -12,7 +12,9 @@
 ## recommended_reading_order
 
 1. [`.ai/lanes/tests/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-2. [`.ai/lanes/tests/test_reduce_lanes.py`](test_reduce_lanes.py) — 触发条件：运行该具名测试或复现其失败用例。读取 test_reduce_lanes.py（run；git；write_json）；仅用于指定测试；fixture 内声明不构成现实授权
+2. [`.ai/lanes/tests/test_local_lanes.py`](test_local_lanes.py) — 触发条件：运行该具名测试或复现其失败用例。读取 test_local_lanes.py（run；git；new_repo）；仅用于指定测试；fixture 内声明不构成现实授权
+3. [`.ai/lanes/tests/test_publish_review.py`](test_publish_review.py) — 触发条件：运行该具名测试或复现其失败用例。读取 test_publish_review.py（run；git；new_remote）；仅用于指定测试；fixture 内声明不构成现实授权
+4. [`.ai/lanes/tests/test_reduce_lanes.py`](test_reduce_lanes.py) — 触发条件：运行该具名测试或复现其失败用例。读取 test_reduce_lanes.py（run；git；write_json）；仅用于指定测试；fixture 内声明不构成现实授权
 
 ## child_directories
 
@@ -27,6 +29,20 @@
   - **authority_class**: `routing`
   - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
   - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+<!-- RIDX_FILE_HEX 2e61692f6c616e65732f74657374732f746573745f6c6f63616c5f6c616e65732e7079 -->
+- **path_or_link**: [`.ai/lanes/tests/test_local_lanes.py`](test_local_lanes.py)
+  - **content_summary**: Python；public symbols=run, git, new_repo, lane_command, test_local_lane_post_read_roundtrip_and_monotonic_sequence
+  - **role_and_use**: 将 test_local_lanes.py（run；git；new_repo） 作为“测试/fixture”使用；仅用于指定测试；fixture 内声明不构成现实授权
+  - **authority_class**: `test_or_fixture`
+  - **status_or_freshness**: semantic_profile=test_or_fixture；authority=test_or_fixture；evidence_basis=python_ast_docstring_and_symbols；仅用于指定测试；fixture 内声明不构成现实授权
+  - **when_to_read**: 触发条件：运行该具名测试或复现其失败用例。读取 test_local_lanes.py（run；git；new_repo）；仅用于指定测试；fixture 内声明不构成现实授权
+<!-- RIDX_FILE_HEX 2e61692f6c616e65732f74657374732f746573745f7075626c6973685f7265766965772e7079 -->
+- **path_or_link**: [`.ai/lanes/tests/test_publish_review.py`](test_publish_review.py)
+  - **content_summary**: Python；public symbols=run, git, new_remote, invoke, staging_tree
+  - **role_and_use**: 将 test_publish_review.py（run；git；new_remote） 作为“测试/fixture”使用；仅用于指定测试；fixture 内声明不构成现实授权
+  - **authority_class**: `test_or_fixture`
+  - **status_or_freshness**: semantic_profile=test_or_fixture；authority=test_or_fixture；evidence_basis=python_ast_docstring_and_symbols；仅用于指定测试；fixture 内声明不构成现实授权
+  - **when_to_read**: 触发条件：运行该具名测试或复现其失败用例。读取 test_publish_review.py（run；git；new_remote）；仅用于指定测试；fixture 内声明不构成现实授权
 <!-- RIDX_FILE_HEX 2e61692f6c616e65732f74657374732f746573745f7265647563655f6c616e65732e7079 -->
 - **path_or_link**: [`.ai/lanes/tests/test_reduce_lanes.py`](test_reduce_lanes.py)
   - **content_summary**: Python；public symbols=run, git, write_json, commit_all, new_repo
@@ -37,7 +53,7 @@
 
 ## do_not_load_by_default
 
-- 默认不加载 1 个历史/测试/生成/用户或大型 direct artifacts：`.ai/lanes/tests/test_reduce_lanes.py`。
+- 默认不加载 3 个历史/测试/生成/用户或大型 direct artifacts：`.ai/lanes/tests/test_local_lanes.py`, `.ai/lanes/tests/test_publish_review.py`, `.ai/lanes/tests/test_reduce_lanes.py`。
 
 ## generation_and_freshness_note
 
