@@ -13,6 +13,7 @@
 
 1. [`.ai/HUMAN_BRIEFS/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 2. [`.ai/HUMAN_BRIEFS/README.md`](README.md) — 触发条件：查证该简报记录的 Human 决策、接受或 publication provenance。读取 README.md（H1《Human Brief Archive》；首个 H2《Policy》）；简报记录决策 provenance，不单独构成新的写入授权
+3. [`.ai/HUMAN_BRIEFS/human-ai-communication-compliance-gate-exact-head-review-0002.md`](human-ai-communication-compliance-gate-exact-head-review-0002.md) — 触发条件：查证该简报记录的 Human 决策、接受或 publication provenance。读取 human-ai-communication-compliance-gate-exact-head-review-0002.md（H1《Human–AI Communication Compliance Gate — Exact-Head Review 0002》；首个 H2《Decision》）；简报记录决策 provenance，不单独构成新的写入授权
 
 ## child_directories
 
@@ -27,6 +28,13 @@
   - **authority_class**: `historical_evidence`
   - **status_or_freshness**: semantic_profile=ai_human_brief_snapshot；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；简报记录决策 provenance，不单独构成新的写入授权
   - **when_to_read**: 触发条件：查证该简报记录的 Human 决策、接受或 publication provenance。读取 README.md（H1《Human Brief Archive》；首个 H2《Policy》）；简报记录决策 provenance，不单独构成新的写入授权
+<!-- RIDX_FILE_HEX 2e61692f48554d414e5f4252494546532f68756d616e2d61692d636f6d6d756e69636174696f6e2d636f6d706c69616e63652d676174652d65786163742d686561642d7265766965772d303030322e6d64 -->
+- **path_or_link**: [`.ai/HUMAN_BRIEFS/human-ai-communication-compliance-gate-exact-head-review-0002.md`](human-ai-communication-compliance-gate-exact-head-review-0002.md)
+  - **content_summary**: H1《Human–AI Communication Compliance Gate — Exact-Head Review 0002》；首个 H2《Decision》
+  - **role_and_use**: 将 human-ai-communication-compliance-gate-exact-head-review-0002.md（H1《Human–AI Communication Compliance Gate — Exact-Head Review 0002》；首个 H2《Decision》） 作为“Human-facing 决策简报”使用；简报记录决策 provenance，不单独构成新的写入授权
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=ai_human_brief_snapshot；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；简报记录决策 provenance，不单独构成新的写入授权
+  - **when_to_read**: 触发条件：查证该简报记录的 Human 决策、接受或 publication provenance。读取 human-ai-communication-compliance-gate-exact-head-review-0002.md（H1《Human–AI Communication Compliance Gate — Exact-Head Review 0002》；首个 H2《Decision》）；简报记录决策 provenance，不单独构成新的写入授权
 <!-- RIDX_FILE_HEX 2e61692f48554d414e5f4252494546532f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/HUMAN_BRIEFS/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
@@ -37,7 +45,7 @@
 
 ## do_not_load_by_default
 
-- 默认不加载 1 个历史/测试/生成/用户或大型 direct artifacts：`.ai/HUMAN_BRIEFS/README.md`。
+- 默认不加载 2 个历史/测试/生成/用户或大型 direct artifacts：`.ai/HUMAN_BRIEFS/README.md`, `.ai/HUMAN_BRIEFS/human-ai-communication-compliance-gate-exact-head-review-0002.md`。
 
 ## generation_and_freshness_note
 

@@ -840,7 +840,7 @@ def build_cases() -> list[dict[str, Any]]:
     reviewed_exception["deterministic_fixture_impossible_reason"] = "The external authenticated channel cannot be replayed inside the repository validator."
     reviewed_exception["foreground_review_required"] = True
     review_path = ".ai/HUMAN_BRIEFS/human-ai-communication-compliance-gate-exact-head-review-0002.md"
-    reviewed_exception["foreground_review_ref"] = git_ref(review_path, "25e78c2932f9fa6157dee6e559f45c056379f5e2")
+    reviewed_exception["foreground_review_ref"] = git_ref(review_path)
     reviewed_exception["record_sha256"] = gate_module().digest_object({key: value for key, value in reviewed_exception.items() if key != "record_sha256"}, preserve_mapping_order=False)
     cases.append(case("drift_deterministic_exception_with_review_pass", "validate_drift", payload=reviewed_exception, prior_records=[drift_record("fixture-drift-reviewed-first", "NON_DETERMINISTIC_EXTERNAL_CHANNEL", [])]))
 
