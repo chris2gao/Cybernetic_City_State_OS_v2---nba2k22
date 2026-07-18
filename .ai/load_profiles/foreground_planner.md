@@ -22,6 +22,8 @@ Load the constitutional digest, the role and seven-field sections of `.ai/PROTOC
 the current task-input contract and communication-event schema, and the review triggers
 in `.ai/PROTOCOL_ADHERENCE.md`. Then dereference the current signal and task/packet refs.
 
+Load `.ai/role_memory/core.md` plus `.ai/role_memory/planner.md` as routing-only memory.
+
 Load full `3号方案.md` plus Awakening for a protected action or constitutional conflict.
 Load the rest of the full protocol when adjudicating protocol meaning, publication,
 transition eligibility, or a malformed/conflicting handoff.

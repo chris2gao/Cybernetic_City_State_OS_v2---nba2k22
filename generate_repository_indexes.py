@@ -2021,6 +2021,8 @@ def directory_semantic_profile(directory: str) -> str:
         ".ai/load_profiles": "ai_control_plane",
         ".ai/lanes": "communication_control_plane",
         ".ai/lanes/tests": "communication_fixture_pool",
+        ".ai/role_memory": "ai_control_plane",
+        ".ai/role_memory/tests": "communication_fixture_pool",
         "01_Research_Reports": "research_library",
         "01_Research_Reports/_Supreme_Court_Proposals": "research_library",
         "02_Protocols": "protocol_library",

@@ -22,6 +22,8 @@ work-mechanism protocol, and the exact current task packet. The token profile is
 canonical pointer here; this manifest does not copy its discipline. Dereference every
 non-null current signal ref.
 
+Load `.ai/role_memory/core.md` plus `.ai/role_memory/executor.md` as routing-only memory.
+
 Load the default large-task or long-run protocol only when its trigger applies. Load
 Math Mentor teaching/validation contracts only for a Math Mentor task. Load full
 constitutional sources for protected actions or constitutional conflict.

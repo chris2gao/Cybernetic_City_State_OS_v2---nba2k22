@@ -3,6 +3,9 @@ param(
     [string]$RepositoryRoot = (Resolve-Path (Join-Path $PSScriptRoot "../..")),
     [string]$LaneRoot = (Join-Path $PSScriptRoot "."),
     [string]$StatePath = (Join-Path $PSScriptRoot "../STATE.yml"),
+    [ValidateSet('local','git','both')]
+    [string]$Transport = 'git',
+    [string]$LocalLaneRoot = (Join-Path ([Environment]::GetFolderPath('LocalApplicationData')) 'CityState/local_lanes'),
     [ValidatePattern('^$|^[0-9a-f]{40}$')]
     [string]$CurrentLaneProtocolEpoch = '',
     [ValidateSet('foreground_review_and_task_dispatch')]
@@ -76,10 +79,14 @@ if (-not $CurrentLaneProtocolEpoch) {
 if ($CurrentLaneProtocolEpoch -notmatch '^[0-9a-f]{40}$') { throw 'current lane protocol epoch is invalid' }
 
 $inputs = @()
+$localTraces = @()
 $seenEvents = @{}
 $backendTasks = @{}
-$laneDirectories = @(Get-ChildItem -LiteralPath $LaneRoot -Directory -ErrorAction SilentlyContinue |
-    Sort-Object Name)
+$laneDirectories = @()
+if ($Transport -in @('git','both')) {
+    $laneDirectories = @(Get-ChildItem -LiteralPath $LaneRoot -Directory -ErrorAction SilentlyContinue |
+        Sort-Object Name)
+}
 
 foreach ($lane in $laneDirectories) {
     $eventsPath = Join-Path $lane.FullName 'events'
@@ -138,6 +145,61 @@ foreach ($lane in $laneDirectories) {
     }
 }
 
+if ($Transport -in @('local','both')) {
+    $localLaneDirectories = @(Get-ChildItem -LiteralPath $LocalLaneRoot -Directory -ErrorAction SilentlyContinue |
+        Sort-Object Name)
+    foreach ($lane in $localLaneDirectories) {
+        if ($lane.Name -notmatch '^[a-z][a-z0-9_-]*-[0-9a-f]{6,32}$') {
+            throw 'local lane directory has an invalid lane_instance_id'
+        }
+        $metaPath = Join-Path $lane.FullName 'meta.yml'
+        if (-not (Test-Path -LiteralPath $metaPath -PathType Leaf)) { continue }
+        $meta = Get-Content -LiteralPath $metaPath -Raw | ConvertFrom-Json
+        if ($meta.transport -ne 'local') { throw 'local lane metadata must declare transport local' }
+        if ($meta.lane_instance_id -ne $lane.Name) { throw 'cross-lane write rejected: local metadata lane differs from directory' }
+        if ($meta.lane_protocol_epoch -ne $CurrentLaneProtocolEpoch) { continue }
+
+        $eventsPath = Join-Path $lane.FullName 'events'
+        $events = @(Get-ChildItem -LiteralPath $eventsPath -File -ErrorAction SilentlyContinue |
+            Where-Object { $_.Name -match '^([0-9]+)\.yml$' } |
+            Sort-Object { [int]$_.BaseName })
+        if ($events.Count -eq 0) { continue }
+        $eventFile = $events[-1]
+        $seq = [int]$eventFile.BaseName
+        $envelopePath = Join-Path $eventsPath ($eventFile.BaseName + '.lane-envelope.yml')
+        if (-not (Test-Path -LiteralPath $envelopePath -PathType Leaf)) {
+            throw 'local lane event lacks its envelope'
+        }
+        $eventBytes = [System.IO.File]::ReadAllBytes($eventFile.FullName)
+        $event = Read-JsonBytes $eventBytes $eventFile.FullName
+        $envelope = Get-Content -LiteralPath $envelopePath -Raw | ConvertFrom-Json
+        if ($event.transport -ne 'local' -or $event.authoritative -ne $false) {
+            throw 'local lane event must be explicitly non-authoritative'
+        }
+        if ($event.message_class -notin @('C0','C1_shadow')) {
+            throw 'local lane event class must be C0 or C1_shadow'
+        }
+        if ($event.lane_instance_id -ne $lane.Name -or $envelope.lane_instance_id -ne $lane.Name) {
+            throw 'cross-lane write rejected: local event or envelope lane differs from directory'
+        }
+        if ([int]$event.message_seq -ne $seq -or [int]$envelope.message_seq -ne $seq) {
+            throw 'local lane sequence differs from event filename'
+        }
+        if ($envelope.lane_protocol_epoch -ne $CurrentLaneProtocolEpoch) { continue }
+        $localTraces += [ordered]@{
+            transport = 'local'
+            non_authoritative = $true
+            lane_instance_id = $lane.Name
+            message_seq = $seq
+            message_class = [string]$event.message_class
+            event_id = [string]$event.event_id
+            task_id = $(if ($event.task_id) { [string]$event.task_id } else { $null })
+            written_at = [string]$event.written_at
+            content_sha256 = (Get-Sha256 $eventBytes)
+        }
+    }
+}
+
 $state = [ordered]@{
     protocol_version = 'v0.3-core'
     status = $StateStatus
@@ -146,6 +208,7 @@ $state = [ordered]@{
     review_branch_head = $head
     lane_required_after_protocol_release_head = $CurrentLaneProtocolEpoch
     lane_inputs = @($inputs | Sort-Object lane_instance_id, message_seq)
+    local_lane_traces = @($localTraces | Sort-Object lane_instance_id, message_seq)
     human_gate = 'not_required'
 }
 $json = $state | ConvertTo-Json -Depth 20
@@ -153,4 +216,4 @@ $target = [System.IO.Path]::GetFullPath($StatePath)
 $temporary = $target + '.tmp-' + [Guid]::NewGuid().ToString('N')
 [System.IO.File]::WriteAllText($temporary, $json + "`n", $Utf8NoBom)
 Move-Item -LiteralPath $temporary -Destination $target -Force
-Write-Output ("lane_inputs=" + $inputs.Count)
+Write-Output ("lane_inputs=" + $inputs.Count + " local_lane_traces=" + $localTraces.Count)

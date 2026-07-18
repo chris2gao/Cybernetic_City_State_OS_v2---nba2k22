@@ -22,6 +22,8 @@ Load the constitutional digest, V9.1 teaching flow, lesson-plan schema, teaching
 contracts, tool-truthfulness policy, and the exact target node evidence. Read the node
 body before teaching it; do not substitute an index, manifest, or schema for that body.
 
+Load `.ai/role_memory/core.md` plus `.ai/role_memory/teacher.md` as routing-only memory.
+
 If the teaching task participates in any C1/C2 handoff, review, publication, state
 change, or protected action, also load the applicable handoff and compliance stack.
 Full constitutional sources are required for protected actions or constitutional
