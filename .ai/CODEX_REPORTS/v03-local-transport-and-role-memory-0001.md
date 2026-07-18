@@ -24,7 +24,7 @@
 
 ## Verification
 
-- focused lanes/publish/role-memory tests: `15/15 PASS`
+- focused lanes/publish/role-memory tests: `16/16 PASS`
 - communication fixtures: `215/215 PASS`
 - communication unit tests: `17/17 PASS`
 - token tests: `6/6 PASS`
@@ -39,6 +39,8 @@
   Coordinator, Gateway, writer, scheduler, polling, credential, or secret change.
 - Local lane ownership remains cooperative and descriptive; it is not authentication.
 - The publication helper is deterministic Git plumbing, not source/master authority.
+- Post-merge dogfooding exposed Windows PowerShell property-name grouping of ordered
+  dictionaries; scriptblock grouping/sorting plus a multi-file regression test fixed it.
 - unresolved_blockers: `none`
 - drift_cause: `null`
 - avoided_extra_gates: `[separate_cleanup, separate_validation, closure_microtask]`

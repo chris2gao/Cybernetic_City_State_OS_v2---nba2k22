@@ -93,6 +93,30 @@ def test_publish_review_dry_run_keeps_remote_and_staging(tmp_path: Path) -> None
 
 
 @pytest.mark.skipif(not POWERSHELL, reason="PowerShell is required")
+def test_publish_review_dry_run_accepts_multiple_distinct_paths(tmp_path: Path) -> None:
+    source, _bare, _original = new_remote(tmp_path)
+    staging = staging_tree(tmp_path)
+    brief = staging / "HUMAN_BRIEFS" / "brief.md"
+    brief.parent.mkdir(parents=True)
+    brief.write_text("brief\n", encoding="utf-8")
+    result = invoke(
+        source,
+        staging,
+        tmp_path / "citystate",
+        "-Refs",
+        ".ai/existing.md",
+        "-DryRun",
+    )
+    value = json.loads(result.stdout)
+    assert value["status"] == "dry_run_pass"
+    assert value["changed_paths"] == [
+        ".ai/CODEX_REPORTS/report.md",
+        ".ai/HUMAN_BRIEFS/brief.md",
+    ]
+    assert staging.exists()
+
+
+@pytest.mark.skipif(not POWERSHELL, reason="PowerShell is required")
 def test_publish_review_missing_ref_fails_and_preserves_staging(tmp_path: Path) -> None:
     source, _bare, _original = new_remote(tmp_path)
     staging = staging_tree(tmp_path)

@@ -225,7 +225,7 @@
   - **when_to_read**: 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 abstracts.json（［0］.title=Exerkines and long-term synaptic potentiation: Mechanisms of exercise-induced n…；［1］.title=LTP and LTD: an embarrassment of riches.）；只在明确研究问题、来源和隐私范围内单文件读取
 <!-- RIDX_FILE_HEX 6167656e742d72756e2e707331 -->
 - **path_or_link**: [`agent-run.ps1`](agent-run.ps1)
-  - **content_summary**: 纯文本，155 个非空行；首行“［CmdletBinding()］”
+  - **content_summary**: 纯文本，155 个非空行；首行“［CmdletBinding()］”；artifact=agent-run.ps1
   - **role_and_use**: 将 agent-run.ps1（nonempty_lines=155；［CmdletBinding()］） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready
   - **authority_class**: `implementation`
   - **status_or_freshness**: semantic_profile=implementation_artifact；authority=implementation；evidence_basis=text_line_count_and_first_visible_line；可追踪实现不等于已激活、已验证或 production-ready
