@@ -248,10 +248,42 @@ def load_store(store: Path, verify_anchor: bool = True) -> tuple[str, list[dict]
     meta = read_store_meta(store)
     epoch = str(meta["bound_epoch"])
 
+    directory = _events_dir(store)
+    if directory.exists():
+        # Anything ending in .yml inside the authoritative events directory is
+        # either an event or a problem; silently ignoring it would hide a
+        # misplaced or renamed file.
+        unexpected = sorted(
+            p.name for p in directory.glob("*.yml") if not EVENT_NAME.match(p.name)
+        )
+        if unexpected:
+            raise WriteRefused(
+                f"unexpected files in the events directory: {unexpected}. "
+                "Event files must be <number>.yml; nothing else may live here."
+            )
+
+    paths = _event_paths(store)
+    # Sequence numbers must be contiguous from 1. A gap means an event was
+    # removed or never landed, and replaying around it would misstate history.
+    expected_seq = [int(EVENT_NAME.match(p.name).group(1)) for p in paths]
+    if expected_seq and expected_seq != list(range(1, len(expected_seq) + 1)):
+        raise WriteRefused(
+            f"event sequence has gaps or does not start at 1: {expected_seq}. "
+            "Gaps are not permitted; a missing event must be investigated, not skipped."
+        )
+
     events: list[dict] = []
-    for path in _event_paths(store):
+    for path in paths:
         with path.open("r", encoding="utf-8") as handle:
-            events.append(yaml.safe_load(handle))
+            try:
+                document = yaml.safe_load(handle)
+            except yaml.YAMLError as error:
+                raise WriteRefused(f"event file {path.name} is not valid YAML: {error}") from error
+        if not isinstance(document, dict):
+            raise WriteRefused(
+                f"event file {path.name} does not contain a mapping; refusing to load"
+            )
+        events.append(document)
 
     if verify_anchor:
         anchor = read_anchor(store)
@@ -278,7 +310,15 @@ def load_store(store: Path, verify_anchor: bool = True) -> tuple[str, list[dict]
                     "tail anchor mismatch: the newest event does not match the recorded head digest"
                 )
             recorded_meta = anchor.get("store_meta_digest")
-            if recorded_meta is not None and recorded_meta != store_meta_digest(meta):
+            if recorded_meta is None:
+                # A downgraded anchor is not acceptable: without the binding
+                # digest, swapping store_meta.yml would go unnoticed. Rebuilding
+                # it is an explicit Human-run repair, never an implicit upgrade.
+                raise WriteRefused(
+                    "tail anchor is missing store_meta_digest; refusing to accept a downgraded "
+                    "anchor. A Human must run repair_anchor after verifying the store binding."
+                )
+            if recorded_meta != store_meta_digest(meta):
                 raise WriteRefused(
                     "store binding changed after events were written: store_meta.yml no longer "
                     "matches the digest recorded in the tail anchor"
@@ -325,9 +365,14 @@ def derive_snapshot(store: Path, allow_rejected: bool = False) -> dict:
                 "qualifying_review_passes": state.review_passes,
                 "qualifying_window_kinds": sorted(state.qualifying_kinds),
                 "historical_pass_count": state.historical_pass_count,
+                # Causes stay distinct in the snapshot too: collapsing them would
+                # throw away the distinction the reducer just computed.
                 "historical_failure_count": state.historical_failure_count,
+                "historical_expiry_count": state.historical_expiry_count,
+                "historical_decay_count": state.historical_decay_count,
                 "active_review_window_id": state.active_review_window_id,
                 "active_review_window_kind": state.active_review_window_kind,
+                "active_review_window_opened_at": state.active_review_window_opened_at,
                 "graduation_evidence_candidate": state.graduation_evidence_candidate,
                 "blocked_from": state.blocked_from,
                 "last_event_id": state.last_event_id,
@@ -349,6 +394,21 @@ def append_event(store: Path, event: dict) -> Path:
         if event.get("learning_state_epoch") != epoch:
             raise WriteRefused(
                 f"event epoch {event.get('learning_state_epoch')!r} != store epoch {epoch!r}"
+            )
+
+        # Pre-release authority boundary, NOT identity verification.
+        #
+        # No trusted Human admission path exists.  A `human_acceptance` event is
+        # just a label plus two strings, and persisting one would let anything
+        # able to write a file grant Human authority to itself.  The reducer may
+        # still EVALUATE such a proposal - that is useful and harmless - but the
+        # writer refuses to make it durable.
+        if event.get("event_type") == "human_acceptance":
+            raise WriteRefused(
+                "unsupported_pending_trusted_human_admission: refusing to persist a "
+                "human_acceptance event. Unblocking and graduation require a trusted "
+                "Human admission path that does not exist yet; an event label, a "
+                "source_type string and a human_authorization_ref are not authority."
             )
 
         bound = meta["bound_student_ref"]
@@ -458,26 +518,30 @@ def write_snapshot(store: Path) -> Path:
     overwriting a newer one.  The snapshot is derived data, so dropping it costs
     nothing - it can always be rebuilt from the event log.
     """
-    snapshot = derive_snapshot(store)  # fail-closed on reducer rejection
+    # The lock spans derive -> write -> compare -> replace as ONE critical
+    # section.  Comparing outside the lock left a TOCTOU window in which another
+    # writer could advance the store between the comparison and the replace, so
+    # a stale snapshot could still land.  `append_event` releases its lock before
+    # calling this, so there is no nested-lock path to reintroduce.
+    with single_writer_lock(store):
+        snapshot = derive_snapshot(store)  # fail-closed on reducer rejection
 
-    directory = store / "snapshots"
-    directory.mkdir(parents=True, exist_ok=True)
-    final = directory / "learning_state.yml"
-    temporary = directory / f".learning_state.{_unique_suffix()}.tmp"
-    with temporary.open("w", encoding="utf-8", newline="\n") as handle:
-        yaml.safe_dump(snapshot, handle, allow_unicode=True, sort_keys=True)
+        directory = store / "snapshots"
+        directory.mkdir(parents=True, exist_ok=True)
+        final = directory / "learning_state.yml"
+        temporary = directory / f".learning_state.{_unique_suffix()}.tmp"
+        with temporary.open("w", encoding="utf-8", newline="\n") as handle:
+            yaml.safe_dump(snapshot, handle, allow_unicode=True, sort_keys=True)
 
-    # Compare-and-publish: if the store advanced while this snapshot was being
-    # derived, discard rather than overwrite a newer one.
-    current = read_anchor(store) or {}
-    if current.get("head_digest") != snapshot["source_head_digest"]:
-        temporary.unlink(missing_ok=True)
-        raise SnapshotStale(
-            "the store advanced while this snapshot was being derived; "
-            "discarding it rather than overwriting a newer snapshot"
-        )
-    os.replace(temporary, final)
-    return final
+        current = read_anchor(store) or {}
+        if current.get("head_digest") != snapshot["source_head_digest"]:
+            temporary.unlink(missing_ok=True)
+            raise SnapshotStale(
+                "the store advanced while this snapshot was being derived; "
+                "discarding it rather than overwriting a newer snapshot"
+            )
+        os.replace(temporary, final)
+        return final
 
 
 def main(argv: list[str]) -> int:

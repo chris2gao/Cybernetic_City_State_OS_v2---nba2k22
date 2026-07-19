@@ -1,4 +1,4 @@
-"""Writer integrity tests (locking, ordering, tail anchor, recovery).
+﻿"""Writer integrity tests (locking, ordering, tail anchor, recovery).
 
 Every defect listed in the 2026-07-19 independent review has a test here.
 All stores are synthetic temporaries; no real learner store is touched.
@@ -70,7 +70,7 @@ def test_existing_event_file_is_never_overwritten(synthetic_store):
     _seed(synthetic_store, 1)
     # Simulate a concurrent writer having already created the next file.
     (synthetic_store / "events" / "002.yml").write_text("placeholder", encoding="utf-8")
-    with pytest.raises(WriteRefused, match="refusing to overwrite|tail anchor|validation"):
+    with pytest.raises(WriteRefused, match="refusing to overwrite|tail anchor|validation|does not contain a mapping"):
         append_event(synthetic_store, reach_classroom_passed()[1])
 
 
@@ -83,24 +83,51 @@ def test_temporary_files_are_process_unique(synthetic_store):
 # --- defect R4.9: numeric ordering -----------------------------------------
 
 
-def test_sequence_ordering_survives_past_999(synthetic_store):
+def test_sequence_ordering_is_numeric_not_lexical():
+    """Lexical sort puts 1000.yml before 999.yml; the loader must not.
+
+    Exercised directly on the ordering helper, because the store itself now
+    requires a contiguous sequence starting at 1 and so cannot host a sparse
+    999/1000 fixture.
+    """
+    from append_event import EVENT_NAME
+
+    names = ["001.yml", "002.yml", "999.yml", "1000.yml", "1001.yml"]
+    assert sorted(names)[0] == "001.yml"
+    assert sorted(names).index("1000.yml") < sorted(names).index("999.yml"), (
+        "precondition: lexical order really is wrong here"
+    )
+    numeric = sorted(names, key=lambda n: int(EVENT_NAME.match(n).group(1)))
+    assert numeric == ["001.yml", "002.yml", "999.yml", "1000.yml", "1001.yml"]
+
+
+def test_sequence_gaps_are_rejected(synthetic_store):
+    _seed(synthetic_store, 2)
+    # Remove the first event, leaving a gap; the anchor still matches the tail.
+    (synthetic_store / "events" / "001.yml").unlink()
+    with pytest.raises(WriteRefused, match="gaps or does not start at 1"):
+        load_store(synthetic_store)
+
+
+def test_unexpected_yml_in_events_directory_is_rejected(synthetic_store):
     _seed(synthetic_store, 1)
-    events_dir = synthetic_store / "events"
-    # Rename the seeded event to 999 and rebuild the anchor to match.
-    first = yaml.safe_load((events_dir / "001.yml").read_text(encoding="utf-8"))
-    (events_dir / "001.yml").unlink()
-    with (events_dir / "999.yml").open("w", encoding="utf-8", newline="\n") as handle:
-        yaml.safe_dump(first, handle, allow_unicode=True, sort_keys=True)
-    from append_event import write_anchor
+    (synthetic_store / "events" / "notes.yml").write_text("a: 1\n", encoding="utf-8")
+    with pytest.raises(WriteRefused, match="unexpected files"):
+        load_store(synthetic_store)
 
-    write_anchor(synthetic_store, [first])
 
-    second = dict(reach_classroom_passed()[1])
-    written = append_event(synthetic_store, second)
-    assert written.name == "1000.yml"
+def test_non_mapping_event_file_fails_cleanly(synthetic_store):
+    _seed(synthetic_store, 1)
+    (synthetic_store / "events" / "001.yml").write_text("- just\n- a list\n", encoding="utf-8")
+    with pytest.raises(WriteRefused, match="does not contain a mapping"):
+        load_store(synthetic_store)
 
-    _, events = load_store(synthetic_store)
-    assert [e["event_id"] for e in events] == ["c1", "c2"], "numeric order must hold past 999"
+
+def test_malformed_yaml_event_file_fails_cleanly(synthetic_store):
+    _seed(synthetic_store, 1)
+    (synthetic_store / "events" / "001.yml").write_text("a: [unclosed\n", encoding="utf-8")
+    with pytest.raises(WriteRefused, match="not valid YAML"):
+        load_store(synthetic_store)
 
 
 # --- defect R4.8: tail integrity -------------------------------------------

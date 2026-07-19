@@ -123,6 +123,31 @@ check(
     sp.simplify(coeff1 - 3) == 0 and sp.simplify(coeff2 + 5) == 0,
 )
 
+# --- the node's code_implementation snippet, actually exercised -------------
+# The teaching snippet claims the fixed-end boundary conditions hold BY
+# CONSTRUCTION. Assert that on the symbolic form it implements, so the claim in
+# the node is backed rather than asserted.
+def string_modal_sum(x_sym, t_sym, length, speed, modes):
+    total = 0
+    for order, a_n, b_n in modes:
+        omega = speed * order * sp.pi / length
+        total += (a_n * sp.cos(omega * t_sym) + b_n * sp.sin(omega * t_sym)) * sp.sin(
+            order * sp.pi * x_sym / length
+        )
+    return total
+
+
+A1s, B1s, A2s = sp.symbols("A1s B1s A2s", real=True)
+snippet = string_modal_sum(x, t, L, c, [(1, A1s, B1s), (2, A2s, 0)])
+check(
+    "code_implementation snippet: the modal sum satisfies u_tt = c^2 u_xx",
+    sp.simplify(sp.diff(snippet, t, 2) - c**2 * sp.diff(snippet, x, 2)) == 0,
+)
+check(
+    "code_implementation snippet: u(0,t) = u(L,t) = 0 holds by construction for all t",
+    sp.simplify(snippet.subs(x, 0)) == 0 and sp.simplify(snippet.subs(x, L)) == 0,
+)
+
 # --- boundary: linear + homogeneous does NOT imply separable ----------------
 # Counterexample: u_xx + u_yy + x*y*u = 0 is linear and homogeneous.  Under
 # u = X(x)Y(y), dividing by XY gives

@@ -17,10 +17,12 @@
 [PASS] a two-mode superposition satisfies the wave equation u_tt = c^2 u_xx
 [PASS] the superposition still satisfies both boundary conditions
 [PASS] orthogonality recovers coefficients 3 and -5 from a known combination
+[PASS] code_implementation snippet: the modal sum satisfies u_tt = c^2 u_xx
+[PASS] code_implementation snippet: u(0,t) = u(L,t) = 0 holds by construction for all t
 [PASS] counterexample u_xx + u_yy + x*y*u = 0: dividing by X*Y leaves a coupling term whose mixed partial equals 1, contradicting any f(x)+g(y) split. Checked claim: 'no NONTRIVIAL Cartesian product solution X(x)Y(y) exists IN THESE COORDINATES'; this says nothing about other coordinate systems or the trivial solution u = 0
 [PASS] sampled rescaling: dividing by X*Y*y (not multiplying by it) still leaves a nonzero mixed partial; sampled evidence only, not exhaustive
 [PASS] sampled rescaling: dividing by X*Y*x (not multiplying by it) still leaves a nonzero mixed partial; sampled evidence only, not exhaustive
 [PASS] sampled rescaling: dividing by X*Y*x*y (not multiplying by it) still leaves a nonzero mixed partial; sampled evidence only, not exhaustive
 [PASS] a non-eigenfunction (x) fails the Dirichlet condition at x=L, so not every smooth function is an eigenfunction
-TOTAL 24 assertions, all passed
+TOTAL 26 assertions, all passed
 exit_code=0

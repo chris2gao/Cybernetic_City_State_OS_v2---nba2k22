@@ -33,6 +33,20 @@ v2_changes:
   - "Disabled correction as unsupported_pending_contract; the v1 behaviour made later appends permanently fail."
   - "Round 3: typed review windows with id+kind matching, near_term before stability, strictly increasing RFC 3339 timestamps, qualifying-vs-historical evidence split, learner-bound store_meta, canonical schema enforced via Draft202012Validator with fail-closed, snapshot bound to its source anchor, three-outcome CLI."
   - "Round 4: blocker_evidence and stale_evidence required with cause distinctions (failure vs expiry vs decay), Human-only unblocking with explicit_human_override, failed/needs_reprep unpersistable, pass timestamp must exceed its window opening, store_meta validated by its own canonical schema and bound into the tail anchor, non-reentrant thread-safe lock, fail-closed derive_snapshot and repair_anchor, graduation_evidence_candidate terminology."
+  - "Round 5: structured review_failure_evidence citing the pending window; exact stale cause-to-provenance mapping (exam_agent never valid for stale); transition-specific schema conditionals so no evidence bundle can enter the log on an unrelated transition; snapshot publication held under one lock end to end; anchor without store_meta_digest fails closed; event files must be a contiguous 1..N sequence of mappings and no stray .yml may sit in the events directory; cause counters and the open-window timestamp exposed in the derived snapshot."
+
+human_acceptance_persistence:
+  status: "disabled_pending_trusted_admission"
+  rationale: >-
+    No trusted Human admission path exists. A human_acceptance event is a label
+    plus two strings, so persisting one would let anything able to write a file
+    grant Human authority to itself. The reducer may still EVALUATE a proposed
+    unblock or graduation - that is useful and harmless - but append_event
+    refuses to make any human_acceptance event durable. This is a pre-release
+    authority boundary, NOT identity verification.
+  affected_transitions:
+    - "blocked -> prior status (unblock)"
+    - "review_passed -> graduated"
 
 store_location:
   medium: "learner_bound_local_store"

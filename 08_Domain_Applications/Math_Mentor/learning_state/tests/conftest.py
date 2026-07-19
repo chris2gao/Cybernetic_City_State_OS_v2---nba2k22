@@ -88,10 +88,21 @@ def make_event(
             "blocked_from": source,
         }
     if target == "stale":
+        failed = source == "review_due"
         event["stale_evidence"] = {
-            "cause": "review_failed" if source == "review_due" else "retention_decay",
+            "cause": "review_failed" if failed else "retention_decay",
             "cause_ref_or_summary": "synthetic stale cause",
         }
+        # Contract 5.1.7: each cause admits only the provenance that could
+        # witness it, so the fixture supplies a matching source type.
+        event["evidence_provenance"]["source_type"] = source_type or "spaced_review"
+        if failed:
+            event["review_failure_evidence"] = {
+                "review_window_id": "SET_BY_CALLER",
+                "review_result": "failed",
+                "failure_summary_or_ref": "synthetic failure",
+                "trap_or_transfer_result": "synthetic trap result",
+            }
     if target == "review_passed":
         event["review_evidence"] = {
             "review_window_id": f"win-{event_id}",
@@ -116,6 +127,32 @@ def open_window(
         review_window_kind=kind,
         **overrides,
     )
+
+
+def fail_review(event_id: str, window: str, **overrides) -> dict:
+    """A failed review attempt: needs a structured failure bundle citing its window."""
+    event = make_event(
+        event_id, "review_due", "stale",
+        event_type="review_result", source_type="spaced_review",
+    )
+    event["review_failure_evidence"]["review_window_id"] = window
+    event.update(overrides)
+    return event
+
+
+def expire_window(event_id: str, **overrides) -> dict:
+    """An expired window: nobody sat it, so it carries no failure bundle."""
+    event = make_event(
+        event_id, "review_due", "stale",
+        event_type="review_result", source_type="scheduler_placeholder",
+    )
+    event["stale_evidence"] = {
+        "cause": "review_window_expired",
+        "cause_ref_or_summary": "window lapsed unused",
+    }
+    event.pop("review_failure_evidence", None)
+    event.update(overrides)
+    return event
 
 
 def unblock(event_id: str, target: str, **overrides) -> dict:

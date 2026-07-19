@@ -70,6 +70,33 @@ must supply the missing evidence from the session record, or the event is omitte
    status that changed and why.
 6. Have the Human review the migration report before the v2 store is used.
 
+## Dependency cascade when an event is omitted
+
+Omitting an event is not a local edit. Every later event whose `transition.from`
+depended on the omitted state becomes unreplayable, because its starting status
+no longer exists in the rebuilt history.
+
+For each omitted event, walk forward through the remaining candidates:
+
+1. If a later event's `transition.from` is still reachable in the rebuilt
+   sequence, keep it.
+2. If it is not reachable, the event **must not be carried over as written**. It
+   is either
+   - re-derived with real Human-supplied evidence for the corrected
+     `transition.from`, or
+   - omitted too, and recorded in the migration report with the reason
+     "cascade from <omitted event id>".
+3. Repeat until no unreachable `transition.from` remains. Omissions can chain:
+   dropping a `classroom_passed` invalidates any later `review_due` that started
+   from it, which in turn invalidates its `review_passed`.
+
+Never repair a cascade by rewriting `transition.from` to whatever the rebuilt
+state happens to be. That silently invents a history the evidence does not
+support, which is the same falsification principle 3 forbids.
+
+The migration report must list, for every omitted event: its id, whether it was
+omitted directly or by cascade, and which omission it cascaded from.
+
 ## Current disposition
 
 One local v1 store was self-reported as having been written. It is **not**

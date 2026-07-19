@@ -61,6 +61,23 @@
       },
       "additionalProperties": false
     },
+    "review_failure_evidence": {
+      "description": "Required only for review_due -> stale with cause review_failed. A summary string alone is not evidence that an attempt happened and went badly.",
+      "type": "object",
+      "required": [
+        "review_window_id",
+        "review_result",
+        "failure_summary_or_ref",
+        "trap_or_transfer_result"
+      ],
+      "properties": {
+        "review_window_id": {"type": "string", "minLength": 1},
+        "review_result": {"const": "failed"},
+        "failure_summary_or_ref": {"type": "string", "minLength": 1},
+        "trap_or_transfer_result": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
     "stale_evidence": {
       "description": "Required for any transition into stale. Causes are not interchangeable: an expired window was never attempted, a failed review was.",
       "type": "object",
@@ -209,6 +226,45 @@
     }
   },
   "allOf": [
-    {"required": ["node_ref", "transition", "student_ref"]}
+    {"required": ["node_ref", "transition", "student_ref"]},
+    {
+      "$comment": "Evidence bundles are transition-specific. An ignored bundle must never enter the append-only log, because a later reader cannot tell whether it was honoured.",
+      "if": {"properties": {"transition": {"properties": {"to": {"const": "classroom_passed"}}, "required": ["to"]}}, "required": ["transition"]},
+      "then": {"required": ["classroom_evidence"]},
+      "else": {"not": {"required": ["classroom_evidence"]}}
+    },
+    {
+      "if": {"properties": {"transition": {"properties": {"to": {"const": "review_passed"}}, "required": ["to"]}}, "required": ["transition"]},
+      "then": {"required": ["review_evidence"]},
+      "else": {"not": {"required": ["review_evidence"]}}
+    },
+    {
+      "if": {"properties": {"transition": {"properties": {"to": {"const": "blocked"}}, "required": ["to"]}}, "required": ["transition"]},
+      "then": {"required": ["blocker_evidence"]},
+      "else": {"not": {"required": ["blocker_evidence"]}}
+    },
+    {
+      "if": {"properties": {"transition": {"properties": {"to": {"const": "stale"}}, "required": ["to"]}}, "required": ["transition"]},
+      "then": {"required": ["stale_evidence"]},
+      "else": {"not": {"required": ["stale_evidence"]}}
+    },
+    {
+      "$comment": "review_failure_evidence belongs only to a failed review attempt.",
+      "if": {"properties": {"stale_evidence": {"properties": {"cause": {"const": "review_failed"}}, "required": ["cause"]}}, "required": ["stale_evidence"]},
+      "then": {"required": ["review_failure_evidence"]},
+      "else": {"not": {"required": ["review_failure_evidence"]}}
+    },
+    {
+      "$comment": "Window identity is declared when a window is opened, not carried around afterwards.",
+      "if": {"properties": {"transition": {"properties": {"to": {"const": "review_due"}}, "required": ["to"]}}, "required": ["transition"]},
+      "then": {"required": ["review_window_id", "review_window_kind"]},
+      "else": {"not": {"anyOf": [{"required": ["review_window_id"]}, {"required": ["review_window_kind"]}]}}
+    },
+    {
+      "$comment": "Resolution evidence belongs only to a proposed unblock.",
+      "if": {"properties": {"transition": {"properties": {"from": {"const": "blocked"}}, "required": ["from"]}}, "required": ["transition"]},
+      "then": true,
+      "else": {"not": {"required": ["blocker_resolution_evidence"]}}
+    }
   ]
 }

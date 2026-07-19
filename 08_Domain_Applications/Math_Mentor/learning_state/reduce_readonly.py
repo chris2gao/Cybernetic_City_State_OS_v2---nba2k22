@@ -86,6 +86,21 @@ STALE_CAUSES = frozenset(
 )
 REVIEW_DUE_STALE_CAUSES = frozenset({"review_failed", "review_window_expired"})
 
+# Contract 5.1.7: each cause admits only the provenance that could actually
+# witness it.  `exam_agent` is never valid for stale - a classroom result cannot
+# testify about retention over time.
+STALE_CAUSE_SOURCE_TYPES = {
+    "review_failed": frozenset({"spaced_review"}),
+    "review_window_expired": frozenset({"scheduler_placeholder"}),
+    "retention_decay": frozenset(
+        {"spaced_review", "registered_learned_state", "explicit_human_override"}
+    ),
+    "prerequisite_invalidated": frozenset(
+        {"registered_learned_state", "explicit_human_override"}
+    ),
+    "malformed_evidence": frozenset({"explicit_human_override"}),
+}
+
 # STUDENT_LEARNING_STATE_SCHEMA.md section 5, including the 5.1 re-entry edges.
 # `blocked` is reachable from any status and returns to the recorded prior
 # status, so both directions are handled separately rather than enumerated.
@@ -295,6 +310,45 @@ def _evidence_requirements(target: str, event: dict, state: NodeState) -> str | 
             return (
                 f"cause {cause!r} describes a review attempt, but the node is in "
                 f"{state.status!r}, not review_due"
+            )
+
+        permitted = STALE_CAUSE_SOURCE_TYPES.get(cause, frozenset())
+        if source_type not in permitted:
+            return (
+                f"stale cause {cause!r} may only be witnessed by source_type in "
+                f"{sorted(permitted)}, not {source_type!r}"
+            )
+
+        if cause == "review_failed":
+            failure = event.get("review_failure_evidence") or {}
+            missing_failure = [
+                key
+                for key in (
+                    "review_window_id",
+                    "review_result",
+                    "failure_summary_or_ref",
+                    "trap_or_transfer_result",
+                )
+                if not failure.get(key)
+            ]
+            if missing_failure:
+                return (
+                    "cause 'review_failed' requires review_failure_evidence; missing "
+                    f"{sorted(missing_failure)}"
+                )
+            if failure.get("review_result") != "failed":
+                return "review_failure_evidence.review_result must be 'failed'"
+            if failure.get("review_window_id") != state.active_review_window_id:
+                return (
+                    f"review_failure_evidence.review_window_id "
+                    f"{failure.get('review_window_id')!r} does not match the pending window "
+                    f"{state.active_review_window_id!r}"
+                )
+
+        if cause == "review_window_expired" and event.get("review_failure_evidence"):
+            return (
+                "cause 'review_window_expired' means no attempt occurred; it must not "
+                "carry review_failure_evidence"
             )
 
     if target == "graduated":

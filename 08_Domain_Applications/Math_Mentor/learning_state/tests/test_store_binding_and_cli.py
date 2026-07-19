@@ -22,6 +22,7 @@ from conftest import (
     pass_window,
     reach_classroom_passed,
     unblock,
+    fail_review,
     reach_two_review_passes,
 )
 
@@ -222,7 +223,7 @@ def test_stability_review_cannot_precede_near_term(synthetic_store):
 def test_failed_review_moves_to_stale_and_is_counted(synthetic_store):
     events = reach_classroom_passed() + [
         open_window("w1", "classroom_passed", "win-A", NEAR_TERM),
-        make_event("f1", "review_due", "stale", event_type="review_result"),
+        fail_review("f1", "win-A"),
     ]
     result = reduce_events(events, EPOCH)
     assert result.rejected == [], reasons(result)

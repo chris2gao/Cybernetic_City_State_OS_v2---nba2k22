@@ -207,6 +207,22 @@ stale_evidence:
   cause_ref_or_summary: "<cause-specific reference or summary>"
 ```
 
+A `review_failed` cause additionally requires a structured
+`review_failure_evidence` bundle. A summary string alone is not evidence that an
+attempt happened and went badly:
+
+```yaml
+review_failure_evidence:
+  review_window_id: "<must equal the currently pending window>"
+  review_result: "failed"
+  failure_summary_or_ref: "<what went wrong, or a reference>"
+  trap_or_transfer_result: "<what the learner actually produced>"
+```
+
+`review_window_expired` is the opposite case and must say so explicitly: no
+attempt occurred, so it carries no failure bundle and never counts as a failed
+attempt.
+
 Causes are not interchangeable:
 
 - `review_failed` requires an explicit failed review outcome and **counts as a failed
@@ -225,8 +241,14 @@ Historical counters preserve these distinctions rather than collapsing every
 | --- | --- | --- |
 | `blocker_evidence` | `classroom_result`, `review_result` | any valid source type for that event |
 | unblocking | `human_acceptance` only | `explicit_human_override` only |
-| `stale_evidence` (`review_failed`, `review_window_expired`) | `review_result` | `spaced_review`, `scheduler_placeholder` |
-| `stale_evidence` (`retention_decay`, `prerequisite_invalidated`, `malformed_evidence`) | `review_result` | `spaced_review`, `registered_learned_state`, `explicit_human_override` |
+| `stale_evidence` cause `review_failed` | `review_result` | `spaced_review` only — someone sat the review |
+| `stale_evidence` cause `review_window_expired` | `review_result` | `scheduler_placeholder` only — the window lapsed, nobody sat it |
+| `stale_evidence` cause `retention_decay` | `review_result` | `spaced_review`, `registered_learned_state`, `explicit_human_override` |
+| `stale_evidence` cause `prerequisite_invalidated` | `review_result` | `registered_learned_state`, `explicit_human_override` |
+| `stale_evidence` cause `malformed_evidence` | `review_result` | `explicit_human_override` only — declaring evidence malformed is a judgement |
+
+`exam_agent` provenance is never valid for a stale transition: a classroom
+result cannot testify about retention over time.
 | graduation | `human_acceptance` only | `explicit_human_override` only |
 
 ### 5.2 Graduation evidence candidacy

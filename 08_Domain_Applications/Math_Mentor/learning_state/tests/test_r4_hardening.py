@@ -1,4 +1,4 @@
-"""Round-4 hardening: threads, fail-closed paths, evidence causes, CLI truth.
+﻿"""Round-4 hardening: threads, fail-closed paths, evidence causes, CLI truth.
 
 All stores are synthetic temporaries. No real learner store is touched.
 """
@@ -24,6 +24,8 @@ from conftest import (
     reach_classroom_passed,
     reach_two_review_passes,
     unblock,
+    fail_review,
+    expire_window,
 )
 
 from append_event import (
@@ -270,9 +272,7 @@ def test_bare_stale_event_is_rejected():
 def test_expiry_is_not_counted_as_a_failed_attempt():
     events = reach_classroom_passed() + [
         open_window("w1", "classroom_passed", "win-A", NEAR_TERM),
-        make_event("s", "review_due", "stale", event_type="review_result",
-                   stale_evidence={"cause": "review_window_expired",
-                                   "cause_ref_or_summary": "window lapsed"}),
+        expire_window("s"),
     ]
     result = reduce_events(events, EPOCH)
     assert result.rejected == [], reasons(result)
@@ -284,9 +284,7 @@ def test_expiry_is_not_counted_as_a_failed_attempt():
 def test_failure_is_counted_as_a_failed_attempt():
     events = reach_classroom_passed() + [
         open_window("w1", "classroom_passed", "win-A", NEAR_TERM),
-        make_event("s", "review_due", "stale", event_type="review_result",
-                   stale_evidence={"cause": "review_failed",
-                                   "cause_ref_or_summary": "learner missed the trap"}),
+        fail_review("s", "win-A"),
     ]
     result = reduce_events(events, EPOCH)
     assert result.rejected == [], reasons(result)

@@ -11,6 +11,49 @@ master_touched: false
 status: "remediation_implemented_pending_foreground_rereview"
 ---
 
+# 0. 第 5 轮:数学语义已被接受
+
+前台复审 5 裁定 **CA-417 与 PDE-486 的数学语义 accepted**(形式定义、映射边界、
+旋转推导、PDE 反例及其范围、弦系数公式),并**禁止重开**这些推导。两节点已按授权回写:
+
+```yaml
+semantic_acceptance_required.status: accepted
+reviewer_acceptance_ref: foreground-rereview-5@8273867
+```
+
+这**不是自我接受**——是前台授权的回写。接受仅覆盖**语义**:
+`teaching_ready`、`coordinator_consumable`、`consumer_allowed` 全部仍为 false,
+`bridge_readiness_status` 仍 `manual_review_required`。
+
+本轮所修:
+
+- **PDE `code_implementation` 换掉了通用 Fourier 片段**——原片段不保证固定端边界条件。
+  现为真实的弦模态和(显式 x, t, L, c),且其两条主张(满足波动方程、边界条件按构造成立)
+  **已被审计实测**。断言 24 → **26**。
+- **证据清单拆分**:"一般整数 n≠m 的正交性"曾被标 `machine_checked`,但实际只代入了
+  (2,5) 与 (3,7) 两组。现拆为「采样对:machine_checked (sampled)」与
+  「一般正弦正交定理:semantic_review_only」。**采样永远不是一般定理的证据**。
+- **Human 持久化禁用**(新的权威边界):writer 拒绝**一切** `human_acceptance` 事件,
+  理由 `unsupported_pending_trusted_human_admission`。reducer 仍可**评估**提议的解锁或
+  毕业——那是有用且无害的——但不得落库。因为没有可信 Human 准入路径时,
+  事件标签 + `source_type` 字符串 + `human_authorization_ref` **都不是权威**。
+- **失败复习需结构化证据**:`review_failure_evidence` 必须引用**当前待定窗口**,
+  且 `review_result: failed`;过期窗口**不得**携带失败包。摘要字符串不再算证据。
+- **stale 因果与来源精确映射**:`exam_agent` 对 stale 永不合法(课堂结果不能证明长期保持);
+  `review_failed` 仅 `spaced_review`,`review_window_expired` 仅 `scheduler_placeholder`,
+  `malformed_evidence` 仅 `explicit_human_override`。每个禁止组合都有负例测试。
+- **转换专属 schema 条件式**:证据包不能出现在无关转换上——被忽略的证据包若进了
+  append-only 日志,后来的读者无法判断它是否被采纳过。
+- **快照 TOCTOU 消除**:derive→写临时→比对→replace 全程持一把锁。此前比对在锁外,
+  存在另一写者插入的窗口。新增确定性双线程交错测试。
+- **加载硬化**:事件序号必须是从 1 开始的**连续**序列(缺口意味着事件被移除或从未落地,
+  绕过它会误述历史);events 目录不得有非事件 `.yml`;非映射/畸形 YAML 干净拒绝。
+- **锚点降级 fail closed**:缺 `store_meta_digest` 的锚点直接拒绝,重建须 Human 运行。
+- **迁移依赖级联**:省略一个事件会使后续依赖该状态的事件不可重放,必须重新取证或
+  一并省略并记录级联来源;**禁止**把 `transition.from` 改成"当前恰好是什么"。
+
+测试 155 → **186 全过**。
+
 # 1. 当前已核实的理解
 
 **读者只需本节即可了解现状。第 4 节起为历史轮次记录,其中含已被推翻的结论。**
@@ -64,9 +107,20 @@ status: "remediation_implemented_pending_foreground_rereview"
 
 # 2. 当前阻塞项
 
-1. **两节点语义接受**——需前台独立裁决,执行者无权自接受。
-2. **历史提交中的学习者元数据**——见第 3 节隐私声明,需**独立的 Human 决策**。
-3. Mode B 两节点、scheduler 第 5 步、master 合入——均未动,待授权。
+**已解除**:两节点语义接受(前台复审 5 已授予)。
+
+仍然阻塞:
+
+1. **前置链未解析**——两节点 `prerequisites_status: declared_unverified`;
+   P0 crosswalk 绑定仍 `unclaimed_fail_closed`,故 `teaching_ready` 保持 false。
+2. **Human 准入路径不存在**——`human_acceptance` 持久化已禁用,因此解锁与毕业
+   在当前实现下**无法落库**。这是刻意的预发布边界。
+3. **bridge / Coordinator / consumer 准入**——`bridge_readiness_status` 仍
+   `manual_review_required`,`coordinator_consumable` 与 `consumer_allowed` 仍为 false。
+4. **历史提交中的学习者元数据**——见第 3 节,需**独立的 Human 决策**。
+5. **最终实现复审**——本轮全部改动仍是执行者证据;`release_status` 保持
+   `pre_release_unfrozen`,真实 v2 写入仍被禁止。
+6. Mode B 两节点、scheduler 第 5 步、master 合入——均未动,待授权。
 
 # 3. 当前执行者证据与隐私声明
 
