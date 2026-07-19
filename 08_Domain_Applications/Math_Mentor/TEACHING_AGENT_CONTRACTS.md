@@ -40,6 +40,7 @@ Rules:
 - Indexes and filenames are locators, not proof that content was read.
 - No payload may imply deterministic tool execution without a real log reference.
 - Full-repository ingestion and full Math Mentor ingestion are forbidden loading strategies.
+- Every handoff carries its own complete `actually_read_files` array; each element is a file path physically read in the current context. Placeholder text and cross-section or cross-document references are forbidden inside that array.
 
 ## 3. Human / Coordinator Input Contract
 
@@ -124,7 +125,8 @@ Coordinator obligations:
 - record every loaded file in `actually_read_files`;
 - select matching bridge records only through explicit endpoints or unambiguous legacy content;
 - preserve `MathLane_A` / `MathLane_B` routing evidence;
-- pass missing learned-history state as `unavailable`, not as learned.
+- pass missing learned-history state as `unavailable`, not as learned;
+- when the target node carries `v9_semantic_audit.status: review_required`, block lesson scheduling before teaching and report the node to the Human review queue; a node must not enter formal teaching while that pending state is unresolved.
 
 Coordinator must not:
 
@@ -204,7 +206,8 @@ Socratic obligations:
 - cover all `subtopic_plan` entries;
 - ask exactly one compact bridge comprehension check on first bridge use;
 - require the student to restate the formal definition or criterion;
-- record struggled concepts, false intuitions, and definition boundaries for Exam_Agent.
+- record struggled concepts, false intuitions, and definition boundaries for Exam_Agent;
+- mark a subtopic `covered` only on the basis of the student's observable response to that subtopic's completion check; teacher-supplemented completion may be marked `teacher_supplemented` only and does not count as covered.
 
 Socratic must not:
 
