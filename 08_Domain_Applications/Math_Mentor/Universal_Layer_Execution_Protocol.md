@@ -74,6 +74,14 @@ Where older wording below would imply machine proof for Mode B, automatic bridge
   - **`llm_physical_mapping`**：必须将抽象数学结构直接映射到大语言模型 (LLM) 自身的物理架构上（例如：泛函内积 $\to$ Attention $QK^T$，拓扑同胚 $\to$ Transformer 残差流，抽象代数群 $\to$ Word2Vec 词嵌入空间）。
   - **代码锚点**：不再提供用于断言的代码，而是提供诸如 PyTorch 神经网络前向传播的核心片段作为直觉锚点。
 
+**【双轨通用：误区证据前置 `common_misconceptions`】**
+
+新生成或修复的节点必须提供 `common_misconceptions` 数组，每项含 `signature`（误区的稳定签名，用于识别同签名二次错误）、`description`（学生会怎么错）、`repair_direction`（不重复失败讲法的修复方向）。
+
+该字段属于教学证据层，不是教学正文。它把陷阱方向前置到语料，供 Prep_Architect 构造 `exam_handoff_conditions.trap_direction` 与 `reprep_triggers`，避免教师临场发挥决定考什么、怎么修。
+
+既有节点缺失该字段时**不阻断教学**：Prep_Architect 自行构造陷阱方向，并在 `evidence_trace.limits` 标注 `common_misconceptions_absent`。不得为补齐该字段而改写既有教学内容；补齐属于节点修复任务，需按批次授权执行。
+
 ### 阶段 3：沙盒验证与测试 (Sandbox / Audit Evaluation) [按轨道分化]
 
 - **【计算代数主路】** $\to$ **沙盒全量测试 (Bulk Sandbox Evaluation)**
