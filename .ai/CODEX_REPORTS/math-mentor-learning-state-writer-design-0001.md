@@ -1,0 +1,160 @@
+---
+design_id: "math-mentor-learning-state-writer-design-0001"
+title: "Math Mentor 学习状态 writer 架构设计(仅设计,待 Human 决策)"
+status: "design_only_awaiting_human_decision"
+authored_by: "claude_cowork (backend_executor, sole-executor mode 2026-07-19)"
+base_master: "e2782e81f8ea7458a8a20bbff6d96390a9c20ae9"
+not_dispatched: true
+independent_review: "pending"
+boundary: "本文件不激活 runtime/Coordinator/writer/scheduler,不写任何学习状态,不创建脚本,不改合同"
+---
+
+# 学习状态 writer 架构设计
+
+## 0. 边界
+
+本文件是设计产物,不是合同,不是实现。它不写 `STUDENT_LEARNING_STATE/**`、不写
+`LEARNED_HISTORY/**`、不碰 `数学间隔重复调度表.md`、不激活任何 runtime。落地需要
+独立的 Human 授权任务。
+
+## 1. 问题陈述
+
+`STUDENT_LEARNING_STATE_SCHEMA.md` 已经定义了记录格式(§3)、八个合法状态(§4)、
+完整状态转换表(§5)和证据溯源要求(§6)。`GRADUATION_CRITERIA.md` 定义了
+`minimum_review_passes: 2`。**缺的不是 schema,是执行层**:谁把 Exam_Agent 的
+classroom 结果变成一条持久记录,谁保证转换合法,谁保证 Human 权威不被模型伪造。
+
+当前所有教学场次(场A/场B/首课)的状态更新都停在"提案文本 + `state_written: false`"。
+这是正确的降级,但代价是学习进度不存在于语料——和批次1 语义接受曾经的处境同构:
+**结论只活在简报里**。
+
+## 2. 核心论点:复用 lanes,不发明新机制
+
+仓库已有一套经过测试的 append-only 事件基础设施(`.ai/lanes/`),其性质恰好是
+learning-state writer 需要的:
+
+| lanes 已实现 | writer 需要 | 复用判断 |
+|---|---|---|
+| 每实例只 append 自己目录、临时文件+原子重命名、`seq` 单调递增 | 学习事件不可覆盖、并发安全 | 直接复用 |
+| envelope 先发、事件后发(不可变 ref 不能自引用) | 事件必须引用其证据基线 | 直接复用 |
+| 只有 foreground 角色可调 `reduce-lanes.ps1` 写 `STATE.yml` | 单写者派生快照,避免多方写同一状态文件 | 直接复用 |
+| `lane_epoch.yml` 绑定协议纪元,纪元不符的事件被 reducer 忽略 | 转换表版本演进时旧事件不被误读 | 直接复用 |
+| local transport 显式 `non_authoritative: true`,永不进 `lane_inputs` | 本地便利记录不得升级为权威进度 | 直接复用 |
+| `publish-review.ps1`:staging→worktree→显式路径→非 force push,失败重建一次 | 状态发布走同一条受控路径 | 直接复用 |
+
+结论:**不需要新的存储引擎,需要的是一个新的事件类型 + 一个新的 reducer**。
+这把 C 从"造系统"降级为"加一种事件",风险和工作量都下一个数量级。
+
+## 3. 五个决策分叉
+
+### D1 存储介质 —— **需要你决定**
+
+| 选项 | 优点 | 代价 |
+|---|---|---|
+| **(a) repo 内 append-only 事件 + 派生快照**(建议) | Git 天然审计、可回溯、复用 lanes 全套;评审可用 diff | 学习进度进入仓库历史,若仓库将来公开则隐私暴露 |
+| (b) CityState 本地 (`%LOCALAPPDATA%/CityState/`) | 隐私最强,不入仓库 | 无 Git 审计;换机即丢;与 lanes 的"local = 非权威"定性冲突 |
+| (c) 混合:本地为权威、repo 存脱敏摘要 | 兼顾 | 两套真相源,需额外一致性机制——**我不建议** |
+
+**建议 (a),但有一个前置条件必须你确认**:这个仓库现在是私有还是将来会公开?
+schema §2 已经强制 `student_key` 用别名/哈希、禁存真名与联系方式,所以即便 (a)
+也不会写入身份信息。但"某人在哪天没学会复数乘法"本身就是敏感的学习画像。
+**如果仓库有任何公开可能,选 (b)。**
+
+### D2 写入权属 —— 建议确定性脚本 + 前台/Human 触发
+
+- 模型**永不**直接写状态文件。模型只产出候选事件(JSON/YAML),写入由脚本执行。
+- 脚本是纯确定性的:读事件 → 校验转换合法性 → 拒绝或追加 → 派生快照。
+- 无常驻进程、无定时器。触发只能是 Human 或前台角色的显式调用。
+- 理由:这条边界一旦松动,模型就能自己宣布自己教会了学生。
+
+### D3 Human 权威注入 —— 建议 publish-helper 提交的 Human 接受事件
+
+- `graduated` 这类转换需要 Human 权威。做法:Human 通过 `publish-review.ps1`
+  同款路径提交一条 `human_acceptance` 事件,reducer 只认该路径来的事件。
+- **不造 ActorOrigin 机器**:不实现签名/身份验证层。当前威胁模型是协作式的
+  (`core-cooperative-threat-model`:lane ID、role label 都不认证身份),writer
+  不应假装比它强。谁能推 review 分支谁就有该权限,这是诚实的现状描述。
+- 若将来需要真身份,那是独立的 gateway 任务,不在 writer 范围。
+
+### D4 回滚 —— 建议事件溯源补偿事件
+
+- 历史不可改写。写错了就追加一条 `correction` 事件,指向被更正事件的 ID。
+- reducer 计算快照时应用补偿。审计链完整保留"曾经错过"这一事实。
+- 与 `reduce-lanes.ps1` 取每 lane 最大编号事件的既有语义一致。
+
+### D5 scheduler 分离 —— 不是分叉,是硬边界
+
+- 间隔复习调度器触碰 protected `scheduler_or_polling` 边界,**必须独立 gate**。
+- learning-state writer 落地**不得**捆绑 scheduler writer。
+- writer 可以把 `classroom_passed` 记录下来,并输出"该节点需要调度"的**信号**,
+  但 `数学间隔重复调度表.md` 的实际写入需要另一个 Human 授权任务。
+- 现有合同(Teaching Flow Spec §6、TEACHING_AGENT_CONTRACTS §7)已明文如此,
+  本设计不放宽。
+
+## 4. 推荐架构(若 D1 选 (a))
+
+```text
+.ai/learning_state/
+├── epoch.yml                      # 绑定转换表版本,仿 lane_epoch.yml
+├── events/
+│   ├── NNN.evidence-envelope.yml  # 先发:证据基线(节点 SHA、exam packet ref)
+│   └── NNN.yml                    # 后发:学习事件,required_refs 指向上面的 envelope
+└── snapshots/
+    └── learning_state.yml         # reducer 派生,只读,不手改
+```
+
+事件草案(字段全部来自 STUDENT_LEARNING_STATE_SCHEMA §3/§6,未发明新概念):
+
+```yaml
+schema_version: "1.0"
+event_id: "ls-NNN"
+event_type: "classroom_result | review_result | human_acceptance | correction"
+student_ref: "<privacy-safe alias>"
+node_ref: { node_id: "n_xxx", file: "DOMAIN-XXX.yaml" }
+transition: { from: "introduced", to: "classroom_passed" }
+evidence_provenance:
+  source_type: "exam_agent"
+  source_ref: "<exam packet path>"
+  actually_read_files: []
+  evidence_timestamp: "YYYY-MM-DDTHH:MM:SSZ"
+  evidence_limitations: ""
+learning_state_epoch: "<must equal epoch.yml>"
+corrects_event_id: null        # 仅 correction 事件非空
+human_authorization_ref: null  # 仅 human_acceptance 事件非空
+```
+
+reducer 必须拒绝的情况(直接来自 schema §5 的 forbidden shortcut 列):
+
+- 转换不在转换表中(如 `introduced` 直接跳 `graduated`);
+- `classroom_passed` 被复用为 `review_passed`;
+- `review_passed → graduated` 但累计 review 通过次数 < 2;
+- 事件 epoch 与 `epoch.yml` 不符;
+- `graduated` 转换缺 `human_authorization_ref`;
+- 事件 ID 重复、envelope 与事件不匹配;
+- 记录中出现真实身份或私密字段。
+
+## 5. 落地顺序(每步都是独立可停点)
+
+1. **只读 reducer**:读现有教学场次的状态提案文本,不写任何文件,只打印"如果落库会是什么"。零风险,验证转换逻辑。
+2. **事件 schema + validator + 测试**:仿 `.ai/lanes/tests/` 建测试,含上述全部拒绝用例。仍不写状态。
+3. **首次真实写入**:单节点、单事件、Human 在场。写完立刻回读比对。
+4. **补齐历史**:把首课 PROP_LOGIC-001 的 classroom_passed 补录为首条事件。
+5. scheduler 信号输出(**不写调度表**)。
+
+## 6. 仅 Human 决策项
+
+1. **D1 存储介质**——前置问题:仓库现在/将来是否公开?(公开 → 选本地)
+2. D2/D3/D4 若同意上述建议,回一句"按建议"即可,不必逐条批。
+3. 是否批准从落地顺序第 1 步(只读 reducer)开跑——该步零写入、零风险。
+
+## 7. 本设计不做的事
+
+不实现脚本、不建目录、不写事件、不改任何现有合同、不激活 scheduler、
+不放宽 `consumer_allowed` / `coordinator_consumable` 任何一道门。
+
+## 8. 独立评审状态
+
+本设计由单一执行者(Claude)在 Codex/Fable 额度耗尽期间产出,**未经独立评审**。
+盲审曾在本执行者的教学产出中发现过自审未捕获的实质错误(2026-07-18 场A 数学错误),
+因此本文件的架构判断在获得独立评审前应视为一家之言,尤其是第 2 节"复用 lanes"
+这一核心论点值得被挑战。
