@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "citystate-math-mentor-learning-event-v1",
+  "title": "Math Mentor learning-state event",
+  "description": "Structural contract for one append-only learning event. Structural validity is not semantic validity: passing this schema does not make a transition legal, does not grant authority, and does not persist anything. Legality is decided by the transition table in reduce_readonly.py. Events live in the local CityState store, never in this public repository.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "event_id",
+    "event_type",
+    "learning_state_epoch",
+    "evidence_provenance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "citystate.math_mentor.learning_event.v1"
+    },
+    "event_id": {
+      "description": "Unique within a store; duplicates are rejected by the reducer.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*$"
+    },
+    "event_type": {
+      "enum": ["classroom_result", "review_result", "human_acceptance", "correction"]
+    },
+    "student_ref": {
+      "description": "Privacy-safe alias or hash only. Real identity is forbidden by STUDENT_LEARNING_STATE_SCHEMA.md section 2.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "node_ref": {
+      "type": "object",
+      "required": ["node_id"],
+      "properties": {
+        "node_id": {"type": "string", "minLength": 1},
+        "file": {"type": "string"},
+        "title": {"type": "string"},
+        "source_level": {"type": ["integer", "string"]}
+      },
+      "additionalProperties": false
+    },
+    "transition": {
+      "type": "object",
+      "required": ["from", "to"],
+      "properties": {
+        "from": {"$ref": "#/$defs/learning_status"},
+        "to": {"$ref": "#/$defs/learning_status"}
+      },
+      "additionalProperties": false
+    },
+    "evidence_provenance": {
+      "type": "object",
+      "required": ["source_type"],
+      "properties": {
+        "source_type": {
+          "enum": [
+            "exam_agent",
+            "spaced_review",
+            "registered_learned_state",
+            "explicit_human_override",
+            "strict_sequence_fallback",
+            "scheduler_placeholder"
+          ]
+        },
+        "source_ref": {"type": ["string", "null"]},
+        "actually_read_files": {
+          "description": "Self-declared and non-verifiable; never upstream evidence in a correctness chain (TEACHING_AGENT_CONTRACTS.md section 2).",
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "evidence_timestamp": {"type": "string", "format": "date-time"},
+        "evidence_limitations": {"type": "string"},
+        "not_machine_validated_reason": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "learning_state_epoch": {
+      "description": "Must equal the bound epoch in epoch.yml; mismatched events are ignored by the reducer.",
+      "type": "string",
+      "minLength": 1
+    },
+    "corrects_event_id": {
+      "description": "Non-null only for correction events; the target event is superseded, never deleted.",
+      "type": ["string", "null"]
+    },
+    "human_authorization_ref": {
+      "description": "Required for any transition into graduated. A model-supplied value is not authority.",
+      "type": ["string", "null"]
+    },
+    "prev_event_digest": {
+      "description": "SHA-256 of the previous event file, forming the integrity chain that replaces Git immutability in the local store.",
+      "type": ["string", "null"],
+      "pattern": "^([0-9a-f]{64})?$"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "learning_status": {
+      "enum": [
+        "not_seen",
+        "introduced",
+        "classroom_passed",
+        "review_due",
+        "review_passed",
+        "graduated",
+        "stale",
+        "blocked"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"event_type": {"const": "correction"}}, "required": ["event_type"]},
+      "then": {"required": ["corrects_event_id"]},
+      "else": {"required": ["node_ref", "transition"]}
+    }
+  ]
+}
