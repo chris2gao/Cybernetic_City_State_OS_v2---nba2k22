@@ -212,7 +212,11 @@ def validate_event(event: dict, report: ValidationReport, validator=None) -> Non
 
 
 def validate_chain(events: list[dict], report: ValidationReport) -> None:
-    """Verify the hash chain that substitutes for Git immutability locally."""
+    """Verify the local hash-chain link between consecutive events.
+
+    This provides tamper-evidence within the store; it does NOT replace Git
+    immutability, and it is not a signature.
+    """
     expected: str | None = None
     for event in events:
         event_id = str(event.get("event_id", "<missing-id>"))

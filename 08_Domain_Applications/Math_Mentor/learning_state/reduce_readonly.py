@@ -140,6 +140,9 @@ class NodeState:
     latest_definition_retention: str | None = None
     latest_transfer_evidence: str | None = None
     last_qualifying_timestamp: str | None = None
+    # Every accepted event advances this, so a backdated event is detectable even
+    # outside the qualifying cycle.
+    last_event_timestamp: str | None = None
 
     # Immutable audit history.  Never cleared, so decay is visible afterwards.
     historical_windows: frozenset[str] = frozenset()
@@ -301,6 +304,30 @@ def _evidence_requirements(target: str, event: dict, state: NodeState) -> str | 
             )
         if not stale_evidence.get("cause_ref_or_summary"):
             return "stale_evidence requires cause_ref_or_summary"
+
+        # Whether anyone sat the review must be machine-readable, not inferred
+        # from free text.
+        attempted = stale_evidence.get("attempt_occurred")
+        if cause == "review_window_expired" and attempted is not False:
+            return (
+                "cause 'review_window_expired' requires stale_evidence.attempt_occurred: false"
+            )
+        if cause == "review_failed" and attempted is not True:
+            return "cause 'review_failed' requires stale_evidence.attempt_occurred: true"
+
+        # A window cannot be failed or expired at or before it opened.
+        if cause in REVIEW_DUE_STALE_CAUSES:
+            stamp = _parse_timestamp(
+                (event.get("evidence_provenance") or {}).get("evidence_timestamp")
+            )
+            opened = _parse_timestamp(state.active_review_window_opened_at)
+            if stamp is None:
+                return f"cause {cause!r} requires an RFC 3339 timestamp with a timezone offset"
+            if opened is not None and stamp <= opened:
+                return (
+                    f"a review window cannot be {cause.replace('review_', '')} at or before it "
+                    f"opened: {stamp.isoformat()} does not follow {opened.isoformat()}"
+                )
         if state.status == "review_due" and cause not in REVIEW_DUE_STALE_CAUSES:
             return (
                 f"leaving review_due may only be explained by {sorted(REVIEW_DUE_STALE_CAUSES)}, "
@@ -488,6 +515,21 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
             continue
 
         current = result.snapshot.get(node_id, NodeState())
+
+        # Backdating check, applied to every event for this node.  Equal stamps
+        # are tolerated (same-session bookkeeping); the strict ordering that
+        # matters for retention is enforced separately at window boundaries.
+        event_stamp = _parse_timestamp(provenance.get("evidence_timestamp"))
+        previous_stamp = _parse_timestamp(current.last_event_timestamp)
+        if event_stamp is not None and previous_stamp is not None and event_stamp < previous_stamp:
+            _reject(
+                result,
+                event_id,
+                f"backdated event: {event_stamp.isoformat()} precedes the previous accepted "
+                f"event for this node at {previous_stamp.isoformat()}",
+            )
+            continue
+
         if current.status != source:
             _reject(
                 result,
@@ -622,7 +664,13 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
             _reject(result, event_id, reason)
             continue
 
-        updated = replace(current, status=target, last_event_id=event_id, blocked_from=None)
+        updated = replace(
+            current,
+            status=target,
+            last_event_id=event_id,
+            blocked_from=None,
+            last_event_timestamp=str(provenance.get("evidence_timestamp")),
+        )
 
         if target == "review_due":
             # Open a window; it stays pending until a matching pass or an

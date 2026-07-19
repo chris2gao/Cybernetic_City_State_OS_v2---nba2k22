@@ -160,12 +160,45 @@ def _anchor_path(store: Path) -> Path:
     return store / "integrity" / "head.json"
 
 
+ANCHOR_REQUIRED_FIELDS = (
+    "schema_version",
+    "event_count",
+    "head_digest",
+    "store_meta_digest",
+    "updated_at",
+)
+ANCHOR_SCHEMA_VERSION = "citystate.math_mentor.learning_state_anchor.v1"
+
+
 def read_anchor(store: Path) -> dict | None:
+    """Read the tail anchor, or None if absent.
+
+    Malformed content is an explicit refusal, never a traceback: an unreadable
+    anchor must not be mistaken for a missing one, because "missing" has its own
+    (also fail-closed) meaning.
+    """
     path = _anchor_path(store)
     if not path.exists():
         return None
-    with path.open("r", encoding="utf-8") as handle:
-        return json.load(handle)
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            anchor = json.load(handle)
+    except (OSError, json.JSONDecodeError) as error:
+        raise WriteRefused(f"tail anchor is not readable JSON: {error}") from error
+    if not isinstance(anchor, dict):
+        raise WriteRefused("tail anchor is not a JSON object; refusing to interpret it")
+    missing = [key for key in ANCHOR_REQUIRED_FIELDS if key not in anchor]
+    if missing:
+        raise WriteRefused(
+            f"tail anchor is missing required fields {sorted(missing)}; refusing to accept a "
+            "downgraded anchor. A Human must run repair_anchor after verifying the store."
+        )
+    if anchor.get("schema_version") != ANCHOR_SCHEMA_VERSION:
+        raise WriteRefused(
+            f"tail anchor schema_version {anchor.get('schema_version')!r} != "
+            f"{ANCHOR_SCHEMA_VERSION!r}"
+        )
+    return anchor
 
 
 def write_anchor(store: Path, events: list[dict], meta: dict | None = None) -> Path:
@@ -174,6 +207,7 @@ def write_anchor(store: Path, events: list[dict], meta: dict | None = None) -> P
     if meta is None:
         meta = read_store_meta(store)
     anchor = {
+        "schema_version": ANCHOR_SCHEMA_VERSION,
         "event_count": len(events),
         "head_digest": event_digest(events[-1]) if events else None,
         # Binding digest: an accidental edit to store_meta.yml after events exist
@@ -212,8 +246,15 @@ def read_store_meta(store: Path) -> dict:
             f"missing {path.name}: a store must declare its binding "
             "(schema_version, store_id, bound_student_ref, bound_epoch) before use"
         )
-    with path.open("r", encoding="utf-8") as handle:
-        meta = yaml.safe_load(handle) or {}
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            meta = yaml.safe_load(handle)
+    except (OSError, yaml.YAMLError) as error:
+        raise WriteRefused(f"store_meta.yml is not readable YAML: {error}") from error
+    if meta is None:
+        meta = {}
+    if not isinstance(meta, dict):
+        raise WriteRefused("store_meta.yml does not contain a mapping; refusing to interpret it")
 
     try:
         from jsonschema import Draft202012Validator, FormatChecker
@@ -541,7 +582,10 @@ def write_snapshot(store: Path) -> Path:
                 "discarding it rather than overwriting a newer snapshot"
             )
         os.replace(temporary, final)
-        return final
+        # Return the exact snapshot that was published, not just its path: a
+        # caller that re-derives afterwards would describe a later store head
+        # and misreport what it actually wrote.
+        return final, snapshot
 
 
 def main(argv: list[str]) -> int:
@@ -581,8 +625,10 @@ def main(argv: list[str]) -> int:
         return 3
 
     try:
-        snapshot_path = write_snapshot(store)
-        snapshot = derive_snapshot(store)
+        # Report the snapshot that was actually published. Re-deriving here would
+        # describe whatever the store looks like now, which may already be a
+        # later head than the file on disk.
+        snapshot_path, snapshot = write_snapshot(store)
     except (OSError, SnapshotStale, WriteRefused, StoreLocked) as error:
         # The event is already committed; say so plainly.
         print("outcome: event_committed_snapshot_pending")

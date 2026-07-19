@@ -92,7 +92,11 @@
             "malformed_evidence"
           ]
         },
-        "cause_ref_or_summary": {"type": "string", "minLength": 1}
+        "cause_ref_or_summary": {"type": "string", "minLength": 1},
+        "attempt_occurred": {
+          "description": "Machine-readable: did anyone actually sit the review? Required true for review_failed and false for review_window_expired, so a reader never has to parse free text to learn it.",
+          "type": "boolean"
+        }
       },
       "additionalProperties": false
     },
@@ -129,7 +133,10 @@
       ],
       "properties": {
         "review_window_id": {"type": "string"},
-        "review_result": {"enum": ["passed", "failed"]},
+        "review_result": {
+          "description": "Only a pass belongs here. A failed attempt lives in review_failure_evidence, so the two can never be confused.",
+          "const": "passed"
+        },
         "definition_retention": {"type": "string"},
         "transfer_evidence": {"type": "string"}
       },
@@ -261,10 +268,32 @@
       "else": {"not": {"anyOf": [{"required": ["review_window_id"]}, {"required": ["review_window_kind"]}]}}
     },
     {
-      "$comment": "Resolution evidence belongs only to a proposed unblock.",
-      "if": {"properties": {"transition": {"properties": {"from": {"const": "blocked"}}, "required": ["from"]}}, "required": ["transition"]},
-      "then": true,
+      "$comment": "Resolution evidence belongs only to a proposed unblock, which is a human_acceptance event.",
+      "if": {
+        "allOf": [
+          {"properties": {"transition": {"properties": {"from": {"const": "blocked"}}, "required": ["from"]}}, "required": ["transition"]},
+          {"properties": {"event_type": {"const": "human_acceptance"}}, "required": ["event_type"]}
+        ]
+      },
+      "then": {"required": ["blocker_resolution_evidence"]},
       "else": {"not": {"required": ["blocker_resolution_evidence"]}}
+    },
+    {
+      "$comment": "Remediation evidence explains re-entry from stale, and belongs nowhere else.",
+      "if": {
+        "allOf": [
+          {"properties": {"transition": {"properties": {"from": {"const": "stale"}}, "required": ["from"]}}, "required": ["transition"]},
+          {"properties": {"transition": {"properties": {"to": {"const": "review_due"}}, "required": ["to"]}}, "required": ["transition"]}
+        ]
+      },
+      "then": {"required": ["remediation_evidence"]},
+      "else": {"not": {"required": ["remediation_evidence"]}}
+    },
+    {
+      "$comment": "human_authorization_ref is meaningful only on a human_acceptance proposal. Since the writer refuses every human_acceptance event, it must never reach a persisted v2 store on any other event type.",
+      "if": {"properties": {"event_type": {"const": "human_acceptance"}}, "required": ["event_type"]},
+      "then": true,
+      "else": {"not": {"required": ["human_authorization_ref"]}}
     }
   ]
 }

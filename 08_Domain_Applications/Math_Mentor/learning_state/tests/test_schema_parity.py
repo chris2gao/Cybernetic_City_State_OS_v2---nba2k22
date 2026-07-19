@@ -1,4 +1,4 @@
-"""Schema enforcement through the real runtime path, and correction disablement.
+﻿"""Schema enforcement through the real runtime path, and correction disablement.
 
 Parity is no longer asserted by comparing hand-written constants to the schema:
 the runtime validator now loads `learning_event.schema.json` itself, so there is

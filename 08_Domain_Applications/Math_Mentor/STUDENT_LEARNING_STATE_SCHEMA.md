@@ -219,9 +219,26 @@ review_failure_evidence:
   trap_or_transfer_result: "<what the learner actually produced>"
 ```
 
-`review_window_expired` is the opposite case and must say so explicitly: no
-attempt occurred, so it carries no failure bundle and never counts as a failed
-attempt.
+`review_window_expired` is the opposite case and must say so **machine-readably**,
+not only in prose: `stale_evidence.attempt_occurred` is `false`, it carries no
+failure bundle, and it never counts as a failed attempt. A reader must not have
+to parse `cause_ref_or_summary` to learn whether anyone sat the review.
+`review_failed` correspondingly sets `attempt_occurred: true` and carries the
+structured bundle as its positive proof.
+
+### 5.1.6.1 Review chronology
+
+Retention is a claim about elapsed time, so the ordering of a window's own events
+is enforced, not assumed:
+
+- a `review_failed` or `review_window_expired` event must have an
+  `evidence_timestamp` **strictly later** than `active_review_window_opened_at`;
+  a window cannot be failed or expired at or before the moment it opened;
+- each node tracks `last_event_timestamp`, and an event whose timestamp precedes
+  the previous accepted event for that node is rejected as backdated;
+- equal timestamps are tolerated only where the contract says so explicitly
+  (same-session bookkeeping). The retention-window boundaries — open, pass,
+  failure, expiry — remain **strictly** ordered.
 
 Causes are not interchangeable:
 
@@ -246,10 +263,28 @@ Historical counters preserve these distinctions rather than collapsing every
 | `stale_evidence` cause `retention_decay` | `review_result` | `spaced_review`, `registered_learned_state`, `explicit_human_override` |
 | `stale_evidence` cause `prerequisite_invalidated` | `review_result` | `registered_learned_state`, `explicit_human_override` |
 | `stale_evidence` cause `malformed_evidence` | `review_result` | `explicit_human_override` only — declaring evidence malformed is a judgement |
+| graduation | `human_acceptance` only | `explicit_human_override` only |
 
 `exam_agent` provenance is never valid for a stale transition: a classroom
 result cannot testify about retention over time.
-| graduation | `human_acceptance` only | `explicit_human_override` only |
+
+### 5.1.8 Pre-release Human authority boundary
+
+**No trusted Human admission path exists yet.** Until one does:
+
+- the reducer **may evaluate** a proposed `human_acceptance` transition — checking
+  whether a proposed unblock or graduation would be legal is useful and harmless;
+- `append_event` **refuses every** `human_acceptance` event, with the reason
+  `unsupported_pending_trusted_human_admission`;
+- therefore **neither unblock nor `graduated` can be persisted** in the current
+  implementation, and no store may contain one;
+- an event label, a `source_type` string and a `human_authorization_ref` string
+  are **not authority**. Anything able to write a file could produce all three,
+  so persisting them would let the system grant Human authority to itself.
+
+This is a pre-release authority boundary, **not identity verification**. The
+transition semantics above stay documented so that a future trusted admission
+path has something exact to implement against.
 
 ### 5.2 Graduation evidence candidacy
 

@@ -1,4 +1,4 @@
-"""Round-5: Human authority boundary, snapshot atomicity, evidence provenance.
+﻿"""Round-5: Human authority boundary, snapshot atomicity, evidence provenance.
 
 All stores are synthetic temporaries. No real learner store is touched.
 """
@@ -140,7 +140,9 @@ def test_review_failed_needs_a_structured_bundle():
     ]
     bare = make_event("s", "review_due", "stale", event_type="review_result",
                       source_type="spaced_review")
-    bare["stale_evidence"] = {"cause": "review_failed", "cause_ref_or_summary": "it went badly"}
+    bare["stale_evidence"] = {"cause": "review_failed",
+                              "cause_ref_or_summary": "it went badly",
+                              "attempt_occurred": True}
     bare.pop("review_failure_evidence", None)
     result = reduce_events(events + [bare], EPOCH)
     assert "requires review_failure_evidence" in reasons(result)
@@ -351,5 +353,5 @@ def test_anchor_without_store_meta_digest_fails_closed(synthetic_store):
     anchor = json.loads(path.read_text(encoding="utf-8"))
     del anchor["store_meta_digest"]
     path.write_text(json.dumps(anchor), encoding="utf-8")
-    with pytest.raises(WriteRefused, match="missing store_meta_digest"):
+    with pytest.raises(WriteRefused, match="missing required fields|missing store_meta_digest"):
         load_store(synthetic_store)

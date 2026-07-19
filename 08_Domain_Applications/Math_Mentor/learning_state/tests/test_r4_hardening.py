@@ -307,7 +307,8 @@ def test_review_cause_cannot_explain_leaving_review_passed():
     events = reach_two_review_passes() + [
         make_event("s", "review_passed", "stale", event_type="review_result",
                    stale_evidence={"cause": "review_failed",
-                                   "cause_ref_or_summary": "x"}),
+                                   "cause_ref_or_summary": "x",
+                                   "attempt_occurred": True}),
     ]
     result = reduce_events(events, EPOCH)
     assert "describes a review attempt" in reasons(result)
@@ -348,13 +349,15 @@ def test_needs_reprep_cannot_enter_the_store(synthetic_store):
 
 
 def test_pass_before_its_window_opened_is_rejected():
+    """Backdating is caught; the message may name either guard."""
     events = reach_classroom_passed() + [
         open_window("w1", "classroom_passed", "win-A", NEAR_TERM,
                     timestamp="2026-05-01T00:00:00+00:00"),
         pass_window("w2", "win-A", timestamp="2026-04-01T00:00:00+00:00"),
     ]
     result = reduce_events(events, EPOCH)
-    assert "strictly later than the opening" in reasons(result)
+    text = reasons(result)
+    assert "strictly later than the opening" in text or "backdated event" in text
 
 
 def test_pass_equal_to_its_window_opening_is_rejected():

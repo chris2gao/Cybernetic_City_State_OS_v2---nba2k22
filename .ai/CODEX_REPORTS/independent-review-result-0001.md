@@ -11,7 +11,47 @@ master_touched: false
 status: "remediation_implemented_pending_foreground_rereview"
 ---
 
-# 0. 第 5 轮:数学语义已被接受
+# 0. 第 6 轮:内部实现复审已清
+
+数学语义为 `accepted_closed`,不再重开。本轮修完内部实现项后:
+
+**最尖锐的一条——我把一个重新实现说成了"节点的片段"。** 节点里的
+`code_implementation` 当时是 float 版本,而审计里我另写了一个 SymPy 版本,却在断言名
+里称它 "code_implementation snippet"。它**没有证明关于节点的任何事**。
+现已改为:节点片段本身改写成 SymPy;审计**加载 PDE-486.yaml、在隔离命名空间中执行那段
+确切文本、调用提取出的函数**再求导。证据清单里也新增了独立的类别
+`machine_checked (node code executed)`,不与"公式等价"混为一谈。
+
+其余:
+
+- **接受元数据收尾**:两节点 `semantic_review_pending: false`,移除已过时的
+  「独立语义接受尚未发生」blocker;保留前置链、crosswalk、bridge、consumer 四类外部
+  blocker;`reviewer_note` 改写为**已完成决定的记录**,不再是待办指令。
+- **复习时序**:失败或过期的时间戳必须**严格晚于**窗口开启;新增按节点跟踪的
+  `last_event_timestamp`,倒退事件一律拒绝;窗口边界严格有序,同会话记账可等值。
+- **过期语义机器可读**:`stale_evidence.attempt_occurred` 必填——
+  `review_window_expired` 要求 `false`,`review_failed` 要求 `true`。
+  **不得**从 `cause_ref_or_summary` 的自由文本推断有没有人应试。
+- **schema 条件式补全**:`remediation_evidence` 仅 `stale -> review_due`;
+  `human_authorization_ref` 仅 `human_acceptance`(而 writer 拒绝该类型,故它永不进入
+  已持久化的 v2 store);`blocker_resolution_evidence` 仅提议解锁;
+  `review_evidence.review_result` 收窄为 `const: passed`——失败只存在于
+  `review_failure_evidence`。
+- **描述更正**:epoch 不匹配是**拒绝并 fail-closed**,不是"被忽略";
+  `prev_event_digest` 是本地哈希链,**不替代** Git 不可变性。
+- **Human 权威合同**:新增 §5.1.8 预发布边界章节;修复被段落打断的 provenance 表格。
+- **CLI 快照真实性**:`write_snapshot` 现在返回它**实际发布的**快照,CLI 不再事后
+  重新派生——否则会描述一个比磁盘文件更新的 head。有交错测试证明这一点。
+- **解析硬化**:畸形 anchor JSON、非对象 anchor、缺字段或版本不符的 anchor、
+  畸形或非映射 store_meta,全部变成显式 `WriteRefused`(附 anchor schema 版本)。
+- **扫描硬化**:检查每个 git 返回码;先验证 ref(对拼错的 ref 报告"零命中"是撒谎);
+  同时扫**文件名**;用 `--` 终止选项解析;分列
+  `content_matching_lines` / `filename_hits` / `scan_errors`;
+  **扫描失败一律 exit 2,绝不当作 clean**。
+
+测试 186 → **214 全过**。
+
+# 0.1 第 5 轮:数学语义已被接受
 
 前台复审 5 裁定 **CA-417 与 PDE-486 的数学语义 accepted**(形式定义、映射边界、
 旋转推导、PDE 反例及其范围、弦系数公式),并**禁止重开**这些推导。两节点已按授权回写:
@@ -118,9 +158,12 @@ reviewer_acceptance_ref: foreground-rereview-5@8273867
 3. **bridge / Coordinator / consumer 准入**——`bridge_readiness_status` 仍
    `manual_review_required`,`coordinator_consumable` 与 `consumer_allowed` 仍为 false。
 4. **历史提交中的学习者元数据**——见第 3 节,需**独立的 Human 决策**。
-5. **最终实现复审**——本轮全部改动仍是执行者证据;`release_status` 保持
-   `pre_release_unfrozen`,真实 v2 写入仍被禁止。
+5. **`release_status` 保持 `pre_release_unfrozen`**,真实 v2 写入仍被禁止;
+   全部测试与审计仍是**执行者证据**,未经独立复现。
 6. Mode B 两节点、scheduler 第 5 步、master 合入——均未动,待授权。
+
+**已解除**(第 6 轮):内部实现复审项已全部修完,214 项测试通过。
+上列 1–6 全部属于**本任务范围之外**的外部依赖或既定边界,不是可在此继续修的缺陷。
 
 # 3. 当前执行者证据与隐私声明
 

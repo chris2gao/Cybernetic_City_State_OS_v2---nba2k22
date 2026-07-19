@@ -11,7 +11,10 @@ those remain textbook results cited by the node, not machine-checked here.
 
 from __future__ import annotations
 
+import pathlib
+
 import sympy as sp
+import yaml
 
 RESULTS: list[tuple[str, str]] = []
 
@@ -123,28 +126,35 @@ check(
     sp.simplify(coeff1 - 3) == 0 and sp.simplify(coeff2 + 5) == 0,
 )
 
-# --- the node's code_implementation snippet, actually exercised -------------
-# The teaching snippet claims the fixed-end boundary conditions hold BY
-# CONSTRUCTION. Assert that on the symbolic form it implements, so the claim in
-# the node is backed rather than asserted.
-def string_modal_sum(x_sym, t_sym, length, speed, modes):
-    total = 0
-    for order, a_n, b_n in modes:
-        omega = speed * order * sp.pi / length
-        total += (a_n * sp.cos(omega * t_sym) + b_n * sp.sin(omega * t_sym)) * sp.sin(
-            order * sp.pi * x_sym / length
-        )
-    return total
+# --- the node's ACTUAL code_implementation, loaded and executed -------------
+# Not a reimplementation: this reads PDE-486.yaml, executes the exact
+# `code_implementation` text in an isolated namespace, and calls the function it
+# defines. An earlier version asserted against a separately written SymPy copy
+# while calling it "the node snippet" - that proved nothing about the node.
+_NODE_PATH = (
+    pathlib.Path(__file__).resolve().parents[4]
+    / "08_Domain_Applications"
+    / "Math_Mentor"
+    / "Pure_Math_Intuition_DB"
+    / "PDE-486.yaml"
+)
+with _NODE_PATH.open("r", encoding="utf-8") as _handle:
+    _node = yaml.safe_load(_handle)
 
+_namespace: dict = {}
+exec(compile(_node["code_implementation"], str(_NODE_PATH) + ":code_implementation", "exec"), _namespace)
+_string_modal_sum = _namespace["string_modal_sum"]
 
 A1s, B1s, A2s = sp.symbols("A1s B1s A2s", real=True)
-snippet = string_modal_sum(x, t, L, c, [(1, A1s, B1s), (2, A2s, 0)])
+snippet = _string_modal_sum(x, t, L, c, [(1, A1s, B1s), (2, A2s, 0)])
 check(
-    "code_implementation snippet: the modal sum satisfies u_tt = c^2 u_xx",
+    "node code_implementation (executed verbatim from PDE-486.yaml): the modal sum "
+    "satisfies u_tt = c^2 u_xx",
     sp.simplify(sp.diff(snippet, t, 2) - c**2 * sp.diff(snippet, x, 2)) == 0,
 )
 check(
-    "code_implementation snippet: u(0,t) = u(L,t) = 0 holds by construction for all t",
+    "node code_implementation (executed verbatim from PDE-486.yaml): u(0,t) = u(L,t) = 0 "
+    "holds exactly by construction for all t",
     sp.simplify(snippet.subs(x, 0)) == 0 and sp.simplify(snippet.subs(x, L)) == 0,
 )
 

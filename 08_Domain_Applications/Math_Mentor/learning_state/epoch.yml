@@ -1,8 +1,10 @@
 # Binds learning events to a transition-table version.
 #
-# The reducer ignores any event whose learning_state_epoch differs from the
-# bound value here.  Bumping the epoch is how a transition-table change avoids
-# silently re-interpreting historical events.
+# An event whose learning_state_epoch differs from the bound value here is
+# REJECTED, and the writer fails closed on it - it is not quietly skipped, because
+# a silently ignored event would leave the store looking consistent while its
+# history was incomplete.  Bumping the epoch is how a transition-table change
+# avoids silently re-interpreting historical events.
 #
 # v1 -> v2 was forced by the 2026-07-19 independent review: transition edges,
 # evidence requirements and correction support all changed, so v1 events must

@@ -1,4 +1,4 @@
-"""Shared fixtures.
+﻿"""Shared fixtures.
 
 Every test in this package works on a synthetic temporary store.  No test may
 read, write, hash or otherwise touch a real learner store.
@@ -92,6 +92,7 @@ def make_event(
         event["stale_evidence"] = {
             "cause": "review_failed" if failed else "retention_decay",
             "cause_ref_or_summary": "synthetic stale cause",
+            "attempt_occurred": bool(failed),
         }
         # Contract 5.1.7: each cause admits only the provenance that could
         # witness it, so the fixture supplies a matching source type.
@@ -129,26 +130,34 @@ def open_window(
     )
 
 
-def fail_review(event_id: str, window: str, **overrides) -> dict:
-    """A failed review attempt: needs a structured failure bundle citing its window."""
+def fail_review(
+    event_id: str, window: str, timestamp: str | None = None, **overrides
+) -> dict:
+    """A failed review attempt: needs a structured failure bundle citing its window.
+
+    `timestamp` is threaded into evidence_provenance rather than left in
+    **overrides, where it would become a bogus top-level field.
+    """
     event = make_event(
         event_id, "review_due", "stale",
-        event_type="review_result", source_type="spaced_review",
+        event_type="review_result", source_type="spaced_review", timestamp=timestamp,
     )
     event["review_failure_evidence"]["review_window_id"] = window
     event.update(overrides)
     return event
 
 
-def expire_window(event_id: str, **overrides) -> dict:
+def expire_window(event_id: str, timestamp: str | None = None, **overrides) -> dict:
     """An expired window: nobody sat it, so it carries no failure bundle."""
     event = make_event(
         event_id, "review_due", "stale",
         event_type="review_result", source_type="scheduler_placeholder",
+        timestamp=timestamp,
     )
     event["stale_evidence"] = {
         "cause": "review_window_expired",
         "cause_ref_or_summary": "window lapsed unused",
+        "attempt_occurred": False,
     }
     event.pop("review_failure_evidence", None)
     event.update(overrides)

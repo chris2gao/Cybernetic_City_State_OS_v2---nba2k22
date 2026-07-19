@@ -1,4 +1,4 @@
-"""Structural-validity tests (layer 1) and the layer separation itself."""
+﻿"""Structural-validity tests (layer 1) and the layer separation itself."""
 
 from __future__ import annotations
 

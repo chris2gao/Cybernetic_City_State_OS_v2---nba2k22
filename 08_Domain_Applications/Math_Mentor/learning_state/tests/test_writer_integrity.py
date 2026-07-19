@@ -202,9 +202,9 @@ def test_epoch_mismatch_is_refused_at_the_writer(synthetic_store):
 
 def test_snapshot_is_rebuildable_after_deletion(synthetic_store):
     _seed(synthetic_store, 2)
-    path = write_snapshot(synthetic_store)
+    path, _ = write_snapshot(synthetic_store)
     os.remove(path)
-    rebuilt = write_snapshot(synthetic_store)
+    rebuilt, _ = write_snapshot(synthetic_store)
     document = yaml.safe_load(rebuilt.read_text(encoding="utf-8"))
     assert document["snapshot_is_derived"] is True
     assert document["nodes"][NODE]["status"] == "classroom_passed"

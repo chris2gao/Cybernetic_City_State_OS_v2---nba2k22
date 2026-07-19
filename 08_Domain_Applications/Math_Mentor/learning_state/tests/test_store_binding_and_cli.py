@@ -191,7 +191,7 @@ def test_stale_snapshot_cannot_overwrite_a_newer_one(synthetic_store, monkeypatc
 
 def test_snapshot_records_its_source_anchor(synthetic_store):
     append_event(synthetic_store, reach_classroom_passed()[0])
-    path = write_snapshot(synthetic_store)
+    path, _ = write_snapshot(synthetic_store)
     document = yaml.safe_load(path.read_text(encoding="utf-8"))
     assert document["source_event_count"] == 1
     assert document["source_head_digest"]
@@ -201,11 +201,13 @@ def test_snapshot_records_its_source_anchor(synthetic_store):
 
 
 def test_same_timestamp_passes_are_rejected(synthetic_store):
+    """Two qualifying passes bearing the same instant cannot evidence a gap."""
     fixed = "2026-06-01T00:00:00+00:00"
     events = reach_classroom_passed() + [
-        open_window("w1", "classroom_passed", "win-A", NEAR_TERM),
+        open_window("w1", "classroom_passed", "win-A", NEAR_TERM,
+                    timestamp="2026-05-01T00:00:00+00:00"),
         pass_window("w2", "win-A", timestamp=fixed),
-        open_window("w3", "review_passed", "win-B", STABILITY),
+        open_window("w3", "review_passed", "win-B", STABILITY, timestamp=fixed),
         pass_window("w4", "win-B", timestamp=fixed),
     ]
     result = reduce_events(events, EPOCH)

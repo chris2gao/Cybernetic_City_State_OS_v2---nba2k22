@@ -9,7 +9,7 @@ mapping_boundary_status: "semantic_only_accepted"
 validation_status: "run_with_log"
 tool_status: "run_with_log"
 teaching_ready: false
-teaching_readiness_status: "semantics_accepted_pending_implementation_and_prerequisite_resolution"
+teaching_readiness_status: "semantics_accepted_pending_prerequisite_and_crosswalk_resolution"
 bridge_readiness_status: "manual_review_required"
 coordinator_consumable: false
 consumer_allowed: false
@@ -29,8 +29,8 @@ identity_evidence:
     Certification evidence was assembled by a backend executor and did NOT
     self-accept. Mathematical semantics were accepted by independent foreground
     review (foreground-rereview-5@8273867). Acceptance covers semantics only:
-    teaching readiness still awaits prerequisite resolution and implementation
-    review, and the P0 crosswalk binding remains unclaimed_fail_closed.
+    teaching readiness still awaits prerequisite resolution and the P0 crosswalk
+    binding, which remains unclaimed_fail_closed.
 
 concept_name: "复数与复平面 - 发生学溯源：理解 i 为二维平面内的 90° 旋转物理机器，非虚幻想象 (n_417)"
 legacy_title_warning: >-
@@ -186,9 +186,10 @@ semantic_acceptance_required:
     - "The quarter-turn intuition is useful without implying that complex numbers are mechanical objects."
     - "All four sub_topics are addressed, with sub_topic 4 explicitly carrying no machine evidence."
   reviewer_note: >-
-    The executor that assembled this node cannot grant this acceptance. An
-    independent foreground/Human reviewer must judge whether the machine
-    evidence actually matches the stated concept (KCP Stage 5 review role).
+    Accepted by independent foreground review (foreground-rereview-5@8273867),
+    which judged that the machine evidence matches the stated concept. This is a
+    record of a completed decision, not a pending instruction. Acceptance covers
+    mathematical semantics only.
 
 tool_truthfulness:
   tool_status: "run_with_log"
@@ -210,12 +211,11 @@ tool_truthfulness:
 certification_boundary:
   node_complete_local_candidate: true
   teaching_ready_local_candidate: false
-  semantic_review_pending: true
+  semantic_review_pending: false
   bridge_ready: false
   coordinator_consumable: false
   consumer_allowed: false
   blockers:
-    - "Independent semantic acceptance has not occurred; the assembling executor cannot self-accept."
     - "Prerequisite chain is declared but not resolved against certified node ids."
     - "The central P0 crosswalk binding remains unclaimed and fail-closed."
     - "No bridge or Stage 8 consumer admission is authorized."
