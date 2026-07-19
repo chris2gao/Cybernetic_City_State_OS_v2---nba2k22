@@ -1,7 +1,7 @@
 run_id: "kcp-batch-1-prop-logic-certification-0001"
 program_ref: "08_Domain_Applications/Math_Mentor/KNOWLEDGE_COMPLETION_PROGRAM.md"
 program_version: "1.0-draft"
-status: "prop_logic_001_in_progress"
+status: "local_candidate_validated"
 source_branch: "master"
 source_head: "94b617e67bdbdb958443545d41b90cdbba77e54d"
 rollback_base: "94b617e67bdbdb958443545d41b90cdbba77e54d"
@@ -29,3 +29,24 @@ publication:
   exact_head_review_required: true
 local_only_after_launch_checkpoint: true
 human_gate: "satisfied_by_task_packet"
+checkpoint_results:
+  PROP_LOGIC-001: "teaching_ready_local_candidate_semantic_review_required"
+  PROP_LOGIC-002: "teaching_ready_local_candidate_semantic_review_required"
+  PROP_LOGIC-003: "teaching_ready_local_candidate_semantic_review_required"
+  PROP_LOGIC-004: "teaching_ready_local_candidate_semantic_review_required"
+  PROP_LOGIC-005: "teaching_ready_local_candidate_semantic_review_required"
+batch_validation: "passed"
+teaching_ready_local_candidate_count: 5
+semantic_review_required_count: 5
+consumer_allowed_count: 0
+central_open_identity_conflict_count: 5
+artifacts:
+  final_report_ref: ".ai/PROGRAM_RUNS/kcp-batch-1-prop-logic-certification-0001/FINAL_REPORT.md"
+  validation_ref: ".ai/PROGRAM_RUNS/kcp-batch-1-prop-logic-certification-0001/REPORTS/validation.md"
+  certification_ref: ".ai/PROGRAM_RUNS/kcp-batch-1-prop-logic-certification-0001/REPORTS/certification.md"
+  semantic_acceptance_ref: ".ai/PROGRAM_RUNS/kcp-batch-1-prop-logic-certification-0001/REPORTS/semantic-acceptance-list.md"
+  actually_read_files_ref: ".ai/PROGRAM_RUNS/kcp-batch-1-prop-logic-certification-0001/REPORTS/actually-read-files.md"
+  changed_files_ref: ".ai/PROGRAM_RUNS/kcp-batch-1-prop-logic-certification-0001/REPORTS/changed-files.txt"
+  batch_validation_ref: ".ai/PROGRAM_RUNS/kcp-batch-1-prop-logic-certification-0001/OUTPUTS/batch-validation.json"
+  token_profile_run_ref: ".ai/PROGRAM_RUNS/kcp-batch-1-prop-logic-certification-0001/TOKEN_USAGE/token_profile_run.json"
+candidate_head_resolution: "use the exact pushed SHA in the external seven-field handoff"

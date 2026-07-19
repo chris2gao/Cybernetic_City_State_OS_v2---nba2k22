@@ -1,86 +1,193 @@
-concept_node:
-  id: PROP_LOGIC-003
-  mode: "A"
-  mode_routing_status: "inferred_high_confidence"
-  validation_status: "review_required"
-  bridge_readiness_status: "manual_review_required"
-  formal_definition_status: "missing"
-  prerequisites_status: "missing"
-  mapping_boundary_status: "missing"
-  migration_review:
-    missing_reason:
-      - "formal_definition_absent"
-      - "prerequisite_nodes_absent"
-      - "mapping_boundary_absent"
-    recommended_next_action: "Perform domain-specific semantic repair; do not treat migration status as mathematical content."
-    warnings:
-      - "legacy_executable_audit_requires_concept_alignment_review"
-  symbol: \neg(P \land Q) \equiv \neg P \lor \neg Q
-  name: De Morgan's Laws (德·摩根定律)
-  domain: Mathematical Logic (数理逻辑) / Propositional Calculus
-  sub_topics:
-  - 交换律、结合律与分配律
-  - 德·摩根定律 (De Morgan's Laws)
-  - 吸收律与等幂律
-  - 互补律与零一律
-  pure_math_definition:
-    description: 'De Morgan''s laws state that the negation of a conjunction is the
-      disjunction of the negations, and the negation of a disjunction is the conjunction
-      of the negations.
+version: "9.1"
+id: "PROP_LOGIC-003"
+canonical_uuid: "214f32b9-8039-5321-8fa8-eaed6d3bce8a"
+city_state_engine: "Plan3_Engine_B"
+mode: "A"
+math_lane: "MathLane_A"
+mode_routing_status: "human_approved_task_scoped"
+formal_definition_status: "semantic_only_review_required"
+prerequisites_status: "verified_within_batch"
+mapping_boundary_status: "semantic_only_review_required"
+validation_status: "run_with_log"
+tool_status: "run_with_log"
+teaching_ready: true
+teaching_readiness_status: "local_candidate_pending_exact_head_review"
+bridge_readiness_status: "manual_review_required"
+coordinator_consumable: false
+consumer_allowed: false
+p3_reopened: false
+bridge_generation_performed: false
 
-      '
-    axioms:
-    - NOT (P AND Q) == (NOT P) OR (NOT Q)
-    - NOT (P OR Q) == (NOT P) AND (NOT Q)
-  llm_physical_mapping:
-    tensor_shape_flow: Boolean inversion distributed over binary tensor operations
-      flips the operation type.
-    cognitive_intuition: 'If it''s NOT true that both A and B are here, it means at
-      least one of them is missing.
+identity_evidence:
+  exact_root_path: "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROP_LOGIC-003_De_Morgans_Laws.yaml"
+  strict_domain_id: "PROP_LOGIC-003"
+  roadmap_level: 1
+  roadmap_alias: "prop_4_algebra_laws"
+  roadmap_ref: "08_Domain_Applications/Math_Mentor/学习期prompt/数学知识路线图_第一层基础工具.yaml"
+  task_resolution_ref: ".ai/TASKS/kcp-batch-1-prop-logic-certification-0001.md@ccf50bec28138125fd6bcbd06a3540208c90baee"
+  resolution_scope: "task_scoped_only"
+  central_crosswalk_binding: "unclaimed_fail_closed"
+  filename_scope_note: "The legacy filename names De Morgan's laws, while the Human-selected node is certified against the broader prop_4_algebra_laws roadmap topic."
 
-      '
-  code_implementation:
-    snippet: 'import torch
+concept_name: "Propositional Algebra Laws / 命题代数定律"
+canonical_concept: "boolean_algebra_laws_for_propositions"
+domain: "Mathematical Logic / Propositional Calculus"
+symbol: "¬(P∧Q)≡¬P∨¬Q"
 
+sub_topics:
+  - "De Morgan's laws / 德·摩根定律"
+  - "Commutative, associative, and distributive laws / 交换律、结合律与分配律"
+  - "Absorption and idempotent laws / 吸收律与等幂律"
+  - "Complement, identity, and domination laws / 互补律、零一律与支配律"
+  - "A Boolean-algebra axiom skeleton and derived equivalences / 布尔代数公理骨架与派生等价式"
 
-      P = torch.tensor([True, True, False, False])
+pure_math_definition:
+  english: |-
+    Under classical two-valued semantics, formulas are identified up to logical
+    equivalence and the operations ∧, ∨, ¬ together with constants 0=False and
+    1=True form a Boolean algebra. The laws include commutativity and
+    associativity of ∧ and ∨; both distributive laws; identities P∧1≡P and
+    P∨0≡P; complements P∧¬P≡0 and P∨¬P≡1; and De Morgan's laws
+    ¬(P∧Q)≡¬P∨¬Q and ¬(P∨Q)≡¬P∧¬Q. Absorption, idempotence, and domination are
+    standard valid consequences within this algebra.
 
-      Q = torch.tensor([True, False, True, False])
+    One axiom skeleton is a bounded distributive lattice with 0 and 1 in which
+    every element P has a complement ¬P. Boolean algebra is sound and complete
+    for classical propositional equivalence: equations derivable from its laws
+    are truth-functionally valid, and truth-functionally valid equations are
+    derivable in Boolean algebra. The executable audit below checks only listed
+    identities over three variables; it is not a machine proof of that general
+    completeness statement.
+  chinese: |-
+    在经典二值语义下，把逻辑等价的公式视为同一元素，则 ∧、∨、¬ 与常量 0=假、
+    1=真构成布尔代数。其定律包括 ∧、∨ 的交换律与结合律、两条分配律、单位律
+    P∧1≡P 与 P∨0≡P、互补律 P∧¬P≡0 与 P∨¬P≡1，以及德·摩根定律
+    ¬(P∧Q)≡¬P∨¬Q、¬(P∨Q)≡¬P∧¬Q。吸收律、等幂律和支配律也是该代数中的
+    标准有效结论。
 
+    一种公理骨架是：带 0、1 的有界分配格，且每个元素 P 都有补元 ¬P。布尔
+    代数对经典命题等价是可靠且完备的：由这些规律推出的等式在真值语义下有效，
+    反之亦然。下方机器审计只检查三变量上的列举恒等式，并不机器证明一般完备性。
 
-      # ~(P & Q) == ~P | ~Q
+assumptions_and_notation:
+  - "All equations use logical equivalence, not syntactic equality. / 所有等式表示逻辑等价，而非语法字符串相等。"
+  - "0 and 1 denote contradiction and tautology truth functions. / 0、1 表示恒假与恒真真值函数。"
+  - "The completeness statement concerns propositional equivalence, not first-order proof-system completeness. / 此处完备性针对命题等价，不是谓词逻辑证明系统完备性。"
 
-      left_side = ~(P & Q)
+required_prerequisites:
+  status: "verified_within_batch"
+  resolved:
+    - {node_id: "PROP_LOGIC-001", canonical_uuid: "55137e7b-f2d8-55e9-9848-00698f7ddf0f", file: "PROP_LOGIC-001_Connectives.yaml", roadmap_alias: "prop_1_connectives", relationship: "supplies connective truth conditions and formula parsing"}
+    - {node_id: "PROP_LOGIC-002", canonical_uuid: "860929b9-b876-52b0-b852-ae353e938cbe", file: "PROP_LOGIC-002_Truth_Tables.yaml", roadmap_alias: "prop_2_truth_tables", relationship: "supplies logical equivalence and exhaustive valuation comparison"}
+  cycles_detected: false
+  sequence_proximity_used_as_mastery: false
 
-      right_side = (~P) | (~Q)
+mode_a_intuition:
+  occurrence_crisis:
+    english: "Long formulas can obscure that different symbol arrangements compute exactly the same truth function."
+    chinese: "长公式会掩盖不同符号排列其实计算同一个真值函数。"
+  primary:
+    english: |-
+      Think of each law as a reversible simplification rule on a two-valued
+      control expression. Reversibility means the input-output behavior is
+      unchanged for every setting, not merely that the rewritten expression
+      looks simpler.
+    chinese: |-
+      把每条定律看作二值控制表达式上的可逆化简规则；“可逆”意味着所有输入设置下
+      输出行为不变，而不只是改写后的式子看起来更简单。
+  low_friction_example:
+    english: "'Not both P and Q' rewrites to 'not P or not Q'; the OR is inclusive."
+    chinese: "‘并非 P、Q 都真’可改写为‘P 不真或 Q 不真’，其中‘或’仍是相容或。"
+  limitations:
+    - "A rewrite-rule analogy does not prove termination or uniqueness of arbitrary simplification procedures. / 改写规则类比不证明任意化简程序终止或结果唯一。"
+    - "A valid equivalence does not preserve sentence length or human readability. / 有效等价改写不保证长度或可读性不变。"
 
-      is_equivalent = torch.all(left_side == right_side).item()
+mapping_boundary:
+  status: "semantic_only_review_required"
+  valid_uses: ["checking behavior-preserving rewrites / 检查保持真值行为的改写", "grouping laws by algebraic role / 按代数作用组织定律", "finding a countervaluation when a proposed law is false / 为错误规律寻找反例赋值"]
+  invalid_inferences:
+    - "Visual similarity is not logical equivalence. / 视觉相似不等于逻辑等价。"
+    - "The audit of eighteen identities does not prove all Boolean-algebra theorems. / 审计十八条恒等式不证明所有布尔代数定理。"
+    - "Propositional-algebra completeness is not first-order logical completeness. / 命题代数完备性不是一阶逻辑完备性。"
+    - "Rewriting formulas does not establish empirical truth of their atoms. / 改写公式不证明原子命题在现实中为真。"
 
-      '
-  v8_sanity_audit:
-    sympy_pseudo_code: 'import sympy as sp
+common_misconceptions:
+  - "De Morgan negation changes literals but leaves ∧ or ∨ unchanged. / 误以为德·摩根否定只改文字而不交换 ∧、∨。"
+  - "Distributivity works in only one direction or for only one connective. / 误以为分配律只能单向使用或只适用于一个联结词。"
+  - "P∨¬P≡1 says P itself is true. / 误以为 P∨¬P≡1 说明 P 为真。"
+  - "A finite audit proves the general axiom-system completeness theorem. / 误以为有限审计证明一般公理系统完备性。"
 
-      from sympy.logic.boolalg import Equivalent, And, Or, Not
+definition_restatement_hook:
+  prompt_en: "State both De Morgan laws and explain the Boolean-algebra axiom skeleton without calling the finite audit a completeness proof."
+  prompt_zh: "复述两条德·摩根定律，并说明布尔代数公理骨架，同时不要把有限审计称为完备性证明。"
+  required_elements: ["swap ∧ and ∨ under negation", "bounded distributive lattice", "complements", "equivalence rather than syntax", "finite-audit boundary"]
 
+forcing_question_plan:
+  - {question_en: "What must happen to ∧ when negation is distributed by De Morgan's law?", question_zh: "按德·摩根定律分配否定时，∧ 必须变成什么？"}
+  - {question_en: "How does absorption differ from idempotence?", question_zh: "吸收律与等幂律有什么区别？"}
+  - {question_en: "Why is one countervaluation enough to reject a proposed algebra law?", question_zh: "为什么一个反例赋值足以否定一条候选代数规律？"}
+  - {question_en: "What does the finite audit fail to prove about the axiom skeleton?", question_zh: "有限审计没有证明公理骨架的什么一般结论？"}
 
-      P, Q = sp.symbols(''P Q'')
+teaching_flow:
+  explanation_before_questioning: true
+  intuition_before_formal_definition: true
+  one_question_per_interactive_turn: true
+  repair_once_before_correction: true
+  covers_all_sub_topics: true
+  definition_restatement_required: true
+  exam_agent_handoff_en: "After all five subtopics and restatement, test both De Morgan laws, distributivity, absorption, complement/identity laws, and the finite-audit/completeness boundary. Do not assert mastery."
+  exam_agent_handoff_zh: "覆盖五个子主题并完成复述后，检查两条德·摩根定律、分配律、吸收律、互补/单位律及有限审计与完备性边界；不宣称掌握。"
+  spaced_review_handoff_en: "After a future classroom_passed signal, interleave one law from each family and one false proposed rewrite. Without scheduler authority, emit placeholder_not_written."
+  spaced_review_handoff_zh: "未来收到 classroom_passed 后，从各定律族交错复习一条，并加入一条错误改写；无调度授权时只输出 placeholder_not_written。"
 
+semantic_acceptance_required:
+  status: "review_required"
+  claims:
+    - "The chosen Boolean-algebra axiom skeleton and soundness/completeness wording are accurate."
+    - "The broader roadmap scope is properly reconciled with the legacy De Morgan filename."
+    - "The rewrite intuition and teaching plan avoid finite-audit overclaim."
 
-      # Demorgan Law 1
+tool_truthfulness:
+  tool_status: "run_with_log"
+  capability: "deterministic_calculation"
+  tool_family: "SymPy logic"
+  audit_scope: "exhaustive_three_variable_boolean_algebra_identities"
+  script_ref: ".ai/PROGRAM_RUNS/kcp-batch-1-prop-logic-certification-0001/AUDITS/run_prop_logic_audit.py"
+  input_ref: ".ai/PROGRAM_RUNS/kcp-batch-1-prop-logic-certification-0001/INPUTS/PROP_LOGIC-003.json"
+  output_ref: ".ai/PROGRAM_RUNS/kcp-batch-1-prop-logic-certification-0001/OUTPUTS/PROP_LOGIC-003.json"
+  environment_ref: ".ai/PROGRAM_RUNS/kcp-batch-1-prop-logic-certification-0001/ENVIRONMENT/python.yml"
+  log_ref: ".ai/PROGRAM_RUNS/kcp-batch-1-prop-logic-certification-0001/LOGS/PROP_LOGIC-003.log"
+  report_ref: null
+  error_ref: null
+  timestamp: "2026-07-19T01:09:19Z"
+  limitations: ["The audit checks eighteen named identities over all eight assignments of P, Q, and R.", "It is not a machine proof of Boolean-algebra completeness for arbitrary formulas.", "It does not machine-validate pedagogy or learner understanding."]
 
-      expr1_left = Not(And(P, Q))
+code_implementation: |
+  def de_morgan_and(p, q):
+      return (not (p and q)) == ((not p) or (not q))
 
-      expr1_right = Or(Not(P), Not(Q))
+v8_sanity_audit:
+  status: "run_with_log"
+  execution_claim: "bounded_finite_audit_only"
+  language: "sympy"
+  script_ref: ".ai/PROGRAM_RUNS/kcp-batch-1-prop-logic-certification-0001/AUDITS/run_prop_logic_audit.py"
+  tested_properties: ["eighteen named Boolean identities", "all eight assignments of three variables", "144 identity-assignment comparisons"]
+  explicitly_not_validated: ["general_boolean_algebra_completeness", "rewrite_termination", "pedagogy", "learner_mastery"]
+  sympy_pseudo_code: |
+    import itertools
+    import sympy as sp
+    from sympy.logic.boolalg import And, Not, Or
+    P, Q = sp.symbols("P Q")
+    for p, q in itertools.product((False, True), repeat=2):
+        values = {P: p, Q: q}
+        assert bool(Not(And(P, Q)).subs(values)) == bool(Or(Not(P), Not(Q)).subs(values))
+        assert bool(Not(Or(P, Q)).subs(values)) == bool(And(Not(P), Not(Q)).subs(values))
 
-      assert sp.simplify_logic(Equivalent(expr1_left, expr1_right)) == True
-
-
-      # Demorgan Law 2
-
-      expr2_left = Not(Or(P, Q))
-
-      expr2_right = And(Not(P), Not(Q))
-
-      assert sp.simplify_logic(Equivalent(expr2_left, expr2_right)) == True
-
-      '
+certification_boundary:
+  node_complete_local_candidate: true
+  teaching_ready_local_candidate: true
+  semantic_review_pending: true
+  bridge_ready: false
+  coordinator_consumable: false
+  consumer_allowed: false
+  blockers: ["Exact-head semantic acceptance has not yet occurred.", "The central P0 crosswalk binding remains unclaimed and fail-closed.", "No bridge or Stage 8 consumer admission is authorized."]
