@@ -458,3 +458,4 @@ Invalid when `handoff_allowed` is `true` while any subtopic is not covered or th
 - [ ] Re-prep triggers are explicit.
 - [ ] `actually_read_files` contains only files read in the current context.
 - [ ] `tool_truthfulness.tool_status` is honest and does not imply unlogged execution.
+- [ ] wrapper 层含 `coverage_map`（不在 schema 顶层）——见 `TEACHING_AGENT_CONTRACTS.md` §5。
