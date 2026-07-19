@@ -109,6 +109,7 @@ The canonical `learning_status` values are:
 | `blocked` | prior valid status | blocker resolved with evidence provenance; the record preserves `blocked_from` and the resolution evidence | silent unblock without evidence |
 | `review_passed` | `review_due` | a NEW review window is scheduled, identified by a `review_window_id` distinct from every window already counted, backed by an authorized scheduler item or an explicit placeholder | re-entering review to inflate the pass count with the same window |
 | `stale` | `review_due` | remediation eligibility evidence plus a new review item with a fresh `review_window_id` | treating decay as automatically re-eligible without remediation |
+| `review_due` | `stale` | the review attempt failed, or the window expired unused; the record states which, with evidence | silently dropping a failed attempt so it never appears in the history |
 
 ### 5.1 Review-cycle re-entry
 
@@ -120,6 +121,60 @@ them the graduation minimum could never be satisfied. They are constrained:
 - a `review_window_id` or `source_ref` already counted must never be counted again;
 - `stale -> review_due` additionally requires remediation evidence, because decay is not
   by itself a qualification to be re-tested.
+
+### 5.1.1 Review-window kinds and ordering
+
+Every `review_due` entry declares a `review_window_kind`:
+
+| kind | meaning |
+| --- | --- |
+| `near_term_retention` | the first check after the classroom pass, testing that the material survived the short term |
+| `stability_review` | a later check testing that it survived a longer gap |
+
+Rules:
+
+- the qualifying cycle must run `near_term_retention` **before** `stability_review`;
+  a stability review offered first does not qualify;
+- each `review_due` carries an `evidence_timestamp`, and timestamps across a node's
+  qualifying passes must be strictly increasing in RFC 3339 form **with timezone**;
+- two qualifying passes bearing the same timestamp are rejected, because they cannot
+  evidence retention across a gap;
+- provenance for entering `review_due` must be `scheduler_placeholder` (see section 6);
+  no other source type may open a window while no scheduler exists.
+
+### 5.1.2 Effect of `stale` on qualification
+
+`stale` does **not** erase history, and it does **not** preserve qualification:
+
+- every past attempt remains in the immutable event log for audit;
+- the **currently qualifying** window set, the currently qualifying kinds, and
+  graduation eligibility are all cleared;
+- after remediation, a fresh `near_term_retention` **and** a fresh
+  `stability_review` are both required before eligibility can return.
+
+Historical evidence and currently-qualifying evidence are therefore tracked
+separately. A node that decayed once cannot graduate on the strength of passes
+earned before the decay.
+
+### 5.1.3 Failed or unfinished classroom attempts
+
+`exam_agent_result` values `failed` and `needs_reprep` describe an Exam outcome,
+but persisting such an attempt as learning state is
+**`unsupported_pending_contract`**. No transition consumes them today. A
+no-state-change attempt event must be formally specified before any failed
+attempt may be written; until then a failed classroom attempt simply leaves the
+node in its prior status and lives only in the session record.
+
+### 5.1.4 Event type to transition constraints
+
+| event_type | may drive |
+| --- | --- |
+| `classroom_result` | `not_seen -> introduced`, `introduced -> classroom_passed`, and transitions into `blocked` |
+| `review_result` | transitions among `review_due`, `review_passed`, `stale`, and into `blocked` |
+| `human_acceptance` | **only** transitions that require Human authority, i.e. into `graduated`, and unblocking |
+
+`human_acceptance` must not be usable to drive arbitrary non-Human transitions.
+Its presence is a procedural record that a Human acted; it is not identity proof.
 
 ### 5.2 Graduation eligibility
 
@@ -145,7 +200,7 @@ Every learning-status claim must identify its evidence source:
 
 ```yaml
 evidence_provenance:
-  source_type: "exam_agent | spaced_review | registered_learned_state | explicit_human_override | strict_sequence_fallback"
+  source_type: "exam_agent | spaced_review | registered_learned_state | explicit_human_override | strict_sequence_fallback | scheduler_placeholder"
   source_ref: "<path, packet id, or placeholder>"
   actually_read_files:
     - "<repository path actually read>"
@@ -153,6 +208,21 @@ evidence_provenance:
   evidence_limitations: "<known limits>"
   not_machine_validated_reason: "<if applicable>"
 ```
+
+`scheduler_placeholder` marks an item that a future authorized scheduler would
+have created. Recording it is not a scheduler write and does not activate one.
+
+Evidence requirements for the non-review transitions:
+
+| transition | required evidence |
+| --- | --- |
+| any `-> blocked` | the blocker, and the status being left, recorded as `blocked_from` |
+| `blocked -> prior status` | `blocker_resolution_evidence`, and the target must equal the recorded `blocked_from` |
+| `-> stale` | which of failure, expiry or decay occurred, with a reference |
+
+`blocked -> blocked` is not a transition. A further blocker discovered while a
+node is already blocked must not overwrite `blocked_from`, or the original status
+would be lost and the node could never be restored correctly.
 
 Evidence priority is defined in `LEARNED_HISTORY_RULES.md`.
 

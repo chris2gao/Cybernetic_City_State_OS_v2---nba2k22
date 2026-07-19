@@ -1,8 +1,10 @@
-"""Schema / runtime-validator parity and correction disablement.
+"""Schema enforcement through the real runtime path, and correction disablement.
 
-A JSON Schema the writer does not enforce is worse than no schema, so these
-tests assert that every constraint declared in learning_event.schema.json is
-actually rejected by the runtime validator.
+Parity is no longer asserted by comparing hand-written constants to the schema:
+the runtime validator now loads `learning_event.schema.json` itself, so there is
+nothing to drift. What these tests check instead is that every constraint the
+schema declares actually causes a rejection when an event goes through
+`validate_documents`, i.e. the path the writer uses.
 """
 
 from __future__ import annotations
@@ -15,17 +17,13 @@ from conftest import EPOCH, make_event
 
 from reduce_readonly import UNSUPPORTED_EVENT_TYPES, reduce_events
 from validate_events import (
-    ALLOWED_NESTED_KEYS,
-    ALLOWED_TOP_LEVEL,
+    SCHEMA_PATH,
     SCHEMA_VERSION,
     VALID_EVENT_TYPES,
-    VALID_SOURCE_TYPES,
-    VALID_STATUSES,
-    VALID_WINDOW_KINDS,
+    _build_schema_validator,
     validate_documents,
 )
 
-SCHEMA_PATH = Path(__file__).resolve().parents[1] / "learning_event.schema.json"
 SCHEMA = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
 
 
@@ -33,40 +31,33 @@ def messages(report) -> str:
     return " | ".join(message for _, message in report.errors)
 
 
-# --- declared-vs-enforced parity -------------------------------------------
+def assert_rejected_by_both(event: dict, fragment: str = "") -> None:
+    """Every negative case must fail the schema AND the runtime path."""
+    jsonschema = pytest.importorskip("jsonschema")
+    validator = jsonschema.Draft202012Validator(SCHEMA, format_checker=jsonschema.FormatChecker())
+    schema_errors = list(validator.iter_errors(event))
+    report = validate_documents([event], check_chain=False)
+    assert schema_errors, "the JSON Schema accepted an event it should reject"
+    assert not report.ok, "the runtime validator accepted an event the schema rejects"
+    if fragment:
+        assert fragment in messages(report)
 
 
-def test_schema_version_matches():
-    assert SCHEMA["properties"]["schema_version"]["const"] == SCHEMA_VERSION
+# --- the validator really is the canonical schema --------------------------
 
 
-def test_event_type_enum_matches():
-    assert set(SCHEMA["properties"]["event_type"]["enum"]) == VALID_EVENT_TYPES
+def test_runtime_loads_the_canonical_schema_file():
+    validator = _build_schema_validator()
+    assert validator.schema["$id"] == SCHEMA["$id"]
+    assert validator.schema["properties"]["schema_version"]["const"] == SCHEMA_VERSION
 
 
-def test_status_enum_matches():
-    assert set(SCHEMA["$defs"]["learning_status"]["enum"]) == VALID_STATUSES
-
-
-def test_source_type_enum_matches():
-    declared = SCHEMA["properties"]["evidence_provenance"]["properties"]["source_type"]["enum"]
-    assert set(declared) == VALID_SOURCE_TYPES
-
-
-def test_window_kind_enum_matches():
-    assert set(SCHEMA["properties"]["review_window_kind"]["enum"]) == VALID_WINDOW_KINDS
-
-
-def test_top_level_property_set_matches():
-    assert set(SCHEMA["properties"]) == ALLOWED_TOP_LEVEL
-    assert SCHEMA["additionalProperties"] is False
-
-
-def test_nested_property_sets_match():
-    for parent, allowed in ALLOWED_NESTED_KEYS.items():
-        declared = SCHEMA["properties"][parent]
-        assert set(declared["properties"]) == allowed, parent
-        assert declared["additionalProperties"] is False, parent
+def test_wellformed_event_passes_both():
+    jsonschema = pytest.importorskip("jsonschema")
+    event = make_event("a", "not_seen", "introduced")
+    jsonschema.Draft202012Validator(SCHEMA, format_checker=jsonschema.FormatChecker()).validate(event)
+    report = validate_documents([event], check_chain=False)
+    assert report.ok, messages(report)
 
 
 def test_schema_is_valid_draft_2020_12():
@@ -74,91 +65,108 @@ def test_schema_is_valid_draft_2020_12():
     jsonschema.Draft202012Validator.check_schema(SCHEMA)
 
 
-def test_representative_event_passes_both_schema_and_validator():
-    jsonschema = pytest.importorskip("jsonschema")
-    event = make_event("a", "not_seen", "introduced")
-    jsonschema.Draft202012Validator(SCHEMA).validate(event)
-    assert validate_documents([event], check_chain=False).ok
-
-
-# --- negative parity cases --------------------------------------------------
+# --- negative cases, each checked against schema AND runtime ---------------
 
 
 def test_malformed_event_id_is_rejected():
-    report = validate_documents([make_event("BAD ID", "not_seen", "introduced")], check_chain=False)
-    assert "event_id must match" in messages(report)
+    assert_rejected_by_both(make_event("BAD ID", "not_seen", "introduced"))
 
 
 def test_uppercase_student_ref_is_rejected():
-    report = validate_documents(
-        [make_event("a", "not_seen", "introduced", student_ref="No.1")], check_chain=False
-    )
-    assert "privacy-safe alias" in messages(report)
+    assert_rejected_by_both(make_event("a", "not_seen", "introduced", student_ref="Learner.One"))
 
 
 def test_student_ref_with_spaces_is_rejected():
-    report = validate_documents(
-        [make_event("a", "not_seen", "introduced", student_ref="learner one")], check_chain=False
-    )
-    assert "privacy-safe alias" in messages(report)
+    assert_rejected_by_both(make_event("a", "not_seen", "introduced", student_ref="learner one"))
 
 
-def test_invalid_timestamp_is_rejected():
+def test_integer_review_window_id_is_rejected():
+    event = make_event("w", "classroom_passed", "review_due", review_window_id=7)
+    assert_rejected_by_both(event)
+
+
+def test_integer_evidence_limitations_is_rejected():
     event = make_event("a", "not_seen", "introduced")
-    event["evidence_provenance"]["evidence_timestamp"] = "yesterday"
-    report = validate_documents([event], check_chain=False)
-    assert "must be an ISO date-time" in messages(report)
+    event["evidence_provenance"]["evidence_limitations"] = 5
+    assert_rejected_by_both(event)
 
 
-def test_non_string_source_ref_is_rejected():
+def test_actually_read_files_as_string_is_rejected():
     event = make_event("a", "not_seen", "introduced")
-    event["evidence_provenance"]["source_ref"] = 12345
-    report = validate_documents([event], check_chain=False)
-    assert "source_ref must be a string" in messages(report)
+    event["evidence_provenance"]["actually_read_files"] = "one_file.yaml"
+    assert_rejected_by_both(event)
+
+
+def test_invalid_node_ref_field_type_is_rejected():
+    event = make_event("a", "not_seen", "introduced")
+    event["node_ref"]["node_id"] = 123
+    assert_rejected_by_both(event)
+
+
+def test_integer_human_authorization_ref_is_rejected():
+    assert_rejected_by_both(make_event("a", "not_seen", "introduced", human_authorization_ref=7))
+
+
+def test_date_only_timestamp_is_rejected():
+    event = make_event("a", "not_seen", "introduced")
+    event["evidence_provenance"]["evidence_timestamp"] = "2026-01-01"
+    assert_rejected_by_both(event)
+
+
+def test_null_source_ref_is_rejected():
+    event = make_event("a", "not_seen", "introduced")
+    event["evidence_provenance"]["source_ref"] = None
+    assert_rejected_by_both(event)
+
+
+def test_unexpected_nested_field_is_rejected():
+    event = make_event("a", "not_seen", "introduced")
+    event["node_ref"]["surprise"] = "value"
+    assert_rejected_by_both(event)
 
 
 def test_arbitrary_extra_top_level_field_is_rejected():
-    report = validate_documents(
-        [make_event("a", "not_seen", "introduced", surprise="value")], check_chain=False
-    )
-    assert "unknown top-level fields" in messages(report)
-
-
-def test_arbitrary_extra_nested_field_is_rejected():
-    event = make_event("a", "not_seen", "introduced")
-    event["node_ref"]["surprise"] = "value"
-    report = validate_documents([event], check_chain=False)
-    assert "unknown keys in node_ref" in messages(report)
+    assert_rejected_by_both(make_event("a", "not_seen", "introduced", surprise="value"))
 
 
 def test_bad_prev_event_digest_is_rejected():
-    report = validate_documents(
-        [make_event("a", "not_seen", "introduced", prev_event_digest="nothex")], check_chain=False
-    )
-    assert "sha256 hex string" in messages(report)
+    assert_rejected_by_both(make_event("a", "not_seen", "introduced", prev_event_digest="nothex"))
+
+
+def test_invalid_window_kind_is_rejected():
+    event = make_event("w", "classroom_passed", "review_due", review_window_kind="made_up")
+    assert_rejected_by_both(event)
 
 
 def test_classroom_passed_requires_tool_and_evidence_limitations():
     event = make_event("b", "introduced", "classroom_passed")
     del event["classroom_evidence"]["tool_and_evidence_limitations"]
     report = validate_documents([event], check_chain=False)
-    assert "tool_and_evidence_limitations is required" in messages(report)
+    assert not report.ok
+
+
+# --- timezone-free timestamps: a runtime-only rule -------------------------
+
+
+def test_timezone_free_timestamp_is_rejected_by_runtime():
+    """`format: date-time` accepts naive input, so the runtime adds this rule."""
+    event = make_event("a", "not_seen", "introduced")
+    event["evidence_provenance"]["evidence_timestamp"] = "2026-01-01T00:00:00"
+    report = validate_documents([event], check_chain=False)
+    assert "timezone offset" in messages(report)
 
 
 # --- correction is disabled at every layer ---------------------------------
 
 
-def test_correction_absent_from_schema_enum():
+def test_correction_absent_from_schema_and_reducer():
     assert "correction" not in SCHEMA["properties"]["event_type"]["enum"]
     assert "corrects_event_id" not in SCHEMA["properties"]
-
-
-def test_correction_absent_from_reducer_valid_types():
     assert "correction" not in VALID_EVENT_TYPES
     assert "correction" in UNSUPPORTED_EVENT_TYPES
 
 
-def test_validator_rejects_correction():
+def test_validator_rejects_correction_with_a_policy_reason():
     report = validate_documents(
         [make_event("fix", "not_seen", "introduced", event_type="correction")], check_chain=False
     )
@@ -166,7 +174,6 @@ def test_validator_rejects_correction():
 
 
 def test_correction_cannot_suppress_or_alter_another_event():
-    """R2.round2: a correction must have NO effect on any other event."""
     good = make_event("a", "not_seen", "introduced")
     correction = make_event("fix", "not_seen", "introduced", event_type="correction")
     without = reduce_events([good], EPOCH)

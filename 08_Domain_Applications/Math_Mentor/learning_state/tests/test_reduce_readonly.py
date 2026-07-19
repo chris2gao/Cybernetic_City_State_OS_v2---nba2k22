@@ -1,4 +1,4 @@
-"""Transition-legality tests (layer 2).
+﻿"""Transition-legality tests (layer 2).
 
 Each test pins one contract rule or one defect found by the 2026-07-19
 independent review.  All fixtures are synthetic.
@@ -39,8 +39,8 @@ def test_two_distinct_windows_yield_graduation_eligibility():
     assert result.rejected == [], reasons(result)
     state = result.snapshot[NODE]
     assert state.review_passes == MINIMUM_REVIEW_PASSES
-    assert len(state.counted_windows) == MINIMUM_REVIEW_PASSES
-    assert state.graduation_eligible is True
+    assert len(state.qualifying_windows) == MINIMUM_REVIEW_PASSES
+    assert state.graduation_evidence_candidate is True
     assert state.status == "review_passed"
 
 
@@ -49,16 +49,16 @@ def test_two_distinct_windows_yield_graduation_eligibility():
 
 def test_review_reentry_requires_a_new_window():
     events = reach_two_review_passes()[:4] + [
-        make_event("dup", "review_passed", "review_due", review_window_id="win-A"),
+        open_window("dup", "review_passed", "win-A", NEAR_TERM),
     ]
     result = reduce_events(events, EPOCH)
-    assert "already counted" in reasons(result)
+    assert "already used" in reasons(result)
 
 
 def test_stale_reentry_requires_remediation_evidence():
     events = reach_two_review_passes()[:4] + [
-        make_event("s1", "review_passed", "stale"),
-        make_event("s2", "stale", "review_due", review_window_id="win-C"),
+        make_event("s1", "review_passed", "stale", event_type="review_result"),
+        open_window("s2", "stale", "win-C", NEAR_TERM),
     ]
     result = reduce_events(events, EPOCH)
     assert "requires remediation_evidence" in reasons(result)
@@ -66,9 +66,9 @@ def test_stale_reentry_requires_remediation_evidence():
 
 def test_stale_reentry_succeeds_with_remediation_evidence():
     events = reach_two_review_passes()[:4] + [
-        make_event("s1", "review_passed", "stale"),
-        make_event(
-            "s2", "stale", "review_due", review_window_id="win-C",
+        make_event("s1", "review_passed", "stale", event_type="review_result"),
+        open_window(
+            "s2", "stale", "win-C", NEAR_TERM,
             remediation_evidence="re-taught the boundary case",
         ),
     ]
@@ -127,7 +127,7 @@ def test_graduation_is_never_persisted_autonomously():
     result = reduce_events(events, EPOCH)
     assert "procedural Human gate" in reasons(result)
     assert result.snapshot[NODE].status == "review_passed"
-    assert result.snapshot[NODE].graduation_eligible is True
+    assert result.snapshot[NODE].graduation_evidence_candidate is True
 
 
 def test_graduation_requires_distinct_windows_not_just_passes():
@@ -144,7 +144,7 @@ def test_graduation_requires_distinct_windows_not_just_passes():
     ]
     result = reduce_events(events, EPOCH)
     assert f"needs >= {MINIMUM_REVIEW_PASSES} review passes" in reasons(result)
-    assert result.snapshot[NODE].graduation_eligible is False
+    assert result.snapshot[NODE].graduation_evidence_candidate is False
 
 
 def test_graduation_requires_human_authorization_ref():
@@ -190,8 +190,9 @@ def test_classroom_passed_rejects_a_failing_exam_result():
 
 def test_review_passed_requires_review_evidence():
     events = reach_classroom_passed() + [
-        make_event("w1", "classroom_passed", "review_due", review_window_id="win-A"),
-        make_event("w2", "review_due", "review_passed", review_evidence=None),
+        open_window("w1", "classroom_passed", "win-A", NEAR_TERM),
+        make_event("w2", "review_due", "review_passed", event_type="review_result",
+                   review_evidence=None),
     ]
     result = reduce_events(events, EPOCH)
     assert "missing required review_evidence" in reasons(result)
@@ -199,8 +200,8 @@ def test_review_passed_requires_review_evidence():
 
 def test_classroom_evidence_cannot_be_reused_as_review_pass():
     events = reach_classroom_passed() + [
-        make_event("w1", "classroom_passed", "review_due", review_window_id="win-A"),
-        make_event("w2", "review_due", "review_passed", source_type="exam_agent"),
+        open_window("w1", "classroom_passed", "win-A", NEAR_TERM),
+        pass_window("w2", "win-A", source_type="exam_agent"),
     ]
     result = reduce_events(events, EPOCH)
     assert "classroom pass cannot be reused" in reasons(result)

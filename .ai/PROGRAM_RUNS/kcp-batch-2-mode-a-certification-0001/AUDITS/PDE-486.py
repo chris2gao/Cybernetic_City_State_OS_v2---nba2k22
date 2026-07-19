@@ -145,17 +145,23 @@ quotient = sp.simplify(non_separable / product)
 mixed_partial = sp.simplify(sp.diff(quotient, x, y_var))
 check(
     "counterexample u_xx + u_yy + x*y*u = 0: dividing by X*Y leaves a coupling term "
-    "whose mixed partial equals 1, contradicting any f(x)+g(y) split; the checked "
-    "claim is exactly 'this quotient is not a sum of an x-only and a y-only function'",
+    "whose mixed partial equals 1, contradicting any f(x)+g(y) split. Checked claim: "
+    "'no NONTRIVIAL Cartesian product solution X(x)Y(y) exists IN THESE COORDINATES'; "
+    "this says nothing about other coordinate systems or the trivial solution u = 0",
     sp.simplify(mixed_partial - 1) == 0,
 )
-# Guard the rescue trick that invalidated the earlier attempt: multiplying by a
-# single power of x, y or x*y must not remove the coupling here.
+# SAMPLED RESCALING CHECKS - not part of the proof.
+# The mixed-partial contradiction above is the whole proof.  These extra checks
+# only sample a habit that invalidated an earlier attempt: dividing the equation
+# by X*Y*<factor> instead of X*Y can sometimes separate an equation that the
+# plain quotient appears to couple.  The sample is NOT exhaustive; passing it
+# does not prove that no rescaling separates the equation.
 for factor, label in ((y_var, "y"), (x, "x"), (x * y_var, "x*y")):
-    rescued = sp.simplify(sp.diff(sp.simplify(non_separable / (product * factor)), x, y_var))
+    rescaled = sp.simplify(sp.diff(sp.simplify(non_separable / (product * factor)), x, y_var))
     check(
-        f"multiplying through by {label} does not make the coupling vanish",
-        sp.simplify(rescued) != 0,
+        f"sampled rescaling: dividing by X*Y*{label} (not multiplying by it) still leaves "
+        f"a nonzero mixed partial; sampled evidence only, not exhaustive",
+        sp.simplify(rescaled) != 0,
     )
 
 # --- boundary: what this audit does NOT establish --------------------------

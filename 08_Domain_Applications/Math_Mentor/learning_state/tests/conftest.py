@@ -6,6 +6,8 @@ read, write, hash or otherwise touch a real learner store.
 
 from __future__ import annotations
 
+from datetime import datetime, timedelta, timezone
+import itertools
 from pathlib import Path
 import sys
 
@@ -20,6 +22,17 @@ NODE = "n_fixture_001"
 NEAR_TERM = "near_term_retention"
 STABILITY = "stability_review"
 
+# Qualifying passes must have strictly increasing RFC 3339 timestamps, so the
+# fixture hands out advancing ones by default.  Computed with timedelta rather
+# than by formatting a counter into the day field, which produced dates like
+# 2026-01-32 once the suite grew past 31 events.
+_EPOCH_START = datetime(2026, 1, 1, tzinfo=timezone.utc)
+_CLOCK = itertools.count()
+
+
+def _next_timestamp() -> str:
+    return (_EPOCH_START + timedelta(hours=next(_CLOCK))).isoformat()
+
 
 def make_event(
     event_id: str,
@@ -29,6 +42,7 @@ def make_event(
     event_type: str = "classroom_result",
     source_type: str | None = None,
     source_ref: str | None = None,
+    timestamp: str | None = None,
     **overrides: object,
 ) -> dict:
     """Build a structurally complete v2 event; overrides break it on purpose.
@@ -50,7 +64,7 @@ def make_event(
         "evidence_provenance": {
             "source_type": resolved_source_type,
             "source_ref": source_ref or f"fixture://{event_id}",
-            "evidence_timestamp": "2026-01-01T00:00:00Z",
+            "evidence_timestamp": timestamp or _next_timestamp(),
             "evidence_limitations": "synthetic fixture",
         },
         "learning_state_epoch": EPOCH,
@@ -78,19 +92,31 @@ def make_event(
     return event
 
 
-def open_window(event_id: str, source: str, window: str, kind: str, **overrides) -> dict:
+def open_window(
+    event_id: str, source: str, window: str, kind: str,
+    timestamp: str | None = None, **overrides,
+) -> dict:
     return make_event(
         event_id, source, "review_due",
         event_type="review_result",
         source_type="scheduler_placeholder",
+        timestamp=timestamp,
         review_window_id=window,
         review_window_kind=kind,
         **overrides,
     )
 
 
-def pass_window(event_id: str, window: str, **overrides) -> dict:
-    event = make_event(event_id, "review_due", "review_passed", event_type="review_result")
+def pass_window(
+    event_id: str, window: str, source_type: str | None = None,
+    timestamp: str | None = None, **overrides,
+) -> dict:
+    # `timestamp` is threaded into evidence_provenance rather than left in
+    # **overrides, where it would become a bogus top-level field.
+    event = make_event(
+        event_id, "review_due", "review_passed",
+        event_type="review_result", source_type=source_type, timestamp=timestamp,
+    )
     event["review_evidence"]["review_window_id"] = window
     event.update(overrides)
     return event
@@ -117,11 +143,22 @@ def reach_two_review_passes(prefix: str = "r") -> list[dict]:
     ]
 
 
+BOUND_STUDENT = "fixture_alias_a"
+
+
 @pytest.fixture
 def synthetic_store(tmp_path: Path) -> Path:
     """A fresh synthetic store.  Never a real learner store."""
     store = tmp_path / "synthetic_store"
     (store / "events").mkdir(parents=True)
-    with (store / "epoch.yml").open("w", encoding="utf-8", newline="\n") as handle:
-        yaml.safe_dump({"bound_epoch": EPOCH}, handle)
+    with (store / "store_meta.yml").open("w", encoding="utf-8", newline="\n") as handle:
+        yaml.safe_dump(
+            {
+                "schema_version": "citystate.math_mentor.learning_store_meta.v1",
+                "store_id": "synthetic-store-0001",
+                "bound_student_ref": BOUND_STUDENT,
+                "bound_epoch": EPOCH,
+            },
+            handle,
+        )
     return store

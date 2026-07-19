@@ -11,7 +11,49 @@ master_touched: false
 status: "remediation_implemented_pending_foreground_rereview"
 ---
 
-# 整改结果
+# 1. 当前已核实的理解
+
+**读者只需本节即可了解现状。第 4 节起为历史轮次记录,其中含已被推翻的结论。**
+
+- 两个 Mode A 节点(CA-417、PDE-486)证据齐备,但**语义接受仍为 `review_required`、
+  `teaching_ready: false`**。装配者不自我接受。
+- learning-state 是**独立领域子系统**,复用事件溯源模式但不是 lanes 的一部分。
+- 学习数据不进 Git,与仓库可见性无关(可见性记为 `unverified`)。
+- `correction` 为 `unsupported_pending_contract`,四层一致拒绝。
+- 毕业永不自动落库;reducer 只计算 `graduation_evidence_candidate`。
+- `stale` 清除**当前资格周期**但保留**历史证据**;恢复资格需重新走完
+  near_term + stability 两个窗口。
+- 结构校验由 `jsonschema.Draft202012Validator` 直接强制 canonical schema;
+  依赖缺失时**fail closed**。
+- 存储绑定单一学习者(`store_meta.yml`),目录名不构成权威。
+
+# 2. 当前阻塞项
+
+1. **两节点语义接受**——需前台独立裁决,执行者无权自接受。
+2. **历史提交中的学习者元数据**——见第 3 节隐私声明,需**独立的 Human 决策**。
+3. Mode B 两节点、scheduler 第 5 步、master 合入——均未动,待授权。
+
+# 3. 当前执行者证据与隐私声明
+
+**执行者证据**:121 项测试、两份 Mode A 审计(20/24 断言)、可复现验证日志。
+**这些是执行者自跑的结果,在被独立复现之前不构成独立验证**;通过的断言只证明其
+自身的确切命题。
+
+**隐私现状(如实陈述,不粉饰)**:
+
+- **当前 dev 工作树**已清除学习者别名、事件数、所学节点与表现细节。
+- **但可达的历史提交与当前 master 仍包含学习者绑定的元数据**。本任务
+  **不改写历史、不 force push、不删分支、不动 master**,因此那些残留依然存在。
+- 因此**不得声称「仓库历史扫描为零」**。清理历史属破坏性操作,需**单独的 Human 决策**。
+- 本报告及本轮新增文件不再重复那些元数据。
+
+---
+
+# 4. 历史轮次记录
+
+> 以下为各轮整改过程,保留供审计。其中被后续评审推翻的结论已就地标注。
+
+## 第 1 轮整改结果
 
 评审裁定 `blocked`。**我不打算就任何一条讨价还价**——逐条核对后,除一处事实补充外
 (见文末「授权状态澄清」),指控全部成立,其中三条我用可复现的方式实测确认,有一条
@@ -30,7 +72,11 @@ status: "remediation_implemented_pending_foreground_rereview"
 | R4.8 尾部截断不可检测 | 确认:删除最末事件后链校验仍返回 ok。 |
 | D1「仓库公开」 | **评审是对的,我错了**:原测试未隔离凭据助手;以 `-c credential.helper=` 且无全局配置重测时访问失败(需认证)。原结论证据不成立。 |
 
-## R1 数学节点(fail -> 已整改,仍 review_required)
+## R1 数学节点(fail -> 第1轮整改;**其中 PDE 反例部分已被第2轮推翻**)
+
+> **SUPERSEDED**:本节所述的「新增不可分离反例 `x*y*u_xx + u_yy = 0`」是**错误的**。
+> 该方程除以 `X·Y·y` 后可分离。它当时通过了机器检查,因为检验的命题选错了。
+> 正确反例与手工推导见第 2 轮记录。本节不得作为「已修复」结论引用。
 
 **COMPLEX_ANALYSIS-417**
 
@@ -183,6 +229,63 @@ status: "remediation_implemented_pending_foreground_rereview"
 
 **诚实边界**:以上全部为执行者证据,在被独立复现前不构成独立验证;通过的断言只证明
 其自身的确切命题。两节点语义接受仍 `review_required`,**未自我接受**。
+
+---
+
+# 第 3 轮前台复审的整改(2026-07-19)
+
+## 实测确认:我第三次算错了
+
+评审指出 `common_misconceptions.i_squared_treated_as_paradox` 的修复方向写错。实测:
+
+```
+从 (0,1) 出发,M 作用一次 -> (-1,0)   [i·i = -1]
+从 (0,1) 出发,M 作用两次 -> (0,-1)   [i³ = -i]   <- 我写的 "(-1,0)" 是错的
+从 (1,0) 出发,M 作用两次 -> (-1,0)   [i²·1 = -1]
+```
+
+讽刺之处在于:这条误区**本身就叫** `i_squared_treated_as_paradox`——我在教别人怎么
+理解 i²=-1 时把它算错了。已改为两种正确走法并加三条审计断言钉死,包括一条显式声明
+「从 (0,1) 转两次得到 (0,-1) 而**不是** (-1,0)」。
+
+同轮另一处:守卫断言措辞反了——代码是**除以** `X·Y·factor`,我写成「乘以」。
+
+## 数学(CA-417 / PDE-486)
+
+- CA-417:修正旋转序列;`legacy_title_warning` + `teaching_display_name`;
+  spaced-review 措辞改为「映射 z↦iz 是四分之一转」。审计 17 → **20 断言**。
+- PDE-486:反例结论**精确限定**为「该坐标系下的非平凡笛卡尔乘积解 X(x)Y(y)」,
+  既不排除平凡解也不排除其他坐标系;三条守卫改名为**采样重标度检查**并声明
+  **非穷尽、非核心证明**;中文定义与英文**逐项对齐**(初值、相容条件、A_n/B_n 公式、
+  L²/逐点/一致收敛边界、完备性为引用);线性性表述改正——线性性是**模态叠加**所必需,
+  但对「分离解存在」并非普遍必需,除以非零 X·T 不因非线性而失效。审计 **24 断言**。
+
+## 合同先行
+
+`STUDENT_LEARNING_STATE_SCHEMA.md` 新增 §5.1.1(窗口类型与时序)、§5.1.2(stale 对资格的
+影响)、§5.1.3(failed/needs_reprep 为 `unsupported_pending_contract`)、§5.1.4(事件类型
+与转换的约束表);provenance 枚举加 `scheduler_placeholder`;补 `review_due -> stale`
+以及 blocked/unblock/stale 的证据要求;明确 `blocked -> blocked` 不是转换。
+
+## 实现
+
+- **资格周期与历史分离**:`qualifying_*` 被 `stale` 清零,`historical_*` 永久保留。
+- **窗口状态机**:`active_review_window_id/kind`;pass 必须匹配待定窗口的 id 与 kind;
+  near_term 必须先于 stability;时间戳必须 RFC 3339 带时区且**严格递增**。
+- **`graduation_eligible` 更名 `graduation_evidence_candidate`**——尚无真实调度权威,
+  它是机械证据而非授予。
+- **store 绑定**:`store_meta.yml` 声明 `bound_student_ref`,事件必须匹配,拒绝混合学习者;
+  目录名不构成权威。
+- **schema 强制**:验证器改为直接加载 canonical schema 并用 `Draft202012Validator`;
+  依赖缺失 **fail closed**。`format: date-time` 无依赖时会被静默跳过,故 schema 另加
+  RFC 3339 **pattern**——静默跳过的检查比没有检查更糟。
+- **correction 彻底移除**:reducer 不再有预扫描与 superseded 分支,CLI 亦无残留输出。
+- **快照防竞态**:快照绑定其派生时刻的 anchor,发布前复查,过期则丢弃(派生数据可重建)。
+- **CLI 三态**:`refused_before_commit` / `event_committed_snapshot_pending` /
+  `full_success`,**绝不在事件已提交时谎报「存储未改变」**。
+
+测试 96 → **121 项全过**,新增 store 绑定、CLI 子进程、快照交错、时间戳同值、
+stability 先于 near_term、失败复习、stale 重置、blocked 全组合等用例。
 
 ## 遗留与不做
 

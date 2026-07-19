@@ -154,17 +154,23 @@ common_misconceptions:
     description: "学生把“乘法=旋转”推广到任意复数，忽略模的缩放（例如认为乘以 2i 只是旋转）。"
     repair_direction: "给出 |2i·z| = 2|z| 的具体计算，区分“乘以单位模复数”与“乘以一般复数”。"
   - signature: "i_squared_treated_as_paradox"
-    description: "学生把 i^2 = -1 当作需要背诵的怪规则，而非两次旋转的必然结果。"
-    repair_direction: "让学生自己把 (0,1) 旋转两次得到 (-1,0)，从几何读出该等式。"
+    description: "学生把 i^2 = -1 当作需要背诵的怪规则，而非映射 M(z)=iz 复合两次的必然结果。"
+    repair_direction: >-
+      让学生亲手走一遍，两种走法都要走对起点：
+      (a) 从 1 即 (1,0) 出发，**两次**作用 M：(1,0) → (0,1) → (-1,0)，
+      这演示的是 i^2 · 1 = -1；
+      (b) 从 i 即 (0,1) 出发，**一次**作用 M：(0,1) → (-1,0)，
+      这演示的是 i · i = -1。
+      切勿说「把 (0,1) 旋转两次得到 (-1,0)」——那实际到达 (0,-1)，对应 i^3 = -i。
 
 spaced_review_handoff_en: >-
   Only after a future classroom_passed is received, review the algebraic form,
-  the quarter-turn reading of i, and the boundary that general complex
-  multiplication also scales. Emit placeholder_not_written without independent
-  scheduler authorization.
+  the reading of the MAP z -> i*z as a quarter turn, and the boundary that
+  multiplication by a general nonzero complex number also scales. Emit
+  placeholder_not_written without independent scheduler authorization.
 spaced_review_handoff_zh: >-
-  仅在未来收到 classroom_passed 后，复习代数形式、i 的四分之一转读法，以及
-  “一般复数乘法还带缩放”这条边界。没有独立调度授权时只输出
+  仅在未来收到 classroom_passed 后，复习代数形式、把**映射** z ↦ iz 读作四分之一转，
+  以及“乘以一般非零复数还带缩放”这条边界。没有独立调度授权时只输出
   placeholder_not_written。
 
 semantic_acceptance_required:

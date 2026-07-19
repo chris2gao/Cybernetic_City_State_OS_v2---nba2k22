@@ -1,4 +1,4 @@
-# Migration specification: learning-state store v1 -> v2
+﻿# Migration specification: learning-state store v1 -> v2
 
 Status: **specification only.** No utility is implemented, and nothing has been
 migrated. Any local v1 store remains `reported_local_unverified` and
@@ -24,7 +24,7 @@ v1 events cannot be reinterpreted under v2 without inspection:
 
 The missing classroom evidence is the substantive problem: v2 asks for facts that
 v1 never recorded. Migration therefore **cannot be fully automatic** - a Human
-must supply the missing evidence from the session record, or the event is omitted.
+must supply the missing evidence from the session record, or the event is omitted from the v2 replay.
 
 ## Principles
 
@@ -32,7 +32,7 @@ must supply the missing evidence from the session record, or the event is omitte
    original remains readable as historical evidence.
 2. **No fabrication.** A migration tool must not invent `trap_evidence`, a
    restatement, or a timestamp. Missing evidence is either supplied by a Human
-   from the real session record, or the event is downgraded.
+   from the session record, or the event is omitted from the v2 replay and recorded in the migration report.
 3. **Omit, do not rewrite.** If the evidence for a `classroom_passed` event
    cannot be reconstructed, that event is **omitted from the v2 replay** and
    recorded in the migration report. It is NOT rewritten into a synthetic

@@ -1,4 +1,4 @@
-"""Review-window state model and graduation-eligibility downgrade tests.
+﻿"""Review-window state model and graduation-eligibility downgrade tests.
 
 Added after foreground rereview round 2.  The point of these tests is that
 "two distinct windows" must mean two REAL, MATCHED, DIFFERENTLY-TYPED review
@@ -85,14 +85,14 @@ def test_two_windows_of_the_same_kind_do_not_grant_eligibility():
     assert result.rejected == [], reasons(result)
     state = result.snapshot[NODE]
     assert state.review_passes == 2
-    assert state.graduation_eligible is False, "same-kind windows must not qualify"
+    assert state.graduation_evidence_candidate is False, "same-kind windows must not qualify"
 
 
 def test_both_required_kinds_grant_eligibility():
     result = reduce_events(reach_two_review_passes(), EPOCH)
     state = result.snapshot[NODE]
-    assert state.counted_window_kinds == {NEAR_TERM, STABILITY}
-    assert state.graduation_eligible is True
+    assert state.qualifying_kinds == {NEAR_TERM, STABILITY}
+    assert state.graduation_evidence_candidate is True
 
 
 def test_invalid_window_kind_is_rejected():
@@ -130,7 +130,7 @@ def test_stale_clears_graduation_eligibility():
     result = reduce_events(events, EPOCH)
     assert result.rejected == [], reasons(result)
     assert result.snapshot[NODE].status == "stale"
-    assert result.snapshot[NODE].graduation_eligible is False
+    assert result.snapshot[NODE].graduation_evidence_candidate is False
 
 
 def test_blocked_clears_graduation_eligibility():
@@ -140,7 +140,7 @@ def test_blocked_clears_graduation_eligibility():
     result = reduce_events(events, EPOCH)
     assert result.rejected == [], reasons(result)
     assert result.snapshot[NODE].status == "blocked"
-    assert result.snapshot[NODE].graduation_eligible is False
+    assert result.snapshot[NODE].graduation_evidence_candidate is False
 
 
 def test_unblock_restores_eligibility_when_conditions_still_hold():
@@ -154,7 +154,7 @@ def test_unblock_restores_eligibility_when_conditions_still_hold():
     ]
     result = reduce_events(events, EPOCH)
     assert result.rejected == [], reasons(result)
-    assert result.snapshot[NODE].graduation_eligible is True
+    assert result.snapshot[NODE].graduation_evidence_candidate is True
 
 
 def test_graduation_refused_while_a_window_is_pending():

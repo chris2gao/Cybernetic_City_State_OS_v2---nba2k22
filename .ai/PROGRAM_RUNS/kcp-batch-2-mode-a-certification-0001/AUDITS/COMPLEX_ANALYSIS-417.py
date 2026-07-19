@@ -94,6 +94,23 @@ check(
     sp.simplify(sp.Abs(z) - sp.sqrt(a**2 + b**2)) == 0,
 )
 
+# --- the exact rotation sequences taught in common_misconceptions -----------
+# An earlier repair_direction claimed "(0,1) rotated twice gives (-1,0)".  That
+# is false: it reaches (0,-1).  These assertions pin the two correct framings so
+# the teaching text cannot drift back.
+check(
+    "from 1 = (1,0): applying M twice gives -1 = (-1,0), demonstrating i^2 * 1 = -1",
+    sp.simplify(sp.I * (sp.I * sp.Integer(1)) + 1) == 0,
+)
+check(
+    "from i = (0,1): applying M once gives -1 = (-1,0), demonstrating i * i = -1",
+    sp.simplify(sp.I * sp.I + 1) == 0,
+)
+check(
+    "from i = (0,1): applying M TWICE gives -i = (0,-1), NOT (-1,0)",
+    sp.simplify(sp.I * (sp.I * sp.I) + sp.I) == 0,
+)
+
 # --- the object/operator distinction ---------------------------------------
 # The rotation is a property of the MAP "multiply by i", not of the number i.
 c1, c2 = sp.symbols("c1 c2", real=True)

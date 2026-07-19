@@ -11,9 +11,12 @@
 [PASS] arg(i*(1+i)) - arg(1+i) == pi/2
 [PASS] the map a+bi -> (a,b) is additive (respects vector addition)
 [PASS] modulus equals Euclidean norm: |a+bi| == sqrt(a^2+b^2)
+[PASS] from 1 = (1,0): applying M twice gives -1 = (-1,0), demonstrating i^2 * 1 = -1
+[PASS] from i = (0,1): applying M once gives -1 = (-1,0), demonstrating i * i = -1
+[PASS] from i = (0,1): applying M TWICE gives -i = (0,-1), NOT (-1,0)
 [PASS] the map M(z) = i*z is R-linear: M(c1 z1 + c2 z2) == c1 M(z1) + c2 M(z2)
 [PASS] multiplying by 2i scales modulus by 2, so it is not a pure rotation
 [PASS] multiplying by 0 collapses every z to 0, so the rotate-and-scale reading requires a nonzero multiplier
 [PASS] library behaviour: SymPy evaluates arg(0) to nan (NOT a proof of undefinedness; the undefinedness of arg(0) is a semantic boundary, not a machine result)
-TOTAL 17 assertions, all passed
+TOTAL 20 assertions, all passed
 exit_code=0

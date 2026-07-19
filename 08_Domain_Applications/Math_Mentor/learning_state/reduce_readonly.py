@@ -28,9 +28,18 @@ under the v1 epoch are not silently reinterpreted.
 from __future__ import annotations
 
 from dataclasses import dataclass, field, replace
+from datetime import datetime
 from pathlib import Path
 import sys
 from typing import Any
+
+# STUDENT_LEARNING_STATE_SCHEMA.md section 5.1.4.  `human_acceptance` is
+# restricted so it cannot be used to drive arbitrary non-Human transitions.
+EVENT_TYPE_TARGETS = {
+    "classroom_result": frozenset({"introduced", "classroom_passed", "blocked"}),
+    "review_result": frozenset({"review_due", "review_passed", "stale", "blocked"}),
+    "human_acceptance": frozenset({"graduated"}),
+}
 
 MINIMUM_REVIEW_PASSES = 2  # GRADUATION_CRITERIA.md graduation_minimum
 
@@ -75,6 +84,7 @@ ALLOWED_TRANSITIONS = frozenset(
         ("review_due", "review_passed"),
         ("review_passed", "review_due"),  # 5.1 re-entry, needs a new window
         ("stale", "review_due"),  # 5.1 re-entry, needs remediation evidence
+        ("review_due", "stale"),  # failed attempt or expired window
         ("review_passed", "graduated"),
         ("review_passed", "stale"),
         ("graduated", "stale"),
@@ -91,16 +101,29 @@ class NodeState:
     """Derived per-node state.  Immutable; the reducer rebuilds it each step."""
 
     status: str = "not_seen"
-    review_passes: int = 0
     last_event_id: str | None = None
     blocked_from: str | None = None
-    counted_windows: frozenset[str] = frozenset()
-    counted_window_kinds: frozenset[str] = frozenset()
-    active_review_window_id: str | None = None
-    active_review_window_kind: str | None = None
+
+    # Currently qualifying cycle.  Cleared by `stale`: a node that decayed cannot
+    # graduate on passes earned before the decay.
+    qualifying_windows: frozenset[str] = frozenset()
+    qualifying_kinds: frozenset[str] = frozenset()
+    review_passes: int = 0
     latest_definition_retention: str | None = None
     latest_transfer_evidence: str | None = None
-    graduation_eligible: bool = False
+    last_qualifying_timestamp: str | None = None
+
+    # Immutable audit history.  Never cleared, so decay is visible afterwards.
+    historical_windows: frozenset[str] = frozenset()
+    historical_pass_count: int = 0
+    historical_failure_count: int = 0
+
+    active_review_window_id: str | None = None
+    active_review_window_kind: str | None = None
+
+    # Named "candidate" deliberately: no real scheduler authority exists yet, so
+    # this is mechanical evidence, not a grant.
+    graduation_evidence_candidate: bool = False
 
 
 @dataclass
@@ -173,12 +196,19 @@ def _evidence_requirements(target: str, event: dict, state: NodeState) -> str | 
                 f"review_window_kind must be one of {sorted(REQUIRED_REVIEW_WINDOW_KINDS)}, "
                 f"got {kind!r}"
             )
-        if window in state.counted_windows:
-            return f"review_window_id {window!r} was already counted; windows must be distinct"
+        if window in state.historical_windows:
+            return f"review_window_id {window!r} was already used; windows must be distinct"
         if state.active_review_window_id is not None:
             return (
                 f"review window {state.active_review_window_id!r} is still pending; "
                 "close it before opening another"
+            )
+        # Ordering: the near-term check must precede the stability check within
+        # the current qualifying cycle.
+        if kind == "stability_review" and "near_term_retention" not in state.qualifying_kinds:
+            return (
+                "stability_review cannot open before a near_term_retention pass exists "
+                "in the current qualifying cycle"
             )
         if state.status == "stale" and not (event.get("remediation_evidence")):
             return "stale -> review_due requires remediation_evidence"
@@ -208,6 +238,16 @@ def _evidence_requirements(target: str, event: dict, state: NodeState) -> str | 
                 f"review_window_kind {event.get('review_window_kind')!r} does not match the "
                 f"pending window kind {state.active_review_window_kind!r}"
             )
+        # Retention is a claim about elapsed time, so timestamps must advance.
+        stamp = _parse_timestamp((event.get("evidence_provenance") or {}).get("evidence_timestamp"))
+        if stamp is None:
+            return "review_passed requires an RFC 3339 timestamp with a timezone offset"
+        previous = _parse_timestamp(state.last_qualifying_timestamp)
+        if previous is not None and stamp <= previous:
+            return (
+                "qualifying review passes must have strictly increasing timestamps; "
+                f"{stamp.isoformat()} does not follow {previous.isoformat()}"
+            )
 
     if target == "graduated":
         if state.status != "review_passed":
@@ -216,9 +256,10 @@ def _evidence_requirements(target: str, event: dict, state: NodeState) -> str | 
             return "graduation requires no pending review window"
         if state.review_passes < MINIMUM_REVIEW_PASSES:
             return (
-                f"graduation needs >= {MINIMUM_REVIEW_PASSES} review passes, has {state.review_passes}"
+                f"graduation needs >= {MINIMUM_REVIEW_PASSES} review passes in the current "
+                f"qualifying cycle, has {state.review_passes}"
             )
-        missing_kinds = REQUIRED_REVIEW_WINDOW_KINDS - state.counted_window_kinds
+        missing_kinds = REQUIRED_REVIEW_WINDOW_KINDS - state.qualifying_kinds
         if missing_kinds:
             return f"graduation needs all required review-window kinds; missing {sorted(missing_kinds)}"
         if not state.latest_definition_retention:
@@ -236,15 +277,30 @@ def _evidence_requirements(target: str, event: dict, state: NodeState) -> str | 
 
 
 def _is_eligible(state: NodeState) -> bool:
-    """Graduation eligibility.  False whenever the node is not currently sound."""
+    """Mechanical graduation-evidence candidacy.
+
+    False whenever the node is not currently sound.  This is NOT a grant: it
+    reports that the evidence pattern is present, while the decision remains a
+    Human gate and no scheduler authority exists yet.
+    """
     return (
         state.status == "review_passed"
         and state.active_review_window_id is None
         and state.review_passes >= MINIMUM_REVIEW_PASSES
-        and REQUIRED_REVIEW_WINDOW_KINDS <= state.counted_window_kinds
+        and REQUIRED_REVIEW_WINDOW_KINDS <= state.qualifying_kinds
         and bool(state.latest_definition_retention)
         and bool(state.latest_transfer_evidence)
     )
+
+
+def _parse_timestamp(value: object) -> datetime | None:
+    if not isinstance(value, str):
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return parsed if parsed.tzinfo is not None else None
 
 
 def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
@@ -338,28 +394,45 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
             )
             continue
 
+        # --- event-type / transition constraints (contract 5.1.4) ----------
+        allowed_targets = EVENT_TYPE_TARGETS.get(event_type, frozenset())
+        unblocking = source == "blocked"
+        if target not in allowed_targets and not unblocking:
+            _reject(
+                result,
+                event_id,
+                f"event_type {event_type!r} may not drive a transition into {target!r}",
+            )
+            continue
+        if unblocking and event_type == "human_acceptance" and target == "graduated":
+            _reject(result, event_id, "cannot graduate directly out of a blocked state")
+            continue
+
         # --- blocked handling (schema section 5) ---------------------------
         if target == "blocked":
-            # Eligibility is cleared while blocked; it is recomputed on unblock.
-            blocked_state = NodeState(
+            if current.status == "blocked":
+                # Overwriting blocked_from would lose the original status and the
+                # node could never be restored correctly.
+                _reject(
+                    result,
+                    event_id,
+                    "blocked -> blocked is not a transition; a further blocker must not "
+                    f"overwrite blocked_from={current.blocked_from!r}",
+                )
+                continue
+            # Candidacy is cleared while blocked; it is recomputed on unblock.
+            result.snapshot[node_id] = replace(
+                current,
                 status="blocked",
-                review_passes=current.review_passes,
                 last_event_id=event_id,
                 blocked_from=current.status,
-                counted_windows=current.counted_windows,
-                counted_window_kinds=current.counted_window_kinds,
-                active_review_window_id=current.active_review_window_id,
-                active_review_window_kind=current.active_review_window_kind,
-                latest_definition_retention=current.latest_definition_retention,
-                latest_transfer_evidence=current.latest_transfer_evidence,
-                graduation_eligible=False,
+                graduation_evidence_candidate=False,
             )
-            result.snapshot[node_id] = blocked_state
             seen_source_refs.add(source_ref)
             result.accepted.append(event_id)
             continue
 
-        if source == "blocked":
+        if unblocking:
             if target != current.blocked_from:
                 _reject(
                     result,
@@ -371,20 +444,11 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
             if not event.get("blocker_resolution_evidence"):
                 _reject(result, event_id, "unblock requires blocker_resolution_evidence")
                 continue
-            restored = NodeState(
-                status=target,
-                review_passes=current.review_passes,
-                last_event_id=event_id,
-                blocked_from=None,
-                counted_windows=current.counted_windows,
-                counted_window_kinds=current.counted_window_kinds,
-                active_review_window_id=current.active_review_window_id,
-                active_review_window_kind=current.active_review_window_kind,
-                latest_definition_retention=current.latest_definition_retention,
-                latest_transfer_evidence=current.latest_transfer_evidence,
+            restored = replace(
+                current, status=target, last_event_id=event_id, blocked_from=None
             )
             result.snapshot[node_id] = replace(
-                restored, graduation_eligible=_is_eligible(restored)
+                restored, graduation_evidence_candidate=_is_eligible(restored)
             )
             seen_source_refs.add(source_ref)
             result.accepted.append(event_id)
@@ -399,48 +463,54 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
             _reject(result, event_id, reason)
             continue
 
-        windows = current.counted_windows
-        window_kinds = current.counted_window_kinds
-        active_id = current.active_review_window_id
-        active_kind = current.active_review_window_kind
-        retention = current.latest_definition_retention
-        transfer = current.latest_transfer_evidence
-        passes = current.review_passes
+        updated = replace(current, status=target, last_event_id=event_id, blocked_from=None)
 
         if target == "review_due":
             # Open a window; it stays pending until a matching pass or an
-            # explicitly contracted failure/stale transition closes it.
-            active_id = str(event.get("review_window_id"))
-            active_kind = str(event.get("review_window_kind"))
-            windows = windows | {active_id}
+            # explicitly contracted failure/expiry closes it.
+            window = str(event.get("review_window_id"))
+            updated = replace(
+                updated,
+                active_review_window_id=window,
+                active_review_window_kind=str(event.get("review_window_kind")),
+                qualifying_windows=updated.qualifying_windows | {window},
+                historical_windows=updated.historical_windows | {window},
+            )
         elif target == "review_passed":
             # A pass counts only against the window it was matched to.
             review = event.get("review_evidence") or {}
-            window_kinds = window_kinds | {str(active_kind)}
-            retention = str(review.get("definition_retention"))
-            transfer = str(review.get("transfer_evidence"))
-            passes += 1
-            active_id = None
-            active_kind = None
+            stamp = (event.get("evidence_provenance") or {}).get("evidence_timestamp")
+            updated = replace(
+                updated,
+                qualifying_kinds=updated.qualifying_kinds | {str(current.active_review_window_kind)},
+                review_passes=updated.review_passes + 1,
+                historical_pass_count=updated.historical_pass_count + 1,
+                latest_definition_retention=str(review.get("definition_retention")),
+                latest_transfer_evidence=str(review.get("transfer_evidence")),
+                last_qualifying_timestamp=str(stamp),
+                active_review_window_id=None,
+                active_review_window_kind=None,
+            )
         elif target == "stale":
-            # A stale transition closes any pending window.
-            active_id = None
-            active_kind = None
+            # Decay closes the pending window AND resets the qualifying cycle.
+            # History is preserved so the decay itself remains auditable.
+            failed_review = current.status == "review_due"
+            updated = replace(
+                updated,
+                qualifying_windows=frozenset(),
+                qualifying_kinds=frozenset(),
+                review_passes=0,
+                latest_definition_retention=None,
+                latest_transfer_evidence=None,
+                last_qualifying_timestamp=None,
+                historical_failure_count=updated.historical_failure_count
+                + (1 if failed_review else 0),
+                active_review_window_id=None,
+                active_review_window_kind=None,
+            )
 
-        candidate = NodeState(
-            status=target,
-            review_passes=passes,
-            last_event_id=event_id,
-            blocked_from=None,
-            counted_windows=windows,
-            counted_window_kinds=window_kinds,
-            active_review_window_id=active_id,
-            active_review_window_kind=active_kind,
-            latest_definition_retention=retention,
-            latest_transfer_evidence=transfer,
-        )
         result.snapshot[node_id] = replace(
-            candidate, graduation_eligible=_is_eligible(candidate)
+            updated, graduation_evidence_candidate=_is_eligible(updated)
         )
         seen_source_refs.add(source_ref)
         result.accepted.append(event_id)
@@ -474,18 +544,17 @@ def main(argv: list[str]) -> int:
     for node_id in sorted(result.snapshot):
         state = result.snapshot[node_id]
         print(
-            f"  {node_id}: status={state.status} review_passes={state.review_passes} "
-            f"windows={len(state.counted_windows)} graduation_eligible={state.graduation_eligible} "
+            f"  {node_id}: status={state.status} "
+            f"qualifying_passes={state.review_passes} "
+            f"qualifying_kinds={sorted(state.qualifying_kinds)} "
+            f"historical_passes={state.historical_pass_count} "
+            f"graduation_evidence_candidate={state.graduation_evidence_candidate} "
             f"via={state.last_event_id}"
         )
     print()
     print(f"accepted: {len(result.accepted)}")
     for event_id in result.accepted:
         print(f"  + {event_id}")
-    if result.superseded:
-        print(f"superseded by corrections: {len(result.superseded)}")
-        for event_id in result.superseded:
-            print(f"  ~ {event_id}")
     print(f"rejected: {len(result.rejected)}")
     for event_id, reason in result.rejected:
         print(f"  - {event_id}: {reason}")

@@ -114,10 +114,22 @@ pure_math_definition:
     满足方程与边界条件。相应的无穷级数在初值容许（与边界条件相容且属于适当空间）
     时表示解；收敛意义（逐点、一致或 L^2）必须显式声明，本节点不提供。
 
-    系数提取。正交性正是系数可提取的原因：把初值与 y_n 作内积并除以
-    ||y_n||^2 = L/2 即可分离出 A_n。该步骤**仅**用到正交性。本征函数系的
-    **完备性**——即级数能表示任意容许初态——是另一条定理，此处为引用，
-    本节点不予建立。
+    完整算例（弦振动）。给定初值 u(x, 0) = f(x) 与 u_t(x, 0) = g(x)，且 f、g 与
+    边界条件相容，即 f(0) = f(L) = 0、g(0) = g(L) = 0。在级数中令 t = 0 得
+    f(x) = sum A_n sin(n pi x / L)；对 t 求导后令 t = 0 得
+    g(x) = sum B_n (c n pi / L) sin(n pi x / L)。再由正交性逐个分离系数：
+
+        A_n = (2/L) * integral_0^L f(x) sin(n pi x / L) dx
+        B_n = (2/(c n pi)) * integral_0^L g(x) sin(n pi x / L) dx
+
+    其中因子 2/L 即 1/||y_n||^2，而 ||y_n||^2 = L/2。
+
+    主张的边界。每个系数公式**只**用到正交性，该步骤已在审计中对一个已知的有限
+    组合验证。所得无穷级数是否收敛到 f、以及在何种意义下收敛（逐点、一致或 L^2），
+    取决于函数空间：f 属于 L^2(0, L) 时级数在 L^2 意义下收敛，而逐点或一致收敛
+    需要额外的光滑性与相容性。本征函数系的**完备性**——即任意容许初态都可被表示
+    ——是另一条被引用的定理。完备性与级数收敛**均未**经机器验证；审计只覆盖有限
+    个模态与系数提取。
 
 assumptions_and_notation:
   - "L > 0 and c > 0 are real constants; n, m range over positive integers. / L > 0、c > 0 为实常数；n、m 取正整数。"
@@ -164,8 +176,25 @@ mode_a_intuition:
       在二维的版本，但其模态属贝塞尔型而非正弦；只可用作「模态可叠加」的有界示意，
       绝不可当作算例。
   limitations:
-    english: "The string picture presumes linearity, homogeneous boundary conditions, and a separable setting. Nonlinear equations do not superpose; inhomogeneous problems need extra treatment; and linearity alone does not make a problem separable."
-    chinese: "弦的图景以线性、齐次边界条件与可分离设置为前提。非线性方程不满足叠加原理；非齐次问题需另行处理；且仅有线性性并不使问题可分离。"
+    english: |-
+      The string picture presumes linearity, homogeneous boundary conditions and
+      a separable setting. Two directions must be kept apart:
+      (a) linearity is REQUIRED for the modal superposition step in this string
+          problem - without it, summing modes need not solve the equation;
+      (b) linearity is NOT universally required for a separated solution to
+          exist. Some nonlinear equations do admit solutions of the form
+          X(x)T(t), and dividing by a nonzero X*T does not become invalid merely
+          because the equation is nonlinear. What fails for nonlinear equations
+          is superposition, not the division step.
+      Linearity alone also does not make a problem separable.
+    chinese: |-
+      弦的图景以线性、齐次边界条件与可分离设置为前提。有两个方向必须分开：
+      (a) 在本弦问题中，**模态叠加**这一步**需要**线性性——没有它，把各模态相加
+          未必仍是解；
+      (b) 线性性对「分离解的存在」**并非普遍必需**。某些非线性方程确实存在
+          X(x)T(t) 形式的解，且除以非零 X*T 这一步**不会**因为方程非线性就自动
+          失效。对非线性方程失效的是**叠加**，不是那步除法。
+      另外，仅有线性性也不足以使问题可分离。
 
 llm_physical_mapping: >-
   拨动一根两端固定的弦：运动分解为基频与各次谐波，每个谐波是固定的正弦驻波形状
@@ -181,7 +210,8 @@ mapping_boundary:
     - "reading modal superposition as rebuilding initial data from an orthogonal basis / 把模态叠加读作用正交基重建初值"
     - "explaining why orthogonality lets each coefficient be extracted independently / 解释正交性为何让系数可以逐个独立提取"
   invalid_inferences:
-    - "Linear and homogeneous does NOT imply separable. Separability additionally requires the operator, coefficients, domain and boundary conditions to separate in the chosen coordinates. Audited counterexample: u_xx + u_yy + x*y*u = 0, where X''/X + Y''/Y = -x*y is impossible because the left side has zero mixed partial and the right side has mixed partial -1. / 线性齐次**不蕴含**可分离；还需算子、系数、区域与边界条件在所选坐标下可分离。已审计反例：u_xx + u_yy + x*y*u = 0，因为 X''/X + Y''/Y = -x*y 不可能成立——左侧混合偏导为 0，右侧为 -1。"
+    - "Linear and homogeneous does NOT imply separable. Audited counterexample: u_xx + u_yy + x*y*u = 0, where X''/X + Y''/Y = -x*y is impossible because the left side has zero mixed partial and the right side has mixed partial -1. SCOPE: this rules out nontrivial Cartesian product solutions X(x)Y(y) in these coordinates only. It does not rule out the trivial solution u = 0, nor separation in some other coordinate system. / 线性齐次**不蕴含**可分离。已审计反例：u_xx + u_yy + x*y*u = 0，因为 X''/X + Y''/Y = -x*y 不可能成立——左侧混合偏导为 0，右侧为 -1。**范围**：这只排除了该坐标系下的非平凡乘积解 X(x)Y(y)，既不排除平凡解 u = 0，也不排除在其他坐标系下可分离。"
+    - "Linearity is required for the modal superposition step here, but it is NOT universally required for a separated solution to exist; some nonlinear equations admit X(x)T(t) solutions, and division by a nonzero X*T does not become invalid under nonlinearity. What fails is superposition. / 线性性是此处**模态叠加**所必需，但对「分离解存在」并非普遍必需；某些非线性方程存在 X(x)T(t) 解，且除以非零 X*T 不因非线性而失效。失效的是叠加。"
     - "Testing only the quotient by X*Y is NOT enough to conclude non-separability, because separation may first multiply through by a nonzero factor. (A previous draft wrongly used x*y*u_xx + u_yy = 0, which does separate after dividing by X*Y*y.) / 仅检验除以 X*Y 后的商**不足以**断定不可分离，因为分离前可以先乘除非零因子。（早先草稿误用 x*y*u_xx + u_yy = 0，它在除以 X*Y*y 后确实可分离。）"
     - "Superposition requires linearity; the string analogy must not be carried to nonlinear PDEs. / 叠加依赖线性性，弦的类比不得推广到非线性方程。"
     - "A drumhead is a 2D membrane with Bessel-type modes; the worked case here is the 1D string. Do not conflate the two mode families. / 鼓面是二维膜、模态属贝塞尔型；此处算例是一维弦，两族模态不可混同。"
@@ -195,11 +225,13 @@ common_misconceptions:
   - signature: "separation_assumed_always_valid"
     description: "学生把 u=X(x)T(t) 当作普遍成立的解形式；进一步地，误以为「线性齐次」就足以保证可分离。"
     repair_direction: >-
-      分两步纠正。第一步：线性齐次是本算例中的**必要**条件——非线性方程不满足叠加，
-      推导中的除法也失效。第二步(关键)：线性齐次**并不充分**。给出 u_xx + u_yy + x*y*u = 0，
-      代入 XY 除以 XY 得 X''/X + Y''/Y = -x*y；左侧形如 f(x)+g(y)，混合偏导恒为 0，
-      右侧混合偏导为 -1，矛盾，故不可分离。再提醒：判定不可分离时不能只看除以 XY 的商，
-      因为允许先乘除非零因子。
+      分两步纠正，且不要把两件事混起来。第一步：在本弦问题中，线性性是**模态叠加**
+      所必需的——非线性时把各模态相加未必仍是解。但注意，线性性并不是「存在分离解」
+      的普遍必要条件：某些非线性方程也有 X(x)T(t) 形式的解，且除以非零 X*T 这一步
+      不会因非线性而失效。第二步(关键)：线性齐次**并不充分**。给出
+      u_xx + u_yy + x*y*u = 0，代入 XY 并除以 XY 得 X''/X + Y''/Y = -x*y；左侧形如
+      f(x)+g(y)，混合偏导恒为 0，右侧为 -1，矛盾，故在该坐标下不存在非平凡乘积解。
+      再提醒：判定不可分离时不能只看除以 XY 的商，因为可以先除以 XY 乘上其他非零因子。
   - signature: "orthogonality_taken_as_given"
     description: "学生认为任意两个正弦函数都正交，不追问区间与边界条件的作用。"
     repair_direction: "让学生在 [0,L] 上实算 n≠m 与 n=m 两种积分，看出 L/2 与 0 的差别来自边界条件选出的频率。"

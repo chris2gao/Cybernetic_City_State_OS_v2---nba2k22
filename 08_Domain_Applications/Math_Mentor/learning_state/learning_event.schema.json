@@ -42,8 +42,15 @@
       "type": ["string", "null"]
     },
     "classroom_evidence": {
-      "description": "Required for a transition into classroom_passed.",
+      "description": "Required for a transition into classroom_passed. If present it must be complete: a partial bundle is not evidence.",
       "type": "object",
+      "required": [
+        "exam_agent_result",
+        "covered_subtopics",
+        "definition_restatement",
+        "trap_evidence",
+        "tool_and_evidence_limitations"
+      ],
       "properties": {
         "exam_agent_result": {"enum": ["classroom_passed", "failed", "needs_reprep"]},
         "covered_subtopics": {"type": "array", "items": {"type": "string"}},
@@ -54,8 +61,14 @@
       "additionalProperties": false
     },
     "review_evidence": {
-      "description": "Required for a transition into review_passed.",
+      "description": "Required for a transition into review_passed. If present it must be complete.",
       "type": "object",
+      "required": [
+        "review_window_id",
+        "review_result",
+        "definition_retention",
+        "transfer_evidence"
+      ],
       "properties": {
         "review_window_id": {"type": "string"},
         "review_result": {"enum": ["passed", "failed"]},
@@ -103,14 +116,23 @@
             "scheduler_placeholder"
           ]
         },
-        "source_ref": {"type": ["string", "null"]},
+        "source_ref": {
+          "description": "Required and non-null: an event with no citable source is not evidence.",
+          "type": "string",
+          "minLength": 1
+        },
         "actually_read_files": {
           "description": "Self-declared and non-verifiable; never upstream evidence in a correctness chain (TEACHING_AGENT_CONTRACTS.md section 2).",
           "type": "array",
           "items": {"type": "string"}
         },
-        "evidence_timestamp": {"type": "string", "format": "date-time"},
-        "evidence_limitations": {"type": "string"},
+        "evidence_timestamp": {
+          "description": "RFC 3339 with a timezone offset. The pattern is enforced explicitly because `format: date-time` is a no-op unless an optional format library is installed, and a silently skipped check is worse than none.",
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "evidence_limitations": {"type": "string", "minLength": 1},
         "not_machine_validated_reason": {"type": ["string", "null"]}
       },
       "additionalProperties": false

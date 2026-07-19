@@ -36,11 +36,25 @@ def _seed(store: Path, count: int = 2) -> None:
 # --- defect R4.7: concurrency ----------------------------------------------
 
 
-def test_second_writer_cannot_enter_while_lock_is_held(synthetic_store):
-    with single_writer_lock(synthetic_store):
+def test_lock_held_by_another_process_blocks_entry(synthetic_store):
+    """Simulate a foreign holder; same-stack re-entry is intentionally allowed."""
+    synthetic_store.mkdir(parents=True, exist_ok=True)
+    foreign = synthetic_store / ".writer.lock"
+    foreign.write_text("pid=999999\n", encoding="utf-8")
+    try:
         with pytest.raises(StoreLocked):
             with single_writer_lock(synthetic_store, timeout=0.2):
                 pass
+    finally:
+        foreign.unlink()
+
+
+def test_lock_is_reentrant_within_one_call_stack(synthetic_store):
+    """append_event holds the lock and then calls helpers that take it too."""
+    with single_writer_lock(synthetic_store):
+        with single_writer_lock(synthetic_store, timeout=0.2):
+            pass  # must not deadlock or raise
+    assert not (synthetic_store / ".writer.lock").exists()
 
 
 def test_lock_is_released_after_use(synthetic_store):

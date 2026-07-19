@@ -64,6 +64,19 @@ class AnchorUpdateFailed(RuntimeError):
     """
 
 
+class SnapshotStale(RuntimeError):
+    """The store advanced while a snapshot was being derived.
+
+    Not an error condition for the event log: snapshots are derived data and the
+    stale one is simply discarded.
+    """
+
+
+# Re-entrancy: `append_event` holds the lock and then calls helpers that also
+# want it.  A plain O_EXCL lock would self-deadlock, so the holder is tracked.
+_LOCK_DEPTH: dict[Path, int] = {}
+
+
 @contextmanager
 def single_writer_lock(store: Path, timeout: float = LOCK_TIMEOUT_SECONDS):
     """Hold an exclusive lock for the whole read-modify-write window.
@@ -74,6 +87,16 @@ def single_writer_lock(store: Path, timeout: float = LOCK_TIMEOUT_SECONDS):
     concurrent writers corrupt an append-only store.
     """
     store.mkdir(parents=True, exist_ok=True)
+    key = store.resolve()
+    if _LOCK_DEPTH.get(key):
+        # Already held by this call stack; re-enter without touching the file.
+        _LOCK_DEPTH[key] += 1
+        try:
+            yield
+        finally:
+            _LOCK_DEPTH[key] -= 1
+        return
+
     lock_path = store / ".writer.lock"
     deadline = time.monotonic() + timeout
     while True:
@@ -89,8 +112,10 @@ def single_writer_lock(store: Path, timeout: float = LOCK_TIMEOUT_SECONDS):
     try:
         os.write(handle, f"pid={os.getpid()}\n".encode("utf-8"))
         os.close(handle)
+        _LOCK_DEPTH[key] = 1
         yield
     finally:
+        _LOCK_DEPTH.pop(key, None)
         try:
             lock_path.unlink()
         except FileNotFoundError:
@@ -146,11 +171,34 @@ def write_anchor(store: Path, events: list[dict]) -> Path:
     return path
 
 
+def read_store_meta(store: Path) -> dict:
+    """Immutable store binding.  A store belongs to exactly one learner.
+
+    Authority never comes from the directory name: a folder named after a learner
+    proves nothing.  `store_meta.yml` is the binding, and every event must match it.
+    """
+    path = store / "store_meta.yml"
+    if not path.exists():
+        raise WriteRefused(
+            f"missing {path.name}: a store must declare its binding "
+            "(schema_version, store_id, bound_student_ref, bound_epoch) before use"
+        )
+    with path.open("r", encoding="utf-8") as handle:
+        meta = yaml.safe_load(handle) or {}
+    missing = [
+        key
+        for key in ("schema_version", "store_id", "bound_student_ref", "bound_epoch")
+        if not meta.get(key)
+    ]
+    if missing:
+        raise WriteRefused(f"store_meta.yml is missing required keys: {sorted(missing)}")
+    return meta
+
+
 def load_store(store: Path, verify_anchor: bool = True) -> tuple[str, list[dict]]:
     """Read the bound epoch and every event on disk, in numeric order."""
-    epoch_file = store / "epoch.yml"
-    with epoch_file.open("r", encoding="utf-8") as handle:
-        epoch = str(yaml.safe_load(handle)["bound_epoch"])
+    meta = read_store_meta(store)
+    epoch = str(meta["bound_epoch"])
 
     events: list[dict] = []
     for path in _event_paths(store):
@@ -187,25 +235,33 @@ def load_store(store: Path, verify_anchor: bool = True) -> tuple[str, list[dict]
 def derive_snapshot(store: Path) -> dict:
     """Recompute the derived snapshot from events on disk.  Pure read."""
     epoch, events = load_store(store)
-    report = validate_documents(events, check_chain=True)
+    report = validate_documents(
+        events, check_chain=True, bound_student_ref=read_store_meta(store)["bound_student_ref"]
+    )
     if not report.ok:
         raise WriteRefused(f"existing store fails validation: {report.errors}")
     result = reduce_events(events, epoch)
+    anchor = read_anchor(store) or {}
     return {
         "derived_at": datetime.now(timezone.utc).isoformat(),
         "bound_epoch": epoch,
         "event_count": len(events),
+        # Bind the snapshot to the exact store state it was derived from, so a
+        # slow deriver cannot publish over a newer snapshot.
+        "source_event_count": anchor.get("event_count"),
+        "source_head_digest": anchor.get("head_digest"),
         "snapshot_is_derived": True,
         "rebuildable_from_events": True,
         "nodes": {
             node_id: {
                 "status": state.status,
-                "review_passes": state.review_passes,
-                "distinct_windows": len(state.counted_windows),
-                "window_kinds": sorted(state.counted_window_kinds),
+                "qualifying_review_passes": state.review_passes,
+                "qualifying_window_kinds": sorted(state.qualifying_kinds),
+                "historical_pass_count": state.historical_pass_count,
+                "historical_failure_count": state.historical_failure_count,
                 "active_review_window_id": state.active_review_window_id,
                 "active_review_window_kind": state.active_review_window_kind,
-                "graduation_eligible": state.graduation_eligible,
+                "graduation_evidence_candidate": state.graduation_evidence_candidate,
                 "blocked_from": state.blocked_from,
                 "last_event_id": state.last_event_id,
             }
@@ -220,6 +276,7 @@ def derive_snapshot(store: Path) -> dict:
 def append_event(store: Path, event: dict) -> Path:
     """Validate then atomically append one event.  Refuses on any finding."""
     with single_writer_lock(store):
+        meta = read_store_meta(store)
         epoch, existing = load_store(store)
 
         if event.get("learning_state_epoch") != epoch:
@@ -227,12 +284,19 @@ def append_event(store: Path, event: dict) -> Path:
                 f"event epoch {event.get('learning_state_epoch')!r} != store epoch {epoch!r}"
             )
 
+        bound = meta["bound_student_ref"]
+        if event.get("student_ref") != bound:
+            raise WriteRefused(
+                f"student_ref {event.get('student_ref')!r} does not match the store binding "
+                f"{bound!r}; this store accepts events for one learner only"
+            )
+
         expected_prev = event_digest(existing[-1]) if existing else None
         event = dict(event, prev_event_digest=expected_prev)
 
         candidate = existing + [event]
 
-        report = validate_documents(candidate, check_chain=True)
+        report = validate_documents(candidate, check_chain=True, bound_student_ref=bound)
         if not report.ok:
             raise WriteRefused(f"structural validation failed: {report.errors}")
 
@@ -305,16 +369,34 @@ def repair_anchor(store: Path) -> Path:
 
 
 def write_snapshot(store: Path) -> Path:
-    """Re-derive the snapshot from disk and write it atomically."""
-    snapshot = derive_snapshot(store)
-    directory = store / "snapshots"
-    directory.mkdir(parents=True, exist_ok=True)
-    final = directory / "learning_state.yml"
-    temporary = directory / f".learning_state.{os.getpid()}.tmp"
-    with temporary.open("w", encoding="utf-8", newline="\n") as handle:
-        yaml.safe_dump(snapshot, handle, allow_unicode=True, sort_keys=True)
-    os.replace(temporary, final)
-    return final
+    """Re-derive the snapshot and publish it atomically, without racing.
+
+    Each snapshot records the anchor it was derived from.  Immediately before
+    publication the anchor is re-read: if another writer advanced the store in
+    the meantime, this snapshot is stale and is discarded rather than
+    overwriting a newer one.  The snapshot is derived data, so dropping it costs
+    nothing - it can always be rebuilt from the event log.
+    """
+    with single_writer_lock(store):
+        snapshot = derive_snapshot(store)
+
+        directory = store / "snapshots"
+        directory.mkdir(parents=True, exist_ok=True)
+        final = directory / "learning_state.yml"
+        temporary = directory / f".learning_state.{os.getpid()}.tmp"
+        with temporary.open("w", encoding="utf-8", newline="\n") as handle:
+            yaml.safe_dump(snapshot, handle, allow_unicode=True, sort_keys=True)
+
+        # Re-check just before publishing.
+        current = read_anchor(store) or {}
+        if current.get("head_digest") != snapshot["source_head_digest"]:
+            temporary.unlink(missing_ok=True)
+            raise SnapshotStale(
+                "the store advanced while this snapshot was being derived; "
+                "discarding it rather than overwriting a newer snapshot"
+            )
+        os.replace(temporary, final)
+        return final
 
 
 def main(argv: list[str]) -> int:
@@ -342,13 +424,14 @@ def main(argv: list[str]) -> int:
 
     try:
         snapshot_path = write_snapshot(store)
-    except OSError as error:
+        snapshot = derive_snapshot(store)
+    except (OSError, SnapshotStale, WriteRefused) as error:
+        # The event is already committed; say so plainly.
         print("outcome: event_committed_snapshot_pending")
-        print(f"WARNING: event committed but snapshot write failed ({error})", file=sys.stderr)
+        print(f"WARNING: event committed but snapshot publication failed ({error})", file=sys.stderr)
         print("the snapshot is derived and can be rebuilt; the event log is intact")
         return 3
 
-    snapshot = derive_snapshot(store)
     print("outcome: full_success")
     print(f"appended: {written}")
     print(f"snapshot: {snapshot_path} (derived; rebuildable from events)")
@@ -356,8 +439,8 @@ def main(argv: list[str]) -> int:
     for node_id, state in snapshot["nodes"].items():
         print(
             f"  {node_id}: {state['status']} "
-            f"(review_passes={state['review_passes']}, "
-            f"graduation_eligible={state['graduation_eligible']})"
+            f"(qualifying_passes={state['qualifying_review_passes']}, "
+            f"graduation_evidence_candidate={state['graduation_evidence_candidate']})"
         )
     return 0
 
