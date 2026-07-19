@@ -46,10 +46,8 @@ Coordinator emits one compressed state dump:
     }
   ],
   "Next_Node_Outlook": "Solving equations as root finding, teaser only.",
-  "Mapping_Status": {
-    "intuition_kind": "everyday_physical",
-    "tool_status": "not_run"
-  },
+  "tool_truthfulness": "not_run",
+  "Mapping_Status": "mode_a_physical_primary",
   "actually_read_files": [
     "simulation_fixture_not_real_node_yaml"
   ]

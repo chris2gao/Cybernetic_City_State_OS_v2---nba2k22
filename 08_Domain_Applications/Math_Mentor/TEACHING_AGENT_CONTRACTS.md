@@ -156,6 +156,8 @@ Required payload:
 }
 ```
 
+wrapper 还必须携带 `evidence_trace` 与 `tool_truthfulness`，与 Teaching Flow Spec Phase 3 的超集要求一致。
+
 Prep obligations:
 
 - map every source `sub_topics` item into `subtopic_plan`;
