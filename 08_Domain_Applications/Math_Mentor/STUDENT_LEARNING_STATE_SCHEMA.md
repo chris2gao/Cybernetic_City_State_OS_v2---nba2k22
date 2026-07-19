@@ -106,7 +106,38 @@ The canonical `learning_status` values are:
 | `review_passed` | `stale` | review failure, overdue window, or trap/definition boundary degradation | silently retaining graduated status |
 | `graduated` | `stale` | later review failure or stability violation | treating graduation as permanent without evidence |
 | any | `blocked` | missing prerequisite, missing state, privacy violation, malformed record, or forbidden write request | guessing status from lower node id |
-| `blocked` | prior valid status | blocker resolved with evidence provenance | silent unblock without evidence |
+| `blocked` | prior valid status | blocker resolved with evidence provenance; the record preserves `blocked_from` and the resolution evidence | silent unblock without evidence |
+| `review_passed` | `review_due` | a NEW review window is scheduled, identified by a `review_window_id` distinct from every window already counted, backed by an authorized scheduler item or an explicit placeholder | re-entering review to inflate the pass count with the same window |
+| `stale` | `review_due` | remediation eligibility evidence plus a new review item with a fresh `review_window_id` | treating decay as automatically re-eligible without remediation |
+
+### 5.1 Review-cycle re-entry
+
+`review_passed -> review_due` and `stale -> review_due` exist so that the second and
+later review passes required by `GRADUATION_CRITERIA.md` are reachable at all. Without
+them the graduation minimum could never be satisfied. They are constrained:
+
+- every `review_due` entry carries a `review_window_id` unique within the node's history;
+- a `review_window_id` or `source_ref` already counted must never be counted again;
+- `stale -> review_due` additionally requires remediation evidence, because decay is not
+  by itself a qualification to be re-tested.
+
+### 5.2 Graduation eligibility
+
+`review_passed -> graduated` requires all of the following, not merely a pass count:
+
+- at least `minimum_review_passes` (see `GRADUATION_CRITERIA.md`) passes earned in
+  **distinct** review windows;
+- definition-boundary retention evidence at the latest review;
+- trap or transfer evidence at the latest review;
+- evidence timestamps present on each counted pass;
+- no unresolved blocker on the node;
+- a Human authorization reference.
+
+The Human authorization reference is a **procedural** protected gate. It records that a
+Human acted; it is not cryptographic proof of identity, and a non-empty string is not
+evidence of authority. A deterministic implementation may compute `graduation_eligible`,
+but must not autonomously persist `graduated` until a trusted Human acceptance path
+exists.
 
 ## 6. Evidence Provenance
 

@@ -44,37 +44,64 @@ sub_topics:
 
 pure_math_definition:
   english: |-
-    A regular Sturm-Liouville problem on [a, b] asks for pairs (lambda, y) with
-    y not identically zero satisfying -(p y')' + q y = lambda w y together with
-    separated homogeneous boundary conditions, where p, w > 0. Its eigenvalues
-    are real and its eigenfunctions belonging to distinct eigenvalues are
-    orthogonal with respect to the weight w.
+    Regular Sturm-Liouville problem. On a finite interval [a, b], seek pairs
+    (lambda, y) with y not identically zero satisfying
+    -(p y')' + q y = lambda w y, subject to separated homogeneous boundary
+    conditions that make the operator self-adjoint. Regularity requires p
+    continuously differentiable, q and w continuous, and p, w strictly positive
+    on the closed interval. Under these hypotheses the eigenvalues are real and
+    form an increasing unbounded sequence, and eigenfunctions belonging to
+    distinct eigenvalues are orthogonal with respect to the weight w.
 
-    Separation of variables seeks solutions u(x,t) = X(x)T(t). Substituting into
-    a linear homogeneous PDE and dividing by the product forces a function of x
-    alone to equal a function of t alone, hence both equal a constant; that
-    constant is the eigenvalue and the spatial factor solves a Sturm-Liouville
-    problem. For the string u_tt = c^2 u_xx on [0, L] with u(0,t)=u(L,t)=0, the
-    eigenpairs are y_n(x) = sin(n pi x / L) with lambda_n = (n pi / L)^2, and the
-    general solution is the superposition sum over n of
-    (A_n cos(c n pi t / L) + B_n sin(c n pi t / L)) sin(n pi x / L).
+    Separation of variables. The method ATTEMPTS solutions u(x,t) = X(x)T(t).
+    Being linear and homogeneous is NOT sufficient: separation succeeds only when
+    the operator, its coefficients, the domain and the boundary conditions are
+    themselves separable in the chosen coordinates. When it does succeed,
+    dividing by X T makes one side depend on x alone and the other on t alone, so
+    both equal a constant. With the convention X'' / X = -lambda, that constant is
+    the eigenvalue and X solves a Sturm-Liouville problem. (The opposite sign
+    convention appears in the literature; the sign must be fixed before the
+    eigenvalues are named.)
 
-    Orthogonality is what makes the coefficients recoverable: integrating the
-    initial data against y_n and dividing by ||y_n||^2 = L/2 isolates A_n.
+    Worked instance: the string. For u_tt = c^2 u_xx on [0, L] with
+    u(0,t) = u(L,t) = 0, the eigenpairs are y_n(x) = sin(n pi x / L) with
+    lambda_n = (n pi / L)^2. Any finite superposition
+    sum (A_n cos(c n pi t / L) + B_n sin(c n pi t / L)) sin(n pi x / L)
+    solves the equation and the boundary conditions. The corresponding infinite
+    series represents the solution for admissible initial data that is compatible
+    with the boundary conditions and lies in the appropriate space; the sense of
+    convergence (pointwise, uniform, or L^2) must be stated and is not supplied by
+    this node.
+
+    Coefficient recovery. Orthogonality is what makes coefficients extractable:
+    integrating the initial data against y_n and dividing by ||y_n||^2 = L/2
+    isolates A_n. This step uses orthogonality only. COMPLETENESS of the
+    eigenfunction system - that the series can represent every admissible initial
+    state - is a separate theorem, cited here and not established by this node.
   chinese: |-
-    区间 [a, b] 上的正则施图姆-刘维尔问题，是求满足 -(p y')' + q y = lambda w y
-    及分离型齐次边界条件的非零解对 (lambda, y)，其中 p、w > 0。其本征值为实数，
-    且属于不同本征值的本征函数关于权 w 正交。
+    正则施图姆-刘维尔问题。在有限区间 [a, b] 上，求满足
+    -(p y')' + q y = lambda w y 的非零解对 (lambda, y)，并配以使算子自伴的分离型
+    齐次边界条件。正则性要求 p 连续可微、q 与 w 连续，且 p、w 在闭区间上严格为正。
+    在这些假设下，本征值为实数并构成递增无界序列，属于不同本征值的本征函数关于
+    权 w 正交。
 
-    分离变量法寻找 u(x,t) = X(x)T(t) 形式的解。代入线性齐次方程并除以该乘积后，
-    只依赖 x 的一侧必须等于只依赖 t 的一侧，故两侧同为常数；该常数即本征值，
-    空间因子满足一个施图姆-刘维尔问题。对 [0, L] 上的弦振动 u_tt = c^2 u_xx，
-    边界条件 u(0,t)=u(L,t)=0，本征对为 y_n(x) = sin(n pi x / L)、
-    lambda_n = (n pi / L)^2，通解是各模态的叠加
-    sum_n (A_n cos(c n pi t / L) + B_n sin(c n pi t / L)) sin(n pi x / L)。
+    分离变量。该方法**尝试** u(x,t) = X(x)T(t) 形式的解。线性齐次**并不充分**：
+    只有当算子、系数、区域与边界条件在所选坐标下本身可分离时，分离才成立。
+    成立时，除以 X T 使一侧只依赖 x、另一侧只依赖 t，故两侧同为常数。采用
+    X'' / X = -lambda 的约定，该常数即本征值，X 满足一个施图姆-刘维尔问题。
+    （文献中也有相反的符号约定；命名本征值之前必须先固定符号。）
 
-    正交性正是系数可提取的原因：把初值与 y_n 作内积并除以 ||y_n||^2 = L/2
-    即可分离出 A_n。
+    具体算例：弦振动。对 [0, L] 上的 u_tt = c^2 u_xx，边界条件
+    u(0,t) = u(L,t) = 0，本征对为 y_n(x) = sin(n pi x / L)、
+    lambda_n = (n pi / L)^2。任意**有限**叠加
+    sum (A_n cos(c n pi t / L) + B_n sin(c n pi t / L)) sin(n pi x / L)
+    满足方程与边界条件。相应的无穷级数在初值容许（与边界条件相容且属于适当空间）
+    时表示解；收敛意义（逐点、一致或 L^2）必须显式声明，本节点不提供。
+
+    系数提取。正交性正是系数可提取的原因：把初值与 y_n 作内积并除以
+    ||y_n||^2 = L/2 即可分离出 A_n。该步骤**仅**用到正交性。本征函数系的
+    **完备性**——即级数能表示任意容许初态——是另一条定理，此处为引用，
+    本节点不予建立。
 
 assumptions_and_notation:
   - "L > 0 and c > 0 are real constants; n, m range over positive integers. / L > 0、c > 0 为实常数；n、m 取正整数。"
@@ -99,20 +126,30 @@ mode_a_intuition:
     chinese: "偏微分方程在每一点上都把空间与时间耦合在一起，无从下手积分。若不能拆开这层耦合，已有的常微分方程手段就用不上。"
   primary:
     english: |-
-      Strike a drumhead: the complicated motion decomposes into a few basic
-      standing-wave patterns, each keeping its shape while its amplitude rises
-      and falls. Separation of variables is the algebraic form of that
-      observation - assume shape and timing factor apart, and the equation itself
-      tells you which shapes are allowed (the eigenfunctions) and how fast each
-      one oscillates (the eigenvalues).
+      Pluck a guitar string clamped at both ends. The motion decomposes into the
+      fundamental and its harmonics: each is a fixed spatial shape whose
+      amplitude rises and falls in time, and the clamped ends force exactly which
+      shapes can survive. Separation of variables is the algebraic form of that
+      observation - posit that shape and timing factor apart, and the equation
+      plus the boundary conditions tell you which shapes are admissible (the
+      eigenfunctions) and how fast each oscillates (the eigenvalues).
+
+      The string is the primary model because it is exactly the case this node
+      verifies. A struck drumhead is the same IDEA in two dimensions, but its
+      modes are Bessel-type, not sines; use it only as a bounded illustration of
+      "modes superpose", never as the worked instance.
     chinese: |-
-      敲一面鼓：复杂的运动可以分解为若干基本驻波形状，每个形状保持不变，只是
-      振幅随时间起落。分离变量正是这一观察的代数形式——先假定“形状”与“节奏”
-      可以分开，方程本身会告诉你哪些形状被允许（本征函数）、每个形状振动多快
-      （本征值）。
+      拨一根两端固定的吉他弦。运动分解为基频与各次谐波：每个都是固定的空间形状，
+      振幅随时间起落，而固定的两端恰好决定了哪些形状能够存活。分离变量正是这一
+      观察的代数形式——先假定「形状」与「节奏」可以分开，方程连同边界条件会告诉
+      你哪些形状被允许（本征函数）、每个振动多快（本征值）。
+
+      以弦为主模型，是因为它正是本节点实际验证的情形。敲击的鼓面是同一**想法**
+      在二维的版本，但其模态属贝塞尔型而非正弦；只可用作「模态可叠加」的有界示意，
+      绝不可当作算例。
   limitations:
-    english: "The drum picture presumes linearity and homogeneous boundary conditions. Nonlinear equations do not superpose, and inhomogeneous problems need extra treatment before this method applies."
-    chinese: "鼓面图景以线性与齐次边界条件为前提。非线性方程不满足叠加原理，非齐次问题需另行处理后才适用本方法。"
+    english: "The string picture presumes linearity, homogeneous boundary conditions, and a separable setting. Nonlinear equations do not superpose; inhomogeneous problems need extra treatment; and linearity alone does not make a problem separable."
+    chinese: "弦的图景以线性、齐次边界条件与可分离设置为前提。非线性方程不满足叠加原理；非齐次问题需另行处理；且仅有线性性并不使问题可分离。"
 
 llm_physical_mapping: "敲击一面鼓，鼓面的复杂震动可以分解为多个基本震动模式（本征态）的叠加。每个本征态都有特定的空间驻波形状。整个过程就是用一组正交的空间振动基底拼凑出任意的初始敲击状态。"
 
@@ -123,10 +160,14 @@ mapping_boundary:
     - "reading modal superposition as rebuilding initial data from an orthogonal basis / 把模态叠加读作用正交基重建初值"
     - "explaining why orthogonality lets each coefficient be extracted independently / 解释正交性为何让系数可以逐个独立提取"
   invalid_inferences:
-    - "Superposition requires linearity; the drum analogy must not be carried to nonlinear PDEs. / 叠加依赖线性性，鼓面类比不得推广到非线性方程。"
-    - "A real drumhead is a 2D membrane with Bessel-type modes; the worked case here is the 1D string. Do not conflate the two mode families. / 真实鼓面是二维膜、模态属贝塞尔型；此处算例是一维弦，两族模态不可混同。"
+    - "Linear and homogeneous does NOT imply separable. Separability additionally requires the operator, coefficients, domain and boundary conditions to separate in the chosen coordinates; the audit includes the counterexample x*y*u_xx + u_yy = 0. / 线性齐次**不蕴含**可分离；还需算子、系数、区域与边界条件在所选坐标下可分离。审计含反例 x*y*u_xx + u_yy = 0。"
+    - "Superposition requires linearity; the string analogy must not be carried to nonlinear PDEs. / 叠加依赖线性性，弦的类比不得推广到非线性方程。"
+    - "A drumhead is a 2D membrane with Bessel-type modes; the worked case here is the 1D string. Do not conflate the two mode families. / 鼓面是二维膜、模态属贝塞尔型；此处算例是一维弦，两族模态不可混同。"
     - "Orthogonality of eigenfunctions is proved for distinct eigenvalues; it is not an assumption about arbitrary function pairs. / 本征函数正交性是对不同本征值证明的，不是关于任意函数对的假设。"
-    - "This node does not establish completeness of the eigenbasis or convergence of the series; those are cited textbook results. / 本节点不建立本征基的完备性或级数收敛性，二者是引用的教科书结论。"
+    - "Orthogonality does NOT imply completeness. Recovering coefficients of a known finite combination uses orthogonality alone and proves nothing about representing arbitrary initial data. / 正交性**不蕴含**完备性。从已知有限组合还原系数只用到正交性，不能说明可表示任意初值。"
+    - "Verifying finitely many modes does NOT verify the infinite series; convergence and its sense must be stated separately. / 验证有限个模态**不等于**验证无穷级数；收敛性及其意义须另行声明。"
+    - "The sign convention for the separation constant must be fixed before eigenvalues are named; the opposite convention flips the sign of lambda. / 分离常数的符号约定须在命名本征值前固定；相反约定会翻转 lambda 的符号。"
+    - "The regular Sturm-Liouville conclusions require the stated regularity and self-adjoint boundary conditions; p, w > 0 alone is not sufficient. / 正则 S-L 的结论依赖所述正则性与自伴边界条件；仅有 p、w > 0 并不充分。"
 
 common_misconceptions:
   - signature: "separation_assumed_always_valid"
@@ -162,16 +203,22 @@ tool_truthfulness:
   tool_status: "run_with_log"
   capability: "deterministic_calculation"
   tool_family: "SymPy"
-  audit_scope: "eigenpair verification, Dirichlet boundary satisfaction, pairwise and symbolic orthogonality, norm L/2, separation identity, two-mode superposition, coefficient recovery"
+  audit_scope: "eigenpair verification, Dirichlet boundary satisfaction, pairwise orthogonality, sampled integer-pair orthogonality, norm L/2, separation identity, non-separable counterexample, two-mode superposition, coefficient recovery"
   script_ref: ".ai/PROGRAM_RUNS/kcp-batch-2-mode-a-certification-0001/AUDITS/PDE-486.py"
   log_ref: ".ai/PROGRAM_RUNS/kcp-batch-2-mode-a-certification-0001/LOGS/PDE-486.log"
   environment_ref: "python 3.14.6, sympy 1.14.0, Windows PowerShell"
-  assertions_passed: 20
+  assertions_passed: 21
   exit_code: 0
+  evidence_scope_statement: >-
+    What passed is the concrete Dirichlet string case on [0, L]. Nothing here may
+    be upgraded into the general Sturm-Liouville spectral theorem, completeness,
+    or a proof that separation of variables applies to an arbitrary PDE.
   limitations:
     - "The audit verifies the Dirichlet string instance on [0,L]; it does NOT prove the general Sturm-Liouville spectral theorem."
     - "Completeness of the eigenfunction basis and convergence of the infinite series are NOT machine-checked; they are cited textbook results."
-    - "Symbolic n != m orthogonality was confirmed at sampled integer pairs, not as a fully general symbolic proof."
+    - "The n != m orthogonality assertion substitutes the sampled integer pairs (2,5) and (3,7). It is sampled evidence, NOT a general symbolic proof; the assertion is named accordingly."
+    - "Only finitely many modes were verified; the infinite series was not."
+    - "The audit verifies the asserted propositions only. It does NOT verify that the definition is correctly stated or that the right propositions were chosen; that judgement is the independent reviewer's."
     - "The torch snippet in code_implementation is an intuition anchor only and was NOT executed."
 
 certification_boundary:

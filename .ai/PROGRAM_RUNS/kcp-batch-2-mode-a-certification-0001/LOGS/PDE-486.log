@@ -12,11 +12,12 @@
 [PASS] ||y_1||^2 == L/2 (nonzero, so the basis is normalisable)
 [PASS] ||y_2||^2 == L/2 (nonzero, so the basis is normalisable)
 [PASS] ||y_3||^2 == L/2 (nonzero, so the basis is normalisable)
-[PASS] symbolic integral of sin(n pi x/L) sin(m pi x/L) vanishes for integer n != m
+[PASS] sampled integer pairs (2,5) and (3,7): integral of sin(n pi x/L) sin(m pi x/L) vanishes; sampled evidence only, not a general symbolic proof
 [PASS] wave equation separates as T''/(c^2 T) - X''/X == 0
 [PASS] a two-mode superposition satisfies the wave equation u_tt = c^2 u_xx
 [PASS] the superposition still satisfies both boundary conditions
 [PASS] orthogonality recovers coefficients 3 and -5 from a known combination
+[PASS] counterexample x*y*u_xx + u_yy = 0 is linear and homogeneous but NOT separable (mixed partial of the quotient is nonzero), so separability is an extra hypothesis
 [PASS] a non-eigenfunction (x) fails the Dirichlet condition at x=L, so not every smooth function is an eigenfunction
-TOTAL 20 assertions, all passed
+TOTAL 21 assertions, all passed
 exit_code=0

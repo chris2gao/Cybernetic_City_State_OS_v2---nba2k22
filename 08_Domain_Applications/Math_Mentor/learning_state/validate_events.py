@@ -9,10 +9,16 @@ Two guarantees are deliberately kept apart:
 Passing here does NOT make a transition legal, and legality does not imply
 authority.  Nothing in this module writes state; it returns findings.
 
-The integrity chain matters because the events live in the local CityState
+The integrity chain matters because the events live in a learner-bound local
 store rather than in Git, so there is no commit history to prove that an earlier
-event was not edited after the fact.  `prev_event_digest` restores that property
-locally: altering an event invalidates every later link.
+event was not edited after the fact.  `prev_event_digest` gives tamper-evidence
+for events that have a successor: altering one invalidates every later link.
+
+Scope, stated honestly: the chain ALONE cannot detect modification of the newest
+event or deletion of a suffix, because nothing downstream links to them.  The
+tail anchor written by `append_event.py` covers that case.  Neither is Git
+immutability nor a cryptographic signature - an actor able to rewrite both the
+events and the anchor can defeat them.
 """
 
 from __future__ import annotations
@@ -24,11 +30,15 @@ from pathlib import Path
 import sys
 from typing import Any
 
-SCHEMA_VERSION = "citystate.math_mentor.learning_event.v1"
+SCHEMA_VERSION = "citystate.math_mentor.learning_event.v2"
 
-VALID_EVENT_TYPES = frozenset(
-    {"classroom_result", "review_result", "human_acceptance", "correction"}
-)
+# `correction` is intentionally absent in v2.  The v1 implementation left it
+# half-working (a corrected event poisoned every later append), and a
+# replay-safe compensation model must be specified in the contract before it is
+# re-enabled.  Explicitly unsupported beats silently broken.
+VALID_EVENT_TYPES = frozenset({"classroom_result", "review_result", "human_acceptance"})
+
+UNSUPPORTED_EVENT_TYPES = frozenset({"correction"})
 
 VALID_STATUSES = frozenset(
     {
@@ -124,29 +134,34 @@ def validate_event(event: dict, report: ValidationReport) -> None:
         )
 
     event_type = event.get("event_type")
-    if event_type not in VALID_EVENT_TYPES:
+    if event_type in UNSUPPORTED_EVENT_TYPES:
+        report.error(
+            event_id,
+            f"event_type {event_type!r} is unsupported_pending_contract in v2; "
+            "a replay-safe compensation model must be specified before re-enabling it",
+        )
+    elif event_type not in VALID_EVENT_TYPES:
         report.error(event_id, f"invalid event_type: {event_type!r}")
 
     forbidden = _scan_forbidden(event)
     if forbidden is not None:
         report.error(event_id, f"forbidden private field present at {forbidden}")
 
-    if event_type == "correction":
-        if not event.get("corrects_event_id"):
-            report.error(event_id, "correction event requires corrects_event_id")
-    else:
-        node_ref = event.get("node_ref")
-        if not isinstance(node_ref, dict) or not node_ref.get("node_id"):
-            report.error(event_id, "non-correction event requires node_ref.node_id")
+    node_ref = event.get("node_ref")
+    if not isinstance(node_ref, dict) or not node_ref.get("node_id"):
+        report.error(event_id, "learning event requires node_ref.node_id")
 
-        transition = event.get("transition")
-        if not isinstance(transition, dict):
-            report.error(event_id, "non-correction event requires a transition object")
-        else:
-            for side in ("from", "to"):
-                value = transition.get(side)
-                if value not in VALID_STATUSES:
-                    report.error(event_id, f"transition.{side} is not a valid status: {value!r}")
+    if not event.get("student_ref"):
+        report.error(event_id, "learning event requires a privacy-safe student_ref")
+
+    transition = event.get("transition")
+    if not isinstance(transition, dict):
+        report.error(event_id, "learning event requires a transition object")
+    else:
+        for side in ("from", "to"):
+            value = transition.get(side)
+            if value not in VALID_STATUSES:
+                report.error(event_id, f"transition.{side} is not a valid status: {value!r}")
 
     provenance = event.get("evidence_provenance")
     if not isinstance(provenance, dict):
@@ -155,6 +170,9 @@ def validate_event(event: dict, report: ValidationReport) -> None:
         source_type = provenance.get("source_type")
         if source_type not in VALID_SOURCE_TYPES:
             report.error(event_id, f"invalid evidence_provenance.source_type: {source_type!r}")
+        for key in ("source_ref", "evidence_timestamp", "evidence_limitations"):
+            if not provenance.get(key):
+                report.error(event_id, f"evidence_provenance.{key} is required")
 
     digest = event.get("prev_event_digest")
     if digest is not None and (not isinstance(digest, str) or len(digest) != 64):

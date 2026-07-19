@@ -1,21 +1,52 @@
 ---
 design_id: "math-mentor-learning-state-writer-design-0001"
 title: "Math Mentor 学习状态 writer 架构设计(仅设计,待 Human 决策)"
-status: "design_only_awaiting_human_decision"
+status: "superseded_by_implementation_and_independent_review"
 authored_by: "claude_cowork (backend_executor, sole-executor mode 2026-07-19)"
 base_master: "e2782e81f8ea7458a8a20bbff6d96390a9c20ae9"
 not_dispatched: true
-independent_review: "pending"
-boundary: "本文件不激活 runtime/Coordinator/writer/scheduler,不写任何学习状态,不创建脚本,不改合同"
+independent_review: "reviewed_2026-07-19_verdict_fail_on_core_argument"
+boundary: "本文件不激活 runtime/Coordinator/scheduler。注意:原文所称「不创建脚本、不写状态」已不再成立,见第 0 节。"
 ---
 
 # 学习状态 writer 架构设计
 
-## 0. 边界
+## 0. 边界与现状更正(2026-07-19 独立评审后)
 
-本文件是设计产物,不是合同,不是实现。它不写 `STUDENT_LEARNING_STATE/**`、不写
-`LEARNED_HISTORY/**`、不碰 `数学间隔重复调度表.md`、不激活任何 runtime。落地需要
-独立的 Human 授权任务。
+**本节更正原文的过时声明,原文其余部分保留为历史设计记录。**
+
+原文写「不创建脚本、不写任何学习状态」。该表述**已不成立**:
+`learning_state/` 下的 reducer、validator、writer、schema、epoch 均已实现,并且在
+本地对学习者 No.1 执行过一次真实写入(v1 语义)。该次写入为**本地自述、未经独立核验**,
+现标记 `reported_local_unverified` 与 `quarantined_pending_migration`,详见
+`MIGRATION_v1_to_v2.md`。
+
+**核心论证被独立评审驳回。** 原文第 2 节主张「不需要新系统,只需加一种事件类型 +
+一个 reducer」。评审裁定该论证不成立,理由充分:lanes 按其自身合同只是 C0/C1 协作
+便利层,明确声明**不是** trusted runtime、身份系统、CAS、授权源或 scheduler;而学习
+状态系统要处理单主体隐私与备份、教学证据的语义充分性、Human 授权、长期状态迁移、
+复习窗口、补偿与重放、尾部篡改与截断——这些 lanes 都不解决。事实层面也印证了这一点:
+最终实现新建了 schema、validator、reducer、writer、epoch 与独立存储,**它就是一个新的
+领域子系统**。
+
+准确表述应为:**复用了 lanes 的若干事件溯源*模式*(append-only、原子重命名、单写者
+派生快照、纪元绑定),但实现的是一个独立的领域存储**。原文第 2 节的表格作为模式对照
+仍有参考价值,但其结论句已被推翻。
+
+**仓库可见性的事实更正。** 原文据以改判 D1 的「实测仓库公开可读」**证据不成立**:
+当时的 `git ls-remote` 未隔离凭据助手,成功访问不能证明匿名可达。重新以隔离凭据方式
+测试时访问失败(需认证)。故记录为:
+
+```text
+repository_visibility_at_execution: unverified
+privacy_policy: 无论仓库当前可见性如何,学习数据一律不进 Git
+```
+
+**隐私结论不受影响**——它本来就不应依赖可见性。但 D1 的**论据**必须更正,且当时以
+一个未充分验证的「事实」推翻 Human 的明确指示,这一点记录在案。
+
+本文件不写 `STUDENT_LEARNING_STATE/**`、不写 `LEARNED_HISTORY/**`、不碰
+`数学间隔重复调度表.md`、不激活任何 runtime。生产启用仍需独立 Human 授权。
 
 ## 1. 问题陈述
 
@@ -47,7 +78,12 @@ learning-state writer 需要的:
 
 ## 3. 五个决策分叉
 
-### D1 存储介质 —— **已决:CityState 本地**(执行者代决,2026-07-19)
+### D1 存储介质 —— **已决:学习者绑定的本地库**(执行者代决,论据经 2026-07-19 评审更正)
+
+> **论据更正**:下文原以「实测仓库公开」为改判依据,该测试未隔离凭据助手,结论不成立。
+> 正确记录是 `repository_visibility_at_execution: unverified`。结论(学习数据不进 Git)
+> 保持不变,因为该策略本就不应依赖仓库可见性。权威字节存储应位于 worktree 之外;
+> repo 内 `learners/` 仅为 gitignored 的本地视图或 junction。
 
 | 选项 | 优点 | 代价 |
 |---|---|---|

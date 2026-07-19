@@ -4,31 +4,59 @@
 # bound value here.  Bumping the epoch is how a transition-table change avoids
 # silently re-interpreting historical events.
 #
-# Status: the writer program has NOT been activated.  This file declares the
-# epoch that step-3 (first real write) would use; nothing is persisted yet.
+# v1 -> v2 was forced by the 2026-07-19 independent review: transition edges,
+# evidence requirements and correction support all changed, so v1 events must
+# NOT be read under v2 semantics.
 
-schema_version: "citystate.math_mentor.learning_state_epoch.v1"
-bound_epoch: "learning-state-epoch-v1"
+schema_version: "citystate.math_mentor.learning_state_epoch.v2"
+bound_epoch: "learning-state-epoch-v2"
+superseded_epoch: "learning-state-epoch-v1"
 transition_table_ref: "08_Domain_Applications/Math_Mentor/learning_state/reduce_readonly.py"
 transition_source_contract: "08_Domain_Applications/Math_Mentor/STUDENT_LEARNING_STATE_SCHEMA.md#5-status-transition-table"
 graduation_contract: "08_Domain_Applications/Math_Mentor/GRADUATION_CRITERIA.md"
 minimum_review_passes: 2
 
+v2_changes:
+  - "Added review_passed -> review_due and stale -> review_due (contract section 5.1) after amending the contract first."
+  - "Implemented blocked -> prior valid status with blocked_from and blocker-resolution evidence."
+  - "Graduation now requires distinct review windows, not just a pass count, and is never persisted autonomously."
+  - "Required student_ref, source_ref, evidence_timestamp and evidence_limitations on every event."
+  - "Required classroom_evidence for classroom_passed and review_evidence for review_passed."
+  - "Rejected reuse of a source_ref or a review_window_id."
+  - "Disabled correction as unsupported_pending_contract; the v1 behaviour made later appends permanently fail."
+
 store_location:
-  medium: "local_citystate_store"
-  path: "%LOCALAPPDATA%/CityState/learning_state/"
+  medium: "learner_bound_local_store"
+  canonical_path: "%LOCALAPPDATA%/CityState/learning_state/<learner_key>/"
+  repo_local_view: "08_Domain_Applications/Math_Mentor/learners/<learner_key>/"
+  repo_local_view_role: >-
+    Gitignored local view or junction only. It is a convenience entry point for
+    the Human, not the canonical byte store, and it is never tracked.
   repository_storage: "forbidden"
   reason: >-
-    This repository is publicly readable (verified 2026-07-19 by anonymous
-    git ls-remote). Learning traces are a sensitive profile and must not enter
-    public history. Code and contracts live in the repository; events and
-    snapshots do not.
+    A learning trace (which nodes a named person failed, how often, which
+    misconceptions recur) is a sensitive profile. It stays out of Git regardless
+    of the repository's current visibility, which is NOT independently verified
+    by this project.
 
 activation_status:
-  writer_activated: false
+  implemented: true
+  locally_reported_first_write: true
+  independently_accepted: false
+  production_authorized: false
   scheduler_writer_activated: false
-  first_real_write_performed: false
   note: >-
-    Steps 1-2 of the landing order (read-only reducer, schema and validator) are
-    complete. Step 3 (first real write, Human present) has not been authorized
-    or performed.
+    Steps 1-2 (read-only reducer; schema and validator) and a v1 writer exist.
+    A first write was performed locally under v1 and is self-reported only - it
+    has not been independently verified. The v2 implementation has not written
+    any real learner event.
+
+v1_store_disposition:
+  status: "reported_local_unverified"
+  quarantine: "quarantined_pending_migration"
+  action_required: >-
+    v1 events were written under the older transition and evidence semantics and
+    lack the fields v2 requires. A Human-run, non-destructive migration is needed
+    before they may be read under v2. Nothing was migrated automatically, and no
+    learner detail is published here.
+  migration_spec: "08_Domain_Applications/Math_Mentor/learning_state/MIGRATION_v1_to_v2.md"

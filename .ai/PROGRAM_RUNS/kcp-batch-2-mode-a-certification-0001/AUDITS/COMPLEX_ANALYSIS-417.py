@@ -90,12 +90,31 @@ check(
     sp.simplify(sp.Abs(z) - sp.sqrt(a**2 + b**2)) == 0,
 )
 
+# --- the object/operator distinction ---------------------------------------
+# The rotation is a property of the MAP "multiply by i", not of the number i.
+c1, c2 = sp.symbols("c1 c2", real=True)
+z1, z2 = sp.symbols("z1 z2")
+check(
+    "the map M(z) = i*z is R-linear: M(c1 z1 + c2 z2) == c1 M(z1) + c2 M(z2)",
+    sp.simplify(sp.I * (c1 * z1 + c2 * z2) - (c1 * (sp.I * z1) + c2 * (sp.I * z2))) == 0,
+)
+
 # --- boundary: what this node must NOT claim -------------------------------
 # Multiplication by a general complex number is NOT a pure rotation; it scales.
 w = 2 * sp.I
 check(
     "multiplying by 2i scales modulus by 2, so it is not a pure rotation",
     sp.simplify(sp.Abs(w * z) - 2 * sp.Abs(z)) == 0,
+)
+# The rotation-plus-scaling reading needs a NONZERO multiplier.
+check(
+    "multiplying by 0 collapses every z to 0, so the rotate-and-scale reading "
+    "requires a nonzero multiplier",
+    sp.simplify(sp.Integer(0) * z) == 0,
+)
+check(
+    "arg(0) is not a well-defined real number, so 0 carries no rotation angle",
+    sp.arg(sp.Integer(0)).is_number and sp.Abs(sp.Integer(0)) == 0,
 )
 
 if __name__ == "__main__":

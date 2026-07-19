@@ -82,6 +82,19 @@ Where older wording below would imply machine proof for Mode B, automatic bridge
 
 既有节点缺失该字段时**不阻断教学**：Prep_Architect 自行构造陷阱方向，并在 `evidence_trace.limits` 标注 `common_misconceptions_absent`。不得为补齐该字段而改写既有教学内容；补齐属于节点修复任务，需按批次授权执行。
 
+该缺失是**显式技术债，不是永久豁免**：
+
+```yaml
+common_misconceptions_gate:
+  new_or_repaired_node: required          # 缺失即不通过 Stage 4
+  existing_node_missing: warning_with_backfill_queue
+  silent_permanent_absence: forbidden
+```
+
+即：既有节点缺失时发出警告并登记补齐队列条目；不得因为“暂不阻断”而让缺失静默长期存在。
+Stage 4 教学就绪门与节点质量审计共同承载该检查，`common_misconceptions` 不是身份字段，
+也不应推迟到 Stage 6 桥端点认证才检查。
+
 ### 阶段 3：沙盒验证与测试 (Sandbox / Audit Evaluation) [按轨道分化]
 
 - **【计算代数主路】** $\to$ **沙盒全量测试 (Bulk Sandbox Evaluation)**

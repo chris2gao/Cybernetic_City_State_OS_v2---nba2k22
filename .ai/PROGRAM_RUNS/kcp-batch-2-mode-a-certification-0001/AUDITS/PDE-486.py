@@ -70,12 +70,14 @@ for k in (1, 2, 3):
         sp.simplify(norm_sq - L / 2) == 0,
     )
 
-# general n != m orthogonality, symbolic in n and m
+# Sampled (not general) orthogonality check.  The name says "sampled" because only
+# the listed integer pairs are substituted; this is NOT a general symbolic proof.
 general = sp.integrate(
     sp.sin(n * sp.pi * x / L) * sp.sin(m * sp.pi * x / L), (x, 0, L)
 )
 check(
-    "symbolic integral of sin(n pi x/L) sin(m pi x/L) vanishes for integer n != m",
+    "sampled integer pairs (2,5) and (3,7): integral of sin(n pi x/L) sin(m pi x/L) "
+    "vanishes; sampled evidence only, not a general symbolic proof",
     sp.simplify(general.subs({n: 2, m: 5})) == 0
     and sp.simplify(general.subs({n: 3, m: 7})) == 0,
 )
@@ -119,6 +121,22 @@ coeff2 = sp.simplify(
 check(
     "orthogonality recovers coefficients 3 and -5 from a known combination",
     sp.simplify(coeff1 - 3) == 0 and sp.simplify(coeff2 + 5) == 0,
+)
+
+# --- boundary: linear + homogeneous does NOT imply separable ----------------
+# Counterexample: x*y*u_xx + u_yy = 0 is linear and homogeneous, yet dividing by
+# X(x)Y(y) leaves a term depending on both variables.  If the quotient could be
+# split as f(x) + g(y), its mixed second partial would vanish; it does not.
+y_var = sp.Symbol("y", real=True)
+Xf, Yf = sp.Function("X"), sp.Function("Y")
+product = Xf(x) * Yf(y_var)
+non_separable = x * y_var * sp.diff(product, x, 2) + sp.diff(product, y_var, 2)
+quotient = sp.simplify(non_separable / product)
+mixed_partial = sp.simplify(sp.diff(quotient, x, y_var))
+check(
+    "counterexample x*y*u_xx + u_yy = 0 is linear and homogeneous but NOT separable "
+    "(mixed partial of the quotient is nonzero), so separability is an extra hypothesis",
+    mixed_partial != 0,
 )
 
 # --- boundary: what this audit does NOT establish --------------------------

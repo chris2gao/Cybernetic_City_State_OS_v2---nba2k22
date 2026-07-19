@@ -40,30 +40,50 @@ sub_topics:
   - "复数的代数形式 a + bi"
   - "乘法 i * z 的旋转几何解释"
   - "阿尔冈图（复平面）的建立"
-  - "虚数在物理矢量场描述中的实在性"
+  - "复数在二维旋转与振幅—相位计算中的表示作用，及数学表示与物理可观测量之间的边界"
+
+subtopic_revision_note: >-
+  第四子主题原为「虚数在物理矢量场描述中的实在性」。「实在性」是本体论/物理解释
+  措辞，不能伪装成数学结论，且无法由确定性审计支持。经独立评审(2026-07-19)后改为
+  有界的「表示作用与表示—可观测量边界」，教学时按解释性内容处理。
 
 pure_math_definition:
   english: |-
-    A complex number is an expression a + bi with a, b real and i satisfying
-    i^2 = -1. Addition is componentwise; multiplication is determined by
-    distributivity together with i^2 = -1. For z = a + bi the real part is a,
-    the imaginary part is b, and the modulus is |z| = sqrt(a^2 + b^2).
+    Construct the complex numbers as the set of ordered pairs (a, b) of real
+    numbers with componentwise addition and the product
+    (a, b)(c, d) = (ac - bd, ad + bc). This set is a field. Writing i for (0, 1)
+    and identifying the real number a with (a, 0), every element is written
+    uniquely as a + bi; that expression is standard NOTATION for the pair, not
+    the object itself. In this notation i^2 = -1. For z = a + bi the real part is
+    a, the imaginary part is b, and the modulus is |z| = sqrt(a^2 + b^2).
 
-    Multiplication by i sends a + bi to -b + ai. Identifying a + bi with the
-    point (a, b), this is exactly the linear map given by the matrix
-    [[0, -1], [1, 0]], a counterclockwise quarter turn about the origin. It has
-    determinant 1 and preserves modulus, so it is a rotation and not a scaling.
-    Applying it four times returns every point to itself, which is the geometric
+    Define the map M(z) = i z. It sends a + bi to -b + ai, and it is R-linear.
+    Under the identification of a + bi with the point (a, b), M is exactly the
+    linear map with matrix [[0, -1], [1, 0]] in the standard basis with the
+    standard orientation: a counterclockwise quarter turn about the origin. Its
+    determinant is 1 and it preserves modulus, so M is a rotation and not a
+    scaling. Applying M four times is the identity, which is the geometric
     content of i^4 = 1.
+
+    Note the distinction: the rotation is a property of the MAP "multiply by i",
+    not of the number i itself. For a nonzero w, the map z -> wz is a rotation by
+    arg(w) composed with a scaling by |w|; for w = 0 the map collapses everything
+    to 0 and is neither.
   chinese: |-
-    复数是形如 a + bi 的表达式，其中 a、b 为实数，i 满足 i^2 = -1。加法按分量
-    进行；乘法由分配律与 i^2 = -1 唯一决定。对 z = a + bi，实部为 a，虚部为 b，
+    把复数构造为实数有序对 (a, b) 的集合，加法按分量进行，乘法为
+    (a, b)(c, d) = (ac - bd, ad + bc)。该集合构成域。记 i 为 (0, 1)，并把实数 a
+    与 (a, 0) 等同，则每个元素唯一地写成 a + bi；该式是这个有序对的标准**记号**，
+    而不是对象本身。在此记号下 i^2 = -1。对 z = a + bi，实部为 a，虚部为 b，
     模为 |z| = sqrt(a^2 + b^2)。
 
-    乘以 i 把 a + bi 送到 -b + ai。若把 a + bi 与平面点 (a, b) 等同，这恰是矩阵
-    [[0, -1], [1, 0]] 给出的线性映射，即绕原点逆时针旋转 90°。该矩阵行列式为 1
-    且保模，所以它是旋转而非缩放。连续作用四次使每个点回到自身，这正是 i^4 = 1
-    的几何含义。
+    定义映射 M(z) = i z。它把 a + bi 送到 -b + ai，且是 R-线性的。在把 a + bi 与
+    平面点 (a, b) 等同后，M 恰是标准基与标准定向下矩阵为 [[0, -1], [1, 0]] 的线性
+    映射，即绕原点逆时针旋转 90°。其行列式为 1 且保模，故 M 是旋转而非缩放。
+    M 作用四次为恒等映射，这正是 i^4 = 1 的几何含义。
+
+    注意区分：旋转是**映射**「乘以 i」的性质，不是数 i 本身的性质。对非零 w，
+    映射 z -> wz 是转 arg(w) 再按 |w| 缩放的复合；当 w = 0 时该映射把一切压成 0，
+    既非旋转也非缩放。
 
 assumptions_and_notation:
   - "a, b denote real numbers throughout. / 全文中 a、b 表示实数。"
@@ -110,9 +130,13 @@ mapping_boundary:
     - "identifying a+bi with the Argand-plane point (a,b) / 把 a+bi 与阿尔冈图上的点 (a,b) 等同"
     - "showing multiplication by i preserves length / 说明乘以 i 保持长度"
   invalid_inferences:
-    - "Multiplication by an arbitrary complex number is NOT a pure rotation; it scales by the modulus. / 乘以任意复数并非纯旋转，它按模缩放。"
+    - "Multiplication by an arbitrary NONZERO complex number is rotation composed with scaling, not pure rotation; for the zero multiplier neither applies and arg is undefined. / 乘以任意**非零**复数是旋转与缩放的复合而非纯旋转；乘子为零时二者皆不适用且辐角无定义。"
+    - "The rotation is a property of the map 'multiply by i', not of the number i. Saying 'i is a rotation' conflates an element with an operator. / 旋转是映射「乘以 i」的性质，不是数 i 的性质；说「i 是旋转」混淆了元素与算子。"
+    - "The quarter-turn reading depends on the standard basis and orientation of the Argand plane; it is not basis-independent. / 四分之一转的读法依赖阿尔冈平面的标准基与定向，并非与基无关。"
+    - "a + bi is notation for an ordered pair; do not treat the written expression as the mathematical object. / a + bi 是有序对的记号，不可把书写表达式当作数学对象本身。"
     - "The gear/crank metaphor must not imply that complex numbers are mechanical objects or that i carries physical units. / 齿轮曲柄比喻不得暗示复数是机械物件或 i 带物理量纲。"
     - "'Imaginary' is a historical label, not a claim about existence. / “虚”是历史称谓，不是关于存在性的断言。"
+    - "Using complex numbers to model a physical system does NOT imply that a physical quantity has imaginary ontology, nor that an imaginary part is directly observable. Representation is not ontology. / 用复数建模物理系统**不**蕴含物理量具有虚数本体，也不蕴含虚部可直接观测；表示不等于本体。"
     - "This node does not establish complex differentiability, analyticity, or any holomorphic-function property. / 本节点不建立复可微性、解析性或任何全纯函数性质。"
 
 common_misconceptions:
@@ -151,14 +175,15 @@ tool_truthfulness:
   tool_status: "run_with_log"
   capability: "deterministic_calculation"
   tool_family: "SymPy"
-  audit_scope: "algebraic form, multiplication by i as rotation, modulus preservation, rotation-matrix correspondence, Argand additivity"
+  audit_scope: "algebraic form, multiplication by i as rotation, R-linearity of that map, modulus preservation, rotation-matrix correspondence, Argand additivity, zero-multiplier boundary"
   script_ref: ".ai/PROGRAM_RUNS/kcp-batch-2-mode-a-certification-0001/AUDITS/COMPLEX_ANALYSIS-417.py"
   log_ref: ".ai/PROGRAM_RUNS/kcp-batch-2-mode-a-certification-0001/LOGS/COMPLEX_ANALYSIS-417.log"
   environment_ref: "python 3.14.6, sympy 1.14.0, Windows PowerShell"
-  assertions_passed: 14
+  assertions_passed: 17
   exit_code: 0
   limitations:
-    - "sub_topic 4 (虚数在物理矢量场描述中的实在性) is conceptual and carries NO machine evidence; teach it as interpretation, not as a verified result."
+    - "sub_topic 4 concerns representation and the representation/observable boundary. It is interpretive and carries NO machine evidence; teach it as interpretation, never as a verified result."
+    - "The audit verifies the asserted propositions only. It does NOT verify that the definition is correctly stated or that the right propositions were chosen; that judgement is the independent reviewer's."
     - "Argument statements were checked at named points only, because arg is multivalued."
     - "Nothing here establishes analyticity or any holomorphic-function property."
 

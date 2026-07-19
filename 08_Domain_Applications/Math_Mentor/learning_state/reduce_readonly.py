@@ -1,23 +1,28 @@
 """Read-only learning-state reducer for Math Mentor.
 
-This module answers one question: *if these classroom events were persisted,
-what would the learning state become, and which events would be rejected?*
+This module answers one question: *if these events were persisted, what would
+the learning state become, and which events would be rejected?*
 
 It is deliberately inert.  It never writes learning state, learned history,
-scheduler files, node YAML, or any repository/runtime state.  It has no side
-effect other than returning values (the CLI prints them).  Persisting state
-requires a separate Human-authorized writer task; this module is the read-only
-first step of that program.
+scheduler files, node YAML, or any repository/runtime state.
 
-Storage note: the eventual writer stores events under the local CityState path,
-never in this repository, because the repository is publicly readable and
-learning traces are a sensitive profile.  This module reads fixtures/events from
-an explicit path argument and holds no default write target.
+Four layers are kept apart on purpose.  This module is layer 2 only:
+
+  1. structural validity      -> validate_events.py
+  2. transition legality      -> THIS MODULE
+  3. semantic sufficiency     -> evidence requirements below, still mechanical
+  4. Human authority          -> a procedural gate outside any code path here
+
+Layer 4 matters: `graduation_eligible` can be computed, but no code in this
+package may treat a string field as proof that a Human authorised anything.
 
 Contracts implemented here:
-  - `STUDENT_LEARNING_STATE_SCHEMA.md` section 4 (statuses) and section 5
-    (transition table with its forbidden shortcuts);
+  - `STUDENT_LEARNING_STATE_SCHEMA.md` sections 4, 5, 5.1 and 5.2;
   - `GRADUATION_CRITERIA.md` `graduation_minimum.minimum_review_passes`.
+
+Epoch v2 note: the transition set and evidence requirements changed after the
+2026-07-19 independent review, so the bound epoch was raised.  Events written
+under the v1 epoch are not silently reinterpreted.
 """
 
 from __future__ import annotations
@@ -46,20 +51,20 @@ VALID_EVENT_TYPES = frozenset(
     {"classroom_result", "review_result", "human_acceptance", "correction"}
 )
 
-# STUDENT_LEARNING_STATE_SCHEMA.md section 5.  `blocked` is reachable from any
-# status and returns to a prior valid status only with evidence provenance, so
-# it is handled separately rather than enumerated here.
+# STUDENT_LEARNING_STATE_SCHEMA.md section 5, including the 5.1 re-entry edges.
+# `blocked` is reachable from any status and returns to the recorded prior
+# status, so both directions are handled separately rather than enumerated.
 ALLOWED_TRANSITIONS = frozenset(
     {
         ("not_seen", "introduced"),
         ("introduced", "classroom_passed"),
         ("classroom_passed", "review_due"),
         ("review_due", "review_passed"),
-        ("review_passed", "review_due"),
+        ("review_passed", "review_due"),  # 5.1 re-entry, needs a new window
+        ("stale", "review_due"),  # 5.1 re-entry, needs remediation evidence
         ("review_passed", "graduated"),
         ("review_passed", "stale"),
         ("graduated", "stale"),
-        ("stale", "review_due"),
     }
 )
 
@@ -75,6 +80,9 @@ class NodeState:
     status: str = "not_seen"
     review_passes: int = 0
     last_event_id: str | None = None
+    blocked_from: str | None = None
+    counted_windows: frozenset[str] = frozenset()
+    graduation_eligible: bool = False
 
 
 @dataclass
@@ -84,6 +92,7 @@ class ReductionResult:
     snapshot: dict[str, NodeState] = field(default_factory=dict)
     accepted: list[str] = field(default_factory=list)
     rejected: list[tuple[str, str]] = field(default_factory=list)
+    superseded: list[str] = field(default_factory=list)
     write_performed: bool = False  # always False by construction
 
 
@@ -108,6 +117,73 @@ def _has_private_data(event: Any) -> str | None:
     return None
 
 
+def _evidence_requirements(target: str, event: dict, state: NodeState) -> str | None:
+    """Mechanical sufficiency checks. Returns a rejection reason, or None."""
+    provenance = event.get("evidence_provenance") or {}
+    source_type = provenance.get("source_type")
+
+    if target == "classroom_passed":
+        if source_type != "exam_agent":
+            return "classroom_passed requires evidence_provenance.source_type == 'exam_agent'"
+        classroom = event.get("classroom_evidence") or {}
+        missing = [
+            key
+            for key in (
+                "exam_agent_result",
+                "covered_subtopics",
+                "definition_restatement",
+                "trap_evidence",
+            )
+            if not classroom.get(key)
+        ]
+        if missing:
+            return f"classroom_passed missing required classroom_evidence: {sorted(missing)}"
+        if classroom.get("exam_agent_result") != "classroom_passed":
+            return "classroom_evidence.exam_agent_result must be 'classroom_passed'"
+
+    if target == "review_due":
+        window = event.get("review_window_id")
+        if not window:
+            return "entering review_due requires a review_window_id"
+        if window in state.counted_windows:
+            return f"review_window_id {window!r} was already counted; windows must be distinct"
+        if state.status == "stale" and not (event.get("remediation_evidence")):
+            return "stale -> review_due requires remediation_evidence"
+
+    if target == "review_passed":
+        if source_type != "spaced_review":
+            return "review_passed requires spaced_review evidence; classroom pass cannot be reused"
+        review = event.get("review_evidence") or {}
+        missing = [
+            key
+            for key in ("review_window_id", "review_result", "definition_retention", "transfer_evidence")
+            if not review.get(key)
+        ]
+        if missing:
+            return f"review_passed missing required review_evidence: {sorted(missing)}"
+        if review.get("review_result") != "passed":
+            return "review_evidence.review_result must be 'passed'"
+
+    if target == "graduated":
+        if state.review_passes < MINIMUM_REVIEW_PASSES:
+            return (
+                f"graduation needs >= {MINIMUM_REVIEW_PASSES} review passes, has {state.review_passes}"
+            )
+        if len(state.counted_windows) < MINIMUM_REVIEW_PASSES:
+            return (
+                f"graduation needs >= {MINIMUM_REVIEW_PASSES} DISTINCT review windows, "
+                f"has {len(state.counted_windows)}"
+            )
+        if not event.get("human_authorization_ref"):
+            return "graduation requires human_authorization_ref"
+        return (
+            "graduation is a procedural Human gate; a deterministic reducer may compute "
+            "graduation_eligible but must not persist 'graduated' autonomously"
+        )
+
+    return None
+
+
 def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
     """Fold events into a derived snapshot, rejecting every illegal step.
 
@@ -115,9 +191,9 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
     """
     result = ReductionResult()
     seen_ids: set[str] = set()
+    seen_source_refs: set[str] = set()
     corrected_ids: set[str] = set()
 
-    # Corrections are resolved first so a corrected event never lands.
     for event in events:
         if event.get("event_type") == "correction":
             target = event.get("corrects_event_id")
@@ -132,8 +208,10 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
             continue
         seen_ids.add(event_id)
 
+        # A superseded event is neither applied nor an error; it is recorded
+        # separately so a correction does not permanently poison the store.
         if event_id in corrected_ids:
-            _reject(result, event_id, "superseded by a correction event")
+            result.superseded.append(event_id)
             continue
 
         event_type = event.get("event_type")
@@ -164,6 +242,29 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
             _reject(result, event_id, "missing node_ref.node_id")
             continue
 
+        if not event.get("student_ref"):
+            _reject(result, event_id, "missing student_ref on a learning event")
+            continue
+
+        provenance = event.get("evidence_provenance") or {}
+        missing_provenance = [
+            key
+            for key in ("source_ref", "evidence_timestamp", "evidence_limitations")
+            if not provenance.get(key)
+        ]
+        if missing_provenance:
+            _reject(
+                result,
+                event_id,
+                f"evidence_provenance missing required keys: {sorted(missing_provenance)}",
+            )
+            continue
+
+        source_ref = str(provenance.get("source_ref"))
+        if source_ref in seen_source_refs:
+            _reject(result, event_id, f"source_ref {source_ref!r} already counted; cannot be reused")
+            continue
+
         transition = event.get("transition") or {}
         source = transition.get("from")
         target = transition.get("to")
@@ -181,12 +282,41 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
             )
             continue
 
+        # --- blocked handling (schema section 5) ---------------------------
         if target == "blocked":
             result.snapshot[node_id] = NodeState(
                 status="blocked",
                 review_passes=current.review_passes,
                 last_event_id=event_id,
+                blocked_from=current.status,
+                counted_windows=current.counted_windows,
+                graduation_eligible=current.graduation_eligible,
             )
+            seen_source_refs.add(source_ref)
+            result.accepted.append(event_id)
+            continue
+
+        if source == "blocked":
+            if target != current.blocked_from:
+                _reject(
+                    result,
+                    event_id,
+                    f"unblock must return to the recorded prior status "
+                    f"{current.blocked_from!r}, not {target!r}",
+                )
+                continue
+            if not event.get("blocker_resolution_evidence"):
+                _reject(result, event_id, "unblock requires blocker_resolution_evidence")
+                continue
+            result.snapshot[node_id] = NodeState(
+                status=target,
+                review_passes=current.review_passes,
+                last_event_id=event_id,
+                blocked_from=None,
+                counted_windows=current.counted_windows,
+                graduation_eligible=current.graduation_eligible,
+            )
+            seen_source_refs.add(source_ref)
             result.accepted.append(event_id)
             continue
 
@@ -194,43 +324,29 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
             _reject(result, event_id, f"transition not in table: {source!r}->{target!r}")
             continue
 
-        provenance = event.get("evidence_provenance") or {}
-        source_type = provenance.get("source_type")
-
-        if target == "classroom_passed" and source_type != "exam_agent":
-            _reject(
-                result,
-                event_id,
-                "classroom_passed requires evidence_provenance.source_type == 'exam_agent'",
-            )
+        reason = _evidence_requirements(target, event, current)
+        if reason is not None:
+            _reject(result, event_id, reason)
             continue
 
-        if target == "review_passed":
-            if source_type != "spaced_review":
-                _reject(
-                    result,
-                    event_id,
-                    "review_passed requires spaced_review evidence; classroom pass cannot be reused",
-                )
-                continue
-
-        if target == "graduated":
-            projected = current.review_passes
-            if projected < MINIMUM_REVIEW_PASSES:
-                _reject(
-                    result,
-                    event_id,
-                    f"graduation needs >= {MINIMUM_REVIEW_PASSES} review passes, has {projected}",
-                )
-                continue
-            if not event.get("human_authorization_ref"):
-                _reject(result, event_id, "graduation requires human_authorization_ref")
-                continue
+        windows = current.counted_windows
+        if target == "review_due":
+            windows = windows | {str(event.get("review_window_id"))}
 
         passes = current.review_passes + (1 if target == "review_passed" else 0)
-        result.snapshot[node_id] = NodeState(
-            status=target, review_passes=passes, last_event_id=event_id
+        eligible = (
+            passes >= MINIMUM_REVIEW_PASSES and len(windows) >= MINIMUM_REVIEW_PASSES
         )
+
+        result.snapshot[node_id] = NodeState(
+            status=target,
+            review_passes=passes,
+            last_event_id=event_id,
+            blocked_from=None,
+            counted_windows=windows,
+            graduation_eligible=eligible,
+        )
+        seen_source_refs.add(source_ref)
         result.accepted.append(event_id)
 
     return result
@@ -262,13 +378,18 @@ def main(argv: list[str]) -> int:
     for node_id in sorted(result.snapshot):
         state = result.snapshot[node_id]
         print(
-            f"  {node_id}: status={state.status} "
-            f"review_passes={state.review_passes} via={state.last_event_id}"
+            f"  {node_id}: status={state.status} review_passes={state.review_passes} "
+            f"windows={len(state.counted_windows)} graduation_eligible={state.graduation_eligible} "
+            f"via={state.last_event_id}"
         )
     print()
     print(f"accepted: {len(result.accepted)}")
     for event_id in result.accepted:
         print(f"  + {event_id}")
+    if result.superseded:
+        print(f"superseded by corrections: {len(result.superseded)}")
+        for event_id in result.superseded:
+            print(f"  ~ {event_id}")
     print(f"rejected: {len(result.rejected)}")
     for event_id, reason in result.rejected:
         print(f"  - {event_id}: {reason}")
