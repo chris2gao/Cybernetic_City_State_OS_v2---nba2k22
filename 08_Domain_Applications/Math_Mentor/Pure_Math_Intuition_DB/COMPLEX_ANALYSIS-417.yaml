@@ -32,7 +32,12 @@ identity_evidence:
     stated concept.
 
 concept_name: "复数与复平面 - 发生学溯源：理解 i 为二维平面内的 90° 旋转物理机器，非虚幻想象 (n_417)"
-canonical_concept: "complex_numbers_as_plane_rotation"
+legacy_title_warning: >-
+  上面的 concept_name 是路线图原标题，逐字保留仅为身份对齐，**不是本节点的形式主张**。
+  它把 i 说成「旋转物理机器」，混淆了元素与算子，且带有机械本体论意味。教学与考核
+  一律使用下面的 teaching_display_name；不得把原标题当作数学陈述引用。
+teaching_display_name: "复数与复平面：映射 z ↦ iz 是平面上的 90° 旋转"
+canonical_concept: "multiplication_by_i_as_plane_rotation"
 domain: "Complex Analysis / Foundations"
 symbol: "i, a+bi, |z|, arg(z)"
 
@@ -108,20 +113,22 @@ mode_a_intuition:
     chinese: "把 i 叫做“虚”数暗示它不真实，反而挡住了使用它；可是 x^2 = -1 在实数里无解，说明单靠实数轴对我们需要的运算并不封闭。"
   primary:
     english: |-
-      Treat i not as a mysterious quantity but as an operator: the quarter turn.
-      Multiplying by i once turns the plane 90 degrees; doing it twice lands on
-      the opposite side, which is why i^2 = -1 is a geometric statement rather
-      than a paradox. Under this reading "imaginary" describes a direction off
-      the real line, not a lack of existence.
+      The object to look at is not the number i by itself, but the MAP
+      M(z) = i z. That map is the quarter turn: it rotates the plane by 90
+      degrees. Applying M twice is a half turn, which is why i^2 = -1 is a
+      geometric statement rather than a paradox - the element i is what the map
+      multiplies by, and the rotation is the map's behaviour. Under this reading
+      "imaginary" names a direction off the real line, not a lack of existence.
     chinese: |-
-      不要把 i 当成神秘的量，把它当成一个算子：四分之一转。乘一次 i 把平面转
-      90°，转两次就到了相反方向——这正是 i^2 = -1 的几何含义，而不是悖论。
-      在这个读法下，“虚”描述的是偏离实轴的方向，不是不存在。
+      要看的不是 i 这个数本身，而是**映射** M(z) = i z。这个映射才是四分之一转：
+      它把平面旋转 90°。M 作用两次是半转，这正是 i^2 = -1 的几何含义，而不是悖论
+      ——元素 i 是映射所乘的那个数，旋转是**映射**的行为。在这个读法下，“虚”指的
+      是偏离实轴的方向，不是不存在。
   limitations:
     english: "The quarter-turn picture explains multiplication by i specifically. Multiplication by a general complex number combines rotation with scaling, so the pure-rotation image must not be generalised."
     chinese: "四分之一转的图景专门解释乘以 i。乘以一般复数是旋转与缩放的复合，故纯旋转图景不可外推。"
 
-llm_physical_mapping: "mundane physical metaphor: A mechanical gear system where multiplying by 'i' engages a perpendicular crank, rotating a rigid lever by exactly 90 degrees."
+llm_physical_mapping: "mundane physical metaphor: applying the map z -> i*z acts like engaging a perpendicular crank that turns a rigid lever by exactly 90 degrees. The crank is the MAP, not the number i; the metaphor carries no claim that complex numbers are mechanical objects."
 
 mapping_boundary:
   status: "semantic_only_review_required"
@@ -142,7 +149,7 @@ mapping_boundary:
 common_misconceptions:
   - signature: "imaginary_means_nonexistent"
     description: "学生认为 i 只是形式记号、不指称任何真实对象，因而拒绝在计算中使用它。"
-    repair_direction: "转到算子读法：i 是平面上的 90° 旋转，与旋转矩阵一一对应；先展示 i 的作用，再回到符号。"
+    repair_direction: "转到映射读法：先展示**映射** z ↦ iz 把 (1,0) 送到 (0,1)、把 (0,1) 送到 (-1,0)，它就是旋转矩阵 [[0,-1],[1,0]]；再回到 i 作为该映射的乘数。注意措辞：旋转是映射的性质，不要说「i 是旋转」。"
   - signature: "rotation_generalized_to_all_multiplication"
     description: "学生把“乘法=旋转”推广到任意复数，忽略模的缩放（例如认为乘以 2i 只是旋转）。"
     repair_direction: "给出 |2i·z| = 2|z| 的具体计算，区分“乘以单位模复数”与“乘以一般复数”。"
@@ -183,6 +190,7 @@ tool_truthfulness:
   exit_code: 0
   limitations:
     - "sub_topic 4 concerns representation and the representation/observable boundary. It is interpretive and carries NO machine evidence; teach it as interpretation, never as a verified result."
+    - "The arg(0) assertion records SymPy LIBRARY BEHAVIOUR (it evaluates to nan). It is NOT a machine proof that arg(0) is undefined; that undefinedness is a semantic boundary. An earlier version asserted `arg(0).is_number`, which passes for nan and proved nothing."
     - "The audit verifies the asserted propositions only. It does NOT verify that the definition is correctly stated or that the right propositions were chosen; that judgement is the independent reviewer's."
     - "Argument statements were checked at named points only, because arg is multivalued."
     - "Nothing here establishes analyticity or any holomorphic-function property."

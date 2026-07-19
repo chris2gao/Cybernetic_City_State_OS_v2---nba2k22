@@ -27,7 +27,7 @@ under the v1 epoch are not silently reinterpreted.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 import sys
 from typing import Any
@@ -47,9 +47,22 @@ VALID_STATUSES = frozenset(
     }
 )
 
-VALID_EVENT_TYPES = frozenset(
-    {"classroom_result", "review_result", "human_acceptance", "correction"}
-)
+# `correction` is absent by design.  The v1 implementation left it half-working
+# (a corrected event poisoned every later append), so v2 rejects it at every
+# layer rather than carrying dead semantics.  Re-enabling it requires a
+# replay-safe compensation model specified in the contract first.
+VALID_EVENT_TYPES = frozenset({"classroom_result", "review_result", "human_acceptance"})
+
+UNSUPPORTED_EVENT_TYPES = frozenset({"correction"})
+
+# Review windows are typed, so "two distinct windows" cannot be satisfied by two
+# arbitrary strings of the same kind.  GRADUATION_CRITERIA requires retention
+# over time, which means a near-term check AND a later stability check.
+REQUIRED_REVIEW_WINDOW_KINDS = frozenset({"near_term_retention", "stability_review"})
+
+# Entering review_due is a scheduling act; only scheduler-derived provenance may
+# authorise it.  This module never writes or activates a scheduler.
+REVIEW_DUE_SOURCE_TYPES = frozenset({"scheduler_placeholder"})
 
 # STUDENT_LEARNING_STATE_SCHEMA.md section 5, including the 5.1 re-entry edges.
 # `blocked` is reachable from any status and returns to the recorded prior
@@ -82,6 +95,11 @@ class NodeState:
     last_event_id: str | None = None
     blocked_from: str | None = None
     counted_windows: frozenset[str] = frozenset()
+    counted_window_kinds: frozenset[str] = frozenset()
+    active_review_window_id: str | None = None
+    active_review_window_kind: str | None = None
+    latest_definition_retention: str | None = None
+    latest_transfer_evidence: str | None = None
     graduation_eligible: bool = False
 
 
@@ -92,7 +110,6 @@ class ReductionResult:
     snapshot: dict[str, NodeState] = field(default_factory=dict)
     accepted: list[str] = field(default_factory=list)
     rejected: list[tuple[str, str]] = field(default_factory=list)
-    superseded: list[str] = field(default_factory=list)
     write_performed: bool = False  # always False by construction
 
 
@@ -142,11 +159,27 @@ def _evidence_requirements(target: str, event: dict, state: NodeState) -> str | 
             return "classroom_evidence.exam_agent_result must be 'classroom_passed'"
 
     if target == "review_due":
+        if source_type not in REVIEW_DUE_SOURCE_TYPES:
+            return (
+                "entering review_due requires scheduler-derived provenance "
+                f"(one of {sorted(REVIEW_DUE_SOURCE_TYPES)}), not {source_type!r}"
+            )
         window = event.get("review_window_id")
+        kind = event.get("review_window_kind")
         if not window:
             return "entering review_due requires a review_window_id"
+        if kind not in REQUIRED_REVIEW_WINDOW_KINDS:
+            return (
+                f"review_window_kind must be one of {sorted(REQUIRED_REVIEW_WINDOW_KINDS)}, "
+                f"got {kind!r}"
+            )
         if window in state.counted_windows:
             return f"review_window_id {window!r} was already counted; windows must be distinct"
+        if state.active_review_window_id is not None:
+            return (
+                f"review window {state.active_review_window_id!r} is still pending; "
+                "close it before opening another"
+            )
         if state.status == "stale" and not (event.get("remediation_evidence")):
             return "stale -> review_due requires remediation_evidence"
 
@@ -163,17 +196,35 @@ def _evidence_requirements(target: str, event: dict, state: NodeState) -> str | 
             return f"review_passed missing required review_evidence: {sorted(missing)}"
         if review.get("review_result") != "passed":
             return "review_evidence.review_result must be 'passed'"
+        if state.active_review_window_id is None:
+            return "review_passed requires a pending review window"
+        if review.get("review_window_id") != state.active_review_window_id:
+            return (
+                f"review_evidence.review_window_id {review.get('review_window_id')!r} does not "
+                f"match the pending window {state.active_review_window_id!r}"
+            )
+        if event.get("review_window_kind", state.active_review_window_kind) != state.active_review_window_kind:
+            return (
+                f"review_window_kind {event.get('review_window_kind')!r} does not match the "
+                f"pending window kind {state.active_review_window_kind!r}"
+            )
 
     if target == "graduated":
+        if state.status != "review_passed":
+            return f"graduation requires status 'review_passed', not {state.status!r}"
+        if state.active_review_window_id is not None:
+            return "graduation requires no pending review window"
         if state.review_passes < MINIMUM_REVIEW_PASSES:
             return (
                 f"graduation needs >= {MINIMUM_REVIEW_PASSES} review passes, has {state.review_passes}"
             )
-        if len(state.counted_windows) < MINIMUM_REVIEW_PASSES:
-            return (
-                f"graduation needs >= {MINIMUM_REVIEW_PASSES} DISTINCT review windows, "
-                f"has {len(state.counted_windows)}"
-            )
+        missing_kinds = REQUIRED_REVIEW_WINDOW_KINDS - state.counted_window_kinds
+        if missing_kinds:
+            return f"graduation needs all required review-window kinds; missing {sorted(missing_kinds)}"
+        if not state.latest_definition_retention:
+            return "graduation requires definition-retention evidence at the latest review"
+        if not state.latest_transfer_evidence:
+            return "graduation requires transfer/trap evidence at the latest review"
         if not event.get("human_authorization_ref"):
             return "graduation requires human_authorization_ref"
         return (
@@ -184,6 +235,18 @@ def _evidence_requirements(target: str, event: dict, state: NodeState) -> str | 
     return None
 
 
+def _is_eligible(state: NodeState) -> bool:
+    """Graduation eligibility.  False whenever the node is not currently sound."""
+    return (
+        state.status == "review_passed"
+        and state.active_review_window_id is None
+        and state.review_passes >= MINIMUM_REVIEW_PASSES
+        and REQUIRED_REVIEW_WINDOW_KINDS <= state.counted_window_kinds
+        and bool(state.latest_definition_retention)
+        and bool(state.latest_transfer_evidence)
+    )
+
+
 def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
     """Fold events into a derived snapshot, rejecting every illegal step.
 
@@ -192,13 +255,6 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
     result = ReductionResult()
     seen_ids: set[str] = set()
     seen_source_refs: set[str] = set()
-    corrected_ids: set[str] = set()
-
-    for event in events:
-        if event.get("event_type") == "correction":
-            target = event.get("corrects_event_id")
-            if target:
-                corrected_ids.add(str(target))
 
     for event in events:
         event_id = str(event.get("event_id", "<missing-id>"))
@@ -208,13 +264,17 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
             continue
         seen_ids.add(event_id)
 
-        # A superseded event is neither applied nor an error; it is recorded
-        # separately so a correction does not permanently poison the store.
-        if event_id in corrected_ids:
-            result.superseded.append(event_id)
-            continue
-
         event_type = event.get("event_type")
+        if event_type in UNSUPPORTED_EVENT_TYPES:
+            # Rejected, never applied: an unsupported correction must not be able
+            # to suppress, alter or supersede any other event.
+            _reject(
+                result,
+                event_id,
+                f"event_type {event_type!r} is unsupported_pending_contract; it has no effect "
+                "on any other event",
+            )
+            continue
         if event_type not in VALID_EVENT_TYPES:
             _reject(result, event_id, f"unknown event_type: {event_type!r}")
             continue
@@ -230,10 +290,6 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
         private_path = _has_private_data(event)
         if private_path is not None:
             _reject(result, event_id, f"private identity data present at {private_path}")
-            continue
-
-        if event_type == "correction":
-            result.accepted.append(event_id)
             continue
 
         node_ref = event.get("node_ref") or {}
@@ -284,14 +340,21 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
 
         # --- blocked handling (schema section 5) ---------------------------
         if target == "blocked":
-            result.snapshot[node_id] = NodeState(
+            # Eligibility is cleared while blocked; it is recomputed on unblock.
+            blocked_state = NodeState(
                 status="blocked",
                 review_passes=current.review_passes,
                 last_event_id=event_id,
                 blocked_from=current.status,
                 counted_windows=current.counted_windows,
-                graduation_eligible=current.graduation_eligible,
+                counted_window_kinds=current.counted_window_kinds,
+                active_review_window_id=current.active_review_window_id,
+                active_review_window_kind=current.active_review_window_kind,
+                latest_definition_retention=current.latest_definition_retention,
+                latest_transfer_evidence=current.latest_transfer_evidence,
+                graduation_eligible=False,
             )
+            result.snapshot[node_id] = blocked_state
             seen_source_refs.add(source_ref)
             result.accepted.append(event_id)
             continue
@@ -308,13 +371,20 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
             if not event.get("blocker_resolution_evidence"):
                 _reject(result, event_id, "unblock requires blocker_resolution_evidence")
                 continue
-            result.snapshot[node_id] = NodeState(
+            restored = NodeState(
                 status=target,
                 review_passes=current.review_passes,
                 last_event_id=event_id,
                 blocked_from=None,
                 counted_windows=current.counted_windows,
-                graduation_eligible=current.graduation_eligible,
+                counted_window_kinds=current.counted_window_kinds,
+                active_review_window_id=current.active_review_window_id,
+                active_review_window_kind=current.active_review_window_kind,
+                latest_definition_retention=current.latest_definition_retention,
+                latest_transfer_evidence=current.latest_transfer_evidence,
+            )
+            result.snapshot[node_id] = replace(
+                restored, graduation_eligible=_is_eligible(restored)
             )
             seen_source_refs.add(source_ref)
             result.accepted.append(event_id)
@@ -330,21 +400,47 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
             continue
 
         windows = current.counted_windows
+        window_kinds = current.counted_window_kinds
+        active_id = current.active_review_window_id
+        active_kind = current.active_review_window_kind
+        retention = current.latest_definition_retention
+        transfer = current.latest_transfer_evidence
+        passes = current.review_passes
+
         if target == "review_due":
-            windows = windows | {str(event.get("review_window_id"))}
+            # Open a window; it stays pending until a matching pass or an
+            # explicitly contracted failure/stale transition closes it.
+            active_id = str(event.get("review_window_id"))
+            active_kind = str(event.get("review_window_kind"))
+            windows = windows | {active_id}
+        elif target == "review_passed":
+            # A pass counts only against the window it was matched to.
+            review = event.get("review_evidence") or {}
+            window_kinds = window_kinds | {str(active_kind)}
+            retention = str(review.get("definition_retention"))
+            transfer = str(review.get("transfer_evidence"))
+            passes += 1
+            active_id = None
+            active_kind = None
+        elif target == "stale":
+            # A stale transition closes any pending window.
+            active_id = None
+            active_kind = None
 
-        passes = current.review_passes + (1 if target == "review_passed" else 0)
-        eligible = (
-            passes >= MINIMUM_REVIEW_PASSES and len(windows) >= MINIMUM_REVIEW_PASSES
-        )
-
-        result.snapshot[node_id] = NodeState(
+        candidate = NodeState(
             status=target,
             review_passes=passes,
             last_event_id=event_id,
             blocked_from=None,
             counted_windows=windows,
-            graduation_eligible=eligible,
+            counted_window_kinds=window_kinds,
+            active_review_window_id=active_id,
+            active_review_window_kind=active_kind,
+            latest_definition_retention=retention,
+            latest_transfer_evidence=transfer,
+        )
+        result.snapshot[node_id] = replace(
+            candidate, graduation_eligible=_is_eligible(candidate)
         )
         seen_source_refs.add(source_ref)
         result.accepted.append(event_id)

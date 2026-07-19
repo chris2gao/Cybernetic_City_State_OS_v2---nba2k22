@@ -124,20 +124,39 @@ check(
 )
 
 # --- boundary: linear + homogeneous does NOT imply separable ----------------
-# Counterexample: x*y*u_xx + u_yy = 0 is linear and homogeneous, yet dividing by
-# X(x)Y(y) leaves a term depending on both variables.  If the quotient could be
-# split as f(x) + g(y), its mixed second partial would vanish; it does not.
+# Counterexample: u_xx + u_yy + x*y*u = 0 is linear and homogeneous.  Under
+# u = X(x)Y(y), dividing by XY gives
+#     X''/X + Y''/Y + x*y = 0,  i.e.  X''/X + Y''/Y = -x*y.
+# The left side has the form f(x) + g(y), whose mixed partial d^2/dxdy is 0,
+# while the right side has mixed partial -1.  The contradiction is what rules
+# out separation; the constant 1 below is that mixed partial.
+#
+# NOTE on a rejected earlier attempt: x*y*u_xx + u_yy = 0 is NOT a valid
+# counterexample.  Dividing instead by X*Y*y gives x*X''/X + Y''/(y*Y) = 0,
+# which separates.  Checking only the quotient by X*Y is insufficient, because
+# separation is allowed to multiply through by a nonzero factor first.
 y_var = sp.Symbol("y", real=True)
 Xf, Yf = sp.Function("X"), sp.Function("Y")
 product = Xf(x) * Yf(y_var)
-non_separable = x * y_var * sp.diff(product, x, 2) + sp.diff(product, y_var, 2)
+non_separable = (
+    sp.diff(product, x, 2) + sp.diff(product, y_var, 2) + x * y_var * product
+)
 quotient = sp.simplify(non_separable / product)
 mixed_partial = sp.simplify(sp.diff(quotient, x, y_var))
 check(
-    "counterexample x*y*u_xx + u_yy = 0 is linear and homogeneous but NOT separable "
-    "(mixed partial of the quotient is nonzero), so separability is an extra hypothesis",
-    mixed_partial != 0,
+    "counterexample u_xx + u_yy + x*y*u = 0: dividing by X*Y leaves a coupling term "
+    "whose mixed partial equals 1, contradicting any f(x)+g(y) split; the checked "
+    "claim is exactly 'this quotient is not a sum of an x-only and a y-only function'",
+    sp.simplify(mixed_partial - 1) == 0,
 )
+# Guard the rescue trick that invalidated the earlier attempt: multiplying by a
+# single power of x, y or x*y must not remove the coupling here.
+for factor, label in ((y_var, "y"), (x, "x"), (x * y_var, "x*y")):
+    rescued = sp.simplify(sp.diff(sp.simplify(non_separable / (product * factor)), x, y_var))
+    check(
+        f"multiplying through by {label} does not make the coupling vanish",
+        sp.simplify(rescued) != 0,
+    )
 
 # --- boundary: what this audit does NOT establish --------------------------
 check(

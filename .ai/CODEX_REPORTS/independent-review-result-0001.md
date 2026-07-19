@@ -18,7 +18,7 @@ status: "remediation_implemented_pending_foreground_rereview"
 比评审推断的更严重。
 
 所有整改在 `dev/independent-review-remediation-0001` 上完成,**未触碰 master**,
-**未访问 No.1 的真实学习库**。
+**未访问任何真实学习库**。
 
 ## 实测确认的缺陷(先验证再动手)
 
@@ -107,8 +107,8 @@ status: "remediation_implemented_pending_foreground_rereview"
 - 设计文档「无脚本、无写入」已更正(见 R2)。
 - `epoch.yml` 激活状态改为四态区分:`implemented` / `locally_reported_first_write` /
   `independently_accepted: false` / `production_authorized: false`。
-- No.1 的 v1 两条事件标记 `reported_local_unverified` + `quarantined_pending_migration`,
-  未迁移、未删除、未在仓库公开任何学习者细节。
+- 本地 v1 存储标记 `reported_local_unverified` + `quarantined_pending_migration`,
+  未迁移、未删除;学习者别名、事件数与所涉节点均不在仓库中披露。
 - 本次全部测试为合成临时库,`conftest.py` 明示禁止触碰真实库。
 
 ### 授权状态澄清(唯一的事实补充)
@@ -118,6 +118,71 @@ status: "remediation_implemented_pending_foreground_rereview"
 均已在决策档案中逐条记录。故非「未授权」,而是「已授权但缺独立评审」。
 **评审的处置建议仍然正确并已执行**:本轮整改全部在 dev 分支,不推 master、不改写历史、
 不 force push,master 合入留待 Human 门。
+
+---
+
+# 第 2 轮前台复审的整改(2026-07-19)
+
+复审仍判 `continue_task`。**最重的一条:我上一轮补的 PDE 反例本身是错的。**
+
+## 实测确认(先验证再动手)
+
+| 复审指控 | 实测 |
+|---|---|
+| `x*y*u_xx + u_yy = 0` 不是有效反例 | **成立。我错了。** 改除以 `X*Y*y` 得 `x*X''/X + Y''/(y*Y) = 0`,**可以分离**。我只检验了「除以 X*Y 的商」,而分离前允许先乘除非零因子。该错误通过了机器检查,因为我选错了要检验的命题。 |
+| `arg(0)` 断言无效 | **成立**。`sp.arg(0)` 返回 `nan`,而 `nan.is_number is True`,故原断言只证明了「nan 是数字对象」。 |
+
+## R1 数学
+
+- **换用有效反例** `u_xx + u_yy + x*y*u = 0`:除以 XY 得 `X''/X + Y''/Y = -x*y`,
+  左侧混合偏导恒为 0、右侧为 -1,矛盾。另加三条「乘以 x / y / x*y 仍无法消除耦合」的
+  守卫断言,专门堵住上一轮翻车的那条路。手工代数推导写入验证日志(不只靠 SymPy)。
+- `arg(0)` 改为显式测 `is sp.nan`,并在断言名与节点限制中写明**这是库行为、不是数学证明**。
+- CA-417 保留原路线图标题作身份对齐,但加 `legacy_title_warning` 与
+  `teaching_display_name: "映射 z ↦ iz 是平面上的 90° 旋转"`;`mode_a_intuition.primary`、
+  `llm_physical_mapping`、`common_misconceptions` 全部改为「映射是旋转」而非「i 是旋转」。
+- PDE-486 主映射改为一维弦(即实际验证的情形),鼓面降级并明示不得据以宣称任意初态重建;
+  补完第四子主题承诺的完整应用:初值 `u(x,0)=f(x)`、`u_t(x,0)=g(x)`、相容条件、
+  `A_n`/`B_n` 公式、按函数空间界定的收敛意义。
+- 审计:CA-417 **17**、PDE-486 **24** 断言,exit=0。
+
+## R4 实现
+
+- **复习窗口状态机**:`NodeState` 增 `active_review_window_id` / `active_review_window_kind`;
+  窗口分型(`near_term_retention` / `stability_review`);pass 必须**精确匹配**待定窗口的
+  id 与 kind;同型两窗口**不授予**毕业资格;窗口未闭合不得开新窗口。
+- `review_due` 需 scheduler 派生来源(`scheduler_placeholder`),本模块不写不激活调度器。
+- `graduation_eligible` 在 `stale` / `blocked` 下强制为假,并要求状态为 `review_passed`、
+  无待定窗口、两种窗口类型齐备、最新复述保持与迁移证据齐备。
+- **correction 彻底清除**:从 reducer 的合法类型移除,删掉预扫描与 superseded 语义;
+  schema、validator、reducer、writer 四层一致拒绝;新增测试证明它**不能影响任何其他事件**。
+- **schema/validator 对等**:验证器现强制 `event_id`/`student_ref` 模式、类型、ISO 时间戳、
+  `additionalProperties=false`、嵌套必填与枚举;新增 parity 测试逐项比对 JSON Schema 与
+  运行时常量,漂移即失败。
+- **anchor fail-closed**:有事件而 anchor 缺失时拒绝读取(删 anchor 不再能掩盖截断);
+  新增 Human 运行的 `repair_anchor`,且拒绝在坏链上重建。
+- **崩溃恢复**:事件放置失败不留空文件;anchor 更新失败抛 `AnchorUpdateFailed` 而非
+  `WriteRefused`——**绝不谎报「存储未改变」**;CLI 三态输出
+  `refused_before_commit` / `event_committed_snapshot_pending` / `full_success`。
+- 测试 55 → **96 项**,含并发、1000 序号、尾部截断、anchor 缺失、放置失败、anchor 写失败与恢复。
+
+## R3 迁移与隐私
+
+- 标题更正为**仅规范**(无工具实现)。
+- 缺证据的 `classroom_passed` 改为**从重放中省略并记入迁移报告**,不再改写为
+  `introduced → introduced`——伪造一个事件本身就是造假。
+- **脱敏**:migration 规范、评审请求、评审结果、设计文档中的学习者别名、事件数、
+  所涉节点与本地状态细节全部移除,替换为通用表述。理由:「某人学了什么、表现如何」的
+  摘要本身就是学习者数据,不只是原始 YAML 才算。
+
+## 证据
+
+`.ai/PROGRAM_RUNS/kcp-batch-2-mode-a-certification-0001/VALIDATION_LOG.md`:
+含精确命令、环境版本、退出码、测试数与审计输出,并附**手工**代数推导。
+日志中不含任何本地学习者路径。
+
+**诚实边界**:以上全部为执行者证据,在被独立复现前不构成独立验证;通过的断言只证明
+其自身的确切命题。两节点语义接受仍 `review_required`,**未自我接受**。
 
 ## 遗留与不做
 

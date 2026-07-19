@@ -6,7 +6,16 @@ independent review.  All fixtures are synthetic.
 
 from __future__ import annotations
 
-from conftest import EPOCH, NODE, make_event, reach_classroom_passed, reach_two_review_passes
+from conftest import (
+    EPOCH,
+    NEAR_TERM,
+    NODE,
+    make_event,
+    open_window,
+    pass_window,
+    reach_classroom_passed,
+    reach_two_review_passes,
+)
 
 from reduce_readonly import MINIMUM_REVIEW_PASSES, reduce_events
 
@@ -122,9 +131,10 @@ def test_graduation_is_never_persisted_autonomously():
 
 
 def test_graduation_requires_distinct_windows_not_just_passes():
+    """One legitimate pass is not enough, however well-evidenced it is."""
     events = reach_classroom_passed() + [
-        make_event("w1", "classroom_passed", "review_due", review_window_id="win-A"),
-        make_event("w2", "review_due", "review_passed"),
+        open_window("w1", "classroom_passed", "win-A", NEAR_TERM),
+        pass_window("w2", "win-A"),
         make_event(
             "g", "review_passed", "graduated",
             event_type="human_acceptance",
@@ -134,6 +144,7 @@ def test_graduation_requires_distinct_windows_not_just_passes():
     ]
     result = reduce_events(events, EPOCH)
     assert f"needs >= {MINIMUM_REVIEW_PASSES} review passes" in reasons(result)
+    assert result.snapshot[NODE].graduation_eligible is False
 
 
 def test_graduation_requires_human_authorization_ref():

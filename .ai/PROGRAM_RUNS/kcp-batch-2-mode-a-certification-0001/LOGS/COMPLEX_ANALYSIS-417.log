@@ -14,6 +14,6 @@
 [PASS] the map M(z) = i*z is R-linear: M(c1 z1 + c2 z2) == c1 M(z1) + c2 M(z2)
 [PASS] multiplying by 2i scales modulus by 2, so it is not a pure rotation
 [PASS] multiplying by 0 collapses every z to 0, so the rotate-and-scale reading requires a nonzero multiplier
-[PASS] arg(0) is not a well-defined real number, so 0 carries no rotation angle
+[PASS] library behaviour: SymPy evaluates arg(0) to nan (NOT a proof of undefinedness; the undefinedness of arg(0) is a semantic boundary, not a machine result)
 TOTAL 17 assertions, all passed
 exit_code=0

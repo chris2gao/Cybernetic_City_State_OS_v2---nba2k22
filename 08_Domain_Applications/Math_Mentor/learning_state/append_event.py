@@ -57,6 +57,13 @@ class StoreLocked(RuntimeError):
     """Raised when another writer holds the single-writer lock."""
 
 
+class AnchorUpdateFailed(RuntimeError):
+    """The event WAS committed but the tail anchor could not be replaced.
+
+    This is not `WriteRefused`: callers must not report "the store is unchanged".
+    """
+
+
 @contextmanager
 def single_writer_lock(store: Path, timeout: float = LOCK_TIMEOUT_SECONDS):
     """Hold an exclusive lock for the whole read-modify-write window.
@@ -152,7 +159,17 @@ def load_store(store: Path, verify_anchor: bool = True) -> tuple[str, list[dict]
 
     if verify_anchor:
         anchor = read_anchor(store)
-        if anchor is not None:
+        if anchor is None:
+            # Fail closed: a store that has events but no anchor may have had its
+            # anchor deleted to hide a truncation.  Only explicit initialisation
+            # or a migration bootstrap may create the first anchor.
+            if events:
+                raise WriteRefused(
+                    "tail anchor is missing while events exist; refusing to proceed. "
+                    "Only explicit empty-store initialisation or migration bootstrap "
+                    "may create the first anchor."
+                )
+        else:
             if anchor.get("event_count") != len(events):
                 raise WriteRefused(
                     f"tail anchor mismatch: anchor says {anchor.get('event_count')} events, "
@@ -185,13 +202,15 @@ def derive_snapshot(store: Path) -> dict:
                 "status": state.status,
                 "review_passes": state.review_passes,
                 "distinct_windows": len(state.counted_windows),
+                "window_kinds": sorted(state.counted_window_kinds),
+                "active_review_window_id": state.active_review_window_id,
+                "active_review_window_kind": state.active_review_window_kind,
                 "graduation_eligible": state.graduation_eligible,
                 "blocked_from": state.blocked_from,
                 "last_event_id": state.last_event_id,
             }
             for node_id, state in sorted(result.snapshot.items())
         },
-        "superseded_events": list(result.superseded),
         "rejected_events": [
             {"event_id": event_id, "reason": reason} for event_id, reason in result.rejected
         ],
@@ -231,17 +250,58 @@ def append_event(store: Path, event: dict) -> Path:
         with temporary.open("w", encoding="utf-8", newline="\n") as handle:
             yaml.safe_dump(event, handle, allow_unicode=True, sort_keys=True)
 
-        # O_EXCL: never clobber a file a concurrent writer just created.
+        # Crash-safe append protocol.
+        #
+        # 1. Reserve the final name with O_EXCL so a concurrent writer cannot be
+        #    clobbered.  A crash here leaves a zero-byte reservation, which the
+        #    next load detects as an anchor mismatch rather than silently
+        #    accepting an empty event.
+        # 2. Rename the fully-written temporary over the reservation.
+        # 3. Replace the anchor.  A crash between 2 and 3 leaves the event
+        #    committed with a stale anchor; `load_store` refuses to proceed and
+        #    a Human runs `repair_anchor` after inspecting the tail.
         try:
             descriptor = os.open(final, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
         except FileExistsError:
             temporary.unlink(missing_ok=True)
             raise WriteRefused(f"refusing to overwrite existing event file {final}")
         os.close(descriptor)
-        os.replace(temporary, final)
 
-        write_anchor(store, candidate)
+        try:
+            os.replace(temporary, final)
+        except OSError:
+            # Never leave an empty reservation behind on a failed placement.
+            try:
+                if final.exists() and final.stat().st_size == 0:
+                    final.unlink()
+            finally:
+                temporary.unlink(missing_ok=True)
+            raise WriteRefused(f"failed to place event file {final}; store unchanged")
+
+        try:
+            write_anchor(store, candidate)
+        except OSError as error:
+            raise AnchorUpdateFailed(
+                f"event {final.name} IS COMMITTED but the tail anchor could not be updated "
+                f"({error}). The store is not corrupt, but it will refuse reads until a Human "
+                f"inspects the tail and runs repair_anchor."
+            ) from error
         return final
+
+
+def repair_anchor(store: Path) -> Path:
+    """Human-run recovery for a committed event whose anchor update failed.
+
+    Deliberately separate from the write path: rebuilding the anchor is exactly
+    the operation that could mask a truncation, so it is never automatic.
+    """
+    _, events = load_store(store, verify_anchor=False)
+    report = validate_documents(events, check_chain=True)
+    if not report.ok:
+        raise WriteRefused(
+            f"refusing to rebuild the anchor over an invalid chain: {report.errors}"
+        )
+    return write_anchor(store, events)
 
 
 def write_snapshot(store: Path) -> Path:
@@ -266,15 +326,30 @@ def main(argv: list[str]) -> int:
     with Path(argv[2]).open("r", encoding="utf-8") as handle:
         event = yaml.safe_load(handle)
 
+    # Three distinct outcomes; never conflate them.
     try:
         written = append_event(store, event)
     except (WriteRefused, StoreLocked) as error:
+        print("outcome: refused_before_commit")
         print(f"REFUSED: {error}", file=sys.stderr)
+        print("the store is unchanged")
         return 1
+    except AnchorUpdateFailed as error:
+        print("outcome: event_committed_snapshot_pending")
+        print(f"WARNING: {error}", file=sys.stderr)
+        print("the store is NOT unchanged; a Human must inspect the tail and run repair_anchor")
+        return 3
 
-    snapshot_path = write_snapshot(store)
+    try:
+        snapshot_path = write_snapshot(store)
+    except OSError as error:
+        print("outcome: event_committed_snapshot_pending")
+        print(f"WARNING: event committed but snapshot write failed ({error})", file=sys.stderr)
+        print("the snapshot is derived and can be rebuilt; the event log is intact")
+        return 3
+
     snapshot = derive_snapshot(store)
-
+    print("outcome: full_success")
     print(f"appended: {written}")
     print(f"snapshot: {snapshot_path} (derived; rebuildable from events)")
     print(f"event_count after write: {snapshot['event_count']}")

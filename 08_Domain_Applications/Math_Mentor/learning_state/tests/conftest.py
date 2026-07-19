@@ -17,6 +17,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 EPOCH = "learning-state-epoch-v2"
 SCHEMA_VERSION = "citystate.math_mentor.learning_event.v2"
 NODE = "n_fixture_001"
+NEAR_TERM = "near_term_retention"
+STABILITY = "stability_review"
 
 
 def make_event(
@@ -62,7 +64,9 @@ def make_event(
             "tool_and_evidence_limitations": "synthetic",
         }
     if target == "review_due":
+        event["evidence_provenance"]["source_type"] = source_type or "scheduler_placeholder"
         event.setdefault("review_window_id", f"win-{event_id}")
+        event.setdefault("review_window_kind", NEAR_TERM)
     if target == "review_passed":
         event["review_evidence"] = {
             "review_window_id": f"win-{event_id}",
@@ -70,6 +74,24 @@ def make_event(
             "definition_retention": "retained",
             "transfer_evidence": "solved a transfer item",
         }
+    event.update(overrides)
+    return event
+
+
+def open_window(event_id: str, source: str, window: str, kind: str, **overrides) -> dict:
+    return make_event(
+        event_id, source, "review_due",
+        event_type="review_result",
+        source_type="scheduler_placeholder",
+        review_window_id=window,
+        review_window_kind=kind,
+        **overrides,
+    )
+
+
+def pass_window(event_id: str, window: str, **overrides) -> dict:
+    event = make_event(event_id, "review_due", "review_passed", event_type="review_result")
+    event["review_evidence"]["review_window_id"] = window
     event.update(overrides)
     return event
 
@@ -82,12 +104,16 @@ def reach_classroom_passed(prefix: str = "c") -> list[dict]:
 
 
 def reach_two_review_passes(prefix: str = "r") -> list[dict]:
-    """Two passes earned in two DISTINCT windows, the legal graduation path."""
+    """Two passes in two distinct windows of BOTH required kinds.
+
+    This is the only legal route to graduation eligibility: a near-term retention
+    check and a later stability check, each opened and then matched by its pass.
+    """
     return reach_classroom_passed(prefix) + [
-        make_event(f"{prefix}3", "classroom_passed", "review_due", review_window_id="win-A"),
-        make_event(f"{prefix}4", "review_due", "review_passed"),
-        make_event(f"{prefix}5", "review_passed", "review_due", review_window_id="win-B"),
-        make_event(f"{prefix}6", "review_due", "review_passed"),
+        open_window(f"{prefix}3", "classroom_passed", "win-A", NEAR_TERM),
+        pass_window(f"{prefix}4", "win-A"),
+        open_window(f"{prefix}5", "review_passed", "win-B", STABILITY),
+        pass_window(f"{prefix}6", "win-B"),
     ]
 
 

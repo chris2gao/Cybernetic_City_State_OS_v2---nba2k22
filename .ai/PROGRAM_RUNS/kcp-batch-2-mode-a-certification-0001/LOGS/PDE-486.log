@@ -17,7 +17,10 @@
 [PASS] a two-mode superposition satisfies the wave equation u_tt = c^2 u_xx
 [PASS] the superposition still satisfies both boundary conditions
 [PASS] orthogonality recovers coefficients 3 and -5 from a known combination
-[PASS] counterexample x*y*u_xx + u_yy = 0 is linear and homogeneous but NOT separable (mixed partial of the quotient is nonzero), so separability is an extra hypothesis
+[PASS] counterexample u_xx + u_yy + x*y*u = 0: dividing by X*Y leaves a coupling term whose mixed partial equals 1, contradicting any f(x)+g(y) split; the checked claim is exactly 'this quotient is not a sum of an x-only and a y-only function'
+[PASS] multiplying through by y does not make the coupling vanish
+[PASS] multiplying through by x does not make the coupling vanish
+[PASS] multiplying through by x*y does not make the coupling vanish
 [PASS] a non-eigenfunction (x) fails the Dirichlet condition at x=L, so not every smooth function is an eigenfunction
-TOTAL 21 assertions, all passed
+TOTAL 24 assertions, all passed
 exit_code=0

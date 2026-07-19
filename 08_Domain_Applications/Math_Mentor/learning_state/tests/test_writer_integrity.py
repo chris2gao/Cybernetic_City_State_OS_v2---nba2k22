@@ -14,12 +14,14 @@ import yaml
 from conftest import EPOCH, NODE, make_event, reach_classroom_passed
 
 from append_event import (
+    AnchorUpdateFailed,
     StoreLocked,
     WriteRefused,
     append_event,
     derive_snapshot,
     load_store,
     read_anchor,
+    repair_anchor,
     single_writer_lock,
     write_snapshot,
 )
@@ -171,3 +173,81 @@ def test_snapshot_marks_itself_as_derived(synthetic_store):
     snapshot = derive_snapshot(synthetic_store)
     assert snapshot["snapshot_is_derived"] is True
     assert snapshot["rebuildable_from_events"] is True
+
+
+# --- rereview round 2: anchor fail-closed and crash recovery ---------------
+
+
+def test_missing_anchor_with_events_fails_closed(synthetic_store):
+    """Deleting the anchor must not be a way to hide a truncation."""
+    _seed(synthetic_store, 2)
+    (synthetic_store / "integrity" / "head.json").unlink()
+    with pytest.raises(WriteRefused, match="tail anchor is missing"):
+        load_store(synthetic_store)
+
+
+def test_empty_store_without_anchor_is_allowed(synthetic_store):
+    epoch, events = load_store(synthetic_store)
+    assert events == []
+    assert epoch
+
+
+def test_repair_anchor_recovers_a_committed_event(synthetic_store):
+    _seed(synthetic_store, 2)
+    (synthetic_store / "integrity" / "head.json").unlink()
+    with pytest.raises(WriteRefused):
+        load_store(synthetic_store)
+    repair_anchor(synthetic_store)
+    _, events = load_store(synthetic_store)
+    assert len(events) == 2
+
+
+def test_repair_anchor_refuses_to_paper_over_a_broken_chain(synthetic_store):
+    _seed(synthetic_store, 2)
+    path = synthetic_store / "events" / "001.yml"
+    document = yaml.safe_load(path.read_text(encoding="utf-8"))
+    document["node_ref"]["node_id"] = "n_tampered"
+    with path.open("w", encoding="utf-8", newline="\n") as handle:
+        yaml.safe_dump(document, handle, allow_unicode=True, sort_keys=True)
+    (synthetic_store / "integrity" / "head.json").unlink()
+    with pytest.raises(WriteRefused, match="invalid chain"):
+        repair_anchor(synthetic_store)
+
+
+def test_anchor_write_failure_reports_event_as_committed(synthetic_store, monkeypatch):
+    """The caller must NOT be told the store is unchanged when it is not."""
+    _seed(synthetic_store, 1)
+
+    import append_event as writer
+
+    def boom(*args, **kwargs):
+        raise OSError("simulated anchor write failure")
+
+    monkeypatch.setattr(writer, "write_anchor", boom)
+    with pytest.raises(AnchorUpdateFailed, match="IS COMMITTED"):
+        writer.append_event(synthetic_store, reach_classroom_passed()[1])
+
+    monkeypatch.undo()
+    # The event really is on disk; the anchor is stale, so reads fail closed.
+    with pytest.raises(WriteRefused, match="tail anchor mismatch"):
+        load_store(synthetic_store)
+    repair_anchor(synthetic_store)
+    assert derive_snapshot(synthetic_store)["event_count"] == 2
+
+
+def test_failed_placement_leaves_no_empty_event_file(synthetic_store, monkeypatch):
+    _seed(synthetic_store, 1)
+
+    import append_event as writer
+
+    def boom(src, dst):
+        raise OSError("simulated rename failure")
+
+    monkeypatch.setattr(writer.os, "replace", boom)
+    with pytest.raises(WriteRefused, match="failed to place event file"):
+        writer.append_event(synthetic_store, reach_classroom_passed()[1])
+    monkeypatch.undo()
+
+    assert not (synthetic_store / "events" / "002.yml").exists()
+    assert derive_snapshot(synthetic_store)["event_count"] == 1
+    assert list((synthetic_store / "events").glob(".*tmp")) == []

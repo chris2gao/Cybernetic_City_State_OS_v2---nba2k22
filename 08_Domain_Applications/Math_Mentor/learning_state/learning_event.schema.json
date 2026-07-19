@@ -25,9 +25,13 @@
       "enum": ["classroom_result", "review_result", "human_acceptance"]
     },
     "review_window_id": {
-      "description": "Identifies one review window. Required when entering review_due; must be distinct from every window already counted for the node.",
+      "description": "Identifies one review window. Required when entering review_due; must be distinct from every window already counted for the node, and a pass must cite the window that is currently pending.",
       "type": "string",
       "minLength": 1
+    },
+    "review_window_kind": {
+      "description": "Typed review window. Graduation requires BOTH kinds, so two arbitrary window ids of the same kind cannot satisfy the minimum.",
+      "enum": ["near_term_retention", "stability_review"]
     },
     "remediation_evidence": {
       "description": "Required for stale -> review_due. Decay alone does not re-qualify a node for review.",

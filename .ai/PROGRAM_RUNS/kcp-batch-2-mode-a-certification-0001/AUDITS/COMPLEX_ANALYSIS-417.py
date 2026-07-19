@@ -1,4 +1,8 @@
-"""Deterministic audit for COMPLEX_ANALYSIS-417 (i as a 90-degree rotation).
+"""Deterministic audit for COMPLEX_ANALYSIS-417.
+
+Subject: the MAP z -> i*z is a quarter turn.  The rotation is a property of that
+linear map, not of the element i, and the assertion names below keep that
+distinction.
 
 Every assertion below corresponds to a claim the node makes.  A claim that is
 not asserted here must not be described as machine-checked in the node.
@@ -112,9 +116,14 @@ check(
     "requires a nonzero multiplier",
     sp.simplify(sp.Integer(0) * z) == 0,
 )
+# NOTE: the previous version asserted `sp.arg(0).is_number`, which passes for
+# SymPy's `nan` and therefore proved nothing.  What follows records LIBRARY
+# BEHAVIOUR (SymPy returns nan) and is explicitly NOT a mathematical proof that
+# arg(0) is undefined; that remains a semantic boundary stated in the node.
 check(
-    "arg(0) is not a well-defined real number, so 0 carries no rotation angle",
-    sp.arg(sp.Integer(0)).is_number and sp.Abs(sp.Integer(0)) == 0,
+    "library behaviour: SymPy evaluates arg(0) to nan (NOT a proof of undefinedness; "
+    "the undefinedness of arg(0) is a semantic boundary, not a machine result)",
+    sp.arg(sp.Integer(0)) is sp.nan,
 )
 
 if __name__ == "__main__":

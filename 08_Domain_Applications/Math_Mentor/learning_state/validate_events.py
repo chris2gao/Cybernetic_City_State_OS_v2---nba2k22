@@ -24,9 +24,11 @@ events and the anchor can defeat them.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from datetime import datetime
 from hashlib import sha256
 import json
 from pathlib import Path
+import re
 import sys
 from typing import Any
 
@@ -81,6 +83,73 @@ FORBIDDEN_KEYS = frozenset(
 )
 
 REQUIRED_TOP_LEVEL = ("schema_version", "event_id", "event_type", "learning_state_epoch")
+
+# Kept in lockstep with learning_event.schema.json.  `test_schema_parity` fails
+# if the two drift apart; a JSON Schema the writer does not enforce is worse
+# than no schema at all.
+EVENT_ID_PATTERN = re.compile(r"^[a-z][a-z0-9_-]*$")
+STUDENT_REF_PATTERN = re.compile(r"^[a-z][a-z0-9_]*$")
+DIGEST_PATTERN = re.compile(r"^[0-9a-f]{64}$")
+
+ALLOWED_TOP_LEVEL = frozenset(
+    {
+        "schema_version",
+        "event_id",
+        "event_type",
+        "student_ref",
+        "node_ref",
+        "transition",
+        "evidence_provenance",
+        "learning_state_epoch",
+        "review_window_id",
+        "review_window_kind",
+        "remediation_evidence",
+        "blocker_resolution_evidence",
+        "classroom_evidence",
+        "review_evidence",
+        "human_authorization_ref",
+        "prev_event_digest",
+    }
+)
+
+ALLOWED_NESTED_KEYS = {
+    "node_ref": frozenset({"node_id", "file", "title", "source_level"}),
+    "transition": frozenset({"from", "to"}),
+    "evidence_provenance": frozenset(
+        {
+            "source_type",
+            "source_ref",
+            "actually_read_files",
+            "evidence_timestamp",
+            "evidence_limitations",
+            "not_machine_validated_reason",
+        }
+    ),
+    "classroom_evidence": frozenset(
+        {
+            "exam_agent_result",
+            "covered_subtopics",
+            "definition_restatement",
+            "trap_evidence",
+            "tool_and_evidence_limitations",
+        }
+    ),
+    "review_evidence": frozenset(
+        {"review_window_id", "review_result", "definition_retention", "transfer_evidence"}
+    ),
+}
+
+VALID_WINDOW_KINDS = frozenset({"near_term_retention", "stability_review"})
+
+
+def _is_iso_timestamp(value: object) -> bool:
+    if not isinstance(value, str):
+        return False
+    try:
+        datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    return True
 
 
 @dataclass
@@ -147,12 +216,44 @@ def validate_event(event: dict, report: ValidationReport) -> None:
     if forbidden is not None:
         report.error(event_id, f"forbidden private field present at {forbidden}")
 
+    # --- shape parity with learning_event.schema.json ----------------------
+    if not EVENT_ID_PATTERN.match(str(event.get("event_id", ""))):
+        report.error(event_id, "event_id must match ^[a-z][a-z0-9_-]*$")
+
+    unknown = set(event) - ALLOWED_TOP_LEVEL
+    if unknown:
+        report.error(event_id, f"unknown top-level fields (additionalProperties=false): {sorted(unknown)}")
+
+    for parent, allowed in ALLOWED_NESTED_KEYS.items():
+        value = event.get(parent)
+        if isinstance(value, dict):
+            extra = set(value) - allowed
+            if extra:
+                report.error(event_id, f"unknown keys in {parent}: {sorted(extra)}")
+
+    digest = event.get("prev_event_digest")
+    if digest is not None and not DIGEST_PATTERN.match(str(digest)):
+        report.error(event_id, "prev_event_digest must be a 64-character sha256 hex string or null")
+
+    window_kind = event.get("review_window_kind")
+    if window_kind is not None and window_kind not in VALID_WINDOW_KINDS:
+        report.error(event_id, f"review_window_kind must be one of {sorted(VALID_WINDOW_KINDS)}")
+
     node_ref = event.get("node_ref")
     if not isinstance(node_ref, dict) or not node_ref.get("node_id"):
         report.error(event_id, "learning event requires node_ref.node_id")
+    elif not isinstance(node_ref.get("node_id"), str):
+        report.error(event_id, "node_ref.node_id must be a string")
 
-    if not event.get("student_ref"):
+    student_ref = event.get("student_ref")
+    if not student_ref:
         report.error(event_id, "learning event requires a privacy-safe student_ref")
+    elif not isinstance(student_ref, str) or not STUDENT_REF_PATTERN.match(student_ref):
+        report.error(
+            event_id,
+            "student_ref must be a privacy-safe alias matching ^[a-z][a-z0-9_]*$ "
+            "(no uppercase, spaces or punctuation)",
+        )
 
     transition = event.get("transition")
     if not isinstance(transition, dict):
@@ -173,10 +274,28 @@ def validate_event(event: dict, report: ValidationReport) -> None:
         for key in ("source_ref", "evidence_timestamp", "evidence_limitations"):
             if not provenance.get(key):
                 report.error(event_id, f"evidence_provenance.{key} is required")
+        if provenance.get("source_ref") is not None and not isinstance(
+            provenance.get("source_ref"), str
+        ):
+            report.error(event_id, "evidence_provenance.source_ref must be a string")
+        timestamp = provenance.get("evidence_timestamp")
+        if timestamp is not None and not _is_iso_timestamp(timestamp):
+            report.error(
+                event_id, "evidence_provenance.evidence_timestamp must be an ISO date-time"
+            )
 
-    digest = event.get("prev_event_digest")
-    if digest is not None and (not isinstance(digest, str) or len(digest) != 64):
-        report.error(event_id, "prev_event_digest must be a 64-character sha256 hex string or null")
+    # Transitions into classroom_passed carry the teaching-state evidence bundle.
+    transition = event.get("transition")
+    if isinstance(transition, dict) and transition.get("to") == "classroom_passed":
+        classroom = event.get("classroom_evidence")
+        if not isinstance(classroom, dict):
+            report.error(event_id, "classroom_passed requires a classroom_evidence object")
+        elif not classroom.get("tool_and_evidence_limitations"):
+            report.error(
+                event_id,
+                "classroom_evidence.tool_and_evidence_limitations is required by the "
+                "teaching-state contract",
+            )
 
     report.checked += 1
 

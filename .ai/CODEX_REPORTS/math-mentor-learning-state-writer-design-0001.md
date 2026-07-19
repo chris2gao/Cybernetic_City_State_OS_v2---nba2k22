@@ -17,7 +17,7 @@ boundary: "本文件不激活 runtime/Coordinator/scheduler。注意:原文所�
 
 原文写「不创建脚本、不写任何学习状态」。该表述**已不成立**:
 `learning_state/` 下的 reducer、validator、writer、schema、epoch 均已实现,并且在
-本地对学习者 No.1 执行过一次真实写入(v1 语义)。该次写入为**本地自述、未经独立核验**,
+本地曾执行过一次真实写入(v1 语义;学习者与内容不在此披露)。该次写入为**本地自述、未经独立核验**,
 现标记 `reported_local_unverified` 与 `quarantined_pending_migration`,详见
 `MIGRATION_v1_to_v2.md`。
 
