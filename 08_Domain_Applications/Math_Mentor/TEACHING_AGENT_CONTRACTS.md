@@ -41,6 +41,7 @@ Rules:
 - No payload may imply deterministic tool execution without a real log reference.
 - Full-repository ingestion and full Math Mentor ingestion are forbidden loading strategies.
 - Every handoff carries its own complete `actually_read_files` array; each element is a file path physically read in the current context. Placeholder text and cross-section or cross-document references are forbidden inside that array.
+- `actually_read_files` is a self-declaration. A reviewer who did not observe the read cannot verify it, so it is a non-verifiable item and must never be treated as upstream evidence in a correctness chain. Teaching correctness is established by in-lesson step-by-step derivation and post-session audit against the node body, not by this array. Precise quantitative claims about a read file — line counts, section counts, byte sizes — are likewise self-declared and must not be relied upon; cite content that can be checked against the file instead.
 
 ## 3. Human / Coordinator Input Contract
 

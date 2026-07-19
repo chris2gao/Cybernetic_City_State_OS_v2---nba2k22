@@ -259,6 +259,8 @@ If learned history is unavailable, bridge-dependent formal content must become `
 
 Exam handoff is allowed only after every subtopic is covered and the student restates the formal definition or criterion in their own words.
 
+`trap_direction` derives from the target node's `common_misconceptions` evidence when that field exists. When the node does not carry it, Prep_Architect may construct the trap direction itself but must record `common_misconceptions_absent` in `evidence_trace.limits`, so that a teacher-invented trap is never mistaken for node-backed evidence.
+
 ### 4.12 `reprep_triggers`
 
 ```json
