@@ -1,0 +1,162 @@
+command_status=passed
+exit_code=0
+{
+  "validation_id": "kcp-batch-1-prop-logic-certification-validation-0001",
+  "timestamp": "2026-07-19T01:09:19Z",
+  "status": "passed",
+  "source_head": "94b617e67bdbdb958443545d41b90cdbba77e54d",
+  "node_count": 5,
+  "nodes": {
+    "PROP_LOGIC-001": {
+      "node_ref": "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROP_LOGIC-001_Connectives.yaml",
+      "canonical_uuid": "55137e7b-f2d8-55e9-9848-00698f7ddf0f",
+      "roadmap_alias": "prop_1_connectives",
+      "prerequisites": [],
+      "sub_topic_count": 3,
+      "teaching_ready_local_candidate": true,
+      "semantic_review_status": "review_required",
+      "audit_scope": "complete_truth_assignments_for_five_connectives",
+      "audit_status": "passed",
+      "audit_exit_code": 0,
+      "audit_repeatability_sha256": "9cbc2df88409042c3db3f6218d7e318c6fe35ec58c5985e7a0f650c1b3a70531",
+      "sandbox_status": "passed",
+      "sandbox_exit_code": 0,
+      "consumer_allowed": false,
+      "central_crosswalk_binding": "unclaimed_fail_closed"
+    },
+    "PROP_LOGIC-002": {
+      "node_ref": "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROP_LOGIC-002_Truth_Tables.yaml",
+      "canonical_uuid": "860929b9-b876-52b0-b852-ae353e938cbe",
+      "roadmap_alias": "prop_2_truth_tables",
+      "prerequisites": [
+        "PROP_LOGIC-001"
+      ],
+      "sub_topic_count": 3,
+      "teaching_ready_local_candidate": true,
+      "semantic_review_status": "review_required",
+      "audit_scope": "truth_table_enumeration_and_common_equivalences",
+      "audit_status": "passed",
+      "audit_exit_code": 0,
+      "audit_repeatability_sha256": "0353d1f42d04258648d112b8cde58c228c065ea30320220006111cf993056fac",
+      "sandbox_status": "passed",
+      "sandbox_exit_code": 0,
+      "consumer_allowed": false,
+      "central_crosswalk_binding": "unclaimed_fail_closed"
+    },
+    "PROP_LOGIC-003": {
+      "node_ref": "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROP_LOGIC-003_De_Morgans_Laws.yaml",
+      "canonical_uuid": "214f32b9-8039-5321-8fa8-eaed6d3bce8a",
+      "roadmap_alias": "prop_4_algebra_laws",
+      "prerequisites": [
+        "PROP_LOGIC-001",
+        "PROP_LOGIC-002"
+      ],
+      "sub_topic_count": 5,
+      "teaching_ready_local_candidate": true,
+      "semantic_review_status": "review_required",
+      "audit_scope": "exhaustive_three_variable_boolean_algebra_identities",
+      "audit_status": "passed",
+      "audit_exit_code": 0,
+      "audit_repeatability_sha256": "15a3669ca715affebaca7b1b2c0f1f4396f6c16692914f91b5579ae9682d9f9b",
+      "sandbox_status": "passed",
+      "sandbox_exit_code": 0,
+      "consumer_allowed": false,
+      "central_crosswalk_binding": "unclaimed_fail_closed"
+    },
+    "PROP_LOGIC-004": {
+      "node_ref": "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROP_LOGIC-004_Tautologies.yaml",
+      "canonical_uuid": "bf097dcc-75fd-5259-8b46-df8ee8b0e2d9",
+      "roadmap_alias": "prop_3_tautologies",
+      "prerequisites": [
+        "PROP_LOGIC-001",
+        "PROP_LOGIC-002"
+      ],
+      "sub_topic_count": 3,
+      "teaching_ready_local_candidate": true,
+      "semantic_review_status": "review_required",
+      "audit_scope": "tautology_contradiction_satisfiability_and_entailment_examples",
+      "audit_status": "passed",
+      "audit_exit_code": 0,
+      "audit_repeatability_sha256": "5584449dc86d431378b3068c230f689cae7dd7ec35c46d1abf03cb5ceeacb49b",
+      "sandbox_status": "passed",
+      "sandbox_exit_code": 0,
+      "consumer_allowed": false,
+      "central_crosswalk_binding": "unclaimed_fail_closed"
+    },
+    "PROP_LOGIC-005": {
+      "node_ref": "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/PROP_LOGIC-005_Normal_Forms.yaml",
+      "canonical_uuid": "67995054-4afd-50e6-aeca-d1b3327625f8",
+      "roadmap_alias": "prop_5_normal_forms",
+      "prerequisites": [
+        "PROP_LOGIC-001",
+        "PROP_LOGIC-002",
+        "PROP_LOGIC-003"
+      ],
+      "sub_topic_count": 3,
+      "teaching_ready_local_candidate": true,
+      "semantic_review_status": "review_required",
+      "audit_scope": "canonical_pdnf_pcnf_reconstruction_for_all_three_variable_truth_functions",
+      "audit_status": "passed",
+      "audit_exit_code": 0,
+      "audit_repeatability_sha256": "08b09572dd544d6af8808f17614cef856dc03228f227c011296d1c129274de66",
+      "sandbox_status": "passed",
+      "sandbox_exit_code": 0,
+      "consumer_allowed": false,
+      "central_crosswalk_binding": "unclaimed_fail_closed"
+    }
+  },
+  "prerequisite_graph": {
+    "status": "passed",
+    "cycle_count": 0,
+    "graph": {
+      "PROP_LOGIC-001": [],
+      "PROP_LOGIC-002": [
+        "PROP_LOGIC-001"
+      ],
+      "PROP_LOGIC-003": [
+        "PROP_LOGIC-001",
+        "PROP_LOGIC-002"
+      ],
+      "PROP_LOGIC-004": [
+        "PROP_LOGIC-001",
+        "PROP_LOGIC-002"
+      ],
+      "PROP_LOGIC-005": [
+        "PROP_LOGIC-001",
+        "PROP_LOGIC-002",
+        "PROP_LOGIC-003"
+      ]
+    }
+  },
+  "control_plane_boundary": {
+    "crosswalk_row_count": 5,
+    "binding_status": "unclaimed",
+    "consumer_allowed_count": 0,
+    "open_missing_alias_conflict_count": 5,
+    "source_digests_are_pre_repair_snapshot": true,
+    "task_scoped_evidence_does_not_mutate_p0_registries": true
+  },
+  "bulk_evaluator": {
+    "status": "passed",
+    "evaluated": 5,
+    "passed": 5,
+    "exit_code": 0
+  },
+  "semantic_review_required_count": 5,
+  "teaching_ready_local_candidate_count": 5,
+  "consumer_allowed_count": 0,
+  "bridge_ready_count": 0,
+  "forbidden_path_changes": [],
+  "runtime_or_state_activation_performed": false,
+  "commit_topology": {
+    "source_is_ancestor": true,
+    "commit_count_at_validation": 2,
+    "all_candidate_commits_have_one_parent": true
+  },
+  "limitations": [
+    "Executable evidence validates only the declared finite truth-functional cases.",
+    "All bilingual formal, completeness, uniqueness, mapping, and pedagogy claims remain on the semantic acceptance list.",
+    "The unchanged P0 crosswalk is a pre-repair snapshot and remains fail-closed; task-scoped identity evidence does not grant consumer admission.",
+    "No bridge, runtime, Coordinator, scheduler, or learner-state capability was activated."
+  ]
+}
