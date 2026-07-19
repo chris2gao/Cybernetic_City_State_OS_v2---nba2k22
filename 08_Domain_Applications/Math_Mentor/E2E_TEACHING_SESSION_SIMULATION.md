@@ -259,3 +259,52 @@ The simulation fails if it contains:
 - `classroom_passed` as long-term graduation;
 - fake scheduler update;
 - learning-state write.
+
+## 4. Negative-Path Simulation: Second Same-Signature Error Triggers REQUEST_REPREP
+
+This section adds a scenario only; it does not change any contract text. It reuses the Section 2 fixture and follows `TEACHING_AGENT_CONTRACTS.md` Section 8.
+
+### Step N1: First Error And Single Repair
+
+Student (first error):
+
+> I subtract 3 only from the left because that is where the 3 is.
+
+Socratic repairs once with a reduced-dimension explanation (scale tilts when one pan changes), then asks one compact repair question. This consumes the single allowed repair for this error signature.
+
+### Step N2: Second Error With The Same Signature
+
+Student (same false intuition, signature `local_symbol_deletion`):
+
+> Fine, then for 5x+2=12 I just delete the 2 on the left again.
+
+Detection: `wrong_answer_count_same_signature: 2`. Socratic must not repeat the failed metaphor, must not invent a third explanation, and must not proceed toward Exam handoff.
+
+### Step N3: REQUEST_REPREP Emission
+
+```json
+{
+  "signal": "SYSTEM_INTERRUPT: REQUEST_REPREP",
+  "failure_type": "metaphor_failure",
+  "target_node": { "node_id": "sim_n_linear_equation" },
+  "failed_component": "intuition_model",
+  "evidence": {
+    "actually_read_files": ["simulation_fixture_not_real_node_yaml"],
+    "unsupported_reference": null,
+    "student_feedback_summary": "Same local-deletion intuition after one repair; balance-scale model rejected twice."
+  },
+  "required_repair": "Prep_Architect regenerates intuition_model with a different low-friction model (e.g., equal-length rod cuts); keep MathLane_A, keep covered subtopic evidence for eq_meaning."
+}
+```
+
+### Step N4: Bounded Continuation
+
+Coordinator and Prep_Architect regenerate only the failed component. Teaching resumes from the repaired intuition model; already covered subtopics are preserved. Exam handoff remains withheld until all subtopics are covered and the definition restatement succeeds.
+
+Acceptance checks:
+
+- exactly one repair before escalation;
+- the failed metaphor is not repeated after the second same-signature error;
+- REQUEST_REPREP carries failure_type, failed_component, evidence, and required_repair;
+- no Exam handoff occurs while the misconception is unresolved;
+- no runtime, prompt mutation, or node generation is claimed.

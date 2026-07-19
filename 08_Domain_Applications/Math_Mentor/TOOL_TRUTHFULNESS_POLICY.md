@@ -107,3 +107,7 @@ tool_truthfulness:
 ```
 
 If these fields are absent, use `not_run`, `semantic_only`, `unavailable`, `planned`, or `review_required`.
+
+## 9. Classroom Numerical Worked Examples (MathLane_A)
+
+A MathLane_A classroom numerical worked example must either be derived step by step inside the lesson, or be verified by a `run_with_log` tool run. When neither condition holds, the example must be labeled `unverified_example` and must not be used as core teaching evidence.

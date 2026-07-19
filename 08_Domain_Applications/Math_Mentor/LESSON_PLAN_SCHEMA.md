@@ -316,7 +316,8 @@ Optional fields are allowed only when they are consumed by a named downstream co
 - `student_language_level`;
 - `session_constraints`;
 - `human_notes`;
-- `review_scheduler_placeholder`.
+- `review_scheduler_placeholder`;
+- `restatement_rubric`: an array of required elements that the student's definition restatement must contain; consumed by the Socratic-to-Exam restatement acceptance check.
 
 Unknown top-level fields should fail validation unless a later schema version explicitly adds them.
 
@@ -458,4 +459,5 @@ Invalid when `handoff_allowed` is `true` while any subtopic is not covered or th
 - [ ] Re-prep triggers are explicit.
 - [ ] `actually_read_files` contains only files read in the current context.
 - [ ] `tool_truthfulness.tool_status` is honest and does not imply unlogged execution.
+- [ ] If `restatement_rubric` is declared, the definition restatement is accepted only after checking every rubric element against the student's restatement, item by item.
 - [ ] wrapper 层含 `coverage_map`（不在 schema 顶层）——见 `TEACHING_AGENT_CONTRACTS.md` §5。
