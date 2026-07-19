@@ -1,4 +1,4 @@
-"""Read-only learning-state reducer for Math Mentor.
+﻿"""Read-only learning-state reducer for Math Mentor.
 
 This module answers one question: *if these events were persisted, what would
 the learning state become, and which events would be rejected?*
@@ -13,7 +13,7 @@ Four layers are kept apart on purpose.  This module is layer 2 only:
   3. semantic sufficiency     -> evidence requirements below, still mechanical
   4. Human authority          -> a procedural gate outside any code path here
 
-Layer 4 matters: `graduation_eligible` can be computed, but no code in this
+Layer 4 matters: `graduation_evidence_candidate` can be computed, but no code in this
 package may treat a string field as proof that a Human authorised anything.
 
 Contracts implemented here:
@@ -73,6 +73,19 @@ REQUIRED_REVIEW_WINDOW_KINDS = frozenset({"near_term_retention", "stability_revi
 # authorise it.  This module never writes or activates a scheduler.
 REVIEW_DUE_SOURCE_TYPES = frozenset({"scheduler_placeholder"})
 
+# Contract 5.1.6.  Only two of these describe leaving `review_due`, and only one
+# of those counts as a failed attempt: never sat is not the same as sat and failed.
+STALE_CAUSES = frozenset(
+    {
+        "review_failed",
+        "review_window_expired",
+        "retention_decay",
+        "prerequisite_invalidated",
+        "malformed_evidence",
+    }
+)
+REVIEW_DUE_STALE_CAUSES = frozenset({"review_failed", "review_window_expired"})
+
 # STUDENT_LEARNING_STATE_SCHEMA.md section 5, including the 5.1 re-entry edges.
 # `blocked` is reachable from any status and returns to the recorded prior
 # status, so both directions are handled separately rather than enumerated.
@@ -116,10 +129,15 @@ class NodeState:
     # Immutable audit history.  Never cleared, so decay is visible afterwards.
     historical_windows: frozenset[str] = frozenset()
     historical_pass_count: int = 0
+    # Causes are counted separately: an expired window was never attempted, so
+    # collapsing it into "failures" would misstate the learner's record.
     historical_failure_count: int = 0
+    historical_expiry_count: int = 0
+    historical_decay_count: int = 0
 
     active_review_window_id: str | None = None
     active_review_window_kind: str | None = None
+    active_review_window_opened_at: str | None = None
 
     # Named "candidate" deliberately: no real scheduler authority exists yet, so
     # this is mechanical evidence, not a grant.
@@ -248,6 +266,36 @@ def _evidence_requirements(target: str, event: dict, state: NodeState) -> str | 
                 "qualifying review passes must have strictly increasing timestamps; "
                 f"{stamp.isoformat()} does not follow {previous.isoformat()}"
             )
+        # A pass cannot predate, or coincide with, the opening of the window it
+        # claims to answer: retention is measured across an interval.
+        opened = _parse_timestamp(state.active_review_window_opened_at)
+        if opened is not None and stamp <= opened:
+            return (
+                f"review pass timestamp {stamp.isoformat()} must be strictly later than the "
+                f"opening of its window ({opened.isoformat()})"
+            )
+
+    if target == "stale":
+        # Contract 5.1.6: causes are not interchangeable.
+        stale_evidence = event.get("stale_evidence") or {}
+        cause = stale_evidence.get("cause")
+        if cause not in STALE_CAUSES:
+            return (
+                f"transition into stale requires stale_evidence.cause in {sorted(STALE_CAUSES)}, "
+                f"got {cause!r}"
+            )
+        if not stale_evidence.get("cause_ref_or_summary"):
+            return "stale_evidence requires cause_ref_or_summary"
+        if state.status == "review_due" and cause not in REVIEW_DUE_STALE_CAUSES:
+            return (
+                f"leaving review_due may only be explained by {sorted(REVIEW_DUE_STALE_CAUSES)}, "
+                f"not {cause!r}"
+            )
+        if state.status != "review_due" and cause in REVIEW_DUE_STALE_CAUSES:
+            return (
+                f"cause {cause!r} describes a review attempt, but the node is in "
+                f"{state.status!r}, not review_due"
+            )
 
     if target == "graduated":
         if state.status != "review_passed":
@@ -270,7 +318,7 @@ def _evidence_requirements(target: str, event: dict, state: NodeState) -> str | 
             return "graduation requires human_authorization_ref"
         return (
             "graduation is a procedural Human gate; a deterministic reducer may compute "
-            "graduation_eligible but must not persist 'graduated' autonomously"
+            "graduation_evidence_candidate but must not persist 'graduated' autonomously"
         )
 
     return None
@@ -395,21 +443,78 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
             continue
 
         # --- event-type / transition constraints (contract 5.1.4) ----------
-        allowed_targets = EVENT_TYPE_TARGETS.get(event_type, frozenset())
-        unblocking = source == "blocked"
-        if target not in allowed_targets and not unblocking:
+        # Unblocking is Human-only, and starting at `blocked` is NOT a licence to
+        # skip the event-type check.  An earlier version exempted unblocking from
+        # this rule, which let classroom_result and review_result unblock a node.
+        # `blocked -> blocked` is not an unblock at all; reject it on its own
+        # terms so the message names the real problem rather than the Human-only
+        # rule that would otherwise fire first.
+        if source == "blocked" and target == "blocked":
+            recorded = result.snapshot.get(node_id, NodeState()).blocked_from
             _reject(
                 result,
                 event_id,
-                f"event_type {event_type!r} may not drive a transition into {target!r}",
+                "blocked -> blocked is not a transition; a further blocker must not "
+                f"overwrite blocked_from={recorded!r}",
             )
             continue
-        if unblocking and event_type == "human_acceptance" and target == "graduated":
-            _reject(result, event_id, "cannot graduate directly out of a blocked state")
-            continue
+
+        unblocking = source == "blocked"
+        if unblocking:
+            if event_type != "human_acceptance":
+                _reject(
+                    result,
+                    event_id,
+                    f"unblocking is Human-only: event_type {event_type!r} may not unblock a node",
+                )
+                continue
+            if (event.get("evidence_provenance") or {}).get(
+                "source_type"
+            ) != "explicit_human_override":
+                _reject(
+                    result,
+                    event_id,
+                    "unblocking requires evidence_provenance.source_type == "
+                    "'explicit_human_override'",
+                )
+                continue
+            if target == "graduated":
+                _reject(result, event_id, "cannot graduate directly out of a blocked state")
+                continue
+        else:
+            allowed_targets = EVENT_TYPE_TARGETS.get(event_type, frozenset())
+            if target not in allowed_targets:
+                _reject(
+                    result,
+                    event_id,
+                    f"event_type {event_type!r} may not drive a transition into {target!r}",
+                )
+                continue
 
         # --- blocked handling (schema section 5) ---------------------------
         if target == "blocked":
+            # Contract 5.1.5: a bare `-> blocked` is not acceptable.
+            blocker = event.get("blocker_evidence") or {}
+            missing_blocker = [
+                key
+                for key in ("blocker_kind", "blocker_summary_or_ref", "blocked_from")
+                if not blocker.get(key)
+            ]
+            if missing_blocker:
+                _reject(
+                    result,
+                    event_id,
+                    f"transition into blocked requires blocker_evidence; missing {sorted(missing_blocker)}",
+                )
+                continue
+            if blocker.get("blocked_from") != source:
+                _reject(
+                    result,
+                    event_id,
+                    f"blocker_evidence.blocked_from {blocker.get('blocked_from')!r} must equal "
+                    f"transition.from {source!r}",
+                )
+                continue
             if current.status == "blocked":
                 # Overwriting blocked_from would lose the original status and the
                 # node could never be restored correctly.
@@ -473,6 +578,9 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
                 updated,
                 active_review_window_id=window,
                 active_review_window_kind=str(event.get("review_window_kind")),
+                active_review_window_opened_at=str(
+                    (event.get("evidence_provenance") or {}).get("evidence_timestamp")
+                ),
                 qualifying_windows=updated.qualifying_windows | {window},
                 historical_windows=updated.historical_windows | {window},
             )
@@ -490,11 +598,13 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
                 last_qualifying_timestamp=str(stamp),
                 active_review_window_id=None,
                 active_review_window_kind=None,
+                active_review_window_opened_at=None,
             )
         elif target == "stale":
             # Decay closes the pending window AND resets the qualifying cycle.
-            # History is preserved so the decay itself remains auditable.
-            failed_review = current.status == "review_due"
+            # History is preserved so the decay itself remains auditable, with
+            # each cause counted separately.
+            cause = (event.get("stale_evidence") or {}).get("cause")
             updated = replace(
                 updated,
                 qualifying_windows=frozenset(),
@@ -504,9 +614,14 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
                 latest_transfer_evidence=None,
                 last_qualifying_timestamp=None,
                 historical_failure_count=updated.historical_failure_count
-                + (1 if failed_review else 0),
+                + (1 if cause == "review_failed" else 0),
+                historical_expiry_count=updated.historical_expiry_count
+                + (1 if cause == "review_window_expired" else 0),
+                historical_decay_count=updated.historical_decay_count
+                + (1 if cause in ("retention_decay", "prerequisite_invalidated") else 0),
                 active_review_window_id=None,
                 active_review_window_kind=None,
+                active_review_window_opened_at=None,
             )
 
         result.snapshot[node_id] = replace(

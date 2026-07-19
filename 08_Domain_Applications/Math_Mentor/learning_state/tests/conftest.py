@@ -81,6 +81,17 @@ def make_event(
         event["evidence_provenance"]["source_type"] = source_type or "scheduler_placeholder"
         event.setdefault("review_window_id", f"win-{event_id}")
         event.setdefault("review_window_kind", NEAR_TERM)
+    if target == "blocked":
+        event["blocker_evidence"] = {
+            "blocker_kind": "missing_prerequisite",
+            "blocker_summary_or_ref": "synthetic blocker",
+            "blocked_from": source,
+        }
+    if target == "stale":
+        event["stale_evidence"] = {
+            "cause": "review_failed" if source == "review_due" else "retention_decay",
+            "cause_ref_or_summary": "synthetic stale cause",
+        }
     if target == "review_passed":
         event["review_evidence"] = {
             "review_window_id": f"win-{event_id}",
@@ -103,6 +114,17 @@ def open_window(
         timestamp=timestamp,
         review_window_id=window,
         review_window_kind=kind,
+        **overrides,
+    )
+
+
+def unblock(event_id: str, target: str, **overrides) -> dict:
+    """Unblocking is Human-only and needs explicit_human_override provenance."""
+    overrides.setdefault("blocker_resolution_evidence", "synthetic resolution")
+    return make_event(
+        event_id, "blocked", target,
+        event_type="human_acceptance",
+        source_type="explicit_human_override",
         **overrides,
     )
 
@@ -160,5 +182,6 @@ def synthetic_store(tmp_path: Path) -> Path:
                 "bound_epoch": EPOCH,
             },
             handle,
+            sort_keys=True,
         )
     return store

@@ -70,8 +70,7 @@ pure_math_definition:
     solves the equation and the boundary conditions. The corresponding infinite
     series represents the solution for admissible initial data that is compatible
     with the boundary conditions and lies in the appropriate space; the sense of
-    convergence (pointwise, uniform, or L^2) must be stated and is not supplied by
-    this node.
+    convergence is stated in the boundary paragraph below.
 
     Complete worked application (the vibrating string). Impose initial data
     u(x, 0) = f(x) and u_t(x, 0) = g(x), with f and g compatible with the
@@ -85,15 +84,17 @@ pure_math_definition:
 
     where the factor 2/L is 1/||y_n||^2 with ||y_n||^2 = L/2.
 
-    Boundary of the claim. Each coefficient formula uses ONLY orthogonality, and
-    that step is verified in the audit for a known finite combination. Whether
-    the resulting infinite series converges to f, and in which sense (pointwise,
-    uniform, or L^2), depends on the function space: for f in L^2(0, L) the
-    series converges in L^2, while pointwise or uniform convergence needs extra
-    smoothness and compatibility. COMPLETENESS of the eigenfunction system - that
-    every admissible initial state is representable at all - is a separate cited
-    theorem. Neither completeness nor series convergence is machine-checked here;
-    the audit covers finitely many modes and coefficient extraction only.
+    Boundary of the claim, stated once and consistently:
+
+    - finite modal sums satisfying the equation and boundary conditions are
+      MACHINE-CHECKED in the audit;
+    - coefficient extraction by orthogonality is MACHINE-CHECKED for one known
+      finite combination;
+    - L^2 convergence of the infinite series, and COMPLETENESS of the
+      eigenfunction system (that every admissible initial state is representable
+      at all), are CITED THEOREMS, not machine-checked here;
+    - a classical pointwise or uniform solution claim needs stronger smoothness
+      and compatibility than L^2 membership, and is likewise not established here.
   chinese: |-
     正则施图姆-刘维尔问题。在有限区间 [a, b] 上，求满足
     -(p y')' + q y = lambda w y 的非零解对 (lambda, y)，并配以使算子自伴的分离型
@@ -112,7 +113,7 @@ pure_math_definition:
     lambda_n = (n pi / L)^2。任意**有限**叠加
     sum (A_n cos(c n pi t / L) + B_n sin(c n pi t / L)) sin(n pi x / L)
     满足方程与边界条件。相应的无穷级数在初值容许（与边界条件相容且属于适当空间）
-    时表示解；收敛意义（逐点、一致或 L^2）必须显式声明，本节点不提供。
+    时表示解；收敛意义在下文「主张的边界」一段中统一给出。
 
     完整算例（弦振动）。给定初值 u(x, 0) = f(x) 与 u_t(x, 0) = g(x)，且 f、g 与
     边界条件相容，即 f(0) = f(L) = 0、g(0) = g(L) = 0。在级数中令 t = 0 得
@@ -124,12 +125,14 @@ pure_math_definition:
 
     其中因子 2/L 即 1/||y_n||^2，而 ||y_n||^2 = L/2。
 
-    主张的边界。每个系数公式**只**用到正交性，该步骤已在审计中对一个已知的有限
-    组合验证。所得无穷级数是否收敛到 f、以及在何种意义下收敛（逐点、一致或 L^2），
-    取决于函数空间：f 属于 L^2(0, L) 时级数在 L^2 意义下收敛，而逐点或一致收敛
-    需要额外的光滑性与相容性。本征函数系的**完备性**——即任意容许初态都可被表示
-    ——是另一条被引用的定理。完备性与级数收敛**均未**经机器验证；审计只覆盖有限
-    个模态与系数提取。
+    主张的边界（一次说清，前后一致）：
+
+    - 满足方程与边界条件的**有限**模态和：已**机器验证**；
+    - 由正交性提取系数：对一个已知的有限组合已**机器验证**；
+    - 无穷级数的 L^2 收敛，以及本征函数系的**完备性**（任意容许初态皆可表示）：
+      属**引用定理**，此处未作机器验证；
+    - 经典意义下的**逐点或一致**解的主张，需要比 L^2 更强的光滑性与相容性，
+      同样未在此建立。
 
 assumptions_and_notation:
   - "L > 0 and c > 0 are real constants; n, m range over positive integers. / L > 0、c > 0 为实常数；n、m 取正整数。"
@@ -241,11 +244,14 @@ common_misconceptions:
 
 spaced_review_handoff_en: >-
   Only after a future classroom_passed is received, review the separation step,
-  the orthogonality computation, and the boundary that linearity is required.
-  Emit placeholder_not_written without independent scheduler authorization.
+  the orthogonality computation, and this boundary: linearity is required for
+  modal superposition in the string problem; it is NOT universally required for
+  the existence of a separated solution. Emit placeholder_not_written without
+  independent scheduler authorization.
 spaced_review_handoff_zh: >-
-  仅在未来收到 classroom_passed 后，复习分离那一步、正交性计算，以及“必须线性”
-  这条边界。没有独立调度授权时只输出 placeholder_not_written。
+  仅在未来收到 classroom_passed 后，复习分离那一步、正交性计算，以及这条边界：
+  线性性是弦问题中**模态叠加**所必需的，但对「分离解的存在」**并非普遍必需**。
+  没有独立调度授权时只输出 placeholder_not_written。
 
 semantic_acceptance_required:
   status: "review_required"
@@ -264,7 +270,7 @@ tool_truthfulness:
   tool_status: "run_with_log"
   capability: "deterministic_calculation"
   tool_family: "SymPy"
-  audit_scope: "eigenpair verification, Dirichlet boundary satisfaction, pairwise orthogonality, sampled integer-pair orthogonality, norm L/2, separation identity, valid non-separable counterexample (u_xx+u_yy+x*y*u=0) with rescue-factor guards, two-mode superposition, coefficient recovery"
+  audit_scope: "eigenpair verification, Dirichlet boundary satisfaction, pairwise orthogonality, sampled integer-pair orthogonality, norm L/2, separation identity, non-separability counterexample (u_xx+u_yy+x*y*u=0) plus three sampled rescaling checks, two-mode superposition, coefficient recovery"
   script_ref: ".ai/PROGRAM_RUNS/kcp-batch-2-mode-a-certification-0001/AUDITS/PDE-486.py"
   log_ref: ".ai/PROGRAM_RUNS/kcp-batch-2-mode-a-certification-0001/LOGS/PDE-486.log"
   environment_ref: "python 3.14.6, sympy 1.14.0, Windows PowerShell"
@@ -274,8 +280,11 @@ tool_truthfulness:
     An earlier version asserted x*y*u_xx + u_yy = 0 as a non-separability
     counterexample. That was WRONG: dividing by X*Y*y yields
     x*X''/X + Y''/(y*Y) = 0, which separates. The check had only inspected the
-    quotient by X*Y. Replaced with u_xx + u_yy + x*y*u = 0 plus explicit guards
-    showing that multiplying through by x, y or x*y does not remove the coupling.
+    quotient by X*Y. It was replaced with u_xx + u_yy + x*y*u = 0, whose proof is
+    the mixed-partial contradiction alone. Three additional SAMPLED RESCALING
+    CHECKS divide the equation by X*Y*factor for factor in {x, y, x*y} and confirm
+    the coupling survives. Those checks are NON-EXHAUSTIVE and are NOT part of the
+    core proof; they only sample the habit that invalidated the earlier attempt.
   evidence_scope_statement: >-
     What passed is the concrete Dirichlet string case on [0, L]. Nothing here may
     be upgraded into the general Sturm-Liouville spectral theorem, completeness,

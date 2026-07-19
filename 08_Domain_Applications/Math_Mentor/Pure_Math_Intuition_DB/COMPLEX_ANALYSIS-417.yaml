@@ -188,11 +188,11 @@ tool_truthfulness:
   tool_status: "run_with_log"
   capability: "deterministic_calculation"
   tool_family: "SymPy"
-  audit_scope: "algebraic form, multiplication by i as rotation, R-linearity of that map, modulus preservation, rotation-matrix correspondence, Argand additivity, zero-multiplier boundary"
+  audit_scope: "algebraic form, multiplication by i as rotation, R-linearity of that map, modulus preservation, rotation-matrix correspondence, Argand additivity, zero-multiplier boundary, and the three taught rotation sequences ((1,0) twice, (0,1) once, (0,1) twice reaching (0,-1))"
   script_ref: ".ai/PROGRAM_RUNS/kcp-batch-2-mode-a-certification-0001/AUDITS/COMPLEX_ANALYSIS-417.py"
   log_ref: ".ai/PROGRAM_RUNS/kcp-batch-2-mode-a-certification-0001/LOGS/COMPLEX_ANALYSIS-417.log"
   environment_ref: "python 3.14.6, sympy 1.14.0, Windows PowerShell"
-  assertions_passed: 17
+  assertions_passed: 20
   exit_code: 0
   limitations:
     - "sub_topic 4 concerns representation and the representation/observable boundary. It is interpretive and carries NO machine evidence; teach it as interpretation, never as a verified result."

@@ -38,8 +38,46 @@
       "type": ["string", "null"]
     },
     "blocker_resolution_evidence": {
-      "description": "Required when leaving blocked; the reducer also enforces returning to the recorded prior status.",
+      "description": "Required when leaving blocked; the reducer also enforces Human-only unblocking and returning to the recorded prior status.",
       "type": ["string", "null"]
+    },
+    "blocker_evidence": {
+      "description": "Required for any transition into blocked. A bare block event would lose why and from where.",
+      "type": "object",
+      "required": ["blocker_kind", "blocker_summary_or_ref", "blocked_from"],
+      "properties": {
+        "blocker_kind": {
+          "enum": [
+            "missing_prerequisite",
+            "missing_evidence",
+            "privacy_violation",
+            "malformed_record",
+            "forbidden_write_request",
+            "external_dependency"
+          ]
+        },
+        "blocker_summary_or_ref": {"type": "string", "minLength": 1},
+        "blocked_from": {"$ref": "#/$defs/learning_status"}
+      },
+      "additionalProperties": false
+    },
+    "stale_evidence": {
+      "description": "Required for any transition into stale. Causes are not interchangeable: an expired window was never attempted, a failed review was.",
+      "type": "object",
+      "required": ["cause", "cause_ref_or_summary"],
+      "properties": {
+        "cause": {
+          "enum": [
+            "review_failed",
+            "review_window_expired",
+            "retention_decay",
+            "prerequisite_invalidated",
+            "malformed_evidence"
+          ]
+        },
+        "cause_ref_or_summary": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
     },
     "classroom_evidence": {
       "description": "Required for a transition into classroom_passed. If present it must be complete: a partial bundle is not evidence.",
@@ -52,7 +90,10 @@
         "tool_and_evidence_limitations"
       ],
       "properties": {
-        "exam_agent_result": {"enum": ["classroom_passed", "failed", "needs_reprep"]},
+        "exam_agent_result": {
+          "description": "Only a pass is persistable. `failed` and `needs_reprep` remain valid Exam outcomes in the session contract, but no learning-state transition consumes them, so they are unsupported_pending_contract here and cannot enter the event store.",
+          "const": "classroom_passed"
+        },
         "covered_subtopics": {"type": "array", "items": {"type": "string"}},
         "definition_restatement": {"type": "string"},
         "trap_evidence": {"type": "string"},

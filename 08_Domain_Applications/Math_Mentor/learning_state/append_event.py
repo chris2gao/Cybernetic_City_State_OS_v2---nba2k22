@@ -1,4 +1,4 @@
-"""Deterministic append-only writer for Math Mentor learning events.
+﻿"""Deterministic append-only writer for Math Mentor learning events.
 
 This is the only module in the package that touches disk.  It is deliberately
 narrow:
@@ -8,7 +8,7 @@ narrow:
     reducer both accept it;
   * a single-writer lock is taken for the whole read-modify-write window, so two
     processes cannot compute the same sequence number;
-  * temporary files are unique per process, and the final name is created with
+  * temporary files are unique per process AND thread, and the final name uses
     O_EXCL so a concurrent writer can never be overwritten;
   * sequence numbers are parsed numerically, so ordering survives past 999;
   * a tail anchor records the event count and head digest, which is what makes
@@ -22,7 +22,7 @@ signature; an actor with full write access to the store can rewrite both.
 Authority boundary: running this script is not authorization.  A model must
 never invoke it to record its own teaching outcome.  `graduated` is refused by
 the reducer as a matter of policy - a deterministic writer may compute
-`graduation_eligible`, but persisting graduation needs a trusted Human
+`graduation_evidence_candidate`, but persisting graduation needs a trusted Human
 acceptance path that does not yet exist.  The spaced-review scheduler is a
 separate protected boundary and is never written here.
 """
@@ -31,22 +31,38 @@ from __future__ import annotations
 
 from contextlib import contextmanager
 from datetime import datetime, timezone
+from hashlib import sha256
 import json
 import os
 from pathlib import Path
 import re
 import sys
+import threading
 import time
+from uuid import uuid4
 
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from reduce_readonly import reduce_events  # noqa: E402
-from validate_events import event_digest, validate_documents  # noqa: E402
+from validate_events import (  # noqa: E402
+    ValidatorUnavailable,
+    event_digest,
+    validate_documents,
+)
 
 LOCK_TIMEOUT_SECONDS = 10.0
 EVENT_NAME = re.compile(r"^(\d+)\.yml$")
+STORE_META_SCHEMA_PATH = Path(__file__).resolve().parent / "learning_store_meta.schema.json"
+
+
+def _canonical_epoch() -> str:
+    with (Path(__file__).resolve().parent / "epoch.yml").open("r", encoding="utf-8") as handle:
+        return str(yaml.safe_load(handle)["bound_epoch"])
+
+
+CANONICAL_EPOCH = _canonical_epoch()
 
 
 class WriteRefused(RuntimeError):
@@ -72,31 +88,21 @@ class SnapshotStale(RuntimeError):
     """
 
 
-# Re-entrancy: `append_event` holds the lock and then calls helpers that also
-# want it.  A plain O_EXCL lock would self-deadlock, so the holder is tracked.
-_LOCK_DEPTH: dict[Path, int] = {}
-
-
 @contextmanager
 def single_writer_lock(store: Path, timeout: float = LOCK_TIMEOUT_SECONDS):
     """Hold an exclusive lock for the whole read-modify-write window.
 
-    Uses O_EXCL creation, which is atomic on both Windows and POSIX.  The lock
-    file records the owning pid so a stale lock can be diagnosed by a Human;
-    it is deliberately NOT auto-broken, because silently stealing a lock is how
+    Strictly non-reentrant.  An earlier version tracked depth in a process-global
+    dict keyed by path, which made the lock useless between threads in one
+    process: a second thread would see "already held" and walk straight in.  No
+    call path needs nesting, so the simple exclusive lock is the correct one.
+
+    O_EXCL creation is atomic on both Windows and POSIX.  The lock file records
+    the owning pid and thread so a stale lock can be diagnosed by a Human; it is
+    deliberately NOT auto-broken, because silently stealing a lock is how
     concurrent writers corrupt an append-only store.
     """
     store.mkdir(parents=True, exist_ok=True)
-    key = store.resolve()
-    if _LOCK_DEPTH.get(key):
-        # Already held by this call stack; re-enter without touching the file.
-        _LOCK_DEPTH[key] += 1
-        try:
-            yield
-        finally:
-            _LOCK_DEPTH[key] -= 1
-        return
-
     lock_path = store / ".writer.lock"
     deadline = time.monotonic() + timeout
     while True:
@@ -108,18 +114,28 @@ def single_writer_lock(store: Path, timeout: float = LOCK_TIMEOUT_SECONDS):
                 raise StoreLocked(
                     f"another writer holds {lock_path}; if this is stale, a Human must remove it"
                 )
-            time.sleep(0.05)
+            time.sleep(0.02)
     try:
-        os.write(handle, f"pid={os.getpid()}\n".encode("utf-8"))
+        os.write(
+            handle,
+            f"pid={os.getpid()}\nthread={threading.get_ident()}\n".encode("utf-8"),
+        )
         os.close(handle)
-        _LOCK_DEPTH[key] = 1
         yield
     finally:
-        _LOCK_DEPTH.pop(key, None)
         try:
             lock_path.unlink()
         except FileNotFoundError:
             pass
+
+
+def _unique_suffix() -> str:
+    """Thread- and process-unique temporary suffix.
+
+    PID alone is not enough: two threads in one process share it and would race
+    on the same temporary path.
+    """
+    return f"{os.getpid()}.{threading.get_ident()}.{uuid4().hex[:8]}"
 
 
 def _events_dir(store: Path) -> Path:
@@ -152,30 +168,43 @@ def read_anchor(store: Path) -> dict | None:
         return json.load(handle)
 
 
-def write_anchor(store: Path, events: list[dict]) -> Path:
+def write_anchor(store: Path, events: list[dict], meta: dict | None = None) -> Path:
     path = _anchor_path(store)
     path.parent.mkdir(parents=True, exist_ok=True)
+    if meta is None:
+        meta = read_store_meta(store)
     anchor = {
         "event_count": len(events),
         "head_digest": event_digest(events[-1]) if events else None,
+        # Binding digest: an accidental edit to store_meta.yml after events exist
+        # is detected rather than silently followed.
+        "store_meta_digest": store_meta_digest(meta),
         "updated_at": datetime.now(timezone.utc).isoformat(),
         "scope_note": (
-            "Detects edits to the newest event and truncation of the tail. "
-            "Not Git immutability; an actor who rewrites this file too can defeat it."
+            "Detects edits to the newest event, truncation of the tail, and changes to "
+            "the store binding. Not Git immutability; an actor who rewrites this file "
+            "too can defeat it."
         ),
     }
-    temporary = path.with_suffix(f".json.{os.getpid()}.tmp")
+    temporary = path.with_suffix(f".json.{_unique_suffix()}.tmp")
     with temporary.open("w", encoding="utf-8", newline="\n") as handle:
         json.dump(anchor, handle, indent=2, sort_keys=True)
     os.replace(temporary, path)
     return path
 
 
+def store_meta_digest(meta: dict) -> str:
+    """Stable digest of the canonical binding, for the tail anchor."""
+    encoded = json.dumps(meta, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+    return sha256(encoded.encode("utf-8")).hexdigest()
+
+
 def read_store_meta(store: Path) -> dict:
-    """Immutable store binding.  A store belongs to exactly one learner.
+    """Immutable store binding, validated against its canonical schema.
 
     Authority never comes from the directory name: a folder named after a learner
-    proves nothing.  `store_meta.yml` is the binding, and every event must match it.
+    proves nothing.  `store_meta.yml` is the binding, every event must match it,
+    and an arbitrary nonempty YAML field is not accepted as one.
     """
     path = store / "store_meta.yml"
     if not path.exists():
@@ -185,13 +214,32 @@ def read_store_meta(store: Path) -> dict:
         )
     with path.open("r", encoding="utf-8") as handle:
         meta = yaml.safe_load(handle) or {}
-    missing = [
-        key
-        for key in ("schema_version", "store_id", "bound_student_ref", "bound_epoch")
-        if not meta.get(key)
-    ]
-    if missing:
-        raise WriteRefused(f"store_meta.yml is missing required keys: {sorted(missing)}")
+
+    try:
+        from jsonschema import Draft202012Validator, FormatChecker
+    except ImportError as error:  # pragma: no cover - environment failure path
+        raise WriteRefused(
+            "jsonschema is required to validate store metadata; refusing to proceed "
+            "with an unvalidated binding"
+        ) from error
+
+    with STORE_META_SCHEMA_PATH.open("r", encoding="utf-8") as handle:
+        schema = json.load(handle)
+    errors = sorted(
+        Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(meta),
+        key=lambda e: list(e.path),
+    )
+    if errors:
+        detail = "; ".join(
+            f"{'/'.join(str(p) for p in e.path) or '<root>'}: {e.message}" for e in errors
+        )
+        raise WriteRefused(f"store_meta.yml fails its canonical schema: {detail}")
+
+    if meta["bound_epoch"] != CANONICAL_EPOCH:
+        raise WriteRefused(
+            f"store bound_epoch {meta['bound_epoch']!r} != package canonical epoch "
+            f"{CANONICAL_EPOCH!r}; a store may not follow different transition semantics"
+        )
     return meta
 
 
@@ -229,11 +277,24 @@ def load_store(store: Path, verify_anchor: bool = True) -> tuple[str, list[dict]
                 raise WriteRefused(
                     "tail anchor mismatch: the newest event does not match the recorded head digest"
                 )
+            recorded_meta = anchor.get("store_meta_digest")
+            if recorded_meta is not None and recorded_meta != store_meta_digest(meta):
+                raise WriteRefused(
+                    "store binding changed after events were written: store_meta.yml no longer "
+                    "matches the digest recorded in the tail anchor"
+                )
     return epoch, events
 
 
-def derive_snapshot(store: Path) -> dict:
-    """Recompute the derived snapshot from events on disk.  Pure read."""
+def derive_snapshot(store: Path, allow_rejected: bool = False) -> dict:
+    """Recompute the derived snapshot from events on disk.  Pure read.
+
+    Fail-closed: if the reducer rejects any event on disk, no snapshot is
+    produced.  Publishing a snapshot that silently ignores illegal events would
+    misrepresent the store as consistent.  `allow_rejected=True` is a diagnostic
+    dry-run switch for inspecting what was rejected; it must not be used on a
+    publication path.
+    """
     epoch, events = load_store(store)
     report = validate_documents(
         events, check_chain=True, bound_student_ref=read_store_meta(store)["bound_student_ref"]
@@ -241,6 +302,12 @@ def derive_snapshot(store: Path) -> dict:
     if not report.ok:
         raise WriteRefused(f"existing store fails validation: {report.errors}")
     result = reduce_events(events, epoch)
+    if result.rejected and not allow_rejected:
+        raise WriteRefused(
+            "refusing to derive a snapshot: the reducer rejected events already on disk "
+            f"({[event_id for event_id, _ in result.rejected]}). Run with allow_rejected=True "
+            "for diagnosis only."
+        )
     anchor = read_anchor(store) or {}
     return {
         "derived_at": datetime.now(timezone.utc).isoformat(),
@@ -310,11 +377,11 @@ def append_event(store: Path, event: dict) -> Path:
         next_seq = int(EVENT_NAME.match(paths[-1].name).group(1)) + 1 if paths else 1
         final = directory / f"{next_seq:03d}.yml"
 
-        temporary = directory / f".{next_seq:03d}.{os.getpid()}.tmp"
+        temporary = directory / f".{next_seq:03d}.{_unique_suffix()}.tmp"
         with temporary.open("w", encoding="utf-8", newline="\n") as handle:
             yaml.safe_dump(event, handle, allow_unicode=True, sort_keys=True)
 
-        # Crash-safe append protocol.
+        # Failure-aware append protocol.
         #
         # 1. Reserve the final name with O_EXCL so a concurrent writer cannot be
         #    clobbered.  A crash here leaves a zero-byte reservation, which the
@@ -357,15 +424,29 @@ def repair_anchor(store: Path) -> Path:
     """Human-run recovery for a committed event whose anchor update failed.
 
     Deliberately separate from the write path: rebuilding the anchor is exactly
-    the operation that could mask a truncation, so it is never automatic.
+    the operation that could mask a truncation, so it is never automatic and it
+    refuses on ANY inconsistency.  Rebuilding over a mixed-learner,
+    epoch-mismatched, chain-broken or transition-invalid sequence would launder
+    a corrupt store into an apparently valid one.
     """
-    _, events = load_store(store, verify_anchor=False)
-    report = validate_documents(events, check_chain=True)
-    if not report.ok:
-        raise WriteRefused(
-            f"refusing to rebuild the anchor over an invalid chain: {report.errors}"
-        )
-    return write_anchor(store, events)
+    with single_writer_lock(store):
+        meta = read_store_meta(store)
+        bound = meta["bound_student_ref"]
+        epoch, events = load_store(store, verify_anchor=False)
+
+        report = validate_documents(events, check_chain=True, bound_student_ref=bound)
+        if not report.ok:
+            raise WriteRefused(
+                f"refusing to rebuild the anchor over an invalid store: {report.errors}"
+            )
+
+        result = reduce_events(events, epoch)
+        if result.rejected:
+            raise WriteRefused(
+                "refusing to rebuild the anchor over a transition-invalid sequence: "
+                f"{result.rejected}"
+            )
+        return write_anchor(store, events)
 
 
 def write_snapshot(store: Path) -> Path:
@@ -377,26 +458,26 @@ def write_snapshot(store: Path) -> Path:
     overwriting a newer one.  The snapshot is derived data, so dropping it costs
     nothing - it can always be rebuilt from the event log.
     """
-    with single_writer_lock(store):
-        snapshot = derive_snapshot(store)
+    snapshot = derive_snapshot(store)  # fail-closed on reducer rejection
 
-        directory = store / "snapshots"
-        directory.mkdir(parents=True, exist_ok=True)
-        final = directory / "learning_state.yml"
-        temporary = directory / f".learning_state.{os.getpid()}.tmp"
-        with temporary.open("w", encoding="utf-8", newline="\n") as handle:
-            yaml.safe_dump(snapshot, handle, allow_unicode=True, sort_keys=True)
+    directory = store / "snapshots"
+    directory.mkdir(parents=True, exist_ok=True)
+    final = directory / "learning_state.yml"
+    temporary = directory / f".learning_state.{_unique_suffix()}.tmp"
+    with temporary.open("w", encoding="utf-8", newline="\n") as handle:
+        yaml.safe_dump(snapshot, handle, allow_unicode=True, sort_keys=True)
 
-        # Re-check just before publishing.
-        current = read_anchor(store) or {}
-        if current.get("head_digest") != snapshot["source_head_digest"]:
-            temporary.unlink(missing_ok=True)
-            raise SnapshotStale(
-                "the store advanced while this snapshot was being derived; "
-                "discarding it rather than overwriting a newer snapshot"
-            )
-        os.replace(temporary, final)
-        return final
+    # Compare-and-publish: if the store advanced while this snapshot was being
+    # derived, discard rather than overwrite a newer one.
+    current = read_anchor(store) or {}
+    if current.get("head_digest") != snapshot["source_head_digest"]:
+        temporary.unlink(missing_ok=True)
+        raise SnapshotStale(
+            "the store advanced while this snapshot was being derived; "
+            "discarding it rather than overwriting a newer snapshot"
+        )
+    os.replace(temporary, final)
+    return final
 
 
 def main(argv: list[str]) -> int:
@@ -405,13 +486,26 @@ def main(argv: list[str]) -> int:
         return 2
 
     store = Path(argv[1])
-    with Path(argv[2]).open("r", encoding="utf-8") as handle:
-        event = yaml.safe_load(handle)
 
-    # Three distinct outcomes; never conflate them.
+    # Three outcomes, scoped to EXPECTED OPERATIONAL failures.  They make no
+    # claim about arbitrary programmer bugs, which still surface as tracebacks.
+    try:
+        with Path(argv[2]).open("r", encoding="utf-8") as handle:
+            event = yaml.safe_load(handle)
+    except (OSError, yaml.YAMLError) as error:
+        print("outcome: refused_before_commit")
+        print(f"REFUSED: cannot read the event file ({error})", file=sys.stderr)
+        print("the store is unchanged")
+        return 1
+    if not isinstance(event, dict):
+        print("outcome: refused_before_commit")
+        print("REFUSED: the event file did not contain a mapping", file=sys.stderr)
+        print("the store is unchanged")
+        return 1
+
     try:
         written = append_event(store, event)
-    except (WriteRefused, StoreLocked) as error:
+    except (WriteRefused, StoreLocked, ValidatorUnavailable) as error:
         print("outcome: refused_before_commit")
         print(f"REFUSED: {error}", file=sys.stderr)
         print("the store is unchanged")
@@ -425,7 +519,7 @@ def main(argv: list[str]) -> int:
     try:
         snapshot_path = write_snapshot(store)
         snapshot = derive_snapshot(store)
-    except (OSError, SnapshotStale, WriteRefused) as error:
+    except (OSError, SnapshotStale, WriteRefused, StoreLocked) as error:
         # The event is already committed; say so plainly.
         print("outcome: event_committed_snapshot_pending")
         print(f"WARNING: event committed but snapshot publication failed ({error})", file=sys.stderr)

@@ -16,6 +16,7 @@ from conftest import (
     open_window,
     pass_window,
     reach_classroom_passed,
+    unblock,
     reach_two_review_passes,
 )
 
@@ -146,11 +147,7 @@ def test_blocked_clears_graduation_eligibility():
 def test_unblock_restores_eligibility_when_conditions_still_hold():
     events = reach_two_review_passes() + [
         make_event("bl", "review_passed", "blocked", event_type="review_result"),
-        make_event(
-            "ub", "blocked", "review_passed",
-            event_type="review_result",
-            blocker_resolution_evidence="resolved",
-        ),
+        unblock("ub", "review_passed"),
     ]
     result = reduce_events(events, EPOCH)
     assert result.rejected == [], reasons(result)

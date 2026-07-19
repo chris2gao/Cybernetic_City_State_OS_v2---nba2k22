@@ -27,6 +27,41 @@ status: "remediation_implemented_pending_foreground_rereview"
   依赖缺失时**fail closed**。
 - 存储绑定单一学习者(`store_meta.yml`),目录名不构成权威。
 
+## 1.1 第 4 轮更新(2026-07-19)
+
+评审裁定两节点数学核心 `pass_with_findings`:**旋转序列、PDE 反例及其范围、形式定义
+均已接受**,并明令不得替换已接受的反例、不得重开旋转推导。语义状态仍 `review_required`
+直至最终机械复审。
+
+本轮所修(节点侧为元数据与措辞,实现侧为实质缺陷):
+
+- **CA-417 断言数 17 → 20**:我改了审计却没同步节点元数据,声明与日志不一致。
+- **PDE-486 收敛表述自相矛盾**:前段写"收敛意义本节点不提供",后段却给出 L²/逐点/一致
+  边界。已统一为一段四层界定(有限模态和已机器验证 / 系数提取已机器验证 /
+  L² 完备性为引用定理 / 经典逐点解需更强光滑性),中英逐项一致。
+- **解锁曾可绕过事件类型检查**:原实现对 `source == blocked` 直接跳过 event_type 约束,
+  等于任何事件类型都能解锁。现改为**仅 `human_acceptance` + `explicit_human_override`**。
+- **blocker/stale 证据**:合同新增 §5.1.5–5.1.7,`-> blocked` 必带 `blocker_evidence`
+  且 `blocked_from` 必须等于 `transition.from`;`-> stale` 必带 cause 枚举,并**区分
+  失败与过期**——未曾应试的过期窗口不计入失败,历史计数分列。
+- **failed / needs_reprep 不可持久化**:schema 收窄为 `const: classroom_passed`,
+  写入路径有负例测试。
+- **时间戳**:新增 `active_review_window_opened_at`,复习通过必须**严格晚于**其窗口开启。
+- **store_meta 有了自己的 canonical schema**,并把其摘要写进尾部锚点——事后改绑定即
+  fail closed;`bound_epoch` 必须等于包的 canonical epoch。
+- **锁**:删除按路径计数的"可重入"机制——它让同进程第二个线程直接放行。现为严格
+  非重入 + 线程唯一临时名,并有 `threading.Barrier` 双线程竞争测试。
+- **fail-closed**:`derive_snapshot` 与 `repair_anchor` 在 reducer 拒绝、学习者混杂、
+  epoch 不符、链断时一律拒绝;诊断模式单独开关。
+- **CLI**:分类 YAML 解析失败、非映射输入、`StoreLocked`、`ValidatorUnavailable`;
+  三态输出经 `main()` 实测断言(不再只调 `append_event`)。三态仅覆盖**预期的运行性失败**,
+  不声称覆盖任意程序缺陷。
+- **术语**:合同、reducer、writer 全部统一为 `graduation_evidence_candidate`;
+  `GRADUATION_CRITERIA.md` 新增三层区分(机械候选 / Human 授权毕业 / 前置可用性)。
+- **epoch** 标记 `pre_release_unfrozen`,并更正"只有 v1 writer"的过时陈述。
+
+测试 121 → **151 全过**。
+
 # 2. 当前阻塞项
 
 1. **两节点语义接受**——需前台独立裁决,执行者无权自接受。
@@ -35,13 +70,17 @@ status: "remediation_implemented_pending_foreground_rereview"
 
 # 3. 当前执行者证据与隐私声明
 
-**执行者证据**:121 项测试、两份 Mode A 审计(20/24 断言)、可复现验证日志。
+**执行者证据**:**151 项测试**、两份 Mode A 审计(**20 / 24** 断言)、
+可复现验证日志(含 claim-to-evidence 清单与手工推导)。
 **这些是执行者自跑的结果,在被独立复现之前不构成独立验证**;通过的断言只证明其
 自身的确切命题。
 
 **隐私现状(如实陈述,不粉饰)**:
 
-- **当前 dev 工作树**已清除学习者别名、事件数、所学节点与表现细节。
+- **上一轮我声称"当前 dev 工作树已清除学习者别名"——那是错误声明**,测试里仍有一处
+  真实技术别名。第4轮评审点名后已替换为合成占位串,并**重新实跑扫描确认 0 命中**。
+  这条记录保留,因为过度声称本身是本轮的发现之一。
+- **当前 dev 工作树**已清除学习者别名、事件数、所学节点与表现细节(扫描已通过)。
 - **但可达的历史提交与当前 master 仍包含学习者绑定的元数据**。本任务
   **不改写历史、不 force push、不删分支、不动 master**,因此那些残留依然存在。
 - 因此**不得声称「仓库历史扫描为零」**。清理历史属破坏性操作,需**单独的 Human 决策**。

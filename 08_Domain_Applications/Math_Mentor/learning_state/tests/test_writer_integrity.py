@@ -49,11 +49,12 @@ def test_lock_held_by_another_process_blocks_entry(synthetic_store):
         foreign.unlink()
 
 
-def test_lock_is_reentrant_within_one_call_stack(synthetic_store):
-    """append_event holds the lock and then calls helpers that take it too."""
+def test_lock_is_strictly_non_reentrant(synthetic_store):
+    """Re-entry was removed: a path-keyed depth counter defeated thread safety."""
     with single_writer_lock(synthetic_store):
-        with single_writer_lock(synthetic_store, timeout=0.2):
-            pass  # must not deadlock or raise
+        with pytest.raises(StoreLocked):
+            with single_writer_lock(synthetic_store, timeout=0.2):
+                pass
     assert not (synthetic_store / ".writer.lock").exists()
 
 
@@ -224,7 +225,7 @@ def test_repair_anchor_refuses_to_paper_over_a_broken_chain(synthetic_store):
     with path.open("w", encoding="utf-8", newline="\n") as handle:
         yaml.safe_dump(document, handle, allow_unicode=True, sort_keys=True)
     (synthetic_store / "integrity" / "head.json").unlink()
-    with pytest.raises(WriteRefused, match="invalid chain"):
+    with pytest.raises(WriteRefused, match="invalid store"):
         repair_anchor(synthetic_store)
 
 

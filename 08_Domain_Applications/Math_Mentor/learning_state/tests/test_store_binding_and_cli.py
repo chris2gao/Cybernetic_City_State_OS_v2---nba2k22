@@ -21,6 +21,7 @@ from conftest import (
     open_window,
     pass_window,
     reach_classroom_passed,
+    unblock,
     reach_two_review_passes,
 )
 
@@ -56,7 +57,7 @@ def test_binding_must_declare_all_required_keys(tmp_path):
     partial.mkdir()
     with (partial / "store_meta.yml").open("w", encoding="utf-8") as handle:
         yaml.safe_dump({"schema_version": "v1", "store_id": "x"}, handle)
-    with pytest.raises(WriteRefused, match="missing required keys"):
+    with pytest.raises(WriteRefused, match="fails its canonical schema"):
         read_store_meta(partial)
 
 
@@ -79,8 +80,12 @@ def test_mixed_student_events_cannot_merge_into_one_node_snapshot(synthetic_stor
 
 
 def test_directory_name_grants_no_authority(tmp_path):
-    """A folder named after a learner proves nothing; the binding file does."""
-    misleading = tmp_path / "no_1"
+    """A folder named after a learner proves nothing; the binding file does.
+
+    The directory name here is a synthetic placeholder on purpose: using a real
+    learner key as a test value would put learner metadata into the repository.
+    """
+    misleading = tmp_path / "looks_like_a_learner_key"
     (misleading / "events").mkdir(parents=True)
     with pytest.raises(WriteRefused):
         read_store_meta(misleading)
@@ -280,7 +285,7 @@ def test_full_fresh_cycle_after_remediation_restores_candidacy(synthetic_store):
 def test_block_and_unblock_from_reachable_statuses(prefix_events, origin):
     events = list(prefix_events) + [
         make_event("bl", origin, "blocked"),
-        make_event("ub", "blocked", origin, blocker_resolution_evidence="resolved"),
+        unblock("ub", origin),
     ]
     result = reduce_events(events, EPOCH)
     assert result.rejected == [], reasons(result)
@@ -292,8 +297,7 @@ def test_block_from_review_due_preserves_the_active_window():
     events = reach_classroom_passed() + [
         open_window("w1", "classroom_passed", "win-A", NEAR_TERM),
         make_event("bl", "review_due", "blocked", event_type="review_result"),
-        make_event("ub", "blocked", "review_due", event_type="review_result",
-                   blocker_resolution_evidence="resolved"),
+        unblock("ub", "review_due"),
     ]
     result = reduce_events(events, EPOCH)
     assert result.rejected == [], reasons(result)
@@ -313,9 +317,7 @@ def test_blocked_to_blocked_is_rejected():
 def test_cannot_graduate_directly_out_of_blocked():
     events = reach_two_review_passes() + [
         make_event("bl", "review_passed", "blocked", event_type="review_result"),
-        make_event("g", "blocked", "graduated", event_type="human_acceptance",
-                   source_type="explicit_human_override", human_authorization_ref="h",
-                   blocker_resolution_evidence="resolved"),
+        unblock("g", "graduated", human_authorization_ref="h"),
     ]
     result = reduce_events(events, EPOCH)
     assert result.rejected, "graduating straight out of blocked must be refused"

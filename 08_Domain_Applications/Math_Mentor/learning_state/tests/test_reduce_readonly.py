@@ -14,6 +14,7 @@ from conftest import (
     open_window,
     pass_window,
     reach_classroom_passed,
+    unblock,
     reach_two_review_passes,
 )
 
@@ -80,10 +81,7 @@ def test_stale_reentry_succeeds_with_remediation_evidence():
 def test_unblock_returns_to_recorded_prior_status():
     events = reach_classroom_passed() + [
         make_event("b1", "classroom_passed", "blocked"),
-        make_event(
-            "b2", "blocked", "classroom_passed",
-            blocker_resolution_evidence="prerequisite resolved",
-        ),
+        unblock("b2", "classroom_passed"),
     ]
     result = reduce_events(events, EPOCH)
     assert result.rejected == [], reasons(result)
@@ -94,10 +92,7 @@ def test_unblock_returns_to_recorded_prior_status():
 def test_unblock_cannot_jump_to_a_different_status():
     events = reach_classroom_passed() + [
         make_event("b1", "classroom_passed", "blocked"),
-        make_event(
-            "b2", "blocked", "review_passed",
-            blocker_resolution_evidence="claimed",
-        ),
+        unblock("b2", "review_passed"),
     ]
     result = reduce_events(events, EPOCH)
     assert "must return to the recorded prior status" in reasons(result)
@@ -106,7 +101,7 @@ def test_unblock_cannot_jump_to_a_different_status():
 def test_unblock_requires_resolution_evidence():
     events = reach_classroom_passed() + [
         make_event("b1", "classroom_passed", "blocked"),
-        make_event("b2", "blocked", "classroom_passed"),
+        unblock("b2", "classroom_passed", blocker_resolution_evidence=None),
     ]
     result = reduce_events(events, EPOCH)
     assert "requires blocker_resolution_evidence" in reasons(result)

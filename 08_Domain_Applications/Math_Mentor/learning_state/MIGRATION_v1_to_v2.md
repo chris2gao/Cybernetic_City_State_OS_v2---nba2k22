@@ -57,11 +57,18 @@ must supply the missing evidence from the session record, or the event is omitte
    - drop any `correction` event and record it in the migration report;
    - note that v2 additionally requires typed review windows, so any v1 review
      history must be re-derived rather than carried over.
-3. Write candidates into a fresh store using `append_event.py`, so every event
-   passes the v2 validator, reducer, chain and tail anchor on the way in.
-4. Compare the derived snapshots of the v1 archive and the v2 store; record every
+3. Create the fresh v2 store's `store_meta.yml` first, and validate it against
+   `learning_store_meta.schema.json`. It must declare the canonical
+   `schema_version`, an opaque `store_id` matching the required pattern, the
+   privacy-safe `bound_student_ref`, and a `bound_epoch` equal to the package's
+   canonical epoch. Without a valid binding the store refuses to open, and the
+   directory name grants nothing.
+4. Write candidates into that store using `append_event.py`, so every event
+   passes the v2 validator, reducer, chain, store binding and tail anchor on the
+   way in.
+5. Compare the derived snapshots of the v1 archive and the v2 store; record every
    status that changed and why.
-5. Have the Human review the migration report before the v2 store is used.
+6. Have the Human review the migration report before the v2 store is used.
 
 ## Current disposition
 

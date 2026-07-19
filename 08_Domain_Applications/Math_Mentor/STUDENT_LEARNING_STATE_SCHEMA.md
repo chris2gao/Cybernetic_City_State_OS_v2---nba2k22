@@ -1,4 +1,4 @@
-# Math Mentor Student Learning State Schema
+﻿# Math Mentor Student Learning State Schema
 
 ## 1. Purpose And Authority
 
@@ -171,12 +171,73 @@ node in its prior status and lives only in the session record.
 | --- | --- |
 | `classroom_result` | `not_seen -> introduced`, `introduced -> classroom_passed`, and transitions into `blocked` |
 | `review_result` | transitions among `review_due`, `review_passed`, `stale`, and into `blocked` |
-| `human_acceptance` | **only** transitions that require Human authority, i.e. into `graduated`, and unblocking |
+| `human_acceptance` | **only** transitions that require Human authority: into `graduated`, and unblocking |
 
-`human_acceptance` must not be usable to drive arbitrary non-Human transitions.
-Its presence is a procedural record that a Human acted; it is not identity proof.
+Two rules follow, and neither may be bypassed:
 
-### 5.2 Graduation eligibility
+- `human_acceptance` must not drive arbitrary non-Human transitions. Its presence is a
+  procedural record that a Human acted; it is not identity proof.
+- **Unblocking is Human-only.** `classroom_result` and `review_result` must not unblock a
+  node, and the fact that a transition starts at `blocked` is not a licence to skip the
+  event-type check. Unblocking additionally requires
+  `evidence_provenance.source_type == explicit_human_override`.
+
+### 5.1.5 Blocker evidence
+
+Every transition into `blocked` carries `blocker_evidence`:
+
+```yaml
+blocker_evidence:
+  blocker_kind: "missing_prerequisite | missing_evidence | privacy_violation | malformed_record | forbidden_write_request | external_dependency"
+  blocker_summary_or_ref: "<what is blocking, or a reference to it>"
+  blocked_from: "<the status being left; must equal transition.from>"
+```
+
+A bare `-> blocked` event is not acceptable: without a recorded cause and origin the node
+cannot be correctly restored. `blocked_from` is preserved unchanged for the whole blocked
+interval, which is why `blocked -> blocked` is not a transition.
+
+### 5.1.6 Stale evidence
+
+Every transition into `stale` carries `stale_evidence` with an explicit cause:
+
+```yaml
+stale_evidence:
+  cause: "review_failed | review_window_expired | retention_decay | prerequisite_invalidated | malformed_evidence"
+  cause_ref_or_summary: "<cause-specific reference or summary>"
+```
+
+Causes are not interchangeable:
+
+- `review_failed` requires an explicit failed review outcome and **counts as a failed
+  attempt** in the history;
+- `review_window_expired` means the window lapsed unused and must **not** be counted as a
+  failed attempt — never sat is not the same as sat and failed;
+- `retention_decay` and `prerequisite_invalidated` apply when leaving `review_passed` or
+  `graduated`, and must identify the decay or invalidation evidence.
+
+Historical counters preserve these distinctions rather than collapsing every
+`review_due -> stale` into one number.
+
+### 5.1.7 Evidence class to provenance mapping
+
+| evidence class | permitted `event_type` | permitted `source_type` |
+| --- | --- | --- |
+| `blocker_evidence` | `classroom_result`, `review_result` | any valid source type for that event |
+| unblocking | `human_acceptance` only | `explicit_human_override` only |
+| `stale_evidence` (`review_failed`, `review_window_expired`) | `review_result` | `spaced_review`, `scheduler_placeholder` |
+| `stale_evidence` (`retention_decay`, `prerequisite_invalidated`, `malformed_evidence`) | `review_result` | `spaced_review`, `registered_learned_state`, `explicit_human_override` |
+| graduation | `human_acceptance` only | `explicit_human_override` only |
+
+### 5.2 Graduation evidence candidacy
+
+Three things are deliberately distinct and must not be used as synonyms:
+
+| term | meaning |
+| --- | --- |
+| `graduation_evidence_candidate` | a **mechanical** calculation: the required evidence pattern is present. It is not a grant, and no real scheduler authority exists yet. |
+| `graduated` | a **status**, reachable only through a Human-gated transition |
+| learned-prerequisite usability | whether another node may rely on this one; governed by `LEARNED_HISTORY_RULES.md`, not by candidacy |
 
 `review_passed -> graduated` requires all of the following, not merely a pass count:
 
@@ -190,7 +251,7 @@ Its presence is a procedural record that a Human acted; it is not identity proof
 
 The Human authorization reference is a **procedural** protected gate. It records that a
 Human acted; it is not cryptographic proof of identity, and a non-empty string is not
-evidence of authority. A deterministic implementation may compute `graduation_eligible`,
+evidence of authority. A deterministic implementation may compute `graduation_evidence_candidate`,
 but must not autonomously persist `graduated` until a trusted Human acceptance path
 exists.
 
