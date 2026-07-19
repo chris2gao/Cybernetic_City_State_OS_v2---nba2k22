@@ -47,18 +47,34 @@ learning-state writer 需要的:
 
 ## 3. 五个决策分叉
 
-### D1 存储介质 —— **需要你决定**
+### D1 存储介质 —— **已决:CityState 本地**(执行者代决,2026-07-19)
 
 | 选项 | 优点 | 代价 |
 |---|---|---|
-| **(a) repo 内 append-only 事件 + 派生快照**(建议) | Git 天然审计、可回溯、复用 lanes 全套;评审可用 diff | 学习进度进入仓库历史,若仓库将来公开则隐私暴露 |
-| (b) CityState 本地 (`%LOCALAPPDATA%/CityState/`) | 隐私最强,不入仓库 | 无 Git 审计;换机即丢;与 lanes 的"local = 非权威"定性冲突 |
-| (c) 混合:本地为权威、repo 存脱敏摘要 | 兼顾 | 两套真相源,需额外一致性机制——**我不建议** |
+| (a) repo 内 append-only 事件 + 派生快照 | Git 天然审计、可回溯、复用 lanes 全套 | **学习画像随公开仓库暴露 —— 本项目已触发** |
+| **(b) CityState 本地 (`%LOCALAPPDATA%/CityState/`)**(采纳) | 隐私安全;学习数据不进公开历史 | 无 Git 审计;换机即丢(需备份策略) |
+| (c) 混合:本地为权威、repo 存脱敏摘要 | 兼顾 | 两套真相源,需额外一致性机制——不建议 |
 
-**建议 (a),但有一个前置条件必须你确认**:这个仓库现在是私有还是将来会公开?
-schema §2 已经强制 `student_key` 用别名/哈希、禁存真名与联系方式,所以即便 (a)
-也不会写入身份信息。但"某人在哪天没学会复数乘法"本身就是敏感的学习画像。
-**如果仓库有任何公开可能,选 (b)。**
+**决策依据是实测事实,不是偏好**:对 `https://github.com/chris2gao/Cybernetic_City_State_OS_v2---teacher.git`
+执行无凭据匿名 `git ls-remote`,成功返回 HEAD,`exit=0` ——**本仓库公开可读**。
+原设计写明的触发条件("如果仓库有任何公开可能,选 (b)")已由事实满足,故改采 (b)。
+
+`STUDENT_LEARNING_STATE_SCHEMA.md` §2 确实强制别名化、禁存真名与联系方式,所以
+即便走 (a) 也不会泄露身份。但"某个可识别的人在哪天没学会复数乘法、错了几次、
+哪类误区反复出现"本身就是敏感学习画像;仓库公开时,别名与真人的关联对熟人是平凡的。
+
+同期扫描结论(未发现既有泄露):repo 内 `student_key` / `learning_status` 命中均为
+schema 与设计文件中的**字段名**,非真实数据;教学逐字稿与决策档案存于 repo 外的
+本地简报库 `E:\newStand\城邦简报`,未随仓库公开。
+
+**权威性与"local = 非权威"的关系**:lanes 把 local transport 定为非权威,是因为
+C1/C2 通信涉及多方协作与外部审计,权威必须落在不可变 Git 事件上。学习状态不同——
+它是**单主体私有数据**,不需要多方共识,其权威性来自 Human 本人与课堂证据,而非
+Git 可见性。两者是不同的域,本地存储在此不构成降级。此区分必须在落地时写入合同,
+以免后人误引 lanes 结论。
+
+**随之而来的代价必须一并接受**:失去 Git 审计意味着需要显式的备份与完整性策略
+(建议:事件文件哈希链 + 定期本地备份;不入仓库)。这是选 (b) 的真实成本,不掩饰。
 
 ### D2 写入权属 —— 建议确定性脚本 + 前台/Human 触发
 
@@ -91,17 +107,25 @@ schema §2 已经强制 `student_key` 用别名/哈希、禁存真名与联系�
 - 现有合同(Teaching Flow Spec §6、TEACHING_AGENT_CONTRACTS §7)已明文如此,
   本设计不放宽。
 
-## 4. 推荐架构(若 D1 选 (a))
+## 4. 推荐架构(D1 = 本地)
 
 ```text
-.ai/learning_state/
+%LOCALAPPDATA%/CityState/learning_state/
 ├── epoch.yml                      # 绑定转换表版本,仿 lane_epoch.yml
 ├── events/
-│   ├── NNN.evidence-envelope.yml  # 先发:证据基线(节点 SHA、exam packet ref)
-│   └── NNN.yml                    # 后发:学习事件,required_refs 指向上面的 envelope
-└── snapshots/
-    └── learning_state.yml         # reducer 派生,只读,不手改
+│   ├── NNN.evidence-envelope.yml  # 先写:证据基线(节点 SHA、exam packet ref)
+│   └── NNN.yml                    # 后写:学习事件,required_refs 指向上面的 envelope
+├── snapshots/
+│   └── learning_state.yml         # reducer 派生,只读,不手改
+└── integrity/
+    └── chain.jsonl                # 事件哈希链,替代 Git 提供的不可变性保证
 ```
+
+repo 内**只放代码与合同**(未来的 reducer 脚本、schema、测试),**永不放事件与快照**。
+落地时须在 `.gitignore` 显式排除,并在合同中写明该路径为禁提交路径。
+
+节点 SHA 引用仍指向公开 repo 的不可变对象——这是安全的:被引用的是教材内容,
+不是学习者行为。方向性很重要:**本地事件可以引用 repo,repo 永不引用本地事件。**
 
 事件草案(字段全部来自 STUDENT_LEARNING_STATE_SCHEMA §3/§6,未发明新概念):
 
@@ -141,11 +165,21 @@ reducer 必须拒绝的情况(直接来自 schema §5 的 forbidden shortcut 列
 4. **补齐历史**:把首课 PROP_LOGIC-001 的 classroom_passed 补录为首条事件。
 5. scheduler 信号输出(**不写调度表**)。
 
-## 6. 仅 Human 决策项
+## 6. 决策状态(2026-07-19 更新)
 
-1. **D1 存储介质**——前置问题:仓库现在/将来是否公开?(公开 → 选本地)
-2. D2/D3/D4 若同意上述建议,回一句"按建议"即可,不必逐条批。
-3. 是否批准从落地顺序第 1 步(只读 reducer)开跑——该步零写入、零风险。
+Human 于 2026-07-19 口述授权执行者代为决策,要求事后列明代决项。当前状态:
+
+| 项 | 结果 | 决策者 |
+|---|---|---|
+| D1 存储介质 | **CityState 本地**(原倾向 repo,因实测仓库公开而改) | 执行者代决 |
+| D2 写入权属 | 确定性脚本 + 显式触发,模型永不直接写 | 执行者代决(按建议) |
+| D3 Human 权威 | publish-helper 同款路径提交接受事件;不造 ActorOrigin 机器 | 执行者代决(按建议) |
+| D4 回滚 | 补偿事件,历史不改写 | 执行者代决(按建议) |
+| D5 scheduler | 硬边界,独立 gate,不与 writer 捆绑 | 合同既定,非决策项 |
+| 落地第 1 步(只读 reducer) | **已批准**,零写入零风险 | Human 明示批准 |
+
+剩余真实 Human 决策:仅"是否接受 D1 改判"这一项属事实驱动的既成结论,若你认为
+公开仓库这一事实有误或即将改变(如计划转私有),需要立刻告知——它会翻转 D1。
 
 ## 7. 本设计不做的事
 
