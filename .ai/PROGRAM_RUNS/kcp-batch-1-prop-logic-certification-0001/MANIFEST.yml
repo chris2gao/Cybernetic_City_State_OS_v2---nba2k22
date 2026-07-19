@@ -1,0 +1,31 @@
+run_id: "kcp-batch-1-prop-logic-certification-0001"
+program_ref: "08_Domain_Applications/Math_Mentor/KNOWLEDGE_COMPLETION_PROGRAM.md"
+program_version: "1.0-draft"
+status: "prop_logic_001_in_progress"
+source_branch: "master"
+source_head: "94b617e67bdbdb958443545d41b90cdbba77e54d"
+rollback_base: "94b617e67bdbdb958443545d41b90cdbba77e54d"
+work_branch: "dev/kcp-batch-1-prop-logic-0001"
+dispatch_head: "ccf50bec28138125fd6bcbd06a3540208c90baee"
+task_ref: ".ai/TASKS/kcp-batch-1-prop-logic-certification-0001.md@ccf50bec28138125fd6bcbd06a3540208c90baee"
+risk_tier: "T2_semantic"
+batch_limit: 5
+node_order:
+  - "PROP_LOGIC-001"
+  - "PROP_LOGIC-002"
+  - "PROP_LOGIC-003"
+  - "PROP_LOGIC-004"
+  - "PROP_LOGIC-005"
+prop_logic_001_standalone_checkpoint_required: true
+consumer_allowed: false
+p3_reopened: false
+bridge_generation_authorized: false
+runtime_activation_authorized: false
+coordinator_activation_authorized: false
+scheduler_or_learner_state_write_authorized: false
+publication:
+  push_development_branch: true
+  push_master: false
+  exact_head_review_required: true
+local_only_after_launch_checkpoint: true
+human_gate: "satisfied_by_task_packet"
