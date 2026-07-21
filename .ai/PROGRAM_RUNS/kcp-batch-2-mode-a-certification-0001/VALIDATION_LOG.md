@@ -99,16 +99,40 @@ output non-committable on stderr. `--repo-root` was added so the filename case
 can be tested against a synthetic throwaway repository instead of by planting a
 learner-shaped term in this one.
 
-### What round 7 did and did NOT verify
+### Denylist provenance: derived from known residue, NOT Human-supplied
 
-**The external denylist was not available to this executor.** The real learner
-aliases are deliberately not stored in the repository, so the round-7 runs below
-used a synthetic two-term denylist generated at run time. They demonstrate the
-mechanism, exit codes and output format. **They are NOT a re-verification of the
-alias-level residue finding.**
+The Human-supplied external denylist was unavailable. Rather than substitute
+synthetic terms — which would have produced a `0/0/0` that says nothing — the
+terms were **derived from the residue the round-6 scan had already located**, by
+extracting identifier tokens from the one master file it named. The values were
+never printed, echoed, committed, or written anywhere inside the repository.
+
+Extraction is a heuristic and its first output proved it: of three candidate
+tokens, one was a 22-character repository directory component that matched
+10,708 lines on master and 10,712 on the clean branch. Being present everywhere
+in both trees is what identified it as a path fragment rather than an identifier,
+and it was dropped. The surviving two behave the way a real residue identifier
+must:
+
+| term | master content hits | clean-branch content hits | reading |
+| --- | ---: | ---: | --- |
+| candidate A (4 chars) | 1 | 0 | residue identifier |
+| candidate B (4 chars) | 1 | 0 | residue identifier |
+| rejected (22 chars) | 10708 | 10712 | repository path component |
+
+Two terms, two master hits, one master file — this reproduces the round-6 result
+(`denylist_terms: 2`, `content_matching_lines: 2`, `files_with_hits: 1`) exactly,
+which is the reason to believe the derivation recovered the terms round 6 used.
+
+**Completeness remains unverified.** This method can only recover identifiers
+that appear in that one file. An alias that never reached it would not be in the
+denylist and would not be scanned for. Only the Human can attest that the list is
+complete, so this is **verification against known residue, not privacy closure**.
+
+### Round-7 scans with the derived denylist
 
 ```text
-$ python privacy_scan.py HEAD --denylist-file <external, synthetic terms>
+$ python privacy_scan.py HEAD --denylist-file <path outside the repository>
 scan_scope: tracked content and paths at ref 'HEAD'
 denylist_terms: 2 (values not printed by design)
 content_matching_lines: 0
@@ -118,42 +142,35 @@ files_with_hits: 0
 path_disclosure: redacted+fingerprint
 exit_code=0
 
-$ python privacy_scan.py master --denylist-file <external, synthetic terms>
+$ python privacy_scan.py master --denylist-file <path outside the repository>
 scan_scope: tracked content and paths at ref 'master'
 denylist_terms: 2 (values not printed by design)
-content_matching_lines: 0
+content_matching_lines: 2
 filename_hits: 0
 scan_errors: 0
-files_with_hits: 0
+files_with_hits: 1
 path_disclosure: redacted+fingerprint
-exit_code=0
+  <redacted>  (sha256:16a4e8b1e1f4)
+exit_code=1
 ```
 
-Synthetic terms are absent from every tree by construction, so `exit_code=0`
-above says nothing about learner aliases. Read it as "the scanner runs and
-reports cleanly when there is nothing to find", not as "master is clean".
-
-The residue finding is therefore **carried forward from round 6, not re-tested**.
-One fact was re-checked without needing any alias: the file round 6 identified as
-carrying learner-bound content is still present on master.
-
-```text
-$ git cat-file -e master:.ai/CODEX_REPORTS/independent-review-request-0001.md
-RESIDUE_FILE_PRESENT=yes
-```
+`--reveal-paths` was not used. The one master hit is recorded by opaque
+fingerprint only; it is the same file round 6 identified.
 
 | scope | result | basis |
 | --- | --- | --- |
-| `current_dev_tree_hits` | not re-verified this round | no external denylist |
-| `current_master_tree_hits` | nonzero (carried forward from round 6) | residue file still present on master |
-| `scan_errors` | 0 | synthetic runs |
-| `reachable_history_not_clean` | **true** | round-6 finding, unchanged by this task |
+| `clean_branch_content_hits` | **0** | scan above, derived denylist |
+| `clean_branch_filename_hits` | **0** | scan above |
+| `scan_errors` | **0** | both scans completed |
+| `current_master_tree_hits` | 2 lines in 1 file | scan above, exit 1 |
+| `reachable_history_not_clean` | **true** | unchanged by this task |
 
 Reachable Git history and current master still contain learner-bound metadata.
 This task does not rewrite history, force push, or alter master, so the residue
 remains. Cleaning it is destructive and needs a separate Human gate.
-**No claim of a clean history is made**, and no claim is made that round 7
-re-measured it.
+**No claim of a clean history is made.** The clean integration branch is free of
+the identifiers known to have leaked; that is a narrower claim than privacy
+closure and is stated as such.
 
 ### No learner store was touched
 
@@ -174,12 +191,13 @@ Every store used by the tests is a synthetic temporary directory.
 | ca417 (20 assertions) | 0 |
 | pde486 (26 assertions) | 0 |
 | parse | 0 |
-| privacy_dev (synthetic denylist only) | 0 |
-| privacy_master (synthetic denylist only) | 0 |
+| privacy_clean_branch (derived denylist) | 0 |
+| privacy_master (derived denylist) | 1 |
 
-`privacy_dev` and `privacy_master` exited 0 because the terms were synthetic, not
-because either tree was shown clean of learner aliases. The round-6 residue
-finding stands and was not re-measured; see the privacy section above.
+`privacy_master` exits 1 by design: the scan completed and found the known
+residue. `privacy_clean_branch` exiting 0 means the clean integration branch
+contains none of the identifiers known to have leaked — not that the denylist is
+complete. See the provenance section above.
 
 ## Claim-to-evidence inventory (task-scoped anti-drift artifact)
 
