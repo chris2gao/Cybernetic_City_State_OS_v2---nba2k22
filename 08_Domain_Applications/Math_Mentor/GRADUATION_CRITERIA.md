@@ -86,6 +86,20 @@ Stable evidence includes:
 
 `stale` does not erase all history. It means current teaching should re-check or remediate before using the node as a learned prerequisite.
 
+## 5.1 Three Distinct Notions
+
+These must never be used as synonyms:
+
+| notion | what it is | who decides |
+| --- | --- | --- |
+| `graduation_evidence_candidate` | a **mechanical** calculation stating that the required evidence pattern is present in the current qualifying cycle | deterministic reducer; **not a grant** |
+| `graduated` | a durable **status** | Human-gated transition only; no code persists it autonomously |
+| learned-prerequisite usability | whether another node may rely on this one | `LEARNED_HISTORY_RULES.md`, subject to future stale checks |
+
+A candidate is not graduated, and a graduated node is not automatically usable as a
+learned prerequisite forever. No real spaced-review scheduler authority exists yet, so
+candidacy is provisional by construction.
+
 ## 6. Graduation Claim Wording Constraints
 
 Allowed wording:

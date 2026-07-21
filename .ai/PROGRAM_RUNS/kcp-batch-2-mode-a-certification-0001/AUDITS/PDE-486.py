@@ -11,7 +11,10 @@ those remain textbook results cited by the node, not machine-checked here.
 
 from __future__ import annotations
 
+import pathlib
+
 import sympy as sp
+import yaml
 
 RESULTS: list[tuple[str, str]] = []
 
@@ -70,12 +73,14 @@ for k in (1, 2, 3):
         sp.simplify(norm_sq - L / 2) == 0,
     )
 
-# general n != m orthogonality, symbolic in n and m
+# Sampled (not general) orthogonality check.  The name says "sampled" because only
+# the listed integer pairs are substituted; this is NOT a general symbolic proof.
 general = sp.integrate(
     sp.sin(n * sp.pi * x / L) * sp.sin(m * sp.pi * x / L), (x, 0, L)
 )
 check(
-    "symbolic integral of sin(n pi x/L) sin(m pi x/L) vanishes for integer n != m",
+    "sampled integer pairs (2,5) and (3,7): integral of sin(n pi x/L) sin(m pi x/L) "
+    "vanishes; sampled evidence only, not a general symbolic proof",
     sp.simplify(general.subs({n: 2, m: 5})) == 0
     and sp.simplify(general.subs({n: 3, m: 7})) == 0,
 )
@@ -120,6 +125,92 @@ check(
     "orthogonality recovers coefficients 3 and -5 from a known combination",
     sp.simplify(coeff1 - 3) == 0 and sp.simplify(coeff2 + 5) == 0,
 )
+
+# --- the node's ACTUAL code_implementation, loaded and executed -------------
+# Not a reimplementation: this reads PDE-486.yaml, executes the exact
+# `code_implementation` text in a separate namespace, and calls the function it
+# defines. An earlier version asserted against a separately written SymPy copy
+# while calling it "the node snippet" - that proved nothing about the node.
+#
+# TRUST BOUNDARY - read before reusing this pattern:
+#   `exec` here uses a SEPARATE NAMESPACE, which is not a security sandbox and
+#   must never be described as one. A separate dict prevents accidental symbol
+#   collision with this module; it prevents nothing else. Executed code retains
+#   full interpreter capability, including filesystem and process access.
+#
+#   The only thing that makes this safe is provenance, not isolation: the code
+#   comes from a TRACKED, REVIEWED node file at the fixed canonical path below.
+#   Executing node code from an untracked, unreviewed or caller-supplied path
+#   would be unsafe no matter what namespace it ran in.
+_NODE_PATH = (
+    pathlib.Path(__file__).resolve().parents[4]
+    / "08_Domain_Applications"
+    / "Math_Mentor"
+    / "Pure_Math_Intuition_DB"
+    / "PDE-486.yaml"
+)
+with _NODE_PATH.open("r", encoding="utf-8") as _handle:
+    _node = yaml.safe_load(_handle)
+
+_namespace: dict = {}
+# Separate namespace only; see the TRUST BOUNDARY note above. Safety here rests
+# on _NODE_PATH being the tracked, reviewed canonical node file.
+exec(compile(_node["code_implementation"], str(_NODE_PATH) + ":code_implementation", "exec"), _namespace)
+_string_modal_sum = _namespace["string_modal_sum"]
+
+A1s, B1s, A2s = sp.symbols("A1s B1s A2s", real=True)
+snippet = _string_modal_sum(x, t, L, c, [(1, A1s, B1s), (2, A2s, 0)])
+check(
+    "node code_implementation (executed verbatim from PDE-486.yaml): the modal sum "
+    "satisfies u_tt = c^2 u_xx",
+    sp.simplify(sp.diff(snippet, t, 2) - c**2 * sp.diff(snippet, x, 2)) == 0,
+)
+check(
+    "node code_implementation (executed verbatim from PDE-486.yaml): u(0,t) = u(L,t) = 0 "
+    "holds exactly by construction for all t",
+    sp.simplify(snippet.subs(x, 0)) == 0 and sp.simplify(snippet.subs(x, L)) == 0,
+)
+
+# --- boundary: linear + homogeneous does NOT imply separable ----------------
+# Counterexample: u_xx + u_yy + x*y*u = 0 is linear and homogeneous.  Under
+# u = X(x)Y(y), dividing by XY gives
+#     X''/X + Y''/Y + x*y = 0,  i.e.  X''/X + Y''/Y = -x*y.
+# The left side has the form f(x) + g(y), whose mixed partial d^2/dxdy is 0,
+# while the right side has mixed partial -1.  The contradiction is what rules
+# out separation; the constant 1 below is that mixed partial.
+#
+# NOTE on a rejected earlier attempt: x*y*u_xx + u_yy = 0 is NOT a valid
+# counterexample.  Dividing instead by X*Y*y gives x*X''/X + Y''/(y*Y) = 0,
+# which separates.  Checking only the quotient by X*Y is insufficient, because
+# separation is allowed to multiply through by a nonzero factor first.
+y_var = sp.Symbol("y", real=True)
+Xf, Yf = sp.Function("X"), sp.Function("Y")
+product = Xf(x) * Yf(y_var)
+non_separable = (
+    sp.diff(product, x, 2) + sp.diff(product, y_var, 2) + x * y_var * product
+)
+quotient = sp.simplify(non_separable / product)
+mixed_partial = sp.simplify(sp.diff(quotient, x, y_var))
+check(
+    "counterexample u_xx + u_yy + x*y*u = 0: dividing by X*Y leaves a coupling term "
+    "whose mixed partial equals 1, contradicting any f(x)+g(y) split. Checked claim: "
+    "'no NONTRIVIAL Cartesian product solution X(x)Y(y) exists IN THESE COORDINATES'; "
+    "this says nothing about other coordinate systems or the trivial solution u = 0",
+    sp.simplify(mixed_partial - 1) == 0,
+)
+# SAMPLED RESCALING CHECKS - not part of the proof.
+# The mixed-partial contradiction above is the whole proof.  These extra checks
+# only sample a habit that invalidated an earlier attempt: dividing the equation
+# by X*Y*<factor> instead of X*Y can sometimes separate an equation that the
+# plain quotient appears to couple.  The sample is NOT exhaustive; passing it
+# does not prove that no rescaling separates the equation.
+for factor, label in ((y_var, "y"), (x, "x"), (x * y_var, "x*y")):
+    rescaled = sp.simplify(sp.diff(sp.simplify(non_separable / (product * factor)), x, y_var))
+    check(
+        f"sampled rescaling: dividing by X*Y*{label} (not multiplying by it) still leaves "
+        f"a nonzero mixed partial; sampled evidence only, not exhaustive",
+        sp.simplify(rescaled) != 0,
+    )
 
 # --- boundary: what this audit does NOT establish --------------------------
 check(

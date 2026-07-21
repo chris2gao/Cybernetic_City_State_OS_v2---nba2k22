@@ -254,8 +254,8 @@ Unindexed, pending, unresolved, failed, or missing-endpoint bridges remain audit
 | --- | --- |
 | Goal | Make each node teachable under the Coordinator's intuition-to-definition pipeline. |
 | Input artifacts | Node-complete corpus, verified prerequisites, Coordinator prompt, mapping references, and teaching-flow specification. |
-| Output artifacts | Mode-correct intuition/mapping, explicit mapping boundaries, subtopic checkpoints, forcing-question plan, definition-restatement hook, and Exam/review handoff metadata. |
-| Exit criteria | Every non-quarantined node satisfies `teaching-ready`; Mode B has no everyday metaphor as primary mapping; Mode A retains low-friction physical intuition. |
+| Output artifacts | Mode-correct intuition/mapping, explicit mapping boundaries, subtopic checkpoints, forcing-question plan, definition-restatement hook, `common_misconceptions` evidence, and Exam/review handoff metadata. |
+| Exit criteria | Every non-quarantined node satisfies `teaching-ready`; Mode B has no everyday metaphor as primary mapping; Mode A retains low-friction physical intuition; every newly generated or repaired node carries `common_misconceptions`, and every existing node lacking it is recorded in the backfill queue rather than silently exempted. |
 | Validation method | Coordinator dry-run rubric covering explanation first, every `sub_topics` item, one-question progression, error repair, definition restatement, Exam handoff, and spaced-review handoff. |
 | Human gate | Required for teaching-philosophy changes, misleading analogy disputes, or Coordinator contract changes. |
 | Rollback strategy | Revert only mapping/teaching patches and restore the prior content-complete checkpoint. |

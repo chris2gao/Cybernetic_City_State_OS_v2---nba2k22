@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "citystate-math-mentor-learning-event-v1",
+  "$id": "citystate-math-mentor-learning-event-v2",
   "title": "Math Mentor learning-state event",
-  "description": "Structural contract for one append-only learning event. Structural validity is not semantic validity: passing this schema does not make a transition legal, does not grant authority, and does not persist anything. Legality is decided by the transition table in reduce_readonly.py. Events live in the local CityState store, never in this public repository.",
+  "description": "Structural contract for one append-only learning event. Four layers are distinct: structural validity (this schema), transition legality (reduce_readonly.py), semantic sufficiency (evidence requirements), and Human authority (a procedural gate no schema can express). Passing this schema does not make a transition legal and does not grant authority. Events live in the learner-bound local store, never in the repository. Version 2 followed the 2026-07-19 independent review.",
   "type": "object",
   "required": [
     "schema_version",
@@ -13,7 +13,7 @@
   ],
   "properties": {
     "schema_version": {
-      "const": "citystate.math_mentor.learning_event.v1"
+      "const": "citystate.math_mentor.learning_event.v2"
     },
     "event_id": {
       "description": "Unique within a store; duplicates are rejected by the reducer.",
@@ -21,7 +21,156 @@
       "pattern": "^[a-z][a-z0-9_-]*$"
     },
     "event_type": {
-      "enum": ["classroom_result", "review_result", "human_acceptance", "correction"]
+      "description": "'correction' is NOT supported in v2. A replay-safe compensation model must be specified in the contract before it is re-enabled; leaving a half-working correction path was a defect found by independent review.",
+      "enum": ["classroom_result", "review_result", "human_acceptance"]
+    },
+    "review_window_id": {
+      "description": "Identifies one review window. Required when entering review_due; must be distinct from every window already counted for the node, and a pass must cite the window that is currently pending.",
+      "type": "string",
+      "minLength": 1
+    },
+    "review_window_kind": {
+      "description": "Typed review window. Graduation requires BOTH kinds, so two arbitrary window ids of the same kind cannot satisfy the minimum.",
+      "enum": ["near_term_retention", "stability_review"]
+    },
+    "remediation_evidence": {
+      "description": "Required for stale -> review_due. Decay alone does not re-qualify a node for review.",
+      "type": ["string", "null"]
+    },
+    "blocker_resolution_evidence": {
+      "description": "Required when leaving blocked; the reducer also enforces Human-only unblocking and returning to the recorded prior status.",
+      "type": ["string", "null"]
+    },
+    "blocker_evidence": {
+      "description": "Required for any transition into blocked. A bare block event would lose why and from where.",
+      "type": "object",
+      "required": ["blocker_kind", "blocker_summary_or_ref", "blocked_from"],
+      "properties": {
+        "blocker_kind": {
+          "enum": [
+            "missing_prerequisite",
+            "missing_evidence",
+            "privacy_violation",
+            "malformed_record",
+            "forbidden_write_request",
+            "external_dependency"
+          ]
+        },
+        "blocker_summary_or_ref": {"type": "string", "minLength": 1},
+        "blocked_from": {"$ref": "#/$defs/learning_status"}
+      },
+      "additionalProperties": false
+    },
+    "review_failure_evidence": {
+      "description": "Required only for review_due -> stale with cause review_failed. A summary string alone is not evidence that an attempt happened and went badly.",
+      "type": "object",
+      "required": [
+        "review_window_id",
+        "review_result",
+        "failure_summary_or_ref",
+        "trap_or_transfer_result"
+      ],
+      "properties": {
+        "review_window_id": {"type": "string", "minLength": 1},
+        "review_result": {"const": "failed"},
+        "failure_summary_or_ref": {"type": "string", "minLength": 1},
+        "trap_or_transfer_result": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "stale_evidence": {
+      "description": "Required for any transition into stale. Causes are not interchangeable: an expired window was never attempted, a failed review was.",
+      "type": "object",
+      "required": ["cause", "cause_ref_or_summary"],
+      "properties": {
+        "cause": {
+          "enum": [
+            "review_failed",
+            "review_window_expired",
+            "retention_decay",
+            "prerequisite_invalidated",
+            "malformed_evidence"
+          ]
+        },
+        "cause_ref_or_summary": {"type": "string", "minLength": 1},
+        "attempt_occurred": {
+          "description": "Machine-readable: did anyone actually sit the review? Enforced by the conditionals below, not merely described: true is required for review_failed, false for review_window_expired, and the field is forbidden for the three causes that do not describe a review attempt. A reader never has to parse free text to learn it.",
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "$comment": "review_failed means someone sat the review and it went badly. Stating the cause without the flag would leave the fact recoverable only from prose.",
+          "if": {"properties": {"cause": {"const": "review_failed"}}, "required": ["cause"]},
+          "then": {
+            "required": ["attempt_occurred"],
+            "properties": {"attempt_occurred": {"const": true}}
+          }
+        },
+        {
+          "$comment": "review_window_expired is the opposite case: the window lapsed and nobody sat it.",
+          "if": {"properties": {"cause": {"const": "review_window_expired"}}, "required": ["cause"]},
+          "then": {
+            "required": ["attempt_occurred"],
+            "properties": {"attempt_occurred": {"const": false}}
+          }
+        },
+        {
+          "$comment": "These three causes do not describe a review attempt at all, so attempt_occurred has no contracted meaning here. Permitting it would let a writer record an unanswerable claim that a later reader could not interpret.",
+          "if": {
+            "properties": {
+              "cause": {
+                "enum": ["retention_decay", "prerequisite_invalidated", "malformed_evidence"]
+              }
+            },
+            "required": ["cause"]
+          },
+          "then": {"not": {"required": ["attempt_occurred"]}}
+        }
+      ]
+    },
+    "classroom_evidence": {
+      "description": "Required for a transition into classroom_passed. If present it must be complete: a partial bundle is not evidence.",
+      "type": "object",
+      "required": [
+        "exam_agent_result",
+        "covered_subtopics",
+        "definition_restatement",
+        "trap_evidence",
+        "tool_and_evidence_limitations"
+      ],
+      "properties": {
+        "exam_agent_result": {
+          "description": "Only a pass is persistable. `failed` and `needs_reprep` remain valid Exam outcomes in the session contract, but no learning-state transition consumes them, so they are unsupported_pending_contract here and cannot enter the event store.",
+          "const": "classroom_passed"
+        },
+        "covered_subtopics": {"type": "array", "items": {"type": "string"}},
+        "definition_restatement": {"type": "string"},
+        "trap_evidence": {"type": "string"},
+        "tool_and_evidence_limitations": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "review_evidence": {
+      "description": "Required for a transition into review_passed. If present it must be complete.",
+      "type": "object",
+      "required": [
+        "review_window_id",
+        "review_result",
+        "definition_retention",
+        "transfer_evidence"
+      ],
+      "properties": {
+        "review_window_id": {"type": "string"},
+        "review_result": {
+          "description": "Only a pass belongs here. A failed attempt lives in review_failure_evidence, so the two can never be confused.",
+          "const": "passed"
+        },
+        "definition_retention": {"type": "string"},
+        "transfer_evidence": {"type": "string"}
+      },
+      "additionalProperties": false
     },
     "student_ref": {
       "description": "Privacy-safe alias or hash only. Real identity is forbidden by STUDENT_LEARNING_STATE_SCHEMA.md section 2.",
@@ -50,7 +199,7 @@
     },
     "evidence_provenance": {
       "type": "object",
-      "required": ["source_type"],
+      "required": ["source_type", "source_ref", "evidence_timestamp", "evidence_limitations"],
       "properties": {
         "source_type": {
           "enum": [
@@ -62,33 +211,38 @@
             "scheduler_placeholder"
           ]
         },
-        "source_ref": {"type": ["string", "null"]},
+        "source_ref": {
+          "description": "Required and non-null: an event with no citable source is not evidence.",
+          "type": "string",
+          "minLength": 1
+        },
         "actually_read_files": {
           "description": "Self-declared and non-verifiable; never upstream evidence in a correctness chain (TEACHING_AGENT_CONTRACTS.md section 2).",
           "type": "array",
           "items": {"type": "string"}
         },
-        "evidence_timestamp": {"type": "string", "format": "date-time"},
-        "evidence_limitations": {"type": "string"},
+        "evidence_timestamp": {
+          "description": "RFC 3339 with a timezone offset. The pattern is enforced explicitly because `format: date-time` is a no-op unless an optional format library is installed, and a silently skipped check is worse than none.",
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "evidence_limitations": {"type": "string", "minLength": 1},
         "not_machine_validated_reason": {"type": ["string", "null"]}
       },
       "additionalProperties": false
     },
     "learning_state_epoch": {
-      "description": "Must equal the bound epoch in epoch.yml; mismatched events are ignored by the reducer.",
+      "description": "Must equal the bound epoch in epoch.yml. A mismatched event is REJECTED fail-closed, not ignored: the reducer records it as rejected, and snapshot derivation refuses to publish while any event on disk is rejected. Events written under an earlier epoch are never silently reinterpreted under current semantics.",
       "type": "string",
       "minLength": 1
     },
-    "corrects_event_id": {
-      "description": "Non-null only for correction events; the target event is superseded, never deleted.",
-      "type": ["string", "null"]
-    },
     "human_authorization_ref": {
-      "description": "Required for any transition into graduated. A model-supplied value is not authority.",
+      "description": "Records that a Human acted. It is NOT identity proof and a non-empty string is not authority; graduation remains a procedural gate that this package will not persist autonomously.",
       "type": ["string", "null"]
     },
     "prev_event_digest": {
-      "description": "SHA-256 of the previous event file, forming the integrity chain that replaces Git immutability in the local store.",
+      "description": "SHA-256 of the previous event file: a local hash-chain link. It gives tamper-evidence against edits and truncation by anything that does not also rewrite the chain and the tail anchor. It does NOT replace Git immutability and is not a signature; an actor with full write access to the store can rewrite the events and the anchor together.",
       "type": ["string", "null"],
       "pattern": "^([0-9a-f]{64})?$"
     }
@@ -109,10 +263,67 @@
     }
   },
   "allOf": [
+    {"required": ["node_ref", "transition", "student_ref"]},
     {
-      "if": {"properties": {"event_type": {"const": "correction"}}, "required": ["event_type"]},
-      "then": {"required": ["corrects_event_id"]},
-      "else": {"required": ["node_ref", "transition"]}
+      "$comment": "Evidence bundles are transition-specific. An ignored bundle must never enter the append-only log, because a later reader cannot tell whether it was honoured.",
+      "if": {"properties": {"transition": {"properties": {"to": {"const": "classroom_passed"}}, "required": ["to"]}}, "required": ["transition"]},
+      "then": {"required": ["classroom_evidence"]},
+      "else": {"not": {"required": ["classroom_evidence"]}}
+    },
+    {
+      "if": {"properties": {"transition": {"properties": {"to": {"const": "review_passed"}}, "required": ["to"]}}, "required": ["transition"]},
+      "then": {"required": ["review_evidence"]},
+      "else": {"not": {"required": ["review_evidence"]}}
+    },
+    {
+      "if": {"properties": {"transition": {"properties": {"to": {"const": "blocked"}}, "required": ["to"]}}, "required": ["transition"]},
+      "then": {"required": ["blocker_evidence"]},
+      "else": {"not": {"required": ["blocker_evidence"]}}
+    },
+    {
+      "if": {"properties": {"transition": {"properties": {"to": {"const": "stale"}}, "required": ["to"]}}, "required": ["transition"]},
+      "then": {"required": ["stale_evidence"]},
+      "else": {"not": {"required": ["stale_evidence"]}}
+    },
+    {
+      "$comment": "review_failure_evidence belongs only to a failed review attempt.",
+      "if": {"properties": {"stale_evidence": {"properties": {"cause": {"const": "review_failed"}}, "required": ["cause"]}}, "required": ["stale_evidence"]},
+      "then": {"required": ["review_failure_evidence"]},
+      "else": {"not": {"required": ["review_failure_evidence"]}}
+    },
+    {
+      "$comment": "Window identity is declared when a window is opened, not carried around afterwards.",
+      "if": {"properties": {"transition": {"properties": {"to": {"const": "review_due"}}, "required": ["to"]}}, "required": ["transition"]},
+      "then": {"required": ["review_window_id", "review_window_kind"]},
+      "else": {"not": {"anyOf": [{"required": ["review_window_id"]}, {"required": ["review_window_kind"]}]}}
+    },
+    {
+      "$comment": "Resolution evidence belongs only to a proposed unblock, which is a human_acceptance event.",
+      "if": {
+        "allOf": [
+          {"properties": {"transition": {"properties": {"from": {"const": "blocked"}}, "required": ["from"]}}, "required": ["transition"]},
+          {"properties": {"event_type": {"const": "human_acceptance"}}, "required": ["event_type"]}
+        ]
+      },
+      "then": {"required": ["blocker_resolution_evidence"]},
+      "else": {"not": {"required": ["blocker_resolution_evidence"]}}
+    },
+    {
+      "$comment": "Remediation evidence explains re-entry from stale, and belongs nowhere else.",
+      "if": {
+        "allOf": [
+          {"properties": {"transition": {"properties": {"from": {"const": "stale"}}, "required": ["from"]}}, "required": ["transition"]},
+          {"properties": {"transition": {"properties": {"to": {"const": "review_due"}}, "required": ["to"]}}, "required": ["transition"]}
+        ]
+      },
+      "then": {"required": ["remediation_evidence"]},
+      "else": {"not": {"required": ["remediation_evidence"]}}
+    },
+    {
+      "$comment": "human_authorization_ref is meaningful only on a human_acceptance proposal. Since the writer refuses every human_acceptance event, it must never reach a persisted v2 store on any other event type.",
+      "if": {"properties": {"event_type": {"const": "human_acceptance"}}, "required": ["event_type"]},
+      "then": true,
+      "else": {"not": {"required": ["human_authorization_ref"]}}
     }
   ]
 }

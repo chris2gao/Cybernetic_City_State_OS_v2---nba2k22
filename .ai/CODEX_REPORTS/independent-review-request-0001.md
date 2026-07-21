@@ -5,7 +5,11 @@ requested_by: "claude_cowork (backend_executor, sole-executor mode)"
 requested_at: "2026-07-19"
 reviewer_role: "foreground_independent_reviewer"
 review_head: "master@ebb16be"
-status: "awaiting_independent_review"
+status: "remediation_implemented_pending_foreground_rereview"
+review_verdict: "blocked / high (R1 fail, R2 fail, R3 pass_with_findings, R4 fail, R5 fail)"
+remediation_ref: ".ai/CODEX_REPORTS/independent-review-result-0001.md"
+remediation_branch: "dev/independent-review-remediation-0001"
+note: "Not accepted. The verdict stands until a foreground reviewer re-reviews the remediation."
 ---
 
 # 为什么有这份请求
@@ -95,9 +99,11 @@ Codex 额度耗尽、Fable 仅剩一次调用期间,Human 授权我(backend exec
 
 ## 不需要你评审的部分
 
-学习者 No.1 的实际学习数据**不在仓库里**(位于 gitignored 的
-`08_Domain_Applications/Math_Mentor/learners/no_1/`),因为仓库公开。这部分的正确性由
-reducer 的确定性校验与哈希链保证,不需要语义评审;你也**不应**要求把它推上来。
+实际学习数据**不在仓库里**(位于 gitignored 的 `08_Domain_Applications/Math_Mentor/learners/`
+之下),学习者别名与具体内容不在此处披露。你**不应**要求把它推上来。
+
+> 更正(第2轮评审后):原文称「这部分的正确性由 reducer 的确定性校验与哈希链保证,
+> 不需要语义评审」——该说法不成立,因为 reducer 与链本身当时存在缺陷。
 
 ## 我请求你不要做的事
 
