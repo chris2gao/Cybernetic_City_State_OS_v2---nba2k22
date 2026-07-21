@@ -247,19 +247,29 @@ Every store used by the tests is a synthetic temporary directory.
 
 ## Summary
 
-| check | exit code |
-| --- | --- |
-| tests (254) | 0 |
-| ca417 (20 assertions) | 0 |
-| pde486 (26 assertions) | 0 |
-| parse | 0 |
-| privacy_clean_branch (derived denylist) | 0 |
-| privacy_master (derived denylist) | 1 |
+| check | exit code | ref scanned | when |
+| --- | --- | --- | --- |
+| tests (254) | 0 | working tree | current |
+| ca417 (20 assertions) | 0 | working tree | current |
+| pde486 (26 assertions) | 0 | working tree | current |
+| parse | 0 | working tree | current |
+| privacy_clean_branch (derived denylist) | 0 | `...-clean` | pre-merge |
+| privacy_master_pre_merge (derived denylist) | 1 | `master` @ `ceb5e6c` | **pre-merge** |
+| **privacy_master_current** (derived denylist) | **0** | `origin/master` @ merged head | **current** |
 
-`privacy_master` exits 1 by design: the scan completed and found the known
-residue. `privacy_clean_branch` exiting 0 means the clean integration branch
-contains none of the identifiers known to have leaked — not that the denylist is
-complete. See the provenance section above.
+The two master rows are different measurements and must not be read as one:
+
+- `privacy_master_pre_merge` exited 1 **by design** — the scan completed and found
+  the residue that master carried before the merge. That row is history now.
+- `privacy_master_current` exits 0: the merge carried the clean branch's redaction
+  into master, so the master **current tree** holds none of the declared
+  identifiers. This is the row that describes master today.
+
+Neither row says anything about reachable history, which still contains the
+pre-merge residue and was deliberately not rewritten. `privacy_clean_branch`
+exiting 0 means that branch contains none of the identifiers known to have
+leaked; completeness of the identifier set rests on the foreground attestation,
+not on the scan.
 
 ## Claim-to-evidence inventory (task-scoped anti-drift artifact)
 

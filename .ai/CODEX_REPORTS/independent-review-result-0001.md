@@ -7,8 +7,8 @@ remediated_by: "claude_cowork (backend_executor)"
 remediated_at: "2026-07-19"
 base_master: "ceb5e6cf8f82eb340a75fa0c136a31a13cf7740e"
 work_branch: "dev/independent-review-remediation-0001-clean"
-clean_branch_head: "3b74c1843f3a8a05030dec65b0a42d408206f51f"
-superseded_work_branch: "dev/independent-review-remediation-0001 (保留未动,含无关派单 96b5f25)"
+clean_branch_head: "92eaf4c51f9ee739b1e0ba7c47d11171ad623c37"
+superseded_work_branch: "dev/independent-review-remediation-0001 @ cc61855bdedbfaf75c628d54a6efaea5716d8cea (保留未动,含无关派单 96b5f25)"
 master_touched: true
 master_merge_commit: "0b34f759582621c33733994e25a3b20b547fa645"
 master_before_merge: "ceb5e6cf8f82eb340a75fa0c136a31a13cf7740e"
@@ -452,6 +452,9 @@ reviewer_acceptance_ref: foreground-rereview-5@8273867
 均已在决策档案中逐条记录。故非「未授权」,而是「已授权但缺独立评审」。
 **评审的处置建议仍然正确并已执行**:本轮整改全部在 dev 分支,不推 master、不改写历史、
 不 force push,master 合入留待 Human 门。
+
+> **[已被取代]** 末句为第 1 轮当时状态。master 合入此后已由 Human 授权并完成
+> (`0b34f75`),当前状态以 §1.0 / §1.0.1 为准。前半句仍成立:未改写历史、未 force push。
 
 ---
 
