@@ -8,9 +8,13 @@ No implementation, test, audit, schema, node or scanner code was touched in this
 pass. Only report front matter, this log, and `epoch.yml` activation metadata
 were aligned with the completed foreground review.
 
-- `faf7dd3..HEAD` is **14 distinct changed paths**. The privacy-evidence commit
-  modified two files that were already inside that set, so the total stayed 14 —
-  it is not "14 plus 2".
+- Path-count drift happened twice; both are recorded rather than smoothed over.
+  The privacy-evidence commit modified two files already inside the round-7 set,
+  so the total stayed **14** at that point — it is not "14 plus 2". This
+  metadata-closure commit then added `epoch.yml`, which was **not** in that set,
+  so `faf7dd3..HEAD` is now **15 distinct paths** (14 remediation + `epoch.yml`).
+  The dispatch asked for the wording "14" and for an `epoch.yml` edit in the same
+  pass; those are mutually exclusive, and the measured value governs.
 - `implementation_foreground_accepted: true` and `independently_accepted: true`
   now record acceptance of the IMPLEMENTATION only, with the scope spelled out in
   `epoch.yml`. Test and audit numbers below remain executor evidence.
