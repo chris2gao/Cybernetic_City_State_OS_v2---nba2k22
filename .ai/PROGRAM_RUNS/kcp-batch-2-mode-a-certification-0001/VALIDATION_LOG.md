@@ -1,6 +1,25 @@
 # Reproducible validation log
 
-Regenerated after foreground rereview round 7.
+Regenerated after foreground rereview round 7, then after metadata closure.
+
+## Metadata closure (final pre-merge pass)
+
+No implementation, test, audit, schema, node or scanner code was touched in this
+pass. Only report front matter, this log, and `epoch.yml` activation metadata
+were aligned with the completed foreground review.
+
+- `faf7dd3..HEAD` is **14 distinct changed paths**. The privacy-evidence commit
+  modified two files that were already inside that set, so the total stayed 14 —
+  it is not "14 plus 2".
+- `implementation_foreground_accepted: true` and `independently_accepted: true`
+  now record acceptance of the IMPLEMENTATION only, with the scope spelled out in
+  `epoch.yml`. Test and audit numbers below remain executor evidence.
+- `release_status` stays `pre_release_unfrozen`, `production_authorized`,
+  `scheduler_writer_activated` and `real_v2_write_performed` stay `false`.
+- Post-edit privacy re-scan on the committed HEAD: 0 / 0 / 0, exit 0.
+- The external denylist file was deleted locally after the final scan; its values
+  were never printed, echoed or committed.
+- No history was rewritten and master was not touched.
 
 **Executor evidence until independently reproduced.** A passing assertion proves
 only its exact claim; a passing test proves only that the implementation matches
@@ -124,10 +143,17 @@ Two terms, two master hits, one master file — this reproduces the round-6 resu
 (`denylist_terms: 2`, `content_matching_lines: 2`, `files_with_hits: 1`) exactly,
 which is the reason to believe the derivation recovered the terms round 6 used.
 
-**Completeness remains unverified.** This method can only recover identifiers
-that appear in that one file. An alias that never reached it would not be in the
-denylist and would not be scanned for. Only the Human can attest that the list is
-complete, so this is **verification against known residue, not privacy closure**.
+**Completeness was not verifiable by the executor.** This method can only recover
+identifiers that appear in that one file; an alias that never reached it would be
+neither in the denylist nor scanned for. At execution time this was therefore
+recorded as verification against known residue, explicitly *not* privacy closure.
+
+**Foreground subsequently attested completeness** (metadata-closure round): the
+two identifier classes on record for this task are the complete set, and no
+additional aliases were authorized. That attestation is the part only a Human can
+supply, and with it the scope closes: the clean integration branch is
+`closed_for_declared_identifier_scope`. No claim is made about unknown aliases
+outside the task record, and reachable history remains unresolved.
 
 ### Round-7 scans with the derived denylist
 

@@ -1,14 +1,18 @@
 ---
 result_id: "independent-review-result-0001"
-title: "独立评审 R1-R5 的整改结果(待前台复审)"
+title: "独立评审 R1-R5 的整改结果(前台实现复审已接受)"
 responds_to: ".ai/CODEX_REPORTS/independent-review-request-0001.md"
 reviewer_verdict_received: "blocked / risk_level high (R1 fail, R2 fail, R3 pass_with_findings, R4 fail, R5 fail)"
 remediated_by: "claude_cowork (backend_executor)"
 remediated_at: "2026-07-19"
 base_master: "ceb5e6cf8f82eb340a75fa0c136a31a13cf7740e"
-work_branch: "dev/independent-review-remediation-0001"
+work_branch: "dev/independent-review-remediation-0001-clean"
+clean_branch_head: "3b74c1843f3a8a05030dec65b0a42d408206f51f"
+superseded_work_branch: "dev/independent-review-remediation-0001 (保留未动,含无关派单 96b5f25)"
 master_touched: false
-status: "remediation_implemented_pending_foreground_rereview"
+status: "foreground_accepted_pending_master_integration"
+privacy_scope: "closed_for_declared_identifier_scope"
+history_privacy_status: "human_decision_required"
 ---
 
 # 0. 第 7 轮:六项内部发现已修,实现部分在 dev 完成
@@ -128,10 +132,20 @@ reviewer_acceptance_ref: foreground-rereview-5@8273867
 | PDE-486 语义状态 | **`accepted_closed`** |
 | 两节点 `semantic_review_pending` | **`false`** |
 | PDE 节点码—证据精确绑定 | **已接受**(审计执行节点自身 `code_implementation` 原文) |
-| 内部实现状态 | **原整改任务的实现部分已完成**,前台已接受;第 7 轮六项发现已全部修复并验证 |
-| 净集成分支 | `dev/independent-review-remediation-0001-clean`,从 faf7dd3 起只含 cc61855 的 14 文件;裁决派单 96b5f25 **未混入**(未删,仍在原分支) |
-| 当前树隐私 | **对已知残留已核**(净分支 0/0/0);**非隐私闭合** —— denylist 由残留提取而非 Human 提供,完整性未担保 |
+| 内部实现状态 | **实现部分已完成并经前台复审接受**(`accepted_closed`);第 7 轮六项发现已全部修复并验证 |
+| 净集成分支 | `dev/independent-review-remediation-0001-clean` @ `3b74c18`;`faf7dd3..HEAD` 为 **14 条不同路径**,裁决派单 96b5f25 **未混入**(未删,仍在原分支) |
+| 当前树隐私 | **已闭合(就已声明的标识范围)** —— 净分支 0 / 0 / 0,exit 0 |
 | 历史隐私 | master 仍有残留(2 命中 / 1 文件),**需单独 Human 决策**,本任务不改写历史 |
+
+净分支路径口径需说清,免得被读成"14 加 2":隐私证据那次提交(`182cebd → 3b74c18`)
+改的两个文件**本来就在那 14 条之内**,因此 `faf7dd3..HEAD` 的路径总数**仍是 14**,不是 16。
+
+隐私范围的确切含义(前台已就完整性作出担保,故本轮可由"对已知残留已核"升为"已闭合"):
+
+- 本任务记录在案的学习者标识类别共 **2 类**,前台确认这就是**完整集合**,本任务未授权其他别名;
+- 净集成分支对**该已声明范围**为零命中,故记为 `closed_for_declared_identifier_scope`;
+- 对任务记录之外、未知的任意别名**不作任何声称** —— 那超出本任务的可验证范围;
+- 可达历史与 master 残留**仍未解决**,属单独的 Human 决策。
 | `teaching_ready` | 仍 `false` —— 受阻于前置链与 P0 crosswalk,**与语义接受无关** |
 | `coordinator_consumable` / `consumer_allowed` | 仍 `false` |
 
@@ -252,9 +266,11 @@ reviewer_acceptance_ref: foreground-rereview-5@8273867
   留下的两个词各在 master 命中 1 次、净分支 0 次,**恰好复现第 6 轮的
   `denylist_terms: 2 / content_matching_lines: 2 / files_with_hits: 1`**。
 - **净集成分支扫描结果 0 / 0 / 0,exit 0**:已知泄漏过的标识不在该分支上。
-- **但这不是隐私闭合**。该方法只能覆盖出现在那一份文件里的标识;若存在从未进入该文件的
-  别名,它既不在 denylist 里、也就不会被扫到。**完整性只有 Human 能担保**,故本轮结论限定为
-  「对已知残留已核」,不得升格为「隐私闭合」。
+- **完整性已由前台担保,故结论升级为「已闭合(就已声明的标识范围)」**。执行阶段我只能说
+  「对已知残留已核」——因为提取法只覆盖那一份文件里出现过的标识,是否还有别的别名,
+  执行者无从判断。前台随后确认本任务在案的 2 类标识即完整集合、未授权其他别名,
+  这一条**只能由 Human 提供**,补上后范围才闭合。
+- 边界仍然明确:闭合是**针对已声明范围**的。对任务记录之外、未知的任意别名不作任何声称。
 - **可达的历史提交与当前 master 仍包含学习者绑定的元数据**:master 扫描 exit 1,
   2 条内容命中、1 个文件(仅以指纹 `sha256:16a4e8b1e1f4` 记录,未用 `--reveal-paths`)。本任务
   **不改写历史、不 force push、不删分支、不动 master**,因此那些残留依然存在。

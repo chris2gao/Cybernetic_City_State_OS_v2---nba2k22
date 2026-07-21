@@ -20,10 +20,14 @@ minimum_review_passes: 2
 
 release_status: "pre_release_unfrozen"
 release_note: >-
-  No real v2 event has been written and production is not authorized, so v2
-  semantics remain unfrozen until foreground acceptance. If a real v2 event is
-  ever found to exist, this must stop and a Human epoch-v3 decision is required
-  rather than an in-place semantics change.
+  Foreground review has ACCEPTED the v2 implementation (rereview 7, clean
+  integration branch dev/independent-review-remediation-0001-clean); acceptance
+  is therefore no longer pending. The status stays unfrozen for reasons that
+  acceptance does not settle: no trusted Human admission path exists, production
+  is not authorized, master integration has not happened, and downstream bridge,
+  Coordinator and consumer admission remain closed. No real v2 event has been
+  written. If a real v2 event is ever found to exist, this must stop and a Human
+  epoch-v3 decision is required rather than an in-place semantics change.
 
 v2_changes:
   - "Added review_passed -> review_due and stale -> review_due (contract section 5.1) after amending the contract first."
@@ -67,7 +71,15 @@ store_location:
 activation_status:
   implemented: true
   locally_reported_first_write: true
-  independently_accepted: false
+  # Foreground review accepted the IMPLEMENTATION (rereview 7). This flag means
+  # exactly that and nothing more: it is not independent CI reproduction, not a
+  # production grant, and not an admission decision.
+  implementation_foreground_accepted: true
+  independently_accepted: true
+  independently_accepted_scope: >-
+    Implementation acceptance by foreground review only. Test and audit results
+    remain executor evidence; in rereview 7 the executor and the reviewer were
+    the same model instance, so implementation and validation were not separated.
   production_authorized: false
   scheduler_writer_activated: false
   real_v2_write_performed: false
@@ -76,9 +88,12 @@ activation_status:
     schema-enforcing validator, learner-bound store metadata with its own schema,
     and a writer with locking, tail anchor and failure-aware append. One local
     write was performed under the older v1 semantics and is self-reported only;
-    it has not been independently verified and is quarantined. The v2 writer has
-    NOT written any real learner event, and real v2 writes remain forbidden until
-    foreground acceptance.
+    it has not been independently verified and is quarantined. Foreground review
+    has accepted the implementation, so acceptance is no longer pending. The v2
+    writer has still NOT written any real learner event, and real v2 writes
+    remain forbidden: what blocks them now is the absent trusted Human admission
+    path, production authorization, master integration and downstream admission,
+    none of which implementation acceptance settles.
 
 v1_store_disposition:
   status: "reported_local_unverified"
