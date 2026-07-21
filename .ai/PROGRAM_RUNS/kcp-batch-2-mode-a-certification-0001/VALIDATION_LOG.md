@@ -192,15 +192,47 @@ fingerprint only; it is the same file round 6 identified.
 | `clean_branch_content_hits` | **0** | scan above, derived denylist |
 | `clean_branch_filename_hits` | **0** | scan above |
 | `scan_errors` | **0** | both scans completed |
-| `current_master_tree_hits` | 2 lines in 1 file | scan above, exit 1 |
+| `pre_merge_master_tree_hits` | 2 lines in 1 file | scan above, exit 1 |
 | `reachable_history_not_clean` | **true** | unchanged by this task |
 
-Reachable Git history and current master still contain learner-bound metadata.
-This task does not rewrite history, force push, or alter master, so the residue
-remains. Cleaning it is destructive and needs a separate Human gate.
-**No claim of a clean history is made.** The clean integration branch is free of
-the identifiers known to have leaked; that is a narrower claim than privacy
-closure and is stated as such.
+The numbers above are the **pre-merge** state. See the post-merge section below
+for the current one: the merge carried the redaction into master, so the master
+current tree is now clean and only reachable history still holds the residue.
+
+## Post-merge state (master 0b34f75)
+
+The remediation was merged into master under Human authorization as a normal,
+non-force merge (`ceb5e6c → 0b34f75`, no squash, no history rewrite).
+
+```text
+$ python privacy_scan.py origin/master --denylist-file <path outside the repository>
+scan_scope: tracked content and paths at ref 'origin/master'
+denylist_terms: 2 (values not printed by design)
+content_matching_lines: 0
+filename_hits: 0
+scan_errors: 0
+files_with_hits: 0
+path_disclosure: redacted+fingerprint
+exit_code=0
+```
+
+| scope | result |
+| --- | --- |
+| `master_current_tree_hits` | **0 / 0 / 0**, exit 0 |
+| `master_current_tree_status` | `closed_for_declared_identifier_scope` |
+| `reachable_history_not_clean` | **true**, unchanged |
+| `history_rewritten` | **false** |
+
+Two statements that must never be collapsed into one:
+
+- **current trees are clean** — the clean integration branch and, since the
+  merge, master itself;
+- **reachable history is not** — the pre-merge commits still hold the residue,
+  the merge neither touched nor should touch them.
+
+**No claim of a clean history is made.** Cleaning it is destructive, needs a
+separate Human decision, and the current policy is
+`retain_private_history_for_now`.
 
 ### No learner store was touched
 

@@ -20,14 +20,15 @@ minimum_review_passes: 2
 
 release_status: "pre_release_unfrozen"
 release_note: >-
-  Foreground review has ACCEPTED the v2 implementation (rereview 7, clean
-  integration branch dev/independent-review-remediation-0001-clean); acceptance
-  is therefore no longer pending. The status stays unfrozen for reasons that
-  acceptance does not settle: no trusted Human admission path exists, production
-  is not authorized, master integration has not happened, and downstream bridge,
-  Coordinator and consumer admission remain closed. No real v2 event has been
-  written. If a real v2 event is ever found to exist, this must stop and a Human
-  epoch-v3 decision is required rather than an in-place semantics change.
+  Foreground review has ACCEPTED the v2 implementation (rereview 7), and the
+  remediation has been merged into master under Human authorization as merge
+  commit 0b34f759582621c33733994e25a3b20b547fa645. Acceptance and master
+  integration are therefore both complete and are no longer reasons to wait.
+  The status stays unfrozen for the reasons neither of them settles: no trusted
+  Human admission path exists, production is not authorized, and downstream
+  bridge, Coordinator and consumer admission remain closed. No real v2 event has
+  been written. If a real v2 event is ever found to exist, this must stop and a
+  Human epoch-v3 decision is required rather than an in-place semantics change.
 
 v2_changes:
   - "Added review_passed -> review_due and stale -> review_due (contract section 5.1) after amending the contract first."
@@ -75,6 +76,8 @@ activation_status:
   # exactly that and nothing more: it is not independent CI reproduction, not a
   # production grant, and not an admission decision.
   implementation_foreground_accepted: true
+  master_integration_completed: true
+  master_merge_commit: "0b34f759582621c33733994e25a3b20b547fa645"
   independently_accepted: true
   independently_accepted_scope: >-
     Implementation acceptance by foreground review only. Test and audit results
@@ -89,11 +92,11 @@ activation_status:
     and a writer with locking, tail anchor and failure-aware append. One local
     write was performed under the older v1 semantics and is self-reported only;
     it has not been independently verified and is quarantined. Foreground review
-    has accepted the implementation, so acceptance is no longer pending. The v2
-    writer has still NOT written any real learner event, and real v2 writes
-    remain forbidden: what blocks them now is the absent trusted Human admission
-    path, production authorization, master integration and downstream admission,
-    none of which implementation acceptance settles.
+    has accepted the implementation and it is merged into master, so neither
+    acceptance nor integration is pending. The v2 writer has still NOT written
+    any real learner event, and real v2 writes remain forbidden: what blocks them
+    now is the absent trusted Human admission path, production authorization and
+    downstream admission, none of which acceptance or a merge settles.
 
 v1_store_disposition:
   status: "reported_local_unverified"

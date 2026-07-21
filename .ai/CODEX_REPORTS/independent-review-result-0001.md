@@ -9,10 +9,13 @@ base_master: "ceb5e6cf8f82eb340a75fa0c136a31a13cf7740e"
 work_branch: "dev/independent-review-remediation-0001-clean"
 clean_branch_head: "3b74c1843f3a8a05030dec65b0a42d408206f51f"
 superseded_work_branch: "dev/independent-review-remediation-0001 (保留未动,含无关派单 96b5f25)"
-master_touched: false
-status: "foreground_accepted_pending_master_integration"
+master_touched: true
+master_merge_commit: "0b34f759582621c33733994e25a3b20b547fa645"
+master_before_merge: "ceb5e6cf8f82eb340a75fa0c136a31a13cf7740e"
+merge_type: "normal non-force merge (no squash, no history rewrite)"
+status: "master_integrated_production_locked"
 privacy_scope: "closed_for_declared_identifier_scope"
-history_privacy_status: "human_decision_required"
+history_privacy_status: "retained_pending_future_human_decision"
 ---
 
 # 0. 第 7 轮:六项内部发现已修,实现部分在 dev 完成
@@ -124,7 +127,7 @@ reviewer_acceptance_ref: foreground-rereview-5@8273867
 **读者只需本节即可了解现状。本节即权威当前摘要;第 4 节起为历史轮次记录,
 其中含已被推翻的结论,不得当作现状引用。**
 
-## 1.0 当前状态(第 7 轮后)
+## 1.0 当前状态(master 合入后)
 
 | 项 | 当前值 |
 | --- | --- |
@@ -132,10 +135,19 @@ reviewer_acceptance_ref: foreground-rereview-5@8273867
 | PDE-486 语义状态 | **`accepted_closed`** |
 | 两节点 `semantic_review_pending` | **`false`** |
 | PDE 节点码—证据精确绑定 | **已接受**(审计执行节点自身 `code_implementation` 原文) |
-| 内部实现状态 | **实现部分已完成并经前台复审接受**(`accepted_closed`);第 7 轮六项发现已全部修复并验证 |
-| 净集成分支 | `dev/independent-review-remediation-0001-clean`;`faf7dd3..HEAD` 为 **15 条不同路径**(第 7 轮整改 14 条 + 元数据收尾新增的 `epoch.yml`),裁决派单 96b5f25 **未混入**(未删,仍在原分支) |
-| 当前树隐私 | **已闭合(就已声明的标识范围)** —— 净分支 0 / 0 / 0,exit 0 |
-| 历史隐私 | master 仍有残留(2 命中 / 1 文件),**需单独 Human 决策**,本任务不改写历史 |
+| 内部实现状态 | **已完成并经前台复审接受**(`accepted_closed`);第 7 轮六项发现已全部修复并验证 |
+| **master 集成** | **已完成**:`ceb5e6c → 0b34f75`,非 force 合并、未 squash、未改写历史;`local == origin` 已回读核验 |
+| 合并 delta | **38 条路径**(第 1–7 轮完整整改 + 元数据收尾);裁决派单 96b5f25 **未进入 master** |
+| 源分支 | `...-clean` @ `92eaf4c` 与原 `dev/...-0001` @ `cc61855` **均保留未动** |
+| **master 当前树隐私** | **已闭合(就已声明的标识范围)** —— 合并把脱敏带入 master;`origin/master` 实扫 **0 / 0 / 0**,exit 0 |
+| 历史隐私 | **仅存于可达历史提交**(合并前 master 曾有 2 命中 / 1 文件);未改写、未 force push,**留待未来 Human 决策** |
+| 生产授权 | **仍关闭**:生产、可信 Human 准入、scheduler、Coordinator、bridge/consumer 准入、Mode B 全部未激活 |
+
+隐私口径务必分清,这两句不是一回事:
+
+- **master 当前树**:已闭合。合并把净分支对残留文件的脱敏一并带入,`origin/master` 实扫 0/0/0。
+- **可达历史**:仍含旧残留。那是合并前 master 的历史提交,合并不会、也不应该改动它;
+  清理属破坏性操作,需单独 Human 决策。当前建议为 `retain_private_history_for_now`。
 
 净分支路径口径需说清,这里出过两次数字漂移,都记下来:
 
@@ -147,14 +159,45 @@ reviewer_acceptance_ref: foreground-rereview-5@8273867
 
 构成:第 7 轮整改 14 条(10 修改 + 4 新测试)+ `epoch.yml` 1 条 = 15。
 
-隐私范围的确切含义(前台已就完整性作出担保,故本轮可由"对已知残留已核"升为"已闭合"):
+隐私范围的确切含义(前台已就完整性作出担保,故可由"对已知残留已核"升为"已闭合"):
 
 - 本任务记录在案的学习者标识类别共 **2 类**,前台确认这就是**完整集合**,本任务未授权其他别名;
-- 净集成分支对**该已声明范围**为零命中,故记为 `closed_for_declared_identifier_scope`;
+- 净集成分支与合并后的 master 对**该已声明范围**均为零命中,故记为
+  `closed_for_declared_identifier_scope`;
 - 对任务记录之外、未知的任意别名**不作任何声称** —— 那超出本任务的可验证范围;
-- 可达历史与 master 残留**仍未解决**,属单独的 Human 决策。
-| `teaching_ready` | 仍 `false` —— 受阻于前置链与 P0 crosswalk,**与语义接受无关** |
-| `coordinator_consumable` / `consumer_allowed` | 仍 `false` |
+- **可达历史**中的旧残留仍未解决,属单独的 Human 决策(当前政策:暂予保留)。
+
+仍为 `false` 的两项与语义接受无关,列在此处免得被误读:
+
+| 项 | 值 | 原因 |
+| --- | --- | --- |
+| `teaching_ready` | `false` | 受阻于前置链与 P0 crosswalk |
+| `coordinator_consumable` / `consumer_allowed` | `false` | Stage 8 准入未授权 |
+
+## 1.0.1 master 合入后验(仓库内权威记录)
+
+本节把后验事实直接记在仓库里,使审计不依赖任何仓库之外的文件。
+
+| 检查项 | 结果 |
+| --- | --- |
+| 合并方式 | 非 force、未 squash、未改写历史 |
+| `master` | `ceb5e6c → 0b34f75`;`local == origin` 回读一致 |
+| 合并 delta | 38 条路径;裁决派单 96b5f25 未进入 master |
+| 源分支 | `...-clean` @ `92eaf4c`、原 `dev/...-0001` @ `cc61855`,均保留未动 |
+| 测试(合并结果上实跑) | 254 通过,exit 0 |
+| 审计 | CA-417 20 断言、PDE-486 26 断言,exit 0 |
+| 两节点语义 | `accepted` / `semantic_review_pending: false` |
+| `release_status` | `pre_release_unfrozen` |
+| 生产/scheduler/真实 v2 写入 | 全部 `false` |
+| `human_acceptance` 持久化 | `disabled_pending_trusted_admission` |
+| 隐私(`origin/master` 实扫) | 0 / 0 / 0,exit 0 |
+| tracked `learners/` | 0 |
+
+**关于决策档案的位置,更正一处此前含糊的说法。** 城邦简报库
+(`E:\newStand\城邦简报\03_决策档案\`)中另存有一份本次集成的中文决策档案,但那是
+**仓库之外**的便利副本,不属本仓库、也不构成权威记录。**权威记录就是本报告与
+`VALIDATION_LOG.md`**,二者均已随本次提交进入 master。此前 handoff 里"档案在
+03_决策档案/..."的表述容易被读成仓库内路径,特此澄清。
 
 语义接受与消费准入是两件事:前者已闭合,后者仍需外部依赖与独立 Human gate。
 数学语义**不得重开**(前台裁决)。
@@ -243,7 +286,8 @@ reviewer_acceptance_ref: foreground-rereview-5@8273867
 4. **历史提交中的学习者元数据**——见第 3 节,需**独立的 Human 决策**。
 5. **`release_status` 保持 `pre_release_unfrozen`**,真实 v2 写入仍被禁止;
    全部测试与审计仍是**执行者证据**,未经独立复现。
-6. Mode B 两节点、scheduler 第 5 步、master 合入——均未动,待授权。
+6. Mode B 两节点、scheduler 第 5 步——均未动,待授权。
+   (**master 合入已不在此列**:已于 `0b34f75` 完成,见 §1.0。)
 
 **已解除**(第 7 轮):内部实现复审项已全部修完,**254 项测试通过**。第 7 轮的六项
 发现已逐条修复并加测试(见 §1.0),原整改任务的实现部分至此在 dev 分支完成。
@@ -278,10 +322,13 @@ reviewer_acceptance_ref: foreground-rereview-5@8273867
   执行者无从判断。前台随后确认本任务在案的 2 类标识即完整集合、未授权其他别名,
   这一条**只能由 Human 提供**,补上后范围才闭合。
 - 边界仍然明确:闭合是**针对已声明范围**的。对任务记录之外、未知的任意别名不作任何声称。
-- **可达的历史提交与当前 master 仍包含学习者绑定的元数据**:master 扫描 exit 1,
-  2 条内容命中、1 个文件(仅以指纹 `sha256:16a4e8b1e1f4` 记录,未用 `--reveal-paths`)。本任务
-  **不改写历史、不 force push、不删分支、不动 master**,因此那些残留依然存在。
-- 因此**不得声称「仓库历史扫描为零」**。清理历史属破坏性操作,需**单独的 Human 决策**。
+- **master 合入后,当前树已闭合**。合并前 master 曾有 2 条内容命中 / 1 个文件
+  (仅以指纹 `sha256:16a4e8b1e1f4` 记录,未用 `--reveal-paths`);净分支早已把该文件脱敏,
+  合并把脱敏一并带入,故合并后 `origin/master` 实扫 **0 / 0 / 0,exit 0**。
+- **残留现在只存在于可达历史提交中**,不在任何当前树里。合并不改动历史,也不应该改动:
+  本任务**不改写历史、不 force push、不删分支**。
+- 因此**仍不得声称「仓库历史扫描为零」**——当前树为零 ≠ 历史为零,两者必须分开陈述。
+  清理历史属破坏性操作,需**单独的 Human 决策**;当前政策为 `retain_private_history_for_now`。
 - 本报告及本轮新增文件不再重复那些元数据。
 
 ---
