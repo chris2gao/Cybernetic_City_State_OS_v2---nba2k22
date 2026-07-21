@@ -550,8 +550,13 @@ def repair_anchor(store: Path) -> Path:
         return write_anchor(store, events)
 
 
-def write_snapshot(store: Path) -> Path:
+def write_snapshot(store: Path) -> tuple[Path, dict]:
     """Re-derive the snapshot and publish it atomically, without racing.
+
+    Returns the path it published AND the exact snapshot that was written.  The
+    snapshot is returned rather than left to the caller to re-derive: a caller
+    that re-derives afterwards would describe whatever the store looks like
+    then, which may already be a later head than the file on disk.
 
     Each snapshot records the anchor it was derived from.  Immediately before
     publication the anchor is re-read: if another writer advanced the store in

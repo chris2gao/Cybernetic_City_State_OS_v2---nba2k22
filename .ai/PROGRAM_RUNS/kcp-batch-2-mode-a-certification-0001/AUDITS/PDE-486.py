@@ -128,9 +128,20 @@ check(
 
 # --- the node's ACTUAL code_implementation, loaded and executed -------------
 # Not a reimplementation: this reads PDE-486.yaml, executes the exact
-# `code_implementation` text in an isolated namespace, and calls the function it
+# `code_implementation` text in a separate namespace, and calls the function it
 # defines. An earlier version asserted against a separately written SymPy copy
 # while calling it "the node snippet" - that proved nothing about the node.
+#
+# TRUST BOUNDARY - read before reusing this pattern:
+#   `exec` here uses a SEPARATE NAMESPACE, which is not a security sandbox and
+#   must never be described as one. A separate dict prevents accidental symbol
+#   collision with this module; it prevents nothing else. Executed code retains
+#   full interpreter capability, including filesystem and process access.
+#
+#   The only thing that makes this safe is provenance, not isolation: the code
+#   comes from a TRACKED, REVIEWED node file at the fixed canonical path below.
+#   Executing node code from an untracked, unreviewed or caller-supplied path
+#   would be unsafe no matter what namespace it ran in.
 _NODE_PATH = (
     pathlib.Path(__file__).resolve().parents[4]
     / "08_Domain_Applications"
@@ -142,6 +153,8 @@ with _NODE_PATH.open("r", encoding="utf-8") as _handle:
     _node = yaml.safe_load(_handle)
 
 _namespace: dict = {}
+# Separate namespace only; see the TRUST BOUNDARY note above. Safety here rests
+# on _NODE_PATH being the tracked, reviewed canonical node file.
 exec(compile(_node["code_implementation"], str(_NODE_PATH) + ":code_implementation", "exec"), _namespace)
 _string_modal_sum = _namespace["string_modal_sum"]
 

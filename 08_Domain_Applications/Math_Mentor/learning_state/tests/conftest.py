@@ -92,8 +92,13 @@ def make_event(
         event["stale_evidence"] = {
             "cause": "review_failed" if failed else "retention_decay",
             "cause_ref_or_summary": "synthetic stale cause",
-            "attempt_occurred": bool(failed),
         }
+        # `attempt_occurred` is contracted only for the two causes that describe
+        # a review attempt.  `retention_decay` describes decay over time, so the
+        # canonical schema forbids the field there; emitting it unconditionally
+        # made the fixture itself contract-invalid.
+        if failed:
+            event["stale_evidence"]["attempt_occurred"] = True
         # Contract 5.1.7: each cause admits only the provenance that could
         # witness it, so the fixture supplies a matching source type.
         event["evidence_provenance"]["source_type"] = source_type or "spaced_review"

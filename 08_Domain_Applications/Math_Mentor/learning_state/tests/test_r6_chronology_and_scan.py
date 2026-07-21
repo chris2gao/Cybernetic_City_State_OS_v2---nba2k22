@@ -10,6 +10,7 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+from uuid import uuid4
 
 import pytest
 import yaml
@@ -254,9 +255,22 @@ def test_cli_reports_malformed_anchor_as_refused_before_commit(synthetic_store, 
 # --- privacy scan hardening ------------------------------------------------
 
 
-def _scan(*args: str, denylist: str | None = "synthetic_never_present_alias"):
+def _absent_term() -> str:
+    """A term that cannot be in the tree, because it is invented per run.
+
+    A literal sentinel does not work here: writing it into this file commits it,
+    so the tree contains the very term the test calls absent and the "clean
+    tree" case can never pass.  That is not a hypothetical - it is the defect
+    this helper replaces.
+    """
+    return f"absent-{uuid4().hex}"
+
+
+def _scan(*args: str, denylist: str | None = None):
     env = dict(os.environ)
     if denylist is None:
+        denylist = _absent_term()
+    if denylist == "":
         env.pop("LEARNER_DENYLIST", None)
     else:
         env["LEARNER_DENYLIST"] = denylist
@@ -282,7 +296,7 @@ def test_scan_invalid_ref_is_a_failure_not_a_clean_result():
 
 
 def test_scan_without_denylist_fails():
-    result = _scan("HEAD", denylist=None)
+    result = _scan("HEAD", denylist="")
     assert result.returncode == 2
     assert "SCAN FAILED" in result.stdout
 

@@ -140,8 +140,10 @@ class NodeState:
     latest_definition_retention: str | None = None
     latest_transfer_evidence: str | None = None
     last_qualifying_timestamp: str | None = None
-    # Every accepted event advances this, so a backdated event is detectable even
-    # outside the qualifying cycle.
+    # Every accepted event advances this - including blocks and unblocks - so a
+    # backdated event is detectable even outside the qualifying cycle.  The
+    # invariant is held by `_accept`, the single acceptance path, rather than by
+    # each branch remembering to set it.
     last_event_timestamp: str | None = None
 
     # Immutable audit history.  Never cleared, so decay is visible afterwards.
@@ -174,6 +176,44 @@ class ReductionResult:
 
 def _reject(result: ReductionResult, event_id: str, reason: str) -> None:
     result.rejected.append((event_id, reason))
+
+
+def _accept(
+    result: ReductionResult,
+    seen_source_refs: set[str],
+    node_id: str,
+    event_id: str,
+    source_ref: str,
+    state: NodeState,
+    evidence_timestamp: object,
+) -> None:
+    """The single acceptance path.  Every accepted event lands here.
+
+    Centralising the write is what keeps `last_event_timestamp` correct.  Three
+    branches accept events (blocked, unblock, ordinary transition) and two of
+    them previously built their own `replace(...)` call; both forgot to advance
+    the timestamp, which let a backdated event slip in after a block or an
+    unblock.  Advancing it is no longer any branch's responsibility, so a future
+    early-continue branch cannot forget it.
+
+    Ordering rule (enforced by the caller before this point): a later accepted
+    event may repeat the previous timestamp for explicitly permitted same-session
+    bookkeeping, but may never precede it.
+
+    `graduation_evidence_candidate` is recomputed from the final state rather
+    than passed in: `_is_eligible` already returns False for any status that is
+    not `review_passed`, so the blocked branch needs no special case.
+    """
+    final = replace(
+        state,
+        last_event_id=event_id,
+        last_event_timestamp=str(evidence_timestamp),
+    )
+    result.snapshot[node_id] = replace(
+        final, graduation_evidence_candidate=_is_eligible(final)
+    )
+    seen_source_refs.add(source_ref)
+    result.accepted.append(event_id)
 
 
 def _has_private_data(event: Any) -> str | None:
@@ -622,15 +662,17 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
                 )
                 continue
             # Candidacy is cleared while blocked; it is recomputed on unblock.
-            result.snapshot[node_id] = replace(
-                current,
-                status="blocked",
-                last_event_id=event_id,
-                blocked_from=current.status,
-                graduation_evidence_candidate=False,
+            # `_accept` recomputes it from the blocked state, which `_is_eligible`
+            # already reports as ineligible.
+            _accept(
+                result,
+                seen_source_refs,
+                node_id,
+                event_id,
+                source_ref,
+                replace(current, status="blocked", blocked_from=current.status),
+                provenance.get("evidence_timestamp"),
             )
-            seen_source_refs.add(source_ref)
-            result.accepted.append(event_id)
             continue
 
         if unblocking:
@@ -645,14 +687,15 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
             if not event.get("blocker_resolution_evidence"):
                 _reject(result, event_id, "unblock requires blocker_resolution_evidence")
                 continue
-            restored = replace(
-                current, status=target, last_event_id=event_id, blocked_from=None
+            _accept(
+                result,
+                seen_source_refs,
+                node_id,
+                event_id,
+                source_ref,
+                replace(current, status=target, blocked_from=None),
+                provenance.get("evidence_timestamp"),
             )
-            result.snapshot[node_id] = replace(
-                restored, graduation_evidence_candidate=_is_eligible(restored)
-            )
-            seen_source_refs.add(source_ref)
-            result.accepted.append(event_id)
             continue
 
         if (source, target) not in ALLOWED_TRANSITIONS:
@@ -667,9 +710,7 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
         updated = replace(
             current,
             status=target,
-            last_event_id=event_id,
             blocked_from=None,
-            last_event_timestamp=str(provenance.get("evidence_timestamp")),
         )
 
         if target == "review_due":
@@ -726,11 +767,15 @@ def reduce_events(events: list[dict], bound_epoch: str) -> ReductionResult:
                 active_review_window_opened_at=None,
             )
 
-        result.snapshot[node_id] = replace(
-            updated, graduation_evidence_candidate=_is_eligible(updated)
+        _accept(
+            result,
+            seen_source_refs,
+            node_id,
+            event_id,
+            source_ref,
+            updated,
+            provenance.get("evidence_timestamp"),
         )
-        seen_source_refs.add(source_ref)
-        result.accepted.append(event_id)
 
     return result
 

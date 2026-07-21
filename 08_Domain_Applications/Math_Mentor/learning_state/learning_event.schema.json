@@ -94,11 +94,41 @@
         },
         "cause_ref_or_summary": {"type": "string", "minLength": 1},
         "attempt_occurred": {
-          "description": "Machine-readable: did anyone actually sit the review? Required true for review_failed and false for review_window_expired, so a reader never has to parse free text to learn it.",
+          "description": "Machine-readable: did anyone actually sit the review? Enforced by the conditionals below, not merely described: true is required for review_failed, false for review_window_expired, and the field is forbidden for the three causes that do not describe a review attempt. A reader never has to parse free text to learn it.",
           "type": "boolean"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "$comment": "review_failed means someone sat the review and it went badly. Stating the cause without the flag would leave the fact recoverable only from prose.",
+          "if": {"properties": {"cause": {"const": "review_failed"}}, "required": ["cause"]},
+          "then": {
+            "required": ["attempt_occurred"],
+            "properties": {"attempt_occurred": {"const": true}}
+          }
+        },
+        {
+          "$comment": "review_window_expired is the opposite case: the window lapsed and nobody sat it.",
+          "if": {"properties": {"cause": {"const": "review_window_expired"}}, "required": ["cause"]},
+          "then": {
+            "required": ["attempt_occurred"],
+            "properties": {"attempt_occurred": {"const": false}}
+          }
+        },
+        {
+          "$comment": "These three causes do not describe a review attempt at all, so attempt_occurred has no contracted meaning here. Permitting it would let a writer record an unanswerable claim that a later reader could not interpret.",
+          "if": {
+            "properties": {
+              "cause": {
+                "enum": ["retention_decay", "prerequisite_invalidated", "malformed_evidence"]
+              }
+            },
+            "required": ["cause"]
+          },
+          "then": {"not": {"required": ["attempt_occurred"]}}
+        }
+      ]
     },
     "classroom_evidence": {
       "description": "Required for a transition into classroom_passed. If present it must be complete: a partial bundle is not evidence.",
@@ -203,7 +233,7 @@
       "additionalProperties": false
     },
     "learning_state_epoch": {
-      "description": "Must equal the bound epoch in epoch.yml; mismatched events are ignored by the reducer.",
+      "description": "Must equal the bound epoch in epoch.yml. A mismatched event is REJECTED fail-closed, not ignored: the reducer records it as rejected, and snapshot derivation refuses to publish while any event on disk is rejected. Events written under an earlier epoch are never silently reinterpreted under current semantics.",
       "type": "string",
       "minLength": 1
     },
@@ -212,7 +242,7 @@
       "type": ["string", "null"]
     },
     "prev_event_digest": {
-      "description": "SHA-256 of the previous event file, forming the integrity chain that replaces Git immutability in the local store.",
+      "description": "SHA-256 of the previous event file: a local hash-chain link. It gives tamper-evidence against edits and truncation by anything that does not also rewrite the chain and the tail anchor. It does NOT replace Git immutability and is not a signature; an actor with full write access to the store can rewrite the events and the anchor together.",
       "type": ["string", "null"],
       "pattern": "^([0-9a-f]{64})?$"
     }

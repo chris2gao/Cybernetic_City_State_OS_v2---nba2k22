@@ -199,13 +199,31 @@ interval, which is why `blocked -> blocked` is not a transition.
 
 ### 5.1.6 Stale evidence
 
-Every transition into `stale` carries `stale_evidence` with an explicit cause:
+Every transition into `stale` carries `stale_evidence` with an explicit cause.
+`attempt_occurred` is part of the bundle, not an afterthought: whether anyone sat
+the review must be machine-readable, and the canonical schema enforces which
+causes carry it.
 
 ```yaml
 stale_evidence:
   cause: "review_failed | review_window_expired | retention_decay | prerequisite_invalidated | malformed_evidence"
   cause_ref_or_summary: "<cause-specific reference or summary>"
+  # required true for review_failed, required false for review_window_expired,
+  # and FORBIDDEN for the other three causes, which describe no review attempt
+  attempt_occurred: true
 ```
+
+| `cause` | `attempt_occurred` | Why |
+|---|---|---|
+| `review_failed` | required, must be `true` | someone sat the review and it went badly |
+| `review_window_expired` | required, must be `false` | the window lapsed; nobody sat it |
+| `retention_decay` | forbidden | describes decay over time, not an attempt |
+| `prerequisite_invalidated` | forbidden | describes an upstream change, not an attempt |
+| `malformed_evidence` | forbidden | describes a judgement about evidence, not an attempt |
+
+These are conditional subschemas in `learning_event.schema.json`, so a wrong or
+unrelated value is refused by canonical validation and on the writer path, not
+merely discouraged in prose.
 
 A `review_failed` cause additionally requires a structured
 `review_failure_evidence` bundle. A summary string alone is not evidence that an

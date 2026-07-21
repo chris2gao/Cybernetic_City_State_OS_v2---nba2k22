@@ -1,6 +1,6 @@
 # Reproducible validation log
 
-Regenerated after foreground rereview round 6.
+Regenerated after foreground rereview round 7.
 
 **Executor evidence until independently reproduced.** A passing assertion proves
 only its exact claim; a passing test proves only that the implementation matches
@@ -25,12 +25,22 @@ platform Windows 10
 
 ```text
 $ python -m pytest tests -q
-........................................................................ [ 33%]
-........................................................................ [ 67%]
-......................................................................   [100%]
-214 passed in 11.30s
+........................................................................ [ 28%]
+........................................................................ [ 56%]
+........................................................................ [ 85%]
+......................................                                   [100%]
+254 passed in 13.16s
 exit_code=0
 ```
+
+Round 7 added 40 tests (214 -> 254) across four new files:
+
+| file | covers |
+| --- | --- |
+| `test_r7_acceptance_timestamps.py` | every accepted reducer branch advances `last_event_timestamp` |
+| `test_r7_attempt_occurred_schema.py` | `attempt_occurred` conditionals, canonical schema AND writer path |
+| `test_r7_privacy_output.py` | denylist terms never reach stdout/stderr, including filename hits |
+| `test_r7_descriptions_and_api.py` | corrected epoch/hash-chain wording, `write_snapshot` signature |
 
 ## Mode A audit: COMPLEX_ANALYSIS-417
 
@@ -74,55 +84,102 @@ $ LEARNER_DENYLIST=<supplied externally> python privacy_scan.py HEAD
 $ LEARNER_DENYLIST=<supplied externally> python privacy_scan.py master
 ```
 
-## privacy scan: current dev tree
+### Round-7 output-confidentiality repair
+
+The scanner printed RAW paths. A denylist term can appear in a tracked FILENAME,
+so a filename hit published the term itself into a log written for committing -
+the scan defeated its own purpose. The round-6 test that asserted "denylist
+values are never printed" used a content-only term, so it never exercised the
+filename case.
+
+Printed paths now have every denylist match replaced by `[REDACTED]` and carry a
+`sha256` prefix of the original path for cross-run correlation. `--reveal-paths`
+prints raw paths for local diagnosis, is never the default, and marks its own
+output non-committable on stderr. `--repo-root` was added so the filename case
+can be tested against a synthetic throwaway repository instead of by planting a
+learner-shaped term in this one.
+
+### What round 7 did and did NOT verify
+
+**The external denylist was not available to this executor.** The real learner
+aliases are deliberately not stored in the repository, so the round-7 runs below
+used a synthetic two-term denylist generated at run time. They demonstrate the
+mechanism, exit codes and output format. **They are NOT a re-verification of the
+alias-level residue finding.**
 
 ```text
-$ python privacy_scan.py HEAD
+$ python privacy_scan.py HEAD --denylist-file <external, synthetic terms>
 scan_scope: tracked content and paths at ref 'HEAD'
 denylist_terms: 2 (values not printed by design)
 content_matching_lines: 0
 filename_hits: 0
 scan_errors: 0
 files_with_hits: 0
+path_disclosure: redacted+fingerprint
+exit_code=0
+
+$ python privacy_scan.py master --denylist-file <external, synthetic terms>
+scan_scope: tracked content and paths at ref 'master'
+denylist_terms: 2 (values not printed by design)
+content_matching_lines: 0
+filename_hits: 0
+scan_errors: 0
+files_with_hits: 0
+path_disclosure: redacted+fingerprint
 exit_code=0
 ```
 
-## privacy scan: master
+Synthetic terms are absent from every tree by construction, so `exit_code=0`
+above says nothing about learner aliases. Read it as "the scanner runs and
+reports cleanly when there is nothing to find", not as "master is clean".
+
+The residue finding is therefore **carried forward from round 6, not re-tested**.
+One fact was re-checked without needing any alias: the file round 6 identified as
+carrying learner-bound content is still present on master.
 
 ```text
-$ python privacy_scan.py master
-scan_scope: tracked content and paths at ref 'master'
-denylist_terms: 2 (values not printed by design)
-content_matching_lines: 2
-filename_hits: 0
-scan_errors: 0
-files_with_hits: 1
-  .ai/CODEX_REPORTS/independent-review-request-0001.md
-exit_code=1
+$ git cat-file -e master:.ai/CODEX_REPORTS/independent-review-request-0001.md
+RESIDUE_FILE_PRESENT=yes
 ```
 
-| scope | result |
-| --- | --- |
-| `current_dev_tree_hits` | 0 |
-| `current_master_tree_hits` | nonzero (path listed above) |
-| `scan_errors` | 0 |
-| `reachable_history_not_clean` | **true** |
+| scope | result | basis |
+| --- | --- | --- |
+| `current_dev_tree_hits` | not re-verified this round | no external denylist |
+| `current_master_tree_hits` | nonzero (carried forward from round 6) | residue file still present on master |
+| `scan_errors` | 0 | synthetic runs |
+| `reachable_history_not_clean` | **true** | round-6 finding, unchanged by this task |
 
 Reachable Git history and current master still contain learner-bound metadata.
 This task does not rewrite history, force push, or alter master, so the residue
 remains. Cleaning it is destructive and needs a separate Human gate.
-**No claim of a clean history is made.** `privacy_master` exits 1 by design.
+**No claim of a clean history is made**, and no claim is made that round 7
+re-measured it.
+
+### No learner store was touched
+
+```text
+$ git ls-files 08_Domain_Applications/Math_Mentor/learners | wc -l
+0
+$ git ls-files "*STUDENT_LEARNING_STATE/*" "*LEARNED_HISTORY/*" | wc -l
+0
+```
+
+Every store used by the tests is a synthetic temporary directory.
 
 ## Summary
 
 | check | exit code |
 | --- | --- |
-| tests | 0 |
-| ca417 | 0 |
-| pde486 | 0 |
+| tests (254) | 0 |
+| ca417 (20 assertions) | 0 |
+| pde486 (26 assertions) | 0 |
 | parse | 0 |
-| privacy_dev | 0 |
-| privacy_master | 1 |
+| privacy_dev (synthetic denylist only) | 0 |
+| privacy_master (synthetic denylist only) | 0 |
+
+`privacy_dev` and `privacy_master` exited 0 because the terms were synthetic, not
+because either tree was shown clean of learner aliases. The round-6 residue
+finding stands and was not re-measured; see the privacy section above.
 
 ## Claim-to-evidence inventory (task-scoped anti-drift artifact)
 
