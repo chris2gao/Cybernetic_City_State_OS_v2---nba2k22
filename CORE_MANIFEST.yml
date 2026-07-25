@@ -19,10 +19,19 @@ core_repository: "git@github.com:chris2gao/Cybernetic_City_State_OS_v2---core.gi
 core_release: "unversioned_pre_release"
 
 # Paths owned by core. Domain repositories treat these as read-only.
+#
+# 01_Research_Reports and 02_Protocols were listed here in the first draft. That
+# was wrong and the first real content drop proved it: every domain builds its
+# own chain - 01 holds that domain's research, which produces its 02 protocols
+# and 03 execution principles, which produce the 08 system. Those are per-domain,
+# not core property. They now sit under domain_owned_paths.
+#
+# 06_Silicon_Index deliberately STAYS here. It is the shared bootstrap every
+# city-state instance starts from, so it is common by nature. Domain-specific
+# initialisation does not belong here either: each domain's agent will derive its
+# own and place it under 08_Domain_Applications.
 core_owned_paths:
   - "00_City_State_Routing_Table.md"
-  - "01_Research_Reports/"
-  - "02_Protocols/"
   - "04_Parliament/"
   - "05_Carbon_Index/"
   - "06_Silicon_Index/"
@@ -57,7 +66,14 @@ core_owned_paths:
 
 # Paths every domain owns for itself. Core never ships content here; each domain
 # repository fills them with its own material, so a core merge must not touch them.
+#
+# 01 -> 02 -> 03 -> 08 is one chain, owned end to end by the domain: research
+# produces protocols, protocols produce execution principles, those produce the
+# system. Splitting the chain across the core/domain boundary would have made
+# every domain fight core for its own reasoning.
 domain_owned_paths:
+  - "01_Research_Reports/"
+  - "02_Protocols/"
   - "03_Daily_Execution/"
   - "08_Domain_Applications/"
   - ".ai/TASKS/"
