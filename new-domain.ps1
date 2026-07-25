@@ -30,7 +30,12 @@ param(
     [string]$CoreRepo = "git@github.com:chris2gao/Cybernetic_City_State_OS_v2---core.git"
 )
 
-$ErrorActionPreference = "Stop"
+# Deliberately NOT ErrorActionPreference='Stop'. Every step below shells out and
+# checks $LASTEXITCODE explicitly, which is the honest test for a native command.
+# With 'Stop', PowerShell treats ANY stderr output from git/gh as fatal - and the
+# preflight probe below is *supposed* to have gh report "no such repository".
+# That normal, expected case would abort the script.
+$ErrorActionPreference = "Continue"
 
 function Fail($message) {
     Write-Host "REFUSED: $message"
@@ -53,7 +58,9 @@ if (Test-Path $folder) { Fail "folder already exists: $folder" }
 gh auth status 2>&1 | Out-Null
 if ($LASTEXITCODE -ne 0) { Fail "gh is not authenticated; run 'gh auth login'" }
 
-gh repo view $repoFull 2>&1 | Out-Null
+# Exit code, not stderr, is the signal here: a non-zero result means "no such
+# repository", which is exactly the state we require before creating one.
+gh repo view $repoFull 2>$null 1>$null
 if ($LASTEXITCODE -eq 0) { Fail "repository already exists: $repoFull" }
 
 # --- create, clone, wire remotes -------------------------------------------
