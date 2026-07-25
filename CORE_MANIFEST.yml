@@ -1,0 +1,97 @@
+# City-State core ownership manifest
+#
+# Authority: descriptive + mechanically checkable. This file grants no
+# permission; it declares which paths belong to the shared core so that drift
+# between core and any domain repository can be DETECTED rather than discovered
+# by accident during an upgrade.
+#
+# The rule this manifest exists to enforce:
+#   core-owned paths are authored in the core repository ONLY.
+#   A domain repository consumes them by merging from core and never edits them
+#   locally. A domain that needs a core change files it upstream first.
+#
+# Why it matters: before this file existed, "what counts as core" was tribal
+# knowledge, so an upgrade was a manual copy with no way to tell what had been
+# missed or what a domain had quietly changed.
+
+schema_version: "citystate.core_manifest.v1"
+core_repository: "git@github.com:chris2gao/Cybernetic_City_State_OS_v2---core.git"
+core_release: "unversioned_pre_release"
+
+# Paths owned by core. Domain repositories treat these as read-only.
+core_owned_paths:
+  - "00_City_State_Routing_Table.md"
+  - "01_Research_Reports/"
+  - "02_Protocols/"
+  - "04_Parliament/"
+  - "05_Carbon_Index/"
+  - "06_Silicon_Index/"
+  - "07_Compiler/"
+  - "07_Execution_Plans/"
+  - "07_Silicon_Private_Zones/"
+  - "system_backbone/"
+  - "0号方案.md"
+  - "1号方案.md"
+  - "2号方案.md"
+  - "3号方案.md"
+  - "AGENTS.md"
+  - "ARCHITECTURE.md"
+  - "CLAUDE.md"
+  - "INSTANCE_CONFIG.md"
+  - "True_Fork_Protocol.md"
+  - "城邦系统需要实现的目标原则.md"
+  - ".ai/PROTOCOL.md"
+  - ".ai/PROTOCOL_ADHERENCE.md"
+  - ".ai/HANDOFF_INIT_PROMPT.md"
+  - ".ai/TOKEN_USAGE_PROFILE.md"
+  - ".ai/TOKEN_USAGE_OPERATIONAL_NORMS.md"
+  - ".ai/CODEX_WORK_MECHANISM_PROTOCOL.md"
+  - ".ai/CODEX_TASK_INPUT_CONTRACT.md"
+  - ".ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md"
+  - ".ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md"
+  - ".ai/load_profiles/"
+  - ".ai/lanes/"
+  - ".ai/communication_compliance/"
+  - ".ai/role_memory/"
+  - ".ai/token_profile/"
+
+# Paths every domain owns for itself. Core never ships content here; each domain
+# repository fills them with its own material, so a core merge must not touch them.
+domain_owned_paths:
+  - "03_Daily_Execution/"
+  - "08_Domain_Applications/"
+  - ".ai/TASKS/"
+  - ".ai/CODEX_REPORTS/"
+  - ".ai/PROGRAM_RUNS/"
+  - ".ai/HUMAN_BRIEFS/"
+  - ".ai/USER_UPLOADS/"
+  - ".ai/STATE.yml"
+  - ".ai/INBOX.md"
+  - ".ai/OUTBOX.md"
+  - ".ai/HUMAN_BRIEF.md"
+  - "README.md"
+  - "PROJECT_CONTEXT.md"
+
+# Mechanics a domain repository follows. Recorded here so the procedure lives
+# with the manifest instead of in someone's memory.
+domain_merge_procedure:
+  first_time_only: >-
+    git merge -s ours core/master
+    records ancestry WITHOUT taking core's tree. Required exactly once per
+    domain, because core's initial commit removes domain content; a plain merge
+    would propagate that deletion and wipe the domain. Measured on the math
+    domain: a naive merge proposed 1132 files and 204156 deletions. After the
+    ours-merge the merge base sits past that commit and ordinary merges are safe.
+  every_upgrade_after: >-
+    git fetch core && git merge core/master
+    is a real three-way merge. A conflict means the domain edited a core-owned
+    path, and that is the finding itself: resolve it by moving the change
+    upstream, not by keeping the local edit.
+  never: >-
+    Do not rewrite core history. Every domain's common ancestor depends on it;
+    one rewrite breaks mergeability for all domains at once.
+
+verification:
+  - "no domain edits inside core_owned_paths"
+  - "core merge completes without conflict, or every conflict is reported"
+  - "domain tests and audits pass after the merge, before it is pushed"
