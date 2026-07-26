@@ -294,24 +294,41 @@ generic routing / migrate the domain implementation / rewrite as a domain-relati
 reference / let the teacher repository override it. Propose only — none of it is
 authorized here.
 
-### R5. Migration ordering, so teacher's in-flight work is never broken
+### R5. Teacher migration is DEFERRED — and that freezes the teaching files in core
 
-Human decision: teaching material belongs to the teacher repository under its
-`08_Domain_Applications/`. Codex may operate that repository. Execute the migration so
-that **no moment exists where a file is absent from teacher**:
+**Human decision, superseding the earlier migration ordering: do not touch the teacher
+repository now.** It has teaching-development work in flight. The migration happens
+later, when that work is finished and the material is no longer load-bearing for it.
 
-1. **teacher** copies the files to `08_Domain_Applications/Math_Mentor/pipeline/` and
-   commits. Both paths now exist there; in-flight tasks referencing the old path keep
-   working.
-2. **teacher** repoints its own references to the new path at its own pace, verifying
-   by running its tests. The old path is still present as a fallback throughout.
-3. **teacher** confirms zero remaining references to `06_Silicon_Index/factory_pipeline/`.
-4. Only then does **core** delete, together with the reference fixes from R4.
-5. **teacher** merges `core/master`; the core copy disappears and nothing references it.
+The consequence for **this** task is the part that matters, and it is not optional:
 
-The dangerous step is not the deletion, it is step 5 — and step 3 is what makes step 5
-a no-op. Teacher controls when it merges, so it cannot be surprised. Steps 1 to 3 are
-teacher-side and are not authorized by this packet; report the plan.
+> While teacher holds no copy of its own, **the core copies are teacher's only copies.**
+> Core must not delete them. A deletion in core reaches teacher at its next
+> `git merge core/master` and removes files its running work depends on.
+
+Therefore, for this classification round:
+
+- `06_Silicon_Index/factory_pipeline/` and every other teaching-related path in core is
+  **retained, and is not a deletion candidate under any class.**
+- Classify them `Live` with the reason recorded as *in use by the teacher domain
+  through core merge*, not as Evidence. They are not a historical record; they are
+  running dependencies of another repository.
+- Introduce and use the disposition `deferred_pending_domain_migration` so the reason
+  for retention is explicit, and so a future round does not have to re-derive it.
+- Do **not** propose, stage, or schedule any teacher-side change. Do not write to the
+  teacher repository.
+
+Still produce the **inventory** from R4 — knowing what would move, and what in core
+references it, is exactly what makes the future migration cheap. Inventory and
+proposal only; no ordering to execute now.
+
+For the record, the ordering that will apply when the migration is authorized, so it
+does not have to be rediscovered: teacher copies to its own path first and both paths
+coexist; teacher repoints its own references while the old path still works; teacher
+confirms zero references to `06_Silicon_Index/factory_pipeline/` remain; core deletes
+last, together with the R4 reference fixes; teacher's next merge then removes the core
+copy as a no-op. The dangerous step is the merge, and the zero-reference confirmation
+is what defuses it.
 
 ### What was accepted and must not be redone
 
