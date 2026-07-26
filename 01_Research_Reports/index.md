@@ -12,11 +12,11 @@
 ## recommended_reading_order
 
 1. [`01_Research_Reports/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-2. [`01_Research_Reports/15_神经优化数学心流学习系统.md`](15_神经优化数学心流学习系统.md) — 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 15_神经优化数学心流学习系统.md（H1《**《诱发极乐酰胺（Anandamide）的数学心流学习交互指南》：基于神经教育学与认知卸载的底层重构报告**》；首个 H2《**研究命题一：动态难度悬垂与“心流通道（Flow Channel）”的维持**》）；只在明确研究问题、来源和隐私范围内单文件读取
-3. [`01_Research_Reports/16_神经优化数学心流学习系统2.0.md`](16_神经优化数学心流学习系统2.0.md) — 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 16_神经优化数学心流学习系统2.0.md（H1《**《诱发极乐酰胺的数学心流学习交互指南 v2.0》：基于四大黑箱补丁的底层重构报告**》；首个 H2《**终极输出：《大麻素心流万能交互架构》核心 System Prompt (v2.0 终极版)**》）；只在明确研究问题、来源和隐私范围内单文件读取
-4. [`01_Research_Reports/AI 数学教学评估框架构建.md`](AI%20数学教学评估框架构建.md) — 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 AI 数学教学评估框架构建.md（H1《**赛博城邦降维架构下的数学大模型 Socratic 教学输出质量对齐与评估准则**》；首个 H2《**1\. 核心评估维度矩阵 (Evaluation Dimensions Matrix)**》）；只在明确研究问题、来源和隐私范围内单文件读取
-5. [`01_Research_Reports/AI 数学教学评估框架设计Phase5部分(3个问题答案).md`](AI%20数学教学评估框架设计Phase5部分%283个问题答案%29.md) — 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 AI 数学教学评估框架设计Phase5部分(3个问题答案).md（首行“❓ 问题一：JSON 查毒矩阵的“算力爆炸”与动态缓存”）；只在明确研究问题、来源和隐私范围内单文件读取
-6. [`01_Research_Reports/AI 数学教学评估框架设计Phase5部分.md`](AI%20数学教学评估框架设计Phase5部分.md) — 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 AI 数学教学评估框架设计Phase5部分.md（H1《**苏格拉底式数学教学引擎系统级评估框架：防范“知识诅咒”与“超纲幻觉”的认知科学准则**》；首个 H2《**绪论：大型语言模型的全知视角与建构主义教学的认知冲突**》）；只在明确研究问题、来源和隐私范围内单文件读取
+2. [`01_Research_Reports/Agent 自进化研究架构设计.md`](Agent%20自进化研究架构设计.md) — 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 Agent 自进化研究架构设计.md（H1《**自进化多智能体架构：从记忆体骨架到复杂系统涌现的工程化实现**》；首个 H2《**引言**》）；只在明确研究问题、来源和隐私范围内单文件读取
+3. [`01_Research_Reports/Designing LLM Persona Meta-Skeleton.md`](Designing%20LLM%20Persona%20Meta-Skeleton.md) — 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 Designing LLM Persona Meta-Skeleton.md（H1《**Architectural Blueprints for a Deterministic Meta-Cognitive Persona Interface**》；首个 H2《**1\. Executive Synopsis and the Paradigm Shift to Deterministic Generative Agents**》）；只在明确研究问题、来源和隐私范围内单文件读取
+4. [`01_Research_Reports/Math Mentor OS：自进化架构物理落地执行方案.md`](Math%20Mentor%20OS：自进化架构物理落地执行方案.md) — 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 Math Mentor OS：自进化架构物理落地执行方案.md（H1《**Agent 自进化架构：物理落地执行规划 (Implementation Plan)**》；首个 H2《**一、 目标描述 (Goal Description)**》）；只在明确研究问题、来源和隐私范围内单文件读取
+5. [`01_Research_Reports/README.md`](README.md) — 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 README.md（研究报告区 README 明示 N=1 生化/研究模板；只用于研究材料路由）；只在明确研究问题、来源和隐私范围内单文件读取
+6. [`01_Research_Reports/Red Team Audit_ Persona Matrix Flaws.md`](Red%20Team%20Audit_%20Persona%20Matrix%20Flaws.md) — 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 Red Team Audit_ Persona Matrix Flaws.md（H1《**Red Team Architectural Teardown: The 5D Holographic Persona Matrix**》；首个 H2《**Introduction and Systemic Overview**》）；只在明确研究问题、来源和隐私范围内单文件读取
 7. [`01_Research_Reports/_Supreme_Court_Proposals/index.md`](_Supreme_Court_Proposals/index.md) — 当前研究问题明确需要 _Supreme_Court_Proposals 中的某个来源或报告
 
 ## child_directories
@@ -29,41 +29,6 @@
 
 ## direct_files
 
-<!-- RIDX_FILE_HEX 30315f52657365617263685f5265706f7274732f31355fe7a59ee7bb8fe4bc98e58c96e695b0e5ada6e5bf83e6b581e5ada6e4b9a0e7b3bbe7bb9f2e6d64 -->
-- **path_or_link**: [`01_Research_Reports/15_神经优化数学心流学习系统.md`](15_神经优化数学心流学习系统.md)
-  - **content_summary**: H1《**《诱发极乐酰胺（Anandamide）的数学心流学习交互指南》：基于神经教育学与认知卸载的底层重构报告**》；首个 H2《**研究命题一：动态难度悬垂与“心流通道（Flow Channel）”的维持**》
-  - **role_and_use**: 将 15_神经优化数学心流学习系统.md（H1《**《诱发极乐酰胺（Anandamide）的数学心流学习交互指南》：基于神经教育学与认知卸载的底层重构报告**》；首个 H2《**研究命题一：动态难度悬垂与“心流通道（Flow Channel）”的维持**》） 作为“研究或用户来源资产”使用；只在明确研究问题、来源和隐私范围内单文件读取
-  - **authority_class**: `user_asset`
-  - **status_or_freshness**: semantic_profile=research_or_user_asset；authority=user_asset；evidence_basis=markdown_heading_or_visible_structure；只在明确研究问题、来源和隐私范围内单文件读取
-  - **when_to_read**: 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 15_神经优化数学心流学习系统.md（H1《**《诱发极乐酰胺（Anandamide）的数学心流学习交互指南》：基于神经教育学与认知卸载的底层重构报告**》；首个 H2《**研究命题一：动态难度悬垂与“心流通道（Flow Channel）”的维持**》）；只在明确研究问题、来源和隐私范围内单文件读取
-<!-- RIDX_FILE_HEX 30315f52657365617263685f5265706f7274732f31365fe7a59ee7bb8fe4bc98e58c96e695b0e5ada6e5bf83e6b581e5ada6e4b9a0e7b3bbe7bb9f322e302e6d64 -->
-- **path_or_link**: [`01_Research_Reports/16_神经优化数学心流学习系统2.0.md`](16_神经优化数学心流学习系统2.0.md)
-  - **content_summary**: H1《**《诱发极乐酰胺的数学心流学习交互指南 v2.0》：基于四大黑箱补丁的底层重构报告**》；首个 H2《**终极输出：《大麻素心流万能交互架构》核心 System Prompt (v2.0 终极版)**》
-  - **role_and_use**: 将 16_神经优化数学心流学习系统2.0.md（H1《**《诱发极乐酰胺的数学心流学习交互指南 v2.0》：基于四大黑箱补丁的底层重构报告**》；首个 H2《**终极输出：《大麻素心流万能交互架构》核心 System Prompt (v2.0 终极版)**》） 作为“研究或用户来源资产”使用；只在明确研究问题、来源和隐私范围内单文件读取
-  - **authority_class**: `user_asset`
-  - **status_or_freshness**: semantic_profile=research_or_user_asset；authority=user_asset；evidence_basis=markdown_heading_or_visible_structure；只在明确研究问题、来源和隐私范围内单文件读取
-  - **when_to_read**: 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 16_神经优化数学心流学习系统2.0.md（H1《**《诱发极乐酰胺的数学心流学习交互指南 v2.0》：基于四大黑箱补丁的底层重构报告**》；首个 H2《**终极输出：《大麻素心流万能交互架构》核心 System Prompt (v2.0 终极版)**》）；只在明确研究问题、来源和隐私范围内单文件读取
-<!-- RIDX_FILE_HEX 30315f52657365617263685f5265706f7274732f414920e695b0e5ada6e69599e5ada6e8af84e4bcb0e6a186e69eb6e69e84e5bbba2e6d64 -->
-- **path_or_link**: [`01_Research_Reports/AI 数学教学评估框架构建.md`](AI%20数学教学评估框架构建.md)
-  - **content_summary**: H1《**赛博城邦降维架构下的数学大模型 Socratic 教学输出质量对齐与评估准则**》；首个 H2《**1\. 核心评估维度矩阵 (Evaluation Dimensions Matrix)**》
-  - **role_and_use**: 将 AI 数学教学评估框架构建.md（H1《**赛博城邦降维架构下的数学大模型 Socratic 教学输出质量对齐与评估准则**》；首个 H2《**1\. 核心评估维度矩阵 (Evaluation Dimensions Matrix)**》） 作为“研究或用户来源资产”使用；只在明确研究问题、来源和隐私范围内单文件读取
-  - **authority_class**: `user_asset`
-  - **status_or_freshness**: semantic_profile=research_or_user_asset；authority=user_asset；evidence_basis=markdown_heading_or_visible_structure；只在明确研究问题、来源和隐私范围内单文件读取
-  - **when_to_read**: 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 AI 数学教学评估框架构建.md（H1《**赛博城邦降维架构下的数学大模型 Socratic 教学输出质量对齐与评估准则**》；首个 H2《**1\. 核心评估维度矩阵 (Evaluation Dimensions Matrix)**》）；只在明确研究问题、来源和隐私范围内单文件读取
-<!-- RIDX_FILE_HEX 30315f52657365617263685f5265706f7274732f414920e695b0e5ada6e69599e5ada6e8af84e4bcb0e6a186e69eb6e8aebee8aea1506861736535e983a8e588862833e4b8aae997aee9a298e7ad94e6a188292e6d64 -->
-- **path_or_link**: [`01_Research_Reports/AI 数学教学评估框架设计Phase5部分(3个问题答案).md`](AI%20数学教学评估框架设计Phase5部分%283个问题答案%29.md)
-  - **content_summary**: 首行“❓ 问题一：JSON 查毒矩阵的“算力爆炸”与动态缓存”
-  - **role_and_use**: 将 AI 数学教学评估框架设计Phase5部分(3个问题答案).md（首行“❓ 问题一：JSON 查毒矩阵的“算力爆炸”与动态缓存”） 作为“研究或用户来源资产”使用；只在明确研究问题、来源和隐私范围内单文件读取
-  - **authority_class**: `user_asset`
-  - **status_or_freshness**: semantic_profile=research_or_user_asset；authority=user_asset；evidence_basis=markdown_heading_or_visible_structure；只在明确研究问题、来源和隐私范围内单文件读取
-  - **when_to_read**: 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 AI 数学教学评估框架设计Phase5部分(3个问题答案).md（首行“❓ 问题一：JSON 查毒矩阵的“算力爆炸”与动态缓存”）；只在明确研究问题、来源和隐私范围内单文件读取
-<!-- RIDX_FILE_HEX 30315f52657365617263685f5265706f7274732f414920e695b0e5ada6e69599e5ada6e8af84e4bcb0e6a186e69eb6e8aebee8aea1506861736535e983a8e588862e6d64 -->
-- **path_or_link**: [`01_Research_Reports/AI 数学教学评估框架设计Phase5部分.md`](AI%20数学教学评估框架设计Phase5部分.md)
-  - **content_summary**: H1《**苏格拉底式数学教学引擎系统级评估框架：防范“知识诅咒”与“超纲幻觉”的认知科学准则**》；首个 H2《**绪论：大型语言模型的全知视角与建构主义教学的认知冲突**》
-  - **role_and_use**: 将 AI 数学教学评估框架设计Phase5部分.md（H1《**苏格拉底式数学教学引擎系统级评估框架：防范“知识诅咒”与“超纲幻觉”的认知科学准则**》；首个 H2《**绪论：大型语言模型的全知视角与建构主义教学的认知冲突**》） 作为“研究或用户来源资产”使用；只在明确研究问题、来源和隐私范围内单文件读取
-  - **authority_class**: `user_asset`
-  - **status_or_freshness**: semantic_profile=research_or_user_asset；authority=user_asset；evidence_basis=markdown_heading_or_visible_structure；只在明确研究问题、来源和隐私范围内单文件读取
-  - **when_to_read**: 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 AI 数学教学评估框架设计Phase5部分.md（H1《**苏格拉底式数学教学引擎系统级评估框架：防范“知识诅咒”与“超纲幻觉”的认知科学准则**》；首个 H2《**绪论：大型语言模型的全知视角与建构主义教学的认知冲突**》）；只在明确研究问题、来源和隐私范围内单文件读取
 <!-- RIDX_FILE_HEX 30315f52657365617263685f5265706f7274732f4167656e7420e887aae8bf9be58c96e7a094e7a9b6e69eb6e69e84e8aebee8aea12e6d64 -->
 - **path_or_link**: [`01_Research_Reports/Agent 自进化研究架构设计.md`](Agent%20自进化研究架构设计.md)
   - **content_summary**: H1《**自进化多智能体架构：从记忆体骨架到复杂系统涌现的工程化实现**》；首个 H2《**引言**》
@@ -155,20 +120,6 @@
   - **authority_class**: `user_asset`
   - **status_or_freshness**: semantic_profile=research_or_user_asset；authority=user_asset；evidence_basis=markdown_heading_or_visible_structure；只在明确研究问题、来源和隐私范围内单文件读取
   - **when_to_read**: 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 引擎落地协议深度研究.md（H1《**赛博城邦《3号方案》双引擎架构落地协议与流体力学深度研究报告**》；首个 H2《**引言：人机合一双引擎架构的系统哲学与流体力学定义**》）；只在明确研究问题、来源和隐私范围内单文件读取
-<!-- RIDX_FILE_HEX 30315f52657365617263685f5265706f7274732fe695b0e5ada6e79fa5e8af86e59bbee8b0b1e7bc96e8af91e68a80e69cafe7a094e7a9b62e6d64 -->
-- **path_or_link**: [`01_Research_Reports/数学知识图谱编译技术研究.md`](数学知识图谱编译技术研究.md)
-  - **content_summary**: H1《**数学知识图谱静态编译与拓扑路由架构分析报告**》；首个 H2《**业界现存数学知识图谱资源的全景图与适用性深度评估**》
-  - **role_and_use**: 将 数学知识图谱编译技术研究.md（H1《**数学知识图谱静态编译与拓扑路由架构分析报告**》；首个 H2《**业界现存数学知识图谱资源的全景图与适用性深度评估**》） 作为“研究或用户来源资产”使用；只在明确研究问题、来源和隐私范围内单文件读取
-  - **authority_class**: `user_asset`
-  - **status_or_freshness**: semantic_profile=research_or_user_asset；authority=user_asset；evidence_basis=markdown_heading_or_visible_structure；只在明确研究问题、来源和隐私范围内单文件读取
-  - **when_to_read**: 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 数学知识图谱编译技术研究.md（H1《**数学知识图谱静态编译与拓扑路由架构分析报告**》；首个 H2《**业界现存数学知识图谱资源的全景图与适用性深度评估**》）；只在明确研究问题、来源和隐私范围内单文件读取
-<!-- RIDX_FILE_HEX 30315f52657365617263685f5265706f7274732fe695b0e5ada6e79fa5e8af86e59bbee8b0b1e8b7afe794b1e599a8e8aebee8aea12e6d64 -->
-- **path_or_link**: [`01_Research_Reports/数学知识图谱路由器设计.md`](数学知识图谱路由器设计.md)
-  - **content_summary**: H1《**阶层嵌套知识结构中的拓扑路由与认知边界提取算法报告**》；首个 H2《**本体工程分析：YAML 物理地形的数学解构与降维重塑**》
-  - **role_and_use**: 将 数学知识图谱路由器设计.md（H1《**阶层嵌套知识结构中的拓扑路由与认知边界提取算法报告**》；首个 H2《**本体工程分析：YAML 物理地形的数学解构与降维重塑**》） 作为“研究或用户来源资产”使用；只在明确研究问题、来源和隐私范围内单文件读取
-  - **authority_class**: `user_asset`
-  - **status_or_freshness**: semantic_profile=research_or_user_asset；authority=user_asset；evidence_basis=markdown_heading_or_visible_structure；只在明确研究问题、来源和隐私范围内单文件读取
-  - **when_to_read**: 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 数学知识图谱路由器设计.md（H1《**阶层嵌套知识结构中的拓扑路由与认知边界提取算法报告**》；首个 H2《**本体工程分析：YAML 物理地形的数学解构与降维重塑**》）；只在明确研究问题、来源和隐私范围内单文件读取
 <!-- RIDX_FILE_HEX 30315f52657365617263685f5265706f7274732fe7a59ee7bb8fe7aca6e58fb7e69599e5ada6e7b3bbe7bb9fe58d87e7baa7e68aa5e5918a2e6d64 -->
 - **path_or_link**: [`01_Research_Reports/神经符号教学系统升级报告.md`](神经符号教学系统升级报告.md)
   - **content_summary**: H1《**V8 神经符号教学引擎建设与升级报告：跨越概率迷雾与语法暴政的深渊**》；首个 H2《**任务 1：对 V7.4 防崩溃机制的“刺透测试”分析与隐性死锁研判**》
@@ -197,13 +148,6 @@
   - **authority_class**: `user_asset`
   - **status_or_freshness**: semantic_profile=research_or_user_asset；authority=user_asset；evidence_basis=markdown_heading_or_visible_structure；只在明确研究问题、来源和隐私范围内单文件读取
   - **when_to_read**: 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 赛博城邦架构 AGI 重构.md（H1《**赛博城邦操作系统（OS）：面向 AGI 纪元的架构解剖与升维重构报告**》；首个 H2《**1\. 机制的“半衰期”诊断：AGI 算力爆发下的脚手架坍塌**》）；只在明确研究问题、来源和隐私范围内单文件读取
-<!-- RIDX_FILE_HEX 30315f52657365617263685f5265706f7274732fe8b59be58d9ae59f8ee982a6e69eb6e69e84e6b7b1e5baa6e8af84e4bcb02e646f6378 -->
-- **path_or_link**: [`01_Research_Reports/赛博城邦架构深度评估.docx`](赛博城邦架构深度评估.docx)
-  - **content_summary**: OOXML Word 二进制文档，22 个 ZIP entries，word/document.xml=present；正文未做语义抽取
-  - **role_and_use**: 将 赛博城邦架构深度评估.docx（zip_entries=22；ooxml=true） 作为“研究或用户来源资产”使用；只在明确研究问题、来源和隐私范围内单文件读取
-  - **authority_class**: `user_asset`
-  - **status_or_freshness**: semantic_profile=research_or_user_asset；authority=user_asset；evidence_basis=binary_ooxml_format_metadata；只在明确研究问题、来源和隐私范围内单文件读取
-  - **when_to_read**: 触发条件：当前问题明确需要该来源/报告，且已确认用途和隐私范围。读取 赛博城邦架构深度评估.docx（zip_entries=22；ooxml=true）；只在明确研究问题、来源和隐私范围内单文件读取
 <!-- RIDX_FILE_HEX 30315f52657365617263685f5265706f7274732fe8b59be58d9ae59f8ee982a6e69eb6e69e84e6b7b1e5baa6e8af84e4bcb02e6d64 -->
 - **path_or_link**: [`01_Research_Reports/赛博城邦架构深度评估.md`](赛博城邦架构深度评估.md)
   - **content_summary**: H1《**赛博城邦《1号方案》落地架构工程学评估与简化重构报告**》；首个 H2《**核心设计之工程学可行性与高价值特性评估**》
@@ -242,7 +186,7 @@
 
 ## do_not_load_by_default
 
-- 默认不加载 29 个历史/测试/生成/用户或大型 direct artifacts：`01_Research_Reports/15_神经优化数学心流学习系统.md`, `01_Research_Reports/16_神经优化数学心流学习系统2.0.md`, `01_Research_Reports/AI 数学教学评估框架构建.md`, `01_Research_Reports/AI 数学教学评估框架设计Phase5部分(3个问题答案).md`, `01_Research_Reports/AI 数学教学评估框架设计Phase5部分.md`, `01_Research_Reports/Agent 自进化研究架构设计.md`, `01_Research_Reports/Designing LLM Persona Meta-Skeleton.md`, `01_Research_Reports/Math Mentor OS：自进化架构物理落地执行方案.md`，另有 21 个见 direct_files。
+- 默认不加载 21 个历史/测试/生成/用户或大型 direct artifacts：`01_Research_Reports/Agent 自进化研究架构设计.md`, `01_Research_Reports/Designing LLM Persona Meta-Skeleton.md`, `01_Research_Reports/Math Mentor OS：自进化架构物理落地执行方案.md`, `01_Research_Reports/README.md`, `01_Research_Reports/Red Team Audit_ Persona Matrix Flaws.md`, `01_Research_Reports/为什么要研究Agent 自进化研究架构设计.md`, `01_Research_Reports/外部专家_第二轮务实追问_高吞吐重构解答.md`, `01_Research_Reports/外部专家_第二轮深度追问_AGI架构降维解答.md`，另有 13 个见 direct_files。
 - 以下子目录按具体证明目标进入，不做递归预读：`01_Research_Reports/_Supreme_Court_Proposals`。
 
 ## generation_and_freshness_note

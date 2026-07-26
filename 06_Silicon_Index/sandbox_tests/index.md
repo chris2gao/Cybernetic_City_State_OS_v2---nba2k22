@@ -12,11 +12,11 @@
 ## recommended_reading_order
 
 1. [`06_Silicon_Index/sandbox_tests/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-2. [`06_Silicon_Index/sandbox_tests/draft_dummy.md`](draft_dummy.md) — 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 draft_dummy.md（首行“This is a metaphorical draft about gravity.”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
-3. [`06_Silicon_Index/sandbox_tests/test_approve.md`](test_approve.md) — 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 test_approve.md（首行“［VERDICT: APPROVE］”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
-4. [`06_Silicon_Index/sandbox_tests/test_success.md`](test_success.md) — 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 test_success.md（首行“［VERDICT: REJECT］ - Reason: The proposed metaphor utilizes a 3D rubber band mapping to explain topological tensor const…”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
-5. [`06_Silicon_Index/sandbox_tests/test_violation_schema.md`](test_violation_schema.md) — 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 test_violation_schema.md（首行“［VERDICT: APPROVE］”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
-6. [`06_Silicon_Index/sandbox_tests/test_violation_tokens.md`](test_violation_tokens.md) — 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 test_violation_tokens.md（首行“［VERDICT: APPROVE］”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
+2. [`06_Silicon_Index/sandbox_tests/draft_dummy.md`](draft_dummy.md) — 触发条件：运行该具名硅基测试或定位其失败。读取 draft_dummy.md（首行“This is a metaphorical draft about gravity.”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
+3. [`06_Silicon_Index/sandbox_tests/test_approve.md`](test_approve.md) — 触发条件：运行该具名硅基测试或定位其失败。读取 test_approve.md（首行“［VERDICT: APPROVE］”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
+4. [`06_Silicon_Index/sandbox_tests/test_success.md`](test_success.md) — 触发条件：运行该具名硅基测试或定位其失败。读取 test_success.md（首行“［VERDICT: REJECT］ - Reason: The proposed metaphor utilizes a 3D rubber band mapping to explain topological tensor const…”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
+5. [`06_Silicon_Index/sandbox_tests/test_violation_schema.md`](test_violation_schema.md) — 触发条件：运行该具名硅基测试或定位其失败。读取 test_violation_schema.md（首行“［VERDICT: APPROVE］”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
+6. [`06_Silicon_Index/sandbox_tests/test_violation_tokens.md`](test_violation_tokens.md) — 触发条件：运行该具名硅基测试或定位其失败。读取 test_violation_tokens.md（首行“［VERDICT: APPROVE］”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
 
 ## child_directories
 
@@ -30,7 +30,7 @@
   - **role_and_use**: 将 draft_dummy.md（首行“This is a metaphorical draft about gravity.”） 作为“硅基测试/fixture”使用；仅复现明确测试；fixture 载荷不构成真实状态或授权
   - **authority_class**: `test_or_fixture`
   - **status_or_freshness**: semantic_profile=silicon_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅复现明确测试；fixture 载荷不构成真实状态或授权
-  - **when_to_read**: 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 draft_dummy.md（首行“This is a metaphorical draft about gravity.”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
+  - **when_to_read**: 触发条件：运行该具名硅基测试或定位其失败。读取 draft_dummy.md（首行“This is a metaphorical draft about gravity.”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f73616e64626f785f74657374732f696e6465782e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/sandbox_tests/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
@@ -44,28 +44,28 @@
   - **role_and_use**: 将 test_approve.md（首行“［VERDICT: APPROVE］”） 作为“硅基测试/fixture”使用；仅复现明确测试；fixture 载荷不构成真实状态或授权
   - **authority_class**: `test_or_fixture`
   - **status_or_freshness**: semantic_profile=silicon_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅复现明确测试；fixture 载荷不构成真实状态或授权
-  - **when_to_read**: 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 test_approve.md（首行“［VERDICT: APPROVE］”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
+  - **when_to_read**: 触发条件：运行该具名硅基测试或定位其失败。读取 test_approve.md（首行“［VERDICT: APPROVE］”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f73616e64626f785f74657374732f746573745f737563636573732e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/sandbox_tests/test_success.md`](test_success.md)
   - **content_summary**: 首行“［VERDICT: REJECT］ - Reason: The proposed metaphor utilizes a 3D rubber band mapping to explain topological tensor const…”
   - **role_and_use**: 将 test_success.md（首行“［VERDICT: REJECT］ - Reason: The proposed metaphor utilizes a 3D rubber band mapping to explain topological tensor const…”） 作为“硅基测试/fixture”使用；仅复现明确测试；fixture 载荷不构成真实状态或授权
   - **authority_class**: `test_or_fixture`
   - **status_or_freshness**: semantic_profile=silicon_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅复现明确测试；fixture 载荷不构成真实状态或授权
-  - **when_to_read**: 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 test_success.md（首行“［VERDICT: REJECT］ - Reason: The proposed metaphor utilizes a 3D rubber band mapping to explain topological tensor const…”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
+  - **when_to_read**: 触发条件：运行该具名硅基测试或定位其失败。读取 test_success.md（首行“［VERDICT: REJECT］ - Reason: The proposed metaphor utilizes a 3D rubber band mapping to explain topological tensor const…”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f73616e64626f785f74657374732f746573745f76696f6c6174696f6e5f736368656d612e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/sandbox_tests/test_violation_schema.md`](test_violation_schema.md)
   - **content_summary**: 首行“［VERDICT: APPROVE］”；artifact=test_violation_schema.md
   - **role_and_use**: 将 test_violation_schema.md（首行“［VERDICT: APPROVE］”） 作为“硅基测试/fixture”使用；仅复现明确测试；fixture 载荷不构成真实状态或授权
   - **authority_class**: `test_or_fixture`
   - **status_or_freshness**: semantic_profile=silicon_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅复现明确测试；fixture 载荷不构成真实状态或授权
-  - **when_to_read**: 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 test_violation_schema.md（首行“［VERDICT: APPROVE］”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
+  - **when_to_read**: 触发条件：运行该具名硅基测试或定位其失败。读取 test_violation_schema.md（首行“［VERDICT: APPROVE］”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f73616e64626f785f74657374732f746573745f76696f6c6174696f6e5f746f6b656e732e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/sandbox_tests/test_violation_tokens.md`](test_violation_tokens.md)
   - **content_summary**: 首行“［VERDICT: APPROVE］”；artifact=test_violation_tokens.md
   - **role_and_use**: 将 test_violation_tokens.md（首行“［VERDICT: APPROVE］”） 作为“硅基测试/fixture”使用；仅复现明确测试；fixture 载荷不构成真实状态或授权
   - **authority_class**: `test_or_fixture`
   - **status_or_freshness**: semantic_profile=silicon_test_or_fixture；authority=test_or_fixture；evidence_basis=markdown_heading_or_visible_structure；仅复现明确测试；fixture 载荷不构成真实状态或授权
-  - **when_to_read**: 触发条件：运行该具名 sandbox/factory 测试或定位其失败。读取 test_violation_tokens.md（首行“［VERDICT: APPROVE］”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
+  - **when_to_read**: 触发条件：运行该具名硅基测试或定位其失败。读取 test_violation_tokens.md（首行“［VERDICT: APPROVE］”）；仅复现明确测试；fixture 载荷不构成真实状态或授权
 
 ## do_not_load_by_default
 

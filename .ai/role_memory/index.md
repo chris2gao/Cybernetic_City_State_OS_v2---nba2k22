@@ -41,8 +41,7 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
 3. [`.ai/role_memory/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 4. [`.ai/role_memory/planner.md`](planner.md) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 planner.md（H1《Planner role memory》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 5. [`.ai/role_memory/reviewer.md`](reviewer.md) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 reviewer.md（H1《Reviewer role memory》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-6. [`.ai/role_memory/teacher.md`](teacher.md) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 teacher.md（H1《Teacher role memory》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-7. [`.ai/role_memory/tests/index.md`](tests/index.md) — 运行通信合规的 tests 测试层
+6. [`.ai/role_memory/tests/index.md`](tests/index.md) — 运行通信合规的 tests 测试层
 
 ## child_directories
 
@@ -89,13 +88,6 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
   - **authority_class**: `routing`
   - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 reviewer.md（H1《Reviewer role memory》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-<!-- RIDX_FILE_HEX 2e61692f726f6c655f6d656d6f72792f746561636865722e6d64 -->
-- **path_or_link**: [`.ai/role_memory/teacher.md`](teacher.md)
-  - **content_summary**: H1《Teacher role memory》
-  - **role_and_use**: 将 teacher.md（H1《Teacher role memory》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 teacher.md（H1《Teacher role memory》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 
 ## do_not_load_by_default
 

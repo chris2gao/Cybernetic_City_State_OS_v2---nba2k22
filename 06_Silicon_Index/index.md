@@ -3,7 +3,7 @@
 
 ## directory_role
 
-硅基启动根：按 Bootstrap→当前 Human 任务→触发合同选择 persona、factory、scripts 或 skills
+硅基启动根：按 Bootstrap→当前 Human 任务→触发合同选择 persona、scripts 或 skills
 
 ## authority_and_usage_boundary
 
@@ -23,11 +23,6 @@
   - **content_scope**: 可选 persona 合同库；只加载当前任务明确选定的单一角色；tracked 后代文件数=18
   - **when_to_enter**: 当前任务明确选定某 persona；只读对应单文件
   - **load_policy**: `do_not_load_by_default`
-<!-- RIDX_DIR_HEX 30365f53696c69636f6e5f496e6465782f666163746f72795f706970656c696e65 -->
-- **path_or_link**: [`06_Silicon_Index/factory_pipeline`](factory_pipeline/index.md)
-  - **content_scope**: Math node factory 的 mock agent/evaluator/pipeline 证据区 factory_pipeline；非 canonical corpus；tracked 后代文件数=37
-  - **when_to_enter**: 复现 factory_pipeline 的 mock factory、evaluator 或 generated-node 行为
-  - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 30365f53696c69636f6e5f496e6465782f73616e64626f785f7465737473 -->
 - **path_or_link**: [`06_Silicon_Index/sandbox_tests`](sandbox_tests/index.md)
   - **content_scope**: 硅基 fail-closed、安全与注入测试池 sandbox_tests；tracked 后代文件数=6
@@ -40,7 +35,7 @@
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 30365f53696c69636f6e5f496e6465782f736b696c6c73 -->
 - **path_or_link**: [`06_Silicon_Index/skills`](skills/index.md)
-  - **content_scope**: 仓库内 planning skill 与 archived skill provenance 区 skills；tracked 后代文件数=5
+  - **content_scope**: 仓库内 planning skill 与 archived skill provenance 区 skills；tracked 后代文件数=3
   - **when_to_enter**: 当前任务明确调用 skills 中的 skill，或追溯 archived skill
   - **load_policy**: `task_triggered_lazy_load`
 
@@ -80,7 +75,7 @@
   - **role_and_use**: 将 City_State_Agent_System_Prompt.md（H1《Cybernetic City-State Agent Instruction Template》；首个 H2《Use》） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
   - **authority_class**: `implementation`
   - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=markdown_heading_or_visible_structure；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
-  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 City_State_Agent_System_Prompt.md（H1《Cybernetic City-State Agent Instruction Template》；首个 H2《Use》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本或工具行为。读取 City_State_Agent_System_Prompt.md（H1《Cybernetic City-State Agent Instruction Template》；首个 H2《Use》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f436f6e746578745f4c6f6164696e675f416e645f44726966745f5265636f766572792e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/Context_Loading_And_Drift_Recovery.md`](Context_Loading_And_Drift_Recovery.md)
   - **content_summary**: H1《Context Loading and Drift Recovery v0.2》；首个 H2《1. Purpose》
@@ -101,14 +96,14 @@
   - **role_and_use**: 将 Cybernetic_City_State_OS_Macro_Architecture.md（H1《赛博城邦操作系统 (Cybernetic City-State OS) 宏观全景架构图》；首个 H2《🏛️ 赛博城邦宏观流转全景图》） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
   - **authority_class**: `implementation`
   - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=markdown_heading_or_visible_structure；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
-  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 Cybernetic_City_State_OS_Macro_Architecture.md（H1《赛博城邦操作系统 (Cybernetic City-State OS) 宏观全景架构图》；首个 H2《🏛️ 赛博城邦宏观流转全景图》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本或工具行为。读取 Cybernetic_City_State_OS_Macro_Architecture.md（H1《赛博城邦操作系统 (Cybernetic City-State OS) 宏观全景架构图》；首个 H2《🏛️ 赛博城邦宏观流转全景图》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f4475616c5f436865636b5f50726f706f73616c5f53797374656d5f4172636869746563747572652e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/Dual_Check_Proposal_System_Architecture.md`](Dual_Check_Proposal_System_Architecture.md)
   - **content_summary**: H1《赛博城邦 (Cybernetic City-State OS) 终极系统架构流转图》；首个 H2《🎯 架构全景图 (End-to-End Topology)》
   - **role_and_use**: 将 Dual_Check_Proposal_System_Architecture.md（H1《赛博城邦 (Cybernetic City-State OS) 终极系统架构流转图》；首个 H2《🎯 架构全景图 (End-to-End Topology)》） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
   - **authority_class**: `implementation`
   - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=markdown_heading_or_visible_structure；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
-  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 Dual_Check_Proposal_System_Architecture.md（H1《赛博城邦 (Cybernetic City-State OS) 终极系统架构流转图》；首个 H2《🎯 架构全景图 (End-to-End Topology)》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本或工具行为。读取 Dual_Check_Proposal_System_Architecture.md（H1《赛博城邦 (Cybernetic City-State OS) 终极系统架构流转图》；首个 H2《🎯 架构全景图 (End-to-End Topology)》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f506c616e335f45787465726e616c5f4175676d656e746174696f6e5f4f535f4172636869746563747572652e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/Plan3_External_Augmentation_OS_Architecture.md`](Plan3_External_Augmentation_OS_Architecture.md)
   - **content_summary**: H1《Plan 3 External Augmentation OS Architecture v0.2》；首个 H2《1. Purpose and scope》
@@ -136,14 +131,14 @@
   - **role_and_use**: 将 city_state_production_methodology.md（H1《赛博城邦：元认知产出体系与创造者方法论》；首个 H2《🏛️ 四层降维投影架构：从真理到心流》） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
   - **authority_class**: `implementation`
   - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=markdown_heading_or_visible_structure；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
-  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 city_state_production_methodology.md（H1《赛博城邦：元认知产出体系与创造者方法论》；首个 H2《🏛️ 四层降维投影架构：从真理到心流》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本或工具行为。读取 city_state_production_methodology.md（H1《赛博城邦：元认知产出体系与创造者方法论》；首个 H2《🏛️ 四层降维投影架构：从真理到心流》）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f66696e616c5f6c6573736f6e2e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/final_lesson.md`](final_lesson.md)
   - **content_summary**: 首行“［ROUTER_DRAFT_SUBMISSION］”；artifact=final_lesson.md
   - **role_and_use**: 将 final_lesson.md（首行“［ROUTER_DRAFT_SUBMISSION］”） 作为“硅基侧实现/工具原型”使用；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
   - **authority_class**: `implementation`
   - **status_or_freshness**: semantic_profile=silicon_implementation；authority=implementation；evidence_basis=markdown_heading_or_visible_structure；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
-  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本、factory 或工具行为。读取 final_lesson.md（首行“［ROUTER_DRAFT_SUBMISSION］”）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
+  - **when_to_read**: 触发条件：修改或复现该具名硅基脚本或工具行为。读取 final_lesson.md（首行“［ROUTER_DRAFT_SUBMISSION］”）；原型/脚本存在不等于 bus、interceptor 或 agent 已激活
 <!-- RIDX_FILE_HEX 30365f53696c69636f6e5f496e6465782f696e6465782e6d64 -->
 - **path_or_link**: [`06_Silicon_Index/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
@@ -154,7 +149,7 @@
 
 ## do_not_load_by_default
 
-- 以下子目录按具体证明目标进入，不做递归预读：`06_Silicon_Index/Personas`, `06_Silicon_Index/factory_pipeline`, `06_Silicon_Index/scripts`。
+- 以下子目录按具体证明目标进入，不做递归预读：`06_Silicon_Index/Personas`, `06_Silicon_Index/scripts`。
 
 ## generation_and_freshness_note
 

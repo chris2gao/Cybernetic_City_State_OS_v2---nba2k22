@@ -12,11 +12,7 @@
 ## recommended_reading_order
 
 1. [`.ai/TASKS/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-2. [`.ai/TASKS/math-mentor-lrp-01-teacher-initialization-context-loading-0001.md`](math-mentor-lrp-01-teacher-initialization-context-loading-0001.md) — 触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 math-mentor-lrp-01-teacher-initialization-context-loading-0001.md（H1《Math Mentor LRP-01 Teacher Initialization And Context Loading》；首个 H2《1. Task Position》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-3. [`.ai/TASKS/math-mentor-lrp-02-lesson-plan-agent-contract-0001.md`](math-mentor-lrp-02-lesson-plan-agent-contract-0001.md) — 触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 math-mentor-lrp-02-lesson-plan-agent-contract-0001.md（H1《Math Mentor LRP-02 Lesson Plan Schema And Agent Contract》；首个 H2《1. Task Position》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-4. [`.ai/TASKS/math-mentor-lrp-03-teaching-prompt-consistency-repair-0001.md`](math-mentor-lrp-03-teaching-prompt-consistency-repair-0001.md) — 触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 math-mentor-lrp-03-teaching-prompt-consistency-repair-0001.md（H1《Math Mentor LRP-03 Teaching Prompt Consistency Repair》；首个 H2《1. Task Position》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-5. [`.ai/TASKS/math-mentor-lrp-04-teaching-test-harness-and-golden-cases-0001.md`](math-mentor-lrp-04-teaching-test-harness-and-golden-cases-0001.md) — 触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 math-mentor-lrp-04-teaching-test-harness-and-golden-cases-0001.md（H1《Math Mentor LRP-04 Teaching Test Harness And Golden Cases》；首个 H2《1. Task Position》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-6. [`.ai/TASKS/math-mentor-lrp-05-student-learning-state-spaced-review-0001.md`](math-mentor-lrp-05-student-learning-state-spaced-review-0001.md) — 触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 math-mentor-lrp-05-student-learning-state-spaced-review-0001.md（H1《Math Mentor LRP-05 Student Learning State And Spaced Review》；首个 H2《1. Task Position》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
+2. [`.ai/TASKS/core-mechanism-reachability-cleanup-0002.md`](core-mechanism-reachability-cleanup-0002.md) — 触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 core-mechanism-reachability-cleanup-0002.md（H1《Keep what the mechanism reaches, delete the rest》；首个 H2《1. The rule, in full》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
 
 ## child_directories
 
@@ -24,6 +20,13 @@
 
 ## direct_files
 
+<!-- RIDX_FILE_HEX 2e61692f5441534b532f636f72652d6d656368616e69736d2d72656163686162696c6974792d636c65616e75702d303030322e6d64 -->
+- **path_or_link**: [`.ai/TASKS/core-mechanism-reachability-cleanup-0002.md`](core-mechanism-reachability-cleanup-0002.md)
+  - **content_summary**: H1《Keep what the mechanism reaches, delete the rest》；首个 H2《1. The rule, in full》
+  - **role_and_use**: 将 core-mechanism-reachability-cleanup-0002.md（H1《Keep what the mechanism reaches, delete the rest》；首个 H2《1. The rule, in full》） 作为“已发布任务或信号快照”使用；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=ai_task_or_signal_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
+  - **when_to_read**: 触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 core-mechanism-reachability-cleanup-0002.md（H1《Keep what the mechanism reaches, delete the rest》；首个 H2《1. The rule, in full》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
 <!-- RIDX_FILE_HEX 2e61692f5441534b532f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/TASKS/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
@@ -31,52 +34,10 @@
   - **authority_class**: `routing`
   - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
   - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-<!-- RIDX_FILE_HEX 2e61692f5441534b532f6d6174682d6d656e746f722d6c72702d30312d746561636865722d696e697469616c697a6174696f6e2d636f6e746578742d6c6f6164696e672d303030312e6d64 -->
-- **path_or_link**: [`.ai/TASKS/math-mentor-lrp-01-teacher-initialization-context-loading-0001.md`](math-mentor-lrp-01-teacher-initialization-context-loading-0001.md)
-  - **content_summary**: H1《Math Mentor LRP-01 Teacher Initialization And Context Loading》；首个 H2《1. Task Position》
-  - **role_and_use**: 将 math-mentor-lrp-01-teacher-initialization-context-loading-0001.md（H1《Math Mentor LRP-01 Teacher Initialization And Context Loading》；首个 H2《1. Task Position》） 作为“已发布任务或信号快照”使用；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-  - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: semantic_profile=ai_task_or_signal_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-  - **when_to_read**: 触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 math-mentor-lrp-01-teacher-initialization-context-loading-0001.md（H1《Math Mentor LRP-01 Teacher Initialization And Context Loading》；首个 H2《1. Task Position》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-<!-- RIDX_FILE_HEX 2e61692f5441534b532f6d6174682d6d656e746f722d6c72702d30322d6c6573736f6e2d706c616e2d6167656e742d636f6e74726163742d303030312e6d64 -->
-- **path_or_link**: [`.ai/TASKS/math-mentor-lrp-02-lesson-plan-agent-contract-0001.md`](math-mentor-lrp-02-lesson-plan-agent-contract-0001.md)
-  - **content_summary**: H1《Math Mentor LRP-02 Lesson Plan Schema And Agent Contract》；首个 H2《1. Task Position》
-  - **role_and_use**: 将 math-mentor-lrp-02-lesson-plan-agent-contract-0001.md（H1《Math Mentor LRP-02 Lesson Plan Schema And Agent Contract》；首个 H2《1. Task Position》） 作为“已发布任务或信号快照”使用；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-  - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: semantic_profile=ai_task_or_signal_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-  - **when_to_read**: 触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 math-mentor-lrp-02-lesson-plan-agent-contract-0001.md（H1《Math Mentor LRP-02 Lesson Plan Schema And Agent Contract》；首个 H2《1. Task Position》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-<!-- RIDX_FILE_HEX 2e61692f5441534b532f6d6174682d6d656e746f722d6c72702d30332d7465616368696e672d70726f6d70742d636f6e73697374656e63792d7265706169722d303030312e6d64 -->
-- **path_or_link**: [`.ai/TASKS/math-mentor-lrp-03-teaching-prompt-consistency-repair-0001.md`](math-mentor-lrp-03-teaching-prompt-consistency-repair-0001.md)
-  - **content_summary**: H1《Math Mentor LRP-03 Teaching Prompt Consistency Repair》；首个 H2《1. Task Position》
-  - **role_and_use**: 将 math-mentor-lrp-03-teaching-prompt-consistency-repair-0001.md（H1《Math Mentor LRP-03 Teaching Prompt Consistency Repair》；首个 H2《1. Task Position》） 作为“已发布任务或信号快照”使用；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-  - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: semantic_profile=ai_task_or_signal_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-  - **when_to_read**: 触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 math-mentor-lrp-03-teaching-prompt-consistency-repair-0001.md（H1《Math Mentor LRP-03 Teaching Prompt Consistency Repair》；首个 H2《1. Task Position》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-<!-- RIDX_FILE_HEX 2e61692f5441534b532f6d6174682d6d656e746f722d6c72702d30342d7465616368696e672d746573742d6861726e6573732d616e642d676f6c64656e2d63617365732d303030312e6d64 -->
-- **path_or_link**: [`.ai/TASKS/math-mentor-lrp-04-teaching-test-harness-and-golden-cases-0001.md`](math-mentor-lrp-04-teaching-test-harness-and-golden-cases-0001.md)
-  - **content_summary**: H1《Math Mentor LRP-04 Teaching Test Harness And Golden Cases》；首个 H2《1. Task Position》
-  - **role_and_use**: 将 math-mentor-lrp-04-teaching-test-harness-and-golden-cases-0001.md（H1《Math Mentor LRP-04 Teaching Test Harness And Golden Cases》；首个 H2《1. Task Position》） 作为“已发布任务或信号快照”使用；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-  - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: semantic_profile=ai_task_or_signal_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-  - **when_to_read**: 触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 math-mentor-lrp-04-teaching-test-harness-and-golden-cases-0001.md（H1《Math Mentor LRP-04 Teaching Test Harness And Golden Cases》；首个 H2《1. Task Position》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-<!-- RIDX_FILE_HEX 2e61692f5441534b532f6d6174682d6d656e746f722d6c72702d30352d73747564656e742d6c6561726e696e672d73746174652d7370616365642d7265766965772d303030312e6d64 -->
-- **path_or_link**: [`.ai/TASKS/math-mentor-lrp-05-student-learning-state-spaced-review-0001.md`](math-mentor-lrp-05-student-learning-state-spaced-review-0001.md)
-  - **content_summary**: H1《Math Mentor LRP-05 Student Learning State And Spaced Review》；首个 H2《1. Task Position》
-  - **role_and_use**: 将 math-mentor-lrp-05-student-learning-state-spaced-review-0001.md（H1《Math Mentor LRP-05 Student Learning State And Spaced Review》；首个 H2《1. Task Position》） 作为“已发布任务或信号快照”使用；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-  - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: semantic_profile=ai_task_or_signal_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-  - **when_to_read**: 触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 math-mentor-lrp-05-student-learning-state-spaced-review-0001.md（H1《Math Mentor LRP-05 Student Learning State And Spaced Review》；首个 H2《1. Task Position》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-<!-- RIDX_FILE_HEX 2e61692f5441534b532f6d6174682d6d656e746f722d6c72702d30362d7465616368696e672d6361706162696c6974792d616e642d746f6f6c2d747275746866756c6e6573732d303030312e6d64 -->
-- **path_or_link**: [`.ai/TASKS/math-mentor-lrp-06-teaching-capability-and-tool-truthfulness-0001.md`](math-mentor-lrp-06-teaching-capability-and-tool-truthfulness-0001.md)
-  - **content_summary**: H1《Math Mentor LRP-06 Teaching Capability And Tool Truthfulness》；首个 H2《1. Task Position》
-  - **role_and_use**: 将 math-mentor-lrp-06-teaching-capability-and-tool-truthfulness-0001.md（H1《Math Mentor LRP-06 Teaching Capability And Tool Truthfulness》；首个 H2《1. Task Position》） 作为“已发布任务或信号快照”使用；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-  - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: semantic_profile=ai_task_or_signal_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
-  - **when_to_read**: 触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 math-mentor-lrp-06-teaching-capability-and-tool-truthfulness-0001.md（H1《Math Mentor LRP-06 Teaching Capability And Tool Truthfulness》；首个 H2《1. Task Position》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
 
 ## do_not_load_by_default
 
-- 默认不加载 6 个历史/测试/生成/用户或大型 direct artifacts：`.ai/TASKS/math-mentor-lrp-01-teacher-initialization-context-loading-0001.md`, `.ai/TASKS/math-mentor-lrp-02-lesson-plan-agent-contract-0001.md`, `.ai/TASKS/math-mentor-lrp-03-teaching-prompt-consistency-repair-0001.md`, `.ai/TASKS/math-mentor-lrp-04-teaching-test-harness-and-golden-cases-0001.md`, `.ai/TASKS/math-mentor-lrp-05-student-learning-state-spaced-review-0001.md`, `.ai/TASKS/math-mentor-lrp-06-teaching-capability-and-tool-truthfulness-0001.md`。
+- 默认不加载 1 个历史/测试/生成/用户或大型 direct artifacts：`.ai/TASKS/core-mechanism-reachability-cleanup-0002.md`。
 
 ## generation_and_freshness_note
 

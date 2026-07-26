@@ -18,32 +18,21 @@
 5. [`06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md`](06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md) — 触发条件：裁决城邦总体权力、Human Speaker 边界或宪章冲突。读取 06_Cybernetic_Citizen_Awakening.md（H1《06_Cybernetic_Citizen_Awakening：硅基特工唤醒与生命契约》；首个 H2《契约一：符号路由与懒加载法则 (The Law of Lazy Loading)》）；索引只能转述其路径与用途，不能降低或扩张其权力边界
 6. [`.ai/index.md`](.ai/index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 7. [`06_Silicon_Index/index.md`](06_Silicon_Index/index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-8. [`08_Domain_Applications/index.md`](08_Domain_Applications/index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-9. [`未完成任务备忘录.yml`](未完成任务备忘录.yml) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 未完成任务备忘录.yml（schema_version=plan3_unfinished_task_memo.v3；document_name=未完成任务备忘录；program_execution_order［0］.id=finish-current-compliance-gate）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-10. [`开发分支与合并进度总账.md`](开发分支与合并进度总账.md) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 开发分支与合并进度总账.md（H1《开发分支与合并进度总账》；首个 H2《authority_and_freshness》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+8. [`未完成任务备忘录.yml`](未完成任务备忘录.yml) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 未完成任务备忘录.yml（schema_version=plan3_unfinished_task_memo.v3；document_name=未完成任务备忘录；program_execution_order［0］.id=finish-current-compliance-gate）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+9. [`开发分支与合并进度总账.md`](开发分支与合并进度总账.md) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 开发分支与合并进度总账.md（H1《开发分支与合并进度总账》；首个 H2《authority_and_freshness》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 
 ## child_directories
 
 <!-- RIDX_DIR_HEX 2e6169 -->
 - **path_or_link**: [`.ai`](.ai/index.md)
-  - **content_scope**: AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信合规入口；tracked 后代文件数=507
+  - **content_scope**: AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信合规入口；tracked 后代文件数=284
   - **when_to_enter**: 执行 handoff、任务接管、review/publication 或查证历史 run
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30315f52657365617263685f5265706f727473 -->
 - **path_or_link**: [`01_Research_Reports`](01_Research_Reports/index.md)
-  - **content_scope**: 研究来源区 01_Research_Reports；可能包含健康、N=1 或用户资产，默认按单文件加载；tracked 后代文件数=33
+  - **content_scope**: 研究来源区 01_Research_Reports；可能包含健康、N=1 或用户资产，默认按单文件加载；tracked 后代文件数=25
   - **when_to_enter**: 当前研究问题明确需要 01_Research_Reports 中的某个来源或报告
   - **load_policy**: `do_not_load_by_default`
-<!-- RIDX_DIR_HEX 30325f50726f746f636f6c73 -->
-- **path_or_link**: [`02_Protocols`](02_Protocols/index.md)
-  - **content_scope**: Engine dispatch、主动压缩转生、路由与委派协议库；tracked 后代文件数=4
-  - **when_to_enter**: 当前动作触及 dispatch、压缩转生、模型路由或委派协议
-  - **load_policy**: `task_triggered_lazy_load`
-<!-- RIDX_DIR_HEX 30335f4461696c795f457865637574696f6e -->
-- **path_or_link**: [`03_Daily_Execution`](03_Daily_Execution/index.md)
-  - **content_scope**: 日常执行与 lesson-plan stress-test 证据区 03_Daily_Execution；tracked 后代文件数=5
-  - **when_to_enter**: 复核 03_Daily_Execution 中的具体执行事件或 stress-test 对照
-  - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30345f5061726c69616d656e74 -->
 - **path_or_link**: [`04_Parliament`](04_Parliament/index.md)
   - **content_scope**: 议会 04_Parliament：组织 Issue、verdict 与归档 provenance，不等于现行宪章；tracked 后代文件数=63
@@ -56,8 +45,8 @@
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30365f53696c69636f6e5f496e646578 -->
 - **path_or_link**: [`06_Silicon_Index`](06_Silicon_Index/index.md)
-  - **content_scope**: 硅基启动根：按 Bootstrap→当前 Human 任务→触发合同选择 persona、factory、scripts 或 skills；tracked 后代文件数=102
-  - **when_to_enter**: 完成 Bootstrap 后，当前任务明确触发 persona、factory、scripts 或 skills 子区
+  - **content_scope**: 硅基启动根：按 Bootstrap→当前 Human 任务→触发合同选择 persona、scripts 或 skills；tracked 后代文件数=63
+  - **when_to_enter**: 完成 Bootstrap 后，当前任务明确触发 persona、scripts 或 skills 子区
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30375f436f6d70696c6572 -->
 - **path_or_link**: [`07_Compiler`](07_Compiler/index.md)
@@ -71,24 +60,14 @@
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30375f53696c69636f6e5f507269766174655f5a6f6e6573 -->
 - **path_or_link**: [`07_Silicon_Private_Zones`](07_Silicon_Private_Zones/index.md)
-  - **content_scope**: Private Zone 07_Silicon_Private_Zones 的路径/格式元数据边界；索引不读取或摘要正文；tracked 后代文件数=22
+  - **content_scope**: Private Zone 07_Silicon_Private_Zones 的路径/格式元数据边界；索引不读取或摘要正文；tracked 后代文件数=2
   - **when_to_enter**: Human 明确点名 Private Zone 07_Silicon_Private_Zones；普通初始化禁止正文加载
   - **load_policy**: `do_not_load_by_default`
-<!-- RIDX_DIR_HEX 30385f446f6d61696e5f4170706c69636174696f6e73 -->
-- **path_or_link**: [`08_Domain_Applications`](08_Domain_Applications/index.md)
-  - **content_scope**: 领域应用入口；领域合同不提升为总体 OS 宪章；tracked 后代文件数=1072
-  - **when_to_enter**: Human 已把任务路由到具体领域并要求读取其合同
-  - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 63616d706169676e73 -->
 - **path_or_link**: [`campaigns`](campaigns/index.md)
   - **content_scope**: campaign manifest schema/template；声明形状不构成任务激活；tracked 后代文件数=2
   - **when_to_enter**: 创建/验证 campaign manifest，不用于 activation
   - **load_policy**: `task_triggered_lazy_load`
-<!-- RIDX_DIR_HEX 73686f72745f7465726d5f7461736b73 -->
-- **path_or_link**: [`short_term_tasks`](short_term_tasks/index.md)
-  - **content_scope**: 已取代 outsourcing/task provenance 区 short_term_tasks；旧 pending 不恢复任务；tracked 后代文件数=12
-  - **when_to_enter**: 追溯 short_term_tasks 中旧 outsourcing/task 请求及其 superseded 边界
-  - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 73797374656d5f6261636b626f6e65 -->
 - **path_or_link**: [`system_backbone`](system_backbone/index.md)
   - **content_scope**: 外部增强骨架 system_backbone；registry/ledger/domain/template 原型未自动接入 runtime；tracked 后代文件数=13
@@ -106,11 +85,11 @@
   - **when_to_read**: 触发条件：当前动作落入该文件规定的协议或执行边界。读取 .gitattributes（nonempty_lines=2；# Keep tracked text byte-stable across platforms; auto-detected binary files remain binary.）；执行前核验当前任务授权、精确 source head 与上位合同
 <!-- RIDX_FILE_HEX 2e67697469676e6f7265 -->
 - **path_or_link**: [`.gitignore`](.gitignore)
-  - **content_summary**: Git ignore 规则 11 条；样例：__pycache__/, *.pyc, *.pyo, .DS_Store, Thumbs.db, *.tmp
-  - **role_and_use**: 将 .gitignore（patterns=11；__pycache__/；*.pyc） 作为“执行合同”使用；执行前核验当前任务授权、精确 source head 与上位合同
+  - **content_summary**: Git ignore 规则 12 条；样例：__pycache__/, *.pyc, *.pyo, .DS_Store, Thumbs.db, *.tmp
+  - **role_and_use**: 将 .gitignore（patterns=12；__pycache__/；*.pyc） 作为“执行合同”使用；执行前核验当前任务授权、精确 source head 与上位合同
   - **authority_class**: `operational_contract`
   - **status_or_freshness**: semantic_profile=operational_contract；authority=operational_contract；evidence_basis=gitignore_pattern_count_and_safe_samples；执行前核验当前任务授权、精确 source head 与上位合同
-  - **when_to_read**: 触发条件：当前动作落入该文件规定的协议或执行边界。读取 .gitignore（patterns=11；__pycache__/；*.pyc）；执行前核验当前任务授权、精确 source head 与上位合同
+  - **when_to_read**: 触发条件：当前动作落入该文件规定的协议或执行边界。读取 .gitignore（patterns=12；__pycache__/；*.pyc）；执行前核验当前任务授权、精确 source head 与上位合同
 <!-- RIDX_FILE_HEX 30305f436974795f53746174655f526f7574696e675f5461626c652e6d64 -->
 - **path_or_link**: [`00_City_State_Routing_Table.md`](00_City_State_Routing_Table.md)
   - **content_summary**: H1《🗺️ 赛博城邦根任务索引与能力路由表 (The Root Task Index &amp; CRT)》；首个 H2《🏛️ 编年史：宏观战役任务索引 (Chronological Task Roster)》
@@ -125,16 +104,9 @@
   - **authority_class**: `routing`
   - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 0号方案.md（H1《赛博城邦 0号方案 (Plan 0)：面向 AGI 纪元的终极演化蓝图》；首个 H2《0. 物理界限与控制论基点 (Cybernetics &amp; Physics Grounding)》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-<!-- RIDX_FILE_HEX 31e58fb7e696b9e6a188202d20e589afe69cac2e6d64 -->
-- **path_or_link**: [`1号方案 - 副本.md`](1号方案%20-%20副本.md)
-  - **content_summary**: H1《赛博城邦多智能体操作系统总体建设方案 (1号方案)》；首个 H2《0. 环境域与基础元素定义（Environmental Domain &amp; Core Elements）》；artifact=1号方案 - 副本.md
-  - **role_and_use**: 将 1号方案 - 副本.md（H1《赛博城邦多智能体操作系统总体建设方案 (1号方案)》；首个 H2《0. 环境域与基础元素定义（Environmental Domain &amp; Core Elements）》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 1号方案 - 副本.md（H1《赛博城邦多智能体操作系统总体建设方案 (1号方案)》；首个 H2《0. 环境域与基础元素定义（Environmental Domain &amp; Core Elements）》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 31e58fb7e696b9e6a1882e6d64 -->
 - **path_or_link**: [`1号方案.md`](1号方案.md)
-  - **content_summary**: H1《赛博城邦多智能体操作系统总体建设方案 (1号方案)》；首个 H2《0. 环境域与基础元素定义（Environmental Domain &amp; Core Elements）》；artifact=1号方案.md
+  - **content_summary**: H1《赛博城邦多智能体操作系统总体建设方案 (1号方案)》；首个 H2《0. 环境域与基础元素定义（Environmental Domain &amp; Core Elements）》
   - **role_and_use**: 将 1号方案.md（H1《赛博城邦多智能体操作系统总体建设方案 (1号方案)》；首个 H2《0. 环境域与基础元素定义（Environmental Domain &amp; Core Elements）》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
   - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
@@ -160,20 +132,20 @@
   - **authority_class**: `operational_contract`
   - **status_or_freshness**: semantic_profile=operational_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；执行前核验当前任务授权、精确 source head 与上位合同
   - **when_to_read**: 触发条件：当前动作落入该文件规定的协议或执行边界。读取 AGENTS.md（H1《Agent Collaboration Guide》；首个 H2《Startup Rules》）；执行前核验当前任务授权、精确 source head 与上位合同
+<!-- RIDX_FILE_HEX 4147454e545f574f524b494e475f4449534349504c494e452e6d64 -->
+- **path_or_link**: [`AGENT_WORKING_DISCIPLINE.md`](AGENT_WORKING_DISCIPLINE.md)
+  - **content_summary**: H1《Agent Working Discipline》；首个 H2《1. Land the output; the chat holds nothing》
+  - **role_and_use**: 将 AGENT_WORKING_DISCIPLINE.md（H1《Agent Working Discipline》；首个 H2《1. Land the output; the chat holds nothing》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **authority_class**: `routing`
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 AGENT_WORKING_DISCIPLINE.md（H1《Agent Working Discipline》；首个 H2《1. Land the output; the chat holds nothing》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 4152434849544543545552452e6d64 -->
 - **path_or_link**: [`ARCHITECTURE.md`](ARCHITECTURE.md)
-  - **content_summary**: H1《Architecture》；首个 H2《Root Structure》
-  - **role_and_use**: 将 ARCHITECTURE.md（H1《Architecture》；首个 H2《Root Structure》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **content_summary**: H1《Architecture》；首个 H2《Core Structure》
+  - **role_and_use**: 将 ARCHITECTURE.md（H1《Architecture》；首个 H2《Core Structure》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **authority_class**: `routing`
   - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 ARCHITECTURE.md（H1《Architecture》；首个 H2《Root Structure》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-<!-- RIDX_FILE_HEX 4348414e47454c4f475f41492e6d64 -->
-- **path_or_link**: [`CHANGELOG_AI.md`](CHANGELOG_AI.md)
-  - **content_summary**: H1《AI Changelog》；首个 H2《2026-06-17》
-  - **role_and_use**: 将 CHANGELOG_AI.md（H1《AI Changelog》；首个 H2《2026-06-17》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 CHANGELOG_AI.md（H1《AI Changelog》；首个 H2《2026-06-17》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 ARCHITECTURE.md（H1《Architecture》；首个 H2《Core Structure》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 434c415544452e6d64 -->
 - **path_or_link**: [`CLAUDE.md`](CLAUDE.md)
   - **content_summary**: H1《Claude Code onboarding router》
@@ -181,6 +153,20 @@
   - **authority_class**: `routing`
   - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 CLAUDE.md（H1《Claude Code onboarding router》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+<!-- RIDX_FILE_HEX 434f52455f4d414e49464553542e796d6c -->
+- **path_or_link**: [`CORE_MANIFEST.yml`](CORE_MANIFEST.yml)
+  - **content_summary**: YAML 结构，顶层键：schema_version, core_repository, core_release, core_owned_paths, domain_owned_paths, domain_merge_procedure, domain_creation, verification；安全锚点：schema_version=citystat…
+  - **role_and_use**: 将 CORE_MANIFEST.yml（schema_version=citystate.core_manifest.v1；domain=a naive merge proposed 1132 files and 204156 deletions. After the） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=implementation_artifact；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；可追踪实现不等于已激活、已验证或 production-ready
+  - **when_to_read**: 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 CORE_MANIFEST.yml（schema_version=citystate.core_manifest.v1；domain=a naive merge proposed 1132 files and 204156 deletions. After the）；可追踪实现不等于已激活、已验证或 production-ready
+<!-- RIDX_FILE_HEX 47454d494e492e6d64 -->
+- **path_or_link**: [`GEMINI.md`](GEMINI.md)
+  - **content_summary**: H1《Gemini / Antigravity onboarding router》；首个 H2《What Antigravity actually loads》
+  - **role_and_use**: 将 GEMINI.md（H1《Gemini / Antigravity onboarding router》；首个 H2《What Antigravity actually loads》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **authority_class**: `routing`
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 GEMINI.md（H1《Gemini / Antigravity onboarding router》；首个 H2《What Antigravity actually loads》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 494e5354414e43455f434f4e4649472e6d64 -->
 - **path_or_link**: [`INSTANCE_CONFIG.md`](INSTANCE_CONFIG.md)
   - **content_summary**: H1《🏷️ 城邦实例配置 (Instance Configuration)》；首个 H2《基本信息》
@@ -258,6 +244,13 @@
   - **authority_class**: `routing`
   - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
   - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+<!-- RIDX_FILE_HEX 6e65772d646f6d61696e2e707331 -->
+- **path_or_link**: [`new-domain.ps1`](new-domain.ps1)
+  - **content_summary**: 纯文本，87 个非空行；首行“&lt;#”
+  - **role_and_use**: 将 new-domain.ps1（nonempty_lines=87；&lt;#） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=implementation_artifact；authority=implementation；evidence_basis=text_line_count_and_first_visible_line；可追踪实现不等于已激活、已验证或 production-ready
+  - **when_to_read**: 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 new-domain.ps1（nonempty_lines=87；&lt;#）；可追踪实现不等于已激活、已验证或 production-ready
 <!-- RIDX_FILE_HEX 7265706f7369746f72795f696e6465785f6d616e69666573742e6a736f6e -->
 - **path_or_link**: [`repository_index_manifest.json`](repository_index_manifest.json)
   - **content_summary**: repository_index_manifest.v1 机器覆盖清单；双向映射目录、直接文件与直接子目录
@@ -293,11 +286,18 @@
   - **authority_class**: `routing`
   - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=yaml_visible_keys_and_safe_fields；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 未完成任务备忘录.yml（schema_version=plan3_unfinished_task_memo.v3；document_name=未完成任务备忘录；program_execution_order［0］.id=finish-current-compliance-gate）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+<!-- RIDX_FILE_HEX e7b3bbe7bb9fe69cbae588b6e680bbe7bb932e6d64 -->
+- **path_or_link**: [`系统机制总结.md`](系统机制总结.md)
+  - **content_summary**: H1《一、系统实际存在三种“使用”》；首个 H2《城邦加载机制初步盘点》
+  - **role_and_use**: 将 系统机制总结.md（H1《一、系统实际存在三种“使用”》；首个 H2《城邦加载机制初步盘点》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **authority_class**: `routing`
+  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
+  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 系统机制总结.md（H1《一、系统实际存在三种“使用”》；首个 H2《城邦加载机制初步盘点》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 
 ## do_not_load_by_default
 
 - 不要默认加载 `.ai/CODEX_REPORTS/`、`.ai/PROGRAM_RUNS/`、研究报告全集、议会归档或 `07_Silicon_Private_Zones/`。
-- 不要默认加载 Math Mentor 全量节点库、staging pools、完整路线图、fixtures/logs、`short_term_tasks/` 或 `system_backbone/`；应按任务进入单个文件。
+- 不要默认加载 `short_term_tasks/`、`system_backbone/` 或大型 fixtures/logs；应按任务进入单个文件。
 - 不要把 README、历史报告、source neutral mailbox 或 branch ledger 快照当作 live authority。
 
 ## generation_and_freshness_note

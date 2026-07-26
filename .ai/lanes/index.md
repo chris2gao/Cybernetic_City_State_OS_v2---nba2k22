@@ -130,7 +130,7 @@ Human-AI event/pointer/state schema、validator 与 fail-closed proof 控制面
   - **when_to_read**: 触发条件：创建、迁移或验证该结构定义对应的数据。读取 lane_envelope.schema.json（$id=citystate-cooperative-lane-envelope-v1；$schema=https://json-schema.org/draft/2020-12/schema；title=Cooperative C0/C1 lane envelope）；结构有效不等于业务有效、授权有效或已持久化
 <!-- RIDX_FILE_HEX 2e61692f6c616e65732f6c616e655f65706f63682e796d6c -->
 - **path_or_link**: [`.ai/lanes/lane_epoch.yml`](lane_epoch.yml)
-  - **content_summary**: YAML 结构，顶层键：未识别；artifact=lane_epoch.yml
+  - **content_summary**: YAML 结构，顶层键：未识别
   - **role_and_use**: 将 lane_epoch.yml（top_keys=none） 作为“执行合同”使用；执行前核验当前任务授权、精确 source head 与上位合同
   - **authority_class**: `operational_contract`
   - **status_or_freshness**: semantic_profile=operational_contract；authority=operational_contract；evidence_basis=yaml_visible_keys_and_safe_fields；执行前核验当前任务授权、精确 source head 与上位合同

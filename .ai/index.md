@@ -23,27 +23,17 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
 
 <!-- RIDX_DIR_HEX 2e61692f434f4445585f5245504f525453 -->
 - **path_or_link**: [`.ai/CODEX_REPORTS`](CODEX_REPORTS/index.md)
-  - **content_scope**: 按 task/source head 保存 Codex 实现、验证与 changed-files 报告；tracked 后代文件数=116
+  - **content_scope**: 按 task/source head 保存 Codex 实现、验证与 changed-files 报告；tracked 后代文件数=15
   - **when_to_enter**: 查证某个 task/source head 的实现、验证或 changed-files 报告
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f48554d414e5f425249454653 -->
 - **path_or_link**: [`.ai/HUMAN_BRIEFS`](HUMAN_BRIEFS/index.md)
-  - **content_scope**: 保存 Human-facing 接受、授权与 publication 决策快照；tracked 后代文件数=5
+  - **content_scope**: 保存 Human-facing 接受、授权与 publication 决策快照；tracked 后代文件数=2
   - **when_to_enter**: 查证具体 Human acceptance、authorization 或 publication brief
-  - **load_policy**: `do_not_load_by_default`
-<!-- RIDX_DIR_HEX 2e61692f4c4f4e475f52554e5f4c4f4753 -->
-- **path_or_link**: [`.ai/LONG_RUN_LOGS`](LONG_RUN_LOGS/index.md)
-  - **content_scope**: 保存长程任务 checkpoint 叙述和续跑 provenance；tracked 后代文件数=2
-  - **when_to_enter**: 续跑或审计某个 long-run checkpoint
-  - **load_policy**: `do_not_load_by_default`
-<!-- RIDX_DIR_HEX 2e61692f50524f4752414d5f52554e53 -->
-- **path_or_link**: [`.ai/PROGRAM_RUNS`](PROGRAM_RUNS/index.md)
-  - **content_scope**: 按 run ID 隔离冻结输入、checkpoint、输出、验证和报告；tracked 后代文件数=107
-  - **when_to_enter**: 按 exact run ID 复现输入、checkpoint、输出或验证
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f5441534b53 -->
 - **path_or_link**: [`.ai/TASKS`](TASKS/index.md)
-  - **content_scope**: 保存已发布 task/LRP 合同；只有活动 pointer 能选择其中一项；tracked 后代文件数=7
+  - **content_scope**: 保存已发布 task/LRP 合同；只有活动 pointer 能选择其中一项；tracked 后代文件数=2
   - **when_to_enter**: 活动 pointer 精确引用某个 task contract；不得按目录批量恢复历史任务
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e6365 -->
@@ -58,17 +48,17 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 2e61692f6c6f61645f70726f66696c6573 -->
 - **path_or_link**: [`.ai/load_profiles`](load_profiles/index.md)
-  - **content_scope**: AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信合规入口；tracked 后代文件数=5
+  - **content_scope**: AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信合规入口；tracked 后代文件数=4
   - **when_to_enter**: 执行 handoff、任务接管、review/publication 或查证历史 run
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 2e61692f726f6c655f6d656d6f7279 -->
 - **path_or_link**: [`.ai/role_memory`](role_memory/index.md)
-  - **content_scope**: AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信合规入口；tracked 后代文件数=8
+  - **content_scope**: AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信合规入口；tracked 后代文件数=7
   - **when_to_enter**: 执行 handoff、任务接管、review/publication 或查证历史 run
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 2e61692f72756e73 -->
 - **path_or_link**: [`.ai/runs`](runs/index.md)
-  - **content_scope**: Windows CLI runner runs 的进程监督、证据 schema 与测试；不承载任务或发布权威；tracked 后代文件数=13
+  - **content_scope**: Windows CLI runner runs 的进程监督、证据 schema 与测试；不承载任务或发布权威；tracked 后代文件数=11
   - **when_to_enter**: 启动、查询、停止或验证已批准的 Windows CLI worker，并核对其本地运行证据
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 2e61692f746f6b656e5f70726f66696c65 -->
@@ -177,13 +167,6 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
   - **authority_class**: `operational_contract`
   - **status_or_freshness**: semantic_profile=ai_protocol_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
   - **when_to_read**: 触发条件：执行其覆盖的通信、交接、长程运行或写入边界。读取 PROTOCOL_ADHERENCE.md（H1《Protocol Adherence》；首个 H2《1. Purpose》）；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
-<!-- RIDX_FILE_HEX 2e61692f52554e4e45522e6d64 -->
-- **path_or_link**: [`.ai/RUNNER.md`](RUNNER.md)
-  - **content_summary**: H1《Windows CLI Runner Harness (&#96;agent-run&#96;)》；首个 H2《Purpose and authority》
-  - **role_and_use**: 将 RUNNER.md（H1《Windows CLI Runner Harness (&#96;agent-run&#96;)》；首个 H2《Purpose and authority》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 RUNNER.md（H1《Windows CLI Runner Harness (&#96;agent-run&#96;)》；首个 H2《Purpose and authority》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 2e61692f53544154452e796d6c -->
 - **path_or_link**: [`.ai/STATE.yml`](STATE.yml)
   - **content_summary**: source/master 的 neutral_baseline 状态记录；不得替代 ai/review/latest 活动 mailbox
@@ -215,7 +198,7 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
 
 ## do_not_load_by_default
 
-- 以下子目录按具体证明目标进入，不做递归预读：`.ai/CODEX_REPORTS`, `.ai/HUMAN_BRIEFS`, `.ai/LONG_RUN_LOGS`, `.ai/PROGRAM_RUNS`, `.ai/TASKS`。
+- 以下子目录按具体证明目标进入，不做递归预读：`.ai/CODEX_REPORTS`, `.ai/HUMAN_BRIEFS`, `.ai/TASKS`。
 
 ## generation_and_freshness_note
 

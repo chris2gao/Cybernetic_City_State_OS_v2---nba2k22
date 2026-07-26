@@ -13,58 +13,16 @@ Private Zone 07_Silicon_Private_Zones 的路径/格式元数据边界；索引�
 
 1. [`07_Silicon_Private_Zones/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
 2. [`07_Silicon_Private_Zones/README.md`](README.md) — 触发条件：Human 明确点名该 Private Zone artifact；默认只核对元数据，不读正文。读取 README.md（private_zone；suffix=.md）；正文未读取且默认禁止加载；索引不泄露内容摘要
-3. [`07_Silicon_Private_Zones/Antigravity/index.md`](Antigravity/index.md) — Human 明确点名 Private Zone Antigravity；普通初始化禁止正文加载
-4. [`07_Silicon_Private_Zones/Home_of_Antigravity/index.md`](Home_of_Antigravity/index.md) — Human 明确点名 Private Zone Home_of_Antigravity；普通初始化禁止正文加载
-5. [`07_Silicon_Private_Zones/Home_of_Atlas/index.md`](Home_of_Atlas/index.md) — Human 明确点名 Private Zone Home_of_Atlas；普通初始化禁止正文加载
 
 ## child_directories
 
-<!-- RIDX_DIR_HEX 30375f53696c69636f6e5f507269766174655f5a6f6e65732f416e746967726176697479 -->
-- **path_or_link**: [`07_Silicon_Private_Zones/Antigravity`](Antigravity/index.md)
-  - **content_scope**: Private Zone Antigravity 的路径/格式元数据边界；索引不读取或摘要正文；tracked 后代文件数=2
-  - **when_to_enter**: Human 明确点名 Private Zone Antigravity；普通初始化禁止正文加载
-  - **load_policy**: `do_not_load_by_default`
-<!-- RIDX_DIR_HEX 30375f53696c69636f6e5f507269766174655f5a6f6e65732f486f6d655f6f665f416e746967726176697479 -->
-- **path_or_link**: [`07_Silicon_Private_Zones/Home_of_Antigravity`](Home_of_Antigravity/index.md)
-  - **content_scope**: Private Zone Antigravity 的路径/格式元数据边界；索引不读取或摘要正文；tracked 后代文件数=4
-  - **when_to_enter**: Human 明确点名 Private Zone Home_of_Antigravity；普通初始化禁止正文加载
-  - **load_policy**: `do_not_load_by_default`
-<!-- RIDX_DIR_HEX 30375f53696c69636f6e5f507269766174655f5a6f6e65732f486f6d655f6f665f41746c6173 -->
-- **path_or_link**: [`07_Silicon_Private_Zones/Home_of_Atlas`](Home_of_Atlas/index.md)
-  - **content_scope**: Private Zone Atlas 的路径/格式元数据边界；索引不读取或摘要正文；tracked 后代文件数=4
-  - **when_to_enter**: Human 明确点名 Private Zone Home_of_Atlas；普通初始化禁止正文加载
-  - **load_policy**: `do_not_load_by_default`
-<!-- RIDX_DIR_HEX 30375f53696c69636f6e5f507269766174655f5a6f6e65732f486f6d655f6f665f44616564616c7573 -->
-- **path_or_link**: [`07_Silicon_Private_Zones/Home_of_Daedalus`](Home_of_Daedalus/index.md)
-  - **content_scope**: Private Zone Daedalus 的路径/格式元数据边界；索引不读取或摘要正文；tracked 后代文件数=2
-  - **when_to_enter**: Human 明确点名 Private Zone Home_of_Daedalus；普通初始化禁止正文加载
-  - **load_policy**: `do_not_load_by_default`
-<!-- RIDX_DIR_HEX 30375f53696c69636f6e5f507269766174655f5a6f6e65732f486f6d655f6f665f4575636c6964 -->
-- **path_or_link**: [`07_Silicon_Private_Zones/Home_of_Euclid`](Home_of_Euclid/index.md)
-  - **content_scope**: Private Zone Euclid 的路径/格式元数据边界；索引不读取或摘要正文；tracked 后代文件数=2
-  - **when_to_enter**: Human 明确点名 Private Zone Home_of_Euclid；普通初始化禁止正文加载
-  - **load_policy**: `do_not_load_by_default`
-<!-- RIDX_DIR_HEX 30375f53696c69636f6e5f507269766174655f5a6f6e65732f486f6d655f6f665f4665796e6d616e -->
-- **path_or_link**: [`07_Silicon_Private_Zones/Home_of_Feynman`](Home_of_Feynman/index.md)
-  - **content_scope**: Private Zone Feynman 的路径/格式元数据边界；索引不读取或摘要正文；tracked 后代文件数=2
-  - **when_to_enter**: Human 明确点名 Private Zone Home_of_Feynman；普通初始化禁止正文加载
-  - **load_policy**: `do_not_load_by_default`
-<!-- RIDX_DIR_HEX 30375f53696c69636f6e5f507269766174655f5a6f6e65732f486f6d655f6f665f4879706572696f6e -->
-- **path_or_link**: [`07_Silicon_Private_Zones/Home_of_Hyperion`](Home_of_Hyperion/index.md)
-  - **content_scope**: Private Zone Hyperion 的路径/格式元数据边界；索引不读取或摘要正文；tracked 后代文件数=2
-  - **when_to_enter**: Human 明确点名 Private Zone Home_of_Hyperion；普通初始化禁止正文加载
-  - **load_policy**: `do_not_load_by_default`
-<!-- RIDX_DIR_HEX 30375f53696c69636f6e5f507269766174655f5a6f6e65732f486f6d655f6f665f547572696e67 -->
-- **path_or_link**: [`07_Silicon_Private_Zones/Home_of_Turing`](Home_of_Turing/index.md)
-  - **content_scope**: Private Zone Turing 的路径/格式元数据边界；索引不读取或摘要正文；tracked 后代文件数=2
-  - **when_to_enter**: Human 明确点名 Private Zone Home_of_Turing；普通初始化禁止正文加载
-  - **load_policy**: `do_not_load_by_default`
+- 无直接 tracked 子目录。
 
 ## direct_files
 
 <!-- RIDX_FILE_HEX 30375f53696c69636f6e5f507269766174655f5a6f6e65732f524541444d452e6d64 -->
 - **path_or_link**: [`07_Silicon_Private_Zones/README.md`](README.md)
-  - **content_summary**: Private Zones tracked artifact；mode=100644，仅记录路径/格式边界，正文未读取；artifact=README.md
+  - **content_summary**: Private Zones tracked artifact；mode=100644，仅记录路径/格式边界，正文未读取
   - **role_and_use**: 将 README.md（private_zone；suffix=.md） 作为“Private Zone 路径/格式元数据”使用；正文未读取且默认禁止加载；索引不泄露内容摘要
   - **authority_class**: `user_asset`
   - **status_or_freshness**: metadata_only；evidence_basis=restricted_private_metadata_only；正文未读取且默认禁止加载；索引不泄露内容摘要
@@ -80,7 +38,6 @@ Private Zone 07_Silicon_Private_Zones 的路径/格式元数据边界；索引�
 ## do_not_load_by_default
 
 - 默认不加载 1 个历史/测试/生成/用户或大型 direct artifacts：`07_Silicon_Private_Zones/README.md`。
-- 以下子目录按具体证明目标进入，不做递归预读：`07_Silicon_Private_Zones/Antigravity`, `07_Silicon_Private_Zones/Home_of_Antigravity`, `07_Silicon_Private_Zones/Home_of_Atlas`, `07_Silicon_Private_Zones/Home_of_Daedalus`, `07_Silicon_Private_Zones/Home_of_Euclid`, `07_Silicon_Private_Zones/Home_of_Feynman`, `07_Silicon_Private_Zones/Home_of_Hyperion`, `07_Silicon_Private_Zones/Home_of_Turing`。
 
 ## generation_and_freshness_note
 

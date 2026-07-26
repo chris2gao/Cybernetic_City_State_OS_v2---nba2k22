@@ -15,7 +15,6 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
 2. [`.ai/load_profiles/foreground_independent_reviewer.md`](foreground_independent_reviewer.md) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 foreground_independent_reviewer.md（H1《Foreground independent-reviewer load profile》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 3. [`.ai/load_profiles/foreground_planner.md`](foreground_planner.md) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 foreground_planner.md（H1《Foreground planner load profile》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 4. [`.ai/load_profiles/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-5. [`.ai/load_profiles/math_mentor_teacher.md`](math_mentor_teacher.md) — 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 math_mentor_teacher.md（H1《Math Mentor teacher load profile》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 
 ## child_directories
 
@@ -51,13 +50,6 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
   - **authority_class**: `routing`
   - **status_or_freshness**: semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力
   - **when_to_read**: 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-<!-- RIDX_FILE_HEX 2e61692f6c6f61645f70726f66696c65732f6d6174685f6d656e746f725f746561636865722e6d64 -->
-- **path_or_link**: [`.ai/load_profiles/math_mentor_teacher.md`](math_mentor_teacher.md)
-  - **content_summary**: H1《Math Mentor teacher load profile》
-  - **role_and_use**: 将 math_mentor_teacher.md（H1《Math Mentor teacher load profile》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 math_mentor_teacher.md（H1《Math Mentor teacher load profile》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 
 ## do_not_load_by_default
 
