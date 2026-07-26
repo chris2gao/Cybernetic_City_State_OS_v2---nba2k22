@@ -58,6 +58,35 @@ Unless explicitly enabled by a human-approved task:
 - Do not paste long prompts, long execution reports, full diffs, command logs, or private data into chat.
 - Source branches carry durable protocol files and neutral mailbox baselines. Active mailbox state belongs on `ai/review/latest` or a task-specific review branch.
 
+### 4.1 Brief Vault (城邦简报) Routing
+
+The brief vault at `E:\newStand\城邦简报` is the Human-facing operational view
+(not under version control, not a Git artifact). Decision archives and domain
+content are stored per repository:
+
+```
+E:\newStand\城邦简报\<suffix>\
+```
+
+where `<suffix>` is the repository folder's trailing segment after
+`Cybernetic_City_State_OS_v2 - `. For example, work in
+`Cybernetic_City_State_OS_v2 - core` writes to `城邦简报\core\03_决策档案\`;
+work in `… - teacher` writes to `城邦简报\teacher\03_决策档案\`.
+
+Root-level files (`城邦简报.md`, `00_今日简报.md`, `01_待我决策.md`,
+`02_项目仪表盘.md`, `chatgpt审核报告*.md`) are shared across repositories and
+stay at the vault root.
+
+Rules:
+- Create a repository subdirectory only when it produces its first brief. Do not
+  pre-create empty directories.
+- If the current working repository cannot be determined, stop and ask the Human.
+  Do not guess.
+- Do not edit the body of any historical archive. Moving files is permitted;
+  rewriting content is not.
+- The vault carries no secrets, credentials, or private configuration.
+- The full layout specification is in `E:\newStand\城邦简报\_简报系统布局.md`.
+
 ## 5. Pointer Dereference Defaults
 
 - A short pointer message is not complete when it has merely been read.
