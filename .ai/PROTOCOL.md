@@ -542,7 +542,15 @@ Final review publication still uses fast-forward or expected-SHA lease protectio
 
 ### Phase 1: Backend-role-only review publication (`Codex-only` historical label)
 
-Only the separately authorized backend execution-and-handoff occupant writes to `ai/review/latest`. The currently verified implementation is Codex; compatibility alone does not grant Claude Code write authority. Publication may use:
+Only the separately authorized backend execution-and-handoff occupant writes to `ai/review/latest`. Compatibility alone still grants nothing; the authorization is separate and recorded below.
+
+**Standing Human authorization, 2026-07-26.** Claude Code is authorized to write to `ai/review/latest` as a backend execution-and-handoff occupant, on the same terms as Codex. This resolves a gap found by a cold-start audit: the earlier wording named Codex as "the currently verified implementation", which a fresh reader correctly read as a closed door, leaving the role's only delivery channel unusable by one of its two compatible occupants.
+
+**Delegation default.** Authorization is not an instruction to use it. Where another occupant can produce the same result, dispatch the write to that occupant; a Claude context is the more expensive one to spend. Claude Code performs the write itself when the task is unusually error-prone, when a mistake would be expensive to undo, or when the Human names it. This is an economic default, not a permission boundary — it never widens what any occupant may do.
+
+Every protected action remains gated regardless of this authorization: source-branch push, history rewriting, repository deletion or visibility change, runtime or scheduler activation, and secrets are unchanged and still require Human authority at the time of the action.
+
+Publication may use:
 
 ```powershell
 git push origin HEAD:ai/review/latest --force-with-lease
