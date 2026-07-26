@@ -215,6 +215,112 @@ section 3 that you believe should count; deletion would require touching a
 release-bound file; the unit suite or release-binding check fails at any point; or the
 Human gate at stage 5 has not been answered.
 
+## 7A. Revision round 1 — required before the stage 5 gate is answered
+
+Independent review returned `changes_required`. Deletion is **not** authorized. The
+following work continues **inside this same task and task ID**; do not open a new
+packet.
+
+### R1. Recompute the closure with unescaped paths — this is the root cause
+
+The classification contradicted its own declared roots: `0号方案.md`, `1号方案.md`,
+`2号方案.md`, `3号方案.md`, `城邦系统需要实现的目标原则.md` and
+`Plan 3 External Augmentation OS 总体架构设计方案 v0.1.md` were classed Evidence, yet
+the first five are **exact entries in `core_owned_paths`** and the Plan is a declared
+root. `3号方案.md` is additionally a conditional-Live constitutional source.
+
+Measured cause, confirmed independently: under default settings `git ls-files` emits
+non-ASCII paths as quoted octal escapes, so they never match a UTF-8 root string.
+**68 of 855 tracked paths are escaped under the default.** The defect is therefore not
+limited to the six named files — up to 68 paths may have been misclassified.
+
+Recompute using NUL-separated, unescaped output:
+
+```
+git -c core.quotepath=false ls-files -z
+```
+
+Then add an assertion that fails the run: **every declared root must end up in Live.**
+A classification that cannot place its own roots is invalid regardless of its totals.
+The previously reported `Live 278 / Evidence 571 / Dead 6` are void; report new ones.
+
+### R2. The `debug_json*` supersession claim is not supported
+
+The report claimed `find_nodes.py` supersedes the four `debug_json*.py` probes. Read
+the code: the four probes search by key or by `NAME`, emit `CHILDREN`, dump a fixed
+node, and probe whether the topology file is a dict or a list. `find_nodes.py` uses
+seven hard-coded keywords, searches only `NAME`, prints only ID and name, caps at ten
+results, takes no parameters, and emits neither `CHILDREN` nor full node structure.
+That is not behavioural replacement.
+
+The report also states the probes and their claimed replacement entered in the **same**
+commit — so the replacement is not a newer version either. Class 3 in this task
+requires unreachable **and** not evidence **and** superseded by a specific newer file.
+Two of the three fail.
+
+Move all four back out of Class 3. If you still believe they are dead, argue it on a
+different basis and say which basis — "looks like a throwaway debug script" is not one
+of the three criteria.
+
+`find_keys.py` and `find_keys2.py` are a stronger case: their recursive traversal was
+copied into the two rescue scripts. But that is a diagnostic-to-repair relationship,
+not equivalence. Re-argue them separately; do not carry them through on the strength
+of the group.
+
+### R3. Missing immutable Human Brief
+
+The stage 5 handoff is a material Human-gate event and returned `brief_ref: null`.
+Write `.ai/HUMAN_BRIEFS/<task-id>/<lane-instance-id>-<message-seq>.md` and reference
+it. Independent expression inside the main report does not substitute for it.
+
+### R4. Teacher migration — widen the inventory, and note what it collides with
+
+The `factory_pipeline` ownership direction is accepted. But **29 references to
+`factory_pipeline` exist in core outside that directory**, including six in
+`.ai/CODEX_TASK_INPUT_CONTRACT.md`, plus `ARCHITECTURE.md`, `CHANGELOG_AI.md`, and
+`开发分支与合并进度总账.md`.
+
+`CODEX_TASK_INPUT_CONTRACT.md` is both release-bound and pinned in
+`canonical_ref_digests`. **Editing it triggers both binding mechanisms, so the core-side
+reference fix must ride inside a release rebinding cycle's semantics commit, not a
+standalone commit.** Record this dependency; do not perform it in this task.
+
+Extend the migration inventory beyond `factory_pipeline` to at least:
+`.ai/load_profiles/math_mentor_teacher.md`, `.ai/role_memory/teacher.md`, the Math
+Mentor rules in `AGENTS.md`, the pipeline path examples in
+`CODEX_TASK_INPUT_CONTRACT.md`, and the Knowledge Completion Program binding in
+`LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md`. For each, propose exactly one of: keep as
+generic routing / migrate the domain implementation / rewrite as a domain-relative
+reference / let the teacher repository override it. Propose only — none of it is
+authorized here.
+
+### R5. Migration ordering, so teacher's in-flight work is never broken
+
+Human decision: teaching material belongs to the teacher repository under its
+`08_Domain_Applications/`. Codex may operate that repository. Execute the migration so
+that **no moment exists where a file is absent from teacher**:
+
+1. **teacher** copies the files to `08_Domain_Applications/Math_Mentor/pipeline/` and
+   commits. Both paths now exist there; in-flight tasks referencing the old path keep
+   working.
+2. **teacher** repoints its own references to the new path at its own pace, verifying
+   by running its tests. The old path is still present as a fallback throughout.
+3. **teacher** confirms zero remaining references to `06_Silicon_Index/factory_pipeline/`.
+4. Only then does **core** delete, together with the reference fixes from R4.
+5. **teacher** merges `core/master`; the core copy disappears and nothing references it.
+
+The dangerous step is not the deletion, it is step 5 — and step 3 is what makes step 5
+a no-op. Teacher controls when it merges, so it cannot be surprised. Steps 1 to 3 are
+teacher-side and are not authorized by this packet; report the plan.
+
+### What was accepted and must not be redone
+
+Stage 1 provenance handling; the dynamic-load inventory of 14 sites across 10 files
+with tracked-core targets distinguished from external and temporary run data; the
+empty intersection between the six candidates and both release-bound paths and tracked
+dynamic targets; 215/215 fixtures and 17/17 tests; evidence directories untouched;
+review-branch identity correctly verified at `173a4439`. Do not re-derive these.
+
 ## 8. Reporting
 
 Report what you measured, not what this packet says. Every number here was measured by
