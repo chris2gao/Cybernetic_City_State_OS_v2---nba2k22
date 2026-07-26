@@ -1,41 +1,35 @@
 # Architecture
 
-Status: structural directory map. This file describes ownership and layout; it is not authoritative current branch, worktree, task, or mailbox state. Start from `06_Silicon_Index/AI_Bootstrap_Sequence.md` and the active task, then load the relevant domain protocol.
+Status: structural routing snapshot. This file describes core ownership and layout; it is not authoritative current branch, worktree, task, or mailbox state. Start from `06_Silicon_Index/AI_Bootstrap_Sequence.md`, the active task, and `CORE_MANIFEST.yml`.
 
-## Root Structure
+## Core Structure
 
-- `01_Research_Reports/`: research reports and source material.
-- `02_Protocols/`: system protocols and operating rules.
-- `03_Daily_Execution/`: daily execution artifacts and applied task outputs.
-- `04_Parliament/`: issues, proposals, verdicts, archived debates, and resolved records.
-- `05_Carbon_Index/`: human-facing index area.
-- `06_Silicon_Index/`: AI-facing index area, scripts, skills, personas, sandbox tests, and factory pipeline code.
-- `07_Compiler/`: compiler-related support code.
-- `07_Execution_Plans/`: task execution plans and closed-loop records.
-- `07_Silicon_Private_Zones/`: private work zones and passports for named AI agents.
-- `08_Domain_Applications/`: domain-specific systems. The active domain is `Math_Mentor`.
-- `Math_Nodes_V9/`: V9 math node material, currently including `Level_4`.
-- `short_term_tasks/`: short-term outsourcing task files and task templates.
+- `.ai/`: execution protocols, task packets, communication validation, cooperative lanes, role memory, run tooling, and load profiles.
+- `01_Research_Reports/`: Human-retained research reports and source material. Its ownership declaration in `CORE_MANIFEST.yml` remains a known manifest correction for a later ownership task.
+- `04_Parliament/`: issues, proposals, verdicts, debates, and resolved governance records.
+- `05_Carbon_Index/`: Human-facing navigation.
+- `06_Silicon_Index/`: AI bootstrap, constitutional routing, capability declarations, plans, scripts, and tests.
+- `07_Compiler/`: compiler and schema support.
+- `07_Execution_Plans/`: core execution plans and closed-loop records.
+- `07_Silicon_Private_Zones/`: protected private-zone routing surfaces; ordinary tasks do not inspect private bodies.
+- `campaigns/`: campaign schemas and state definitions.
+- `short_term_tasks/`: generic short-term task contracts and templates.
+- `system_backbone/`: shared backbone schemas and registry prototypes.
 
-## Math Mentor Structure
+## Mechanism Responsibilities
 
-- `08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/`: main YAML knowledge-node database.
-- `08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level*/`: staging areas for generated node batches.
-- `08_Domain_Applications/Math_Mentor/知识图谱_节点映射索引.md`: node mapping index.
-- `08_Domain_Applications/Math_Mentor/学习期prompt/`: teaching-period prompts and LLM/math architecture references.
-- `08_Domain_Applications/Math_Mentor/复习巩固期prompt/`: review-period prompts.
-- `08_Domain_Applications/Math_Mentor/Universal_Layer_Execution_Protocol.md`: layer generation, validation, and merge protocol.
-- `08_Domain_Applications/Math_Mentor/08_Math_Mentor_Coordinator_Prompt.md`: coordinator prompt for teaching execution.
+- Bootstrap and load profiles select the minimum context required for an executor role.
+- Constitutional documents establish authority and stop conditions.
+- Communication compliance validates material events without granting identity or authority.
+- Cooperative lanes provide descriptive write ownership and deterministic reduction.
+- Role memory routes agents to durable evidence without becoming task state.
+- Large-task protocols preserve one coherent Human-authorized objective across execution and review.
+- The index generator produces navigational `index.md` files and `repository_index_manifest.json`; generated indexes are not authority.
 
-## Main Responsibilities
+## Ownership Boundary
 
-- Root OS: provide routing, protocol storage, review history, and AI/human operating surfaces.
-- `06_Silicon_Index/factory_pipeline/`: run sandbox and bulk validation for generated math YAML nodes.
-- `Math_Mentor`: maintain the math knowledge graph, teaching prompts, spaced review artifacts, generated node batches, and outsourcing instructions.
-- `short_term_tasks`: keep concrete outsourcing task specifications and templates.
+Core contains reusable mechanism, governance, schemas, and routing. Domain repositories contain their own teaching, business, or other domain material. Domain repositories receive core updates through the merge procedure in `CORE_MANIFEST.yml`; core does not embed or actively bind one specific domain.
 
-## Known Unclear Areas
+## Verification Boundary
 
-- `INSTANCE_CONFIG.md` still contains placeholder values.
-- Some staging directories are committed alongside merged generated nodes; future agents should verify whether staging folders are intended as permanent audit artifacts or temporary build output.
-- Historical local worktree and branch observations may appear in old reports. Verify current worktrees and branch tips from Git before using them as execution state.
+Git and the active task establish live branch and execution state. `README.md`, `PROJECT_CONTEXT.md`, this file, generated indexes, and historical records are navigation or evidence only. Release-bound protocol changes require the repository release-binding checks before they may be treated as active.

@@ -71,7 +71,7 @@ E:\newStand\城邦简报\<suffix>\
 where `<suffix>` is the repository folder's trailing segment after
 `Cybernetic_City_State_OS_v2 - `. For example, work in
 `Cybernetic_City_State_OS_v2 - core` writes to `城邦简报\core\03_决策档案\`;
-work in `… - teacher` writes to `城邦简报\teacher\03_决策档案\`.
+work in any domain suffix writes to that suffix's own `03_决策档案\` directory.
 
 Root-level files (`城邦简报.md`, `00_今日简报.md`, `01_待我决策.md`,
 `02_项目仪表盘.md`, `chatgpt审核报告*.md`) are shared across repositories and

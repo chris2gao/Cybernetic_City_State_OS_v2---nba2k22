@@ -68,23 +68,6 @@ SEMANTIC_PROFILES = {
     "ai_program_run_evidence",
     "communication_contract_or_implementation",
     "communication_test_or_proof",
-    "math_derived_authority_router",
-    "math_current_state_router",
-    "math_takeover_router",
-    "math_active_contract",
-    "math_active_schema",
-    "math_manual_teaching_prompt",
-    "math_split_roadmap",
-    "math_restricted_roadmap_metadata",
-    "math_root_candidate_node",
-    "math_staging_candidate",
-    "math_legacy_unresolved_bridge",
-    "math_legacy_review_input",
-    "math_archived_evidence",
-    "math_control_plane_implementation",
-    "math_control_plane_schema",
-    "math_test_or_fixture",
-    "math_generated_evidence",
     "research_or_user_asset",
     "private_zone_metadata",
     "parliament_proposal_or_debate",
@@ -135,7 +118,6 @@ DIRECTORY_SEMANTIC_PROFILES = {
     "carbon_manual_library",
     "silicon_bootstrap_root",
     "persona_library",
-    "silicon_factory",
     "silicon_test_pool",
     "silicon_script_pool",
     "silicon_skill_library",
@@ -143,16 +125,6 @@ DIRECTORY_SEMANTIC_PROFILES = {
     "execution_plan_archive",
     "private_zone",
     "domain_application_root",
-    "math_mentor_root",
-    "math_root_corpus",
-    "math_staging_pool",
-    "math_archive",
-    "math_control_plane",
-    "math_schema_library",
-    "math_test_pool",
-    "math_legacy_review_library",
-    "math_learning_material_library",
-    "math_learning_material_backup",
     "campaign_template_library",
     "legacy_task_archive",
     "system_backbone",
@@ -214,81 +186,6 @@ GENERIC_SEMANTIC_RE = re.compile(
     re.IGNORECASE,
 )
 
-RESTRICTED_METADATA_ONLY = {
-    "08_Domain_Applications/Math_Mentor/学习期prompt/数学知识路线图_全部.yaml",
-}
-
-DEPRECATION_EXACT_STATES = {
-    "08_Domain_Applications/Math_Mentor/复习巩固期总调度prompt.md": "historical_frozen",
-    "08_Domain_Applications/Math_Mentor/复习执行协议.md": "historical_frozen",
-    "08_Domain_Applications/Math_Mentor/数学间隔重复调度表.md": "historical_frozen",
-    "08_Domain_Applications/Math_Mentor/数学间隔重复调度表(通用模板).md": "compatibility_only",
-    "08_Domain_Applications/Math_Mentor/已毕业知识点.md": "historical_frozen",
-    "08_Domain_Applications/Math_Mentor/拖延知识点清单.md": "historical_frozen",
-    "08_Domain_Applications/Math_Mentor/知识图谱_节点映射索引.md": "compatibility_only",
-    "08_Domain_Applications/Math_Mentor/Math Mentor Teaching System Design.md": "compatibility_only",
-    "08_Domain_Applications/Math_Mentor/Math Mentor Teaching System Design implement plan.md": "superseded",
-    "08_Domain_Applications/Math_Mentor/POST_P2_EXECUTION_MEMORY.md": "historical_frozen",
-}
-
-DEPRECATION_PREFIX_STATES = (
-    ("08_Domain_Applications/Math_Mentor/_ARCHIVED/", "historical_frozen"),
-    ("08_Domain_Applications/Math_Mentor/复习巩固期prompt/", "compatibility_only"),
-    (
-        ".ai/PROGRAM_RUNS/math-mentor-knowledge-completion-stage-0-inventory-0001/",
-        "historical_frozen",
-    ),
-)
-
-ACTIVE_DOMAIN_AUTHORITY_PATHS = {
-    "08_Domain_Applications/Math_Mentor/Universal_Layer_Execution_Protocol.md",
-    "08_Domain_Applications/Math_Mentor/KNOWLEDGE_COMPLETION_PROGRAM.md",
-    "08_Domain_Applications/Math_Mentor/NODE_QUALITY_AUDIT_PLAN.md",
-    "08_Domain_Applications/Math_Mentor/BRIDGE_SCHEMA.md",
-    "08_Domain_Applications/Math_Mentor/TEACHER_INITIALIZATION_FLOW.md",
-    "08_Domain_Applications/Math_Mentor/V9.1_教学流程系统规范_Teaching_Flow_Spec.md",
-    "08_Domain_Applications/Math_Mentor/08_Math_Mentor_Coordinator_Prompt.md",
-    "08_Domain_Applications/Math_Mentor/STUDENT_LEARNING_STATE_SCHEMA.md",
-    "08_Domain_Applications/Math_Mentor/SPACED_REVIEW_SCHEDULER_SCHEMA.md",
-    "08_Domain_Applications/Math_Mentor/GRADUATION_CRITERIA.md",
-    "08_Domain_Applications/Math_Mentor/MATH_MENTOR_CAPABILITY_REGISTRY.md",
-    "08_Domain_Applications/Math_Mentor/TOOL_TRUTHFULNESS_POLICY.md",
-}
-
-ACTIVE_DOMAIN_SCHEMA_PATHS = {
-    "08_Domain_Applications/Math_Mentor/BRIDGE_SCHEMA.md",
-    "08_Domain_Applications/Math_Mentor/STUDENT_LEARNING_STATE_SCHEMA.md",
-    "08_Domain_Applications/Math_Mentor/SPACED_REVIEW_SCHEDULER_SCHEMA.md",
-}
-
-ACTIVE_MANUAL_TEACHING_PROMPTS = {
-    "08_Domain_Applications/Math_Mentor/学习期prompt/Exam_Agent_Prompt.md",
-    "08_Domain_Applications/Math_Mentor/学习期prompt/Prep_Architect_Prompt.md",
-    "08_Domain_Applications/Math_Mentor/学习期prompt/Socratic_Router_Prompt_v7.0.md",
-}
-
-ADDITIONAL_OPERATIONAL_CONTRACT_PATHS = {
-    "08_Domain_Applications/Math_Mentor/DETERMINISTIC_CALCULATION_HANDOFF.md",
-    "08_Domain_Applications/Math_Mentor/TEACHER_CONTEXT_LOADING_RULES.md",
-}
-
-DOMAIN_TEST_ARTIFACT_PATHS = {
-    "08_Domain_Applications/Math_Mentor/E2E_TEACHING_SESSION_SIMULATION.md",
-    "08_Domain_Applications/Math_Mentor/TEACHING_GOLDEN_CASES.md",
-    "08_Domain_Applications/Math_Mentor/NODE_QUALITY_AUDIT_SAMPLE_PACK.md",
-    "08_Domain_Applications/Math_Mentor/TEACHER_INITIALIZATION_DRY_RUNS.md",
-    "08_Domain_Applications/Math_Mentor/TEACHER_INITIALIZATION_TEST_FIXTURES.md",
-}
-
-STATIC_CONTROL_PLANE_EVIDENCE_PATHS = {
-    "08_Domain_Applications/Math_Mentor/ALIAS_CONFLICT_REGISTRY.json",
-    "08_Domain_Applications/Math_Mentor/BRIDGE_REGISTRY_AUDIT.md",
-    "08_Domain_Applications/Math_Mentor/CANONICAL_NODE_CROSSWALK.json",
-    "08_Domain_Applications/Math_Mentor/MATH_MENTOR_CAPABILITY_MATURITY.yml",
-    "08_Domain_Applications/Math_Mentor/ROOT_CORPUS_REGISTRY.json",
-    MANIFEST_PATH,
-}
-
 ROOT_RESEARCH_ASSET_PATHS = {"abstracts.json", "search_results.json"}
 
 HISTORICAL_EXECUTION_PLAN_PATHS = {
@@ -299,12 +196,6 @@ HISTORICAL_EXECUTION_PLAN_PATHS = {
 SILICON_MUTABLE_STATE_EVIDENCE_PATHS = {
     "06_Silicon_Index/scripts/.bus_state_manager.json",
     "06_Silicon_Index/scripts/.interceptor_state.json",
-}
-
-MATH_MENTOR_TAKEOVER_BUNDLE_PATHS = {
-    "08_Domain_Applications/Math_Mentor/MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md",
-    "08_Domain_Applications/Math_Mentor/MATH_MENTOR_CURRENT_STATE.yml",
-    "08_Domain_Applications/Math_Mentor/MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md",
 }
 
 CANONICAL_PATHS = {
@@ -323,9 +214,6 @@ OPERATIONAL_CONTRACT_PATHS = {
     ".ai/CODEX_TASK_INPUT_CONTRACT.md",
     ".ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md",
     ".ai/HANDOFF_INIT_PROMPT.md",
-    "08_Domain_Applications/Math_Mentor/Universal_Layer_Execution_Protocol.md",
-    "08_Domain_Applications/Math_Mentor/MATH_MENTOR_DEPRECATION_MAP.yml",
-    "08_Domain_Applications/Math_Mentor/MATH_MENTOR_AUTHORITY_REGISTRY.yml",
 }
 
 PLAN3_V0_2_CONTROL_PLANE_PATHS = {
@@ -348,8 +236,6 @@ ROUTING_PATHS = {
     ".ai/HUMAN_BRIEF.md",
     "开发分支与合并进度总账.md",
     "未完成任务备忘录.yml",
-    "08_Domain_Applications/Math_Mentor/MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md",
-    "08_Domain_Applications/Math_Mentor/MATH_MENTOR_CURRENT_STATE.yml",
 }
 
 SELF_REFERENTIAL_METADATA_PATHS = {
@@ -515,23 +401,6 @@ def path_is_private(path: str) -> bool:
 
 
 def deprecation_state(path: str) -> str | None:
-    exact = DEPRECATION_EXACT_STATES.get(path)
-    if exact:
-        return exact
-    for prefix, state in DEPRECATION_PREFIX_STATES:
-        if path.startswith(prefix):
-            return state
-    if path.startswith(
-        "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_"
-    ):
-        return "candidate_only"
-    if (
-        parent_directory(path)
-        == "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB"
-        and PurePosixPath(path).name.startswith("BRIDGE-")
-        and PurePosixPath(path).suffix.casefold() == ".yaml"
-    ):
-        return "legacy_unresolved"
     return None
 
 
@@ -1232,14 +1101,6 @@ SPECIAL_SUMMARIES = {
         "source/master 的 neutral_baseline 状态记录；不得替代 ai/review/latest 活动 mailbox",
         "curated_source_mailbox_contract",
     ),
-    "08_Domain_Applications/Math_Mentor/README.md": (
-        "README 标题/正文仍描述 02_Protocols 模板，与 Math_Mentor 实际目录不一致",
-        "curated_misaligned_readme_evidence",
-    ),
-    "08_Domain_Applications/Math_Mentor/复习巩固期prompt/README.md": (
-        "README 标题仍描述 03_Daily_Execution 模板，与复习巩固 prompt 目录不一致",
-        "curated_misaligned_readme_evidence",
-    ),
     "01_Research_Reports/README.md": (
         "研究报告区 README 明示 N=1 生化/研究模板；只用于研究材料路由",
         "curated_research_readme_evidence",
@@ -1359,7 +1220,6 @@ def is_silicon_script_test_artifact(path: str) -> bool:
 def is_silicon_generated_evidence(path: str) -> bool:
     return (
         path in SILICON_MUTABLE_STATE_EVIDENCE_PATHS
-        or "/factory_pipeline/generated_nodes/" in path
         or (
             parent_directory(path) == "06_Silicon_Index/scripts"
             and PurePosixPath(path).name.casefold().startswith("verification_")
@@ -1369,15 +1229,6 @@ def is_silicon_generated_evidence(path: str) -> bool:
 
 def is_legacy_short_task_artifact(path: str) -> bool:
     return path.startswith("short_term_tasks/") and not path_is_index(path)
-
-
-def is_split_math_roadmap(path: str) -> bool:
-    return (
-        parent_directory(path) == "08_Domain_Applications/Math_Mentor/学习期prompt"
-        and PurePosixPath(path).name.startswith("数学知识路线图_")
-        and PurePosixPath(path).suffix.casefold() in {".yaml", ".yml"}
-        and path not in RESTRICTED_METADATA_ONLY
-    )
 
 
 def directory_is_nondefault(directory: str) -> bool:
@@ -1391,18 +1242,13 @@ def directory_is_nondefault(directory: str) -> bool:
         or directory
         in {
             "06_Silicon_Index/Personas",
-            "06_Silicon_Index/factory_pipeline",
             "06_Silicon_Index/scripts",
-            "08_Domain_Applications/Math_Mentor/p0_control_plane",
         }
         or directory.startswith(".ai/PROGRAM_RUNS")
         or directory.startswith(".ai/CODEX_REPORTS")
         or directory.startswith(".ai/HUMAN_BRIEFS")
         or directory.startswith(".ai/LONG_RUN_LOGS")
         or directory.startswith(".ai/TASKS")
-        or directory.startswith("08_Domain_Applications/Math_Mentor/复习巩固期prompt")
-        or directory
-        == "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB"
         or "backup" in parts
         or "generated_nodes" in parts
         or bool(
@@ -1429,21 +1275,13 @@ def semantic_profile(path: str, metadata: dict[str, Any] | None = None) -> str:
     suffix = PurePosixPath(path).suffix.casefold()
     parts = {part.casefold() for part in PurePosixPath(path).parts}
     lower = path.casefold()
-    math_root = "08_Domain_Applications/Math_Mentor"
-    corpus_root = f"{math_root}/Pure_Math_Intuition_DB"
 
     if path_is_index(path):
         return "repository_index"
     if path == MANIFEST_PATH:
         return "repository_manifest"
-    if path in RESTRICTED_METADATA_ONLY:
-        return "math_restricted_roadmap_metadata"
     if path_is_private(path):
         return "private_zone_metadata"
-    if path in ACTIVE_DOMAIN_SCHEMA_PATHS:
-        return "math_active_schema"
-    if path.startswith(f"{math_root}/p0_control_plane/schemas/"):
-        return "math_control_plane_schema"
     if metadata and metadata.get("schema_shape") is True:
         return "schema_definition"
     if path in CANONICAL_PATHS:
@@ -1487,55 +1325,6 @@ def semantic_profile(path: str, metadata: dict[str, Any] | None = None) -> str:
         or name == "HANDOFF_INIT_PROMPT.md"
     ):
         return "ai_protocol_contract"
-
-    if path in RESTRICTED_METADATA_ONLY:
-        return "math_restricted_roadmap_metadata"
-    if path_is_private(path):
-        return "private_zone_metadata"
-    if path.startswith(f"{corpus_root}/_Staging_"):
-        return "math_staging_candidate"
-    if (
-        parent_directory(path) == corpus_root
-        and name.startswith("BRIDGE-")
-        and suffix in {".yaml", ".yml"}
-    ):
-        return "math_legacy_unresolved_bridge"
-    if parent_directory(path) == corpus_root and name.casefold() == "schema.yaml":
-        return "schema_definition"
-    if (
-        parent_directory(path) == corpus_root
-        and suffix in {".yaml", ".yml"}
-    ):
-        return "math_root_candidate_node"
-    if path in {
-        f"{math_root}/MATH_MENTOR_AUTHORITY_REGISTRY.yml",
-        f"{math_root}/MATH_MENTOR_DEPRECATION_MAP.yml",
-    }:
-        return "math_derived_authority_router"
-    if path == f"{math_root}/MATH_MENTOR_CURRENT_STATE.yml":
-        return "math_current_state_router"
-    if path in MATH_MENTOR_TAKEOVER_BUNDLE_PATHS:
-        return "math_takeover_router"
-    if path in ACTIVE_DOMAIN_SCHEMA_PATHS:
-        return "math_active_schema"
-    if path in ACTIVE_DOMAIN_AUTHORITY_PATHS or path in ADDITIONAL_OPERATIONAL_CONTRACT_PATHS:
-        return "math_active_contract"
-    if path in ACTIVE_MANUAL_TEACHING_PROMPTS:
-        return "math_manual_teaching_prompt"
-    if is_split_math_roadmap(path):
-        return "math_split_roadmap"
-    if path.startswith(f"{math_root}/复习巩固期prompt/") or path in DEPRECATION_EXACT_STATES:
-        return "math_legacy_review_input"
-    if path.startswith(f"{math_root}/_ARCHIVED/"):
-        return "math_archived_evidence"
-    if path.startswith(f"{math_root}/p0_control_plane/schemas/"):
-        return "math_control_plane_schema"
-    if path.startswith(f"{math_root}/p0_control_plane/"):
-        return "math_control_plane_implementation"
-    if path.startswith(f"{math_root}/tests/") or path in DOMAIN_TEST_ARTIFACT_PATHS:
-        return "math_test_or_fixture"
-    if path in STATIC_CONTROL_PLANE_EVIDENCE_PATHS or path.startswith(f"{math_root}/tests/results/"):
-        return "math_generated_evidence"
 
     if path.startswith("04_Parliament/Issues/Templates/") or path.startswith("04_Parliament/Issues/_Template/"):
         return "test_or_fixture"
@@ -1602,23 +1391,6 @@ PROFILE_AUTHORITY = {
     "ai_program_run_evidence": "generated_evidence",
     "communication_contract_or_implementation": "implementation",
     "communication_test_or_proof": "test_or_fixture",
-    "math_derived_authority_router": "routing",
-    "math_current_state_router": "routing",
-    "math_takeover_router": "routing",
-    "math_active_contract": "operational_contract",
-    "math_active_schema": "schema",
-    "math_manual_teaching_prompt": "operational_contract",
-    "math_split_roadmap": "routing",
-    "math_restricted_roadmap_metadata": "routing",
-    "math_root_candidate_node": "implementation",
-    "math_staging_candidate": "generated_evidence",
-    "math_legacy_unresolved_bridge": "historical_evidence",
-    "math_legacy_review_input": "historical_evidence",
-    "math_archived_evidence": "historical_evidence",
-    "math_control_plane_implementation": "implementation",
-    "math_control_plane_schema": "schema",
-    "math_test_or_fixture": "test_or_fixture",
-    "math_generated_evidence": "generated_evidence",
     "research_or_user_asset": "user_asset",
     "private_zone_metadata": "user_asset",
     "parliament_proposal_or_debate": "historical_evidence",
@@ -1672,23 +1444,6 @@ def profile_label(profile: str) -> str:
         "ai_program_run_evidence": "可复现 program-run 证据",
         "communication_contract_or_implementation": "通信合规实现/合同",
         "communication_test_or_proof": "通信 transition 测试/proof",
-        "math_derived_authority_router": "Math Mentor 非授权派生路由表",
-        "math_current_state_router": "Math Mentor 当前状态路由快照",
-        "math_takeover_router": "Math Mentor 接管与进度路由",
-        "math_active_contract": "Math Mentor 活动领域合同",
-        "math_active_schema": "Math Mentor 活动数据合同",
-        "math_manual_teaching_prompt": "Math Mentor 人工教学角色 prompt",
-        "math_split_roadmap": "Math Mentor 分片路线图",
-        "math_restricted_roadmap_metadata": "受限全图路线元数据",
-        "math_root_candidate_node": "根语料候选节点",
-        "math_staging_candidate": "staging 候选节点",
-        "math_legacy_unresolved_bridge": "未裁决 legacy bridge",
-        "math_legacy_review_input": "legacy review 只读输入",
-        "math_archived_evidence": "Math Mentor 冻结历史证据",
-        "math_control_plane_implementation": "未激活 P0 静态控制面实现",
-        "math_control_plane_schema": "P0 静态控制面 schema",
-        "math_test_or_fixture": "Math Mentor 测试/fixture",
-        "math_generated_evidence": "Math Mentor 派生验证证据",
         "research_or_user_asset": "研究或用户来源资产",
         "private_zone_metadata": "Private Zone 路径/格式元数据",
         "parliament_proposal_or_debate": "议会提案/辩论 provenance",
@@ -1730,23 +1485,6 @@ def semantic_boundary(profile: str) -> str:
         "ai_program_run_evidence": "只证明所属 run 的输入/输出/验证，不授予 activation 或写权限",
         "communication_contract_or_implementation": "不得从模型生成 payload 推导 trusted-host 权限",
         "communication_test_or_proof": "fixture 内 actor、human_gate、verdict 均不是现实授权",
-        "math_derived_authority_router": "registry_role 明示 non-authorizing/derived；必须回到其引用 authority 核验",
-        "math_current_state_router": "exact Git 和活动 mailbox 优先；状态字段不激活 runtime/Coordinator",
-        "math_takeover_router": "用于接管和差异定位，不把计划完成度冒充运行能力",
-        "math_active_contract": "合同效力不证明 backend runtime、writer、scheduler 或 Coordinator 已部署",
-        "math_active_schema": "只定义允许形状；写入仍需受信 host 注入 AuthorizationContext",
-        "math_manual_teaching_prompt": "仅支持 specified_manual_only 前台流程，不授予后台写入/激活能力",
-        "math_split_roadmap": "roadmap ID/title 是 claim，不等于 canonical identity、admission 或 certification",
-        "math_restricted_roadmap_metadata": "本轮未读正文；常规任务必须改用 split roadmaps",
-        "math_root_candidate_node": "根目录位置不证明 admission、certification、runtime_allowed 或 consumer_allowed",
-        "math_staging_candidate": "只能用于候选比较/裁决，不得按历史 importer 或根语料优先级消费",
-        "math_legacy_unresolved_bridge": "endpoint/identity 尚未裁决；禁止教学准入、Coordinator 消费或自动迁移",
-        "math_legacy_review_input": "只允许 read/compare/read_only_import；旧毕业和 R5 语义不得进入生产状态机",
-        "math_archived_evidence": "只作 provenance；不得恢复旧 prompt、任务、状态或 authority",
-        "math_control_plane_implementation": "静态验证通过不等于 runtime activation；生产 trust boundary 仍在外部 host",
-        "math_control_plane_schema": "只验证静态 artifact 形状，不签发身份、权限或 admission",
-        "math_test_or_fixture": "模拟 verdict/human_gate/状态不构成真实权限或能力证据",
-        "math_generated_evidence": "派生 registry/report 只证明静态结果，不授权 teaching admission 或状态提升",
         "research_or_user_asset": "只在明确研究问题、来源和隐私范围内单文件读取",
         "private_zone_metadata": "正文未读取且默认禁止加载；索引不泄露内容摘要",
         "parliament_proposal_or_debate": "提案/辩论不是现行宪章或已生效 verdict",
@@ -1778,14 +1516,7 @@ def status_or_freshness(path: str, authority: str, metadata: dict[str, Any]) -> 
     profile = semantic_profile(path, metadata)
     if metadata.get("parse_failure"):
         return f"semantic_profile={profile}；parser_failed，索引仅保留安全元数据；{semantic_boundary(profile)}"
-    if profile == "math_staging_candidate":
-        return f"candidate_only；evidence_basis={metadata['description_basis']}；{semantic_boundary(profile)}"
-    if profile == "math_legacy_unresolved_bridge":
-        return f"legacy_unresolved；evidence_basis={metadata['description_basis']}；{semantic_boundary(profile)}"
-    if profile == "math_legacy_review_input":
-        state = deprecation_state(path) or "compatibility_only"
-        return f"{state}；evidence_basis={metadata['description_basis']}；{semantic_boundary(profile)}"
-    if profile in {"private_zone_metadata", "math_restricted_roadmap_metadata"}:
+    if profile == "private_zone_metadata":
         return f"metadata_only；evidence_basis={metadata['description_basis']}；{semantic_boundary(profile)}"
     return (
         f"semantic_profile={profile}；authority={authority}；"
@@ -1821,23 +1552,6 @@ def when_to_read(path: str, authority: str, metadata: dict[str, Any]) -> str:
         "ai_program_run_evidence": "复现该 run 的特定输入、checkpoint、输出或验证结论",
         "communication_contract_or_implementation": "修改或验证通信 event/pointer/state 的 schema、validator 或 transition 规则",
         "communication_test_or_proof": "复现该具名 transition case 或定位相应 fail-closed 断言",
-        "math_derived_authority_router": "解析某项 Math Mentor authority/deprecation claim，并回溯其引用源",
-        "math_current_state_router": "接管 Math Mentor、确认静态成熟度或定位下一份精确证据",
-        "math_takeover_router": "进行 Math Mentor 窗口交接、主计划进度核验或角色边界审查",
-        "math_active_contract": "当前 Math Mentor 工作触及该合同规定的教学、质量、bridge 或 handoff 边界",
-        "math_active_schema": "创建、迁移或验证该 schema 所辖学习状态、review 或 bridge artifact",
-        "math_manual_teaching_prompt": "Human 明确启动对应前台人工教学角色",
-        "math_split_roadmap": "在指定 Level 分片中定位 ID/title claim 或检查 roadmap-node 对齐",
-        "math_restricted_roadmap_metadata": "仅核验受限文件存在/路径/格式；若需正文必须满足独立全图任务门槛",
-        "math_root_candidate_node": "教学或质量任务精确点名该节点，并先核验 identity/admission/certification",
-        "math_staging_candidate": "对该候选做 root 对照、alias 冲突或 Human 语义裁决",
-        "math_legacy_unresolved_bridge": "审计该 bridge 的 endpoint、重复 ID 或迁移冲突",
-        "math_legacy_review_input": "设计只读 legacy importer，或对照旧 review/毕业语义冲突",
-        "math_archived_evidence": "追溯被取代 Math Mentor 设计、prompt 或状态来源",
-        "math_control_plane_implementation": "修改或静态验证该 P0 identity/alias/admission/authorization 模块",
-        "math_control_plane_schema": "验证相应 P0 registry、crosswalk、authorization 或 admission artifact",
-        "math_test_or_fixture": "运行该具名 Math Mentor 测试或复现其 fixture 失败",
-        "math_generated_evidence": "核对该派生 registry/report 的生成输入、冲突或成熟度结论",
         "research_or_user_asset": "当前问题明确需要该来源/报告，且已确认用途和隐私范围",
         "private_zone_metadata": "Human 明确点名该 Private Zone artifact；默认只核对元数据，不读正文",
         "parliament_proposal_or_debate": "追溯对应 Issue 的提案、反驳或审查演化",
@@ -1845,8 +1559,8 @@ def when_to_read(path: str, authority: str, metadata: dict[str, Any]) -> str:
         "parliament_historical_archive": "追溯已关闭 Issue 的决策来源或迁移影响",
         "execution_plan_history": "比较该设计方案与现行实现，或追溯架构选择",
         "persona_contract": "当前任务明确选定该 persona，并需加载其角色合同",
-        "silicon_implementation": "修改或复现该具名硅基脚本、factory 或工具行为",
-        "silicon_test_or_fixture": "运行该具名 sandbox/factory 测试或定位其失败",
+        "silicon_implementation": "修改或复现该具名硅基脚本或工具行为",
+        "silicon_test_or_fixture": "运行该具名硅基测试或定位其失败",
         "silicon_generated_evidence": "核验该 mock/generated/verification 输出的具体生成场景",
         "compiler_implementation": "修改或测试对应 projector、compiler、lattice 或 fuzz 原型",
         "legacy_task_history": "追溯该旧 outsourcing/task 请求及其被取代边界",
@@ -1927,10 +1641,7 @@ def file_record(entry: GitEntry, data: bytes | None) -> dict[str, Any]:
         "description_basis": metadata["description_basis"],
         "semantic_profile": profile,
         "semantic_audit_status": "reviewed",
-        "metadata_only_boundary": profile in {
-            "private_zone_metadata",
-            "math_restricted_roadmap_metadata",
-        },
+        "metadata_only_boundary": profile == "private_zone_metadata",
         "safe_anchors": [safe_text(value, 100) for value in metadata.get("anchors", [])[:8]],
         "encoding_or_format": metadata.get("encoding", "unknown"),
     }
@@ -1988,8 +1699,6 @@ def validate_structured_record(record: dict[str, Any]) -> None:
             )
         if record.get("semantic_profile") not in {
             "schema_definition",
-            "math_active_schema",
-            "math_control_plane_schema",
             "campaign_template",
         }:
             raise IndexErrorDetail(
@@ -2035,8 +1744,6 @@ def directory_semantic_profile(directory: str) -> str:
         "05_Carbon_Index/_ARCHIVED": "carbon_manual_library",
         "06_Silicon_Index": "silicon_bootstrap_root",
         "06_Silicon_Index/Personas": "persona_library",
-        "06_Silicon_Index/factory_pipeline": "silicon_factory",
-        "06_Silicon_Index/factory_pipeline/generated_nodes": "silicon_factory",
         "06_Silicon_Index/sandbox_tests": "silicon_test_pool",
         "06_Silicon_Index/scripts": "silicon_script_pool",
         "06_Silicon_Index/skills": "silicon_skill_library",
@@ -2045,14 +1752,6 @@ def directory_semantic_profile(directory: str) -> str:
         "07_Execution_Plans": "execution_plan_archive",
         "07_Execution_Plans/Dual_Check_Proposal_System": "execution_plan_archive",
         "08_Domain_Applications": "domain_application_root",
-        "08_Domain_Applications/Math_Mentor": "math_mentor_root",
-        "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB": "math_root_corpus",
-        "08_Domain_Applications/Math_Mentor/_ARCHIVED": "math_archive",
-        "08_Domain_Applications/Math_Mentor/p0_control_plane": "math_control_plane",
-        "08_Domain_Applications/Math_Mentor/p0_control_plane/schemas": "math_schema_library",
-        "08_Domain_Applications/Math_Mentor/复习巩固期prompt": "math_legacy_review_library",
-        "08_Domain_Applications/Math_Mentor/学习期prompt": "math_learning_material_library",
-        "08_Domain_Applications/Math_Mentor/学习期prompt/backup": "math_learning_material_backup",
         "campaigns": "campaign_template_library",
         "short_term_tasks": "legacy_task_archive",
         "system_backbone": "system_backbone",
@@ -2082,10 +1781,6 @@ def directory_semantic_profile(directory: str) -> str:
         return "parliament_archive"
     if path_is_private(directory):
         return "private_zone"
-    if directory.startswith("08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_"):
-        return "math_staging_pool"
-    if directory.startswith("08_Domain_Applications/Math_Mentor/tests"):
-        return "math_test_pool"
     if directory.startswith("short_term_tasks/"):
         return "legacy_task_archive"
     if directory.startswith("system_backbone/"):
@@ -2115,23 +1810,14 @@ def directory_role(directory: str, descendant_files: list[str]) -> str:
         "parliament_template": f"议会 Issue 结构模板 {leaf}；用于创建/校验而非立项",
         "parliament_archive": f"议会冻结归档 {leaf}；仅追溯已关闭裁决及迁移来源",
         "carbon_manual_library": f"碳基用户手册区 {leaf}；区分现行说明与 archived bootstrap 手册",
-        "silicon_bootstrap_root": "硅基启动根：按 Bootstrap→当前 Human 任务→触发合同选择 persona、factory、scripts 或 skills",
+        "silicon_bootstrap_root": "硅基启动根：按 Bootstrap→当前 Human 任务→触发合同选择 persona、scripts 或 skills",
         "persona_library": "可选 persona 合同库；只加载当前任务明确选定的单一角色",
-        "silicon_factory": f"Math node factory 的 mock agent/evaluator/pipeline 证据区 {leaf}；非 canonical corpus",
         "silicon_test_pool": f"硅基 fail-closed、安全与注入测试池 {leaf}",
         "silicon_script_pool": "city-state bus/interceptor 原型、draft、mock 与 verification artifact 区；未默认激活",
         "silicon_skill_library": f"仓库内 planning skill 与 archived skill provenance 区 {leaf}",
         "compiler_workspace": "CQRS projector、lattice、fuzz gateway 与 YAML topology compiler 原型/测试区",
         "execution_plan_archive": f"执行方案设计 provenance 区 {leaf}；方案存在不证明实现或授权",
         "domain_application_root": "领域应用入口；领域合同不提升为总体 OS 宪章",
-        "math_mentor_root": "Math Mentor 活动合同、静态控制面、教学 prompt、节点语料、测试与 legacy 边界根",
-        "math_root_corpus": "Math Mentor 根候选语料与 staging 分区；按 exact ID 懒加载并先过 identity/admission/certification gate",
-        "math_archive": "Math Mentor historical_frozen 归档；只读追溯，不恢复旧状态或 prompt",
-        "math_control_plane": "deterministic identity/alias/authorization/admission 静态控制面；runtime 未激活",
-        "math_schema_library": "P0 registry/crosswalk/conflict/root-corpus/authorization/admission JSON schema 库",
-        "math_legacy_review_library": "legacy review prompt/table 只读 importer 输入；旧毕业语义不得进入生产状态机",
-        "math_learning_material_library": "人工教学 prompt、split roadmaps、topology map 与辅助语料入口",
-        "math_learning_material_backup": "学习期 prompt/语料历史备份；只作 provenance，不作为当前合同",
         "campaign_template_library": "campaign manifest schema/template；声明形状不构成任务激活",
         "legacy_task_archive": f"已取代 outsourcing/task provenance 区 {leaf}；旧 pending 不恢复任务",
         "system_backbone": f"外部增强骨架 {leaf}；registry/ledger/domain/template 原型未自动接入 runtime",
@@ -2148,10 +1834,6 @@ def directory_role(directory: str, descendant_files: list[str]) -> str:
     if profile == "private_zone":
         owner = leaf.replace("Home_of_", "")
         return f"Private Zone {owner} 的路径/格式元数据边界；索引不读取或摘要正文"
-    if profile == "math_staging_pool":
-        return f"Math Mentor {leaf} 候选池；只用于 root 对照、alias 冲突与 Human 语义裁决"
-    if profile == "math_test_pool":
-        return f"Math Mentor 测试分区 {leaf}；fixture/verdict 不构成真实权限或 activation"
     return roles[profile]
 
 
@@ -2177,9 +1859,8 @@ def when_to_enter_directory(directory: str) -> str:
         "parliament_template": f"创建或校验 {leaf} 的 Issue 结构；模板不代表已立项",
         "parliament_archive": f"追溯 {leaf} 中已关闭裁决的来源或迁移影响",
         "carbon_manual_library": f"当前 Human 使用场景需要 {leaf} 中的现行或 archived 手册",
-        "silicon_bootstrap_root": "完成 Bootstrap 后，当前任务明确触发 persona、factory、scripts 或 skills 子区",
+        "silicon_bootstrap_root": "完成 Bootstrap 后，当前任务明确触发 persona、scripts 或 skills 子区",
         "persona_library": "当前任务明确选定某 persona；只读对应单文件",
-        "silicon_factory": f"复现 {leaf} 的 mock factory、evaluator 或 generated-node 行为",
         "silicon_test_pool": f"运行 {leaf} 的具名安全/fail-closed 用例",
         "silicon_script_pool": "运行或审查某个具名 bus/interceptor 原型、draft 或 verification artifact",
         "silicon_skill_library": f"当前任务明确调用 {leaf} 中的 skill，或追溯 archived skill",
@@ -2187,16 +1868,6 @@ def when_to_enter_directory(directory: str) -> str:
         "execution_plan_archive": f"比较 {leaf} 中的设计方案与现行实现，或追溯架构来源",
         "private_zone": f"Human 明确点名 Private Zone {leaf}；普通初始化禁止正文加载",
         "domain_application_root": "Human 已把任务路由到具体领域并要求读取其合同",
-        "math_mentor_root": "当前任务属于 Math Mentor，并已先读 Universal Layer 与 current-state 路由",
-        "math_root_corpus": "任务精确点名节点 ID；先完成 identity/admission/certification 核验",
-        "math_staging_pool": f"对 {leaf} 中具名候选进行 root 对照、alias 冲突或 Human 裁决",
-        "math_archive": "追溯冻结 Math Mentor 设计、prompt 或状态来源",
-        "math_control_plane": "修改或静态验证 P0 identity/alias/authorization/admission 控制面",
-        "math_schema_library": "验证具名 P0 registry/crosswalk/authorization/admission artifact",
-        "math_test_pool": f"运行 {leaf} 中的具名测试或复现 fixture 失败",
-        "math_legacy_review_library": "设计只读 legacy importer 或核对旧 review/毕业语义冲突",
-        "math_learning_material_library": "人工教学或路线任务精确需要某个 prompt/split roadmap",
-        "math_learning_material_backup": "追溯现行学习材料的历史副本来源",
         "campaign_template_library": "创建/验证 campaign manifest，不用于 activation",
         "legacy_task_archive": f"追溯 {leaf} 中旧 outsourcing/task 请求及其 superseded 边界",
         "system_backbone": f"明确评估或修改 {leaf} 中的外部 registry/ledger/domain/template 原型",
@@ -2395,14 +2066,6 @@ DIRECTORY_READING_ORDERS = {
         ".ai/CODEX_TASK_INPUT_CONTRACT.md",
         ".ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md",
     ),
-    "08_Domain_Applications/Math_Mentor": (
-        "08_Domain_Applications/Math_Mentor/Universal_Layer_Execution_Protocol.md",
-        "08_Domain_Applications/Math_Mentor/MATH_MENTOR_CURRENT_STATE.yml",
-        "08_Domain_Applications/Math_Mentor/MATH_MENTOR_MASTER_PLAN_AND_PROGRESS.md",
-        "08_Domain_Applications/Math_Mentor/MATH_MENTOR_ROLE_AND_HANDOFF_CONTRACT.md",
-        "08_Domain_Applications/Math_Mentor/MATH_MENTOR_AUTHORITY_REGISTRY.yml",
-        "08_Domain_Applications/Math_Mentor/MATH_MENTOR_DEPRECATION_MAP.yml",
-    ),
 }
 
 
@@ -2521,12 +2184,10 @@ def render_generated_block(
         lines.extend(
             [
                 "- 不要默认加载 `.ai/CODEX_REPORTS/`、`.ai/PROGRAM_RUNS/`、研究报告全集、议会归档或 `07_Silicon_Private_Zones/`。",
-                "- 不要默认加载 Math Mentor 全量节点库、staging pools、完整路线图、fixtures/logs、`short_term_tasks/` 或 `system_backbone/`；应按任务进入单个文件。",
+                "- 不要默认加载 `short_term_tasks/`、`system_backbone/` 或大型 fixtures/logs；应按任务进入单个文件。",
                 "- 不要把 README、历史报告、source neutral mailbox 或 branch ledger 快照当作 live authority。",
             ]
         )
-    elif directory == "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB":
-        lines.append("- 不要批量加载本目录数百个概念节点；先按 node ID、roadmap 或 admission 证据选择单个目标。")
     else:
         non_default = [
             item
@@ -2926,17 +2587,17 @@ def build_expected(ref: str | None) -> tuple[dict[str, bytes], dict[str, Any]]:
                     for record in structured_records
                 ),
                 "confirmed_regressions": {
-                    "08_Domain_Applications/Math_Mentor/AUTHORIZATION_CONTEXT_SCHEMA.json": {
+                    ".ai/communication_compliance/communication_event.schema.json": {
                         "semantic_profile": file_records[
-                            "08_Domain_Applications/Math_Mentor/AUTHORIZATION_CONTEXT_SCHEMA.json"
+                            ".ai/communication_compliance/communication_event.schema.json"
                         ]["semantic_profile"],
                         "authority_class": file_records[
-                            "08_Domain_Applications/Math_Mentor/AUTHORIZATION_CONTEXT_SCHEMA.json"
+                            ".ai/communication_compliance/communication_event.schema.json"
                         ]["authority_class"],
                     },
-                    "08_Domain_Applications/Math_Mentor/ALIAS_CONFLICT_REGISTRY.json": {
+                    ".ai/communication_compliance/material_event_policy.yml": {
                         "safe_anchors": file_records[
-                            "08_Domain_Applications/Math_Mentor/ALIAS_CONFLICT_REGISTRY.json"
+                            ".ai/communication_compliance/material_event_policy.yml"
                         ]["safe_anchors"],
                     },
                 },
@@ -3119,10 +2780,7 @@ def validate_outputs(ref: str | None) -> dict[str, Any]:
                 raise IndexErrorDetail(
                     f"File lacks completed semantic audit: {item['path']}"
                 )
-            expected_metadata_only = item["semantic_profile"] in {
-                "private_zone_metadata",
-                "math_restricted_roadmap_metadata",
-            }
+            expected_metadata_only = item["semantic_profile"] == "private_zone_metadata"
             if item.get("metadata_only_boundary") is not expected_metadata_only:
                 raise IndexErrorDetail(
                     f"Incorrect metadata-only boundary: {item['path']}"
@@ -3233,7 +2891,6 @@ def validate_outputs(ref: str | None) -> dict[str, Any]:
     ):
         raise IndexErrorDetail("Schema filename variants are not consistently classified")
     if structured_audit.get("explicit_non_json_schema_contracts") != [
-        "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/schema.yaml",
         "campaigns/campaign_manifest_template.yaml",
     ]:
         raise IndexErrorDetail("Explicit structured schema contract registry drifted")
@@ -3247,16 +2904,14 @@ def validate_outputs(ref: str | None) -> dict[str, Any]:
     if structured_audit.get("repeated_rendered_anchor_fragments") != 0:
         raise IndexErrorDetail("Rendered semantic fields repeat anchor fragments")
     if structured_audit.get("confirmed_regressions", {}).get(
-        "08_Domain_Applications/Math_Mentor/AUTHORIZATION_CONTEXT_SCHEMA.json"
+        ".ai/communication_compliance/communication_event.schema.json"
     ) != {"semantic_profile": "schema_definition", "authority_class": "schema"}:
-        raise IndexErrorDetail("AuthorizationContext schema regression returned")
-    alias_anchors = structured_audit.get("confirmed_regressions", {}).get(
-        "08_Domain_Applications/Math_Mentor/ALIAS_CONFLICT_REGISTRY.json", {}
+        raise IndexErrorDetail("Communication event schema regression returned")
+    policy_anchors = structured_audit.get("confirmed_regressions", {}).get(
+        ".ai/communication_compliance/material_event_policy.yml", {}
     ).get("safe_anchors", [])
-    if len(alias_anchors) != len(set(alias_anchors)) or alias_anchors.count(
-        "status=open"
-    ) > 1:
-        raise IndexErrorDetail("Alias conflict anchor dedup regression returned")
+    if not policy_anchors or len(policy_anchors) != len(set(policy_anchors)):
+        raise IndexErrorDetail("Material-event policy anchor regression returned")
     if semantic_audit.get("baseline_scope") != {
         "directory_indexes": 160,
         "direct_file_entries": 1806,
@@ -3276,14 +2931,6 @@ def validate_outputs(ref: str | None) -> dict[str, Any]:
     }:
         raise IndexErrorDetail("Semantic audit correction accounting changed")
     critical_profiles = {
-        "08_Domain_Applications/Math_Mentor/MATH_MENTOR_AUTHORITY_REGISTRY.yml": (
-            "math_derived_authority_router",
-            "routing",
-        ),
-        "08_Domain_Applications/Math_Mentor/MATH_MENTOR_DEPRECATION_MAP.yml": (
-            "math_derived_authority_router",
-            "routing",
-        ),
         ".ai/STATE.yml": ("source_neutral_mailbox", "routing"),
         ".ai/INBOX.md": ("source_neutral_mailbox", "routing"),
     }
@@ -3537,25 +3184,14 @@ def expect_error(function: Any, *args: Any, **kwargs: Any) -> None:
 def self_test() -> dict[str, Any]:
     semantic_cases = {
         ".ai/STATE.yml": ("source_neutral_mailbox", "routing"),
-        "08_Domain_Applications/Math_Mentor/MATH_MENTOR_AUTHORITY_REGISTRY.yml": (
-            "math_derived_authority_router",
-            "routing",
-        ),
-        "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/ARITHMETIC-001.yaml": (
-            "math_root_candidate_node",
+        ".ai/communication_compliance/validate_communication.py": (
+            "communication_contract_or_implementation",
             "implementation",
         ),
-        "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2/ANALYTIC_NT-684.yaml": (
-            "math_staging_candidate",
-            "generated_evidence",
-        ),
-        "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/BRIDGE-001.yaml": (
-            "math_legacy_unresolved_bridge",
+        "campaigns/campaign_manifest_template.yaml": ("campaign_template", "schema"),
+        "04_Parliament/Verdicts/Verdict_005_Vacuum_Circuit_Breaker.md": (
+            "parliament_verdict",
             "historical_evidence",
-        ),
-        "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/schema.yaml": (
-            "schema_definition",
-            "schema",
         ),
         "06_Silicon_Index/README.md": ("routing_snapshot", "routing"),
         **{
@@ -3564,7 +3200,8 @@ def self_test() -> dict[str, Any]:
         },
     }
     for path, expected in semantic_cases.items():
-        assert (semantic_profile(path), authority_class(path)) == expected
+        actual = (semantic_profile(path), authority_class(path))
+        assert actual == expected, (path, actual, expected)
     schema_document = {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "$id": "https://example.invalid/MIXED_CONTEXT_SCHEMA.json",
@@ -3664,30 +3301,26 @@ def self_test() -> dict[str, Any]:
     bad_schema_class = dict(regression_record)
     bad_schema_class["authority_class"] = "implementation"
     expect_error(validate_structured_record, bad_schema_class)
-    authorization_path = (
-        "08_Domain_Applications/Math_Mentor/AUTHORIZATION_CONTEXT_SCHEMA.json"
+    event_schema_path = ".ai/communication_compliance/communication_event.schema.json"
+    event_schema_metadata = extract_json(
+        event_schema_path,
+        (ROOT / PurePosixPath(event_schema_path)).read_text(encoding="utf-8"),
     )
-    authorization_metadata = extract_json(
-        authorization_path,
-        (ROOT / PurePosixPath(authorization_path)).read_text(encoding="utf-8"),
-    )
-    assert authorization_metadata["schema_shape"] is True
+    assert event_schema_metadata["schema_shape"] is True
     assert (
-        semantic_profile(authorization_path, authorization_metadata),
-        authority_class(authorization_path, authorization_metadata),
+        semantic_profile(event_schema_path, event_schema_metadata),
+        authority_class(event_schema_path, event_schema_metadata),
     ) == ("schema_definition", "schema")
-    alias_path = "08_Domain_Applications/Math_Mentor/ALIAS_CONFLICT_REGISTRY.json"
-    alias_metadata = extract_json(
-        alias_path, (ROOT / PurePosixPath(alias_path)).read_text(encoding="utf-8")
+    policy_path = ".ai/communication_compliance/material_event_policy.yml"
+    policy_metadata = extract_yaml(
+        policy_path, (ROOT / PurePosixPath(policy_path)).read_text(encoding="utf-8")
     )
-    assert len(alias_metadata["anchors"]) == len(set(alias_metadata["anchors"]))
-    assert alias_metadata["anchors"].count("status=open") == 1
+    assert len(policy_metadata["anchors"]) == len(set(policy_metadata["anchors"]))
+    assert policy_metadata["anchors"]
     assert directory_semantic_profile(
         ".ai/communication_compliance/fixtures/artifacts/proof/transition-c2-replay"
     ) == "communication_proof_case"
-    assert directory_semantic_profile(
-        "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/_Staging_Level6_Part2"
-    ) == "math_staging_pool"
+    assert directory_semantic_profile(".ai/runs/tests") == "ai_runner_control_plane"
     block = "# generated\n"
     manual = "# 人工说明\r\n保持原样\r\n".encode("utf-8")
     merged, preserved = merge_generated_block("index.md", manual, block)

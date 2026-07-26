@@ -14,7 +14,7 @@ param(
     [string]$EnvironmentClass = 'codex_desktop',
     [ValidateSet('human_speaker','foreground_review_and_task_dispatch','backend_execution_and_handoff')]
     [string]$ProtocolRole = 'backend_execution_and_handoff',
-    [ValidateSet('foreground_planner','foreground_independent_reviewer','backend_executor','math_mentor_teacher')]
+    [ValidateSet('foreground_planner','foreground_independent_reviewer','backend_executor')]
     [string]$LoadProfileId = 'backend_executor',
     [string]$RepositoryRoot = (Resolve-Path (Join-Path $PSScriptRoot '../..')),
     [string]$LocalLaneRoot = (Join-Path ([Environment]::GetFolderPath('LocalApplicationData')) 'CityState/local_lanes'),

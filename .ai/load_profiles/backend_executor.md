@@ -4,7 +4,7 @@ authority: "routing_only"
 reflects_protocol_release_head: ".ai/communication_compliance/material_event_policy.yml#protocol_release_head"
 canonical_ref_digests:
   "06_Silicon_Index/CONSTITUTION_DIGEST.md": "ad7f76dca6a42657e7fc4220fdff0acde542c6ad52b894d796da008e90cd888e"
-  "AGENTS.md": "a8fdc48fb7a02686267c3f0f1660db3fd56751aaa9e10fa2543a8cee9270be4c"
+  "AGENTS.md": "a3e1cb140e01c122e43e544391bb2fb5042eca28bb268fb5f6382c89732441fc"
   ".ai/TOKEN_USAGE_PROFILE.md": "b738226e32c1efddf8c61ffa551b728c201dd82ed02d6dd86fa9bb4c887cbadb"
   ".ai/CODEX_WORK_MECHANISM_PROTOCOL.md": "5c3f0c6acf12f1eed546088cd9c8a90050859681516de11414029e5a05b04f49"
 ---
@@ -25,5 +25,5 @@ non-null current signal ref.
 Load `.ai/role_memory/core.md` plus `.ai/role_memory/executor.md` as routing-only memory.
 
 Load the default large-task or long-run protocol only when its trigger applies. Load
-Math Mentor teaching/validation contracts only for a Math Mentor task. Load full
+domain contracts only when the current task explicitly names them. Load full
 constitutional sources for protected actions or constitutional conflict.

@@ -4,7 +4,7 @@ authority: "routing_only"
 reflects_protocol_release_head: ".ai/communication_compliance/material_event_policy.yml#protocol_release_head"
 canonical_ref_digests:
   "06_Silicon_Index/CONSTITUTION_DIGEST.md": "ad7f76dca6a42657e7fc4220fdff0acde542c6ad52b894d796da008e90cd888e"
-  ".ai/PROTOCOL.md": "3c29f8b854a4fcf255699a263a9972235afb30212014eebcb0ff15f1d13f3ff4"
+  ".ai/PROTOCOL.md": "c0c2485da18e24a0445c6effebe2396ec79a40f374511407edf1c6583b86ebf2"
   ".ai/PROTOCOL_ADHERENCE.md": "d0e5321222aa955bc0a15ca47a62f70755035fdc17744311fa6c5b0427d581db"
 ---
 

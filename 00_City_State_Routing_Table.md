@@ -32,6 +32,5 @@
 
 | 问题域 (Domain) | 核心法典/机制直接入口 | 关联溯源任务 |
 | :--- | :--- | :--- |
-| **内存/上下文满了怎么办？** | [Protocol_007_Active_Compression_Reincarnation.md](./02_Protocols/Protocol_007_Active_Compression_Reincarnation.md) | Task-003 |
 | **议长失联断网怎么办？** | [Verdict_005_Vacuum_Circuit_Breaker.md](./04_Parliament/Verdicts/Verdict_005_Vacuum_Circuit_Breaker.md) | Task-003 |
-| **Engine A 调度规范是啥？** | [Engine_A_Dispatch_Protocol.md](./02_Protocols/Engine_A_Dispatch_Protocol.md) | Task-002 |
+| **分布式管线拆分记录在哪？** | [Task_001_Distributed_Pipeline_Mapping.md](./07_Execution_Plans/Task_001_Distributed_Pipeline_Mapping.md) | Task-001 |

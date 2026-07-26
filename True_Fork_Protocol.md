@@ -59,10 +59,10 @@ git merge upstream/main
 
 > **以下是落盘结果的系统通报：**
 > 
-> 📁 **全新独立节点**：`E:\newStand\bank` 
-> ⚙️ **层级瓦解 (Root Unpacked)**：原 `Cybernetic_City_State_OS_v2 - teacher` 下的所有文件和目录（包括隐藏配置），已经直接**平铺（Unpacked）**在了 `bank` 目录的根节点下。没有多余的包裹层，极度清爽。 
+> 📁 **全新独立节点**：`<target-path>`
+> ⚙️ **层级瓦解 (Root Unpacked)**：原 `<source-repository>` 下的所有文件和目录（包括隐藏配置），已经直接**平铺（Unpacked）**在了目标目录的根节点下。没有多余的包裹层，极度清爽。
 > 🧠 **物理失忆与重塑**：已将旧的记忆体（`.git`）彻底粉碎，并在 `bank` 中重新烙印了属于它自己的全新时间线（`git init` && `git commit`）。 
-> 🔗 **单向输血管道**：已将原主城邦 `E:\newStand\study\Cybernetic_City_State_OS_v2 - teacher` 设定为了 `bank` 的远端源头（`upstream`）。
+> 🔗 **单向输血管道**：已将原主城邦 `<source-repository>` 设定为了目标仓库的远端源头（`upstream`）。
 > 
 > 现在，`bank` 节点已经成为一个完全独立的物理沙盒。它随时可以通过执行：
 > 

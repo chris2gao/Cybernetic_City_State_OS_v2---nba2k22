@@ -118,8 +118,7 @@ Human Speaker 是：
 先区分四个互不替代的维度：stable `protocol_role`、描述性的
 `environment_class`、自声明的本地 `lane_instance_id`，以及只负责加载路由的
 `load_profile_id`。后三者不授予协议权限。可选 profile 为
-`foreground_planner`、`foreground_independent_reviewer`、`backend_executor`、
-`math_mentor_teacher`。
+`foreground_planner`、`foreground_independent_reviewer`、`backend_executor`。
 
 ### Codex 执行器
 

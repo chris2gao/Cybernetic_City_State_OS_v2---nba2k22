@@ -3,12 +3,11 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ROLE_FILES = ["core.md", "planner.md", "executor.md", "reviewer.md", "teacher.md"]
+ROLE_FILES = ["core.md", "planner.md", "executor.md", "reviewer.md"]
 PROFILE_MAP = {
     "backend_executor.md": "executor.md",
     "foreground_planner.md": "planner.md",
     "foreground_independent_reviewer.md": "reviewer.md",
-    "math_mentor_teacher.md": "teacher.md",
 }
 REQUIRED_FIELDS = (
     "source_ref",

@@ -25,7 +25,7 @@ It is not a repository constitution. It does not override:
 - explicit current human instructions;
 - secrets, credentials, or safety boundaries;
 - mathematical content or validation rules;
-- domain protocols, including Math Mentor execution protocols;
+- domain protocols;
 - software architecture decisions outside the handoff workflow.
 
 `.ai/CODEX_WORK_MECHANISM_PROTOCOL.md` governs backend execution-role mechanics for compatible Codex or Claude Code occupants only. It does not govern mathematical/domain semantics, override higher-priority instructions, or authorize a gated project stage or business change by itself.

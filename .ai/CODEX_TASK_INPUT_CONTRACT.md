@@ -336,7 +336,7 @@ inputs:
   required_refs:
     - "source:.ai/PROTOCOL.md"
     - "ai/review/latest:.ai/CODEX_REPORTS/example.md"
-    - "source:08_Domain_Applications/Math_Mentor/BRIDGE_SCHEMA.md#section-6"
+    - "source:06_Silicon_Index/CONSTITUTION_DIGEST.md#authority"
 ```
 
 Rules:
@@ -372,8 +372,8 @@ Good validation is proportional to risk:
 
 - documentation: existence, structure, refs, scope, and parse checks;
 - code/evaluator: focused behavioral tests plus diff review;
-- node YAML: schema/evaluator checks and semantic review where required;
-- bridge/math: endpoint/schema checks and lane-specific semantic/computational review;
+- structured data: schema/evaluator checks and semantic review where required;
+- domain integration: endpoint/schema checks and domain-specific semantic review;
 - Git publication: exact changed paths, commit SHA, expected-SHA lease, and remote read-back.
 
 Do not define success as a command merely exiting zero when semantic behavior matters. Do not require broad test or log output unrelated to the changed surface.
@@ -401,8 +401,7 @@ For ordinary tasks, one short declaration is enough:
 
 ```yaml
 inheritance:
-  domain_protocols:
-    - "08_Domain_Applications/Math_Mentor/Universal_Layer_Execution_Protocol.md"
+  domain_protocols: []
   overrides: []
 ```
 
@@ -469,81 +468,79 @@ return:
 
 ## 16. Expanded Packet Examples
 
-### 16.1 Evaluator Patch
+### 16.1 Communication Validator Patch
 
 ```markdown
 ---
 task_version: "1.0"
-task_id: "chatgpt-evaluator-status-0001"
-title: "Correct evaluator status semantics"
+task_id: "chatgpt-communication-validator-0001"
+title: "Correct communication validator semantics"
 mode: "goal"
 task_level: 3
 intent:
-  goal: "Separate machine-validated passes from review-required and skipped outcomes."
+  goal: "Correct one fail-closed communication validation rule."
   definition_of_done:
-    - "Semantic-only checks do not claim mathematical validation."
-    - "Bulk summary reports passed, failed, review-required, skipped, and warnings."
+    - "The invalid transition is rejected."
+    - "Existing valid fixtures remain accepted."
 outputs:
-  primary: "06_Silicon_Index/factory_pipeline/sandbox_evaluator.py"
+  primary: ".ai/communication_compliance/validate_communication.py"
   additional:
-    - "06_Silicon_Index/factory_pipeline/bulk_evaluator.py"
-    - "06_Silicon_Index/factory_pipeline/test_evaluator_status.py"
+    - ".ai/communication_compliance/tests/test_validate_communication.py"
 inputs:
   required_refs:
-    - "source:08_Domain_Applications/Math_Mentor/NODE_QUALITY_AUDIT_SAMPLE_PACK.md"
+    - "source:.ai/communication_compliance/README.md"
 scope:
   allowed_files:
-    - "06_Silicon_Index/factory_pipeline/sandbox_evaluator.py"
-    - "06_Silicon_Index/factory_pipeline/bulk_evaluator.py"
-    - "06_Silicon_Index/factory_pipeline/test_evaluator_status.py"
+    - ".ai/communication_compliance/validate_communication.py"
+    - ".ai/communication_compliance/tests/test_validate_communication.py"
 requirements:
   invariants:
-    - "Support top-level and concept_node schemas."
+    - "Unknown or malformed authority data fails closed."
   validation:
-    - "Run the focused evaluator status test suite."
+    - "Run the focused communication validator unit suite."
   stop_rules:
     - "Stop after local source commit and review handoff; do not push source."
 return:
-  packet_id: "codex-evaluator-status-0001"
+  packet_id: "codex-communication-validator-0001"
 ---
 ```
 
-### 16.2 Node YAML Repair
+### 16.2 Domain Record Repair
 
 ```markdown
 ---
 task_version: "1.0"
-task_id: "chatgpt-node-repair-0001"
-title: "Repair one approved Mode B node"
+task_id: "chatgpt-domain-record-repair-0001"
+title: "Repair one approved domain record"
 mode: "goal"
 task_level: 3
 intent:
-  goal: "Repair the approved mapping and audit fields without changing node identity or scope."
+  goal: "Repair the approved fields without changing record identity or scope."
   definition_of_done:
-    - "The primary mapping uses LLM architecture rather than an everyday metaphor."
-    - "The node passes schema checks and receives required semantic review."
+    - "The record satisfies its domain schema."
+    - "The repair receives required domain review."
 outputs:
-  primary: "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/<NODE>.yaml"
+  primary: "<domain-path>/<RECORD>.yaml"
 inputs:
   required_refs:
-    - "source:08_Domain_Applications/Math_Mentor/NODE_REPAIR_PLAN.md"
-    - "source:08_Domain_Applications/Math_Mentor/Universal_Layer_Execution_Protocol.md"
+    - "source:<domain-path>/REPAIR_PLAN.md"
+    - "source:<domain-path>/EXECUTION_PROTOCOL.md"
 scope:
   allowed_files:
-    - "08_Domain_Applications/Math_Mentor/Pure_Math_Intuition_DB/<NODE>.yaml"
+    - "<domain-path>/<RECORD>.yaml"
   forbidden_files:
     - "<protected-adjacent-file>"
 requirements:
   invariants:
-    - "Preserve node ID, title scope, layer, and prerequisite identity."
+    - "Preserve record identity and declared scope."
   validation:
-    - "Run the focused sandbox evaluator."
+    - "Run the focused domain validator."
   stop_rules:
-    - "Stop if mathematical scope is disputed or semantic review evidence is unavailable."
+    - "Stop if domain scope is disputed or semantic review evidence is unavailable."
 authority:
-  semantic_reviewer: "chatgpt"
+  semantic_reviewer: "<authorized-reviewer>"
 return:
-  packet_id: "codex-node-repair-0001"
+  packet_id: "codex-domain-record-repair-0001"
 ---
 ```
 

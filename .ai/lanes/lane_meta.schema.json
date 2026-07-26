@@ -16,7 +16,7 @@
     "lane_instance_id": {"type": "string", "pattern": "^[a-z][a-z0-9_-]*-[0-9a-f]{6,32}$"},
     "environment_class": {"enum": ["claude_desktop", "chatgpt_web", "codex_desktop", "codex_cli", "claude_code_cli"]},
     "protocol_role": {"enum": ["human_speaker", "foreground_review_and_task_dispatch", "backend_execution_and_handoff"]},
-    "load_profile_id": {"enum": ["foreground_planner", "foreground_independent_reviewer", "backend_executor", "math_mentor_teacher"]},
+    "load_profile_id": {"enum": ["foreground_planner", "foreground_independent_reviewer", "backend_executor"]},
     "opened_at": {"type": "string", "format": "date-time"},
     "lane_protocol_epoch": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
     "transport": {

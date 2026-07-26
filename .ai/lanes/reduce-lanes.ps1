@@ -116,7 +116,7 @@ foreach ($lane in $laneDirectories) {
     if ([int]$envelope.message_seq -ne $seq) { throw 'lane sequence differs from event filename' }
     if ($envelope.protocol_role -notin @('human_speaker','foreground_review_and_task_dispatch','backend_execution_and_handoff')) { throw 'lane protocol role is invalid' }
     if ($envelope.environment_class -notin @('claude_desktop','chatgpt_web','codex_desktop','codex_cli','claude_code_cli')) { throw 'lane environment class is invalid' }
-    if ($envelope.load_profile_id -notin @('foreground_planner','foreground_independent_reviewer','backend_executor','math_mentor_teacher')) { throw 'lane load profile is invalid' }
+    if ($envelope.load_profile_id -notin @('foreground_planner','foreground_independent_reviewer','backend_executor')) { throw 'lane load profile is invalid' }
     if ($envelope.lane_protocol_epoch -ne $CurrentLaneProtocolEpoch) { continue }
     if ($envelope.base_review_head -notmatch '^[0-9a-f]{40}$') { throw 'base_review_head is invalid' }
     & git -C $RepositoryRoot cat-file -e ($envelope.base_review_head + '^{commit}')
