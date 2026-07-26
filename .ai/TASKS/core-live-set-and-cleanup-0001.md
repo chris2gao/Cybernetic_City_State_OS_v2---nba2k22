@@ -25,6 +25,8 @@ intent:
     - "A separate ownership proposal covers 06_Silicon_Index/factory_pipeline, including the cross-repository move order in section 6."
     - "The classification is published to ai/review/latest with conclusions separated from evidence, and review_branch_head is verified to be a commit on that branch and not on master."
     - "After the Human gate in stage 5, class 3 files are removed in one commit, the unit suite still passes, and the release binding remains green."
+    - "origin/master is recorded at task start and again at task end; any change between them is reported as a concurrent external write, not silently absorbed."
+    - "The class 3 list is checked for intersection with release-bound paths and with every dynamic-load target before it is proposed."
 
 outputs:
   primary: ".ai/CODEX_REPORTS/core-live-set-0001.md"
@@ -75,20 +77,55 @@ runs continuously.
 
 ## 2. Stages
 
-**Stage 1 — publish what already exists.** Two prior reports
-(`core-structural-integrity-diagnosis-0001.md`, `link_fix_0001.md`) plus the human
-brief were committed to `master` and were reported with a `review_branch_head` that is
-actually a master commit. Publish them to `ai/review/latest` so an independent
-reviewer can read them from GitHub, and verify the head you report is on that branch.
+**Stage 1 — publish what already exists.** The original text of this stage was wrong
+about where the artifacts live. Corrected after measurement at `5d1951c` /
+`origin/ai/review/latest@b1e40c6a`; re-measure before acting:
+
+| artifact | on master | on review |
+| :--- | :--- | :--- |
+| `.ai/CODEX_REPORTS/core-structural-integrity-diagnosis-0001.md` | no | yes |
+| `.ai/CODEX_REPORTS/release-rebinding-cycle-0001.md` | no | yes |
+| `.ai/CODEX_REPORTS/link_fix_0001.md` | yes | no |
+| `.ai/HUMAN_BRIEFS/link_fix_0001/codex-001.md` | yes | no |
+
+No artifact exists on both. So the actual work is: **publish the two master-only
+files to `ai/review/latest`, and leave the two already there untouched.** Do not
+claim that all of them were newly published from master.
+
+Separately, one earlier handoff reported a `review_branch_head` that was a master
+commit. Whatever you report must be verified to be on the review branch.
 
 **Stage 2 — compute the closure.** From the roots in section 3. Record for each
 reached file which edge reached it.
 
-**Stage 3 — resolve dynamic loading.** Nine sites load by glob or directory walk
-(`chat_channel.py`, `consolidate_ledger.py`, `autonomous_factory_agent.py`,
-`bulk_evaluator.py`, `global_topology_tracer.py`, `rescue_remaining.py`,
-`rescue_sub_topics.py`). Static text reachability will not see what they load. Resolve
-each to a concrete set and mark those files live, naming the site.
+**Stage 3 — resolve dynamic loading.** The original text of this stage said "nine
+sites" and listed seven files. Both were wrong: they came from a truncated search
+whose pattern also matched `Get-ChildItem`. Re-measured over
+`.glob(` / `.rglob(` / `iterdir(` / `os.listdir(` / `os.walk(` / `os.scandir(`:
+**14 call sites across 10 files.**
+
+```
+ 1  .ai/communication_compliance/tests/test_validate_communication.py
+ 3  .ai/runs/tests/test_agent_runner.py
+ 3  .ai/token_profile/chat_channel.py
+ 1  .ai/token_profile/consolidate_ledger.py
+ 1  .ai/token_profile/tests/test_chat_channel.py
+ 1  06_Silicon_Index/factory_pipeline/autonomous_factory_agent.py
+ 1  06_Silicon_Index/factory_pipeline/bulk_evaluator.py
+ 1  06_Silicon_Index/factory_pipeline/global_topology_tracer.py
+ 1  06_Silicon_Index/factory_pipeline/rescue_remaining.py
+ 1  06_Silicon_Index/factory_pipeline/rescue_sub_topics.py
+```
+
+Count these yourself and report your number. Do not reconcile to 14 to match this
+packet; if you measure something else, that is the finding.
+
+Four of the ten are test files loading fixtures dynamically. Those targets are
+especially dangerous to misclassify: a fixture judged dead will not fail at
+classification time, it will fail in the test suite after deletion.
+
+Static text reachability will not see any of this. Resolve each site to a concrete
+file set, mark those files live, and name the loading site for each.
 
 **Stage 4 — classify and publish.** Three classes, section 4. Publish to
 `ai/review/latest`. The classification artifact must present evidence with the
