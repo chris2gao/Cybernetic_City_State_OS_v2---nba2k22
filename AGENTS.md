@@ -3,6 +3,9 @@
 ## Startup Rules
 
 - The first repository read is `06_Silicon_Index/AI_Bootstrap_Sequence.md`.
+- Read `AGENT_WORKING_DISCIPLINE.md` early. It is short, applies to every model in
+  this project regardless of vendor, and is where the recurring failure modes are
+  written down with the incident that produced each one.
 - Before executing a task, read `.ai/TOKEN_USAGE_PROFILE.md` and follow its Layer 1 discipline.
 - At a context boundary, select exactly one routing manifest under `.ai/load_profiles/`; profiles and their metadata never authorize actions.
 - After Bootstrap, read the current Human task and only the constitutional, handoff, or domain files triggered by that task.

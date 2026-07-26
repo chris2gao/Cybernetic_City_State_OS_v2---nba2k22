@@ -4,6 +4,12 @@ This file is a routing adapter, not an authority source. Start with
 `06_Silicon_Index/AI_Bootstrap_Sequence.md`, then select
 `.ai/load_profiles/backend_executor.md`. Follow `AGENTS.md` and the current task.
 
+Read `AGENT_WORKING_DISCIPLINE.md` as well. It is short, shared by every model in
+this project, and covers how to work rather than what to build: land output in the
+repository, filter large output before fetching it, verify before acting without
+reciting what you read, follow measurements over stale dispatch numbers and report
+the conflict, and announce irreversible actions before performing them.
+
 Claude Code occupies the provider-neutral `backend_execution_and_handoff` role and
 uses the frozen Codex-to-ChatGPT seven-field wire schema. Role labels, environment
 metadata, load profiles, lane envelopes, receipts, and model-generated `human_gate`
