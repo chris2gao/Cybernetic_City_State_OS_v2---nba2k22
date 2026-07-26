@@ -188,6 +188,10 @@ GENERIC_SEMANTIC_RE = re.compile(
 
 ROOT_RESEARCH_ASSET_PATHS = {"abstracts.json", "search_results.json"}
 
+# Core currently has no tracked artifact whose body must be excluded while its
+# metadata remains indexable. Keep the generic guard explicit for domain forks.
+RESTRICTED_METADATA_ONLY: set[str] = set()
+
 HISTORICAL_EXECUTION_PLAN_PATHS = {
     "07_Execution_Plans/Task_001_Distributed_Pipeline_Mapping.md",
     "07_Execution_Plans/Task_003_Context_Collapse_Resistance.md",
