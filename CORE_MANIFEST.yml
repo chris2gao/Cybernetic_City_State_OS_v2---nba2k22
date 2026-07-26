@@ -107,6 +107,25 @@ domain_merge_procedure:
     Do not rewrite core history. Every domain's common ancestor depends on it;
     one rewrite breaks mergeability for all domains at once.
 
+# How a NEW domain repository comes into existence. Recorded here because the
+# script existed for weeks with nothing in the repository pointing at it, so the
+# only place the procedure lived was one person's notes.
+domain_creation:
+  use: >-
+    new-domain.ps1 at the core repository root. Example: .\new-domain.ps1 -Name finance
+  never: >-
+    Do not create a domain by copying the core FOLDER. A folder copy carries
+    core's remotes, so the new domain keeps pointing at core and at every other
+    domain remote core happens to have; one stray `git push` then writes into the
+    wrong repository. The script clones instead, which carries only `origin`, and
+    renames that to `core` before adding the domain's own `origin`.
+  note: >-
+    A fresh domain does NOT need the `merge -s ours` step described under
+    domain_merge_procedure.first_time_only. That step existed only because the
+    math domain already held content that core's first commit deletes. A new
+    domain starts at core's current state, so ordinary `git merge core/master`
+    is correct from day one.
+
 verification:
   - "no domain edits inside core_owned_paths"
   - "core merge completes without conflict, or every conflict is reported"

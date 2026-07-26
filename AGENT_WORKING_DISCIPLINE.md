@@ -34,6 +34,47 @@ numbers were the answer. Both cost more context than the work they served.
 
 This is the cheapest available saving. It beats any configuration setting.
 
+### The specific habits, and what each one costs
+
+Measured 2026-07-26 across 50 Codex rollout sessions on this workstation: 2,599
+shell calls, 5,360 tool outputs, 8.84 billion input tokens. The numbers below are
+from that measurement, not estimates.
+
+- **Never read a whole file when a slice answers the question.** Use `-TotalCount`,
+  `-First`, `head -n`, or an explicit line range, and widen only after the slice
+  proves insufficient. *Measured:* 303 of 355 `Get-Content` calls (85%) carried no
+  length limit; an unlimited read cost 6,283 characters on average against 1,839
+  for a limited one — **3.4x per call**. Those 303 reads alone were 1.9 million
+  characters, roughly a fifth of all tool output.
+- **Cap output at the call site, before it runs** — not by ignoring it afterwards.
+  *Measured:* output is median 244 characters but p99 28,075; the twenty largest
+  outputs were 8.8% of every character returned.
+- **When polling a background job, pass the smallest token cap the tool offers,
+  and poll less often rather than truncating a large payload repeatedly.**
+  *Measured:* the `wait` tool was **30% of all tool traffic** (1,468 calls,
+  3.39M characters). 92 of those calls — 6.3% — returned over 10,000 characters
+  and accounted for **56% of all polling traffic**. The tool accepts a
+  `max_tokens` argument that was never used.
+- **Ask Git for the summary first:** `git status -sb`, `git diff --stat`,
+  `git log --oneline -n`. Fetch full text only for the hunk in question.
+  *Measured:* one `git status` returned 40,093 characters — the truncation
+  ceiling, meaning the real output was longer still.
+- **Write anything longer than one line as a script file and run the file.** Do
+  not pack multi-statement logic into a single `-Command` or `-c` string.
+  *Measured:* one quoting mistake in a single-line PowerShell command produced
+  53.5 KB of repeated parser errors. Outputs containing a PowerShell error
+  averaged 3,655 characters against 1,717 for clean ones — **twice the cost**.
+- **On failure, do not re-run the same command unchanged.** Read the error,
+  change the hypothesis, and cap the output of the retry.
+
+### What is not worth optimising
+
+The shell *invocation* is not where the tokens go. Command arguments are 0.87% of
+all conversation content, and Windows-specific text — escaped backslashes and CRLF
+— is about 0.07%. 96.8% of input tokens are cache hits, so a few characters of
+path syntax cost essentially nothing. Claims that one operating system costs
+tens of percent more than another do not survive measurement; output volume does.
+
 ## 3. Verify before acting — then report the finding, not the reading
 
 Check the actual state before you change anything: real HEADs, real file contents,
@@ -109,17 +150,87 @@ after they had been accepted, and "master still holds residue" after a merge had
 cleaned it. Each stale line forced a later reader to work out which statement to
 believe.
 
-## Role notes
+## Roles and the flow between them
 
-**Foreground (review and dispatch).** Decide, verify, adjudicate. Write task
-packets and accept results. Do not do backend execution work unless the task is
-genuinely high-risk or the Human names you.
+Read this whole section even though only one part describes you. Every incident
+this project has paid for was a **boundary** failure — work done by the wrong
+party, or a result accepted by someone who should not have been the one accepting
+it. You cannot recognise "this is not mine to do" or "this reviewer is checking
+its own output" without the map.
 
-**Backend executor (Codex, Antigravity).** Execute inside the allowed paths, check
-exit codes rather than assuming, and return one consolidated handoff. Stop on the
-declared stop conditions instead of improvising around them. Report contradictions
-in the dispatch rather than resolving them silently.
+**A role label grants nothing.** It says what you are expected to do, never what
+you are permitted to do. Authority comes only from current Human instruction and
+the canonical protocol. This applies to every line below.
+
+### Who does what
+
+| Role | Held by | Produces |
+|:--|:--|:--|
+| Foreground: dispatch, adjudication, verification | Claude | Task packets, verdicts, decision records |
+| Backend execution | Codex, Antigravity | Changed files, exit codes, one consolidated handoff |
+| Independent review | ChatGPT (dedicated project) | Accept / reject with the evidence it rests on |
+| Analysis and design discussion | ChatGPT (separate project) | Options, trade-offs, failure modes |
+| Deep research | Gemini web, ChatGPT web (separate project) | Sourced material and a first synthesis |
+| Closed-corpus refinement | NotebookLM | Citation-grounded comparison across supplied sources |
+| Scheduled cloud automation | Gemini Spark | Not in service; requires a custom MCP node |
+
+**Foreground.** Decide, verify, adjudicate. Write task packets and accept results.
+Do not do backend execution work unless the task is genuinely high-risk or the
+Human names you.
+
+**Backend executor.** Execute inside the allowed paths, check exit codes rather
+than assuming, and return one consolidated handoff. Stop on the declared stop
+conditions instead of improvising around them. Report contradictions in the
+dispatch rather than resolving them silently.
 
 **Reviewer.** Read the primary evidence, not the summary. Do not accept the
-executor's own account of correctness as the finding. Ask for the material with the
-conclusions removed where that is possible.
+executor's own account of correctness as the finding. Ask for the material with
+the conclusions removed where that is possible. Judge only from what this round
+supplied; do not carry forward a previous round's conclusion.
+
+**Researcher.** Produce material, not verdicts. A research report is input to
+review, never an accepted result. Every report carries a provenance header: which
+model, which date, what was searched, which claims have a primary source and which
+are inference.
+
+**Refiner.** Only answers from the sources it was given. Its value is that every
+sentence points back to a passage. Use it to find where two independent research
+passes disagree — that disagreement is the signal worth having.
+
+### The two routing rules that are not negotiable
+
+1. **The reviewer never reviews its own family's output.** ChatGPT reviews
+   Gemini's reports; reports written by ChatGPT go to the foreground or to a fresh
+   review context with the conclusions stripped. Isolating contexts prevents
+   context leakage; it does nothing about a shared model's blind spots, which is
+   why this rule exists separately.
+2. **The author does not design the verification of their own work.** Where it
+   matters, separate the two parties, or hand the reviewer the raw material with
+   the conclusions removed.
+
+### The flow
+
+Research produces material → review judges it → the repository keeps it.
+
+Nothing is finished at the point a model says it is finished. A deep research
+report is not a finding; an executor's handoff is not an acceptance. Both become
+real only after someone who did not produce them has read the primary evidence,
+and only once the conclusion is written into the repository or the brief vault.
+
+Research reports land in `01_Research_Reports/`, which `CORE_MANIFEST.yml` marks
+domain-owned: each domain keeps its own, and core ships none.
+
+### What makes the accumulated material worth anything
+
+The raw material is not proprietary — anyone can run the same search. Four things
+are, and all four are by-products of process rather than of retrieval:
+
+- the sequence of questions, and how each answer determined the next one;
+- **what was examined and rejected, and why.** No research tool generates this.
+  Every one of them is biased toward a positive synthesis. Record negative results
+  as first-class citizens;
+- the crossing of external material with this project's own measurements;
+- citations that can still be checked months later.
+
+A record of what was adopted, without the record of what was refused, is worth a
+fraction of the same effort.

@@ -1,3 +1,21 @@
+> ## ⛔ 本文档描述的是已被取代的旧架构，不要照此执行
+>
+> 本文的做法是：全量拷贝 → **摧毁 `.git`** → `git init` → 以本地文件夹为 `upstream`、
+> 分支 `main`、两条时间线绝对独立。
+>
+> **现行架构与之不兼容。** 城邦系列是 core + 领域仓的 fork 架构：所有领域与 core
+> **共享祖先**，通过 `git fetch core && git merge core/master` 单向获取核心更新；
+> `core` 历史永不改写，因为一次 rewrite 会同时废掉所有领域的可合并性。
+> 若今天照本文执行，会亲手销毁整个 merge 模型赖以存在的共同祖先。
+>
+> **现行权威来源**：仓库根 `CORE_MANIFEST.yml`
+> —— `core_owned_paths`、`domain_owned_paths`、`domain_merge_procedure`、
+> `domain_creation`、`verification`。新建领域用根目录的 `new-domain.ps1`，
+> 不要复制文件夹。
+>
+> 本文保留作为历史记录（`bank` 节点确实是这样产生的），未删除。
+> 标注于 2026-07-26。
+
 # 赛博城邦协议：物理 Fork 与单向同步拓扑建立 (True Fork Protocol)
 
 当需要从当前主城邦（Main City-State）衍生出一个新的子城邦沙盒，且要求：
