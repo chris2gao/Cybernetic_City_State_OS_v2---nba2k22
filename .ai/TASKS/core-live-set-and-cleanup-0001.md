@@ -294,41 +294,60 @@ generic routing / migrate the domain implementation / rewrite as a domain-relati
 reference / let the teacher repository override it. Propose only — none of it is
 authorized here.
 
-### R5. Teacher migration is DEFERRED — and that freezes the teaching files in core
+### R5. Teaching material in core is now removable — under its own disposition, not Class 3
 
-**Human decision, superseding the earlier migration ordering: do not touch the teacher
-repository now.** It has teaching-development work in flight. The migration happens
-later, when that work is finished and the material is no longer load-bearing for it.
+**Human decision, superseding both earlier positions: do not touch the teacher
+repository at all, and remove the teaching material from core.** Teacher is protected
+by a different mechanism — it simply will not run `git merge core/master` until its
+teaching-development work is finished. It is currently at merge base `f46093d`, in
+sync with its own remote, so nothing core does can reach it.
 
-The consequence for **this** task is the part that matters, and it is not optional:
+**Do not force this material into Class 3.** It fails the Class 3 definition: it is
+not superseded by a newer file. It is being removed because **core is not its owner**,
+which is a different and independently sufficient reason. Forcing it into Class 3
+would corrupt the one criterion set that review just used to reject four other files.
 
-> While teacher holds no copy of its own, **the core copies are teacher's only copies.**
-> Core must not delete them. A deletion in core reaches teacher at its next
-> `git merge core/master` and removes files its running work depends on.
+Use a separate disposition:
 
-Therefore, for this classification round:
+```
+domain_material_removed_by_human_decision
+```
 
-- `06_Silicon_Index/factory_pipeline/` and every other teaching-related path in core is
-  **retained, and is not a deletion candidate under any class.**
-- Classify them `Live` with the reason recorded as *in use by the teacher domain
-  through core merge*, not as Evidence. They are not a historical record; they are
-  running dependencies of another repository.
-- Introduce and use the disposition `deferred_pending_domain_migration` so the reason
-  for retention is explicit, and so a future round does not have to re-derive it.
-- Do **not** propose, stage, or schedule any teacher-side change. Do not write to the
-  teacher repository.
+Its evidence requirement is ownership, not deadness. For each path record: that it is
+teaching-domain material, which domain owns it, whether the core path is core-owned or
+domain-owned, and the Human decision authorizing removal. Report it as its own section
+with its own total, never merged into the Class 3 count.
 
-Still produce the **inventory** from R4 — knowing what would move, and what in core
-references it, is exactly what makes the future migration cheap. Inventory and
-proposal only; no ordering to execute now.
+Scope to propose under this disposition: `06_Silicon_Index/factory_pipeline/` and the
+other teaching-related core paths from the R4 inventory. Measured earlier at 276
+teaching-related tracked paths of 855, of which 38 sit under core-owned
+`06_Silicon_Index/`; re-measure with unescaped paths per R1, since that count was taken
+with the defective enumeration.
 
-For the record, the ordering that will apply when the migration is authorized, so it
-does not have to be rediscovered: teacher copies to its own path first and both paths
-coexist; teacher repoints its own references while the old path still works; teacher
-confirms zero references to `06_Silicon_Index/factory_pipeline/` remain; core deletes
-last, together with the R4 reference fixes; teacher's next merge then removes the core
-copy as a no-op. The dangerous step is the merge, and the zero-reference confirmation
-is what defuses it.
+### R5a. The one thing that must be recorded, or teacher loses files silently
+
+Deferring the problem does not remove it. When teacher eventually merges core, it
+receives these deletions, and `06_Silicon_Index/factory_pipeline/` — **37 tracked files
+in teacher today** — disappears from its worktree.
+
+So write a **pre-merge condition** into the report, addressed to whoever performs
+teacher's eventual merge:
+
+> Before running `git merge core/master` in the teacher repository, copy
+> `06_Silicon_Index/factory_pipeline/` into `08_Domain_Applications/Math_Mentor/`
+> and repoint teacher's own references. Teacher already has 1093 tracked files under
+> that directory, so the destination exists. Merging without this step removes 37
+> files from teacher with no warning and no conflict, because deleting a file the
+> domain has not modified is a clean merge, not a conflict.
+
+That last clause is the whole risk: this loss produces **no conflict signal**. It is
+silent. The record is the only thing standing between the decision and the loss.
+
+Also record, in core, the provenance needed later: which paths were removed, at which
+commit, and where teacher should place them. Do not write anything into the teacher
+repository, and do not propose that teacher put files back under `06_Silicon_Index/` —
+that path is core-owned, and a domain holding files there would permanently convert
+the merge-conflict detector into noise.
 
 ### What was accepted and must not be redone
 
