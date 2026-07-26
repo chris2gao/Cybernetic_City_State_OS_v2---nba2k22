@@ -17,3 +17,15 @@ Thumbs.db
 # locally, but it must never enter public history.  Code and contracts are
 # tracked; events and snapshots are not.
 08_Domain_Applications/Math_Mentor/learners/
+
+# Claude Code agent settings.
+#
+# settings.json is TRACKED: it carries the shared policy (permissions, deny
+# rules) and reaches every domain through a core merge, so one edit in core
+# updates all of them.
+#
+# settings.local.json is NOT tracked. It holds one machine's personal choices -
+# model, effort, thinking budget. It was tracked by mistake, which is how one
+# person's 16k always-on thinking budget ended up cloned into every domain
+# repository.
+.claude/settings.local.json
