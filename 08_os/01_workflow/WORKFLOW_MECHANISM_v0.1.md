@@ -118,15 +118,77 @@ before stage 4 begins. The evidence-tracing requirement may already be sufficien
 is the point where the project's existing rule — an author should not design the
 verification of their own work — either applies or is judged already satisfied.
 
-## 6. Execution and completion
+## 6. Stage 5 — execution, as a loop
 
-The steps are executed and the tests run. Tests passing is completion, because that is
-exactly the condition under which A is satisfied. There is no separate acceptance.
+Settled by Human decision 2026-07-27: **execution is inside the workflow**, and it is
+not a straight line. The full chain:
 
-**Open choice:** whether execution is a workflow stage or a handoff to the machinery
-that already exists — backend executor, independent reviewer, human gates. The boundary
-must be explicit either way; what must not happen is execution being assumed to belong
-to whoever is nearby.
+```
+requirement → A → evidence → B → test program → step decomposition
+                                                      │
+                                        ┌─────────────┘
+                                        ▼
+                            execute one step ──► verify
+                                        ▲            │
+                                        │       pass │ fail
+                                        │            ▼
+                                        └──────── retry ──► next step
+                                                              │
+                                                    all steps done
+                                                              ▼
+                                                          complete
+```
+
+Verification gates progress step by step. A step is not left until its tests pass, so a
+defect is caught against the step that caused it rather than at the end against
+everything at once.
+
+### The loop needs an exit that is not success
+
+"Retry until done" has no terminating condition when a step cannot be done, and that
+produces two failures, the second worse than the first.
+
+**Unbounded spin.** A step that is not achievable retries forever. The
+first-generation system already answered this with a bounded repair budget — three
+attempts, after which the task escalates rather than continuing. That precedent is
+adopted here rather than reinvented.
+
+**Termination by weakening the check.** Under retry pressure the cheapest way to make a
+test pass is to change the test. A loop with no exit but success will find that exit.
+This is the failure mode the loop must be built against, not merely warned about.
+
+Two rules follow, and they are the load-bearing part of this section:
+
+1. **Tests are frozen once the loop begins.** They were derived from evidence in stage
+   4; changing them inside the loop is not a repair, it is a redefinition of what
+   success means. A test that turns out to be wrong invalidates upward — see below —
+   it is not edited in place.
+2. **Repeated failure is a finding, not just a retry.** After the repair budget is
+   exhausted, the correct question is not "how else can this step be implemented" but
+   "which upstream artifact was wrong".
+
+### Three exits, not two
+
+| Exit | When | Action |
+| :--- | :--- | :--- |
+| pass | tests pass | proceed to the next step |
+| retry | failure looks like an implementation defect, budget remains | re-execute the same step |
+| invalidate | budget exhausted, or the failure indicates the evidence was wrong | append a verdict against `steps/`, `tests/`, `result/` or `evidence/` and return to that stage |
+
+The third exit is the one that makes the loop honest. A step that cannot be made to
+pass is evidence about the model that produced it — most often that B claimed something
+the evidence did not actually support, which is exactly the case stage 3's
+evidence-dependency naming exists to make traceable.
+
+### Completion
+
+All steps executed, all tests passing. That **is** completion, because it is exactly the
+condition under which A is satisfied. There is no separate acceptance stage; adding one
+would imply the tests were insufficient, and in that case the defect is in the tests.
+
+**Open choice:** who performs execution — a backend executor under the existing
+machinery, or a role defined inside this system. The boundary must be explicit either
+way. What must not happen is execution being assumed to belong to whoever is nearby.
 
 ## 7. What this proposal does not settle
 
