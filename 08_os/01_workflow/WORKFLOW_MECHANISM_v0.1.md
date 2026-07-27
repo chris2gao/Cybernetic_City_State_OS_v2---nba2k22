@@ -97,6 +97,63 @@ old A no longer validate, and the instance is back at the stage where its inputs
 sound. Nothing needs to be reset by hand, which is the point of deriving rather than
 declaring.
 
+## 4A. Role separation with partitioned context
+
+Human decision 2026-07-27. Stages are performed by **separate model instances with
+partial context**, not by one instance changing hats.
+
+| Stage | instance | sees | does not see |
+| :--- | :--- | :--- | :--- |
+| requirement, overall planning | a | requirement, result, project-level information | implementation and test detail |
+| information gathering | b (one or more) | requirement, sources | result model, implementation |
+| result modeling | a or c | requirement, evidence | implementation |
+| test program | d | evidence, requirement, result model | implementation |
+| implementation | e | implementation plan, tests as read-only | how the tests were derived |
+| review and testing | a or b | result model, evidence, implementation output | — |
+
+This is why test tampering is not a rule but a structural impossibility: the instance
+that would benefit from weakening a test is not given the context in which a test could
+be rewritten, and receives the tests under an explicit no-modification constraint.
+
+Detailed role and context definitions per stage are deferred; this records the
+principle.
+
+### Partitioned context is a loading discipline, not an access boundary
+
+Stated plainly because this repository has paid for the distinction twice in two days.
+
+An instance with shell access can read files outside its loaded context. Loading is
+about what enters the window, not about what is reachable. So partitioning removes
+contamination and removes incentive; it does not remove capability.
+
+The same distinction cost the permission policy: its `deny` rules were a boundary,
+while "do not run `git add .`" — the only thing standing between a private key in the
+working tree and a published repository — is a convention.
+
+**A mechanism already exists here.** Measured at this commit: `git worktree list`
+returns **32 registered worktrees**, and both Codex and Antigravity already run
+subagents in their own. One worktree per role, containing only the paths that role may
+see, converts the partition from discipline into boundary. Whether to use it is a
+choice; what should not happen is treating loading discipline as though it were already
+enforcement.
+
+### What partitioning does not address
+
+**Overfitting to the test.** Instance e can leave every test untouched and still satisfy
+the letter of a test rather than its intent. That is not tampering; it is a property of
+tests being incomplete specifications, and no context boundary prevents it.
+
+The design already contains the answer, and it is worth making explicit: the review
+instance checks **the implementation against B and the evidence**, not merely that the
+suite is green. Review that only reads the result of the tests degrades into confirming
+a light is on.
+
+**One reuse constraint.** Where the table allows `a or c` and `a or b`, instance a may
+define the requirement and later review whether the implementation satisfies it — the
+requirement owner is the right acceptor. But a must not also have produced B, or it is
+reviewing its own derivation, which is the failure this project spent six review rounds
+on.
+
 ## 5. Who performs, who confirms
 
 | Stage | performs | confirms |
