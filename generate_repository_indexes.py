@@ -105,6 +105,7 @@ DIRECTORY_SEMANTIC_PROFILES = {
     "ai_program_run_root",
     "ai_program_run",
     "ai_program_run_component",
+    "agent_host_policy",
     "communication_control_plane",
     "communication_fixture_pool",
     "communication_proof_case",
@@ -191,11 +192,6 @@ ROOT_RESEARCH_ASSET_PATHS = {"abstracts.json", "search_results.json"}
 # Core currently has no tracked artifact whose body must be excluded while its
 # metadata remains indexable. Keep the generic guard explicit for domain forks.
 RESTRICTED_METADATA_ONLY: set[str] = set()
-
-HISTORICAL_EXECUTION_PLAN_PATHS = {
-    "07_Execution_Plans/Task_001_Distributed_Pipeline_Mapping.md",
-    "07_Execution_Plans/Task_003_Context_Collapse_Resistance.md",
-}
 
 SILICON_MUTABLE_STATE_EVIDENCE_PATHS = {
     "06_Silicon_Index/scripts/.bus_state_manager.json",
@@ -1292,6 +1288,8 @@ def semantic_profile(path: str, metadata: dict[str, Any] | None = None) -> str:
         return "canonical_governance"
     if path == "06_Silicon_Index/AI_Bootstrap_Sequence.md":
         return "startup_router"
+    if path == ".claude/settings.json":
+        return "operational_contract"
     if path in {"06_Silicon_Index/CONSTITUTION_DIGEST.md", "CLAUDE.md"}:
         return "routing_snapshot"
     if path.startswith(".ai/load_profiles/"):
@@ -1736,6 +1734,7 @@ def directory_semantic_profile(directory: str) -> str:
         ".ai/lanes/tests": "communication_fixture_pool",
         ".ai/role_memory": "ai_control_plane",
         ".ai/role_memory/tests": "communication_fixture_pool",
+        ".claude": "agent_host_policy",
         "01_Research_Reports": "research_library",
         "01_Research_Reports/_Supreme_Court_Proposals": "research_library",
         "02_Protocols": "protocol_library",
@@ -1805,6 +1804,7 @@ def directory_role(directory: str, descendant_files: list[str]) -> str:
         "ai_runner_control_plane": f"Windows CLI runner {leaf} 的进程监督、证据 schema 与测试；不承载任务或发布权威",
         "ai_long_run_library": "保存长程任务 checkpoint 叙述和续跑 provenance",
         "ai_program_run_root": "按 run ID 隔离冻结输入、checkpoint、输出、验证和报告",
+        "agent_host_policy": "Claude Code 项目级共享权限策略；由宿主按固定路径加载，不是普通实现配置",
         "communication_control_plane": "Human-AI event/pointer/state schema、validator 与 fail-closed proof 控制面",
         "communication_fixture_pool": f"通信合规测试层 {leaf}；保存 raw/fixture/proof artifact，不承载现实授权",
         "research_library": f"研究来源区 {leaf}；可能包含健康、N=1 或用户资产，默认按单文件加载",
@@ -1854,6 +1854,7 @@ def when_to_enter_directory(directory: str) -> str:
         "ai_runner_control_plane": "启动、查询、停止或验证已批准的 Windows CLI worker，并核对其本地运行证据",
         "ai_long_run_library": "续跑或审计某个 long-run checkpoint",
         "ai_program_run_root": "按 exact run ID 复现输入、checkpoint、输出或验证",
+        "agent_host_policy": "核验或修改 Claude Code 的共享 allow/ask/deny 策略",
         "communication_control_plane": "验证 event/pointer/state schema、validator 或 transition proof",
         "communication_fixture_pool": f"运行通信合规的 {leaf} 测试层",
         "research_library": f"当前研究问题明确需要 {leaf} 中的某个来源或报告",
@@ -3193,10 +3194,6 @@ def self_test() -> dict[str, Any]:
             "implementation",
         ),
         "campaigns/campaign_manifest_template.yaml": ("campaign_template", "schema"),
-        "04_Parliament/Verdicts/Verdict_005_Vacuum_Circuit_Breaker.md": (
-            "parliament_verdict",
-            "historical_evidence",
-        ),
         "06_Silicon_Index/README.md": ("routing_snapshot", "routing"),
         **{
             path: ("operational_contract", "operational_contract")
@@ -3325,6 +3322,8 @@ def self_test() -> dict[str, Any]:
         ".ai/communication_compliance/fixtures/artifacts/proof/transition-c2-replay"
     ) == "communication_proof_case"
     assert directory_semantic_profile(".ai/runs/tests") == "ai_runner_control_plane"
+    assert directory_semantic_profile(".claude") == "agent_host_policy"
+    assert semantic_profile(".claude/settings.json") == "operational_contract"
     block = "# generated\n"
     manual = "# 人工说明\r\n保持原样\r\n".encode("utf-8")
     merged, preserved = merge_generated_block("index.md", manual, block)

@@ -11,11 +11,12 @@ Windows CLI runner runs 的进程监督、证据 schema 与测试；不承载任
 
 ## recommended_reading_order
 
-1. [`.ai/runs/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-2. [`.ai/runs/Runner.Common.ps1`](Runner.Common.ps1) — 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 Runner.Common.ps1（nonempty_lines=399；Set-StrictMode -Version 2.0）；可追踪实现不等于已激活、已验证或 production-ready
-3. [`.ai/runs/runner-worker.ps1`](runner-worker.ps1) — 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 runner-worker.ps1（nonempty_lines=154；［CmdletBinding()］）；可追踪实现不等于已激活、已验证或 production-ready
-4. [`.ai/runs/cli-runner-harness-0001/index.md`](cli-runner-harness-0001/index.md) — 启动、查询、停止或验证已批准的 Windows CLI worker，并核对其本地运行证据
-5. [`.ai/runs/tests/index.md`](tests/index.md) — 启动、查询、停止或验证已批准的 Windows CLI worker，并核对其本地运行证据
+1. [`.ai/runs/.gitignore`](.gitignore) — 触发条件：当前动作落入该文件规定的协议或执行边界。读取 .gitignore（nonempty_lines=8；*/LOCK）；执行前核验当前任务授权、精确 source head 与上位合同
+2. [`.ai/runs/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
+3. [`.ai/runs/Runner.Common.ps1`](Runner.Common.ps1) — 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 Runner.Common.ps1（nonempty_lines=399；Set-StrictMode -Version 2.0）；可追踪实现不等于已激活、已验证或 production-ready
+4. [`.ai/runs/runner-worker.ps1`](runner-worker.ps1) — 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 runner-worker.ps1（nonempty_lines=154；［CmdletBinding()］）；可追踪实现不等于已激活、已验证或 production-ready
+5. [`.ai/runs/cli-runner-harness-0001/index.md`](cli-runner-harness-0001/index.md) — 启动、查询、停止或验证已批准的 Windows CLI worker，并核对其本地运行证据
+6. [`.ai/runs/tests/index.md`](tests/index.md) — 启动、查询、停止或验证已批准的 Windows CLI worker，并核对其本地运行证据
 
 ## child_directories
 
@@ -32,6 +33,13 @@ Windows CLI runner runs 的进程监督、证据 schema 与测试；不承载任
 
 ## direct_files
 
+<!-- RIDX_FILE_HEX 2e61692f72756e732f2e67697469676e6f7265 -->
+- **path_or_link**: [`.ai/runs/.gitignore`](.gitignore)
+  - **content_summary**: 纯文本，8 个非空行；首行“*/LOCK”
+  - **role_and_use**: 将 .gitignore（nonempty_lines=8；*/LOCK） 作为“执行合同”使用；执行前核验当前任务授权、精确 source head 与上位合同
+  - **authority_class**: `operational_contract`
+  - **status_or_freshness**: semantic_profile=operational_contract；authority=operational_contract；evidence_basis=text_line_count_and_first_visible_line；执行前核验当前任务授权、精确 source head 与上位合同
+  - **when_to_read**: 触发条件：当前动作落入该文件规定的协议或执行边界。读取 .gitignore（nonempty_lines=8；*/LOCK）；执行前核验当前任务授权、精确 source head 与上位合同
 <!-- RIDX_FILE_HEX 2e61692f72756e732f52756e6e65722e436f6d6d6f6e2e707331 -->
 - **path_or_link**: [`.ai/runs/Runner.Common.ps1`](Runner.Common.ps1)
   - **content_summary**: 纯文本，399 个非空行；首行“Set-StrictMode -Version 2.0”

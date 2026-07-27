@@ -27,7 +27,7 @@
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30345f5061726c69616d656e742f5665726469637473 -->
 - **path_or_link**: [`04_Parliament/Verdicts`](Verdicts/index.md)
-  - **content_scope**: 议会 Verdicts：组织 Issue、verdict 与归档 provenance，不等于现行宪章；tracked 后代文件数=4
+  - **content_scope**: 议会 Verdicts：组织 Issue、verdict 与归档 provenance，不等于现行宪章；tracked 后代文件数=3
   - **when_to_enter**: 定位议会 Verdicts 中的具体 Issue/verdict，并先区分 active 与 historical
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30345f5061726c69616d656e742f5f4152434849564544 -->

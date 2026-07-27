@@ -25,8 +25,13 @@
 
 <!-- RIDX_DIR_HEX 2e6169 -->
 - **path_or_link**: [`.ai`](.ai/index.md)
-  - **content_scope**: AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信合规入口；tracked 后代文件数=284
+  - **content_scope**: AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信合规入口；tracked 后代文件数=288
   - **when_to_enter**: 执行 handoff、任务接管、review/publication 或查证历史 run
+  - **load_policy**: `task_triggered_lazy_load`
+<!-- RIDX_DIR_HEX 2e636c61756465 -->
+- **path_or_link**: [`.claude`](.claude/index.md)
+  - **content_scope**: Claude Code 项目级共享权限策略；由宿主按固定路径加载，不是普通实现配置；tracked 后代文件数=2
+  - **when_to_enter**: 核验或修改 Claude Code 的共享 allow/ask/deny 策略
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30315f52657365617263685f5265706f727473 -->
 - **path_or_link**: [`01_Research_Reports`](01_Research_Reports/index.md)
@@ -35,7 +40,7 @@
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 30345f5061726c69616d656e74 -->
 - **path_or_link**: [`04_Parliament`](04_Parliament/index.md)
-  - **content_scope**: 议会 04_Parliament：组织 Issue、verdict 与归档 provenance，不等于现行宪章；tracked 后代文件数=63
+  - **content_scope**: 议会 04_Parliament：组织 Issue、verdict 与归档 provenance，不等于现行宪章；tracked 后代文件数=62
   - **when_to_enter**: 定位议会 04_Parliament 中的具体 Issue/verdict，并先区分 active 与 historical
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30355f436172626f6e5f496e646578 -->
@@ -52,11 +57,6 @@
 - **path_or_link**: [`07_Compiler`](07_Compiler/index.md)
   - **content_scope**: CQRS projector、lattice、fuzz gateway 与 YAML topology compiler 原型/测试区；tracked 后代文件数=8
   - **when_to_enter**: 修改或验证具名 projector/compiler/lattice/fuzz 原型
-  - **load_policy**: `task_triggered_lazy_load`
-<!-- RIDX_DIR_HEX 30375f457865637574696f6e5f506c616e73 -->
-- **path_or_link**: [`07_Execution_Plans`](07_Execution_Plans/index.md)
-  - **content_scope**: 执行方案设计 provenance 区 07_Execution_Plans；方案存在不证明实现或授权；tracked 后代文件数=7
-  - **when_to_enter**: 比较 07_Execution_Plans 中的设计方案与现行实现，或追溯架构来源
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 30375f53696c69636f6e5f507269766174655f5a6f6e6573 -->
 - **path_or_link**: [`07_Silicon_Private_Zones`](07_Silicon_Private_Zones/index.md)
@@ -97,27 +97,6 @@
   - **authority_class**: `routing`
   - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
   - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 00_City_State_Routing_Table.md（H1《🗺️ 赛博城邦根任务索引与能力路由表 (The Root Task Index &amp; CRT)》；首个 H2《🏛️ 编年史：宏观战役任务索引 (Chronological Task Roster)》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-<!-- RIDX_FILE_HEX 30e58fb7e696b9e6a1882e6d64 -->
-- **path_or_link**: [`0号方案.md`](0号方案.md)
-  - **content_summary**: H1《赛博城邦 0号方案 (Plan 0)：面向 AGI 纪元的终极演化蓝图》；首个 H2《0. 物理界限与控制论基点 (Cybernetics &amp; Physics Grounding)》
-  - **role_and_use**: 将 0号方案.md（H1《赛博城邦 0号方案 (Plan 0)：面向 AGI 纪元的终极演化蓝图》；首个 H2《0. 物理界限与控制论基点 (Cybernetics &amp; Physics Grounding)》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 0号方案.md（H1《赛博城邦 0号方案 (Plan 0)：面向 AGI 纪元的终极演化蓝图》；首个 H2《0. 物理界限与控制论基点 (Cybernetics &amp; Physics Grounding)》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-<!-- RIDX_FILE_HEX 31e58fb7e696b9e6a1882e6d64 -->
-- **path_or_link**: [`1号方案.md`](1号方案.md)
-  - **content_summary**: H1《赛博城邦多智能体操作系统总体建设方案 (1号方案)》；首个 H2《0. 环境域与基础元素定义（Environmental Domain &amp; Core Elements）》
-  - **role_and_use**: 将 1号方案.md（H1《赛博城邦多智能体操作系统总体建设方案 (1号方案)》；首个 H2《0. 环境域与基础元素定义（Environmental Domain &amp; Core Elements）》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 1号方案.md（H1《赛博城邦多智能体操作系统总体建设方案 (1号方案)》；首个 H2《0. 环境域与基础元素定义（Environmental Domain &amp; Core Elements）》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-<!-- RIDX_FILE_HEX 32e58fb7e696b9e6a1882e6d64 -->
-- **path_or_link**: [`2号方案.md`](2号方案.md)
-  - **content_summary**: H1《赛博城邦 2号方案 (Plan 2)：面向 2026 现役模型的高吞吐量极简落地架构》；首个 H2《核心设计哲学 (Core Philosophy)》
-  - **role_and_use**: 将 2号方案.md（H1《赛博城邦 2号方案 (Plan 2)：面向 2026 现役模型的高吞吐量极简落地架构》；首个 H2《核心设计哲学 (Core Philosophy)》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-  - **authority_class**: `routing`
-  - **status_or_freshness**: semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
-  - **when_to_read**: 触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 2号方案.md（H1《赛博城邦 2号方案 (Plan 2)：面向 2026 现役模型的高吞吐量极简落地架构》；首个 H2《核心设计哲学 (Core Philosophy)》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先
 <!-- RIDX_FILE_HEX 33e58fb7e696b9e6a1882e6d64 -->
 - **path_or_link**: [`3号方案.md`](3号方案.md)
   - **content_summary**: H1《赛博城邦 3号方案 (Plan 3)：人机合一的双引擎治国宪章 (Human-Centric Dual-Engine Constitution)》；首个 H2《核心设计哲学：绝对人类控制阀 (The Absolute Human Anchor)》

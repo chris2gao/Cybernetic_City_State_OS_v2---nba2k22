@@ -12,7 +12,9 @@
 ## recommended_reading_order
 
 1. [`.ai/TASKS/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-2. [`.ai/TASKS/core-mechanism-reachability-cleanup-0002.md`](core-mechanism-reachability-cleanup-0002.md) — 触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 core-mechanism-reachability-cleanup-0002.md（H1《Keep what the mechanism reaches, delete the rest》；首个 H2《1. The rule, in full》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
+2. [`.ai/TASKS/core-mechanism-file-audit-0003.md`](core-mechanism-file-audit-0003.md) — 触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 core-mechanism-file-audit-0003.md（H1《The files no repository reference can reveal》；首个 H2《1. The real shape of the miss》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
+3. [`.ai/TASKS/core-mechanism-reachability-cleanup-0002.md`](core-mechanism-reachability-cleanup-0002.md) — 触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 core-mechanism-reachability-cleanup-0002.md（H1《Keep what the mechanism reaches, delete the rest》；首个 H2《1. The rule, in full》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
+4. [`.ai/TASKS/core-registry-and-final-cleanup-0004.md`](core-registry-and-final-cleanup-0004.md) — 触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 core-registry-and-final-cleanup-0004.md（H1《The registry, and the cleanup it makes cheap》；首个 H2《1. Why the registry comes first》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
 
 ## child_directories
 
@@ -20,6 +22,13 @@
 
 ## direct_files
 
+<!-- RIDX_FILE_HEX 2e61692f5441534b532f636f72652d6d656368616e69736d2d66696c652d61756469742d303030332e6d64 -->
+- **path_or_link**: [`.ai/TASKS/core-mechanism-file-audit-0003.md`](core-mechanism-file-audit-0003.md)
+  - **content_summary**: H1《The files no repository reference can reveal》；首个 H2《1. The real shape of the miss》
+  - **role_and_use**: 将 core-mechanism-file-audit-0003.md（H1《The files no repository reference can reveal》；首个 H2《1. The real shape of the miss》） 作为“已发布任务或信号快照”使用；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=ai_task_or_signal_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
+  - **when_to_read**: 触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 core-mechanism-file-audit-0003.md（H1《The files no repository reference can reveal》；首个 H2《1. The real shape of the miss》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
 <!-- RIDX_FILE_HEX 2e61692f5441534b532f636f72652d6d656368616e69736d2d72656163686162696c6974792d636c65616e75702d303030322e6d64 -->
 - **path_or_link**: [`.ai/TASKS/core-mechanism-reachability-cleanup-0002.md`](core-mechanism-reachability-cleanup-0002.md)
   - **content_summary**: H1《Keep what the mechanism reaches, delete the rest》；首个 H2《1. The rule, in full》
@@ -27,6 +36,13 @@
   - **authority_class**: `historical_evidence`
   - **status_or_freshness**: semantic_profile=ai_task_or_signal_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
   - **when_to_read**: 触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 core-mechanism-reachability-cleanup-0002.md（H1《Keep what the mechanism reaches, delete the rest》；首个 H2《1. The rule, in full》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
+<!-- RIDX_FILE_HEX 2e61692f5441534b532f636f72652d72656769737472792d616e642d66696e616c2d636c65616e75702d303030342e6d64 -->
+- **path_or_link**: [`.ai/TASKS/core-registry-and-final-cleanup-0004.md`](core-registry-and-final-cleanup-0004.md)
+  - **content_summary**: H1《The registry, and the cleanup it makes cheap》；首个 H2《1. Why the registry comes first》
+  - **role_and_use**: 将 core-registry-and-final-cleanup-0004.md（H1《The registry, and the cleanup it makes cheap》；首个 H2《1. Why the registry comes first》） 作为“已发布任务或信号快照”使用；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
+  - **authority_class**: `historical_evidence`
+  - **status_or_freshness**: semantic_profile=ai_task_or_signal_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
+  - **when_to_read**: 触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 core-registry-and-final-cleanup-0004.md（H1《The registry, and the cleanup it makes cheap》；首个 H2《1. Why the registry comes first》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer
 <!-- RIDX_FILE_HEX 2e61692f5441534b532f696e6465782e6d64 -->
 - **path_or_link**: [`.ai/TASKS/index.md`](index.md)
   - **content_summary**: 本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories
@@ -37,7 +53,7 @@
 
 ## do_not_load_by_default
 
-- 默认不加载 1 个历史/测试/生成/用户或大型 direct artifacts：`.ai/TASKS/core-mechanism-reachability-cleanup-0002.md`。
+- 默认不加载 3 个历史/测试/生成/用户或大型 direct artifacts：`.ai/TASKS/core-mechanism-file-audit-0003.md`, `.ai/TASKS/core-mechanism-reachability-cleanup-0002.md`, `.ai/TASKS/core-registry-and-final-cleanup-0004.md`。
 
 ## generation_and_freshness_note
 

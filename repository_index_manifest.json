@@ -1,25 +1,34 @@
 {
   "counts": {
-    "direct_child_directory_edges": 103,
-    "direct_file_edges": 503,
-    "index_files": 104,
+    "direct_child_directory_edges": 102,
+    "direct_file_edges": 498,
+    "index_files": 103,
     "manual_index_sections": 2,
     "submodules": 0,
     "symlinks": 0,
-    "tracked_directories": 104,
-    "tracked_files_final": 503
+    "tracked_directories": 103,
+    "tracked_files_final": 498
   },
   "directories": [
     {
       "child_directories": [
         {
-          "content_scope": "AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信合规入口；tracked 后代文件数=284",
+          "content_scope": "AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信合规入口；tracked 后代文件数=288",
           "entry_id": "96862139c0db47cac9562c51fc3046008d2cb6064d891b94785efe108d4e5f72",
           "load_policy": "task_triggered_lazy_load",
           "path": ".ai",
           "semantic_audit_status": "reviewed",
           "semantic_profile": "ai_control_plane",
           "when_to_enter": "执行 handoff、任务接管、review/publication 或查证历史 run"
+        },
+        {
+          "content_scope": "Claude Code 项目级共享权限策略；由宿主按固定路径加载，不是普通实现配置；tracked 后代文件数=2",
+          "entry_id": "e026f56c08dcdea441a2aa620ab410ce91162062609b2430f5a13bc9b7cf93f1",
+          "load_policy": "task_triggered_lazy_load",
+          "path": ".claude",
+          "semantic_audit_status": "reviewed",
+          "semantic_profile": "agent_host_policy",
+          "when_to_enter": "核验或修改 Claude Code 的共享 allow/ask/deny 策略"
         },
         {
           "content_scope": "研究来源区 01_Research_Reports；可能包含健康、N=1 或用户资产，默认按单文件加载；tracked 后代文件数=25",
@@ -31,7 +40,7 @@
           "when_to_enter": "当前研究问题明确需要 01_Research_Reports 中的某个来源或报告"
         },
         {
-          "content_scope": "议会 04_Parliament：组织 Issue、verdict 与归档 provenance，不等于现行宪章；tracked 后代文件数=63",
+          "content_scope": "议会 04_Parliament：组织 Issue、verdict 与归档 provenance，不等于现行宪章；tracked 后代文件数=62",
           "entry_id": "f3d6a77488f703e0173430c574aee21e9565c1f2dd0f10d4454af08f19e33ea3",
           "load_policy": "task_triggered_lazy_load",
           "path": "04_Parliament",
@@ -65,15 +74,6 @@
           "semantic_audit_status": "reviewed",
           "semantic_profile": "compiler_workspace",
           "when_to_enter": "修改或验证具名 projector/compiler/lattice/fuzz 原型"
-        },
-        {
-          "content_scope": "执行方案设计 provenance 区 07_Execution_Plans；方案存在不证明实现或授权；tracked 后代文件数=7",
-          "entry_id": "3185ac80d0b8004773a134a87ff2b0d9ac4a038f67cf447d6c20e6c8d80d4bb9",
-          "load_policy": "task_triggered_lazy_load",
-          "path": "07_Execution_Plans",
-          "semantic_audit_status": "reviewed",
-          "semantic_profile": "execution_plan_archive",
-          "when_to_enter": "比较 07_Execution_Plans 中的设计方案与现行实现，或追溯架构来源"
         },
         {
           "content_scope": "Private Zone 07_Silicon_Private_Zones 的路径/格式元数据边界；索引不读取或摘要正文；tracked 后代文件数=2",
@@ -153,7 +153,7 @@
         },
         {
           "authority_class": "routing",
-          "byte_size": 2104,
+          "byte_size": 764,
           "content_summary": "H1《🗺️ 赛博城邦根任务索引与能力路由表 (The Root Task Index &amp; CRT)》；首个 H2《🏛️ 编年史：宏观战役任务索引 (Chronological Task Roster)》",
           "description_basis": "markdown_heading_or_visible_structure",
           "encoding_or_format": "utf8",
@@ -171,69 +171,6 @@
           "semantic_profile": "routing_snapshot",
           "status_or_freshness": "semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先",
           "when_to_read": "触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 00_City_State_Routing_Table.md（H1《🗺️ 赛博城邦根任务索引与能力路由表 (The Root Task Index &amp; CRT)》；首个 H2《🏛️ 编年史：宏观战役任务索引 (Chronological Task Roster)》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先"
-        },
-        {
-          "authority_class": "routing",
-          "byte_size": 5152,
-          "content_summary": "H1《赛博城邦 0号方案 (Plan 0)：面向 AGI 纪元的终极演化蓝图》；首个 H2《0. 物理界限与控制论基点 (Cybernetics &amp; Physics Grounding)》",
-          "description_basis": "markdown_heading_or_visible_structure",
-          "encoding_or_format": "utf8",
-          "entry_id": "cc2a9222fbc47afc96fa027e9437d948252b2abde2ab58ccef8e42460fc40746",
-          "git_mode": "100644",
-          "metadata_only_boundary": false,
-          "object_type": "blob",
-          "path": "0号方案.md",
-          "role_and_use": "将 0号方案.md（H1《赛博城邦 0号方案 (Plan 0)：面向 AGI 纪元的终极演化蓝图》；首个 H2《0. 物理界限与控制论基点 (Cybernetics &amp; Physics Grounding)》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先",
-          "safe_anchors": [
-            "H1《赛博城邦 0号方案 (Plan 0)：面向 AGI 纪元的终极演化蓝图》",
-            "首个 H2《0. 物理界限与控制论基点 (Cybernetics &amp; Physics Grounding)》"
-          ],
-          "semantic_audit_status": "reviewed",
-          "semantic_profile": "routing_snapshot",
-          "status_or_freshness": "semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先",
-          "when_to_read": "触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 0号方案.md（H1《赛博城邦 0号方案 (Plan 0)：面向 AGI 纪元的终极演化蓝图》；首个 H2《0. 物理界限与控制论基点 (Cybernetics &amp; Physics Grounding)》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先"
-        },
-        {
-          "authority_class": "routing",
-          "byte_size": 7174,
-          "content_summary": "H1《赛博城邦多智能体操作系统总体建设方案 (1号方案)》；首个 H2《0. 环境域与基础元素定义（Environmental Domain &amp; Core Elements）》",
-          "description_basis": "markdown_heading_or_visible_structure",
-          "encoding_or_format": "utf8",
-          "entry_id": "1d433d8acbcc7cb1706cdbb3663582baa7750a68a6a4ee0dd7369fab9b4d91a1",
-          "git_mode": "100644",
-          "metadata_only_boundary": false,
-          "object_type": "blob",
-          "path": "1号方案.md",
-          "role_and_use": "将 1号方案.md（H1《赛博城邦多智能体操作系统总体建设方案 (1号方案)》；首个 H2《0. 环境域与基础元素定义（Environmental Domain &amp; Core Elements）》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先",
-          "safe_anchors": [
-            "H1《赛博城邦多智能体操作系统总体建设方案 (1号方案)》",
-            "首个 H2《0. 环境域与基础元素定义（Environmental Domain &amp; Core Elements）》"
-          ],
-          "semantic_audit_status": "reviewed",
-          "semantic_profile": "routing_snapshot",
-          "status_or_freshness": "semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先",
-          "when_to_read": "触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 1号方案.md（H1《赛博城邦多智能体操作系统总体建设方案 (1号方案)》；首个 H2《0. 环境域与基础元素定义（Environmental Domain &amp; Core Elements）》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先"
-        },
-        {
-          "authority_class": "routing",
-          "byte_size": 5469,
-          "content_summary": "H1《赛博城邦 2号方案 (Plan 2)：面向 2026 现役模型的高吞吐量极简落地架构》；首个 H2《核心设计哲学 (Core Philosophy)》",
-          "description_basis": "markdown_heading_or_visible_structure",
-          "encoding_or_format": "utf8",
-          "entry_id": "ddcbb4ebe011b56be979f126e98ae88d3bf80fab45c3827318abd519fa46c381",
-          "git_mode": "100644",
-          "metadata_only_boundary": false,
-          "object_type": "blob",
-          "path": "2号方案.md",
-          "role_and_use": "将 2号方案.md（H1《赛博城邦 2号方案 (Plan 2)：面向 2026 现役模型的高吞吐量极简落地架构》；首个 H2《核心设计哲学 (Core Philosophy)》） 作为“导航/状态快照”使用；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先",
-          "safe_anchors": [
-            "H1《赛博城邦 2号方案 (Plan 2)：面向 2026 现役模型的高吞吐量极简落地架构》",
-            "首个 H2《核心设计哲学 (Core Philosophy)》"
-          ],
-          "semantic_audit_status": "reviewed",
-          "semantic_profile": "routing_snapshot",
-          "status_or_freshness": "semantic_profile=routing_snapshot；authority=routing；evidence_basis=markdown_heading_or_visible_structure；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先",
-          "when_to_read": "触发条件：需要从该具名导航/状态摘要定位下一份现行权威。读取 2号方案.md（H1《赛博城邦 2号方案 (Plan 2)：面向 2026 现役模型的高吞吐量极简落地架构》；首个 H2《核心设计哲学 (Core Philosophy)》）；只用于定位下一权威；实时 Git、Human 指令和活动 mailbox 优先"
         },
         {
           "authority_class": "canonical",
@@ -579,7 +516,7 @@
         },
         {
           "authority_class": "implementation",
-          "byte_size": 149510,
+          "byte_size": 149702,
           "content_summary": "Python；module docstring“Deterministically generate and validate repository directory indexes. The Git index (or an explicit…”；public symbols=IndexErrorDetail, GitEntry, sanitized_…",
           "description_basis": "python_ast_docstring_and_symbols",
           "encoding_or_format": "utf8",
@@ -807,7 +744,7 @@
           "when_to_enter": "查证具体 Human acceptance、authorization 或 publication brief"
         },
         {
-          "content_scope": "保存已发布 task/LRP 合同；只有活动 pointer 能选择其中一项；tracked 后代文件数=2",
+          "content_scope": "保存已发布 task/LRP 合同；只有活动 pointer 能选择其中一项；tracked 后代文件数=4",
           "entry_id": "c895e8d9ab9742463f5242bee9df7b04f721d84c50c2ab9c56123bbf00b8847b",
           "load_policy": "do_not_load_by_default",
           "path": ".ai/TASKS",
@@ -852,7 +789,7 @@
           "when_to_enter": "执行 handoff、任务接管、review/publication 或查证历史 run"
         },
         {
-          "content_scope": "Windows CLI runner runs 的进程监督、证据 schema 与测试；不承载任务或发布权威；tracked 后代文件数=11",
+          "content_scope": "Windows CLI runner runs 的进程监督、证据 schema 与测试；不承载任务或发布权威；tracked 后代文件数=12",
           "entry_id": "536863fd7315df70d6ba2c08b85dff8b521d2e918713b91e7b8af5070b2003d5",
           "load_policy": "task_triggered_lazy_load",
           "path": ".ai/runs",
@@ -1103,6 +1040,30 @@
           "semantic_profile": "ai_protocol_contract",
           "status_or_freshness": "semantic_profile=ai_protocol_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；实际动作仍须满足当前 task、source head 与 Human/host 权限边界",
           "when_to_read": "触发条件：执行其覆盖的通信、交接、长程运行或写入边界。读取 LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md（H1《Long-Run Autonomous Program Protocol》；首个 H2《1. Purpose And Authority》）；实际动作仍须满足当前 task、source head 与 Human/host 权限边界"
+        },
+        {
+          "authority_class": "implementation",
+          "byte_size": 97547,
+          "content_summary": "YAML 结构，顶层键：schema_version, registry_status, assembled_from, ownership_note, protected, mechanisms, mechanism, retired_records；安全锚点：schema_version=citystate.mechanism_registry.v1",
+          "description_basis": "yaml_visible_keys_and_safe_fields",
+          "encoding_or_format": "utf8",
+          "entry_id": "769faea13d0206ca985b63ee8c79282c956635b71d79f89d16f84e2f1948f304",
+          "git_mode": "100644",
+          "metadata_only_boundary": false,
+          "object_type": "blob",
+          "path": ".ai/MECHANISM_REGISTRY.yml",
+          "role_and_use": "将 MECHANISM_REGISTRY.yml（schema_version=citystate.mechanism_registry.v1） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready",
+          "safe_anchors": [
+            "schema_version=citystate.mechanism_registry.v1"
+          ],
+          "schema_detection": "not_schema_shaped",
+          "schema_evidence": [],
+          "schema_shape_detected": false,
+          "semantic_audit_status": "reviewed",
+          "semantic_profile": "implementation_artifact",
+          "status_or_freshness": "semantic_profile=implementation_artifact；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；可追踪实现不等于已激活、已验证或 production-ready",
+          "structured_format": "yaml",
+          "when_to_read": "触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 MECHANISM_REGISTRY.yml（schema_version=citystate.mechanism_registry.v1）；可追踪实现不等于已激活、已验证或 production-ready"
         },
         {
           "authority_class": "routing",
@@ -1628,6 +1589,27 @@
       "direct_files": [
         {
           "authority_class": "historical_evidence",
+          "byte_size": 7512,
+          "content_summary": "H1《The files no repository reference can reveal》；首个 H2《1. The real shape of the miss》",
+          "description_basis": "markdown_heading_or_visible_structure",
+          "encoding_or_format": "utf8",
+          "entry_id": "afbd4bbc9de5d153d0b060220109f0822d55bd044ae7262926546f5f72a39423",
+          "git_mode": "100644",
+          "metadata_only_boundary": false,
+          "object_type": "blob",
+          "path": ".ai/TASKS/core-mechanism-file-audit-0003.md",
+          "role_and_use": "将 core-mechanism-file-audit-0003.md（H1《The files no repository reference can reveal》；首个 H2《1. The real shape of the miss》） 作为“已发布任务或信号快照”使用；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer",
+          "safe_anchors": [
+            "H1《The files no repository reference can reveal》",
+            "首个 H2《1. The real shape of the miss》"
+          ],
+          "semantic_audit_status": "reviewed",
+          "semantic_profile": "ai_task_or_signal_history",
+          "status_or_freshness": "semantic_profile=ai_task_or_signal_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer",
+          "when_to_read": "触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 core-mechanism-file-audit-0003.md（H1《The files no repository reference can reveal》；首个 H2《1. The real shape of the miss》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer"
+        },
+        {
+          "authority_class": "historical_evidence",
           "byte_size": 6481,
           "content_summary": "H1《Keep what the mechanism reaches, delete the rest》；首个 H2《1. The rule, in full》",
           "description_basis": "markdown_heading_or_visible_structure",
@@ -1646,6 +1628,27 @@
           "semantic_profile": "ai_task_or_signal_history",
           "status_or_freshness": "semantic_profile=ai_task_or_signal_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer",
           "when_to_read": "触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 core-mechanism-reachability-cleanup-0002.md（H1《Keep what the mechanism reaches, delete the rest》；首个 H2《1. The rule, in full》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer"
+        },
+        {
+          "authority_class": "historical_evidence",
+          "byte_size": 9928,
+          "content_summary": "H1《The registry, and the cleanup it makes cheap》；首个 H2《1. Why the registry comes first》",
+          "description_basis": "markdown_heading_or_visible_structure",
+          "encoding_or_format": "utf8",
+          "entry_id": "6883fa6b8a3bca47a3c9763c891487c8b1bc857e44bb0411b2ec35dabef2a341",
+          "git_mode": "100644",
+          "metadata_only_boundary": false,
+          "object_type": "blob",
+          "path": ".ai/TASKS/core-registry-and-final-cleanup-0004.md",
+          "role_and_use": "将 core-registry-and-final-cleanup-0004.md（H1《The registry, and the cleanup it makes cheap》；首个 H2《1. Why the registry comes first》） 作为“已发布任务或信号快照”使用；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer",
+          "safe_anchors": [
+            "H1《The registry, and the cleanup it makes cheap》",
+            "首个 H2《1. Why the registry comes first》"
+          ],
+          "semantic_audit_status": "reviewed",
+          "semantic_profile": "ai_task_or_signal_history",
+          "status_or_freshness": "semantic_profile=ai_task_or_signal_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer",
+          "when_to_read": "触发条件：当前 pointer 精确引用该历史任务/信号，或审计其决策来源。读取 core-registry-and-final-cleanup-0004.md（H1《The registry, and the cleanup it makes cheap》；首个 H2《1. Why the registry comes first》）；文件存在不重新激活已结束任务，也不替代当前 INBOX pointer"
         },
         {
           "authority_class": "routing",
@@ -8057,6 +8060,27 @@
       ],
       "direct_files": [
         {
+          "authority_class": "operational_contract",
+          "byte_size": 108,
+          "content_summary": "纯文本，8 个非空行；首行“*/LOCK”",
+          "description_basis": "text_line_count_and_first_visible_line",
+          "encoding_or_format": "utf8",
+          "entry_id": "41065b37dde9733346d87287f5a7b283ce800a6f66e749ed0c5d6394fe24129c",
+          "git_mode": "100644",
+          "metadata_only_boundary": false,
+          "object_type": "blob",
+          "path": ".ai/runs/.gitignore",
+          "role_and_use": "将 .gitignore（nonempty_lines=8；*/LOCK） 作为“执行合同”使用；执行前核验当前任务授权、精确 source head 与上位合同",
+          "safe_anchors": [
+            "nonempty_lines=8",
+            "*/LOCK"
+          ],
+          "semantic_audit_status": "reviewed",
+          "semantic_profile": "operational_contract",
+          "status_or_freshness": "semantic_profile=operational_contract；authority=operational_contract；evidence_basis=text_line_count_and_first_visible_line；执行前核验当前任务授权、精确 source head 与上位合同",
+          "when_to_read": "触发条件：当前动作落入该文件规定的协议或执行边界。读取 .gitignore（nonempty_lines=8；*/LOCK）；执行前核验当前任务授权、精确 source head 与上位合同"
+        },
+        {
           "authority_class": "implementation",
           "byte_size": 19727,
           "content_summary": "纯文本，399 个非空行；首行“Set-StrictMode -Version 2.0”",
@@ -8486,6 +8510,59 @@
       "path": ".ai/token_profile/tests",
       "semantic_audit_status": "reviewed",
       "semantic_profile": "ai_token_profile_tools"
+    },
+    {
+      "child_directories": [],
+      "direct_files": [
+        {
+          "authority_class": "routing",
+          "content_summary": "本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories",
+          "description_basis": "synthetic_index_self_entry",
+          "encoding_or_format": "utf8_generated",
+          "entry_id": "851023bd8623ef7f1b3ba67abab8c4384a022e329490df1de238ebdf9aaf6c56",
+          "git_mode": "100644",
+          "metadata_only_boundary": false,
+          "object_type": "blob",
+          "path": ".claude/index.md",
+          "role_and_use": "作为 .claude 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件",
+          "safe_anchors": [
+            "repository_index_self"
+          ],
+          "semantic_audit_status": "reviewed",
+          "semantic_profile": "repository_index",
+          "status_or_freshness": "semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力",
+          "when_to_read": "进入该目录时先读；依据当前任务只选择一个最小后续文件集合"
+        },
+        {
+          "authority_class": "operational_contract",
+          "byte_size": 5718,
+          "content_summary": "JSON object，顶层键：$comment, permissions",
+          "description_basis": "json_strict_structure_and_safe_fields",
+          "encoding_or_format": "utf8",
+          "entry_id": "f27ac6f39d89fe021c56900069198aa7d9968f2cd6645c00b11ffd1b78fcf546",
+          "git_mode": "100644",
+          "metadata_only_boundary": false,
+          "object_type": "blob",
+          "path": ".claude/settings.json",
+          "role_and_use": "将 settings.json（JSON object，顶层键：$comment, permissions） 作为“执行合同”使用；执行前核验当前任务授权、精确 source head 与上位合同",
+          "safe_anchors": [
+            "JSON object，顶层键：$comment, permissions"
+          ],
+          "schema_detection": "not_schema_shaped",
+          "schema_evidence": [],
+          "schema_shape_detected": false,
+          "semantic_audit_status": "reviewed",
+          "semantic_profile": "operational_contract",
+          "status_or_freshness": "semantic_profile=operational_contract；authority=operational_contract；evidence_basis=json_strict_structure_and_safe_fields；执行前核验当前任务授权、精确 source head 与上位合同",
+          "structured_format": "json",
+          "when_to_read": "触发条件：当前动作落入该文件规定的协议或执行边界。读取 settings.json（JSON object，顶层键：$comment, permissions）；执行前核验当前任务授权、精确 source head 与上位合同"
+        }
+      ],
+      "directory_role": "Claude Code 项目级共享权限策略；由宿主按固定路径加载，不是普通实现配置",
+      "index_path": ".claude/index.md",
+      "path": ".claude",
+      "semantic_audit_status": "reviewed",
+      "semantic_profile": "agent_host_policy"
     },
     {
       "child_directories": [
@@ -9044,7 +9121,7 @@
           "when_to_enter": "定位议会 Issues 中的具体 Issue/verdict，并先区分 active 与 historical"
         },
         {
-          "content_scope": "议会 Verdicts：组织 Issue、verdict 与归档 provenance，不等于现行宪章；tracked 后代文件数=4",
+          "content_scope": "议会 Verdicts：组织 Issue、verdict 与归档 provenance，不等于现行宪章；tracked 后代文件数=3",
           "entry_id": "f41ee662722ca14e85059efe9d5e4d7eb55d54e93d87d8a09924d5cfeef50ca0",
           "load_policy": "task_triggered_lazy_load",
           "path": "04_Parliament/Verdicts",
@@ -10189,27 +10266,6 @@
     {
       "child_directories": [],
       "direct_files": [
-        {
-          "authority_class": "historical_evidence",
-          "byte_size": 4652,
-          "content_summary": "H1《🏛️ 法庭裁决档案 005：真空期系统防崩溃与自治指南 (Vacuum Circuit Breaker)》；首个 H2《📜 协议正文：代偿性做梦状态与局部自治 (Compensatory Dream State &amp; Local Autonomy)》",
-          "description_basis": "markdown_heading_or_visible_structure",
-          "encoding_or_format": "utf8",
-          "entry_id": "bd0d6fdadf7e6ca0d4dce26c213443c9074968290a38850eff27ce32d5051092",
-          "git_mode": "100644",
-          "metadata_only_boundary": false,
-          "object_type": "blob",
-          "path": "04_Parliament/Verdicts/Verdict_005_Vacuum_Circuit_Breaker.md",
-          "role_and_use": "将 Verdict_005_Vacuum_Circuit_Breaker.md（H1《🏛️ 法庭裁决档案 005：真空期系统防崩溃与自治指南 (Vacuum Circuit Breaker)》；首个 H2《📜 协议正文：代偿性做梦状态与局部自治 (Compensatory Dream State &amp; Local Autonomy)》） 作为“议会裁决 provenance”使用；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认",
-          "safe_anchors": [
-            "H1《🏛️ 法庭裁决档案 005：真空期系统防崩溃与自治指南 (Vacuum Circuit Breaker)》",
-            "首个 H2《📜 协议正文：代偿性做梦状态与局部自治 (Compensatory Dream State &amp; Local Autonomy)》"
-          ],
-          "semantic_audit_status": "reviewed",
-          "semantic_profile": "parliament_verdict",
-          "status_or_freshness": "semantic_profile=parliament_verdict；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认",
-          "when_to_read": "触发条件：核对对应 Issue 的裁决文本及其适用范围。读取 Verdict_005_Vacuum_Circuit_Breaker.md（H1《🏛️ 法庭裁决档案 005：真空期系统防崩溃与自治指南 (Vacuum Circuit Breaker)》；首个 H2《📜 协议正文：代偿性做梦状态与局部自治 (Compensatory Dream State &amp; Local Autonomy)》）；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认"
-        },
         {
           "authority_class": "historical_evidence",
           "byte_size": 2668,
@@ -12373,179 +12429,6 @@
       "semantic_profile": "compiler_workspace"
     },
     {
-      "child_directories": [
-        {
-          "content_scope": "执行方案设计 provenance 区 Dual_Check_Proposal_System；方案存在不证明实现或授权；tracked 后代文件数=4",
-          "entry_id": "8e561879c01225a608bae1fd148c2fa273ec292112cbc97439abb7e8643c8872",
-          "load_policy": "task_triggered_lazy_load",
-          "path": "07_Execution_Plans/Dual_Check_Proposal_System",
-          "semantic_audit_status": "reviewed",
-          "semantic_profile": "execution_plan_archive",
-          "when_to_enter": "比较 Dual_Check_Proposal_System 中的设计方案与现行实现，或追溯架构来源"
-        }
-      ],
-      "direct_files": [
-        {
-          "authority_class": "historical_evidence",
-          "byte_size": 2473,
-          "content_summary": "H1《🛡️ 战役复盘：Task-001 V5.6至V7.x 分布式数学管线架构拆分实装》；首个 H2《🛑 1. 痛点溯源 (Problem Proposition)》",
-          "description_basis": "markdown_heading_or_visible_structure",
-          "encoding_or_format": "utf8",
-          "entry_id": "d034679899889428192d2a3923201b9175deac299875c34fb74bd00361ea8d3f",
-          "git_mode": "100644",
-          "metadata_only_boundary": false,
-          "object_type": "blob",
-          "path": "07_Execution_Plans/Task_001_Distributed_Pipeline_Mapping.md",
-          "role_and_use": "将 Task_001_Distributed_Pipeline_Mapping.md（H1《🛡️ 战役复盘：Task-001 V5.6至V7.x 分布式数学管线架构拆分实装》；首个 H2《🛑 1. 痛点溯源 (Problem Proposition)》） 作为“执行方案设计 provenance”使用；设计/复盘不是当前任务授权，也不证明对应系统已实现",
-          "safe_anchors": [
-            "H1《🛡️ 战役复盘：Task-001 V5.6至V7.x 分布式数学管线架构拆分实装》",
-            "首个 H2《🛑 1. 痛点溯源 (Problem Proposition)》"
-          ],
-          "semantic_audit_status": "reviewed",
-          "semantic_profile": "execution_plan_history",
-          "status_or_freshness": "semantic_profile=execution_plan_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；设计/复盘不是当前任务授权，也不证明对应系统已实现",
-          "when_to_read": "触发条件：比较该设计方案与现行实现，或追溯架构选择。读取 Task_001_Distributed_Pipeline_Mapping.md（H1《🛡️ 战役复盘：Task-001 V5.6至V7.x 分布式数学管线架构拆分实装》；首个 H2《🛑 1. 痛点溯源 (Problem Proposition)》）；设计/复盘不是当前任务授权，也不证明对应系统已实现"
-        },
-        {
-          "authority_class": "historical_evidence",
-          "byte_size": 3322,
-          "content_summary": "H1《🛡️ 战役复盘：Task-003 长周期代理上下文抗坍塌与极限熔断机制》；首个 H2《🛑 1. 痛点溯源 (Problem Proposition)》",
-          "description_basis": "markdown_heading_or_visible_structure",
-          "encoding_or_format": "utf8",
-          "entry_id": "83dc575853c4b400d3d0b6b3b08863c759591cb2140f4e16a195bdfe457187c8",
-          "git_mode": "100644",
-          "metadata_only_boundary": false,
-          "object_type": "blob",
-          "path": "07_Execution_Plans/Task_003_Context_Collapse_Resistance.md",
-          "role_and_use": "将 Task_003_Context_Collapse_Resistance.md（H1《🛡️ 战役复盘：Task-003 长周期代理上下文抗坍塌与极限熔断机制》；首个 H2《🛑 1. 痛点溯源 (Problem Proposition)》） 作为“执行方案设计 provenance”使用；设计/复盘不是当前任务授权，也不证明对应系统已实现",
-          "safe_anchors": [
-            "H1《🛡️ 战役复盘：Task-003 长周期代理上下文抗坍塌与极限熔断机制》",
-            "首个 H2《🛑 1. 痛点溯源 (Problem Proposition)》"
-          ],
-          "semantic_audit_status": "reviewed",
-          "semantic_profile": "execution_plan_history",
-          "status_or_freshness": "semantic_profile=execution_plan_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；设计/复盘不是当前任务授权，也不证明对应系统已实现",
-          "when_to_read": "触发条件：比较该设计方案与现行实现，或追溯架构选择。读取 Task_003_Context_Collapse_Resistance.md（H1《🛡️ 战役复盘：Task-003 长周期代理上下文抗坍塌与极限熔断机制》；首个 H2《🛑 1. 痛点溯源 (Problem Proposition)》）；设计/复盘不是当前任务授权，也不证明对应系统已实现"
-        },
-        {
-          "authority_class": "routing",
-          "content_summary": "本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories",
-          "description_basis": "synthetic_index_self_entry",
-          "encoding_or_format": "utf8_generated",
-          "entry_id": "ace7a1f5f99e0eee915cef9d7273b659af96a7b8670c5d007d4af12fb3262ce6",
-          "git_mode": "100644",
-          "metadata_only_boundary": false,
-          "object_type": "blob",
-          "path": "07_Execution_Plans/index.md",
-          "role_and_use": "作为 07_Execution_Plans 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件",
-          "safe_anchors": [
-            "repository_index_self"
-          ],
-          "semantic_audit_status": "reviewed",
-          "semantic_profile": "repository_index",
-          "status_or_freshness": "semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力",
-          "when_to_read": "进入该目录时先读；依据当前任务只选择一个最小后续文件集合"
-        }
-      ],
-      "directory_role": "执行方案设计 provenance 区 07_Execution_Plans；方案存在不证明实现或授权",
-      "index_path": "07_Execution_Plans/index.md",
-      "path": "07_Execution_Plans",
-      "semantic_audit_status": "reviewed",
-      "semantic_profile": "execution_plan_archive"
-    },
-    {
-      "child_directories": [],
-      "direct_files": [
-        {
-          "authority_class": "historical_evidence",
-          "byte_size": 3806,
-          "content_summary": "H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 v4.3 (Stage 1 完结版)》；首个 H2《核心设计哲学 (Core Philosophy)》",
-          "description_basis": "markdown_heading_or_visible_structure",
-          "encoding_or_format": "utf8",
-          "entry_id": "5772de5fd89b0f5b07be4f630d95a0dbb76c06ac22ab82353404a12d3ae77c6e",
-          "git_mode": "100644",
-          "metadata_only_boundary": false,
-          "object_type": "blob",
-          "path": "07_Execution_Plans/Dual_Check_Proposal_System/Stage_1_Global_Blueprint_v4.3_Final.md",
-          "role_and_use": "将 Stage_1_Global_Blueprint_v4.3_Final.md（H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 v4.3 (Stage 1 完结版)》；首个 H2《核心设计哲学 (Core Philosophy)》） 作为“执行方案设计 provenance”使用；设计/复盘不是当前任务授权，也不证明对应系统已实现",
-          "safe_anchors": [
-            "H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 v4.3 (Stage 1 完结版)》",
-            "首个 H2《核心设计哲学 (Core Philosophy)》"
-          ],
-          "semantic_audit_status": "reviewed",
-          "semantic_profile": "execution_plan_history",
-          "status_or_freshness": "semantic_profile=execution_plan_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；设计/复盘不是当前任务授权，也不证明对应系统已实现",
-          "when_to_read": "触发条件：比较该设计方案与现行实现，或追溯架构选择。读取 Stage_1_Global_Blueprint_v4.3_Final.md（H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 v4.3 (Stage 1 完结版)》；首个 H2《核心设计哲学 (Core Philosophy)》）；设计/复盘不是当前任务授权，也不证明对应系统已实现"
-        },
-        {
-          "authority_class": "historical_evidence",
-          "byte_size": 2623,
-          "content_summary": "H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 - Stage 2 实施计划 ［✅全线竣工］》；首个 H2《🎯 目标概述》",
-          "description_basis": "markdown_heading_or_visible_structure",
-          "encoding_or_format": "utf8",
-          "entry_id": "18c19060ad03baca3955ec5e1d986a1f7a0f4b7048c10674dfe7badfaf7ba157",
-          "git_mode": "100644",
-          "metadata_only_boundary": false,
-          "object_type": "blob",
-          "path": "07_Execution_Plans/Dual_Check_Proposal_System/Stage_2_Routing_Nodes_Final.md",
-          "role_and_use": "将 Stage_2_Routing_Nodes_Final.md（H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 - Stage 2 实施计划 ［✅全线竣工］》；首个 H2《🎯 目标概述》） 作为“执行方案设计 provenance”使用；设计/复盘不是当前任务授权，也不证明对应系统已实现",
-          "safe_anchors": [
-            "H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 - Stage 2 实施计划 ［✅全线竣工］》",
-            "首个 H2《🎯 目标概述》"
-          ],
-          "semantic_audit_status": "reviewed",
-          "semantic_profile": "execution_plan_history",
-          "status_or_freshness": "semantic_profile=execution_plan_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；设计/复盘不是当前任务授权，也不证明对应系统已实现",
-          "when_to_read": "触发条件：比较该设计方案与现行实现，或追溯架构选择。读取 Stage_2_Routing_Nodes_Final.md（H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 - Stage 2 实施计划 ［✅全线竣工］》；首个 H2《🎯 目标概述》）；设计/复盘不是当前任务授权，也不证明对应系统已实现"
-        },
-        {
-          "authority_class": "historical_evidence",
-          "byte_size": 2485,
-          "content_summary": "H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 - Stage 3 实施计划 (最终闭环) ［✅全线竣工］》；首个 H2《🎯 目标概述》",
-          "description_basis": "markdown_heading_or_visible_structure",
-          "encoding_or_format": "utf8",
-          "entry_id": "32f0b27b530f273fbea6c0380e04bec1d6c58d36936b4c1518f41dd99b4286cf",
-          "git_mode": "100644",
-          "metadata_only_boundary": false,
-          "object_type": "blob",
-          "path": "07_Execution_Plans/Dual_Check_Proposal_System/Stage_3_Sandbox_Evolutionary_Loop_Final.md",
-          "role_and_use": "将 Stage_3_Sandbox_Evolutionary_Loop_Final.md（H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 - Stage 3 实施计划 (最终闭环) ［✅全线竣工］》；首个 H2《🎯 目标概述》） 作为“执行方案设计 provenance”使用；设计/复盘不是当前任务授权，也不证明对应系统已实现",
-          "safe_anchors": [
-            "H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 - Stage 3 实施计划 (最终闭环) ［✅全线竣工］》",
-            "首个 H2《🎯 目标概述》"
-          ],
-          "semantic_audit_status": "reviewed",
-          "semantic_profile": "execution_plan_history",
-          "status_or_freshness": "semantic_profile=execution_plan_history；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；设计/复盘不是当前任务授权，也不证明对应系统已实现",
-          "when_to_read": "触发条件：比较该设计方案与现行实现，或追溯架构选择。读取 Stage_3_Sandbox_Evolutionary_Loop_Final.md（H1《赛博城邦 (Cybernetic City-State OS) 总体架构蓝图 - Stage 3 实施计划 (最终闭环) ［✅全线竣工］》；首个 H2《🎯 目标概述》）；设计/复盘不是当前任务授权，也不证明对应系统已实现"
-        },
-        {
-          "authority_class": "routing",
-          "content_summary": "本目录的确定性懒加载路由索引；生成块覆盖 direct files 与 child directories",
-          "description_basis": "synthetic_index_self_entry",
-          "encoding_or_format": "utf8_generated",
-          "entry_id": "c5132536aa3948820d948ec6443db2146d16254b61fd762d0445aa4fdeb2912c",
-          "git_mode": "100644",
-          "metadata_only_boundary": false,
-          "object_type": "blob",
-          "path": "07_Execution_Plans/Dual_Check_Proposal_System/index.md",
-          "role_and_use": "作为 07_Execution_Plans/Dual_Check_Proposal_System 的 direct-file/direct-child 选择器，并记录每个入口的 authority 与读取触发条件",
-          "safe_anchors": [
-            "repository_index_self"
-          ],
-          "semantic_audit_status": "reviewed",
-          "semantic_profile": "repository_index",
-          "status_or_freshness": "semantic_profile=repository_index；authority=routing；evidence_basis=synthetic_index_self_entry；只负责选择下一份最小输入，不改写被索引文件的效力",
-          "when_to_read": "进入该目录时先读；依据当前任务只选择一个最小后续文件集合"
-        }
-      ],
-      "directory_role": "执行方案设计 provenance 区 Dual_Check_Proposal_System；方案存在不证明实现或授权",
-      "index_path": "07_Execution_Plans/Dual_Check_Proposal_System/index.md",
-      "path": "07_Execution_Plans/Dual_Check_Proposal_System",
-      "semantic_audit_status": "reviewed",
-      "semantic_profile": "execution_plan_archive"
-    },
-    {
       "child_directories": [],
       "direct_files": [
         {
@@ -13037,10 +12920,10 @@
   },
   "generator_path": "generate_repository_indexes.py",
   "hashes": {
-    "coverage_edges_sha256": "4796bb6a903d4e52154a58cefbf4c523057a7b607940a57b887f91dfe7701bc0",
-    "directory_set_sha256": "cff89b08c181c0c92b8f5fecf1ecce91df8682396bb1fecb7a00a1f3b0459e46",
-    "generated_indexes_sha256": "9acd67a872b678578357c32d8cac963b128ee8a1e367e7a704235518ef3cbeb7",
-    "tracked_pathset_sha256": "18369d05dadb243b01fb94dd847ebf82aa0f6b08fb1a307d41ab22dfb5c6717b"
+    "coverage_edges_sha256": "d3e9245a011124609239600b0e769834a348df51f7e106e8e4db668446dacc6c",
+    "directory_set_sha256": "80e54f09b09df04ddc1b3bbc47500b34ff9b268f02d9f5f1c5d02e072320c54c",
+    "generated_indexes_sha256": "30f59ba9b8991e05990bcd510ca3b42117e19add62ced9c30680354846b1dcae",
+    "tracked_pathset_sha256": "f0b71b8ff4d46b443fda1c35074f08a92bc172cd95ae1ed08cd2661e7757e724"
   },
   "inventory_source": "NUL-delimited tracked Git tree (ls-files/ls-tree)",
   "manual_index_preservation": {
@@ -13078,6 +12961,7 @@
       "directory_indexes": 160
     },
     "child_directory_profile_counts": {
+      "agent_host_policy": 1,
       "ai_control_plane": 3,
       "ai_human_brief_library": 1,
       "ai_report_library": 1,
@@ -13090,7 +12974,6 @@
       "communication_fixture_pool": 7,
       "communication_proof_case": 43,
       "compiler_workspace": 1,
-      "execution_plan_archive": 2,
       "parliament_archive": 5,
       "parliament_issue": 10,
       "parliament_template": 2,
@@ -13105,6 +12988,7 @@
       "system_backbone": 5
     },
     "directory_profile_counts": {
+      "agent_host_policy": 1,
       "ai_control_plane": 3,
       "ai_human_brief_library": 1,
       "ai_report_library": 1,
@@ -13117,7 +13001,6 @@
       "communication_fixture_pool": 7,
       "communication_proof_case": 43,
       "compiler_workspace": 1,
-      "execution_plan_archive": 2,
       "parliament_archive": 5,
       "parliament_issue": 10,
       "parliament_template": 2,
@@ -13136,25 +13019,24 @@
       "ai_human_brief_snapshot": 1,
       "ai_protocol_contract": 9,
       "ai_report_snapshot": 14,
-      "ai_task_or_signal_history": 1,
+      "ai_task_or_signal_history": 3,
       "campaign_template": 1,
       "canonical_governance": 2,
       "communication_contract_or_implementation": 5,
       "communication_test_or_proof": 141,
       "compiler_implementation": 7,
-      "execution_plan_history": 5,
       "historical_evidence": 2,
-      "implementation_artifact": 14,
-      "operational_contract": 12,
+      "implementation_artifact": 15,
+      "operational_contract": 14,
       "parliament_historical_archive": 11,
       "parliament_proposal_or_debate": 22,
-      "parliament_verdict": 3,
+      "parliament_verdict": 2,
       "persona_contract": 17,
       "private_zone_metadata": 1,
-      "repository_index": 104,
+      "repository_index": 103,
       "repository_manifest": 1,
       "research_or_user_asset": 25,
-      "routing_snapshot": 31,
+      "routing_snapshot": 28,
       "schema_definition": 15,
       "silicon_generated_evidence": 6,
       "silicon_implementation": 10,
@@ -13166,9 +13048,9 @@
     },
     "final_entries_reviewed_exactly_once": true,
     "final_scope": {
-      "direct_child_directory_entries": 103,
-      "direct_file_entries": 503,
-      "directory_indexes": 104
+      "direct_child_directory_entries": 102,
+      "direct_file_entries": 498,
+      "directory_indexes": 103
     },
     "metadata_only_file_entries": 1,
     "private_or_restricted_body_reads": 0,
@@ -13192,11 +13074,11 @@
       ],
       "known_schema_misclassifications": 0,
       "metadata_only_json_yaml_exclusions": 0,
-      "readable_json_yaml_artifacts_scanned": 171,
+      "readable_json_yaml_artifacts_scanned": 173,
       "records_with_path_qualified_anchors": 45,
       "repeated_rendered_anchor_fragments": 0,
       "schema_detection_counts": {
-        "not_schema_shaped": 156,
+        "not_schema_shaped": 158,
         "recognized_json_schema_dialect_and_root_shape": 15
       },
       "schema_name_variants_classified_as_schema": 14,

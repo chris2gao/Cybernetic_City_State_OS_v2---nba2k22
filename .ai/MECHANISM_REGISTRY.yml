@@ -1,0 +1,1599 @@
+schema_version: citystate.mechanism_registry.v1
+registry_status: active
+assembled_from:
+  closure:
+    ref: 11b6d1376e116a7d3a9230eefc29a735012e6b03:.ai/CODEX_REPORTS/core-mechanism-reachability-cleanup-0002-closure.json
+    blob: acc0093fd21c74d8dea814aec5b4b0e076d26638
+    source_head: a84ea281c0ee7f664c6069f2608241a43087e8c5
+    root_file_count: 360
+    edge_count: 1267
+    dynamic_site_count: 20
+    recomputed: false
+  external_mechanism_audit:
+    ref: 11b6d1376e116a7d3a9230eefc29a735012e6b03:.ai/CODEX_REPORTS/core-mechanism-file-audit-0003.md
+    blob: 4d89601dfe072f78457e682fb94305f87085e853
+    set_a_path_count: 18
+    recomputed: false
+  task_source_head: 3c2a33845529f1636086a1b065e671220e7220b3
+ownership_note: UNDECLARED records current CORE_MANIFEST.yml gaps only; this task does not change ownership policy.
+  01_Research_Reports remains domain-owned in the manifest but protected by explicit Human decision.
+protected:
+  exact_paths:
+  - .ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md
+  - .ai/CODEX_TASK_INPUT_CONTRACT.md
+  - .ai/CODEX_WORK_MECHANISM_PROTOCOL.md
+  - .ai/HANDOFF_COMMON_CONVENTIONS.md
+  - .ai/HANDOFF_INIT_PROMPT.md
+  - .ai/PROTOCOL.md
+  - .ai/PROTOCOL_ADHERENCE.md
+  - .ai/communication_compliance/tests/test_validate_communication.py
+  - .ai/lanes/.gitignore
+  - .ai/lanes/tests/test_local_lanes.py
+  - .ai/lanes/tests/test_publish_review.py
+  - .ai/lanes/tests/test_reduce_lanes.py
+  - .ai/role_memory/tests/test_role_memory.py
+  - .ai/runs/.gitignore
+  - .ai/runs/tests/test_agent_runner.py
+  - .ai/token_profile/tests/test_chat_channel.py
+  - .ai/token_profile/tests/test_consolidate_ledger.py
+  - .claude/settings.json
+  - .gitattributes
+  - .gitignore
+  - 01_Research_Reports/Agent 自进化研究架构设计.md
+  - 01_Research_Reports/Designing LLM Persona Meta-Skeleton.md
+  - 01_Research_Reports/Math Mentor OS：自进化架构物理落地执行方案.md
+  - 01_Research_Reports/README.md
+  - 01_Research_Reports/Red Team Audit_ Persona Matrix Flaws.md
+  - 01_Research_Reports/_Supreme_Court_Proposals/04_Lossless_Dimensional_Elevation_Proposal.md
+  - 01_Research_Reports/_Supreme_Court_Proposals/05_Representation_Engineering_Control_Vectors_Proposal.md
+  - 01_Research_Reports/_Supreme_Court_Proposals/index.md
+  - 01_Research_Reports/index.md
+  - 01_Research_Reports/为什么要研究Agent 自进化研究架构设计.md
+  - 01_Research_Reports/外部专家_第二轮务实追问_高吞吐重构解答.md
+  - 01_Research_Reports/外部专家_第二轮深度追问_AGI架构降维解答.md
+  - 01_Research_Reports/多智能体人格化深研与辩论基建.md
+  - 01_Research_Reports/多智能体辩论系统架构审查.md
+  - 01_Research_Reports/大模型是否可以承担数学的教学任务.md
+  - 01_Research_Reports/引擎落地协议深度研究.md
+  - 01_Research_Reports/神经符号教学系统升级报告.md
+  - 01_Research_Reports/赛博城邦 V6 宪章深研裁决.md
+  - 01_Research_Reports/赛博城邦 V6 宪章深研裁决补丁文件.md
+  - 01_Research_Reports/赛博城邦架构 AGI 重构.md
+  - 01_Research_Reports/赛博城邦架构深度评估.md
+  - 01_Research_Reports/赛博城邦：LLM 路由控制节点设计.md
+  - 01_Research_Reports/赛博城邦：修宪闭环研究.md
+  - 01_Research_Reports/赛博城邦：证据思维链融合.md
+  - 01_Research_Reports/黑盒代理上下文抗坍塌研究.md
+  - 06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md
+  - 06_Silicon_Index/AI_Bootstrap_Sequence.md
+  - 07_Compiler/test_cqrs.py
+  - 07_Compiler/test_fuzzing.py
+  - 07_Compiler/test_sandbox.py
+  - 3号方案.md
+  - AGENTS.md
+  - CLAUDE.md
+  - GEMINI.md
+  - 城邦系统需要实现的目标原则.md
+  exact_path_count: 55
+  exact_path_sha256: 1671d724c1638cc2793f8d31f83c28eeb505936efb228088178207dca61df26e
+  research_directory: 01_Research_Reports/
+  set_a_paths:
+  - .ai/communication_compliance/tests/test_validate_communication.py
+  - .ai/lanes/.gitignore
+  - .ai/lanes/tests/test_local_lanes.py
+  - .ai/lanes/tests/test_publish_review.py
+  - .ai/lanes/tests/test_reduce_lanes.py
+  - .ai/role_memory/tests/test_role_memory.py
+  - .ai/runs/tests/test_agent_runner.py
+  - .ai/token_profile/tests/test_chat_channel.py
+  - .ai/token_profile/tests/test_consolidate_ledger.py
+  - .claude/settings.json
+  - .gitattributes
+  - .gitignore
+  - 07_Compiler/test_cqrs.py
+  - 07_Compiler/test_fuzzing.py
+  - 07_Compiler/test_sandbox.py
+  - AGENTS.md
+  - CLAUDE.md
+  - GEMINI.md
+mechanisms:
+- mechanism: claude_project_permission_policy
+  loader: Claude Code
+  loader_class: host_application
+  discovery: documented convention
+  evidence: 0003 audit Set A; root .gitignore declares the shared policy path.
+  paths:
+  - .claude/settings.json
+  cache_dirs: []
+  ownership: UNDECLARED
+  failure_surfacing: never until a formerly denied or ask-gated operation is misused
+  deletion_rule: protected
+  failure_order: 10
+  ownership_detail:
+    UNDECLARED:
+    - .claude/settings.json
+- mechanism: git_root_ignore_policy
+  loader: git
+  loader_class: external_tool_convention
+  discovery: documented convention
+  evidence: 0003 audit Set A and observable git check-ignore behavior.
+  paths:
+  - .gitignore
+  cache_dirs:
+  - .pytest_cache/
+  - '**/__pycache__/'
+  ownership: UNDECLARED
+  failure_surfacing: silent until status/staging or accidental publication
+  deletion_rule: protected
+  failure_order: 20
+  ownership_detail:
+    UNDECLARED:
+    - .gitignore
+- mechanism: git_runner_runtime_ignore_policy
+  loader: git
+  loader_class: external_tool_convention
+  discovery: documented convention
+  evidence: Restored at 2f298d2; exact ignore rules cover runner state and branch locks.
+  paths:
+  - .ai/runs/.gitignore
+  cache_dirs:
+  - .ai/runs/<task-id>/
+  - .ai/runs/_branch_locks/
+  ownership: UNDECLARED
+  failure_surfacing: silent until runner artifacts enter status/staging
+  deletion_rule: protected
+  failure_order: 21
+  ownership_detail:
+    UNDECLARED:
+    - .ai/runs/.gitignore
+- mechanism: git_lane_runtime_ignore_policy
+  loader: git
+  loader_class: external_tool_convention
+  discovery: documented convention
+  evidence: 0003 audit Set A; .ai/lanes/.gitignore defines local metadata/temp exclusions.
+  paths:
+  - .ai/lanes/.gitignore
+  cache_dirs:
+  - .ai/lanes/<lane_instance_id>/
+  ownership: core
+  failure_surfacing: silent until lane metadata or temporary files enter staging
+  deletion_rule: protected
+  failure_order: 22
+- mechanism: agent_host_instruction_discovery
+  loader: Codex, Claude Code, and Antigravity
+  loader_class: host_application
+  discovery: documented convention
+  evidence: 0003 audit Set A verified fixed host filenames and directory-walk behavior.
+  paths:
+  - AGENTS.md
+  - CLAUDE.md
+  - GEMINI.md
+  cache_dirs: []
+  ownership: UNDECLARED
+  failure_surfacing: next host startup, or later when a missing safety rule is violated
+  deletion_rule: protected
+  failure_order: 30
+  ownership_detail:
+    UNDECLARED:
+    - GEMINI.md
+    core:
+    - AGENTS.md
+    - CLAUDE.md
+- mechanism: git_eol_normalization
+  loader: git
+  loader_class: external_tool_convention
+  discovery: documented convention
+  evidence: 0003 audit Set A; root .gitattributes applies text=auto eol=lf.
+  paths:
+  - .gitattributes
+  cache_dirs: []
+  ownership: UNDECLARED
+  failure_surfacing: next add, checkout, merge, or cross-platform byte comparison
+  deletion_rule: protected
+  failure_order: 40
+  ownership_detail:
+    UNDECLARED:
+    - .gitattributes
+- mechanism: bootstrap_receipt_required_control_plane
+  loader: communication bootstrap receipt validator
+  loader_class: in_repo_program
+  discovery: referenced from .ai/communication_compliance/material_event_policy.yml
+  evidence: Policy bootstrap_required_loaded_files contains these seven exact paths.
+  paths:
+  - .ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md
+  - .ai/HANDOFF_COMMON_CONVENTIONS.md
+  - .ai/HANDOFF_INIT_PROMPT.md
+  - .ai/PROTOCOL.md
+  - .ai/PROTOCOL_ADHERENCE.md
+  - 06_Silicon_Index/AI_Bootstrap_Sequence.md
+  - AGENTS.md
+  cache_dirs: []
+  ownership: UNDECLARED
+  failure_surfacing: next C1/C2 bootstrap receipt or release-binding validation
+  deletion_rule: protected
+  failure_order: 50
+  ownership_detail:
+    UNDECLARED:
+    - .ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md
+    - .ai/HANDOFF_COMMON_CONVENTIONS.md
+    core:
+    - .ai/HANDOFF_INIT_PROMPT.md
+    - .ai/PROTOCOL.md
+    - .ai/PROTOCOL_ADHERENCE.md
+    - 06_Silicon_Index/AI_Bootstrap_Sequence.md
+    - AGENTS.md
+- mechanism: context_boundary_initialization
+  loader: Codex, Claude Code, ChatGPT, and Antigravity
+  loader_class: host_application
+  discovery: referenced from 06_Silicon_Index/AI_Bootstrap_Sequence.md
+  evidence: 0002 mechanism survey opened the complete-context initialization chain.
+  paths:
+  - .ai/INBOX.md
+  - .ai/STATE.yml
+  - .ai/TOKEN_USAGE_PROFILE.md
+  - .ai/load_profiles/backend_executor.md
+  - .ai/load_profiles/foreground_independent_reviewer.md
+  - .ai/load_profiles/foreground_planner.md
+  - .ai/load_profiles/index.md
+  - 06_Silicon_Index/CONSTITUTION_DIGEST.md
+  - AGENT_WORKING_DISCIPLINE.md
+  cache_dirs: []
+  ownership: UNDECLARED
+  failure_surfacing: next new thread, context loss, protocol update, or pointer conflict
+  deletion_rule: protected
+  failure_order: 60
+  ownership_detail:
+    UNDECLARED:
+    - AGENT_WORKING_DISCIPLINE.md
+    core:
+    - .ai/TOKEN_USAGE_PROFILE.md
+    - .ai/load_profiles/backend_executor.md
+    - .ai/load_profiles/foreground_independent_reviewer.md
+    - .ai/load_profiles/foreground_planner.md
+    - .ai/load_profiles/index.md
+    - 06_Silicon_Index/CONSTITUTION_DIGEST.md
+    domain:
+    - .ai/INBOX.md
+    - .ai/STATE.yml
+- mechanism: role_load_profiles
+  loader: AI host selected by role
+  loader_class: host_application
+  discovery: referenced from 06_Silicon_Index/AI_Bootstrap_Sequence.md
+  evidence: 0002 closure recorded all three core profiles and their canonical pins.
+  paths:
+  - .ai/CODEX_TASK_INPUT_CONTRACT.md
+  - .ai/CODEX_WORK_MECHANISM_PROTOCOL.md
+  - .ai/communication_compliance/communication_event.schema.json
+  - .ai/communication_compliance/material_event_policy.yml
+  - .ai/load_profiles/backend_executor.md
+  - .ai/load_profiles/foreground_independent_reviewer.md
+  - .ai/load_profiles/foreground_planner.md
+  - .ai/load_profiles/index.md
+  - .ai/role_memory/core.md
+  - .ai/role_memory/executor.md
+  - .ai/role_memory/index.md
+  - .ai/role_memory/planner.md
+  - .ai/role_memory/reviewer.md
+  - .ai/role_memory/tests/index.md
+  - .ai/role_memory/tests/test_role_memory.py
+  cache_dirs: []
+  ownership: core
+  failure_surfacing: next profile-selected initialization
+  deletion_rule: protected
+  failure_order: 61
+- mechanism: constitutional_engine_routing
+  loader: Human Speaker and AI hosts
+  loader_class: host_application
+  discovery: referenced from 06_Silicon_Index/AI_Bootstrap_Sequence.md
+  evidence: Task section 4 protects the digest, two full sources, and goal-principles chain.
+  paths:
+  - 06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md
+  - 06_Silicon_Index/CONSTITUTION_DIGEST.md
+  - 3号方案.md
+  - 城邦系统需要实现的目标原则.md
+  cache_dirs: []
+  ownership: core
+  failure_surfacing: next protected action, constitutional conflict, or Engine A/B dispute
+  deletion_rule: protected
+  failure_order: 70
+- mechanism: handoff_protocol_stack
+  loader: Human/AI handoff participants
+  loader_class: host_application
+  discovery: referenced from .ai/PROTOCOL.md and AI bootstrap
+  evidence: 0002 mechanism survey opened the protocol stack and fast-path mailbox refs.
+  paths:
+  - .ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md
+  - .ai/CODEX_TASK_INPUT_CONTRACT.md
+  - .ai/CODEX_WORK_MECHANISM_PROTOCOL.md
+  - .ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md
+  - .ai/HANDOFF_COMMON_CONVENTIONS.md
+  - .ai/HANDOFF_INIT_PROMPT.md
+  - .ai/HUMAN_BRIEF.md
+  - .ai/INBOX.md
+  - .ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md
+  - .ai/OUTBOX.md
+  - .ai/PROTOCOL.md
+  - .ai/PROTOCOL_ADHERENCE.md
+  - .ai/STATE.yml
+  cache_dirs: []
+  ownership: UNDECLARED
+  failure_surfacing: next material handoff or pointer dereference
+  deletion_rule: protected
+  failure_order: 80
+  ownership_detail:
+    UNDECLARED:
+    - .ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md
+    - .ai/HANDOFF_COMMON_CONVENTIONS.md
+    core:
+    - .ai/CODEX_TASK_INPUT_CONTRACT.md
+    - .ai/CODEX_WORK_MECHANISM_PROTOCOL.md
+    - .ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md
+    - .ai/HANDOFF_INIT_PROMPT.md
+    - .ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md
+    - .ai/PROTOCOL.md
+    - .ai/PROTOCOL_ADHERENCE.md
+    domain:
+    - .ai/HUMAN_BRIEF.md
+    - .ai/INBOX.md
+    - .ai/OUTBOX.md
+    - .ai/STATE.yml
+- mechanism: default_large_task_and_long_run_execution
+  loader: backend execution host
+  loader_class: host_application
+  discovery: referenced from AI bootstrap and backend profile
+  evidence: 0002 mechanism survey records ordinary large-task and conditional long-run loading.
+  paths:
+  - .ai/CODEX_TASK_INPUT_CONTRACT.md
+  - .ai/CODEX_WORK_MECHANISM_PROTOCOL.md
+  - .ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md
+  - .ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md
+  - .ai/PROTOCOL.md
+  - .ai/PROTOCOL_ADHERENCE.md
+  - campaigns/campaign_manifest_template.yaml
+  - system_backbone/audit_ledger/system_record.jsonl
+  cache_dirs: []
+  ownership: UNDECLARED
+  failure_surfacing: next qualifying large task or long-run program
+  deletion_rule: protected
+  failure_order: 81
+  ownership_detail:
+    UNDECLARED:
+    - campaigns/campaign_manifest_template.yaml
+    core:
+    - .ai/CODEX_TASK_INPUT_CONTRACT.md
+    - .ai/CODEX_WORK_MECHANISM_PROTOCOL.md
+    - .ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md
+    - .ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md
+    - .ai/PROTOCOL.md
+    - .ai/PROTOCOL_ADHERENCE.md
+    - system_backbone/audit_ledger/system_record.jsonl
+- mechanism: communication_compliance_and_release_binding
+  loader: .ai/communication_compliance/validate_communication.py and fixture builder
+  loader_class: in_repo_program
+  discovery: referenced from .ai/communication_compliance/README.md
+  evidence: 0002 closure opened the validator, schemas, fixture suite, proofs, and policy.
+  paths:
+  - .ai/COMMUNICATION_DRIFT_LEDGER.yml
+  - .ai/communication_compliance/README.md
+  - .ai/communication_compliance/active_state_context.schema.json
+  - .ai/communication_compliance/actor_origin_context.schema.json
+  - .ai/communication_compliance/authorization_context.schema.json
+  - .ai/communication_compliance/bootstrap_receipt.schema.json
+  - .ai/communication_compliance/communication_drift_ledger.schema.json
+  - .ai/communication_compliance/communication_event.schema.json
+  - .ai/communication_compliance/communication_validation.schema.json
+  - .ai/communication_compliance/drift_record.schema.json
+  - .ai/communication_compliance/fixtures/artifacts/complete_dispatch_brief.md
+  - .ai/communication_compliance/fixtures/artifacts/complete_review_brief.md
+  - .ai/communication_compliance/fixtures/artifacts/incomplete_dispatch_brief.md
+  - .ai/communication_compliance/fixtures/artifacts/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-actor-origin-forged-host/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-actor-origin-forged-host/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-actor-origin-forged-host/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-actor-origin-forged-host/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-forged-trusted/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-forged-trusted/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-forged-trusted/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-forged-trusted/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-replay/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-replay/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-replay/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-replay/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-trusted-host-pass/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-trusted-host-pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-trusted-host-pass/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-trusted-host-pass/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-claimed-from-mismatch/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-claimed-from-mismatch/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-claimed-from-mismatch/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-claimed-from-mismatch/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-event-mutation/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-event-mutation/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-event-mutation/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-event-mutation/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-event-mutation/validation.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-fabricated-result/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-fabricated-result/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-fabricated-result/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-fabricated-result/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-fabricated-result/validation.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-missing-event/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-missing-event/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-missing-event/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-missing-event/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-pointer-binding/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-pointer-binding/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-pointer-binding/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-pointer-binding/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-state-task-mismatch/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-state-task-mismatch/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-state-task-mismatch/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-state-task-mismatch/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-unreachable/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-unreachable/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-unreachable/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-unreachable/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-from-other-event/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-from-other-event/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-from-other-event/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-from-other-event/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-from-other-event/validation.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-malformed/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-malformed/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-malformed/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-malformed/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-malformed/validation.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_acceptance_pass/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_acceptance_pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_acceptance_pass/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_acceptance_pass/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_cross_event_transplant/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_cross_event_transplant/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_cross_event_transplant/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_cross_event_transplant/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_event_digest_transplant/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_event_digest_transplant/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_event_digest_transplant/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_event_digest_transplant/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_replay/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_replay/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_replay/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_replay/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_provider/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_provider/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_provider/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_provider/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_role/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_role/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_role/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_role/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_transition/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_transition/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_transition/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_transition/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_material_review_close_rejected/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_material_review_close_rejected/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_material_review_close_rejected/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_material_review_close_rejected/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_publication_candidate_rejected/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_publication_candidate_rejected/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_publication_candidate_rejected/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_publication_candidate_rejected/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_self_acceptance_rejected/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_self_acceptance_rejected/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_self_acceptance_rejected/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_self_acceptance_rejected/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_cross_actor_transplant/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_cross_actor_transplant/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_cross_actor_transplant/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_cross_actor_transplant/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_event_digest_mismatch/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_event_digest_mismatch/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_event_digest_mismatch/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_event_digest_mismatch/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_pass/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_pass/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_pass/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_wrong_task/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_wrong_task/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_wrong_task/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_wrong_task/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_no_authority/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_no_authority/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_no_authority/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_no_authority/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_candidate_pass/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_candidate_pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_candidate_pass/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_candidate_pass/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_completion_pass/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_completion_pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_completion_pass/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_completion_pass/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_completion_two_pass/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_completion_two_pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_completion_two_pass/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_completion_two_pass/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_dispatch_pass/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_dispatch_pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_dispatch_pass/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_dispatch_pass/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_exact_validation_artifact_pass/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_exact_validation_artifact_pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_exact_validation_artifact_pass/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_exact_validation_artifact_pass/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_exact_validation_artifact_pass/validation.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_foreground_self_completion_rejected/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_foreground_self_completion_rejected/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_foreground_self_completion_rejected/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_foreground_self_completion_rejected/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_acceptance_pass/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_acceptance_pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_acceptance_pass/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_c2_no_authority/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_c2_no_authority/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_c2_no_authority/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_dispatch_pass/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_dispatch_pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_dispatch_pass/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_dispatch_pass/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_origin_missing/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_origin_missing/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_origin_missing/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_origin_missing/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_self_completion_rejected/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_self_completion_rejected/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_self_completion_rejected/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_model_origin_missing/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_model_origin_missing/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_model_origin_missing/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_model_origin_missing/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_provider_role_edge_mismatch_rejected/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_provider_role_edge_mismatch_rejected/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_provider_role_edge_mismatch_rejected/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_provider_role_edge_mismatch_rejected/state.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_revision_loop_pass/event.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_revision_loop_pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_revision_loop_pass/pointer.json
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_revision_loop_pass/state.json
+  - .ai/communication_compliance/fixtures/build_fixture_suite.py
+  - .ai/communication_compliance/fixtures/fixture_suite.json
+  - .ai/communication_compliance/fixtures/index.md
+  - .ai/communication_compliance/fixtures/latest_fixture_result.json
+  - .ai/communication_compliance/fixtures/raw/index.md
+  - .ai/communication_compliance/fixtures/raw/pointer_anchor_alias.yml
+  - .ai/communication_compliance/fixtures/raw/pointer_duplicate_keys.yml
+  - .ai/communication_compliance/fixtures/raw/pointer_multidoc.yml
+  - .ai/communication_compliance/index.md
+  - .ai/communication_compliance/inherited_fixture_coverage_map.json
+  - .ai/communication_compliance/inherited_fixture_coverage_map.schema.json
+  - .ai/communication_compliance/material_event_policy.yml
+  - .ai/communication_compliance/proof_chain_review.json
+  - .ai/communication_compliance/proof_chain_review.schema.json
+  - .ai/communication_compliance/tests/index.md
+  - .ai/communication_compliance/tests/test_validate_communication.py
+  - .ai/communication_compliance/transition_proof.schema.json
+  - .ai/communication_compliance/transition_request.schema.json
+  - .ai/communication_compliance/validate_communication.py
+  cache_dirs:
+  - .ai/communication_compliance/__pycache__/
+  - .ai/communication_compliance/tests/__pycache__/
+  ownership: UNDECLARED
+  failure_surfacing: next validation, fixture run, or release-binding check
+  deletion_rule: protected
+  failure_order: 90
+  ownership_detail:
+    UNDECLARED:
+    - .ai/COMMUNICATION_DRIFT_LEDGER.yml
+    core:
+    - .ai/communication_compliance/README.md
+    - .ai/communication_compliance/active_state_context.schema.json
+    - .ai/communication_compliance/actor_origin_context.schema.json
+    - .ai/communication_compliance/authorization_context.schema.json
+    - .ai/communication_compliance/bootstrap_receipt.schema.json
+    - .ai/communication_compliance/communication_drift_ledger.schema.json
+    - .ai/communication_compliance/communication_event.schema.json
+    - .ai/communication_compliance/communication_validation.schema.json
+    - .ai/communication_compliance/drift_record.schema.json
+    - .ai/communication_compliance/fixtures/artifacts/complete_dispatch_brief.md
+    - .ai/communication_compliance/fixtures/artifacts/complete_review_brief.md
+    - .ai/communication_compliance/fixtures/artifacts/incomplete_dispatch_brief.md
+    - .ai/communication_compliance/fixtures/artifacts/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-actor-origin-forged-host/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-actor-origin-forged-host/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-actor-origin-forged-host/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-actor-origin-forged-host/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-forged-trusted/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-forged-trusted/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-forged-trusted/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-forged-trusted/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-replay/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-replay/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-replay/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-replay/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-trusted-host-pass/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-trusted-host-pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-trusted-host-pass/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-trusted-host-pass/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-claimed-from-mismatch/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-claimed-from-mismatch/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-claimed-from-mismatch/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-claimed-from-mismatch/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-event-mutation/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-event-mutation/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-event-mutation/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-event-mutation/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-event-mutation/validation.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-fabricated-result/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-fabricated-result/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-fabricated-result/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-fabricated-result/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-fabricated-result/validation.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-missing-event/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-missing-event/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-missing-event/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-missing-event/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-pointer-binding/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-pointer-binding/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-pointer-binding/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-pointer-binding/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-state-task-mismatch/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-state-task-mismatch/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-state-task-mismatch/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-state-task-mismatch/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-unreachable/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-unreachable/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-unreachable/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-unreachable/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-from-other-event/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-from-other-event/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-from-other-event/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-from-other-event/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-from-other-event/validation.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-malformed/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-malformed/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-malformed/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-malformed/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-malformed/validation.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_acceptance_pass/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_acceptance_pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_acceptance_pass/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_acceptance_pass/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_cross_event_transplant/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_cross_event_transplant/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_cross_event_transplant/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_cross_event_transplant/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_event_digest_transplant/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_event_digest_transplant/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_event_digest_transplant/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_event_digest_transplant/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_replay/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_replay/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_replay/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_replay/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_provider/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_provider/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_provider/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_provider/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_role/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_role/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_role/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_role/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_transition/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_transition/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_transition/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_transition/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_material_review_close_rejected/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_material_review_close_rejected/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_material_review_close_rejected/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_material_review_close_rejected/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_publication_candidate_rejected/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_publication_candidate_rejected/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_publication_candidate_rejected/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_publication_candidate_rejected/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_self_acceptance_rejected/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_self_acceptance_rejected/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_self_acceptance_rejected/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_self_acceptance_rejected/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_cross_actor_transplant/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_cross_actor_transplant/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_cross_actor_transplant/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_cross_actor_transplant/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_event_digest_mismatch/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_event_digest_mismatch/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_event_digest_mismatch/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_event_digest_mismatch/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_pass/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_pass/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_pass/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_wrong_task/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_wrong_task/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_wrong_task/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_wrong_task/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_no_authority/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_no_authority/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_no_authority/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_no_authority/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_candidate_pass/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_candidate_pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_candidate_pass/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_candidate_pass/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_completion_pass/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_completion_pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_completion_pass/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_completion_pass/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_completion_two_pass/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_completion_two_pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_completion_two_pass/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_completion_two_pass/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_dispatch_pass/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_dispatch_pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_dispatch_pass/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_dispatch_pass/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_exact_validation_artifact_pass/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_exact_validation_artifact_pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_exact_validation_artifact_pass/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_exact_validation_artifact_pass/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_exact_validation_artifact_pass/validation.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_foreground_self_completion_rejected/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_foreground_self_completion_rejected/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_foreground_self_completion_rejected/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_foreground_self_completion_rejected/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_acceptance_pass/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_acceptance_pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_acceptance_pass/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_c2_no_authority/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_c2_no_authority/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_c2_no_authority/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_dispatch_pass/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_dispatch_pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_dispatch_pass/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_dispatch_pass/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_origin_missing/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_origin_missing/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_origin_missing/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_origin_missing/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_self_completion_rejected/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_self_completion_rejected/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_self_completion_rejected/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_model_origin_missing/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_model_origin_missing/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_model_origin_missing/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_model_origin_missing/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_provider_role_edge_mismatch_rejected/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_provider_role_edge_mismatch_rejected/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_provider_role_edge_mismatch_rejected/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_provider_role_edge_mismatch_rejected/state.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_revision_loop_pass/event.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_revision_loop_pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_revision_loop_pass/pointer.json
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_revision_loop_pass/state.json
+    - .ai/communication_compliance/fixtures/build_fixture_suite.py
+    - .ai/communication_compliance/fixtures/fixture_suite.json
+    - .ai/communication_compliance/fixtures/index.md
+    - .ai/communication_compliance/fixtures/latest_fixture_result.json
+    - .ai/communication_compliance/fixtures/raw/index.md
+    - .ai/communication_compliance/fixtures/raw/pointer_anchor_alias.yml
+    - .ai/communication_compliance/fixtures/raw/pointer_duplicate_keys.yml
+    - .ai/communication_compliance/fixtures/raw/pointer_multidoc.yml
+    - .ai/communication_compliance/index.md
+    - .ai/communication_compliance/inherited_fixture_coverage_map.json
+    - .ai/communication_compliance/inherited_fixture_coverage_map.schema.json
+    - .ai/communication_compliance/material_event_policy.yml
+    - .ai/communication_compliance/proof_chain_review.json
+    - .ai/communication_compliance/proof_chain_review.schema.json
+    - .ai/communication_compliance/tests/index.md
+    - .ai/communication_compliance/tests/test_validate_communication.py
+    - .ai/communication_compliance/transition_proof.schema.json
+    - .ai/communication_compliance/transition_request.schema.json
+    - .ai/communication_compliance/validate_communication.py
+- mechanism: cooperative_lane_runtime
+  loader: .ai/lanes/*.ps1
+  loader_class: in_repo_program
+  discovery: referenced from .ai/PROTOCOL.md
+  evidence: 0002 closure opened lane scripts/schemas and resolved eleven dynamic enumeration sites.
+  paths:
+  - .ai/STATE.yml
+  - .ai/lanes/.gitignore
+  - .ai/lanes/index.md
+  - .ai/lanes/lane-local.ps1
+  - .ai/lanes/lane_envelope.schema.json
+  - .ai/lanes/lane_epoch.yml
+  - .ai/lanes/lane_meta.schema.json
+  - .ai/lanes/publish-review.ps1
+  - .ai/lanes/reduce-lanes.ps1
+  - .ai/lanes/tests/index.md
+  - .ai/lanes/tests/test_local_lanes.py
+  - .ai/lanes/tests/test_publish_review.py
+  - .ai/lanes/tests/test_reduce_lanes.py
+  cache_dirs:
+  - .ai/lanes/<lane_instance_id>/
+  - C:/Users/gk/AppData/Local/CityState/local_lanes/
+  ownership: UNDECLARED
+  failure_surfacing: next lane write, reduction, or review publication
+  deletion_rule: protected
+  failure_order: 91
+  ownership_detail:
+    core:
+    - .ai/lanes/.gitignore
+    - .ai/lanes/index.md
+    - .ai/lanes/lane-local.ps1
+    - .ai/lanes/lane_envelope.schema.json
+    - .ai/lanes/lane_epoch.yml
+    - .ai/lanes/lane_meta.schema.json
+    - .ai/lanes/publish-review.ps1
+    - .ai/lanes/reduce-lanes.ps1
+    - .ai/lanes/tests/index.md
+    - .ai/lanes/tests/test_local_lanes.py
+    - .ai/lanes/tests/test_publish_review.py
+    - .ai/lanes/tests/test_reduce_lanes.py
+    domain:
+    - .ai/STATE.yml
+- mechanism: role_memory_routing
+  loader: selected load profile
+  loader_class: in_repo_program
+  discovery: referenced from .ai/load_profiles/*.md
+  evidence: 0002 closure opened every core role-memory target; teacher-only files were excluded.
+  paths:
+  - .ai/load_profiles/backend_executor.md
+  - .ai/load_profiles/foreground_independent_reviewer.md
+  - .ai/load_profiles/foreground_planner.md
+  - .ai/load_profiles/index.md
+  - .ai/role_memory/core.md
+  - .ai/role_memory/executor.md
+  - .ai/role_memory/index.md
+  - .ai/role_memory/planner.md
+  - .ai/role_memory/reviewer.md
+  - .ai/role_memory/tests/index.md
+  - .ai/role_memory/tests/test_role_memory.py
+  cache_dirs:
+  - .ai/role_memory/tests/__pycache__/
+  ownership: core
+  failure_surfacing: next role-profile initialization or role-memory test
+  deletion_rule: protected
+  failure_order: 92
+- mechanism: agent_runner
+  loader: agent-run.ps1, agent-status.ps1, agent-stop.ps1
+  loader_class: in_repo_program
+  discovery: referenced from CORE_MANIFEST.yml domain creation/runtime mechanics and runner tests
+  evidence: Runner sources and tests define worktree, lock, status, log, and ledger paths.
+  paths:
+  - .ai/runs/.gitignore
+  - .ai/runs/Runner.Common.ps1
+  - .ai/runs/cli-runner-harness-0001/final-report.md
+  - .ai/runs/cli-runner-harness-0001/index.md
+  - .ai/runs/index.md
+  - .ai/runs/runner-worker.ps1
+  - .ai/runs/tests/fixtures/fake-engine-failure.ps1
+  - .ai/runs/tests/fixtures/fake-engine-long.ps1
+  - .ai/runs/tests/fixtures/fake-engine-success.ps1
+  - .ai/runs/tests/fixtures/index.md
+  - .ai/runs/tests/index.md
+  - .ai/runs/tests/test_agent_runner.py
+  - agent-run.ps1
+  - agent-status.ps1
+  - agent-stop.ps1
+  cache_dirs:
+  - .ai/runs/<task-id>/
+  - .ai/runs/_branch_locks/
+  - C:/Users/gk/AppData/Local/CityState/agent_runs/
+  - C:/Users/gk/AppData/Local/CityState/token_ledger/runs/
+  ownership: UNDECLARED
+  failure_surfacing: next runner invocation or status query
+  deletion_rule: protected
+  failure_order: 93
+  ownership_detail:
+    UNDECLARED:
+    - .ai/runs/.gitignore
+    - .ai/runs/Runner.Common.ps1
+    - .ai/runs/cli-runner-harness-0001/final-report.md
+    - .ai/runs/cli-runner-harness-0001/index.md
+    - .ai/runs/index.md
+    - .ai/runs/runner-worker.ps1
+    - .ai/runs/tests/fixtures/fake-engine-failure.ps1
+    - .ai/runs/tests/fixtures/fake-engine-long.ps1
+    - .ai/runs/tests/fixtures/fake-engine-success.ps1
+    - .ai/runs/tests/fixtures/index.md
+    - .ai/runs/tests/index.md
+    - .ai/runs/tests/test_agent_runner.py
+    - agent-run.ps1
+    - agent-status.ps1
+    - agent-stop.ps1
+- mechanism: token_profile_local_transport_and_ledger
+  loader: .ai/token_profile/*.py
+  loader_class: in_repo_program
+  discovery: referenced from .ai/TOKEN_USAGE_PROFILE.md
+  evidence: 0002 dynamic-site audit resolved local chat and token-ledger enumeration.
+  paths:
+  - .ai/TOKEN_USAGE_OPERATIONAL_NORMS.md
+  - .ai/TOKEN_USAGE_PROFILE.md
+  - .ai/token_profile/chat_channel.py
+  - .ai/token_profile/consolidate_ledger.py
+  - .ai/token_profile/index.md
+  - .ai/token_profile/tests/index.md
+  - .ai/token_profile/tests/test_chat_channel.py
+  - .ai/token_profile/tests/test_consolidate_ledger.py
+  cache_dirs:
+  - C:/Users/gk/AppData/Local/CityState/local_bus/chat/
+  - C:/Users/gk/AppData/Local/CityState/token_ledger/runs/
+  ownership: core
+  failure_surfacing: next local-bus or ledger command
+  deletion_rule: protected
+  failure_order: 94
+- mechanism: pytest_unittest_discovery
+  loader: pytest and unittest
+  loader_class: external_tool_convention
+  discovery: hardcoded default
+  evidence: 0003 audit Set A; installed pytest reports test_*.py and *_test.py defaults.
+  paths:
+  - .ai/communication_compliance/tests/test_validate_communication.py
+  - .ai/lanes/tests/test_local_lanes.py
+  - .ai/lanes/tests/test_publish_review.py
+  - .ai/lanes/tests/test_reduce_lanes.py
+  - .ai/role_memory/tests/test_role_memory.py
+  - .ai/runs/tests/test_agent_runner.py
+  - .ai/token_profile/tests/test_chat_channel.py
+  - .ai/token_profile/tests/test_consolidate_ledger.py
+  - 07_Compiler/test_cqrs.py
+  - 07_Compiler/test_fuzzing.py
+  - 07_Compiler/test_sandbox.py
+  cache_dirs:
+  - .pytest_cache/
+  - '**/__pycache__/'
+  ownership: UNDECLARED
+  failure_surfacing: next explicit unit-suite discovery; missing modules may reduce count silently
+  deletion_rule: protected
+  failure_order: 95
+  ownership_detail:
+    UNDECLARED:
+    - .ai/runs/tests/test_agent_runner.py
+    core:
+    - .ai/communication_compliance/tests/test_validate_communication.py
+    - .ai/lanes/tests/test_local_lanes.py
+    - .ai/lanes/tests/test_publish_review.py
+    - .ai/lanes/tests/test_reduce_lanes.py
+    - .ai/role_memory/tests/test_role_memory.py
+    - .ai/token_profile/tests/test_chat_channel.py
+    - .ai/token_profile/tests/test_consolidate_ledger.py
+    - 07_Compiler/test_cqrs.py
+    - 07_Compiler/test_fuzzing.py
+    - 07_Compiler/test_sandbox.py
+- mechanism: communication_schema_dynamic_discovery
+  loader: .ai/communication_compliance/tests/test_validate_communication.py
+  loader_class: in_repo_program
+  discovery: hardcoded default
+  evidence: 0002 closure dynamic site line 126 resolves GATE_DIR/*.schema.json to twelve targets.
+  paths:
+  - .ai/communication_compliance/active_state_context.schema.json
+  - .ai/communication_compliance/actor_origin_context.schema.json
+  - .ai/communication_compliance/authorization_context.schema.json
+  - .ai/communication_compliance/bootstrap_receipt.schema.json
+  - .ai/communication_compliance/communication_drift_ledger.schema.json
+  - .ai/communication_compliance/communication_event.schema.json
+  - .ai/communication_compliance/communication_validation.schema.json
+  - .ai/communication_compliance/drift_record.schema.json
+  - .ai/communication_compliance/inherited_fixture_coverage_map.schema.json
+  - .ai/communication_compliance/proof_chain_review.schema.json
+  - .ai/communication_compliance/tests/test_validate_communication.py
+  - .ai/communication_compliance/transition_proof.schema.json
+  - .ai/communication_compliance/transition_request.schema.json
+  cache_dirs: []
+  ownership: core
+  failure_surfacing: next communication unit-suite run
+  deletion_rule: protected
+  failure_order: 96
+- mechanism: repository_index_generation
+  loader: generate_repository_indexes.py
+  loader_class: in_repo_program
+  discovery: hardcoded default
+  evidence: Generator commands produce and validate every tracked directory index and manifest.
+  paths:
+  - .ai/CODEX_REPORTS/index.md
+  - .ai/HUMAN_BRIEFS/index.md
+  - .ai/TASKS/index.md
+  - .ai/communication_compliance/fixtures/artifacts/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-actor-origin-forged-host/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-forged-trusted/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-replay/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-trusted-host-pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-claimed-from-mismatch/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-event-mutation/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-fabricated-result/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-missing-event/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-pointer-binding/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-state-task-mismatch/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-unreachable/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-from-other-event/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-malformed/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_acceptance_pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_cross_event_transplant/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_event_digest_transplant/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_replay/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_provider/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_role/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_transition/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_material_review_close_rejected/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_publication_candidate_rejected/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_self_acceptance_rejected/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_cross_actor_transplant/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_event_digest_mismatch/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_wrong_task/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_no_authority/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_candidate_pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_completion_pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_completion_two_pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_dispatch_pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_exact_validation_artifact_pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_foreground_self_completion_rejected/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_acceptance_pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_c2_no_authority/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_dispatch_pass/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_origin_missing/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_self_completion_rejected/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_model_origin_missing/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_provider_role_edge_mismatch_rejected/index.md
+  - .ai/communication_compliance/fixtures/artifacts/proof/transition_revision_loop_pass/index.md
+  - .ai/communication_compliance/fixtures/index.md
+  - .ai/communication_compliance/fixtures/raw/index.md
+  - .ai/communication_compliance/index.md
+  - .ai/communication_compliance/tests/index.md
+  - .ai/index.md
+  - .ai/lanes/index.md
+  - .ai/lanes/tests/index.md
+  - .ai/load_profiles/index.md
+  - .ai/role_memory/index.md
+  - .ai/role_memory/tests/index.md
+  - .ai/runs/cli-runner-harness-0001/index.md
+  - .ai/runs/index.md
+  - .ai/runs/tests/fixtures/index.md
+  - .ai/runs/tests/index.md
+  - .ai/token_profile/index.md
+  - .ai/token_profile/tests/index.md
+  - .claude/index.md
+  - 01_Research_Reports/_Supreme_Court_Proposals/index.md
+  - 01_Research_Reports/index.md
+  - 04_Parliament/Issues/Issue_003_Deep_Research_Roadmap/index.md
+  - 04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/index.md
+  - 04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism/index.md
+  - 04_Parliament/Issues/Issue_006_Flywheel_Self_Optimization/index.md
+  - 04_Parliament/Issues/Issue_007_V6_Phase0_CQRS_Engine/index.md
+  - 04_Parliament/Issues/Issue_008_V6_Phase0_Lattice_Sandbox/index.md
+  - 04_Parliament/Issues/Issue_009_V6_Phase0_Fuzzing_Gateway/index.md
+  - 04_Parliament/Issues/Issue_010_V6_Legacy_Cleanup_and_Domain_Migration/index.md
+  - 04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/index.md
+  - 04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/index.md
+  - 04_Parliament/Issues/Templates/index.md
+  - 04_Parliament/Issues/_Template/index.md
+  - 04_Parliament/Issues/index.md
+  - 04_Parliament/Verdicts/index.md
+  - 04_Parliament/_ARCHIVED/index.md
+  - 04_Parliament/index.md
+  - 04_Parliament/已解决归档/Issue_001_Path_Refactor/index.md
+  - 04_Parliament/已解决归档/Issue_002_Tutor_Skill/index.md
+  - 04_Parliament/已解决归档/Issue_003_Deep_Research_Roadmap/index.md
+  - 04_Parliament/已解决归档/index.md
+  - 05_Carbon_Index/_ARCHIVED/index.md
+  - 05_Carbon_Index/index.md
+  - 06_Silicon_Index/Personas/index.md
+  - 06_Silicon_Index/index.md
+  - 06_Silicon_Index/sandbox_tests/index.md
+  - 06_Silicon_Index/scripts/index.md
+  - 06_Silicon_Index/skills/index.md
+  - 07_Compiler/index.md
+  - 07_Silicon_Private_Zones/index.md
+  - abstracts.json
+  - campaigns/index.md
+  - generate_repository_indexes.py
+  - index.md
+  - repository_index_manifest.json
+  - search_results.json
+  - system_backbone/apicurio_registry_hub/index.md
+  - system_backbone/audit_ledger/index.md
+  - system_backbone/domain_knowledge/index.md
+  - system_backbone/framework_skeleton/index.md
+  - system_backbone/index.md
+  cache_dirs:
+  - __pycache__/
+  ownership: UNDECLARED
+  failure_surfacing: next index check/validation or lazy-navigation use
+  deletion_rule: protected
+  failure_order: 100
+  ownership_detail:
+    UNDECLARED:
+    - .ai/index.md
+    - .ai/runs/cli-runner-harness-0001/index.md
+    - .ai/runs/index.md
+    - .ai/runs/tests/fixtures/index.md
+    - .ai/runs/tests/index.md
+    - .claude/index.md
+    - abstracts.json
+    - campaigns/index.md
+    - generate_repository_indexes.py
+    - index.md
+    - repository_index_manifest.json
+    - search_results.json
+    core:
+    - .ai/communication_compliance/fixtures/artifacts/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-actor-origin-forged-host/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-forged-trusted/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-replay/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-c2-trusted-host-pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-claim-forgery/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-claimed-from-mismatch/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-event-mutation/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-fabricated-result/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-missing-event/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-pointer-binding/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-state-task-mismatch/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-unreachable/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-from-other-event/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition-validation-malformed/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_acceptance_pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_cross_event_transplant/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_event_digest_transplant/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_replay/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_provider/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_role/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_actor_origin_wrong_transition/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_material_review_close_rejected/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_publication_candidate_rejected/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_backend_self_acceptance_rejected/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_cross_actor_transplant/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_event_digest_mismatch/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_authority_wrong_task/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_c2_no_authority/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_candidate_pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_completion_pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_completion_two_pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_dispatch_pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_exact_validation_artifact_pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_foreground_self_completion_rejected/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_acceptance_pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_c2_no_authority/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_dispatch_pass/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_origin_missing/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_human_self_completion_rejected/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_model_origin_missing/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_provider_role_edge_mismatch_rejected/index.md
+    - .ai/communication_compliance/fixtures/artifacts/proof/transition_revision_loop_pass/index.md
+    - .ai/communication_compliance/fixtures/index.md
+    - .ai/communication_compliance/fixtures/raw/index.md
+    - .ai/communication_compliance/index.md
+    - .ai/communication_compliance/tests/index.md
+    - .ai/lanes/index.md
+    - .ai/lanes/tests/index.md
+    - .ai/load_profiles/index.md
+    - .ai/role_memory/index.md
+    - .ai/role_memory/tests/index.md
+    - .ai/token_profile/index.md
+    - .ai/token_profile/tests/index.md
+    - 04_Parliament/Issues/Issue_003_Deep_Research_Roadmap/index.md
+    - 04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/index.md
+    - 04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism/index.md
+    - 04_Parliament/Issues/Issue_006_Flywheel_Self_Optimization/index.md
+    - 04_Parliament/Issues/Issue_007_V6_Phase0_CQRS_Engine/index.md
+    - 04_Parliament/Issues/Issue_008_V6_Phase0_Lattice_Sandbox/index.md
+    - 04_Parliament/Issues/Issue_009_V6_Phase0_Fuzzing_Gateway/index.md
+    - 04_Parliament/Issues/Issue_010_V6_Legacy_Cleanup_and_Domain_Migration/index.md
+    - 04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/index.md
+    - 04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/index.md
+    - 04_Parliament/Issues/Templates/index.md
+    - 04_Parliament/Issues/_Template/index.md
+    - 04_Parliament/Issues/index.md
+    - 04_Parliament/Verdicts/index.md
+    - 04_Parliament/_ARCHIVED/index.md
+    - 04_Parliament/index.md
+    - 04_Parliament/已解决归档/Issue_001_Path_Refactor/index.md
+    - 04_Parliament/已解决归档/Issue_002_Tutor_Skill/index.md
+    - 04_Parliament/已解决归档/Issue_003_Deep_Research_Roadmap/index.md
+    - 04_Parliament/已解决归档/index.md
+    - 05_Carbon_Index/_ARCHIVED/index.md
+    - 05_Carbon_Index/index.md
+    - 06_Silicon_Index/Personas/index.md
+    - 06_Silicon_Index/index.md
+    - 06_Silicon_Index/sandbox_tests/index.md
+    - 06_Silicon_Index/scripts/index.md
+    - 06_Silicon_Index/skills/index.md
+    - 07_Compiler/index.md
+    - 07_Silicon_Private_Zones/index.md
+    - system_backbone/apicurio_registry_hub/index.md
+    - system_backbone/audit_ledger/index.md
+    - system_backbone/domain_knowledge/index.md
+    - system_backbone/framework_skeleton/index.md
+    - system_backbone/index.md
+    domain:
+    - .ai/CODEX_REPORTS/index.md
+    - .ai/HUMAN_BRIEFS/index.md
+    - .ai/TASKS/index.md
+    - 01_Research_Reports/_Supreme_Court_Proposals/index.md
+    - 01_Research_Reports/index.md
+- mechanism: core_ownership_and_domain_creation
+  loader: new-domain.ps1 and Human/domain upgrade procedure
+  loader_class: in_repo_program
+  discovery: referenced from CORE_MANIFEST.yml
+  evidence: 0002 closure records new-domain.ps1 as a manifest-declared mechanic.
+  paths:
+  - CORE_MANIFEST.yml
+  - new-domain.ps1
+  cache_dirs: []
+  ownership: UNDECLARED
+  failure_surfacing: next domain creation or core upgrade
+  deletion_rule: protected
+  failure_order: 110
+  ownership_detail:
+    UNDECLARED:
+    - CORE_MANIFEST.yml
+    - new-domain.ps1
+- mechanism: silicon_bootstrap_persona_and_bus_catalog
+  loader: AI bootstrap, city_state_bus.py, and system_2_interceptor.py
+  loader_class: in_repo_program
+  discovery: referenced from 06_Silicon_Index routing documents
+  evidence: 0002 closure retained the core-owned Silicon index and opened its bootstrap chain.
+  paths:
+  - 06_Silicon_Index/06_Cybernetic_Citizen_Awakening.md
+  - 06_Silicon_Index/AI_Bootstrap_Sequence.md
+  - 06_Silicon_Index/CONSTITUTION_DIGEST.md
+  - 06_Silicon_Index/Capability_Registry.md
+  - 06_Silicon_Index/City_State_Agent_System_Prompt.md
+  - 06_Silicon_Index/Context_Loading_And_Drift_Recovery.md
+  - 06_Silicon_Index/Context_Memory_System.md
+  - 06_Silicon_Index/Cybernetic_City_State_OS_Macro_Architecture.md
+  - 06_Silicon_Index/Dual_Check_Proposal_System_Architecture.md
+  - 06_Silicon_Index/Personas/Aggregator_Protocol.xml
+  - 06_Silicon_Index/Personas/Arbiter_Supreme_Protocol.xml
+  - 06_Silicon_Index/Personas/Assembly_Agent_Protocol.xml
+  - 06_Silicon_Index/Personas/Deep_Research_Red_Teaming_Module.xml
+  - 06_Silicon_Index/Personas/Dialectic_Auditor_Protocol.xml
+  - 06_Silicon_Index/Personas/Epistemic_Purifier_Protocol.xml
+  - 06_Silicon_Index/Personas/Evidence_Based_CoT_Fusion_Module.xml
+  - 06_Silicon_Index/Personas/Exam_Agent_Protocol.xml
+  - 06_Silicon_Index/Personas/Gemini_Pro_Architect_Protocol.xml
+  - 06_Silicon_Index/Personas/Identity_Masking_Protocol.xml
+  - 06_Silicon_Index/Personas/Institute_Evolution_Agent.xml
+  - 06_Silicon_Index/Personas/Meta_Template_Skeleton.xml
+  - 06_Silicon_Index/Personas/OS_Coordinator_Protocol.xml
+  - 06_Silicon_Index/Personas/Prep_Architect_Protocol.xml
+  - 06_Silicon_Index/Personas/Red_Team_Mathematician_Protocol.xml
+  - 06_Silicon_Index/Personas/Sandbox_Verification_Officer_Protocol.xml
+  - 06_Silicon_Index/Personas/Socratic_Router_Protocol.xml
+  - 06_Silicon_Index/Personas/index.md
+  - 06_Silicon_Index/Plan3_External_Augmentation_OS_Architecture.md
+  - 06_Silicon_Index/README.md
+  - 06_Silicon_Index/Task_Type_And_Execution_Model.md
+  - 06_Silicon_Index/city_state_production_methodology.md
+  - 06_Silicon_Index/final_lesson.md
+  - 06_Silicon_Index/index.md
+  - 06_Silicon_Index/sandbox_tests/draft_dummy.md
+  - 06_Silicon_Index/sandbox_tests/index.md
+  - 06_Silicon_Index/sandbox_tests/test_approve.md
+  - 06_Silicon_Index/sandbox_tests/test_success.md
+  - 06_Silicon_Index/sandbox_tests/test_violation_schema.md
+  - 06_Silicon_Index/sandbox_tests/test_violation_tokens.md
+  - 06_Silicon_Index/scripts/.bus_state_manager.json
+  - 06_Silicon_Index/scripts/.interceptor_state.json
+  - 06_Silicon_Index/scripts/city_state_bus.py
+  - 06_Silicon_Index/scripts/draft.md
+  - 06_Silicon_Index/scripts/index.md
+  - 06_Silicon_Index/scripts/malicious_draft.md
+  - 06_Silicon_Index/scripts/mock_draft.md
+  - 06_Silicon_Index/scripts/mock_validation.md
+  - 06_Silicon_Index/scripts/multi_model_draft.md
+  - 06_Silicon_Index/scripts/socratic_draft.md
+  - 06_Silicon_Index/scripts/socratic_draft_attention.md
+  - 06_Silicon_Index/scripts/sym2z_validator.py
+  - 06_Silicon_Index/scripts/system_2_interceptor.py
+  - 06_Silicon_Index/scripts/task_request.md
+  - 06_Silicon_Index/scripts/test_cegar_validation.md
+  - 06_Silicon_Index/scripts/test_draft.md
+  - 06_Silicon_Index/scripts/test_validation.md
+  - 06_Silicon_Index/scripts/verification_algebra.md
+  - 06_Silicon_Index/scripts/verification_attention.md
+  - 06_Silicon_Index/scripts/verification_pure_math.md
+  - 06_Silicon_Index/scripts/verification_result.md
+  - 06_Silicon_Index/skills/AI_Planning_Methodology.md
+  - 06_Silicon_Index/skills/firecrawl.md
+  - 06_Silicon_Index/skills/index.md
+  cache_dirs:
+  - 06_Silicon_Index/scripts/__pycache__/
+  ownership: core
+  failure_surfacing: next explicit Silicon bootstrap, persona load, or legacy bus/interceptor run
+  deletion_rule: human_decision_required
+  failure_order: 120
+- mechanism: compiler_quartet
+  loader: 07_Compiler Python entrypoints
+  loader_class: in_repo_program
+  discovery: referenced from 07_Compiler tests and issue records
+  evidence: Tracked CQRS, sandbox, fuzzing, topology compiler, and test files form one code unit.
+  paths:
+  - 07_Compiler/CQRS_Projector.py
+  - 07_Compiler/Lattice_Sandbox.py
+  - 07_Compiler/QuartetFuzz_Gateway.py
+  - 07_Compiler/index.md
+  - 07_Compiler/test_cqrs.py
+  - 07_Compiler/test_fuzzing.py
+  - 07_Compiler/test_sandbox.py
+  - 07_Compiler/yaml_topology_compiler.py
+  cache_dirs:
+  - 07_Compiler/__pycache__/
+  ownership: core
+  failure_surfacing: next explicit compiler or compiler-test invocation
+  deletion_rule: human_decision_required
+  failure_order: 121
+- mechanism: parliament_knowledge_court
+  loader: Human Speaker and Engine B review hosts
+  loader_class: host_application
+  discovery: referenced from 04_Parliament indexes and routing
+  evidence: CORE_MANIFEST marks the Parliament tree core-owned; current task removes only one named retired verdict.
+  paths:
+  - 04_Parliament/Engine_B_Court_Protocol.md
+  - 04_Parliament/Issues/Issue_003_Deep_Research_Roadmap/01-Antigravity-提出议题.md
+  - 04_Parliament/Issues/Issue_003_Deep_Research_Roadmap/index.md
+  - 04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/01-Antigravity-提出议题.md
+  - 04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/02-Atlas-审查.md
+  - 04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/02-Atlas-审查意见.md
+  - 04_Parliament/Issues/Issue_004_System_Prompt_v6_Architecture_Upgrade/index.md
+  - 04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism/01-Antigravity-提出议题.md
+  - 04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism/02-独立专家-火力侦察与辩论报告.md
+  - 04_Parliament/Issues/Issue_005_V5_Dual_Debate_Mechanism/index.md
+  - 04_Parliament/Issues/Issue_006_Flywheel_Self_Optimization/00-给独立专家的初始化投喂包.md
+  - 04_Parliament/Issues/Issue_006_Flywheel_Self_Optimization/01-事前提案_V5自我进化.md
+  - 04_Parliament/Issues/Issue_006_Flywheel_Self_Optimization/02-独立专家-V5全生命周期进化报告.md
+  - 04_Parliament/Issues/Issue_006_Flywheel_Self_Optimization/04-给深研专家的Deep_Research指令.md
+  - 04_Parliament/Issues/Issue_006_Flywheel_Self_Optimization/index.md
+  - 04_Parliament/Issues/Issue_007_V6_Phase0_CQRS_Engine/00_需求澄清与反向问询_CQRS引擎.md
+  - 04_Parliament/Issues/Issue_007_V6_Phase0_CQRS_Engine/index.md
+  - 04_Parliament/Issues/Issue_008_V6_Phase0_Lattice_Sandbox/00_需求澄清与反向问询_沙盒路由器.md
+  - 04_Parliament/Issues/Issue_008_V6_Phase0_Lattice_Sandbox/index.md
+  - 04_Parliament/Issues/Issue_009_V6_Phase0_Fuzzing_Gateway/00_需求澄清与反向问询_Fuzzing网关.md
+  - 04_Parliament/Issues/Issue_009_V6_Phase0_Fuzzing_Gateway/index.md
+  - 04_Parliament/Issues/Issue_010_V6_Legacy_Cleanup_and_Domain_Migration/00_需求澄清与立项建议.md
+  - 04_Parliament/Issues/Issue_010_V6_Legacy_Cleanup_and_Domain_Migration/index.md
+  - 04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/01-Antigravity-需求澄清与机制提议.md
+  - 04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/02-Claude-辩论审查.md
+  - 04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/03-Antigravity-最终合题与机制敲定.md
+  - 04_Parliament/Issues/Issue_011_V6_Debate_Mechanism_Enhancement/index.md
+  - 04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/01-Antigravity-初始议题提案.md
+  - 04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/02-Feynman-反题审查.md
+  - 04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/03-Euclid-反题审查.md
+  - 04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/04-Turing-物理绞杀报告.md
+  - 04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/XX-最终合题：傅里叶变换全景指南.md
+  - 04_Parliament/Issues/Issue_012_Mathematical_Flywheel_Ignition/index.md
+  - 04_Parliament/Issues/Templates/00_需求澄清与反向问询模板_V6.md
+  - 04_Parliament/Issues/Templates/01_事前提案模板_L3专用.md
+  - 04_Parliament/Issues/Templates/02_事后验收模板_L2L3通用.md
+  - 04_Parliament/Issues/Templates/index.md
+  - 04_Parliament/Issues/_Template/00_Issue_Description.md
+  - 04_Parliament/Issues/_Template/XX_Synthesis_Resolution.md
+  - 04_Parliament/Issues/_Template/index.md
+  - 04_Parliament/Issues/index.md
+  - 04_Parliament/README.md
+  - 04_Parliament/Verdicts/Verdict_006_Dynamic_Hybrid_Pipeline.md
+  - 04_Parliament/Verdicts/Verdict_Suspended_Proposal_004.md
+  - 04_Parliament/Verdicts/index.md
+  - 04_Parliament/_ARCHIVED/Challenger_Guidelines.md
+  - 04_Parliament/_ARCHIVED/V4_Emergence_Debate_Protocol.md
+  - 04_Parliament/_ARCHIVED/V6_Autonomous_DAG_Protocol.md
+  - 04_Parliament/_ARCHIVED/V6_Multi_Model_Debate_Protocol.md
+  - 04_Parliament/_ARCHIVED/index.md
+  - 04_Parliament/index.md
+  - 04_Parliament/已解决归档/Issue_001_Path_Refactor/01-Hyperion-提出议题.md
+  - 04_Parliament/已解决归档/Issue_001_Path_Refactor/02-Antigravity-审查与防御.md
+  - 04_Parliament/已解决归档/Issue_001_Path_Refactor/index.md
+  - 04_Parliament/已解决归档/Issue_002_Tutor_Skill/01-Antigravity-提出议题.md
+  - 04_Parliament/已解决归档/Issue_002_Tutor_Skill/02-Atlas-审查.md
+  - 04_Parliament/已解决归档/Issue_002_Tutor_Skill/index.md
+  - 04_Parliament/已解决归档/Issue_003_Deep_Research_Roadmap/01-Antigravity-提出议题.md
+  - 04_Parliament/已解决归档/Issue_003_Deep_Research_Roadmap/02-Atlas-审查.md
+  - 04_Parliament/已解决归档/Issue_003_Deep_Research_Roadmap/index.md
+  - 04_Parliament/已解决归档/README.md
+  - 04_Parliament/已解决归档/index.md
+  cache_dirs: []
+  ownership: core
+  failure_surfacing: next issue review, provenance check, or Engine B adjudication
+  deletion_rule: human_decision_required
+  failure_order: 130
+- mechanism: system_backbone_prototypes
+  loader: explicit prototype operators
+  loader_class: in_repo_program
+  discovery: referenced from system_backbone indexes
+  evidence: 0002 closure retained the core-owned prototype registry, ledger, domain, and framework files.
+  paths:
+  - system_backbone/apicurio_registry_hub/AGENT_CARD_TEMPLATE.json
+  - system_backbone/apicurio_registry_hub/AgentCard_Gemini_3_1_Pro.json
+  - system_backbone/apicurio_registry_hub/a2a-protocol-validator.yaml
+  - system_backbone/apicurio_registry_hub/docker-compose.yml
+  - system_backbone/apicurio_registry_hub/index.md
+  - system_backbone/audit_ledger/index.md
+  - system_backbone/audit_ledger/system_record.jsonl
+  - system_backbone/domain_knowledge/index.md
+  - system_backbone/domain_knowledge/数学知识路线图_知识点版.yaml
+  - system_backbone/framework_skeleton/index.md
+  - system_backbone/framework_skeleton/symbolic_index.yaml
+  - system_backbone/framework_skeleton/task_templates.yaml
+  - system_backbone/index.md
+  cache_dirs: []
+  ownership: core
+  failure_surfacing: next explicit prototype evaluation or activation planning
+  deletion_rule: human_decision_required
+  failure_order: 131
+- mechanism: research_report_human_exception
+  loader: Human and research reviewers
+  loader_class: host_application
+  discovery: referenced from Human decision in cleanup tasks
+  evidence: 0002 closure kept the directory by explicit Human exception despite domain ownership.
+  paths:
+  - 01_Research_Reports/Agent 自进化研究架构设计.md
+  - 01_Research_Reports/Designing LLM Persona Meta-Skeleton.md
+  - 01_Research_Reports/Math Mentor OS：自进化架构物理落地执行方案.md
+  - 01_Research_Reports/README.md
+  - 01_Research_Reports/Red Team Audit_ Persona Matrix Flaws.md
+  - 01_Research_Reports/_Supreme_Court_Proposals/04_Lossless_Dimensional_Elevation_Proposal.md
+  - 01_Research_Reports/_Supreme_Court_Proposals/05_Representation_Engineering_Control_Vectors_Proposal.md
+  - 01_Research_Reports/_Supreme_Court_Proposals/index.md
+  - 01_Research_Reports/index.md
+  - 01_Research_Reports/为什么要研究Agent 自进化研究架构设计.md
+  - 01_Research_Reports/外部专家_第二轮务实追问_高吞吐重构解答.md
+  - 01_Research_Reports/外部专家_第二轮深度追问_AGI架构降维解答.md
+  - 01_Research_Reports/多智能体人格化深研与辩论基建.md
+  - 01_Research_Reports/多智能体辩论系统架构审查.md
+  - 01_Research_Reports/大模型是否可以承担数学的教学任务.md
+  - 01_Research_Reports/引擎落地协议深度研究.md
+  - 01_Research_Reports/神经符号教学系统升级报告.md
+  - 01_Research_Reports/赛博城邦 V6 宪章深研裁决.md
+  - 01_Research_Reports/赛博城邦 V6 宪章深研裁决补丁文件.md
+  - 01_Research_Reports/赛博城邦架构 AGI 重构.md
+  - 01_Research_Reports/赛博城邦架构深度评估.md
+  - 01_Research_Reports/赛博城邦：LLM 路由控制节点设计.md
+  - 01_Research_Reports/赛博城邦：修宪闭环研究.md
+  - 01_Research_Reports/赛博城邦：证据思维链融合.md
+  - 01_Research_Reports/黑盒代理上下文抗坍塌研究.md
+  cache_dirs: []
+  ownership: domain
+  failure_surfacing: next research review or provenance lookup
+  deletion_rule: protected
+  failure_order: 140
+- mechanism: repository_navigation_and_state_routing
+  loader: Human and AI readers
+  loader_class: host_application
+  discovery: referenced from AGENTS.md and generated indexes
+  evidence: 0002 mechanism survey distinguishes routing snapshots from physical current state.
+  paths:
+  - 00_City_State_Routing_Table.md
+  - ARCHITECTURE.md
+  - INSTANCE_CONFIG.md
+  - PROJECT_CONTEXT.md
+  - Plan 3 External Augmentation OS 总体架构设计方案 v0.1.md
+  - README.md
+  - True_Fork_Protocol.md
+  - 开发分支与合并进度总账.md
+  - 未完成任务备忘录.yml
+  - 系统机制总结.md
+  cache_dirs: []
+  ownership: UNDECLARED
+  failure_surfacing: next repository navigation or historical status lookup
+  deletion_rule: human_decision_required
+  failure_order: 150
+  ownership_detail:
+    UNDECLARED:
+    - Plan 3 External Augmentation OS 总体架构设计方案 v0.1.md
+    - 开发分支与合并进度总账.md
+    - 未完成任务备忘录.yml
+    - 系统机制总结.md
+    core:
+    - 00_City_State_Routing_Table.md
+    - ARCHITECTURE.md
+    - INSTANCE_CONFIG.md
+    - True_Fork_Protocol.md
+    domain:
+    - PROJECT_CONTEXT.md
+    - README.md
+- mechanism: mechanism_registry
+  loader: future cleanup validator and Human reviewer
+  loader_class: in_repo_program
+  discovery: referenced from .ai/TASKS/core-registry-and-final-cleanup-0004.md
+  evidence: Human-authorized durable registry output for mechanism-aware cleanup.
+  paths:
+  - .ai/MECHANISM_REGISTRY.yml
+  cache_dirs: []
+  ownership: UNDECLARED
+  failure_surfacing: next cleanup candidate derivation or registry validation
+  deletion_rule: protected
+  failure_order: 160
+  ownership_detail:
+    UNDECLARED:
+    - .ai/MECHANISM_REGISTRY.yml
+retired_records:
+- record: retired_plan_variants
+  former_paths:
+  - 0号方案.md
+  - 1号方案.md
+  - 2号方案.md
+  loader: Human/AI historical reader
+  discovery: formerly declared by CORE_MANIFEST.yml and generated navigation
+  evidence: Human decision in task section 5; no protocol/profile/test reference.
+  referencing_files_before_removal:
+  - CORE_MANIFEST.yml
+  - index.md
+  - repository_index_manifest.json
+  chained_edits:
+  - regenerate root index.md and repository_index_manifest.json
+  - leave CORE_MANIFEST.yml ownership declarations unchanged as required by task section 3
+  decision: human-core-registry-and-final-cleanup-0004 section 5
+  pre_deletion_source_head: 3c2a33845529f1636086a1b065e671220e7220b3
+  recovery_anchors:
+  - 3c2a33845529f1636086a1b065e671220e7220b3:0号方案.md
+  - 3c2a33845529f1636086a1b065e671220e7220b3:1号方案.md
+  - 3c2a33845529f1636086a1b065e671220e7220b3:2号方案.md
+- record: retired_execution_plan_battle_records
+  former_paths:
+  - 07_Execution_Plans/Dual_Check_Proposal_System/Stage_1_Global_Blueprint_v4.3_Final.md
+  - 07_Execution_Plans/Dual_Check_Proposal_System/Stage_2_Routing_Nodes_Final.md
+  - 07_Execution_Plans/Dual_Check_Proposal_System/Stage_3_Sandbox_Evolutionary_Loop_Final.md
+  - 07_Execution_Plans/Dual_Check_Proposal_System/index.md
+  - 07_Execution_Plans/Task_001_Distributed_Pipeline_Mapping.md
+  - 07_Execution_Plans/Task_003_Context_Collapse_Resistance.md
+  - 07_Execution_Plans/index.md
+  loader: Human/AI historical reader
+  discovery: formerly linked from the routing table and generated indexes
+  evidence: Task section 5 authorizes executed battle-task records and indexes; all three Dual Check stages were
+    opened and confirmed implementation-plan history.
+  referencing_files_before_removal:
+  - 00_City_State_Routing_Table.md
+  - CORE_MANIFEST.yml
+  - generate_repository_indexes.py
+  - repository_index_manifest.json
+  - 07_Execution_Plans/index.md
+  - 07_Execution_Plans/Dual_Check_Proposal_System/index.md
+  chained_edits:
+  - remove Task-001 and Task-003 routing entries
+  - remove two exact historical-path constants from generate_repository_indexes.py
+  - regenerate indexes and repository_index_manifest.json
+  - leave CORE_MANIFEST.yml ownership declaration unchanged as required by task section 3
+  decision: human-core-registry-and-final-cleanup-0004 section 5
+  pre_deletion_source_head: 3c2a33845529f1636086a1b065e671220e7220b3
+  recovery_anchors:
+  - 3c2a33845529f1636086a1b065e671220e7220b3:07_Execution_Plans/Dual_Check_Proposal_System/Stage_1_Global_Blueprint_v4.3_Final.md
+  - 3c2a33845529f1636086a1b065e671220e7220b3:07_Execution_Plans/Dual_Check_Proposal_System/Stage_2_Routing_Nodes_Final.md
+  - 3c2a33845529f1636086a1b065e671220e7220b3:07_Execution_Plans/Dual_Check_Proposal_System/Stage_3_Sandbox_Evolutionary_Loop_Final.md
+  - 3c2a33845529f1636086a1b065e671220e7220b3:07_Execution_Plans/Dual_Check_Proposal_System/index.md
+  - 3c2a33845529f1636086a1b065e671220e7220b3:07_Execution_Plans/Task_001_Distributed_Pipeline_Mapping.md
+  - 3c2a33845529f1636086a1b065e671220e7220b3:07_Execution_Plans/Task_003_Context_Collapse_Resistance.md
+  - 3c2a33845529f1636086a1b065e671220e7220b3:07_Execution_Plans/index.md
+- record: retired_vacuum_circuit_breaker_verdict
+  former_paths:
+  - 04_Parliament/Verdicts/Verdict_005_Vacuum_Circuit_Breaker.md
+  loader: Human/AI historical reader
+  discovery: formerly linked from the routing table, Task-003, and generated verdict index
+  evidence: Task section 6 names Verdict_005 as a chained target of the authorized historical cleanup.
+  referencing_files_before_removal:
+  - 00_City_State_Routing_Table.md
+  - 07_Execution_Plans/Task_003_Context_Collapse_Resistance.md
+  - 04_Parliament/Verdicts/index.md
+  - generate_repository_indexes.py
+  - repository_index_manifest.json
+  chained_edits:
+  - remove the routing-table capability entry
+  - co-delete Task-003, which held the only authored nested link
+  - remove the exact self-test case from generate_repository_indexes.py
+  - regenerate the verdict index and repository_index_manifest.json
+  decision: human-core-registry-and-final-cleanup-0004 sections 5-6
+  pre_deletion_source_head: 3c2a33845529f1636086a1b065e671220e7220b3
+  recovery_anchors:
+  - 3c2a33845529f1636086a1b065e671220e7220b3:04_Parliament/Verdicts/Verdict_005_Vacuum_Circuit_Breaker.md

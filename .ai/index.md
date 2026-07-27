@@ -33,7 +33,7 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f5441534b53 -->
 - **path_or_link**: [`.ai/TASKS`](TASKS/index.md)
-  - **content_scope**: 保存已发布 task/LRP 合同；只有活动 pointer 能选择其中一项；tracked 后代文件数=2
+  - **content_scope**: 保存已发布 task/LRP 合同；只有活动 pointer 能选择其中一项；tracked 后代文件数=4
   - **when_to_enter**: 活动 pointer 精确引用某个 task contract；不得按目录批量恢复历史任务
   - **load_policy**: `do_not_load_by_default`
 <!-- RIDX_DIR_HEX 2e61692f636f6d6d756e69636174696f6e5f636f6d706c69616e6365 -->
@@ -58,7 +58,7 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 2e61692f72756e73 -->
 - **path_or_link**: [`.ai/runs`](runs/index.md)
-  - **content_scope**: Windows CLI runner runs 的进程监督、证据 schema 与测试；不承载任务或发布权威；tracked 后代文件数=11
+  - **content_scope**: Windows CLI runner runs 的进程监督、证据 schema 与测试；不承载任务或发布权威；tracked 后代文件数=12
   - **when_to_enter**: 启动、查询、停止或验证已批准的 Windows CLI worker，并核对其本地运行证据
   - **load_policy**: `task_triggered_lazy_load`
 <!-- RIDX_DIR_HEX 2e61692f746f6b656e5f70726f66696c65 -->
@@ -146,6 +146,13 @@ AI source-neutral mailbox、持久协议、任务/报告、program-run 与通信
   - **authority_class**: `operational_contract`
   - **status_or_freshness**: semantic_profile=ai_protocol_contract；authority=operational_contract；evidence_basis=markdown_heading_or_visible_structure；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
   - **when_to_read**: 触发条件：执行其覆盖的通信、交接、长程运行或写入边界。读取 LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md（H1《Long-Run Autonomous Program Protocol》；首个 H2《1. Purpose And Authority》）；实际动作仍须满足当前 task、source head 与 Human/host 权限边界
+<!-- RIDX_FILE_HEX 2e61692f4d454348414e49534d5f52454749535452592e796d6c -->
+- **path_or_link**: [`.ai/MECHANISM_REGISTRY.yml`](MECHANISM_REGISTRY.yml)
+  - **content_summary**: YAML 结构，顶层键：schema_version, registry_status, assembled_from, ownership_note, protected, mechanisms, mechanism, retired_records；安全锚点：schema_version=citystate.mechanism_registry.v1
+  - **role_and_use**: 将 MECHANISM_REGISTRY.yml（schema_version=citystate.mechanism_registry.v1） 作为“实现或结构化领域资产”使用；可追踪实现不等于已激活、已验证或 production-ready
+  - **authority_class**: `implementation`
+  - **status_or_freshness**: semantic_profile=implementation_artifact；authority=implementation；evidence_basis=yaml_visible_keys_and_safe_fields；可追踪实现不等于已激活、已验证或 production-ready
+  - **when_to_read**: 触发条件：修改、运行或消费该具名实现/领域资产，并已定位相邻合同。读取 MECHANISM_REGISTRY.yml（schema_version=citystate.mechanism_registry.v1）；可追踪实现不等于已激活、已验证或 production-ready
 <!-- RIDX_FILE_HEX 2e61692f4f5554424f582e6d64 -->
 - **path_or_link**: [`.ai/OUTBOX.md`](OUTBOX.md)
   - **content_summary**: 首行“packet_id: null”

@@ -12,9 +12,8 @@
 ## recommended_reading_order
 
 1. [`04_Parliament/Verdicts/index.md`](index.md) — 进入该目录时先读；依据当前任务只选择一个最小后续文件集合
-2. [`04_Parliament/Verdicts/Verdict_005_Vacuum_Circuit_Breaker.md`](Verdict_005_Vacuum_Circuit_Breaker.md) — 触发条件：核对对应 Issue 的裁决文本及其适用范围。读取 Verdict_005_Vacuum_Circuit_Breaker.md（H1《🏛️ 法庭裁决档案 005：真空期系统防崩溃与自治指南 (Vacuum Circuit Breaker)》；首个 H2《📜 协议正文：代偿性做梦状态与局部自治 (Compensatory Dream State &amp; Local Autonomy)》）；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认
-3. [`04_Parliament/Verdicts/Verdict_006_Dynamic_Hybrid_Pipeline.md`](Verdict_006_Dynamic_Hybrid_Pipeline.md) — 触发条件：核对对应 Issue 的裁决文本及其适用范围。读取 Verdict_006_Dynamic_Hybrid_Pipeline.md（H1《赛博城邦引擎 B 知识法庭：最高法院结案裁决书》；首个 H2《【法庭总则：皮层-丘脑动态混合架构 (Cortical-Thalamic Dynamic Hybrid Architecture)】》）；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认
-4. [`04_Parliament/Verdicts/Verdict_Suspended_Proposal_004.md`](Verdict_Suspended_Proposal_004.md) — 触发条件：核对对应 Issue 的裁决文本及其适用范围。读取 Verdict_Suspended_Proposal_004.md（H1《赛博城邦引擎 B 知识法庭：最高法院结案裁决书》；首个 H2《【法庭总则】》）；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认
+2. [`04_Parliament/Verdicts/Verdict_006_Dynamic_Hybrid_Pipeline.md`](Verdict_006_Dynamic_Hybrid_Pipeline.md) — 触发条件：核对对应 Issue 的裁决文本及其适用范围。读取 Verdict_006_Dynamic_Hybrid_Pipeline.md（H1《赛博城邦引擎 B 知识法庭：最高法院结案裁决书》；首个 H2《【法庭总则：皮层-丘脑动态混合架构 (Cortical-Thalamic Dynamic Hybrid Architecture)】》）；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认
+3. [`04_Parliament/Verdicts/Verdict_Suspended_Proposal_004.md`](Verdict_Suspended_Proposal_004.md) — 触发条件：核对对应 Issue 的裁决文本及其适用范围。读取 Verdict_Suspended_Proposal_004.md（H1《赛博城邦引擎 B 知识法庭：最高法院结案裁决书》；首个 H2《【法庭总则】》）；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认
 
 ## child_directories
 
@@ -22,13 +21,6 @@
 
 ## direct_files
 
-<!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f56657264696374732f566572646963745f3030355f56616375756d5f436972637569745f427265616b65722e6d64 -->
-- **path_or_link**: [`04_Parliament/Verdicts/Verdict_005_Vacuum_Circuit_Breaker.md`](Verdict_005_Vacuum_Circuit_Breaker.md)
-  - **content_summary**: H1《🏛️ 法庭裁决档案 005：真空期系统防崩溃与自治指南 (Vacuum Circuit Breaker)》；首个 H2《📜 协议正文：代偿性做梦状态与局部自治 (Compensatory Dream State &amp; Local Autonomy)》
-  - **role_and_use**: 将 Verdict_005_Vacuum_Circuit_Breaker.md（H1《🏛️ 法庭裁决档案 005：真空期系统防崩溃与自治指南 (Vacuum Circuit Breaker)》；首个 H2《📜 协议正文：代偿性做梦状态与局部自治 (Compensatory Dream State &amp; Local Autonomy)》） 作为“议会裁决 provenance”使用；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认
-  - **authority_class**: `historical_evidence`
-  - **status_or_freshness**: semantic_profile=parliament_verdict；authority=historical_evidence；evidence_basis=markdown_heading_or_visible_structure；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认
-  - **when_to_read**: 触发条件：核对对应 Issue 的裁决文本及其适用范围。读取 Verdict_005_Vacuum_Circuit_Breaker.md（H1《🏛️ 法庭裁决档案 005：真空期系统防崩溃与自治指南 (Vacuum Circuit Breaker)》；首个 H2《📜 协议正文：代偿性做梦状态与局部自治 (Compensatory Dream State &amp; Local Autonomy)》）；仅用于核验具体裁决 provenance；当前适用性仍需现行合同确认
 <!-- RIDX_FILE_HEX 30345f5061726c69616d656e742f56657264696374732f566572646963745f3030365f44796e616d69635f4879627269645f506970656c696e652e6d64 -->
 - **path_or_link**: [`04_Parliament/Verdicts/Verdict_006_Dynamic_Hybrid_Pipeline.md`](Verdict_006_Dynamic_Hybrid_Pipeline.md)
   - **content_summary**: H1《赛博城邦引擎 B 知识法庭：最高法院结案裁决书》；首个 H2《【法庭总则：皮层-丘脑动态混合架构 (Cortical-Thalamic Dynamic Hybrid Architecture)】》
@@ -53,7 +45,7 @@
 
 ## do_not_load_by_default
 
-- 默认不加载 3 个历史/测试/生成/用户或大型 direct artifacts：`04_Parliament/Verdicts/Verdict_005_Vacuum_Circuit_Breaker.md`, `04_Parliament/Verdicts/Verdict_006_Dynamic_Hybrid_Pipeline.md`, `04_Parliament/Verdicts/Verdict_Suspended_Proposal_004.md`。
+- 默认不加载 2 个历史/测试/生成/用户或大型 direct artifacts：`04_Parliament/Verdicts/Verdict_006_Dynamic_Hybrid_Pipeline.md`, `04_Parliament/Verdicts/Verdict_Suspended_Proposal_004.md`。
 
 ## generation_and_freshness_note
 
