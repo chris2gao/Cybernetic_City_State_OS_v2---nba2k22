@@ -1,26 +1,50 @@
 # 01_workflow
 
-The main area. Everything else exists to serve automated collaborative work, and this
-is where that work is defined.
+工作流是整个系统的入口。其余六个区域都是它需要什么才建什么。
 
-## Holds
+## 目录结构
 
-One subdirectory per workflow, and within it the execution information for each stage:
-what the stage consumes, what it produces, who performs it, what makes it complete, and
-what it hands to the next stage.
+**一个阶段一个目录**，阶段的全部内容在自己目录里。
 
-## Does not hold
+```
+01_需求建模/
+02_信息收集与提炼/
+03_结果建模/
+04_测试生成/
+05_步骤拆分/
+06_执行/
+07_测试执行/
+```
 
-- general mechanisms — those live in `03_mechanisms/` and are referenced from here
-- loaders — `06_execution/` initialises a workflow; this area only defines it
-- content produced by running a workflow — that belongs in `07_content/`
+阶段八（完成）没有机制——全部步骤完成且测试通过即终止，所以不建目录。
+**空目录声称一个它还没承担的角色，正是这个系统要避免的东西。**
 
-## Not yet decided
+## 每个阶段目录的内部约定
 
-The stage schema itself. The first-generation system has task packets, definition of
-done, allowed scope, and stop rules already working under
-`.ai/CODEX_TASK_INPUT_CONTRACT.md`; whether the workflow stage adopts that shape or a
-different one is the next design conversation, not a settled matter.
+```
+<阶段>/
+├── README.md      这个阶段做什么、核心机制是什么、现在什么状态
+├── 方法论_vN.md    机制的规格。第一版可以粗，要求是接得上
+└── 实现/          实现该机制的文件
+```
 
-Empty until that is decided. It is not a placeholder for a plan that exists elsewhere —
-the plan does not exist yet.
+**规格与实现分开、版本号显式。** 这样第二版重构时，替换的是一个目录内的内容，
+不牵动其他阶段——**隔离做好了，升级才便宜。**
+
+## 开发方式
+
+**每个阶段先做出能跑的第一版，再逐个升级。** 不追求一次到位。
+
+八个机制各自独立，某一个换实现不影响其他。所以顺序是：
+先让整条链接得上，再回头把每一环做好。
+
+## 链条
+
+```
+需求 → A → 证据 → B → 测试程序 → 步骤拆分 → [执行→验证→循环] → 完成
+         ↑______________________________|
+                失效可向上退回任意阶段
+```
+
+设计依据在 `../_dev/WORKFLOW_BACKBONE_v0.2.md`（四阶段与承重关系）
+与 `../_dev/WORKFLOW_MECHANISM_v0.1.md`（连接方式、角色分区、执行循环）。
