@@ -1,0 +1,152 @@
+{
+  "$comment": [
+    "SHARED City-State agent policy. This file is TRACKED and core-owned: edit it",
+    "in the core repository, then `git merge core/master` carries it to every",
+    "domain. Before this existed, the same policy was hand-copied into six repos,",
+    "which is the exact problem the core/domain split was built to remove.",
+    "",
+    "Personal, machine-specific preferences (model, effort, thinking) belong in",
+    ".claude/settings.local.json, which stays untracked and overrides this file.",
+    "",
+    "Restored 2026-07-26 after the mechanism-reachability cleanup deleted it. The",
+    "cleanup was not wrong by its own rule - no protocol document references this",
+    "file, so it was unreachable in a document graph. It governs what agents may",
+    "do, not what documents say, and nothing would have reported its absence. A",
+    "deleted fixture turns the suite red; a deleted permission policy is silent",
+    "until an agent performs something that should have been refused.",
+    "",
+    "SCOPE LIMIT, measured and important: every rule below is written in",
+    "`Bash(...)` form and therefore applies to the Claude Code Bash tool. An agent",
+    "that shells out through an MCP server - for example Desktop Commander's",
+    "start_process - does not match these patterns at all, and falls through to",
+    "whatever the host application decides. This file cannot grant or restrict",
+    "that path. Do not read a green rule here as proof that an MCP-based agent is",
+    "permitted."
+  ],
+
+  "permissions": {
+    "$comment_allow": [
+      "Read-only inspection plus the write operations this project actually",
+      "performs. `git push` was moved here from `ask` on 2026-07-26 by Human",
+      "decision: ordinary publication should not interrupt automation. The",
+      "destructive push forms remain gated below."
+    ],
+    "allow": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash(rg:*)",
+
+      "Bash(git status:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git diff:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(git rev-list:*)",
+      "Bash(git ls-files:*)",
+      "Bash(git ls-tree:*)",
+      "Bash(git ls-remote:*)",
+      "Bash(git cat-file:*)",
+      "Bash(git branch:*)",
+      "Bash(git merge-base:*)",
+      "Bash(git check-ignore:*)",
+      "Bash(git grep:*)",
+      "Bash(git fetch:*)",
+      "Bash(git remote -v:*)",
+      "Bash(git remote get-url:*)",
+
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git checkout -b:*)",
+      "Bash(git switch:*)",
+      "Bash(git merge:*)",
+      "Bash(git cherry-pick:*)",
+      "Bash(git stash list:*)",
+      "Bash(git worktree list:*)",
+
+      "Bash(gh repo view:*)",
+      "Bash(gh repo list:*)",
+      "Bash(gh auth status:*)",
+      "Bash(gh api repos/:*)",
+
+      "Bash(python -m pytest:*)",
+      "Bash(python -m unittest:*)",
+      "Bash(python -c:*)",
+      "Bash(python --version:*)"
+    ],
+
+    "$comment_ask": [
+      "Human decision 2026-07-26: history rewriting, worktree destruction and",
+      "remote repointing move from `deny` to `ask`. They are no longer refused",
+      "mechanically; they require an explicit authorization at the moment of use.",
+      "",
+      "The reason they were denied still holds and is the reason they stay gated",
+      "rather than allowed: every domain repository shares an ancestor with core,",
+      "so one rewrite of core history breaks mergeability for all of them at once",
+      "and nothing afterwards repairs it. `git remote set-url` is here because a",
+      "domain silently repointed at another repository is how a push lands in the",
+      "wrong system - that trap was found live in the core folder on 2026-07-25.",
+      "",
+      "Approving one of these is a decision, not a formality. Whoever approves it",
+      "should be able to say which repositories it affects."
+    ],
+    "ask": [
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git push --force-with-lease:*)",
+      "Bash(git push --mirror:*)",
+      "Bash(git push --delete:*)",
+
+      "Bash(git rebase:*)",
+      "Bash(git filter-branch:*)",
+      "Bash(git filter-repo:*)",
+      "Bash(git update-ref -d:*)",
+      "Bash(git branch -D:*)",
+      "Bash(git branch --delete --force:*)",
+      "Bash(git reflog expire:*)",
+      "Bash(git gc --prune:*)",
+
+      "Bash(git reset --hard:*)",
+      "Bash(git clean:*)",
+      "Bash(git checkout -- :*)",
+      "Bash(git restore:*)",
+
+      "Bash(git remote set-url:*)",
+      "Bash(git remote remove:*)",
+      "Bash(git remote rename:*)",
+
+      "Bash(gh repo create:*)",
+      "Bash(gh pr merge:*)",
+      "Bash(pip install:*)",
+      "Bash(npm install:*)"
+    ],
+
+    "$comment_deny": [
+      "These are kept as hard refusals because they are unrelated to git",
+      "automation. The Human instruction was to relax whatever obstructed free",
+      "git operation; reading private keys, credentials, environment files and",
+      "learner records never did. Removing them would be a loss with no",
+      "corresponding gain, so they stay.",
+      "",
+      "Repository deletion and visibility changes stay denied for the same",
+      "reason: neither is part of operating git, and both are irreversible in a",
+      "way a prompt does not adequately convey."
+    ],
+    "deny": [
+      "Read(**/.ssh/**)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/id_rsa*)",
+      "Read(**/id_ed25519*)",
+      "Read(**/.credentials.json)",
+      "Read(**/learners/**)",
+
+      "Bash(gh repo delete:*)",
+      "Bash(gh repo edit --visibility:*)",
+      "Bash(gh api -X DELETE:*)"
+    ]
+  }
+}
