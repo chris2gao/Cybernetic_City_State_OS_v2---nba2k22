@@ -1,257 +1,213 @@
-# Workflow mechanism v0.1 — proposal
+# 工作流机制 v0.1 · 方案
 
-Status: **proposal.** The four stages are settled in `WORKFLOW_BACKBONE_v0.2.md`. This
-describes how they connect: what a stage declares, what makes it complete, what it
-hands on, and how a workflow instance is tracked.
+状态：**方案**。四个阶段已在 `WORKFLOW_BACKBONE_v0.2.md` 定稿。本文描述它们如何连接：
+一个阶段声明什么、什么算完成、向下交接什么，以及一个工作流实例如何被追踪。
 
-Open choices are marked. They are choices, not oversights.
+标注为"开放选择"的是选择，不是疏漏。
 
 ---
 
-## 1. The governing property: state is derived, never declared
+## 1. 支配性质：状态由产物推导，绝不单独声明
 
-A workflow instance has no state file.
+工作流实例**没有状态文件**。
 
-Its stage is **computed** from which artifacts exist and validate. Artifacts present and
-consistent means the stage is reached; an artifact invalidated means the stage is not.
+它的阶段是**算出来的**——由哪些产物存在且自洽决定。产物齐备且一致，即到达该阶段；
+产物被判失效，即未到达。
 
-This is the one design decision taken on direct evidence rather than preference. Every
-significant defect found in the first-generation system had the same shape: a
-declaration that nothing checked, drifting from what it described. The ownership
-manifest declared no content under paths holding 337 files. A generated index claimed
-1883 tracked files against a real 503. Load-profile digests described files that had
-moved. An execution record stated that directories were untouched after they had been
-moved.
+这是唯一一条依据实测证据而非偏好做出的设计决定。第一代系统里每一个重大缺陷都是同一形状：
+**一份没有任何东西检查的声明，与它所描述的现实脱节**。所有权清单声称某些路径下无内容，
+实测 337 个文件。自动生成的索引声称 1883 个跟踪文件，实测 503。载入档案的摘要描述的是
+已经移动过的文件。执行记录写着"目录未触碰"，而那些目录已经搬走。
 
-A `state: stage_3` field would acquire the same capacity on the day it is written.
-Deriving the stage removes the capacity rather than promising to check it.
+一个 `state: stage_3` 字段在写下的当天就获得同样的能力。**推导状态是取消这个能力，
+而不是承诺去检查它。**
 
-**Consequence:** every stage's completion condition must be decidable from artifacts on
-disk. A stage that can only be judged by asking someone is not finished being designed.
+**后果是一条真实约束**：每个阶段的完成条件必须**能从磁盘上的产物判定**。
+只能靠问某个人才能判断的阶段，说明它还没设计完。
 
-## 2. Instance layout
+## 2. 实例布局
 
 ```
 08_os/01_workflow/<workflow-id>/
-  requirement/        A — the requirement model
-  evidence/           what stage 2 gathered, including negative results
-  result/             B — the result model, naming the evidence it rests on
-  tests/              test steps derived from the evidence
-  steps/              the decomposition
-  verdicts/           invalidation verdicts, appended, never edited
+  requirement/   A — 需求建模
+  evidence/      阶段二所得，含否定结果
+  result/        B — 结果建模，写明所依赖的证据
+  tests/         由证据推导的测试步骤
+  steps/         步骤拆分
+  verdicts/      失效判定，只追加，不修改
 ```
 
-`<workflow-id>` is stable and human-readable. The information base itself lives in
-`07_content/<domain>/information/`; `evidence/` here holds the workflow's *use* of it —
-which items were consulted, what was searched and returned nothing, and where a search
-hit a result limit.
+`<workflow-id>` 稳定且人类可读。信息库本体在 `07_content/<domain>/information/`；
+此处的 `evidence/` 记的是本工作流对它的**使用**——查阅了哪些条目、搜了什么返回为空、
+以及搜索在何处撞上结果上限。
 
-That last part is not bookkeeping. It is the only mechanism by which the boundary of the
-evidence set becomes visible, and the reason is recorded in the backbone's residual-risk
-section.
+最后那部分不是流水账。**它是证据集边界得以可见的唯一机制**，理由记在骨干文档的残留风险一节。
 
-## 3. Stage contract
+## 3. 阶段契约
 
-Every stage declares the same five things:
+每个阶段声明同样五项：
 
 ```yaml
-stage: "<number and name>"
-consumes: ["<artifact paths this stage reads>"]
-produces: "<the single artifact path this stage writes>"
-complete_when: "<a condition decidable from artifacts on disk>"
-may_invalidate: ["<upstream artifacts this stage is entitled to reject>"]
+stage: "<编号与名称>"
+consumes: ["<本阶段读取的产物路径>"]
+produces: "<本阶段写出的唯一产物路径>"
+complete_when: "<可由磁盘产物判定的条件>"
+may_invalidate: ["<本阶段有权否决的上游产物>"]
 ```
 
-One stage, one durable artifact. A stage that wants to produce two is two stages, or one
-of the two is scratch and is not kept.
+一个阶段一份耐久产物。想产出两份的，要么是两个阶段，要么其中一份是临时的、不保留。
 
-### The four stages under this contract
+### 四个阶段在此契约下
 
-| Stage | consumes | produces | complete_when |
+| 阶段 | consumes | produces | complete_when |
 | :--- | :--- | :--- | :--- |
-| 1 requirement | — | `requirement/` | A exists and the Human has confirmed it reads as the same requirement they meant |
-| 2 evidence | `requirement/` | `evidence/` | evidence recorded **with** its negative results, and a feasibility verdict written |
-| 3 result | `requirement/`, `evidence/` | `result/` | B exists and every claim in it names the evidence item it rests on |
-| 4 tests and steps | `evidence/`, `result/` | `tests/`, `steps/` | every test traces to an evidence item; steps decompose to those tests |
+| 一 需求 | — | `requirement/` | A 存在，且人类确认它读起来就是自己要的那个需求 |
+| 二 证据 | `requirement/` | `evidence/` | 证据**连同否定结果**一并记录，且可行性判断已写出 |
+| 三 结果 | `requirement/`、`evidence/` | `result/` | B 存在，且其中每条主张都写明所依据的证据条目 |
+| 四 测试与步骤 | `evidence/`、`result/` | `tests/`、`steps/` | 每条测试可溯至一条证据；步骤拆分对应到这些测试 |
 
-Stage 4 is the one exception to one-stage-one-artifact, and it is deliberate: the tests
-fix what the steps must achieve, so separating them would allow steps to be written
-before the tests they answer to. **Open choice:** split them into 4a and 4b with the
-same rule enforced by ordering instead.
+阶段四是"一阶段一产物"的唯一例外，且是有意的：**测试固定了步骤必须达成什么**，
+拆开会给"步骤先于测试写出"留下空间。
+**开放选择**：拆成 4a/4b，改由顺序约束来强制同一规则。
 
-## 4. Invalidation is a first-class transition
+## 4. 失效是一等转移
 
-Any stage may reject an upstream artifact. This is not an error path.
+任何阶段都可以否决上游产物。**这不是错误路径。**
 
-A verdict is appended to `verdicts/` naming the rejected artifact, the evidence for the
-rejection, and what must change. The rejected artifact is **not edited in place** — it
-is superseded by a new version, so that "A as the evidence was gathered against" and "A
-after revision" stay distinguishable.
+判定追加进 `verdicts/`，写明被否产物、否决依据、以及必须改什么。被否产物**不就地修改**——
+它被新版本取代，从而使"证据是针对哪一版 A 收集的"与"修订后的 A"始终可分。
 
-Stage 2 rejecting A is expected often enough that it is part of the stage's purpose:
-evidence gathered on behalf of a requirement contradicts it regularly. Stages 3 and 4
-may reject upward for the same reason, and the mechanism is identical.
+阶段二否决 A 发生得足够频繁，以至于它是该阶段目的的一部分：为需求收集来的证据推翻该需求
+是常态。阶段三、四同样可以向上否决，机制完全相同。
 
-Derived state follows automatically: once A is superseded, the artifacts built on the
-old A no longer validate, and the instance is back at the stage where its inputs are
-sound. Nothing needs to be reset by hand, which is the point of deriving rather than
-declaring.
+推导状态随之自动生效：A 一旦被取代，建立在旧 A 之上的产物不再自洽，实例自动退回到输入
+仍然成立的那个阶段。**不需要手工重置——这正是推导而非声明的实际收益。**
 
-## 4A. Role separation with partitioned context
+## 4A. 角色分离与上下文分区
 
-Human decision 2026-07-27. Stages are performed by **separate model instances with
-partial context**, not by one instance changing hats.
+人类裁决 2026-07-27。各阶段由**独立的模型实例、局部上下文**执行，而不是一个实例换帽子。
 
-| Stage | instance | sees | does not see |
+| 阶段 | 实例 | 看得到 | 看不到 |
 | :--- | :--- | :--- | :--- |
-| requirement, overall planning | a | requirement, result, project-level information | implementation and test detail |
-| information gathering | b (one or more) | requirement, sources | result model, implementation |
-| result modeling | a or c | requirement, evidence | implementation |
-| test program | d | evidence, requirement, result model | implementation |
-| implementation | e | implementation plan, tests as read-only | how the tests were derived |
-| review and testing | a or b | result model, evidence, implementation output | — |
+| 需求与总体规划 | a | 需求、结果、项目级信息 | 实现与测试细节 |
+| 信息收集提炼 | b（一个或多个） | 需求、信息源 | 结果建模、实现 |
+| 结果建模 | a 或 c | 需求、证据 | 实现 |
+| 测试程序 | d | 证据、需求、结果建模 | 实现 |
+| 实现 | e | 实现方案、只读的测试 | 测试是如何推导出来的 |
+| 审核与测试 | a 或 b | 结果建模、证据、实现产出 | — |
 
-This is why test tampering is not a rule but a structural impossibility: the instance
-that would benefit from weakening a test is not given the context in which a test could
-be rewritten, and receives the tests under an explicit no-modification constraint.
+篡改测试因此不是一条规矩而是**结构上的不可能**：会从削弱测试中获益的那个实例，
+根本没有拿到能改写测试的上下文，且测试是以明确的不可修改约束交给它的。
 
-Detailed role and context definitions per stage are deferred; this records the
-principle.
+各阶段角色与上下文的细化另行进行；此处只记录原则。
 
-### Partitioned context is a loading discipline, not an access boundary
+### 上下文分区是加载纪律，不是访问边界
 
-Stated plainly because this repository has paid for the distinction twice in two days.
+明写，因为本仓库两天内为这个区别付过两次代价。
 
-An instance with shell access can read files outside its loaded context. Loading is
-about what enters the window, not about what is reachable. So partitioning removes
-contamination and removes incentive; it does not remove capability.
+有 shell 的实例能读它加载范围之外的文件。**加载管的是什么进入窗口，不是什么可以触达。**
+所以分区消除的是污染和动机，**不消除能力**。
 
-The same distinction cost the permission policy: its `deny` rules were a boundary,
-while "do not run `git add .`" — the only thing standing between a private key in the
-working tree and a published repository — is a convention.
+同一区别让权限策略付过账：它的 `deny` 规则是边界；而"不要跑 `git add .`"——
+挡在工作树里那把私钥和已发布仓库之间的唯一一样东西——是**约定**。
 
-**A mechanism already exists here.** Measured at this commit: `git worktree list`
-returns **32 registered worktrees**, and both Codex and Antigravity already run
-subagents in their own. One worktree per role, containing only the paths that role may
-see, converts the partition from discipline into boundary. Whether to use it is a
-choice; what should not happen is treating loading discipline as though it were already
-enforcement.
+**机制其实现成。** 本提交实测：`git worktree list` 返回 **32 个已注册工作树**，
+Codex 与 Antigravity 的子代理本来就各跑各的。一个角色一个工作树、只含该角色可见的路径，
+分区就从纪律变成边界。用不用是选择；不该发生的是**把加载纪律当成已经强制**。
 
-### What partitioning does not address
+### 分区没有覆盖的
 
-**Overfitting to the test.** Instance e can leave every test untouched and still satisfy
-the letter of a test rather than its intent. That is not tampering; it is a property of
-tests being incomplete specifications, and no context boundary prevents it.
+**对测试过拟合。** 实例 e 可以一个测试都不碰，却只满足测试的字面而非意图。
+这不是篡改，是**测试作为不完备规格的固有性质**，任何上下文边界都防不住。
 
-The design already contains the answer, and it is worth making explicit: the review
-instance checks **the implementation against B and the evidence**, not merely that the
-suite is green. Review that only reads the result of the tests degrades into confirming
-a light is on.
+设计里已有答案，值得明写：审核实例核的是**实现对 B 与证据**，而不只是"套件是不是绿的"。
+只读测试结果的审核会退化成确认一盏灯亮着。
 
-**One reuse constraint.** Where the table allows `a or c` and `a or b`, instance a may
-define the requirement and later review whether the implementation satisfies it — the
-requirement owner is the right acceptor. But a must not also have produced B, or it is
-reviewing its own derivation, which is the failure this project spent six review rounds
-on.
+**一条复用约束。** 表中允许 `a 或 c`、`a 或 b`：a 可以定义需求并在之后审核实现是否满足它
+——需求方本就是恰当的验收方。但 **a 不能同时产出 B**，否则它在审自己的推导，
+而这正是本项目为之付出六轮复审的那个失败。
 
-## 5. Who performs, who confirms
+## 5. 谁执行，谁确认
 
-| Stage | performs | confirms |
+| 阶段 | 执行 | 确认 |
 | :--- | :--- | :--- |
-| 1 | model and Human together | Human — this is the one place a human confirmation is structural rather than procedural |
-| 2 | model | the negative-results record makes the boundary checkable by anyone |
-| 3 | model | evidence-dependency naming makes each claim traceable |
-| 4 | model | test-to-evidence tracing is mechanically checkable |
+| 一 | 模型与人类共同 | 人类——这是唯一一处人类确认属于结构性而非程序性 |
+| 二 | 模型 | 否定结果记录使边界对任何人可查 |
+| 三 | 模型 | 证据依赖标注使每条主张可溯 |
+| 四 | 模型 | 测试到证据的溯源可机械检查 |
 
-Stage 1 needs the Human because its completion condition is that two parties mean the
-same thing, and no artifact can establish that on its own.
+阶段一需要人类，因为它的完成条件是**两方指的是同一件事**，没有任何产物能独立证明这一点。
 
-The other three are designed so that a reader who did not perform them can check them
-from the artifacts. That is deliberate and it is what makes independent review possible
-without re-running the work.
+其余三个阶段都设计成：**没有执行过它们的读者也能从产物核验**。
+这是有意的，也正是独立评审不必重跑工作的前提。
 
-**Open choice:** whether stage 3's B additionally requires an independent reviewer
-before stage 4 begins. The evidence-tracing requirement may already be sufficient. This
-is the point where the project's existing rule — an author should not design the
-verification of their own work — either applies or is judged already satisfied.
+**开放选择**：阶段三的 B 是否需要在阶段四开始前经过独立评审。证据溯源要求也许已经足够。
+这是"作者不应设计对自己工作的验证"这条规矩**要么适用、要么已被满足**的判断点。
 
-## 6. Stage 5 — execution, as a loop
+## 6. 阶段五 · 执行，作为循环
 
-Settled by Human decision 2026-07-27: **execution is inside the workflow**, and it is
-not a straight line. The full chain:
+人类裁决 2026-07-27：**执行在工作流内部**，且不是一条直线。完整链条：
 
 ```
-requirement → A → evidence → B → test program → step decomposition
-                                                      │
-                                        ┌─────────────┘
-                                        ▼
-                            execute one step ──► verify
-                                        ▲            │
-                                        │       pass │ fail
-                                        │            ▼
-                                        └──────── retry ──► next step
-                                                              │
-                                                    all steps done
-                                                              ▼
-                                                          complete
+需求 → A → 证据 → B → 测试程序 → 步骤拆分
+                                      │
+                        ┌─────────────┘
+                        ▼
+              执行一个步骤 ──► 验证
+                        ▲          │
+                        │     通过 │ 失败
+                        │          ▼
+                        └────── 重试 ──► 下一步骤
+                                          │
+                                    全部步骤完成
+                                          ▼
+                                        完成
 ```
 
-Verification gates progress step by step. A step is not left until its tests pass, so a
-defect is caught against the step that caused it rather than at the end against
-everything at once.
+验证逐步把关。一个步骤在其测试通过前不会被离开，因此缺陷是**对着造成它的那一步**被抓住，
+而不是最后对着全部一起抓。
 
-### The loop needs an exit that is not success
+### 循环需要一个不是"成功"的出口
 
-"Retry until done" has no terminating condition when a step cannot be done, and that
-produces two failures, the second worse than the first.
+"重试直到完成"在步骤做不到时没有终止条件，由此产生两种失败，第二种更糟。
 
-**Unbounded spin.** A step that is not achievable retries forever. The
-first-generation system already answered this with a bounded repair budget — three
-attempts, after which the task escalates rather than continuing. That precedent is
-adopted here rather than reinvented.
+**无界自旋。** 做不到的步骤会永远重试。第一代系统已经给过答案——**三次修复预算**，
+耗尽即上报而不是继续。此处沿用该先例，不重新发明。
 
-**Termination by weakening the check.** Under retry pressure the cheapest way to make a
-test pass is to change the test. A loop with no exit but success will find that exit.
-This is the failure mode the loop must be built against, not merely warned about.
+**通过削弱检查来终止。** 在重试压力下，让测试通过的最省力方式是改测试。
+**一个除了成功没有别的出口的循环，会找到那个出口。** 这是循环必须被建造来对抗的失败模式，
+而不只是被警告一句。
 
-Two rules follow, and they are the load-bearing part of this section:
+由此两条规则，是本节承重的部分：
 
-1. **Tests are frozen once the loop begins.** They were derived from evidence in stage
-   4; changing them inside the loop is not a repair, it is a redefinition of what
-   success means. A test that turns out to be wrong invalidates upward — see below —
-   it is not edited in place.
-2. **Repeated failure is a finding, not just a retry.** After the repair budget is
-   exhausted, the correct question is not "how else can this step be implemented" but
-   "which upstream artifact was wrong".
+1. **循环开始后测试冻结。** 它们在阶段四由证据推导而来；在循环内改它们不是修复，
+   是**重新定义什么叫成功**。发现测试错了要向上失效——见下——而不是就地修改。
+2. **反复失败是发现，不只是重试。** 修复预算耗尽后，正确的问题不是"这一步还能怎么实现"，
+   而是**"上游哪个产物错了"**。
 
-### Three exits, not two
+### 三个出口，不是两个
 
-| Exit | When | Action |
+| 出口 | 何时 | 动作 |
 | :--- | :--- | :--- |
-| pass | tests pass | proceed to the next step |
-| retry | failure looks like an implementation defect, budget remains | re-execute the same step |
-| invalidate | budget exhausted, or the failure indicates the evidence was wrong | append a verdict against `steps/`, `tests/`, `result/` or `evidence/` and return to that stage |
+| 通过 | 测试通过 | 进入下一步骤 |
+| 重试 | 失败像是实现缺陷，且预算尚有余 | 重新执行同一步骤 |
+| 失效 | 预算耗尽，或失败表明证据有误 | 向 `steps/`、`tests/`、`result/` 或 `evidence/` 追加判定并退回该阶段 |
 
-The third exit is the one that makes the loop honest. A step that cannot be made to
-pass is evidence about the model that produced it — most often that B claimed something
-the evidence did not actually support, which is exactly the case stage 3's
-evidence-dependency naming exists to make traceable.
+第三个出口是让循环诚实的那个。**一个怎么都过不了的步骤，是关于产出它的那个模型的证据**——
+最常见的情况是 B 声称了证据并不支持的东西，而这正是阶段三的证据依赖标注所要暴露的。
 
-### Completion
+### 完成
 
-All steps executed, all tests passing. That **is** completion, because it is exactly the
-condition under which A is satisfied. There is no separate acceptance stage; adding one
-would imply the tests were insufficient, and in that case the defect is in the tests.
+全部步骤执行完毕、全部测试通过。**那就是完成**，因为那正是 A 得到满足的条件。
+没有单独的验收阶段；再加一个等于暗示测试不充分，那样的话缺陷在测试里。
 
-**Open choice:** who performs execution — a backend executor under the existing
-machinery, or a role defined inside this system. The boundary must be explicit either
-way. What must not happen is execution being assumed to belong to whoever is nearby.
+**开放选择**：谁执行——现有机制下的后端执行角色，还是本系统内定义的角色。
+无论哪种，边界都必须明写。**不该发生的是"谁在旁边就默认归谁"。**
 
-## 7. What this proposal does not settle
+## 7. 本方案未解决的
 
-- Whether the stage contract adopts, adapts or replaces the first-generation
-  `CODEX_TASK_INPUT_CONTRACT.md` shape. That contract already carries intent, definition
-  of done, allowed scope, stop rules and a return contract, all in production use.
-- How a workflow instance is registered and loaded — `05_registry/` and `06_execution/`,
-  both downstream of this.
-- Whether workflows can depend on other workflows.
+- 阶段契约是沿用、改造还是替换第一代的 `.ai/CODEX_TASK_INPUT_CONTRACT.md` 形状。
+  那份契约已在生产使用，载有 intent、definition of done、allowed scope、stop rules
+  与 return contract。
+- 工作流实例如何注册与加载——属 `05_registry/` 与 `06_execution/`，均在本方案下游。
+- 工作流之间能否互相依赖。

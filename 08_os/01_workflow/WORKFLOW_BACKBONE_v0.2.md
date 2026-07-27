@@ -1,159 +1,127 @@
-# Workflow backbone v0.2
+# 工作流骨干 v0.2
 
-Supersedes v0.1. The six open questions of v0.1 were answered by the Human on
-2026-07-27; this version folds the answers into the stages rather than leaving them
-beside it. One residual risk is recorded at the end.
+取代 v0.1。v0.1 提出的六个开放问题已于 2026-07-27 由人类回答，本版把答案并入各阶段，
+不再另置一处。末尾保留一条残留风险。
 
-The workflow is the entry point of the second-generation system. Everything else —
-boot, mechanisms, skills, registry, execution — is built outward from what the workflow
-turns out to need.
+工作流是第二代系统的入口。boot、机制、技能、注册表、执行——其余一切都从工作流实际
+需要什么向外生长。
 
 ---
 
-## The shape
+## 形状
 
 ```
-A ──────────────► evidence ──────────────► B
-requirement       information base         result model
-   │                    │                    │
-   │                    ├── feasibility ─────┤
-   │                    │   assessment       │
-   │                    │                    │
-   └──────── tests derived from evidence ────┘
-                        │
-                  step decomposition
-                        │
-                     execute → tests pass → A is satisfied
+A ──────────────► 证据 ──────────────► B
+需求建模          信息库                结果建模
+   │                │                    │
+   │                ├──── 可行性判断 ─────┤
+   │                │                    │
+   └────────── 测试由证据推导 ────────────┘
+                    │
+                 步骤拆分
+                    │
+              执行 → 测试通过 → A 得到满足
 ```
 
-The load-bearing relation is **B achieved implies A satisfied**. B is a proposition
-about A, not a deliverable beside it. That is what stops a project completing something
-nobody can demonstrate was the thing asked for.
+承重的是这条关系：**B 实现即 A 满足**。B 是关于 A 的一个命题，不是摆在 A 旁边的交付物。
+这一点决定了项目不会做完一个没人能证明"就是当初要的那个"的东西。
 
 ---
 
-## Stage 1 — requirement modeling
+## 阶段一 · 需求建模
 
-Reach consensus through sustained questioning: the model and the Human specify the
-requirement's information together until it stands in three dimensions rather than in a
-few sentences.
+通过持续提问达成共识：模型与人类共同把需求的信息具体化，直到它立体起来，而不是停留在
+几句话。
 
-The point is not agreement. It is that both parties can state the same requirement and
-mean the same thing. A requirement described in a sentence is under-specified in ways
-neither party can see until the questioning exposes them. Existing continuous-questioning
-skills are a reference for the technique.
+要点不是"达成一致"，而是**双方陈述同一需求时指的是同一件事**。一句话描述的需求总有
+双方都看不见的欠定，只有追问能把它们暴露出来。市面上的连续追问 skill 是技术上的参考。
 
-**Output:** requirement model A, in `01_workflow/<workflow-id>/requirement/`.
+**产出**：需求建模 A，置于 `01_workflow/<workflow-id>/requirement/`。
 
-**Complete when:** the requirement is modeled to where the Human and the model both
-understand it accurately — materially more concrete than the sentence it started as.
+**完成条件**：需求被建模到人类与模型都能准确理解的程度，实质上比起始的那句话具体得多。
 
-## Stage 2 — information base, and the feasibility verdict
+## 阶段二 · 信息库与可行性判断
 
-Working from A, collect and refine the evidence the requirement depends on — deep
-research and equivalent gathering — and combine it with domain knowledge already held.
+以 A 为依据，收集并提炼需求所依赖的证据——deep research 及同类手段——并与既有领域知识
+结合。
 
-**This stage has two outputs, not one.** The information base is the visible one. The
-second is a feasibility assessment: whether the evidence supports building anything
-that would satisfy A.
+**本阶段有两个产出，不是一个。** 显性的是信息库。第二个是可行性判断：证据是否支持构建出
+任何能满足 A 的东西。
 
-That verdict may be negative, and a negative verdict is a finding rather than a
-failure. Evidence gathered on behalf of a requirement routinely contradicts it. The
-workflow does not treat that as an exception path because it is not exceptional; it is
-what stage 2 is partly for.
+该判断**可以是否定的，而否定判断是发现不是失败**。为某个需求收集来的证据反过来推翻该
+需求，这件事经常发生。工作流不把它当异常路径处理，因为它不异常——它本就是阶段二存在的
+部分理由。
 
-**Output:** information base in `07_content/<domain>/information/`, treated as source
-material rather than as conclusion. Plus the feasibility verdict.
+**产出**：信息库置于 `07_content/<domain>/information/`，按**原料**而非结论对待；
+外加可行性判断。
 
-## Stage 3 — result modeling
+## 阶段三 · 结果建模
 
-From A and the evidence, derive **B** dialectically: what the realized requirement
-looks like, and why the evidence supports it.
+由 A 与证据辩证地推出 **B**：需求实现后是什么样，以及证据为何支持它。
 
-Feasibility is not asserted separately. If B can be constructed on the evidence, that
-construction is the feasibility argument — and B must record **which evidence it rests
-on**, so that a later failure can be traced to the specific insufficient item rather
-than to a general misjudgement.
+可行性不单独断言。**若 B 能在证据上被构造出来，这个构造过程本身就是可行性论证**——
+而 B 必须写明**它依赖哪些证据**，这样日后失败能定位到具体哪一条不足，而不是笼统地说
+"当初判断错了"。
 
-**Output:** result model B, with its evidence dependencies named.
+**产出**：结果建模 B，附其证据依赖。
 
-## Stage 4 — tests, then steps
+## 阶段四 · 先测试，后步骤
 
-**Tests derive from the evidence, not from B.**
+**测试由证据推导，不由 B 推导。**
 
-This is the stage's defining rule and it is worth stating why. Tests generated from B
-check B's internal consistency; when one line of reasoning produced both B and its
-tests, they pass by construction and prove nothing. Evidence is the third party — it
-was authored by neither A nor B — so a test grounded in an external fact can fail
-honestly.
+这是本阶段的定义性规则，理由值得写明：从 B 生成的测试检验的是 B 的自洽性；当同一套推理
+产出 B 和它的测试时，测试**因构造而通过**，什么也证明不了。证据是第三方——A 没写它，
+B 也没写它——所以基于外部事实的测试**能够诚实地失败**。
 
-The same evidence therefore does two jobs: it establishes that B is feasible, and it
-supplies what the tests must demonstrate.
+同一批证据因此干两件事：证明 B 可行，以及供给测试必须展示的内容。
 
-With the tests fixed, work backwards to the implementation steps for A. Decompose into
-multiple steps. Multi-step testing produces B.
+测试固定之后，倒推 A 的实现步骤，做多步骤拆分。多步测试产出 B。
 
-**Output:** test steps and step decomposition.
+**产出**：测试步骤与步骤拆分。
 
-## Completion
+## 完成
 
-B implemented and its tests passing **is** the end of the workflow, because that is
-exactly the condition under which A is satisfied. There is no separate acceptance
-stage, and adding one would imply the tests were not sufficient — in which case the
-defect is in the tests.
+B 实现且其测试通过，**就是**工作流的终点，因为那正是 A 得到满足的条件。没有单独的验收
+阶段——再加一个等于暗示测试不充分，那样的话缺陷在测试里。
 
 ---
 
-## Residual risk, stated precisely
+## 残留风险 · 精确表述
 
-An earlier draft framed this as "constructibility is not achievability". That framing
-was too loose and is withdrawn: because B is **derived from** the evidence rather than
-designed first and justified afterwards, the derivation direction already answers most
-of it. Deriving B from evidence and finding evidence for a chosen B are different
-activities, and this workflow does the first.
+早先的草稿把它写成"可构造不等于可实现"。**该表述过于宽泛，予以撤回**：因为 B 是**从证据
+推导出来的**，而不是先设计好再去找依据，推导方向本身已经回答了其中大部分。
+"由证据推出 B"和"为选定的 B 寻找证据"是两种不同的活动，本工作流做的是前者。
 
-What remains is narrower and sits in one place.
+留下的那条更窄，且只落在一处。
 
-**The completeness of the evidence set cannot be established by the evidence set.**
-Stage 2 ends when the gatherer judges the evidence sufficient, and that gatherer is the
-same party who then derives B. Every other link in the chain rests on evidence; the
-stopping rule does not.
+**证据集的完备性无法由证据集本身证明。** 阶段二在收集者判定证据充分时结束，而该收集者
+正是随后推导 B 的同一方。链条上其余每一环都建立在证据上，**唯独"何时停止收集"这一判断
+没有**。
 
-Worked example from this repository, 2026-07-26. An agent searched for the release
-rebinding procedure, received a result list truncated at its limit, concluded that no
-document described the procedure, and reconstructed one from commit history. The
-reconstruction was correct in shape. The evidence set was incomplete —
-`.ai/communication_compliance/README.md#release-binding` described the procedure in
-full — and **nothing inside the evidence set could indicate that**. The reconstruction
-also omitted that `lane_epoch.yml` must be bound in the same cycle, which the missed
-document stated plainly. Executing the reconstructed version would have completed half
-a release binding.
+本仓库 2026-07-26 的实例：某代理搜索发布重绑定流程，得到一个**被上限截断**的结果列表，
+据此断定"没有任何文档描述该流程"，转而从提交历史重建了一套。重建的形状是对的，
+但证据集不完整——`.ai/communication_compliance/README.md#release-binding` 完整描述了该
+流程——而**证据集内部没有任何东西能指出这一点**。该重建还漏掉了 `lane_epoch.yml` 必须
+在同一循环内绑定，那份没读到的文档写得清清楚楚。照该版本执行，会做出半个绑定循环。
 
-**Mitigation, already house doctrine rather than a new rule.**
-`AGENT_WORKING_DISCIPLINE.md` requires recording what was examined and rejected, and
-why, on the grounds that no research tool produces it and every one of them is biased
-toward positive synthesis.
+**缓解方式是已有规矩的应用，不是新规则。** `AGENT_WORKING_DISCIPLINE.md` 要求记录
+"检查过什么、否决了什么、为什么"，理由是没有任何研究工具会产出这个，而所有工具都偏向
+正面综合。
 
-Applied here: the information base records **what was searched and returned nothing**,
-alongside what was found, including where a search hit a result limit. A later reader
-can then see the boundary of the evidence set instead of mistaking it for the whole.
-This does not make the set complete. It makes its incompleteness visible, which is the
-difference between a gap that can be noticed and one that cannot.
+落到这里：信息库同时记录**搜了什么、返回为空**，包括搜索在何处撞上结果上限。
+后来的读者由此能看见证据集的**边界**，而不是把它误当作全集。这不让证据集变完整，
+它让不完整**可见**——这是"能被注意到的缺口"和"不能被注意到的缺口"之间的区别。
 
-Stage 3's requirement that B name the evidence it rests on remains, for the same
-reason: it makes a later failure specific — which evidence was insufficient — rather
-than a general verdict that some judgement was wrong.
+阶段三要求 B 写明所依赖的证据，出于同一理由：让日后的失败具体到"哪条证据不足"，
+而不是含糊的"某个判断错了"。
 
 ---
 
-## What v0.2 still does not define
+## v0.2 仍未定义的
 
-- **The stage schema.** What a stage declares, what makes it complete, what it hands
-  on. The first-generation system has a working version in
-  `.ai/CODEX_TASK_INPUT_CONTRACT.md` — intent, definition of done, allowed scope, stop
-  rules, return contract. Adopt, adapt, or replace: undecided.
-- **Placement of B, the tests and the steps.** A and the information base are placed.
-  These are not, and the answer determines what the registry records and what the
-  loaders load.
-- **Who executes the steps.** Outside the workflow definition, but the boundary should
-  be explicit rather than assumed.
+- **阶段 schema**：一个阶段声明什么、什么算完成、向下交接什么。第一代系统在
+  `.ai/CODEX_TASK_INPUT_CONTRACT.md` 有一份在用的版本——intent、definition of done、
+  allowed scope、stop rules、return contract。沿用、改造还是替换，未定。
+- **B、测试、步骤的存放位置**。A 与信息库已定位，这三者未定，而这个答案决定注册表记什么、
+  加载器加载什么。
+- **谁执行步骤**。在工作流定义之外，但边界应当明写而非默认。

@@ -1,154 +1,130 @@
-# Second-generation system — implementation plan v0.1
+# 第二代系统 · 实现方案 v0.1
 
-Status: **draft for discussion.** Not yet reviewed by any other model, by decision.
+状态：**待讨论草案**。按决定，尚未交给任何其他模型评审。
 
-The design is settled far enough to plan against: `01_workflow/WORKFLOW_BACKBONE_v0.2.md`
-fixes the four stages, `01_workflow/WORKFLOW_MECHANISM_v0.1.md` fixes how they connect.
-This says how the system gets built, in what order, and what has to be decided before
-anything starts.
+设计已经定到可以据此排期：`01_workflow/WORKFLOW_BACKBONE_v0.2.md` 定了四个阶段，
+`01_workflow/WORKFLOW_MECHANISM_v0.1.md` 定了它们如何连接。本文说的是**系统怎么建、
+按什么顺序、动手前必须先定什么**。
 
 ---
 
-## 1. The principle that sets the order
+## 1. 决定顺序的原则
 
-**Build what the workflow demands, when it demands it.** Not seven areas in parallel,
-not a complete platform waiting for a first user.
+**工作流需要什么，才建什么，什么时候需要什么时候建。** 不是七个区域并行开工，
+也不是先造一个完整平台等第一个用户。
 
-The first-generation system was built the other way and the cost was measured: 855
-tracked files, of which a third belonged to one domain, with two working mechanism
-files deleted by a correct analysis because nothing recorded that they were loaded from
-outside. Structure that arrives before its use has nothing to check it against.
+第一代系统是反着来的，代价实测过：855 个跟踪文件，其中三分之一属于一个领域，
+两个在用的机制文件被一次**正确的**分析删掉——因为没有任何东西记录它们是被仓库外部加载的。
+**先于用途到达的结构，没有东西能校验它。**
 
-So the order below is a dependency order, not a wish list. An area is built when
-something concrete is blocked without it.
+所以下面是依赖顺序，不是愿望清单。**某件具体的事没有它就卡住，才建它。**
 
-## 2. Current state
+## 2. 当前状态
 
-| Area | State |
+| 区域 | 状态 |
 | :--- | :--- |
-| `01_workflow` | designed — backbone v0.2, mechanism v0.1. Stage contract unsettled |
-| `02_boot` | empty, purpose stated |
-| `03_mechanisms` | empty, purpose stated |
-| `04_skills_and_tools` | empty, purpose stated |
-| `05_registry` | empty, purpose stated |
-| `06_execution` | empty, purpose stated |
-| `07_content` | empty, purpose stated |
+| `01_workflow` | 已设计——骨干 v0.2、机制 v0.1。阶段契约未定 |
+| `02_boot` | 空，已声明用途 |
+| `03_mechanisms` | 空，已声明用途 |
+| `04_skills_and_tools` | 空，已声明用途 |
+| `05_registry` | 空，已声明用途 |
+| `06_execution` | 空，已声明用途 |
+| `07_content` | 空，已声明用途 |
 
-The first-generation system is tidied and stays available as a donor: mechanisms that
-already work there are ported selectively, assessed one at a time, never copied
-wholesale.
+第一代系统已整理完毕，作为**供体**保留：其中已经跑通的机制按需逐个移植，
+逐个评估，绝不整体搬运。
 
-## 3. Two decisions that block the start
+## 3. 卡在开工前的两个决定
 
-Neither is a detail and neither can be deferred by starting anyway.
+两个都不是细节，也都不能靠"先干起来再说"绕过。
 
-**D1 — the stage contract.** Does a workflow stage adopt, adapt, or replace the shape
-already in production at `.ai/CODEX_TASK_INPUT_CONTRACT.md`: intent, definition of
-done, allowed scope, stop rules, return contract. Adopting is cheapest and carries
-known-good semantics. Replacing is cleaner conceptually and costs a re-derivation of
-everything that contract learned the hard way.
+**D1 · 阶段契约。** 工作流阶段是沿用、改造还是替换已在生产使用的
+`.ai/CODEX_TASK_INPUT_CONTRACT.md` 形状：intent、definition of done、allowed scope、
+stop rules、return contract。
+沿用最省，且带着已验证的语义；替换概念上更干净，代价是把那份契约用血换来的东西重推一遍。
 
-**D2 — who executes.** A backend executor under the existing machinery, or a role
-defined inside this system. This determines whether `06_execution` loads an external
-agent or drives an internal one, and it changes what the loaders look like.
+**D2 · 谁执行。** 现有机制下的后端执行角色，还是本系统内定义的角色。
+这个决定 `06_execution` 是**加载一个外部代理**还是**驱动一个内部角色**，
+加载器的样子随之不同。
 
-Everything in section 4 assumes these are answered. They are the first thing to
-discuss with another model.
+第 4 节的一切都假定这两个已有答案。**它们是找其他模型讨论时的第一件事。**
 
-## 4. Build order
+## 4. 建设顺序
 
-### Step 1 — run one workflow by hand, end to end
+### 第一步 · 手工完整跑一遍工作流
 
-Before automating a workflow, run one manually through all four stages and the
-execution loop. The obvious candidate is **building this system itself**: requirement,
-evidence, result model, tests, steps, execute.
+在自动化之前，先手工把四个阶段加执行循环完整跑一遍。最合适的题目就是
+**建这个系统本身**：需求 → A → 证据 → B → 测试 → 步骤 → 执行。
 
-This is deliberate and it is the cheapest available validation. A workflow that cannot
-carry its own construction will not carry anything else, and every gap shows up as a
-question the person running it cannot answer from the design.
+这是有意的，也是现有最便宜的验证。**一个承载不了自身构建的工作流，承载不了别的东西**，
+而每一处缺口都会表现为"跑的人无法从设计里找到答案的问题"。
 
-There is a bootstrap limit worth stating: the run is manual, so it validates the
-**stages**, not the loaders or the context partitioning. Those cannot be tested until
-they exist. What the manual run produces is the list of what they must do.
+有一条自举局限必须写明：手工跑验证的是**阶段**，不是加载器，也不是上下文分区——
+后两者还不存在。手工跑真正的产出是**"那两者必须做到什么"的清单**。
 
-**Produces:** one complete workflow instance under
-`01_workflow/<workflow-id>/`, and a list of everything the design failed to specify.
+**产出**：`01_workflow/<workflow-id>/` 下一个完整实例，以及一份"设计没说清楚的东西"清单。
 
-### Step 2 — registry v0, from what step 1 actually needed
+### 第二步 · 注册表 v0，来自第一步实际需要的东西
 
-Not a schema designed in advance. The registry's first entries are the artifacts step 1
-produced and the mechanisms it turned out to require.
+不是事先设计好的 schema。注册表的头一批条目就是第一步产出的产物，
+以及它跑下来发现确实需要的机制。
 
-The field set is already drafted in `05_registry/README.md`, including `loader_class`
-and `failure_surfacing` — both present because the first-generation system lost files
-for want of them.
+字段集已在 `05_registry/README.md` 起草，含 `loader_class` 与 `failure_surfacing`——
+**两者都因为第一代系统为缺少它们丢过文件而存在**。
 
-**Produces:** `05_registry/` with real entries and a validator that fails on a
-registered path that does not exist, an existing path with no entry, and a declared
-cache directory that is neither present nor correctly ignored.
+**产出**：`05_registry/` 带真实条目，外加一个校验器，在以下情况失败：
+注册的路径不存在；存在的路径没有条目；声明的缓存目录既不存在也未被正确忽略。
 
-### Step 3 — context partitioning, because the design depends on it
+### 第三步 · 上下文分区，因为设计依赖它
 
-Role separation with partial context is what makes test tampering structurally
-impossible rather than merely forbidden. That property is load-bearing in the mechanism
-document, so it has to become real before the workflow runs unattended.
+角色分离与局部上下文，是"篡改测试在结构上不可能而非仅仅被禁止"这一性质的来源。
+该性质在机制文档里是承重的，所以**在工作流无人值守运行之前，它必须成真**。
 
-This is where `02_boot` and `06_execution` get built, together, because a loader and
-the context it establishes are the same problem seen from two ends.
+`02_boot` 与 `06_execution` 在这一步一起建——因为**加载器和它建立的上下文，
+是同一个问题的两端**。
 
-The enforcement question is open and should be settled here: partitioned **loading** is
-a discipline; per-role **worktrees** are a boundary. Thirty-two worktrees are already
-registered in this repository and both Codex and Antigravity run subagents in their
-own, so the mechanism exists and the choice is whether to use it.
+强制方式的选择应当在这里定：分区**加载**是纪律，**每角色一个工作树**是边界。
+本仓库已注册 32 个工作树，Codex 与 Antigravity 的子代理本来就各跑各的，
+机制现成，问题只是用不用。
 
-**Produces:** `02_boot/` context model, `06_execution/` loaders for at least the roles
-step 1 used.
+**产出**：`02_boot/` 上下文模型，`06_execution/` 至少覆盖第一步用到的角色的加载器。
 
-### Step 4 — port mechanisms on demand
+### 第四步 · 按需移植机制
 
-One at a time, when a workflow run needs one. Candidates in rough order of likely
-demand: the communication protocol, release binding, compliance validation, lane
-coordination.
+一次一个，当某次工作流运行确实需要时。按预计需求排序的候选：
+通讯协议、发布绑定、合规校验、lane 协同。
 
-Each port carries its failure history with it, not just its code. The release binding
-mechanism is worth more with the knowledge that its two binding surfaces can disagree
-silently than without it.
+**每次移植要连同它的失败史一起搬，不只是搬代码。** 发布绑定机制，
+带着"它的两套绑定面可以静默地互相矛盾"这条知识，比不带值钱得多。
 
-**Produces:** `03_mechanisms/<name>/` per ported mechanism, each with a registry entry.
+**产出**：每个移植的机制一个 `03_mechanisms/<name>/`，各带注册表条目。
 
-### Step 5 — skills, tools, content
+### 第五步 · 技能、工具、内容
 
-`04_skills_and_tools` and `07_content` fill as real work arrives. Neither is on the
-critical path; both are where the system stops being infrastructure and starts being
-useful.
+`04_skills_and_tools` 与 `07_content` 随真实工作到来而填充。两者都不在关键路径上；
+两者也都是这个系统**从基础设施变成有用东西**的地方。
 
-## 5. What "done" means for the migration
+## 5. 迁移的"完成"是什么意思
 
-The second-generation system is complete when a workflow can be run through it without
-consulting the first-generation repository. Until then the old system is a donor, not a
-dependency — and the difference should be checkable rather than assumed.
+第二代系统完成的标志是：**一次工作流能跑完全程而不需要查阅第一代仓库**。
+在此之前，旧系统是供体不是依赖——而这个区别应当可核验，不应当靠假定。
 
-`os/second-generation` becomes `master` at that point, by Human decision, not
-automatically.
+到那时，由**人类决定**把 `os/second-generation` 变成 `master`，不自动发生。
 
-## 6. Risks recorded now
+## 6. 现在就记下的风险
 
-**Designing further before running anything.** The design is already deeper than
-anything that has been tried. Step 1 exists to correct that, and its value drops the
-longer it is deferred.
+**在跑起来之前继续设计。** 目前的设计深度已经超过任何试过的东西。
+第一步存在的意义就是纠正这一点，**而它的价值随拖延而下降**。
 
-**The registry drifting from the code it describes.** The stated rule is that the
-registry updates in the same change as the development. That rule is exactly the kind
-this repository has watched fail — declarations that nothing checks. The validator in
-step 2 is not optional garnish; it is what makes the rule true.
+**注册表与它所描述的代码脱节。** 规定是"注册表与开发在同一次改动中更新"。
+这条规定恰恰是本仓库反复看着失效的那一类——**没有任何东西检查的声明**。
+第二步里那个校验器不是装饰，**它是让这条规定为真的东西**。
 
-**Porting by sympathy rather than by demand.** Mechanisms in the old system work and
-are tempting to bring across wholesale. A third of the old repository turned out to be
-one domain's material precisely because things arrived without being asked for.
+**出于顺手而非需求去移植。** 旧系统里的机制能跑，看着就想搬过来。
+旧仓库有三分之一最后被发现是某一个领域的材料，正是因为东西在没人要它的时候到达了。
 
 ---
 
-## 7. Immediate next action
+## 7. 立即的下一步
 
-Settle D1 and D2. Then step 1, with the requirement being the construction of this
-system.
+定 D1 与 D2。然后第一步，需求就是**这个系统的构建**。
