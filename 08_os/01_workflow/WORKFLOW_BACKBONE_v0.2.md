@@ -104,13 +104,45 @@ defect is in the tests.
 
 ---
 
-## Residual risk, recorded not solved
+## Residual risk, stated precisely
 
-Constructibility is not identical to achievability. A model can be coherent on the
-available evidence and still not be buildable, if the evidence is incomplete in a way
-nobody noticed. Stage 3's requirement that B name its evidence dependencies is the
-mitigation: it does not prevent the failure, but it makes the post-mortem specific —
-which evidence was insufficient, rather than which judgement was wrong.
+An earlier draft framed this as "constructibility is not achievability". That framing
+was too loose and is withdrawn: because B is **derived from** the evidence rather than
+designed first and justified afterwards, the derivation direction already answers most
+of it. Deriving B from evidence and finding evidence for a chosen B are different
+activities, and this workflow does the first.
+
+What remains is narrower and sits in one place.
+
+**The completeness of the evidence set cannot be established by the evidence set.**
+Stage 2 ends when the gatherer judges the evidence sufficient, and that gatherer is the
+same party who then derives B. Every other link in the chain rests on evidence; the
+stopping rule does not.
+
+Worked example from this repository, 2026-07-26. An agent searched for the release
+rebinding procedure, received a result list truncated at its limit, concluded that no
+document described the procedure, and reconstructed one from commit history. The
+reconstruction was correct in shape. The evidence set was incomplete —
+`.ai/communication_compliance/README.md#release-binding` described the procedure in
+full — and **nothing inside the evidence set could indicate that**. The reconstruction
+also omitted that `lane_epoch.yml` must be bound in the same cycle, which the missed
+document stated plainly. Executing the reconstructed version would have completed half
+a release binding.
+
+**Mitigation, already house doctrine rather than a new rule.**
+`AGENT_WORKING_DISCIPLINE.md` requires recording what was examined and rejected, and
+why, on the grounds that no research tool produces it and every one of them is biased
+toward positive synthesis.
+
+Applied here: the information base records **what was searched and returned nothing**,
+alongside what was found, including where a search hit a result limit. A later reader
+can then see the boundary of the evidence set instead of mistaking it for the whole.
+This does not make the set complete. It makes its incompleteness visible, which is the
+difference between a gap that can be noticed and one that cannot.
+
+Stage 3's requirement that B name the evidence it rests on remains, for the same
+reason: it makes a later failure specific — which evidence was insufficient — rather
+than a general verdict that some judgement was wrong.
 
 ---
 
