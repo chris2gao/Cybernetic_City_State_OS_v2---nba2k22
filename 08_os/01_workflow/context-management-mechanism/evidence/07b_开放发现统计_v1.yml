@@ -1,0 +1,86 @@
+workflow_id: context-management-mechanism
+stage: 02_信息收集与提炼
+version: 1
+created_at: 2026-07-29
+status: calculated_with_method_limits
+
+input_ref: 08_os/01_workflow/context-management-mechanism/evidence/07a_机制同义裁定_v1.yml
+formula:
+  chapman: N_hat = ((n1 + 1) * (n2 + 1) / (m + 1)) - 1
+  coverage: distinct / N_hat
+
+statistics:
+  - capture_unit: 机制模式
+    lane_1: ChatGPT Deep Research
+    lane_2: Gemini Deep Research
+    n1: 14
+    n2: 8
+    m: 4
+    distinct: 18
+    chapman_N_hat: 26.0
+    coverage: 0.6923076923
+    coverage_percent: 69.23
+    overlap_refs:
+      - checkpointed_restore
+      - typed_versioned_handoff
+      - active_state_event_log_separation
+      - threshold_trim_policy
+    interpretation: directional_signal_only
+    limitations:
+      - Gemini 使用较高层的自命名架构模式，ChatGPT 使用较细的框架原语，等可捕获性不成立。
+      - 两路虽互盲，但共享部分官方框架与论文来源，发现独立不等于证据来源独立。
+      - 结果说明还有候选机制空间未被捕获，不要求为追求形式覆盖率继续低 EIG 检索。
+
+  - capture_unit: 隔离机制
+    lane_1: ChatGPT Deep Research
+    lane_2: Gemini Deep Research
+    n1: 10
+    n2: 4
+    m: 3
+    distinct: 11
+    chapman_N_hat: 12.75
+    coverage: 0.8627450980
+    coverage_percent: 86.27
+    overlap_refs:
+      - git_worktree
+      - independent_clone_family
+      - restricted_tool_gateway
+    interpretation: likely_optimistic_upper_signal
+    limitations:
+      - Gemini 路线只返回四个机制，明显偏向少量强隔离候选；ChatGPT 路线覆盖工作区、主机权限、容器、工具和远程仓库多个层级。
+      - 两路捕获概率不相等，高重合可能来自 Gemini 清单过窄，而不是领域接近完整。
+      - 当前 A 只要求防止正常路径的无意污染，因此运行试验比继续枚举更多安全机制具有更高 EIG。
+
+  - capture_unit: 版本与失效模式
+    lane_1: ChatGPT Deep Research
+    lane_2: Gemini Deep Research
+    n1: 6
+    n2: 2
+    m: 2
+    distinct: 6
+    chapman_N_hat: 6.0
+    coverage: 1.0
+    coverage_percent: 100.0
+    overlap_refs:
+      - fingerprinted_stale_gating
+      - checkpoint_recovery
+    interpretation: mathematically_computable_but_not_valid_as_completeness_proof
+    limitations:
+      - Gemini 路线只有两个高度聚合的模式，且两者正好覆盖 ChatGPT 清单中的两个大类。
+      - 小样本、聚合粒度不对称和定向问题收敛使 100% 成为方法假象。
+      - ChatGPT 独有的不可变固定、事件日志分离、保留删除钩子和失效例外仍会改变 B 的结构，证明领域并非只有两个模式。
+
+stop_assessment:
+  capture_recap_alone_supports_stop: false
+  eig_assessment:
+    more_broad_web_search: low
+    primary_source_verification_for_disputed_claims: medium
+    local_partition_runtime_experiment: high
+    github_handoff_cost_experiment: high
+  current_decision: >-
+    不启动第三轮宽泛 Deep Research。下一步转向高 EIG 的运行试验，并在最终证据索引中把争议性 Gemini 主张降级为未决或候选约束。
+
+calculation_check:
+  mechanism_patterns: "((14+1)*(8+1)/(4+1))-1 = 26; 18/26 = 69.23%"
+  isolation_mechanisms: "((10+1)*(4+1)/(3+1))-1 = 12.75; 11/12.75 = 86.27%"
+  version_invalidation: "((6+1)*(2+1)/(2+1))-1 = 6; 6/6 = 100%, but methodologically non-probative"
