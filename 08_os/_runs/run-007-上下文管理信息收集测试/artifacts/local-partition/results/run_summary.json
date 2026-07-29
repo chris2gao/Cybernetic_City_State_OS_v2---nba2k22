@@ -1,0 +1,70 @@
+{
+  "schema_version": "local_partition.run_summary.v1",
+  "task_id": "context-stage2-local-partition-001",
+  "generated_at": "2026-07-29T14:08:55.449527+00:00",
+  "experiment_summary": {
+    "ENV-01": "passed",
+    "PART-01": "failed",
+    "BOUND-01": "passed",
+    "RESTORE-01": "passed",
+    "HANDOFF-01": "passed",
+    "SIZE-01": "passed"
+  },
+  "blocked_capabilities": [],
+  "partition": {
+    "status": "failed",
+    "workspace_workflow_status": "passed",
+    "access_boundary_status": "failed",
+    "reason": "independent clones organize role state but the same unrestricted shell successfully read a sibling role private sentinel",
+    "sibling_read_exit_code": 0,
+    "role_count": 3,
+    "clone_duration_ms": {
+      "planner": 183.109,
+      "executor": 169.787,
+      "reviewer": 234.236
+    }
+  },
+  "restore": {
+    "status": "passed",
+    "fresh_process_exit_code": 0,
+    "predecessor_in_memory_state_cleared": true,
+    "inherited_custom_environment": false,
+    "read_paths": [
+      "published/planner_to_executor.json",
+      "fixtures/authorized_input_v1.json",
+      "fixtures/test_spec_v1.json"
+    ],
+    "unauthorized_paths_read": [],
+    "deterministic_result": 12,
+    "expected_result": 12
+  },
+  "handoff": {
+    "status": "passed",
+    "planner_publish": "passed",
+    "executor_consume_and_publish": "passed",
+    "reviewer_minimal_audit": "passed",
+    "reviewer_read_paths": [
+      "published/executor_to_reviewer.json",
+      "fixtures/test_spec_v1.json",
+      "published/implementation.json"
+    ],
+    "reviewer_process_exit_code": 0
+  },
+  "stale": {
+    "status": "passed",
+    "planner_handoff_v1_sha256": "d6fe8cf563117fc7dab207476f0b4d24f2ee57efba4188a15ac44343faaf9661",
+    "planner_handoff_v2_sha256": "c33098b5ce368192a0c5aba1972bd20296c1acb598f69b27b25a22b9b20ba290",
+    "hash_changed": true,
+    "executor_stale": true,
+    "reviewer_stale": true,
+    "executor_check_exit_code": 0,
+    "reviewer_check_exit_code": 0
+  },
+  "cleanup": {
+    "status": "passed",
+    "residual_paths": [],
+    "duration_ms": 113.55
+  },
+  "total_duration_ms": 7327.181,
+  "result_claim_boundary": "This run measures local mechanics and context volume only; it does not establish production isolation or model-quality improvement."
+}

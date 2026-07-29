@@ -1,0 +1,809 @@
+{
+  "commands": [
+    {
+      "label": "git version",
+      "command": [
+        "git",
+        "--version"
+      ],
+      "cwd": "<inherited>",
+      "duration_ms": 34.182,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 29,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "python version",
+      "command": [
+        "<USER_HOME>\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "--version"
+      ],
+      "cwd": "<inherited>",
+      "duration_ms": 9.358,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 14,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "PowerShell version",
+      "command": [
+        "C:\\Program Files\\PowerShell\\7\\pwsh.EXE",
+        "-NoProfile",
+        "-Command",
+        "$PSVersionTable.PSVersion.ToString()"
+      ],
+      "cwd": "<inherited>",
+      "duration_ms": 419.304,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 6,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "current process elevation",
+      "command": [
+        "C:\\Program Files\\PowerShell\\7\\pwsh.EXE",
+        "-NoProfile",
+        "-Command",
+        "[Security.Principal.WindowsPrincipal]::new([Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)"
+      ],
+      "cwd": "<inherited>",
+      "duration_ms": 451.631,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 6,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "Docker CLI version",
+      "command": [
+        "C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.EXE",
+        "--version"
+      ],
+      "cwd": "<inherited>",
+      "duration_ms": 76.329,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 37,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "Docker server probe",
+      "command": [
+        "C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.EXE",
+        "version",
+        "--format",
+        "{{.Server.Version}}"
+      ],
+      "cwd": "<inherited>",
+      "duration_ms": 130.872,
+      "exit_code": 1,
+      "timed_out": false,
+      "stdout_bytes": 1,
+      "stderr_bytes": 224
+    },
+    {
+      "label": "WSL status probe",
+      "command": [
+        "C:\\windows\\system32\\wsl.EXE",
+        "--status"
+      ],
+      "cwd": "<inherited>",
+      "duration_ms": 103.799,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 40,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "create local bare origin",
+      "command": [
+        "git",
+        "init",
+        "--bare",
+        "<TEMP>\\origin.git"
+      ],
+      "cwd": "<inherited>",
+      "duration_ms": 68.702,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 119,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "create seed repository",
+      "command": [
+        "git",
+        "init",
+        "--initial-branch",
+        "main",
+        "<TEMP>\\seed"
+      ],
+      "cwd": "<inherited>",
+      "duration_ms": 58.383,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 118,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "configure git user name",
+      "command": [
+        "git",
+        "config",
+        "user.name",
+        "Context Partition Experiment"
+      ],
+      "cwd": "<TEMP>\\seed",
+      "duration_ms": 34.983,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "configure git user email",
+      "command": [
+        "git",
+        "config",
+        "user.email",
+        "experiment@example.invalid"
+      ],
+      "cwd": "<TEMP>\\seed",
+      "duration_ms": 34.5,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "seed: stage",
+      "command": [
+        "git",
+        "add",
+        "--",
+        "README.md",
+        "fixtures"
+      ],
+      "cwd": "<TEMP>\\seed",
+      "duration_ms": 82.731,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 245
+    },
+    {
+      "label": "seed: commit",
+      "command": [
+        "git",
+        "commit",
+        "-m",
+        "seed experiment"
+      ],
+      "cwd": "<TEMP>\\seed",
+      "duration_ms": 138.154,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 211,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "seed add origin",
+      "command": [
+        "git",
+        "remote",
+        "add",
+        "origin",
+        "<TEMP>\\origin.git"
+      ],
+      "cwd": "<TEMP>\\seed",
+      "duration_ms": 29.88,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "seed push",
+      "command": [
+        "git",
+        "push",
+        "-u",
+        "origin",
+        "main"
+      ],
+      "cwd": "<TEMP>\\seed",
+      "duration_ms": 247.989,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 45,
+      "stderr_bytes": 119
+    },
+    {
+      "label": "set bare repository HEAD",
+      "command": [
+        "git",
+        "symbolic-ref",
+        "HEAD",
+        "refs/heads/main"
+      ],
+      "cwd": "<TEMP>\\origin.git",
+      "duration_ms": 28.305,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "clone planner workspace",
+      "command": [
+        "git",
+        "clone",
+        "<TEMP>\\origin.git",
+        "<TEMP>\\planner"
+      ],
+      "cwd": "<inherited>",
+      "duration_ms": 183.109,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 103
+    },
+    {
+      "label": "configure git user name",
+      "command": [
+        "git",
+        "config",
+        "user.name",
+        "Context Partition Experiment"
+      ],
+      "cwd": "<TEMP>\\planner",
+      "duration_ms": 41.869,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "configure git user email",
+      "command": [
+        "git",
+        "config",
+        "user.email",
+        "experiment@example.invalid"
+      ],
+      "cwd": "<TEMP>\\planner",
+      "duration_ms": 40.566,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "clone executor workspace",
+      "command": [
+        "git",
+        "clone",
+        "<TEMP>\\origin.git",
+        "<TEMP>\\executor"
+      ],
+      "cwd": "<inherited>",
+      "duration_ms": 169.787,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 104
+    },
+    {
+      "label": "configure git user name",
+      "command": [
+        "git",
+        "config",
+        "user.name",
+        "Context Partition Experiment"
+      ],
+      "cwd": "<TEMP>\\executor",
+      "duration_ms": 42.784,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "configure git user email",
+      "command": [
+        "git",
+        "config",
+        "user.email",
+        "experiment@example.invalid"
+      ],
+      "cwd": "<TEMP>\\executor",
+      "duration_ms": 43.482,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "clone reviewer workspace",
+      "command": [
+        "git",
+        "clone",
+        "<TEMP>\\origin.git",
+        "<TEMP>\\reviewer"
+      ],
+      "cwd": "<inherited>",
+      "duration_ms": 234.236,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 104
+    },
+    {
+      "label": "configure git user name",
+      "command": [
+        "git",
+        "config",
+        "user.name",
+        "Context Partition Experiment"
+      ],
+      "cwd": "<TEMP>\\reviewer",
+      "duration_ms": 39.808,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "configure git user email",
+      "command": [
+        "git",
+        "config",
+        "user.email",
+        "experiment@example.invalid"
+      ],
+      "cwd": "<TEMP>\\reviewer",
+      "duration_ms": 38.815,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "executor shell reads planner sibling sentinel",
+      "command": [
+        "<USER_HOME>\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-I",
+        "-c",
+        "from pathlib import Path; Path(__import__('sys').argv[1]).read_text()",
+        "<TEMP>\\planner\\private\\sentinel.txt"
+      ],
+      "cwd": "<TEMP>\\executor",
+      "duration_ms": 73.328,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "planner publish: stage",
+      "command": [
+        "git",
+        "add",
+        "--",
+        "published/planner_to_executor.json"
+      ],
+      "cwd": "<TEMP>\\planner",
+      "duration_ms": 44.404,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "planner publish: commit",
+      "command": [
+        "git",
+        "commit",
+        "-m",
+        "planner handoff v1"
+      ],
+      "cwd": "<TEMP>\\planner",
+      "duration_ms": 89.94,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 123,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "planner push handoff",
+      "command": [
+        "git",
+        "push",
+        "origin",
+        "main"
+      ],
+      "cwd": "<TEMP>\\planner",
+      "duration_ms": 208.697,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 119
+    },
+    {
+      "label": "executor consume planner handoff",
+      "command": [
+        "git",
+        "pull",
+        "--ff-only"
+      ],
+      "cwd": "<TEMP>\\executor",
+      "duration_ms": 229.232,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 182,
+      "stderr_bytes": 130
+    },
+    {
+      "label": "fresh executor restore and deterministic step",
+      "command": [
+        "<USER_HOME>\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-I",
+        "<REPO>\\08_os\\_runs\\run-007-上下文管理信息收集测试\\artifacts\\local-partition\\role_worker.py",
+        "--mode",
+        "executor",
+        "--entry",
+        "<TEMP>\\executor\\private\\role_entry.json"
+      ],
+      "cwd": "<TEMP>\\executor",
+      "duration_ms": 98.509,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "executor publish: stage",
+      "command": [
+        "git",
+        "add",
+        "--",
+        "published/implementation.json",
+        "published/test_result.json",
+        "published/executor_to_reviewer.json"
+      ],
+      "cwd": "<TEMP>\\executor",
+      "duration_ms": 74.803,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "executor publish: commit",
+      "command": [
+        "git",
+        "commit",
+        "-m",
+        "executor result handoff"
+      ],
+      "cwd": "<TEMP>\\executor",
+      "duration_ms": 122.289,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 227,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "executor push handoff",
+      "command": [
+        "git",
+        "push",
+        "origin",
+        "main"
+      ],
+      "cwd": "<TEMP>\\executor",
+      "duration_ms": 352.56,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 119
+    },
+    {
+      "label": "reviewer consume executor handoff",
+      "command": [
+        "git",
+        "pull",
+        "--ff-only"
+      ],
+      "cwd": "<TEMP>\\reviewer",
+      "duration_ms": 435.615,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 490,
+      "stderr_bytes": 130
+    },
+    {
+      "label": "fresh reviewer minimal audit",
+      "command": [
+        "<USER_HOME>\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-I",
+        "<REPO>\\08_os\\_runs\\run-007-上下文管理信息收集测试\\artifacts\\local-partition\\role_worker.py",
+        "--mode",
+        "reviewer",
+        "--entry",
+        "<TEMP>\\reviewer\\private\\role_entry.json"
+      ],
+      "cwd": "<TEMP>\\reviewer",
+      "duration_ms": 106.534,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "reviewer publish: stage",
+      "command": [
+        "git",
+        "add",
+        "--",
+        "published/reviewer_verdict.json"
+      ],
+      "cwd": "<TEMP>\\reviewer",
+      "duration_ms": 43.724,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "reviewer publish: commit",
+      "command": [
+        "git",
+        "commit",
+        "-m",
+        "reviewer verdict"
+      ],
+      "cwd": "<TEMP>\\reviewer",
+      "duration_ms": 124.142,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 118,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "reviewer push verdict",
+      "command": [
+        "git",
+        "push",
+        "origin",
+        "main"
+      ],
+      "cwd": "<TEMP>\\reviewer",
+      "duration_ms": 269.618,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 119
+    },
+    {
+      "label": "planner fast-forward before v2",
+      "command": [
+        "git",
+        "pull",
+        "--ff-only"
+      ],
+      "cwd": "<TEMP>\\planner",
+      "duration_ms": 410.579,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 489,
+      "stderr_bytes": 130
+    },
+    {
+      "label": "planner revise: stage",
+      "command": [
+        "git",
+        "add",
+        "--",
+        "published/planner_to_executor.json"
+      ],
+      "cwd": "<TEMP>\\planner",
+      "duration_ms": 41.959,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "planner revise: commit",
+      "command": [
+        "git",
+        "commit",
+        "-m",
+        "planner handoff v2"
+      ],
+      "cwd": "<TEMP>\\planner",
+      "duration_ms": 108.267,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 83,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "planner push v2",
+      "command": [
+        "git",
+        "push",
+        "origin",
+        "main"
+      ],
+      "cwd": "<TEMP>\\planner",
+      "duration_ms": 234.905,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 119
+    },
+    {
+      "label": "executor update for stale check",
+      "command": [
+        "git",
+        "pull",
+        "--ff-only"
+      ],
+      "cwd": "<TEMP>\\executor",
+      "duration_ms": 354.181,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 245,
+      "stderr_bytes": 130
+    },
+    {
+      "label": "reviewer update for stale check",
+      "command": [
+        "git",
+        "pull",
+        "--ff-only"
+      ],
+      "cwd": "<TEMP>\\reviewer",
+      "duration_ms": 333.372,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 134,
+      "stderr_bytes": 130
+    },
+    {
+      "label": "executor stale check",
+      "command": [
+        "<USER_HOME>\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-I",
+        "<REPO>\\08_os\\_runs\\run-007-上下文管理信息收集测试\\artifacts\\local-partition\\role_worker.py",
+        "--mode",
+        "stale",
+        "--entry",
+        "<TEMP>\\executor\\private\\role_entry.json"
+      ],
+      "cwd": "<TEMP>\\executor",
+      "duration_ms": 122.928,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "reviewer stale check",
+      "command": [
+        "<USER_HOME>\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-I",
+        "<REPO>\\08_os\\_runs\\run-007-上下文管理信息收集测试\\artifacts\\local-partition\\role_worker.py",
+        "--mode",
+        "stale",
+        "--entry",
+        "<TEMP>\\reviewer\\private\\role_entry.json"
+      ],
+      "cwd": "<TEMP>\\reviewer",
+      "duration_ms": 116.989,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "detect current SID",
+      "command": [
+        "whoami",
+        "/user",
+        "/fo",
+        "csv",
+        "/nh"
+      ],
+      "cwd": "<inherited>",
+      "duration_ms": 9.839,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 69,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "ACL authorized read",
+      "command": [
+        "<USER_HOME>\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-I",
+        "-c",
+        "from pathlib import Path; Path(__import__('sys').argv[1]).read_text()",
+        "<TEMP>\\boundary\\allowed\\authorized.txt"
+      ],
+      "cwd": "<inherited>",
+      "duration_ms": 73.876,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "ACL install read deny",
+      "command": [
+        "icacls",
+        "<TEMP>\\boundary\\blocked",
+        "/deny",
+        "*<CURRENT_SID>:(OI)(CI)(RD)"
+      ],
+      "cwd": "<inherited>",
+      "duration_ms": 12.048,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 162,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "ACL outside read",
+      "command": [
+        "<USER_HOME>\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-I",
+        "-c",
+        "from pathlib import Path; Path(__import__('sys').argv[1]).read_text()",
+        "<TEMP>\\boundary\\blocked\\outside.txt"
+      ],
+      "cwd": "<inherited>",
+      "duration_ms": 154.709,
+      "exit_code": 1,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 897
+    },
+    {
+      "label": "ACL remove read deny",
+      "command": [
+        "icacls",
+        "<TEMP>\\boundary\\blocked",
+        "/remove:d",
+        "*<CURRENT_SID>"
+      ],
+      "cwd": "<inherited>",
+      "duration_ms": 9.813,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 162,
+      "stderr_bytes": 0
+    },
+    {
+      "label": "ACL restored read",
+      "command": [
+        "<USER_HOME>\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-I",
+        "-c",
+        "from pathlib import Path; Path(__import__('sys').argv[1]).read_text()",
+        "<TEMP>\\boundary\\blocked\\outside.txt"
+      ],
+      "cwd": "<inherited>",
+      "duration_ms": 85.115,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    }
+  ]
+}
