@@ -20,6 +20,9 @@
 
 ## 文件归属
 
-阶段规格/实现位于 `01_workflow/<stage>/`；运行公开证据位于 `_runs/<run-id>/`；
-跨阶段的上下文管理位于 `03_mechanisms/context_management/`。workflow 不承载永久
-全局机制实例。
+阶段规格/实现位于 `01_workflow/<stage>/`；共享 OS/workflow/mechanism 的开发与验证
+证据位于 core-owned `_runs/<run-id>/`，领域业务运行流量位于 domain-owned
+`.ai/PROGRAM_RUNS/<run-id>/`。跨阶段的上下文管理位于
+`03_mechanisms/context_management/`。workflow 不承载永久全局机制实例。
+
+D2 已决：沿用现有后端执行角色，活动裁决见 `决定_谁执行_v0.2.md`。

@@ -59,18 +59,21 @@
 预先设计环境等于猜测需求；从实现中提取等于测量需求。
 
 提取后的机制 canonical 落 `03_mechanisms/`；`02_boot/` 只保存启动入口，
-`06_execution/` 只保存加载/验证入口。运行公开证据落 `_runs/<run-id>/`，
-不注册；角色私有 runtime 不跟踪。
+`06_execution/` 只保存加载/验证入口。共享 OS 开发/验证证据落 core-owned
+`_runs/<run-id>/`；领域业务运行流量落 domain-owned `.ai/PROGRAM_RUNS/<run-id>/`。
+两者都不注册，角色私有 runtime 不跟踪。
 
-## 五、两个待定
+## 五、决定状态
 
 **D1 · 阶段契约**：沿用、改造还是替换 `.ai/CODEX_TASK_INPUT_CONTRACT.md`
 （intent / definition of done / allowed scope / stop rules / return contract）。
 沿用最省且语义已验证。
 
-**D2 · 谁执行**：现有后端执行角色，还是本系统内定义的角色。这决定加载器的样子。
+**D2 · 谁执行：已决。** 沿用现有后端执行角色（Codex / Antigravity），由工作流收窄
+派单与加载面。活动裁决见 `决定_谁执行_v0.2.md`；worktree/clone 只提供
+`workspace_partition`，不提供 `enforced_access_boundary`。
 
-两个都不阻塞机制 1 的调研，但阻塞第一次完整跑通。
+D1 仍需随阶段契约演进；D2 不再构成第一次完整跑通的未决项。
 
 ## 六、目录约定
 

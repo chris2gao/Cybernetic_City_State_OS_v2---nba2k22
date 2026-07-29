@@ -14,6 +14,10 @@ Thumbs.db
 # role-private state and scratch never enter Git.
 08_os/_runs/*/_runtime/
 
+# Domain workflow runtime traffic is domain-owned under .ai/PROGRAM_RUNS.
+# Its per-run private runtime follows the same no-track rule.
+.ai/PROGRAM_RUNS/*/_runtime/
+
 # Claude Code agent settings.
 #
 # settings.json is TRACKED: it carries the shared policy (permissions, deny

@@ -16,6 +16,9 @@ import yaml
 REPO = Path(__file__).resolve().parents[4]
 MECHANISM = REPO / "08_os/03_mechanisms/context_management"
 OLD_PATH = "08_os/01_workflow/context-management-mechanism"
+UNVERSIONED_D2 = "08_os/_dev/决定_谁执行.md"
+D2_V01 = "08_os/_dev/决定_谁执行_v0.1.md"
+D2_V02 = "08_os/_dev/决定_谁执行_v0.2.md"
 FINDINGS: list[tuple[str, str]] = []
 
 
@@ -46,14 +49,45 @@ def require_paths() -> None:
         "08_os/05_registry/context_management_v1.yml",
         "08_os/06_execution/boot/context_management/README.md",
         "08_os/_dev/开发产物与文件隔离规范_v1.md",
+        D2_V01,
+        D2_V02,
         "08_os/_runs/run-008-上下文管理结构迁移/run.yml",
         "08_os/_runs/run-008-上下文管理结构迁移/05_步骤拆分/迁移映射_v1.yml",
+        "08_os/_runs/run-009-上下文管理结构复核修订/run.yml",
+        "08_os/_runs/run-009-上下文管理结构复核修订/06_执行/变更清单.md",
+        "08_os/_runs/run-009-上下文管理结构复核修订/07_测试执行/测试记录.md",
     ]
     for relative in required:
         if not (REPO / relative).is_file():
             finding("CM001_REQUIRED_PATH", relative)
     if (REPO / OLD_PATH).exists():
         finding("CM002_OLD_DIRECTORY_PRESENT", OLD_PATH)
+    if (REPO / UNVERSIONED_D2).exists():
+        finding("CM025_UNVERSIONED_D2_PRESENT", UNVERSIONED_D2)
+
+    d2_v01 = REPO / D2_V01
+    if d2_v01.is_file():
+        text = d2_v01.read_text(encoding="utf-8")
+        if "已被 `决定_谁执行_v0.2.md` 取代" not in text:
+            finding("CM026_D2_V01_NOT_SUPERSEDED", D2_V01)
+
+    d2_v02 = REPO / D2_V02
+    if d2_v02.is_file():
+        text = d2_v02.read_text(encoding="utf-8")
+        required = {
+            "workspace_partition",
+            "enforced_access_boundary",
+            "ACL",
+            "容器",
+            "tool root",
+            "网关",
+            "正负例",
+            "DACL",
+            "publish allowlist",
+        }
+        missing = sorted(token for token in required if token not in text)
+        if missing:
+            finding("CM027_D2_V02_SEMANTICS", str(missing))
 
 
 def check_boot_and_contract() -> None:
@@ -80,6 +114,38 @@ def check_boot_and_contract() -> None:
         for declared in contract.get("declared_roots", []):
             if not any(declared.startswith(root) for root in keep):
                 finding("CM006_DECLARED_ROOT_OUTSIDE_KEEP", declared)
+        classes = {
+            item.get("id"): item
+            for item in contract.get("classes", [])
+            if isinstance(item, dict)
+        }
+        expected = {
+            "os_development_run": ("08_os/_runs/<run-id>/", "core"),
+            "domain_runtime_run": (".ai/PROGRAM_RUNS/<run-id>/", "domain"),
+            "os_development_private_runtime": (
+                "08_os/_runs/<run-id>/_runtime/",
+                "core_runtime_untracked",
+            ),
+            "domain_private_runtime": (
+                ".ai/PROGRAM_RUNS/<run-id>/_runtime/",
+                "domain_runtime_untracked",
+            ),
+        }
+        for class_id, (path, ownership) in expected.items():
+            item = classes.get(class_id, {})
+            if item.get("path") != path or item.get("ownership") != ownership:
+                finding("CM028_RUN_CLASS_CONTRACT", class_id)
+            if class_id.endswith("private_runtime") and item.get("tracked") is not False:
+                finding("CM028_RUN_CLASS_CONTRACT", f"{class_id}:tracked")
+
+    run009 = load_yaml(
+        "08_os/_runs/run-009-上下文管理结构复核修订/run.yml",
+        "CM034_RUN009_YAML",
+    )
+    if isinstance(run009, dict):
+        for relative in run009.get("records", {}).values():
+            if not (REPO / relative).is_file():
+                finding("CM035_RUN009_REF_MISSING", relative)
 
 
 def check_registry() -> None:
@@ -116,6 +182,7 @@ def check_registry() -> None:
         "08_os/03_mechanisms/context_management/依据材料/evidence/**",
         "08_os/06_execution/boot/context_management/README.md",
         "08_os/_dev/开发产物与文件隔离规范_v1.md",
+        D2_V02,
         "08_os/claude与人类的开发对话日志.md",
         "08_os/01_workflow/02_信息收集与提炼/实现/运行验证补充_v1.md",
     }
@@ -165,7 +232,10 @@ def check_active_text() -> None:
         "08_os/01_workflow/02_信息收集与提炼/实现/README.md",
         "08_os/01_workflow/02_信息收集与提炼/实现/运行验证补充_v1.md",
         "08_os/01_workflow/06_执行/README.md",
+        "08_os/01_workflow/06_执行/方法论_v0.1.md",
         "08_os/02_boot/README.md",
+        "08_os/02_boot/协作伙伴.md",
+        "08_os/02_boot/context_management/README.md",
         "08_os/03_mechanisms/README.md",
         "08_os/03_mechanisms/context_management/README.md",
         "08_os/03_mechanisms/context_management/方法论_v1.md",
@@ -177,10 +247,13 @@ def check_active_text() -> None:
         "08_os/_dev/WORKFLOW_MECHANISM_v0.2.md",
         "08_os/_dev/IMPLEMENTATION_PLAN_v0.2.md",
         "08_os/_dev/开发产物与文件隔离规范_v1.md",
+        D2_V02,
     ]
     false_boundary = [
         re.compile(r"worktree\s*(是|构成|提供).{0,12}(访问边界|真边界|安全边界)", re.I),
         re.compile(r"每角色一个工作树.{0,20}(真边界|访问边界)", re.I),
+        re.compile(r"要变成真边界.{0,30}(worktree|工作树|clone)", re.I),
+        re.compile(r"每角色一个工作树的隔离方案", re.I),
     ]
     broad = ("git add --all", "git add .")
     for relative in active:
@@ -190,6 +263,8 @@ def check_active_text() -> None:
         text = path.read_text(encoding="utf-8")
         if OLD_PATH in text:
             finding("CM015_ACTIVE_OLD_PATH", relative)
+        if "决定_谁执行.md" in text:
+            finding("CM029_ACTIVE_UNVERSIONED_D2_REF", relative)
         for pattern in false_boundary:
             if pattern.search(text):
                 finding("CM016_FALSE_BOUNDARY_CLAIM", relative)
@@ -201,13 +276,20 @@ def check_active_text() -> None:
 
 
 def check_runtime_and_evidence() -> None:
-    ignored = subprocess.run(
-        ["git", "check-ignore", "-q", "08_os/_runs/example/_runtime/private.txt"],
-        cwd=REPO,
-        check=False,
-    )
-    if ignored.returncode != 0:
-        finding("CM018_RUNTIME_NOT_IGNORED", "08_os/_runs/*/_runtime/")
+    ignored_paths = {
+        "08_os/_runs/*/_runtime/": "08_os/_runs/example/_runtime/private.txt",
+        ".ai/PROGRAM_RUNS/*/_runtime/": (
+            ".ai/PROGRAM_RUNS/example/_runtime/private.txt"
+        ),
+    }
+    for rule, probe in ignored_paths.items():
+        ignored = subprocess.run(
+            ["git", "check-ignore", "-q", probe],
+            cwd=REPO,
+            check=False,
+        )
+        if ignored.returncode != 0:
+            finding("CM018_RUNTIME_NOT_IGNORED", rule)
 
     tracked = subprocess.run(
         ["git", "-c", "core.quotepath=false", "ls-files", "-z"],
@@ -232,6 +314,12 @@ def check_runtime_and_evidence() -> None:
     except Exception as exc:
         finding("CM020_PART01_NOT_FAILED", f"{type(exc).__name__}: {exc}")
 
+    runs_root = REPO / "08_os/_runs"
+    for index in range(1, 9):
+        prefix = f"run-{index:03d}-"
+        if not any(path.is_dir() for path in runs_root.glob(f"{prefix}*")):
+            finding("CM030_OS_RUN_HISTORY_MISSING", prefix)
+
 
 def check_ownership() -> None:
     manifest = load_yaml("CORE_MANIFEST.yml", "CM021_CORE_MANIFEST_YAML")
@@ -248,17 +336,50 @@ def check_ownership() -> None:
         "08_os/05_registry/",
         "08_os/06_execution/",
         "08_os/_dev/",
+        "08_os/_runs/",
         "08_os/claude与人类的开发对话日志.md",
     }
-    expected_domain = {"08_os/07_content/", "08_os/_runs/"}
+    expected_domain = {"08_os/07_content/", ".ai/PROGRAM_RUNS/"}
     for missing in sorted(expected_core - set(core)):
         finding("CM022_CORE_OWNERSHIP_MISSING", missing)
     for missing in sorted(expected_domain - set(domain)):
         finding("CM023_DOMAIN_OWNERSHIP_MISSING", missing)
+    if "08_os/_runs/" in domain:
+        finding("CM031_OS_RUN_DOMAIN_OWNED", "08_os/_runs/")
+    if ".ai/PROGRAM_RUNS/" in core:
+        finding("CM032_DOMAIN_RUN_CORE_OWNED", ".ai/PROGRAM_RUNS/")
     for left in core:
         for right in domain:
             if left.startswith(right) or right.startswith(left):
                 finding("CM024_OWNERSHIP_OVERLAP", f"{left} <> {right}")
+
+
+def check_active_ownership_text() -> None:
+    required_tokens = {
+        "08_os/README.md": {
+            "08_os/_runs/",
+            "core-owned",
+            ".ai/PROGRAM_RUNS/",
+            "domain-owned",
+        },
+        "08_os/03_mechanisms/context_management/文件隔离与产物生命周期_v1.md": {
+            "08_os/_runs/",
+            "core-owned",
+            ".ai/PROGRAM_RUNS/",
+            "domain-owned",
+        },
+        "08_os/_dev/开发产物与文件隔离规范_v1.md": {
+            "08_os/_runs/",
+            "core-owned",
+            ".ai/PROGRAM_RUNS/",
+            "domain-owned",
+        },
+    }
+    for relative, tokens in required_tokens.items():
+        text = (REPO / relative).read_text(encoding="utf-8")
+        missing = sorted(token for token in tokens if token not in text)
+        if missing:
+            finding("CM033_ACTIVE_RUN_OWNERSHIP_TEXT", f"{relative}:{missing}")
 
 
 def main() -> int:
@@ -269,6 +390,7 @@ def main() -> int:
     check_active_text()
     check_runtime_and_evidence()
     check_ownership()
+    check_active_ownership_text()
     if FINDINGS:
         for code, message in FINDINGS:
             print(f"{code}: {message}")

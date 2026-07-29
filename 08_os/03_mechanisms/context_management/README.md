@@ -11,6 +11,7 @@
 - `实现/文件布局契约_v1.yml`：机器可读路径与生命周期契约；
 - `实现/verify_context_structure.py`：结构、引用和禁止项 validator。
 
+活动执行角色裁决是 `../../_dev/决定_谁执行_v0.2.md`；其 v0.1 仅作历史保留。
 启动入口在 `../../02_boot/context_management/`，加载说明在
 `../../06_execution/boot/context_management/`，注册表在
 `../../05_registry/context_management_v1.yml`。

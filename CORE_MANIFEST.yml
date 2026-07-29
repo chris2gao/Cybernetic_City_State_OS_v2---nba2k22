@@ -38,8 +38,9 @@ core_owned_paths:
   - "07_Compiler/"
   - "07_Execution_Plans/"
   - "07_Silicon_Private_Zones/"
-  # Second-generation OS machinery is shared core. Run traffic and domain
-  # content are explicitly excluded below so these roots do not overlap.
+  # Second-generation OS machinery is shared core. Its _runs root retains
+  # durable development, research, migration and validation evidence for the
+  # shared OS itself; domain business run traffic is excluded below.
   - "08_os/README.md"
   - "08_os/01_workflow/"
   - "08_os/02_boot/"
@@ -48,6 +49,7 @@ core_owned_paths:
   - "08_os/05_registry/"
   - "08_os/06_execution/"
   - "08_os/_dev/"
+  - "08_os/_runs/"
   - "08_os/claude与人类的开发对话日志.md"
   - "system_backbone/"
   - "0号方案.md"
@@ -87,10 +89,10 @@ domain_owned_paths:
   - "02_Protocols/"
   - "03_Daily_Execution/"
   - "08_Domain_Applications/"
-  # Domain-specific content and all run traffic stay with each domain and are
-  # never copied from core during a release.
+  # Domain-specific content and domain workflow run traffic stay with each
+  # domain. The current domain run root is .ai/PROGRAM_RUNS/; a future
+  # second-generation domain run root requires separate approval and modelling.
   - "08_os/07_content/"
-  - "08_os/_runs/"
   - ".ai/TASKS/"
   - ".ai/CODEX_REPORTS/"
   - ".ai/PROGRAM_RUNS/"

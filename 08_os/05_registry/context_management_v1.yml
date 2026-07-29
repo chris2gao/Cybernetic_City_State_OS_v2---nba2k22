@@ -65,6 +65,15 @@ entries:
     cache_dirs: []
     failure_surfacing: next validator run
     deletion_rule: protected
+  - path: 08_os/_dev/决定_谁执行_v0.2.md
+    purpose: 活动 D2 执行角色、workspace partition 与强边界裁决
+    loader: developers and boot manifest
+    loader_class: external_tool_convention
+    discovery: referenced from boot manifest and workflow README
+    evidence: 08_os/02_boot/context_management/启动清单_v1.yml
+    cache_dirs: []
+    failure_surfacing: next validator run
+    deletion_rule: protected
   - path: 08_os/_dev/{WORKFLOW_BACKBONE_v0.3.md,WORKFLOW_MECHANISM_v0.2.md,IMPLEMENTATION_PLAN_v0.2.md}
     purpose: 活动 workflow 开发设计
     loader: developers
@@ -93,6 +102,10 @@ entries:
     failure_surfacing: next stage 2 execution
     deletion_rule: protected
 excluded:
+  # Core-owned shared OS development traffic is durable evidence, not registry structure.
   - 08_os/_runs/**
   - 08_os/_runs/<run-id>/_runtime/**
+  # Domain-owned business/workflow run traffic is likewise not registry structure.
+  - .ai/PROGRAM_RUNS/**
+  - .ai/PROGRAM_RUNS/<run-id>/_runtime/**
   - role private and scratch

@@ -1,6 +1,7 @@
 schema_version: context_management.file_layout.v1
 mechanism_version: 1
 keep_roots:
+  - .ai/PROGRAM_RUNS/
   - 08_os/01_workflow/
   - 08_os/02_boot/
   - 08_os/03_mechanisms/
@@ -9,6 +10,7 @@ keep_roots:
   - 08_os/_dev/
   - 08_os/_runs/
 declared_roots:
+  - .ai/PROGRAM_RUNS/
   - 08_os/01_workflow/
   - 08_os/02_boot/context_management/
   - 08_os/03_mechanisms/context_management/
@@ -42,13 +44,27 @@ classes:
     tracked: true
     registry: when_active
     lifecycle: supersede_with_history
-  - id: public_run
+  - id: os_development_run
     path: 08_os/_runs/<run-id>/
+    ownership: core
     tracked: when_durable
     registry: false
     lifecycle: retain_per_run_policy
-  - id: role_private_runtime
+  - id: domain_runtime_run
+    path: .ai/PROGRAM_RUNS/<run-id>/
+    ownership: domain
+    tracked: when_durable
+    registry: false
+    lifecycle: retain_per_domain_policy
+  - id: os_development_private_runtime
     path: 08_os/_runs/<run-id>/_runtime/
+    ownership: core_runtime_untracked
+    tracked: false
+    registry: false
+    lifecycle: delete_on_completion
+  - id: domain_private_runtime
+    path: .ai/PROGRAM_RUNS/<run-id>/_runtime/
+    ownership: domain_runtime_untracked
     tracked: false
     registry: false
     lifecycle: delete_on_completion
@@ -61,7 +77,9 @@ task_role_zones: [entry, inbox, private, outbox, artifacts, audit]
 run_public_stage_dirs: [01, 02, 03, 04, 05, 06, 07]
 runtime_policy:
   preferred_location: outside_repository
-  repository_fallback: 08_os/_runs/<run-id>/_runtime/
+  repository_fallback:
+    os_development_run: 08_os/_runs/<run-id>/_runtime/
+    domain_runtime_run: .ai/PROGRAM_RUNS/<run-id>/_runtime/
   must_be_ignored: true
 publish_policy:
   mode: explicit_allowlist

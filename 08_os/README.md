@@ -15,7 +15,7 @@
 | `06_execution/` | 初始化、重载与验证入口 | 被加载的定义正文 |
 | `07_content/` | 领域内容 | 工作流与全局机制 |
 | `_dev/` | 活动开发设计与被取代版本 | 角色私有运行时 |
-| `_runs/` | 运行输入、公开产物、测试、日志与审计 | 注册对象或永久机制实例 |
+| `_runs/` | 共享 OS/workflow/mechanism 的开发、研究、迁移与验证记录 | 领域业务运行流量、注册对象或永久机制实例 |
 
 ## Two rules this structure exists to enforce
 
@@ -34,10 +34,12 @@ it does not get an entry; it gets removed.
 上下文管理的 canonical 定义位于
 `03_mechanisms/context_management/`；启动清单位于
 `02_boot/context_management/`；加载和验证入口位于
-`06_execution/boot/context_management/`。任务公开证据继续位于 `_runs/`，
-私有运行时不跟踪。
+`06_execution/boot/context_management/`。共享 OS 的耐久开发证据位于 `_runs/`；
+领域业务与领域 workflow 的运行流量位于 `.ai/PROGRAM_RUNS/`。两类运行的私有
+`_runtime/` 均不跟踪。
 
 ## Ownership
 
-`CORE_MANIFEST.yml` 明确列出 core-owned 的 OS 机制区域，以及 domain-owned 的
-`08_os/07_content/` 与 `08_os/_runs/`。两个集合不得重叠。
+`CORE_MANIFEST.yml` 将 OS 机制区域和保存共享 OS 开发/验证历史的 `08_os/_runs/`
+列为 core-owned；`08_os/07_content/` 与领域运行根 `.ai/PROGRAM_RUNS/` 为
+domain-owned。两个集合不得重叠。
