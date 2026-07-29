@@ -7,6 +7,9 @@
 ```yaml
 stage: 02_信息收集与提炼
 status: completed_with_residuals
+requirement_version: 2
+requirement_ref: 08_os/01_workflow/context-management-mechanism/requirement/A_需求建模_v2.yml
+requirement_confirmation_ref: 08_os/01_workflow/context-management-mechanism/requirement/人类确认_v2.yml
 final_evidence_ref: 07_证据索引与可行性判断_v1.yml
 feasibility: partially_supported
 stop_stage_02: true
@@ -14,7 +17,13 @@ mechanism_3_ready: true
 ```
 
 阶段二已经完成双路线发现、第三方候选匹配、合并方语义裁定、Chapman 统计、本机运行试验和最终证据收口。
-未执行的每任务每 Web 角色远程仓库生命周期成本试验被保留为非阻断未决项；只有 B 选择 `repo-per-role` 方案时才需要单独授权执行。
+当前闭包以 Human 确认的 `A_需求建模_v2.yml` 与 `人类确认_v2.yml` 为有效需求锚点；
+`A_需求建模_v1.yml` 与 `人类确认_v1.yml` 作为已被取代的历史记录保留。
+
+A v2 固定 Web 交接的结果要求：按任务和 Web 角色独立授权、不可读取主仓库或其他空间、可撤销、可审计，
+并只暴露获准输入、接收结构化结果。独立仓库、受控交接网关或其他同等边界实现由 B 比较选择，
+所以具体拓扑不阻塞 `03_结果建模`；B 选定实现后，相应 `05_步骤拆分`、`06_执行` 必须等待所需测试。
+`repo-per-role` 的生命周期成本仍未验证，若 B 选择该候选，须另行取得保护授权。
 
 ## 二、文件角色与当前实际路径
 
@@ -113,4 +122,5 @@ NotebookLM 负责扎根匹配，不替代合并方的最终证据裁定。
 - 角色发布必须使用显式 `publish_allowlist`，禁止默认 `git add --all`；
 - 固定入口、结构化 handoff 和内容指纹 stale 已完成最小运行验证；
 - 输入体积显著缩小不等于模型质量提高；
-- GitHub `repo-per-role` 的实际运营成本尚未验证，不得在 B 中写成既定方案。
+- Web 受限交接的独立授权、不可越界、可撤销和可审计是 A v2 硬结果约束；
+- GitHub `repo-per-role` 只是候选实现，其实际运营成本尚未验证，不得在 B 中写成既定方案。

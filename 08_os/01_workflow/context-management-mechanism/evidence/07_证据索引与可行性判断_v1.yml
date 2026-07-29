@@ -3,8 +3,11 @@ stage: 02_信息收集与提炼
 version: 1
 status: completed_with_residuals
 created_at: 2026-07-29
-requirement_ref: 08_os/01_workflow/context-management-mechanism/requirement/A_需求建模_v1.yml
-requirement_confirmation_ref: 08_os/01_workflow/context-management-mechanism/requirement/人类确认_v1.yml
+requirement_version: 2
+requirement_ref: 08_os/01_workflow/context-management-mechanism/requirement/A_需求建模_v2.yml
+requirement_confirmation_ref: 08_os/01_workflow/context-management-mechanism/requirement/人类确认_v2.yml
+requirement_supersedes_ref: 08_os/01_workflow/context-management-mechanism/requirement/A_需求建模_v1.yml
+requirement_confirmation_supersedes_ref: 08_os/01_workflow/context-management-mechanism/requirement/人类确认_v1.yml
 supersedes:
   - 08_os/01_workflow/context-management-mechanism/evidence/07c_证据索引草案_v1.yml
 derived_from:
@@ -14,11 +17,11 @@ derived_from:
 
 source_catalog:
   - source_id: SRC-A
-    名称: 需求建模 A · 上下文管理机制
-    地址: 08_os/01_workflow/context-management-mechanism/requirement/A_需求建模_v1.yml
+    名称: 需求建模 A v2 · 上下文管理机制
+    地址: 08_os/01_workflow/context-management-mechanism/requirement/A_需求建模_v2.yml
     类型: 内部证据
     信源可靠性: A
-    可靠性理由: 当前 workflow 经人类确认的需求、成功判据、边界、假设与未解歧义。
+    可靠性理由: 当前 workflow 经人类确认 v2 的需求、成功判据、边界、假设与未解歧义；A v1 作为被取代的历史记录保留。
     可访问性: 模型可直接访问
   - source_id: SRC-INT-OS1
     名称: 第一代 OS 内部机制与失败证据
@@ -104,8 +107,13 @@ research_question_closure:
   - id: RQ-05
     类型: 定向核实
     status: unresolved_non_blocking
-    answer: 官方能力支持组织仓库的仓库级角色和团队授权；个人仓库权限过粗。每任务每 Web 角色仓库的创建、授权、密钥和清理成本未做真实生命周期试验。
-    stop_basis: 不在阶段二未经单独保护授权创建远程资源；B 可先将 Web 交接建模为受限传输接口，禁止把具体 GitHub 拓扑写成已验证事实。
+    answer: >-
+      A v2 已固定 Web 受限交接空间的结果要求：按任务和 Web 角色独立授权、不可读取主仓库或其他空间、可撤销且可审计。
+      官方能力支持组织仓库的仓库级角色和团队授权，个人仓库权限过粗；repo-per-role 生命周期成本仍未做真实试验，
+      独立仓库、受控网关或其他满足同等边界的具体传输实现由 B 比较选择。
+    stop_basis: >-
+      阶段二已有足够证据把 A v2 的硬结果约束和候选实现直接交给 B；具体实现的选择不阻塞 03_结果建模。
+      B 选定实现后，相应 05_步骤拆分和 06_执行必须等待所需测试或受保护运行试验，禁止把未测 GitHub 拓扑写成已验证事实。
   - id: RQ-06
     类型: 开放发现
     捕获单位: 版本与失效模式
@@ -400,7 +408,7 @@ research_question_closure:
       合并方推断: 最小化必须与补充和原始引用共同设计。
   - evidence_id: E-GH-001
     research_question_ids: [RQ-05]
-    主张: GitHub 组织仓库支持仓库级角色与团队授权，个人仓库权限过粗；真实每任务每角色生命周期成本仍未验证。
+    主张: GitHub 组织仓库支持仓库级角色与团队授权，个人仓库权限过粗；repo-per-role 是满足 A v2 结果边界的候选实现之一，其生命周期成本仍未验证。
     方向: 支持并未决
     source_refs:
       - source_id: SRC-DR-CGPT
@@ -417,11 +425,13 @@ research_question_closure:
     时间适用性: 可能随 GitHub 产品、计划和计费变化
     适用边界: 仓库/团队级控制，不是单仓库目录 ACL；未验证邀请、许可证、密钥和清理的实际耗时。
     与A的关系:
-      supports_success_criteria: [Web 模型使用受限交接空间]
-      tests_assumptions: [Web 模型按任务和角色使用独立受限仓库在操作成本上可接受]
-      resolves_ambiguities: [独立受限仓库与受控网关成本比较]
-    对B的约束: 把 Web 交接定义为受限传输接口；具体 GitHub repo-per-role 拓扑保留为候选，不得视为已选方案。
-    对测试的潜在线索: 需要单独保护授权后测量创建、授权、凭证、读写、撤销、删除和审计成本。
+      supports_success_criteria: [Web 模型通过按任务和 Web 角色独立授权、不可越界、可撤销且可审计的受限交接空间参与工作]
+      tests_assumptions: [Web 模型可以通过某种按任务和角色受限的交接空间以可接受的操作成本参与协作]
+      resolves_ambiguities: [独立仓库、受控交接网关或其他同等边界实现的比较]
+    对B的约束: >-
+      直接继承 A v2 的受限交接结果要求；比较独立仓库、受控网关或其他同等边界实现。
+      repo-per-role 不得视为已选方案，也不得把其未测生命周期成本外推为其他候选的成本。
+    对测试的潜在线索: B 选定实现后验证独立授权、越界拒绝、获准输入、结构化结果、撤销和审计；选择 repo-per-role 时另行取得保护授权测量完整生命周期。
     事实与推断:
       读到的事实: 组织仓库有细粒度 repo roles；个人仓库缺少所需粒度。
       合并方推断: 能力存在不等于运营成本可接受。
@@ -468,11 +478,11 @@ research_question_closure:
 可行性判断:
   judgment: partially_supported
   bearing_statement: >-
-    证据支持构建 A 的核心机制：角色最小有效上下文、结构化交接、固定入口恢复、有效状态与事件记录分离、
+    证据支持构建 A v2 的核心机制：角色最小有效上下文、结构化交接、固定入口恢复、有效状态与事件记录分离、
     显式发布 allowlist、内容指纹失效和本地正常路径边界均具有可实现原语并通过最小运行试验。
     证据同时推翻了“独立 clone/worktree 即可实现角色不可直接读取”的隐含实现假设。
-    每任务每 Web 角色独立 GitHub 仓库的真实运营成本未验证，因此 B 必须把 Web 传输拓扑保留为未决候选，
-    不能宣告 A 全部成功判据已被阶段二证明。
+    A v2 已固定 Web 受限交接空间的独立授权、不可越界、可撤销和可审计结果要求，但具体传输实现留给 B 比较；
+    repo-per-role 生命周期成本与真实完整小型 OS 任务的语义完整度均未验证，因此不能宣告 A v2 全部成功判据已被阶段二实证。
   supported_parts:
     - claim: 角色化最小默认输入和固定入口恢复在机械上可行。
       evidence_refs: [E-CTX-001, E-STATE-001, E-SIZE-001]
@@ -495,10 +505,11 @@ research_question_closure:
       evidence_refs: [E-SIZE-001, E-LIMIT-001]
       consequence: 真实任务测试必须同时测正确性、遗漏、补充次数和 token 成本。
   unresolved_parts:
-    - question: 每任务每 Web 角色独立 GitHub 仓库的生命周期成本是否可接受？
+    - question: 哪种 Web 受限交接实现能够以可接受成本满足 A v2 的独立授权、不可越界、可撤销和可审计要求？
       impact: 中
-      blocks: []
-      next_action: 在 B 中保留受限传输接口和候选实现；仅在方案确实选择 repo-per-role 时申请保护授权并运行成本试验。
+      does_not_block: [03_结果建模]
+      blocks_after_B_selection: [05_步骤拆分, 06_执行]
+      next_action: B 比较独立仓库、受控交接网关或其他同等边界实现；选定实现后完成相应测试，选择 repo-per-role 时另行申请保护授权并运行生命周期试验。
     - question: 最小入口在真实完整小型 OS 任务中的语义完整度与补充成本如何？
       impact: 高
       blocks: [04_测试生成, 06_执行]
@@ -515,9 +526,9 @@ research_question_closure:
       - 两路发现、第三方匹配、合并裁定和 Chapman 统计已完成。
       - 继续宽泛搜索不会改变 B 的主要平面、边界和验收结构，EIG 低。
       - 本机高 EIG 运行问题已完成正负例验证。
-      - RQ-05 的剩余问题可在不猜测的前提下作为显式未决传给 B，且只有方案选择 repo-per-role 时才值得运行外部成本试验。
+      - RQ-05 已把 A v2 的硬结果约束和候选实现直接交给 B；选定实现后的测试门不要求继续阶段二宽泛研究。
     residual_risk: >-
-      可能仍有未发现的框架或隔离原语；最小上下文的真实质量收益和 Web 远程仓库运营成本尚未验证。
+      可能仍有未发现的框架或隔离原语；最小上下文的真实质量收益和 Web 受限交接候选实现的运营成本尚未验证。
       这些风险已转化为 B 的约束、后续测试和受保护的条件性实验，不需要继续阶段二宽泛研究。
 
 边界记录:
@@ -536,7 +547,7 @@ research_question_closure:
       result: 形成组织分区与访问边界分层，并完成 Windows 本机试验。
     - research_question_id: RQ-05
       queries_or_paths: [GitHub personal repository permissions, organization roles, teams, outside collaborators, custom roles]
-      result: 官方能力明确；真实 repo-per-role 生命周期成本未执行。
+      result: 官方仓库级能力明确；A v2 固定受限交接结果要求，具体实现由 B 比较，真实 repo-per-role 生命周期成本未执行。
     - research_question_id: RQ-06
       queries_or_paths: [Dagster, Bazel, DVC, checkpoints, fingerprints, stale propagation]
       result: 显式依赖和指纹失效模式已形成并完成本机验证。
@@ -573,7 +584,7 @@ research_question_closure:
 信源使用记录:
   actually_used:
     - source_id: SRC-A
-      purpose: 绑定研究问题、成功判据、假设和未解歧义。
+      purpose: 绑定 A v2 研究问题、成功判据、假设、未解歧义和 Web 受限交接硬结果约束。
     - source_id: SRC-INT-OS1
       purpose: 内部机制、失败反例和生命周期经验。
     - source_id: SRC-DR-CGPT
@@ -600,7 +611,9 @@ research_question_closure:
 
 mechanism_3_handoff:
   ready: true
-  requirement_version: 1
+  requirement_version: 2
+  requirement_ref: 08_os/01_workflow/context-management-mechanism/requirement/A_需求建模_v2.yml
+  requirement_confirmation_ref: 08_os/01_workflow/context-management-mechanism/requirement/人类确认_v2.yml
   feasibility: partially_supported
   must_model:
     - 三平面：角色有效上下文、耐久系统事实、完整事件/审计记录。
@@ -610,7 +623,9 @@ mechanism_3_handoff:
     - 显式 publish_allowlist；禁止角色交接使用 git add --all。
     - 确定性 current/stale validator；规划角色决定重跑范围。
     - 生命周期顺序：先提取耐久事实，再删除低价值私有过程。
-    - Web 角色使用受限传输接口；GitHub repo-per-role 只是未验证候选。
+    - Web 受限交接空间必须按任务和 Web 角色独立授权，只暴露获准输入并只接收结构化结果。
+    - Web 角色不得读取主仓库、其他任务或其他角色空间；交接边界必须可撤销、可审计。
+    - B 比较独立仓库、受控网关或其他同等边界实现；GitHub repo-per-role 只是未验证候选。
   must_not_claim:
     - clone/worktree 是访问安全边界。
     - Windows DACL 是不可绕过的生产沙箱。
@@ -622,7 +637,14 @@ mechanism_3_handoff:
     - 角色私有区代表性越界抽查与发布泄漏测试。
     - 无旧聊天恢复、补充申请、stale 阻断和独立审核。
     - 任务完成后耐久事实保留与私有过程清理。
-    - 仅在选择 repo-per-role 方案时运行远程仓库生命周期成本试验。
+    - B 选定 Web 交接实现后验证独立授权、越界拒绝、撤销和审计；选择 repo-per-role 时另行运行受保护的远程生命周期成本试验。
+
+stage_completion_basis:
+  requirement_version: 2
+  requirement_ref_verified: true
+  requirement_confirmation_ref_verified: true
+  human_confirmation_v2_confirmed: true
+  A_v1_history_preserved: true
 
 stage_completion_audit:
   research_questions_classified: true
