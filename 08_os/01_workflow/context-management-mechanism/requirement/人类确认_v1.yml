@@ -1,0 +1,28 @@
+# 阶段一 · 人类同义确认
+# 与 A_需求建模_v1.yml 共同组成 requirement/ 耐久产物包
+
+workflow_id: context-management-mechanism
+requirement_version: 1
+requirement_ref: 08_os/01_workflow/context-management-mechanism/requirement/A_需求建模_v1.yml
+
+确认状态: confirmed
+确认者: human
+确认日期: 2026-07-29
+确认内容:
+  - 隔离目标准确表达为：主要防止无意上下文污染、误读和注意力漂移；允许经过审批的有意越界。
+  - 一个完整需求 A 对应一个任务，粒度准确。
+  - 长期保留系统事实、不长期保留模型私有过程，符合预期。
+  - 完整需求模型 A 准确表达了要开发的上下文管理机制。
+
+原始确认摘录: >-
+  1 是的；2 是的；3 是的。确认，准确表达了我想开发的上下文管理机制。
+
+完成判定:
+  A存在: true
+  schema槽位已填充: true
+  人类确认双方所指相同: true
+  阶段一完成: true
+
+备注:
+  - 本确认只确认需求含义，不确认任何具体实现方案。
+  - 后续证据、B、测试或执行发现 A 不成立时，应通过新版本与失效判定替代，不就地覆盖本记录。
