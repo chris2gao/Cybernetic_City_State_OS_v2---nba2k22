@@ -1,0 +1,187 @@
+workflow_id: context-management-mechanism
+stage: 02_信息收集与提炼
+version: 1
+status: semantic_adjudication_complete
+created_at: 2026-07-29
+
+inputs:
+  chatgpt_report: 08_os/01_workflow/context-management-mechanism/evidence/chatgpt - deep-research-report.md
+  gemini_report: 08_os/01_workflow/context-management-mechanism/evidence/gemini - Multi-Model OS Context Research.md
+  notebooklm_mapping: 08_os/01_workflow/context-management-mechanism/evidence/06_NotebookLM_第三方匹配_v1.md
+  internal_evidence: 08_os/01_workflow/context-management-mechanism/evidence/01_内部证据_v1.yml
+
+adjudication_rules:
+  - 捕获单位按机制功能而不是产品名或论文名比较。
+  - 同一路线中只因实现细节不同而重复列出的条目，先归并为一个机制族再计算。
+  - 一个条目只有在核心输入、状态变化和输出语义相同或构成同一机制的直接特化时才计为重合。
+  - 仅目标相似、但运行原语不同的条目不合并。
+  - NotebookLM 的候选对只是线索；本文件的裁定由合并方回读两份原始报告后给出。
+
+机制模式:
+  chatgpt_normalized:
+    - checkpointed_restore
+    - cross_thread_fact_store
+    - scoped_namespaces
+    - fresh_context_subagents
+    - typed_handoff_schema
+    - handoff_input_filtering
+    - worker_output_reduction
+    - persistent_summarization
+    - trim_delete_policy
+    - on_demand_memory_loading
+    - retrieve_offload_delegate
+    - human_approval_pause_resume
+    - active_state_event_log_separation
+    - read_only_vs_writable_memory
+  gemini_normalized:
+    - dual_track_storage
+    - hierarchical_view_isolation
+    - receipt_based_handoff
+    - typed_blackboard
+    - fact_entity_extraction
+    - graph_semantic_tracking
+    - checkpoint_rehydration
+    - token_based_trim
+  confirmed_overlap:
+    - canonical: checkpointed_restore
+      chatgpt: [Thread-scoped checkpoints, Fixed restore token]
+      gemini: Checkpoint Rehydration
+      rationale: 都以稳定线程或状态标识从持久化状态恢复新实例；Gemini 是更具体的反序列化实现。
+    - canonical: typed_versioned_handoff
+      chatgpt: Structured handoff schema
+      gemini: Receipt-based Handoff
+      rationale: 都以强类型载荷替代完整会话；Gemini 额外要求哈希、退出码和产物指针。
+    - canonical: active_state_event_log_separation
+      chatgpt: Separate trace/event log
+      gemini: Dual-Track Storage
+      rationale: 核心均为活动模型状态与完整审计或事件记录分离；Gemini 的物理双存储是强化实现。
+    - canonical: threshold_trim_policy
+      chatgpt: Trim/delete policies
+      gemini: Token-based Trim
+      rationale: 都按策略缩减活动历史；Gemini 将触发条件限定为 token 阈值。
+  not_merged:
+    - left: Scoped namespaces
+      right: Hierarchical View Isolation
+      reason: 前者是存储命名空间分区，后者是共享状态上的授权投影视图，运行原语不同。
+    - left: Persistent summarization
+      right: Fact-Entity Extraction
+      reason: 摘要保留叙述性状态，事实实体抽取生成原子事实；信息损失形态不同。
+    - left: Cross-thread fact store
+      right: Fact-Entity Extraction
+      reason: 一个是存储平面，一个是写入存储前的提炼过程。
+    - left: Structured handoff schema
+      right: Typed Blackboard
+      reason: 点对点交接产物与共享槽位总线属于不同协作拓扑。
+    - left: On-demand memory loading
+      right: Graph Semantic Tracking
+      reason: 前者是加载策略，后者是关系化表示与查询机制。
+
+隔离机制:
+  chatgpt_normalized:
+    - git_worktree
+    - independent_clone
+    - sparse_partial_clone
+    - host_acl
+    - readonly_container_mount
+    - ephemeral_tmpfs
+    - restricted_tool_gateway
+    - local_permission_profile
+    - temporary_org_repo
+    - git_bundle_handoff
+  gemini_normalized:
+    - landlock
+    - restricted_tool_gateway
+    - local_bare_repo_clone
+    - git_worktree
+  confirmed_overlap:
+    - canonical: git_worktree
+      chatgpt: Git worktree
+      gemini: Traditional Git Worktree
+    - canonical: independent_clone_family
+      chatgpt: Independent clone
+      gemini: Local Bare Repo and Clone Handoff
+      rationale: 两者都用独立 clone 分离工作目录；Gemini 额外使用本地裸仓库作为交接总线。
+    - canonical: restricted_tool_gateway
+      chatgpt: MCP roots / allowed directories
+      gemini: MCP Guard
+      rationale: 都把文件访问收口到受限工具接口；具体执行能力和逃逸边界需运行试验。
+  not_merged:
+    - left: POSIX ACLs / directory permissions
+      right: Linux Landlock
+      reason: 一个依赖主体权限与文件 ACL，一个是进程自限式内核沙箱，部署和失效模式不同。
+    - left: Local permission profiles
+      right: MCP Guard
+      reason: 权限 profile 可覆盖命令和网络策略；MCP Guard 是特定工具网关中间件。
+  verification_flags:
+    - claim: Landlock 同时剥夺全局网络、其他进程空间与兄弟目录访问
+      status: requires_primary_source_check
+      reason: Gemini 报告的描述可能超出 Landlock 文件系统规则本身的保证范围，不能按原文直接进入正式证据。
+
+版本与失效模式:
+  chatgpt_normalized:
+    - immutable_artifact_pinning
+    - fingerprinted_stale_gating
+    - checkpoint_recovery
+    - active_state_event_log_separation
+    - retention_forgetting_hooks
+    - passthrough_invalidation_exemption
+  gemini_normalized:
+    - proof_or_stop_gating
+    - stepwise_checkpoint_rollback
+  confirmed_overlap:
+    - canonical: fingerprinted_stale_gating
+      chatgpt: [Fingerprinted dependency invalidation, Unsynced / stale propagation]
+      gemini: Proof-or-Stop Lifecycle Control
+      rationale: 都用上游内容或版本指纹判断下游状态陈旧，并阻止继续推进。
+    - canonical: checkpoint_recovery
+      chatgpt: Checkpoint/resume
+      gemini: Stepwise Rollback Framework
+      rationale: 都依赖已保存检查点恢复；Gemini 是冲突发生后的回滚特化，不等于普通继续执行。
+  not_merged:
+    - left: Immutable artifact pinning
+      right: Proof-or-Stop Lifecycle Control
+      reason: 固定引用只保证可复现，不自动检测或传播失效。
+    - left: Passthrough invalidation exemption
+      right: Proof-or-Stop Lifecycle Control
+      reason: 前者定义不应触发失效的例外语义，Gemini 条目未提供对应机制。
+
+定向核实裁定:
+  - claim_id: DQ-01
+    claim: 长上下文、无关信息或信息位置会造成任务表现风险。
+    result: supported_with_boundaries
+    independence: 两份报告大量共享 Lost in the Middle 与 Context Length Alone 等原始论文，不能把两份报告本身计为两个独立来源；但原始证据池中存在多篇独立研究。
+    boundary: 风险随模型与任务变化，不能写成所有长上下文必然失败或固定有效长度只有标称值的 10% 到 20%。
+  - claim_id: DQ-02
+    claim: GitHub 个人仓库不适合只读角色隔离，组织仓库提供更细仓库级角色。
+    result: supported
+    independence: 主要依赖同一 GitHub 官方文档体系；这是权威单一来源族，不是双路独立支持。
+    unresolved: 每任务每角色仓库的实际创建、授权、密钥清理和许可成本仍需运行试验。
+  - claim_id: DQ-03
+    claim: 主流 agent 框架具备持久化、handoff 与过滤能力，但最小角色上下文通常不是默认保证。
+    result: supported_by_multiple_framework_sources
+    boundary: 必须按 OpenAI Agents SDK、LangGraph、AutoGen、CrewAI 等框架分别形成原子证据，不能把所有框架概括为相同的全历史默认。
+  - claim_id: DQ-04
+    claim: 工作区分离本身不是 shell 或文件工具的访问边界。
+    result: supported
+    sources: [Git 官方工作树语义, 第一代 OS 内部失败反例, 两份报告的共同工程判断]
+  - claim_id: DQ-05
+    claim: LangGraph 的裁剪或摘要必然物理删除完整审计记录。
+    result: not_yet_verified
+    reason: ChatGPT 报告只足以支持裁剪有损和摘要改变后续状态；Gemini 的物理删除绝对表述主要依赖论坛与实现推断，需要回查具体 API 和存储语义。
+  - claim_id: DQ-06
+    claim: 最小交接必须绑定 AST 或逻辑图，纯自然语言摘要绝不能使用。
+    result: rejected_as_general_requirement
+    reason: Gemini 单路线的过强推断；现有材料只能支持结构化字段、产物版本和原始证据引用，不能证明所有任务都必须携带 AST 或逻辑图。
+  - claim_id: DQ-07
+    claim: 本地模型的信息补充请求需要重试上限或熔断。
+    result: plausible_design_constraint_not_verified_fact
+    reason: 风险方向合理，但报告未给出足以把固定 N 次熔断写成通用证据的直接材料。
+
+handoff_to_metrics:
+  use_normalized_lists: true
+  exact_name_overlap_is_invalid: true
+  report_raw_and_normalized_counts: true
+  coverage_interpretation:
+    机制模式: directional_only_due_to_granularity_asymmetry
+    隔离机制: likely_optimistic_upper_signal_due_to_gemini_narrow_scope
+    版本与失效模式: do_not_use_as_completeness_proof_due_to_small_and_asymmetric_lane
