@@ -4,10 +4,11 @@
 
 ## 当前文件
 
-- `执行清单_v1.md`：第一版手工执行流程；
+- `执行清单_v1.md`：第一版手工执行流程，当前内容版本 v1.2；
 - `信源清单模板.md`：长期信源资产格式；
 - `证据包schema_v1.md`：workflow 实例 `evidence/` 耐久产物格式与完成条件；
-- `外部工具中转与Codex委派_v1.md`：NotebookLM 人工中转和 Codex 结构化委派契约。
+- `外部工具中转与Codex委派_v1.md`：NotebookLM 人工中转和 Codex 结构化委派契约；
+- `运行验证补充_v1.md`：首个真实 workflow 与本机试验形成的强制运行规则。
 
 ## 该放什么
 
@@ -42,9 +43,9 @@
 
 ## 状态
 
-**手工 v1.2 正在真实测试。**
+**手工 v1.2 已完成首个真实 workflow 验证。**
 
-当前实例：
+已验证实例：
 
 ```text
 08_os/01_workflow/context-management-mechanism/evidence/
@@ -52,18 +53,26 @@
 
 已完成：
 
-- 挖掘目标与研究问题分类；
+- 挖掘目标、研究问题类型和 EIG 领域筛选；
 - 第一代内部证据提炼；
 - ChatGPT 与 Gemini 两路正式 Deep Research；
 - NotebookLM 第三方候选匹配；
+- 合并方语义同义裁定、来源级独立性复核和争议主张降级；
+- 三类开放发现 Chapman 计算与方法限制记录；
 - YAML 到 Markdown 上传镜像及一致性核对；
 - 外部文件落点契约；
-- NotebookLM 人工中转与 Codex 委派契约。
+- NotebookLM 人工中转与 Codex 委派契约；
+- 本机工作区、DACL、固定入口恢复、结构化 handoff、stale 和体积代理运行试验；
+- 最终证据索引、`partially_supported` 可行性判断、边界记录和机制 3 交接；
+- 从运行失败提取显式 `publish_allowlist`、工作区/访问边界分离等通用规则。
 
-尚未完成：
+尚未完成的机制级能力：
 
-- 合并方复核 NotebookLM 候选匹配与原始来源；
-- 三类开放发现清单的同义裁定和 Chapman 计算；
-- 最终证据索引、可行性判断与边界记录；
-- 本机隔离和 Web 交接仓库的运行试验；
-- 证据包 validator。
+- 自动证据包 validator；
+- 语义同义与循环报道剥离自动化；
+- 第二个不同领域 workflow 的迁移验证；
+- 外部工具文件搬运自动化。
+
+条件性未决，不阻断机制 2 首版验证：
+
+- 每任务每 Web 角色 GitHub 仓库的真实生命周期成本。只有 B 选择 `repo-per-role` 方案时才申请保护授权执行，不为形式完整度预先创建远程资源。
