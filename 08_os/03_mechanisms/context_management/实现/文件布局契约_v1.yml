@@ -1,0 +1,77 @@
+schema_version: context_management.file_layout.v1
+mechanism_version: 1
+keep_roots:
+  - 08_os/01_workflow/
+  - 08_os/02_boot/
+  - 08_os/03_mechanisms/
+  - 08_os/05_registry/
+  - 08_os/06_execution/
+  - 08_os/_dev/
+  - 08_os/_runs/
+declared_roots:
+  - 08_os/01_workflow/
+  - 08_os/02_boot/context_management/
+  - 08_os/03_mechanisms/context_management/
+  - 08_os/05_registry/
+  - 08_os/06_execution/boot/context_management/
+  - 08_os/_dev/
+  - 08_os/_runs/
+classes:
+  - id: workflow_stage
+    path: 08_os/01_workflow/<stage>/
+    tracked: true
+    registry: true
+    lifecycle: protected_versioned
+  - id: global_mechanism
+    path: 08_os/03_mechanisms/<mechanism>/
+    tracked: true
+    registry: true
+    lifecycle: protected_versioned
+  - id: boot_adapter
+    path: 08_os/02_boot/<name>/
+    tracked: true
+    registry: true
+    lifecycle: protected_versioned
+  - id: execution_loader
+    path: 08_os/06_execution/<area>/<name>/
+    tracked: true
+    registry: true
+    lifecycle: protected_versioned
+  - id: development
+    path: 08_os/_dev/
+    tracked: true
+    registry: when_active
+    lifecycle: supersede_with_history
+  - id: public_run
+    path: 08_os/_runs/<run-id>/
+    tracked: when_durable
+    registry: false
+    lifecycle: retain_per_run_policy
+  - id: role_private_runtime
+    path: 08_os/_runs/<run-id>/_runtime/
+    tracked: false
+    registry: false
+    lifecycle: delete_on_completion
+  - id: handoff_outbox
+    path: 08_os/_runs/<run-id>/<explicit-public-path>/
+    tracked: only_when_published
+    registry: false
+    lifecycle: retain_when_durable
+task_role_zones: [entry, inbox, private, outbox, artifacts, audit]
+run_public_stage_dirs: [01, 02, 03, 04, 05, 06, 07]
+runtime_policy:
+  preferred_location: outside_repository
+  repository_fallback: 08_os/_runs/<run-id>/_runtime/
+  must_be_ignored: true
+publish_policy:
+  mode: explicit_allowlist
+  private_sentinel_negative_test: required
+  broad_git_staging: forbidden
+  broad_packaging: forbidden
+lifecycle_order:
+  - publish_durable_facts
+  - record_failures_and_residuals
+  - delete_private_runtime
+stale_policy:
+  dependency_fingerprints: required
+  checkpoint_is_stale_decision: false

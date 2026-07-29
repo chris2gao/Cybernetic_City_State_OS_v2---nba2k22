@@ -35,7 +35,7 @@
 
 **每个阶段先做出能跑的第一版，再逐个升级。** 不追求一次到位。
 
-八个机制各自独立，某一个换实现不影响其他。所以顺序是：
+七个阶段机制各自独立，某一个换实现不影响其他。所以顺序是：
 先让整条链接得上，再回头把每一环做好。
 
 ## 链条
@@ -46,5 +46,12 @@
                 失效可向上退回任意阶段
 ```
 
-设计依据在 `../_dev/WORKFLOW_BACKBONE_v0.2.md`（四阶段与承重关系）
-与 `../_dev/WORKFLOW_MECHANISM_v0.1.md`（连接方式、角色分区、执行循环）。
+设计依据在 `../_dev/WORKFLOW_BACKBONE_v0.3.md`（四阶段与承重关系）
+与 `../_dev/WORKFLOW_MECHANISM_v0.2.md`（连接方式、全局上下文机制、执行循环）。
+
+## 与全局机制的边界
+
+`01_workflow/` 只保存阶段规格和阶段实现。跨阶段复用的上下文加载、角色入口、
+workspace partition、访问边界、发布 allowlist、stale 与生命周期由
+`../03_mechanisms/context_management/` 统一定义。任务运行的耐久公开证据放
+`../_runs/<run-id>/`，私有 scratch 不进入 Git。

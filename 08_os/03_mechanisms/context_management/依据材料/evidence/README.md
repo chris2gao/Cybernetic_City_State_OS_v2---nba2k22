@@ -8,8 +8,8 @@
 stage: 02_信息收集与提炼
 status: completed_with_residuals
 requirement_version: 2
-requirement_ref: 08_os/01_workflow/context-management-mechanism/requirement/A_需求建模_v2.yml
-requirement_confirmation_ref: 08_os/01_workflow/context-management-mechanism/requirement/人类确认_v2.yml
+requirement_ref: 08_os/03_mechanisms/context_management/依据材料/requirement/A_需求建模_v2.yml
+requirement_confirmation_ref: 08_os/03_mechanisms/context_management/依据材料/requirement/人类确认_v2.yml
 final_evidence_ref: 07_证据索引与可行性判断_v1.yml
 feasibility: partially_supported
 stop_stage_02: true
@@ -69,16 +69,16 @@ NotebookLM 当前不能上传 YAML，因此建立内容完全相同的 `.md` 镜
 上传文件路径均相对于仓库根目录：
 
 ```text
-08_os/01_workflow/context-management-mechanism/evidence/00_挖掘目标与领域_v1.md
-08_os/01_workflow/context-management-mechanism/evidence/01_内部证据_v1.md
-08_os/01_workflow/context-management-mechanism/evidence/chatgpt - deep-research-report.md
-08_os/01_workflow/context-management-mechanism/evidence/gemini - Multi-Model OS Context Research.md
+08_os/03_mechanisms/context_management/依据材料/evidence/00_挖掘目标与领域_v1.md
+08_os/03_mechanisms/context_management/依据材料/evidence/01_内部证据_v1.md
+08_os/03_mechanisms/context_management/依据材料/evidence/chatgpt - deep-research-report.md
+08_os/03_mechanisms/context_management/依据材料/evidence/gemini - Multi-Model OS Context Research.md
 ```
 
 NotebookLM 输出保存到：
 
 ```text
-08_os/01_workflow/context-management-mechanism/evidence/06_NotebookLM_第三方匹配_v1.md
+08_os/03_mechanisms/context_management/依据材料/evidence/06_NotebookLM_第三方匹配_v1.md
 ```
 
 `02_ChatGPT外部检索_v1.md` 是预跑材料，不进入 NotebookLM 双路线正式匹配。

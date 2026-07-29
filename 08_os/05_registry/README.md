@@ -51,4 +51,9 @@ Whatever validator eventually checks this registry should fail on: a registered 
 that does not exist, an existing path with no entry, and a declared cache directory
 that is neither present nor correctly ignored.
 
-Empty until the first entries are written.
+## 当前注册
+
+- `context_management_v1.yml`：上下文管理的 canonical 机制、boot adapter、
+  execution loader/validator、活动开发规范、受保护历史和阶段二拆分补充。
+
+`08_os/_runs/`、`_runtime/`、角色 private/scratch 不注册。

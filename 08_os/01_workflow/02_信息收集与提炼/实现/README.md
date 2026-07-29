@@ -6,7 +6,7 @@
 
 - `执行清单_v1.md`：第一版手工执行流程，当前内容版本 v1.2；
 - `信源清单模板.md`：长期信源资产格式；
-- `证据包schema_v1.md`：workflow 实例 `evidence/` 耐久产物格式与完成条件；
+- `证据包schema_v1.md`：运行公开证据包的格式与完成条件；
 - `外部工具中转与Codex委派_v1.md`：NotebookLM 人工中转和 Codex 结构化委派契约；
 - `运行验证补充_v1.md`：首个真实 workflow 与本机试验形成的强制运行规则。
 
@@ -24,7 +24,8 @@
 ## 不该放什么
 
 - 规格与理由——在上一级；
-- 某一次任务挖到的证据——放在对应 workflow 实例的 `evidence/`；
+- 某一次任务挖到的证据——放在对应 `_runs/<run-id>/`；
+- 全局上下文隔离、发布、stale 与生命周期规范——放在 `03_mechanisms/context_management/`；
 - 不承担状态、溯源或方法论证据的普通临时文件。
 
 ## 第一版要求
@@ -45,14 +46,15 @@
 
 **手工 v1.2 已完成首个真实 workflow 验证。**
 
-该 workflow 的阶段二完成状态以 Human 确认的 `context-management-mechanism/requirement/A_需求建模_v2.yml`
+该 workflow 的阶段二完成状态以 Human 确认的
+`03_mechanisms/context_management/依据材料/requirement/A_需求建模_v2.yml`
 与 `人类确认_v2.yml` 为当前需求前提；A v1 与确认 v1 只作为历史记录保留。最终证据索引已按
 A v2 重新闭包，因此机制 3 不需要自行调和旧版 `repo-per-role` 硬实现与当前 handoff。
 
 已验证实例：
 
 ```text
-08_os/01_workflow/context-management-mechanism/evidence/
+08_os/03_mechanisms/context_management/依据材料/evidence/
 ```
 
 已完成：

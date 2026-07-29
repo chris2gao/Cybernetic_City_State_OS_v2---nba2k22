@@ -37,4 +37,9 @@ So each loader declares its own failure mode: what a partial load looks like, an
 the model should do when it detects one. Failing loudly is a requirement, not a
 nicety — this is the area whose failures would otherwise be silent by construction.
 
-Empty until the first loader is written.
+## 当前加载器
+
+- `boot/context_management/README.md`：读取 boot 清单和 registry，注入最小活动定义，
+  排除原始研究报告、运行历史与私有 scratch，并运行结构 validator。
+
+加载 receipt 必须记录机制版本和实际读取项；缺项、旧版本或 stale 均失败退出。

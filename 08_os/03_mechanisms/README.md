@@ -34,4 +34,8 @@ and the compliance validator all work in the first-generation system and all hav
 measured failure histories worth carrying over with them. Porting is selective:
 assessed one at a time, not copied wholesale.
 
-Empty until the first mechanism is ported or written.
+## 当前机制
+
+- `context_management/`：全局上下文管理、文件隔离、产物生命周期、发布边界与结构验证。
+
+工作流只引用该机制，不在 `01_workflow/` 内保留第二份实例。

@@ -10,6 +10,10 @@ Thumbs.db
 .env
 .ssh/
 
+# Per-run private runtime. Durable public run evidence belongs in stages 01-07;
+# role-private state and scratch never enter Git.
+08_os/_runs/*/_runtime/
+
 # Claude Code agent settings.
 #
 # settings.json is TRACKED: it carries the shared policy (permissions, deny

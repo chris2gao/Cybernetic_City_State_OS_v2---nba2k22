@@ -4,35 +4,35 @@ version: 1
 status: completed_with_residuals
 created_at: 2026-07-29
 requirement_version: 2
-requirement_ref: 08_os/01_workflow/context-management-mechanism/requirement/A_需求建模_v2.yml
-requirement_confirmation_ref: 08_os/01_workflow/context-management-mechanism/requirement/人类确认_v2.yml
-requirement_supersedes_ref: 08_os/01_workflow/context-management-mechanism/requirement/A_需求建模_v1.yml
-requirement_confirmation_supersedes_ref: 08_os/01_workflow/context-management-mechanism/requirement/人类确认_v1.yml
+requirement_ref: 08_os/03_mechanisms/context_management/依据材料/requirement/A_需求建模_v2.yml
+requirement_confirmation_ref: 08_os/03_mechanisms/context_management/依据材料/requirement/人类确认_v2.yml
+requirement_supersedes_ref: 08_os/03_mechanisms/context_management/依据材料/requirement/A_需求建模_v1.yml
+requirement_confirmation_supersedes_ref: 08_os/03_mechanisms/context_management/依据材料/requirement/人类确认_v1.yml
 supersedes:
-  - 08_os/01_workflow/context-management-mechanism/evidence/07c_证据索引草案_v1.yml
+  - 08_os/03_mechanisms/context_management/依据材料/evidence/07c_证据索引草案_v1.yml
 derived_from:
-  - 08_os/01_workflow/context-management-mechanism/evidence/07a_机制同义裁定_v1.yml
-  - 08_os/01_workflow/context-management-mechanism/evidence/07b_开放发现统计_v1.yml
-  - 08_os/01_workflow/context-management-mechanism/evidence/09_本机默认分区试验_v1.md
+  - 08_os/03_mechanisms/context_management/依据材料/evidence/07a_机制同义裁定_v1.yml
+  - 08_os/03_mechanisms/context_management/依据材料/evidence/07b_开放发现统计_v1.yml
+  - 08_os/03_mechanisms/context_management/依据材料/evidence/09_本机默认分区试验_v1.md
 
 source_catalog:
   - source_id: SRC-A
     名称: 需求建模 A v2 · 上下文管理机制
-    地址: 08_os/01_workflow/context-management-mechanism/requirement/A_需求建模_v2.yml
+    地址: 08_os/03_mechanisms/context_management/依据材料/requirement/A_需求建模_v2.yml
     类型: 内部证据
     信源可靠性: A
     可靠性理由: 当前 workflow 经人类确认 v2 的需求、成功判据、边界、假设与未解歧义；A v1 作为被取代的历史记录保留。
     可访问性: 模型可直接访问
   - source_id: SRC-INT-OS1
     名称: 第一代 OS 内部机制与失败证据
-    地址: 08_os/01_workflow/context-management-mechanism/evidence/01_内部证据_v1.yml
+    地址: 08_os/03_mechanisms/context_management/依据材料/evidence/01_内部证据_v1.yml
     类型: 内部证据
     信源可靠性: A
     可靠性理由: 项目真实运行机制、失败形态与可复用约束的耐久记录。
     可访问性: 模型可直接访问
   - source_id: SRC-DR-CGPT
     名称: ChatGPT Deep Research 完整报告
-    地址: 08_os/01_workflow/context-management-mechanism/evidence/chatgpt - deep-research-report.md
+    地址: 08_os/03_mechanisms/context_management/依据材料/evidence/chatgpt - deep-research-report.md
     类型: 外部研究综合
     信源可靠性: B
     可靠性理由: 具有明确 Evidence register，关键项回指同行评审论文、官方文档和官方 issue。
@@ -46,35 +46,35 @@ source_catalog:
       - E-14 Dagster/Bazel/DVC official dependency and invalidation documentation
   - source_id: SRC-DR-GEM
     名称: Gemini Deep Research 完整报告
-    地址: 08_os/01_workflow/context-management-mechanism/evidence/gemini - Multi-Model OS Context Research.md
+    地址: 08_os/03_mechanisms/context_management/依据材料/evidence/gemini - Multi-Model OS Context Research.md
     类型: 外部研究综合
     信源可靠性: C
     可靠性理由: 提供独特候选机制，但部分主张绝对化或来源粒度不足，关键项只在回查后使用。
     可访问性: 模型可直接访问
   - source_id: SRC-NLM
     名称: NotebookLM 第三方候选匹配
-    地址: 08_os/01_workflow/context-management-mechanism/evidence/06_NotebookLM_第三方匹配_v1.md
+    地址: 08_os/03_mechanisms/context_management/依据材料/evidence/06_NotebookLM_第三方匹配_v1.md
     类型: 语料综合
     信源可靠性: C
     可靠性理由: 基于受控语料进行匹配；未充分返回精确原文位置，只作为候选映射。
     可访问性: 模型可直接访问
   - source_id: SRC-SEM
     名称: 合并方机制同义与来源独立性裁定
-    地址: 08_os/01_workflow/context-management-mechanism/evidence/07a_机制同义裁定_v1.yml
+    地址: 08_os/03_mechanisms/context_management/依据材料/evidence/07a_机制同义裁定_v1.yml
     类型: 内部证据
     信源可靠性: A
     可靠性理由: 回到两份原始报告完成同义、相关、独有和未验证主张裁定。
     可访问性: 模型可直接访问
   - source_id: SRC-COVER
     名称: 开放发现 Chapman 统计
-    地址: 08_os/01_workflow/context-management-mechanism/evidence/07b_开放发现统计_v1.yml
+    地址: 08_os/03_mechanisms/context_management/依据材料/evidence/07b_开放发现统计_v1.yml
     类型: 内部证据
     信源可靠性: A
     可靠性理由: 明确捕获单位、公式、重合数、等可捕获性限制和 EIG 停止依据。
     可访问性: 模型可直接访问
   - source_id: SRC-RUNTIME
     名称: 本机默认分区运行试验
-    地址: 08_os/01_workflow/context-management-mechanism/evidence/09_本机默认分区试验_v1.md
+    地址: 08_os/03_mechanisms/context_management/依据材料/evidence/09_本机默认分区试验_v1.md
     类型: 内部证据
     信源可靠性: A
     可靠性理由: 可重复脚本、fixture、脱敏日志和结果文件已进入 master；候选提交经独立审核。
@@ -612,8 +612,8 @@ research_question_closure:
 mechanism_3_handoff:
   ready: true
   requirement_version: 2
-  requirement_ref: 08_os/01_workflow/context-management-mechanism/requirement/A_需求建模_v2.yml
-  requirement_confirmation_ref: 08_os/01_workflow/context-management-mechanism/requirement/人类确认_v2.yml
+  requirement_ref: 08_os/03_mechanisms/context_management/依据材料/requirement/A_需求建模_v2.yml
+  requirement_confirmation_ref: 08_os/03_mechanisms/context_management/依据材料/requirement/人类确认_v2.yml
   feasibility: partially_supported
   must_model:
     - 三平面：角色有效上下文、耐久系统事实、完整事件/审计记录。
@@ -627,7 +627,7 @@ mechanism_3_handoff:
     - Web 角色不得读取主仓库、其他任务或其他角色空间；交接边界必须可撤销、可审计。
     - B 比较独立仓库、受控网关或其他同等边界实现；GitHub repo-per-role 只是未验证候选。
   must_not_claim:
-    - clone/worktree 是访问安全边界。
+    - clone/worktree 能提供技术访问隔离。
     - Windows DACL 是不可绕过的生产沙箱。
     - 最小输入体积等于模型质量提高。
     - 开放发现已达到领域完整。

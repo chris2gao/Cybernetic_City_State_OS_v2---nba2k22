@@ -13,19 +13,19 @@ objective: >-
   worktree/clone 不能构成访问边界、可用的主机或工具约束以及无法验证的部分。
 
 inputs:
-  - 08_os/01_workflow/context-management-mechanism/requirement/A_需求建模_v1.yml
-  - 08_os/01_workflow/context-management-mechanism/evidence/00_挖掘目标与领域_v1.yml
-  - 08_os/01_workflow/context-management-mechanism/evidence/01_内部证据_v1.yml
-  - 08_os/01_workflow/context-management-mechanism/evidence/07a_机制同义裁定_v1.yml
-  - 08_os/01_workflow/context-management-mechanism/evidence/07b_开放发现统计_v1.yml
+  - 08_os/03_mechanisms/context_management/依据材料/requirement/A_需求建模_v1.yml
+  - 08_os/03_mechanisms/context_management/依据材料/evidence/00_挖掘目标与领域_v1.yml
+  - 08_os/03_mechanisms/context_management/依据材料/evidence/01_内部证据_v1.yml
+  - 08_os/03_mechanisms/context_management/依据材料/evidence/07a_机制同义裁定_v1.yml
+  - 08_os/03_mechanisms/context_management/依据材料/evidence/07b_开放发现统计_v1.yml
   - 08_os/01_workflow/02_信息收集与提炼/实现/证据包schema_v1.md
 
 allowed_paths:
-  - 08_os/01_workflow/context-management-mechanism/evidence/09_本机默认分区试验_v1.md
+  - 08_os/03_mechanisms/context_management/依据材料/evidence/09_本机默认分区试验_v1.md
   - 08_os/_runs/run-007-上下文管理信息收集测试/artifacts/local-partition/**
 
 forbidden_paths:
-  - 08_os/01_workflow/context-management-mechanism/requirement/**
+  - 08_os/03_mechanisms/context_management/依据材料/requirement/**
   - 08_os/01_workflow/02_信息收集与提炼/**
   - 08_os/01_workflow/03_结果建模/**
   - CORE_MANIFEST.yml
@@ -92,7 +92,7 @@ experiment_plan:
     pass_condition: 报告可重复的体积差异，并说明它只证明输入缩减，不直接证明模型质量提升。
 
 required_outputs:
-  - path: 08_os/01_workflow/context-management-mechanism/evidence/09_本机默认分区试验_v1.md
+  - path: 08_os/03_mechanisms/context_management/依据材料/evidence/09_本机默认分区试验_v1.md
     content:
       - 环境能力矩阵
       - 每个实验的命令、输入、实际输出与 passed/failed/blocked
