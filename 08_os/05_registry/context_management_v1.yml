@@ -11,6 +11,15 @@ entries:
     cache_dirs: []
     failure_surfacing: next validator run
     deletion_rule: protected
+  - path: 08_os/03_mechanisms/context_management/开发总结_v1.md
+    purpose: 面向 Human 的实现前后对照、开发链、质量评价、验证边界与后续更新入口
+    loader: human-directed mechanism review
+    loader_class: external_tool_convention
+    discovery: referenced from mechanism README
+    evidence: 08_os/_runs/run-010-上下文管理开发总结/06_执行/变更清单.md
+    cache_dirs: []
+    failure_surfacing: next human mechanism review
+    deletion_rule: protected
   - path: 08_os/03_mechanisms/context_management/依据材料/requirement/**
     purpose: A v1/v2 与 Human 确认需求锚点
     loader: context management design and audit
