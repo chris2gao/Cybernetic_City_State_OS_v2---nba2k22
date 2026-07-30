@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import re
 import subprocess
 
 import yaml
@@ -103,6 +104,19 @@ assert results["wrapper"]["apply_exposed"] is False
 assert all(item["passed"] is True for item in results["wrapper"]["cases"])
 assert results["resources"]["exact_model_tokens"] == "not_observable"
 assert results["resources"]["resident_processes_after_run"] == 0
+assert set(results["resources"]["lifecycle_measurement"]) == {
+    "installed_idle",
+    "registered_on_demand",
+    "calibration_invoked",
+    "real_target_invoked",
+    "diagnostic_consumed_by_model",
+}
+assert results["resources"]["lifecycle_measurement"]["registered_on_demand"][
+    "default_loaded"
+] is False
+assert results["resources"]["lifecycle_measurement"]["registered_on_demand"][
+    "mcp_exposed"
+] is False
 assert results["token_and_context"]["boot_loaded"] is False
 assert results["token_and_context"]["mcp_exposed"] is False
 assert results["cleanup"] == {
@@ -119,6 +133,14 @@ assert receipt["sudo_used"] is False
 assert receipt["credentials_used_or_recorded"] is False
 assert receipt["process_residue_count"] == 0
 assert receipt["origin_master_at_start"] == receipt["origin_master_at_end"]
+for command_id in (
+    "pip",
+    "pip_show_mutmut",
+    "pip_show_libcst",
+    "pytest",
+    "version",
+):
+    assert receipt["commands"][command_id]["exit_code"] == 0, command_id
 
 assert WRAPPER_PATH.stat().st_mode & 0o111
 wrapper_text = WRAPPER_PATH.read_text(encoding="utf-8")
@@ -186,6 +208,25 @@ for record in filter(None, status.decode("utf-8").split("\0")):
 for path in [*changed, *status_paths]:
     assert path in allowed_exact or path.startswith(allowed_prefixes), path
 
+high_confidence_secret_patterns = [
+    re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
+    re.compile(r"\bAKIA[0-9A-Z]{16}\b"),
+    re.compile(r"\bgh[pousr]_[A-Za-z0-9]{20,}\b"),
+    re.compile(r"\bxox[baprs]-[A-Za-z0-9-]{20,}\b"),
+    re.compile(r"\bAIza[0-9A-Za-z_-]{30,}\b"),
+]
+for relative in sorted(set([*changed, *status_paths])):
+    path = ROOT / relative
+    if not path.is_file() or path.stat().st_size > 2_000_000:
+        continue
+    payload = path.read_bytes()
+    if b"\0" in payload:
+        continue
+    text = payload.decode("utf-8", errors="ignore")
+    assert not any(pattern.search(text) for pattern in high_confidence_secret_patterns), (
+        relative
+    )
+
 assert not (RUN_ROOT / "07_测试执行/real_target_tests/mutants").exists()
 assert not (RUN_ROOT / "07_测试执行/real_target_tests/target").exists()
 assert (
@@ -205,4 +246,5 @@ print("PASS calibration_real_target_and_wrapper_receipts")
 print("PASS canonical_target_unchanged")
 print("PASS boot_non_reference_and_unchanged")
 print("PASS canonical_absolute_user_path_scan")
+print("PASS scoped_high_confidence_secret_scan")
 print("PASS cleanup_and_changed_path_allowlist")

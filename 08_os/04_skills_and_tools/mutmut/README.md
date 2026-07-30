@@ -43,5 +43,11 @@ canonical wrapper 是
 - virtualenv 是机器态前置条件，不进入仓库，也不进入默认 boot。
 - exact model token、可靠的整棵进程峰值内存和网络包行为均未直接观测；不得据此
   声称精确 token 节省、峰值内存或零网络。
+- decorator、动态生成代码、运行时注入和 mutmut 未生成的 mutation operator 是
+  工具盲区；0 survivor 也不表示这些行为已验证。
 - mutmut、Python、wrapper、目标配置或测试语义变化后，必须重跑 run-013 的完整
   校准、真实目标、边界和 repository-state 验证。
+
+升级时创建新的专用 virtualenv，先保持 registry 的旧版本和未验证状态，在新环境
+完成 run-013 后再更新 exact version gate。卸载是机器维护动作：删除专用 virtualenv
+即可；不要删除 run evidence 或把卸载写成 repository runtime 行为。

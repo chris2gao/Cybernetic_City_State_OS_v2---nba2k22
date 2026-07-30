@@ -206,6 +206,11 @@ def mutation_run(
             "results": public_capture(results),
             "status_counts": status_counts,
             "total_mutants": sum(status_counts.values()),
+            "mutants_per_second": round(
+                sum(status_counts.values())
+                / (float(mutation["duration_ms"]) / 1000),
+                3,
+            ),
             "survivors": survivors,
             "survivor_diffs": survivor_diffs,
             "cache_before_cleanup": cache,
@@ -317,6 +322,22 @@ def main() -> int:
         "uname": capture(["uname", "-a"], cwd=repo),
         "python": capture([str(venv / "bin/python"), "--version"], cwd=repo),
         "git": capture(["git", "--version"], cwd=repo),
+        "pip": capture(
+            [str(venv / "bin/python"), "-m", "pip", "--version"],
+            cwd=repo,
+        ),
+        "pip_show_mutmut": capture(
+            [str(venv / "bin/python"), "-m", "pip", "show", "mutmut"],
+            cwd=repo,
+        ),
+        "pip_show_libcst": capture(
+            [str(venv / "bin/python"), "-m", "pip", "show", "libcst"],
+            cwd=repo,
+        ),
+        "pytest": capture(
+            [str(venv / "bin/python"), "-m", "pytest", "--version"],
+            cwd=repo,
+        ),
         "which_python": capture(
             ["bash", "-lc", f"source '{venv}/bin/activate' && command -v python"],
             cwd=repo,
@@ -506,6 +527,11 @@ def main() -> int:
                 "id": item["id"],
                 "status_counts": counts,
                 "total_mutants": sum(counts.values()),
+                "mutants_per_second": round(
+                    sum(counts.values())
+                    / (float(item["result"]["duration_ms"]) / 1000),
+                    3,
+                ),
                 "survivors": survivors,
             }
         )
@@ -559,6 +585,32 @@ def main() -> int:
         ]
     )
     child_usage = resource.getrusage(resource.RUSAGE_CHILDREN)
+    calibration_duration_ms = round(
+        sum(
+            float(item["baseline"]["duration_ms"])
+            + float(item["mutation"]["duration_ms"])
+            + float(item["results"]["duration_ms"])
+            for item in calibration_runs
+        ),
+        3,
+    )
+    real_target_duration_ms = round(
+        float(initial_real["baseline"]["duration_ms"])
+        + float(initial_real["mutation"]["duration_ms"])
+        + float(initial_real["results"]["duration_ms"])
+        + sum(
+            float(item["result"]["duration_ms"])
+            for item in wrapper_cases[:2]
+        ),
+        3,
+    )
+    registered_artifacts = [
+        repo / "08_os/04_skills_and_tools/mutmut/README.md",
+        repo / "08_os/06_execution/tools/mutmut/README.md",
+        repo / "08_os/06_execution/tools/mutmut/invoke.sh",
+        repo / "08_os/05_registry/skills_and_tools_v1.yml",
+    ]
+    registered_bytes = sum(path.stat().st_size for path in registered_artifacts)
     origin_url = command_text(["git", "remote", "get-url", "origin"], repo)
     head = command_text(["git", "rev-parse", "HEAD"], repo)
     origin_master = command_text(["git", "rev-parse", "origin/master"], repo)
@@ -660,6 +712,43 @@ def main() -> int:
             "peak_process_tree_memory": "not_observable_reliably",
             "exact_model_tokens": "not_observable",
             "resident_processes_after_run": len(process_residue),
+            "lifecycle_measurement": {
+                "installed_idle": {
+                    "venv_file_count": venv_size["file_count"],
+                    "venv_bytes": venv_size["bytes"],
+                    "resident_mutmut_processes": len(process_residue),
+                },
+                "registered_on_demand": {
+                    "repository_artifact_count": len(registered_artifacts),
+                    "repository_artifact_bytes": registered_bytes,
+                    "default_loaded": False,
+                    "mcp_exposed": False,
+                },
+                "calibration_invoked": {
+                    "run_count": len(calibration_runs),
+                    "duration_ms": calibration_duration_ms,
+                    "maximum_cache_bytes_before_cleanup": max(
+                        item["cache_before_cleanup"]["bytes"]
+                        for item in calibration_runs
+                    ),
+                },
+                "real_target_invoked": {
+                    "run_count": 3,
+                    "duration_ms": real_target_duration_ms,
+                    "initial_mutants": initial_real["total_mutants"],
+                    "strengthened_mutants_each": (
+                        wrapper_success_mutations[0]["total_mutants"]
+                    ),
+                },
+                "diagnostic_consumed_by_model": {
+                    "survivor_summary_utf8_bytes": len(
+                        survivor_summary.encode("utf-8")
+                    ),
+                    "survivor_summary_characters": output_chars,
+                    "exact_model_tokens": "not_observable",
+                    "proxy_not_billing_tokens": (output_chars + 3) // 4,
+                },
+            },
         },
         "token_and_context": {
             "boot_loaded": False,
