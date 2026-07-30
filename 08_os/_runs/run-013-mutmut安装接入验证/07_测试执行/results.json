@@ -1,0 +1,963 @@
+{
+  "schema_version": "citystate.mutmut_validation.v1",
+  "generated_at_utc": "2026-07-30T09:49:48.247500+00:00",
+  "task_id": "mutmut-wsl-installation-validation-001",
+  "source_head": "31ce5812bf34e7e4fc338543841973246a6a2467",
+  "validation_head": "2f719181b5c89134caedbca73c46ea3f0a14df87",
+  "summary": {
+    "environment_passed": true,
+    "calibration_passed": true,
+    "real_target_passed": true,
+    "wrapper_boundary_passed": true,
+    "process_residue_count": 0,
+    "all_passed": true
+  },
+  "environment": {
+    "whoami": {
+      "command": "whoami",
+      "arguments": [],
+      "started_utc": "2026-07-30T09:48:01.687941+00:00",
+      "duration_ms": 5.807,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 3,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "472238ca5e53f0239074f20fa69340e339cafb94695697d2f4ae27e0ef759638",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "uname": {
+      "command": "uname",
+      "arguments": [
+        "-a"
+      ],
+      "started_utc": "2026-07-30T09:48:01.693870+00:00",
+      "duration_ms": 4.633,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 125,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "2d3a816b1fcb417724f40cf3ae51757561b9d4b5f2c56c70aee8190d14aa95d2",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "python": {
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+      "arguments": [
+        "--version"
+      ],
+      "started_utc": "2026-07-30T09:48:01.698643+00:00",
+      "duration_ms": 2.252,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 14,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "63990b3ee50c49ab28d70e29c0f967f0c71330e39243ffeb4d3a8d5878c8a978",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "git": {
+      "command": "git",
+      "arguments": [
+        "--version"
+      ],
+      "started_utc": "2026-07-30T09:48:01.700962+00:00",
+      "duration_ms": 2.796,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 19,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "97452bcde974ef512f9552791fc4f6a3219a724877671fba270baca1a6075b74",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "which_python": {
+      "command": "bash",
+      "arguments": [
+        "-lc",
+        "source '/home/gk/.venvs/core-mutmut-3.6.0/bin/activate' && command -v python"
+      ],
+      "started_utc": "2026-07-30T09:48:01.703874+00:00",
+      "duration_ms": 29.628,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 45,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "c0377457b066cea8c29c00d12d95a320e9381613cbcc7aa21b644340ea8cc1c5",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "which_mutmut": {
+      "command": "bash",
+      "arguments": [
+        "-lc",
+        "source '/home/gk/.venvs/core-mutmut-3.6.0/bin/activate' && command -v mutmut"
+      ],
+      "started_utc": "2026-07-30T09:48:01.733588+00:00",
+      "duration_ms": 22.52,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 45,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "0572564803adadb0afbd8cd6952badf9bbb87421144a949ecb9954393dd42b77",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "imports": {
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+      "arguments": [
+        "-c",
+        "import libcst, mutmut; print('imports-ok')"
+      ],
+      "started_utc": "2026-07-30T09:48:01.756222+00:00",
+      "duration_ms": 471.995,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 11,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "c8a46b5c7f5ecf647e6659e7e45432714ca2a46bd6f9719eee4d59828fd553d8",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "version": {
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
+      "arguments": [
+        "--version"
+      ],
+      "started_utc": "2026-07-30T09:48:02.228315+00:00",
+      "duration_ms": 1237.911,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 22,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "7f0c4b8b7125957a3b2b2e7487532da46bdea6017e26f8ddce505d1725375668",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "fork_probe": {
+    "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+    "arguments": [
+      "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/_runs/run-013-mutmut安装接入验证/01_任务输入/fork_probe.py"
+    ],
+    "started_utc": "2026-07-30T09:48:03.466451+00:00",
+    "duration_ms": 38.929,
+    "exit_code": 0,
+    "stdout_utf8_bytes": 124,
+    "stderr_utf8_bytes": 0,
+    "stdout_sha256": "81da9d7fa6d45e81c9228220224ee5f12b3e6a90fe2101b3e67be5773a338f88",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "calibration": {
+    "weak_checkpoint": "c43a077",
+    "strengthened_checkpoint": "HEAD",
+    "runs": [
+      {
+        "id": "weak-1",
+        "source_commit": "c43a077",
+        "baseline": {
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+          "arguments": [
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_logic.py"
+          ],
+          "started_utc": "2026-07-30T09:48:03.563872+00:00",
+          "duration_ms": 755.511,
+          "exit_code": 0,
+          "stdout_utf8_bytes": 98,
+          "stderr_utf8_bytes": 0,
+          "stdout_sha256": "cdf8d13a3f141b449c7d92c9b86d6fd681de17445a1d661236b92f93860eafac",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "mutation": {
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
+          "arguments": [
+            "run",
+            "--max-children",
+            "2"
+          ],
+          "started_utc": "2026-07-30T09:48:04.319496+00:00",
+          "duration_ms": 2164.749,
+          "exit_code": 0,
+          "stdout_utf8_bytes": 1803,
+          "stderr_utf8_bytes": 0,
+          "stdout_sha256": "e029d5027085cf7e708c1ef1a62e23747d1aa0b30f1b2c2c9d22eecb29ca5392",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "results": {
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
+          "arguments": [
+            "results",
+            "--all",
+            "true"
+          ],
+          "started_utc": "2026-07-30T09:48:06.484356+00:00",
+          "duration_ms": 1213.064,
+          "exit_code": 0,
+          "stdout_utf8_bytes": 497,
+          "stderr_utf8_bytes": 0,
+          "stdout_sha256": "da008904623796a2052d5b474c7dd250917a4af358ed5c80921db2689b25e988",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status_counts": {
+          "killed": 3,
+          "survived": 5
+        },
+        "total_mutants": 8,
+        "survivors": [
+          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_1",
+          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_2",
+          "calibration_pkg.logic.x_access_level__mutmut_2",
+          "calibration_pkg.logic.x_access_level__mutmut_3",
+          "calibration_pkg.logic.x_access_level__mutmut_4"
+        ],
+        "survivor_diffs": {
+          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_1": "# calibration_pkg.logic.x_clamp_nonnegative__mutmut_1: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def clamp_nonnegative(value: int) -> int:\n-    if value < 0:\n+    if value <= 0:\n         return 0\n     return value",
+          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_2": "# calibration_pkg.logic.x_clamp_nonnegative__mutmut_2: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def clamp_nonnegative(value: int) -> int:\n-    if value < 0:\n+    if value < 1:\n         return 0\n     return value",
+          "calibration_pkg.logic.x_access_level__mutmut_2": "# calibration_pkg.logic.x_access_level__mutmut_2: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def access_level(role: str) -> int:\n-    if role == \"admin\":\n+    if role == \"XXadminXX\":\n         return 2\n     return 1",
+          "calibration_pkg.logic.x_access_level__mutmut_3": "# calibration_pkg.logic.x_access_level__mutmut_3: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def access_level(role: str) -> int:\n-    if role == \"admin\":\n+    if role == \"ADMIN\":\n         return 2\n     return 1",
+          "calibration_pkg.logic.x_access_level__mutmut_4": "# calibration_pkg.logic.x_access_level__mutmut_4: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def access_level(role: str) -> int:\n     if role == \"admin\":\n-        return 2\n+        return 3\n     return 1"
+        },
+        "cache_before_cleanup": {
+          "file_count": 15,
+          "bytes": 15272
+        },
+        "raw_mutation_output_utf8_bytes": 1803,
+        "temporary_workspace_cleaned": true
+      },
+      {
+        "id": "weak-2",
+        "source_commit": "c43a077",
+        "baseline": {
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+          "arguments": [
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_logic.py"
+          ],
+          "started_utc": "2026-07-30T09:48:12.865923+00:00",
+          "duration_ms": 436.741,
+          "exit_code": 0,
+          "stdout_utf8_bytes": 98,
+          "stderr_utf8_bytes": 0,
+          "stdout_sha256": "cdf8d13a3f141b449c7d92c9b86d6fd681de17445a1d661236b92f93860eafac",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "mutation": {
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
+          "arguments": [
+            "run",
+            "--max-children",
+            "2"
+          ],
+          "started_utc": "2026-07-30T09:48:13.302784+00:00",
+          "duration_ms": 3175.477,
+          "exit_code": 0,
+          "stdout_utf8_bytes": 1803,
+          "stderr_utf8_bytes": 0,
+          "stdout_sha256": "f607b2b0d409b0db1a6165a8c390d327acd55aa01bd97e83c065a5a05fc1bb0d",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "results": {
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
+          "arguments": [
+            "results",
+            "--all",
+            "true"
+          ],
+          "started_utc": "2026-07-30T09:48:16.478526+00:00",
+          "duration_ms": 1248.289,
+          "exit_code": 0,
+          "stdout_utf8_bytes": 497,
+          "stderr_utf8_bytes": 0,
+          "stdout_sha256": "da008904623796a2052d5b474c7dd250917a4af358ed5c80921db2689b25e988",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status_counts": {
+          "killed": 3,
+          "survived": 5
+        },
+        "total_mutants": 8,
+        "survivors": [
+          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_1",
+          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_2",
+          "calibration_pkg.logic.x_access_level__mutmut_2",
+          "calibration_pkg.logic.x_access_level__mutmut_3",
+          "calibration_pkg.logic.x_access_level__mutmut_4"
+        ],
+        "survivor_diffs": {
+          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_1": "# calibration_pkg.logic.x_clamp_nonnegative__mutmut_1: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def clamp_nonnegative(value: int) -> int:\n-    if value < 0:\n+    if value <= 0:\n         return 0\n     return value",
+          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_2": "# calibration_pkg.logic.x_clamp_nonnegative__mutmut_2: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def clamp_nonnegative(value: int) -> int:\n-    if value < 0:\n+    if value < 1:\n         return 0\n     return value",
+          "calibration_pkg.logic.x_access_level__mutmut_2": "# calibration_pkg.logic.x_access_level__mutmut_2: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def access_level(role: str) -> int:\n-    if role == \"admin\":\n+    if role == \"XXadminXX\":\n         return 2\n     return 1",
+          "calibration_pkg.logic.x_access_level__mutmut_3": "# calibration_pkg.logic.x_access_level__mutmut_3: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def access_level(role: str) -> int:\n-    if role == \"admin\":\n+    if role == \"ADMIN\":\n         return 2\n     return 1",
+          "calibration_pkg.logic.x_access_level__mutmut_4": "# calibration_pkg.logic.x_access_level__mutmut_4: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def access_level(role: str) -> int:\n     if role == \"admin\":\n-        return 2\n+        return 3\n     return 1"
+        },
+        "cache_before_cleanup": {
+          "file_count": 15,
+          "bytes": 15203
+        },
+        "raw_mutation_output_utf8_bytes": 1803,
+        "temporary_workspace_cleaned": true
+      },
+      {
+        "id": "strengthened-1",
+        "source_commit": "HEAD",
+        "baseline": {
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+          "arguments": [
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_logic.py"
+          ],
+          "started_utc": "2026-07-30T09:48:23.138336+00:00",
+          "duration_ms": 504.921,
+          "exit_code": 0,
+          "stdout_utf8_bytes": 98,
+          "stderr_utf8_bytes": 0,
+          "stdout_sha256": "bf22e88f0e3a0e89eddb09d252b1661a48c9dfc4bd5aa177b5efca41f2700a18",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "mutation": {
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
+          "arguments": [
+            "run",
+            "--max-children",
+            "2"
+          ],
+          "started_utc": "2026-07-30T09:48:23.643387+00:00",
+          "duration_ms": 2372.548,
+          "exit_code": 0,
+          "stdout_utf8_bytes": 1844,
+          "stderr_utf8_bytes": 0,
+          "stdout_sha256": "9af5c3436612b8d2b55cbd4a6064dbcd68ffff991ded6e00bd0f8632ec3c25f0",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "results": {
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
+          "arguments": [
+            "results",
+            "--all",
+            "true"
+          ],
+          "started_utc": "2026-07-30T09:48:26.016083+00:00",
+          "duration_ms": 1125.928,
+          "exit_code": 0,
+          "stdout_utf8_bytes": 491,
+          "stderr_utf8_bytes": 0,
+          "stdout_sha256": "a2597d031763631bde761932253b7a0c727ad963875e89ac67a506df59b858a1",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status_counts": {
+          "killed": 6,
+          "survived": 2
+        },
+        "total_mutants": 8,
+        "survivors": [
+          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_1",
+          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_2"
+        ],
+        "survivor_diffs": {
+          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_1": "# calibration_pkg.logic.x_clamp_nonnegative__mutmut_1: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def clamp_nonnegative(value: int) -> int:\n-    if value < 0:\n+    if value <= 0:\n         return 0\n     return value",
+          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_2": "# calibration_pkg.logic.x_clamp_nonnegative__mutmut_2: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def clamp_nonnegative(value: int) -> int:\n-    if value < 0:\n+    if value < 1:\n         return 0\n     return value"
+        },
+        "cache_before_cleanup": {
+          "file_count": 15,
+          "bytes": 16293
+        },
+        "raw_mutation_output_utf8_bytes": 1844,
+        "temporary_workspace_cleaned": true
+      },
+      {
+        "id": "strengthened-2",
+        "source_commit": "HEAD",
+        "baseline": {
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+          "arguments": [
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_logic.py"
+          ],
+          "started_utc": "2026-07-30T09:48:29.265778+00:00",
+          "duration_ms": 865.989,
+          "exit_code": 0,
+          "stdout_utf8_bytes": 98,
+          "stderr_utf8_bytes": 0,
+          "stdout_sha256": "c2d64d41edcb4d9a0b7a81fcc964ceb8d2b7d73d7d92491bb17f24d0bbaea6d3",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "mutation": {
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
+          "arguments": [
+            "run",
+            "--max-children",
+            "2"
+          ],
+          "started_utc": "2026-07-30T09:48:30.131916+00:00",
+          "duration_ms": 3012.872,
+          "exit_code": 0,
+          "stdout_utf8_bytes": 1845,
+          "stderr_utf8_bytes": 0,
+          "stdout_sha256": "ceb42c0c2ebf36a5e06f1225ef389106c8f2d55948ba43a05e253b860588dd66",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "results": {
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
+          "arguments": [
+            "results",
+            "--all",
+            "true"
+          ],
+          "started_utc": "2026-07-30T09:48:33.144913+00:00",
+          "duration_ms": 1212.354,
+          "exit_code": 0,
+          "stdout_utf8_bytes": 491,
+          "stderr_utf8_bytes": 0,
+          "stdout_sha256": "a2597d031763631bde761932253b7a0c727ad963875e89ac67a506df59b858a1",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status_counts": {
+          "killed": 6,
+          "survived": 2
+        },
+        "total_mutants": 8,
+        "survivors": [
+          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_1",
+          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_2"
+        ],
+        "survivor_diffs": {
+          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_1": "# calibration_pkg.logic.x_clamp_nonnegative__mutmut_1: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def clamp_nonnegative(value: int) -> int:\n-    if value < 0:\n+    if value <= 0:\n         return 0\n     return value",
+          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_2": "# calibration_pkg.logic.x_clamp_nonnegative__mutmut_2: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def clamp_nonnegative(value: int) -> int:\n-    if value < 0:\n+    if value < 1:\n         return 0\n     return value"
+        },
+        "cache_before_cleanup": {
+          "file_count": 15,
+          "bytes": 16289
+        },
+        "raw_mutation_output_utf8_bytes": 1845,
+        "temporary_workspace_cleaned": true
+      }
+    ],
+    "classification": {
+      "weak_survivors": {
+        "real_test_gaps": 3,
+        "equivalent_for_int_domain": 2
+      },
+      "strengthened_survivors": {
+        "equivalent_for_int_domain": 2
+      }
+    }
+  },
+  "real_target": {
+    "canonical_path": "08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py",
+    "canonical_sha256": "64c23a871d6cf4f8b17d9dd6d379b7b9d63269c29ae25da1392353059484b4ac",
+    "initial": {
+      "id": "real-initial",
+      "source_commit": "298c7bf",
+      "baseline": {
+        "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+        "arguments": [
+          "-m",
+          "pytest",
+          "-q",
+          "tests/inspector_cases.py"
+        ],
+        "started_utc": "2026-07-30T09:48:36.662635+00:00",
+        "duration_ms": 695.827,
+        "exit_code": 0,
+        "stdout_utf8_bytes": 99,
+        "stderr_utf8_bytes": 0,
+        "stdout_sha256": "d30644bb1db9337ac1adce249e90cc224662e8ee76cab56508c92b579590c4c4",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "mutation": {
+        "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
+        "arguments": [
+          "run",
+          "--max-children",
+          "2"
+        ],
+        "started_utc": "2026-07-30T09:48:37.358582+00:00",
+        "duration_ms": 15927.216,
+        "exit_code": 0,
+        "stdout_utf8_bytes": 10543,
+        "stderr_utf8_bytes": 0,
+        "stdout_sha256": "090e8e83e51b16649221bac135706bb43f2224ca451dc68196dbbaf63b1a3e27",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "results": {
+        "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
+        "arguments": [
+          "results",
+          "--all",
+          "true"
+        ],
+        "started_utc": "2026-07-30T09:48:53.285970+00:00",
+        "duration_ms": 1079.252,
+        "exit_code": 0,
+        "stdout_utf8_bytes": 7976,
+        "stderr_utf8_bytes": 0,
+        "stdout_sha256": "ca99814c996b24caceed90d01a2aabdfbb14c93e3480a34adb2ee1ea9ad048bc",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status_counts": {
+        "killed": 118,
+        "survived": 11
+      },
+      "total_mutants": 129,
+      "survivors": [
+        "target.inspect_schema_refs.xǁSchemaPolicyErrorǁ__init____mutmut_1",
+        "target.inspect_schema_refs.x__child_location__mutmut_2",
+        "target.inspect_schema_refs.x__child_location__mutmut_4",
+        "target.inspect_schema_refs.x__child_location__mutmut_5",
+        "target.inspect_schema_refs.x__walk__mutmut_43",
+        "target.inspect_schema_refs.x_inspect_schema__mutmut_7",
+        "target.inspect_schema_refs.x_inspect_schema__mutmut_14",
+        "target.inspect_schema_refs.x_inspect_schema__mutmut_15",
+        "target.inspect_schema_refs.x_inspect_schema__mutmut_17",
+        "target.inspect_schema_refs.x_inspect_schema__mutmut_19",
+        "target.inspect_schema_refs.x_inspect_schema__mutmut_32"
+      ],
+      "survivor_diffs": {
+        "target.inspect_schema_refs.xǁSchemaPolicyErrorǁ__init____mutmut_1": "# target.inspect_schema_refs.xǁSchemaPolicyErrorǁ__init____mutmut_1: survived\n--- target/inspect_schema_refs.py\n+++ target/inspect_schema_refs.py\n@@ -1,5 +1,5 @@\n def __init__(self, code: str, location: str, detail: str) -> None:\n-    super().__init__(detail)\n+    super().__init__(None)\n     self.code = code\n     self.location = location\n     self.detail = detail",
+        "target.inspect_schema_refs.x__child_location__mutmut_2": "# target.inspect_schema_refs.x__child_location__mutmut_2: survived\n--- target/inspect_schema_refs.py\n+++ target/inspect_schema_refs.py\n@@ -1,4 +1,4 @@\n def _child_location(location: str, key: str | int) -> str:\n     if isinstance(key, int):\n         return f\"{location}[{key}]\"\n-    return f\"{location}[{json.dumps(key, ensure_ascii=False)}]\"\n+    return f\"{location}[{json.dumps(key, ensure_ascii=None)}]\"",
+        "target.inspect_schema_refs.x__child_location__mutmut_4": "# target.inspect_schema_refs.x__child_location__mutmut_4: survived\n--- target/inspect_schema_refs.py\n+++ target/inspect_schema_refs.py\n@@ -1,4 +1,4 @@\n def _child_location(location: str, key: str | int) -> str:\n     if isinstance(key, int):\n         return f\"{location}[{key}]\"\n-    return f\"{location}[{json.dumps(key, ensure_ascii=False)}]\"\n+    return f\"{location}[{json.dumps(key, )}]\"",
+        "target.inspect_schema_refs.x__child_location__mutmut_5": "# target.inspect_schema_refs.x__child_location__mutmut_5: survived\n--- target/inspect_schema_refs.py\n+++ target/inspect_schema_refs.py\n@@ -1,4 +1,4 @@\n def _child_location(location: str, key: str | int) -> str:\n     if isinstance(key, int):\n         return f\"{location}[{key}]\"\n-    return f\"{location}[{json.dumps(key, ensure_ascii=False)}]\"\n+    return f\"{location}[{json.dumps(key, ensure_ascii=True)}]\"",
+        "target.inspect_schema_refs.x__walk__mutmut_43": "# target.inspect_schema_refs.x__walk__mutmut_43: survived\n--- target/inspect_schema_refs.py\n+++ target/inspect_schema_refs.py\n@@ -21,7 +21,7 @@\n                     raise SchemaPolicyError(\n                         \"CJV-R01-REMOTE-IDENTIFIER\",\n                         child_location,\n-                        f\"{key} must not use HTTP(S); got {json.dumps(child)}\",\n+                        f\"{key} must not use HTTP(S); got {json.dumps(None)}\",\n                     )\n             _walk(child, child_location)\n     elif isinstance(value, list):",
+        "target.inspect_schema_refs.x_inspect_schema__mutmut_7": "# target.inspect_schema_refs.x_inspect_schema__mutmut_7: survived\n--- target/inspect_schema_refs.py\n+++ target/inspect_schema_refs.py\n@@ -3,7 +3,7 @@\n         raise SchemaPolicyError(\n             \"CJV-R01-JSON-SUFFIX\",\n             \"$\",\n-            \"canonical schema must use the .json suffix\",\n+            None,\n         )\n     try:\n         text = path.read_text(encoding=\"utf-8\")",
+        "target.inspect_schema_refs.x_inspect_schema__mutmut_14": "# target.inspect_schema_refs.x_inspect_schema__mutmut_14: survived\n--- target/inspect_schema_refs.py\n+++ target/inspect_schema_refs.py\n@@ -3,7 +3,7 @@\n         raise SchemaPolicyError(\n             \"CJV-R01-JSON-SUFFIX\",\n             \"$\",\n-            \"canonical schema must use the .json suffix\",\n+            \"XXcanonical schema must use the .json suffixXX\",\n         )\n     try:\n         text = path.read_text(encoding=\"utf-8\")",
+        "target.inspect_schema_refs.x_inspect_schema__mutmut_15": "# target.inspect_schema_refs.x_inspect_schema__mutmut_15: survived\n--- target/inspect_schema_refs.py\n+++ target/inspect_schema_refs.py\n@@ -3,7 +3,7 @@\n         raise SchemaPolicyError(\n             \"CJV-R01-JSON-SUFFIX\",\n             \"$\",\n-            \"canonical schema must use the .json suffix\",\n+            \"CANONICAL SCHEMA MUST USE THE .JSON SUFFIX\",\n         )\n     try:\n         text = path.read_text(encoding=\"utf-8\")",
+        "target.inspect_schema_refs.x_inspect_schema__mutmut_17": "# target.inspect_schema_refs.x_inspect_schema__mutmut_17: survived\n--- target/inspect_schema_refs.py\n+++ target/inspect_schema_refs.py\n@@ -6,7 +6,7 @@\n             \"canonical schema must use the .json suffix\",\n         )\n     try:\n-        text = path.read_text(encoding=\"utf-8\")\n+        text = path.read_text(encoding=None)\n     except OSError as exc:\n         raise SchemaPolicyError(\n             \"CJV-R01-SCHEMA-READ\",",
+        "target.inspect_schema_refs.x_inspect_schema__mutmut_19": "# target.inspect_schema_refs.x_inspect_schema__mutmut_19: survived\n--- target/inspect_schema_refs.py\n+++ target/inspect_schema_refs.py\n@@ -6,7 +6,7 @@\n             \"canonical schema must use the .json suffix\",\n         )\n     try:\n-        text = path.read_text(encoding=\"utf-8\")\n+        text = path.read_text(encoding=\"UTF-8\")\n     except OSError as exc:\n         raise SchemaPolicyError(\n             \"CJV-R01-SCHEMA-READ\",",
+        "target.inspect_schema_refs.x_inspect_schema__mutmut_32": "# target.inspect_schema_refs.x_inspect_schema__mutmut_32: survived\n--- target/inspect_schema_refs.py\n+++ target/inspect_schema_refs.py\n@@ -18,7 +18,7 @@\n     except (UnicodeError, json.JSONDecodeError) as exc:\n         detail = f\"strict JSON parse failed: {exc.__class__.__name__}\"\n         if isinstance(exc, json.JSONDecodeError):\n-            detail += f\" at line {exc.lineno} column {exc.colno}\"\n+            detail = f\" at line {exc.lineno} column {exc.colno}\"\n         raise SchemaPolicyError(\n             \"CJV-R01-STRICT-JSON\",\n             \"$\","
+      },
+      "cache_before_cleanup": {
+        "file_count": 12,
+        "bytes": 380540
+      },
+      "raw_mutation_output_utf8_bytes": 10543,
+      "temporary_workspace_cleaned": true
+    },
+    "strengthened_wrapper_runs": [
+      {
+        "id": "W-SUCCESS-1",
+        "status_counts": {
+          "killed": 127,
+          "survived": 2
+        },
+        "total_mutants": 129,
+        "survivors": [
+          "target.inspect_schema_refs.x__child_location__mutmut_2",
+          "target.inspect_schema_refs.x_inspect_schema__mutmut_19"
+        ]
+      },
+      {
+        "id": "W-SUCCESS-2",
+        "status_counts": {
+          "killed": 127,
+          "survived": 2
+        },
+        "total_mutants": 129,
+        "survivors": [
+          "target.inspect_schema_refs.x__child_location__mutmut_2",
+          "target.inspect_schema_refs.x_inspect_schema__mutmut_19"
+        ]
+      }
+    ],
+    "equivalent_survivors": [
+      {
+        "mutant": "target.inspect_schema_refs.x__child_location__mutmut_2",
+        "reason": "json ensure_ascii=None and False both select the falsey stdlib encoder branch"
+      },
+      {
+        "mutant": "target.inspect_schema_refs.x_inspect_schema__mutmut_19",
+        "reason": "UTF-8 and utf-8 resolve to the same Python codec"
+      }
+    ],
+    "equivalence_proof": {
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+      "arguments": [
+        "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/equivalence_proof.py"
+      ],
+      "started_utc": "2026-07-30T09:48:03.505504+00:00",
+      "duration_ms": 35.278,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 352,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "02e0c9fc10d557a7bc8a694ce37ad8f9521ffb96a867041849ed170578f56550",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "json": {
+        "ensure_ascii": {
+          "false_is_falsey": true,
+          "none_is_falsey": true,
+          "representative_outputs_equal": true,
+          "output": "{\"location\": \"$.含中文\"}"
+        },
+        "encoding": {
+          "lowercase_codec": "utf-8",
+          "uppercase_codec": "utf-8",
+          "same_codec": true
+        },
+        "classification": "equivalent_for_the_exercised_stdlib_semantics"
+      }
+    },
+    "canonical_source_modified": false
+  },
+  "wrapper": {
+    "path": "08_os/06_execution/tools/mutmut/invoke.sh",
+    "expected_version": "3.6.0",
+    "apply_exposed": false,
+    "cases": [
+      {
+        "id": "W-SUCCESS-1",
+        "expected_exit_code": 0,
+        "expected_diagnostic": "cache_cleanup=scheduled process_exit=0",
+        "diagnostic_matched": true,
+        "temporary_workspaces": [
+          "/tmp/citystate-mutmut.ucyBWD"
+        ],
+        "temporary_workspaces_cleaned": true,
+        "passed": true,
+        "result": {
+          "command": "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/06_execution/tools/mutmut/invoke.sh",
+          "arguments": [
+            "--repo-root",
+            "/home/gk/projects/Cybernetic_City_State_OS_v2---core",
+            "--venv",
+            "/home/gk/.venvs/core-mutmut-3.6.0",
+            "--project-dir",
+            "08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests",
+            "--target",
+            "08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py",
+            "--allow-target",
+            "08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py",
+            "--test-path",
+            "tests/inspector_cases.py",
+            "--max-children",
+            "2"
+          ],
+          "started_utc": "2026-07-30T09:49:13.747605+00:00",
+          "duration_ms": 15402.694,
+          "exit_code": 0,
+          "stdout_utf8_bytes": 18865,
+          "stderr_utf8_bytes": 0,
+          "stdout_sha256": "5f1abe444ca66f985ed2071bce1a7d20ad1fb587d72efb0243e0266b75043d86",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "id": "W-SUCCESS-2",
+        "expected_exit_code": 0,
+        "expected_diagnostic": "cache_cleanup=scheduled process_exit=0",
+        "diagnostic_matched": true,
+        "temporary_workspaces": [
+          "/tmp/citystate-mutmut.Zy272l"
+        ],
+        "temporary_workspaces_cleaned": true,
+        "passed": true,
+        "result": {
+          "command": "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/06_execution/tools/mutmut/invoke.sh",
+          "arguments": [
+            "--repo-root",
+            "/home/gk/projects/Cybernetic_City_State_OS_v2---core",
+            "--venv",
+            "/home/gk/.venvs/core-mutmut-3.6.0",
+            "--project-dir",
+            "08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests",
+            "--target",
+            "08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py",
+            "--allow-target",
+            "08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py",
+            "--test-path",
+            "tests/inspector_cases.py",
+            "--max-children",
+            "2"
+          ],
+          "started_utc": "2026-07-30T09:49:29.151229+00:00",
+          "duration_ms": 15989.917,
+          "exit_code": 0,
+          "stdout_utf8_bytes": 18865,
+          "stderr_utf8_bytes": 0,
+          "stdout_sha256": "9d181f6a66ebf13f3dd2d18cfe489f0ad4e3efa9b1f62f462c61ad340d01c682",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "id": "W-MISSING-TOOL",
+        "expected_exit_code": 69,
+        "expected_diagnostic": "mutmut executable not found",
+        "diagnostic_matched": true,
+        "temporary_workspaces": [],
+        "temporary_workspaces_cleaned": true,
+        "passed": true,
+        "result": {
+          "command": "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/06_execution/tools/mutmut/invoke.sh",
+          "arguments": [
+            "--repo-root",
+            "/home/gk/projects/Cybernetic_City_State_OS_v2---core",
+            "--venv",
+            "/home/gk/.venvs/core-mutmut-3.6.0",
+            "--project-dir",
+            "08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests",
+            "--target",
+            "08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py",
+            "--allow-target",
+            "08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py",
+            "--test-path",
+            "tests/inspector_cases.py",
+            "--max-children",
+            "2",
+            "--mutmut-executable",
+            "/home/gk/.venvs/core-mutmut-3.6.0/bin/does-not-exist"
+          ],
+          "started_utc": "2026-07-30T09:49:45.142071+00:00",
+          "duration_ms": 98.562,
+          "exit_code": 69,
+          "stdout_utf8_bytes": 0,
+          "stderr_utf8_bytes": 134,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "727d7116a29813a8838c990e47774bb503858b450f7aaea05e0818d1dd63d7fa"
+        }
+      },
+      {
+        "id": "W-VERSION-MISMATCH",
+        "expected_exit_code": 78,
+        "expected_diagnostic": "version mismatch",
+        "diagnostic_matched": true,
+        "temporary_workspaces": [],
+        "temporary_workspaces_cleaned": true,
+        "passed": true,
+        "result": {
+          "command": "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/06_execution/tools/mutmut/invoke.sh",
+          "arguments": [
+            "--repo-root",
+            "/home/gk/projects/Cybernetic_City_State_OS_v2---core",
+            "--venv",
+            "/home/gk/.venvs/core-mutmut-3.6.0",
+            "--project-dir",
+            "08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests",
+            "--target",
+            "08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py",
+            "--allow-target",
+            "08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py",
+            "--test-path",
+            "tests/inspector_cases.py",
+            "--max-children",
+            "2",
+            "--mutmut-executable",
+            "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/fixtures/fake_mutmut_9_9_9.sh"
+          ],
+          "started_utc": "2026-07-30T09:49:45.240805+00:00",
+          "duration_ms": 135.086,
+          "exit_code": 78,
+          "stdout_utf8_bytes": 0,
+          "stderr_utf8_bytes": 76,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "61a7d9c503fede12d1507045200c50d7ced67c3925f1707a74de89d3c7fab749"
+        }
+      },
+      {
+        "id": "W-BASELINE-FAILURE",
+        "expected_exit_code": 67,
+        "expected_diagnostic": "baseline pytest failed",
+        "diagnostic_matched": true,
+        "temporary_workspaces": [],
+        "temporary_workspaces_cleaned": true,
+        "passed": true,
+        "result": {
+          "command": "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/06_execution/tools/mutmut/invoke.sh",
+          "arguments": [
+            "--repo-root",
+            "/home/gk/projects/Cybernetic_City_State_OS_v2---core",
+            "--venv",
+            "/home/gk/.venvs/core-mutmut-3.6.0",
+            "--project-dir",
+            "08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests",
+            "--target",
+            "08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py",
+            "--allow-target",
+            "08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py",
+            "--test-path",
+            "tests/baseline_failure_case.py",
+            "--max-children",
+            "2"
+          ],
+          "started_utc": "2026-07-30T09:49:45.375984+00:00",
+          "duration_ms": 2218.768,
+          "exit_code": 67,
+          "stdout_utf8_bytes": 680,
+          "stderr_utf8_bytes": 51,
+          "stdout_sha256": "5719e61a28df53cbac4fa6ea45e78fa970977cce0ad9a34f4dc7f019e794293f",
+          "stderr_sha256": "4c7e7c695fed32bebb8ffa3f1212861e3924c892c713a70a8361f574b7dd228a"
+        }
+      },
+      {
+        "id": "W-MISSING-TARGET",
+        "expected_exit_code": 66,
+        "expected_diagnostic": "mutation target not found",
+        "diagnostic_matched": true,
+        "temporary_workspaces": [],
+        "temporary_workspaces_cleaned": true,
+        "passed": true,
+        "result": {
+          "command": "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/06_execution/tools/mutmut/invoke.sh",
+          "arguments": [
+            "--repo-root",
+            "/home/gk/projects/Cybernetic_City_State_OS_v2---core",
+            "--venv",
+            "/home/gk/.venvs/core-mutmut-3.6.0",
+            "--project-dir",
+            "08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests",
+            "--target",
+            "08_os/06_execution/tools/check_jsonschema/missing.py",
+            "--allow-target",
+            "08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py",
+            "--test-path",
+            "tests/inspector_cases.py",
+            "--max-children",
+            "2"
+          ],
+          "started_utc": "2026-07-30T09:49:47.594844+00:00",
+          "duration_ms": 56.342,
+          "exit_code": 66,
+          "stdout_utf8_bytes": 0,
+          "stderr_utf8_bytes": 185,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "7fc4c667f6c021130f4e09976e41248f516663b7c3b9a7c24c12806ee477826c"
+        }
+      },
+      {
+        "id": "W-TARGET-OUTSIDE-ALLOWLIST",
+        "expected_exit_code": 65,
+        "expected_diagnostic": "outside explicit allowlist",
+        "diagnostic_matched": true,
+        "temporary_workspaces": [],
+        "temporary_workspaces_cleaned": true,
+        "passed": true,
+        "result": {
+          "command": "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/06_execution/tools/mutmut/invoke.sh",
+          "arguments": [
+            "--repo-root",
+            "/home/gk/projects/Cybernetic_City_State_OS_v2---core",
+            "--venv",
+            "/home/gk/.venvs/core-mutmut-3.6.0",
+            "--project-dir",
+            "08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests",
+            "--target",
+            "08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py",
+            "--allow-target",
+            "08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/run_validation.py",
+            "--test-path",
+            "tests/inspector_cases.py",
+            "--max-children",
+            "2"
+          ],
+          "started_utc": "2026-07-30T09:49:47.651308+00:00",
+          "duration_ms": 61.652,
+          "exit_code": 65,
+          "stdout_utf8_bytes": 0,
+          "stderr_utf8_bytes": 62,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "4405af45c9d66944adec30583d58fc1a9aa2e2cf4d358e1f1cd4aabd70e8c880"
+        }
+      },
+      {
+        "id": "W-REQUIRED-TARGET-ABSENT",
+        "expected_exit_code": 64,
+        "expected_diagnostic": "--target is required",
+        "diagnostic_matched": true,
+        "temporary_workspaces": [],
+        "temporary_workspaces_cleaned": true,
+        "passed": true,
+        "result": {
+          "command": "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/06_execution/tools/mutmut/invoke.sh",
+          "arguments": [
+            "--repo-root",
+            "/home/gk/projects/Cybernetic_City_State_OS_v2---core",
+            "--venv",
+            "/home/gk/.venvs/core-mutmut-3.6.0",
+            "--project-dir",
+            "08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests",
+            "--allow-target",
+            "08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py",
+            "--test-path",
+            "tests/inspector_cases.py",
+            "--max-children",
+            "2"
+          ],
+          "started_utc": "2026-07-30T09:49:47.713129+00:00",
+          "duration_ms": 10.077,
+          "exit_code": 64,
+          "stdout_utf8_bytes": 0,
+          "stderr_utf8_bytes": 37,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "623ada4ced90e20de6d83e7f5dc603cd07b3e3b220943f35b1b1fab289a53ab0"
+        }
+      },
+      {
+        "id": "W-DIRTY-WORKTREE",
+        "expected_exit_code": 73,
+        "expected_diagnostic": "Git worktree must be clean",
+        "diagnostic_matched": true,
+        "temporary_workspaces": [],
+        "temporary_workspaces_cleaned": true,
+        "passed": true,
+        "result": {
+          "command": "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/06_execution/tools/mutmut/invoke.sh",
+          "arguments": [
+            "--repo-root",
+            "/home/gk/projects/Cybernetic_City_State_OS_v2---core",
+            "--venv",
+            "/home/gk/.venvs/core-mutmut-3.6.0",
+            "--project-dir",
+            "08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests",
+            "--target",
+            "08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py",
+            "--allow-target",
+            "08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py",
+            "--test-path",
+            "tests/inspector_cases.py",
+            "--max-children",
+            "2"
+          ],
+          "started_utc": "2026-07-30T09:49:47.723526+00:00",
+          "duration_ms": 39.059,
+          "exit_code": 73,
+          "stdout_utf8_bytes": 0,
+          "stderr_utf8_bytes": 43,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "046f45e7522ee76cc6d4c8e244e7b8c58adc3bb12dbd11dae624a8e1c3c56e99"
+        }
+      }
+    ]
+  },
+  "resources": {
+    "venv": {
+      "file_count": 3753,
+      "bytes": 86162370
+    },
+    "maximum_direct_mutants_cache_bytes_before_cleanup": 380540,
+    "raw_output_bytes": 56836,
+    "child_ru_maxrss_kib_cumulative_process_tree_proxy": 106828,
+    "peak_process_tree_memory": "not_observable_reliably",
+    "exact_model_tokens": "not_observable",
+    "resident_processes_after_run": 0
+  },
+  "token_and_context": {
+    "boot_loaded": false,
+    "mcp_exposed": false,
+    "input_source_and_tests": {
+      "utf8_bytes": 10320,
+      "characters": 10318,
+      "proxy_not_billing_tokens": 2580
+    },
+    "survivor_summary": {
+      "utf8_bytes": 116,
+      "characters": 116,
+      "proxy_not_billing_tokens": 29
+    },
+    "claim": "Mutation execution increases deterministic machine work and returns a smaller survivor-focused review surface; this is a context proxy, not an observed billing-token saving."
+  },
+  "process_residue": [],
+  "cleanup": {
+    "repository_mutants_absent": true,
+    "repository_target_copy_absent": true,
+    "dirty_sentinel_absent": true,
+    "temporary_archives_cleaned": true
+  },
+  "git": {
+    "origin_url": "git@github.com:chris2gao/Cybernetic_City_State_OS_v2---core.git",
+    "origin_master_at_start": "987ff40fa0317053bf0484f6e3556976e560f63b",
+    "origin_master_at_end": "987ff40fa0317053bf0484f6e3556976e560f63b",
+    "work_branch": "codex/mutmut-wsl-installation-validation-001",
+    "master_modified": false,
+    "merge_performed": false
+  }
+}
