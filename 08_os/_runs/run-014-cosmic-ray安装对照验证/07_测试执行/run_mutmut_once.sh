@@ -80,12 +80,16 @@ timeout 600s "$mutmut_venv/bin/mutmut" run --max-children 1 \
 "$mutmut_venv/bin/mutmut" results --all true \
     >"$output_dir/results.txt"
 
-while IFS= read -r mutant_name; do
-    printf '=== %s ===\n' "$mutant_name"
-    "$mutmut_venv/bin/mutmut" show "$mutant_name"
-done < <(
-    sed -n 's/^[[:space:]]*\([^:]*\):.*/\1/p' "$output_dir/results.txt"
-) >"$output_dir/all-mutants.txt"
+if [[ "${CAPTURE_ALL_MUTANTS:-1}" == "1" ]]; then
+    while IFS= read -r mutant_name; do
+        printf '=== %s ===\n' "$mutant_name"
+        "$mutmut_venv/bin/mutmut" show "$mutant_name"
+    done < <(
+        sed -n 's/^[[:space:]]*\([^:]*\):.*/\1/p' "$output_dir/results.txt"
+    ) >"$output_dir/all-mutants.txt"
+else
+    printf 'not_captured_in_repeat_run\n' >"$output_dir/all-mutants.txt"
+fi
 
 if [[ -f mutants/.mutmut-cache ]]; then
     cp -- mutants/.mutmut-cache "$output_dir/mutmut-cache.sqlite"
