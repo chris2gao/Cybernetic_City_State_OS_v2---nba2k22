@@ -1,0 +1,34 @@
+schema_version: citystate.registry.v1
+registry_id: skills_and_tools_v1
+mechanism_version: 1
+entries:
+  - path: 08_os/04_skills_and_tools/README.md
+    purpose: 外部 skill 与确定性工具的分类、可用性验证规则和 Human 文档入口
+    loader: human-directed tools review
+    loader_class: external_tool_convention
+    discovery: referenced from 08_os/05_registry/skills_and_tools_v1.yml
+    evidence: 08_os/_runs/run-011-确定性工具接入收益风险评估/06_执行/变更清单.md
+    cache_dirs: []
+    failure_surfacing: next human tools review
+    deletion_rule: protected
+  - path: 08_os/04_skills_and_tools/工具选型_v1.md
+    purpose: run-005 形成的确定性操作候选与替代路线历史快照
+    loader: human-directed tools review
+    loader_class: external_tool_convention
+    discovery: referenced from 08_os/04_skills_and_tools/README.md
+    evidence: 08_os/_runs/run-005-确定性操作全量挖掘/04_合并结论.md
+    cache_dirs: []
+    failure_surfacing: next human tools review
+    deletion_rule: human_decision_required
+  - path: 08_os/04_skills_and_tools/确定性工具接入收益与风险评估_v1.md
+    purpose: 安装前的收益风险、环境、token、按需加载、准入测试与 Human 决策依据
+    loader: human-directed tools review
+    loader_class: external_tool_convention
+    discovery: referenced from 08_os/04_skills_and_tools/README.md
+    evidence: 08_os/_runs/run-011-确定性工具接入收益风险评估/06_执行/变更清单.md
+    cache_dirs: []
+    failure_surfacing: next human tools review
+    deletion_rule: protected
+excluded:
+  - candidate packages, runtimes, MCP servers, and skills not installed by run-011
+  - 08_os/_runs/**

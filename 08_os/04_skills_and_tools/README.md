@@ -24,4 +24,11 @@ PowerShell behaviour that belonged to a version that was not the one running.
 Every entry here declares how to verify the tool is present and at what version, and
 that check is part of the entry rather than a note beside it.
 
-Empty until the first skill or tool is registered.
+## Human documents
+
+- [工具选型_v1.md](工具选型_v1.md)：run-005 形成的候选与替代路线快照。
+- [确定性工具接入收益与风险评估_v1.md](确定性工具接入收益与风险评估_v1.md)：
+  安装前的收益、风险、资源、按需加载与准入测试决策依据。
+
+这两份文档只用于 Human 定向审阅。当前没有因这些文档而安装、激活、
+暴露、加载或调用任何候选工具；长评估文档也不进入默认 boot。

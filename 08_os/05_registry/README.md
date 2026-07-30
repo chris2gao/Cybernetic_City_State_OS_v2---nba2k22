@@ -55,5 +55,7 @@ that is neither present nor correctly ignored.
 
 - `context_management_v1.yml`：上下文管理的 canonical 机制、boot adapter、
   execution loader/validator、活动开发规范、受保护历史和阶段二拆分补充。
+- `skills_and_tools_v1.yml`：确定性工具的 Human 选型与接入评估入口；仅注册
+  文档，不表示工具已安装、激活或进入 boot。
 
 `08_os/_runs/`、`_runtime/`、角色 private/scratch 不注册。
