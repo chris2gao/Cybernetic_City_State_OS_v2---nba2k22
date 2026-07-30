@@ -70,44 +70,36 @@ cd "$project_dir"
 source_path=calibration_pkg/logic.py
 source_before=$(sha256sum "$source_path" | cut -d " " -f 1)
 
-baseline_started_ms=$(date +%s%3N)
+/usr/bin/time -f "wall_seconds=%e" -o "$output_dir/baseline.time" \
 timeout 120s "$pytest_python" -m pytest -q -x tests \
     >"$output_dir/baseline.stdout.txt" \
     2>"$output_dir/baseline.stderr.txt"
-baseline_finished_ms=$(date +%s%3N)
 
-init_started_ms=$(date +%s%3N)
+/usr/bin/time -f "wall_seconds=%e" -o "$output_dir/init.time" \
 timeout 120s "$cosmic_venv/bin/cosmic-ray" init \
     cosmic-ray.toml session.sqlite \
     >"$output_dir/init.stdout.txt" \
     2>"$output_dir/init.stderr.txt"
-init_finished_ms=$(date +%s%3N)
 
-exec_started_ms=$(date +%s%3N)
+/usr/bin/time -f "wall_seconds=%e" -o "$output_dir/exec.time" \
 timeout 600s "$cosmic_venv/bin/cosmic-ray" exec \
     cosmic-ray.toml session.sqlite \
     >"$output_dir/exec.stdout.txt" \
     2>"$output_dir/exec.stderr.txt"
-exec_finished_ms=$(date +%s%3N)
 
-report_started_ms=$(date +%s%3N)
+/usr/bin/time -f "wall_seconds=%e" -o "$output_dir/dump.time" \
 "$cosmic_venv/bin/cosmic-ray" dump session.sqlite \
     >"$output_dir/session.dump.jsonl"
+/usr/bin/time -f "wall_seconds=%e" -o "$output_dir/report.time" \
 "$cosmic_venv/bin/cr-report" --show-diff --all-mutations session.sqlite \
     >"$output_dir/report.txt"
-report_finished_ms=$(date +%s%3N)
 
 cp -- session.sqlite "$output_dir/session.sqlite"
 source_after=$(sha256sum "$source_path" | cut -d " " -f 1)
 session_sha256=$(sha256sum "$output_dir/session.sqlite" | cut -d " " -f 1)
 session_bytes=$(stat -c %s "$output_dir/session.sqlite")
 
-cat >"$output_dir/timing.env" <<EOF
-baseline_ms=$((baseline_finished_ms - baseline_started_ms))
-init_ms=$((init_finished_ms - init_started_ms))
-exec_ms=$((exec_finished_ms - exec_started_ms))
-report_ms=$((report_finished_ms - report_started_ms))
-total_ms=$((report_finished_ms - baseline_started_ms))
+cat >"$output_dir/receipt.env" <<EOF
 source_before_sha256=$source_before
 source_after_sha256=$source_after
 session_sha256=$session_sha256
