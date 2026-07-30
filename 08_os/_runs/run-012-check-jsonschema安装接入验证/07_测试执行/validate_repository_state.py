@@ -19,7 +19,7 @@ INSTALL_RECEIPT_PATH = (
     / "08_os/_runs/run-012-check-jsonschema安装接入验证/01_任务输入"
     / "安装真实性命令回执.json"
 )
-BASE = "a14b4ddac15cd9c0055ef78fd67a90b8644685aa"
+BASE = "987ff40fa0317053bf0484f6e3556976e560f63b"
 
 
 registry = yaml.safe_load(REGISTRY_PATH.read_text(encoding="utf-8"))
@@ -60,31 +60,95 @@ assert tool["status"] == "verified_on_demand"
 assert tool["mount"] == "on_demand_cli"
 assert tool["default_loaded"] is False
 assert tool["mcp_exposed"] is False
-assert tool["validated_at"] == "2026-07-29"
+assert tool["expected_version"] == "0.37.4"
+assert tool["version_gate"] == "exact_runtime_probe_before_validation"
+assert tool["schema_reference_policy"] == "self_contained_json_fragment_only"
+assert tool["validated_at"] == "2026-07-30"
 assert (ROOT / tool["evidence"]).exists()
 assert (ROOT / tool["canonical_wrapper"]).exists()
+assert (ROOT / tool["schema_preflight"]).exists()
 
 assert run["tool"]["status"] == "verified_on_demand"
 assert run["tool"]["default_loaded"] is False
 assert run["tool"]["mcp_exposed"] is False
+assert run["tool"]["expected_version"] == "0.37.4"
+assert run["tool"]["version_gate"] == "exact_runtime_probe_before_validation"
+assert run["tool"]["schema_reference_policy"] == "self_contained_json_fragment_only"
+assert run["revision"]["findings"] == {
+    "CJV-R01": "resolved",
+    "CJV-R02": "resolved",
+}
+assert run["validation"]["original_matrix_27"] == "passed"
+assert run["validation"]["network_reference_closure_10"] == "passed"
+assert run["validation"]["version_boundary_4"] == "passed"
+assert run["validation"]["validation_not_started_sentinels"] == "passed"
 assert run["measurement"]["exact_model_tokens"] == "not_observable"
 assert run["measurement"]["network_packet_capture"] == "not_run"
+assert (
+    run["measurement"]["network_behavior"]
+    == "not_observable_no_packet_capture"
+)
+assert run["measurement"]["resident_processes_after_run"] == 0
 assert run["measurement"]["environment_changes_performed"] is False
 
 assert results["summary"] == {
-    "total_cases": 27,
-    "passed_cases": 27,
+    "total_cases": 43,
+    "passed_cases": 43,
     "failed_cases": 0,
+    "original_cases": 27,
+    "original_cases_passed": 27,
+    "correction_cases": 14,
+    "correction_cases_passed": 14,
+    "measurement_cases": 2,
+    "measurement_cases_passed": 2,
     "all_passed": True,
 }
 assert results["repeatability"]["run_count"] == 5
 assert results["repeatability"]["identical_exit_and_diagnostics"] is True
 assert results["process_residue"]["matching_process_count"] == 0
 assert results["network_measurement"] == "not_observable_no_packet_capture"
+assert "direct CLI bypass remains network-capable" in results["local_only_design"]
 assert (
     results["token_and_context"]["comparison"]["proxy_label"]
     == "proxy_not_billing_tokens"
 )
+for measurement in results["gate_measurements"].values():
+    assert measurement > 0
+assert run["measurement"]["version_probe_ms"] == results["gate_measurements"][
+    "version_probe_ms"
+]
+assert run["measurement"]["schema_preflight_ms"] == results["gate_measurements"][
+    "schema_preflight_ms"
+]
+assert run["measurement"]["direct_cli_validation_ms"] == results[
+    "gate_measurements"
+]["direct_cli_validation_ms"]
+assert run["measurement"]["wrapper_total_ms"] == results["gate_measurements"][
+    "wrapper_total_ms"
+]
+
+cases = {item["id"]: item for item in results["cases"]}
+expected_correction_exits = {
+    "CJV-FRAGMENT-REF": 0,
+    "CJV-HTTPS-REF": 65,
+    "CJV-HTTP-DYNAMIC-REF": 65,
+    "CJV-HTTPS-RECURSIVE-REF": 65,
+    "CJV-RELATIVE-REF": 65,
+    "CJV-HTTPS-ID": 65,
+    "CJV-HTTP-LEGACY-ID": 65,
+    "CJV-NONSTRING-REF": 65,
+    "CJV-YAML-SCHEMA": 65,
+    "CJV-DAMAGED-JSON": 65,
+    "CJV-REAL-VERSION": 0,
+    "CJV-FAKE-VERSION": 78,
+    "CJV-CORRUPT-VERSION": 78,
+    "CJV-PROBE-FAILURE": 78,
+}
+for case_id, expected_exit in expected_correction_exits.items():
+    case = cases[case_id]
+    assert case["passed"] is True, case_id
+    assert case["result"]["exit_code"] == expected_exit, case_id
+    assert case["forbidden_path_absent"] is True, case_id
 
 commands = {item["id"]: item for item in installation["commands"]}
 assert commands["PY-VERSION"]["exit_code"] == 0
@@ -105,6 +169,7 @@ canonical_paths = [
     ROOT / "08_os/05_registry/skills_and_tools_v1.yml",
     ROOT / "08_os/06_execution/tools/check_jsonschema/README.md",
     ROOT / "08_os/06_execution/tools/check_jsonschema/invoke.ps1",
+    ROOT / "08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py",
 ]
 for path in canonical_paths:
     text = path.read_text(encoding="utf-8")

@@ -3,9 +3,9 @@
 ## Human 结论
 
 `check-jsonschema` 0.37.4 已达到 `verified_on_demand`：本机安装链可解引用，
-本轮校准 schema、合法 YAML/JSON、十类核心负例、五次重复性和 wrapper
-fail-closed 路径全部通过。它可以作为一个任务显式调用的本地 CLI，但不能进入
-默认 boot，不能暴露成 MCP，也不能被写成“已经覆盖整个 OS”。
+本轮校准 schema、合法 YAML/JSON、核心负例、五次重复性、schema 引用闭包和
+exact-version fail-closed 路径全部通过。它可以作为一个任务显式调用的本地 CLI，
+但不能进入默认 boot，不能暴露成 MCP，也不能被写成“已经覆盖整个 OS”。
 
 ## 它具体负责什么
 
@@ -53,19 +53,25 @@ run-012 实际阻断了缺必填字段、错误 boolean、非法状态值、多�
 上下文面，而这里没有服务状态、交互会话或远程资源需要维持。默认 boot 也不应
 携带工具说明或 schema。
 
-canonical wrapper 通过 PATH 或 caller 显式 executable 解析工具，校验两个本地
-输入存在后再调用，保留底层退出码。工具、schema 或 instance 不可用时明确失败，
-不回退模型判断，不修改全局状态。
+canonical wrapper 通过 PATH 或 caller 显式 executable 解析工具，先验证本地输入，
+再以独立 preflight 将 schema 收紧为严格 JSON、fragment-only 引用且无 HTTP(S)
+identifier，随后运行时探测并精确匹配 `check-jsonschema 0.37.4`。两个门都通过后
+才启动 validation，并保留底层退出码。工具、Python、preflight、版本、schema 或
+instance 不可用时明确失败，不回退模型判断，不修改全局状态。
 
 ## 实测收益和成本
 
 ### 错误检出
 
-- 27/27 matrix cases 通过；
+- 43/43 matrix cases 通过，其中原始矩阵 27/27、边界修复 14/14、测量 2/2；
 - 五次重复运行完全一致；
 - 中文和空格路径通过；
 - PATH 移除工具目录时 wrapper 以 exit 69 fail closed；
-- URL-shaped schema 参数被当作非本地文件拒绝。
+- URL-shaped schema 参数被当作非本地文件拒绝；
+- 外部 `$ref` / `$dynamicRef` / `$recursiveRef`、HTTP(S) identifier、非 JSON
+  schema 在 validation 前以 exit 65 拒绝；
+- 版本漂移、损坏的 version 输出和 probe 失败以 exit 78 拒绝；
+- 所有边界拒绝案例的 validation sentinel 均未出现。
 
 原始 CLI 在 instance 缺失时输出 3033 UTF-8 字节 traceback；wrapper 在启动工具
 前以 exit 66 和 205 字节诊断停止。这既减少噪声，也把“输入不存在”和“schema
@@ -73,10 +79,12 @@ canonical wrapper 通过 PATH 或 caller 显式 executable 解析工具，校验
 
 ### 时间和机器资源
 
-- 首个测量的新 CLI 进程：410.816 ms；
-- 五次后续运行：平均 406.557 ms，范围 401.034–415.017 ms；
-- `pwsh` wrapper 成功路径：756.038 ms；
-- Windows PowerShell 5.1 wrapper 成功路径：654.499 ms；
+- exact-version probe：462.805 ms；
+- schema reference preflight：191.880 ms；
+- 直接 CLI validation：556.268 ms；
+- `pwsh` wrapper 总耗时：1588.680 ms；
+- 五次后续 CLI：平均 483.410 ms，范围 443.970–508.052 ms；
+- Windows PowerShell 5.1 wrapper 成功路径：1304.700 ms；
 - pipx venv：686 个文件、12,360,162 字节；
 - 测试结束后匹配的常驻工具/venv Python 进程：0。
 
@@ -110,10 +118,13 @@ token，标签是 `proxy_not_billing_tokens`，不是计费或平台实测值，
 
 ## 网络与残余风险
 
-本轮所有真实 `--schemafile` 参数都是本地文件，wrapper 拒绝 URL；没有进行网络
-抓包，因此网络结论只能写 `not_observable_no_packet_capture`，不能写“已证明零
-连接”。包自带 remote-schema 能力，但 canonical wrapper 的本地路径前置检查不
-开放它。
+没有进行网络抓包，因此网络结论只能写
+`not_observable_no_packet_capture`，不能写“已证明零连接”。上游包和直接 CLI
+仍自带 remote-schema 能力；canonical v1 wrapper 不依赖“顶层路径是本地文件”
+这一弱条件，而是在启动 validation 前递归检查 schema，机械拒绝所有非 fragment
+引用及 HTTP(S) `$id`/legacy `id`。标准 `$schema` URI 与 schema 内 fragment
+继续允许。需要本地多文件模块化 schema 时，必须由后续任务设计新的受控解析面，
+不能绕过当前门禁。
 
 残余风险：
 
@@ -121,20 +132,24 @@ token，标签是 `proxy_not_billing_tokens`，不是计费或平台实测值，
 - 某些 `format` 行为依赖 validator 配置和依赖；
 - 工具升级可能改变诊断、draft 或依赖；
 - 直接绕过 wrapper 会重新暴露长 traceback、remote URI 和不稳定输入错误；
+- 当前保守 preflight 不支持本地多文件 schema；
 - registry 状态只绑定 0.37.4、Python 3.14.6 与本轮 fixture，不自动涵盖未来 schema。
 
 ## Human 生命周期
 
 Human 可在单独授权的维护任务中使用 `py -m pipx upgrade check-jsonschema` 或
 `py -m pipx uninstall check-jsonschema`。任何版本、Python runtime、wrapper 或
-机器契约变化后，必须重跑 metaschema、合法 YAML/JSON、全部核心负例、五次
-重复、中文空格路径和工具不可用测试，再更新 registry。
+机器契约变化后，必须重跑 metaschema、合法 YAML/JSON、全部核心负例、外部引用
+闭包、exact-version 边界、validation sentinel、五次重复、中文空格路径和工具
+不可用测试，再更新 registry。
 
 ## 何时阻止下游
 
 以下任一情况必须停止当前对象向下游流转：
 
 - wrapper 找不到 executable、schema 或 instance；
+- schema preflight 不可用或拒绝输入；
+- version probe 失败、输出不可解析或不是精确的 0.37.4；
 - schema 未通过 metaschema；
 - instance 解析失败；
 - validation 返回非零；

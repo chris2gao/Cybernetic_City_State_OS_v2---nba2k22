@@ -10,16 +10,21 @@ trap {
     exit 99
 }
 
-$repoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "../../../..")).Path
-$fixtures = Join-Path $PSScriptRoot "fixtures"
-$schema = Join-Path $fixtures "run_manifest.schema.json"
-$validYaml = Join-Path $fixtures "valid.yaml"
-$validJson = Join-Path $fixtures "valid.json"
-$wrapper = Join-Path $repoRoot "08_os/06_execution/tools/check_jsonschema/invoke.ps1"
-$resultPath = Join-Path $PSScriptRoot "results.json"
-$tool = (Get-Command -Name "check-jsonschema" -CommandType Application).Source
-$pwsh = (Get-Command -Name "pwsh" -CommandType Application).Source
-$windowsPowerShell = (Get-Command -Name "powershell" -CommandType Application).Source
+[string]$repoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "../../../..")).Path
+[string]$fixtures = Join-Path $PSScriptRoot "fixtures"
+[string]$schema = Join-Path $fixtures "run_manifest.schema.json"
+[string]$validYaml = Join-Path $fixtures "valid.yaml"
+[string]$validJson = Join-Path $fixtures "valid.json"
+[string]$wrapper = Join-Path $repoRoot "08_os/06_execution/tools/check_jsonschema/invoke.ps1"
+[string]$inspector = Join-Path $repoRoot "08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py"
+[string]$resultPath = Join-Path $PSScriptRoot "results.json"
+[string]$tool = (Get-Command -Name "check-jsonschema" -CommandType Application).Source
+[string]$python = (
+    Get-Command -Name "python" -CommandType Application |
+        Select-Object -First 1
+).Source
+[string]$pwsh = (Get-Command -Name "pwsh" -CommandType Application).Source
+[string]$windowsPowerShell = (Get-Command -Name "powershell" -CommandType Application).Source
 $utf8 = [Text.UTF8Encoding]::new($false)
 
 function Invoke-CapturedProcess {
@@ -111,9 +116,16 @@ function Invoke-TestCase {
 
         [string[]]$ExpectedDiagnostics = @(),
 
-        [hashtable]$EnvironmentOverrides = @{}
+        [hashtable]$EnvironmentOverrides = @{},
+
+        [string]$Cohort = "original",
+
+        [string]$ForbiddenPath = ""
     )
 
+    if ($ForbiddenPath -and (Test-Path -LiteralPath $ForbiddenPath -PathType Leaf)) {
+        Remove-Item -LiteralPath $ForbiddenPath -Force
+    }
     $capture = Invoke-CapturedProcess -FilePath $FilePath -ArgumentList $ArgumentList `
         -EnvironmentOverrides $EnvironmentOverrides
     $combined = "$($capture.stdout)`n$($capture.stderr)"
@@ -123,14 +135,23 @@ function Invoke-TestCase {
         }
     )
     $diagnosticsPassed = -not ($diagnosticMatches -contains $false)
+    $forbiddenPathAbsent = (-not $ForbiddenPath) -or
+        (-not (Test-Path -LiteralPath $ForbiddenPath -PathType Leaf))
+    if ($ForbiddenPath -and -not $forbiddenPathAbsent) {
+        Remove-Item -LiteralPath $ForbiddenPath -Force
+    }
 
     [pscustomobject]@{
         id = $Id
         category = $Category
+        cohort = $Cohort
         expected_exit_code = $ExpectedExitCode
         expected_diagnostics = $ExpectedDiagnostics
         diagnostic_matches = $diagnosticMatches
-        passed = ($capture.exit_code -eq $ExpectedExitCode) -and $diagnosticsPassed
+        forbidden_path = $ForbiddenPath
+        forbidden_path_absent = $forbiddenPathAbsent
+        passed = ($capture.exit_code -eq $ExpectedExitCode) -and
+            $diagnosticsPassed -and $forbiddenPathAbsent
         result = $capture
     }
 }
@@ -214,11 +235,86 @@ $cases.Add((Invoke-TestCase -Id "W-REMOTE-SCHEMA-REJECTED" -Category "boundary" 
     -ArgumentList ($wrapperPrefix + @("-SchemaPath", "https://example.com/schema.json", "-InstancePath", $validYaml)) `
     -ExpectedExitCode 66 -ExpectedDiagnostics @("schema file not found", "https://example.com/schema.json")))
 
-$restrictedPath = "C:\Windows\System32;C:\Program Files\PowerShell\7"
+$pythonDirectory = Split-Path -Parent $python
+$restrictedPath = "C:\Windows\System32;C:\Program Files\PowerShell\7;$pythonDirectory"
 $cases.Add((Invoke-TestCase -Id "W-TOOL-UNAVAILABLE" -Category "boundary" -FilePath $pwsh `
     -ArgumentList ($wrapperPrefix + @("-SchemaPath", $schema, "-InstancePath", $validYaml)) `
     -ExpectedExitCode 69 -ExpectedDiagnostics @("executable unavailable on PATH", "check-jsonschema") `
     -EnvironmentOverrides @{ Path = $restrictedPath }))
+
+$fragmentSchema = Join-Path $fixtures "fragment_ref.schema.json"
+$fragmentInstance = Join-Path $fixtures "fragment_ref.valid.json"
+$fakeGood = Join-Path $fixtures "fake_check_jsonschema_0_37_4.cmd"
+$sentinel = Join-Path $PSScriptRoot "validation_should_not_run.sentinel"
+
+$cases.Add((Invoke-TestCase -Id "CJV-FRAGMENT-REF" -Category "reference_closure" `
+    -Cohort "correction" -FilePath $pwsh `
+    -ArgumentList ($wrapperPrefix + @("-SchemaPath", $fragmentSchema, "-InstancePath", $fragmentInstance)) `
+    -ExpectedExitCode 0 -ExpectedDiagnostics @("ok -- validation done")))
+
+$referencePolicyCases = @(
+    [pscustomobject]@{ Id = "CJV-HTTPS-REF"; File = "https_ref.schema.json"; Code = "CJV-R01-EXTERNAL-REFERENCE" },
+    [pscustomobject]@{ Id = "CJV-HTTP-DYNAMIC-REF"; File = "http_dynamic_ref.schema.json"; Code = "CJV-R01-EXTERNAL-REFERENCE" },
+    [pscustomobject]@{ Id = "CJV-HTTPS-RECURSIVE-REF"; File = "https_recursive_ref.schema.json"; Code = "CJV-R01-EXTERNAL-REFERENCE" },
+    [pscustomobject]@{ Id = "CJV-RELATIVE-REF"; File = "relative_ref.schema.json"; Code = "CJV-R01-EXTERNAL-REFERENCE" },
+    [pscustomobject]@{ Id = "CJV-HTTPS-ID"; File = "https_id.schema.json"; Code = "CJV-R01-REMOTE-IDENTIFIER" },
+    [pscustomobject]@{ Id = "CJV-HTTP-LEGACY-ID"; File = "http_legacy_id.schema.json"; Code = "CJV-R01-REMOTE-IDENTIFIER" },
+    [pscustomobject]@{ Id = "CJV-NONSTRING-REF"; File = "nonstring_ref.schema.json"; Code = "CJV-R01-REFERENCE-TYPE" },
+    [pscustomobject]@{ Id = "CJV-YAML-SCHEMA"; File = "schema_not_json.yaml"; Code = "CJV-R01-JSON-SUFFIX" },
+    [pscustomobject]@{ Id = "CJV-DAMAGED-JSON"; File = "invalid_schema_syntax.json"; Code = "CJV-R01-STRICT-JSON" }
+)
+foreach ($policyCase in $referencePolicyCases) {
+    $cases.Add((Invoke-TestCase -Id $policyCase.Id -Category "reference_closure" `
+        -Cohort "correction" -FilePath $pwsh `
+        -ArgumentList ($wrapperPrefix + @(
+            "-SchemaPath", (Join-Path $fixtures $policyCase.File),
+            "-InstancePath", $validJson,
+            "-Executable", $fakeGood
+        )) `
+        -ExpectedExitCode 65 -ExpectedDiagnostics @($policyCase.Code) `
+        -EnvironmentOverrides @{ CJV_SENTINEL = $sentinel } -ForbiddenPath $sentinel))
+}
+
+$cases.Add((Invoke-TestCase -Id "CJV-REAL-VERSION" -Category "version_gate" `
+    -Cohort "correction" -FilePath $pwsh `
+    -ArgumentList ($wrapperPrefix + @("-SchemaPath", $schema, "-InstancePath", $validYaml)) `
+    -ExpectedExitCode 0 -ExpectedDiagnostics @("ok -- validation done")))
+
+$versionPolicyCases = @(
+    [pscustomobject]@{
+        Id = "CJV-FAKE-VERSION"
+        File = "fake_check_jsonschema_9_9_9.cmd"
+        Diagnostic = "version mismatch: expected 0.37.4, got 9.9.9"
+    },
+    [pscustomobject]@{
+        Id = "CJV-CORRUPT-VERSION"
+        File = "fake_check_jsonschema_corrupt_version.cmd"
+        Diagnostic = "unparseable version output"
+    },
+    [pscustomobject]@{
+        Id = "CJV-PROBE-FAILURE"
+        File = "fake_check_jsonschema_probe_failure.cmd"
+        Diagnostic = "version probe failed with exit 7"
+    }
+)
+foreach ($versionCase in $versionPolicyCases) {
+    $cases.Add((Invoke-TestCase -Id $versionCase.Id -Category "version_gate" `
+        -Cohort "correction" -FilePath $pwsh `
+        -ArgumentList ($wrapperPrefix + @(
+            "-SchemaPath", $schema,
+            "-InstancePath", $validYaml,
+            "-Executable", (Join-Path $fixtures $versionCase.File)
+        )) `
+        -ExpectedExitCode 78 -ExpectedDiagnostics @($versionCase.Diagnostic) `
+        -EnvironmentOverrides @{ CJV_SENTINEL = $sentinel } -ForbiddenPath $sentinel))
+}
+
+$cases.Add((Invoke-TestCase -Id "M-VERSION-PROBE" -Category "measurement" `
+    -Cohort "measurement" -FilePath $tool -ArgumentList @("--version") `
+    -ExpectedExitCode 0 -ExpectedDiagnostics @("check-jsonschema, version 0.37.4")))
+$cases.Add((Invoke-TestCase -Id "M-SCHEMA-PREFLIGHT" -Category "measurement" `
+    -Cohort "measurement" -FilePath $python -ArgumentList @($inspector, $schema) `
+    -ExpectedExitCode 0 -ExpectedDiagnostics @("schema reference policy: PASS")))
 
 $repeatCases = @($cases | Where-Object { $_.category -eq "repeatability" })
 $repeatOutputs = @($repeatCases | ForEach-Object { "$($_.result.exit_code)|$($_.result.stdout)|$($_.result.stderr)" })
@@ -294,6 +390,9 @@ $residualProcesses = @(
 )
 
 $failedCases = @($cases | Where-Object { -not $_.passed })
+$originalCases = @($cases | Where-Object { $_.cohort -eq "original" })
+$correctionCases = @($cases | Where-Object { $_.cohort -eq "correction" })
+$measurementCases = @($cases | Where-Object { $_.cohort -eq "measurement" })
 $receipt = [ordered]@{
     schema_version = "check_jsonschema_validation_receipt.v1"
     generated_utc = [DateTimeOffset]::UtcNow.ToString("o")
@@ -312,12 +411,24 @@ $receipt = [ordered]@{
     }
     memory_measurement_scope = "launched process only; child-process tree peak is not_observable"
     network_measurement = "not_observable_no_packet_capture"
-    local_only_design = "all schemafile arguments are local paths; wrapper rejects URL-shaped schema input as a missing local file"
+    local_only_design = "canonical wrapper requires local .json, strict JSON, fragment-only references, and no HTTP(S) id; direct CLI bypass remains network-capable"
+    gate_measurements = [pscustomobject]@{
+        version_probe_ms = @($cases | Where-Object { $_.id -eq "M-VERSION-PROBE" })[0].result.duration_ms
+        schema_preflight_ms = @($cases | Where-Object { $_.id -eq "M-SCHEMA-PREFLIGHT" })[0].result.duration_ms
+        direct_cli_validation_ms = @($cases | Where-Object { $_.id -eq "P-YAML-COLD" })[0].result.duration_ms
+        wrapper_total_ms = @($cases | Where-Object { $_.id -eq "W-SUCCESS" })[0].result.duration_ms
+    }
     token_and_context = $tokenMeasurement
     summary = [pscustomobject]@{
         total_cases = $cases.Count
         passed_cases = $cases.Count - $failedCases.Count
         failed_cases = $failedCases.Count
+        original_cases = $originalCases.Count
+        original_cases_passed = @($originalCases | Where-Object { $_.passed }).Count
+        correction_cases = $correctionCases.Count
+        correction_cases_passed = @($correctionCases | Where-Object { $_.passed }).Count
+        measurement_cases = $measurementCases.Count
+        measurement_cases_passed = @($measurementCases | Where-Object { $_.passed }).Count
         all_passed = ($failedCases.Count -eq 0) -and $repeatabilityPassed -and ($residualProcesses.Count -eq 0)
     }
 }

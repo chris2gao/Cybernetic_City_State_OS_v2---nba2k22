@@ -16,11 +16,15 @@ tool:
   mount: on_demand_cli
   default_loaded: false
   mcp_exposed: false
+  expected_version: 0.37.4
+  version_gate: exact_runtime_probe_before_validation
+  schema_reference_policy: self_contained_json_fragment_only
   canonical_wrapper: 08_os/06_execution/tools/check_jsonschema/invoke.ps1
 outputs:
   tool_contract: 08_os/04_skills_and_tools/check-jsonschema/README.md
   loader_contract: 08_os/06_execution/tools/check_jsonschema/README.md
   wrapper: 08_os/06_execution/tools/check_jsonschema/invoke.ps1
+  schema_preflight: 08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py
   installation_receipt: 08_os/_runs/run-012-check-jsonschema安装接入验证/01_任务输入/安装真实性命令回执.json
   validation_receipt: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/results.json
   conclusion: 08_os/_runs/run-012-check-jsonschema安装接入验证/08_结论/check-jsonschema系统职责与收益.md
@@ -43,9 +47,34 @@ validation:
   boot_non_reference: passed
   mcp_not_exposed: passed
   canonical_absolute_user_path_scan: passed
+  original_matrix_27: passed
+  network_reference_closure_10: passed
+  version_boundary_4: passed
+  validation_not_started_sentinels: passed
 measurement:
+  version_probe_ms: 462.805
+  schema_preflight_ms: 191.880
+  direct_cli_validation_ms: 556.268
+  wrapper_total_ms: 1588.680
+  repeated_cli_average_ms: 483.410
+  repeated_cli_min_ms: 443.970
+  repeated_cli_max_ms: 508.052
+  resident_processes_after_run: 0
   exact_model_tokens: not_observable
   network_packet_capture: not_run
+  network_behavior: not_observable_no_packet_capture
   peak_process_tree_memory: not_observable
   environment_changes_performed: false
-status: completed_on_work_branch
+revision:
+  task_id: check-jsonschema-network-version-boundary-fix-001
+  implementation_base: 987ff40fa0317053bf0484f6e3556976e560f63b
+  replayed_candidate: aafd4c05417c1c85a56456ac30269c8d655473af
+  replay_commit: 90beefc4bded5d290a21969b77e5b57e04df3ae3
+  dispatch_head: f01695990c2268bbe7cb9972dd3b59be8c54154d
+  work_branch: codex/check-jsonschema-network-version-boundary-fix-001
+  original_status: completed_on_work_branch
+  findings:
+    CJV-R01: resolved
+    CJV-R02: resolved
+  status: network_version_boundary_fix_completed_on_work_branch
+status: network_version_boundary_fix_completed_on_work_branch

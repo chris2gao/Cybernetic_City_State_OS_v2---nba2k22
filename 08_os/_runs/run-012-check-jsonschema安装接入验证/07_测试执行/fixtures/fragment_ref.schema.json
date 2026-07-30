@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:citystate:fragment-ref-calibration:v1",
+  "$defs": {
+    "nonempty": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "type": "object",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "name": {
+      "$ref": "#/$defs/nonempty"
+    }
+  },
+  "additionalProperties": false
+}

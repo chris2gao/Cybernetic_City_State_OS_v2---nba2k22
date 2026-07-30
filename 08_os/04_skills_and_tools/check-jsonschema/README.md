@@ -4,12 +4,14 @@
 
 - status: `verified_on_demand`
 - verified version: `0.37.4`
-- validation date: `2026-07-29`
+- validation date: `2026-07-30`
 - mount: `on_demand_cli`
 - default loaded: `false`
 - MCP exposed: `false`
 - canonical wrapper:
   `08_os/06_execution/tools/check_jsonschema/invoke.ps1`
+- version gate: exact runtime match to `0.37.4` before validation
+- schema gate: strict self-contained local `.json`; references must be fragment-only
 - evidence:
   `08_os/_runs/run-012-check-jsonschema安装接入验证/`
 
@@ -18,6 +20,11 @@ the pipx-isolated package and Python runtime, and passed the run-012 positive,
 negative, repetition and fail-closed wrapper matrix. The bare `pipx` command was not
 visible in the executing shell; `py -m pipx` reproduced the pipx metadata without
 changing the environment.
+
+The correction matrix additionally proved that HTTP(S), relative-file and non-string
+reference keywords, HTTP(S) identifiers, YAML schemas and damaged JSON are rejected
+before validation. Fake 9.9.9, corrupt-version and failed-version probes all stopped
+before their validation sentinel could be written.
 
 ## OS responsibility
 
@@ -54,11 +61,13 @@ py -m pipx uninstall check-jsonschema
 ```
 
 Every upgrade requires rerunning run-012's schema meta-check, positive YAML/JSON,
-all core negative cases, five-run repetition, Unicode/space path and wrapper
-unavailable-path tests before the registry version/status changes.
+all core negative cases, reference-closure and version-drift cases, five-run
+repetition, Unicode/space path and wrapper unavailable-path tests before the registry
+version/status changes.
 
 ## Stop downstream
 
 Stop the consuming task when the wrapper cannot find its executable or input files,
-the schema fails its metaschema check, the instance is malformed, or validation
+the wrapper cannot find Python/inspector, schema closure or metaschema validation
+fails, the instance is malformed, the version probe differs from 0.37.4, or validation
 returns nonzero. Do not fall back to “the model thinks it looks valid.”
