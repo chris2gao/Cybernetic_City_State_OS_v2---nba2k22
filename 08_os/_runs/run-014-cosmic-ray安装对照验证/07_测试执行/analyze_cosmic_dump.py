@@ -34,6 +34,14 @@ def normalize(dump_path: Path) -> dict[str, Any]:
         result = result or {}
         diff = result.get("diff", "")
         output = result.get("output", "")
+        test_outcome = result.get("test_outcome", "pending")
+        worker_outcome = result.get("worker_outcome", "pending")
+        if output.strip() == "timeout":
+            semantic_outcome = "timeout_misclassified_as_killed"
+        elif worker_outcome != "normal":
+            semantic_outcome = f"worker_{worker_outcome}"
+        else:
+            semantic_outcome = test_outcome
         objects.append(
             {
                 "module_path": mutation.get("module_path"),
@@ -42,8 +50,9 @@ def normalize(dump_path: Path) -> dict[str, Any]:
                 "start_pos": mutation.get("start_pos"),
                 "end_pos": mutation.get("end_pos"),
                 "definition_name": mutation.get("definition_name"),
-                "worker_outcome": result.get("worker_outcome", "pending"),
-                "test_outcome": result.get("test_outcome", "pending"),
+                "worker_outcome": worker_outcome,
+                "test_outcome": test_outcome,
+                "semantic_outcome": semantic_outcome,
                 "diff": diff,
                 "output_sha256": sha256_text(output),
             }
@@ -58,6 +67,7 @@ def normalize(dump_path: Path) -> dict[str, Any]:
         )
     )
     status_counts = Counter(item["test_outcome"] for item in objects)
+    semantic_counts = Counter(item["semantic_outcome"] for item in objects)
     worker_counts = Counter(item["worker_outcome"] for item in objects)
     operator_counts = Counter(item["operator_name"] for item in objects)
     normalized_json = json.dumps(
@@ -85,6 +95,7 @@ def normalize(dump_path: Path) -> dict[str, Any]:
         "source_dump": str(dump_path),
         "object_count": len(objects),
         "status_counts": dict(sorted(status_counts.items())),
+        "semantic_outcome_counts": dict(sorted(semantic_counts.items())),
         "worker_outcome_counts": dict(sorted(worker_counts.items())),
         "operator_counts": dict(sorted(operator_counts.items())),
         "objects_sha256": sha256_text(normalized_json),
@@ -110,6 +121,7 @@ def main() -> int:
                 "objects_sha256": result["objects_sha256"],
                 "semantic_objects_sha256": result["semantic_objects_sha256"],
                 "status_counts": result["status_counts"],
+                "semantic_outcome_counts": result["semantic_outcome_counts"],
                 "worker_outcome_counts": result["worker_outcome_counts"],
             },
             sort_keys=True,

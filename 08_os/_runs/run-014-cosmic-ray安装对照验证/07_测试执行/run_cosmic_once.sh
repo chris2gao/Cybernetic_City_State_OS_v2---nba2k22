@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ $# -lt 4 || $# -gt 6 ]]; then
-    echo "usage: $0 REPO_ROOT COMMIT_SHA PROJECT_REL OUTPUT_DIR [SOURCE_REL] [TEST_PATH]" >&2
+if [[ $# -lt 4 || $# -gt 8 ]]; then
+    echo "usage: $0 REPO_ROOT COMMIT_SHA PROJECT_REL OUTPUT_DIR [SOURCE_REL] [TEST_PATH] [CONFIG_REL] [CANONICAL_SOURCE_REL]" >&2
     exit 64
 fi
 
@@ -12,6 +12,8 @@ project_rel=$3
 output_dir=$4
 source_path=${5:-calibration_pkg/logic.py}
 test_path=${6:-tests}
+config_rel=${7:-}
+canonical_source_rel=${8:-}
 cosmic_venv=/home/gk/.venvs/core-cosmic-ray-8.4.6
 pytest_python=/home/gk/.venvs/core-mutmut-3.6.0/bin/python
 
@@ -66,6 +68,13 @@ project_dir="$temp_root/$project_rel"
 if [[ ! -d "$project_dir" ]]; then
     echo "archived project path is missing" >&2
     exit 68
+fi
+if [[ -n "$config_rel" ]]; then
+    cp -- "$temp_root/$config_rel" "$project_dir/cosmic-ray.toml"
+fi
+if [[ -n "$canonical_source_rel" ]]; then
+    mkdir -p -- "$(dirname "$project_dir/$source_path")"
+    cp -- "$temp_root/$canonical_source_rel" "$project_dir/$source_path"
 fi
 
 cd "$project_dir"
