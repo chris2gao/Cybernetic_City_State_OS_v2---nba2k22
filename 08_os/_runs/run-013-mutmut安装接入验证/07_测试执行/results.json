@@ -1,9 +1,9 @@
 {
   "schema_version": "citystate.mutmut_validation.v1",
-  "generated_at_utc": "2026-07-30T09:49:48.247500+00:00",
+  "generated_at_utc": "2026-07-30T09:58:05.448344+00:00",
   "task_id": "mutmut-wsl-installation-validation-001",
   "source_head": "31ce5812bf34e7e4fc338543841973246a6a2467",
-  "validation_head": "2f719181b5c89134caedbca73c46ea3f0a14df87",
+  "validation_head": "40fab7007d5fb48731f442b8dbea2b84680f8ee1",
   "summary": {
     "environment_passed": true,
     "calibration_passed": true,
@@ -16,8 +16,8 @@
     "whoami": {
       "command": "whoami",
       "arguments": [],
-      "started_utc": "2026-07-30T09:48:01.687941+00:00",
-      "duration_ms": 5.807,
+      "started_utc": "2026-07-30T09:55:29.627046+00:00",
+      "duration_ms": 7.508,
       "exit_code": 0,
       "stdout_utf8_bytes": 3,
       "stderr_utf8_bytes": 0,
@@ -29,8 +29,8 @@
       "arguments": [
         "-a"
       ],
-      "started_utc": "2026-07-30T09:48:01.693870+00:00",
-      "duration_ms": 4.633,
+      "started_utc": "2026-07-30T09:55:29.634712+00:00",
+      "duration_ms": 4.732,
       "exit_code": 0,
       "stdout_utf8_bytes": 125,
       "stderr_utf8_bytes": 0,
@@ -42,8 +42,8 @@
       "arguments": [
         "--version"
       ],
-      "started_utc": "2026-07-30T09:48:01.698643+00:00",
-      "duration_ms": 2.252,
+      "started_utc": "2026-07-30T09:55:29.639546+00:00",
+      "duration_ms": 2.218,
       "exit_code": 0,
       "stdout_utf8_bytes": 14,
       "stderr_utf8_bytes": 0,
@@ -55,12 +55,74 @@
       "arguments": [
         "--version"
       ],
-      "started_utc": "2026-07-30T09:48:01.700962+00:00",
-      "duration_ms": 2.796,
+      "started_utc": "2026-07-30T09:55:29.641812+00:00",
+      "duration_ms": 6.252,
       "exit_code": 0,
       "stdout_utf8_bytes": 19,
       "stderr_utf8_bytes": 0,
       "stdout_sha256": "97452bcde974ef512f9552791fc4f6a3219a724877671fba270baca1a6075b74",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pip": {
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+      "arguments": [
+        "-m",
+        "pip",
+        "--version"
+      ],
+      "started_utc": "2026-07-30T09:55:29.648227+00:00",
+      "duration_ms": 963.223,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 95,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "fe1b53679b8420367a48660fe2b44166fefc66f286e23d52e13a2ef82843deaa",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pip_show_mutmut": {
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+      "arguments": [
+        "-m",
+        "pip",
+        "show",
+        "mutmut"
+      ],
+      "started_utc": "2026-07-30T09:55:30.611600+00:00",
+      "duration_ms": 661.788,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 375,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "54ed41b2fb9174b0fe8e0027ed1b13986b15dabcefed375ea6108e1a1cae1da7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pip_show_libcst": {
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+      "arguments": [
+        "-m",
+        "pip",
+        "show",
+        "libcst"
+      ],
+      "started_utc": "2026-07-30T09:55:31.273543+00:00",
+      "duration_ms": 384.461,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 4979,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "4e0b1f405b6b837ddcb46ffb50e5d44657f46a833c174b6d2bf9b7a388a51387",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pytest": {
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+      "arguments": [
+        "-m",
+        "pytest",
+        "--version"
+      ],
+      "started_utc": "2026-07-30T09:55:31.658171+00:00",
+      "duration_ms": 377.713,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 13,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "ef5a4d39b097310ed885c4a4dc78e963c7ef42c92ed56ab09571200962f53779",
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "which_python": {
@@ -69,8 +131,8 @@
         "-lc",
         "source '/home/gk/.venvs/core-mutmut-3.6.0/bin/activate' && command -v python"
       ],
-      "started_utc": "2026-07-30T09:48:01.703874+00:00",
-      "duration_ms": 29.628,
+      "started_utc": "2026-07-30T09:55:32.035969+00:00",
+      "duration_ms": 24.622,
       "exit_code": 0,
       "stdout_utf8_bytes": 45,
       "stderr_utf8_bytes": 0,
@@ -83,8 +145,8 @@
         "-lc",
         "source '/home/gk/.venvs/core-mutmut-3.6.0/bin/activate' && command -v mutmut"
       ],
-      "started_utc": "2026-07-30T09:48:01.733588+00:00",
-      "duration_ms": 22.52,
+      "started_utc": "2026-07-30T09:55:32.060645+00:00",
+      "duration_ms": 23.533,
       "exit_code": 0,
       "stdout_utf8_bytes": 45,
       "stderr_utf8_bytes": 0,
@@ -97,8 +159,8 @@
         "-c",
         "import libcst, mutmut; print('imports-ok')"
       ],
-      "started_utc": "2026-07-30T09:48:01.756222+00:00",
-      "duration_ms": 471.995,
+      "started_utc": "2026-07-30T09:55:32.084352+00:00",
+      "duration_ms": 876.768,
       "exit_code": 0,
       "stdout_utf8_bytes": 11,
       "stderr_utf8_bytes": 0,
@@ -110,8 +172,8 @@
       "arguments": [
         "--version"
       ],
-      "started_utc": "2026-07-30T09:48:02.228315+00:00",
-      "duration_ms": 1237.911,
+      "started_utc": "2026-07-30T09:55:32.961267+00:00",
+      "duration_ms": 1809.818,
       "exit_code": 0,
       "stdout_utf8_bytes": 22,
       "stderr_utf8_bytes": 0,
@@ -124,12 +186,12 @@
     "arguments": [
       "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/_runs/run-013-mutmut安装接入验证/01_任务输入/fork_probe.py"
     ],
-    "started_utc": "2026-07-30T09:48:03.466451+00:00",
-    "duration_ms": 38.929,
+    "started_utc": "2026-07-30T09:55:34.771285+00:00",
+    "duration_ms": 149.582,
     "exit_code": 0,
     "stdout_utf8_bytes": 124,
     "stderr_utf8_bytes": 0,
-    "stdout_sha256": "81da9d7fa6d45e81c9228220224ee5f12b3e6a90fe2101b3e67be5773a338f88",
+    "stdout_sha256": "4768e701a77d8624faeef4ef2ec2e1ee9fcdd855319d84c56cfed09d58eec005",
     "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
   "calibration": {
@@ -147,12 +209,12 @@
             "-q",
             "tests/test_logic.py"
           ],
-          "started_utc": "2026-07-30T09:48:03.563872+00:00",
-          "duration_ms": 755.511,
+          "started_utc": "2026-07-30T09:55:35.064177+00:00",
+          "duration_ms": 640.522,
           "exit_code": 0,
           "stdout_utf8_bytes": 98,
           "stderr_utf8_bytes": 0,
-          "stdout_sha256": "cdf8d13a3f141b449c7d92c9b86d6fd681de17445a1d661236b92f93860eafac",
+          "stdout_sha256": "fcd476841e8af121ff907e81a92a59579b64c007b70cb79f9d096806f703fc7e",
           "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         },
         "mutation": {
@@ -162,12 +224,12 @@
             "--max-children",
             "2"
           ],
-          "started_utc": "2026-07-30T09:48:04.319496+00:00",
-          "duration_ms": 2164.749,
+          "started_utc": "2026-07-30T09:55:35.704825+00:00",
+          "duration_ms": 3170.155,
           "exit_code": 0,
           "stdout_utf8_bytes": 1803,
           "stderr_utf8_bytes": 0,
-          "stdout_sha256": "e029d5027085cf7e708c1ef1a62e23747d1aa0b30f1b2c2c9d22eecb29ca5392",
+          "stdout_sha256": "a73b991edacae1a4286c815eca71919d805b90b92961298f82059acafa4db3b2",
           "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         },
         "results": {
@@ -177,8 +239,8 @@
             "--all",
             "true"
           ],
-          "started_utc": "2026-07-30T09:48:06.484356+00:00",
-          "duration_ms": 1213.064,
+          "started_utc": "2026-07-30T09:55:38.875101+00:00",
+          "duration_ms": 1309.036,
           "exit_code": 0,
           "stdout_utf8_bytes": 497,
           "stderr_utf8_bytes": 0,
@@ -190,81 +252,7 @@
           "survived": 5
         },
         "total_mutants": 8,
-        "survivors": [
-          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_1",
-          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_2",
-          "calibration_pkg.logic.x_access_level__mutmut_2",
-          "calibration_pkg.logic.x_access_level__mutmut_3",
-          "calibration_pkg.logic.x_access_level__mutmut_4"
-        ],
-        "survivor_diffs": {
-          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_1": "# calibration_pkg.logic.x_clamp_nonnegative__mutmut_1: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def clamp_nonnegative(value: int) -> int:\n-    if value < 0:\n+    if value <= 0:\n         return 0\n     return value",
-          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_2": "# calibration_pkg.logic.x_clamp_nonnegative__mutmut_2: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def clamp_nonnegative(value: int) -> int:\n-    if value < 0:\n+    if value < 1:\n         return 0\n     return value",
-          "calibration_pkg.logic.x_access_level__mutmut_2": "# calibration_pkg.logic.x_access_level__mutmut_2: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def access_level(role: str) -> int:\n-    if role == \"admin\":\n+    if role == \"XXadminXX\":\n         return 2\n     return 1",
-          "calibration_pkg.logic.x_access_level__mutmut_3": "# calibration_pkg.logic.x_access_level__mutmut_3: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def access_level(role: str) -> int:\n-    if role == \"admin\":\n+    if role == \"ADMIN\":\n         return 2\n     return 1",
-          "calibration_pkg.logic.x_access_level__mutmut_4": "# calibration_pkg.logic.x_access_level__mutmut_4: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def access_level(role: str) -> int:\n     if role == \"admin\":\n-        return 2\n+        return 3\n     return 1"
-        },
-        "cache_before_cleanup": {
-          "file_count": 15,
-          "bytes": 15272
-        },
-        "raw_mutation_output_utf8_bytes": 1803,
-        "temporary_workspace_cleaned": true
-      },
-      {
-        "id": "weak-2",
-        "source_commit": "c43a077",
-        "baseline": {
-          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
-          "arguments": [
-            "-m",
-            "pytest",
-            "-q",
-            "tests/test_logic.py"
-          ],
-          "started_utc": "2026-07-30T09:48:12.865923+00:00",
-          "duration_ms": 436.741,
-          "exit_code": 0,
-          "stdout_utf8_bytes": 98,
-          "stderr_utf8_bytes": 0,
-          "stdout_sha256": "cdf8d13a3f141b449c7d92c9b86d6fd681de17445a1d661236b92f93860eafac",
-          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-        },
-        "mutation": {
-          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
-          "arguments": [
-            "run",
-            "--max-children",
-            "2"
-          ],
-          "started_utc": "2026-07-30T09:48:13.302784+00:00",
-          "duration_ms": 3175.477,
-          "exit_code": 0,
-          "stdout_utf8_bytes": 1803,
-          "stderr_utf8_bytes": 0,
-          "stdout_sha256": "f607b2b0d409b0db1a6165a8c390d327acd55aa01bd97e83c065a5a05fc1bb0d",
-          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-        },
-        "results": {
-          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
-          "arguments": [
-            "results",
-            "--all",
-            "true"
-          ],
-          "started_utc": "2026-07-30T09:48:16.478526+00:00",
-          "duration_ms": 1248.289,
-          "exit_code": 0,
-          "stdout_utf8_bytes": 497,
-          "stderr_utf8_bytes": 0,
-          "stdout_sha256": "da008904623796a2052d5b474c7dd250917a4af358ed5c80921db2689b25e988",
-          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-        },
-        "status_counts": {
-          "killed": 3,
-          "survived": 5
-        },
-        "total_mutants": 8,
+        "mutants_per_second": 2.524,
         "survivors": [
           "calibration_pkg.logic.x_clamp_nonnegative__mutmut_1",
           "calibration_pkg.logic.x_clamp_nonnegative__mutmut_2",
@@ -287,6 +275,82 @@
         "temporary_workspace_cleaned": true
       },
       {
+        "id": "weak-2",
+        "source_commit": "c43a077",
+        "baseline": {
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+          "arguments": [
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_logic.py"
+          ],
+          "started_utc": "2026-07-30T09:55:53.198130+00:00",
+          "duration_ms": 1148.786,
+          "exit_code": 0,
+          "stdout_utf8_bytes": 98,
+          "stderr_utf8_bytes": 0,
+          "stdout_sha256": "fa9cd0e25dcc1e230610463c80c04cc48c6c326debe3521403b94a8e7f25f4ae",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "mutation": {
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
+          "arguments": [
+            "run",
+            "--max-children",
+            "2"
+          ],
+          "started_utc": "2026-07-30T09:55:54.347074+00:00",
+          "duration_ms": 4998.157,
+          "exit_code": 0,
+          "stdout_utf8_bytes": 1803,
+          "stderr_utf8_bytes": 0,
+          "stdout_sha256": "e8b309b9e3206a1949a088da0b135e35605393d96230440a527d1f802d21cbfd",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "results": {
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
+          "arguments": [
+            "results",
+            "--all",
+            "true"
+          ],
+          "started_utc": "2026-07-30T09:55:59.345426+00:00",
+          "duration_ms": 1821.172,
+          "exit_code": 0,
+          "stdout_utf8_bytes": 497,
+          "stderr_utf8_bytes": 0,
+          "stdout_sha256": "da008904623796a2052d5b474c7dd250917a4af358ed5c80921db2689b25e988",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "status_counts": {
+          "killed": 3,
+          "survived": 5
+        },
+        "total_mutants": 8,
+        "mutants_per_second": 1.601,
+        "survivors": [
+          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_1",
+          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_2",
+          "calibration_pkg.logic.x_access_level__mutmut_2",
+          "calibration_pkg.logic.x_access_level__mutmut_3",
+          "calibration_pkg.logic.x_access_level__mutmut_4"
+        ],
+        "survivor_diffs": {
+          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_1": "# calibration_pkg.logic.x_clamp_nonnegative__mutmut_1: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def clamp_nonnegative(value: int) -> int:\n-    if value < 0:\n+    if value <= 0:\n         return 0\n     return value",
+          "calibration_pkg.logic.x_clamp_nonnegative__mutmut_2": "# calibration_pkg.logic.x_clamp_nonnegative__mutmut_2: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def clamp_nonnegative(value: int) -> int:\n-    if value < 0:\n+    if value < 1:\n         return 0\n     return value",
+          "calibration_pkg.logic.x_access_level__mutmut_2": "# calibration_pkg.logic.x_access_level__mutmut_2: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def access_level(role: str) -> int:\n-    if role == \"admin\":\n+    if role == \"XXadminXX\":\n         return 2\n     return 1",
+          "calibration_pkg.logic.x_access_level__mutmut_3": "# calibration_pkg.logic.x_access_level__mutmut_3: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def access_level(role: str) -> int:\n-    if role == \"admin\":\n+    if role == \"ADMIN\":\n         return 2\n     return 1",
+          "calibration_pkg.logic.x_access_level__mutmut_4": "# calibration_pkg.logic.x_access_level__mutmut_4: survived\n--- calibration_pkg/logic.py\n+++ calibration_pkg/logic.py\n@@ -1,4 +1,4 @@\n def access_level(role: str) -> int:\n     if role == \"admin\":\n-        return 2\n+        return 3\n     return 1"
+        },
+        "cache_before_cleanup": {
+          "file_count": 15,
+          "bytes": 15217
+        },
+        "raw_mutation_output_utf8_bytes": 1803,
+        "temporary_workspace_cleaned": true
+      },
+      {
         "id": "strengthened-1",
         "source_commit": "HEAD",
         "baseline": {
@@ -297,8 +361,8 @@
             "-q",
             "tests/test_logic.py"
           ],
-          "started_utc": "2026-07-30T09:48:23.138336+00:00",
-          "duration_ms": 504.921,
+          "started_utc": "2026-07-30T09:56:07.390228+00:00",
+          "duration_ms": 526.859,
           "exit_code": 0,
           "stdout_utf8_bytes": 98,
           "stderr_utf8_bytes": 0,
@@ -312,12 +376,12 @@
             "--max-children",
             "2"
           ],
-          "started_utc": "2026-07-30T09:48:23.643387+00:00",
-          "duration_ms": 2372.548,
+          "started_utc": "2026-07-30T09:56:07.917230+00:00",
+          "duration_ms": 2716.17,
           "exit_code": 0,
           "stdout_utf8_bytes": 1844,
           "stderr_utf8_bytes": 0,
-          "stdout_sha256": "9af5c3436612b8d2b55cbd4a6064dbcd68ffff991ded6e00bd0f8632ec3c25f0",
+          "stdout_sha256": "ab2034033396916c23421176ac153ee32ad87b59cfcfda2e8cc1c5b3e381c06d",
           "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         },
         "results": {
@@ -327,8 +391,8 @@
             "--all",
             "true"
           ],
-          "started_utc": "2026-07-30T09:48:26.016083+00:00",
-          "duration_ms": 1125.928,
+          "started_utc": "2026-07-30T09:56:10.633545+00:00",
+          "duration_ms": 995.088,
           "exit_code": 0,
           "stdout_utf8_bytes": 491,
           "stderr_utf8_bytes": 0,
@@ -340,6 +404,7 @@
           "survived": 2
         },
         "total_mutants": 8,
+        "mutants_per_second": 2.945,
         "survivors": [
           "calibration_pkg.logic.x_clamp_nonnegative__mutmut_1",
           "calibration_pkg.logic.x_clamp_nonnegative__mutmut_2"
@@ -350,7 +415,7 @@
         },
         "cache_before_cleanup": {
           "file_count": 15,
-          "bytes": 16293
+          "bytes": 16294
         },
         "raw_mutation_output_utf8_bytes": 1844,
         "temporary_workspace_cleaned": true
@@ -366,12 +431,12 @@
             "-q",
             "tests/test_logic.py"
           ],
-          "started_utc": "2026-07-30T09:48:29.265778+00:00",
-          "duration_ms": 865.989,
+          "started_utc": "2026-07-30T09:56:13.933611+00:00",
+          "duration_ms": 485.604,
           "exit_code": 0,
           "stdout_utf8_bytes": 98,
           "stderr_utf8_bytes": 0,
-          "stdout_sha256": "c2d64d41edcb4d9a0b7a81fcc964ceb8d2b7d73d7d92491bb17f24d0bbaea6d3",
+          "stdout_sha256": "86288ee89a493b657a4f02c2118272c4f6a9a7afa049f10741e60f3a564db934",
           "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         },
         "mutation": {
@@ -381,12 +446,12 @@
             "--max-children",
             "2"
           ],
-          "started_utc": "2026-07-30T09:48:30.131916+00:00",
-          "duration_ms": 3012.872,
+          "started_utc": "2026-07-30T09:56:14.419342+00:00",
+          "duration_ms": 2763.098,
           "exit_code": 0,
           "stdout_utf8_bytes": 1845,
           "stderr_utf8_bytes": 0,
-          "stdout_sha256": "ceb42c0c2ebf36a5e06f1225ef389106c8f2d55948ba43a05e253b860588dd66",
+          "stdout_sha256": "0ea7e02f1d146775dbafb6bdd4329d1c24b97426f1ee8c3d1b05c2f4bb2a06a7",
           "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         },
         "results": {
@@ -396,8 +461,8 @@
             "--all",
             "true"
           ],
-          "started_utc": "2026-07-30T09:48:33.144913+00:00",
-          "duration_ms": 1212.354,
+          "started_utc": "2026-07-30T09:56:17.182556+00:00",
+          "duration_ms": 1369.391,
           "exit_code": 0,
           "stdout_utf8_bytes": 491,
           "stderr_utf8_bytes": 0,
@@ -409,6 +474,7 @@
           "survived": 2
         },
         "total_mutants": 8,
+        "mutants_per_second": 2.895,
         "survivors": [
           "calibration_pkg.logic.x_clamp_nonnegative__mutmut_1",
           "calibration_pkg.logic.x_clamp_nonnegative__mutmut_2"
@@ -419,7 +485,7 @@
         },
         "cache_before_cleanup": {
           "file_count": 15,
-          "bytes": 16289
+          "bytes": 16285
         },
         "raw_mutation_output_utf8_bytes": 1845,
         "temporary_workspace_cleaned": true
@@ -449,12 +515,12 @@
           "-q",
           "tests/inspector_cases.py"
         ],
-        "started_utc": "2026-07-30T09:48:36.662635+00:00",
-        "duration_ms": 695.827,
+        "started_utc": "2026-07-30T09:56:20.878293+00:00",
+        "duration_ms": 714.51,
         "exit_code": 0,
         "stdout_utf8_bytes": 99,
         "stderr_utf8_bytes": 0,
-        "stdout_sha256": "d30644bb1db9337ac1adce249e90cc224662e8ee76cab56508c92b579590c4c4",
+        "stdout_sha256": "f36e1e392d59bef8578ffcad22a6c77bd2c42ec802b5034c3ddf93f7cf774009",
         "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
       "mutation": {
@@ -464,12 +530,12 @@
           "--max-children",
           "2"
         ],
-        "started_utc": "2026-07-30T09:48:37.358582+00:00",
-        "duration_ms": 15927.216,
+        "started_utc": "2026-07-30T09:56:21.592939+00:00",
+        "duration_ms": 26562.437,
         "exit_code": 0,
-        "stdout_utf8_bytes": 10543,
+        "stdout_utf8_bytes": 10541,
         "stderr_utf8_bytes": 0,
-        "stdout_sha256": "090e8e83e51b16649221bac135706bb43f2224ca451dc68196dbbaf63b1a3e27",
+        "stdout_sha256": "58542c7a57d52ea611f5e1fecff97f802dffd79cd8d4af6496d9978269edb74a",
         "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
       "results": {
@@ -479,8 +545,8 @@
           "--all",
           "true"
         ],
-        "started_utc": "2026-07-30T09:48:53.285970+00:00",
-        "duration_ms": 1079.252,
+        "started_utc": "2026-07-30T09:56:48.155713+00:00",
+        "duration_ms": 1689.489,
         "exit_code": 0,
         "stdout_utf8_bytes": 7976,
         "stderr_utf8_bytes": 0,
@@ -492,6 +558,7 @@
         "survived": 11
       },
       "total_mutants": 129,
+      "mutants_per_second": 4.856,
       "survivors": [
         "target.inspect_schema_refs.xǁSchemaPolicyErrorǁ__init____mutmut_1",
         "target.inspect_schema_refs.x__child_location__mutmut_2",
@@ -520,9 +587,9 @@
       },
       "cache_before_cleanup": {
         "file_count": 12,
-        "bytes": 380540
+        "bytes": 380507
       },
-      "raw_mutation_output_utf8_bytes": 10543,
+      "raw_mutation_output_utf8_bytes": 10541,
       "temporary_workspace_cleaned": true
     },
     "strengthened_wrapper_runs": [
@@ -533,6 +600,7 @@
           "survived": 2
         },
         "total_mutants": 129,
+        "mutants_per_second": 7.027,
         "survivors": [
           "target.inspect_schema_refs.x__child_location__mutmut_2",
           "target.inspect_schema_refs.x_inspect_schema__mutmut_19"
@@ -545,6 +613,7 @@
           "survived": 2
         },
         "total_mutants": 129,
+        "mutants_per_second": 5.362,
         "survivors": [
           "target.inspect_schema_refs.x__child_location__mutmut_2",
           "target.inspect_schema_refs.x_inspect_schema__mutmut_19"
@@ -566,8 +635,8 @@
       "arguments": [
         "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/equivalence_proof.py"
       ],
-      "started_utc": "2026-07-30T09:48:03.505504+00:00",
-      "duration_ms": 35.278,
+      "started_utc": "2026-07-30T09:55:34.921038+00:00",
+      "duration_ms": 117.004,
       "exit_code": 0,
       "stdout_utf8_bytes": 352,
       "stderr_utf8_bytes": 0,
@@ -601,7 +670,7 @@
         "expected_diagnostic": "cache_cleanup=scheduled process_exit=0",
         "diagnostic_matched": true,
         "temporary_workspaces": [
-          "/tmp/citystate-mutmut.ucyBWD"
+          "/tmp/citystate-mutmut.kZuYii"
         ],
         "temporary_workspaces_cleaned": true,
         "passed": true,
@@ -623,12 +692,12 @@
             "--max-children",
             "2"
           ],
-          "started_utc": "2026-07-30T09:49:13.747605+00:00",
-          "duration_ms": 15402.694,
+          "started_utc": "2026-07-30T09:57:18.042587+00:00",
+          "duration_ms": 18356.532,
           "exit_code": 0,
           "stdout_utf8_bytes": 18865,
           "stderr_utf8_bytes": 0,
-          "stdout_sha256": "5f1abe444ca66f985ed2071bce1a7d20ad1fb587d72efb0243e0266b75043d86",
+          "stdout_sha256": "c35b07102d3e7e24b39c59a0bb47b7b553238301ae71c44a05df213a998ae2e4",
           "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         }
       },
@@ -638,7 +707,7 @@
         "expected_diagnostic": "cache_cleanup=scheduled process_exit=0",
         "diagnostic_matched": true,
         "temporary_workspaces": [
-          "/tmp/citystate-mutmut.Zy272l"
+          "/tmp/citystate-mutmut.tNLOuk"
         ],
         "temporary_workspaces_cleaned": true,
         "passed": true,
@@ -660,12 +729,12 @@
             "--max-children",
             "2"
           ],
-          "started_utc": "2026-07-30T09:49:29.151229+00:00",
-          "duration_ms": 15989.917,
+          "started_utc": "2026-07-30T09:57:36.400194+00:00",
+          "duration_ms": 24056.393,
           "exit_code": 0,
-          "stdout_utf8_bytes": 18865,
+          "stdout_utf8_bytes": 18866,
           "stderr_utf8_bytes": 0,
-          "stdout_sha256": "9d181f6a66ebf13f3dd2d18cfe489f0ad4e3efa9b1f62f462c61ad340d01c682",
+          "stdout_sha256": "67c8cc39735e110a1770bbc81a5a34463b98eb64212c42eecb052f835b663b0b",
           "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         }
       },
@@ -697,8 +766,8 @@
             "--mutmut-executable",
             "/home/gk/.venvs/core-mutmut-3.6.0/bin/does-not-exist"
           ],
-          "started_utc": "2026-07-30T09:49:45.142071+00:00",
-          "duration_ms": 98.562,
+          "started_utc": "2026-07-30T09:58:00.457342+00:00",
+          "duration_ms": 75.414,
           "exit_code": 69,
           "stdout_utf8_bytes": 0,
           "stderr_utf8_bytes": 134,
@@ -734,8 +803,8 @@
             "--mutmut-executable",
             "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/fixtures/fake_mutmut_9_9_9.sh"
           ],
-          "started_utc": "2026-07-30T09:49:45.240805+00:00",
-          "duration_ms": 135.086,
+          "started_utc": "2026-07-30T09:58:00.532948+00:00",
+          "duration_ms": 142.302,
           "exit_code": 78,
           "stdout_utf8_bytes": 0,
           "stderr_utf8_bytes": 76,
@@ -769,12 +838,12 @@
             "--max-children",
             "2"
           ],
-          "started_utc": "2026-07-30T09:49:45.375984+00:00",
-          "duration_ms": 2218.768,
+          "started_utc": "2026-07-30T09:58:00.675361+00:00",
+          "duration_ms": 4021.411,
           "exit_code": 67,
           "stdout_utf8_bytes": 680,
           "stderr_utf8_bytes": 51,
-          "stdout_sha256": "5719e61a28df53cbac4fa6ea45e78fa970977cce0ad9a34f4dc7f019e794293f",
+          "stdout_sha256": "eaba19c8e60b34d4b77ff0d799af6981299f5cf791a318b92a7a500f89221380",
           "stderr_sha256": "4c7e7c695fed32bebb8ffa3f1212861e3924c892c713a70a8361f574b7dd228a"
         }
       },
@@ -804,8 +873,8 @@
             "--max-children",
             "2"
           ],
-          "started_utc": "2026-07-30T09:49:47.594844+00:00",
-          "duration_ms": 56.342,
+          "started_utc": "2026-07-30T09:58:04.696907+00:00",
+          "duration_ms": 79.401,
           "exit_code": 66,
           "stdout_utf8_bytes": 0,
           "stderr_utf8_bytes": 185,
@@ -839,8 +908,8 @@
             "--max-children",
             "2"
           ],
-          "started_utc": "2026-07-30T09:49:47.651308+00:00",
-          "duration_ms": 61.652,
+          "started_utc": "2026-07-30T09:58:04.776607+00:00",
+          "duration_ms": 77.024,
           "exit_code": 65,
           "stdout_utf8_bytes": 0,
           "stderr_utf8_bytes": 62,
@@ -872,8 +941,8 @@
             "--max-children",
             "2"
           ],
-          "started_utc": "2026-07-30T09:49:47.713129+00:00",
-          "duration_ms": 10.077,
+          "started_utc": "2026-07-30T09:58:04.853814+00:00",
+          "duration_ms": 15.594,
           "exit_code": 64,
           "stdout_utf8_bytes": 0,
           "stderr_utf8_bytes": 37,
@@ -907,8 +976,8 @@
             "--max-children",
             "2"
           ],
-          "started_utc": "2026-07-30T09:49:47.723526+00:00",
-          "duration_ms": 39.059,
+          "started_utc": "2026-07-30T09:58:04.869851+00:00",
+          "duration_ms": 53.232,
           "exit_code": 73,
           "stdout_utf8_bytes": 0,
           "stderr_utf8_bytes": 43,
@@ -923,12 +992,42 @@
       "file_count": 3753,
       "bytes": 86162370
     },
-    "maximum_direct_mutants_cache_bytes_before_cleanup": 380540,
-    "raw_output_bytes": 56836,
-    "child_ru_maxrss_kib_cumulative_process_tree_proxy": 106828,
+    "maximum_direct_mutants_cache_bytes_before_cleanup": 380507,
+    "raw_output_bytes": 56835,
+    "child_ru_maxrss_kib_cumulative_process_tree_proxy": 106824,
     "peak_process_tree_memory": "not_observable_reliably",
     "exact_model_tokens": "not_observable",
-    "resident_processes_after_run": 0
+    "resident_processes_after_run": 0,
+    "lifecycle_measurement": {
+      "installed_idle": {
+        "venv_file_count": 3753,
+        "venv_bytes": 86162370,
+        "resident_mutmut_processes": 0
+      },
+      "registered_on_demand": {
+        "repository_artifact_count": 4,
+        "repository_artifact_bytes": 18046,
+        "default_loaded": false,
+        "mcp_exposed": false
+      },
+      "calibration_invoked": {
+        "run_count": 4,
+        "duration_ms": 21944.038,
+        "maximum_cache_bytes_before_cleanup": 16294
+      },
+      "real_target_invoked": {
+        "run_count": 3,
+        "duration_ms": 71379.361,
+        "initial_mutants": 129,
+        "strengthened_mutants_each": 129
+      },
+      "diagnostic_consumed_by_model": {
+        "survivor_summary_utf8_bytes": 116,
+        "survivor_summary_characters": 116,
+        "exact_model_tokens": "not_observable",
+        "proxy_not_billing_tokens": 29
+      }
+    }
   },
   "token_and_context": {
     "boot_loaded": false,
