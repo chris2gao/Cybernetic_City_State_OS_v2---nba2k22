@@ -50,6 +50,14 @@ validation:
   boot_non_reference: passed
   mcp_not_exposed: passed
   canonical_absolute_user_path_scan: passed
+  scoped_high_confidence_secret_scan: passed
+  context_structure_validator: passed
+  ai_pytest: 45_passed_22_subtests_passed
+  check_jsonschema_run_012_repository_validation: passed
+  full_pytest_candidate: 11_failed_4_passed
+  full_pytest_implementation_base: 11_failed_1_passed
+  full_pytest_failure_node_ids_identical_to_base: true
+  candidate_caused_full_pytest_failures: 0
 measurement:
   calibration_weak: 3_killed_5_survived_of_8
   calibration_strengthened: 6_killed_2_equivalent_survived_of_8
@@ -61,4 +69,4 @@ measurement:
   context_claim: proxy_not_billing_tokens
   system_install_performed: false
   sudo_used: false
-status: completed_on_work_branch
+status: candidate_ready_for_independent_review
