@@ -92,4 +92,14 @@ evidence_consistency_revision:
   local_clone_fallback_tracking_ref_authoritative: false
   mutation_retest: not_run_accepted_without_retest
   full_pytest_retest: not_run_no_code_or_test_semantics_changed
+  validation:
+    run_013_repository_state_validator: passed
+    json_yaml_parse: passed
+    correction_changed_path_allowlist: passed
+    reviewed_candidate_results_preserved: passed
+    forbidden_candidate_blobs_unchanged: passed
+    git_diff_check: passed
+    context_structure_validator: passed
+    ai_pytest: 45_passed_22_subtests_passed
+    check_jsonschema_run_012_repository_validator: passed
 status: evidence_consistency_corrected_on_work_branch
