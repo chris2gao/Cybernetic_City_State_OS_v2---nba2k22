@@ -123,7 +123,7 @@ assert receipt["origin_master_at_start"] == receipt["origin_master_at_end"]
 assert WRAPPER_PATH.stat().st_mode & 0o111
 wrapper_text = WRAPPER_PATH.read_text(encoding="utf-8")
 assert "mutmut apply" not in wrapper_text
-assert "git archive" in wrapper_text
+assert " archive --format=tar HEAD " in wrapper_text
 assert "status --porcelain" in wrapper_text
 assert "EXPECTED_MUTMUT_VERSION=\"3.6.0\"" in wrapper_text
 
