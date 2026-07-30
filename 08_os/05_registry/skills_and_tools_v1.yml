@@ -65,6 +65,35 @@ entries:
     cache_dirs: []
     failure_surfacing: current invocation before version probe or validation
     deletion_rule: protected
+  - path: 08_os/04_skills_and_tools/mutmut/README.md
+    purpose: mutmut 已验证版本、OS 职责、等价 survivor 与复验边界
+    loader: human or task-directed tools review
+    loader_class: external_tool_convention
+    discovery: referenced from 08_os/04_skills_and_tools/README.md
+    evidence: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/results.json
+    cache_dirs: []
+    failure_surfacing: next mutmut invocation or revalidation
+    deletion_rule: protected
+  - path: 08_os/06_execution/tools/mutmut/README.md
+    purpose: mutmut WSL loader、退出码、单文件 allowlist 与 fail-closed 调用契约
+    loader: task-directed tool invocation
+    loader_class: external_tool_convention
+    discovery: referenced from tool registry metadata
+    evidence: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/results.json
+    cache_dirs:
+      - /tmp/citystate-mutmut.*
+    failure_surfacing: current invocation
+    deletion_rule: protected
+  - path: 08_os/06_execution/tools/mutmut/invoke.sh
+    purpose: 在 WSL 临时归档中对一个显式 allowlisted Python 文件执行 baseline 与 mutation
+    loader: Bash task executor
+    loader_class: in_repo_program
+    discovery: canonical_wrapper in tools registry
+    evidence: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/results.json
+    cache_dirs:
+      - /tmp/citystate-mutmut.*
+    failure_surfacing: current invocation
+    deletion_rule: protected
 tools:
   - name: check-jsonschema
     version: 0.37.4
@@ -86,6 +115,27 @@ tools:
       metaschema, positive, core negative, reference-closure, version-drift,
       five-repeat, Unicode-path and unavailable-tool tests.
     canonical_wrapper: 08_os/06_execution/tools/check_jsonschema/invoke.ps1
+  - name: mutmut
+    version: 3.6.0
+    status: verified_on_demand
+    mount: on_demand_wsl_cli
+    default_loaded: false
+    mcp_exposed: false
+    expected_version: 3.6.0
+    version_gate: exact_runtime_probe_before_mutation
+    workspace_policy: wsl_linux_filesystem_clean_git_worktree
+    target_policy: explicit_single_python_file_allowlist
+    validation_command: >-
+      bash
+      08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/run_validation.sh
+      /absolute/path/to/dedicated-mutmut-venv
+    validated_at: "2026-07-30"
+    evidence: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/results.json
+    upgrade_and_revalidation: >-
+      After any mutmut, Python, wrapper, target configuration or test-semantics
+      change, rerun run-013 calibration, real target, wrapper boundary and
+      repository-state validation.
+    canonical_wrapper: 08_os/06_execution/tools/mutmut/invoke.sh
 excluded:
   - candidate packages, runtimes, MCP servers, and skills not explicitly listed under tools
   - 08_os/_runs/**
