@@ -8,3 +8,7 @@ def test_clamp_nonnegative() -> None:
 
 def test_guest_access_level() -> None:
     assert access_level("guest") == 1
+
+
+def test_admin_access_level() -> None:
+    assert access_level("admin") == 2
