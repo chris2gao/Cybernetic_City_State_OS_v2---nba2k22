@@ -66,6 +66,20 @@ def normalize(dump_path: Path) -> dict[str, Any]:
         sort_keys=True,
         separators=(",", ":"),
     )
+    semantic_objects = [
+        {
+            key: value
+            for key, value in item.items()
+            if key != "output_sha256"
+        }
+        for item in objects
+    ]
+    semantic_json = json.dumps(
+        semantic_objects,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
     return {
         "format": "cosmic-ray-normalized-v1",
         "source_dump": str(dump_path),
@@ -74,6 +88,7 @@ def normalize(dump_path: Path) -> dict[str, Any]:
         "worker_outcome_counts": dict(sorted(worker_counts.items())),
         "operator_counts": dict(sorted(operator_counts.items())),
         "objects_sha256": sha256_text(normalized_json),
+        "semantic_objects_sha256": sha256_text(semantic_json),
         "objects": objects,
     }
 
@@ -93,6 +108,7 @@ def main() -> int:
             {
                 "object_count": result["object_count"],
                 "objects_sha256": result["objects_sha256"],
+                "semantic_objects_sha256": result["semantic_objects_sha256"],
                 "status_counts": result["status_counts"],
                 "worker_outcome_counts": result["worker_outcome_counts"],
             },

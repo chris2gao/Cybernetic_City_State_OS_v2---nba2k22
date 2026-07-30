@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ $# -ne 4 ]]; then
-    echo "usage: $0 REPO_ROOT COMMIT_SHA PROJECT_REL OUTPUT_DIR" >&2
+if [[ $# -lt 4 || $# -gt 6 ]]; then
+    echo "usage: $0 REPO_ROOT COMMIT_SHA PROJECT_REL OUTPUT_DIR [SOURCE_REL] [TEST_PATH]" >&2
     exit 64
 fi
 
@@ -10,6 +10,8 @@ repo_root=$1
 commit_sha=$2
 project_rel=$3
 output_dir=$4
+source_path=${5:-calibration_pkg/logic.py}
+test_path=${6:-tests}
 cosmic_venv=/home/gk/.venvs/core-cosmic-ray-8.4.6
 pytest_python=/home/gk/.venvs/core-mutmut-3.6.0/bin/python
 
@@ -67,11 +69,10 @@ if [[ ! -d "$project_dir" ]]; then
 fi
 
 cd "$project_dir"
-source_path=calibration_pkg/logic.py
 source_before=$(sha256sum "$source_path" | cut -d " " -f 1)
 
 /usr/bin/time -f "wall_seconds=%e" -o "$output_dir/baseline.time" \
-timeout 120s "$pytest_python" -m pytest -q -x tests \
+timeout 120s "$pytest_python" -m pytest -q -x "$test_path" \
     >"$output_dir/baseline.stdout.txt" \
     2>"$output_dir/baseline.stderr.txt"
 
