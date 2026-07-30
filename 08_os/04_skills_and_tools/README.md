@@ -32,3 +32,11 @@ that check is part of the entry rather than a note beside it.
 
 这两份文档只用于 Human 定向审阅。当前没有因这些文档而安装、激活、
 暴露、加载或调用任何候选工具；长评估文档也不进入默认 boot。
+
+## Verified on-demand tools
+
+- [check-jsonschema](check-jsonschema/README.md)：`0.37.4`，通过 run-012
+  独立安装真实性、正负例、重复性与 fail-closed wrapper 验证。
+
+已验证工具仍不进入默认 boot，不暴露为 MCP，也不因登记而自动调用。任务必须通过
+registry 发现并显式调用 canonical wrapper。

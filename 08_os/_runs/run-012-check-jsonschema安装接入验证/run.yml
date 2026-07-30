@@ -1,0 +1,51 @@
+schema_version: os_development_run.v1
+run_id: run-012-check-jsonschema-installation-validation
+task_id: check-jsonschema-installation-validation-001
+implementation_base: a14b4ddac15cd9c0055ef78fd67a90b8644685aa
+dispatch_head: 5b0784aed1bcefcace38f21d81b140b77fa52374
+work_branch: codex/check-jsonschema-installation-validation-001
+ownership: core
+run_class: tool_installation_and_on_demand_validation
+purpose: 独立验证 check-jsonschema 安装真实性、结构错误检出、按需调用边界与成本
+tool:
+  name: check-jsonschema
+  version: 0.37.4
+  installation_manager: pipx
+  runtime: Python 3.14.6
+  status: verified_on_demand
+  mount: on_demand_cli
+  default_loaded: false
+  mcp_exposed: false
+  canonical_wrapper: 08_os/06_execution/tools/check_jsonschema/invoke.ps1
+outputs:
+  tool_contract: 08_os/04_skills_and_tools/check-jsonschema/README.md
+  loader_contract: 08_os/06_execution/tools/check_jsonschema/README.md
+  wrapper: 08_os/06_execution/tools/check_jsonschema/invoke.ps1
+  installation_receipt: 08_os/_runs/run-012-check-jsonschema安装接入验证/01_任务输入/安装真实性命令回执.json
+  validation_receipt: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/results.json
+  conclusion: 08_os/_runs/run-012-check-jsonschema安装接入验证/08_结论/check-jsonschema系统职责与收益.md
+records:
+  installation_summary: 08_os/_runs/run-012-check-jsonschema安装接入验证/01_任务输入/安装回执.md
+  validation_matrix: 08_os/_runs/run-012-check-jsonschema安装接入验证/03_方案设计/验证矩阵.md
+  change_record: 08_os/_runs/run-012-check-jsonschema安装接入验证/06_执行/变更清单.md
+  test_record: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/测试记录.md
+validation:
+  installation_truth: passed_with_pipx_path_observation
+  positive_yaml: passed
+  positive_json: passed
+  metaschema: passed
+  core_negative_cases: passed
+  repeatability_five_runs: passed
+  wrapper_success_failure_unavailable: passed
+  unicode_and_space_path: passed
+  local_only_boundary: passed
+  no_resident_process: passed
+  boot_non_reference: passed
+  mcp_not_exposed: passed
+  canonical_absolute_user_path_scan: passed
+measurement:
+  exact_model_tokens: not_observable
+  network_packet_capture: not_run
+  peak_process_tree_memory: not_observable
+  environment_changes_performed: false
+status: completed_on_work_branch

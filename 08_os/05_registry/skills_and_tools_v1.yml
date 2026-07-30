@@ -29,6 +29,49 @@ entries:
     cache_dirs: []
     failure_surfacing: next human tools review
     deletion_rule: protected
+  - path: 08_os/04_skills_and_tools/check-jsonschema/README.md
+    purpose: check-jsonschema 已验证版本、OS 职责边界、生命周期与复验入口
+    loader: human or task-directed tools review
+    loader_class: external_tool_convention
+    discovery: referenced from 08_os/04_skills_and_tools/README.md
+    evidence: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/results.json
+    cache_dirs: []
+    failure_surfacing: next check-jsonschema invocation or revalidation
+    deletion_rule: protected
+  - path: 08_os/06_execution/tools/check_jsonschema/README.md
+    purpose: check-jsonschema 按需 loader、退出码和 fail-closed 调用契约
+    loader: task-directed tool invocation
+    loader_class: external_tool_convention
+    discovery: referenced from tool README and registry metadata
+    evidence: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/results.json
+    cache_dirs: []
+    failure_surfacing: next check-jsonschema invocation
+    deletion_rule: protected
+  - path: 08_os/06_execution/tools/check_jsonschema/invoke.ps1
+    purpose: 解析本地 schema/instance 与 CLI executable、转发诊断并保留退出码
+    loader: PowerShell task executor
+    loader_class: in_repo_program
+    discovery: canonical_wrapper in tools registry
+    evidence: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/results.json
+    cache_dirs: []
+    failure_surfacing: current invocation
+    deletion_rule: protected
+tools:
+  - name: check-jsonschema
+    version: 0.37.4
+    status: verified_on_demand
+    mount: on_demand_cli
+    default_loaded: false
+    mcp_exposed: false
+    validation_command: >-
+      pwsh -NoProfile -File
+      08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/run_validation.ps1
+    validated_at: "2026-07-29"
+    evidence: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/results.json
+    upgrade_and_revalidation: >-
+      After any version or runtime change, rerun run-012 metaschema, positive,
+      core negative, five-repeat, Unicode-path and unavailable-tool tests.
+    canonical_wrapper: 08_os/06_execution/tools/check_jsonschema/invoke.ps1
 excluded:
-  - candidate packages, runtimes, MCP servers, and skills not installed by run-011
+  - candidate packages, runtimes, MCP servers, and skills not explicitly listed under tools
   - 08_os/_runs/**

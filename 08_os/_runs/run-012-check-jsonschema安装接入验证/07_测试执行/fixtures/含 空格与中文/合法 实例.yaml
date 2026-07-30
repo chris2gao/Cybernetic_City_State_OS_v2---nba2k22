@@ -1,0 +1,13 @@
+schema_version: run_manifest.calibration.v1
+run_id: run-012-schema-check
+status: completed
+human_gate: false
+outputs:
+  report_ref: 08_os/_runs/run-012/含 空格与中文/报告.md
+  artifact_refs:
+    - 08_os/_runs/run-012/含 空格与中文/结果.json
+checks:
+  - id: SCHEMA-01
+    required_pass: true
+    tags:
+      - unicode-path
