@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import codecs
 import json
 from pathlib import Path
 
@@ -26,6 +27,7 @@ def assert_policy_error(
     assert caught.value.code == code
     assert caught.value.location == location
     assert caught.value.detail
+    assert str(caught.value) == caught.value.detail
     return caught.value
 
 
@@ -99,6 +101,7 @@ def test_remote_identifiers_are_rejected(
         f'$["{keyword}"]',
     )
     assert "HTTP(S)" in error.detail
+    assert error.detail == f'{keyword} must not use HTTP(S); got "{value}"'
 
 
 def test_nested_location_is_stable(tmp_path: Path) -> None:
@@ -111,12 +114,23 @@ def test_nested_location_is_stable(tmp_path: Path) -> None:
     assert '"other.json"' in error.detail
 
 
+def test_unicode_location_is_not_ascii_escaped(tmp_path: Path) -> None:
+    error = assert_policy_error(
+        tmp_path,
+        {"π": {"$ref": "other.json"}},
+        "CJV-R01-EXTERNAL-REFERENCE",
+        '$["π"]["$ref"]',
+    )
+    assert "\\u03c0" not in error.location
+
+
 def test_non_json_suffix_is_rejected(tmp_path: Path) -> None:
     path = write_schema(tmp_path, {}, suffix=".yaml")
     with pytest.raises(subject.SchemaPolicyError) as caught:
         subject.inspect_schema(path)
     assert caught.value.code == "CJV-R01-JSON-SUFFIX"
     assert caught.value.location == "$"
+    assert caught.value.detail == "canonical schema must use the .json suffix"
 
 
 def test_uppercase_json_suffix_is_allowed(tmp_path: Path) -> None:
@@ -130,8 +144,32 @@ def test_damaged_json_is_rejected_with_stable_location(tmp_path: Path) -> None:
         subject.inspect_schema(path)
     assert caught.value.code == "CJV-R01-STRICT-JSON"
     assert caught.value.location == "$"
-    assert "line 1" in caught.value.detail
-    assert "column" in caught.value.detail
+    assert caught.value.detail.startswith(
+        "strict JSON parse failed: JSONDecodeError at line 1 column "
+    )
+
+
+def test_schema_read_uses_an_explicit_utf8_codec(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    path = write_schema(tmp_path, {})
+    observed: dict[str, str | None] = {}
+    original_read_text = Path.read_text
+
+    def tracked_read_text(
+        receiver: Path,
+        *args: object,
+        **kwargs: object,
+    ) -> str:
+        encoding = kwargs.get("encoding")
+        observed["encoding"] = encoding if isinstance(encoding, str) else None
+        return original_read_text(receiver, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "read_text", tracked_read_text)
+    subject.inspect_schema(path)
+    assert observed["encoding"] is not None
+    assert codecs.lookup(observed["encoding"]).name == "utf-8"
 
 
 def test_unreadable_schema_is_rejected(tmp_path: Path) -> None:
