@@ -74,9 +74,18 @@ timeout 600s "$mutmut_venv/bin/mutmut" run --max-children 1 \
 "$mutmut_venv/bin/mutmut" results --all true \
     >"$output_dir/results.txt"
 
+while IFS= read -r mutant_name; do
+    printf '=== %s ===\n' "$mutant_name"
+    "$mutmut_venv/bin/mutmut" show "$mutant_name"
+done < <(
+    sed -n 's/^[[:space:]]*\([^:]*\):.*/\1/p' "$output_dir/results.txt"
+) >"$output_dir/all-mutants.txt"
+
 if [[ -f mutants/.mutmut-cache ]]; then
     cp -- mutants/.mutmut-cache "$output_dir/mutmut-cache.sqlite"
 fi
+cp -- mutants/calibration_pkg/logic.py "$output_dir/mutants-logic.py"
+cp -- mutants/calibration_pkg/logic.py.meta "$output_dir/mutants-logic.py.meta"
 find mutants -maxdepth 2 -type f -printf '%P\t%s\n' \
     | sort >"$output_dir/mutants-files.tsv"
 
