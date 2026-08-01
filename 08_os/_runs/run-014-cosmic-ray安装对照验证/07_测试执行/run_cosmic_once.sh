@@ -70,7 +70,7 @@ if [[ ! -d "$project_dir" ]]; then
     exit 68
 fi
 if [[ -n "$config_rel" ]]; then
-    cp -- "$temp_root/$config_rel" "$project_dir/cosmic-ray.toml"
+    cp -- "$repo_root/$config_rel" "$project_dir/cosmic-ray.toml"
     sed -i "s|\${COSMIC_RAY_VENV}|$cosmic_venv|g" "$project_dir/cosmic-ray.toml"
 fi
 if [[ -n "$canonical_source_rel" ]]; then
