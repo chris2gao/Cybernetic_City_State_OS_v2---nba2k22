@@ -57,5 +57,9 @@ that is neither present nor correctly ignored.
   execution loader/validator、活动开发规范、受保护历史和阶段二拆分补充。
 - `skills_and_tools_v1.yml`：确定性工具的 Human 选型与接入评估入口；仅注册
   文档，不表示工具已安装、激活或进入 boot。
+- `repository_guards_v1.yml`：git 按约定路径从仓库引用图**外部**读取的守卫文件
+  （当前为 `.githooks/`）。这正是本 README 开头所述、reachability 分析必然漏掉的
+  那一类文件。所有权在 `CORE_MANIFEST.yml` 另行声明：那份答"谁有权编写"，
+  本 registry 答"谁加载、怎么被发现、失败何时显形"，两者不可互相替代。
 
 `08_os/_runs/`、`_runtime/`、角色 private/scratch 不注册。

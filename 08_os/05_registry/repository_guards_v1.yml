@@ -1,0 +1,87 @@
+schema_version: citystate.registry.v1
+mechanism_version: 1
+
+# Repository-level guards: files that git or another external tool loads from a
+# conventional path, outside this repository's own reference graph.
+#
+# This is the file class 05_registry/README.md was written for. Two working
+# mechanism files were once deleted by a correct reachability analysis precisely
+# because the thing loading them was not in the repository and no reference to
+# them existed anywhere; both were found by accident. A guard that git reads by
+# convention has the same shape.
+#
+# Ownership is declared separately in CORE_MANIFEST.yml. That file answers who
+# may author a path, so that core/domain drift can be detected. It does not
+# answer what loads the path, how the path is discovered, or when a failure
+# becomes visible. Those are this registry's questions, and the two are not
+# substitutes for each other.
+
+guards:
+  - path: ".githooks/pre-push"
+    purpose: >-
+      Refuses non-fast-forward pushes to any ref, pushes to master or main
+      without per-command authorization, and deletion of a remote branch.
+    loader: "git, when core.hooksPath points at .githooks"
+    loader_class: external_tool_convention
+    discovery: >-
+      hardcoded default in git. Nothing inside the tree references this file as
+      an execution dependency, so no in-repository analysis can reveal it.
+    activation: "git config core.hooksPath .githooks"
+    activation_travels_with_merge: false
+    evidence: >-
+      08_os/_runs/ has no run for this; the acceptance evidence is the self-test
+      in .githooks/install.ps1, which attempts a dry-run push to master and
+      requires the refusal. Five cases were measured at install time: an
+      unauthorized master push is refused, the same push with
+      CITYSTATE_ALLOW_MASTER=1 is allowed, an ordinary fast-forward to a feature
+      branch is allowed, force-pushing an ancestor over a published branch is
+      refused, and deleting a remote branch is refused.
+    cache_dirs: []
+    failure_surfacing: "never until misuse"
+    failure_note: >-
+      This is the worst category and it has already happened. The first commit
+      shipped a zero-byte hook: it was executable, exited zero, refused nothing,
+      and every push continued to succeed, so the repository looked exactly as it
+      would have if the guard were working. Only an attempted push that was
+      required to fail revealed it. Checking that the file exists proves nothing
+      about this entry.
+    deletion_rule: protected
+    known_limit: >-
+      `git push --no-verify` skips the hook entirely, as does any client that
+      pushes without invoking hooks. This is a guard, not an enforced access
+      boundary - the same distinction run-007 drew for workspace partitions. It
+      must never be cited as evidence that history was not rewritten; read the
+      remote for that.
+
+  - path: ".githooks/README.md"
+    purpose: "How to enable the guard, what it refuses, and what it cannot do."
+    loader: "Human and development executors"
+    loader_class: external_tool_convention
+    discovery: "referenced from .githooks/install.ps1 and from this registry"
+    evidence: ".githooks/install.ps1"
+    cache_dirs: []
+    failure_surfacing: "next clone that runs unguarded because nobody enabled it"
+    deletion_rule: protected
+
+  - path: ".githooks/install.ps1"
+    purpose: >-
+      Sets core.hooksPath, checks the hook has LF endings because a CRLF shebang
+      fails silently under Git Bash, and proves the guard fires by requiring a
+      refused dry-run push to master.
+    loader: "Human or development executor, once per clone"
+    loader_class: external_tool_convention
+    discovery: "referenced from .githooks/README.md and from this registry"
+    evidence: "its own output; it exits non-zero when the guard does not fire"
+    cache_dirs: []
+    failure_surfacing: "immediately, by design - it refuses to report success"
+    deletion_rule: protected
+
+  - path: ".githooks/.gitattributes"
+    purpose: "Forces LF on hook files. A CRLF shebang makes the hook not run."
+    loader: "git"
+    loader_class: external_tool_convention
+    discovery: "hardcoded default in git"
+    evidence: "the LF check in .githooks/install.ps1"
+    cache_dirs: []
+    failure_surfacing: "never until misuse"
+    deletion_rule: protected
