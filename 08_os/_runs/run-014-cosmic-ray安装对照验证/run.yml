@@ -1,6 +1,7 @@
 schema_version: os_development_run.v1
 run_id: run-014-cosmic-ray安装对照验证
 task_id: cosmic-ray-wsl-installation-validation-001
+correction_task_id: cosmic-ray-final-evidence-runtime-correction-002
 implementation_base: a6261cf3a8f0e0263b41a6ec32a3dd6c16ed653c
 dispatch_head: 452f19a8d86fad32da002d24368cc204124e9084
 work_branch: codex/cosmic-ray-wsl-installation-validation-001
@@ -50,7 +51,10 @@ validation:
   timeout_semantics: passed_with_wrapper_correction
   real_target_repeat: passed
   survivor_proofs: passed
-  wrapper_matrix: 30_passed
+  wrapper_matrix: 38_passed
+  results_environment_exact_match: passed
+  committed_personal_paths: 0
+  evidence_files: 208
   temporary_cleanup: passed
   no_resident_process: passed
   canonical_source_unchanged: passed

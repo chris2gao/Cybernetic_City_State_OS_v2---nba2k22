@@ -47,8 +47,8 @@ wrapper fail closed（退出 `72`），不得计入 killed。
 ## 成本与限制
 
 - 专用 venv：`73,253,524` bytes、`3,755` regular files（最终修正复验时点）。
-- 同一真实目标的 mutation exec：Cosmic Ray 两次约 `35.07s`、`39.07s`；mutmut
-  两次约 `17.84s`、`13.02s`。
+- 同一真实目标的最终 mutation exec：Cosmic Ray 两次约 `28.84s`、`18.12s`；mutmut
+  两次约 `8.31s`、`8.81s`。
 - Cosmic Ray 会对 `from __future__ import annotations` 下的注解表达式生成大量运行时
   无效 mutation；survivor 必须逐项分类。
 - 只验证了 local distributor 和单 worker；HTTP distributor、远端 worker、`/mnt/**`

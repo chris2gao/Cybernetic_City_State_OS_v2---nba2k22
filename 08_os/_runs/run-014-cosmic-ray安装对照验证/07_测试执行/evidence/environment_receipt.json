@@ -16,7 +16,9 @@
       "yattag"
     ],
     "expected_version": "8.4.6",
-    "include_system_site_packages": true,
+    "include_system_site_packages": false,
+    "installed_pytest_version": "9.1.1",
+    "installed_python_version": "3.14.4",
     "installed_version": "8.4.6",
     "packages": [
       "aiohappyeyeballs==2.7.1",
@@ -55,19 +57,19 @@
     ],
     "pip_probe": {
       "command": [
-        "/home/gk/.venvs/core-cosmic-ray-8.4.6/bin/python",
+        "${COSMIC_RAY_VENV}/bin/python",
         "-m",
         "pip",
         "--version"
       ],
       "exit_code": 0,
       "stderr": "",
-      "stdout": "pip 25.1.1 from /home/gk/.venvs/core-cosmic-ray-8.4.6/lib/python3.14/site-packages/pip (python 3.14)",
-      "wall_seconds": 0.806464
+      "stdout": "pip 25.1.1 from ${COSMIC_RAY_VENV}/lib/python3.14/site-packages/pip (python 3.14)",
+      "wall_seconds": 0.695579
     },
     "pytest_probe": {
       "command": [
-        "/home/gk/.venvs/core-cosmic-ray-8.4.6/bin/python",
+        "${COSMIC_RAY_VENV}/bin/python",
         "-m",
         "pytest",
         "--version"
@@ -75,10 +77,10 @@
       "exit_code": 0,
       "stderr": "",
       "stdout": "pytest 9.1.1",
-      "wall_seconds": 0.5231
+      "wall_seconds": 0.244558
     },
     "requires_python": ">=3.9",
-    "venv": "/home/gk/.venvs/core-cosmic-ray-8.4.6",
+    "venv": "${COSMIC_RAY_VENV}",
     "venv_stats": {
       "bytes": 73253524,
       "file_count": 3755,
@@ -86,23 +88,23 @@
     },
     "version_probe_cold_proxy": {
       "command": [
-        "/home/gk/.venvs/core-cosmic-ray-8.4.6/bin/cosmic-ray",
+        "${COSMIC_RAY_VENV}/bin/cosmic-ray",
         "--version"
       ],
       "exit_code": 0,
       "stderr": "",
       "stdout": "cosmic-ray, version 8.4.6",
-      "wall_seconds": 1.619394
+      "wall_seconds": 3.022402
     },
     "version_probe_warm": {
       "command": [
-        "/home/gk/.venvs/core-cosmic-ray-8.4.6/bin/cosmic-ray",
+        "${COSMIC_RAY_VENV}/bin/cosmic-ray",
         "--version"
       ],
       "exit_code": 0,
       "stderr": "",
       "stdout": "cosmic-ray, version 8.4.6",
-      "wall_seconds": 1.283151
+      "wall_seconds": 0.89382
     }
   },
   "format": "run-014-cosmic-ray-environment-v1",
@@ -112,7 +114,7 @@
     "local_remote_tracking_ref": "987ff40fa0317053bf0484f6e3556976e560f63b",
     "local_tracking_used_for_authoritative_relation": false,
     "wsl_experiment_branch": "codex/cosmic-ray-wsl-installation-validation-001",
-    "wsl_experiment_head": "5981f6c7effbe39cf055b2c38535ea63b81b7d51"
+    "wsl_experiment_head": "4018b26bad19828e148bbf9374ad3bfd8fd5890e"
   },
   "measurement_limits": {
     "cold_probe": "proxy_first_new_process_not_os_page_cache_controlled",
@@ -121,7 +123,7 @@
     "source_and_test_context": "proxy_not_billing_tokens"
   },
   "mutmut_comparison": {
-    "venv": "/home/gk/.venvs/core-mutmut-3.6.0",
+    "venv": "${MUTMUT_VENV}",
     "venv_stats": {
       "bytes": 56237642,
       "file_count": 3749,
