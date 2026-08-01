@@ -44,6 +44,48 @@ def write(path: Path, value: str, executable: bool = False) -> None:
         path.chmod(0o755)
 
 
+def create_fake_venv(root: Path, mode: str) -> Path:
+    venv = root / f"fake-venv-{mode}"
+    cfg_value = {
+        "site_true": "true",
+        "missing_cfg": None,
+        "unparseable_cfg": "sometimes",
+    }.get(mode, "false")
+    cfg = "home = /usr/bin\n"
+    if cfg_value is not None:
+        cfg += f"include-system-site-packages = {cfg_value}\n"
+    write(venv / "pyvenv.cfg", cfg)
+    personal_marker = "/home/" + "gk/private-runtime-detail"
+    python_version = {
+        "wrong_python": "3.13.0",
+        "malicious_python": f"3.14.4\\n{personal_marker}",
+    }.get(mode, "3.14.4")
+    pytest_version = {
+        "wrong_pytest": "pytest 9.9.9",
+        "malicious_pytest": f"pytest 9.1.1\\n{personal_marker}",
+    }.get(mode, "pytest 9.1.1")
+    write(
+        venv / "bin/python",
+        f"""#!/usr/bin/env bash
+set -euo pipefail
+if [[ -n "${{PYTHONPATH+x}}" || -n "${{PYTHONHOME+x}}" || -n "${{PYTHONUSERBASE+x}}" ]]; then
+    exit 19
+fi
+if [[ "${{1:-}}" == "-c" ]]; then
+    printf '%b\\n' '{python_version}'
+    exit 0
+fi
+if [[ "${{1:-}}" == "-m" && "${{2:-}}" == "pytest" && "${{3:-}}" == "--version" ]]; then
+    printf '%b\\n' '{pytest_version}'
+    exit 0
+fi
+exit 20
+""",
+        executable=True,
+    )
+    return venv
+
+
 def create_fixture(root: Path, source_repo: Path) -> tuple[Path, Path, Path]:
     repo = root / "fixture-repo"
     repo.mkdir()
@@ -76,12 +118,16 @@ def create_fixture(root: Path, source_repo: Path) -> tuple[Path, Path, Path]:
         """#!/usr/bin/env bash
 set -euo pipefail
 printf '%s\\n' "$*" >>"${COSMIC_FAKE_LOG:?}"
+if [[ -n "${PYTHONPATH+x}" || -n "${PYTHONHOME+x}" || -n "${PYTHONUSERBASE+x}" ]]; then
+    exit 19
+fi
 mode="${COSMIC_FAKE_MODE:-normal}"
 if [[ "${1:-}" == "--version" ]]; then
     case "$mode" in
         wrong_version) printf 'cosmic-ray, version 9.9.9\\n' ;;
         probe_failure) exit 5 ;;
         unparseable) printf 'unknown-output\\n' ;;
+        malicious_version) printf 'cosmic-ray, version 8.4.6\\n/home/%s/private-runtime-detail\\n' 'gk' ;;
         *) printf 'cosmic-ray, version 8.4.6\\n' ;;
     esac
     exit 0
@@ -189,6 +235,9 @@ def main() -> int:
             log.parent.mkdir(exist_ok=True)
             env = dict(os.environ)
             env["COSMIC_FAKE_LOG"] = str(log)
+            env["PYTHONPATH"] = "/tmp/run014-injected-pythonpath"
+            env["PYTHONHOME"] = "/tmp/run014-injected-pythonhome"
+            env["PYTHONUSERBASE"] = "/tmp/run014-injected-userbase"
             if mode is not None:
                 env["COSMIC_FAKE_MODE"] = mode
             completed = run(command, cwd=fixture, env=env)
@@ -239,11 +288,32 @@ def main() -> int:
             ("wrong_version", "wrong_version"),
             ("version_probe_failure", "probe_failure"),
             ("unparseable_version", "unparseable"),
+            ("malicious_cosmic_version", "malicious_version"),
         ]:
             completed = execute(name, base(name) + fake_options, 78, mode=mode)
             calls = cases[-1]["fake_calls"]
             if calls != ["--version"]:
                 raise AssertionError(f"{name}: init/exec ran after version gate")
+            if "/home/" + "gk" in completed.stderr:
+                raise AssertionError(f"{name}: untrusted probe output was echoed")
+
+        for name, venv_mode in [
+            ("system_site_packages_true", "site_true"),
+            ("missing_pyvenv_cfg_value", "missing_cfg"),
+            ("unparseable_pyvenv_cfg_value", "unparseable_cfg"),
+            ("wrong_python_version", "wrong_python"),
+            ("malicious_python_version", "malicious_python"),
+            ("wrong_pytest_version", "wrong_pytest"),
+            ("malicious_pytest_version", "malicious_pytest"),
+        ]:
+            fake_venv = create_fake_venv(root, venv_mode)
+            command = base(name) + fake_options
+            command[command.index(str(venv))] = str(fake_venv)
+            completed = execute(name, command, 78)
+            if cases[-1]["fake_calls"]:
+                raise AssertionError(f"{name}: Cosmic Ray ran after runtime gate failure")
+            if "/home/" + "gk" in completed.stderr or str(fake_venv) in completed.stderr:
+                raise AssertionError(f"{name}: runtime detail was echoed")
 
         missing_venv = base("missing-venv")
         missing_venv[missing_venv.index(str(venv))] = str(root / "missing-venv")
@@ -442,6 +512,11 @@ def main() -> int:
         "repository_unchanged": not source_status_after and source_head == source_head_after,
         "process_residue": process_residue,
         "version_revalidated_each_invocation": True,
+        "python_version_revalidated_each_invocation": True,
+        "pytest_version_revalidated_each_invocation": True,
+        "system_site_packages_rejected": True,
+        "python_environment_variables_unset": True,
+        "untrusted_probe_output_echoed": False,
         "local_distributor_and_config_checked_by_fake": True,
         "passed": passed,
     }

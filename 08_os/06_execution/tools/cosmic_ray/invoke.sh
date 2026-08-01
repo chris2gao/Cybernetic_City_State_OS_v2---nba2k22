@@ -2,6 +2,8 @@
 set -euo pipefail
 
 readonly EXPECTED_COSMIC_RAY_VERSION="8.4.6"
+readonly EXPECTED_PYTHON_VERSION="3.14.4"
+readonly EXPECTED_PYTEST_VERSION="9.1.1"
 readonly SUMMARY_REL="08_os/06_execution/tools/cosmic_ray/summarize.py"
 
 fail() {
@@ -15,6 +17,33 @@ require_value() {
     local option="$1"
     local value="${2:-}"
     [[ -n "$value" ]] || fail 64 "missing value for ${option}"
+}
+
+read_include_system_site_packages() {
+    local cfg_path="$1"
+    awk '
+        function trim(value) {
+            sub(/^[[:space:]]+/, "", value)
+            sub(/[[:space:]]+$/, "", value)
+            return value
+        }
+        {
+            line = $0
+            sub(/\r$/, "", line)
+            separator = index(line, "=")
+            if (separator == 0) next
+            key = tolower(trim(substr(line, 1, separator - 1)))
+            value = tolower(trim(substr(line, separator + 1)))
+            if (key == "include-system-site-packages") {
+                count += 1
+                selected = value
+            }
+        }
+        END {
+            if (count != 1 || (selected != "true" && selected != "false")) exit 2
+            print selected
+        }
+    ' "$cfg_path" 2>/dev/null
 }
 
 repo_root=""
@@ -118,6 +147,10 @@ done
 ((max_mutations <= 10000)) \
     || fail 64 "--max-mutations must not exceed 10000"
 
+unset PYTHONPATH
+unset PYTHONHOME
+unset PYTHONUSERBASE
+
 repo_real="$(realpath -e -- "$repo_root")" || fail 66 "repository not found"
 [[ -d "$repo_real" ]] || fail 66 "repository is not a directory"
 case "$repo_real" in
@@ -184,21 +217,34 @@ case "$receipt_parent/" in
     "$repo_real"/*) fail 65 "receipt directory must be outside repository" ;;
 esac
 
-venv_real="$(realpath -e -- "$venv_path")" || fail 69 "virtualenv not found"
+venv_real="$(realpath -e -- "$venv_path" 2>/dev/null)" || fail 69 "virtualenv not found"
 python_executable="$venv_real/bin/python"
 [[ -x "$python_executable" ]] || fail 69 "virtualenv Python is unavailable"
-"$python_executable" -m pytest --version >/dev/null 2>&1 \
-    || fail 69 "pytest is unavailable in the dedicated virtualenv"
+set +e
+site_packages_value="$(read_include_system_site_packages "$venv_real/pyvenv.cfg")"
+site_packages_exit=$?
+python_version_output="$("$python_executable" -c \
+    'import platform; print(platform.python_version())' 2>&1)"
+python_version_exit=$?
+pytest_version_output="$("$python_executable" -m pytest --version 2>&1)"
+pytest_version_exit=$?
+set -e
+[[ "$site_packages_exit" -eq 0 && "$site_packages_value" == "false" ]] \
+    || fail 78 "virtualenv isolation mismatch"
+[[ "$python_version_exit" -eq 0 && "$python_version_output" == "$EXPECTED_PYTHON_VERSION" ]] \
+    || fail 78 "Python runtime mismatch"
+[[ "$pytest_version_exit" -eq 0 && "$pytest_version_output" == "pytest $EXPECTED_PYTEST_VERSION" ]] \
+    || fail 78 "pytest runtime mismatch"
 if [[ -z "$cosmic_ray_executable" ]]; then
     cosmic_ray_executable="$venv_real/bin/cosmic-ray"
 fi
-cosmic_ray_real="$(realpath -e -- "$cosmic_ray_executable")" \
+cosmic_ray_real="$(realpath -e -- "$cosmic_ray_executable" 2>/dev/null)" \
     || fail 69 "Cosmic Ray executable not found"
 [[ -x "$cosmic_ray_real" ]] || fail 69 "Cosmic Ray executable is not executable"
 if [[ -z "$cr_report_executable" ]]; then
     cr_report_executable="$venv_real/bin/cr-report"
 fi
-cr_report_real="$(realpath -e -- "$cr_report_executable")" \
+cr_report_real="$(realpath -e -- "$cr_report_executable" 2>/dev/null)" \
     || fail 69 "cr-report executable not found"
 summary_real="$(realpath -e -- "$repo_real/$SUMMARY_REL")" \
     || fail 69 "summary helper not found"
@@ -208,9 +254,9 @@ version_output="$("$cosmic_ray_real" --version 2>&1)"
 version_exit=$?
 set -e
 [[ "$version_exit" -eq 0 ]] \
-    || fail 78 "version probe failed with exit ${version_exit}"
+    || fail 78 "Cosmic Ray runtime mismatch"
 [[ "$version_output" == "cosmic-ray, version ${EXPECTED_COSMIC_RAY_VERSION}" ]] \
-    || fail 78 "version mismatch: expected ${EXPECTED_COSMIC_RAY_VERSION}, got ${version_output}"
+    || fail 78 "Cosmic Ray runtime mismatch"
 
 work_root="$(mktemp -d "${TMPDIR:-/tmp}/citystate-cosmic-ray.XXXXXX")"
 cleanup() {

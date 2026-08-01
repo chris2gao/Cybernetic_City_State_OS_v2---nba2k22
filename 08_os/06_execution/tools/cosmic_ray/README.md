@@ -22,8 +22,11 @@ bash 08_os/06_execution/tools/cosmic_ray/invoke.sh \
 ```
 
 wrapper 先检查 Linux filesystem、worktree root/clean status、project/target/test
-realpath containment、单一 `.py` allowlist、receipt 边界、virtualenv、pytest、
-`cosmic-ray`/`cr-report` 和精确版本。随后从 `HEAD` 归档 project 到
+realpath containment、单一 `.py` allowlist、receipt 边界、virtualenv、
+`include-system-site-packages = false`，以及 Python `3.14.4`、pytest `9.1.1`、
+Cosmic Ray `8.4.6` 的精确版本。所有 Python 探测和执行前均清除 `PYTHONPATH`、
+`PYTHONHOME`、`PYTHONUSERBASE`；失败诊断不回显 probe 输出、可执行路径或用户目录。
+随后从 `HEAD` 归档 project 到
 `/tmp/citystate-cosmic-ray.XXXXXX`，只在归档中生成 config、SQLite session、cache
 和 mutated source；baseline 通过后才允许 init/exec。
 
@@ -44,13 +47,14 @@ pending、非 normal worker 和非 killed/survived test outcome 归入 unsafe ou
 - `66`：repository、project、target、test 或 receipt parent 不存在。
 - `67`：baseline pytest 失败；init/exec 不会运行。
 - `68`：session init 失败。
-- `69`：virtualenv、Python、pytest、Cosmic Ray、cr-report 或 summary helper 不可用。
+- `69`：virtualenv、Python、Cosmic Ray、cr-report 或 summary helper 可执行文件不可用。
 - `70`：mutation exec 失败或 config 在 init/exec 间失效。
 - `71`：dump、report、summary 或 archived source restore 校验失败。
 - `72`：存在 timeout、incomplete、incompetent 或 worker error；结构化 receipt 已保留。
 - `73`：worktree 开始前不干净，或执行后 repository 状态变化。
 - `74`：init 产生的对象数超过显式 session 上限；exec 不会运行。
-- `78`：版本探测失败、不可解析或不是精确 `8.4.6`。
+- `78`：virtualenv isolation 声明缺失/不可解析/非 false，或 Python、pytest、
+  Cosmic Ray 版本探测失败及精确值不匹配。
 
 不要扩展 wrapper 为多目标、HTTP distributor、远端 worker、并行写同一 source tree、
 canonical mutation apply 或 repository 内 receipt 入口。

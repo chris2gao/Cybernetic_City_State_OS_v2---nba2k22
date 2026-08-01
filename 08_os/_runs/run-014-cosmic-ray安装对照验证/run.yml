@@ -13,6 +13,7 @@ tool:
   runtime: Python 3.14.4
   test_runner: pytest 9.1.1
   validation_parser: PyYAML 6.0.3
+  include_system_site_packages: false
   installation_manager: dedicated_virtualenv_pip
   status: verified_on_demand
   mount: on_demand_wsl_cli
@@ -20,7 +21,8 @@ tool:
   mcp_exposed: false
   distributor: local
   workers: 1
-  version_gate: exact_runtime_probe_before_session_init
+  version_gate: exact_cosmic_ray_python_pytest_and_isolated_pyvenv_before_session_init
+  python_environment: PYTHONPATH_PYTHONHOME_PYTHONUSERBASE_unset
   workspace_policy: wsl_linux_filesystem_clean_git_worktree
   target_policy: explicit_single_python_file_allowlist
   canonical_wrapper: 08_os/06_execution/tools/cosmic_ray/invoke.sh

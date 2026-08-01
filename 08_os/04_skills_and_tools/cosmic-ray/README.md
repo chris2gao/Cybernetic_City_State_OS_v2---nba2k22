@@ -6,6 +6,7 @@
 - Python：WSL2 Ubuntu user-space `3.14.4`
 - test runner：同一专用 virtualenv 中的 `pytest 9.1.1`
 - validation parser：同一专用 virtualenv 中的 `PyYAML 6.0.3`
+- virtualenv isolation：`include-system-site-packages = false`
 - 安装边界：专用 user-owned virtualenv；不使用 `sudo`，不改系统 Python 或 PATH
 - 挂载：`verified_on_demand`
 - 默认加载：否
@@ -28,11 +29,15 @@ exception。16 个 survivor 经可执行证明分为 12 个注解或当前可达
 ## 强制调用边界
 
 所有 canonical 调用必须经过
-`08_os/06_execution/tools/cosmic_ray/invoke.sh`。wrapper 固定 `8.4.6`，只接受
+`08_os/06_execution/tools/cosmic_ray/invoke.sh`。wrapper 固定 Cosmic Ray `8.4.6`、
+Python `3.14.4`、pytest `9.1.1`，并要求 `pyvenv.cfg` 明确且唯一声明
+`include-system-site-packages = false`。它只接受
 WSL Linux 文件系统中的干净 Git worktree、一个 repository 内 Python 文件、一个
 完全匹配的 allowlist 条目、一个 repository 内测试文件和一个 repository 外的
 Linux receipt 目录。它只启用 `local` distributor、单 worker、显式 mutation timeout
-与 session 对象上限，并先运行 baseline pytest。
+与 session 对象上限，并先清除 `PYTHONPATH`、`PYTHONHOME`、`PYTHONUSERBASE`，再运行
+baseline pytest。版本探测失败只输出固定诊断，不回显不受信任的 probe 输出、可执行路径
+或用户目录。
 
 Cosmic Ray 8.4.6 的原生 session 会把真实 timeout 写成 `test_outcome=killed`、
 `worker_outcome=normal`，仅在 output 留下 `timeout`。canonical summary helper 会把它
@@ -41,7 +46,7 @@ wrapper fail closed（退出 `72`），不得计入 killed。
 
 ## 成本与限制
 
-- 专用 venv：`70,145,809` bytes、`3,711` regular files（run-014 时点）。
+- 专用 venv：`73,253,524` bytes、`3,755` regular files（最终修正复验时点）。
 - 同一真实目标的 mutation exec：Cosmic Ray 两次约 `35.07s`、`39.07s`；mutmut
   两次约 `17.84s`、`13.02s`。
 - Cosmic Ray 会对 `from __future__ import annotations` 下的注解表达式生成大量运行时

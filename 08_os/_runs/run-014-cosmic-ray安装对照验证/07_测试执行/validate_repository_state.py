@@ -87,7 +87,64 @@ def main() -> int:
     check(not forbidden, f"forbidden paths changed: {forbidden}")
     check(git(repo, "diff", "--check", BASE, "HEAD") == "", "git diff --check failed")
 
+    changed_paths_record = (
+        run / "06_执行/changed_paths.txt"
+    ).read_text(encoding="utf-8").splitlines()
+    check(changed_paths_record == sorted(changed), "changed_paths.txt mismatch")
+
+    personal_paths = [
+        "/home/" + "gk",
+        "C:\\Users" + "\\gk",
+        "E:\\" + "newStand",
+    ]
+    binary_artifact_count = 0
+    for relative in changed:
+        path = repo / relative
+        if not path.is_file():
+            continue
+        data = path.read_bytes()
+        try:
+            text = data.decode("utf-8")
+        except UnicodeDecodeError:
+            binary_artifact_count += 1
+            continue
+        for needle in personal_paths:
+            check(needle not in text, f"personal path {needle!r} in {relative}")
+
     check(results["passed"] is True, "results did not pass")
+    check(results["environment"] == environment, "results environment drift")
+    check(
+        results["resources"]["cosmic_ray_venv"]
+        == environment["cosmic_ray"]["venv_stats"],
+        "Cosmic Ray resource stats drift",
+    )
+    check(
+        results["resources"]["mutmut_venv"]
+        == environment["mutmut_comparison"]["venv_stats"],
+        "mutmut resource stats drift",
+    )
+    check(
+        results["environment"]["cosmic_ray"]["packages"]
+        == environment["cosmic_ray"]["packages"],
+        "package freeze drift",
+    )
+    check(
+        environment["cosmic_ray"]["include_system_site_packages"] is False,
+        "system site packages must be disabled",
+    )
+    check(environment["platform"]["python"] == "3.14.4", "Python version mismatch")
+    check(
+        environment["cosmic_ray"]["installed_python_version"] == "3.14.4",
+        "installed Python version mismatch",
+    )
+    check(
+        environment["cosmic_ray"]["installed_pytest_version"] == "9.1.1",
+        "pytest version mismatch",
+    )
+    check(
+        environment["cosmic_ray"]["installed_version"] == "8.4.6",
+        "Cosmic Ray version mismatch",
+    )
     check(
         results["adoption_decision"]["decision"] == "verified_on_demand",
         "adoption decision mismatch",
@@ -97,6 +154,11 @@ def main() -> int:
     check(matrix["repository_unchanged"] is True, "wrapper changed repository")
     check(matrix["temporary_workspace_cleanup"] is True, "wrapper cleanup failed")
     check(not matrix["process_residue"], "wrapper process residue")
+    check(matrix["python_version_revalidated_each_invocation"] is True, "Python gate missing")
+    check(matrix["pytest_version_revalidated_each_invocation"] is True, "pytest gate missing")
+    check(matrix["system_site_packages_rejected"] is True, "isolation gate missing")
+    check(matrix["python_environment_variables_unset"] is True, "Python env cleanup missing")
+    check(matrix["untrusted_probe_output_echoed"] is False, "probe output leaked")
     check(
         results["blob_evidence"]["canonical_target"]["unchanged"],
         "canonical target blob changed",
@@ -125,6 +187,11 @@ def main() -> int:
     check(isinstance(cosmic, dict), "Cosmic Ray missing from registry")
     expected_registry = {
         "version": "8.4.6",
+        "python_version": "3.14.4",
+        "pytest_version": "9.1.1",
+        "include_system_site_packages": False,
+        "version_gate": "exact_cosmic_ray_python_pytest_and_isolated_pyvenv_before_session_init",
+        "python_environment": "PYTHONPATH_PYTHONHOME_PYTHONUSERBASE_unset",
         "status": "verified_on_demand",
         "mount": "on_demand_wsl_cli",
         "default_loaded": False,
@@ -148,15 +215,23 @@ def main() -> int:
         repo / "08_os/06_execution/tools/cosmic_ray/summarize.py",
         repo / "08_os/05_registry/skills_and_tools_v1.yml",
     ]
-    forbidden_text = ["/home/gk", "BEGIN PRIVATE KEY", "ghp_", "password="]
+    forbidden_text = [
+        "/home/" + "gk",
+        "C:\\Users" + "\\gk",
+        "E:\\" + "newStand",
+        "BEGIN PRIVATE KEY",
+        "ghp_",
+        "password=",
+    ]
     for path in canonical_files:
         text = path.read_text(encoding="utf-8")
         for needle in forbidden_text:
             check(needle not in text, f"forbidden canonical text {needle!r} in {path}")
 
     summary = {
-        "PASS": 14,
+        "PASS": 27,
         "changed_paths": len(changed),
+        "binary_artifact_count": binary_artifact_count,
         "evidence_files": manifest["file_count"],
         "wrapper_cases": matrix["case_count"],
     }

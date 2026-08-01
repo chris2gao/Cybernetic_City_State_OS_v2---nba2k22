@@ -212,6 +212,11 @@ def main() -> int:
         and wrapper_matrix["temporary_workspace_cleanup"]
         and wrapper_matrix["repository_unchanged"]
         and not wrapper_matrix["process_residue"]
+        and wrapper_matrix["python_version_revalidated_each_invocation"]
+        and wrapper_matrix["pytest_version_revalidated_each_invocation"]
+        and wrapper_matrix["system_site_packages_rejected"]
+        and wrapper_matrix["python_environment_variables_unset"]
+        and not wrapper_matrix["untrusted_probe_output_echoed"]
     )
     meaningful_incremental_value = (
         real_proof["classification_counts"]["genuine_gap"]
@@ -222,6 +227,9 @@ def main() -> int:
     )
     qualified = (
         environment["cosmic_ray"]["installed_version"] == "8.4.6"
+        and environment["cosmic_ray"]["installed_python_version"] == "3.14.4"
+        and environment["cosmic_ray"]["installed_pytest_version"] == "9.1.1"
+        and environment["cosmic_ray"]["include_system_site_packages"] is False
         and all(
             phase["repeatability"]["cosmic_ray_semantic_objects_equal"]
             for phase in phases.values()
@@ -239,7 +247,12 @@ def main() -> int:
         "format": "run-014-cosmic-ray-results-v1",
         "task_id": "cosmic-ray-wsl-installation-validation-001",
         "implementation_base": base,
-        "compiled_at_head": current_head,
+        "evidence_compiled_from_repository_head": current_head,
+        "compilation_head_semantics": (
+            "repository HEAD whose tracked source and test blobs were checked while "
+            "this evidence object was compiled; it is not a claim about the later "
+            "publication commit"
+        ),
         "calibration_checkpoints": {
             "weak": "c89e1e6c53d12af870d2e128a007987fada39c1f",
             "strong_tests_only": "2481fbaff06cc12a8f37afe537e20f3369f07cb1",

@@ -28,7 +28,8 @@ cleanup() {
 trap cleanup EXIT
 
 "$python" -m pytest -q \
-    "$run/07_测试执行/test_summarize.py"
+    "$run/07_测试执行/test_summarize.py" \
+    "$run/07_测试执行/test_collect_environment.py"
 "$python" "$run/07_测试执行/calibration_survivor_proof.py" \
     "$run/07_测试执行/calibration/calibration_pkg/logic.py" \
     "$temporary/calibration-proof.json"

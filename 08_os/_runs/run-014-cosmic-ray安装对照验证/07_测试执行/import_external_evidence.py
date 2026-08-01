@@ -41,11 +41,13 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("source_root", type=Path)
     parser.add_argument("destination_root", type=Path)
+    parser.add_argument("--replace-existing", action="store_true")
     args = parser.parse_args()
     source_root = args.source_root.resolve(strict=True)
     destination_root = args.destination_root.resolve(strict=False)
-    if destination_root.exists():
+    if destination_root.exists() and not args.replace_existing:
         raise SystemExit("destination already exists; refusing to overwrite evidence")
+    destination_root.mkdir(parents=True, exist_ok=True)
 
     selected = sorted(
         path

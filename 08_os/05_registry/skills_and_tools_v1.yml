@@ -176,12 +176,16 @@ tools:
     canonical_wrapper: 08_os/06_execution/tools/mutmut/invoke.sh
   - name: cosmic-ray
     version: 8.4.6
+    python_version: 3.14.4
+    pytest_version: 9.1.1
+    include_system_site_packages: false
     status: verified_on_demand
     mount: on_demand_wsl_cli
     default_loaded: false
     mcp_exposed: false
     expected_version: 8.4.6
-    version_gate: exact_runtime_probe_before_session_init
+    version_gate: exact_cosmic_ray_python_pytest_and_isolated_pyvenv_before_session_init
+    python_environment: PYTHONPATH_PYTHONHOME_PYTHONUSERBASE_unset
     workspace_policy: wsl_linux_filesystem_clean_git_worktree
     target_policy: explicit_single_python_file_allowlist
     distributor: local
