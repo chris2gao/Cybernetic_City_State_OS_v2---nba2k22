@@ -30,10 +30,13 @@ def capture(command: list[str], cwd: Path | None = None) -> dict[str, Any]:
 
 
 def tree_stats(root: Path) -> dict[str, int]:
-    files = [path for path in root.rglob("*") if path.is_file()]
+    du = capture(["du", "-sb", str(root)])
+    files = capture(["find", str(root), "-type", "f"])
+    symlinks = capture(["find", str(root), "-type", "l"])
     return {
-        "file_count": len(files),
-        "bytes": sum(path.stat().st_size for path in files),
+        "file_count": len(files["stdout"].splitlines()),
+        "symlink_count": len(symlinks["stdout"].splitlines()),
+        "bytes": int(du["stdout"].split()[0]),
     }
 
 
