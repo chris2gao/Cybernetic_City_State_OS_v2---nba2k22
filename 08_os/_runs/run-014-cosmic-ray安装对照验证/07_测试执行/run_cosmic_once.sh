@@ -14,8 +14,8 @@ source_path=${5:-calibration_pkg/logic.py}
 test_path=${6:-tests}
 config_rel=${7:-}
 canonical_source_rel=${8:-}
-cosmic_venv=/home/gk/.venvs/core-cosmic-ray-8.4.6
-pytest_python=/home/gk/.venvs/core-mutmut-3.6.0/bin/python
+cosmic_venv=${COSMIC_RAY_VENV:?COSMIC_RAY_VENV is required}
+pytest_python="$cosmic_venv/bin/python"
 
 case "$repo_root" in
     /mnt/*)
@@ -71,6 +71,7 @@ if [[ ! -d "$project_dir" ]]; then
 fi
 if [[ -n "$config_rel" ]]; then
     cp -- "$temp_root/$config_rel" "$project_dir/cosmic-ray.toml"
+    sed -i "s|\${COSMIC_RAY_VENV}|$cosmic_venv|g" "$project_dir/cosmic-ray.toml"
 fi
 if [[ -n "$canonical_source_rel" ]]; then
     mkdir -p -- "$(dirname "$project_dir/$source_path")"

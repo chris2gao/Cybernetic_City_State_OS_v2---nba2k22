@@ -13,7 +13,7 @@ output_dir=$4
 source_path=${5:-calibration_pkg/logic.py}
 test_path=${6:-tests}
 canonical_source_rel=${7:-}
-mutmut_venv=/home/gk/.venvs/core-mutmut-3.6.0
+mutmut_venv=${MUTMUT_VENV:?MUTMUT_VENV is required}
 
 case "$repo_root" in
     /mnt/*)
