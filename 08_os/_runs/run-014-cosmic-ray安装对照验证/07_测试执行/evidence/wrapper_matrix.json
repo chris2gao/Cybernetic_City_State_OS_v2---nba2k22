@@ -1,0 +1,321 @@
+{
+  "case_count": 30,
+  "cases": [
+    {
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "fake_calls": [],
+      "name": "success_real_1",
+      "passed": true,
+      "semantic_outcome_counts": {
+        "killed": 12,
+        "survived": 1
+      }
+    },
+    {
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "fake_calls": [],
+      "name": "success_real_2",
+      "passed": true,
+      "semantic_outcome_counts": {
+        "killed": 12,
+        "survived": 1
+      }
+    },
+    {
+      "exit_code": 78,
+      "expected_exit_code": 78,
+      "fake_calls": [
+        "--version"
+      ],
+      "name": "wrong_version",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 78,
+      "expected_exit_code": 78,
+      "fake_calls": [
+        "--version"
+      ],
+      "name": "version_probe_failure",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 78,
+      "expected_exit_code": 78,
+      "fake_calls": [
+        "--version"
+      ],
+      "name": "unparseable_version",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 69,
+      "expected_exit_code": 69,
+      "fake_calls": [],
+      "name": "missing_venv",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 66,
+      "expected_exit_code": 66,
+      "fake_calls": [],
+      "name": "missing_project",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 66,
+      "expected_exit_code": 66,
+      "fake_calls": [],
+      "name": "missing_target",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 66,
+      "expected_exit_code": 66,
+      "fake_calls": [],
+      "name": "missing_test",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 65,
+      "expected_exit_code": 65,
+      "fake_calls": [],
+      "name": "mounted_workspace",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 73,
+      "expected_exit_code": 73,
+      "fake_calls": [],
+      "name": "dirty_worktree",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 65,
+      "expected_exit_code": 65,
+      "fake_calls": [],
+      "name": "outside_allowlist",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 65,
+      "expected_exit_code": 65,
+      "fake_calls": [],
+      "name": "project_outside_repo",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 65,
+      "expected_exit_code": 65,
+      "fake_calls": [],
+      "name": "target_outside_repo",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 65,
+      "expected_exit_code": 65,
+      "fake_calls": [],
+      "name": "test_outside_project",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 65,
+      "expected_exit_code": 65,
+      "fake_calls": [],
+      "name": "non_python_target",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 67,
+      "expected_exit_code": 67,
+      "fake_calls": [
+        "--version"
+      ],
+      "name": "baseline_failure",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 68,
+      "expected_exit_code": 68,
+      "fake_calls": [
+        "--version",
+        "init /tmp/citystate-cosmic-ray.8yUZgB/cosmic-ray.toml /tmp/citystate-cosmic-ray.8yUZgB/session.sqlite"
+      ],
+      "name": "init_failure",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 70,
+      "expected_exit_code": 70,
+      "fake_calls": [
+        "--version",
+        "init /tmp/citystate-cosmic-ray.TCCx8B/cosmic-ray.toml /tmp/citystate-cosmic-ray.TCCx8B/session.sqlite",
+        "dump /tmp/citystate-cosmic-ray.TCCx8B/session.sqlite",
+        "exec /tmp/citystate-cosmic-ray.TCCx8B/cosmic-ray.toml /tmp/citystate-cosmic-ray.TCCx8B/session.sqlite"
+      ],
+      "name": "exec_failure",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 74,
+      "expected_exit_code": 74,
+      "fake_calls": [
+        "--version",
+        "init /tmp/citystate-cosmic-ray.YlarBI/cosmic-ray.toml /tmp/citystate-cosmic-ray.YlarBI/session.sqlite",
+        "dump /tmp/citystate-cosmic-ray.YlarBI/session.sqlite"
+      ],
+      "name": "session_limit",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 70,
+      "expected_exit_code": 70,
+      "fake_calls": [
+        "--version",
+        "init /tmp/citystate-cosmic-ray.xUWRw6/cosmic-ray.toml /tmp/citystate-cosmic-ray.xUWRw6/session.sqlite",
+        "dump /tmp/citystate-cosmic-ray.xUWRw6/session.sqlite",
+        "exec /tmp/citystate-cosmic-ray.xUWRw6/cosmic-ray.toml /tmp/citystate-cosmic-ray.xUWRw6/session.sqlite"
+      ],
+      "name": "config_removed",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 71,
+      "expected_exit_code": 71,
+      "fake_calls": [
+        "--version",
+        "init /tmp/citystate-cosmic-ray.yUqchd/cosmic-ray.toml /tmp/citystate-cosmic-ray.yUqchd/session.sqlite",
+        "dump /tmp/citystate-cosmic-ray.yUqchd/session.sqlite",
+        "exec /tmp/citystate-cosmic-ray.yUqchd/cosmic-ray.toml /tmp/citystate-cosmic-ray.yUqchd/session.sqlite",
+        "dump /tmp/citystate-cosmic-ray.yUqchd/session.sqlite"
+      ],
+      "name": "malformed_dump",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 72,
+      "expected_exit_code": 72,
+      "fake_calls": [
+        "--version",
+        "init /tmp/citystate-cosmic-ray.pdDDmL/cosmic-ray.toml /tmp/citystate-cosmic-ray.pdDDmL/session.sqlite",
+        "dump /tmp/citystate-cosmic-ray.pdDDmL/session.sqlite",
+        "exec /tmp/citystate-cosmic-ray.pdDDmL/cosmic-ray.toml /tmp/citystate-cosmic-ray.pdDDmL/session.sqlite",
+        "dump /tmp/citystate-cosmic-ray.pdDDmL/session.sqlite"
+      ],
+      "name": "incomplete_result",
+      "passed": true,
+      "semantic_outcome_counts": {
+        "incomplete": 1
+      }
+    },
+    {
+      "exit_code": 72,
+      "expected_exit_code": 72,
+      "fake_calls": [
+        "--version",
+        "init /tmp/citystate-cosmic-ray.3zs7RG/cosmic-ray.toml /tmp/citystate-cosmic-ray.3zs7RG/session.sqlite",
+        "dump /tmp/citystate-cosmic-ray.3zs7RG/session.sqlite",
+        "exec /tmp/citystate-cosmic-ray.3zs7RG/cosmic-ray.toml /tmp/citystate-cosmic-ray.3zs7RG/session.sqlite",
+        "dump /tmp/citystate-cosmic-ray.3zs7RG/session.sqlite"
+      ],
+      "name": "worker_error",
+      "passed": true,
+      "semantic_outcome_counts": {
+        "worker_exception": 1
+      }
+    },
+    {
+      "exit_code": 72,
+      "expected_exit_code": 72,
+      "fake_calls": [
+        "--version",
+        "init /tmp/citystate-cosmic-ray.SgLEry/cosmic-ray.toml /tmp/citystate-cosmic-ray.SgLEry/session.sqlite",
+        "dump /tmp/citystate-cosmic-ray.SgLEry/session.sqlite",
+        "exec /tmp/citystate-cosmic-ray.SgLEry/cosmic-ray.toml /tmp/citystate-cosmic-ray.SgLEry/session.sqlite",
+        "dump /tmp/citystate-cosmic-ray.SgLEry/session.sqlite"
+      ],
+      "name": "timeout_reclassified",
+      "passed": true,
+      "semantic_outcome_counts": {
+        "timeout": 1
+      }
+    },
+    {
+      "exit_code": 65,
+      "expected_exit_code": 65,
+      "fake_calls": [],
+      "name": "receipt_inside_repo",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 65,
+      "expected_exit_code": 65,
+      "fake_calls": [],
+      "name": "existing_receipt",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 64,
+      "expected_exit_code": 64,
+      "fake_calls": [],
+      "name": "multiple_allowlist",
+      "passed": true,
+      "semantic_outcome_counts": null
+    },
+    {
+      "exit_code": 72,
+      "expected_exit_code": 72,
+      "fake_calls": [],
+      "name": "real_timeout_semantics",
+      "passed": true,
+      "semantic_outcome_counts": {
+        "killed": 8,
+        "survived": 1,
+        "timeout": 1
+      }
+    },
+    {
+      "exit_code": 72,
+      "expected_exit_code": 72,
+      "fake_calls": [],
+      "name": "real_target_worker_exception",
+      "passed": true,
+      "semantic_outcome_counts": {
+        "killed": 41,
+        "survived": 16,
+        "worker_exception": 1
+      }
+    }
+  ],
+  "format": "run-014-cosmic-ray-wrapper-matrix-v1",
+  "local_distributor_and_config_checked_by_fake": true,
+  "passed": true,
+  "process_residue": [],
+  "repository_unchanged": true,
+  "temporary_workspace_cleanup": true,
+  "version_revalidated_each_invocation": true
+}
