@@ -5,12 +5,12 @@
   "wsl_distribution": "Ubuntu",
   "workspace": {
     "filesystem_class": "WSL_Linux_filesystem",
-    "clone_path": "/home/gk/projects/Cybernetic_City_State_OS_v2---core",
+    "clone_path": "${REPOSITORY_ROOT}",
     "clone_method": "ordinary local clone fallback after noninteractive SSH clone did not complete",
     "remote_restored_to": "git@github.com:chris2gao/Cybernetic_City_State_OS_v2---core.git"
   },
   "virtualenv": {
-    "path": "/home/gk/.venvs/core-mutmut-3.6.0",
+    "path": "${MUTMUT_VENV}",
     "include_system_site_packages": false,
     "mutmut_version": "3.6.0",
     "file_count": 3753,
@@ -42,7 +42,7 @@
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "python": {
-      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+      "command": "${MUTMUT_VENV}/bin/python",
       "arguments": [
         "--version"
       ],
@@ -68,7 +68,7 @@
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "pip": {
-      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+      "command": "${MUTMUT_VENV}/bin/python",
       "arguments": [
         "-m",
         "pip",
@@ -83,7 +83,7 @@
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "pip_show_mutmut": {
-      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+      "command": "${MUTMUT_VENV}/bin/python",
       "arguments": [
         "-m",
         "pip",
@@ -99,7 +99,7 @@
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "pip_show_libcst": {
-      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+      "command": "${MUTMUT_VENV}/bin/python",
       "arguments": [
         "-m",
         "pip",
@@ -115,7 +115,7 @@
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "pytest": {
-      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+      "command": "${MUTMUT_VENV}/bin/python",
       "arguments": [
         "-m",
         "pytest",
@@ -133,7 +133,7 @@
       "command": "bash",
       "arguments": [
         "-lc",
-        "source '/home/gk/.venvs/core-mutmut-3.6.0/bin/activate' && command -v python"
+        "source '${MUTMUT_VENV}/bin/activate' && command -v python"
       ],
       "started_utc": "2026-07-30T10:06:43.152913+00:00",
       "duration_ms": 36.994,
@@ -147,7 +147,7 @@
       "command": "bash",
       "arguments": [
         "-lc",
-        "source '/home/gk/.venvs/core-mutmut-3.6.0/bin/activate' && command -v mutmut"
+        "source '${MUTMUT_VENV}/bin/activate' && command -v mutmut"
       ],
       "started_utc": "2026-07-30T10:06:43.190020+00:00",
       "duration_ms": 38.807,
@@ -158,7 +158,7 @@
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "imports": {
-      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+      "command": "${MUTMUT_VENV}/bin/python",
       "arguments": [
         "-c",
         "import libcst, mutmut; print('imports-ok')"
@@ -172,7 +172,7 @@
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "version": {
-      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
+      "command": "${MUTMUT_VENV}/bin/mutmut",
       "arguments": [
         "--version"
       ],
@@ -186,9 +186,9 @@
     }
   },
   "fork_probe": {
-    "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+    "command": "${MUTMUT_VENV}/bin/python",
     "arguments": [
-      "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/_runs/run-013-mutmut安装接入验证/01_任务输入/fork_probe.py"
+      "${REPOSITORY_ROOT}/08_os/_runs/run-013-mutmut安装接入验证/01_任务输入/fork_probe.py"
     ],
     "started_utc": "2026-07-30T10:06:45.996966+00:00",
     "duration_ms": 64.875,

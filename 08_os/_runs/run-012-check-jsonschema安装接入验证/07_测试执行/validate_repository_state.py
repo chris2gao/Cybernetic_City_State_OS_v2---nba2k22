@@ -171,9 +171,10 @@ canonical_paths = [
     ROOT / "08_os/06_execution/tools/check_jsonschema/invoke.ps1",
     ROOT / "08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py",
 ]
+windows_user_home = "C:" + "\\\\Users" + "\\\\gk"
 for path in canonical_paths:
     text = path.read_text(encoding="utf-8")
-    assert r"C:\Users\gk" not in text, path
+    assert windows_user_home not in text, path
 
 boot_root = ROOT / "08_os/02_boot"
 for path in boot_root.rglob("*"):

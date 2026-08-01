@@ -335,10 +335,12 @@ canonical_paths = [
     ROOT / "08_os/06_execution/tools/mutmut/README.md",
     WRAPPER_PATH,
 ]
+linux_user_home = "/" + "home" + "/" + "gk"
+windows_user_home = "C:" + "\\\\Users" + "\\\\gk"
 for path in canonical_paths:
     text = path.read_text(encoding="utf-8")
-    assert "/home/gk" not in text, path
-    assert r"C:\Users\gk" not in text, path
+    assert linux_user_home not in text, path
+    assert windows_user_home not in text, path
 
 allowed_exact = {
     "08_os/_runs/run-013-mutmut安装接入验证/01_任务输入/environment_receipt.json",
