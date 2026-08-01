@@ -94,6 +94,44 @@ entries:
       - /tmp/citystate-mutmut.*
     failure_surfacing: current invocation
     deletion_rule: protected
+  - path: 08_os/04_skills_and_tools/cosmic-ray/README.md
+    purpose: Cosmic Ray 已验证版本、互补 operator reach、成本、timeout 修正与复验边界
+    loader: human or task-directed tools review
+    loader_class: external_tool_convention
+    discovery: referenced from 08_os/04_skills_and_tools/README.md
+    evidence: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/results.json
+    cache_dirs: []
+    failure_surfacing: next Cosmic Ray invocation or revalidation
+    deletion_rule: protected
+  - path: 08_os/06_execution/tools/cosmic_ray/README.md
+    purpose: Cosmic Ray WSL loader、结构化对象摘要、退出码与 fail-closed 调用契约
+    loader: task-directed tool invocation
+    loader_class: external_tool_convention
+    discovery: referenced from tool registry metadata
+    evidence: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/results.json
+    cache_dirs:
+      - /tmp/citystate-cosmic-ray.*
+    failure_surfacing: current invocation
+    deletion_rule: protected
+  - path: 08_os/06_execution/tools/cosmic_ray/invoke.sh
+    purpose: 在 WSL 临时归档中运行一个显式 allowlisted Python 文件的 local mutation session
+    loader: Bash task executor
+    loader_class: in_repo_program
+    discovery: canonical_wrapper in tools registry
+    evidence: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/results.json
+    cache_dirs:
+      - /tmp/citystate-cosmic-ray.*
+    failure_surfacing: current invocation
+    deletion_rule: protected
+  - path: 08_os/06_execution/tools/cosmic_ray/summarize.py
+    purpose: 将 session dump 归一化并把 timeout、incomplete 与 worker error 从 killed 中剥离
+    loader: sibling dependency of Cosmic Ray canonical_wrapper
+    loader_class: in_repo_program
+    discovery: canonical_wrapper fixed helper path
+    evidence: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/results.json
+    cache_dirs: []
+    failure_surfacing: current invocation
+    deletion_rule: protected
 tools:
   - name: check-jsonschema
     version: 0.37.4
@@ -136,6 +174,30 @@ tools:
       change, rerun run-013 calibration, real target, wrapper boundary and
       repository-state validation.
     canonical_wrapper: 08_os/06_execution/tools/mutmut/invoke.sh
+  - name: cosmic-ray
+    version: 8.4.6
+    status: verified_on_demand
+    mount: on_demand_wsl_cli
+    default_loaded: false
+    mcp_exposed: false
+    expected_version: 8.4.6
+    version_gate: exact_runtime_probe_before_session_init
+    workspace_policy: wsl_linux_filesystem_clean_git_worktree
+    target_policy: explicit_single_python_file_allowlist
+    distributor: local
+    workers: 1
+    unsafe_outcome_policy: timeout_incomplete_incompetent_or_worker_error_exit_72
+    validation_command: >-
+      bash
+      08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/run_validation.sh
+      /absolute/path/to/dedicated-cosmic-ray-venv
+    validated_at: "2026-08-01"
+    evidence: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/results.json
+    upgrade_and_revalidation: >-
+      After any Cosmic Ray, Python, pytest, wrapper, summary, local distributor,
+      target configuration or test-semantics change, rerun run-014 calibration,
+      timeout, real target, wrapper matrix and repository-state validation.
+    canonical_wrapper: 08_os/06_execution/tools/cosmic_ray/invoke.sh
 excluded:
   - candidate packages, runtimes, MCP servers, and skills not explicitly listed under tools
   - 08_os/_runs/**

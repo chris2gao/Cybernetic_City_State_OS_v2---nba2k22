@@ -1,0 +1,970 @@
+[job-id] a9e5de9f39e54cf4ace27152cfd711ae
+target/inspect_schema_refs.py core/ReplaceBinaryOperator_BitOr_Add 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -21,7 +21,7 @@
+         self.detail = detail
+ 
+ 
+-def _child_location(location: str, key: str | int) -> str:
++def _child_location(location: str, key: str + int) -> str:
+     if isinstance(key, int):
+         return f"{location}[{key}]"
+     return f"{location}[{json.dumps(key, ensure_ascii=False)}]"
+============
+[job-id] 43c7bdaf931c4fe6925d9c7f81c201b7
+target/inspect_schema_refs.py core/ReplaceBinaryOperator_BitOr_Sub 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -21,7 +21,7 @@
+         self.detail = detail
+ 
+ 
+-def _child_location(location: str, key: str | int) -> str:
++def _child_location(location: str, key: str - int) -> str:
+     if isinstance(key, int):
+         return f"{location}[{key}]"
+     return f"{location}[{json.dumps(key, ensure_ascii=False)}]"
+============
+[job-id] 8cc2850fcdc6400fbd08ac2a7fdfd2c0
+target/inspect_schema_refs.py core/ReplaceBinaryOperator_BitOr_Mul 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -21,7 +21,7 @@
+         self.detail = detail
+ 
+ 
+-def _child_location(location: str, key: str | int) -> str:
++def _child_location(location: str, key: str * int) -> str:
+     if isinstance(key, int):
+         return f"{location}[{key}]"
+     return f"{location}[{json.dumps(key, ensure_ascii=False)}]"
+============
+[job-id] 5c2f7e6315724e22aaba56189bb4f818
+target/inspect_schema_refs.py core/ReplaceBinaryOperator_BitOr_Div 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -21,7 +21,7 @@
+         self.detail = detail
+ 
+ 
+-def _child_location(location: str, key: str | int) -> str:
++def _child_location(location: str, key: str / int) -> str:
+     if isinstance(key, int):
+         return f"{location}[{key}]"
+     return f"{location}[{json.dumps(key, ensure_ascii=False)}]"
+============
+[job-id] 731ad358ed3741aba7fe974a2dfb23a7
+target/inspect_schema_refs.py core/ReplaceBinaryOperator_BitOr_FloorDiv 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -21,7 +21,7 @@
+         self.detail = detail
+ 
+ 
+-def _child_location(location: str, key: str | int) -> str:
++def _child_location(location: str, key: str // int) -> str:
+     if isinstance(key, int):
+         return f"{location}[{key}]"
+     return f"{location}[{json.dumps(key, ensure_ascii=False)}]"
+============
+[job-id] 451b98780f0544bc8acf6c91ecb2a1bb
+target/inspect_schema_refs.py core/ReplaceBinaryOperator_BitOr_Mod 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -21,7 +21,7 @@
+         self.detail = detail
+ 
+ 
+-def _child_location(location: str, key: str | int) -> str:
++def _child_location(location: str, key: str % int) -> str:
+     if isinstance(key, int):
+         return f"{location}[{key}]"
+     return f"{location}[{json.dumps(key, ensure_ascii=False)}]"
+============
+[job-id] 396518896c86473f8071707056b4054d
+target/inspect_schema_refs.py core/ReplaceBinaryOperator_BitOr_Pow 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -21,7 +21,7 @@
+         self.detail = detail
+ 
+ 
+-def _child_location(location: str, key: str | int) -> str:
++def _child_location(location: str, key: str ** int) -> str:
+     if isinstance(key, int):
+         return f"{location}[{key}]"
+     return f"{location}[{json.dumps(key, ensure_ascii=False)}]"
+============
+[job-id] 76676eadbee94b08a1841a18aed432f3
+target/inspect_schema_refs.py core/ReplaceBinaryOperator_BitOr_RShift 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -21,7 +21,7 @@
+         self.detail = detail
+ 
+ 
+-def _child_location(location: str, key: str | int) -> str:
++def _child_location(location: str, key: str >> int) -> str:
+     if isinstance(key, int):
+         return f"{location}[{key}]"
+     return f"{location}[{json.dumps(key, ensure_ascii=False)}]"
+============
+[job-id] addb6e356a7f4dc580fe0bccc44bb6d4
+target/inspect_schema_refs.py core/ReplaceBinaryOperator_BitOr_LShift 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -21,7 +21,7 @@
+         self.detail = detail
+ 
+ 
+-def _child_location(location: str, key: str | int) -> str:
++def _child_location(location: str, key: str << int) -> str:
+     if isinstance(key, int):
+         return f"{location}[{key}]"
+     return f"{location}[{json.dumps(key, ensure_ascii=False)}]"
+============
+[job-id] b6a9fb2313914c98b330ca2949a631cb
+target/inspect_schema_refs.py core/ReplaceBinaryOperator_BitOr_BitAnd 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -21,7 +21,7 @@
+         self.detail = detail
+ 
+ 
+-def _child_location(location: str, key: str | int) -> str:
++def _child_location(location: str, key: str & int) -> str:
+     if isinstance(key, int):
+         return f"{location}[{key}]"
+     return f"{location}[{json.dumps(key, ensure_ascii=False)}]"
+============
+[job-id] f15d56956ce649f19fa911b1b1aa57e7
+target/inspect_schema_refs.py core/ReplaceBinaryOperator_BitOr_BitXor 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -21,7 +21,7 @@
+         self.detail = detail
+ 
+ 
+-def _child_location(location: str, key: str | int) -> str:
++def _child_location(location: str, key: str ^ int) -> str:
+     if isinstance(key, int):
+         return f"{location}[{key}]"
+     return f"{location}[{json.dumps(key, ensure_ascii=False)}]"
+============
+[job-id] 3a6e10e5ae5744f0bae933b9e027b823
+target/inspect_schema_refs.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -107,6 +107,6 @@
+     return 0
+ 
+ 
+-if __name__ == "__main__":
++if __name__ != "__main__":
+     raise SystemExit(main(sys.argv))
+ 
+============
+[job-id] fd89da1949bd4bb6a0d599d9ac759d06
+target/inspect_schema_refs.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -107,6 +107,6 @@
+     return 0
+ 
+ 
+-if __name__ == "__main__":
++if __name__ < "__main__":
+     raise SystemExit(main(sys.argv))
+ 
+============
+[job-id] 427a49f2c21446e08903592fb0d79347
+target/inspect_schema_refs.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -107,6 +107,6 @@
+     return 0
+ 
+ 
+-if __name__ == "__main__":
++if __name__ <= "__main__":
+     raise SystemExit(main(sys.argv))
+ 
+============
+[job-id] 0ded9079a36446a1ae2c81ce91804009
+target/inspect_schema_refs.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -107,6 +107,6 @@
+     return 0
+ 
+ 
+-if __name__ == "__main__":
++if __name__ > "__main__":
+     raise SystemExit(main(sys.argv))
+ 
+============
+[job-id] e18ee2b3526541ab9650b54699ddb2af
+target/inspect_schema_refs.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -107,6 +107,6 @@
+     return 0
+ 
+ 
+-if __name__ == "__main__":
++if __name__ >= "__main__":
+     raise SystemExit(main(sys.argv))
+ 
+============
+[job-id] 8f051bc3254a423c8dca56fd034f5689
+target/inspect_schema_refs.py core/ReplaceComparisonOperator_Eq_Is 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -107,6 +107,6 @@
+     return 0
+ 
+ 
+-if __name__ == "__main__":
++if __name__ is "__main__":
+     raise SystemExit(main(sys.argv))
+ 
+============
+[job-id] 8b07aab0cfe64acfa1e7baaa956dca75
+target/inspect_schema_refs.py core/ReplaceComparisonOperator_Eq_IsNot 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -107,6 +107,6 @@
+     return 0
+ 
+ 
+-if __name__ == "__main__":
++if __name__ is not "__main__":
+     raise SystemExit(main(sys.argv))
+ 
+============
+[job-id] b791824facda4dd3b6128a4cb94d200d
+target/inspect_schema_refs.py core/ReplaceComparisonOperator_NotEq_Eq 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -59,7 +59,7 @@
+ 
+ 
+ def inspect_schema(path: Path) -> None:
+-    if path.suffix.lower() != ".json":
++    if path.suffix.lower() == ".json":
+         raise SchemaPolicyError(
+             "CJV-R01-JSON-SUFFIX",
+             "$",
+============
+[job-id] 01c65e5eb19949a4b48b3276f21d9635
+target/inspect_schema_refs.py core/ReplaceComparisonOperator_NotEq_Eq 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -88,7 +88,7 @@
+ 
+ 
+ def main(argv: list[str]) -> int:
+-    if len(argv) != 2:
++    if len(argv) == 2:
+         print(
+             "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path",
+             file=sys.stderr,
+============
+[job-id] a1af3b54c480425bb7f33ba6c81cb1a8
+target/inspect_schema_refs.py core/ReplaceComparisonOperator_NotEq_Lt 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -59,7 +59,7 @@
+ 
+ 
+ def inspect_schema(path: Path) -> None:
+-    if path.suffix.lower() != ".json":
++    if path.suffix.lower() < ".json":
+         raise SchemaPolicyError(
+             "CJV-R01-JSON-SUFFIX",
+             "$",
+============
+[job-id] f12c3da2e746411298c248499a0d0803
+target/inspect_schema_refs.py core/ReplaceComparisonOperator_NotEq_Lt 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -88,7 +88,7 @@
+ 
+ 
+ def main(argv: list[str]) -> int:
+-    if len(argv) != 2:
++    if len(argv) < 2:
+         print(
+             "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path",
+             file=sys.stderr,
+============
+[job-id] 97bd9b73db814d8490a74ecf23adf2ea
+target/inspect_schema_refs.py core/ReplaceComparisonOperator_NotEq_LtE 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -59,7 +59,7 @@
+ 
+ 
+ def inspect_schema(path: Path) -> None:
+-    if path.suffix.lower() != ".json":
++    if path.suffix.lower() <= ".json":
+         raise SchemaPolicyError(
+             "CJV-R01-JSON-SUFFIX",
+             "$",
+============
+[job-id] b9c2c528e11c4785a30ab12a2bba1248
+target/inspect_schema_refs.py core/ReplaceComparisonOperator_NotEq_LtE 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -88,7 +88,7 @@
+ 
+ 
+ def main(argv: list[str]) -> int:
+-    if len(argv) != 2:
++    if len(argv) <= 2:
+         print(
+             "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path",
+             file=sys.stderr,
+============
+[job-id] 32693d1cca894b278dbf957120df8c23
+target/inspect_schema_refs.py core/ReplaceComparisonOperator_NotEq_Gt 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -59,7 +59,7 @@
+ 
+ 
+ def inspect_schema(path: Path) -> None:
+-    if path.suffix.lower() != ".json":
++    if path.suffix.lower() > ".json":
+         raise SchemaPolicyError(
+             "CJV-R01-JSON-SUFFIX",
+             "$",
+============
+[job-id] 13d91b2f588a4f31aa12bacfea9c130b
+target/inspect_schema_refs.py core/ReplaceComparisonOperator_NotEq_Gt 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -88,7 +88,7 @@
+ 
+ 
+ def main(argv: list[str]) -> int:
+-    if len(argv) != 2:
++    if len(argv) > 2:
+         print(
+             "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path",
+             file=sys.stderr,
+============
+[job-id] 381a013af4344396bb5dd6ca1d499b2e
+target/inspect_schema_refs.py core/ReplaceComparisonOperator_NotEq_GtE 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -59,7 +59,7 @@
+ 
+ 
+ def inspect_schema(path: Path) -> None:
+-    if path.suffix.lower() != ".json":
++    if path.suffix.lower() >= ".json":
+         raise SchemaPolicyError(
+             "CJV-R01-JSON-SUFFIX",
+             "$",
+============
+[job-id] a58e384fea0d4392a2eeb65c3d7ca9b5
+target/inspect_schema_refs.py core/ReplaceComparisonOperator_NotEq_GtE 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -88,7 +88,7 @@
+ 
+ 
+ def main(argv: list[str]) -> int:
+-    if len(argv) != 2:
++    if len(argv) >= 2:
+         print(
+             "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path",
+             file=sys.stderr,
+============
+[job-id] 7412c4f233c142ddbddd4fd134c617e1
+target/inspect_schema_refs.py core/ReplaceComparisonOperator_NotEq_Is 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -59,7 +59,7 @@
+ 
+ 
+ def inspect_schema(path: Path) -> None:
+-    if path.suffix.lower() != ".json":
++    if path.suffix.lower() is ".json":
+         raise SchemaPolicyError(
+             "CJV-R01-JSON-SUFFIX",
+             "$",
+============
+[job-id] 6c288be7e3724db59b5aceddce21efa0
+target/inspect_schema_refs.py core/ReplaceComparisonOperator_NotEq_IsNot 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -59,7 +59,7 @@
+ 
+ 
+ def inspect_schema(path: Path) -> None:
+-    if path.suffix.lower() != ".json":
++    if path.suffix.lower() is not ".json":
+         raise SchemaPolicyError(
+             "CJV-R01-JSON-SUFFIX",
+             "$",
+============
+[job-id] ded4bf3c2e754b80b0dcd0d4ffde0757
+target/inspect_schema_refs.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -32,7 +32,7 @@
+         for key, child in value.items():
+             child_location = _child_location(location, key)
+             if key in REFERENCE_KEYWORDS:
+-                if not isinstance(child, str):
++                if  isinstance(child, str):
+                     raise SchemaPolicyError(
+                         "CJV-R01-REFERENCE-TYPE",
+                         child_location,
+============
+[job-id] d058ca540165425ea73dd40b5e8d3a1a
+target/inspect_schema_refs.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -38,7 +38,7 @@
+                         child_location,
+                         f"{key} must be a string",
+                     )
+-                if not child.startswith("#"):
++                if  child.startswith("#"):
+                     raise SchemaPolicyError(
+                         "CJV-R01-EXTERNAL-REFERENCE",
+                         child_location,
+============
+[job-id] 9c432d253ef249cf914b31b930a92699
+target/inspect_schema_refs.py core/AddNot 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -22,7 +22,7 @@
+ 
+ 
+ def _child_location(location: str, key: str | int) -> str:
+-    if isinstance(key, int):
++    if not isinstance(key, int):
+         return f"{location}[{key}]"
+     return f"{location}[{json.dumps(key, ensure_ascii=False)}]"
+ 
+============
+[job-id] 949eea2108e74864a0789e41986c50ee
+target/inspect_schema_refs.py core/AddNot 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -28,7 +28,7 @@
+ 
+ 
+ def _walk(value: Any, location: str = "$") -> None:
+-    if isinstance(value, dict):
++    if not isinstance(value, dict):
+         for key, child in value.items():
+             child_location = _child_location(location, key)
+             if key in REFERENCE_KEYWORDS:
+============
+[job-id] d8a13128f0924753a12168eda17cdfa1
+target/inspect_schema_refs.py core/AddNot 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -31,7 +31,7 @@
+     if isinstance(value, dict):
+         for key, child in value.items():
+             child_location = _child_location(location, key)
+-            if key in REFERENCE_KEYWORDS:
++            if not key in REFERENCE_KEYWORDS:
+                 if not isinstance(child, str):
+                     raise SchemaPolicyError(
+                         "CJV-R01-REFERENCE-TYPE",
+============
+[job-id] 3bb87c55aa854d61885e49f3c1120dc5
+target/inspect_schema_refs.py core/AddNot 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -32,7 +32,7 @@
+         for key, child in value.items():
+             child_location = _child_location(location, key)
+             if key in REFERENCE_KEYWORDS:
+-                if not isinstance(child, str):
++                if not not isinstance(child, str):
+                     raise SchemaPolicyError(
+                         "CJV-R01-REFERENCE-TYPE",
+                         child_location,
+============
+[job-id] 27d5df94f8084bb2b781d02ba1d19d0f
+target/inspect_schema_refs.py core/AddNot 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -38,7 +38,7 @@
+                         child_location,
+                         f"{key} must be a string",
+                     )
+-                if not child.startswith("#"):
++                if not not child.startswith("#"):
+                     raise SchemaPolicyError(
+                         "CJV-R01-EXTERNAL-REFERENCE",
+                         child_location,
+============
+[job-id] 14b342435b6943248ba8c768a4cfa218
+target/inspect_schema_refs.py core/AddNot 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -46,7 +46,7 @@
+                     )
+             elif key in IDENTIFIER_KEYWORDS and isinstance(child, str):
+                 scheme = urlsplit(child).scheme.lower()
+-                if scheme in HTTP_SCHEMES:
++                if not scheme in HTTP_SCHEMES:
+                     raise SchemaPolicyError(
+                         "CJV-R01-REMOTE-IDENTIFIER",
+                         child_location,
+============
+[job-id] bb3219be76ad466bbb92103c47024ef4
+target/inspect_schema_refs.py core/AddNot 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -59,7 +59,7 @@
+ 
+ 
+ def inspect_schema(path: Path) -> None:
+-    if path.suffix.lower() != ".json":
++    if not path.suffix.lower() != ".json":
+         raise SchemaPolicyError(
+             "CJV-R01-JSON-SUFFIX",
+             "$",
+============
+[job-id] cc78e5335ead41a4bf5467ec9599f34d
+target/inspect_schema_refs.py core/AddNot 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -77,7 +77,7 @@
+         schema = json.loads(text)
+     except (UnicodeError, json.JSONDecodeError) as exc:
+         detail = f"strict JSON parse failed: {exc.__class__.__name__}"
+-        if isinstance(exc, json.JSONDecodeError):
++        if not isinstance(exc, json.JSONDecodeError):
+             detail += f" at line {exc.lineno} column {exc.colno}"
+         raise SchemaPolicyError(
+             "CJV-R01-STRICT-JSON",
+============
+[job-id] 09cec30915894b8abd5e788683941082
+target/inspect_schema_refs.py core/AddNot 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -88,7 +88,7 @@
+ 
+ 
+ def main(argv: list[str]) -> int:
+-    if len(argv) != 2:
++    if not len(argv) != 2:
+         print(
+             "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path",
+             file=sys.stderr,
+============
+[job-id] 22c6034dbda44aa6853dce638ccc0c71
+target/inspect_schema_refs.py core/AddNot 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -107,6 +107,6 @@
+     return 0
+ 
+ 
+-if __name__ == "__main__":
++if not __name__ == "__main__":
+     raise SystemExit(main(sys.argv))
+ 
+============
+[job-id] 5bdcbb4f6c534540a723f269f584c540
+target/inspect_schema_refs.py core/ReplaceFalseWithTrue 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -24,7 +24,7 @@
+ def _child_location(location: str, key: str | int) -> str:
+     if isinstance(key, int):
+         return f"{location}[{key}]"
+-    return f"{location}[{json.dumps(key, ensure_ascii=False)}]"
++    return f"{location}[{json.dumps(key, ensure_ascii=True)}]"
+ 
+ 
+ def _walk(value: Any, location: str = "$") -> None:
+============
+[job-id] 595675b711a44b27b29e5861ffd69e8c
+target/inspect_schema_refs.py core/ReplaceAndWithOr 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -44,7 +44,7 @@
+                         child_location,
+                         f"{key} must be fragment-only; got {json.dumps(child)}",
+                     )
+-            elif key in IDENTIFIER_KEYWORDS and isinstance(child, str):
++            elif key in IDENTIFIER_KEYWORDS or isinstance(child, str):
+                 scheme = urlsplit(child).scheme.lower()
+                 if scheme in HTTP_SCHEMES:
+                     raise SchemaPolicyError(
+============
+[job-id] 94da07c03a374738b4ef4936a9aa97e1
+target/inspect_schema_refs.py core/ExceptionReplacer 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -67,7 +67,7 @@
+         )
+     try:
+         text = path.read_text(encoding="utf-8")
+-    except OSError as exc:
++    except CosmicRayTestingException as exc:
+         raise SchemaPolicyError(
+             "CJV-R01-SCHEMA-READ",
+             "$",
+============
+[job-id] 1ab1e9e00c284d16ac1c60fc78e34c79
+target/inspect_schema_refs.py core/ExceptionReplacer 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -75,7 +75,7 @@
+         ) from exc
+     try:
+         schema = json.loads(text)
+-    except (UnicodeError, json.JSONDecodeError) as exc:
++    except (CosmicRayTestingException, json.JSONDecodeError) as exc:
+         detail = f"strict JSON parse failed: {exc.__class__.__name__}"
+         if isinstance(exc, json.JSONDecodeError):
+             detail += f" at line {exc.lineno} column {exc.colno}"
+============
+[job-id] 82764985dfa24d68be020a5a3f7fe032
+target/inspect_schema_refs.py core/ExceptionReplacer 2
+worker outcome: WorkerOutcome.EXCEPTION, test outcome: TestOutcome.INCOMPETENT
+=== DIFF ===
+None
+============
+[job-id] 4298dced988d4ff488d99efa86da91eb
+target/inspect_schema_refs.py core/ExceptionReplacer 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -96,7 +96,7 @@
+         return EXIT_POLICY_FAILURE
+     try:
+         inspect_schema(Path(argv[1]))
+-    except SchemaPolicyError as exc:
++    except CosmicRayTestingException as exc:
+         print(
+             f"schema reference policy: FAIL [{exc.code}] "
+             f"at {exc.location}: {exc.detail}",
+============
+[job-id] 8a06c7872a6942e6b2bf4501a4913e28
+target/inspect_schema_refs.py core/NumberReplacer 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -10,7 +10,7 @@
+ REFERENCE_KEYWORDS = frozenset({"$ref", "$dynamicRef", "$recursiveRef"})
+ IDENTIFIER_KEYWORDS = frozenset({"$id", "id"})
+ HTTP_SCHEMES = frozenset({"http", "https"})
+-EXIT_POLICY_FAILURE = 65
++EXIT_POLICY_FAILURE = 66
+ 
+ 
+ class SchemaPolicyError(ValueError):
+============
+[job-id] a5af0174fc054330b31a6ca6b1e56b5c
+target/inspect_schema_refs.py core/NumberReplacer 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -10,7 +10,7 @@
+ REFERENCE_KEYWORDS = frozenset({"$ref", "$dynamicRef", "$recursiveRef"})
+ IDENTIFIER_KEYWORDS = frozenset({"$id", "id"})
+ HTTP_SCHEMES = frozenset({"http", "https"})
+-EXIT_POLICY_FAILURE = 65
++EXIT_POLICY_FAILURE = 64
+ 
+ 
+ class SchemaPolicyError(ValueError):
+============
+[job-id] 616da1bbc2474e389ae500372ab6e22a
+target/inspect_schema_refs.py core/NumberReplacer 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -88,7 +88,7 @@
+ 
+ 
+ def main(argv: list[str]) -> int:
+-    if len(argv) != 2:
++    if len(argv) != 3:
+         print(
+             "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path",
+             file=sys.stderr,
+============
+[job-id] 22938893ba0f444f8ab1da8ba489e590
+target/inspect_schema_refs.py core/NumberReplacer 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -88,7 +88,7 @@
+ 
+ 
+ def main(argv: list[str]) -> int:
+-    if len(argv) != 2:
++    if len(argv) != 1:
+         print(
+             "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path",
+             file=sys.stderr,
+============
+[job-id] 4147a50f65dd4da7bb2bc311804ac596
+target/inspect_schema_refs.py core/NumberReplacer 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -95,7 +95,7 @@
+         )
+         return EXIT_POLICY_FAILURE
+     try:
+-        inspect_schema(Path(argv[1]))
++        inspect_schema(Path(argv[ 2]))
+     except SchemaPolicyError as exc:
+         print(
+             f"schema reference policy: FAIL [{exc.code}] "
+============
+[job-id] b2a970699bb244c1bb857f514a8bb150
+target/inspect_schema_refs.py core/NumberReplacer 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -95,7 +95,7 @@
+         )
+         return EXIT_POLICY_FAILURE
+     try:
+-        inspect_schema(Path(argv[1]))
++        inspect_schema(Path(argv[ 0]))
+     except SchemaPolicyError as exc:
+         print(
+             f"schema reference policy: FAIL [{exc.code}] "
+============
+[job-id] 3d7aa593075c41429bc57ce06316f2c1
+target/inspect_schema_refs.py core/NumberReplacer 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -104,7 +104,7 @@
+         )
+         return EXIT_POLICY_FAILURE
+     print("schema reference policy: PASS")
+-    return 0
++    return 1
+ 
+ 
+ if __name__ == "__main__":
+============
+[job-id] 621b9dc088f849a6b970ad255615cdc8
+target/inspect_schema_refs.py core/NumberReplacer 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -104,7 +104,7 @@
+         )
+         return EXIT_POLICY_FAILURE
+     print("schema reference policy: PASS")
+-    return 0
++    return -1
+ 
+ 
+ if __name__ == "__main__":
+============
+[job-id] 1c36f07f5b9147d6b667592f9efac155
+target/inspect_schema_refs.py core/ZeroIterationForLoop 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -29,7 +29,7 @@
+ 
+ def _walk(value: Any, location: str = "$") -> None:
+     if isinstance(value, dict):
+-        for key, child in value.items():
++        for key, child in []:
+             child_location = _child_location(location, key)
+             if key in REFERENCE_KEYWORDS:
+                 if not isinstance(child, str):
+============
+[job-id] 1fbbf2febc1e427db33a357c5b453cf8
+target/inspect_schema_refs.py core/ZeroIterationForLoop 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atarget/inspect_schema_refs.py
++++ btarget/inspect_schema_refs.py
+@@ -54,7 +54,7 @@
+                     )
+             _walk(child, child_location)
+     elif isinstance(value, list):
+-        for index, child in enumerate(value):
++        for index, child in []:
+             _walk(child, _child_location(location, index))
+ 
+ 
+============
+total jobs: 58
+complete: 58 (100.00%)
+surviving mutants: 16 (27.59%)

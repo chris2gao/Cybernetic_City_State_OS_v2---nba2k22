@@ -1,0 +1,44 @@
+{
+  "clamp_lt_one_equivalent": true,
+  "clamp_lte_equivalent": true,
+  "classification_counts": {
+    "executable_equivalent": 9,
+    "genuine_gap": 3
+  },
+  "domain": {
+    "kind": "int",
+    "tested_max": 100,
+    "tested_min": -100
+  },
+  "format": "run-014-calibration-survivor-proof-v1",
+  "gap_cases": {
+    "clamp_zero_to_negative_one": {
+      "differs": true,
+      "input": -1,
+      "mutant": -1,
+      "original": 0
+    },
+    "decorator_lte_zero": {
+      "differs": true,
+      "input": 0,
+      "mutant_would_raise": true,
+      "original": 0
+    },
+    "decorator_zero_to_one": {
+      "differs": true,
+      "input": 0,
+      "mutant_would_raise": true,
+      "original": 0
+    }
+  },
+  "identity_cases": {
+    "core/ReplaceBinaryOperator_Add_BitOr": true,
+    "core/ReplaceBinaryOperator_Add_BitXor": true,
+    "core/ReplaceBinaryOperator_Add_LShift": true,
+    "core/ReplaceBinaryOperator_Add_RShift": true,
+    "core/ReplaceBinaryOperator_Add_Sub": true
+  },
+  "passed": true,
+  "role_identity_to_equality": true,
+  "survivor_count": 12
+}

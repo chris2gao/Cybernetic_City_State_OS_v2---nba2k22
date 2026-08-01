@@ -1,0 +1,1133 @@
+[job-id] c73a2bbbbd28495db639e5edb1a250be
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Add_Sub 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -41,5 +41,5 @@
+ 
+ 
+ def identity_offset(value: int) -> int:
+-    return value + 0
++    return value - 0
+ 
+============
+[job-id] 86d45410cf8f4540a9c7373a3cfe3a17
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Add_Mul 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -41,5 +41,5 @@
+ 
+ 
+ def identity_offset(value: int) -> int:
+-    return value + 0
++    return value * 0
+ 
+============
+[job-id] 54aca3141d01435e9893bc7f222f8426
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Add_Div 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -41,5 +41,5 @@
+ 
+ 
+ def identity_offset(value: int) -> int:
+-    return value + 0
++    return value / 0
+ 
+============
+[job-id] 7e1855ae9f9441529d3eb20227613eb9
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Add_FloorDiv 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -41,5 +41,5 @@
+ 
+ 
+ def identity_offset(value: int) -> int:
+-    return value + 0
++    return value // 0
+ 
+============
+[job-id] 80378ff8b9ce4031b5bd591d923bda0e
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Add_Mod 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -41,5 +41,5 @@
+ 
+ 
+ def identity_offset(value: int) -> int:
+-    return value + 0
++    return value % 0
+ 
+============
+[job-id] 915f694ac46747c4bdd6c6bfd40ee10f
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Add_Pow 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -41,5 +41,5 @@
+ 
+ 
+ def identity_offset(value: int) -> int:
+-    return value + 0
++    return value ** 0
+ 
+============
+[job-id] fdd1e5ab0458482a968227cdb44f5be5
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Add_RShift 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -41,5 +41,5 @@
+ 
+ 
+ def identity_offset(value: int) -> int:
+-    return value + 0
++    return value >> 0
+ 
+============
+[job-id] b1d1e476cb3e4be88569a25533c211d6
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Add_LShift 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -41,5 +41,5 @@
+ 
+ 
+ def identity_offset(value: int) -> int:
+-    return value + 0
++    return value << 0
+ 
+============
+[job-id] 32b31c201e8d46a5839bae565ba4ddbd
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Add_BitOr 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -41,5 +41,5 @@
+ 
+ 
+ def identity_offset(value: int) -> int:
+-    return value + 0
++    return value | 0
+ 
+============
+[job-id] e0e0b4fa735140878e93720925da6773
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Add_BitAnd 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -41,5 +41,5 @@
+ 
+ 
+ def identity_offset(value: int) -> int:
+-    return value + 0
++    return value & 0
+ 
+============
+[job-id] 596a463d38bd45aba57c158380ae6241
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Add_BitXor 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -41,5 +41,5 @@
+ 
+ 
+ def identity_offset(value: int) -> int:
+-    return value + 0
++    return value ^ 0
+ 
+============
+[job-id] 65279ea42e1c4b349a4e4dedd8f04d30
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Mul_Add 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -37,7 +37,7 @@
+ 
+ @require_nonnegative
+ def decorated_double(value: int) -> int:
+-    return value * 2
++    return value + 2
+ 
+ 
+ def identity_offset(value: int) -> int:
+============
+[job-id] 6b310b075b424bceac4a14f82938b02a
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Mul_Sub 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -37,7 +37,7 @@
+ 
+ @require_nonnegative
+ def decorated_double(value: int) -> int:
+-    return value * 2
++    return value - 2
+ 
+ 
+ def identity_offset(value: int) -> int:
+============
+[job-id] d0c4659ba06d41e09063ca8a6ea3bc42
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Mul_Div 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -37,7 +37,7 @@
+ 
+ @require_nonnegative
+ def decorated_double(value: int) -> int:
+-    return value * 2
++    return value / 2
+ 
+ 
+ def identity_offset(value: int) -> int:
+============
+[job-id] 02089ca9ccee4becba3e80de8ec04899
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Mul_FloorDiv 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -37,7 +37,7 @@
+ 
+ @require_nonnegative
+ def decorated_double(value: int) -> int:
+-    return value * 2
++    return value // 2
+ 
+ 
+ def identity_offset(value: int) -> int:
+============
+[job-id] 7990fb89d0b24cfca40f4f01bc7d474d
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Mul_Mod 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -37,7 +37,7 @@
+ 
+ @require_nonnegative
+ def decorated_double(value: int) -> int:
+-    return value * 2
++    return value % 2
+ 
+ 
+ def identity_offset(value: int) -> int:
+============
+[job-id] 0a30bf8de6ef41bc8b4c4c453cde73ac
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Mul_Pow 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -37,7 +37,7 @@
+ 
+ @require_nonnegative
+ def decorated_double(value: int) -> int:
+-    return value * 2
++    return value ** 2
+ 
+ 
+ def identity_offset(value: int) -> int:
+============
+[job-id] e4019000ea214b4aa8e4b8fee497d8e2
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Mul_RShift 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -37,7 +37,7 @@
+ 
+ @require_nonnegative
+ def decorated_double(value: int) -> int:
+-    return value * 2
++    return value >> 2
+ 
+ 
+ def identity_offset(value: int) -> int:
+============
+[job-id] ed8df1053a164544b7eb9b63f50a7bcb
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Mul_LShift 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -37,7 +37,7 @@
+ 
+ @require_nonnegative
+ def decorated_double(value: int) -> int:
+-    return value * 2
++    return value << 2
+ 
+ 
+ def identity_offset(value: int) -> int:
+============
+[job-id] 4bd0d93e8fb14fce937ca608f9274a5e
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Mul_BitOr 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -37,7 +37,7 @@
+ 
+ @require_nonnegative
+ def decorated_double(value: int) -> int:
+-    return value * 2
++    return value | 2
+ 
+ 
+ def identity_offset(value: int) -> int:
+============
+[job-id] d43470b48e9641a3b0e8aae72ae92c21
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Mul_BitAnd 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -37,7 +37,7 @@
+ 
+ @require_nonnegative
+ def decorated_double(value: int) -> int:
+-    return value * 2
++    return value & 2
+ 
+ 
+ def identity_offset(value: int) -> int:
+============
+[job-id] 475401b9bc8141fc958a24227bf0e231
+calibration_pkg/logic.py core/ReplaceBinaryOperator_Mul_BitXor 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -37,7 +37,7 @@
+ 
+ @require_nonnegative
+ def decorated_double(value: int) -> int:
+-    return value * 2
++    return value ^ 2
+ 
+ 
+ def identity_offset(value: int) -> int:
+============
+[job-id] 6c9a4da669c840648d739a78f5a5e214
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Lt_Eq 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -12,7 +12,7 @@
+ 
+ 
+ def clamp_nonnegative(value: int) -> int:
+-    if value < 0:
++    if value == 0:
+         return 0
+     return value
+ 
+============
+[job-id] 4b2f1014dc104cb9845b728a98092e4f
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Lt_Eq 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -28,7 +28,7 @@
+ def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:
+     @wraps(function)
+     def wrapped(value: int) -> int:
+-        if value < 0:
++        if value == 0:
+             raise ValueError("value must be nonnegative")
+         return function(value)
+ 
+============
+[job-id] 77416b739d0344f6ba146070e9958a51
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Lt_NotEq 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -12,7 +12,7 @@
+ 
+ 
+ def clamp_nonnegative(value: int) -> int:
+-    if value < 0:
++    if value != 0:
+         return 0
+     return value
+ 
+============
+[job-id] 0ac79f1c3dc94e01b7121e7c37017826
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Lt_NotEq 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -28,7 +28,7 @@
+ def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:
+     @wraps(function)
+     def wrapped(value: int) -> int:
+-        if value < 0:
++        if value != 0:
+             raise ValueError("value must be nonnegative")
+         return function(value)
+ 
+============
+[job-id] b56c069747474aae8f9d0c151c7dff20
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Lt_LtE 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -12,7 +12,7 @@
+ 
+ 
+ def clamp_nonnegative(value: int) -> int:
+-    if value < 0:
++    if value <= 0:
+         return 0
+     return value
+ 
+============
+[job-id] cd44d028a1cf4b3eaa682845f40a97b5
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Lt_LtE 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -28,7 +28,7 @@
+ def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:
+     @wraps(function)
+     def wrapped(value: int) -> int:
+-        if value < 0:
++        if value <= 0:
+             raise ValueError("value must be nonnegative")
+         return function(value)
+ 
+============
+[job-id] 92b9ba10cb724a09a2958e67dd1225d3
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Lt_Gt 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -12,7 +12,7 @@
+ 
+ 
+ def clamp_nonnegative(value: int) -> int:
+-    if value < 0:
++    if value > 0:
+         return 0
+     return value
+ 
+============
+[job-id] 9e3c2bf2adeb4f16980c67989dcc7044
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Lt_Gt 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -28,7 +28,7 @@
+ def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:
+     @wraps(function)
+     def wrapped(value: int) -> int:
+-        if value < 0:
++        if value > 0:
+             raise ValueError("value must be nonnegative")
+         return function(value)
+ 
+============
+[job-id] c7a80c8784184fe7bb7a24804e2e997a
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Lt_GtE 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -12,7 +12,7 @@
+ 
+ 
+ def clamp_nonnegative(value: int) -> int:
+-    if value < 0:
++    if value >= 0:
+         return 0
+     return value
+ 
+============
+[job-id] 71832d1b2d6a4afe9f23d418438bf97c
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Lt_GtE 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -28,7 +28,7 @@
+ def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:
+     @wraps(function)
+     def wrapped(value: int) -> int:
+-        if value < 0:
++        if value >= 0:
+             raise ValueError("value must be nonnegative")
+         return function(value)
+ 
+============
+[job-id] 79a47679fa9a4fd4ac74fd5bb568f283
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Is_Eq 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -18,7 +18,7 @@
+ 
+ 
+ def access_level(role: Role) -> int:
+-    if role is Role.ADMIN:
++    if role == Role.ADMIN:
+         return 2
+     if role is Role.MEMBER:
+         return 1
+============
+[job-id] eae9a399c53f42af8a6b9914f0995782
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Is_Eq 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -20,7 +20,7 @@
+ def access_level(role: Role) -> int:
+     if role is Role.ADMIN:
+         return 2
+-    if role is Role.MEMBER:
++    if role == Role.MEMBER:
+         return 1
+     return 0
+ 
+============
+[job-id] 38e5053265364888a1bf18efb720d1da
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Is_NotEq 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -18,7 +18,7 @@
+ 
+ 
+ def access_level(role: Role) -> int:
+-    if role is Role.ADMIN:
++    if role != Role.ADMIN:
+         return 2
+     if role is Role.MEMBER:
+         return 1
+============
+[job-id] 05b330255e5f4092b795f91943ab8643
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Is_NotEq 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -20,7 +20,7 @@
+ def access_level(role: Role) -> int:
+     if role is Role.ADMIN:
+         return 2
+-    if role is Role.MEMBER:
++    if role != Role.MEMBER:
+         return 1
+     return 0
+ 
+============
+[job-id] d5295fa833b645dbb7644682678ec8b1
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Is_Lt 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -18,7 +18,7 @@
+ 
+ 
+ def access_level(role: Role) -> int:
+-    if role is Role.ADMIN:
++    if role < Role.ADMIN:
+         return 2
+     if role is Role.MEMBER:
+         return 1
+============
+[job-id] 104a3483a19a42e0aef7f05376fd7ee2
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Is_Lt 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -20,7 +20,7 @@
+ def access_level(role: Role) -> int:
+     if role is Role.ADMIN:
+         return 2
+-    if role is Role.MEMBER:
++    if role < Role.MEMBER:
+         return 1
+     return 0
+ 
+============
+[job-id] e882ff5739eb48c69cc6cbb66996b254
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Is_LtE 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -18,7 +18,7 @@
+ 
+ 
+ def access_level(role: Role) -> int:
+-    if role is Role.ADMIN:
++    if role <= Role.ADMIN:
+         return 2
+     if role is Role.MEMBER:
+         return 1
+============
+[job-id] d9c9ce1c27a14ecaaee477415c54bc67
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Is_LtE 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -20,7 +20,7 @@
+ def access_level(role: Role) -> int:
+     if role is Role.ADMIN:
+         return 2
+-    if role is Role.MEMBER:
++    if role <= Role.MEMBER:
+         return 1
+     return 0
+ 
+============
+[job-id] 7c481e09f87b4c169d018563775fa28a
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Is_Gt 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -18,7 +18,7 @@
+ 
+ 
+ def access_level(role: Role) -> int:
+-    if role is Role.ADMIN:
++    if role > Role.ADMIN:
+         return 2
+     if role is Role.MEMBER:
+         return 1
+============
+[job-id] f6c8330a9a5143679e4637a10eb05859
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Is_Gt 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -20,7 +20,7 @@
+ def access_level(role: Role) -> int:
+     if role is Role.ADMIN:
+         return 2
+-    if role is Role.MEMBER:
++    if role > Role.MEMBER:
+         return 1
+     return 0
+ 
+============
+[job-id] 13f050658a164451bd7339b12be87cac
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Is_GtE 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -18,7 +18,7 @@
+ 
+ 
+ def access_level(role: Role) -> int:
+-    if role is Role.ADMIN:
++    if role >= Role.ADMIN:
+         return 2
+     if role is Role.MEMBER:
+         return 1
+============
+[job-id] 3ecc39266d834adb8d42da1e0a3c1240
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Is_GtE 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -20,7 +20,7 @@
+ def access_level(role: Role) -> int:
+     if role is Role.ADMIN:
+         return 2
+-    if role is Role.MEMBER:
++    if role >= Role.MEMBER:
+         return 1
+     return 0
+ 
+============
+[job-id] a1d3367185af4515b561cb77894b39d0
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -18,7 +18,7 @@
+ 
+ 
+ def access_level(role: Role) -> int:
+-    if role is Role.ADMIN:
++    if role is not Role.ADMIN:
+         return 2
+     if role is Role.MEMBER:
+         return 1
+============
+[job-id] 2aea91b894a44126bd35ba4c3d9b7368
+calibration_pkg/logic.py core/ReplaceComparisonOperator_Is_IsNot 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -20,7 +20,7 @@
+ def access_level(role: Role) -> int:
+     if role is Role.ADMIN:
+         return 2
+-    if role is Role.MEMBER:
++    if role is not Role.MEMBER:
+         return 1
+     return 0
+ 
+============
+[job-id] 5e9b413bfffe429abb700b5a4a7352d0
+calibration_pkg/logic.py core/AddNot 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -12,7 +12,7 @@
+ 
+ 
+ def clamp_nonnegative(value: int) -> int:
+-    if value < 0:
++    if not value < 0:
+         return 0
+     return value
+ 
+============
+[job-id] d7c50239e4f24898848dfea7b1d49878
+calibration_pkg/logic.py core/AddNot 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -18,7 +18,7 @@
+ 
+ 
+ def access_level(role: Role) -> int:
+-    if role is Role.ADMIN:
++    if not role is Role.ADMIN:
+         return 2
+     if role is Role.MEMBER:
+         return 1
+============
+[job-id] 09efa1c717584e10ac604bf800448c5b
+calibration_pkg/logic.py core/AddNot 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -20,7 +20,7 @@
+ def access_level(role: Role) -> int:
+     if role is Role.ADMIN:
+         return 2
+-    if role is Role.MEMBER:
++    if not role is Role.MEMBER:
+         return 1
+     return 0
+ 
+============
+[job-id] 9fcb4b1c7ade4d1f8c799e1e691ba937
+calibration_pkg/logic.py core/AddNot 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -28,7 +28,7 @@
+ def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:
+     @wraps(function)
+     def wrapped(value: int) -> int:
+-        if value < 0:
++        if not value < 0:
+             raise ValueError("value must be nonnegative")
+         return function(value)
+ 
+============
+[job-id] 0ebe0d60f6fa45ef9c4667a93d4efc0e
+calibration_pkg/logic.py core/NumberReplacer 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -12,7 +12,7 @@
+ 
+ 
+ def clamp_nonnegative(value: int) -> int:
+-    if value < 0:
++    if value < 1:
+         return 0
+     return value
+ 
+============
+[job-id] 24bbc22ae3e74e1fa79b978df5deff36
+calibration_pkg/logic.py core/NumberReplacer 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -12,7 +12,7 @@
+ 
+ 
+ def clamp_nonnegative(value: int) -> int:
+-    if value < 0:
++    if value < -1:
+         return 0
+     return value
+ 
+============
+[job-id] 0b08638e78694cc6a06385fee1b2185e
+calibration_pkg/logic.py core/NumberReplacer 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -13,7 +13,7 @@
+ 
+ def clamp_nonnegative(value: int) -> int:
+     if value < 0:
+-        return 0
++        return 1
+     return value
+ 
+ 
+============
+[job-id] 98a415ba41c944f589be5208b619a4b0
+calibration_pkg/logic.py core/NumberReplacer 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -13,7 +13,7 @@
+ 
+ def clamp_nonnegative(value: int) -> int:
+     if value < 0:
+-        return 0
++        return -1
+     return value
+ 
+ 
+============
+[job-id] cd6a125229514fdd8571234ce42cab99
+calibration_pkg/logic.py core/NumberReplacer 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -19,7 +19,7 @@
+ 
+ def access_level(role: Role) -> int:
+     if role is Role.ADMIN:
+-        return 2
++        return 3
+     if role is Role.MEMBER:
+         return 1
+     return 0
+============
+[job-id] 536d1b48c0cd47fa8832d074e585dda8
+calibration_pkg/logic.py core/NumberReplacer 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -19,7 +19,7 @@
+ 
+ def access_level(role: Role) -> int:
+     if role is Role.ADMIN:
+-        return 2
++        return 1
+     if role is Role.MEMBER:
+         return 1
+     return 0
+============
+[job-id] a1c2463a95e74bcd822a813ee06ace1b
+calibration_pkg/logic.py core/NumberReplacer 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -21,7 +21,7 @@
+     if role is Role.ADMIN:
+         return 2
+     if role is Role.MEMBER:
+-        return 1
++        return 2
+     return 0
+ 
+ 
+============
+[job-id] 4ccdf20c7ce4449f8650806ec25d119e
+calibration_pkg/logic.py core/NumberReplacer 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -21,7 +21,7 @@
+     if role is Role.ADMIN:
+         return 2
+     if role is Role.MEMBER:
+-        return 1
++        return 0
+     return 0
+ 
+ 
+============
+[job-id] 42b0bbdab1c84ccc8577d946a1b395c5
+calibration_pkg/logic.py core/NumberReplacer 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -22,7 +22,7 @@
+         return 2
+     if role is Role.MEMBER:
+         return 1
+-    return 0
++    return 1
+ 
+ 
+ def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:
+============
+[job-id] 4ffb4e6d55724da2ab979b1438016490
+calibration_pkg/logic.py core/NumberReplacer 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -22,7 +22,7 @@
+         return 2
+     if role is Role.MEMBER:
+         return 1
+-    return 0
++    return -1
+ 
+ 
+ def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:
+============
+[job-id] d92a041f3f6b4646a53766e8efa41a8d
+calibration_pkg/logic.py core/NumberReplacer 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -28,7 +28,7 @@
+ def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:
+     @wraps(function)
+     def wrapped(value: int) -> int:
+-        if value < 0:
++        if value < 1:
+             raise ValueError("value must be nonnegative")
+         return function(value)
+ 
+============
+[job-id] 5516ba948aae442c8956c865cd6b11d6
+calibration_pkg/logic.py core/NumberReplacer 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -28,7 +28,7 @@
+ def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:
+     @wraps(function)
+     def wrapped(value: int) -> int:
+-        if value < 0:
++        if value < -1:
+             raise ValueError("value must be nonnegative")
+         return function(value)
+ 
+============
+[job-id] 6843f7e365ff41c6856dee68843fff76
+calibration_pkg/logic.py core/NumberReplacer 12
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -37,7 +37,7 @@
+ 
+ @require_nonnegative
+ def decorated_double(value: int) -> int:
+-    return value * 2
++    return value * 3
+ 
+ 
+ def identity_offset(value: int) -> int:
+============
+[job-id] 916e51556dd24af1ba5d74ce7c59557f
+calibration_pkg/logic.py core/NumberReplacer 13
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -37,7 +37,7 @@
+ 
+ @require_nonnegative
+ def decorated_double(value: int) -> int:
+-    return value * 2
++    return value * 1
+ 
+ 
+ def identity_offset(value: int) -> int:
+============
+[job-id] e968dc0443d24f1b84e196bc6116c817
+calibration_pkg/logic.py core/NumberReplacer 14
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -41,5 +41,5 @@
+ 
+ 
+ def identity_offset(value: int) -> int:
+-    return value + 0
++    return value + 1
+ 
+============
+[job-id] caaeaccb048c47f8802b3d0b022a999f
+calibration_pkg/logic.py core/NumberReplacer 15
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -41,5 +41,5 @@
+ 
+ 
+ def identity_offset(value: int) -> int:
+-    return value + 0
++    return value + -1
+ 
+============
+[job-id] 9c8af7c97a2b4d3986e01b13de3811ef
+calibration_pkg/logic.py core/RemoveDecorator 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -26,7 +26,6 @@
+ 
+ 
+ def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:
+-    @wraps(function)
+     def wrapped(value: int) -> int:
+         if value < 0:
+             raise ValueError("value must be nonnegative")
+============
+[job-id] bd4a58f2c28e45a6a6455bcae0f85110
+calibration_pkg/logic.py core/RemoveDecorator 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- acalibration_pkg/logic.py
++++ bcalibration_pkg/logic.py
+@@ -33,9 +33,6 @@
+         return function(value)
+ 
+     return wrapped
+-
+-
+-@require_nonnegative
+ def decorated_double(value: int) -> int:
+     return value * 2
+ 
+============
+total jobs: 68
+complete: 68 (100.00%)
+surviving mutants: 20 (29.41%)

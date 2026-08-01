@@ -1,0 +1,220 @@
+{
+  "format": "cosmic-ray-normalized-v1",
+  "object_count": 10,
+  "objects": [
+    {
+      "definition_name": "descend_to_zero",
+      "diff": "--- mutation diff ---\n--- atimeout_pkg/logic.py\n+++ btimeout_pkg/logic.py\n@@ -1,5 +1,5 @@\n def descend_to_zero(value: int) -> int:\n-    while value > 0:\n+    while not value > 0:\n         value -= 1\n     return value\n ",
+      "end_pos": [
+        2,
+        19
+      ],
+      "module_path": "timeout_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/AddNot",
+      "output_sha256": "89967780c96fe4f7f575bc9c04d23c7d6c2e9439f4c44e86416dddd8a97e6761",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        2,
+        10
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "descend_to_zero",
+      "diff": "--- mutation diff ---\n--- atimeout_pkg/logic.py\n+++ btimeout_pkg/logic.py\n@@ -1,5 +1,5 @@\n def descend_to_zero(value: int) -> int:\n-    while value > 0:\n+    while value == 0:\n         value -= 1\n     return value\n ",
+      "end_pos": [
+        2,
+        17
+      ],
+      "module_path": "timeout_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Gt_Eq",
+      "output_sha256": "ee505b6ff93bb0ad71485afa76329345e2b3e69d9fe4c2b8e0460f976e95dbf3",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        2,
+        16
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "descend_to_zero",
+      "diff": "--- mutation diff ---\n--- atimeout_pkg/logic.py\n+++ btimeout_pkg/logic.py\n@@ -1,5 +1,5 @@\n def descend_to_zero(value: int) -> int:\n-    while value > 0:\n+    while value >= 0:\n         value -= 1\n     return value\n ",
+      "end_pos": [
+        2,
+        17
+      ],
+      "module_path": "timeout_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Gt_GtE",
+      "output_sha256": "8910ef8ffc2b976252ed8b03d0f922b396908b1eb2a9fd1948f92b10aae39b29",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        2,
+        16
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "descend_to_zero",
+      "diff": "--- mutation diff ---\n--- atimeout_pkg/logic.py\n+++ btimeout_pkg/logic.py\n@@ -1,5 +1,5 @@\n def descend_to_zero(value: int) -> int:\n-    while value > 0:\n+    while value < 0:\n         value -= 1\n     return value\n ",
+      "end_pos": [
+        2,
+        17
+      ],
+      "module_path": "timeout_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Gt_Lt",
+      "output_sha256": "89967780c96fe4f7f575bc9c04d23c7d6c2e9439f4c44e86416dddd8a97e6761",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        2,
+        16
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "descend_to_zero",
+      "diff": "--- mutation diff ---\n--- atimeout_pkg/logic.py\n+++ btimeout_pkg/logic.py\n@@ -1,5 +1,5 @@\n def descend_to_zero(value: int) -> int:\n-    while value > 0:\n+    while value <= 0:\n         value -= 1\n     return value\n ",
+      "end_pos": [
+        2,
+        17
+      ],
+      "module_path": "timeout_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Gt_LtE",
+      "output_sha256": "89967780c96fe4f7f575bc9c04d23c7d6c2e9439f4c44e86416dddd8a97e6761",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        2,
+        16
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "descend_to_zero",
+      "diff": "--- mutation diff ---\n--- atimeout_pkg/logic.py\n+++ btimeout_pkg/logic.py\n@@ -1,5 +1,5 @@\n def descend_to_zero(value: int) -> int:\n-    while value > 0:\n+    while value != 0:\n         value -= 1\n     return value\n ",
+      "end_pos": [
+        2,
+        17
+      ],
+      "module_path": "timeout_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Gt_NotEq",
+      "output_sha256": "a71df3ef716cabe43ead70bd8311cda3aeadcb986bea501da0ea9262f31c3925",
+      "semantic_outcome": "survived",
+      "start_pos": [
+        2,
+        16
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "descend_to_zero",
+      "diff": "--- mutation diff ---\n--- atimeout_pkg/logic.py\n+++ btimeout_pkg/logic.py\n@@ -1,5 +1,5 @@\n def descend_to_zero(value: int) -> int:\n-    while value > 0:\n+    while value > 1:\n         value -= 1\n     return value\n ",
+      "end_pos": [
+        2,
+        19
+      ],
+      "module_path": "timeout_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "45ebb4e921bc4bffd6d8fdaffb789613e412a7136c4818b6a69ab6c5a668fc38",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        2,
+        18
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "descend_to_zero",
+      "diff": "--- mutation diff ---\n--- atimeout_pkg/logic.py\n+++ btimeout_pkg/logic.py\n@@ -1,5 +1,5 @@\n def descend_to_zero(value: int) -> int:\n-    while value > 0:\n+    while value > -1:\n         value -= 1\n     return value\n ",
+      "end_pos": [
+        2,
+        19
+      ],
+      "module_path": "timeout_pkg/logic.py",
+      "occurrence": 1,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "2b0b4987aa4e63036210107d1658c71f96211841ec2a97a91dd4eb59fcafd981",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        2,
+        18
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "descend_to_zero",
+      "diff": "--- mutation diff ---\n--- atimeout_pkg/logic.py\n+++ btimeout_pkg/logic.py\n@@ -1,5 +1,5 @@\n def descend_to_zero(value: int) -> int:\n     while value > 0:\n-        value -= 1\n+        value -= 2\n     return value\n ",
+      "end_pos": [
+        3,
+        18
+      ],
+      "module_path": "timeout_pkg/logic.py",
+      "occurrence": 2,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "ab6bc9cb3036ed72eec15705b286031922647c8cbcb85d7e40145aac9c46790b",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        3,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "descend_to_zero",
+      "diff": "--- mutation diff ---\n--- atimeout_pkg/logic.py\n+++ btimeout_pkg/logic.py\n@@ -1,5 +1,5 @@\n def descend_to_zero(value: int) -> int:\n     while value > 0:\n-        value -= 1\n+        value -= 0\n     return value\n ",
+      "end_pos": [
+        3,
+        18
+      ],
+      "module_path": "timeout_pkg/logic.py",
+      "occurrence": 3,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "f77d1bb58da886e3cbeebbf35a0b3d217b003506792268052c6a730fbc5ec9bc",
+      "semantic_outcome": "timeout_misclassified_as_killed",
+      "start_pos": [
+        3,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    }
+  ],
+  "objects_sha256": "ac044f92c2851b4647a351a4e68c86eef85b65722df626141dd6543155d29bb5",
+  "operator_counts": {
+    "core/AddNot": 1,
+    "core/NumberReplacer": 4,
+    "core/ReplaceComparisonOperator_Gt_Eq": 1,
+    "core/ReplaceComparisonOperator_Gt_GtE": 1,
+    "core/ReplaceComparisonOperator_Gt_Lt": 1,
+    "core/ReplaceComparisonOperator_Gt_LtE": 1,
+    "core/ReplaceComparisonOperator_Gt_NotEq": 1
+  },
+  "semantic_objects_sha256": "c639be0f33ea3b9702e6128c7e6346e51bac5843ae26a1895b175522c5f05bb1",
+  "semantic_outcome_counts": {
+    "killed": 8,
+    "survived": 1,
+    "timeout_misclassified_as_killed": 1
+  },
+  "source_dump": "/home/gk/cosmic-ray-evidence/timeout/cosmic/rep2/session.dump.jsonl",
+  "status_counts": {
+    "killed": 9,
+    "survived": 1
+  },
+  "worker_outcome_counts": {
+    "normal": 10
+  }
+}

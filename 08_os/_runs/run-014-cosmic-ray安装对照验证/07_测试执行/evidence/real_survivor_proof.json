@@ -1,0 +1,144 @@
+{
+  "annotation_cases": [
+    {
+      "annotation_is_string": true,
+      "classification": "annotation_only_runtime_equivalent",
+      "outputs_match": true,
+      "replacement": "str + int"
+    },
+    {
+      "annotation_is_string": true,
+      "classification": "annotation_only_runtime_equivalent",
+      "outputs_match": true,
+      "replacement": "str - int"
+    },
+    {
+      "annotation_is_string": true,
+      "classification": "annotation_only_runtime_equivalent",
+      "outputs_match": true,
+      "replacement": "str * int"
+    },
+    {
+      "annotation_is_string": true,
+      "classification": "annotation_only_runtime_equivalent",
+      "outputs_match": true,
+      "replacement": "str / int"
+    },
+    {
+      "annotation_is_string": true,
+      "classification": "annotation_only_runtime_equivalent",
+      "outputs_match": true,
+      "replacement": "str // int"
+    },
+    {
+      "annotation_is_string": true,
+      "classification": "annotation_only_runtime_equivalent",
+      "outputs_match": true,
+      "replacement": "str % int"
+    },
+    {
+      "annotation_is_string": true,
+      "classification": "annotation_only_runtime_equivalent",
+      "outputs_match": true,
+      "replacement": "str ** int"
+    },
+    {
+      "annotation_is_string": true,
+      "classification": "annotation_only_runtime_equivalent",
+      "outputs_match": true,
+      "replacement": "str >> int"
+    },
+    {
+      "annotation_is_string": true,
+      "classification": "annotation_only_runtime_equivalent",
+      "outputs_match": true,
+      "replacement": "str << int"
+    },
+    {
+      "annotation_is_string": true,
+      "classification": "annotation_only_runtime_equivalent",
+      "outputs_match": true,
+      "replacement": "str & int"
+    },
+    {
+      "annotation_is_string": true,
+      "classification": "annotation_only_runtime_equivalent",
+      "outputs_match": true,
+      "replacement": "str ^ int"
+    }
+  ],
+  "classification_counts": {
+    "annotation_only_runtime_equivalent": 11,
+    "genuine_gap": 3,
+    "genuine_semantic_gap": 1,
+    "reachable_context_equivalent": 1
+  },
+  "format": "run-014-real-survivor-proof-v1",
+  "gap_cases": {
+    "argv_not_equal_to_less_than": {
+      "behavior_differs": true,
+      "classification": "genuine_gap",
+      "mutant_exit": 0,
+      "original_exit": 65
+    },
+    "suffix_not_equal_to_greater_than": {
+      "classification": "genuine_gap",
+      "mutant_accepts_valid_json_with_abc_suffix": true,
+      "original_error_code": "CJV-R01-JSON-SUFFIX"
+    }
+  },
+  "guard_cases": {
+    "eq_to_is": {
+      "classification": "genuine_semantic_gap",
+      "equal_but_distinct_name": true,
+      "mutant": {
+        "exit_code": null,
+        "stderr": "inspect_schema_refs.py:110: SyntaxWarning: \"is\" with 'str' literal. Did you mean \"==\"?\n",
+        "stdout": ""
+      },
+      "original": {
+        "exit_code": 65,
+        "stderr": "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path\n",
+        "stdout": ""
+      }
+    },
+    "eq_to_lt": {
+      "classification": "genuine_gap",
+      "mutant": {
+        "exit_code": null,
+        "stderr": "",
+        "stdout": ""
+      },
+      "original": {
+        "exit_code": 65,
+        "stderr": "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path\n",
+        "stdout": ""
+      }
+    },
+    "eq_to_lte": {
+      "classification": "reachable_context_equivalent",
+      "mutant_import": {
+        "exit_code": null,
+        "stderr": "",
+        "stdout": ""
+      },
+      "mutant_main": {
+        "exit_code": 65,
+        "stderr": "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path\n",
+        "stdout": ""
+      },
+      "original_import": {
+        "exit_code": null,
+        "stderr": "",
+        "stdout": ""
+      },
+      "original_main": {
+        "exit_code": 65,
+        "stderr": "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path\n",
+        "stdout": ""
+      }
+    }
+  },
+  "passed": true,
+  "survivor_count": 16
+}

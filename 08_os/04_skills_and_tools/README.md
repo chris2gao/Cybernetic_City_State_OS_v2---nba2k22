@@ -40,6 +40,9 @@ that check is part of the entry rather than a note beside it.
 - [mutmut](mutmut/README.md)：`3.6.0`，通过 run-013 在 WSL Linux 文件系统、
   独立 virtualenv、`fork`、校准样本与一个真实 OS Python 目标上验证；仅在任务
   显式给出单文件 allowlist 时按需调用。
+- [Cosmic Ray](cosmic-ray/README.md)：`8.4.6`，通过 run-014 在 Python `3.14.4`
+  上完成双引擎同输入校准、decorator/timeout、真实目标与 30 项 fail-closed wrapper
+  验证；只作为 mutmut 的互补第二引擎按需调用。
 
 已验证工具仍不进入默认 boot，不暴露为 MCP，也不因登记而自动调用。任务必须通过
 registry 发现并显式调用 canonical wrapper。

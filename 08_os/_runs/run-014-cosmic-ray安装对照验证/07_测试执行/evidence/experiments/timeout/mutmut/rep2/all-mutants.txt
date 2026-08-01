@@ -1,0 +1,50 @@
+=== timeout_pkg.logic.x_descend_to_zero__mutmut_1 ===
+# timeout_pkg.logic.x_descend_to_zero__mutmut_1: killed
+--- timeout_pkg/logic.py
++++ timeout_pkg/logic.py
+@@ -1,4 +1,4 @@
+ def descend_to_zero(value: int) -> int:
+-    while value > 0:
++    while value >= 0:
+         value -= 1
+     return value
+=== timeout_pkg.logic.x_descend_to_zero__mutmut_2 ===
+# timeout_pkg.logic.x_descend_to_zero__mutmut_2: killed
+--- timeout_pkg/logic.py
++++ timeout_pkg/logic.py
+@@ -1,4 +1,4 @@
+ def descend_to_zero(value: int) -> int:
+-    while value > 0:
++    while value > 1:
+         value -= 1
+     return value
+=== timeout_pkg.logic.x_descend_to_zero__mutmut_3 ===
+# timeout_pkg.logic.x_descend_to_zero__mutmut_3: timeout
+--- timeout_pkg/logic.py
++++ timeout_pkg/logic.py
+@@ -1,4 +1,4 @@
+ def descend_to_zero(value: int) -> int:
+     while value > 0:
+-        value -= 1
++        value = 1
+     return value
+=== timeout_pkg.logic.x_descend_to_zero__mutmut_4 ===
+# timeout_pkg.logic.x_descend_to_zero__mutmut_4: timeout
+--- timeout_pkg/logic.py
++++ timeout_pkg/logic.py
+@@ -1,4 +1,4 @@
+ def descend_to_zero(value: int) -> int:
+     while value > 0:
+-        value -= 1
++        value += 1
+     return value
+=== timeout_pkg.logic.x_descend_to_zero__mutmut_5 ===
+# timeout_pkg.logic.x_descend_to_zero__mutmut_5: killed
+--- timeout_pkg/logic.py
++++ timeout_pkg/logic.py
+@@ -1,4 +1,4 @@
+ def descend_to_zero(value: int) -> int:
+     while value > 0:
+-        value -= 1
++        value -= 2
+     return value

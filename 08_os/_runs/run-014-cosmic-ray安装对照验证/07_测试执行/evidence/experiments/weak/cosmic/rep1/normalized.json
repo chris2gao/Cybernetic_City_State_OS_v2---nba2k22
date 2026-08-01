@@ -1,0 +1,1279 @@
+{
+  "format": "cosmic-ray-normalized-v1",
+  "object_count": 68,
+  "objects": [
+    {
+      "definition_name": "clamp_nonnegative",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -12,7 +12,7 @@\n \n \n def clamp_nonnegative(value: int) -> int:\n-    if value < 0:\n+    if not value < 0:\n         return 0\n     return value\n ",
+      "end_pos": [
+        15,
+        16
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/AddNot",
+      "output_sha256": "d04f1ed67b8fc910d50b094d7c610fbe9da65c70d7698867ab438ce76798d2ef",
+      "start_pos": [
+        15,
+        7
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "clamp_nonnegative",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -12,7 +12,7 @@\n \n \n def clamp_nonnegative(value: int) -> int:\n-    if value < 0:\n+    if value == 0:\n         return 0\n     return value\n ",
+      "end_pos": [
+        15,
+        14
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Lt_Eq",
+      "output_sha256": "9ac20320ce0f423b020062bfe9a59ba59b851b2df0de418e20ad0aaaeaecd1df",
+      "start_pos": [
+        15,
+        13
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "clamp_nonnegative",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -12,7 +12,7 @@\n \n \n def clamp_nonnegative(value: int) -> int:\n-    if value < 0:\n+    if value > 0:\n         return 0\n     return value\n ",
+      "end_pos": [
+        15,
+        14
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Lt_Gt",
+      "output_sha256": "711aaebeda4a49570926c424b0831ab540157054ce1bca2148b48fc99768130d",
+      "start_pos": [
+        15,
+        13
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "clamp_nonnegative",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -12,7 +12,7 @@\n \n \n def clamp_nonnegative(value: int) -> int:\n-    if value < 0:\n+    if value >= 0:\n         return 0\n     return value\n ",
+      "end_pos": [
+        15,
+        14
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Lt_GtE",
+      "output_sha256": "9ac20320ce0f423b020062bfe9a59ba59b851b2df0de418e20ad0aaaeaecd1df",
+      "start_pos": [
+        15,
+        13
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "clamp_nonnegative",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -12,7 +12,7 @@\n \n \n def clamp_nonnegative(value: int) -> int:\n-    if value < 0:\n+    if value <= 0:\n         return 0\n     return value\n ",
+      "end_pos": [
+        15,
+        14
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Lt_LtE",
+      "output_sha256": "99cef98de12a8b8a90abbcb2033d076bfc563ea7951d4da90263da27288d16f6",
+      "start_pos": [
+        15,
+        13
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "clamp_nonnegative",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -12,7 +12,7 @@\n \n \n def clamp_nonnegative(value: int) -> int:\n-    if value < 0:\n+    if value != 0:\n         return 0\n     return value\n ",
+      "end_pos": [
+        15,
+        14
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Lt_NotEq",
+      "output_sha256": "a7ce861a8edf27e67301e7ede65f31fdd4d5def621bf68c472a38cb30f8d3289",
+      "start_pos": [
+        15,
+        13
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "clamp_nonnegative",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -12,7 +12,7 @@\n \n \n def clamp_nonnegative(value: int) -> int:\n-    if value < 0:\n+    if value < 1:\n         return 0\n     return value\n ",
+      "end_pos": [
+        15,
+        16
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "99cef98de12a8b8a90abbcb2033d076bfc563ea7951d4da90263da27288d16f6",
+      "start_pos": [
+        15,
+        15
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "clamp_nonnegative",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -12,7 +12,7 @@\n \n \n def clamp_nonnegative(value: int) -> int:\n-    if value < 0:\n+    if value < -1:\n         return 0\n     return value\n ",
+      "end_pos": [
+        15,
+        16
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 1,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "4250d1f2029068ddc50a143f438d48c0e151e05c734fe713ffea94436ecf9381",
+      "start_pos": [
+        15,
+        15
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "clamp_nonnegative",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -13,7 +13,7 @@\n \n def clamp_nonnegative(value: int) -> int:\n     if value < 0:\n-        return 0\n+        return 1\n     return value\n \n ",
+      "end_pos": [
+        16,
+        16
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 2,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "996a9e3c6a871ec66eb9efada00e4de23938a9221e052eb6768c28fb9ad44c77",
+      "start_pos": [
+        16,
+        15
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "clamp_nonnegative",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -13,7 +13,7 @@\n \n def clamp_nonnegative(value: int) -> int:\n     if value < 0:\n-        return 0\n+        return -1\n     return value\n \n ",
+      "end_pos": [
+        16,
+        16
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 3,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "12d43dce587d8b133bb0c414b2aca3a4fa6cedbcd85f0ab04b093d82e3792d93",
+      "start_pos": [
+        16,
+        15
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -18,7 +18,7 @@\n \n \n def access_level(role: Role) -> int:\n-    if role is Role.ADMIN:\n+    if not role is Role.ADMIN:\n         return 2\n     if role is Role.MEMBER:\n         return 1",
+      "end_pos": [
+        21,
+        25
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 1,
+      "operator_name": "core/AddNot",
+      "output_sha256": "93b18902c8c8b1eb53500c82deb9d16da2c538c4d40430f94c11bc98e508ec53",
+      "start_pos": [
+        21,
+        7
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -18,7 +18,7 @@\n \n \n def access_level(role: Role) -> int:\n-    if role is Role.ADMIN:\n+    if role == Role.ADMIN:\n         return 2\n     if role is Role.MEMBER:\n         return 1",
+      "end_pos": [
+        21,
+        14
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Is_Eq",
+      "output_sha256": "99cef98de12a8b8a90abbcb2033d076bfc563ea7951d4da90263da27288d16f6",
+      "start_pos": [
+        21,
+        12
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -18,7 +18,7 @@\n \n \n def access_level(role: Role) -> int:\n-    if role is Role.ADMIN:\n+    if role > Role.ADMIN:\n         return 2\n     if role is Role.MEMBER:\n         return 1",
+      "end_pos": [
+        21,
+        14
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Is_Gt",
+      "output_sha256": "5e3b6d3e08ecec2a2eaaeda168c966fc3610ebdb0363461d5231083cbd5e6868",
+      "start_pos": [
+        21,
+        12
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -18,7 +18,7 @@\n \n \n def access_level(role: Role) -> int:\n-    if role is Role.ADMIN:\n+    if role >= Role.ADMIN:\n         return 2\n     if role is Role.MEMBER:\n         return 1",
+      "end_pos": [
+        21,
+        14
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Is_GtE",
+      "output_sha256": "4e1ff2ec90c0fbee6d2d9b2bdef7d7a9cf4be2bcebab47a0634164233ad365b9",
+      "start_pos": [
+        21,
+        12
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -18,7 +18,7 @@\n \n \n def access_level(role: Role) -> int:\n-    if role is Role.ADMIN:\n+    if role is not Role.ADMIN:\n         return 2\n     if role is Role.MEMBER:\n         return 1",
+      "end_pos": [
+        21,
+        14
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Is_IsNot",
+      "output_sha256": "cfa6912afb7c9e0b885a67ba75e59ca18bff69f65ad6d09be85af65bcec5524f",
+      "start_pos": [
+        21,
+        12
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -18,7 +18,7 @@\n \n \n def access_level(role: Role) -> int:\n-    if role is Role.ADMIN:\n+    if role < Role.ADMIN:\n         return 2\n     if role is Role.MEMBER:\n         return 1",
+      "end_pos": [
+        21,
+        14
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Is_Lt",
+      "output_sha256": "c694a9917c8f5a04f0ee3fe8b16909ecfc9f9f68e77ab8eb920aa57bfe1a6af4",
+      "start_pos": [
+        21,
+        12
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -18,7 +18,7 @@\n \n \n def access_level(role: Role) -> int:\n-    if role is Role.ADMIN:\n+    if role <= Role.ADMIN:\n         return 2\n     if role is Role.MEMBER:\n         return 1",
+      "end_pos": [
+        21,
+        14
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Is_LtE",
+      "output_sha256": "bd6db930d7e447d947f9a1b1facce3422a6dfdd2d7ea8713ec8c58fa29f8615a",
+      "start_pos": [
+        21,
+        12
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -18,7 +18,7 @@\n \n \n def access_level(role: Role) -> int:\n-    if role is Role.ADMIN:\n+    if role != Role.ADMIN:\n         return 2\n     if role is Role.MEMBER:\n         return 1",
+      "end_pos": [
+        21,
+        14
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Is_NotEq",
+      "output_sha256": "4603e342687319a0ec00ac23bb88b228f0021d9fa0f647c53b4f189039dab34d",
+      "start_pos": [
+        21,
+        12
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -19,7 +19,7 @@\n \n def access_level(role: Role) -> int:\n     if role is Role.ADMIN:\n-        return 2\n+        return 3\n     if role is Role.MEMBER:\n         return 1\n     return 0",
+      "end_pos": [
+        22,
+        16
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 4,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "99cef98de12a8b8a90abbcb2033d076bfc563ea7951d4da90263da27288d16f6",
+      "start_pos": [
+        22,
+        15
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -19,7 +19,7 @@\n \n def access_level(role: Role) -> int:\n     if role is Role.ADMIN:\n-        return 2\n+        return 1\n     if role is Role.MEMBER:\n         return 1\n     return 0",
+      "end_pos": [
+        22,
+        16
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 5,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "a00d95dfbc084b6eb22229f4a5b545b4452162a59797c0faa121535a79212580",
+      "start_pos": [
+        22,
+        15
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -20,7 +20,7 @@\n def access_level(role: Role) -> int:\n     if role is Role.ADMIN:\n         return 2\n-    if role is Role.MEMBER:\n+    if not role is Role.MEMBER:\n         return 1\n     return 0\n ",
+      "end_pos": [
+        23,
+        26
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 2,
+      "operator_name": "core/AddNot",
+      "output_sha256": "aa45c4a56884392f876acf460ca2fb4c6be5afb496c99cc7d7badf37a5f787cc",
+      "start_pos": [
+        23,
+        7
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -20,7 +20,7 @@\n def access_level(role: Role) -> int:\n     if role is Role.ADMIN:\n         return 2\n-    if role is Role.MEMBER:\n+    if role == Role.MEMBER:\n         return 1\n     return 0\n ",
+      "end_pos": [
+        23,
+        14
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 1,
+      "operator_name": "core/ReplaceComparisonOperator_Is_Eq",
+      "output_sha256": "99cef98de12a8b8a90abbcb2033d076bfc563ea7951d4da90263da27288d16f6",
+      "start_pos": [
+        23,
+        12
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -20,7 +20,7 @@\n def access_level(role: Role) -> int:\n     if role is Role.ADMIN:\n         return 2\n-    if role is Role.MEMBER:\n+    if role > Role.MEMBER:\n         return 1\n     return 0\n ",
+      "end_pos": [
+        23,
+        14
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 1,
+      "operator_name": "core/ReplaceComparisonOperator_Is_Gt",
+      "output_sha256": "6ce69fcf5a5ba157f9a2e5c00426e0a061ef4c051f0d56e698fe4fd992c012fc",
+      "start_pos": [
+        23,
+        12
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -20,7 +20,7 @@\n def access_level(role: Role) -> int:\n     if role is Role.ADMIN:\n         return 2\n-    if role is Role.MEMBER:\n+    if role >= Role.MEMBER:\n         return 1\n     return 0\n ",
+      "end_pos": [
+        23,
+        14
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 1,
+      "operator_name": "core/ReplaceComparisonOperator_Is_GtE",
+      "output_sha256": "1a862721310a5a292b2c2127adb6d917e5baa529ebabc8141a88bb309cbb7ae3",
+      "start_pos": [
+        23,
+        12
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -20,7 +20,7 @@\n def access_level(role: Role) -> int:\n     if role is Role.ADMIN:\n         return 2\n-    if role is Role.MEMBER:\n+    if role is not Role.MEMBER:\n         return 1\n     return 0\n ",
+      "end_pos": [
+        23,
+        14
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 1,
+      "operator_name": "core/ReplaceComparisonOperator_Is_IsNot",
+      "output_sha256": "aa45c4a56884392f876acf460ca2fb4c6be5afb496c99cc7d7badf37a5f787cc",
+      "start_pos": [
+        23,
+        12
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -20,7 +20,7 @@\n def access_level(role: Role) -> int:\n     if role is Role.ADMIN:\n         return 2\n-    if role is Role.MEMBER:\n+    if role < Role.MEMBER:\n         return 1\n     return 0\n ",
+      "end_pos": [
+        23,
+        14
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 1,
+      "operator_name": "core/ReplaceComparisonOperator_Is_Lt",
+      "output_sha256": "31e16ab37abfc7db8a6b062f3eb7bab36b8dfe2d14b0c244c86ff7f28fda3b08",
+      "start_pos": [
+        23,
+        12
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -20,7 +20,7 @@\n def access_level(role: Role) -> int:\n     if role is Role.ADMIN:\n         return 2\n-    if role is Role.MEMBER:\n+    if role <= Role.MEMBER:\n         return 1\n     return 0\n ",
+      "end_pos": [
+        23,
+        14
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 1,
+      "operator_name": "core/ReplaceComparisonOperator_Is_LtE",
+      "output_sha256": "32fa3ce4f653e9f6f17b9106b9e19c53f98d4d27a3cde8929ac5240077e69c66",
+      "start_pos": [
+        23,
+        12
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -20,7 +20,7 @@\n def access_level(role: Role) -> int:\n     if role is Role.ADMIN:\n         return 2\n-    if role is Role.MEMBER:\n+    if role != Role.MEMBER:\n         return 1\n     return 0\n ",
+      "end_pos": [
+        23,
+        14
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 1,
+      "operator_name": "core/ReplaceComparisonOperator_Is_NotEq",
+      "output_sha256": "00ff84594abb592b6bc837939aceeefb284d95b7bd49c07cb86dadc8a8e32f8f",
+      "start_pos": [
+        23,
+        12
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -21,7 +21,7 @@\n     if role is Role.ADMIN:\n         return 2\n     if role is Role.MEMBER:\n-        return 1\n+        return 2\n     return 0\n \n ",
+      "end_pos": [
+        24,
+        16
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 6,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "99cef98de12a8b8a90abbcb2033d076bfc563ea7951d4da90263da27288d16f6",
+      "start_pos": [
+        24,
+        15
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -21,7 +21,7 @@\n     if role is Role.ADMIN:\n         return 2\n     if role is Role.MEMBER:\n-        return 1\n+        return 0\n     return 0\n \n ",
+      "end_pos": [
+        24,
+        16
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 7,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "99cef98de12a8b8a90abbcb2033d076bfc563ea7951d4da90263da27288d16f6",
+      "start_pos": [
+        24,
+        15
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -22,7 +22,7 @@\n         return 2\n     if role is Role.MEMBER:\n         return 1\n-    return 0\n+    return 1\n \n \n def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:",
+      "end_pos": [
+        25,
+        12
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 8,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "aa45c4a56884392f876acf460ca2fb4c6be5afb496c99cc7d7badf37a5f787cc",
+      "start_pos": [
+        25,
+        11
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "access_level",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -22,7 +22,7 @@\n         return 2\n     if role is Role.MEMBER:\n         return 1\n-    return 0\n+    return -1\n \n \n def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:",
+      "end_pos": [
+        25,
+        12
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 9,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "37c44c01a3dbbaafedc4199f04b2972d16e739e469162105064401d08064d9b3",
+      "start_pos": [
+        25,
+        11
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "require_nonnegative",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -26,7 +26,6 @@\n \n \n def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:\n-    @wraps(function)\n     def wrapped(value: int) -> int:\n         if value < 0:\n             raise ValueError(\"value must be nonnegative\")",
+      "end_pos": [
+        30,
+        0
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/RemoveDecorator",
+      "output_sha256": "99cef98de12a8b8a90abbcb2033d076bfc563ea7951d4da90263da27288d16f6",
+      "start_pos": [
+        29,
+        4
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "wrapped",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -28,7 +28,7 @@\n def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:\n     @wraps(function)\n     def wrapped(value: int) -> int:\n-        if value < 0:\n+        if not value < 0:\n             raise ValueError(\"value must be nonnegative\")\n         return function(value)\n ",
+      "end_pos": [
+        31,
+        20
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 3,
+      "operator_name": "core/AddNot",
+      "output_sha256": "a9ba87f8d1a7c13c51fec345ae8f4a014b5add46f152821aae0c2cd676ca5d6d",
+      "start_pos": [
+        31,
+        11
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "wrapped",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -28,7 +28,7 @@\n def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:\n     @wraps(function)\n     def wrapped(value: int) -> int:\n-        if value < 0:\n+        if value == 0:\n             raise ValueError(\"value must be nonnegative\")\n         return function(value)\n ",
+      "end_pos": [
+        31,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 1,
+      "operator_name": "core/ReplaceComparisonOperator_Lt_Eq",
+      "output_sha256": "4250d1f2029068ddc50a143f438d48c0e151e05c734fe713ffea94436ecf9381",
+      "start_pos": [
+        31,
+        17
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "wrapped",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -28,7 +28,7 @@\n def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:\n     @wraps(function)\n     def wrapped(value: int) -> int:\n-        if value < 0:\n+        if value > 0:\n             raise ValueError(\"value must be nonnegative\")\n         return function(value)\n ",
+      "end_pos": [
+        31,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 1,
+      "operator_name": "core/ReplaceComparisonOperator_Lt_Gt",
+      "output_sha256": "5ad991fd53661216901041b80c96bcb47b2dbc37e9411a91d26b7bbbc27485f9",
+      "start_pos": [
+        31,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "wrapped",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -28,7 +28,7 @@\n def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:\n     @wraps(function)\n     def wrapped(value: int) -> int:\n-        if value < 0:\n+        if value >= 0:\n             raise ValueError(\"value must be nonnegative\")\n         return function(value)\n ",
+      "end_pos": [
+        31,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 1,
+      "operator_name": "core/ReplaceComparisonOperator_Lt_GtE",
+      "output_sha256": "ab2c0855ee18b29bd44f5702d86fb529306555b4c06e77c303f222b412c15743",
+      "start_pos": [
+        31,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "wrapped",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -28,7 +28,7 @@\n def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:\n     @wraps(function)\n     def wrapped(value: int) -> int:\n-        if value < 0:\n+        if value <= 0:\n             raise ValueError(\"value must be nonnegative\")\n         return function(value)\n ",
+      "end_pos": [
+        31,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 1,
+      "operator_name": "core/ReplaceComparisonOperator_Lt_LtE",
+      "output_sha256": "99cef98de12a8b8a90abbcb2033d076bfc563ea7951d4da90263da27288d16f6",
+      "start_pos": [
+        31,
+        17
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "wrapped",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -28,7 +28,7 @@\n def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:\n     @wraps(function)\n     def wrapped(value: int) -> int:\n-        if value < 0:\n+        if value != 0:\n             raise ValueError(\"value must be nonnegative\")\n         return function(value)\n ",
+      "end_pos": [
+        31,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 1,
+      "operator_name": "core/ReplaceComparisonOperator_Lt_NotEq",
+      "output_sha256": "ad980b18e3ca8c977abd4b7a2df9235076c902f83afc2d95e1b04e5e5d88a357",
+      "start_pos": [
+        31,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "wrapped",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -28,7 +28,7 @@\n def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:\n     @wraps(function)\n     def wrapped(value: int) -> int:\n-        if value < 0:\n+        if value < 1:\n             raise ValueError(\"value must be nonnegative\")\n         return function(value)\n ",
+      "end_pos": [
+        31,
+        20
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 10,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "4250d1f2029068ddc50a143f438d48c0e151e05c734fe713ffea94436ecf9381",
+      "start_pos": [
+        31,
+        19
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "wrapped",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -28,7 +28,7 @@\n def require_nonnegative(function: Callable[[int], int]) -> Callable[[int], int]:\n     @wraps(function)\n     def wrapped(value: int) -> int:\n-        if value < 0:\n+        if value < -1:\n             raise ValueError(\"value must be nonnegative\")\n         return function(value)\n ",
+      "end_pos": [
+        31,
+        20
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 11,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "4250d1f2029068ddc50a143f438d48c0e151e05c734fe713ffea94436ecf9381",
+      "start_pos": [
+        31,
+        19
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": null,
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -33,9 +33,6 @@\n         return function(value)\n \n     return wrapped\n-\n-\n-@require_nonnegative\n def decorated_double(value: int) -> int:\n     return value * 2\n ",
+      "end_pos": [
+        39,
+        0
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 1,
+      "operator_name": "core/RemoveDecorator",
+      "output_sha256": "99cef98de12a8b8a90abbcb2033d076bfc563ea7951d4da90263da27288d16f6",
+      "start_pos": [
+        38,
+        0
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "decorated_double",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -37,7 +37,7 @@\n \n @require_nonnegative\n def decorated_double(value: int) -> int:\n-    return value * 2\n+    return value + 2\n \n \n def identity_offset(value: int) -> int:",
+      "end_pos": [
+        40,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Mul_Add",
+      "output_sha256": "c16f6afd11c19ee67ed3fb56053973007dee29019a8cf424ac880df03c5a53c8",
+      "start_pos": [
+        40,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "decorated_double",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -37,7 +37,7 @@\n \n @require_nonnegative\n def decorated_double(value: int) -> int:\n-    return value * 2\n+    return value & 2\n \n \n def identity_offset(value: int) -> int:",
+      "end_pos": [
+        40,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Mul_BitAnd",
+      "output_sha256": "335af32936980f68f6e89f026bee2b22f38fd3dd9baf2d451642dc19459a6165",
+      "start_pos": [
+        40,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "decorated_double",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -37,7 +37,7 @@\n \n @require_nonnegative\n def decorated_double(value: int) -> int:\n-    return value * 2\n+    return value | 2\n \n \n def identity_offset(value: int) -> int:",
+      "end_pos": [
+        40,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Mul_BitOr",
+      "output_sha256": "18f8a3096f3d57d9c48b871f047ec2ada010e148a6012f7628d7b1cc21e65273",
+      "start_pos": [
+        40,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "decorated_double",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -37,7 +37,7 @@\n \n @require_nonnegative\n def decorated_double(value: int) -> int:\n-    return value * 2\n+    return value ^ 2\n \n \n def identity_offset(value: int) -> int:",
+      "end_pos": [
+        40,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Mul_BitXor",
+      "output_sha256": "9e370c105dd18087c77d570ede4099a426c38f00a8c62ca67ed4cb3063849bbb",
+      "start_pos": [
+        40,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "decorated_double",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -37,7 +37,7 @@\n \n @require_nonnegative\n def decorated_double(value: int) -> int:\n-    return value * 2\n+    return value / 2\n \n \n def identity_offset(value: int) -> int:",
+      "end_pos": [
+        40,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Mul_Div",
+      "output_sha256": "09359b530d22c7c0371495e6ef4fa424d12cf7f48c45017d88bc3f7f241785f4",
+      "start_pos": [
+        40,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "decorated_double",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -37,7 +37,7 @@\n \n @require_nonnegative\n def decorated_double(value: int) -> int:\n-    return value * 2\n+    return value // 2\n \n \n def identity_offset(value: int) -> int:",
+      "end_pos": [
+        40,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Mul_FloorDiv",
+      "output_sha256": "9e370c105dd18087c77d570ede4099a426c38f00a8c62ca67ed4cb3063849bbb",
+      "start_pos": [
+        40,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "decorated_double",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -37,7 +37,7 @@\n \n @require_nonnegative\n def decorated_double(value: int) -> int:\n-    return value * 2\n+    return value << 2\n \n \n def identity_offset(value: int) -> int:",
+      "end_pos": [
+        40,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Mul_LShift",
+      "output_sha256": "298c3f045b7ac3ad27099b3c6122d8ed01631edb4452d8ed0f20c31749eb2a40",
+      "start_pos": [
+        40,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "decorated_double",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -37,7 +37,7 @@\n \n @require_nonnegative\n def decorated_double(value: int) -> int:\n-    return value * 2\n+    return value % 2\n \n \n def identity_offset(value: int) -> int:",
+      "end_pos": [
+        40,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Mul_Mod",
+      "output_sha256": "9e370c105dd18087c77d570ede4099a426c38f00a8c62ca67ed4cb3063849bbb",
+      "start_pos": [
+        40,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "decorated_double",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -37,7 +37,7 @@\n \n @require_nonnegative\n def decorated_double(value: int) -> int:\n-    return value * 2\n+    return value ** 2\n \n \n def identity_offset(value: int) -> int:",
+      "end_pos": [
+        40,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Mul_Pow",
+      "output_sha256": "38e654a2e71820af1c3afdf6e63e6367427e5a2967943c17b5d3376a384934c4",
+      "start_pos": [
+        40,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "decorated_double",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -37,7 +37,7 @@\n \n @require_nonnegative\n def decorated_double(value: int) -> int:\n-    return value * 2\n+    return value >> 2\n \n \n def identity_offset(value: int) -> int:",
+      "end_pos": [
+        40,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Mul_RShift",
+      "output_sha256": "5301e712a352d83f09a8c6e2699067764e25c6b3a3a14147e925b9f2dabfb6ad",
+      "start_pos": [
+        40,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "decorated_double",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -37,7 +37,7 @@\n \n @require_nonnegative\n def decorated_double(value: int) -> int:\n-    return value * 2\n+    return value - 2\n \n \n def identity_offset(value: int) -> int:",
+      "end_pos": [
+        40,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Mul_Sub",
+      "output_sha256": "057622fcb1c8ceb2e60f898f95a913cd9bd1c1aecab26c4d81097dfd9ef1c24e",
+      "start_pos": [
+        40,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "decorated_double",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -37,7 +37,7 @@\n \n @require_nonnegative\n def decorated_double(value: int) -> int:\n-    return value * 2\n+    return value * 3\n \n \n def identity_offset(value: int) -> int:",
+      "end_pos": [
+        40,
+        20
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 12,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "62517afc9a589afc62a908a7f60e02b45a44335133b1d3120d2059ff16c1e96e",
+      "start_pos": [
+        40,
+        19
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "decorated_double",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -37,7 +37,7 @@\n \n @require_nonnegative\n def decorated_double(value: int) -> int:\n-    return value * 2\n+    return value * 1\n \n \n def identity_offset(value: int) -> int:",
+      "end_pos": [
+        40,
+        20
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 13,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "a089d19c572d2ca3aa793126cb5b3627d8edaf4dbc14fa3873b417f37dd3345d",
+      "start_pos": [
+        40,
+        19
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "identity_offset",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -41,5 +41,5 @@\n \n \n def identity_offset(value: int) -> int:\n-    return value + 0\n+    return value & 0\n ",
+      "end_pos": [
+        44,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Add_BitAnd",
+      "output_sha256": "822c1e2d392c174052839daaafed4c946f7ec94ec9d80e3d1b71589c81e7f4d6",
+      "start_pos": [
+        44,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "identity_offset",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -41,5 +41,5 @@\n \n \n def identity_offset(value: int) -> int:\n-    return value + 0\n+    return value | 0\n ",
+      "end_pos": [
+        44,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Add_BitOr",
+      "output_sha256": "4250d1f2029068ddc50a143f438d48c0e151e05c734fe713ffea94436ecf9381",
+      "start_pos": [
+        44,
+        17
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "identity_offset",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -41,5 +41,5 @@\n \n \n def identity_offset(value: int) -> int:\n-    return value + 0\n+    return value ^ 0\n ",
+      "end_pos": [
+        44,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Add_BitXor",
+      "output_sha256": "4250d1f2029068ddc50a143f438d48c0e151e05c734fe713ffea94436ecf9381",
+      "start_pos": [
+        44,
+        17
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "identity_offset",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -41,5 +41,5 @@\n \n \n def identity_offset(value: int) -> int:\n-    return value + 0\n+    return value / 0\n ",
+      "end_pos": [
+        44,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Add_Div",
+      "output_sha256": "564da01e9611783f789bf376b2597ebf2260f119fa6a9dc2927f015a07d6dce9",
+      "start_pos": [
+        44,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "identity_offset",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -41,5 +41,5 @@\n \n \n def identity_offset(value: int) -> int:\n-    return value + 0\n+    return value // 0\n ",
+      "end_pos": [
+        44,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Add_FloorDiv",
+      "output_sha256": "432ae578b8ca5a0279b283c35c1346a134234c671eb79bd2a72c8ec6a1cbb92c",
+      "start_pos": [
+        44,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "identity_offset",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -41,5 +41,5 @@\n \n \n def identity_offset(value: int) -> int:\n-    return value + 0\n+    return value << 0\n ",
+      "end_pos": [
+        44,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Add_LShift",
+      "output_sha256": "4250d1f2029068ddc50a143f438d48c0e151e05c734fe713ffea94436ecf9381",
+      "start_pos": [
+        44,
+        17
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "identity_offset",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -41,5 +41,5 @@\n \n \n def identity_offset(value: int) -> int:\n-    return value + 0\n+    return value % 0\n ",
+      "end_pos": [
+        44,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Add_Mod",
+      "output_sha256": "8d85cb7913abe7ce2f84d028dbd048e7065a40c09324d0ff57f848f998c29f4e",
+      "start_pos": [
+        44,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "identity_offset",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -41,5 +41,5 @@\n \n \n def identity_offset(value: int) -> int:\n-    return value + 0\n+    return value * 0\n ",
+      "end_pos": [
+        44,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Add_Mul",
+      "output_sha256": "822c1e2d392c174052839daaafed4c946f7ec94ec9d80e3d1b71589c81e7f4d6",
+      "start_pos": [
+        44,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "identity_offset",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -41,5 +41,5 @@\n \n \n def identity_offset(value: int) -> int:\n-    return value + 0\n+    return value ** 0\n ",
+      "end_pos": [
+        44,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Add_Pow",
+      "output_sha256": "d7f571189dd08f78ef4bcffd3447667016ea5c72857044ed6863a7b47548036d",
+      "start_pos": [
+        44,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "identity_offset",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -41,5 +41,5 @@\n \n \n def identity_offset(value: int) -> int:\n-    return value + 0\n+    return value >> 0\n ",
+      "end_pos": [
+        44,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Add_RShift",
+      "output_sha256": "4250d1f2029068ddc50a143f438d48c0e151e05c734fe713ffea94436ecf9381",
+      "start_pos": [
+        44,
+        17
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "identity_offset",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -41,5 +41,5 @@\n \n \n def identity_offset(value: int) -> int:\n-    return value + 0\n+    return value - 0\n ",
+      "end_pos": [
+        44,
+        18
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_Add_Sub",
+      "output_sha256": "99cef98de12a8b8a90abbcb2033d076bfc563ea7951d4da90263da27288d16f6",
+      "start_pos": [
+        44,
+        17
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "identity_offset",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -41,5 +41,5 @@\n \n \n def identity_offset(value: int) -> int:\n-    return value + 0\n+    return value + 1\n ",
+      "end_pos": [
+        44,
+        20
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 14,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "f1c5f9f6a0ec71e2599147689924f4e550cb8792da5e0e7e00ad24fee445645a",
+      "start_pos": [
+        44,
+        19
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "identity_offset",
+      "diff": "--- mutation diff ---\n--- acalibration_pkg/logic.py\n+++ bcalibration_pkg/logic.py\n@@ -41,5 +41,5 @@\n \n \n def identity_offset(value: int) -> int:\n-    return value + 0\n+    return value + -1\n ",
+      "end_pos": [
+        44,
+        20
+      ],
+      "module_path": "calibration_pkg/logic.py",
+      "occurrence": 15,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "f202ef0dfb7b4674427e3197079dc897be63a4e5242d327066c4df3bfcfec375",
+      "start_pos": [
+        44,
+        19
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    }
+  ],
+  "objects_sha256": "4bc30e6cab918fd98d22b64f548a07436edfd4ad911c6e7f7e1454ec1a025a62",
+  "operator_counts": {
+    "core/AddNot": 4,
+    "core/NumberReplacer": 16,
+    "core/RemoveDecorator": 2,
+    "core/ReplaceBinaryOperator_Add_BitAnd": 1,
+    "core/ReplaceBinaryOperator_Add_BitOr": 1,
+    "core/ReplaceBinaryOperator_Add_BitXor": 1,
+    "core/ReplaceBinaryOperator_Add_Div": 1,
+    "core/ReplaceBinaryOperator_Add_FloorDiv": 1,
+    "core/ReplaceBinaryOperator_Add_LShift": 1,
+    "core/ReplaceBinaryOperator_Add_Mod": 1,
+    "core/ReplaceBinaryOperator_Add_Mul": 1,
+    "core/ReplaceBinaryOperator_Add_Pow": 1,
+    "core/ReplaceBinaryOperator_Add_RShift": 1,
+    "core/ReplaceBinaryOperator_Add_Sub": 1,
+    "core/ReplaceBinaryOperator_Mul_Add": 1,
+    "core/ReplaceBinaryOperator_Mul_BitAnd": 1,
+    "core/ReplaceBinaryOperator_Mul_BitOr": 1,
+    "core/ReplaceBinaryOperator_Mul_BitXor": 1,
+    "core/ReplaceBinaryOperator_Mul_Div": 1,
+    "core/ReplaceBinaryOperator_Mul_FloorDiv": 1,
+    "core/ReplaceBinaryOperator_Mul_LShift": 1,
+    "core/ReplaceBinaryOperator_Mul_Mod": 1,
+    "core/ReplaceBinaryOperator_Mul_Pow": 1,
+    "core/ReplaceBinaryOperator_Mul_RShift": 1,
+    "core/ReplaceBinaryOperator_Mul_Sub": 1,
+    "core/ReplaceComparisonOperator_Is_Eq": 2,
+    "core/ReplaceComparisonOperator_Is_Gt": 2,
+    "core/ReplaceComparisonOperator_Is_GtE": 2,
+    "core/ReplaceComparisonOperator_Is_IsNot": 2,
+    "core/ReplaceComparisonOperator_Is_Lt": 2,
+    "core/ReplaceComparisonOperator_Is_LtE": 2,
+    "core/ReplaceComparisonOperator_Is_NotEq": 2,
+    "core/ReplaceComparisonOperator_Lt_Eq": 2,
+    "core/ReplaceComparisonOperator_Lt_Gt": 2,
+    "core/ReplaceComparisonOperator_Lt_GtE": 2,
+    "core/ReplaceComparisonOperator_Lt_LtE": 2,
+    "core/ReplaceComparisonOperator_Lt_NotEq": 2
+  },
+  "semantic_objects_sha256": "ee9b85fb4d1064ce0dd0201d0f5a37286b10ca9abd58607b70d16c058da28b30",
+  "source_dump": "/home/gk/cosmic-ray-evidence/weak/cosmic/rep1/session.dump.jsonl",
+  "status_counts": {
+    "killed": 48,
+    "survived": 20
+  },
+  "worker_outcome_counts": {
+    "normal": 68
+  }
+}

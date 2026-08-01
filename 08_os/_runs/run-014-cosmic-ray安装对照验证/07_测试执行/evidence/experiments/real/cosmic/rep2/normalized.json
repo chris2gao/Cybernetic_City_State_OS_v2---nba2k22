@@ -1,0 +1,1159 @@
+{
+  "format": "cosmic-ray-normalized-v1",
+  "object_count": 58,
+  "objects": [
+    {
+      "definition_name": null,
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -10,7 +10,7 @@\n REFERENCE_KEYWORDS = frozenset({\"$ref\", \"$dynamicRef\", \"$recursiveRef\"})\n IDENTIFIER_KEYWORDS = frozenset({\"$id\", \"id\"})\n HTTP_SCHEMES = frozenset({\"http\", \"https\"})\n-EXIT_POLICY_FAILURE = 65\n+EXIT_POLICY_FAILURE = 66\n \n \n class SchemaPolicyError(ValueError):",
+      "end_pos": [
+        13,
+        24
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "f05fc25964e98badc9e5a13627cdb6e259347e7b232c77ebd73fe6f94568e85d",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        13,
+        22
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": null,
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -10,7 +10,7 @@\n REFERENCE_KEYWORDS = frozenset({\"$ref\", \"$dynamicRef\", \"$recursiveRef\"})\n IDENTIFIER_KEYWORDS = frozenset({\"$id\", \"id\"})\n HTTP_SCHEMES = frozenset({\"http\", \"https\"})\n-EXIT_POLICY_FAILURE = 65\n+EXIT_POLICY_FAILURE = 64\n \n \n class SchemaPolicyError(ValueError):",
+      "end_pos": [
+        13,
+        24
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 1,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "516e611fb632797265c20aa7dab87c52a04657f360e7453df295f6dd812eef37",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        13,
+        22
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_child_location",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -21,7 +21,7 @@\n         self.detail = detail\n \n \n-def _child_location(location: str, key: str | int) -> str:\n+def _child_location(location: str, key: str + int) -> str:\n     if isinstance(key, int):\n         return f\"{location}[{key}]\"\n     return f\"{location}[{json.dumps(key, ensure_ascii=False)}]\"",
+      "end_pos": [
+        24,
+        45
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_BitOr_Add",
+      "output_sha256": "eb561b1d92ca4ac7b279d021bbdd6918af940fa565928750901067ee10fc948c",
+      "semantic_outcome": "survived",
+      "start_pos": [
+        24,
+        44
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_child_location",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -21,7 +21,7 @@\n         self.detail = detail\n \n \n-def _child_location(location: str, key: str | int) -> str:\n+def _child_location(location: str, key: str & int) -> str:\n     if isinstance(key, int):\n         return f\"{location}[{key}]\"\n     return f\"{location}[{json.dumps(key, ensure_ascii=False)}]\"",
+      "end_pos": [
+        24,
+        45
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_BitOr_BitAnd",
+      "output_sha256": "d61c3ab9582591171717a3f824efec5f6578bd5f09187b5af330c67726084ac1",
+      "semantic_outcome": "survived",
+      "start_pos": [
+        24,
+        44
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_child_location",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -21,7 +21,7 @@\n         self.detail = detail\n \n \n-def _child_location(location: str, key: str | int) -> str:\n+def _child_location(location: str, key: str ^ int) -> str:\n     if isinstance(key, int):\n         return f\"{location}[{key}]\"\n     return f\"{location}[{json.dumps(key, ensure_ascii=False)}]\"",
+      "end_pos": [
+        24,
+        45
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_BitOr_BitXor",
+      "output_sha256": "7610c788b785f7d340233d740fc00b53dd1c4bade1054bdae1b98a39ef43bb01",
+      "semantic_outcome": "survived",
+      "start_pos": [
+        24,
+        44
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_child_location",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -21,7 +21,7 @@\n         self.detail = detail\n \n \n-def _child_location(location: str, key: str | int) -> str:\n+def _child_location(location: str, key: str / int) -> str:\n     if isinstance(key, int):\n         return f\"{location}[{key}]\"\n     return f\"{location}[{json.dumps(key, ensure_ascii=False)}]\"",
+      "end_pos": [
+        24,
+        45
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_BitOr_Div",
+      "output_sha256": "d61c3ab9582591171717a3f824efec5f6578bd5f09187b5af330c67726084ac1",
+      "semantic_outcome": "survived",
+      "start_pos": [
+        24,
+        44
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_child_location",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -21,7 +21,7 @@\n         self.detail = detail\n \n \n-def _child_location(location: str, key: str | int) -> str:\n+def _child_location(location: str, key: str // int) -> str:\n     if isinstance(key, int):\n         return f\"{location}[{key}]\"\n     return f\"{location}[{json.dumps(key, ensure_ascii=False)}]\"",
+      "end_pos": [
+        24,
+        45
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_BitOr_FloorDiv",
+      "output_sha256": "d61c3ab9582591171717a3f824efec5f6578bd5f09187b5af330c67726084ac1",
+      "semantic_outcome": "survived",
+      "start_pos": [
+        24,
+        44
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_child_location",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -21,7 +21,7 @@\n         self.detail = detail\n \n \n-def _child_location(location: str, key: str | int) -> str:\n+def _child_location(location: str, key: str << int) -> str:\n     if isinstance(key, int):\n         return f\"{location}[{key}]\"\n     return f\"{location}[{json.dumps(key, ensure_ascii=False)}]\"",
+      "end_pos": [
+        24,
+        45
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_BitOr_LShift",
+      "output_sha256": "b90e7b36e126a76e6729ad424f3c9d0a6d739d09c958cfad28aa36e3d7e55a3e",
+      "semantic_outcome": "survived",
+      "start_pos": [
+        24,
+        44
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_child_location",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -21,7 +21,7 @@\n         self.detail = detail\n \n \n-def _child_location(location: str, key: str | int) -> str:\n+def _child_location(location: str, key: str % int) -> str:\n     if isinstance(key, int):\n         return f\"{location}[{key}]\"\n     return f\"{location}[{json.dumps(key, ensure_ascii=False)}]\"",
+      "end_pos": [
+        24,
+        45
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_BitOr_Mod",
+      "output_sha256": "7b25e4ef29c0ab94de95a85856be5f8bc0b26c74cbe9f9cc74d41e107e6e7ff3",
+      "semantic_outcome": "survived",
+      "start_pos": [
+        24,
+        44
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_child_location",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -21,7 +21,7 @@\n         self.detail = detail\n \n \n-def _child_location(location: str, key: str | int) -> str:\n+def _child_location(location: str, key: str * int) -> str:\n     if isinstance(key, int):\n         return f\"{location}[{key}]\"\n     return f\"{location}[{json.dumps(key, ensure_ascii=False)}]\"",
+      "end_pos": [
+        24,
+        45
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_BitOr_Mul",
+      "output_sha256": "b90e7b36e126a76e6729ad424f3c9d0a6d739d09c958cfad28aa36e3d7e55a3e",
+      "semantic_outcome": "survived",
+      "start_pos": [
+        24,
+        44
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_child_location",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -21,7 +21,7 @@\n         self.detail = detail\n \n \n-def _child_location(location: str, key: str | int) -> str:\n+def _child_location(location: str, key: str ** int) -> str:\n     if isinstance(key, int):\n         return f\"{location}[{key}]\"\n     return f\"{location}[{json.dumps(key, ensure_ascii=False)}]\"",
+      "end_pos": [
+        24,
+        45
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_BitOr_Pow",
+      "output_sha256": "0e55c03a487f33a998a152dd8a38f58bb60dbf0168a447b02921567ebe6e0b36",
+      "semantic_outcome": "survived",
+      "start_pos": [
+        24,
+        44
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_child_location",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -21,7 +21,7 @@\n         self.detail = detail\n \n \n-def _child_location(location: str, key: str | int) -> str:\n+def _child_location(location: str, key: str >> int) -> str:\n     if isinstance(key, int):\n         return f\"{location}[{key}]\"\n     return f\"{location}[{json.dumps(key, ensure_ascii=False)}]\"",
+      "end_pos": [
+        24,
+        45
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_BitOr_RShift",
+      "output_sha256": "eb561b1d92ca4ac7b279d021bbdd6918af940fa565928750901067ee10fc948c",
+      "semantic_outcome": "survived",
+      "start_pos": [
+        24,
+        44
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_child_location",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -21,7 +21,7 @@\n         self.detail = detail\n \n \n-def _child_location(location: str, key: str | int) -> str:\n+def _child_location(location: str, key: str - int) -> str:\n     if isinstance(key, int):\n         return f\"{location}[{key}]\"\n     return f\"{location}[{json.dumps(key, ensure_ascii=False)}]\"",
+      "end_pos": [
+        24,
+        45
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceBinaryOperator_BitOr_Sub",
+      "output_sha256": "bdea51565d9356e22eb3ca38d329eef64b8b15db85f746a6ab6594456f14a415",
+      "semantic_outcome": "survived",
+      "start_pos": [
+        24,
+        44
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_child_location",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -22,7 +22,7 @@\n \n \n def _child_location(location: str, key: str | int) -> str:\n-    if isinstance(key, int):\n+    if not isinstance(key, int):\n         return f\"{location}[{key}]\"\n     return f\"{location}[{json.dumps(key, ensure_ascii=False)}]\"\n ",
+      "end_pos": [
+        25,
+        27
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/AddNot",
+      "output_sha256": "328240a7a14ce4511a5f7b2a166a04a89f485c564cd88db875b8232b534f4412",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        25,
+        7
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_child_location",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -24,7 +24,7 @@\n def _child_location(location: str, key: str | int) -> str:\n     if isinstance(key, int):\n         return f\"{location}[{key}]\"\n-    return f\"{location}[{json.dumps(key, ensure_ascii=False)}]\"\n+    return f\"{location}[{json.dumps(key, ensure_ascii=True)}]\"\n \n \n def _walk(value: Any, location: str = \"$\") -> None:",
+      "end_pos": [
+        27,
+        59
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceFalseWithTrue",
+      "output_sha256": "7d73e94b187c60cd2cbf37c26f1289d8789c6e1da78fccc2cb7903e146dddcc4",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        27,
+        54
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_walk",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -28,7 +28,7 @@\n \n \n def _walk(value: Any, location: str = \"$\") -> None:\n-    if isinstance(value, dict):\n+    if not isinstance(value, dict):\n         for key, child in value.items():\n             child_location = _child_location(location, key)\n             if key in REFERENCE_KEYWORDS:",
+      "end_pos": [
+        31,
+        30
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 1,
+      "operator_name": "core/AddNot",
+      "output_sha256": "22311e12e7a50c4fe411219eeea7d9a3fbbed54bdfb9d49ceb5455e70199cc79",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        31,
+        7
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_walk",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -29,7 +29,7 @@\n \n def _walk(value: Any, location: str = \"$\") -> None:\n     if isinstance(value, dict):\n-        for key, child in value.items():\n+        for key, child in []:\n             child_location = _child_location(location, key)\n             if key in REFERENCE_KEYWORDS:\n                 if not isinstance(child, str):",
+      "end_pos": [
+        32,
+        39
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ZeroIterationForLoop",
+      "output_sha256": "c89f629f0f59450b1d788a7072910db195a2295021d934fa8d2123f47253fec7",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        32,
+        26
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_walk",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -31,7 +31,7 @@\n     if isinstance(value, dict):\n         for key, child in value.items():\n             child_location = _child_location(location, key)\n-            if key in REFERENCE_KEYWORDS:\n+            if not key in REFERENCE_KEYWORDS:\n                 if not isinstance(child, str):\n                     raise SchemaPolicyError(\n                         \"CJV-R01-REFERENCE-TYPE\",",
+      "end_pos": [
+        34,
+        40
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 2,
+      "operator_name": "core/AddNot",
+      "output_sha256": "7dc2e1d548912606a03fbafb611f0967a43d08c678120bae77dc153f551aee22",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        34,
+        15
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_walk",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -32,7 +32,7 @@\n         for key, child in value.items():\n             child_location = _child_location(location, key)\n             if key in REFERENCE_KEYWORDS:\n-                if not isinstance(child, str):\n+                if  isinstance(child, str):\n                     raise SchemaPolicyError(\n                         \"CJV-R01-REFERENCE-TYPE\",\n                         child_location,",
+      "end_pos": [
+        35,
+        22
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceUnaryOperator_Delete_Not",
+      "output_sha256": "935fb54142e0da39aff78bc78496734f1a3161e4c05faf778f543041e3b6ebf3",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        35,
+        19
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_walk",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -32,7 +32,7 @@\n         for key, child in value.items():\n             child_location = _child_location(location, key)\n             if key in REFERENCE_KEYWORDS:\n-                if not isinstance(child, str):\n+                if not not isinstance(child, str):\n                     raise SchemaPolicyError(\n                         \"CJV-R01-REFERENCE-TYPE\",\n                         child_location,",
+      "end_pos": [
+        35,
+        45
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 3,
+      "operator_name": "core/AddNot",
+      "output_sha256": "dc2b9c935c7b9af508f6c8ae8febdf5208f5ec0ea2eb865437bb3dc45f5db3da",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        35,
+        19
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_walk",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -38,7 +38,7 @@\n                         child_location,\n                         f\"{key} must be a string\",\n                     )\n-                if not child.startswith(\"#\"):\n+                if  child.startswith(\"#\"):\n                     raise SchemaPolicyError(\n                         \"CJV-R01-EXTERNAL-REFERENCE\",\n                         child_location,",
+      "end_pos": [
+        41,
+        22
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 1,
+      "operator_name": "core/ReplaceUnaryOperator_Delete_Not",
+      "output_sha256": "4ca92d51d721fed7dad6d25aed14a4b5dd3b38c706dea69c200d2bed20711ae0",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        41,
+        19
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_walk",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -38,7 +38,7 @@\n                         child_location,\n                         f\"{key} must be a string\",\n                     )\n-                if not child.startswith(\"#\"):\n+                if not not child.startswith(\"#\"):\n                     raise SchemaPolicyError(\n                         \"CJV-R01-EXTERNAL-REFERENCE\",\n                         child_location,",
+      "end_pos": [
+        41,
+        44
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 4,
+      "operator_name": "core/AddNot",
+      "output_sha256": "98b347aa61fef0bd395fe47719d06710e6df6ea3228a2e438520927fa28deffc",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        41,
+        19
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_walk",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -44,7 +44,7 @@\n                         child_location,\n                         f\"{key} must be fragment-only; got {json.dumps(child)}\",\n                     )\n-            elif key in IDENTIFIER_KEYWORDS and isinstance(child, str):\n+            elif key in IDENTIFIER_KEYWORDS or isinstance(child, str):\n                 scheme = urlsplit(child).scheme.lower()\n                 if scheme in HTTP_SCHEMES:\n                     raise SchemaPolicyError(",
+      "end_pos": [
+        47,
+        47
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceAndWithOr",
+      "output_sha256": "fab359fb990693167dc4ef427cd1da8145d282e080db6dfcef9a8e45cbf43852",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        47,
+        44
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_walk",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -46,7 +46,7 @@\n                     )\n             elif key in IDENTIFIER_KEYWORDS and isinstance(child, str):\n                 scheme = urlsplit(child).scheme.lower()\n-                if scheme in HTTP_SCHEMES:\n+                if not scheme in HTTP_SCHEMES:\n                     raise SchemaPolicyError(\n                         \"CJV-R01-REMOTE-IDENTIFIER\",\n                         child_location,",
+      "end_pos": [
+        49,
+        41
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 5,
+      "operator_name": "core/AddNot",
+      "output_sha256": "7afe5521a8ae042e09ca401685b08ac3e78f1fd42f4a0386907d3fd20b01f33b",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        49,
+        19
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "_walk",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -54,7 +54,7 @@\n                     )\n             _walk(child, child_location)\n     elif isinstance(value, list):\n-        for index, child in enumerate(value):\n+        for index, child in []:\n             _walk(child, _child_location(location, index))\n \n ",
+      "end_pos": [
+        57,
+        44
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 1,
+      "operator_name": "core/ZeroIterationForLoop",
+      "output_sha256": "eb8a2467ff2686de6af76ff255117deb0a6f25f66751aa233c7aeb72678be87c",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        57,
+        28
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "inspect_schema",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -59,7 +59,7 @@\n \n \n def inspect_schema(path: Path) -> None:\n-    if path.suffix.lower() != \".json\":\n+    if not path.suffix.lower() != \".json\":\n         raise SchemaPolicyError(\n             \"CJV-R01-JSON-SUFFIX\",\n             \"$\",",
+      "end_pos": [
+        62,
+        37
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 6,
+      "operator_name": "core/AddNot",
+      "output_sha256": "fd780a5781d88068a3c8f847d30fc62f7f8b14d0aac7c75d69f941d72b6cbde8",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        62,
+        7
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "inspect_schema",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -59,7 +59,7 @@\n \n \n def inspect_schema(path: Path) -> None:\n-    if path.suffix.lower() != \".json\":\n+    if path.suffix.lower() == \".json\":\n         raise SchemaPolicyError(\n             \"CJV-R01-JSON-SUFFIX\",\n             \"$\",",
+      "end_pos": [
+        62,
+        29
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_NotEq_Eq",
+      "output_sha256": "5d0975d4e86fb7adde20c97f036dfd82ecd9c30ad3f95f3e7b8b9219aa53ad7a",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        62,
+        27
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "inspect_schema",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -59,7 +59,7 @@\n \n \n def inspect_schema(path: Path) -> None:\n-    if path.suffix.lower() != \".json\":\n+    if path.suffix.lower() > \".json\":\n         raise SchemaPolicyError(\n             \"CJV-R01-JSON-SUFFIX\",\n             \"$\",",
+      "end_pos": [
+        62,
+        29
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_NotEq_Gt",
+      "output_sha256": "05d90f1b42234a898bc8c3511fd81afe39e578d31635335fadf9a77181c9110e",
+      "semantic_outcome": "survived",
+      "start_pos": [
+        62,
+        27
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "inspect_schema",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -59,7 +59,7 @@\n \n \n def inspect_schema(path: Path) -> None:\n-    if path.suffix.lower() != \".json\":\n+    if path.suffix.lower() >= \".json\":\n         raise SchemaPolicyError(\n             \"CJV-R01-JSON-SUFFIX\",\n             \"$\",",
+      "end_pos": [
+        62,
+        29
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_NotEq_GtE",
+      "output_sha256": "520d8b99d41789b68007ba22b967e48407dd58738ea9f885f66e0bd48c0a63c0",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        62,
+        27
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "inspect_schema",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -59,7 +59,7 @@\n \n \n def inspect_schema(path: Path) -> None:\n-    if path.suffix.lower() != \".json\":\n+    if path.suffix.lower() is \".json\":\n         raise SchemaPolicyError(\n             \"CJV-R01-JSON-SUFFIX\",\n             \"$\",",
+      "end_pos": [
+        62,
+        29
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_NotEq_Is",
+      "output_sha256": "2330bc918b30db9c71abf6f9b5ad3fe7aadf161636babbdc6e3a1823e6823191",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        62,
+        27
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "inspect_schema",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -59,7 +59,7 @@\n \n \n def inspect_schema(path: Path) -> None:\n-    if path.suffix.lower() != \".json\":\n+    if path.suffix.lower() is not \".json\":\n         raise SchemaPolicyError(\n             \"CJV-R01-JSON-SUFFIX\",\n             \"$\",",
+      "end_pos": [
+        62,
+        29
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_NotEq_IsNot",
+      "output_sha256": "3ec6a2b47746a9fe7a257917c5c7f98c8d2ba593c3eb4a3092c4b07047f1c02a",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        62,
+        27
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "inspect_schema",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -59,7 +59,7 @@\n \n \n def inspect_schema(path: Path) -> None:\n-    if path.suffix.lower() != \".json\":\n+    if path.suffix.lower() < \".json\":\n         raise SchemaPolicyError(\n             \"CJV-R01-JSON-SUFFIX\",\n             \"$\",",
+      "end_pos": [
+        62,
+        29
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_NotEq_Lt",
+      "output_sha256": "90f5fcd7109d3efbc41dc0ffe4e224177300701105677bd9e392a74a45d9b89a",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        62,
+        27
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "inspect_schema",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -59,7 +59,7 @@\n \n \n def inspect_schema(path: Path) -> None:\n-    if path.suffix.lower() != \".json\":\n+    if path.suffix.lower() <= \".json\":\n         raise SchemaPolicyError(\n             \"CJV-R01-JSON-SUFFIX\",\n             \"$\",",
+      "end_pos": [
+        62,
+        29
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_NotEq_LtE",
+      "output_sha256": "b3cef4974d6870c1551632dec3cf7211d3eb42b681c05e3629d0b2f599b6682c",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        62,
+        27
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "inspect_schema",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -67,7 +67,7 @@\n         )\n     try:\n         text = path.read_text(encoding=\"utf-8\")\n-    except OSError as exc:\n+    except CosmicRayTestingException as exc:\n         raise SchemaPolicyError(\n             \"CJV-R01-SCHEMA-READ\",\n             \"$\",",
+      "end_pos": [
+        70,
+        18
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ExceptionReplacer",
+      "output_sha256": "aa60f0f5a9c5bdd85f0e08b5071bff1e916ee4ba7dff7d43ecd9c61d23244a31",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        70,
+        11
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "inspect_schema",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -75,7 +75,7 @@\n         ) from exc\n     try:\n         schema = json.loads(text)\n-    except (UnicodeError, json.JSONDecodeError) as exc:\n+    except (CosmicRayTestingException, json.JSONDecodeError) as exc:\n         detail = f\"strict JSON parse failed: {exc.__class__.__name__}\"\n         if isinstance(exc, json.JSONDecodeError):\n             detail += f\" at line {exc.lineno} column {exc.colno}\"",
+      "end_pos": [
+        78,
+        24
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 1,
+      "operator_name": "core/ExceptionReplacer",
+      "output_sha256": "2aa72d86e699566dedf2dd19f47fb19e47413dd15c49213191d49f6e232291e7",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        78,
+        12
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "inspect_schema",
+      "diff": null,
+      "end_pos": [
+        78,
+        46
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 2,
+      "operator_name": "core/ExceptionReplacer",
+      "output_sha256": "1f994cccca729150320d4655038495b52d778116b014cc15371aa205bf85642c",
+      "semantic_outcome": "worker_exception",
+      "start_pos": [
+        78,
+        26
+      ],
+      "test_outcome": "incompetent",
+      "worker_outcome": "exception"
+    },
+    {
+      "definition_name": "inspect_schema",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -77,7 +77,7 @@\n         schema = json.loads(text)\n     except (UnicodeError, json.JSONDecodeError) as exc:\n         detail = f\"strict JSON parse failed: {exc.__class__.__name__}\"\n-        if isinstance(exc, json.JSONDecodeError):\n+        if not isinstance(exc, json.JSONDecodeError):\n             detail += f\" at line {exc.lineno} column {exc.colno}\"\n         raise SchemaPolicyError(\n             \"CJV-R01-STRICT-JSON\",",
+      "end_pos": [
+        80,
+        48
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 7,
+      "operator_name": "core/AddNot",
+      "output_sha256": "61195c29979af2adc09cd573b17fb5a7b1091666d897b54e3d334f1b8a3ab14b",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        80,
+        11
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "main",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -88,7 +88,7 @@\n \n \n def main(argv: list[str]) -> int:\n-    if len(argv) != 2:\n+    if not len(argv) != 2:\n         print(\n             \"schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path\",\n             file=sys.stderr,",
+      "end_pos": [
+        91,
+        21
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 8,
+      "operator_name": "core/AddNot",
+      "output_sha256": "e288919d1c3b19870f903753e21f4600fcbef24f784ad970cc6acbdcde6819ca",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        91,
+        7
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "main",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -88,7 +88,7 @@\n \n \n def main(argv: list[str]) -> int:\n-    if len(argv) != 2:\n+    if len(argv) == 2:\n         print(\n             \"schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path\",\n             file=sys.stderr,",
+      "end_pos": [
+        91,
+        19
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 1,
+      "operator_name": "core/ReplaceComparisonOperator_NotEq_Eq",
+      "output_sha256": "d9cc33d973799e2ff23fb6aa38bf9e1ee0ac6b689834ece01c6152684f631474",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        91,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "main",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -88,7 +88,7 @@\n \n \n def main(argv: list[str]) -> int:\n-    if len(argv) != 2:\n+    if len(argv) > 2:\n         print(\n             \"schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path\",\n             file=sys.stderr,",
+      "end_pos": [
+        91,
+        19
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 1,
+      "operator_name": "core/ReplaceComparisonOperator_NotEq_Gt",
+      "output_sha256": "6d4ca24a76d87c6189ef2ec80fb34ae55d4376ba79c72e117d936632c3dae8ad",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        91,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "main",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -88,7 +88,7 @@\n \n \n def main(argv: list[str]) -> int:\n-    if len(argv) != 2:\n+    if len(argv) >= 2:\n         print(\n             \"schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path\",\n             file=sys.stderr,",
+      "end_pos": [
+        91,
+        19
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 1,
+      "operator_name": "core/ReplaceComparisonOperator_NotEq_GtE",
+      "output_sha256": "9a0d9600c7d4f6d29bfd4d00198c8eb83c925f3d23496bb43940ed4ca04e0eb8",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        91,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "main",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -88,7 +88,7 @@\n \n \n def main(argv: list[str]) -> int:\n-    if len(argv) != 2:\n+    if len(argv) < 2:\n         print(\n             \"schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path\",\n             file=sys.stderr,",
+      "end_pos": [
+        91,
+        19
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 1,
+      "operator_name": "core/ReplaceComparisonOperator_NotEq_Lt",
+      "output_sha256": "7610c788b785f7d340233d740fc00b53dd1c4bade1054bdae1b98a39ef43bb01",
+      "semantic_outcome": "survived",
+      "start_pos": [
+        91,
+        17
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "main",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -88,7 +88,7 @@\n \n \n def main(argv: list[str]) -> int:\n-    if len(argv) != 2:\n+    if len(argv) <= 2:\n         print(\n             \"schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path\",\n             file=sys.stderr,",
+      "end_pos": [
+        91,
+        19
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 1,
+      "operator_name": "core/ReplaceComparisonOperator_NotEq_LtE",
+      "output_sha256": "e417488b7f556ba8897afb33b9aebec511f47a035c9135cd8f755bcc01b89b87",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        91,
+        17
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "main",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -88,7 +88,7 @@\n \n \n def main(argv: list[str]) -> int:\n-    if len(argv) != 2:\n+    if len(argv) != 3:\n         print(\n             \"schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path\",\n             file=sys.stderr,",
+      "end_pos": [
+        91,
+        21
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 2,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "693eb53737ebb36ed41314a2962a5385cf7afefd4baab76394014df6980d80fe",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        91,
+        20
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "main",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -88,7 +88,7 @@\n \n \n def main(argv: list[str]) -> int:\n-    if len(argv) != 2:\n+    if len(argv) != 1:\n         print(\n             \"schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path\",\n             file=sys.stderr,",
+      "end_pos": [
+        91,
+        21
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 3,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "b314dac8e8231e3ff74ae423498736dfc2359d62206d2b6579186ebb20f355bd",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        91,
+        20
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "main",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -95,7 +95,7 @@\n         )\n         return EXIT_POLICY_FAILURE\n     try:\n-        inspect_schema(Path(argv[1]))\n+        inspect_schema(Path(argv[ 2]))\n     except SchemaPolicyError as exc:\n         print(\n             f\"schema reference policy: FAIL [{exc.code}] \"",
+      "end_pos": [
+        98,
+        34
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 4,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "32af536972131dfc147184725be8333cad88e69462fda87c62a1159ddc89aee4",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        98,
+        33
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "main",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -95,7 +95,7 @@\n         )\n         return EXIT_POLICY_FAILURE\n     try:\n-        inspect_schema(Path(argv[1]))\n+        inspect_schema(Path(argv[ 0]))\n     except SchemaPolicyError as exc:\n         print(\n             f\"schema reference policy: FAIL [{exc.code}] \"",
+      "end_pos": [
+        98,
+        34
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 5,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "b3923e6434fdd1012cf539aadd0e697f62c9754da99fce5370171c6247d0a26a",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        98,
+        33
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "main",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -96,7 +96,7 @@\n         return EXIT_POLICY_FAILURE\n     try:\n         inspect_schema(Path(argv[1]))\n-    except SchemaPolicyError as exc:\n+    except CosmicRayTestingException as exc:\n         print(\n             f\"schema reference policy: FAIL [{exc.code}] \"\n             f\"at {exc.location}: {exc.detail}\",",
+      "end_pos": [
+        99,
+        28
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 3,
+      "operator_name": "core/ExceptionReplacer",
+      "output_sha256": "f239ddd167e51b81cda2c2d6f43a295d057576496af91847ff8713a8cb07798a",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        99,
+        11
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "main",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -104,7 +104,7 @@\n         )\n         return EXIT_POLICY_FAILURE\n     print(\"schema reference policy: PASS\")\n-    return 0\n+    return 1\n \n \n if __name__ == \"__main__\":",
+      "end_pos": [
+        107,
+        12
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 6,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "fe01005cd6e37d14aadac4290b2fb06e95511d7ff15d383faeffc88d6ce503b9",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        107,
+        11
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": "main",
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -104,7 +104,7 @@\n         )\n         return EXIT_POLICY_FAILURE\n     print(\"schema reference policy: PASS\")\n-    return 0\n+    return -1\n \n \n if __name__ == \"__main__\":",
+      "end_pos": [
+        107,
+        12
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 7,
+      "operator_name": "core/NumberReplacer",
+      "output_sha256": "1c6567c5e6aa5858ec96e92cee69406ee27a0223b0ce93049828d7811cfe4b17",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        107,
+        11
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": null,
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -107,6 +107,6 @@\n     return 0\n \n \n-if __name__ == \"__main__\":\n+if not __name__ == \"__main__\":\n     raise SystemExit(main(sys.argv))\n ",
+      "end_pos": [
+        110,
+        25
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 9,
+      "operator_name": "core/AddNot",
+      "output_sha256": "734e2cafb9af67e3667ebd2d10c3cfbadb3c2ed982147d03b17b40ecdad457b8",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        110,
+        3
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": null,
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -107,6 +107,6 @@\n     return 0\n \n \n-if __name__ == \"__main__\":\n+if __name__ > \"__main__\":\n     raise SystemExit(main(sys.argv))\n ",
+      "end_pos": [
+        110,
+        14
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Eq_Gt",
+      "output_sha256": "893ed7af1decb1e012cfdf3771734619619284b70f31fbfa8d3a8753addc03fb",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        110,
+        12
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": null,
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -107,6 +107,6 @@\n     return 0\n \n \n-if __name__ == \"__main__\":\n+if __name__ >= \"__main__\":\n     raise SystemExit(main(sys.argv))\n ",
+      "end_pos": [
+        110,
+        14
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Eq_GtE",
+      "output_sha256": "893ed7af1decb1e012cfdf3771734619619284b70f31fbfa8d3a8753addc03fb",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        110,
+        12
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": null,
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -107,6 +107,6 @@\n     return 0\n \n \n-if __name__ == \"__main__\":\n+if __name__ is \"__main__\":\n     raise SystemExit(main(sys.argv))\n ",
+      "end_pos": [
+        110,
+        14
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Eq_Is",
+      "output_sha256": "79d09018fdd0054e56d541c9764f9a685a86e800448b9556b4373fd5684a3abe",
+      "semantic_outcome": "survived",
+      "start_pos": [
+        110,
+        12
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": null,
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -107,6 +107,6 @@\n     return 0\n \n \n-if __name__ == \"__main__\":\n+if __name__ is not \"__main__\":\n     raise SystemExit(main(sys.argv))\n ",
+      "end_pos": [
+        110,
+        14
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Eq_IsNot",
+      "output_sha256": "b1ad724f155fc9422ba06117bea6235c4c387e85cb531359a2b1fc5a4936bb3d",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        110,
+        12
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": null,
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -107,6 +107,6 @@\n     return 0\n \n \n-if __name__ == \"__main__\":\n+if __name__ < \"__main__\":\n     raise SystemExit(main(sys.argv))\n ",
+      "end_pos": [
+        110,
+        14
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Eq_Lt",
+      "output_sha256": "59d63cd1693dcac95a66a2dfb21f20b741ec4f58c6853f77cd09beaa532e39ed",
+      "semantic_outcome": "survived",
+      "start_pos": [
+        110,
+        12
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": null,
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -107,6 +107,6 @@\n     return 0\n \n \n-if __name__ == \"__main__\":\n+if __name__ <= \"__main__\":\n     raise SystemExit(main(sys.argv))\n ",
+      "end_pos": [
+        110,
+        14
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Eq_LtE",
+      "output_sha256": "0e55c03a487f33a998a152dd8a38f58bb60dbf0168a447b02921567ebe6e0b36",
+      "semantic_outcome": "survived",
+      "start_pos": [
+        110,
+        12
+      ],
+      "test_outcome": "survived",
+      "worker_outcome": "normal"
+    },
+    {
+      "definition_name": null,
+      "diff": "--- mutation diff ---\n--- atarget/inspect_schema_refs.py\n+++ btarget/inspect_schema_refs.py\n@@ -107,6 +107,6 @@\n     return 0\n \n \n-if __name__ == \"__main__\":\n+if __name__ != \"__main__\":\n     raise SystemExit(main(sys.argv))\n ",
+      "end_pos": [
+        110,
+        14
+      ],
+      "module_path": "target/inspect_schema_refs.py",
+      "occurrence": 0,
+      "operator_name": "core/ReplaceComparisonOperator_Eq_NotEq",
+      "output_sha256": "350be4062ea7d17db994450cdfb7bf39ef59921c4e2699e1a39fddf07fd4546d",
+      "semantic_outcome": "killed",
+      "start_pos": [
+        110,
+        12
+      ],
+      "test_outcome": "killed",
+      "worker_outcome": "normal"
+    }
+  ],
+  "objects_sha256": "b00db82a8f26add2e7d544efdeaec22f1de83f443336c5dd65c8e7d45bfd7201",
+  "operator_counts": {
+    "core/AddNot": 10,
+    "core/ExceptionReplacer": 4,
+    "core/NumberReplacer": 8,
+    "core/ReplaceAndWithOr": 1,
+    "core/ReplaceBinaryOperator_BitOr_Add": 1,
+    "core/ReplaceBinaryOperator_BitOr_BitAnd": 1,
+    "core/ReplaceBinaryOperator_BitOr_BitXor": 1,
+    "core/ReplaceBinaryOperator_BitOr_Div": 1,
+    "core/ReplaceBinaryOperator_BitOr_FloorDiv": 1,
+    "core/ReplaceBinaryOperator_BitOr_LShift": 1,
+    "core/ReplaceBinaryOperator_BitOr_Mod": 1,
+    "core/ReplaceBinaryOperator_BitOr_Mul": 1,
+    "core/ReplaceBinaryOperator_BitOr_Pow": 1,
+    "core/ReplaceBinaryOperator_BitOr_RShift": 1,
+    "core/ReplaceBinaryOperator_BitOr_Sub": 1,
+    "core/ReplaceComparisonOperator_Eq_Gt": 1,
+    "core/ReplaceComparisonOperator_Eq_GtE": 1,
+    "core/ReplaceComparisonOperator_Eq_Is": 1,
+    "core/ReplaceComparisonOperator_Eq_IsNot": 1,
+    "core/ReplaceComparisonOperator_Eq_Lt": 1,
+    "core/ReplaceComparisonOperator_Eq_LtE": 1,
+    "core/ReplaceComparisonOperator_Eq_NotEq": 1,
+    "core/ReplaceComparisonOperator_NotEq_Eq": 2,
+    "core/ReplaceComparisonOperator_NotEq_Gt": 2,
+    "core/ReplaceComparisonOperator_NotEq_GtE": 2,
+    "core/ReplaceComparisonOperator_NotEq_Is": 1,
+    "core/ReplaceComparisonOperator_NotEq_IsNot": 1,
+    "core/ReplaceComparisonOperator_NotEq_Lt": 2,
+    "core/ReplaceComparisonOperator_NotEq_LtE": 2,
+    "core/ReplaceFalseWithTrue": 1,
+    "core/ReplaceUnaryOperator_Delete_Not": 2,
+    "core/ZeroIterationForLoop": 2
+  },
+  "semantic_objects_sha256": "f057516ada0660e1a40c32b254c7f3f6b562a7fc711368c701c6e60ded1fa216",
+  "semantic_outcome_counts": {
+    "killed": 41,
+    "survived": 16,
+    "worker_exception": 1
+  },
+  "source_dump": "/home/gk/cosmic-ray-evidence/real/cosmic/rep2/session.dump.jsonl",
+  "status_counts": {
+    "incompetent": 1,
+    "killed": 41,
+    "survived": 16
+  },
+  "worker_outcome_counts": {
+    "exception": 1,
+    "normal": 57
+  }
+}

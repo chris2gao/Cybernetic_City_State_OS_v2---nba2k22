@@ -1,0 +1,153 @@
+[job-id] 6cb47c31dc6640cfb8482085dfc33df9
+timeout_pkg/logic.py core/ReplaceComparisonOperator_Gt_Eq 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atimeout_pkg/logic.py
++++ btimeout_pkg/logic.py
+@@ -1,5 +1,5 @@
+ def descend_to_zero(value: int) -> int:
+-    while value > 0:
++    while value == 0:
+         value -= 1
+     return value
+ 
+============
+[job-id] 5d406c5b37a54cd48e3e39b797a479eb
+timeout_pkg/logic.py core/ReplaceComparisonOperator_Gt_NotEq 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+=== DIFF ===
+--- mutation diff ---
+--- atimeout_pkg/logic.py
++++ btimeout_pkg/logic.py
+@@ -1,5 +1,5 @@
+ def descend_to_zero(value: int) -> int:
+-    while value > 0:
++    while value != 0:
+         value -= 1
+     return value
+ 
+============
+[job-id] e3389adaa0bc40158e6c039cbf696849
+timeout_pkg/logic.py core/ReplaceComparisonOperator_Gt_Lt 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atimeout_pkg/logic.py
++++ btimeout_pkg/logic.py
+@@ -1,5 +1,5 @@
+ def descend_to_zero(value: int) -> int:
+-    while value > 0:
++    while value < 0:
+         value -= 1
+     return value
+ 
+============
+[job-id] 5333c9e80d774861bfd387949d91e1c9
+timeout_pkg/logic.py core/ReplaceComparisonOperator_Gt_LtE 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atimeout_pkg/logic.py
++++ btimeout_pkg/logic.py
+@@ -1,5 +1,5 @@
+ def descend_to_zero(value: int) -> int:
+-    while value > 0:
++    while value <= 0:
+         value -= 1
+     return value
+ 
+============
+[job-id] b301284b411f410f99fd7c38375acf27
+timeout_pkg/logic.py core/ReplaceComparisonOperator_Gt_GtE 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atimeout_pkg/logic.py
++++ btimeout_pkg/logic.py
+@@ -1,5 +1,5 @@
+ def descend_to_zero(value: int) -> int:
+-    while value > 0:
++    while value >= 0:
+         value -= 1
+     return value
+ 
+============
+[job-id] c74ea7ad594b494d80e0bdc5bd940316
+timeout_pkg/logic.py core/AddNot 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atimeout_pkg/logic.py
++++ btimeout_pkg/logic.py
+@@ -1,5 +1,5 @@
+ def descend_to_zero(value: int) -> int:
+-    while value > 0:
++    while not value > 0:
+         value -= 1
+     return value
+ 
+============
+[job-id] ad07df9469c74cb2a3df803eb7fa6f11
+timeout_pkg/logic.py core/NumberReplacer 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atimeout_pkg/logic.py
++++ btimeout_pkg/logic.py
+@@ -1,5 +1,5 @@
+ def descend_to_zero(value: int) -> int:
+-    while value > 0:
++    while value > 1:
+         value -= 1
+     return value
+ 
+============
+[job-id] 82e3d032c1a241089dbd76aca972397e
+timeout_pkg/logic.py core/NumberReplacer 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atimeout_pkg/logic.py
++++ btimeout_pkg/logic.py
+@@ -1,5 +1,5 @@
+ def descend_to_zero(value: int) -> int:
+-    while value > 0:
++    while value > -1:
+         value -= 1
+     return value
+ 
+============
+[job-id] f52077d29f4d4595a4e91026db86e85b
+timeout_pkg/logic.py core/NumberReplacer 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atimeout_pkg/logic.py
++++ btimeout_pkg/logic.py
+@@ -1,5 +1,5 @@
+ def descend_to_zero(value: int) -> int:
+     while value > 0:
+-        value -= 1
++        value -= 2
+     return value
+ 
+============
+[job-id] d70cc9acac984e7c9130394acec5e5c5
+timeout_pkg/logic.py core/NumberReplacer 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+=== DIFF ===
+--- mutation diff ---
+--- atimeout_pkg/logic.py
++++ btimeout_pkg/logic.py
+@@ -1,5 +1,5 @@
+ def descend_to_zero(value: int) -> int:
+     while value > 0:
+-        value -= 1
++        value -= 0
+     return value
+ 
+============
+total jobs: 10
+complete: 10 (100.00%)
+surviving mutants: 1 (10.00%)

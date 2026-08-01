@@ -1,0 +1,102 @@
+=== calibration_pkg.logic.x_clamp_nonnegative__mutmut_1 ===
+# calibration_pkg.logic.x_clamp_nonnegative__mutmut_1: survived
+--- calibration_pkg/logic.py
++++ calibration_pkg/logic.py
+@@ -1,4 +1,4 @@
+ def clamp_nonnegative(value: int) -> int:
+-    if value < 0:
++    if value <= 0:
+         return 0
+     return value
+=== calibration_pkg.logic.x_clamp_nonnegative__mutmut_2 ===
+# calibration_pkg.logic.x_clamp_nonnegative__mutmut_2: survived
+--- calibration_pkg/logic.py
++++ calibration_pkg/logic.py
+@@ -1,4 +1,4 @@
+ def clamp_nonnegative(value: int) -> int:
+-    if value < 0:
++    if value < 1:
+         return 0
+     return value
+=== calibration_pkg.logic.x_clamp_nonnegative__mutmut_3 ===
+# calibration_pkg.logic.x_clamp_nonnegative__mutmut_3: killed
+--- calibration_pkg/logic.py
++++ calibration_pkg/logic.py
+@@ -1,4 +1,4 @@
+ def clamp_nonnegative(value: int) -> int:
+     if value < 0:
+-        return 0
++        return 1
+     return value
+=== calibration_pkg.logic.x_access_level__mutmut_1 ===
+# calibration_pkg.logic.x_access_level__mutmut_1: killed
+--- calibration_pkg/logic.py
++++ calibration_pkg/logic.py
+@@ -1,5 +1,5 @@
+ def access_level(role: Role) -> int:
+-    if role is Role.ADMIN:
++    if role is not Role.ADMIN:
+         return 2
+     if role is Role.MEMBER:
+         return 1
+=== calibration_pkg.logic.x_access_level__mutmut_2 ===
+# calibration_pkg.logic.x_access_level__mutmut_2: killed
+--- calibration_pkg/logic.py
++++ calibration_pkg/logic.py
+@@ -1,6 +1,6 @@
+ def access_level(role: Role) -> int:
+     if role is Role.ADMIN:
+-        return 2
++        return 3
+     if role is Role.MEMBER:
+         return 1
+     return 0
+=== calibration_pkg.logic.x_access_level__mutmut_3 ===
+# calibration_pkg.logic.x_access_level__mutmut_3: killed
+--- calibration_pkg/logic.py
++++ calibration_pkg/logic.py
+@@ -1,6 +1,6 @@
+ def access_level(role: Role) -> int:
+     if role is Role.ADMIN:
+         return 2
+-    if role is Role.MEMBER:
++    if role is not Role.MEMBER:
+         return 1
+     return 0
+=== calibration_pkg.logic.x_access_level__mutmut_4 ===
+# calibration_pkg.logic.x_access_level__mutmut_4: killed
+--- calibration_pkg/logic.py
++++ calibration_pkg/logic.py
+@@ -2,5 +2,5 @@
+     if role is Role.ADMIN:
+         return 2
+     if role is Role.MEMBER:
+-        return 1
++        return 2
+     return 0
+=== calibration_pkg.logic.x_access_level__mutmut_5 ===
+# calibration_pkg.logic.x_access_level__mutmut_5: killed
+--- calibration_pkg/logic.py
++++ calibration_pkg/logic.py
+@@ -3,4 +3,4 @@
+         return 2
+     if role is Role.MEMBER:
+         return 1
+-    return 0
++    return 1
+=== calibration_pkg.logic.x_identity_offset__mutmut_1 ===
+# calibration_pkg.logic.x_identity_offset__mutmut_1: survived
+--- calibration_pkg/logic.py
++++ calibration_pkg/logic.py
+@@ -1,2 +1,2 @@
+ def identity_offset(value: int) -> int:
+-    return value + 0
++    return value - 0
+=== calibration_pkg.logic.x_identity_offset__mutmut_2 ===
+# calibration_pkg.logic.x_identity_offset__mutmut_2: killed
+--- calibration_pkg/logic.py
++++ calibration_pkg/logic.py
+@@ -1,2 +1,2 @@
+ def identity_offset(value: int) -> int:
+-    return value + 0
++    return value + 1

@@ -1,0 +1,1591 @@
+=== target.inspect_schema_refs.xǁSchemaPolicyErrorǁ__init____mutmut_1 ===
+# target.inspect_schema_refs.xǁSchemaPolicyErrorǁ__init____mutmut_1: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,5 +1,5 @@
+ def __init__(self, code: str, location: str, detail: str) -> None:
+-    super().__init__(detail)
++    super().__init__(None)
+     self.code = code
+     self.location = location
+     self.detail = detail
+=== target.inspect_schema_refs.xǁSchemaPolicyErrorǁ__init____mutmut_2 ===
+# target.inspect_schema_refs.xǁSchemaPolicyErrorǁ__init____mutmut_2: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,5 +1,5 @@
+ def __init__(self, code: str, location: str, detail: str) -> None:
+     super().__init__(detail)
+-    self.code = code
++    self.code = None
+     self.location = location
+     self.detail = detail
+=== target.inspect_schema_refs.xǁSchemaPolicyErrorǁ__init____mutmut_3 ===
+# target.inspect_schema_refs.xǁSchemaPolicyErrorǁ__init____mutmut_3: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,5 +1,5 @@
+ def __init__(self, code: str, location: str, detail: str) -> None:
+     super().__init__(detail)
+     self.code = code
+-    self.location = location
++    self.location = None
+     self.detail = detail
+=== target.inspect_schema_refs.xǁSchemaPolicyErrorǁ__init____mutmut_4 ===
+# target.inspect_schema_refs.xǁSchemaPolicyErrorǁ__init____mutmut_4: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -2,4 +2,4 @@
+     super().__init__(detail)
+     self.code = code
+     self.location = location
+-    self.detail = detail
++    self.detail = None
+=== target.inspect_schema_refs.x__child_location__mutmut_1 ===
+# target.inspect_schema_refs.x__child_location__mutmut_1: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,4 +1,4 @@
+ def _child_location(location: str, key: str | int) -> str:
+     if isinstance(key, int):
+         return f"{location}[{key}]"
+-    return f"{location}[{json.dumps(key, ensure_ascii=False)}]"
++    return f"{location}[{json.dumps(None, ensure_ascii=False)}]"
+=== target.inspect_schema_refs.x__child_location__mutmut_2 ===
+# target.inspect_schema_refs.x__child_location__mutmut_2: survived
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,4 +1,4 @@
+ def _child_location(location: str, key: str | int) -> str:
+     if isinstance(key, int):
+         return f"{location}[{key}]"
+-    return f"{location}[{json.dumps(key, ensure_ascii=False)}]"
++    return f"{location}[{json.dumps(key, ensure_ascii=None)}]"
+=== target.inspect_schema_refs.x__child_location__mutmut_3 ===
+# target.inspect_schema_refs.x__child_location__mutmut_3: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,4 +1,4 @@
+ def _child_location(location: str, key: str | int) -> str:
+     if isinstance(key, int):
+         return f"{location}[{key}]"
+-    return f"{location}[{json.dumps(key, ensure_ascii=False)}]"
++    return f"{location}[{json.dumps(ensure_ascii=False)}]"
+=== target.inspect_schema_refs.x__child_location__mutmut_4 ===
+# target.inspect_schema_refs.x__child_location__mutmut_4: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,4 +1,4 @@
+ def _child_location(location: str, key: str | int) -> str:
+     if isinstance(key, int):
+         return f"{location}[{key}]"
+-    return f"{location}[{json.dumps(key, ensure_ascii=False)}]"
++    return f"{location}[{json.dumps(key, )}]"
+=== target.inspect_schema_refs.x__child_location__mutmut_5 ===
+# target.inspect_schema_refs.x__child_location__mutmut_5: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,4 +1,4 @@
+ def _child_location(location: str, key: str | int) -> str:
+     if isinstance(key, int):
+         return f"{location}[{key}]"
+-    return f"{location}[{json.dumps(key, ensure_ascii=False)}]"
++    return f"{location}[{json.dumps(key, ensure_ascii=True)}]"
+=== target.inspect_schema_refs.x__walk__mutmut_1 ===
+# target.inspect_schema_refs.x__walk__mutmut_1: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,4 +1,4 @@
+-def _walk(value: Any, location: str = "$") -> None:
++def _walk(value: Any, location: str = "XX$XX") -> None:
+     if isinstance(value, dict):
+         for key, child in value.items():
+             child_location = _child_location(location, key)
+=== target.inspect_schema_refs.x__walk__mutmut_2 ===
+# target.inspect_schema_refs.x__walk__mutmut_2: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,7 +1,7 @@
+ def _walk(value: Any, location: str = "$") -> None:
+     if isinstance(value, dict):
+         for key, child in value.items():
+-            child_location = _child_location(location, key)
++            child_location = None
+             if key in REFERENCE_KEYWORDS:
+                 if not isinstance(child, str):
+                     raise SchemaPolicyError(
+=== target.inspect_schema_refs.x__walk__mutmut_3 ===
+# target.inspect_schema_refs.x__walk__mutmut_3: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,7 +1,7 @@
+ def _walk(value: Any, location: str = "$") -> None:
+     if isinstance(value, dict):
+         for key, child in value.items():
+-            child_location = _child_location(location, key)
++            child_location = _child_location(None, key)
+             if key in REFERENCE_KEYWORDS:
+                 if not isinstance(child, str):
+                     raise SchemaPolicyError(
+=== target.inspect_schema_refs.x__walk__mutmut_4 ===
+# target.inspect_schema_refs.x__walk__mutmut_4: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,7 +1,7 @@
+ def _walk(value: Any, location: str = "$") -> None:
+     if isinstance(value, dict):
+         for key, child in value.items():
+-            child_location = _child_location(location, key)
++            child_location = _child_location(location, None)
+             if key in REFERENCE_KEYWORDS:
+                 if not isinstance(child, str):
+                     raise SchemaPolicyError(
+=== target.inspect_schema_refs.x__walk__mutmut_5 ===
+# target.inspect_schema_refs.x__walk__mutmut_5: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,7 +1,7 @@
+ def _walk(value: Any, location: str = "$") -> None:
+     if isinstance(value, dict):
+         for key, child in value.items():
+-            child_location = _child_location(location, key)
++            child_location = _child_location(key)
+             if key in REFERENCE_KEYWORDS:
+                 if not isinstance(child, str):
+                     raise SchemaPolicyError(
+=== target.inspect_schema_refs.x__walk__mutmut_6 ===
+# target.inspect_schema_refs.x__walk__mutmut_6: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,7 +1,7 @@
+ def _walk(value: Any, location: str = "$") -> None:
+     if isinstance(value, dict):
+         for key, child in value.items():
+-            child_location = _child_location(location, key)
++            child_location = _child_location(location, )
+             if key in REFERENCE_KEYWORDS:
+                 if not isinstance(child, str):
+                     raise SchemaPolicyError(
+=== target.inspect_schema_refs.x__walk__mutmut_7 ===
+# target.inspect_schema_refs.x__walk__mutmut_7: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -2,7 +2,7 @@
+     if isinstance(value, dict):
+         for key, child in value.items():
+             child_location = _child_location(location, key)
+-            if key in REFERENCE_KEYWORDS:
++            if key not in REFERENCE_KEYWORDS:
+                 if not isinstance(child, str):
+                     raise SchemaPolicyError(
+                         "CJV-R01-REFERENCE-TYPE",
+=== target.inspect_schema_refs.x__walk__mutmut_8 ===
+# target.inspect_schema_refs.x__walk__mutmut_8: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -3,7 +3,7 @@
+         for key, child in value.items():
+             child_location = _child_location(location, key)
+             if key in REFERENCE_KEYWORDS:
+-                if not isinstance(child, str):
++                if isinstance(child, str):
+                     raise SchemaPolicyError(
+                         "CJV-R01-REFERENCE-TYPE",
+                         child_location,
+=== target.inspect_schema_refs.x__walk__mutmut_9 ===
+# target.inspect_schema_refs.x__walk__mutmut_9: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -5,7 +5,7 @@
+             if key in REFERENCE_KEYWORDS:
+                 if not isinstance(child, str):
+                     raise SchemaPolicyError(
+-                        "CJV-R01-REFERENCE-TYPE",
++                        None,
+                         child_location,
+                         f"{key} must be a string",
+                     )
+=== target.inspect_schema_refs.x__walk__mutmut_10 ===
+# target.inspect_schema_refs.x__walk__mutmut_10: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -6,7 +6,7 @@
+                 if not isinstance(child, str):
+                     raise SchemaPolicyError(
+                         "CJV-R01-REFERENCE-TYPE",
+-                        child_location,
++                        None,
+                         f"{key} must be a string",
+                     )
+                 if not child.startswith("#"):
+=== target.inspect_schema_refs.x__walk__mutmut_11 ===
+# target.inspect_schema_refs.x__walk__mutmut_11: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -7,7 +7,7 @@
+                     raise SchemaPolicyError(
+                         "CJV-R01-REFERENCE-TYPE",
+                         child_location,
+-                        f"{key} must be a string",
++                        None,
+                     )
+                 if not child.startswith("#"):
+                     raise SchemaPolicyError(
+=== target.inspect_schema_refs.x__walk__mutmut_12 ===
+# target.inspect_schema_refs.x__walk__mutmut_12: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -5,7 +5,6 @@
+             if key in REFERENCE_KEYWORDS:
+                 if not isinstance(child, str):
+                     raise SchemaPolicyError(
+-                        "CJV-R01-REFERENCE-TYPE",
+                         child_location,
+                         f"{key} must be a string",
+                     )
+=== target.inspect_schema_refs.x__walk__mutmut_13 ===
+# target.inspect_schema_refs.x__walk__mutmut_13: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -6,7 +6,6 @@
+                 if not isinstance(child, str):
+                     raise SchemaPolicyError(
+                         "CJV-R01-REFERENCE-TYPE",
+-                        child_location,
+                         f"{key} must be a string",
+                     )
+                 if not child.startswith("#"):
+=== target.inspect_schema_refs.x__walk__mutmut_14 ===
+# target.inspect_schema_refs.x__walk__mutmut_14: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -7,8 +7,7 @@
+                     raise SchemaPolicyError(
+                         "CJV-R01-REFERENCE-TYPE",
+                         child_location,
+-                        f"{key} must be a string",
+-                    )
++                        )
+                 if not child.startswith("#"):
+                     raise SchemaPolicyError(
+                         "CJV-R01-EXTERNAL-REFERENCE",
+=== target.inspect_schema_refs.x__walk__mutmut_15 ===
+# target.inspect_schema_refs.x__walk__mutmut_15: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -5,7 +5,7 @@
+             if key in REFERENCE_KEYWORDS:
+                 if not isinstance(child, str):
+                     raise SchemaPolicyError(
+-                        "CJV-R01-REFERENCE-TYPE",
++                        "XXCJV-R01-REFERENCE-TYPEXX",
+                         child_location,
+                         f"{key} must be a string",
+                     )
+=== target.inspect_schema_refs.x__walk__mutmut_16 ===
+# target.inspect_schema_refs.x__walk__mutmut_16: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -5,7 +5,7 @@
+             if key in REFERENCE_KEYWORDS:
+                 if not isinstance(child, str):
+                     raise SchemaPolicyError(
+-                        "CJV-R01-REFERENCE-TYPE",
++                        "cjv-r01-reference-type",
+                         child_location,
+                         f"{key} must be a string",
+                     )
+=== target.inspect_schema_refs.x__walk__mutmut_17 ===
+# target.inspect_schema_refs.x__walk__mutmut_17: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -9,7 +9,7 @@
+                         child_location,
+                         f"{key} must be a string",
+                     )
+-                if not child.startswith("#"):
++                if child.startswith("#"):
+                     raise SchemaPolicyError(
+                         "CJV-R01-EXTERNAL-REFERENCE",
+                         child_location,
+=== target.inspect_schema_refs.x__walk__mutmut_18 ===
+# target.inspect_schema_refs.x__walk__mutmut_18: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -9,7 +9,7 @@
+                         child_location,
+                         f"{key} must be a string",
+                     )
+-                if not child.startswith("#"):
++                if not child.startswith(None):
+                     raise SchemaPolicyError(
+                         "CJV-R01-EXTERNAL-REFERENCE",
+                         child_location,
+=== target.inspect_schema_refs.x__walk__mutmut_19 ===
+# target.inspect_schema_refs.x__walk__mutmut_19: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -9,7 +9,7 @@
+                         child_location,
+                         f"{key} must be a string",
+                     )
+-                if not child.startswith("#"):
++                if not child.startswith("XX#XX"):
+                     raise SchemaPolicyError(
+                         "CJV-R01-EXTERNAL-REFERENCE",
+                         child_location,
+=== target.inspect_schema_refs.x__walk__mutmut_20 ===
+# target.inspect_schema_refs.x__walk__mutmut_20: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -11,7 +11,7 @@
+                     )
+                 if not child.startswith("#"):
+                     raise SchemaPolicyError(
+-                        "CJV-R01-EXTERNAL-REFERENCE",
++                        None,
+                         child_location,
+                         f"{key} must be fragment-only; got {json.dumps(child)}",
+                     )
+=== target.inspect_schema_refs.x__walk__mutmut_21 ===
+# target.inspect_schema_refs.x__walk__mutmut_21: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -12,7 +12,7 @@
+                 if not child.startswith("#"):
+                     raise SchemaPolicyError(
+                         "CJV-R01-EXTERNAL-REFERENCE",
+-                        child_location,
++                        None,
+                         f"{key} must be fragment-only; got {json.dumps(child)}",
+                     )
+             elif key in IDENTIFIER_KEYWORDS and isinstance(child, str):
+=== target.inspect_schema_refs.x__walk__mutmut_22 ===
+# target.inspect_schema_refs.x__walk__mutmut_22: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -13,7 +13,7 @@
+                     raise SchemaPolicyError(
+                         "CJV-R01-EXTERNAL-REFERENCE",
+                         child_location,
+-                        f"{key} must be fragment-only; got {json.dumps(child)}",
++                        None,
+                     )
+             elif key in IDENTIFIER_KEYWORDS and isinstance(child, str):
+                 scheme = urlsplit(child).scheme.lower()
+=== target.inspect_schema_refs.x__walk__mutmut_23 ===
+# target.inspect_schema_refs.x__walk__mutmut_23: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -11,7 +11,6 @@
+                     )
+                 if not child.startswith("#"):
+                     raise SchemaPolicyError(
+-                        "CJV-R01-EXTERNAL-REFERENCE",
+                         child_location,
+                         f"{key} must be fragment-only; got {json.dumps(child)}",
+                     )
+=== target.inspect_schema_refs.x__walk__mutmut_24 ===
+# target.inspect_schema_refs.x__walk__mutmut_24: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -12,7 +12,6 @@
+                 if not child.startswith("#"):
+                     raise SchemaPolicyError(
+                         "CJV-R01-EXTERNAL-REFERENCE",
+-                        child_location,
+                         f"{key} must be fragment-only; got {json.dumps(child)}",
+                     )
+             elif key in IDENTIFIER_KEYWORDS and isinstance(child, str):
+=== target.inspect_schema_refs.x__walk__mutmut_25 ===
+# target.inspect_schema_refs.x__walk__mutmut_25: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -13,8 +13,7 @@
+                     raise SchemaPolicyError(
+                         "CJV-R01-EXTERNAL-REFERENCE",
+                         child_location,
+-                        f"{key} must be fragment-only; got {json.dumps(child)}",
+-                    )
++                        )
+             elif key in IDENTIFIER_KEYWORDS and isinstance(child, str):
+                 scheme = urlsplit(child).scheme.lower()
+                 if scheme in HTTP_SCHEMES:
+=== target.inspect_schema_refs.x__walk__mutmut_26 ===
+# target.inspect_schema_refs.x__walk__mutmut_26: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -11,7 +11,7 @@
+                     )
+                 if not child.startswith("#"):
+                     raise SchemaPolicyError(
+-                        "CJV-R01-EXTERNAL-REFERENCE",
++                        "XXCJV-R01-EXTERNAL-REFERENCEXX",
+                         child_location,
+                         f"{key} must be fragment-only; got {json.dumps(child)}",
+                     )
+=== target.inspect_schema_refs.x__walk__mutmut_27 ===
+# target.inspect_schema_refs.x__walk__mutmut_27: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -11,7 +11,7 @@
+                     )
+                 if not child.startswith("#"):
+                     raise SchemaPolicyError(
+-                        "CJV-R01-EXTERNAL-REFERENCE",
++                        "cjv-r01-external-reference",
+                         child_location,
+                         f"{key} must be fragment-only; got {json.dumps(child)}",
+                     )
+=== target.inspect_schema_refs.x__walk__mutmut_28 ===
+# target.inspect_schema_refs.x__walk__mutmut_28: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -13,7 +13,7 @@
+                     raise SchemaPolicyError(
+                         "CJV-R01-EXTERNAL-REFERENCE",
+                         child_location,
+-                        f"{key} must be fragment-only; got {json.dumps(child)}",
++                        f"{key} must be fragment-only; got {json.dumps(None)}",
+                     )
+             elif key in IDENTIFIER_KEYWORDS and isinstance(child, str):
+                 scheme = urlsplit(child).scheme.lower()
+=== target.inspect_schema_refs.x__walk__mutmut_29 ===
+# target.inspect_schema_refs.x__walk__mutmut_29: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -15,7 +15,7 @@
+                         child_location,
+                         f"{key} must be fragment-only; got {json.dumps(child)}",
+                     )
+-            elif key in IDENTIFIER_KEYWORDS and isinstance(child, str):
++            elif key in IDENTIFIER_KEYWORDS or isinstance(child, str):
+                 scheme = urlsplit(child).scheme.lower()
+                 if scheme in HTTP_SCHEMES:
+                     raise SchemaPolicyError(
+=== target.inspect_schema_refs.x__walk__mutmut_30 ===
+# target.inspect_schema_refs.x__walk__mutmut_30: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -15,7 +15,7 @@
+                         child_location,
+                         f"{key} must be fragment-only; got {json.dumps(child)}",
+                     )
+-            elif key in IDENTIFIER_KEYWORDS and isinstance(child, str):
++            elif key not in IDENTIFIER_KEYWORDS and isinstance(child, str):
+                 scheme = urlsplit(child).scheme.lower()
+                 if scheme in HTTP_SCHEMES:
+                     raise SchemaPolicyError(
+=== target.inspect_schema_refs.x__walk__mutmut_31 ===
+# target.inspect_schema_refs.x__walk__mutmut_31: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -16,7 +16,7 @@
+                         f"{key} must be fragment-only; got {json.dumps(child)}",
+                     )
+             elif key in IDENTIFIER_KEYWORDS and isinstance(child, str):
+-                scheme = urlsplit(child).scheme.lower()
++                scheme = None
+                 if scheme in HTTP_SCHEMES:
+                     raise SchemaPolicyError(
+                         "CJV-R01-REMOTE-IDENTIFIER",
+=== target.inspect_schema_refs.x__walk__mutmut_32 ===
+# target.inspect_schema_refs.x__walk__mutmut_32: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -16,7 +16,7 @@
+                         f"{key} must be fragment-only; got {json.dumps(child)}",
+                     )
+             elif key in IDENTIFIER_KEYWORDS and isinstance(child, str):
+-                scheme = urlsplit(child).scheme.lower()
++                scheme = urlsplit(child).scheme.upper()
+                 if scheme in HTTP_SCHEMES:
+                     raise SchemaPolicyError(
+                         "CJV-R01-REMOTE-IDENTIFIER",
+=== target.inspect_schema_refs.x__walk__mutmut_33 ===
+# target.inspect_schema_refs.x__walk__mutmut_33: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -16,7 +16,7 @@
+                         f"{key} must be fragment-only; got {json.dumps(child)}",
+                     )
+             elif key in IDENTIFIER_KEYWORDS and isinstance(child, str):
+-                scheme = urlsplit(child).scheme.lower()
++                scheme = urlsplit(None).scheme.lower()
+                 if scheme in HTTP_SCHEMES:
+                     raise SchemaPolicyError(
+                         "CJV-R01-REMOTE-IDENTIFIER",
+=== target.inspect_schema_refs.x__walk__mutmut_34 ===
+# target.inspect_schema_refs.x__walk__mutmut_34: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -17,7 +17,7 @@
+                     )
+             elif key in IDENTIFIER_KEYWORDS and isinstance(child, str):
+                 scheme = urlsplit(child).scheme.lower()
+-                if scheme in HTTP_SCHEMES:
++                if scheme not in HTTP_SCHEMES:
+                     raise SchemaPolicyError(
+                         "CJV-R01-REMOTE-IDENTIFIER",
+                         child_location,
+=== target.inspect_schema_refs.x__walk__mutmut_35 ===
+# target.inspect_schema_refs.x__walk__mutmut_35: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -19,7 +19,7 @@
+                 scheme = urlsplit(child).scheme.lower()
+                 if scheme in HTTP_SCHEMES:
+                     raise SchemaPolicyError(
+-                        "CJV-R01-REMOTE-IDENTIFIER",
++                        None,
+                         child_location,
+                         f"{key} must not use HTTP(S); got {json.dumps(child)}",
+                     )
+=== target.inspect_schema_refs.x__walk__mutmut_36 ===
+# target.inspect_schema_refs.x__walk__mutmut_36: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -20,7 +20,7 @@
+                 if scheme in HTTP_SCHEMES:
+                     raise SchemaPolicyError(
+                         "CJV-R01-REMOTE-IDENTIFIER",
+-                        child_location,
++                        None,
+                         f"{key} must not use HTTP(S); got {json.dumps(child)}",
+                     )
+             _walk(child, child_location)
+=== target.inspect_schema_refs.x__walk__mutmut_37 ===
+# target.inspect_schema_refs.x__walk__mutmut_37: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -21,7 +21,7 @@
+                     raise SchemaPolicyError(
+                         "CJV-R01-REMOTE-IDENTIFIER",
+                         child_location,
+-                        f"{key} must not use HTTP(S); got {json.dumps(child)}",
++                        None,
+                     )
+             _walk(child, child_location)
+     elif isinstance(value, list):
+=== target.inspect_schema_refs.x__walk__mutmut_38 ===
+# target.inspect_schema_refs.x__walk__mutmut_38: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -19,7 +19,6 @@
+                 scheme = urlsplit(child).scheme.lower()
+                 if scheme in HTTP_SCHEMES:
+                     raise SchemaPolicyError(
+-                        "CJV-R01-REMOTE-IDENTIFIER",
+                         child_location,
+                         f"{key} must not use HTTP(S); got {json.dumps(child)}",
+                     )
+=== target.inspect_schema_refs.x__walk__mutmut_39 ===
+# target.inspect_schema_refs.x__walk__mutmut_39: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -20,7 +20,6 @@
+                 if scheme in HTTP_SCHEMES:
+                     raise SchemaPolicyError(
+                         "CJV-R01-REMOTE-IDENTIFIER",
+-                        child_location,
+                         f"{key} must not use HTTP(S); got {json.dumps(child)}",
+                     )
+             _walk(child, child_location)
+=== target.inspect_schema_refs.x__walk__mutmut_40 ===
+# target.inspect_schema_refs.x__walk__mutmut_40: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -21,8 +21,7 @@
+                     raise SchemaPolicyError(
+                         "CJV-R01-REMOTE-IDENTIFIER",
+                         child_location,
+-                        f"{key} must not use HTTP(S); got {json.dumps(child)}",
+-                    )
++                        )
+             _walk(child, child_location)
+     elif isinstance(value, list):
+         for index, child in enumerate(value):
+=== target.inspect_schema_refs.x__walk__mutmut_41 ===
+# target.inspect_schema_refs.x__walk__mutmut_41: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -19,7 +19,7 @@
+                 scheme = urlsplit(child).scheme.lower()
+                 if scheme in HTTP_SCHEMES:
+                     raise SchemaPolicyError(
+-                        "CJV-R01-REMOTE-IDENTIFIER",
++                        "XXCJV-R01-REMOTE-IDENTIFIERXX",
+                         child_location,
+                         f"{key} must not use HTTP(S); got {json.dumps(child)}",
+                     )
+=== target.inspect_schema_refs.x__walk__mutmut_42 ===
+# target.inspect_schema_refs.x__walk__mutmut_42: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -19,7 +19,7 @@
+                 scheme = urlsplit(child).scheme.lower()
+                 if scheme in HTTP_SCHEMES:
+                     raise SchemaPolicyError(
+-                        "CJV-R01-REMOTE-IDENTIFIER",
++                        "cjv-r01-remote-identifier",
+                         child_location,
+                         f"{key} must not use HTTP(S); got {json.dumps(child)}",
+                     )
+=== target.inspect_schema_refs.x__walk__mutmut_43 ===
+# target.inspect_schema_refs.x__walk__mutmut_43: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -21,7 +21,7 @@
+                     raise SchemaPolicyError(
+                         "CJV-R01-REMOTE-IDENTIFIER",
+                         child_location,
+-                        f"{key} must not use HTTP(S); got {json.dumps(child)}",
++                        f"{key} must not use HTTP(S); got {json.dumps(None)}",
+                     )
+             _walk(child, child_location)
+     elif isinstance(value, list):
+=== target.inspect_schema_refs.x__walk__mutmut_44 ===
+# target.inspect_schema_refs.x__walk__mutmut_44: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -23,7 +23,7 @@
+                         child_location,
+                         f"{key} must not use HTTP(S); got {json.dumps(child)}",
+                     )
+-            _walk(child, child_location)
++            _walk(None, child_location)
+     elif isinstance(value, list):
+         for index, child in enumerate(value):
+             _walk(child, _child_location(location, index))
+=== target.inspect_schema_refs.x__walk__mutmut_45 ===
+# target.inspect_schema_refs.x__walk__mutmut_45: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -23,7 +23,7 @@
+                         child_location,
+                         f"{key} must not use HTTP(S); got {json.dumps(child)}",
+                     )
+-            _walk(child, child_location)
++            _walk(child, None)
+     elif isinstance(value, list):
+         for index, child in enumerate(value):
+             _walk(child, _child_location(location, index))
+=== target.inspect_schema_refs.x__walk__mutmut_46 ===
+# target.inspect_schema_refs.x__walk__mutmut_46: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -23,7 +23,7 @@
+                         child_location,
+                         f"{key} must not use HTTP(S); got {json.dumps(child)}",
+                     )
+-            _walk(child, child_location)
++            _walk(child_location)
+     elif isinstance(value, list):
+         for index, child in enumerate(value):
+             _walk(child, _child_location(location, index))
+=== target.inspect_schema_refs.x__walk__mutmut_47 ===
+# target.inspect_schema_refs.x__walk__mutmut_47: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -23,7 +23,7 @@
+                         child_location,
+                         f"{key} must not use HTTP(S); got {json.dumps(child)}",
+                     )
+-            _walk(child, child_location)
++            _walk(child, )
+     elif isinstance(value, list):
+         for index, child in enumerate(value):
+             _walk(child, _child_location(location, index))
+=== target.inspect_schema_refs.x__walk__mutmut_48 ===
+# target.inspect_schema_refs.x__walk__mutmut_48: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -25,5 +25,5 @@
+                     )
+             _walk(child, child_location)
+     elif isinstance(value, list):
+-        for index, child in enumerate(value):
++        for index, child in enumerate(None):
+             _walk(child, _child_location(location, index))
+=== target.inspect_schema_refs.x__walk__mutmut_49 ===
+# target.inspect_schema_refs.x__walk__mutmut_49: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -26,4 +26,4 @@
+             _walk(child, child_location)
+     elif isinstance(value, list):
+         for index, child in enumerate(value):
+-            _walk(child, _child_location(location, index))
++            _walk(None, _child_location(location, index))
+=== target.inspect_schema_refs.x__walk__mutmut_50 ===
+# target.inspect_schema_refs.x__walk__mutmut_50: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -26,4 +26,4 @@
+             _walk(child, child_location)
+     elif isinstance(value, list):
+         for index, child in enumerate(value):
+-            _walk(child, _child_location(location, index))
++            _walk(child, None)
+=== target.inspect_schema_refs.x__walk__mutmut_51 ===
+# target.inspect_schema_refs.x__walk__mutmut_51: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -26,4 +26,4 @@
+             _walk(child, child_location)
+     elif isinstance(value, list):
+         for index, child in enumerate(value):
+-            _walk(child, _child_location(location, index))
++            _walk(_child_location(location, index))
+=== target.inspect_schema_refs.x__walk__mutmut_52 ===
+# target.inspect_schema_refs.x__walk__mutmut_52: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -26,4 +26,4 @@
+             _walk(child, child_location)
+     elif isinstance(value, list):
+         for index, child in enumerate(value):
+-            _walk(child, _child_location(location, index))
++            _walk(child, )
+=== target.inspect_schema_refs.x__walk__mutmut_53 ===
+# target.inspect_schema_refs.x__walk__mutmut_53: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -26,4 +26,4 @@
+             _walk(child, child_location)
+     elif isinstance(value, list):
+         for index, child in enumerate(value):
+-            _walk(child, _child_location(location, index))
++            _walk(child, _child_location(None, index))
+=== target.inspect_schema_refs.x__walk__mutmut_54 ===
+# target.inspect_schema_refs.x__walk__mutmut_54: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -26,4 +26,4 @@
+             _walk(child, child_location)
+     elif isinstance(value, list):
+         for index, child in enumerate(value):
+-            _walk(child, _child_location(location, index))
++            _walk(child, _child_location(location, None))
+=== target.inspect_schema_refs.x__walk__mutmut_55 ===
+# target.inspect_schema_refs.x__walk__mutmut_55: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -26,4 +26,4 @@
+             _walk(child, child_location)
+     elif isinstance(value, list):
+         for index, child in enumerate(value):
+-            _walk(child, _child_location(location, index))
++            _walk(child, _child_location(index))
+=== target.inspect_schema_refs.x__walk__mutmut_56 ===
+# target.inspect_schema_refs.x__walk__mutmut_56: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -26,4 +26,4 @@
+             _walk(child, child_location)
+     elif isinstance(value, list):
+         for index, child in enumerate(value):
+-            _walk(child, _child_location(location, index))
++            _walk(child, _child_location(location, ))
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_1 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_1: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,5 +1,5 @@
+ def inspect_schema(path: Path) -> None:
+-    if path.suffix.lower() != ".json":
++    if path.suffix.upper() != ".json":
+         raise SchemaPolicyError(
+             "CJV-R01-JSON-SUFFIX",
+             "$",
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_2 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_2: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,5 +1,5 @@
+ def inspect_schema(path: Path) -> None:
+-    if path.suffix.lower() != ".json":
++    if path.suffix.lower() == ".json":
+         raise SchemaPolicyError(
+             "CJV-R01-JSON-SUFFIX",
+             "$",
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_3 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_3: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,5 +1,5 @@
+ def inspect_schema(path: Path) -> None:
+-    if path.suffix.lower() != ".json":
++    if path.suffix.lower() != "XX.jsonXX":
+         raise SchemaPolicyError(
+             "CJV-R01-JSON-SUFFIX",
+             "$",
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_4 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_4: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,5 +1,5 @@
+ def inspect_schema(path: Path) -> None:
+-    if path.suffix.lower() != ".json":
++    if path.suffix.lower() != ".JSON":
+         raise SchemaPolicyError(
+             "CJV-R01-JSON-SUFFIX",
+             "$",
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_5 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_5: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,7 +1,7 @@
+ def inspect_schema(path: Path) -> None:
+     if path.suffix.lower() != ".json":
+         raise SchemaPolicyError(
+-            "CJV-R01-JSON-SUFFIX",
++            None,
+             "$",
+             "canonical schema must use the .json suffix",
+         )
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_6 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_6: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -2,7 +2,7 @@
+     if path.suffix.lower() != ".json":
+         raise SchemaPolicyError(
+             "CJV-R01-JSON-SUFFIX",
+-            "$",
++            None,
+             "canonical schema must use the .json suffix",
+         )
+     try:
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_7 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_7: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -3,7 +3,7 @@
+         raise SchemaPolicyError(
+             "CJV-R01-JSON-SUFFIX",
+             "$",
+-            "canonical schema must use the .json suffix",
++            None,
+         )
+     try:
+         text = path.read_text(encoding="utf-8")
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_8 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_8: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,7 +1,6 @@
+ def inspect_schema(path: Path) -> None:
+     if path.suffix.lower() != ".json":
+         raise SchemaPolicyError(
+-            "CJV-R01-JSON-SUFFIX",
+             "$",
+             "canonical schema must use the .json suffix",
+         )
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_9 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_9: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -2,7 +2,6 @@
+     if path.suffix.lower() != ".json":
+         raise SchemaPolicyError(
+             "CJV-R01-JSON-SUFFIX",
+-            "$",
+             "canonical schema must use the .json suffix",
+         )
+     try:
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_10 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_10: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -3,8 +3,7 @@
+         raise SchemaPolicyError(
+             "CJV-R01-JSON-SUFFIX",
+             "$",
+-            "canonical schema must use the .json suffix",
+-        )
++            )
+     try:
+         text = path.read_text(encoding="utf-8")
+     except OSError as exc:
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_11 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_11: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,7 +1,7 @@
+ def inspect_schema(path: Path) -> None:
+     if path.suffix.lower() != ".json":
+         raise SchemaPolicyError(
+-            "CJV-R01-JSON-SUFFIX",
++            "XXCJV-R01-JSON-SUFFIXXX",
+             "$",
+             "canonical schema must use the .json suffix",
+         )
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_12 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_12: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,7 +1,7 @@
+ def inspect_schema(path: Path) -> None:
+     if path.suffix.lower() != ".json":
+         raise SchemaPolicyError(
+-            "CJV-R01-JSON-SUFFIX",
++            "cjv-r01-json-suffix",
+             "$",
+             "canonical schema must use the .json suffix",
+         )
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_13 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_13: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -2,7 +2,7 @@
+     if path.suffix.lower() != ".json":
+         raise SchemaPolicyError(
+             "CJV-R01-JSON-SUFFIX",
+-            "$",
++            "XX$XX",
+             "canonical schema must use the .json suffix",
+         )
+     try:
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_14 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_14: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -3,7 +3,7 @@
+         raise SchemaPolicyError(
+             "CJV-R01-JSON-SUFFIX",
+             "$",
+-            "canonical schema must use the .json suffix",
++            "XXcanonical schema must use the .json suffixXX",
+         )
+     try:
+         text = path.read_text(encoding="utf-8")
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_15 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_15: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -3,7 +3,7 @@
+         raise SchemaPolicyError(
+             "CJV-R01-JSON-SUFFIX",
+             "$",
+-            "canonical schema must use the .json suffix",
++            "CANONICAL SCHEMA MUST USE THE .JSON SUFFIX",
+         )
+     try:
+         text = path.read_text(encoding="utf-8")
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_16 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_16: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -6,7 +6,7 @@
+             "canonical schema must use the .json suffix",
+         )
+     try:
+-        text = path.read_text(encoding="utf-8")
++        text = None
+     except OSError as exc:
+         raise SchemaPolicyError(
+             "CJV-R01-SCHEMA-READ",
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_17 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_17: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -6,7 +6,7 @@
+             "canonical schema must use the .json suffix",
+         )
+     try:
+-        text = path.read_text(encoding="utf-8")
++        text = path.read_text(encoding=None)
+     except OSError as exc:
+         raise SchemaPolicyError(
+             "CJV-R01-SCHEMA-READ",
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_18 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_18: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -6,7 +6,7 @@
+             "canonical schema must use the .json suffix",
+         )
+     try:
+-        text = path.read_text(encoding="utf-8")
++        text = path.read_text(encoding="XXutf-8XX")
+     except OSError as exc:
+         raise SchemaPolicyError(
+             "CJV-R01-SCHEMA-READ",
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_19 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_19: survived
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -6,7 +6,7 @@
+             "canonical schema must use the .json suffix",
+         )
+     try:
+-        text = path.read_text(encoding="utf-8")
++        text = path.read_text(encoding="UTF-8")
+     except OSError as exc:
+         raise SchemaPolicyError(
+             "CJV-R01-SCHEMA-READ",
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_20 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_20: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -9,7 +9,7 @@
+         text = path.read_text(encoding="utf-8")
+     except OSError as exc:
+         raise SchemaPolicyError(
+-            "CJV-R01-SCHEMA-READ",
++            None,
+             "$",
+             f"schema could not be read: {exc.__class__.__name__}",
+         ) from exc
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_21 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_21: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -10,7 +10,7 @@
+     except OSError as exc:
+         raise SchemaPolicyError(
+             "CJV-R01-SCHEMA-READ",
+-            "$",
++            None,
+             f"schema could not be read: {exc.__class__.__name__}",
+         ) from exc
+     try:
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_22 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_22: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -11,7 +11,7 @@
+         raise SchemaPolicyError(
+             "CJV-R01-SCHEMA-READ",
+             "$",
+-            f"schema could not be read: {exc.__class__.__name__}",
++            None,
+         ) from exc
+     try:
+         schema = json.loads(text)
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_23 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_23: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -9,7 +9,6 @@
+         text = path.read_text(encoding="utf-8")
+     except OSError as exc:
+         raise SchemaPolicyError(
+-            "CJV-R01-SCHEMA-READ",
+             "$",
+             f"schema could not be read: {exc.__class__.__name__}",
+         ) from exc
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_24 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_24: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -10,7 +10,6 @@
+     except OSError as exc:
+         raise SchemaPolicyError(
+             "CJV-R01-SCHEMA-READ",
+-            "$",
+             f"schema could not be read: {exc.__class__.__name__}",
+         ) from exc
+     try:
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_25 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_25: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -11,8 +11,7 @@
+         raise SchemaPolicyError(
+             "CJV-R01-SCHEMA-READ",
+             "$",
+-            f"schema could not be read: {exc.__class__.__name__}",
+-        ) from exc
++            ) from exc
+     try:
+         schema = json.loads(text)
+     except (UnicodeError, json.JSONDecodeError) as exc:
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_26 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_26: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -9,7 +9,7 @@
+         text = path.read_text(encoding="utf-8")
+     except OSError as exc:
+         raise SchemaPolicyError(
+-            "CJV-R01-SCHEMA-READ",
++            "XXCJV-R01-SCHEMA-READXX",
+             "$",
+             f"schema could not be read: {exc.__class__.__name__}",
+         ) from exc
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_27 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_27: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -9,7 +9,7 @@
+         text = path.read_text(encoding="utf-8")
+     except OSError as exc:
+         raise SchemaPolicyError(
+-            "CJV-R01-SCHEMA-READ",
++            "cjv-r01-schema-read",
+             "$",
+             f"schema could not be read: {exc.__class__.__name__}",
+         ) from exc
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_28 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_28: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -10,7 +10,7 @@
+     except OSError as exc:
+         raise SchemaPolicyError(
+             "CJV-R01-SCHEMA-READ",
+-            "$",
++            "XX$XX",
+             f"schema could not be read: {exc.__class__.__name__}",
+         ) from exc
+     try:
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_29 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_29: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -14,7 +14,7 @@
+             f"schema could not be read: {exc.__class__.__name__}",
+         ) from exc
+     try:
+-        schema = json.loads(text)
++        schema = None
+     except (UnicodeError, json.JSONDecodeError) as exc:
+         detail = f"strict JSON parse failed: {exc.__class__.__name__}"
+         if isinstance(exc, json.JSONDecodeError):
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_30 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_30: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -14,7 +14,7 @@
+             f"schema could not be read: {exc.__class__.__name__}",
+         ) from exc
+     try:
+-        schema = json.loads(text)
++        schema = json.loads(None)
+     except (UnicodeError, json.JSONDecodeError) as exc:
+         detail = f"strict JSON parse failed: {exc.__class__.__name__}"
+         if isinstance(exc, json.JSONDecodeError):
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_31 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_31: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -16,7 +16,7 @@
+     try:
+         schema = json.loads(text)
+     except (UnicodeError, json.JSONDecodeError) as exc:
+-        detail = f"strict JSON parse failed: {exc.__class__.__name__}"
++        detail = None
+         if isinstance(exc, json.JSONDecodeError):
+             detail += f" at line {exc.lineno} column {exc.colno}"
+         raise SchemaPolicyError(
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_32 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_32: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -18,7 +18,7 @@
+     except (UnicodeError, json.JSONDecodeError) as exc:
+         detail = f"strict JSON parse failed: {exc.__class__.__name__}"
+         if isinstance(exc, json.JSONDecodeError):
+-            detail += f" at line {exc.lineno} column {exc.colno}"
++            detail = f" at line {exc.lineno} column {exc.colno}"
+         raise SchemaPolicyError(
+             "CJV-R01-STRICT-JSON",
+             "$",
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_33 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_33: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -18,7 +18,7 @@
+     except (UnicodeError, json.JSONDecodeError) as exc:
+         detail = f"strict JSON parse failed: {exc.__class__.__name__}"
+         if isinstance(exc, json.JSONDecodeError):
+-            detail += f" at line {exc.lineno} column {exc.colno}"
++            detail -= f" at line {exc.lineno} column {exc.colno}"
+         raise SchemaPolicyError(
+             "CJV-R01-STRICT-JSON",
+             "$",
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_34 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_34: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -20,7 +20,7 @@
+         if isinstance(exc, json.JSONDecodeError):
+             detail += f" at line {exc.lineno} column {exc.colno}"
+         raise SchemaPolicyError(
+-            "CJV-R01-STRICT-JSON",
++            None,
+             "$",
+             detail,
+         ) from exc
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_35 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_35: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -21,7 +21,7 @@
+             detail += f" at line {exc.lineno} column {exc.colno}"
+         raise SchemaPolicyError(
+             "CJV-R01-STRICT-JSON",
+-            "$",
++            None,
+             detail,
+         ) from exc
+     _walk(schema)
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_36 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_36: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -22,6 +22,6 @@
+         raise SchemaPolicyError(
+             "CJV-R01-STRICT-JSON",
+             "$",
+-            detail,
++            None,
+         ) from exc
+     _walk(schema)
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_37 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_37: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -20,7 +20,6 @@
+         if isinstance(exc, json.JSONDecodeError):
+             detail += f" at line {exc.lineno} column {exc.colno}"
+         raise SchemaPolicyError(
+-            "CJV-R01-STRICT-JSON",
+             "$",
+             detail,
+         ) from exc
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_38 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_38: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -21,7 +21,6 @@
+             detail += f" at line {exc.lineno} column {exc.colno}"
+         raise SchemaPolicyError(
+             "CJV-R01-STRICT-JSON",
+-            "$",
+             detail,
+         ) from exc
+     _walk(schema)
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_39 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_39: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -22,6 +22,5 @@
+         raise SchemaPolicyError(
+             "CJV-R01-STRICT-JSON",
+             "$",
+-            detail,
+-        ) from exc
++            ) from exc
+     _walk(schema)
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_40 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_40: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -20,7 +20,7 @@
+         if isinstance(exc, json.JSONDecodeError):
+             detail += f" at line {exc.lineno} column {exc.colno}"
+         raise SchemaPolicyError(
+-            "CJV-R01-STRICT-JSON",
++            "XXCJV-R01-STRICT-JSONXX",
+             "$",
+             detail,
+         ) from exc
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_41 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_41: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -20,7 +20,7 @@
+         if isinstance(exc, json.JSONDecodeError):
+             detail += f" at line {exc.lineno} column {exc.colno}"
+         raise SchemaPolicyError(
+-            "CJV-R01-STRICT-JSON",
++            "cjv-r01-strict-json",
+             "$",
+             detail,
+         ) from exc
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_42 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_42: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -21,7 +21,7 @@
+             detail += f" at line {exc.lineno} column {exc.colno}"
+         raise SchemaPolicyError(
+             "CJV-R01-STRICT-JSON",
+-            "$",
++            "XX$XX",
+             detail,
+         ) from exc
+     _walk(schema)
+=== target.inspect_schema_refs.x_inspect_schema__mutmut_43 ===
+# target.inspect_schema_refs.x_inspect_schema__mutmut_43: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -24,4 +24,4 @@
+             "$",
+             detail,
+         ) from exc
+-    _walk(schema)
++    _walk(None)
+=== target.inspect_schema_refs.x_main__mutmut_1 ===
+# target.inspect_schema_refs.x_main__mutmut_1: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,5 +1,5 @@
+ def main(argv: list[str]) -> int:
+-    if len(argv) != 2:
++    if len(argv) == 2:
+         print(
+             "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path",
+             file=sys.stderr,
+=== target.inspect_schema_refs.x_main__mutmut_2 ===
+# target.inspect_schema_refs.x_main__mutmut_2: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,5 +1,5 @@
+ def main(argv: list[str]) -> int:
+-    if len(argv) != 2:
++    if len(argv) != 3:
+         print(
+             "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path",
+             file=sys.stderr,
+=== target.inspect_schema_refs.x_main__mutmut_3 ===
+# target.inspect_schema_refs.x_main__mutmut_3: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,7 +1,7 @@
+ def main(argv: list[str]) -> int:
+     if len(argv) != 2:
+         print(
+-            "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path",
++            None,
+             file=sys.stderr,
+         )
+         return EXIT_POLICY_FAILURE
+=== target.inspect_schema_refs.x_main__mutmut_4 ===
+# target.inspect_schema_refs.x_main__mutmut_4: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -2,7 +2,7 @@
+     if len(argv) != 2:
+         print(
+             "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path",
+-            file=sys.stderr,
++            file=None,
+         )
+         return EXIT_POLICY_FAILURE
+     try:
+=== target.inspect_schema_refs.x_main__mutmut_5 ===
+# target.inspect_schema_refs.x_main__mutmut_5: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,7 +1,6 @@
+ def main(argv: list[str]) -> int:
+     if len(argv) != 2:
+         print(
+-            "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path",
+             file=sys.stderr,
+         )
+         return EXIT_POLICY_FAILURE
+=== target.inspect_schema_refs.x_main__mutmut_6 ===
+# target.inspect_schema_refs.x_main__mutmut_6: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -2,8 +2,7 @@
+     if len(argv) != 2:
+         print(
+             "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path",
+-            file=sys.stderr,
+-        )
++            )
+         return EXIT_POLICY_FAILURE
+     try:
+         inspect_schema(Path(argv[1]))
+=== target.inspect_schema_refs.x_main__mutmut_7 ===
+# target.inspect_schema_refs.x_main__mutmut_7: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,7 +1,7 @@
+ def main(argv: list[str]) -> int:
+     if len(argv) != 2:
+         print(
+-            "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path",
++            "XXschema reference policy: FAIL [CJV-R01-USAGE] expected one schema pathXX",
+             file=sys.stderr,
+         )
+         return EXIT_POLICY_FAILURE
+=== target.inspect_schema_refs.x_main__mutmut_8 ===
+# target.inspect_schema_refs.x_main__mutmut_8: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,7 +1,7 @@
+ def main(argv: list[str]) -> int:
+     if len(argv) != 2:
+         print(
+-            "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path",
++            "schema reference policy: fail [cjv-r01-usage] expected one schema path",
+             file=sys.stderr,
+         )
+         return EXIT_POLICY_FAILURE
+=== target.inspect_schema_refs.x_main__mutmut_9 ===
+# target.inspect_schema_refs.x_main__mutmut_9: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -1,7 +1,7 @@
+ def main(argv: list[str]) -> int:
+     if len(argv) != 2:
+         print(
+-            "schema reference policy: FAIL [CJV-R01-USAGE] expected one schema path",
++            "SCHEMA REFERENCE POLICY: FAIL [CJV-R01-USAGE] EXPECTED ONE SCHEMA PATH",
+             file=sys.stderr,
+         )
+         return EXIT_POLICY_FAILURE
+=== target.inspect_schema_refs.x_main__mutmut_10 ===
+# target.inspect_schema_refs.x_main__mutmut_10: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -6,7 +6,7 @@
+         )
+         return EXIT_POLICY_FAILURE
+     try:
+-        inspect_schema(Path(argv[1]))
++        inspect_schema(None)
+     except SchemaPolicyError as exc:
+         print(
+             f"schema reference policy: FAIL [{exc.code}] "
+=== target.inspect_schema_refs.x_main__mutmut_11 ===
+# target.inspect_schema_refs.x_main__mutmut_11: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -6,7 +6,7 @@
+         )
+         return EXIT_POLICY_FAILURE
+     try:
+-        inspect_schema(Path(argv[1]))
++        inspect_schema(Path(None))
+     except SchemaPolicyError as exc:
+         print(
+             f"schema reference policy: FAIL [{exc.code}] "
+=== target.inspect_schema_refs.x_main__mutmut_12 ===
+# target.inspect_schema_refs.x_main__mutmut_12: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -6,7 +6,7 @@
+         )
+         return EXIT_POLICY_FAILURE
+     try:
+-        inspect_schema(Path(argv[1]))
++        inspect_schema(Path(argv[2]))
+     except SchemaPolicyError as exc:
+         print(
+             f"schema reference policy: FAIL [{exc.code}] "
+=== target.inspect_schema_refs.x_main__mutmut_13 ===
+# target.inspect_schema_refs.x_main__mutmut_13: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -9,8 +9,7 @@
+         inspect_schema(Path(argv[1]))
+     except SchemaPolicyError as exc:
+         print(
+-            f"schema reference policy: FAIL [{exc.code}] "
+-            f"at {exc.location}: {exc.detail}",
++            None,
+             file=sys.stderr,
+         )
+         return EXIT_POLICY_FAILURE
+=== target.inspect_schema_refs.x_main__mutmut_14 ===
+# target.inspect_schema_refs.x_main__mutmut_14: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -11,7 +11,7 @@
+         print(
+             f"schema reference policy: FAIL [{exc.code}] "
+             f"at {exc.location}: {exc.detail}",
+-            file=sys.stderr,
++            file=None,
+         )
+         return EXIT_POLICY_FAILURE
+     print("schema reference policy: PASS")
+=== target.inspect_schema_refs.x_main__mutmut_15 ===
+# target.inspect_schema_refs.x_main__mutmut_15: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -9,8 +9,6 @@
+         inspect_schema(Path(argv[1]))
+     except SchemaPolicyError as exc:
+         print(
+-            f"schema reference policy: FAIL [{exc.code}] "
+-            f"at {exc.location}: {exc.detail}",
+             file=sys.stderr,
+         )
+         return EXIT_POLICY_FAILURE
+=== target.inspect_schema_refs.x_main__mutmut_16 ===
+# target.inspect_schema_refs.x_main__mutmut_16: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -11,8 +11,7 @@
+         print(
+             f"schema reference policy: FAIL [{exc.code}] "
+             f"at {exc.location}: {exc.detail}",
+-            file=sys.stderr,
+-        )
++            )
+         return EXIT_POLICY_FAILURE
+     print("schema reference policy: PASS")
+     return 0
+=== target.inspect_schema_refs.x_main__mutmut_17 ===
+# target.inspect_schema_refs.x_main__mutmut_17: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -14,5 +14,5 @@
+             file=sys.stderr,
+         )
+         return EXIT_POLICY_FAILURE
+-    print("schema reference policy: PASS")
++    print(None)
+     return 0
+=== target.inspect_schema_refs.x_main__mutmut_18 ===
+# target.inspect_schema_refs.x_main__mutmut_18: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -14,5 +14,5 @@
+             file=sys.stderr,
+         )
+         return EXIT_POLICY_FAILURE
+-    print("schema reference policy: PASS")
++    print("XXschema reference policy: PASSXX")
+     return 0
+=== target.inspect_schema_refs.x_main__mutmut_19 ===
+# target.inspect_schema_refs.x_main__mutmut_19: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -14,5 +14,5 @@
+             file=sys.stderr,
+         )
+         return EXIT_POLICY_FAILURE
+-    print("schema reference policy: PASS")
++    print("schema reference policy: pass")
+     return 0
+=== target.inspect_schema_refs.x_main__mutmut_20 ===
+# target.inspect_schema_refs.x_main__mutmut_20: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -14,5 +14,5 @@
+             file=sys.stderr,
+         )
+         return EXIT_POLICY_FAILURE
+-    print("schema reference policy: PASS")
++    print("SCHEMA REFERENCE POLICY: PASS")
+     return 0
+=== target.inspect_schema_refs.x_main__mutmut_21 ===
+# target.inspect_schema_refs.x_main__mutmut_21: killed
+--- target/inspect_schema_refs.py
++++ target/inspect_schema_refs.py
+@@ -15,4 +15,4 @@
+         )
+         return EXIT_POLICY_FAILURE
+     print("schema reference policy: PASS")
+-    return 0
++    return 1
