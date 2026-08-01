@@ -65,6 +65,15 @@ entries:
     cache_dirs: []
     failure_surfacing: next execution
     deletion_rule: protected
+  - path: 08_os/开发入口与单窗口任务规范_v1.md
+    purpose: 新窗口最小加载、一个窗口一个任务、文件放置、registry、run、测试、审核与接入纪律
+    loader: Human and authorized development executors
+    loader_class: external_tool_convention
+    discovery: referenced from 08_os/README.md
+    evidence: 08_os/README.md
+    cache_dirs: []
+    failure_surfacing: next 08_os development task or independent review
+    deletion_rule: protected
   - path: 08_os/_dev/开发产物与文件隔离规范_v1.md
     purpose: 活动开发文件分区规范
     loader: developers and boot manifest
