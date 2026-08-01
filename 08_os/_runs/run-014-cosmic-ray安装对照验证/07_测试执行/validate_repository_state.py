@@ -204,7 +204,7 @@ def main() -> int:
         check(cosmic.get(key) == expected, f"registry {key} mismatch")
 
     check(run_yml["tool"]["status"] == "verified_on_demand", "run.yml status mismatch")
-    check(run_yml["status"] == "candidate_ready_for_independent_review", "run status mismatch")
+    check(run_yml["status"] == "integrated_and_verified_on_demand", "run status mismatch")
     wrapper_mode = git(repo, "ls-files", "-s", "08_os/06_execution/tools/cosmic_ray/invoke.sh")
     check(wrapper_mode.startswith("100755 "), "wrapper is not executable in Git")
 
