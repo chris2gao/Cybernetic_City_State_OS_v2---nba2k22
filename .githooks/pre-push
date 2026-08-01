@@ -1,0 +1,63 @@
+#!/bin/sh
+# City-state pre-push guard.
+#
+# Enforces at the tool layer what the protocol has so far only stated in prose:
+#   - core history is never rewritten (every domain fork shares this ancestry;
+#     one rewrite makes all of them unmergeable, and it cannot be repaired after)
+#   - master moves only after independent audit and human authorization
+#   - remote branches are not deleted by an agent
+#
+# Enable once per clone:   git config core.hooksPath .githooks
+#
+# KNOWN LIMIT, stated plainly: `git push --no-verify` skips this hook entirely.
+# This is a guard, not an access boundary. It stops the accident and the
+# unthinking habit. It does not stop a caller that has decided to go around it.
+
+Z40=0000000000000000000000000000000000000000
+fail=0
+
+say() { printf '%s\n' "$*" >&2; }
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+	[ -z "$local_ref" ] && continue
+
+	if [ "$local_sha" = "$Z40" ]; then
+		say "BLOCKED  deleting remote ref: $remote_ref"
+		say "         Deletion is a human decision."
+		fail=1
+		continue
+	fi
+
+	case "$remote_ref" in
+	refs/heads/master | refs/heads/main)
+		if [ "$CITYSTATE_ALLOW_MASTER" != "1" ]; then
+			say "BLOCKED  push to $remote_ref without authorization."
+			say "         master moves only after independent audit and a human gate."
+			say "         If that has happened, re-run as:"
+			say "             CITYSTATE_ALLOW_MASTER=1 git push origin master"
+			fail=1
+			continue
+		fi
+		say "NOTE     master push authorized via CITYSTATE_ALLOW_MASTER=1"
+		;;
+	esac
+
+	if [ "$remote_sha" != "$Z40" ]; then
+		if ! git merge-base --is-ancestor "$remote_sha" "$local_sha" 2>/dev/null; then
+			say "BLOCKED  non-fast-forward push to $remote_ref"
+			say "         remote $remote_sha is not an ancestor of local $local_sha."
+			say "         This rewrites published history. Every domain fork shares"
+			say "         this ancestry and a rewrite cannot be undone for them."
+			say "         There is no override for this rule. Add a commit instead."
+			fail=1
+			continue
+		fi
+	fi
+done
+
+if [ "$fail" -ne 0 ]; then
+	say "city-state pre-push guard refused this push. Nothing was sent."
+	exit 1
+fi
+
+exit 0
