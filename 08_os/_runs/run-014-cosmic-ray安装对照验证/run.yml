@@ -12,6 +12,7 @@ tool:
   version: 8.4.6
   runtime: Python 3.14.4
   test_runner: pytest 9.1.1
+  validation_parser: PyYAML 6.0.3
   installation_manager: dedicated_virtualenv_pip
   status: verified_on_demand
   mount: on_demand_wsl_cli
@@ -51,7 +52,10 @@ validation:
   temporary_cleanup: passed
   no_resident_process: passed
   canonical_source_unchanged: passed
-  final_regression: pending
+  final_regression: passed_with_baseline_equivalence
+  candidate_caused_full_pytest_failures: 0
+  ai_pytest: 45_passed_22_subtests_passed
+  historical_run_013_scope_validator: not_applicable_to_later_approved_tool_paths
 measurement:
   weak_cosmic_ray: 48_killed_20_survived_of_68
   weak_mutmut: 5_killed_5_survived_of_10
