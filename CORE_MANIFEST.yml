@@ -76,6 +76,13 @@ core_owned_paths:
   - ".ai/communication_compliance/"
   - ".ai/role_memory/"
   - ".ai/token_profile/"
+  # The push guard is core-owned for the same reason core history is never
+  # rewritten: the rule it enforces is shared. A domain that could edit its own
+  # copy could weaken its own guard, and the damage from a rewrite lands on every
+  # domain at once rather than only on the one that did it. Note that the hook
+  # files travel with a merge but `core.hooksPath` is local config and does not,
+  # so each clone still has to enable it once - see .githooks/README.md.
+  - ".githooks/"
 
 # Paths every domain owns for itself. Core never ships content here; each domain
 # repository fills them with its own material, so a core merge must not touch them.
