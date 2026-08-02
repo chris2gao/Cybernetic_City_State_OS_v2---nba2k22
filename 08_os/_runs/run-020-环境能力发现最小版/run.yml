@@ -17,9 +17,11 @@ outputs:
   registry: 08_os/05_registry/environment_capability_v1.yml
   measured_receipt: 08_os/_runs/run-020-环境能力发现最小版/08_结论/环境能力receipt_实测_v1.yml
   results: 08_os/_runs/run-020-环境能力发现最小版/07_测试执行/results.json
+  fix_round1_results: 08_os/_runs/run-020-环境能力发现最小版/07_测试执行/fix_round1_results.json
 records:
   task_input: 08_os/_runs/run-020-环境能力发现最小版/01_任务输入/任务包摘要.md
   baseline: 08_os/_runs/run-020-环境能力发现最小版/07_测试执行/基线复现.md
+  fix_round1_baseline: 08_os/_runs/run-020-环境能力发现最小版/07_测试执行/第1轮修正基线.md
   independent_checker: 08_os/_runs/run-020-环境能力发现最小版/07_测试执行/independent_receipt_check.py
 validation:
   positive_cases_required: 1
@@ -36,6 +38,20 @@ validation:
   out_of_scope_paths: 0
   powershell_boolean_repair_attempts: 2
   powershell_boolean_repair_note: literals were corrected in the ephemeral collector and validation harness before final validation
+  correction_round_1:
+    rejected_head: f4c76e4e49a148d290e4476b2c2c03da03707bc9
+    findings: [B1_observed_top_level_null, B2_checker_rule_independence]
+    case_count: 20
+    agreed_reject_count: 10
+    checker_only_count: 8
+    pass_count: 2
+    nested_null_remains_legal: true
+    n1_schema_expansion_performed: false
+    out_of_scope_receipt_modified: false
+    final_check_count: 9
+    correction_changed_path_count: 10
+    correction_out_of_scope_paths: 0
+    artifact_hygiene_repair_attempts: 1
 lifecycle:
   runtime_collection_script: deleted_before_final_validation
   runtime_negative_instances: deleted_after_digest

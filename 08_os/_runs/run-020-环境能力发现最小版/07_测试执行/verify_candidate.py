@@ -9,12 +9,13 @@ from typing import Any
 import yaml
 
 
-BASE = "492fa24abf9ae9b41d3ccdc86c012fb66f149a36"
+ORIGINAL_BASE = "492fa24abf9ae9b41d3ccdc86c012fb66f149a36"
+CORRECTION_BASE = "f4c76e4e49a148d290e4476b2c2c03da03707bc9"
 RUN_PREFIX = "08_os/_runs/run-020-环境能力发现最小版/"
-MECHANISM_PREFIX = "08_os/03_mechanisms/environment_capability/"
 EXACT_ALLOWED = {
-    "08_os/03_mechanisms/README.md",
-    "08_os/05_registry/environment_capability_v1.yml",
+    "08_os/03_mechanisms/environment_capability/实现/环境能力receipt_schema_v1.yml",
+    "08_os/03_mechanisms/environment_capability/实现/正例与负例说明_v1.md",
+    "08_os/_runs/run-020-环境能力发现最小版/run.yml",
 }
 
 
@@ -27,7 +28,7 @@ def decode_nul_paths(raw: bytes) -> list[str]:
 
 
 def allowed(path: str) -> bool:
-    return path in EXACT_ALLOWED or path.startswith(RUN_PREFIX) or path.startswith(MECHANISM_PREFIX)
+    return path in EXACT_ALLOWED or path.startswith(f"{RUN_PREFIX}07_测试执行/")
 
 
 def main() -> int:
@@ -44,10 +45,16 @@ def main() -> int:
     )
     checks["schema_matrix"] = {"exit_code": schema_matrix.returncode, "passed": schema_matrix.returncode == 0}
 
+    fix_round1 = run(
+        repo,
+        ["python", f"{RUN_PREFIX}07_测试执行/fix_round1_validation.py"],
+    )
+    checks["fix_round1_matrix"] = {"exit_code": fix_round1.returncode, "passed": fix_round1.returncode == 0}
+
     receipt_ref = f"{RUN_PREFIX}08_结论/环境能力receipt_实测_v1.yml"
     independent = run(
         repo,
-        ["python", f"{RUN_PREFIX}07_测试执行/independent_receipt_check.py", receipt_ref],
+        ["python", f"{RUN_PREFIX}07_测试执行/independent_receipt_check.py", receipt_ref, "--schema-exit", "0"],
     )
     checks["independent_receipt"] = {
         "exit_code": independent.returncode,
@@ -64,7 +71,7 @@ def main() -> int:
             "--mode",
             "changed",
             "--base",
-            BASE,
+            ORIGINAL_BASE,
         ],
     )
     personal_summary: dict[str, Any] = {}
@@ -82,7 +89,7 @@ def main() -> int:
     diff_check = run(repo, ["git", "diff", "--check"])
     checks["git_diff_check"] = {"exit_code": diff_check.returncode, "passed": diff_check.returncode == 0}
 
-    changed = run(repo, ["git", "diff", "--name-only", "-z", BASE])
+    changed = run(repo, ["git", "diff", "--name-only", "-z", CORRECTION_BASE])
     untracked = run(repo, ["git", "ls-files", "--others", "--exclude-standard", "-z"])
     changed_paths = sorted(set(decode_nul_paths(changed.stdout) + decode_nul_paths(untracked.stdout)))
     out_of_scope = [path for path in changed_paths if not allowed(path)]
@@ -92,12 +99,12 @@ def main() -> int:
         "out_of_scope_paths": out_of_scope,
     }
 
-    readme_diff = run(repo, ["git", "diff", "--unified=0", BASE, "--", "08_os/03_mechanisms/README.md"])
+    readme_diff = run(repo, ["git", "diff", "--unified=0", CORRECTION_BASE, "--", "08_os/03_mechanisms/README.md"])
     diff_lines = readme_diff.stdout.decode("utf-8", errors="replace").splitlines()
     additions = [line for line in diff_lines if line.startswith("+") and not line.startswith("+++")]
     removals = [line for line in diff_lines if line.startswith("-") and not line.startswith("---")]
     checks["mechanism_navigation_delta"] = {
-        "passed": readme_diff.returncode == 0 and len(additions) == 1 and not removals,
+        "passed": readme_diff.returncode == 0 and not additions and not removals,
         "added_lines": len(additions),
         "removed_lines": len(removals),
     }
@@ -139,7 +146,7 @@ def main() -> int:
     all_passed = all(bool(item.get("passed")) for item in checks.values())
     result = {
         "schema_version": "environment_capability_final_validation.v1",
-        "base": BASE,
+        "base": CORRECTION_BASE,
         "checks": checks,
         "changed_paths": changed_paths,
         "summary": {"all_passed": all_passed},

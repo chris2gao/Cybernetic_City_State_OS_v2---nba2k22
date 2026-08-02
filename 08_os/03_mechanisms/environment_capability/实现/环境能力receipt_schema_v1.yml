@@ -129,7 +129,12 @@
       "properties": {
         "id": {"$ref": "#/$defs/identifier"},
         "status": {"enum": ["observed", "not_observable"]},
-        "value": {"$ref": "#/$defs/safeValue"},
+        "value": {
+          "allOf": [
+            {"$ref": "#/$defs/safeValue"},
+            {"not": {"type": "null"}}
+          ]
+        },
         "reason": {"$ref": "#/$defs/safeString"},
         "limitations": {
           "type": "array",
