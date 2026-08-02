@@ -1,0 +1,61 @@
+schema_version: citystate.run.v1
+run_id: run-017-引用图事实盘点分类
+task_id: 08os-reference-graph-classification-001
+revision_task_id: 08os-reference-graph-classification-selfcontained-001
+status: candidate_ready_for_independent_review
+ownership: core
+branch: chatgpt/reference-graph-classification-001
+execution_base_sha: 07cdc1c76b38bc5a65dbcfb72376f1b6008b5626
+publication_base_sha: c0492cd2bc9c7d4a53ed556f7029adfed9c1f94d
+task_packet: agent/reference-inventory-enumeration-001:08_os/_runs/run-016-引用图事实盘点枚举/06_执行/T06b_分类派单.md
+revision_task_packet: chatgpt/reference-graph-classification-001:08_os/_runs/run-017-引用图事实盘点分类/06_执行/T06c_自足化派单.md
+inputs:
+- path: 08_os/_runs/run-016-引用图事实盘点枚举/06_执行/path_references.csv
+  commit: cca682a
+  blob_sha: 2b2e57f11e992af63acbf5bb0176e2768cd19529
+  rows_excluding_header: 391
+- path: 08_os/_runs/run-016-引用图事实盘点枚举/06_执行/枚举结果_v1.md
+  commit: cca682a
+- path: 08_os/_runs/run-017-引用图事实盘点分类/06_执行/path_reference_classification.csv
+  reviewed_blob_sha: 483afbfd389fa3aa6eed05b479e8af86573bc4a1
+outputs:
+- 08_os/_runs/run-017-引用图事实盘点分类/06_执行/path_reference_classification.csv
+- 08_os/_runs/run-017-引用图事实盘点分类/06_执行/分类结论_v1.md
+- 08_os/_runs/run-017-引用图事实盘点分类/06_执行/T06c_执行结果.md
+validation:
+  rows_classified: 391
+  classification_counts:
+    normative_definition: 277
+    observed_instance: 86
+    explanatory_example: 10
+    template_placeholder: 0
+    run_fixture: 18
+    unresolved_hypothesis: 0
+  confirmed_failures: 0
+  suspected_failures: 0
+  pending_item_adjudicated: true
+  fixture_ready_rows: 362
+  fixture_readiness_counts:
+    valid_reference_or_policy: 349
+    not_ready: 29
+    extractor_regression: 9
+    negative_sentinel: 2
+    executable_probe: 2
+  out_of_scope_paths: 0
+  implemented_validator_or_schema: false
+  selfcontained_schema_columns: 7
+  input_row_range: 1..391
+  judgment_columns_preserved: true
+  source_columns_preserved: true
+  row_278_field_count: 7
+  row_278_target: ".githooks/install.ps1,"
+  publication_transport: github_api_connector
+  hook_guard: not_applicable_transport
+  replacement_gate: passed
+  expected_remote_head: dee47c0165926e99d909a3b0eab86d57c0dbc4ad
+  resulting_remote_head: 297d2b432b3ad8e8818537a8135d9d0207029f16
+  compare_and_swap: passed
+  fast_forward_verified: true
+  force_used: false
+  receipt_scope: content_publication_before_run_receipt_commit
+next_owner: foreground_independent_review
