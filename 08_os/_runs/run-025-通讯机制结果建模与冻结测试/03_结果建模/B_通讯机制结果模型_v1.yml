@@ -1,0 +1,359 @@
+承重命题: >-
+  当本 B 的 provider-neutral 事件、状态、授权、传输、兼容、恢复与分层权威方法全部实现并通过
+  冻结测试时，A v2 的 R1–R14 同时满足；任一 kill criterion 失败则只能得到 adapter_only，
+  不能切换通讯 canonical。
+
+主张:
+  - 主张: "[I1][保留] machine pointer 与 Human 内容继续结构隔离。"
+    依据: [E-004, E-005, E-016]
+    类型: 设计选择
+    推理: 三通道是 R2 的直接结构锚；旧实际 dispatch 的错误 brief 说明隔离后仍需精确绑定。
+    备选: [把 Human prose 塞入 pointer；会破坏机器解析并扩大短消息]
+  - 主张: "[I2][保留] 长任务、报告、日志与证据只通过耐久引用传递。"
+    依据: [E-004, E-027]
+    类型: 设计选择
+    推理: durable-first 发布顺序避免聊天成为唯一事实源，并支持独立审核重放。
+    备选: [在聊天复制正文；UI 不可达时会丢失事实且不能绑定 immutable head]
+  - 主张: "[I3][保留] 状态新鲜度永远不等于动作授权。"
+    依据: [E-009, E-018]
+    类型: 设计选择
+    推理: 当前 head、身份、验证和授权是四个不可替代边界。
+    备选: [以最新 head 或 human_gate 文本授权；会让可重放 payload 自行越权]
+  - 主张: "[I4][改造] event、actor origin 与 Human authority 保持分离并改用 provider-neutral 绑定。"
+    依据: [E-003, E-009, E-024]
+    类型: 设计选择
+    推理: 分离语义保留，但旧 provider-branded wire 和 repository-only gate 不能冒充 live host。
+    备选: [原样复制旧命名与 repository gate；无法证明 live actor 或原子授权消费]
+  - 主张: "[I5][保留] transition 使用 immutable evidence、外部 current-head 证据与 expected-head CAS。"
+    依据: [E-010, E-011, E-014]
+    类型: 设计选择
+    推理: immutable 历史只证明过去；current-head anchor 与 CAS 共同拒绝陈旧或并发写。
+    备选: [只校验旧 STATE 摘要；旧事件重放仍可能第二次推进]
+  - 主张: "[I6][保留] same-context fast path 只读当前状态与所有适用非空引用。"
+    依据: [E-006, E-022]
+    类型: 设计选择
+    推理: 该路径减少重复加载但不减少决定性证据；触发条件变化即退出 fast path。
+    备选: [每次全量初始化；成本高, 隐藏协议漂移后仍走 fast path；状态不可靠]
+  - 主张: "[I7][保留] 缺失、陈旧、冲突、未知或不可解引用输入一律 fail closed。"
+    依据: [E-004, E-010, E-012]
+    类型: 设计选择
+    推理: 负例与 drift ledger 已证明猜测恢复会扩大错误声明。
+    备选: [从文件名或旧聊天补齐；不能形成可审计事实]
+  - 主张: "[I8][保留] validator 只证明 eligibility，不授权也不执行状态改变。"
+    依据: [E-009, E-012, E-024]
+    类型: 设计选择
+    推理: 把验证结果当授权是旧 drift ledger 的首要复发风险。
+    备选: [validator pass 自动 transition；把执行方产物变成自授权]
+
+  - 主张: "[C17][设计落地] 兼容观察期只冻结计数维度，不在 B 给数值。"
+    依据: [E-022, E-023, E-027]
+    类型: 设计选择
+    推理: 当前没有匹配新入口记录，数值会是估计而非实测。
+    备选: [预填观察时长或样本阈值；违反 A v2 并制造不可比较结论]
+  - 主张: "[C18][设计落地] 当前 shell 与 git 凭据只记为现状信任根，不外推为目标授权。"
+    依据: [E-017, E-018, E-024]
+    类型: 设计选择
+    推理: 当前能力事实只能证明可执行 local Git，不能证明 action-bound host injection。
+    备选: [把已认证 git 凭据视为 C2 授权；身份能力与动作授权混同]
+  - 主张: "[C19][设计落地] CITYSTATE_ALLOW_MASTER 只作为防误操作信号。"
+    依据: [E-018, E-024]
+    类型: 设计选择
+    推理: 该环境值既不绑定 event/action，也可重复设置，不能成为 action-bound authorization。
+    备选: [环境值存在即授权；可被重放并越过 Human host]
+  - 主张: "[C20][设计落地] 目标授权由宿主注入并对具体动作与事件一次性原子消费。"
+    依据: [E-009, E-011, E-024]
+    类型: 设计选择
+    推理: replay store 必须独立于 payload，消费失败或重复时 transition fail closed。
+    备选: [payload 携带 reusable approval；旧 event 可复用授权]
+  - 主张: "[C21][设计落地] trusted Human host 的实际强度评估留在 P4b。"
+    依据: [E-018, E-024]
+    类型: 设计选择
+    推理: P1 只定义接口与 fail-closed 边界，不宣称 live host 已认证或加固。
+    备选: [在 P1 以 schema 存在宣告 host security 完成；声明宽于证据]
+  - 主张: "[C22][设计落地] rollback 保证已 push commit 零丢失、允许丢未提交工作区并续跑在途任务。"
+    依据: [E-013, E-025, E-027]
+    类型: 设计选择
+    推理: 恢复点以 remote commit、耐久 event 与 refs 为锚；无新 canonical 时不能宣告已实测。
+    备选: [清理远端历史换取回滚, 保证未提交内容零丢失；前者破坏历史，后者无法可靠承诺]
+  - 主张: "[C23][设计落地] 观察结论只提出版本绑定约束，领域仓决定载体留 P5 Human gate。"
+    依据: [E-009, E-013, E-018]
+    类型: 设计选择
+    推理: 通讯切换门与默认活动/建域门必须是不同 evidence 和不同授权事件。
+    备选: [P1 结论直接授权建立领域仓；跨越 P5 与 Human gate]
+
+  - 主张: "[D1] 新 canonical 采用 append-only event、唯一 reducer 与显式 transition graph。"
+    依据: [E-008, E-014, E-015]
+    类型: 设计选择
+    推理: append-only producer 加唯一 reducer 可保留并发输入而不形成多个状态写入权威。
+    备选: [共享 mutable STATE 多 writer；覆盖与重复 transition 难以显露]
+  - 主张: "[D2] pointer、Human brief、状态与内容对象分别版本化并用 immutable ref 连接。"
+    依据: [E-004, E-005, E-010, E-013]
+    类型: 设计选择
+    推理: 分对象版本化让短指针保持固定，同时精确证明长内容与 release 绑定。
+    备选: [单一大消息对象；解析、隐私与重放边界耦合]
+  - 主张: "[D3] P1 传输矩阵只保留 local_git 与 github_cli，connector 当前排除。"
+    依据: [E-017, E-018, E-024]
+    类型: 设计选择
+    推理: connector 当前 unavailable，规范等价不能替代生产正负例。
+    备选: [三传输一律可写；会把未实测 connector 误列为 canonical]
+  - 主张: "[D4] 通讯 canonical 按方案 v2 的 mechanism、boot、loader 与 registry 落点设计。"
+    依据: [E-002, E-013, E-027]
+    类型: 设计选择
+    推理: area-first 布局分离定义、启动、加载与发现；本任务只设计不创建 canonical 目录。
+    备选: [继续把 loader 放 boot 或复制旧 .ai 路径；形成第二套布局权威]
+  - 主张: "[D5] compatibility adapter 只转换或读取，切换和 rollback 始终保持单一写入权威。"
+    依据: [E-007, E-014, E-025]
+    类型: 设计选择
+    推理: adapter 双写会破坏 R9；回滚必须通过版本绑定切换事件恢复旧 writer。
+    备选: [兼容期新旧双写；无法证明唯一状态]
+  - 主张: "[D6] core 窗口覆盖以可重跑 host/worktree inventory 为基础，未知项保持 not_observable。"
+    依据: [E-019, E-020, E-021, E-027]
+    类型: 设计选择
+    推理: Git 可给 path/worktree universe，实际 client session 与迁移顺序必须由宿主事实补齐。
+    备选: [一次人工清点或从 Git 推断 UI 窗口；不可复算且会伪造覆盖]
+  - 主张: "[D7] kill criterion 失败时确定性降级为 adapter_only。"
+    依据: [E-012, E-025, E-027]
+    类型: 设计选择
+    推理: 状态唯一、防重放或真实 rollback 不能证明时不得用文档完成度替代切换证据。
+    备选: [带未知高风险直接切换；违反 R14]
+  - 主张: "[D8] R8 现在冻结旧入口测量方法与旧基线，新入口测量留阶段六，判定留阶段七。"
+    依据: [E-022, E-023, E-027]
+    类型: 设计选择
+    推理: 在新入口不存在时比较成本是循环依赖；拆开采样时点才能保留同口径。
+    备选: [现在编造新入口记录或写死阈值；不能由实际测量支持]
+  - 主张: "[D9] 通讯切换不改变 Token/资源或 workflow canonical。"
+    依据: [E-002, E-022, E-027]
+    类型: 设计选择
+    推理: P1 只替换通讯层；跨层继承会绕过 P2/P3 自己的设计和验证门。
+    备选: [随通讯一并切换资源和 workflow；扩大 P1 权限]
+  - 主张: "[D10] release 分离协议语义 head、中性源基线与活动状态 head。"
+    依据: [E-007, E-013, E-026]
+    类型: 设计选择
+    推理: 三者合并会让活动 task snapshot 或 neutral base 冒充 canonical semantics。
+    备选: [用单一 latest branch 代表全部版本；mutable head 不能独立证明语义]
+
+实现方法:
+  - ID: M-CHANNEL-01
+    方法: >-
+      定义 machine_pointer、human_operational_ref、durable_human_brief_ref 三个互斥载体；pointer
+      中禁止 prose，不能安全分离的界面必须 pointer-only 且 brief_ref 非空。
+    类型: 配置
+    依据: [E-004, E-005, E-016]
+    实现哪条主张: "[I1][保留] machine pointer 与 Human 内容继续结构隔离。"
+  - ID: M-REF-01
+    方法: >-
+      writer 先发布 ordinary blob 与完整 commit/digest，再发布 pointer；receiver 对每个适用非空
+      ref 做 full-commit ordinary-blob 与 digest 校验，缺失只检查一次后 fail closed。
+    类型: 流程
+    依据: [E-004, E-010, E-027]
+    实现哪条主张: "[I2][保留] 长任务、报告、日志与证据只通过耐久引用传递。"
+  - ID: M-BOUNDARY-01
+    方法: >-
+      事件分别携带 state_head_ref、actor_origin_ref、validation_ref 与 authorization_ref；validator
+      明确拒绝以任一单项替代其他边界。
+    类型: 配置
+    依据: [E-009, E-018]
+    实现哪条主张: "[I3][保留] 状态新鲜度永远不等于动作授权。"
+  - ID: M-ACTOR-01
+    方法: >-
+      actor origin 对 event digest、stable role、task、transition、protocol release 与 provider
+      occupancy 做外部绑定；provider 只作描述，不进入授权判定。
+    类型: 配置
+    依据: [E-003, E-009, E-024]
+    实现哪条主张: "[I4][改造] event、actor origin 与 Human authority 保持分离并改用 provider-neutral 绑定。"
+  - ID: M-STATE-01
+    方法: >-
+      transition 输入为 immutable event/state blobs、外部 observed current head 和 expected-head；
+      reducer 只在 predecessor 唯一、event 未消费且 CAS 成功后发布新 state，随后远端回读。
+    类型: 流程
+    依据: [E-010, E-011, E-014]
+    实现哪条主张: "[I5][保留] transition 使用 immutable evidence、外部 current-head 证据与 expected-head CAS。"
+  - ID: M-BOOT-01
+    方法: >-
+      fast path 仅在 context/session identity 连续、protocol release 与 current head 未变时加载当前
+      state 和全部非空 refs；任一条件不确定即执行固定 bootstrap/profile/protocol/full-ref 初始化。
+    类型: 流程
+    依据: [E-006, E-022]
+    实现哪条主张: "[I6][保留] same-context fast path 只读当前状态与所有适用非空引用。"
+  - ID: M-FAILCLOSED-01
+    方法: >-
+      对缺字段、字段乱序、重复键、unknown event、mutable ref、digest mismatch、branch/head 冲突、
+      predecessor 不合法与重复消费返回结构化拒绝，且不写 state。
+    类型: 配置
+    依据: [E-004, E-010, E-012]
+    实现哪条主张: "[I7][保留] 缺失、陈旧、冲突、未知或不可解引用输入一律 fail closed。"
+  - ID: M-ELIGIBILITY-01
+    方法: >-
+      validator 输出仅含 eligibility 与拒绝原因；真实 actor authentication、authorization consumption、
+      transport CAS 和 state publication 由独立执行边界完成，任何 pass 字段都不可自证。
+    类型: 流程
+    依据: [E-009, E-012, E-024]
+    实现哪条主张: "[I8][保留] validator 只证明 eligibility，不授权也不执行状态改变。"
+  - ID: M-OBSERVATION-01
+    方法: >-
+      观察记录只声明 real_task_count、transport_type_coverage、dual_authority_event_count 与
+      rollback_exercise_count 四个计数维度；数值由阶段四/后续实测载体绑定，不写入 B。
+    类型: 文档
+    依据: [E-022, E-023, E-027]
+    实现哪条主张: "[C17][设计落地] 兼容观察期只冻结计数维度，不在 B 给数值。"
+  - ID: M-AUTH-CURRENT-01
+    方法: >-
+      capability receipt 单独记录当前 local shell 与 git principal 能力，并强制标记
+      current_state_only；不得把它转换成 target AuthorizationContext。
+    类型: 文档
+    依据: [E-017, E-018, E-024]
+    实现哪条主张: "[C18][设计落地] 当前 shell 与 git 凭据只记为现状信任根，不外推为目标授权。"
+  - ID: M-AUTH-GUARD-01
+    方法: >-
+      CITYSTATE_ALLOW_MASTER 只进入 accidental_guard_observed 字段；授权检查完全忽略该值，并要求
+      外部 authorization_ref 与一次性消费 receipt。
+    类型: 配置
+    依据: [E-018, E-024]
+    实现哪条主张: "[C19][设计落地] CITYSTATE_ALLOW_MASTER 只作为防误操作信号。"
+  - ID: M-AUTH-TARGET-01
+    方法: >-
+      ReplayStore 以 sha256(event_digest, action_id, actor_origin_digest, authorization_nonce) 为 key，
+      value 绑定 trusted_host_principal、expected_state_head、status=available|consumed 与
+      consumed_by_transition_digest。授权由宿主在 payload 外注入；执行器在 transport CAS 前以
+      原子 compare-and-set 将 available 消费为 consumed。消费后发布失败则授权烧毁并须重新签发，
+      不回滚为 available。local_git 与 github_cli 的等价判据均为同一外部注入、同一绑定 key、
+      同一原子消费语义、各自 expected-head CAS 与发布后回读；connector 当前不进入比较。
+    类型: 流程
+    依据: [E-009, E-011, E-024]
+    实现哪条主张: "[C20][设计落地] 目标授权由宿主注入并对具体动作与事件一次性原子消费。"
+  - ID: M-AUTH-P4B-01
+    方法: >-
+      P1 只冻结 host injection 接口、输入绑定、原子消费和 fail-closed 测试；host 防篡改、密钥保管、
+      principal assurance 与攻击强度统一标为 P4b_required，不产生完成声明。
+    类型: 文档
+    依据: [E-018, E-024]
+    实现哪条主张: "[C21][设计落地] trusted Human host 的实际强度评估留在 P4b。"
+  - ID: M-ROLLBACK-LOSS-01
+    方法: >-
+      恢复点绑定 last_verified_legacy_bootstrap_head、new_release_head、current_state_event、
+      task durable refs 与全部已 push commit。rollback 先以单一 cutover event 把 writer 权威交回
+      legacy，再从耐久 task/event 恢复；未提交工作区允许舍弃，remote commit 必须保持可达。
+      在途任务只有在 task_id、branch/head、last accepted event、next eligible transition 与全部 refs
+      可解且无已消费未落地授权时才可续跑；授权已消费但发布失败时从同一 event 重新签发新授权。
+    类型: 流程
+    依据: [E-013, E-025, E-027]
+    实现哪条主张: "[C22][设计落地] rollback 保证已 push commit 零丢失、允许丢未提交工作区并续跑在途任务。"
+  - ID: M-DOMAIN-BINDING-01
+    方法: >-
+      P1 observation_result 只记录不可变 result digest 与 P1 release；P5 的 create_domain 决定必须
+      由新的 Human event 显式引用该 digest，P1 event 自身不能授权建域。
+    类型: 配置
+    依据: [E-009, E-013, E-018]
+    实现哪条主张: "[C23][设计落地] 观察结论只提出版本绑定约束，领域仓决定载体留 P5 Human gate。"
+  - ID: M-EVENT-01
+    方法: >-
+      事件族包含 dispatch、completion、review、revision、blocked、conflict、human_gate 与 completed；
+      每个事件绑定 event_id、task_id、stable sender/recipient role、branch、source_head、predecessor、
+      status、evidence refs、actor origin 和适用 authorization。唯一 reducer 按 predecessor 与
+      expected state head 生成一次 transition，unknown/duplicate/out-of-order 均拒绝。
+    类型: 配置
+    依据: [E-008, E-014, E-015]
+    实现哪条主张: "[D1] 新 canonical 采用 append-only event、唯一 reducer 与显式 transition graph。"
+  - ID: M-POINTER-01
+    方法: >-
+      定义 provider-neutral dispatch_pointer 与 completion_pointer 固定字段顺序；二者仅承载
+      event/task/status/head 与 immutable refs。Human brief、long packet、report、validation 和
+      release binding 各自独立版本化，pointer 只引用其 ordinary blob digest。
+    类型: 配置
+    依据: [E-004, E-005, E-010, E-013]
+    实现哪条主张: "[D2] pointer、Human brief、状态与内容对象分别版本化并用 immutable ref 连接。"
+  - ID: M-TRANSPORT-01
+    方法: >-
+      local_git 证明已登记 hook 执行机会、精确 branch/head、普通 push 与回读；github_cli 证明
+      authenticated principal、expected-head non-force CAS、allowed paths 与 read-back。两者共享
+      event/auth/state 合同。github_api_connector mode=excluded；一旦 available=true 自动使排除失效，
+      必须补同合同正负例后重评。unknown fail closed。
+    类型: 配置
+    依据: [E-017, E-018, E-024]
+    实现哪条主张: "[D3] P1 传输矩阵只保留 local_git 与 github_cli，connector 当前排除。"
+  - ID: M-LAYOUT-01
+    方法: >-
+      机制正文设计落点 03_mechanisms/communication/，boot manifest 落点
+      02_boot/communication/，loader/adapter 落点 06_execution/mechanisms/communication/，
+      registry 落点 05_registry/communication_v1.yml；阶段六同一变更再创建并同步 registry。
+    类型: 文档
+    依据: [E-002, E-013, E-027]
+    实现哪条主张: "[D4] 通讯 canonical 按方案 v2 的 mechanism、boot、loader 与 registry 落点设计。"
+  - ID: M-COMPAT-01
+    方法: >-
+      compatibility adapter 在新 canonical 前只 shadow/read/translate；cutover event 后只有新 reducer
+      可写，旧入口只读。rollback event 以 expected-head CAS 把 writer 交回 last verified legacy
+      bootstrap，禁止任一时刻双写，adapter 永不自产生 transition。
+    类型: 流程
+    依据: [E-007, E-014, E-025]
+    实现哪条主张: "[D5] compatibility adapter 只转换或读取，切换和 rollback 始终保持单一写入权威。"
+  - ID: M-INVENTORY-01
+    方法: >-
+      阶段四使用可重跑 PowerShell 方法枚举 git worktree 的匿名 path digest、branch/head 与宿主
+      client process 分组；client session、window-repository 绑定、焦点/存活和迁移顺序不可观测时
+      明确 not_observable。T7 切换前必须重算并由宿主 session manifest 补齐，否则 R13 失败。
+    类型: 脚本
+    依据: [E-019, E-020, E-021, E-027]
+    实现哪条主张: "[D6] core 窗口覆盖以可重跑 host/worktree inventory 为基础，未知项保持 not_observable。"
+  - ID: M-KILL-01
+    方法: >-
+      gate 按 state_uniqueness、authorization_replay、real_rollback 三项独立证据判定；任一在修正预算
+      后仍未证明，release status 固定为 adapter_only，writer 保持 legacy，全部 core 窗口不切换。
+    类型: 配置
+    依据: [E-012, E-025, E-027]
+    实现哪条主张: "[D7] kill criterion 失败时确定性降级为 adapter_only。"
+  - ID: M-TOKEN-01
+    方法: >-
+      当前收集同 task_type、scale、acceptance 的旧入口 token_profile_run.v1 记录；不可观测 token
+      指标保持 null。阶段六以同一测量脚本/匹配维度收集新入口记录，冻结测试只要求执行匹配测量并
+      输出实际比较，不写成本数值阈值；R8 是否满足由阶段七独立判断。
+    类型: 流程
+    依据: [E-022, E-023, E-027]
+    实现哪条主张: "[D8] R8 现在冻结旧入口测量方法与旧基线，新入口测量留阶段六，判定留阶段七。"
+  - ID: M-LAYER-01
+    方法: >-
+      communication release manifest 只改 communication canonical ref；token_resource_ref 必须继续
+      指向 .ai/TOKEN_USAGE_PROFILE.md，workflow_ref 必须继续指向 01_workflow 既有规格，且新 OS
+      默认活动、旧系统退役与建域授权字段保持 absent。
+    类型: 配置
+    依据: [E-002, E-022, E-027]
+    实现哪条主张: "[D9] 通讯切换不改变 Token/资源或 workflow canonical。"
+  - ID: M-RELEASE-01
+    方法: >-
+      release binding 分别记录 protocol_semantics_head、neutral_source_base_head 与 active_state_head；
+      semantics 先发布，binding-only child 再绑定 immutable head，活动任务只能在独立 state ref，
+      不能写入 neutral source baseline。
+    类型: 配置
+    依据: [E-007, E-013, E-026]
+    实现哪条主张: "[D10] release 分离协议语义 head、中性源基线与活动状态 head。"
+
+候选与淘汰:
+  - 候选: append-only event + immutable refs + 单一 reducer + transport adapter
+    状态: 采纳
+    淘汰依据: []
+  - 候选: 共享 mutable mailbox 作为新旧入口双写 canonical
+    状态: 淘汰
+    淘汰依据: [E-007, E-014, E-026]
+  - 候选: 把旧 .ai 通讯栈原样复制到 08_os
+    状态: 淘汰
+    淘汰依据: [E-002, E-012, E-021, E-024]
+  - 候选: 以 live gateway 或外部消息队列直接替代 Git 证据
+    状态: 淘汰
+    淘汰依据: [E-014, E-017, E-024]
+
+未被证据覆盖的部分:
+  - 部分: trusted Human host 的生产身份强度与防篡改实现
+    为何无依据: 当前只有 repository schema/fixtures，live host verifier 与密钥边界留 P4b。
+    风险: 高
+  - 部分: GitHub API connector 的生产 CAS/read-back/actor binding 行为
+    为何无依据: run-020 实测 connector unavailable，本 B 将其排除并设置自动失效条件。
+    风险: 高
+  - 部分: 当前全部 UI client session 与其 repository/window 绑定
+    为何无依据: local_git shell 只能观察 worktree 与 process 分组，session manifest 当前不可观测。
+    风险: 中
+  - 部分: 新入口 Token 成本与旧入口的实际比较
+    为何无依据: 新入口到阶段六才存在；本任务只冻结测量方法和旧入口记录。
+    风险: 中
+  - 部分: 从新 canonical 回旧 bootstrap 的真实执行结果
+    为何无依据: 新 canonical 尚未实现；B 只冻结恢复点、损失边界与续跑判定。
+    风险: 高
