@@ -1,0 +1,31 @@
+run_id: run-024-通讯机制信息收集
+task_id: os-v2-communication-evidence-collection-001
+parent_program: P1 通讯机制
+stage: 02_信息收集与提炼
+base_sha: a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
+branch: dev/os-v2-communication-evidence-collection-001
+ownership: core-owned
+purpose: >-
+  按证据包 schema v1 收集和提炼新通讯机制的内部证据，判定旧 .ai 通讯能力的保留、改造、
+  拒绝或待验证状态，并形成可复算的 core 窗口与任务类型枚举。
+outputs:
+  - 02_信息收集与提炼/evidence/
+  - 06_执行/enumerate_core_task_types.py
+  - 07_测试执行/validate_evidence_package.py
+validation:
+  - evidence package schema and task-specific completeness checks
+  - deterministic core task-type enumeration rerun
+  - personal-path changed-mode validator
+  - git diff --check
+  - exact allowlist comparison
+lifecycle: candidate_ready_for_independent_review
+prohibitions:
+  - no_result_modeling_B
+  - no_protocol_implementation
+  - no_changes_to_ai_stack
+  - no_schema_creation
+  - no_bootstrap_cutover
+  - no_master_modification
+  - no_force_push
+  - no_rebase
+  - no_squash

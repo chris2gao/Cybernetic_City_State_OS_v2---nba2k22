@@ -1,0 +1,304 @@
+{
+  "schema_version": "run024.core_task_type_enumeration.v1",
+  "base_commit": "a66ee671e47f3a90f3a108eb7531c7c84b0f9d37",
+  "method": {
+    "finite_universe": "CORE_MANIFEST.yml core_owned_paths at base commit",
+    "tree_observation": "git ls-tree -r --name-only <base>",
+    "classification": "static exhaustive path-to-task-type rules in this script",
+    "runtime_window_inventory": "not_observable_from_git",
+    "window_coverage_rule": "any core window touching an enumerated active path inherits its task type regardless of provider or UI"
+  },
+  "counts": {
+    "core_owned_paths_total": 44,
+    "core_owned_paths_outside_08_os": 34,
+    "task_types_outside_08_os": 8,
+    "tracked_ai_task_files": 5,
+    "indexed_ai_task_files": 4,
+    "run_id_collision_commits": 0
+  },
+  "task_types": [
+    {
+      "task_type": "constitutional_and_governance",
+      "purpose": "宪章、议会、碳基索引与城邦目标裁定",
+      "active_paths": [
+        {
+          "path": "04_Parliament/",
+          "present": true
+        },
+        {
+          "path": "05_Carbon_Index/",
+          "present": true
+        },
+        {
+          "path": "0号方案.md",
+          "present": false
+        },
+        {
+          "path": "1号方案.md",
+          "present": false
+        },
+        {
+          "path": "2号方案.md",
+          "present": false
+        },
+        {
+          "path": "3号方案.md",
+          "present": true
+        },
+        {
+          "path": "城邦系统需要实现的目标原则.md",
+          "present": true
+        }
+      ]
+    },
+    {
+      "task_type": "bootstrap_routing_architecture_and_fork",
+      "purpose": "启动、路由、架构、实例与 fork 治理",
+      "active_paths": [
+        {
+          "path": "00_City_State_Routing_Table.md",
+          "present": true
+        },
+        {
+          "path": "06_Silicon_Index/",
+          "present": true
+        },
+        {
+          "path": "AGENTS.md",
+          "present": true
+        },
+        {
+          "path": "ARCHITECTURE.md",
+          "present": true
+        },
+        {
+          "path": "CLAUDE.md",
+          "present": true
+        },
+        {
+          "path": "INSTANCE_CONFIG.md",
+          "present": true
+        },
+        {
+          "path": "True_Fork_Protocol.md",
+          "present": true
+        }
+      ]
+    },
+    {
+      "task_type": "compiler_execution_and_legacy_backbone",
+      "purpose": "编译、执行计划、私有区与旧运行骨架",
+      "active_paths": [
+        {
+          "path": "07_Compiler/",
+          "present": true
+        },
+        {
+          "path": "07_Execution_Plans/",
+          "present": false
+        },
+        {
+          "path": "07_Silicon_Private_Zones/",
+          "present": true
+        },
+        {
+          "path": "system_backbone/",
+          "present": true
+        }
+      ]
+    },
+    {
+      "task_type": "communication_protocol_bootstrap_and_routing",
+      "purpose": "旧通讯协议、初始化、load profile 与角色 routing memory",
+      "active_paths": [
+        {
+          "path": ".ai/PROTOCOL.md",
+          "present": true
+        },
+        {
+          "path": ".ai/PROTOCOL_ADHERENCE.md",
+          "present": true
+        },
+        {
+          "path": ".ai/HANDOFF_INIT_PROMPT.md",
+          "present": true
+        },
+        {
+          "path": ".ai/load_profiles/",
+          "present": true
+        },
+        {
+          "path": ".ai/role_memory/",
+          "present": true
+        }
+      ]
+    },
+    {
+      "task_type": "backend_task_and_long_run_contracts",
+      "purpose": "后端执行、任务输入、大任务与 long-run 合同",
+      "active_paths": [
+        {
+          "path": ".ai/CODEX_WORK_MECHANISM_PROTOCOL.md",
+          "present": true
+        },
+        {
+          "path": ".ai/CODEX_TASK_INPUT_CONTRACT.md",
+          "present": true
+        },
+        {
+          "path": ".ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md",
+          "present": true
+        },
+        {
+          "path": ".ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md",
+          "present": true
+        }
+      ]
+    },
+    {
+      "task_type": "token_and_resource_routing",
+      "purpose": "Token/资源路由、操作规范与本地计量工具",
+      "active_paths": [
+        {
+          "path": ".ai/TOKEN_USAGE_PROFILE.md",
+          "present": true
+        },
+        {
+          "path": ".ai/TOKEN_USAGE_OPERATIONAL_NORMS.md",
+          "present": true
+        },
+        {
+          "path": ".ai/token_profile/",
+          "present": true
+        }
+      ]
+    },
+    {
+      "task_type": "communication_transport_state_and_validation",
+      "purpose": "lane、状态归并、通讯合规与 proof chain",
+      "active_paths": [
+        {
+          "path": ".ai/lanes/",
+          "present": true
+        },
+        {
+          "path": ".ai/communication_compliance/",
+          "present": true
+        }
+      ]
+    },
+    {
+      "task_type": "repository_publication_governance",
+      "purpose": "发布授权与本地 Git 守卫",
+      "active_paths": [
+        {
+          "path": ".ai/REPOSITORY_PUBLISHER_AUTHORITY.yml",
+          "present": true
+        },
+        {
+          "path": ".githooks/",
+          "present": true
+        }
+      ]
+    }
+  ],
+  "unclassified_core_paths": [],
+  "assignments_not_in_manifest": [],
+  "task_carrier_inventory": {
+    "path": ".ai/TASKS/",
+    "ownership": "domain_owned_paths in CORE_MANIFEST.yml",
+    "tracked_files": [
+      ".ai/TASKS/context-stage2-local-partition-001.md",
+      ".ai/TASKS/core-mechanism-file-audit-0003.md",
+      ".ai/TASKS/core-mechanism-reachability-cleanup-0002.md",
+      ".ai/TASKS/core-registry-and-final-cleanup-0004.md",
+      ".ai/TASKS/index.md"
+    ],
+    "indexed_files": [
+      ".ai/TASKS/core-mechanism-file-audit-0003.md",
+      ".ai/TASKS/core-mechanism-reachability-cleanup-0002.md",
+      ".ai/TASKS/core-registry-and-final-cleanup-0004.md",
+      ".ai/TASKS/index.md"
+    ],
+    "tracked_but_not_indexed": [
+      ".ai/TASKS/context-stage2-local-partition-001.md"
+    ]
+  },
+  "known_instances": [
+    {
+      "commit": "d56ac9e2a231d435391593e23c6fdc51546c41f3",
+      "is_ancestor_of_base": true,
+      "changed_paths": [
+        ".githooks/README.md",
+        ".githooks/pre-push",
+        ".githooks/test_pre_push_logic.ps1",
+        "08_os/05_registry/repository_guards_v1.yml",
+        "08_os/05_registry/repository_validation_v1.yml",
+        "08_os/06_execution/validators/personal_paths/README.md",
+        "08_os/06_execution/validators/personal_paths/patterns.json",
+        "08_os/06_execution/validators/personal_paths/tests/test_validate.py",
+        "08_os/06_execution/validators/personal_paths/validate.py",
+        "08_os/_runs/run-019-个人路径常驻门接入/01_任务输入/任务包摘要.md",
+        "08_os/_runs/run-019-个人路径常驻门接入/03_方案设计/验证矩阵.md",
+        "08_os/_runs/run-019-个人路径常驻门接入/06_执行/changed_paths.txt",
+        "08_os/_runs/run-019-个人路径常驻门接入/07_测试执行/results.json",
+        "08_os/_runs/run-019-个人路径常驻门接入/07_测试执行/validate_candidate.py",
+        "08_os/_runs/run-019-个人路径常驻门接入/08_结论/结论.md",
+        "08_os/_runs/run-019-个人路径常驻门接入/run.yml"
+      ],
+      "outside_08_os": [
+        ".githooks/README.md",
+        ".githooks/pre-push",
+        ".githooks/test_pre_push_logic.ps1"
+      ]
+    },
+    {
+      "commit": "ea653f13bbdf23e2e2579f4c98aa42e1181829a5",
+      "is_ancestor_of_base": true,
+      "changed_paths": [
+        ".ai/REPOSITORY_PUBLISHER_AUTHORITY.yml",
+        ".githooks/README.md",
+        ".githooks/pre-push",
+        ".githooks/test_pre_push_logic.ps1",
+        "08_os/05_registry/repository_guards_v1.yml"
+      ],
+      "outside_08_os": [
+        ".ai/REPOSITORY_PUBLISHER_AUTHORITY.yml",
+        ".githooks/README.md",
+        ".githooks/pre-push",
+        ".githooks/test_pre_push_logic.ps1"
+      ]
+    },
+    {
+      "commit": "5739a297ab71ecd37197524fa121a0b9b28da942",
+      "is_ancestor_of_base": true,
+      "changed_paths": [
+        "CORE_MANIFEST.yml",
+        "True_Fork_Protocol.md"
+      ],
+      "outside_08_os": [
+        "CORE_MANIFEST.yml",
+        "True_Fork_Protocol.md"
+      ]
+    }
+  ],
+  "run_id_collision_commits": [],
+  "domain_owned_paths": [
+    "01_Research_Reports/",
+    "02_Protocols/",
+    "03_Daily_Execution/",
+    "08_Domain_Applications/",
+    "08_os/07_content/",
+    ".ai/TASKS/",
+    ".ai/CODEX_REPORTS/",
+    ".ai/PROGRAM_RUNS/",
+    ".ai/HUMAN_BRIEFS/",
+    ".ai/USER_UPLOADS/",
+    ".ai/STATE.yml",
+    ".ai/INBOX.md",
+    ".ai/OUTBOX.md",
+    ".ai/HUMAN_BRIEF.md",
+    "README.md",
+    "PROJECT_CONTEXT.md"
+  ]
+}

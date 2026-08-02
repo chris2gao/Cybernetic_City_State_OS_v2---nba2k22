@@ -1,0 +1,76 @@
+workflow_id: os-v2-communication-mechanism
+requirement_version: 1
+evidence_version: 1
+judgment: partially_supported
+
+bearing_statement: >-
+  证据支持构建满足 A 的新通讯机制：旧栈已经用真实任务、机器 policy、adversarial fixtures 和失败
+  ledger 证明了 stable roles、短 pointer、durable refs、三通道、non-self-auth、immutable evidence、
+  current-head CAS、单写与独立审核等关键不变量。但证据不支持把旧 .ai 整套平移，也不支持宣告
+  live trusted-host auth、connector 等价、成本不上升、全窗口迁移或真实 rollback 已完成。
+
+supported_parts:
+  - claim: provider-neutral stable roles、pointer/durable refs 与 Human/机器通道分离可行。
+    evidence_refs: [E-003, E-004, E-005, E-015]
+  - claim: state evidence、actor origin、validator provenance 与 Human authority 可在合同和测试层分离。
+    evidence_refs: [E-008, E-009, E-010, E-011, E-012]
+  - claim: immutable Git evidence、release binding、lane single-writer 与 transport-specific gates 提供可复用不变量。
+    evidence_refs: [E-013, E-014, E-017, E-018]
+  - claim: 08_os 外 core 任务类型与已知实例可从 immutable base 确定性枚举。
+    evidence_refs: [E-019, E-020, E-021]
+
+refuted_or_limited_parts:
+  - claim: 旧 .ai 栈可原样成为新 canonical。
+    evidence_refs: [E-012, E-016, E-021, E-024, E-026]
+    consequence: 只提取不变量、失败例和测试；旧 path 保持 evidence/adapter，不默认复制。
+  - claim: 当前材料已证明最低充分 token 且成本不上升。
+    evidence_refs: [E-022, E-023]
+    consequence: 禁止给数值阈值或 pass；阶段四冻结前补 3–5 组匹配旧/新 run。
+  - claim: repository compliance gate 等于 live gateway、trusted Human host 或 executed transition。
+    evidence_refs: [E-009, E-024]
+    consequence: B 与测试必须把 eligibility、host authentication、atomic consumption 和 CAS execution 分层。
+  - claim: Human 确认中的 37 个非 08_os core-owned 条目与 5 个“已登记” task files 是当前精确值。
+    evidence_refs: [E-019, E-021]
+    consequence: 使用 34 个 core-owned/8 类、5 tracked/4 indexed 的可复算结果并保留差异。
+
+unresolved_parts:
+  - question: 观察期阈值与跨传输最低样本量
+    impact: 高
+    blocks: [03_结果建模, 04_测试生成]
+    next_action: B 先定义可观测维度，阶段四从风险和 capability receipt 冻结阈值。
+  - question: live core window inventory 与迁移顺序
+    impact: 高
+    blocks: [04_测试生成, 06_执行]
+    next_action: 切换门前由 host/runtime 提供 active instance inventory；Git 枚举只作 path coverage universe。
+  - question: connector 生产 CAS/read-back/actor binding 等价证据
+    impact: 高
+    blocks: [04_测试生成, 06_执行]
+    next_action: connector 可用环境做独立正负例实测。
+  - question: trusted Human host、ActorOrigin 与 C2 authority 的 replay store/atomic consumption
+    impact: 高
+    blocks: [03_结果建模, 04_测试生成, 06_执行]
+    next_action: B 明确 trust boundary；implementation 由独立 host integration task 验证。
+  - question: token matched baseline 与成本阈值
+    impact: 高
+    blocks: [04_测试生成]
+    next_action: 已明确升级；旧/新入口各收集至少 3–5 组 matched token_profile_run.v1 后才能冻结 R8。
+  - question: 真实 rollback 的状态/损失/续跑标准
+    impact: 高
+    blocks: [03_结果建模, 04_测试生成, 06_执行, 07_独立审核]
+    next_action: B 定义后冻结；阶段六执行真实 rollback，阶段七独立复验，否则 adapter_only。
+  - question: 观察结论与未来新领域仓 Human 决定的版本绑定 shape
+    impact: 中
+    blocks: [03_结果建模, 04_测试生成]
+    next_action: B 只提出约束；P5 release design 与 Human gate 定最终载体。
+
+stop_decision:
+  stop: true
+  basis:
+    - RQ-03 使用 finite CORE_MANIFEST + immutable Git tree 全量枚举，无需捕获-再捕获估计。
+    - RQ-01/RQ-02 指定旧证据面全部覆盖，34 项能力均有四选一、理由、失败历史和 evidence refs。
+    - RQ-04 已证明继续扫描同一仓库不能产生不存在的 matched run；下一高 EIG 动作是生成测量而非再读文档。
+    - live host、connector、cutover 与 rollback 缺口需要新环境或后续阶段实验，继续本阶段内部检索不会改变判断结构。
+  residual_risk: >-
+    历史 pointer records 采用代表性采样而非全量；actual live windows 不可由 Git 观测；旧 fixture suite
+    本轮未独立重跑；外部成熟代理系统未调研。若 B 出现内部证据无法回答的结构争议，应重新打开
+    对应高 EIG 研究问题，而不是把本 stop 决定解释为证据完整。
