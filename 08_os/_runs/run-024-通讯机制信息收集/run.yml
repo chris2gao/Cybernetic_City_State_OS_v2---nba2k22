@@ -18,7 +18,13 @@ validation:
   - personal-path changed-mode validator
   - git diff --check
   - exact allowlist comparison
-lifecycle: candidate_ready_for_independent_review
+lifecycle: downstream_blocked_ready_for_independent_re_review
+review_history:
+  - review_head: 94b3ac567a6cb09feb94ee78521cfa379e9942cf
+    verdict: fix_required
+    blocking_findings: [F1_evidence_traceability, F2_workflow_transition]
+machine_gate: blocked
+enter_stage_3: prohibited
 prohibitions:
   - no_result_modeling_B
   - no_protocol_implementation

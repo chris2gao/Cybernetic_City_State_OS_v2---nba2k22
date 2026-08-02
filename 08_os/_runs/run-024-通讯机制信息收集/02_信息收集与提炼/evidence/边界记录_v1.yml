@@ -66,3 +66,6 @@ search_asymmetry:
   - protocol、HANDOFF_INIT、common conventions 与 policy 多处重复同一 invariant，不按多独立来源计数。
   - fixture result 是执行方产物；未由本窗口独立重跑，因此只证明存档结果内容，不作为独立 acceptance。
   - Human确认_v1.yml 是 Human 决定的 repository 转录；不把执行/审核模型重复引用算第二个 Human 来源。
+  - 同一 independence_group 内的多个原始 artifact 只计一个首发来源；shared_origin_groups 必须列出所有重复组。
+  - 本 run 生成的枚举 JSON 是可重跑 measurement artifact，标为 original_source=false，不能替代 manifest、Git commit、tree 或 index 首发锚点。
+  - 27 条证据均按关键主张保守处理；独立来源不足双源的条目显式标为 single_source，不以可信度等级掩盖来源数量。

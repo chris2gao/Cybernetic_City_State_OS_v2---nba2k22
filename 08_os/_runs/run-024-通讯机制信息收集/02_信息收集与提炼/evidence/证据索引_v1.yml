@@ -8,9 +8,15 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-001
-        location: 01_需求建模/Human确认_v1.yml@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
+        location: 08_os/_runs/run-023-通讯机制需求建模/01_需求建模/Human确认_v1.yml::human_gate@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 1, shared_origin: Human 决定的 repository 转录}
+        independence_group: run023-human-gate
+    独立性:
+      independent_source_count: 1
+      claim_source_status: single_source
+      critical_claim: true
+      shared_origin_groups: []
+      shared_origin: Human 决定的 repository 转录
     信息可信度: "1"
     可信度理由: 当前 immutable base 文件与 A 实测摘要完全一致。
     时间适用性: 绑定 A version 1；A 内容变化即失效。
@@ -31,9 +37,15 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-002
-        location: §2.2 与 §3.3
+        location: 08_os/第二代OS替换与退役方案_v2.md::§2.2,§3.3@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 1, shared_origin: Human-approved program plan}
+        independence_group: program-plan-v2
+    独立性:
+      independent_source_count: 1
+      claim_source_status: single_source
+      critical_claim: true
+      shared_origin_groups: []
+      shared_origin: Human-approved program plan
     信息可信度: "1"
     可信度理由: 当前 master 活动总体方案的直接阶段边界。
     时间适用性: P1 阶段二有效。
@@ -52,9 +64,19 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-003
-        location: PROTOCOL.md Protocol Role Compatibility
+        location: .ai/PROTOCOL.md::Protocol Role Compatibility@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 2, shared_origin: PROTOCOL 与 publisher authority 为不同合同}
+        independence_group: protocol-role-contract
+      - source_id: SRC-012
+        location: .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml::identity_binding,grants@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
+        original_source: true
+        independence_group: publisher-authority-contract
+    独立性:
+      independent_source_count: 2
+      claim_source_status: corroborated
+      critical_claim: true
+      shared_origin_groups: []
+      shared_origin: 两份独立 canonical 合同
     信息可信度: "1"
     可信度理由: 两份 canonical 文件一致，且 compliance policy 有 role mapping。
     时间适用性: 当前旧通讯 release。
@@ -73,9 +95,19 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-003
-        location: PROTOCOL.md Pointer-Based Message Format 与 Pointer Dereference Obligation
+        location: .ai/PROTOCOL.md::Pointer-Based Message Format,Pointer Dereference Obligation@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 2, shared_origin: protocol 与 material_event_policy 同一旧栈但不同机器/文档表达}
+        independence_group: legacy-pointer-contract
+      - source_id: SRC-004
+        location: .ai/communication_compliance/material_event_policy.yml::pointer_fields,reference_policy@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
+        original_source: true
+        independence_group: legacy-pointer-contract
+    独立性:
+      independent_source_count: 1
+      claim_source_status: single_source
+      critical_claim: true
+      shared_origin_groups: [legacy-pointer-contract]
+      shared_origin: protocol 与 machine policy 是同一旧栈的重复表达，只计一个首发来源
     信息可信度: "1"
     可信度理由: policy 明确列出顺序，fixtures 验证缺字段、顺序与 ref 攻击。
     时间适用性: 当前旧通讯 release。
@@ -94,9 +126,23 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-003
-        location: PROTOCOL.md Canonical Human-AI Communication Completeness
+        location: .ai/PROTOCOL.md::Canonical Human-AI Communication Completeness@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 2, shared_origin: protocol 与实际 lane event}
+        independence_group: protocol-channel-contract
+      - source_id: SRC-011
+        location: .ai/lanes/codex-desktop-ab4d01/events/005.yml::completion_pointer@9c1140763694a4e18e3929ab51ae10db70a82419
+        original_source: true
+        independence_group: historical-task-9c11407
+      - source_id: SRC-011
+        location: .ai/HUMAN_BRIEF.md::completion_brief@9c1140763694a4e18e3929ab51ae10db70a82419
+        original_source: true
+        independence_group: historical-task-9c11407
+    独立性:
+      independent_source_count: 2
+      claim_source_status: corroborated
+      critical_claim: true
+      shared_origin_groups: [historical-task-9c11407]
+      shared_origin: completion event 与 brief 属于同一次历史任务，只共同贡献一个独立来源
     信息可信度: "1"
     可信度理由: canonical 规则与 9c11407 实际 completion event/brief 同时存在。
     时间适用性: 当前旧通讯 release 与历史真实任务。
@@ -115,9 +161,19 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-005
-        location: Full Initialization Read Order、Fast Path、Bootstrap Receipt
+        location: .ai/HANDOFF_INIT_PROMPT.md::Full Initialization Read Order,Fast Path,Bootstrap Receipt@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 2, shared_origin: HANDOFF_INIT 与 actual completion receipt}
+        independence_group: handoff-init-contract
+      - source_id: SRC-011
+        location: .ai/lanes/codex-desktop-ab4d01/events/005.yml::bootstrap_receipt@9c1140763694a4e18e3929ab51ae10db70a82419
+        original_source: true
+        independence_group: historical-task-9c11407
+    独立性:
+      independent_source_count: 2
+      claim_source_status: corroborated
+      critical_claim: true
+      shared_origin_groups: []
+      shared_origin: canonical initialization contract 与独立历史执行记录
     信息可信度: "1"
     可信度理由: 文档规则、schema/fixtures 与 9c11407 receipt 三者一致。
     时间适用性: 绑定 protocol release head。
@@ -136,9 +192,19 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-006
-        location: .ai/STATE.yml、INBOX.md、OUTBOX.md、HUMAN_BRIEF.md@a66ee67 与 ai/review/latest@cd70147
+        location: .ai/STATE.yml::status@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 2, shared_origin: 两个不同 Git refs 的物理回读}
+        independence_group: legacy-mailbox-state
+      - source_id: SRC-006
+        location: .ai/STATE.yml::status@cd70147d55f8161163a37c24f181c6f01f3c7490
+        original_source: true
+        independence_group: legacy-mailbox-state
+    独立性:
+      independent_source_count: 1
+      claim_source_status: single_source
+      critical_claim: true
+      shared_origin_groups: [legacy-mailbox-state]
+      shared_origin: 两个 Git refs 都属于同一旧 mailbox 系统状态，只计一个首发来源
     信息可信度: "1"
     可信度理由: 本轮直接读取 source 与 remote review head。
     时间适用性: ai/review/latest mutable；仅对 2026-08-02 observed head cd70147 有效。
@@ -157,9 +223,15 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-004
-        location: material_event_policy.yml event_classes/state_evidence/transitions
+        location: .ai/communication_compliance/material_event_policy.yml::event_classes,state_evidence,transitions@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 1, shared_origin: canonical machine policy}
+        independence_group: compliance-policy-v3
+    独立性:
+      independent_source_count: 1
+      claim_source_status: single_source
+      critical_claim: true
+      shared_origin_groups: []
+      shared_origin: canonical machine policy
     信息可信度: "1"
     可信度理由: 当前 validator 直接消费的 versioned policy。
     时间适用性: validator 3.0.0 / policy v3。
@@ -178,9 +250,19 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-004
-        location: README Non-self-authenticating transition proof 与 proof_chain_review.json
+        location: .ai/communication_compliance/README.md::Non-self-authenticating transition proof@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 2, shared_origin: canonical README 与 machine review artifact}
+        independence_group: compliance-release-v3
+      - source_id: SRC-004
+        location: .ai/communication_compliance/proof_chain_review.json::checks@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
+        original_source: true
+        independence_group: compliance-release-v3
+    独立性:
+      independent_source_count: 1
+      claim_source_status: single_source
+      critical_claim: true
+      shared_origin_groups: [compliance-release-v3]
+      shared_origin: README 与 machine review artifact 同属一个 compliance release，只计一个首发来源
     信息可信度: "1"
     可信度理由: schema、policy、review artifact 和负例一致。
     时间适用性: 当前旧通讯 release。
@@ -199,9 +281,19 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-004
-        location: README Event and pointer evidence、material_event_policy reference_policy
+        location: .ai/communication_compliance/material_event_policy.yml::reference_policy@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 2, shared_origin: policy 与 attack fixtures}
+        independence_group: compliance-release-v3
+      - source_id: SRC-004
+        location: .ai/communication_compliance/fixtures/fixture_suite.json::pointer_attack_cases@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
+        original_source: true
+        independence_group: compliance-release-v3
+    独立性:
+      independent_source_count: 1
+      claim_source_status: single_source
+      critical_claim: true
+      shared_origin_groups: [compliance-release-v3]
+      shared_origin: policy 与 attack fixtures 同属一个 compliance release，只计一个首发来源
     信息可信度: "1"
     可信度理由: 机器规则与当前 suite 执行结果匹配。
     时间适用性: 当前旧通讯 release。
@@ -220,9 +312,15 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-004
-        location: fixtures/latest_fixture_result.json
+        location: .ai/communication_compliance/fixtures/latest_fixture_result.json::summary@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 1, shared_origin: executor-produced machine result}
+        independence_group: compliance-executor-result
+    独立性:
+      independent_source_count: 1
+      claim_source_status: single_source
+      critical_claim: true
+      shared_origin_groups: []
+      shared_origin: executor-produced machine result
     信息可信度: "2"
     可信度理由: 结构化机器结果与 suite digest 完整，但本轮未独立重跑整个旧 suite。
     时间适用性: protocol_release_head 8172f7e。
@@ -241,9 +339,15 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-004
-        location: .ai/COMMUNICATION_DRIFT_LEDGER.yml records 1-7
+        location: .ai/COMMUNICATION_DRIFT_LEDGER.yml::records[1:7]@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 2, shared_origin: 两轮 foreground exact-head reviews}
+        independence_group: communication-drift-ledger-r2
+    独立性:
+      independent_source_count: 1
+      claim_source_status: single_source
+      critical_claim: true
+      shared_origin_groups: []
+      shared_origin: ledger 汇总多轮审核但自身只算一个首发来源
     信息可信度: "1"
     可信度理由: 每条有 immutable detection ref、root cause 与 preventive action。
     时间适用性: ledger revision 2。
@@ -262,9 +366,19 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-004
-        location: README Release binding 与 material_event_policy heads
+        location: .ai/communication_compliance/README.md::Release binding@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 2, shared_origin: policy 与 drift correction}
+        independence_group: compliance-release-v3
+      - source_id: SRC-004
+        location: .ai/communication_compliance/material_event_policy.yml::protocol_semantics_head,protocol_release_head@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
+        original_source: true
+        independence_group: compliance-release-v3
+    独立性:
+      independent_source_count: 1
+      claim_source_status: single_source
+      critical_claim: true
+      shared_origin_groups: [compliance-release-v3]
+      shared_origin: README 与 bound policy 同属一个 compliance release，只计一个首发来源
     信息可信度: "1"
     可信度理由: 当前 policy 为 bound 且 ledger 记录旧错误。
     时间适用性: protocol release 8172f7e。
@@ -283,9 +397,19 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-006
-        location: .ai/lanes/index.md Instance layout、Canonical reduction、Local transport
+        location: .ai/lanes/index.md::Instance layout,Canonical reduction,Local transport@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 2, shared_origin: lane docs 与实际 lane event}
+        independence_group: lane-contract
+      - source_id: SRC-011
+        location: .ai/lanes/codex-desktop-ab4d01/events/005.yml::completion_pointer@9c1140763694a4e18e3929ab51ae10db70a82419
+        original_source: true
+        independence_group: historical-task-9c11407
+    独立性:
+      independent_source_count: 2
+      claim_source_status: corroborated
+      critical_claim: true
+      shared_origin_groups: []
+      shared_origin: lane contract 与独立历史 event
     信息可信度: "1"
     可信度理由: 规则和 9c11407 tracked event 同时可回读。
     时间适用性: lane epoch 8172f7e 后。
@@ -304,9 +428,15 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-011
-        location: 9c1140763694a4e18e3929ab51ae10db70a82419:.ai/lanes/codex-desktop-ab4d01/events/005.yml
+        location: .ai/lanes/codex-desktop-ab4d01/events/005.yml::completion_pointer,bootstrap_receipt@9c1140763694a4e18e3929ab51ae10db70a82419
         original_source: true
-    独立性: {independent_source_count: 1, shared_origin: 一次真实任务记录}
+        independence_group: historical-task-9c11407
+    独立性:
+      independent_source_count: 1
+      claim_source_status: single_source
+      critical_claim: true
+      shared_origin_groups: []
+      shared_origin: 一次真实任务记录
     信息可信度: "1"
     可信度理由: immutable event 与三条 required_refs 可直接解析。
     时间适用性: 历史任务 v03-local-transport-and-role-memory-0001。
@@ -325,9 +455,19 @@ evidence_entries:
     方向: 限制
     source_refs:
       - source_id: SRC-011
-        location: e8ac5bab995a0d5a489953c65f7a5f6c67e35043:.ai/SIGNAL_CHATGPT_v03-local-transport-and-role-memory-0001.yml 与 .ai/HUMAN_BRIEF.md
+        location: .ai/SIGNAL_CHATGPT_v03-local-transport-and-role-memory-0001.yml::dispatch_pointer@e8ac5bab995a0d5a489953c65f7a5f6c67e35043
         original_source: true
-    独立性: {independent_source_count: 1, shared_origin: 同一次真实 dispatch}
+        independence_group: historical-dispatch-e8ac5ba
+      - source_id: SRC-011
+        location: .ai/HUMAN_BRIEF.md::dispatch_brief@e8ac5bab995a0d5a489953c65f7a5f6c67e35043
+        original_source: true
+        independence_group: historical-dispatch-e8ac5ba
+    独立性:
+      independent_source_count: 1
+      claim_source_status: single_source
+      critical_claim: true
+      shared_origin_groups: [historical-dispatch-e8ac5ba]
+      shared_origin: signal 与 brief 属于同一次真实 dispatch，只计一个首发来源
     信息可信度: "1"
     可信度理由: immutable commit 中的 pointer 与 brief 可直接对照。
     时间适用性: 历史 dispatch；不代表当前 protocol 接受这些字段。
@@ -346,9 +486,15 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-009
-        location: publication_transport observations
+        location: 08_os/_runs/run-020-环境能力发现最小版/08_结论/环境能力receipt_实测_v1.yml::publication_transport@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 1, shared_origin: 同一环境 receipt 的多 probe}
+        independence_group: environment-receipt-run020
+    独立性:
+      independent_source_count: 1
+      claim_source_status: single_source
+      critical_claim: true
+      shared_origin_groups: []
+      shared_origin: 同一环境 receipt 的多 probe
     信息可信度: "1"
     可信度理由: 每项带 measurement_source、result 与 exit code/limitations。
     时间适用性: receipt invalidation events 触发时需重测。
@@ -367,9 +513,19 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-012
-        location: identity、grant、capabilities、destructive_or_irreversible
+        location: .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml::identity,grant,capabilities,destructive_or_irreversible@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 2, shared_origin: publisher authority 与 08_os transport matrix}
+        independence_group: publisher-authority-contract
+      - source_id: SRC-012
+        location: 08_os/开发入口与单窗口任务规范_v1.md::§1.1@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
+        original_source: true
+        independence_group: transport-matrix-contract
+    独立性:
+      independent_source_count: 2
+      claim_source_status: corroborated
+      critical_claim: true
+      shared_origin_groups: []
+      shared_origin: publisher authority 与 transport matrix 为独立 canonical 合同
     信息可信度: "1"
     可信度理由: 当前 master canonical 文件与 Human grant ref 明确。
     时间适用性: 被后续 master 修订或 task authority 改变时失效。
@@ -388,9 +544,19 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-010
-        location: core任务类型枚举_v1.json counts/task_types
+        location: CORE_MANIFEST.yml::core_owned_paths@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 1, shared_origin: 当前执行方脚本输出}
+        independence_group: manifest-a66ee67
+      - source_id: SRC-010
+        location: 08_os/_runs/run-024-通讯机制信息收集/02_信息收集与提炼/evidence/core任务类型枚举_v1.json::counts,task_types
+        original_source: false
+        independence_group: derived-enumeration-run024
+    独立性:
+      independent_source_count: 1
+      claim_source_status: single_source
+      critical_claim: true
+      shared_origin_groups: []
+      shared_origin: manifest 是首发来源；候选枚举 JSON 仅为可重跑 measurement artifact
     信息可信度: "2"
     可信度理由: finite manifest/tree 全量枚举且 validator 将做双跑字节比较；最终仍需独立会话复核分类语义。
     时间适用性: 仅绑定 base a66ee67。
@@ -409,9 +575,27 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-010
-        location: core任务类型枚举_v1.json known_instances
+        location: .githooks/pre-push@d56ac9e2a231d435391593e23c6fdc51546c41f3
         original_source: true
-    独立性: {independent_source_count: 3, shared_origin: 三个独立 Git commits}
+        independence_group: commit-d56ac9e
+      - source_id: SRC-010
+        location: .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml@ea653f13bbdf23e2e2579f4c98aa42e1181829a5
+        original_source: true
+        independence_group: commit-ea653f1
+      - source_id: SRC-010
+        location: CORE_MANIFEST.yml,True_Fork_Protocol.md@5739a297ab71ecd37197524fa121a0b9b28da942
+        original_source: true
+        independence_group: commit-5739a29
+      - source_id: SRC-010
+        location: 08_os/_runs/run-024-通讯机制信息收集/02_信息收集与提炼/evidence/core任务类型枚举_v1.json::known_instances
+        original_source: false
+        independence_group: derived-enumeration-run024
+    独立性:
+      independent_source_count: 3
+      claim_source_status: corroborated
+      critical_claim: true
+      shared_origin_groups: []
+      shared_origin: 三个 immutable Git commits 分别计数；候选枚举只作派生测量
     信息可信度: "1"
     可信度理由: script 使用 rev-parse、merge-base 与 diff-tree 直接测量。
     时间适用性: immutable commits。
@@ -430,9 +614,23 @@ evidence_entries:
     方向: 冲突
     source_refs:
       - source_id: SRC-010
-        location: core任务类型枚举_v1.json task_carrier_inventory
+        location: git-ls-tree::.ai/TASKS/*@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 2, shared_origin: git tree 与 generated index 两种 measurement}
+        independence_group: task-carrier-a66ee67
+      - source_id: SRC-010
+        location: .ai/TASKS/index.md::generated-index-entries@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
+        original_source: true
+        independence_group: task-carrier-a66ee67
+      - source_id: SRC-010
+        location: 08_os/_runs/run-024-通讯机制信息收集/02_信息收集与提炼/evidence/core任务类型枚举_v1.json::task_carrier_inventory
+        original_source: false
+        independence_group: derived-enumeration-run024
+    独立性:
+      independent_source_count: 1
+      claim_source_status: single_source
+      critical_claim: true
+      shared_origin_groups: [task-carrier-a66ee67]
+      shared_origin: Git tree 与 generated index 可分别解引用，但同属一个 base/task-carrier 系统，只计一个首发来源
     信息可信度: "1"
     可信度理由: 同一 immutable base 上两种可复算事实直接矛盾。
     时间适用性: base a66ee67。
@@ -451,9 +649,15 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-007
-        location: TOKEN_USAGE_PROFILE.md Layer 2
+        location: .ai/TOKEN_USAGE_PROFILE.md::Layer 2@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 1, shared_origin: canonical measurement contract}
+        independence_group: token-profile-contract
+    独立性:
+      independent_source_count: 1
+      claim_source_status: single_source
+      critical_claim: true
+      shared_origin_groups: []
+      shared_origin: canonical measurement contract
     信息可信度: "1"
     可信度理由: 当前 Token/资源 canonical 的直接合同。
     时间适用性: P2 切换前。
@@ -472,12 +676,19 @@ evidence_entries:
     方向: 限制
     source_refs:
       - source_id: SRC-007
-        location: .ai/token_profile/ tree@a66ee67
+        location: git-ls-tree::.ai/token_profile/*@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
+        independence_group: token-profile-tree-a66ee67
       - source_id: SRC-011
-        location: 9c11407 brief 对 v03 local token run 的说明
+        location: .ai/HUMAN_BRIEF.md::token_metrics@9c1140763694a4e18e3929ab51ae10db70a82419
         original_source: true
-    独立性: {independent_source_count: 2, shared_origin: current tree absence 与 immutable historical brief}
+        independence_group: historical-task-9c11407
+    独立性:
+      independent_source_count: 2
+      claim_source_status: corroborated
+      critical_claim: true
+      shared_origin_groups: []
+      shared_origin: current tree absence 与 immutable historical brief
     信息可信度: "1"
     可信度理由: current tree inventory 与实际 handoff 的 null 声明一致。
     时间适用性: base a66ee67 与历史 v03 task。
@@ -496,9 +707,15 @@ evidence_entries:
     方向: 限制
     source_refs:
       - source_id: SRC-004
-        location: communication_compliance/README.md opening boundaries
+        location: .ai/communication_compliance/README.md::opening-boundaries@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 1, shared_origin: canonical implementation boundary}
+        independence_group: compliance-release-v3
+    独立性:
+      independent_source_count: 1
+      claim_source_status: single_source
+      critical_claim: true
+      shared_origin_groups: []
+      shared_origin: canonical implementation boundary
     信息可信度: "1"
     可信度理由: README 明确列举 non-capabilities，未见相反 runtime evidence。
     时间适用性: 当前旧 implementation。
@@ -517,12 +734,19 @@ evidence_entries:
     方向: 未决
     source_refs:
       - source_id: SRC-001
-        location: A 假设/歧义/adapter_only kill criterion
+        location: 08_os/_runs/run-023-通讯机制需求建模/01_需求建模/A_通讯机制需求建模_v1.yml::假设,歧义,adapter_only-kill-criterion@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
+        independence_group: human-approved-p1-program
       - source_id: SRC-002
-        location: §3.5、§3.7、§7.1-§7.3
+        location: 08_os/第二代OS替换与退役方案_v2.md::§3.5,§3.7,§7.1-§7.3@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 2, shared_origin: A 与 program plan}
+        independence_group: human-approved-p1-program
+    独立性:
+      independent_source_count: 1
+      claim_source_status: single_source
+      critical_claim: true
+      shared_origin_groups: [human-approved-p1-program]
+      shared_origin: Human-confirmed A 与 program plan 共同起源于同一 P1 Human program，只计一个首发来源
     信息可信度: "2"
     可信度理由: 两份合同都要求未来实测；absence claim 仅限已检索证据范围。
     时间适用性: P1 阶段二。
@@ -541,9 +765,19 @@ evidence_entries:
     方向: 冲突
     source_refs:
       - source_id: SRC-001
-        location: run-023/08_结论/完成指针.md 与 01_需求建模/Human确认_v1.yml@a66ee67
+        location: 08_os/_runs/run-023-通讯机制需求建模/08_结论/完成指针.md::human_gate@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 2, shared_origin: 同一 run 的两份 durable artifacts}
+        independence_group: run023-artifacts
+      - source_id: SRC-001
+        location: 08_os/_runs/run-023-通讯机制需求建模/01_需求建模/Human确认_v1.yml::human_gate@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
+        original_source: true
+        independence_group: run023-artifacts
+    独立性:
+      independent_source_count: 1
+      claim_source_status: single_source
+      critical_claim: true
+      shared_origin_groups: [run023-artifacts]
+      shared_origin: 同一 run 的两份 durable artifacts，共同起源只计一个首发来源
     信息可信度: "1"
     可信度理由: 当前 immutable base 内部直接矛盾。
     时间适用性: base a66ee67。
@@ -562,9 +796,15 @@ evidence_entries:
     方向: 支持
     source_refs:
       - source_id: SRC-008
-        location: sections 1-7 与 Roles and flow
+        location: AGENT_WORKING_DISCIPLINE.md::§1-§7,Roles-and-the-flow-between-them@a66ee671e47f3a90f3a108eb7531c7c84b0f9d37
         original_source: true
-    独立性: {independent_source_count: 1, shared_origin: 多起已记录 repository incidents}
+        independence_group: working-discipline-incidents
+    独立性:
+      independent_source_count: 1
+      claim_source_status: single_source
+      critical_claim: true
+      shared_origin_groups: []
+      shared_origin: 多起事故被汇总在同一 durable discipline 文档，只计一个首发来源
     信息可信度: "1"
     可信度理由: 每条纪律附具体事故和测量来源。
     时间适用性: 当前全仓工作纪律。

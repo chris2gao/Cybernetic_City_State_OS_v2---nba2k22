@@ -4,6 +4,12 @@ evidence_version: 1
 建立时间: "2026-08-02"
 最后核对: "2026-08-02"
 建立者: Codex backend execution session
+traceability_revision: 2
+traceability_contract:
+  independent_source_count: "仅计算 original_source=true 的不同 independence_group"
+  shared_origin: "同组多个首发 artifact 只计一次，并在 shared_origin_groups 显式列出"
+  derived_artifact: "本轮生成的枚举或聚合物必须标为 original_source=false"
+  critical_single_source: "所有关键单源主张必须标为 claim_source_status=single_source 或 unresolved"
 sources:
   - source_id: SRC-001
     名称: Human-confirmed requirement model A and gate artifact

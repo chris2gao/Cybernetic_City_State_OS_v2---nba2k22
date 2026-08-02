@@ -35,6 +35,95 @@ $evidenceCount = Count-Lines $indexPath '^  - evidence_id: E-[0-9]{3}$'
 $questionCount = Count-Lines $goalPath '^  - id: RQ-[0-9]{2}$'
 $sourceCount = Count-Lines $sourcePath '^  - source_id: SRC-[0-9]{3}$'
 
+$entryMetrics = @{}
+$currentEntry = $null
+$currentRef = $null
+foreach ($line in (Get-Content -LiteralPath $indexPath)) {
+    if ($line -match '^  - evidence_id: (E-[0-9]{3})$') {
+        $currentEntry = $Matches[1]
+        $entryMetrics[$currentEntry] = @{
+            refs = [System.Collections.Generic.List[object]]::new()
+            count = $null
+            status = $null
+            critical = $null
+            shared_groups = @()
+        }
+        $currentRef = $null
+        continue
+    }
+    if ($null -eq $currentEntry) { continue }
+    if ($line -match '^      - source_id: (SRC-[0-9]{3})$') {
+        $currentRef = @{ source_id = $Matches[1]; location = ""; original = $null; group = "" }
+        $entryMetrics[$currentEntry].refs.Add($currentRef)
+    } elseif ($null -ne $currentRef -and $line -match '^        location: (.+)$') {
+        $currentRef.location = $Matches[1]
+    } elseif ($null -ne $currentRef -and $line -match '^        original_source: (true|false)$') {
+        $currentRef.original = ($Matches[1] -eq "true")
+    } elseif ($null -ne $currentRef -and $line -match '^        independence_group: (.+)$') {
+        $currentRef.group = $Matches[1]
+    } elseif ($line -match '^      independent_source_count: ([0-9]+)$') {
+        $entryMetrics[$currentEntry].count = [int]$Matches[1]
+        $currentRef = $null
+    } elseif ($line -match '^      claim_source_status: (corroborated|single_source|unresolved)$') {
+        $entryMetrics[$currentEntry].status = $Matches[1]
+    } elseif ($line -match '^      critical_claim: (true|false)$') {
+        $entryMetrics[$currentEntry].critical = ($Matches[1] -eq "true")
+    } elseif ($line -match '^      shared_origin_groups: \[(.*)\]$') {
+        $body = $Matches[1].Trim()
+        $entryMetrics[$currentEntry].shared_groups = if ($body) { @($body -split ',' | ForEach-Object { $_.Trim() }) } else { @() }
+    }
+}
+
+$traceCountMatches = $true
+$traceSharedComplete = $true
+$criticalSinglesExposed = $true
+$derivedEnumerationNotOriginal = $true
+$originalAnchorsImmutable = $true
+$independentSourceTotal = 0
+$singleSourceClaims = 0
+$corroboratedClaims = 0
+foreach ($metric in $entryMetrics.Values) {
+    $originalRefs = @($metric.refs | Where-Object { $_.original -eq $true })
+    $originalGroups = @($originalRefs | ForEach-Object { $_.group })
+    $distinctGroups = @($originalGroups | Sort-Object -Unique)
+    $actualShared = @($originalGroups | Group-Object | Where-Object { $_.Count -gt 1 } | ForEach-Object { $_.Name } | Sort-Object)
+    $declaredShared = @($metric.shared_groups | Sort-Object)
+    $traceCountMatches = $traceCountMatches -and ($metric.count -eq $distinctGroups.Count) -and ($metric.count -gt 0)
+    $traceSharedComplete = $traceSharedComplete -and ([string]::Join('|', $actualShared) -eq [string]::Join('|', $declaredShared))
+    if ($metric.critical -and $metric.count -eq 1) {
+        $criticalSinglesExposed = $criticalSinglesExposed -and ($metric.status -in @('single_source', 'unresolved'))
+    }
+    if ($metric.count -gt 1) {
+        $criticalSinglesExposed = $criticalSinglesExposed -and ($metric.status -eq 'corroborated')
+    }
+    $derivedEnumerationNotOriginal = $derivedEnumerationNotOriginal -and -not @(
+        $metric.refs | Where-Object { $_.original -eq $true -and $_.location.Contains('core任务类型枚举_v1.json') }
+    )
+    $originalAnchorsImmutable = $originalAnchorsImmutable -and -not @(
+        $originalRefs | Where-Object { $_.location -notmatch '[0-9a-f]{40}' }
+    )
+    $independentSourceTotal += $metric.count
+    if ($metric.status -eq 'single_source') { $singleSourceClaims += 1 }
+    if ($metric.status -eq 'corroborated') { $corroboratedClaims += 1 }
+}
+
+$judgmentText = Get-Content -LiteralPath (Join-Path $evidenceRoot "可行性判断_v1.yml") -Raw
+$pointerText = Get-Content -LiteralPath (Join-Path $runRoot "08_结论\完成指针.md") -Raw
+$stage3BlockerMatches = [regex]::Matches(
+    $judgmentText,
+    '(?ms)^  - question:.*?^    impact: 高\r?\n^    blocks: \[[^\]]*03_结果建模[^\]]*\]'
+)
+$stage3TransitionBlocked = (
+    $stage3BlockerMatches.Count -gt 0 -and
+    $judgmentText.Contains('status: downstream_blocked') -and
+    $judgmentText.Contains('machine_gate: blocked') -and
+    $judgmentText.Contains('enter_stage_3: prohibited') -and
+    $pointerText.Contains('status: downstream_blocked') -and
+    $pointerText.Contains('machine_gate: blocked') -and
+    $pointerText.Contains('enter_stage_3: prohibited') -and
+    -not $pointerText.Contains('才可自动进入下一阶段')
+)
+
 $manifestLines = Get-Content -LiteralPath (Join-Path $repoRoot "CORE_MANIFEST.yml")
 $corePaths = [System.Collections.Generic.List[string]]::new()
 $insideCore = $false
@@ -71,6 +160,12 @@ $checks = [ordered]@{
     ambiguities_complete = ($ambiguityCount -eq 8)
     token_escalation_present = ($escalatedCount -eq 1)
     evidence_entries = ($evidenceCount -eq 27)
+    traceability_count_matches_groups = $traceCountMatches
+    traceability_shared_groups_complete = $traceSharedComplete
+    critical_single_sources_exposed = $criticalSinglesExposed
+    derived_enumeration_not_original = $derivedEnumerationNotOriginal
+    original_source_anchors_immutable = $originalAnchorsImmutable
+    stage3_transition_blocked = $stage3TransitionBlocked
     research_questions = ($questionCount -eq 6)
     sources = ($sourceCount -eq 14)
     manifest_core_owned_total = ($corePaths.Count -eq 44)
@@ -95,6 +190,10 @@ $result = [ordered]@{
     observed = [ordered]@{
         capability_rows = $capabilityCount
         evidence_entries = $evidenceCount
+        independent_sources_counted = $independentSourceTotal
+        single_source_claims = $singleSourceClaims
+        corroborated_claims = $corroboratedClaims
+        high_impact_stage3_blockers = $stage3BlockerMatches.Count
         ambiguities = $ambiguityCount
         research_questions = $questionCount
         sources = $sourceCount

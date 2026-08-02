@@ -3,6 +3,19 @@ requirement_version: 1
 evidence_version: 1
 judgment: partially_supported
 
+downstream_transition:
+  status: downstream_blocked
+  machine_gate: blocked
+  enter_stage_3: prohibited
+  blocking_questions:
+    - 观察期阈值与跨传输最低样本量
+    - trusted Human host、ActorOrigin 与 C2 authority 的 replay store/atomic consumption
+    - 真实 rollback 的状态/损失/续跑标准
+  review_pass_effect: 只确认阶段二证据包修正合格，不解除 Human-confirmed A 的高影响阻塞范围。
+  unblock_conditions:
+    - 定点补证据或实验使对应高影响歧义不再阻塞 03_结果建模，并留下可复验结果。
+    - 或 Human 明确修订/缩小 A 中对应歧义的阻塞范围并绑定版本。
+
 bearing_statement: >-
   证据支持构建满足 A 的新通讯机制：旧栈已经用真实任务、机器 policy、adversarial fixtures 和失败
   ledger 证明了 stable roles、短 pointer、durable refs、三通道、non-self-auth、immutable evidence、
@@ -37,7 +50,7 @@ unresolved_parts:
   - question: 观察期阈值与跨传输最低样本量
     impact: 高
     blocks: [03_结果建模, 04_测试生成]
-    next_action: B 先定义可观测维度，阶段四从风险和 capability receipt 冻结阈值。
+    next_action: 在阶段二定点补齐阈值依据，或由 Human 明确修订该阻塞范围；解除前不得进入 B。
   - question: live core window inventory 与迁移顺序
     impact: 高
     blocks: [04_测试生成, 06_执行]
@@ -49,7 +62,7 @@ unresolved_parts:
   - question: trusted Human host、ActorOrigin 与 C2 authority 的 replay store/atomic consumption
     impact: 高
     blocks: [03_结果建模, 04_测试生成, 06_执行]
-    next_action: B 明确 trust boundary；implementation 由独立 host integration task 验证。
+    next_action: 先取得 host/runtime 定点证据并由 Human 明确 trust boundary，或由 Human 修订阻塞范围；解除前不得进入 B。
   - question: token matched baseline 与成本阈值
     impact: 高
     blocks: [04_测试生成]
@@ -57,7 +70,7 @@ unresolved_parts:
   - question: 真实 rollback 的状态/损失/续跑标准
     impact: 高
     blocks: [03_结果建模, 04_测试生成, 06_执行, 07_独立审核]
-    next_action: B 定义后冻结；阶段六执行真实 rollback，阶段七独立复验，否则 adapter_only。
+    next_action: 先形成可版本绑定的 rollback 标准依据，或由 Human 修订阻塞范围；解除前不得进入 B，后续仍须真实执行与独立复验。
   - question: 观察结论与未来新领域仓 Human 决定的版本绑定 shape
     impact: 中
     blocks: [03_结果建模, 04_测试生成]

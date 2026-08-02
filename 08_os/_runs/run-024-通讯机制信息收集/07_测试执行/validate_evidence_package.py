@@ -4,8 +4,10 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -18,6 +20,7 @@ RUN_REL = Path("08_os/_runs/run-024-通讯机制信息收集")
 EVIDENCE_REL = RUN_REL / "02_信息收集与提炼/evidence"
 BASE = "a66ee671e47f3a90f3a108eb7531c7c84b0f9d37"
 EXPECTED_A_SHA256 = "cfff1e32928db0c8aeb860260b8ed9c34e32994ab1b137e015dcafe5eac0f4a7"
+FULL_COMMIT_RE = re.compile(r"(?<![0-9a-f])[0-9a-f]{40}(?![0-9a-f])")
 
 
 class ValidationFailure(Exception):
@@ -45,6 +48,174 @@ def run_command(args: list[str], cwd: Path) -> subprocess.CompletedProcess[str]:
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
+
+
+def validate_traceability(entries: list[dict], source_ids: set[str]) -> dict:
+    status_counts = {"corroborated": 0, "single_source": 0, "unresolved": 0}
+    independent_total = 0
+    for entry in entries:
+        eid = entry.get("evidence_id", "<missing>")
+        refs = entry.get("source_refs")
+        require(isinstance(refs, list) and refs, f"source refs required: {eid}")
+        independence = entry.get("独立性")
+        require(isinstance(independence, dict), f"independence mapping required: {eid}")
+        count = independence.get("independent_source_count")
+        require(type(count) is int and count > 0, f"independent source count must be positive integer: {eid}")
+        status = independence.get("claim_source_status")
+        require(status in status_counts, f"invalid claim source status: {eid}")
+        require(type(independence.get("critical_claim")) is bool, f"critical claim flag required: {eid}")
+        declared_shared = independence.get("shared_origin_groups")
+        require(isinstance(declared_shared, list), f"shared origin groups must be a list: {eid}")
+        require(len(declared_shared) == len(set(declared_shared)), f"duplicate shared origin group: {eid}")
+        require(bool(str(independence.get("shared_origin", "")).strip()), f"shared origin note required: {eid}")
+
+        original_groups: list[str] = []
+        for ref in refs:
+            require(ref.get("source_id") in source_ids, f"unknown source in {eid}")
+            location = ref.get("location")
+            require(isinstance(location, str) and location.strip(), f"source location required: {eid}")
+            require(type(ref.get("original_source")) is bool, f"original_source must be boolean: {eid}")
+            group = ref.get("independence_group")
+            require(isinstance(group, str) and group.strip(), f"independence group required: {eid}")
+            if ref["original_source"]:
+                require(FULL_COMMIT_RE.search(location) is not None, f"original source lacks immutable commit anchor: {eid}")
+                require("core任务类型枚举_v1.json" not in location, f"derived enumeration marked original: {eid}")
+                original_groups.append(group)
+
+        require(original_groups, f"at least one original source required: {eid}")
+        actual_count = len(set(original_groups))
+        require(count == actual_count, f"independent source count/ref groups mismatch: {eid}")
+        actual_shared = sorted(group for group in set(original_groups) if original_groups.count(group) > 1)
+        require(sorted(declared_shared) == actual_shared, f"shared origin groups mismatch: {eid}")
+        if count >= 2:
+            require(status == "corroborated", f"multi-source claim must be corroborated: {eid}")
+        elif independence["critical_claim"]:
+            require(status in {"single_source", "unresolved"}, f"critical single-source claim not exposed: {eid}")
+        status_counts[status] += 1
+        independent_total += count
+
+    return {"independent_source_total": independent_total, "status_counts": status_counts}
+
+
+def validate_source_ref_resolution(repo: Path, entries: list[dict]) -> dict:
+    original_refs = 0
+    derived_refs = 0
+    for entry in entries:
+        eid = entry["evidence_id"]
+        for ref in entry["source_refs"]:
+            location = ref["location"]
+            if not ref["original_source"]:
+                derived_path = location.split("::", 1)[0]
+                require(derived_path.startswith(RUN_REL.as_posix() + "/"), f"derived ref outside run: {eid}")
+                require((repo / derived_path).is_file(), f"derived ref cannot be resolved: {eid}")
+                derived_refs += 1
+                continue
+
+            locator, commit = location.rsplit("@", 1)
+            require(FULL_COMMIT_RE.fullmatch(commit) is not None, f"source commit anchor malformed: {eid}")
+            require(
+                run_command(["git", "cat-file", "-e", f"{commit}^{{commit}}"], repo).returncode == 0,
+                f"source commit cannot be resolved: {eid}",
+            )
+            if locator.startswith("git-ls-tree::"):
+                prefix = locator.removeprefix("git-ls-tree::").rstrip("*").rstrip("/")
+                observed = run_command(
+                    ["git", "-c", "core.quotepath=false", "ls-tree", "-r", "--name-only", commit, "--", prefix],
+                    repo,
+                )
+                require(observed.returncode == 0 and observed.stdout.strip(), f"Git tree source is empty: {eid}")
+            else:
+                path_field = locator.split("::", 1)[0]
+                for source_path in (item.strip() for item in path_field.split(",")):
+                    require(source_path, f"empty source path: {eid}")
+                    require(
+                        run_command(["git", "cat-file", "-e", f"{commit}:{source_path}"], repo).returncode == 0,
+                        f"source path cannot be resolved: {eid}: {source_path}",
+                    )
+            original_refs += 1
+    return {"original_refs_resolved": original_refs, "derived_refs_resolved": derived_refs}
+
+
+def expect_validation_failure(label: str, action) -> str:
+    try:
+        action()
+    except ValidationFailure:
+        return label
+    raise ValidationFailure(f"negative case was accepted: {label}")
+
+
+def exercise_traceability_negative_cases(entries: list[dict], source_ids: set[str]) -> list[str]:
+    passed = []
+
+    mutated = copy.deepcopy(entries)
+    mutated[0]["独立性"]["independent_source_count"] += 1
+    passed.append(expect_validation_failure("count_group_mismatch", lambda: validate_traceability(mutated, source_ids)))
+
+    mutated = copy.deepcopy(entries)
+    shared = next(item for item in mutated if item["独立性"]["shared_origin_groups"])
+    shared["独立性"]["shared_origin_groups"] = []
+    passed.append(expect_validation_failure("shared_origin_undeclared", lambda: validate_traceability(mutated, source_ids)))
+
+    mutated = copy.deepcopy(entries)
+    single = next(item for item in mutated if item["独立性"]["independent_source_count"] == 1)
+    single["独立性"]["claim_source_status"] = "corroborated"
+    passed.append(expect_validation_failure("critical_single_source_hidden", lambda: validate_traceability(mutated, source_ids)))
+
+    mutated = copy.deepcopy(entries)
+    derived = next(
+        ref
+        for item in mutated
+        for ref in item["source_refs"]
+        if ref["original_source"] is False and "core任务类型枚举_v1.json" in ref["location"]
+    )
+    derived["original_source"] = True
+    passed.append(expect_validation_failure("derived_aggregate_marked_original", lambda: validate_traceability(mutated, source_ids)))
+    return passed
+
+
+def exercise_resolution_negative_case(repo: Path, entries: list[dict]) -> str:
+    mutated = copy.deepcopy(entries)
+    first_original = next(ref for item in mutated for ref in item["source_refs"] if ref["original_source"])
+    first_original["location"] = re.sub(r"[0-9a-f]{40}$", "0" * 40, first_original["location"])
+    return expect_validation_failure("unresolvable_immutable_anchor", lambda: validate_source_ref_resolution(repo, mutated))
+
+
+def validate_transition_semantics(judgment: dict, pointer_text: str) -> list[str]:
+    blockers = [
+        item["question"]
+        for item in judgment.get("unresolved_parts", [])
+        if item.get("impact") == "高" and "03_结果建模" in item.get("blocks", [])
+    ]
+    require(blockers, "high-impact stage-3 blockers must remain explicit")
+    transition = judgment.get("downstream_transition")
+    require(isinstance(transition, dict), "downstream transition mapping required")
+    require(transition.get("status") == "downstream_blocked", "stage-3 blockers require downstream_blocked")
+    require(transition.get("machine_gate") == "blocked", "stage-3 blockers require blocked machine gate")
+    require(transition.get("enter_stage_3") == "prohibited", "stage-3 blockers must prohibit entry")
+    require(sorted(transition.get("blocking_questions", [])) == sorted(blockers), "transition blocker list mismatch")
+    require(transition.get("unblock_conditions"), "explicit unblock conditions required")
+    for marker in (
+        "status: downstream_blocked",
+        "machine_gate: blocked",
+        "enter_stage_3: prohibited",
+        "after_review_pass: targeted_evidence_or_human_block_scope_revision",
+    ):
+        require(marker in pointer_text, f"completion pointer missing transition marker: {marker}")
+    require("才可自动进入下一阶段" not in pointer_text, "completion pointer still claims automatic stage advance")
+    return blockers
+
+
+def exercise_transition_negative_cases(judgment: dict, pointer_text: str) -> list[str]:
+    mutated = copy.deepcopy(judgment)
+    mutated["downstream_transition"]["status"] = "ready_for_stage_3"
+    first = expect_validation_failure(
+        "blocked_scope_marked_ready", lambda: validate_transition_semantics(mutated, pointer_text)
+    )
+    bad_pointer = pointer_text.replace("status: downstream_blocked", "status: ready_for_stage_3", 1)
+    second = expect_validation_failure(
+        "pointer_bypasses_machine_gate", lambda: validate_transition_semantics(judgment, bad_pointer)
+    )
+    return [first, second]
 
 
 def validate(repo: Path) -> dict:
@@ -133,16 +304,17 @@ def validate(repo: Path) -> dict:
         entry_ids.add(eid)
         require(set(entry["research_question_ids"]) <= question_ids, f"unknown RQ in {eid}")
         require(entry["方向"] in {"支持", "推翻", "限制", "冲突", "未决"}, f"invalid direction {eid}")
-        require(entry["source_refs"], f"source refs required: {eid}")
-        for ref in entry["source_refs"]:
-            require(ref.get("source_id") in source_ids, f"unknown source in {eid}")
-            require("location" in ref and "original_source" in ref, f"bad source ref in {eid}")
         relation = entry["与A的关系"]
         require(
             {"supports_success_criteria", "tests_assumptions", "resolves_ambiguities"} <= set(relation),
             f"A relation incomplete: {eid}",
         )
         require({"读到的事实", "合并方推断"} <= set(entry["事实与推断"]), f"fact/inference missing: {eid}")
+
+    traceability = validate_traceability(entries, source_ids)
+    traceability_negative_cases = exercise_traceability_negative_cases(entries, source_ids)
+    source_ref_resolution = validate_source_ref_resolution(repo, entries)
+    traceability_negative_cases.append(exercise_resolution_negative_case(repo, entries))
 
     capability_rows = internal.get("old_capability_decisions")
     require(isinstance(capability_rows, list) and len(capability_rows) == 34, "expected 34 capability rows")
@@ -175,6 +347,16 @@ def validate(repo: Path) -> dict:
         require(key in judgment, f"judgment missing {key}")
     require(judgment["stop_decision"].get("stop") is True, "explicit stop decision required")
     require(judgment["stop_decision"].get("basis"), "stop basis required")
+    run_metadata = load_yaml(repo / RUN_REL / "run.yml")
+    require(
+        run_metadata.get("lifecycle") == "downstream_blocked_ready_for_independent_re_review",
+        "run lifecycle does not expose downstream blocker",
+    )
+    require(run_metadata.get("machine_gate") == "blocked", "run metadata machine gate must remain blocked")
+    require(run_metadata.get("enter_stage_3") == "prohibited", "run metadata must prohibit stage 3")
+    pointer_text = (repo / RUN_REL / "08_结论/完成指针.md").read_text(encoding="utf-8")
+    stage3_blockers = validate_transition_semantics(judgment, pointer_text)
+    transition_negative_cases = exercise_transition_negative_cases(judgment, pointer_text)
 
     for key in ("searched", "empty_returns", "truncations", "inaccessible_sources", "search_asymmetry"):
         require(isinstance(boundary.get(key), list) and boundary[key], f"boundary missing {key}")
@@ -248,6 +430,15 @@ def validate(repo: Path) -> dict:
         "does not import task validator" in independent.get("measurement_tool", ""),
         "independent measurement tool boundary missing",
     )
+    independent_checks = independent.get("checks", {})
+    for check_name in (
+        "traceability_count_matches_groups",
+        "traceability_shared_groups_complete",
+        "critical_single_sources_exposed",
+        "derived_enumeration_not_original",
+        "stage3_transition_blocked",
+    ):
+        require(independent_checks.get(check_name) is True, f"independent measurement missing {check_name}")
 
     forbidden_dirs = [repo / RUN_REL / "03_结果建模", repo / RUN_REL / ".ai"]
     require(not any(path.exists() for path in forbidden_dirs), "forbidden result-modeling or .ai path present")
@@ -281,6 +472,13 @@ def validate(repo: Path) -> dict:
             "research_questions": len(question_ids),
             "sources": len(source_ids),
             "evidence_entries": len(entry_ids),
+            "independent_sources_counted": traceability["independent_source_total"],
+            "claim_source_status_counts": traceability["status_counts"],
+            "traceability_negative_cases": traceability_negative_cases,
+            "source_ref_resolution": source_ref_resolution,
+            "transition_negative_cases": transition_negative_cases,
+            "high_impact_stage3_blockers": len(stage3_blockers),
+            "machine_gate_blocked": True,
             "capability_decisions": len(capability_ids),
             "ambiguities": len(ambiguity_ids),
             "enumeration_sha256": enumeration_sha256,
