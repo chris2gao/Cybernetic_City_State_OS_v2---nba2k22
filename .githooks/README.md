@@ -27,8 +27,21 @@ unguarded until someone sets it. `install.ps1` does it and reports the result.
 | :--- | :--- |
 | Non-fast-forward push (force, rebase, squash, amend of published history) | Refused. **No override.** |
 | Push to `master` / `main` | Refused unless `CITYSTATE_ALLOW_MASTER=1` is set for that command |
-| Deleting a remote branch | Refused |
+| Deleting `master` / `main` | Refused unless `CITYSTATE_ALLOW_MASTER=1` is set for that command |
+| Deleting an ordinary remote branch | **Allowed** since 2026-08-02 |
 | Normal push to a feature branch | Allowed |
+
+Branch deletion was refused with no override until 2026-08-02. Removing it was not
+a relaxation for its own sake. With no override, the only way to delete a branch
+was `git push --no-verify`, and that turns off *every* check in this hook at once —
+including the non-fast-forward guard. Routine cleanup and history rewriting shared
+a single switch, so every branch tidy-up meant reaching for the lever that also
+unlocks the one thing this repository can never undo. Deleting a merged branch
+costs nothing; rewriting history costs every fork at once. They are now separate.
+
+Deletion is still worth doing carefully — record the branch names and their SHAs
+before deleting, because an unmerged branch's commits become unreachable and are
+eventually collected. The hook no longer does that thinking for you.
 
 Authorized master push, after independent audit:
 

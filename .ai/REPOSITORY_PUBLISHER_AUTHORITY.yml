@@ -77,6 +77,12 @@ capabilities:
   fast_forward_master: true
   merge_when_strategy_is_Human_approved: true
   remote_readback_and_audit: true
+  # Moved out of the destructive set on 2026-08-02. Deleting a merged branch
+  # loses no information: its commits stay reachable from master. It is not in
+  # the same class as rewriting history, and pairing them meant every cleanup
+  # reached for `--no-verify`, which unlocks both. Record name and sha before
+  # deleting an unmerged branch - those commits do become collectable.
+  delete_remote_branch: true
 
 # Not "insufficient permission". These are unrecoverable, so each one needs a
 # current Human authorization bound to that specific action - being trusted does
@@ -84,7 +90,6 @@ capabilities:
 destructive_or_irreversible:
   force_push: action_bound_Human_authorization_required
   rewrite_published_history: action_bound_Human_authorization_required
-  delete_remote_branch: action_bound_Human_authorization_required
   delete_master_or_repository: action_bound_Human_authorization_required
   change_repository_visibility_or_credentials: action_bound_Human_authorization_required
   activate_runtime_scheduler_or_coordinator: action_bound_Human_authorization_required

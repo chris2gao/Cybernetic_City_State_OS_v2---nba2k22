@@ -19,8 +19,13 @@ mechanism_version: 1
 guards:
   - path: ".githooks/pre-push"
     purpose: >-
-      Refuses non-fast-forward pushes to any ref, pushes to master or main
-      without per-command authorization, and deletion of a remote branch.
+      Refuses non-fast-forward pushes to any ref, and pushes to or deletion of
+      master or main without per-command authorization. Deletion of an ordinary
+      remote branch was refused until 2026-08-02 and is now allowed: with no
+      override for it, the only route was `--no-verify`, which disables every
+      check here at once, so routine branch cleanup and history rewriting shared
+      one switch. Separating them removes a standing reason to reach for the
+      lever that also unlocks the unrepairable action.
     loader: "git, when core.hooksPath points at .githooks"
     loader_class: external_tool_convention
     transport_scope: local_git
@@ -48,7 +53,14 @@ guards:
       unauthorized master push is refused, the same push with
       CITYSTATE_ALLOW_MASTER=1 is allowed, an ordinary fast-forward to a feature
       branch is allowed, force-pushing an ancestor over a published branch is
-      refused, and deleting a remote branch is refused.
+      refused, and deleting a remote branch is refused. The fifth case no longer
+      holds: branch deletion was opened on 2026-08-02 and only trunk deletion is
+      still gated. install.ps1 measures the master case alone, so it did not need
+      to change - which is exactly why it was never sufficient evidence for this
+      entry. The decision table is now measured by
+      .githooks/test_pre_push_logic.ps1, nine cases driven through stdin with no
+      remote involved, including the one that matters most: CITYSTATE_ALLOW_MASTER
+      must not also unlock a non-fast-forward push to master.
     cache_dirs: []
     failure_surfacing: "never until misuse"
     failure_note: >-
@@ -87,6 +99,26 @@ guards:
     evidence: "its own output; it exits non-zero when the guard does not fire"
     cache_dirs: []
     failure_surfacing: "immediately, by design - it refuses to report success"
+    deletion_rule: protected
+
+  - path: ".githooks/test_pre_push_logic.ps1"
+    purpose: >-
+      Exercises the pre-push decision table offline by feeding it the same
+      stdin git would. install.ps1 answers "is the guard installed and does it
+      fire"; this answers "what does it decide", which is the question that
+      changes whenever the rules change.
+    loader: "Human or development executor, after any edit to .githooks/pre-push"
+    loader_class: in_repo_program
+    discovery: "referenced from .githooks/README.md and from this registry"
+    evidence: >-
+      its own exit code; it returns non-zero when any of the nine cases departs
+      from the specified behaviour. Two harness defects were found and fixed
+      while writing it - a PowerShell pipe appending CRLF into the null-sha
+      comparison, and a parameter named $args shadowing the automatic variable -
+      each of which had produced a confident wrong verdict first. That is the
+      argument for keeping the cases in the repository rather than retyping them.
+    cache_dirs: []
+    failure_surfacing: "immediately, by design - it exits non-zero"
     deletion_rule: protected
 
   - path: ".githooks/.gitattributes"

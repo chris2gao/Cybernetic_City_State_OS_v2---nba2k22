@@ -5,7 +5,9 @@
 #   - core history is never rewritten (every domain fork shares this ancestry;
 #     one rewrite makes all of them unmergeable, and it cannot be repaired after)
 #   - master moves only after independent audit and human authorization
-#   - remote branches are not deleted by an agent
+#   - the trunk itself is not deleted without that same authorization
+#
+# Deleting an ordinary remote branch is NOT guarded here. See the note below.
 #
 # Enable once per clone:   git config core.hooksPath .githooks
 #
@@ -21,10 +23,27 @@ say() { printf '%s\n' "$*" >&2; }
 while read -r local_ref local_sha remote_ref remote_sha; do
 	[ -z "$local_ref" ] && continue
 
+	# Deleting a remote ref. Open as of 2026-08-02 by human decision, after a
+	# cleanup of 34 branches showed the cost of the previous rule: with no
+	# override, the only way through was `--no-verify`, which switches off every
+	# check at once - including the non-fast-forward guard below. Branch deletion
+	# and history rewriting shared one switch, and the dangerous one rode along
+	# with the routine one. Deleting a merged branch loses nothing; rewriting
+	# history cannot be undone for any fork. They should not be the same lever.
+	#
+	# This must `continue` rather than fall through: a deletion has no local
+	# commit, so the ancestry check below would compare against the null sha,
+	# fail, and refuse the deletion as if it were a rewrite.
 	if [ "$local_sha" = "$Z40" ]; then
-		say "BLOCKED  deleting remote ref: $remote_ref"
-		say "         Deletion is a human decision."
-		fail=1
+		case "$remote_ref" in
+		refs/heads/master | refs/heads/main)
+			if [ "$CITYSTATE_ALLOW_MASTER" != "1" ]; then
+				say "BLOCKED  deleting $remote_ref without authorization."
+				say "         Branch deletion is open; deleting the trunk is not."
+				fail=1
+			fi
+			;;
+		esac
 		continue
 	fi
 
