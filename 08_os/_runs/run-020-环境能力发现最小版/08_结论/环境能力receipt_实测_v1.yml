@@ -1,0 +1,242 @@
+{
+  "schema_version": "citystate.environment_capability_receipt.v1",
+  "receipt_id": "run-020.environment-capability.local.v1",
+  "task_id": "os-v2-environment-capability-receipt-minimal-001",
+  "measured_at": "2026-08-02T07:52:27.3890407Z",
+  "environment_class": {
+    "observations": [
+      {
+        "id": "os_family",
+        "status": "observed",
+        "value": "Windows_NT",
+        "measurement_source": {"kind": "command", "probe": "Environment OS version probe", "result": "value_observed", "exit_code": 0}
+      },
+      {
+        "id": "os_version",
+        "status": "observed",
+        "value": "10.0.19045.0",
+        "measurement_source": {"kind": "command", "probe": "Environment OS version probe", "result": "value_observed", "exit_code": 0}
+      },
+      {
+        "id": "architecture",
+        "status": "observed",
+        "value": "X64",
+        "measurement_source": {"kind": "command", "probe": "RuntimeInformation OSArchitecture probe", "result": "value_observed", "exit_code": 0}
+      },
+      {
+        "id": "shell",
+        "status": "observed",
+        "value": {"family": "PowerShell", "edition": "Core", "version": "7.6.4"},
+        "measurement_source": {"kind": "command", "probe": "PowerShell version table probe", "result": "value_observed", "exit_code": 0}
+      },
+      {
+        "id": "path_separator",
+        "status": "observed",
+        "value": "backslash_primary",
+        "measurement_source": {"kind": "derived_probe", "probe": "IO path separator semantic probe", "result": "backslash_observed", "exit_code": 0}
+      },
+      {
+        "id": "path_case_sensitivity",
+        "status": "observed",
+        "value": "case_insensitive_in_task_worktree",
+        "limitations": ["result applies to the current task worktree filesystem"],
+        "measurement_source": {"kind": "derived_probe", "probe": "run-local mixed-case file lookup", "result": "alternate_case_resolved", "exit_code": 0}
+      },
+      {
+        "id": "path_length_limit",
+        "status": "not_observable",
+        "reason": "no bounded non-destructive probe can establish the full effective host filesystem and process path limit",
+        "measurement_source": {"kind": "derived_probe", "probe": "capability-boundary assessment", "result": "not_observable", "exit_code": null}
+      }
+    ]
+  },
+  "model_availability": {
+    "observations": [
+      {
+        "id": "active_route",
+        "status": "observed",
+        "value": {"provider": "OpenAI", "model_tier": "gpt-5.6-sol", "reasoning_effort": "high", "mode": "standard"},
+        "measurement_source": {"kind": "task_packet", "probe": "current Human-authorized executor profile", "result": "route_bound", "exit_code": null}
+      },
+      {
+        "id": "gpt_5_6_sol",
+        "status": "observed",
+        "value": {
+          "runtime_exposed": true,
+          "runtime_effort_labels": ["low", "medium", "high", "xhigh", "max", "ultra"],
+          "project_authorized_efforts": ["low", "medium", "high", "max"],
+          "modes": ["standard", "ultra"]
+        },
+        "measurement_source": {"kind": "host_runtime_contract", "probe": "current session model capability catalog plus project routing rule", "result": "tier_exposed", "exit_code": null}
+      },
+      {
+        "id": "gpt_5_6_terra",
+        "status": "observed",
+        "value": {
+          "runtime_exposed": true,
+          "runtime_effort_labels": ["low", "medium", "high", "xhigh", "max", "ultra"],
+          "project_authorized_efforts": ["low", "medium", "high"],
+          "modes": ["standard", "ultra"]
+        },
+        "measurement_source": {"kind": "host_runtime_contract", "probe": "current session model capability catalog plus project routing rule", "result": "tier_exposed", "exit_code": null}
+      },
+      {
+        "id": "gpt_5_6_luna",
+        "status": "not_observable",
+        "reason": "the current host capability catalog does not expose this tier",
+        "measurement_source": {"kind": "host_runtime_contract", "probe": "current session model capability catalog", "result": "not_exposed", "exit_code": null}
+      },
+      {
+        "id": "ultra_mode_gate",
+        "status": "observed",
+        "value": {
+          "host_mode_exposed": true,
+          "authorized_for_current_task": false,
+          "requirements": ["positive rollout_token_budget", "bounded subagent scope", "explicit stop conditions"]
+        },
+        "measurement_source": {"kind": "repository_protocol", "probe": "08 OS single-window model routing rule", "result": "gate_read", "exit_code": null}
+      }
+    ]
+  },
+  "toolchain": {
+    "observations": [
+      {
+        "id": "git",
+        "status": "observed",
+        "value": {"installed": true, "verified_runnable": true, "version": "2.53.0.windows.2"},
+        "measurement_source": {"kind": "command", "probe": "git --version", "result": "exit_0", "exit_code": 0}
+      },
+      {
+        "id": "python",
+        "status": "observed",
+        "value": {"installed": true, "verified_runnable": true, "version": "3.14.6"},
+        "measurement_source": {"kind": "command", "probe": "python --version", "result": "exit_0", "exit_code": 0}
+      },
+      {
+        "id": "node",
+        "status": "observed",
+        "value": {"installed": true, "verified_runnable": true, "version": "24.14.1"},
+        "measurement_source": {"kind": "command", "probe": "node --version", "result": "exit_0", "exit_code": 0}
+      },
+      {
+        "id": "check_jsonschema",
+        "status": "observed",
+        "value": {"registered": true, "installed": true, "verified_runnable": true, "version": "0.37.4"},
+        "measurement_source": {"kind": "command", "probe": "check-jsonschema --version and registered wrapper positive probe", "result": "exit_0", "exit_code": 0}
+      },
+      {
+        "id": "mutmut_registry",
+        "status": "observed",
+        "value": {"registered": true, "expected_version": "3.6.0", "mount": "on_demand_wsl_cli"},
+        "limitations": ["registry evidence is not current runtime availability"],
+        "measurement_source": {"kind": "repository_protocol", "probe": "skills and tools registry", "result": "registered_entry_read", "exit_code": null}
+      },
+      {
+        "id": "mutmut_runtime_version",
+        "status": "not_observable",
+        "reason": "tool is absent from both host PATH and default WSL PATH; no authorized runtime locator was supplied",
+        "measurement_source": {"kind": "command", "probe": "host and default WSL PATH version probes", "result": "command_not_found", "exit_code": null}
+      },
+      {
+        "id": "cosmic_ray_registry",
+        "status": "observed",
+        "value": {"registered": true, "expected_version": "8.4.6", "mount": "on_demand_wsl_cli"},
+        "limitations": ["registry evidence is not current runtime availability"],
+        "measurement_source": {"kind": "repository_protocol", "probe": "skills and tools registry", "result": "registered_entry_read", "exit_code": null}
+      },
+      {
+        "id": "cosmic_ray_runtime_version",
+        "status": "not_observable",
+        "reason": "tool is absent from both host PATH and default WSL PATH; no authorized runtime locator was supplied",
+        "measurement_source": {"kind": "command", "probe": "host and default WSL PATH version probes", "result": "command_not_found", "exit_code": null}
+      }
+    ]
+  },
+  "publication_transport": {
+    "observations": [
+      {
+        "id": "local_git",
+        "status": "observed",
+        "value": {"available": true, "selected_for_task": true, "hook_guard_has_execution_opportunity": true, "hooks_path": ".githooks"},
+        "measurement_source": {"kind": "command", "probe": "git version and core.hooksPath probes", "result": "local_gate_available", "exit_code": 0}
+      },
+      {
+        "id": "github_cli",
+        "status": "observed",
+        "value": {"available": true, "authenticated": true, "selected_for_task": false, "hook_guard_has_execution_opportunity": false, "replacement_gate_required_if_selected": true},
+        "measurement_source": {"kind": "command", "probe": "gh version and auth-status exit probes", "result": "available_authenticated", "exit_code": 0}
+      },
+      {
+        "id": "github_api_connector",
+        "status": "observed",
+        "value": {"available": false, "selected_for_task": false, "hook_guard_has_execution_opportunity": false, "replacement_gate_required_if_selected": true},
+        "measurement_source": {"kind": "host_runtime_contract", "probe": "current session connector surface", "result": "not_exposed", "exit_code": null}
+      }
+    ]
+  },
+  "boundaries": {
+    "observations": [
+      {
+        "id": "filesystem_sandbox",
+        "status": "observed",
+        "value": {"host_sandbox": "unrestricted", "task_write_scope": "allowed_paths_only", "secret_material": "forbidden"},
+        "measurement_source": {"kind": "host_runtime_contract", "probe": "current filesystem permission profile plus task allowlist", "result": "boundary_read", "exit_code": null}
+      },
+      {
+        "id": "process_elevation",
+        "status": "observed",
+        "value": false,
+        "measurement_source": {"kind": "command", "probe": "Windows administrator-role boolean probe", "result": "not_elevated", "exit_code": 0}
+      },
+      {
+        "id": "network",
+        "status": "observed",
+        "value": {"host_network_enabled": true, "repository_remote_reachable": true},
+        "limitations": ["repository reachability does not prove arbitrary endpoint reachability"],
+        "measurement_source": {"kind": "command", "probe": "remote master read probe plus host network contract", "result": "repository_remote_reached", "exit_code": 0}
+      },
+      {
+        "id": "wsl",
+        "status": "observed",
+        "value": {"available": true, "default_path_tools_verified": false},
+        "measurement_source": {"kind": "command", "probe": "WSL availability and default PATH probes", "result": "wsl_available", "exit_code": 0}
+      }
+    ]
+  },
+  "runtime_limits": {
+    "observations": [
+      {
+        "id": "shell_timeout_ceiling",
+        "status": "not_observable",
+        "reason": "the current host exposes per-call timeout configuration but no single stable runtime ceiling",
+        "measurement_source": {"kind": "host_runtime_contract", "probe": "current command tool contract", "result": "not_observable", "exit_code": null}
+      },
+      {
+        "id": "tool_output_ceiling",
+        "status": "not_observable",
+        "reason": "the current host exposes output budgeting but not one stable byte ceiling for every tool",
+        "measurement_source": {"kind": "host_runtime_contract", "probe": "current tool output contracts", "result": "not_observable", "exit_code": null}
+      },
+      {
+        "id": "agent_concurrency_slots",
+        "status": "observed",
+        "value": 4,
+        "measurement_source": {"kind": "host_runtime_contract", "probe": "current collaboration runtime contract", "result": "value_exposed", "exit_code": null}
+      },
+      {
+        "id": "current_execution_mode",
+        "status": "observed",
+        "value": {"mode": "standard", "subagents_authorized": false, "rollout_token_budget": null},
+        "measurement_source": {"kind": "task_packet", "probe": "current executor profile", "result": "mode_bound", "exit_code": null}
+      }
+    ]
+  },
+  "invalidation_events": [
+    {"id": "host_runtime_changed", "trigger": "model catalog, tool surface, sandbox, network or permission profile changes", "required_action": "remeasure_before_use"},
+    {"id": "os_or_shell_changed", "trigger": "OS build, shell edition or shell version changes", "required_action": "remeasure_before_use"},
+    {"id": "toolchain_changed", "trigger": "PATH, registered wrapper, tool version or WSL runtime locator changes", "required_action": "remeasure_before_use"},
+    {"id": "publication_gate_changed", "trigger": "transport, authentication, remote head or hooks configuration changes", "required_action": "remeasure_before_use"},
+    {"id": "filesystem_changed", "trigger": "worktree volume, case-sensitivity setting or path policy changes", "required_action": "remeasure_before_use"},
+    {"id": "task_authority_changed", "trigger": "allowed paths, prohibitions, task mode or Human authorization changes", "required_action": "remeasure_before_use"}
+  ]
+}

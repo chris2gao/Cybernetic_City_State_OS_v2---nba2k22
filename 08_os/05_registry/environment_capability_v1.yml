@@ -1,0 +1,26 @@
+schema_version: citystate.registry.v1
+registry_id: environment_capability_v1
+mechanism_version: 1
+entries:
+  - path: 08_os/03_mechanisms/environment_capability/{README.md,实现/正例与负例说明_v1.md}
+    purpose: 环境与能力 receipt 的 canonical 语义、失效条件、路径脱敏及正负例合同
+    loader: Human and task-directed environment capability review
+    loader_class: external_tool_convention
+    discovery: referenced from 08_os/03_mechanisms/README.md
+    evidence: 08_os/_runs/run-020-环境能力发现最小版/07_测试执行/results.json
+    cache_dirs: []
+    failure_surfacing: next P1 or P2 input review
+    deletion_rule: protected
+  - path: 08_os/03_mechanisms/environment_capability/实现/环境能力receipt_schema_v1.yml
+    purpose: 环境能力 receipt v1 的机器结构、可观测状态机与递归个人绝对路径禁令
+    loader: task-directed check-jsonschema validation through an exact-byte temporary JSON copy
+    loader_class: in_repo_program
+    discovery: referenced from mechanism README
+    evidence: 08_os/_runs/run-020-环境能力发现最小版/07_测试执行/results.json
+    cache_dirs:
+      - 08_os/_runs/run-020-环境能力发现最小版/_runtime/
+    failure_surfacing: current schema validation or next receipt consumption
+    deletion_rule: protected
+excluded:
+  - 08_os/_runs/**
+  - 08_os/_runs/<run-id>/_runtime/**
