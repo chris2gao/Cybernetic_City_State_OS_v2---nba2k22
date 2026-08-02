@@ -1,0 +1,17 @@
+schema_version: citystate.run.v1
+run_id: run-022-环境能力checker提升与回归
+task_id: env-capability-checker-promotion-001
+base: a0a2cdbb8d9e8d2e8ea2c50bcbcef601088e72dc
+branch: dev/env-capability-checker-promotion-001
+risk_tier: T1_standard
+status: awaiting_independent_review
+allowed_paths:
+  - 08_os/06_execution/validators/environment_capability/
+  - 08_os/03_mechanisms/environment_capability/实现/正例与负例说明_v1.md
+  - 08_os/05_registry/environment_capability_v1.yml
+  - 08_os/_runs/run-022-环境能力checker提升与回归/
+prohibitions:
+  - no_schema_regex_expansion
+  - no_modification_of_run_020_evidence
+  - no_changes_to_measured_receipt
+run_id_note: task packet proposed run-021, but full Git history already contains run-021 review evidence; run-022 was the first unused id

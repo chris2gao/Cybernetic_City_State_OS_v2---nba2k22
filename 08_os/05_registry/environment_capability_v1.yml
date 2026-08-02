@@ -21,6 +21,24 @@ entries:
       - 08_os/_runs/run-020-环境能力发现最小版/_runtime/
     failure_surfacing: current schema validation or next receipt consumption
     deletion_rule: protected
+  - path: 08_os/06_execution/validators/environment_capability/README.md
+    purpose: 环境能力 receipt canonical validator 的调用方式、四向结果合同与 schema-only 白名单边界
+    loader: Human and task-directed environment capability validation
+    loader_class: external_tool_convention
+    discovery: referenced from this registry
+    evidence: 08_os/_runs/run-022-环境能力checker提升与回归/07_测试执行/results.json
+    cache_dirs: []
+    failure_surfacing: current validation invocation
+    deletion_rule: protected
+  - path: 08_os/06_execution/validators/environment_capability/validate.py
+    purpose: 组合 canonical schema wrapper 与独立 checker，并对 schema-only 分歧做可重验证的白名单分类
+    loader: task-directed Python invocation
+    loader_class: in_repo_program
+    discovery: paired with the validator README in this registry
+    evidence: 08_os/_runs/run-022-环境能力checker提升与回归/07_测试执行/results.json
+    cache_dirs: []
+    failure_surfacing: process exit and structured JSON output
+    deletion_rule: protected
 excluded:
   - 08_os/_runs/**
   - 08_os/_runs/<run-id>/_runtime/**
