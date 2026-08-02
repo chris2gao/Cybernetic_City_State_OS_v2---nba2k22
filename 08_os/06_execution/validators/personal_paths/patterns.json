@@ -1,21 +1,22 @@
 {
-  "schema_version": "citystate.personal-path-patterns.v1",
+  "schema_version": "citystate.personal-path-patterns.v2",
   "patterns": [
     {
       "id": "windows_user_home",
-      "segments": ["C:", "\\Users", "\\gk"]
+      "segments": ["C:", "\\Users", "\\gk"],
+      "variants": ["canonical", "escaped_backslash", "forward_slash"],
+      "case_insensitive": true
     },
     {
       "id": "linux_user_home",
-      "segments": ["/", "home", "/", "gk"]
+      "segments": ["/", "home", "/", "gk"],
+      "variants": ["canonical"]
     },
     {
       "id": "windows_workspace_root",
-      "segments": ["E:", "\\", "newStand"]
-    },
-    {
-      "id": "portable_workspace_root",
-      "segments": ["E:", "/", "newStand"]
+      "segments": ["E:", "\\", "newStand"],
+      "variants": ["canonical", "escaped_backslash", "forward_slash"],
+      "case_insensitive": true
     }
   ]
 }

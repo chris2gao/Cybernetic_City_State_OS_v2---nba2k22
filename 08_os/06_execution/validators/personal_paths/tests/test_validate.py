@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.util
 import json
 from pathlib import Path
 import subprocess
@@ -12,6 +13,11 @@ ROOT = Path(__file__).resolve().parents[1]
 VALIDATOR = ROOT / "validate.py"
 PATTERNS = ROOT / "patterns.json"
 FIXTURE = Path(__file__).parent / "fixtures/personal_path_segments.json"
+VALIDATOR_SPEC = importlib.util.spec_from_file_location("personal_paths_validate", VALIDATOR)
+assert VALIDATOR_SPEC and VALIDATOR_SPEC.loader
+VALIDATOR_MODULE = importlib.util.module_from_spec(VALIDATOR_SPEC)
+sys.modules[VALIDATOR_SPEC.name] = VALIDATOR_MODULE
+VALIDATOR_SPEC.loader.exec_module(VALIDATOR_MODULE)
 
 
 def git(repo: Path, *args: str) -> str:
@@ -63,6 +69,13 @@ class PersonalPathValidatorTests(unittest.TestCase):
         (self.repo / relative).write_text(f"artifact={value}\n", encoding="utf-8")
         return value
 
+    def write_fixture(self, relative: str, value: str) -> None:
+        (self.repo / relative).write_text(f"artifact={value}\n", encoding="utf-8")
+
+    def windows_user_home(self) -> str:
+        fixture = json.loads(FIXTURE.read_text(encoding="utf-8"))
+        return "".join(fixture["segments"])
+
     def test_tracked_clean_returns_zero(self) -> None:
         result = self.invoke("--mode", "tracked")
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -91,9 +104,32 @@ class PersonalPathValidatorTests(unittest.TestCase):
         self.assertEqual(result.returncode, 2)
         self.assertIn("--base is required", result.stderr)
 
+    def test_escaped_backslash_variant_is_detected(self) -> None:
+        value = self.windows_user_home().replace("\\", "\\\\") + "\\x"
+        self.write_fixture("escaped.txt", value)
+        git(self.repo, "add", "escaped.txt")
+        result = self.invoke("--mode", "tracked")
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertIn("escaped.txt:1:windows_user_home", result.stdout)
+
+    def test_forward_slash_variant_is_detected(self) -> None:
+        value = self.windows_user_home().replace("\\", "/") + "/y"
+        self.write_fixture("forward.txt", value)
+        git(self.repo, "add", "forward.txt")
+        result = self.invoke("--mode", "tracked")
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertIn("forward.txt:1:windows_user_home", result.stdout)
+
+    def test_case_insensitive_variant_is_detected(self) -> None:
+        value = self.windows_user_home().lower() + "\\z"
+        self.write_fixture("case.txt", value)
+        git(self.repo, "add", "case.txt")
+        result = self.invoke("--mode", "tracked")
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertIn("case.txt:1:windows_user_home", result.stdout)
+
     def test_every_default_pattern_is_detected(self) -> None:
-        document = json.loads(PATTERNS.read_text(encoding="utf-8"))
-        values = ["".join(item["segments"]) for item in document["patterns"]]
+        values = [pattern.literal for pattern in VALIDATOR_MODULE.load_patterns(PATTERNS)]
         (self.repo / "all-patterns.txt").write_text("\n".join(values) + "\n", encoding="utf-8")
         git(self.repo, "add", "all-patterns.txt")
         result = self.invoke("--mode", "tracked", "--summary-only")

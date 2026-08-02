@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from dataclasses import dataclass
 import json
 from pathlib import Path
 import subprocess
@@ -12,10 +13,19 @@ EXIT_CLEAN = 0
 EXIT_HITS = 1
 EXIT_ERROR = 2
 DEFAULT_CONFIG = Path(__file__).with_name("patterns.json")
+SUPPORTED_VARIANTS = ("canonical", "escaped_backslash", "forward_slash")
 
 
 class ValidationError(RuntimeError):
     pass
+
+
+@dataclass(frozen=True)
+class CompiledPattern:
+    id: str
+    literal: str
+    case_insensitive: bool
+    search_literal: str
 
 
 def run_git(repo: Path, *args: str) -> list[str]:
@@ -32,7 +42,40 @@ def run_git(repo: Path, *args: str) -> list[str]:
     return [line for line in completed.stdout.splitlines() if line]
 
 
-def load_patterns(path: Path) -> list[tuple[str, str]]:
+def pattern_value(item: dict[str, Any]) -> str:
+    literal = item.get("literal")
+    segments = item.get("segments")
+    if isinstance(literal, str):
+        return literal
+    if isinstance(segments, list) and all(isinstance(part, str) for part in segments):
+        return "".join(segments)
+    raise ValidationError(f"pattern {item['id']} requires literal or string segments")
+
+
+def expand_variants(pattern_id: str, value: str, variants: list[str]) -> list[str]:
+    expanded: list[str] = []
+    seen: set[str] = set()
+    for name in variants:
+        if name == "canonical":
+            candidate = value
+        elif name == "escaped_backslash":
+            candidate = value.replace("\\", "\\\\")
+        elif name == "forward_slash":
+            candidate = value.replace("\\", "/")
+        else:
+            raise ValidationError(
+                f"pattern {pattern_id} uses unsupported variant {name!r}; "
+                f"supported: {', '.join(SUPPORTED_VARIANTS)}"
+            )
+        if not candidate:
+            raise ValidationError(f"pattern {pattern_id} generated an empty variant")
+        if candidate not in seen:
+            expanded.append(candidate)
+            seen.add(candidate)
+    return expanded
+
+
+def load_patterns(path: Path) -> list[CompiledPattern]:
     try:
         document: Any = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
@@ -41,21 +84,28 @@ def load_patterns(path: Path) -> list[tuple[str, str]]:
     if not isinstance(items, list) or not items:
         raise ValidationError("pattern table must contain a non-empty patterns list")
 
-    patterns: list[tuple[str, str]] = []
+    patterns: list[CompiledPattern] = []
     for index, item in enumerate(items):
         if not isinstance(item, dict) or not isinstance(item.get("id"), str):
             raise ValidationError(f"pattern {index} requires a string id")
-        literal = item.get("literal")
-        segments = item.get("segments")
-        if isinstance(literal, str):
-            value = literal
-        elif isinstance(segments, list) and all(isinstance(part, str) for part in segments):
-            value = "".join(segments)
-        else:
-            raise ValidationError(f"pattern {item['id']} requires literal or string segments")
+        value = pattern_value(item)
         if not value:
             raise ValidationError(f"pattern {item['id']} is empty")
-        patterns.append((item["id"], value))
+        variants = item.get("variants", ["canonical"])
+        if not isinstance(variants, list) or not variants or not all(isinstance(name, str) for name in variants):
+            raise ValidationError(f"pattern {item['id']} requires a non-empty string variants list")
+        case_insensitive = item.get("case_insensitive", False)
+        if not isinstance(case_insensitive, bool):
+            raise ValidationError(f"pattern {item['id']} requires a boolean case_insensitive flag")
+        for variant in expand_variants(item["id"], value, variants):
+            patterns.append(
+                CompiledPattern(
+                    id=item["id"],
+                    literal=variant,
+                    case_insensitive=case_insensitive,
+                    search_literal=variant.lower() if case_insensitive else variant,
+                )
+            )
     return patterns
 
 
@@ -86,7 +136,9 @@ def candidate_paths(repo: Path, mode: str, base: str | None) -> list[str]:
     return sorted(changed)
 
 
-def scan_file(path: Path, relative: str, patterns: list[tuple[str, str]]) -> tuple[list[dict[str, Any]], str | None]:
+def scan_file(
+    path: Path, relative: str, patterns: list[CompiledPattern]
+) -> tuple[list[dict[str, Any]], str | None]:
     if path.is_symlink() or not path.is_file():
         return [], "non_regular"
     try:
@@ -102,24 +154,27 @@ def scan_file(path: Path, relative: str, patterns: list[tuple[str, str]]) -> tup
 
     hits: list[dict[str, Any]] = []
     for line_number, line in enumerate(text.splitlines(), start=1):
-        for pattern_id, literal in patterns:
+        lowered_line = line.lower()
+        for pattern in patterns:
+            haystack = lowered_line if pattern.case_insensitive else line
+            literal = pattern.search_literal if pattern.case_insensitive else pattern.literal
             start = 0
             while True:
-                offset = line.find(literal, start)
+                offset = haystack.find(literal, start)
                 if offset < 0:
                     break
                 left = max(0, offset - 40)
-                right = min(len(line), offset + len(literal) + 40)
+                right = min(len(line), offset + len(pattern.literal) + 40)
                 hits.append(
                     {
                         "file": relative,
                         "line": line_number,
-                        "pattern": pattern_id,
-                        "match": literal,
+                        "pattern": pattern.id,
+                        "match": line[offset : offset + len(pattern.literal)],
                         "snippet": line[left:right],
                     }
                 )
-                start = offset + max(1, len(literal))
+                start = offset + max(1, len(pattern.literal))
     return hits, None
 
 

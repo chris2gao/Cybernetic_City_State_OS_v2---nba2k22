@@ -23,12 +23,16 @@
 #>
 param(
     [Parameter(Mandatory = $true)][string]$Name,
-    [string]$Root = "E:\newStand\study",
+    [string]$Root,
     [string]$Owner = "chris2gao",
     [string]$RepoPrefix = "Cybernetic_City_State_OS_v2---",
     [string]$FolderPrefix = "Cybernetic_City_State_OS_v2 - ",
     [string]$CoreRepo = "git@github.com:chris2gao/Cybernetic_City_State_OS_v2---core.git"
 )
+
+if (-not $PSBoundParameters.ContainsKey('Root')) {
+    $Root = Split-Path -Parent $PSScriptRoot
+}
 
 # Deliberately NOT ErrorActionPreference='Stop'. Every step below shells out and
 # checks $LASTEXITCODE explicitly, which is the honest test for a native command.

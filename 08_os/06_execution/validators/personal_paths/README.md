@@ -3,8 +3,8 @@
 This deterministic validator finds configured personal absolute paths in UTF-8 text.
 It scans either every tracked file in the requested repository-relative scopes or
 every file changed from an explicit Git base, including staged, unstaged and
-untracked files. It does not run continuously, use the network, enter boot, or expose
-an MCP surface.
+untracked files. It is an on-demand validator; it does not run continuously, use the
+network, enter boot, or expose an MCP surface.
 
 ## Usage
 
@@ -24,8 +24,14 @@ repository-relative file, line, pattern ID and matching line snippet for every h
 
 `patterns.json` is the default configurable pattern table. A pattern may provide a
 single `literal` or a list of `segments`, which are concatenated before scanning.
-The default table uses segments so the validator does not create its own finding.
-User-specific values belong in configuration, never in validator logic.
+Each entry may also declare a `variants` list. The built-in variant family is
+literal-only and deterministic: `canonical`, `escaped_backslash`, and
+`forward_slash`. Windows-rooted entries may additionally set `case_insensitive: true`
+so one segmented Windows home value can cover canonical, JSON-escaped,
+forward-slash, and lowercase variants without duplicating the personal path in the
+pattern table itself. The default table uses segments so the validator does not
+create its own finding. User-specific values belong in configuration, never in
+validator logic.
 
 ## Exit codes
 
@@ -37,5 +43,13 @@ User-specific values belong in configuration, never in validator logic.
 
 Binary, symlink and non-UTF-8 files are counted as skipped because this validator's
 declared scope is UTF-8 text. Tests cover clean tracked input, a generated negative
-fixture, changed-mode detection, detailed reporting, summary-only reporting, and the
-three exit-code classes.
+fixture, changed-mode detection, escaped-backslash coverage, forward-slash coverage,
+case-insensitive coverage, detailed reporting, summary-only reporting, and the three
+exit-code classes.
+
+## Known limitations
+
+Exit `0` means only that the selected UTF-8 text, under the selected Git scope, did
+not contain any configured variants at scan time. It does not prove the whole
+repository is clean, it does not cover binary or non-UTF-8 files, and it cannot detect
+path families that are absent from `patterns.json`.

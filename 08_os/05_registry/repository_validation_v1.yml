@@ -3,7 +3,7 @@ mechanism_version: 1
 
 validators:
   - path: 08_os/06_execution/validators/personal_paths/README.md
-    purpose: Personal-path validator contract, invocation, configuration and exit-code semantics.
+    purpose: Personal-path validator contract, invocation, variant configuration and exit-code semantics.
     loader: Human or development executor preparing to validate repository evidence.
     loader_class: in_repo_program
     discovery: referenced from 08_os/06_execution/README.md and this registry
@@ -13,7 +13,7 @@ validators:
     deletion_rule: protected
 
   - path: 08_os/06_execution/validators/personal_paths/validate.py
-    purpose: Scan selected tracked or changed UTF-8 repository text for configured personal absolute paths.
+    purpose: Scan selected tracked or changed UTF-8 repository text for configured personal absolute-path variants.
     loader: Python invoked by a Human, development executor or later explicit machine gate.
     loader_class: in_repo_program
     discovery: referenced from its README and this registry
@@ -23,7 +23,7 @@ validators:
     deletion_rule: protected
 
   - path: 08_os/06_execution/validators/personal_paths/patterns.json
-    purpose: Configurable default literal-pattern segments for the personal-path validator.
+    purpose: Configurable default segmented personal-path families, variants and case-sensitivity flags.
     loader: 08_os/06_execution/validators/personal_paths/validate.py
     loader_class: in_repo_program
     discovery: hardcoded default adjacent to validate.py; overridable with --config
@@ -33,7 +33,7 @@ validators:
     deletion_rule: protected
 
   - path: 08_os/06_execution/validators/personal_paths/tests/test_validate.py
-    purpose: Positive, negative, changed-mode, reporting and exit-code regression tests.
+    purpose: Positive, negative, changed-mode, variant coverage, reporting and exit-code regression tests.
     loader: Python unittest discovery or explicit module invocation.
     loader_class: in_repo_program
     discovery: referenced from the validator README and registry evidence fields
