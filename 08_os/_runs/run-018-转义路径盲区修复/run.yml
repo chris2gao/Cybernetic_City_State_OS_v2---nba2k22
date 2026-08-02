@@ -1,5 +1,5 @@
 schema_version: os_development_run.v1
-run_id: run-016-转义路径盲区修复
+run_id: run-018-转义路径盲区修复
 task_id: chatgpt-personal-path-escaped-variant-closure-001
 implementation_base: ee51f38a51d7d928a46cbe0d74e4c284f8606ed7
 work_branch: codex/personal-path-escaped-variant-002
@@ -11,13 +11,13 @@ outputs:
   validator: 08_os/06_execution/validators/personal_paths/validate.py
   pattern_table: 08_os/06_execution/validators/personal_paths/patterns.json
   registry: 08_os/05_registry/repository_validation_v1.yml
-  results: 08_os/_runs/run-016-转义路径盲区修复/07_测试执行/results.json
-  conclusion: 08_os/_runs/run-016-转义路径盲区修复/08_结论/结论.md
+  results: 08_os/_runs/run-018-转义路径盲区修复/07_测试执行/results.json
+  conclusion: 08_os/_runs/run-018-转义路径盲区修复/08_结论/结论.md
 records:
-  task_input: 08_os/_runs/run-016-转义路径盲区修复/01_任务输入/任务包摘要.md
-  validation_matrix: 08_os/_runs/run-016-转义路径盲区修复/03_方案设计/验证矩阵.md
-  blindness_before_fix: 08_os/_runs/run-016-转义路径盲区修复/06_执行/blindness_before_fix.json
-  changed_paths: 08_os/_runs/run-016-转义路径盲区修复/06_执行/changed_paths.txt
+  task_input: 08_os/_runs/run-018-转义路径盲区修复/01_任务输入/任务包摘要.md
+  validation_matrix: 08_os/_runs/run-018-转义路径盲区修复/03_方案设计/验证矩阵.md
+  blindness_before_fix: 08_os/_runs/run-018-转义路径盲区修复/06_执行/blindness_before_fix.json
+  changed_paths: 08_os/_runs/run-018-转义路径盲区修复/06_执行/changed_paths.txt
 validation:
   blindness_reproduced_before_fix: true
   variants_covered:

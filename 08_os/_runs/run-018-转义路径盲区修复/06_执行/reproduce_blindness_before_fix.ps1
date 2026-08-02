@@ -4,7 +4,7 @@ $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $repoRoot = Resolve-Path (Join-Path $scriptDir '..\..\..\..')
 $validator = Join-Path $repoRoot '08_os\06_execution\validators\personal_paths\validate.py'
 $config = Join-Path $repoRoot '08_os\06_execution\validators\personal_paths\patterns.json'
-$probeRelativePath = '08_os/_runs/run-016-转义路径盲区修复/06_执行/_blindness_probe_before_fix.txt'
+$probeRelativePath = '08_os/_runs/run-018-转义路径盲区修复/06_执行/_blindness_probe_before_fix.txt'
 $probePath = Join-Path $repoRoot $probeRelativePath
 
 $windowsDrive = 'C:'
