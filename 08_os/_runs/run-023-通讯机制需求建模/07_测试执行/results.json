@@ -1,0 +1,81 @@
+{
+  "schema_version": "communication_requirement_model_validation.v1",
+  "base": "dab1ecef2d34c4cb70dfa6529a2b2f9f4612570b",
+  "schema_ref": "08_os/01_workflow/01_需求建模/实现/需求建模schema_v1.md",
+  "schema_sha256": "09174e83e0e8697cba7882a978a21884a1bff762e0d7afec4fe5e4b5beda2d14",
+  "candidate_sha256": "cfff1e32928db0c8aeb860260b8ed9c34e32994ab1b137e015dcafe5eac0f4a7",
+  "test_count": 14,
+  "tests": [
+    {
+      "test_id": "exact_eight_slots",
+      "passed": true,
+      "detail": "top-level keys equal schema v1"
+    },
+    {
+      "test_id": "goal_nonempty",
+      "passed": true,
+      "detail": "目标 is a non-empty string"
+    },
+    {
+      "test_id": "success_criteria_shape",
+      "passed": true,
+      "detail": "each criterion has 描述 and 可观察"
+    },
+    {
+      "test_id": "success_criteria_observable",
+      "passed": true,
+      "detail": "all criteria are non-empty and observable"
+    },
+    {
+      "test_id": "boundaries_nonempty",
+      "passed": true,
+      "detail": "边界 is a non-empty string array"
+    },
+    {
+      "test_id": "constraints_shape",
+      "passed": true,
+      "detail": "约束 is a string array"
+    },
+    {
+      "test_id": "terms_shape",
+      "passed": true,
+      "detail": "术语 items match schema v1"
+    },
+    {
+      "test_id": "related_domains_shape",
+      "passed": true,
+      "detail": "关联领域 is directly consumable by stage 2"
+    },
+    {
+      "test_id": "assumptions_shape",
+      "passed": true,
+      "detail": "every assumption has a failure consequence"
+    },
+    {
+      "test_id": "ambiguities_shape",
+      "passed": true,
+      "detail": "未解歧义 records impact and scoped blocking"
+    },
+    {
+      "test_id": "goal_keywords_defined",
+      "passed": true,
+      "detail": "all configured goal keywords appear in 术语"
+    },
+    {
+      "test_id": "v2_eleven_requirements_covered",
+      "passed": true,
+      "detail": "v2 section 3.2 R1-R11 each map to one observable criterion"
+    },
+    {
+      "test_id": "candidate_digest_bound",
+      "passed": true,
+      "detail": "confirmation template binds candidate path, version, and SHA-256"
+    },
+    {
+      "test_id": "human_gate_unsigned",
+      "passed": true,
+      "detail": "all Human-owned confirmation fields remain null"
+    }
+  ],
+  "all_passed": true
+}
