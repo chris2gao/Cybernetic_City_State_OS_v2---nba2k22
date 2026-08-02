@@ -10,7 +10,8 @@
 > 历史基线：v1 来自 `origin/dev/os-v2-replacement-program-plan-001@034cebc5`，
 > 本版依据独立审核、Human 裁定和 P0 实测重新落地，不把旧候选分支当作当前状态。
 >
-> 当前 Human 决定：新 OS 完成前不触碰任何领域仓；替换工作只在 core 内推进。
+> 当前 Human 事实与决定：原领域仓已失效且大多删除；替换工作只在 core 内推进。首个完整版
+> OS 形成后再建立新领域仓，建立时点必须与通讯 canonical 观察期通过绑定。
 
 ## 0. 目标
 
@@ -35,17 +36,18 @@ review loop、Human gate 和 receipt。
 本版把下列裁定作为活动计划语义。决策来源是 brief vault 中的
 `core/03_决策档案/2026-08-02_第二代OS替换方案独立审核意见.md`，P0 状态来源是
 `2026-08-02_P0独立审核结论.md`、`2026-08-02_P0第1轮修正复验结论.md` 和
-`master@0fc7e1c` 的物理文件；这些引用提供证据，不自行授权后续动作。
+`master@0fc7e1c` 的物理文件。领域仓事实与 ultra 路由以更晚的
+`2026-08-02_事实更正与派单约定更新.md` 为准；这些引用提供证据，不自行授权后续动作。
 
 | 编号 | 活动裁定 |
 | :--- | :--- |
 | A1 | P1/P2 直接使用阶段 1–4 的既有 schema。P3 是对账补齐：新增阶段 5–7 schema、全部 validator、transition graph 和 runner，并只按真实运行证据修订既有四份 schema。不得再声称“七阶段尚无 schema”。 |
 | A2 | `06_execution/<area>/<name>/` 的 area-first 布局是既有 canonical。机制 loader 进入 `mechanisms/<name>/`，通用校验器进入 `validators/<name>/`；`communication/`、`resource_management/` 直接挂在 `06_execution/` 根部均属违规。现有 `boot/context_management/` 是唯一已知例外，按 §2.6 归一化。 |
 | A3 | P1 完成时切换全部 core 窗口的通讯 canonical，而不是宣告整个新 OS 已接管。Token/资源在 P2 前仍由 `.ai/TOKEN_USAGE_PROFILE.md` 路由，workflow 在 P3 前仍由 `01_workflow/` 既有规格路由；§7.1 分成通讯切换门和默认活动系统宣告门。 |
-| A3-附 | 领域仓解冻必须与“通讯 canonical 已通过兼容观察期”绑定，不得单独裁定。 |
+| A3-附 | 新领域仓建立必须与“通讯 canonical 已通过兼容观察期”绑定，不得单独裁定；旧“领域仓解冻”措辞已被事实更正取代。 |
 | B1 | P0 已完成：capability receipt 机制和本机实测以 `master@0fc7e1c` 中的 run-020 receipt 为准，本方案只引用，不重述或改写测量事实。 |
 | B2 | P2 使用 `_runs/` 历史数据作为旧基线，新方案单跑；缺失字段写 `not_observable`，只有关键指标无法恢复时才补对照跑。 |
-| C1 | 不设置阶段性冻结复核门；每个 P 保留技术性 kill criteria，失败时降级、回滚或停止切换，不用“继续冻结吗”制造新的例行 Human gate。 |
+| C1 | 不设置阶段性复核门；每个 P 保留技术性 kill criteria，失败时降级、回滚或停止切换，不用“是否继续”制造新的例行 Human gate。 |
 | C2 | 总体规划文档可豁免七阶段 workflow，但豁免不适用于通讯、资源、runner 或任何机制实现任务。 |
 | D1 | 替换方案由 `05_registry/os_program_v1.yml` 独立登记，不属于 context management registry。 |
 | D2 | run 阶段编号统一为 `00_任务输入 / 01_需求建模 … 07_测试执行 / 08_结论`。 |
@@ -78,17 +80,19 @@ review loop、Human gate 和 receipt。
 
 准确结论是：第二代 OS 已经是成熟的开发治理框架，但还不是完整的端到端任务运行系统。
 
-### 1.3 P0 遗留项与唯一落点
+### 1.3 P0 遗留项、新增待办与唯一落点
 
 | 项 | 落点与时限 | 本方案中的处理边界 |
 | :--- | :--- | :--- |
 | N1 路径形态盲区 8 类 | 新建独立任务 `personal-path-shape-coverage-001`；在 P1 阶段二消费环境证据前完成 | 现有 master 没有可复用的 `.ai/TASKS/personal-path-gate-integration-001.md`，不得把未合入草稿当 canonical；本版只裁定，不扩 schema 正则。 |
 | N2 `--mode tracked 08_os` 的 4 处既存命中 | 新建 `personal-path-tracked-baseline-cleanup-001`；在 tracked 模式成为接入门前完成 | 由 core backend 精确处理 run-014 validator 与开发对话日志，保留历史语义并接受独立审核；不在机制任务中顺手改。 |
-| N3 registry brace path-set | 纳入未来 `registry-validator-v1-001` | validator 必须确定性支持现有 brace finite-set 语法，或先以独立迁移任务改成逐项 entry；未知语法必须 fail closed，不得静默漏项。 |
+| N3 registry brace path-set | `registry-validator-v1-001`；在任何 registry validator 或 P3 workflow runner 首次成为接入门前完成 | validator 必须确定性支持现有 brace finite-set 语法，或先以独立迁移任务改成逐项 entry；未知语法必须 fail closed，不得静默漏项。 |
 | N5 文档缺少第 4 种 checker 结局 | `env-capability-checker-promotion-001` | 与 checker canonical 提升同一任务补入文档。 |
 | N6 `schema_only_disagreement` 语义偏宽 | `env-capability-checker-promotion-001` | 拆成“已知 schema-only 合法差异”和“无法解释的 schema-only 分歧”两个 code；两者仍非零退出，后者保持硬失败。 |
+| U1 ultra 适用面尚无实测 | `ultra-applicability-research-001`；P2 资源机制可用且积累一批 standard 模式实测基线后启动，在形成 standing ultra 路由前完成 | 按七阶段 workflow 比较任务级返工、审核、成本与质量；结论形成前默认 `mode: standard`。2M rollout budget 只在某次任务显式启用 ultra 时生效，不构成 standing authorization。 |
 
-run-020 的 `independent_receipt_check.py` 只保留为不可变历史证据。可复用 checker 的 canonical
+run-020 的 `independent_receipt_check.py` 工作树副本保持不变，原始证据固定于
+`master@0fc7e1c`。可复用 checker 的 canonical
 落点裁定为 `08_os/06_execution/validators/environment_capability/`；提升、回归、registry 同步及
 run-020 原件的 superseded 说明都由 `env-capability-checker-promotion-001` 完成，且不得修改
 run-020 文件本身。
@@ -174,7 +178,7 @@ pointer 或 approved deletion，不能与新路径同时成为 loader 权威。
 | P2 | 无法诚实记录关键资源指标或新方案导致证据/质量下降且无法归因：保持 `.ai/TOKEN_USAGE_PROFILE.md` authoritative，新机制只作 measurement candidate。 |
 | P3 | runner 无法保持冻结测试、唯一 transition 或可重放 backtrack：不得成为 workflow canonical，继续由既有阶段规格和人工调度运行。 |
 | P4 | 任一安全、审计、恢复或发布机制存在不可观测的受保护动作路径：该机制被排除出默认活动声明，并阻断 P5。 |
-| P5 | 观察期出现双权威、状态漂移、领域仓误解冻或 rollback 失败：立即回到已验证旧入口，保持领域仓冻结并停止退役。 |
+| P5 | 观察期出现双权威、状态漂移、新领域仓提前建立或 rollback 失败：立即回到已验证旧入口，不建立新领域仓并停止退役。 |
 
 ## 3. P1：新通讯机制
 
@@ -213,7 +217,7 @@ A 必须直接使用
 9. 单一通讯权威、兼容 adapter、shadow 和禁止双写的边界；
 10. P1 完成时全部 core 窗口切换通讯 canonical 的兼容期与 rollback 语义，并明确 Token/资源
     在 P2 前仍由 `.ai/TOKEN_USAGE_PROFILE.md` 路由、workflow 在 P3 前仍用既有规格；
-11. 通讯 canonical 切换门与新 OS 默认活动系统宣告门的边界，以及领域仓解冻必须绑定通讯
+11. 通讯 canonical 切换门与新 OS 默认活动系统宣告门的边界，以及新领域仓建立必须绑定通讯
     观察期通过这一条件。
 
 A 必须由 Human 确认并绑定版本；后续需求变化不得静默继承旧确认。
@@ -300,7 +304,7 @@ B 应明确：
 - 旧 `.ai` 通讯路径只作为明确 adapter 或历史证据；
 - 回滚到旧机制的条件和步骤经过真实测试；
 - 通过 §7.1 的通讯 canonical 切换门并把全部 core 窗口切到新通讯入口；
-- 切换不改变 Token/资源和 workflow 层的活动 canonical，也不解除领域仓冻结。
+- 切换不改变 Token/资源和 workflow 层的活动 canonical，也不授权建立新领域仓。
 
 ## 4. P2：新 Token 与资源管理机制
 
@@ -553,7 +557,7 @@ P0 已在 `master@0fc7e1c` 建立 environment/capability receipt schema、本机
 
 `env-capability-checker-promotion-001` 把 run-020 checker 提升到
 `06_execution/validators/environment_capability/`，补齐 N5/N6 并同步 registry；run-020 原件
-保持不可变，作为旧行为对照和 provenance evidence。
+保持不变，原始 provenance 固定于 `master@0fc7e1c`，作为旧行为对照。
 
 #### E. 安全、隐私、secret 与访问边界
 
@@ -648,10 +652,10 @@ clone、worktree、窄提示词和 load profile 都不得被描述为强访问�
 - compatibility adapter 只有一个写入权威，旧 `.ai` 路径不会独立改变当前状态；
 - Token/资源仍明确指向 `.ai/TOKEN_USAGE_PROFILE.md`，workflow 仍明确指向 `01_workflow/`
   既有阶段规格；
-- 领域仓继续冻结，解冻条件绑定为“通讯 canonical 已通过兼容观察期”，不得单独批准。
+- 不建立新领域仓；新领域仓建立必须绑定“通讯 canonical 已通过兼容观察期”，不得单独批准。
 
 通过第一道门只表示全部 core 窗口的通讯、状态和 handoff canonical 已切换，不表示新 OS
-整体接管，也不授权旧系统退役或领域仓解冻。
+整体接管，也不授权旧系统退役或新领域仓建立。
 
 **第二道：新 OS 默认活动系统宣告门，留在 P5。** 只有同时满足以下条件才可通过：
 
@@ -662,7 +666,7 @@ clone、worktree、窄提示词和 load profile 都不得被描述为强访问�
 - security/privacy/access boundary 有明确威胁模型和测试；
 - audit/recovery 和 OS release/migration 机制可用；
 - bootstrap、AGENTS 和 load profile 已有新 OS 路由；
-- domain 仓仍保持冻结，直到 Human 明确解除；
+- 新领域仓只有在通讯观察期通过后才可由 Human 明确批准建立；
 - 回滚到旧入口经过测试。
 
 两道门必须分别形成版本绑定 evidence；第一道门的通过不能复制为第二道门的结论。
@@ -702,7 +706,7 @@ workflow 的旧 canonical 指针。P5 在其余阶段完成后再更新默认活
 - 新机制覆盖旧系统的必要不变量；
 - 旧路径删除不会使现有证据 blob 不可达；
 - registry、manifest、reference graph 和 domain upgrade 测试通过；
-- 通讯 canonical 的兼容观察期已有独立结论；领域仓解冻与该结论在同一 Human 决定中绑定；
+- 通讯 canonical 的兼容观察期已有独立结论；新领域仓建立与该结论在同一 Human 决定中绑定；
 - Human 明确批准退役和删除范围。
 
 退役后旧 `.ai` 内容可分为：
@@ -735,8 +739,11 @@ P4e concurrency/lane, when parallelism is needed
   ↓
 P5  default-active declaration + compatibility observation
   ↓
-Human gate: legacy retirement；domain-freeze release 必须绑定通讯观察期结论
+Human gate: legacy retirement；新领域仓建立必须绑定通讯观察期结论
 ```
+
+U1 `ultra-applicability-research-001` 在 P2 资源机制可用且已有 standard 实测基线后作为独立
+workflow 任务执行；它不自动启用 ultra，也不改变 P3 从 P1/P2 真实产物提取的依赖顺序。
 
 每个任务都使用当前 `08_os/开发入口与单窗口任务规范_v1.md` 的单窗口任务包、模型路由、
 发布传输矩阵、独立审核和 completion pointer。
@@ -751,7 +758,7 @@ task_id: env-capability-checker-promotion-001
 objective: >-
   把 run-020 的 independent_receipt_check.py 提升到
   08_os/06_execution/validators/environment_capability/，补齐 N5 文档与 N6 分类，
-  保留 run-020 原件为不可变历史证据。
+  保持 run-020 原件不变，原始证据固定于 master@0fc7e1c。
 risk_tier: T1_standard
 expected_outputs:
   - 08_os/06_execution/validators/environment_capability/
@@ -772,6 +779,6 @@ run-id、allowed paths、模型和测试均由各窗口从当前远端 master �
 3. 从两次真实运行中抽取通用 workflow；
 4. 补齐环境发现、安全边界、审计恢复、发布迁移和必要的并发机制；
 5. P1 先切通讯 canonical；P5 再宣告默认活动系统，经过兼容观察和回滚验证后，由 Human
-   决定旧 OS 退役，并把领域仓解冻绑定到通讯观察期结论。
+   决定旧 OS 退役，并把新领域仓建立绑定到通讯观察期结论。
 
 这样第二代 OS 不只是文档结构替代旧系统，而是用自己的 workflow 建成、验证并最终运行自己。
