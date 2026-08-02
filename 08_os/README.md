@@ -10,6 +10,15 @@
 顺序、一个窗口一个任务、文件放置、registry、run 证据、分支、测试、独立审核和 Human
 接入门。任务专属材料按该入口继续加载，不默认读取全部 `_runs/` 历史。
 
+## 替换程序入口
+
+[第二代OS替换与退役方案_v2.md](第二代OS替换与退役方案_v2.md) 是当前活动总体方案：P0
+环境能力 receipt 已完成；后续先收口 canonical checker，再用既有 workflow schema 建通讯和
+Token/资源机制，补齐 runner 与全局机制，最后经过分层切换、兼容观察和 Human gate 退役旧 OS。
+[v1](第二代OS替换与退役方案_v1.md) 仅保留为 superseded 历史证据。两版由
+[`05_registry/os_program_v1.yml`](05_registry/os_program_v1.yml) 登记；方案只用于任务拆分和
+审核，不自行授权实现、迁移、领域仓变更或旧系统删除。
+
 ## The seven areas
 
 | Directory | Holds | Does not hold |

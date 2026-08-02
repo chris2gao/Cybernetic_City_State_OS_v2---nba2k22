@@ -1,0 +1,25 @@
+schema_version: citystate.registry.v1
+registry_id: os_program_v1
+program_version: 1
+entries:
+  - path: 08_os/第二代OS替换与退役方案_v2.md
+    purpose: 第二代 OS 替换程序的活动阶段、依赖、技术停止条件、切换门和遗留项落点
+    loader: Human and authorized OS planning or task-dispatch windows
+    loader_class: external_tool_convention
+    discovery: referenced from 08_os/README.md
+    evidence: 08_os/README.md and master@0fc7e1c16f0947d9f311f80b55059de75600a8b8
+    cache_dirs: []
+    failure_surfacing: next OS replacement planning, task decomposition, independent review or cutover decision
+    deletion_rule: protected
+  - path: 08_os/第二代OS替换与退役方案_v1.md
+    purpose: 已被 v2 取代的第二代 OS 替换程序历史设计证据
+    loader: Human-directed historical review
+    loader_class: external_tool_convention
+    discovery: referenced as superseded history from 08_os/README.md and v2
+    evidence: origin/dev/os-v2-replacement-program-plan-001@034cebc53c4e6304b071e380806e1df8b1e6cd7b
+    cache_dirs: []
+    failure_surfacing: next historical audit, replacement-plan review or deletion proposal
+    deletion_rule: protected
+excluded:
+  - 08_os/_runs/**
+  - 08_os/_runs/<run-id>/_runtime/**
