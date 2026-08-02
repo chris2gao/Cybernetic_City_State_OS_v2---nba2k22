@@ -125,12 +125,29 @@ def validate() -> dict[str, Any]:
     ]
     record("human_rulings_promoted_to_constraints", all(fragment in constraints_text for fragment in required_constraint_fragments), "rulings 1-3 and attached treatment are constraints")
 
+    # 两态契约。与 validate_requirement_model.py 的 human_gate_two_state 保持同一语义：
+    # 只承认"未签"会让 Human 真的确认之后本 run 校验转红——一个正常流程走完必然说谎的测试。
+    # 该修复此前已在 validate_requirement_model.py 落地，但当时只改了单个脚本，
+    # 未提升为工作流层规则，因此在本新脚本中复发。canonical 落点是 P3 的 transition graph。
+    DECISION_KEYS = {"decision", "confirmed_by", "confirmed_at", "statement"}
+    SIGNED_TEXT_KEYS = ("confirmed_by", "confirmed_at", "statement")
     decision = confirmation.get("human_decision")
+    status = confirmation.get("status")
+    keys_exact = isinstance(decision, dict) and set(decision) == DECISION_KEYS
+
+    def _nonempty(value: object) -> bool:
+        return isinstance(value, str) and bool(value.strip())
+
     unsigned = (
-        confirmation.get("status") == "awaiting_human_confirmation"
-        and isinstance(decision, dict)
-        and set(decision) == {"decision", "confirmed_by", "confirmed_at", "statement"}
+        status == "awaiting_human_confirmation"
+        and keys_exact
         and all(value is None for value in decision.values())
+    )
+    confirmed = (
+        status == "human_confirmed"
+        and keys_exact
+        and decision.get("decision") in {"confirmed", "revision_required"}
+        and all(_nonempty(decision.get(key)) for key in SIGNED_TEXT_KEYS)
     )
     candidate = confirmation.get("candidate", {})
     bound = candidate == {
@@ -138,7 +155,17 @@ def validate() -> dict[str, Any]:
         "version": 2,
         "sha256": V2_SHA,
     }
-    record("human_confirmation_v2_unsigned", unsigned, "four decision fields are null")
+    record(
+        "human_gate_two_state",
+        unsigned or confirmed,
+        "confirmation is fully unsigned (awaiting_human_confirmation) or fully signed "
+        "(human_confirmed); partial states fail",
+    )
+    record(
+        "human_gate_state_reported",
+        status in {"awaiting_human_confirmation", "human_confirmed"},
+        f"confirmation status is a declared state: {status}",
+    )
     record("human_confirmation_v2_bound", bound, "path/version/sha256 match v2")
 
     model_result = json.loads(MODEL_RESULTS.read_text(encoding="utf-8"))

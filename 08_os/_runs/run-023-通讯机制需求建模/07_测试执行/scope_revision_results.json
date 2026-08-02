@@ -22,7 +22,7 @@
     "08_os/_runs/run-023-通讯机制需求建模/run.yml"
   ],
   "out_of_scope_paths": [],
-  "test_count": 16,
+  "test_count": 17,
   "tests": [
     {
       "test_id": "v1_candidate_bytes_unchanged",
@@ -60,9 +60,14 @@
       "detail": "rulings 1-3 and attached treatment are constraints"
     },
     {
-      "test_id": "human_confirmation_v2_unsigned",
+      "test_id": "human_gate_two_state",
       "passed": true,
-      "detail": "four decision fields are null"
+      "detail": "confirmation is fully unsigned (awaiting_human_confirmation) or fully signed (human_confirmed); partial states fail"
+    },
+    {
+      "test_id": "human_gate_state_reported",
+      "passed": true,
+      "detail": "confirmation status is a declared state: human_confirmed"
     },
     {
       "test_id": "human_confirmation_v2_bound",
