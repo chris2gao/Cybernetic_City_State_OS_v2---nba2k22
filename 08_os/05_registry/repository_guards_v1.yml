@@ -19,8 +19,11 @@ mechanism_version: 1
 guards:
   - path: ".githooks/pre-push"
     purpose: >-
-      Refuses non-fast-forward pushes to any ref, and pushes to or deletion of
-      master or main without per-command authorization. Deletion of an ordinary
+      Refuses non-fast-forward pushes to any ref, pushes to or deletion of
+      master or main without per-command authorization, and configured personal
+      absolute paths in the exact commit range being pushed. Missing Python,
+      validator files, configuration errors and indeterminate new-branch bases
+      fail closed. Deletion of an ordinary
       remote branch was refused until 2026-08-02 and is now allowed: with no
       override for it, the only route was `--no-verify`, which disables every
       check here at once, so routine branch cleanup and history rewriting shared
@@ -58,9 +61,12 @@ guards:
       still gated. install.ps1 measures the master case alone, so it did not need
       to change - which is exactly why it was never sufficient evidence for this
       entry. The decision table is now measured by
-      .githooks/test_pre_push_logic.ps1, nine cases driven through stdin with no
-      remote involved, including the one that matters most: CITYSTATE_ALLOW_MASTER
-      must not also unlock a non-fast-forward push to master.
+      .githooks/test_pre_push_logic.ps1, fourteen cases driven through stdin with
+      no remote involved. They include the one that matters most for history:
+      CITYSTATE_ALLOW_MASTER must not also unlock a non-fast-forward push to
+      master. They also prove a personal path in the pushed range is refused,
+      an unrelated historical finding is ignored, and missing Python, a missing
+      validator, or validator exit 2 all refuse the push.
     cache_dirs: []
     failure_surfacing: "never until misuse"
     failure_note: >-
@@ -73,7 +79,10 @@ guards:
     deletion_rule: protected
     known_limit: >-
       `git push --no-verify` skips the hook entirely, as does any client that
-      pushes without invoking hooks. This is a guard, not an enforced access
+      pushes without invoking hooks. activation_travels_with_merge is false:
+      every clone must configure core.hooksPath itself. The guard covers only
+      local_git; claiming hook_guard passed for an API or connector transport is
+      a false receipt. This is a guard, not an enforced access
       boundary - the same distinction run-007 drew for workspace partitions. It
       must never be cited as evidence that history was not rewritten; read the
       remote for that.
@@ -111,7 +120,7 @@ guards:
     loader_class: in_repo_program
     discovery: "referenced from .githooks/README.md and from this registry"
     evidence: >-
-      its own exit code; it returns non-zero when any of the nine cases departs
+      its own exit code; it returns non-zero when any of the fourteen cases departs
       from the specified behaviour. Two harness defects were found and fixed
       while writing it - a PowerShell pipe appending CRLF into the null-sha
       comparison, and a parameter named $args shadowing the automatic variable -

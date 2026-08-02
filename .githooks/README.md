@@ -30,6 +30,8 @@ unguarded until someone sets it. `install.ps1` does it and reports the result.
 | Deleting `master` / `main` | Refused unless `CITYSTATE_ALLOW_MASTER=1` is set for that command |
 | Deleting an ordinary remote branch | **Allowed** since 2026-08-02 |
 | Normal push to a feature branch | Allowed |
+| Configured personal absolute path in the commits being pushed | Refused |
+| Personal-path validator, configuration, or Python runtime unavailable | Refused (fail closed) |
 
 Branch deletion was refused with no override until 2026-08-02. Removing it was not
 a relaxation for its own sake. With no override, the only way to delete a branch
@@ -62,3 +64,15 @@ between a workspace partition and an enforced boundary. It stops the accident, t
 stale habit and the agent that never considered the rule. It does not stop a caller
 that has decided to go around it, and it should never be cited as proof that history
 cannot have been rewritten. For that, read the remote.
+
+The personal-path check scans the exact committed range Git supplies for each pushed
+ref. It does not scan unrelated historical files, so legacy findings outside the
+range do not make every future push impossible. A new branch is compared with the
+merge-base of the remote's tracked `master` or `main`; if that base cannot be
+determined, the hook refuses instead of falling back to a whole-repository scan.
+
+`activation_travels_with_merge: false`: merging these files into a domain repository
+does not activate them in an existing clone. Every clone must still run
+`git config core.hooksPath .githooks` (or `install.ps1`). This hook covers only the
+`local_git` publication transport; GitHub API/connector publication never invokes it,
+so reporting `hook_guard: passed` for those transports is a false receipt.

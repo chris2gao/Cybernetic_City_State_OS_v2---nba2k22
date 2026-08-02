@@ -76,6 +76,13 @@ class PersonalPathValidatorTests(unittest.TestCase):
         fixture = json.loads(FIXTURE.read_text(encoding="utf-8"))
         return "".join(fixture["segments"])
 
+    def pattern_literal(self, pattern_id: str) -> str:
+        return next(
+            pattern.literal
+            for pattern in VALIDATOR_MODULE.load_patterns(PATTERNS)
+            if pattern.id == pattern_id
+        )
+
     def test_tracked_clean_returns_zero(self) -> None:
         result = self.invoke("--mode", "tracked")
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -127,6 +134,42 @@ class PersonalPathValidatorTests(unittest.TestCase):
         result = self.invoke("--mode", "tracked")
         self.assertEqual(result.returncode, 1, result.stderr)
         self.assertIn("case.txt:1:windows_user_home", result.stdout)
+
+    def test_linux_user_home_is_case_insensitive(self) -> None:
+        self.write_fixture("linux-case.txt", self.pattern_literal("linux_user_home").upper() + "/x")
+        git(self.repo, "add", "linux-case.txt")
+        result = self.invoke("--mode", "tracked")
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertIn("linux-case.txt:1:linux_user_home", result.stdout)
+
+    def test_wsl_mounted_user_home_is_detected(self) -> None:
+        self.write_fixture("mounted-user.txt", self.pattern_literal("wsl_mounted_user_home") + "/x")
+        git(self.repo, "add", "mounted-user.txt")
+        result = self.invoke("--mode", "tracked")
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertIn("mounted-user.txt:1:wsl_mounted_user_home", result.stdout)
+
+    def test_wsl_mounted_workspace_root_is_detected_case_insensitively(self) -> None:
+        value = self.pattern_literal("wsl_mounted_workspace_root").upper() + "/study"
+        self.write_fixture("mounted-workspace.txt", value)
+        git(self.repo, "add", "mounted-workspace.txt")
+        result = self.invoke("--mode", "tracked")
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertIn("mounted-workspace.txt:1:wsl_mounted_workspace_root", result.stdout)
+
+    def test_changed_mode_head_scans_committed_blob_not_worktree(self) -> None:
+        self.write_negative_fixture("pushed.txt")
+        git(self.repo, "add", "pushed.txt")
+        git(self.repo, "commit", "--quiet", "-m", "pushed finding")
+        pushed_head = git(self.repo, "rev-parse", "HEAD")
+        (self.repo / "pushed.txt").write_text("portable working tree\n", encoding="utf-8")
+        result = self.invoke(
+            "--mode", "changed", "--base", self.base, "--head", pushed_head, "--summary-only"
+        )
+        self.assertEqual(result.returncode, 1, result.stderr)
+        summary = json.loads(result.stdout)
+        self.assertEqual(summary["head"], pushed_head)
+        self.assertEqual(summary["hit_files"], 1)
 
     def test_every_default_pattern_is_detected(self) -> None:
         values = [pattern.literal for pattern in VALIDATOR_MODULE.load_patterns(PATTERNS)]

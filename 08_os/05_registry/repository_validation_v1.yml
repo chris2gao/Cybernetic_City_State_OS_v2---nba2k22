@@ -13,8 +13,8 @@ validators:
     deletion_rule: protected
 
   - path: 08_os/06_execution/validators/personal_paths/validate.py
-    purpose: Scan selected tracked or changed UTF-8 repository text for configured personal absolute-path variants.
-    loader: Python invoked by a Human, development executor or later explicit machine gate.
+    purpose: Scan selected tracked, working-tree-changed, or exact committed push-range UTF-8 text for configured personal absolute-path variants.
+    loader: Python invoked by a Human, development executor or the registered local pre-push guard.
     loader_class: in_repo_program
     discovery: referenced from its README and this registry
     evidence: 08_os/06_execution/validators/personal_paths/tests/test_validate.py
@@ -23,7 +23,7 @@ validators:
     deletion_rule: protected
 
   - path: 08_os/06_execution/validators/personal_paths/patterns.json
-    purpose: Configurable default segmented personal-path families, variants and case-sensitivity flags.
+    purpose: Configurable default segmented personal-path families, including Windows, Linux and WSL-mounted roots, variants and case-sensitivity flags.
     loader: 08_os/06_execution/validators/personal_paths/validate.py
     loader_class: in_repo_program
     discovery: hardcoded default adjacent to validate.py; overridable with --config
@@ -33,7 +33,7 @@ validators:
     deletion_rule: protected
 
   - path: 08_os/06_execution/validators/personal_paths/tests/test_validate.py
-    purpose: Positive, negative, changed-mode, variant coverage, reporting and exit-code regression tests.
+    purpose: Positive, negative, working-tree and exact-commit changed-mode, Windows/Linux/WSL variant coverage, reporting and exit-code regression tests.
     loader: Python unittest discovery or explicit module invocation.
     loader_class: in_repo_program
     discovery: referenced from the validator README and registry evidence fields

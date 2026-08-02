@@ -123,28 +123,26 @@ def in_scopes(path: str, scopes: Iterable[str]) -> bool:
     return any(scope == "." or path == scope or path.startswith(scope + "/") for scope in scopes)
 
 
-def candidate_paths(repo: Path, mode: str, base: str | None) -> list[str]:
+def candidate_paths(repo: Path, mode: str, base: str | None, head: str | None) -> list[str]:
     if mode == "tracked":
+        if head:
+            raise ValidationError("--head is only supported when --mode changed")
         return sorted(set(run_git(repo, "ls-files")))
     if not base:
         raise ValidationError("--base is required when --mode changed")
     changed: set[str] = set()
-    changed.update(run_git(repo, "diff", "--name-only", "--diff-filter=ACMR", base, "HEAD"))
-    changed.update(run_git(repo, "diff", "--name-only", "--diff-filter=ACMR"))
-    changed.update(run_git(repo, "diff", "--cached", "--name-only", "--diff-filter=ACMR"))
-    changed.update(run_git(repo, "ls-files", "--others", "--exclude-standard"))
+    target = head or "HEAD"
+    changed.update(run_git(repo, "diff", "--name-only", "--diff-filter=ACMR", base, target))
+    if head is None:
+        changed.update(run_git(repo, "diff", "--name-only", "--diff-filter=ACMR"))
+        changed.update(run_git(repo, "diff", "--cached", "--name-only", "--diff-filter=ACMR"))
+        changed.update(run_git(repo, "ls-files", "--others", "--exclude-standard"))
     return sorted(changed)
 
 
-def scan_file(
-    path: Path, relative: str, patterns: list[CompiledPattern]
+def scan_bytes(
+    data: bytes, relative: str, patterns: list[CompiledPattern]
 ) -> tuple[list[dict[str, Any]], str | None]:
-    if path.is_symlink() or not path.is_file():
-        return [], "non_regular"
-    try:
-        data = path.read_bytes()
-    except OSError as exc:
-        raise ValidationError(f"cannot read {relative}: {exc}") from exc
     if b"\x00" in data:
         return [], "binary"
     try:
@@ -178,11 +176,49 @@ def scan_file(
     return hits, None
 
 
+def scan_file(
+    path: Path, relative: str, patterns: list[CompiledPattern]
+) -> tuple[list[dict[str, Any]], str | None]:
+    if path.is_symlink() or not path.is_file():
+        return [], "non_regular"
+    try:
+        data = path.read_bytes()
+    except OSError as exc:
+        raise ValidationError(f"cannot read {relative}: {exc}") from exc
+    return scan_bytes(data, relative, patterns)
+
+
+def scan_revision_file(
+    repo: Path, revision: str, relative: str, patterns: list[CompiledPattern]
+) -> tuple[list[dict[str, Any]], str | None]:
+    entries = run_git(repo, "ls-tree", revision, "--", relative)
+    if len(entries) != 1:
+        return [], "non_regular"
+    metadata, separator, listed_path = entries[0].partition("\t")
+    parts = metadata.split()
+    if not separator or listed_path != relative or len(parts) < 3:
+        raise ValidationError(f"cannot resolve {relative} at {revision}")
+    mode, object_type = parts[0], parts[1]
+    if object_type != "blob" or mode == "120000":
+        return [], "non_regular"
+    completed = subprocess.run(
+        ["git", "cat-file", "blob", f"{revision}:{relative}"],
+        cwd=repo,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    if completed.returncode != 0:
+        detail = completed.stderr.decode("utf-8", errors="replace").strip()
+        raise ValidationError(f"cannot read {relative} at {revision}: {detail}")
+    return scan_bytes(completed.stdout, relative, patterns)
+
+
 def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Find configured personal absolute paths in repository text.")
     parser.add_argument("--repo-root", default=".", help="Git repository root")
     parser.add_argument("--mode", choices=("tracked", "changed"), default="tracked")
     parser.add_argument("--base", help="Git base revision required by changed mode")
+    parser.add_argument("--head", help="Scan exact committed content at this revision in changed mode")
     parser.add_argument("--config", default=str(DEFAULT_CONFIG), help="JSON pattern table")
     parser.add_argument("--summary-only", action="store_true", help="Suppress detailed hit lines")
     parser.add_argument("scopes", nargs="*", default=["."], help="Repository-relative files or directories")
@@ -201,13 +237,21 @@ def main(argv: list[str] | None = None) -> int:
             config = repo / config
         patterns = load_patterns(config.resolve())
         scopes = [normalize_scope(repo, scope) for scope in args.scopes]
-        candidates = [path for path in candidate_paths(repo, args.mode, args.base) if in_scopes(path, scopes)]
+        if args.head:
+            run_git(repo, "rev-parse", "--verify", f"{args.head}^{{commit}}")
+        candidates = [
+            path for path in candidate_paths(repo, args.mode, args.base, args.head)
+            if in_scopes(path, scopes)
+        ]
 
         hits: list[dict[str, Any]] = []
         skipped = {"binary": 0, "non_utf8": 0, "non_regular": 0}
         scanned_files = 0
         for relative in candidates:
-            file_hits, reason = scan_file(repo / relative, relative, patterns)
+            if args.head:
+                file_hits, reason = scan_revision_file(repo, args.head, relative, patterns)
+            else:
+                file_hits, reason = scan_file(repo / relative, relative, patterns)
             if reason:
                 skipped[reason] += 1
                 continue
@@ -228,6 +272,7 @@ def main(argv: list[str] | None = None) -> int:
             hit_files_by_top_level.setdefault(top_level, set()).add(hit["file"])
         summary = {
             "mode": args.mode,
+            "head": args.head,
             "candidate_files": len(candidates),
             "scanned_files": scanned_files,
             "skipped": skipped,

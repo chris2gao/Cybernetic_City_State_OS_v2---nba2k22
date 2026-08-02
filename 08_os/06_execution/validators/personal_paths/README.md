@@ -14,11 +14,17 @@ python 08_os/06_execution/validators/personal_paths/validate.py `
 
 python 08_os/06_execution/validators/personal_paths/validate.py `
   --repo-root . --mode changed --base <40-character-sha>
+
+python 08_os/06_execution/validators/personal_paths/validate.py `
+  --repo-root . --mode changed --base <remote-sha> --head <local-sha>
 ```
 
 `--summary-only` suppresses detailed findings when retained evidence must contain
 counts without reproducing sensitive path strings. Normal output reports the
 repository-relative file, line, pattern ID and matching line snippet for every hit.
+When `--head` is supplied, changed mode reads the exact blobs at that commit and does
+not mix in staged, unstaged or untracked working-tree content. The pre-push guard uses
+this form for the exact `remote_sha..local_sha` range.
 
 ## Pattern table
 
@@ -32,6 +38,10 @@ forward-slash, and lowercase variants without duplicating the personal path in t
 pattern table itself. The default table uses segments so the validator does not
 create its own finding. User-specific values belong in configuration, never in
 validator logic.
+
+The default table also covers the WSL-style mounted forms of the configured Windows
+home and workspace roots (`/mnt/<drive>/...`). The Linux home and mounted families
+are case-insensitive; equivalent literal variants are deterministically de-duplicated.
 
 ## Exit codes
 

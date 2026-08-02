@@ -1,0 +1,54 @@
+{
+  "schema_version": "citystate.personal_path_gate_results.v1",
+  "implementation_evidence": {
+    "rename_commit": "a3deff9c68c1242c8f0632b6e534bfbb1afb3971",
+    "merge_commit": "d85768c18989935ea9090220ee792e02072bbf5a",
+    "history_rewritten": false,
+    "textual_merge_conflicts": 0
+  },
+  "tests": {
+    "validator_unittest": {
+      "command": "python -m unittest 08_os/06_execution/validators/personal_paths/tests/test_validate.py",
+      "exit_code": 0,
+      "tests_run": 12
+    },
+    "pre_push_decision_table": {
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .githooks/test_pre_push_logic.ps1",
+      "exit_code": 0,
+      "cases_before": 9,
+      "cases_after": 14,
+      "gate_fires_proof": "BLOCKED personal-path validator found configured paths in the push range",
+      "clean_range_with_historical_hit_exit": 0,
+      "missing_validator_exit": 1,
+      "validator_error_exit": 1,
+      "missing_python_exit": 1
+    },
+    "tracked_scan": {
+      "command": "python 08_os/06_execution/validators/personal_paths/validate.py --repo-root . --mode tracked --summary-only",
+      "exit_code": 1,
+      "exit_interpretation": "configured findings present",
+      "candidate_files": 1020,
+      "scanned_files": 1020,
+      "hit_files": 8,
+      "hit_count": 16,
+      "hit_counts_by_top_level": {
+        ".ai": 12,
+        "08_os": 4
+      },
+      "run014_mnt_hit_reported_not_cleaned": true
+    },
+    "hook_shell_syntax_exit": 0,
+    "hook_lf": true,
+    "git_diff_check_exit": 0,
+    "changed_scope_scan": {
+      "exit_code": 0,
+      "candidate_files": 16,
+      "hit_count": 0
+    },
+    "candidate_validator_exit": 0,
+    "registry_yaml_parse": true,
+    "mailbox_neutral_before_publish": true,
+    "mailbox_readback_after_publish": null
+  },
+  "coverage_boundary": "Counts and clean findings are only under the current patterns.json literal families and UTF-8 text scope."
+}
