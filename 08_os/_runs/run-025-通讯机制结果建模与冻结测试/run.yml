@@ -7,7 +7,7 @@ base_sha: 822fb2d1d6be39cd0777f2a26a4febc7b2a55f15
 branch: dev/os-v2-communication-result-model-and-test-freeze-001
 ownership: core-owned
 risk_tier: T2_semantic
-status: candidate_pending_validation
+status: candidate_ready_for_independent_review
 purpose: >-
   依据已确认的 A v2 与阶段二证据包产出结果模型 B，收敛 connector、Token 匹配基线与
   live core window inventory 三条阶段四 blocker，并生成可机器溯源的冻结测试集。
@@ -52,3 +52,10 @@ prohibitions:
 run_id_note: >-
   run-025 在 base tree 与开工时全部本地 refs 的 object path 搜索中均未出现；历史存在 run-021，
   因而本任务只采用已核验未占用的 run-025。
+completion:
+  result_model_commit: a6200cd5c50628856b6c8d82eb9356a6959e5cda
+  freeze_commit: 9f72a57e787d05d92bcba58e241aac8514a1ebbf
+  machine_validation: passed
+  independent_executor_measurement: passed
+  next_owner: foreground_independent_review
+  T7_entry: prohibited_until_independent_review_passes

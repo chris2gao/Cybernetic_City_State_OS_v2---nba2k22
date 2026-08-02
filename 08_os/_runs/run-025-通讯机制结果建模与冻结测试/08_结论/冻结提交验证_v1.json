@@ -1,0 +1,29 @@
+{
+  "artifact_type": "T56_freeze_commit_order_verification",
+  "freeze_commit": "9f72a57e787d05d92bcba58e241aac8514a1ebbf",
+  "freeze_parent": "a6200cd5c50628856b6c8d82eb9356a6959e5cda",
+  "freeze_commit_subject": "test: freeze communication acceptance suite",
+  "only_test_and_validation_artifacts": true,
+  "protocol_implementation_paths": [],
+  "frozen_path_prefixes": [
+    "08_os/_runs/run-025-通讯机制结果建模与冻结测试/04_测试生成/",
+    "08_os/_runs/run-025-通讯机制结果建模与冻结测试/07_测试执行/"
+  ],
+  "freeze_commit_changed_path_count": 7,
+  "freeze_commit_git_blob_ids": {
+    "04_测试生成/冻结测试集_v1.yml": "c7eaf42d9a8f2cd4f7c0d5b17efa666a7f6ba661",
+    "04_测试生成/冻结清单_v1.json": "cde09462d5c622fd7f2cdeeca17091ad3cce859c",
+    "04_测试生成/测试覆盖报告_v1.json": "2f41da9a82aafc555006d4652673006d23ce953f",
+    "07_测试执行/independent_results.json": "3d2953499bab0a987992bd30165bde37adc68cc4",
+    "07_测试执行/measure_frozen_tests_independently.ps1": "fb48059b32f2eaea4c9049c3a27a108b8d287140",
+    "07_测试执行/results.json": "e9390a2ffce29ba76324da8ba5e86591d62f480c",
+    "07_测试执行/validate_result_model_and_frozen_tests.py": "eb4ae1fb9cc4f9829288cf941b5db0b0f1900ac4"
+  },
+  "return_to_stage_4_records_after_freeze": [],
+  "terminal_rule": "Any byte change under frozen path prefixes after freeze_commit requires an explicit return-to-stage-4 record with reason and new evidence.",
+  "closure_commit_allowed_changes": [
+    "run.yml",
+    "08_结论/冻结提交验证_v1.json",
+    "08_结论/完成指针.md"
+  ]
+}
