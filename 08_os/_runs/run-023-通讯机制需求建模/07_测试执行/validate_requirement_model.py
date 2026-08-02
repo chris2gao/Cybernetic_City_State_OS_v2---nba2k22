@@ -10,8 +10,8 @@ import yaml
 
 repo = Path(__file__).resolve().parents[4]
 run_root = repo / "08_os/_runs/run-023-通讯机制需求建模"
-model_path = run_root / "01_需求建模/A_通讯机制需求建模_v1.yml"
-confirmation_path = run_root / "01_需求建模/Human确认_v1.yml"
+model_path = run_root / "01_需求建模/A_通讯机制需求建模_v2.yml"
+confirmation_path = run_root / "01_需求建模/Human确认_v2.yml"
 schema_path = repo / "08_os/01_workflow/01_需求建模/实现/需求建模schema_v1.md"
 result_path = run_root / "07_测试执行/results.json"
 
@@ -141,14 +141,14 @@ record(
     "v2 section 3.2 R1-R11 each map to one observable criterion",
 )
 
-expected_candidate_path = "08_os/_runs/run-023-通讯机制需求建模/01_需求建模/A_通讯机制需求建模_v1.yml"
+expected_candidate_path = "08_os/_runs/run-023-通讯机制需求建模/01_需求建模/A_通讯机制需求建模_v2.yml"
 candidate = confirmation.get("candidate") if isinstance(confirmation, dict) else None
 decision = confirmation.get("human_decision") if isinstance(confirmation, dict) else None
 record(
     "candidate_digest_bound",
     isinstance(candidate, dict)
     and candidate.get("path") == expected_candidate_path
-    and candidate.get("version") == 1
+    and candidate.get("version") == 2
     and candidate.get("sha256") == digest(model_path),
     "confirmation template binds candidate path, version, and SHA-256",
 )
@@ -186,7 +186,7 @@ record(
 all_passed = all(item["passed"] for item in tests)
 result = {
     "schema_version": "communication_requirement_model_validation.v1",
-    "base": "dab1ecef2d34c4cb70dfa6529a2b2f9f4612570b",
+    "base": "11b6bb2ba8064a1368067e6c9924b506249d8dcc",
     "schema_ref": "08_os/01_workflow/01_需求建模/实现/需求建模schema_v1.md",
     "schema_sha256": digest(schema_path),
     "candidate_sha256": digest(model_path),
