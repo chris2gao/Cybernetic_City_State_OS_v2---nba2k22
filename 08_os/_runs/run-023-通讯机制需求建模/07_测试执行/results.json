@@ -4,7 +4,7 @@
   "schema_ref": "08_os/01_workflow/01_需求建模/实现/需求建模schema_v1.md",
   "schema_sha256": "09174e83e0e8697cba7882a978a21884a1bff762e0d7afec4fe5e4b5beda2d14",
   "candidate_sha256": "cfff1e32928db0c8aeb860260b8ed9c34e32994ab1b137e015dcafe5eac0f4a7",
-  "test_count": 14,
+  "test_count": 15,
   "tests": [
     {
       "test_id": "exact_eight_slots",
@@ -72,9 +72,14 @@
       "detail": "confirmation template binds candidate path, version, and SHA-256"
     },
     {
-      "test_id": "human_gate_unsigned",
+      "test_id": "human_gate_two_state",
       "passed": true,
-      "detail": "all Human-owned confirmation fields remain null"
+      "detail": "confirmation is either fully unsigned (awaiting_human_confirmation) or fully signed (human_confirmed); partial states fail"
+    },
+    {
+      "test_id": "human_gate_state_reported",
+      "passed": true,
+      "detail": "confirmation status is a declared state: human_confirmed"
     }
   ],
   "all_passed": true

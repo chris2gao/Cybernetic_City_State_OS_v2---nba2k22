@@ -152,13 +152,35 @@ record(
     and candidate.get("sha256") == digest(model_path),
     "confirmation template binds candidate path, version, and SHA-256",
 )
+DECISION_KEYS = {"decision", "confirmed_by", "confirmed_at", "statement"}
+SIGNED_TEXT_KEYS = ("confirmed_by", "confirmed_at", "statement")
+status = confirmation.get("status") if isinstance(confirmation, dict) else None
+keys_exact = isinstance(decision, dict) and set(decision) == DECISION_KEYS
+
+# 两态契约。原先只承认"未签"一种通过状态，Human 一旦真的确认，本 run 的校验就会转红——
+# 一个在正常流程里必然说谎的测试。改为：要么四字段全空且状态为等待，要么四字段全填且
+# 状态为已确认。中间态一律失败，因此"执行方半签"仍然被拦。
+unsigned_state = (
+    status == "awaiting_human_confirmation"
+    and keys_exact
+    and all(value is None for value in decision.values())
+)
+confirmed_state = (
+    status == "human_confirmed"
+    and keys_exact
+    and decision.get("decision") in {"confirmed", "revision_required"}
+    and all(nonempty_string(decision.get(key)) for key in SIGNED_TEXT_KEYS)
+)
 record(
-    "human_gate_unsigned",
-    confirmation.get("status") == "awaiting_human_confirmation"
-    and isinstance(decision, dict)
-    and set(decision) == {"decision", "confirmed_by", "confirmed_at", "statement"}
-    and all(value is None for value in decision.values()),
-    "all Human-owned confirmation fields remain null",
+    "human_gate_two_state",
+    unsigned_state or confirmed_state,
+    "confirmation is either fully unsigned (awaiting_human_confirmation) "
+    "or fully signed (human_confirmed); partial states fail",
+)
+record(
+    "human_gate_state_reported",
+    status in {"awaiting_human_confirmation", "human_confirmed"},
+    f"confirmation status is a declared state: {status}",
 )
 
 all_passed = all(item["passed"] for item in tests)
