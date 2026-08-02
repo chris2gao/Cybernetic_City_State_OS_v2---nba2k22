@@ -23,6 +23,19 @@ guards:
       without per-command authorization, and deletion of a remote branch.
     loader: "git, when core.hooksPath points at .githooks"
     loader_class: external_tool_convention
+    transport_scope: local_git
+    outside_transport_scope: >-
+      This guard covers exactly one publication transport. An executor publishing
+      through the GitHub API, a connector, or a CLI whose hooks are not verified
+      never gives this file a chance to run, so its absence there is neither a
+      pass nor a failure - it is out of scope. The equivalent gates for those
+      transports are remote compare-and-swap against an expected head, a path
+      allowlist checked against the actual diff, and a read-back of the resulting
+      remote head. See section 1.1 of
+      08_os/开发入口与单窗口任务规范_v1.md for the matrix and
+      .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml for who may publish at all.
+      Reporting `hook_guard: passed` from a non-local_git transport is a false
+      receipt, not a technicality.
     discovery: >-
       hardcoded default in git. Nothing inside the tree references this file as
       an execution dependency, so no in-repository analysis can reveal it.

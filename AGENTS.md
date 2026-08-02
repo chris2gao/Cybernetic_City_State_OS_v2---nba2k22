@@ -56,6 +56,20 @@ Vendor-specific mechanics, and nothing else, belong here:
 - Commit related changes together with a concise message.
 - Push the current branch after successful commit when the user asks for publication.
 - Keep `master` and feature/work branches distinct unless the user asks to merge.
+- A local clone with a shell is not a shared premise. Some executors that load
+  this file reach the repository only through the GitHub API or a connector: they
+  can create branches, write files and update refs, but cannot read or set
+  `core.hooksPath` and cannot run a local hook. State which transport you are on
+  before publishing, and run that transport's gate — the matrix is section 1.1 of
+  `08_os/开发入口与单窗口任务规范_v1.md`. An unrecognized transport is blocked.
+- Lacking a local hook is not lacking permission, and is not grounds for
+  withholding a finished artifact. The API path substitutes a real gate for the
+  hook: bind an expected 40-character head, write with a non-force
+  compare-and-swap, keep the diff inside the allowed paths, and read the
+  resulting remote head back rather than assuming it. Report the value you read.
+- Publication authority itself, and which acts remain action-bound even under the
+  widest Human grant, are in `.ai/REPOSITORY_PUBLISHER_AUTHORITY.yml`. A provider
+  name authorizes nothing there — it is text the caller writes about itself.
 
 ## Test And Review Expectations
 

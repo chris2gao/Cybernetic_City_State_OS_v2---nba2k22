@@ -138,6 +138,23 @@ touching a real learner store.
 rewrite breaks mergeability for all of them at once and nothing repairs it
 afterwards.
 
+This rule is about the act, not the tool. A branch created through a GitHub API
+connector, a `gh` invocation and a local `git push` are the same publication;
+writing to master through one of them is the same announced action as writing to
+master through another. The local pre-push hook covers only the local transport,
+so its silence elsewhere proves nothing — read the remote for that. What each
+transport must prove instead is the matrix in section 1.1 of
+`08_os/开发入口与单窗口任务规范_v1.md`; who may publish at all, and which acts stay
+action-bound even under the widest grant, is
+`.ai/REPOSITORY_PUBLISHER_AUTHORITY.yml`.
+
+*Paid for once:* an executor with only a connector read "I cannot run
+`git config --get core.hooksPath`" as "I am not permitted to publish", withheld a
+finished artifact, and then published a proposal branch through that same
+transport. One executor, one session, two incompatible rulings — because the rule
+said nothing about the transport and it had to invent one twice. An undefined
+gate does not fail safe; it fails inconsistently.
+
 ## 7. Keep durable memory honest
 
 Long-lived notes about a fast-moving project decay into confident false statements.
