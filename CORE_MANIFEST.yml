@@ -118,6 +118,28 @@ domain_owned_paths:
 # Mechanics a domain repository follows. Recorded here so the procedure lives
 # with the manifest instead of in someone's memory.
 domain_merge_procedure:
+  # Read this before the steps below. The steps describe how a merge works, not
+  # whether one is due.
+  currently_frozen: >-
+    HOLD as of 2026-08-02, by Human decision. No domain repository content is to
+    be touched - not merged into, not edited, not migrated - while the new OS is
+    still being built in core. Everything below stays true as procedure and is
+    simply not to be run yet.
+
+    The reason is that core is changing underneath the thing a merge would be
+    carrying. The publication transport matrix, the publisher authority file and
+    the push guard all moved this week, and the guard's own decision table
+    changed on 2026-08-02. A domain that merged mid-flight would take a snapshot
+    of half-finished rules, and the next merge would have to reconcile a divergence
+    that only exists because the first merge happened too early. Waiting costs
+    nothing: core history is never rewritten, so every commit a domain skips now
+    is still reachable and mergeable later.
+
+    This hold is lifted by an explicit Human instruction, recorded here. Do not
+    infer that it has expired because core looks stable, because a task would be
+    easier with the merge, or because a core change is described as urgent - a
+    guard fix included. Core-owned files reaching domains late is the expected
+    state during the freeze, not a problem to route around.
   first_time_only: >-
     git merge -s ours core/master
     records ancestry WITHOUT taking core's tree. Required exactly once per
