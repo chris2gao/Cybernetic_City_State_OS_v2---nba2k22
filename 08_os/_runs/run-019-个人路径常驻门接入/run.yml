@@ -29,5 +29,14 @@ validation:
   pre_push_cases_after: 14
   tracked_hits_under_current_patterns: 16
   run014_mnt_hit_reported_not_cleaned: true
-  mailbox_neutralization_gate: passed_candidate_check_recheck_required_at_publish
-status: candidate_pending_human_publish_gate
+  mailbox_neutralization_gate: passed_pre_publish_and_remote_readback
+publication:
+  transport: local_git
+  master_before: 5739a297ab71ecd37197524fa121a0b9b28da942
+  implementation_head: d56ac9e2a231d435391593e23c6fdc51546c41f3
+  first_resulting_remote_head: d56ac9e2a231d435391593e23c6fdc51546c41f3
+  push_was_fast_forward: true
+  hook_guard: passed
+  mailbox_readback_head: d56ac9e2a231d435391593e23c6fdc51546c41f3
+  publication_evidence_commit: self
+status: integrated_and_verified_on_demand
