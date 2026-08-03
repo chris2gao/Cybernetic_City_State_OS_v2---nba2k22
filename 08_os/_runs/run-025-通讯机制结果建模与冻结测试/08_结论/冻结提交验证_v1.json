@@ -24,6 +24,26 @@
   "closure_commit_allowed_changes": [
     "run.yml",
     "08_结论/冻结提交验证_v1.json",
-    "08_结论/完成指针.md"
-  ]
+    "08_结论/完成指针.md",
+    "08_结论/独立审核报告_v1.md",
+    "08_结论/独立审核补充门_v1.yml",
+    "03_结果建模/B_追溯矩阵_v1.yml"
+  ],
+  "independent_review_fix_commits": [
+    {
+      "commit": "3793c0279fbaf0e768aa9c47c5508d7fbaae8e9d",
+      "subject": "fix: close T56 independent review gaps",
+      "changed_paths": [
+        "03_结果建模/B_追溯矩阵_v1.yml",
+        "08_结论/完成指针.md",
+        "08_结论/独立审核报告_v1.md",
+        "08_结论/独立审核补充门_v1.yml",
+        "run.yml"
+      ],
+      "frozen_prefix_bytes_changed": false,
+      "reason": "独立审核发现 R6/R8/R13 三项判定不成立，需新增 T041-T044 补充门并把收窄后的判定状态回写追溯矩阵与状态文件。补充门与审核报告只描述附加验收条件，不修改 04_测试生成/ 与 07_测试执行/ 下任何冻结字节，因此不构成 return_to_stage_4。",
+      "verification": "git diff --name-only 9f72a57 3793c02 -- 04_测试生成/ 07_测试执行/ 为空"
+    }
+  ],
+  "allowlist_amendment_note": "closure_commit_allowed_changes 原只列三项，未涵盖独立审核修正引入的路径；本次补齐以消除同一 run 内两份记录互相矛盾，terminal_rule 与 frozen_path_prefixes 未放宽。"
 }
