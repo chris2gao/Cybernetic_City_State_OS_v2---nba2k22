@@ -41,6 +41,17 @@ blockers:
   live_core_window_inventory:
     disposition: rerunnable_partial_inventory_with_not_observable_boundary
     method_ids: [M-INVENTORY-01]
+independent_review_gate:
+  supplement_path: 08_结论/独立审核补充门_v1.yml
+  frozen_validator_semantics: definition_structure_and_traceability_only
+  functional_test_execution: not_run
+  criterion_status:
+    R6: blocked_until_connector_positive_negative_evidence_or_Human_reconfirmed_A_revision
+    R8: blocked_until_immutable_threshold_ref_and_observable_matched_measurement_pass
+    R13: blocked_until_real_non_08_os_task_and_host_session_manifest
+  final_acceptance_suite:
+    - 04_测试生成/冻结测试集_v1.yml
+    - 08_结论/独立审核补充门_v1.yml
 layered_authority:
   communication: changes_only_by_P1_release
   token_and_resource: .ai/TOKEN_USAGE_PROFILE.md

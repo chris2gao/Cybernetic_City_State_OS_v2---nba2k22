@@ -7,7 +7,7 @@ base_sha: 822fb2d1d6be39cd0777f2a26a4febc7b2a55f15
 branch: dev/os-v2-communication-result-model-and-test-freeze-001
 ownership: core-owned
 risk_tier: T2_semantic
-status: candidate_ready_for_independent_review
+status: verified_on_demand
 purpose: >-
   依据已确认的 A v2 与阶段二证据包产出结果模型 B，收敛 connector、Token 匹配基线与
   live core window inventory 三条阶段四 blocker，并生成可机器溯源的冻结测试集。
@@ -29,10 +29,13 @@ expected_outputs:
   - 02_前置阻塞清理/core_window_inventory_run_2.json
   - 07_测试执行/validate_result_model_and_frozen_tests.py
   - 08_结论/完成指针.md
+  - 08_结论/独立审核补充门_v1.yml
+  - 08_结论/独立审核报告_v1.md
 validation:
   - B_schema_v1 结构和交叉引用
   - A v1 八条不变量与 A v2 七条新增约束追溯
   - 测试schema_v1 结构、R/E 溯源与 R1-R14 反向覆盖
+  - 独立审核补充门收紧 R6、R8、R13，不把排除、无阈值比较或 fixture 冒充通过
   - Token 旧入口基线至少三组且字段完整
   - core window inventory 两次输出字节一致
   - 冻结提交顺序和冻结文件字节稳定
@@ -55,7 +58,10 @@ run_id_note: >-
 completion:
   result_model_commit: a6200cd5c50628856b6c8d82eb9356a6959e5cda
   freeze_commit: 9f72a57e787d05d92bcba58e241aac8514a1ebbf
-  machine_validation: passed
-  independent_executor_measurement: passed
-  next_owner: foreground_independent_review
-  T7_entry: prohibited_until_independent_review_passes
+  review_fix_commit: self
+  machine_validation: definition_structure_and_traceability_passed
+  frozen_functional_tests: not_run
+  independent_review: passed_with_supplemental_gate
+  next_owner: Human
+  master_integration: ready_for_human_decision
+  T7_entry: prohibited_until_T001_T044_applicable_gates_pass
