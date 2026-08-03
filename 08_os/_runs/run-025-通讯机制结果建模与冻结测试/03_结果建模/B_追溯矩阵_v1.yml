@@ -1,0 +1,65 @@
+B_path: 03_结果建模/B_通讯机制结果模型_v1.yml
+invariants:
+  I1: {disposition: 保留, method_ids: [M-CHANNEL-01], reason_anchor: "三通道结构隔离"}
+  I2: {disposition: 保留, method_ids: [M-REF-01], reason_anchor: "durable-first"}
+  I3: {disposition: 保留, method_ids: [M-BOUNDARY-01], reason_anchor: "新鲜度不授权"}
+  I4: {disposition: 改造, method_ids: [M-ACTOR-01, M-AUTH-TARGET-01], reason_anchor: "provider-neutral 与 live host 分层"}
+  I5: {disposition: 保留, method_ids: [M-STATE-01], reason_anchor: "immutable + current-head + CAS"}
+  I6: {disposition: 保留, method_ids: [M-BOOT-01], reason_anchor: "fast/full 互斥触发"}
+  I7: {disposition: 保留, method_ids: [M-FAILCLOSED-01], reason_anchor: "异常输入 fail closed"}
+  I8: {disposition: 保留, method_ids: [M-ELIGIBILITY-01], reason_anchor: "eligibility 不授权"}
+A_v2_new_constraints:
+  C17: [M-OBSERVATION-01]
+  C18: [M-AUTH-CURRENT-01]
+  C19: [M-AUTH-GUARD-01]
+  C20: [M-AUTH-TARGET-01]
+  C21: [M-AUTH-P4B-01]
+  C22: [M-ROLLBACK-LOSS-01]
+  C23: [M-DOMAIN-BINDING-01]
+success_criteria:
+  R1: [M-EVENT-01, M-POINTER-01]
+  R2: [M-CHANNEL-01, M-REF-01]
+  R3: [M-EVENT-01, M-STATE-01]
+  R4: [M-BOUNDARY-01, M-ACTOR-01, M-AUTH-TARGET-01, M-ELIGIBILITY-01]
+  R5: [M-EVENT-01, M-FAILCLOSED-01]
+  R6: [M-TRANSPORT-01]
+  R7: [M-BOOT-01]
+  R8: [M-TOKEN-01, M-REF-01]
+  R9: [M-STATE-01, M-COMPAT-01]
+  R10: [M-COMPAT-01, M-ROLLBACK-LOSS-01, M-LAYER-01]
+  R11: [M-DOMAIN-BINDING-01, M-RELEASE-01]
+  R12: [M-LAYOUT-01, M-EVENT-01]
+  R13: [M-INVENTORY-01, M-FAILCLOSED-01, M-ROLLBACK-LOSS-01]
+  R14: [M-KILL-01]
+blockers:
+  connector_production_equivalence:
+    disposition: excluded_until_available_then_reassess
+    method_ids: [M-TRANSPORT-01]
+  token_matched_baseline:
+    disposition: old_now_new_stage6_decision_stage7
+    method_ids: [M-TOKEN-01]
+  live_core_window_inventory:
+    disposition: rerunnable_partial_inventory_with_not_observable_boundary
+    method_ids: [M-INVENTORY-01]
+independent_review_gate:
+  supplement_path: 08_结论/独立审核补充门_v1.yml
+  frozen_validator_semantics: definition_structure_and_traceability_only
+  functional_test_execution: not_run
+  criterion_status:
+    R6: blocked_until_connector_positive_negative_evidence_or_Human_reconfirmed_A_revision
+    R8: blocked_until_immutable_threshold_ref_and_observable_matched_measurement_pass
+    R13: blocked_until_real_non_08_os_task_and_host_session_manifest
+  final_acceptance_suite:
+    - 04_测试生成/冻结测试集_v1.yml
+    - 08_结论/独立审核补充门_v1.yml
+layered_authority:
+  communication: changes_only_by_P1_release
+  token_and_resource: .ai/TOKEN_USAGE_PROFILE.md
+  workflow: 08_os/01_workflow/
+  new_OS_default_active_gate: not_entered
+canonical_landing_design:
+  mechanism: 08_os/03_mechanisms/communication/
+  boot: 08_os/02_boot/communication/
+  loader: 08_os/06_execution/mechanisms/communication/
+  registry: 08_os/05_registry/communication_v1.yml
+  created_in_T56: false

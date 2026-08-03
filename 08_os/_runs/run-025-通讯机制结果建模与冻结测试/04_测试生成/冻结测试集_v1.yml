@@ -1,0 +1,446 @@
+凭证选择记录:
+  裁定人: "Claude（T56 派单/审核方，依据 Human 授权）"
+  时间: 2026-08-02
+  依据证据: [E-003, E-004, E-009, E-010, E-011, E-012, E-014, E-017, E-022, E-023, E-024, E-025, E-027]
+  选定属性:
+    - provider-neutral 角色与三通道
+    - immutable ref、current-head CAS 与单写状态
+    - actor、validation、authorization 分层与防重放
+    - 传输等价的实测边界
+    - fast/full 初始化一致性
+    - matched Token 测量完整性
+    - core 窗口覆盖、rollback 与 adapter_only kill criterion
+  为何是这些: >-
+    这些属性直接覆盖 A v2 的 R1–R14、方案 v2 §3.5 的攻击面和阶段二已记录的真实 drift；
+    未把 B 的设计文本当判据，只用 R 编号与 E 编号决定通过语义。
+  度量选择: >-
+    结构合同用 parser/validator，Git 与传输用 expected-head CAS/read-back，状态与授权用重放和并发负例，
+    Token 用 matched token_profile_run.v1，窗口用可重跑 host/worktree inventory，rollback 用真实演练。
+  容差: >-
+    结构、授权、重放、单写、引用与 branch/head 冲突零容忍；不可观测项必须明确 not_observable。
+    成本只记录实际比较，冻结阶段不设置兼容观察期的数值阈值。
+
+测试:
+  - 描述: "[T001] 正常 dispatch 绑定稳定角色、接收者、task、branch 与精确 head。"
+    被测主体: M-EVENT-01
+    判据来源: [R1, E-003, E-015]
+    测量方法: >-
+      构造合法 dispatch event，解析 pointer 与 refs 后运行 transition eligibility。
+    通过判据: >-
+      事件只产生一次 awaiting-backend 状态，stable role 不因 provider 名称变化。
+    可失败: true
+    对应成功判据: R1
+    类型: 行为验证
+  - 描述: "[T002] 正常 completion 从后台角色回传 immutable report、brief 与 source head。"
+    被测主体: M-POINTER-01
+    判据来源: [R1, E-004, E-015]
+    测量方法: >-
+      发布内容对象后生成 completion pointer，逐项回读普通 blob 与 digest。
+    通过判据: >-
+      接收者恢复出同一 task/head/status，短 pointer 不含报告正文。
+    可失败: true
+    对应成功判据: R1
+    类型: 行为验证
+  - 描述: "[T003] review 只能从合法 completion predecessor 进入审核状态。"
+    被测主体: M-EVENT-01
+    判据来源: [R5, E-008, E-015]
+    测量方法: >-
+      分别以合法 completion 和非法 predecessor 输入 review event。
+    通过判据: >-
+      合法路径唯一推进；非法 predecessor 不写 state 并给出拒绝原因。
+    可失败: true
+    对应成功判据: R5
+    类型: 边界检查
+  - 描述: "[T004] revision 绑定被拒候选 head 并返回同一 task 的执行状态。"
+    被测主体: M-EVENT-01
+    判据来源: [R5, E-008, E-012]
+    测量方法: >-
+      提交一个绑定 rejected candidate head 的 revision event，再提交缺 head 负例。
+    通过判据: >-
+      完整 revision 一次推进，缺绑定负例失败。
+    可失败: true
+    对应成功判据: R5
+    类型: 行为验证
+  - 描述: "[T005] blocked 与 conflict 具有不同原因语义且都不冒充完成。"
+    被测主体: M-EVENT-01
+    判据来源: [R5, E-008, E-012]
+    测量方法: >-
+      构造 blocked、conflict 与把两者标成 completed 的篡改事件。
+    通过判据: >-
+      前两者保留各自状态和证据；篡改事件被拒绝。
+    可失败: true
+    对应成功判据: R5
+    类型: 一致性检查
+  - 描述: "[T006] Human gate 事件必须携带外部 action-bound authorization。"
+    被测主体: M-AUTH-TARGET-01
+    判据来源: [R4, E-009, E-024]
+    测量方法: >-
+      对同一 Human gate 分别注入有效一次性授权与只含 payload 文本的负例。
+    通过判据: >-
+      只有外部绑定并原子消费的授权使事件 eligible；文本负例失败。
+    可失败: true
+    对应成功判据: R4
+    类型: 边界检查
+  - 描述: "[T007] pointer 缺任一必填字段时 fail closed。"
+    被测主体: M-FAILCLOSED-01
+    判据来源: [R2, E-004, E-011]
+    测量方法: >-
+      对每种 pointer 依次删除一个必填字段并运行结构检查。
+    通过判据: >-
+      每个缺字段变体均失败且不解引用或写 state。
+    可失败: true
+    对应成功判据: R2
+    类型: 边界检查
+  - 描述: "[T008] 字段乱序、重复键与 unknown event 均失败。"
+    被测主体: M-FAILCLOSED-01
+    判据来源: [R5, E-004, E-008, E-011]
+    测量方法: >-
+      分别生成顺序错误、重复键与未知 event_type 变体。
+    通过判据: >-
+      三个变体全部拒绝，失败类别可区分。
+    可失败: true
+    对应成功判据: R5
+    类型: 边界检查
+  - 描述: "[T009] 缺失 durable ref 只检查一次并阻止执行。"
+    被测主体: M-REF-01
+    判据来源: [R2, E-004, E-012]
+    测量方法: >-
+      让 pointer 指向不存在的 immutable path，记录 receiver 行为。
+    通过判据: >-
+      receiver 不从文件名或旧聊天猜测，并在一次检查后返回 missing-ref。
+    可失败: true
+    对应成功判据: R2
+    类型: 行为验证
+  - 描述: "[T010] mutable ref 不得冒充 production immutable evidence。"
+    被测主体: M-REF-01
+    判据来源: [R13, E-010, E-011]
+    测量方法: >-
+      以 branch、tree、symlink、submodule 与普通 commit blob 分别解析。
+    通过判据: >-
+      只有 full-commit ordinary blob 且 digest 精确匹配通过。
+    可失败: true
+    对应成功判据: R13
+    类型: 边界检查
+  - 描述: "[T011] 旧 STATE 或旧 event 重放不能产生第二次 transition。"
+    被测主体: M-STATE-01
+    判据来源: [R13, E-009, E-011, E-012]
+    测量方法: >-
+      先消费合法 event，再以旧 state head 重放同一 event。
+    通过判据: >-
+      第二次消费或 claimed predecessor mismatch 失败且 current state 不变。
+    可失败: true
+    对应成功判据: R13
+    类型: 行为验证
+  - 描述: "[T012] human_gate 文本与模型自报批准不能授权受保护动作。"
+    被测主体: M-BOUNDARY-01
+    判据来源: [R4, E-009, E-018, E-024]
+    测量方法: >-
+      只修改 human_gate 字段或 provider role 文本，保持外部授权为空。
+    通过判据: >-
+      所有文本变体均不 eligible。
+    可失败: true
+    对应成功判据: R4
+    类型: 边界检查
+  - 描述: "[T013] 执行者自报计数不能直接成为独立审核结论。"
+    被测主体: M-ELIGIBILITY-01
+    判据来源: [R4, E-012, E-027]
+    测量方法: >-
+      让 executor report 声称覆盖通过，但不给原始 measurement 与独立复算。
+    通过判据: >-
+      审核状态保持未证实；只有独立测量 refs 可形成结论。
+    可失败: true
+    对应成功判据: R4
+    类型: 边界检查
+  - 描述: "[T014] 长任务、完整报告或日志进入短消息时失败。"
+    被测主体: M-CHANNEL-01
+    判据来源: [R2, E-005, E-016, E-027]
+    测量方法: >-
+      向 pointer 追加 prose、report body 与 log payload。
+    通过判据: >-
+      结构检查拒绝所有长内容，要求 durable ref。
+    可失败: true
+    对应成功判据: R2
+    类型: 边界检查
+  - 描述: "[T015] branch/head 与 event、pointer 或当前状态不一致时失败。"
+    被测主体: M-STATE-01
+    判据来源: [R3, E-009, E-010, E-011]
+    测量方法: >-
+      分别篡改 event source head、pointer head 与 observed current head。
+    通过判据: >-
+      任一不一致均阻止 transition 并指出冲突字段。
+    可失败: true
+    对应成功判据: R3
+    类型: 一致性检查
+  - 描述: "[T016] 同一事件重复消费或并发双重 transition 只能有一个成功。"
+    被测主体: M-STATE-01
+    判据来源: [R9, E-011, E-014]
+    测量方法: >-
+      让两个消费者用同一 expected state head 提交同一或竞争 event。
+    通过判据: >-
+      原子消费/CAS 最多接受一个，另一个明确冲突。
+    可失败: true
+    对应成功判据: R9
+    类型: 行为验证
+  - 描述: "[T017] local_git 证明 hook 执行机会、精确 head、普通 push 与回读。"
+    被测主体: M-TRANSPORT-01
+    判据来源: [R6, E-017, E-018]
+    测量方法: >-
+      在 local_git fixture 中执行 registered hook 检查、non-force expected head 发布和 read-back。
+    通过判据: >-
+      全部本地传输证据真实产生且失败时不推进状态。
+    可失败: true
+    对应成功判据: R6
+    类型: 行为验证
+  - 描述: "[T018] github_cli 使用 replacement gate 而不是声称 hook passed。"
+    被测主体: M-TRANSPORT-01
+    判据来源: [R6, E-017, E-018]
+    测量方法: >-
+      在 CLI 可用环境执行 principal、expected-head CAS、allowlist 与 remote read-back 正负例。
+    通过判据: >-
+      报告 hook not applicable transport，replacement gate 全链成立；任一缺失失败。
+    可失败: true
+    对应成功判据: R6
+    类型: 行为验证
+  - 描述: "[T019] connector 当前排除且不得声称已验证。"
+    被测主体: M-TRANSPORT-01
+    判据来源: [R6, E-017, E-024]
+    测量方法: >-
+      读取 capability receipt 与 P1 support matrix，尝试选择 unavailable connector。
+    通过判据: >-
+      选择被拒并返回 excluded/not_verified，不生成生产等价结论。
+    可失败: true
+    对应成功判据: R6
+    类型: 边界检查
+  - 描述: "[T020] unknown transport 一律 fail closed。"
+    被测主体: M-TRANSPORT-01
+    判据来源: [R6, E-018, E-027]
+    测量方法: >-
+      提交未在支持矩阵中的 transport 名称。
+    通过判据: >-
+      发布和状态推进均被拒绝。
+    可失败: true
+    对应成功判据: R6
+    类型: 边界检查
+  - 描述: "[T021] same-context fast path 只加载 current state 与全部非空 refs。"
+    被测主体: M-BOOT-01
+    判据来源: [R7, E-006, E-022]
+    测量方法: >-
+      在同一 context、相同 protocol release/head 下记录实际加载集合。
+    通过判据: >-
+      集合恰含 current state 与所有适用 refs，未漏证据也未全量重载。
+    可失败: true
+    对应成功判据: R7
+    类型: 行为验证
+  - 描述: "[T022] context boundary 或协议变化必须走 full initialization。"
+    被测主体: M-BOOT-01
+    判据来源: [R7, E-006, E-011]
+    测量方法: >-
+      分别触发新上下文、release 变化、ref 异常和状态不确定。
+    通过判据: >-
+      每种情况都加载固定 bootstrap/profile/protocol 与 required refs；缺项失败。
+    可失败: true
+    对应成功判据: R7
+    类型: 行为验证
+  - 描述: "[T023] fast path 与 full initialization 恢复出同一有效任务状态。"
+    被测主体: M-BOOT-01
+    判据来源: [R7, E-006, E-015]
+    测量方法: >-
+      对同一 immutable event/state 分别运行两条恢复路径并比较 canonical result。
+    通过判据: >-
+      task、head、status、refs 和 next transition 完全一致。
+    可失败: true
+    对应成功判据: R7
+    类型: 一致性检查
+  - 描述: "[T024] 执行旧入口与新入口的 matched measurement 并输出实际比较。"
+    被测主体: M-TOKEN-01
+    判据来源: [R8, E-022, E-023]
+    测量方法: >-
+      按冻结的 task type、scale、acceptance 匹配记录，运行阶段六新入口测量并与旧入口集合比较。
+    通过判据: >-
+      全部指标来自实际记录或保持 null，比较报告列出真实差异，未预填成本结论。
+    可失败: true
+    对应成功判据: R8
+    类型: 行为验证
+  - 描述: "[T025] token 优化不得删除独立证据、验证、审计或 Human-facing 完整性。"
+    被测主体: M-REF-01
+    判据来源: [R8, E-022, E-027]
+    测量方法: >-
+      对 matched task 比较 required refs、独立复验步骤、audit bindings 与 Human 内容字段。
+    通过判据: >-
+      新入口所有必需集合不比冻结合同少；缺任一项失败。
+    可失败: true
+    对应成功判据: R8
+    类型: 一致性检查
+  - 描述: "[T026] adapter、shadow 与 mirror 不能形成第二个 writer。"
+    被测主体: M-COMPAT-01
+    判据来源: [R9, E-007, E-014]
+    测量方法: >-
+      让 legacy adapter 与新 reducer 尝试对同一 predecessor 写不同状态。
+    通过判据: >-
+      只有当前 canonical writer 可成功；双写测试必须失败并阻止切换。
+    可失败: true
+    对应成功判据: R9
+    类型: 边界检查
+  - 描述: "[T027] 通讯切换后 Token/资源和 workflow 仍指旧 canonical。"
+    被测主体: M-LAYER-01
+    判据来源: [R10, E-002, E-022]
+    测量方法: >-
+      检查 communication release manifest 的三层引用与禁止字段。
+    通过判据: >-
+      只改变 communication ref；Token 指向 .ai/TOKEN_USAGE_PROFILE.md，workflow 指向 01_workflow。
+    可失败: true
+    对应成功判据: R10
+    类型: 一致性检查
+  - 描述: "[T028] rollback 保持 remote commits、允许丢未提交区并能续跑耐久任务。"
+    被测主体: M-ROLLBACK-LOSS-01
+    判据来源: [R10, E-013, E-025, E-027]
+    测量方法: >-
+      在实现后制造已 push commit、未提交改动与 in-flight task，执行回旧 bootstrap。
+    通过判据: >-
+      remote commit 全部可达；未提交区可清除；满足续跑字段的任务从 last event 继续。
+    可失败: true
+    对应成功判据: R10
+    类型: 行为验证
+  - 描述: "[T029] P1 通讯门不能冒充 P5 默认活动或建域 Human gate。"
+    被测主体: M-DOMAIN-BINDING-01
+    判据来源: [R11, E-009, E-013, E-018]
+    测量方法: >-
+      用通过的 observation result 直接请求 create_domain，再用独立 Human event 显式绑定请求。
+    通过判据: >-
+      前者失败；后者仍需 P5 的真实授权证据才 eligible。
+    可失败: true
+    对应成功判据: R11
+    类型: 边界检查
+  - 描述: "[T030] canonical、boot、loader、registry、validator 与 adapter 可从固定入口发现。"
+    被测主体: M-LAYOUT-01
+    判据来源: [R12, E-002, E-027]
+    测量方法: >-
+      阶段六实现后从 registry 与 boot manifest 反向解析所有落点和 loader。
+    通过判据: >-
+      所有对象唯一可发现且 loader 位于 mechanisms/communication；缺项或双权威失败。
+    可失败: true
+    对应成功判据: R12
+    类型: 一致性检查
+  - 描述: "[T031] 真实跨模型任务覆盖派单、执行、审核、定点修复、Human gate 与完成。"
+    被测主体: M-EVENT-01
+    判据来源: [R12, E-015, E-027]
+    测量方法: >-
+      在兼容 provider 间执行完整任务闭环并从 durable events 独立重放。
+    通过判据: >-
+      每个 transition 唯一、refs 可解、Human gate 外部授权、最终状态可复算。
+    可失败: true
+    对应成功判据: R12
+    类型: 行为验证
+  - 描述: "[T032] 08_os 外 core task types 也使用同一通讯合同。"
+    被测主体: M-INVENTORY-01
+    判据来源: [R13, E-019, E-020, E-021]
+    测量方法: >-
+      从 immutable CORE_MANIFEST/path universe 选取每类非 08_os task fixture 运行闭环。
+    通过判据: >-
+      每类均覆盖 dispatch、执行、审核与适用 Human gate；未分类路径显式失败。
+    可失败: true
+    对应成功判据: R13
+    类型: 行为验证
+  - 描述: "[T033] core window inventory 可重跑且不可观测项不被推测补齐。"
+    被测主体: M-INVENTORY-01
+    判据来源: [R13, E-019, E-021, E-027]
+    测量方法: >-
+      连续运行 host/worktree 枚举并比较字节；检查 session/window/migration 边界。
+    通过判据: >-
+      两次结果一致，所有不可见项为 not_observable；T7 未补 host manifest 时 R13 不通过。
+    可失败: true
+    对应成功判据: R13
+    类型: 一致性检查
+  - 描述: "[T034] 状态唯一性或防重放未证明时确定性降级 adapter_only。"
+    被测主体: M-KILL-01
+    判据来源: [R14, E-012, E-027]
+    测量方法: >-
+      分别移除 single-writer 与 replay evidence 后运行 release gate。
+    通过判据: >-
+      release status 为 adapter_only，legacy writer 保持，不能切换任何窗口。
+    可失败: true
+    对应成功判据: R14
+    类型: 边界检查
+  - 描述: "[T035] 真实 rollback 未通过时不得切换通讯 canonical。"
+    被测主体: M-KILL-01
+    判据来源: [R14, E-025, E-027]
+    测量方法: >-
+      令 rollback 演练丢失 remote commit 或无法恢复 eligible in-flight task。
+    通过判据: >-
+      gate 失败并保持 legacy canonical；文档步骤不能替代执行证据。
+    可失败: true
+    对应成功判据: R14
+    类型: 行为验证
+  - 描述: "[T036] ReplayStore 原子消费在 local_git 与 github_cli 上语义等价。"
+    被测主体: M-AUTH-TARGET-01
+    判据来源: [R4, E-009, E-011, E-024]
+    测量方法: >-
+      对同一授权 key 并发消费，并分别在 local_git/CLI 的 publish CAS 前执行。
+    通过判据: >-
+      每个 key 只消费一次；发布失败时授权烧毁，重试必须由宿主签发新 nonce。
+    可失败: true
+    对应成功判据: R4
+    类型: 行为验证
+  - 描述: "[T037] CITYSTATE_ALLOW_MASTER 不能替代 action-bound authorization。"
+    被测主体: M-AUTH-GUARD-01
+    判据来源: [R4, E-018, E-024]
+    测量方法: >-
+      仅设置环境防误操作值，不注入 authorization context 后请求受保护动作。
+    通过判据: >-
+      请求失败；receipt 只记录 guard observed。
+    可失败: true
+    对应成功判据: R4
+    类型: 边界检查
+  - 描述: "[T038] protocol semantics、neutral source base 与 active state 使用不同 head。"
+    被测主体: M-RELEASE-01
+    判据来源: [R11, E-007, E-013, E-026]
+    测量方法: >-
+      构造正确三 head binding 与把 neutral/latest 冒充 semantics 的负例。
+    通过判据: >-
+      正确 binding 可回读；两个冒充变体失败。
+    可失败: true
+    对应成功判据: R11
+    类型: 一致性检查
+  - 描述: "[T039] connector 一旦可用会自动使排除决定失效。"
+    被测主体: M-TRANSPORT-01
+    判据来源: [R6, E-017, E-024]
+    测量方法: >-
+      把 capability receipt 的 connector 状态改为 available 并保持旧 excluded 结论。
+    通过判据: >-
+      gate 要求重新评估和补正负例，旧排除不能继续当作通过。
+    可失败: true
+    对应成功判据: R6
+    类型: 边界检查
+  - 描述: "[T040] 观察记录只使用冻结计数维度且不跨层授权。"
+    被测主体: M-OBSERVATION-01
+    判据来源: [R10, E-022, E-027]
+    测量方法: >-
+      检查 observation artifact 的维度集合和它对 Token/workflow/P5 字段的影响。
+    通过判据: >-
+      只记录实际维度值；不改变 Token/workflow refs，也不生成 P5 或建域授权。
+    可失败: true
+    对应成功判据: R10
+    类型: 一致性检查
+
+方法资格:
+  可测试性: >-
+    所有测试都给出可构造正例或负例、明确被测方法和失败条件；环境当前不可用的 connector、
+    新入口与真实 rollback 测试保持冻结，待对应阶段按相同合同执行。
+  同行评审: >-
+    测试由 T56 任务包规定 R/E 溯源机器门，最终由不同会话、不同模型族与不同测量工具审核。
+  已知错误率: 未量化；阶段七通过对抗用例与独立复算记录误报、漏报，不以本执行方自报代替。
+  操作标准: >-
+    先验证 R/E 溯源和 B method ID，再运行正负例；每次记录输入、expected/actual、退出码、
+    immutable refs 与环境 capability，tool crash 或不可观测结果 fail closed。
+  普遍接受度: >-
+    使用 Git immutable refs、CAS、事件溯源、幂等消费、独立审核和显式 not_observable，
+    均为本仓库已验证且在阶段二证据包中有来源的操作原则。
+
+实现前检查:
+  约束可满足: 是
+  边界僭越:
+    - connector 当前不可用：P1 支持矩阵排除；可用时排除自动失效并重测。
+    - 新入口尚不存在：R8 只冻结 matched 测量方法与旧基线，阶段六采新样本、阶段七判断。
+    - live client session 当前不可观测：T7 切换前必须补宿主 session manifest，否则 R13 失败。
+    - trusted Human host 强度留 P4b：P1 只测接口、绑定与一次性消费语义。
+    - 真实 rollback 只能在实现后执行：当前冻结恢复点、损失边界与失败判据，不宣告已经通过。

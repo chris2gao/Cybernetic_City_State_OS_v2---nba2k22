@@ -1,0 +1,77 @@
+schema_version: citystate.independent_review_supplement.v1
+task_id: os-v2-communication-result-model-and-test-freeze-001
+reviewed_candidate_head: 766eb11d414d90094359246ca308914171c1fef0
+review_basis:
+  master_sha: 822fb2d1d6be39cd0777f2a26a4febc7b2a55f15
+  result_model_commit: a6200cd5c50628856b6c8d82eb9356a6959e5cda
+  freeze_commit: 9f72a57e787d05d92bcba58e241aac8514a1ebbf
+  frozen_suite_path: 04_测试生成/冻结测试集_v1.yml
+interpretation:
+  frozen_validator_result: definition_structure_and_traceability_passed
+  functional_test_execution: not_run
+  rule: >-
+    T001-T040 是未来实现的冻结验收定义；当前 validator 只证明 schema、引用和覆盖计数，
+    不得表述为 40 个功能测试已经执行通过。
+blocking_corrections:
+  R6:
+    finding: >-
+      A v2 明文要求 local Git、GitHub connector 与 GitHub CLI 三类传输均证明同一语义合同；
+      当前 connector unavailable 的排除决定是诚实边界，但不能作为 R6 已满足的证据。
+    current_status: blocked_by_unavailable_connector
+    pass_conditions:
+      - connector available 时完成 authenticated principal、expected-head CAS、allowed paths、read-back、失败显露与授权防重放正负例
+      - 或先由 Human 修订并重新确认 A v2，使 R6 的传输范围明确缩小
+    prohibition: excluded_or_not_verified_must_not_be_counted_as_R6_pass
+  R8:
+    finding: >-
+      原 T024 只要求输出实际差异，并明确不形成成本结论；这不能证明 R8 所要求的
+      “成本满足阶段四冻结阈值”。原 validator 反而拒绝阈值，构成语义反向。
+    current_status: blocked_until_threshold_and_observable_matched_measurement
+    pass_conditions:
+      - 存在 immutable threshold_ref，且该阈值由有权阶段依据真实证据冻结
+      - 新旧入口记录按 task_type、scale、acceptance 匹配
+      - 所有用于结论的成本指标可观察；null 指标不得形成通过结论
+      - 实际比较满足 threshold_ref，且证据、验证、审计与 Human-facing 完整性不减少
+    prohibition: comparison_without_threshold_or_with_required_null_metrics_must_not_pass_R8
+  R13:
+    finding: >-
+      原 T032 只要求从 path universe 选择 fixture，弱于 A v2 对至少一个 08_os 外真实 core
+      任务类型和全部 core 窗口的要求。
+    current_status: blocked_until_real_task_and_host_manifest
+    pass_conditions:
+      - 至少一个 08_os 外真实 core 任务完成端到端闭环
+      - T7 前取得宿主 session/window manifest 并证明全部活动与新开 core 窗口纳入切换
+      - 不可观测项保持 not_observable 时不得宣告 R13 通过
+supplemental_tests:
+  - id: T041
+    criterion: R6
+    measurement: >-
+      connector unavailable 时读取 capability receipt 并尝试形成 R6 verdict；available 后执行
+      生产身份、CAS、allowlist、read-back、失败显露和授权防重放正负例。
+    pass: >-
+      unavailable 只能得到 blocked_by_unavailable_connector；available 后全部正负例通过才可得到 R6 pass。
+  - id: T042
+    criterion: R8
+    measurement: >-
+      解引用 immutable threshold_ref，验证其授权与证据来源，再对 matched 新旧记录执行实际比较。
+    pass: >-
+      threshold_ref 存在、结论指标可观察、实际比较满足阈值且完整性集合不减少；缺任一项均不得通过。
+  - id: T043
+    criterion: R13
+    measurement: >-
+      选择至少一个仓库内真实存在且不属于 08_os 的 core 任务，使用新通讯合同完成完整闭环并重放。
+    pass: >-
+      真实任务而非仅 fixture 完成 dispatch、执行、审核、适用 Human gate 与最终状态复算。
+  - id: T044
+    criterion: R10_and_R13
+    measurement: >-
+      T7 前读取宿主 session/window manifest，覆盖切换时活动窗口和切换期间新开窗口，并执行真实 rollback。
+    pass: >-
+      全部窗口均有版本绑定 cutover/rollback evidence；manifest 缺失或任一窗口未覆盖时 gate 失败。
+integration_rule:
+  final_acceptance_suite:
+    - 04_测试生成/冻结测试集_v1.yml
+    - 08_结论/独立审核补充门_v1.yml
+  precedence: >-
+    本补充门只收紧原冻结套件，不删除 T001-T040；发生冲突时采用更严格且不扩大声明的判据。
+  T7_entry: prohibited_until_T001_T044_applicable_gates_pass
