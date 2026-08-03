@@ -37,6 +37,5 @@ assessed one at a time, not copied wholesale.
 ## 当前机制
 
 - `context_management/`：全局上下文管理、文件隔离、产物生命周期、发布边界与结构验证。
-- `environment_capability/`：环境与能力事实的可失效、可追溯 receipt 契约；只保存路径语义与类别。
 
 工作流只引用该机制，不在 `01_workflow/` 内保留第二份实例。

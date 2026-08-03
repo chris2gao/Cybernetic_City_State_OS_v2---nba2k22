@@ -38,7 +38,7 @@
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "python": {
-      "command": "${MUTMUT_VENV}/bin/python",
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
       "arguments": [
         "--version"
       ],
@@ -64,7 +64,7 @@
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "pip": {
-      "command": "${MUTMUT_VENV}/bin/python",
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
       "arguments": [
         "-m",
         "pip",
@@ -79,7 +79,7 @@
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "pip_show_mutmut": {
-      "command": "${MUTMUT_VENV}/bin/python",
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
       "arguments": [
         "-m",
         "pip",
@@ -95,7 +95,7 @@
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "pip_show_libcst": {
-      "command": "${MUTMUT_VENV}/bin/python",
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
       "arguments": [
         "-m",
         "pip",
@@ -111,7 +111,7 @@
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "pytest": {
-      "command": "${MUTMUT_VENV}/bin/python",
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
       "arguments": [
         "-m",
         "pytest",
@@ -129,7 +129,7 @@
       "command": "bash",
       "arguments": [
         "-lc",
-        "source '${MUTMUT_VENV}/bin/activate' && command -v python"
+        "source '/home/gk/.venvs/core-mutmut-3.6.0/bin/activate' && command -v python"
       ],
       "started_utc": "2026-07-30T10:06:43.152913+00:00",
       "duration_ms": 36.994,
@@ -143,7 +143,7 @@
       "command": "bash",
       "arguments": [
         "-lc",
-        "source '${MUTMUT_VENV}/bin/activate' && command -v mutmut"
+        "source '/home/gk/.venvs/core-mutmut-3.6.0/bin/activate' && command -v mutmut"
       ],
       "started_utc": "2026-07-30T10:06:43.190020+00:00",
       "duration_ms": 38.807,
@@ -154,7 +154,7 @@
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "imports": {
-      "command": "${MUTMUT_VENV}/bin/python",
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
       "arguments": [
         "-c",
         "import libcst, mutmut; print('imports-ok')"
@@ -168,7 +168,7 @@
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "version": {
-      "command": "${MUTMUT_VENV}/bin/mutmut",
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
       "arguments": [
         "--version"
       ],
@@ -182,9 +182,9 @@
     }
   },
   "fork_probe": {
-    "command": "${MUTMUT_VENV}/bin/python",
+    "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
     "arguments": [
-      "${REPOSITORY_ROOT}/08_os/_runs/run-013-mutmut安装接入验证/01_任务输入/fork_probe.py"
+      "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/_runs/run-013-mutmut安装接入验证/01_任务输入/fork_probe.py"
     ],
     "started_utc": "2026-07-30T10:06:45.996966+00:00",
     "duration_ms": 64.875,
@@ -202,7 +202,7 @@
         "id": "weak-1",
         "source_commit": "c43a077",
         "baseline": {
-          "command": "${MUTMUT_VENV}/bin/python",
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
           "arguments": [
             "-m",
             "pytest",
@@ -218,7 +218,7 @@
           "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         },
         "mutation": {
-          "command": "${MUTMUT_VENV}/bin/mutmut",
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
           "arguments": [
             "run",
             "--max-children",
@@ -233,7 +233,7 @@
           "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         },
         "results": {
-          "command": "${MUTMUT_VENV}/bin/mutmut",
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
           "arguments": [
             "results",
             "--all",
@@ -278,7 +278,7 @@
         "id": "weak-2",
         "source_commit": "c43a077",
         "baseline": {
-          "command": "${MUTMUT_VENV}/bin/python",
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
           "arguments": [
             "-m",
             "pytest",
@@ -294,7 +294,7 @@
           "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         },
         "mutation": {
-          "command": "${MUTMUT_VENV}/bin/mutmut",
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
           "arguments": [
             "run",
             "--max-children",
@@ -309,7 +309,7 @@
           "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         },
         "results": {
-          "command": "${MUTMUT_VENV}/bin/mutmut",
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
           "arguments": [
             "results",
             "--all",
@@ -354,7 +354,7 @@
         "id": "strengthened-1",
         "source_commit": "HEAD",
         "baseline": {
-          "command": "${MUTMUT_VENV}/bin/python",
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
           "arguments": [
             "-m",
             "pytest",
@@ -370,7 +370,7 @@
           "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         },
         "mutation": {
-          "command": "${MUTMUT_VENV}/bin/mutmut",
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
           "arguments": [
             "run",
             "--max-children",
@@ -385,7 +385,7 @@
           "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         },
         "results": {
-          "command": "${MUTMUT_VENV}/bin/mutmut",
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
           "arguments": [
             "results",
             "--all",
@@ -424,7 +424,7 @@
         "id": "strengthened-2",
         "source_commit": "HEAD",
         "baseline": {
-          "command": "${MUTMUT_VENV}/bin/python",
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
           "arguments": [
             "-m",
             "pytest",
@@ -440,7 +440,7 @@
           "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         },
         "mutation": {
-          "command": "${MUTMUT_VENV}/bin/mutmut",
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
           "arguments": [
             "run",
             "--max-children",
@@ -455,7 +455,7 @@
           "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         },
         "results": {
-          "command": "${MUTMUT_VENV}/bin/mutmut",
+          "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
           "arguments": [
             "results",
             "--all",
@@ -508,7 +508,7 @@
       "id": "real-initial",
       "source_commit": "298c7bf",
       "baseline": {
-        "command": "${MUTMUT_VENV}/bin/python",
+        "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
         "arguments": [
           "-m",
           "pytest",
@@ -524,7 +524,7 @@
         "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
       "mutation": {
-        "command": "${MUTMUT_VENV}/bin/mutmut",
+        "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
         "arguments": [
           "run",
           "--max-children",
@@ -539,7 +539,7 @@
         "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
       "results": {
-        "command": "${MUTMUT_VENV}/bin/mutmut",
+        "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
         "arguments": [
           "results",
           "--all",
@@ -631,9 +631,9 @@
       }
     ],
     "equivalence_proof": {
-      "command": "${MUTMUT_VENV}/bin/python",
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
       "arguments": [
-        "${REPOSITORY_ROOT}/08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/equivalence_proof.py"
+        "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/equivalence_proof.py"
       ],
       "started_utc": "2026-07-30T10:06:46.062020+00:00",
       "duration_ms": 62.927,
@@ -675,12 +675,12 @@
         "temporary_workspaces_cleaned": true,
         "passed": true,
         "result": {
-          "command": "${REPOSITORY_ROOT}/08_os/06_execution/tools/mutmut/invoke.sh",
+          "command": "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/06_execution/tools/mutmut/invoke.sh",
           "arguments": [
             "--repo-root",
-            "${REPOSITORY_ROOT}",
+            "/home/gk/projects/Cybernetic_City_State_OS_v2---core",
             "--venv",
-            "${MUTMUT_VENV}",
+            "/home/gk/.venvs/core-mutmut-3.6.0",
             "--project-dir",
             "08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests",
             "--target",
@@ -712,12 +712,12 @@
         "temporary_workspaces_cleaned": true,
         "passed": true,
         "result": {
-          "command": "${REPOSITORY_ROOT}/08_os/06_execution/tools/mutmut/invoke.sh",
+          "command": "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/06_execution/tools/mutmut/invoke.sh",
           "arguments": [
             "--repo-root",
-            "${REPOSITORY_ROOT}",
+            "/home/gk/projects/Cybernetic_City_State_OS_v2---core",
             "--venv",
-            "${MUTMUT_VENV}",
+            "/home/gk/.venvs/core-mutmut-3.6.0",
             "--project-dir",
             "08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests",
             "--target",
@@ -747,12 +747,12 @@
         "temporary_workspaces_cleaned": true,
         "passed": true,
         "result": {
-          "command": "${REPOSITORY_ROOT}/08_os/06_execution/tools/mutmut/invoke.sh",
+          "command": "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/06_execution/tools/mutmut/invoke.sh",
           "arguments": [
             "--repo-root",
-            "${REPOSITORY_ROOT}",
+            "/home/gk/projects/Cybernetic_City_State_OS_v2---core",
             "--venv",
-            "${MUTMUT_VENV}",
+            "/home/gk/.venvs/core-mutmut-3.6.0",
             "--project-dir",
             "08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests",
             "--target",
@@ -764,7 +764,7 @@
             "--max-children",
             "2",
             "--mutmut-executable",
-            "${MUTMUT_VENV}/bin/does-not-exist"
+            "/home/gk/.venvs/core-mutmut-3.6.0/bin/does-not-exist"
           ],
           "started_utc": "2026-07-30T10:09:47.482550+00:00",
           "duration_ms": 67.216,
@@ -784,12 +784,12 @@
         "temporary_workspaces_cleaned": true,
         "passed": true,
         "result": {
-          "command": "${REPOSITORY_ROOT}/08_os/06_execution/tools/mutmut/invoke.sh",
+          "command": "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/06_execution/tools/mutmut/invoke.sh",
           "arguments": [
             "--repo-root",
-            "${REPOSITORY_ROOT}",
+            "/home/gk/projects/Cybernetic_City_State_OS_v2---core",
             "--venv",
-            "${MUTMUT_VENV}",
+            "/home/gk/.venvs/core-mutmut-3.6.0",
             "--project-dir",
             "08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests",
             "--target",
@@ -801,7 +801,7 @@
             "--max-children",
             "2",
             "--mutmut-executable",
-            "${REPOSITORY_ROOT}/08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/fixtures/fake_mutmut_9_9_9.sh"
+            "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/fixtures/fake_mutmut_9_9_9.sh"
           ],
           "started_utc": "2026-07-30T10:09:47.549891+00:00",
           "duration_ms": 103.813,
@@ -821,12 +821,12 @@
         "temporary_workspaces_cleaned": true,
         "passed": true,
         "result": {
-          "command": "${REPOSITORY_ROOT}/08_os/06_execution/tools/mutmut/invoke.sh",
+          "command": "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/06_execution/tools/mutmut/invoke.sh",
           "arguments": [
             "--repo-root",
-            "${REPOSITORY_ROOT}",
+            "/home/gk/projects/Cybernetic_City_State_OS_v2---core",
             "--venv",
-            "${MUTMUT_VENV}",
+            "/home/gk/.venvs/core-mutmut-3.6.0",
             "--project-dir",
             "08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests",
             "--target",
@@ -856,12 +856,12 @@
         "temporary_workspaces_cleaned": true,
         "passed": true,
         "result": {
-          "command": "${REPOSITORY_ROOT}/08_os/06_execution/tools/mutmut/invoke.sh",
+          "command": "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/06_execution/tools/mutmut/invoke.sh",
           "arguments": [
             "--repo-root",
-            "${REPOSITORY_ROOT}",
+            "/home/gk/projects/Cybernetic_City_State_OS_v2---core",
             "--venv",
-            "${MUTMUT_VENV}",
+            "/home/gk/.venvs/core-mutmut-3.6.0",
             "--project-dir",
             "08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests",
             "--target",
@@ -891,12 +891,12 @@
         "temporary_workspaces_cleaned": true,
         "passed": true,
         "result": {
-          "command": "${REPOSITORY_ROOT}/08_os/06_execution/tools/mutmut/invoke.sh",
+          "command": "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/06_execution/tools/mutmut/invoke.sh",
           "arguments": [
             "--repo-root",
-            "${REPOSITORY_ROOT}",
+            "/home/gk/projects/Cybernetic_City_State_OS_v2---core",
             "--venv",
-            "${MUTMUT_VENV}",
+            "/home/gk/.venvs/core-mutmut-3.6.0",
             "--project-dir",
             "08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests",
             "--target",
@@ -926,12 +926,12 @@
         "temporary_workspaces_cleaned": true,
         "passed": true,
         "result": {
-          "command": "${REPOSITORY_ROOT}/08_os/06_execution/tools/mutmut/invoke.sh",
+          "command": "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/06_execution/tools/mutmut/invoke.sh",
           "arguments": [
             "--repo-root",
-            "${REPOSITORY_ROOT}",
+            "/home/gk/projects/Cybernetic_City_State_OS_v2---core",
             "--venv",
-            "${MUTMUT_VENV}",
+            "/home/gk/.venvs/core-mutmut-3.6.0",
             "--project-dir",
             "08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests",
             "--allow-target",
@@ -959,12 +959,12 @@
         "temporary_workspaces_cleaned": true,
         "passed": true,
         "result": {
-          "command": "${REPOSITORY_ROOT}/08_os/06_execution/tools/mutmut/invoke.sh",
+          "command": "/home/gk/projects/Cybernetic_City_State_OS_v2---core/08_os/06_execution/tools/mutmut/invoke.sh",
           "arguments": [
             "--repo-root",
-            "${REPOSITORY_ROOT}",
+            "/home/gk/projects/Cybernetic_City_State_OS_v2---core",
             "--venv",
-            "${MUTMUT_VENV}",
+            "/home/gk/.venvs/core-mutmut-3.6.0",
             "--project-dir",
             "08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests",
             "--target",

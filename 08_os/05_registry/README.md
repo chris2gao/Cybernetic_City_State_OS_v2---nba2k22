@@ -61,8 +61,5 @@ that is neither present nor correctly ignored.
   （当前为 `.githooks/`）。这正是本 README 开头所述、reachability 分析必然漏掉的
   那一类文件。所有权在 `CORE_MANIFEST.yml` 另行声明：那份答"谁有权编写"，
   本 registry 答"谁加载、怎么被发现、失败何时显形"，两者不可互相替代。
-- `repository_validation_v1.yml`：可复用的仓库级确定性校验器、配置与自测入口；
-  当前登记个人绝对路径 validator。登记表示可发现和受保护，不表示常驻、boot 加载或
-  MCP 暴露。
 
 `08_os/_runs/`、`_runtime/`、角色 private/scratch 不注册。

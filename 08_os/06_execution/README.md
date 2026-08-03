@@ -43,9 +43,3 @@ nicety — this is the area whose failures would otherwise be silent by construc
   排除原始研究报告、运行历史与私有 scratch，并运行结构 validator。
 
 加载 receipt 必须记录机制版本和实际读取项；缺项、旧版本或 stale 均失败退出。
-
-## 当前仓库校验器
-
-- `validators/personal_paths/README.md`：按可配置模式表扫描 tracked 或相对显式
-  Git base 的 changed UTF-8 文本，报告个人绝对路径命中。它是按需 validator，
-  不进入 boot、不联网、不常驻，也不暴露 MCP。
