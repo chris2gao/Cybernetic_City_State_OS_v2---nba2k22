@@ -1,0 +1,32 @@
+schema_version: citystate.workflow.stage_artifact_schema.v1
+artifact_schema_version: 1
+common_required_fields:
+- schema_version
+- run_id
+- stage_id
+- artifact_kind
+- artifact_version
+- status
+- input_refs
+- deliberation_receipt
+- payload
+common_rules:
+- status_must_equal_complete
+- artifact_version_must_be_positive_integer
+- input_refs_must_bind_required_predecessor_sha256
+- deliberation_receipt_must_bind_stage_profile
+- dormant_receipt_must_not_create_session
+- full_or_incremental_receipt_requires_task_gate_and_Human_authorization_ref
+stage_id: workflow_stage_01_requirement_modeling
+artifact_kind: requirement_package
+artifact_filename: 01_requirement.yml
+required_predecessors: []
+payload_required_fields:
+- requirement_id
+- objective
+- success_criteria
+- constraints
+- Human_confirmation
+stage_specific_rules:
+- Human_confirmation.confirmed_must_be_true
+- Human_confirmation.artifact_version_must_match

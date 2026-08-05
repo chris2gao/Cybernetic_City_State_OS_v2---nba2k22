@@ -1,0 +1,35 @@
+schema_version: citystate.workflow.stage_artifact_schema.v1
+artifact_schema_version: 1
+common_required_fields:
+- schema_version
+- run_id
+- stage_id
+- artifact_kind
+- artifact_version
+- status
+- input_refs
+- deliberation_receipt
+- payload
+common_rules:
+- status_must_equal_complete
+- artifact_version_must_be_positive_integer
+- input_refs_must_bind_required_predecessor_sha256
+- deliberation_receipt_must_bind_stage_profile
+- dormant_receipt_must_not_create_session
+- full_or_incremental_receipt_requires_task_gate_and_Human_authorization_ref
+stage_id: workflow_stage_04_test_generation
+artifact_kind: frozen_test_package
+artifact_filename: 04_tests.yml
+required_predecessors:
+- workflow_stage_01_requirement_modeling
+- workflow_stage_02_information_collection
+- workflow_stage_03_result_modeling
+payload_required_fields:
+- frozen
+- freeze_authorization_ref
+- tests
+- test_package_sha256
+stage_specific_rules:
+- frozen_must_be_true
+- each_test_requires_evidence_claim_ids
+- test_package_sha256_must_match_normalized_tests
