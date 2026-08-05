@@ -1,0 +1,54 @@
+schema_version: citystate.workflow.artifact.v1
+run_id: pilot-cross-platform-repository-logical-path-001
+stage_id: workflow_stage_04_test_generation
+artifact_kind: frozen_test_package
+artifact_version: 1
+status: complete
+input_refs:
+- stage_id: workflow_stage_01_requirement_modeling
+  path: 01_requirement.yml
+  artifact_version: 1
+  sha256: 11a5aea60da22db8023fa6b4950795caf0ed13b33fac364e7019076da8cf5288
+- stage_id: workflow_stage_02_information_collection
+  path: 02_evidence.yml
+  artifact_version: 1
+  sha256: c1cb64991c41befe5736faecb0381a889f97d304281725e8f3e5f7a71211e801
+- stage_id: workflow_stage_03_result_modeling
+  path: 03_result.yml
+  artifact_version: 1
+  sha256: 632c4f2df9c70b6ee3e1924c210f56aee18e2449dcbf782cecf013cd768737e3
+deliberation_receipt:
+  mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
+  activation_state: active_dormant
+  profile_id: workflow_stage_04_test_generation
+  route: dormant
+  receipt_status: valid
+  session_id: null
+  task_gate_ref: null
+  Human_authorization_ref: null
+payload:
+  frozen: true
+  freeze_authorization_ref: Human_activation_task_scope_2026-08-05
+  tests:
+  - test_id: T-1
+    evidence_claim_ids:
+    - E-1
+    - E-2
+    command_or_method: Evaluate the construction under Windows separator semantics.
+    expected: Forward-slash logical path.
+  - test_id: T-2
+    evidence_claim_ids:
+    - E-2
+    command_or_method: Evaluate the construction under POSIX separator semantics.
+    expected: The same forward-slash logical path.
+  - test_id: T-3
+    evidence_claim_ids:
+    - E-3
+    command_or_method: Run v2 static in a byte-exact Windows checkout.
+    expected: Exit 0.
+  - test_id: T-4
+    evidence_claim_ids:
+    - E-1
+    command_or_method: Check the computed logical path for a backslash.
+    expected: No backslash is present.
+  test_package_sha256: 1437a7648568e6ade480e91d1cd8772fe4785e9e5cda9176fa7f2149ba7f6175
