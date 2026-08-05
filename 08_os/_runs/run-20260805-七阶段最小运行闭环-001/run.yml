@@ -1,0 +1,53 @@
+run_id: run-20260805-七阶段最小运行闭环-001
+task_id: os-v2-seven-stage-minimum-operational-loop-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+branch: dev/os-v2-seven-stage-minimum-operational-loop-001
+exact_base_sha: c81a116226a57f0047b55b924fad1771c1b81029
+status: candidate_pending_validation
+objective: Build and prove a minimum deterministic control loop for the seven workflow stages.
+operation_policy:
+  one_large_task: true
+  single_active_model_serial_operation: true
+  executor: current_project_lead_model
+  independent_reviewer: cc_Opus_5
+  executor_claims_independent_review: false
+checkpoints:
+  C1_common_contract_and_run_envelope: in_progress
+  C2_stage_01_requirement: pending
+  C3_stage_02_evidence: pending
+  C4_stage_03_result: pending
+  C5_stage_04_frozen_tests: pending
+  C6_stage_05_steps_and_three_exits: pending
+  C7_stage_06_execution_boundary: pending
+  C8_stage_07_independent_verification: pending
+  C9_runner_and_loader: pending
+  C10_cross_platform_path_pilot: pending
+  C11_regression_registry_and_handoff: pending
+candidate_state:
+  branch_only: true
+  master_modified: false
+  runtime_activated_by_this_task: false
+  canonical_live_instance_state_created: false
+validation:
+  contract_static: pending
+  pilot_positive: pending
+  dormant_receipts: pending
+  negative_fixtures: pending
+  unit_tests: pending
+  context_management_regression: pending
+  stage_collaborative_deliberation_regression: pending
+unresolved:
+  blocker: []
+  major: []
+  minor: []
+next_action:
+  owner: current_project_lead_model
+  action: implement_common_contract_stage_schemas_runner_and_pilot
+prohibitions:
+  - modify_master_before_independent_review_and_new_Human_gate
+  - force_push
+  - rebase
+  - squash
+  - create_canonical_live_instance_state
+  - claim_semantic_generation_is_deterministic
+  - bypass_test_freeze_or_independent_review
