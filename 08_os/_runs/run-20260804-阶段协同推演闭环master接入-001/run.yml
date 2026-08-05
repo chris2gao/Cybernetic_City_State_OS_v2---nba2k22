@@ -4,7 +4,7 @@ repository: chris2gao/Cybernetic_City_State_OS_v2---core
 branch: dev/os-v2-stage-collaborative-deliberation-master-integration-001
 exact_base_sha: 05cf8b67ecf01896b669ad0582ed05371391b866
 accepted_source_head: 0c6f08554636ade9b3120db03cadfe6dfa87861b
-status: candidate_building
+status: candidate_ready_for_independent_master_integration_review
 objective: Rebuild the accepted mechanism on current master as a staged-inert integration candidate.
 operation_policy:
   single_active_model_serial_operation: true
@@ -17,22 +17,29 @@ authority:
 scope:
   manifest: 01_任务输入/接入范围与证据闭包_v1.yml
   master_rebinding: 01_任务输入/master基准重绑定_v1.yml
+candidate:
+  tested_content_head: 236cb73ae16a76048929e009c2393f57b353a00a
+  validation_record_commit: e131d9fbea6c4ea2c685d0b08dc8fd1da0932a17
+  changed_paths_before_review_dispatch: 68
 candidate_state:
   staged_inert: true
   activated: false
   master_integrated: false
 validation:
-  static_validator: pending
-  fixture_regression: pending
-  exact_reference_check: pending
-  scope_check: pending
+  result_path: 07_测试执行/master接入验证结果_v1.yml
+  remote_exact_blob_check: passed
+  scope_check: passed
+  fixture_regression: 35/35
+  validator_projection_and_reference_probes: 6/6
+  actual_full_checkout_static: pending_independent_review_due_executor_environment_boundary
 unresolved:
   blocker: []
   major: []
   minor: []
 next_action:
-  owner: current_project_lead_model
-  action: finish_selected_rebuild_and_run_integration_validation
+  owner: cc_opus_5
+  action: independently_review_exact_master_integration_diff_and_run_static_on_actual_checkout
+  branch_modification_allowed: false
 prohibitions:
   - activate_mechanism
   - modify_master
