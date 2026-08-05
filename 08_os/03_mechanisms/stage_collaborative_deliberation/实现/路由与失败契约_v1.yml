@@ -1,0 +1,128 @@
+schema_version: stage_collaborative_deliberation.router_failure_contract.v1
+mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
+mechanism_version: 1
+status: staged_inert
+package_owner: P3_internal_checkpoint
+source_contract_union:
+- path: 08_os/_runs/run-20260804-阶段协同推演闭环结果建模-001/03_结果建模/B_结果建模_v1.yml
+  blob_sha: 6e9998e7161bb542bc4a7705c5a097797e6f67a6
+- path: 08_os/_runs/run-20260804-阶段协同推演闭环结果建模-001/03_结果建模/B_v1一阶必要修复叠加层_v1.yml
+  blob_sha: 35f42eeea68d1721b06e9f14650788117b50a143
+- path: 08_os/_runs/run-20260804-阶段协同推演闭环结果建模-001/03_结果建模/B_v1一阶必要修复失败码补全_v1.yml
+  blob_sha: 2aae10cdbb6bb031dac606f36e43dfb0a97f2c16
+- path: 08_os/_runs/run-20260804-阶段协同推演闭环实现方案建模-001/04_实现方案建模/实现方案模型_v1.yml
+  blob_sha: 9f93ce2f563eeac79cc5b565f8b01298020363ef
+routers:
+  trigger_activation:
+    order: [validate_versions_profile_and_active_contract, identify_load_bearing_gaps, evaluate_profile_triggers, evaluate_simple_or_dormant_route, emit_trigger_evaluation, obtain_exact_Human_activation_authorization_when_activating, create_session]
+    required_inputs: [active_contract_refs, stage_profile_ref, current_model_elements, Human_authorization_ref_when_activating]
+    outputs: [trigger_evaluation_result, activation_decision_candidate, Human_activation_authorization_or_dormant_reason, deliberation_session_record_when_active]
+    failure_conditions: [load_bearing_gap_silently_skipped, unjustified_full_activation, stage_profile_main_obligation_missing, formalistic_round_counting]
+    stop_conditions: [dormant_route_with_reason_and_valid_receipt, active_session_created_with_exact_authorization]
+    modes: {dormant: no_load_bearing_gap_and_no_mandatory_trigger, full: new_or_structurally_changed_bearing_model, incremental: ordinary_bearing_update_with_known_affected_scope}
+    round_minimums: {full: 5, incremental: 2}
+    formalistic_rounds_count: false
+  inquiry:
+    order: [bind_target_model_element, classify_gap, estimate_value_cost_timing_and_risk, prioritize, ask_or_act, evaluate_acceptance, stop_or_escalate]
+    required_inputs: [target_model_element_ref, gap_type, downstream_impact, evidence_requirement]
+    outputs: [inquiry_item, question_value_cost_timing_and_stop_result, evidence_or_unknown_disposition]
+    failure_conditions: [load_bearing_gap_silently_skipped, collapsed_state_dimensions]
+    stop_conditions: [no_blocking_gap_and_required_results_complete, remaining_questions_durably_deferred_nonblocking, next_question_cannot_change_result_test_or_authority_scope_and_cost_exceeds_value, valid_Human_stop_or_scope_decision]
+    gap_types: [missing_field, unknown_fact, unverified_assumption, terminology_ambiguity, claim_conflict, insufficient_evidence, lack_of_capability, true_unknown]
+    universal_numeric_threshold: false
+  material_event:
+    order: [normalize_event, bind_exact_source, load_dependency_graph_version, classify_affected_unaffected_unknown, emit_dependency_impact, invalidate_affected_scope, preserve_explicitly_justified_unaffected_scope, block_unknown_scope, create_successor_and_reconfirmation_requirements]
+    required_inputs: [event_ref, exact_source_ref, dependency_graph_version, current_confirmations_and_assessments]
+    outputs: [material_event_record, dependency_impact_result, invalidation_record, successor_and_supersession_record, reconfirmation_requirement]
+    failure_conditions: [unknown_dependency_fail_open, silent_or_unscoped_invalidation, unnormalized_external_material]
+    stop_conditions: [successor_and_reconfirmation_requirements_recorded, affected_progression_blocked_when_dependency_unknown]
+    global_invalidation_default: false
+    unknown_dependency: fail_closed_for_affected_progression
+  granularity:
+    order: [classify_main_mechanism_first_order_local_second_order_or_insufficient, test_scope_authority_reversibility_and_subsystem_predicates, resolve_record_defer_or_escalate]
+    required_inputs: [originating_detail, confirmed_scope, authority, risk_and_reversibility, subsystem_and_lifecycle_effect]
+    outputs: [detail_granularity_evaluation, detail_divergence_event_or_deferred_detail_record_or_local_resolution]
+    failure_conditions: [unapproved_second_order_scope_expansion, deferred_detail_not_durable, unjustified_micro_approval_escalation]
+    stop_conditions: [ordinary_local_choice_recorded, first_order_detail_closed, second_order_event_waiting_Human, insufficient_information_blocks_classification]
+    ordered_classes: [main_mechanism, first_order_required_detail, ordinary_local_choice, second_order_detail_divergence, classification_blocked_insufficient_information]
+  external_action:
+    order: [create_exact_action_model, obtain_Human_authorization, execute_authorized_scope_only, record_returned_material, normalize_sources_and_fact_policy_inference, ingest_and_route_material_event_if_bearing]
+    required_inputs: [unresolved_model_element_refs, objective, questions, scope, owner_and_tool, complete_prompt, output_contract, cost_risk_stop_conditions]
+    outputs: [external_action_model, Human_external_action_authorization, returned_material_record, external_material_ingestion_result]
+    failure_conditions: [recommendation_used_as_authorization, unnormalized_external_material, execution_without_current_authority]
+    stop_conditions: [returned_material_rejected_with_reason, normalized_material_ingested_and_bearing_event_routed]
+    report_count_as_independence: false
+complete_failure_code_union:
+- {code: agreement_used_as_fact_proof, source: active_B_union}
+- {code: grounding_collapsed_into_authority, source: active_B_union}
+- {code: silence_or_response_as_agreement, source: active_B_union}
+- {code: residual_objection_erased, source: active_B_union}
+- {code: recommendation_used_as_authorization, source: active_B_union}
+- {code: authority_used_as_epistemic_truth, source: active_B_union}
+- {code: unbound_or_ambiguous_confirmation, source: active_B_union}
+- {code: unknown_dependency_fail_open, source: active_B_union}
+- {code: unapproved_second_order_scope_expansion, source: active_B_union}
+- {code: deferred_detail_not_durable, source: active_B_union}
+- {code: unjustified_micro_approval_escalation, source: active_B_union}
+- {code: executor_self_clearance, source: active_B_union}
+- {code: unnormalized_external_material, source: active_B_union}
+- {code: stage_profile_main_obligation_missing, source: active_B_union}
+- {code: receipt_detail_visibility_missing, source: active_B_union}
+- {code: formalistic_round_counting, source: active_B_union}
+- {code: unjustified_full_activation, source: active_B_union}
+- {code: load_bearing_gap_silently_skipped, source: active_B_union}
+- {code: missing_partial_or_stale_load_fail_open, source: active_B_union}
+- {code: premature_completion, source: active_B_union}
+- {code: headcount_used_as_disposition, source: active_B_union}
+- {code: option_selection_used_as_truth, source: active_B_union}
+- {code: silent_or_unscoped_invalidation, source: active_B_union}
+- {code: unverified_model_agreement_as_independent_confirmation, source: active_B_union}
+- {code: execution_without_current_authority, source: active_B_union}
+- {code: collapsed_state_dimensions, source: active_B_union}
+failure_code_count: 26
+failure_code_to_exit_class:
+  agreement_used_as_fact_proof: 14
+  grounding_collapsed_into_authority: 14
+  silence_or_response_as_agreement: 14
+  residual_objection_erased: 14
+  recommendation_used_as_authorization: 15
+  authority_used_as_epistemic_truth: 14
+  unbound_or_ambiguous_confirmation: 15
+  unknown_dependency_fail_open: 13
+  unapproved_second_order_scope_expansion: 15
+  deferred_detail_not_durable: 14
+  unjustified_micro_approval_escalation: 14
+  executor_self_clearance: 18
+  unnormalized_external_material: 14
+  stage_profile_main_obligation_missing: 16
+  receipt_detail_visibility_missing: 17
+  formalistic_round_counting: 16
+  unjustified_full_activation: 16
+  load_bearing_gap_silently_skipped: 16
+  missing_partial_or_stale_load_fail_open: 12
+  premature_completion: 14
+  headcount_used_as_disposition: 14
+  option_selection_used_as_truth: 14
+  silent_or_unscoped_invalidation: 14
+  unverified_model_agreement_as_independent_confirmation: 18
+  execution_without_current_authority: 15
+  collapsed_state_dimensions: 14
+validator_modes: [static, instance, material_event, review_execution]
+validator_exit_codes:
+  0: pass
+  10: missing_required_path_or_object
+  11: schema_or_version_mismatch
+  12: partial_or_stale_load
+  13: unresolved_reference_or_dependency
+  14: invariant_violation
+  15: unauthorized_action_or_transition
+  16: profile_or_gate_failure
+  17: invalid_or_incomplete_receipt
+  18: review_execution_or_allowlist_violation
+  19: validator_internal_error
+rules:
+  all_failures_get_durable_records: true
+  unknown_or_unmapped_failure_code: fail_closed
+  complete_union_must_equal_26_unique_codes: true
+  no_universal_numeric_threshold: true
+candidate_state: {loadable_now: false, activatable_now: false}
