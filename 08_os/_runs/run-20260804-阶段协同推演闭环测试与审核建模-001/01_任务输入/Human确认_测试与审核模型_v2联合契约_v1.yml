@@ -1,0 +1,72 @@
+artifact:
+  kind: Human_confirmation_test_review_model_v2_active_union
+  version: 1
+  task_id: os-v2-stage-collaborative-deliberation-test-review-modeling-001
+  confirmed_on: '2026-08-04T04:59:00-07:00'
+  authority: Human
+
+confirmed_union:
+  model:
+    path: ../06_测试与审核建模/测试与审核模型_v2.yml
+    blob_sha: 37fc774bb8fbea00a8eb13a70ca364ba7c7123e9
+  acceptance_crosswalk:
+    path: ../06_测试与审核建模/package_acceptance_to_test_ids_crosswalk_v1.yml
+    blob_sha: 86264b1db6d35db002332af2044d7dcd902fb33a
+  blocking_failure_crosswalk:
+    path: ../06_测试与审核建模/package_blocking_failure_to_negative_test_ids_crosswalk_v1.yml
+    blob_sha: 061223a0fc3bee6b022ea0d65e85b7a5fe045fec
+  schema_adequacy_contract:
+    path: ../06_测试与审核建模/主建模schema充分性测试契约_v1.yml
+    blob_sha: 2a2d3374bd76666450421550de331f0a6a0fd157
+  consumption_rule: all_four_exact_artifacts_form_one_active_union
+
+confirmation_statement: >-
+  Human 同意以上述四个精确 artifact 的联合契约作为“阶段协同推演闭环”
+  development Stage 06 的后继测试与审核模型，取代 v1 的下游消费资格，
+  并提交 cc（Opus 5）重新独立审核。
+
+superseded_downstream_qualification:
+  v1_model_blob: 80681d6d980ce24330c29823cf44f1adb7244dfe
+  v1_modified: false
+  v1_retained_for_audit: true
+  v1_downstream_executable: false
+
+schema_adequacy_binding:
+  field_occupancy_alone_is_model_completeness: false
+  every_bearing_dimension_requires_disposition: true
+  allowed_dispositions:
+    - represented_with_supported_value
+    - explicitly_irrelevant_with_reason_and_scope
+    - unknown_with_blocking_or_deferred_disposition_and_revisit_trigger
+  unknown_adequacy_fails_closed: true
+
+confirmation_scope:
+  authorized:
+    - bind_exact_v2_active_union
+    - replace_v1_downstream_consumption_qualification
+    - update_run_and_task_to_awaiting_fresh_cc_re_review
+    - publish_fresh_re_review_dispatch_for_cc_opus_5
+  not_authorized:
+    - complete_development_Stage_06
+    - request_or_grant_implementation_execution_authorization
+    - create_P1_through_P7_implementation_branches
+    - dispatch_or_execute_implementation_tasks
+    - authorize_activation_or_master_integration
+    - modify_canonical_workflow_registry_boot_or_loader
+    - modify_master
+
+version_binding:
+  exact_blobs_required: true
+  modification_after_binding_allowed: false
+  successor_rule: append_only_successor_plus_material_event_analysis_plus_required_Human_reconfirmation
+
+stage_gate:
+  v2_active_union_Human_binding_complete: true
+  fresh_cc_re_review_required: true
+  Stage_06_completion_allowed: false
+  Human_execution_authorization_request_allowed: false
+  implementation_execution_allowed: false
+  P1_through_P7_branch_creation_allowed: false
+  next_allowed_action: fresh_cc_re_review_only
+
+status: confirmed_awaiting_fresh_independent_re_review

@@ -1,0 +1,404 @@
+artifact:
+  kind: stage_02_evidence_index
+  version: 3
+  task_id: os-v2-stage-collaborative-deliberation-information-collection-001
+  created_on: 2026-08-04
+  status: active_complete_review_minor_repaired
+  supersedes:
+    - path: 证据索引_v1.yml
+      blob_sha: 41c36483709eb8eb7595677af7396878fdeb027b
+    - path: 证据索引_v2.yml
+      blob_sha: 6bcdf27a4602b41b625c80b359af433b528af368
+
+baseline:
+  requirement:
+    path: ../../../../run-20260803-阶段协同推演闭环需求建模-001/01_任务输入/A_需求建模_v7.yml
+    blob_sha: bab36c48b822f40571089b4bdd6876073209fb34
+  Human_confirmation:
+    path: ../../../../run-20260803-阶段协同推演闭环需求建模-001/01_任务输入/Human确认_需求建模_v3.yml
+    blob_sha: caec737ebec327269ad0cb662f2e98830adce04b
+  independent_review:
+    result: PASS_WITH_NON_BLOCKING_NOTES
+    result_record: ../../07_审核/独立Stage02证据审核结果与非阻塞项处置_v1.yml
+
+composition:
+  mining_target: 00_挖掘目标与领域_v2.yml
+  internal_evidence: 01_内部证据_v2.yml
+  normalization_queue: 02_信源归一化工作队列_v1.yml
+  Batch_01_complete: 04_外部一手来源复验_BATCH01_v2.yml
+  Batch_02_narrowed_complete: 05_外部一手来源复验_BATCH02_v1.yml
+  historical_full_entry_sources:
+    E_001_through_E_018: 证据索引_v1.yml
+    E_019_through_E_021: 证据索引_v2.yml
+
+consumer_contract:
+  active_index_for_Stage_03_and_Stage_06: 证据索引_v3.yml
+  canonical_fact_inference_key: fact_and_inference
+  native_key_facts_and_inference: prohibited_for_active_consumption
+  silent_missing_key_fallback: prohibited
+  all_bearing_entries_materialized_here: true
+  historical_indexes_are_audit_sources_only: true
+  source_detail_resolution: >-
+    本文件物化 Stage 03/06 所需的原子主张、来源、事实、推断、边界和下游约束；
+    更细的访问记录、精确页节和完整来源对象仍回指 Batch 与历史索引，不得重新推断键名。
+
+index_rules:
+  atomic_claims_only: true
+  stable_source_id_required: true
+  primary_or_official_recheck_for_bearing_external_claims: true
+  shared_origins_count_once: true
+  report_agreement_is_not_independent_confirmation: true
+  external_fact_Human_policy_internal_execution_and_limiting_entries_are_distinct: true
+  project_inferences_are_explicit: true
+  partial_access_reduces_claim_scope: true
+  current_requirement_only: A_v7
+  second_order_detail_expansion_without_Human_decision: prohibited
+
+counts:
+  stable_internal_source_ids: 14
+  stable_external_source_ids: 15
+  total_stable_source_ids: 29
+  verified_external_source_ids: 10
+  deferred_nonblocking_external_source_ids: 5
+  bearing_evidence_entries_total: 21
+  classification:
+    external_fact_entries: 10
+    internal_repository_or_execution_entries: 4
+    Human_project_policy_evidence_entries: 6
+    limiting_or_negative_entries: 1
+  Human_project_policy_objects: 6
+  project_inference_objects: 4
+  blocking_unresolved_evidence_items: 0
+
+bearing_evidence_entries:
+  - evidence_id: E-001
+    classification: external_fact
+    origin: {path: 证据索引_v1.yml, native_key: fact_and_inference}
+    research_question_ids: [RQ-01]
+    claim: typed_structured_uncertainty_can_drive_question_selection_in_structured_domains
+    source_ids: [SRC-CLARIFY-STRUCTURED-UNCERTAINTY-2026]
+    direction: supports_with_scope_limit
+    applicability_boundary: structured_tool_parameter_and_benchmark_domains_only
+    fact_and_inference:
+      fact: paper_evaluates_structured_uncertainty_and_question_value_in_tool_calling_domains
+      inference: project_can_use_typed_gap_and_cost_aware_question_selection_with_restricted_numeric_mode
+    constraint_on_B: question_value_defaults_to_ordinal_explainable_and_numeric_mode_requires_typed_auditable_domain
+
+  - evidence_id: E-002
+    classification: external_fact
+    origin: {path: 证据索引_v1.yml, native_key: fact_and_inference}
+    research_question_ids: [RQ-02, RQ-05]
+    claim: issue_treatment_and_objection_disposition_are_distinct_from_vote_count_or_unanimity
+    source_ids: [SRC-RFC-7282-2014]
+    direction: supports
+    applicability_boundary: IETF_rough_consensus_not_universal_epistemic_rule
+    fact_and_inference:
+      fact: RFC_requires_reasoned_issue_treatment_and_distinguishes_addressing_from_accommodation
+      inference: validator_requires_explicit_issue_disposition_before_nonblocking_progress
+    constraint_on_B: issue_and_objection_record_must_preserve_disposition_and_residual_disagreement
+
+  - evidence_id: E-003
+    classification: external_fact
+    origin: {path: 证据索引_v1.yml, native_key: fact_and_inference}
+    research_question_ids: [RQ-02, RQ-05]
+    claim: AI_governance_should_document_and_differentiate_roles_responsibilities_and_Human_AI_oversight
+    source_ids: [SRC-NIST-AI-RMF-1-0]
+    direction: supports
+    applicability_boundary: voluntary_contextual_framework
+    fact_and_inference:
+      fact: framework_calls_for_clear_accountability_and_differentiated_Human_AI_roles
+      inference: recommendation_authorization_execution_and_verification_are_separate_project_states
+    constraint_on_B: actor_authority_and_transition_records_need_explicit_sources_and_scopes
+
+  - evidence_id: E-004
+    classification: external_fact
+    origin: {path: 证据索引_v1.yml, native_key: fact_and_inference}
+    research_question_ids: [RQ-03]
+    claim: provenance_can_represent_entities_activities_agents_derivation_attribution_and_revision
+    source_ids: [SRC-W3C-PROV-O-2013]
+    direction: supports
+    applicability_boundary: provenance_representation_not_change_governance_policy
+    fact_and_inference:
+      fact: PROV_O_defines_derivation_attribution_and_revision_relations
+      inference: project_can_encode_append_only_successors_and_dependency_links
+    constraint_on_B: artifact_version_dependency_and_agent_activity_links_are_first_class
+
+  - evidence_id: E-005
+    classification: external_fact
+    origin: {path: 证据索引_v1.yml, native_key: fact_and_inference}
+    research_question_ids: [RQ-02]
+    claim: semantic_grounding_is_joint_purpose_scoped_and_not_fact_truth
+    source_ids: [SRC-CLARK-BRENNAN-GROUNDING-1991]
+    direction: supports_with_access_limit
+    applicability_boundary: partial_primary_text_access_and_Human_model_mapping_requires_inference
+    fact_and_inference:
+      fact: grounding_is_collaborative_and_sufficient_for_current_purposes
+      inference: project_confirmation_needs_scoped_grounding_evidence_not_global_boolean
+    constraint_on_B: grounding_record_binds_participants_scope_purpose_and_positive_evidence
+
+  - evidence_id: E-006
+    classification: external_fact
+    origin: {path: 证据索引_v1.yml, native_key: fact_and_inference}
+    research_question_ids: [RQ-03]
+    claim: controlled_baselines_require_version_identification_traceable_change_and_change_control
+    source_ids: [SRC-NIST-CONFIGURATION-BASELINE-CHANGE-CONTROL]
+    direction: supports
+    applicability_boundary: security_focused_guidance_does_not_define_project_confirmation_invalidation
+    fact_and_inference:
+      fact: configuration_management_records_versions_baselines_and_controlled_changes
+      inference: project_material_event_router_uses_dependency_graph_to_scope_invalidation
+    constraint_on_B: version_baseline_change_record_and_impact_analysis_are_explicit_objects
+
+  - evidence_id: E-007
+    classification: external_fact
+    origin: {path: 证据索引_v1.yml, native_key: fact_and_inference}
+    research_question_ids: [RQ-02, RQ-05, RQ-06]
+    claim: multiple_LLMs_can_share_substantial_error_correlation
+    source_ids: [SRC-KIM-CORRELATED-LLM-ERRORS-2025]
+    direction: supports
+    applicability_boundary: evaluated_tasks_do_not_define_universal_project_threshold
+    fact_and_inference:
+      fact: study_finds_substantial_correlated_errors_across_many_LLMs
+      inference: project_defaults_model_agreement_to_non_independent_until_verified
+    constraint_on_B: independent_confirmation_requires_metadata_shared_origin_analysis_and_acceptance_rule
+
+  - evidence_id: E-008
+    classification: internal_repository_or_execution
+    origin: {path: 证据索引_v1.yml, native_key: fact_and_inference}
+    research_question_ids: [RQ-04]
+    claim: repository_has_a_reference_not_copy_global_mechanism_pattern
+    source_ids: [INT-CM-README]
+    direction: supports
+    applicability_boundary: pattern_only_not_new_semantic_correctness
+    fact_and_inference:
+      fact: context_management_uses_global_reference_not_copy_pattern
+      inference: new_mechanism_can_use_same_repository_topology
+    constraint_on_B: mechanism_ref_and_stage_profile_ref_are_separate_from_canonical_copy
+
+  - evidence_id: E-009
+    classification: internal_repository_or_execution
+    origin: {path: 证据索引_v1.yml, native_key: fact_and_inference}
+    research_question_ids: [RQ-04]
+    claim: repository_has_fail_closed_boot_manifest_validator_registry_and_receipt_pattern
+    source_ids: [INT-CM-BOOT, INT-CM-REGISTRY]
+    direction: supports
+    applicability_boundary: does_not_prove_new_router_or_granularity_validator
+    fact_and_inference:
+      fact: implemented_precedent_has_explicit_failure_policy_and_receipt_fields
+      inference: equivalent_new_component_chain_is_feasible
+    constraint_on_B: boot_manifest_loader_registry_receipt_and_validator_have_versioned_links
+
+  - evidence_id: E-010
+    classification: Human_project_policy_evidence
+    origin: {path: 证据索引_v1.yml, native_key: fact_and_inference}
+    research_question_ids: [RQ-01, RQ-02, RQ-03, RQ-05, RQ-07]
+    claim: A_v7_is_the_current_Human_confirmed_project_policy_baseline
+    source_ids: [INT-REQ-A7, INT-HCONF-3]
+    direction: supports
+    applicability_boundary: project_authority_not_external_empirical_fact
+    fact_and_inference:
+      fact: Human_confirmation_v3_exactly_binds_A_v7
+      inference: downstream_models_use_A_v7_as_current_authority
+    constraint_on_B: B_must_realize_A_v7_without_claiming_policy_is_empirical_optimum
+
+  - evidence_id: E-011
+    classification: Human_project_policy_evidence
+    origin: {path: 证据索引_v1.yml, native_key: fact_and_inference}
+    research_question_ids: [RQ-05, RQ-07]
+    claim: three_level_granularity_and_Human_second_order_scope_gate_are_project_policy
+    source_ids: [INT-REQ-A7, INT-HCONF-3]
+    direction: supports
+    applicability_boundary: project_policy_not_scientific_classification
+    fact_and_inference:
+      fact: A_v7_and_Human_confirmation_define_and_authorize_the_three_classes
+      inference: stage_profiles_receipts_and_state_machine_propagate_them
+    constraint_on_B: result_objects_include_detail_event_scope_decision_and_deferred_record
+
+  - evidence_id: E-012
+    classification: Human_project_policy_evidence
+    origin: {path: 证据索引_v1.yml, native_key: fact_and_inference}
+    research_question_ids: [RQ-07]
+    claim: stage_profiles_require_main_mechanism_ref_and_open_detail_divergence_event_refs
+    source_ids: [INT-GRANULARITY-REVIEW, INT-GRANULARITY-FIRST-ORDER]
+    direction: supports
+    applicability_boundary: does_not_select_final_serialization_or_file_layout
+    fact_and_inference:
+      fact: review_finding_was_accepted_and_closed_as_first_order_obligation
+      inference: Stage_03_B_must_include_both_fields
+    constraint_on_B: both_fields_are_required_result_contracts
+
+  - evidence_id: E-013
+    classification: Human_project_policy_evidence
+    origin: {path: 证据索引_v1.yml, native_key: fact_and_inference}
+    research_question_ids: [RQ-07]
+    claim: ordinary_local_reversible_choices_must_not_create_unjustified_Human_scope_gates
+    source_ids: [INT-GRANULARITY-REVIEW, INT-GRANULARITY-FIRST-ORDER]
+    direction: supports
+    applicability_boundary: applies_only_when_all_six_positive_predicates_hold
+    fact_and_inference:
+      fact: closure_record_defines_predicates_expected_action_and_violation_code
+      inference: Stage_03_04_and_06_propagate_rule_and_tests
+    constraint_on_B: validator_result_exposes_unjustified_micro_approval_escalation
+
+  - evidence_id: E-014
+    classification: internal_repository_or_execution
+    origin: {path: 证据索引_v1.yml, native_key: fact_and_inference}
+    research_question_ids: [RQ-03, RQ-05]
+    claim: append_only_successor_exact_confirmation_and_independent_review_can_control_requirement_change
+    source_ids: [INT-GRANULARITY-REVIEW, INT-GRANULARITY-COMPLETE]
+    direction: supports_as_internal_execution_evidence
+    applicability_boundary: one_instance_does_not_prove_every_future_change_case
+    fact_and_inference:
+      fact: A_v7_change_chain_completed_without_modifying_confirmed_blobs
+      inference: mechanism_can_generalize_the_durable_gate_pattern
+    constraint_on_B: material_event_and_confirmation_objects_follow_the_working_project_pattern
+
+  - evidence_id: E-015
+    classification: limiting_or_negative
+    origin: {path: 证据索引_v1.yml, native_key: fact_and_inference}
+    research_question_ids: [RQ-03]
+    claim: scoped_confirmation_invalidation_is_a_project_inference_not_directly_defined_by_PROV_or_NIST
+    source_ids: [SRC-W3C-PROV-O-2013, SRC-NIST-CONFIGURATION-BASELINE-CHANGE-CONTROL]
+    direction: limits
+    applicability_boundary: negative_boundary_about_external_support
+    fact_and_inference:
+      fact: sources_support_provenance_baselines_and_change_control_but_not_this_exact_algorithm
+      inference: B_must_define_and_test_project_specific_scoped_invalidation
+    constraint_on_B: dependency_impact_algorithm_is_explicit_project_synthesis_with_fail_closed_unknowns
+
+  - evidence_id: E-016
+    classification: Human_project_policy_evidence
+    origin: {path: 证据索引_v1.yml, native_key: fact_and_inference}
+    research_question_ids: [RQ-01, RQ-05]
+    claim: five_round_and_two_round_minima_are_Human_project_policy_not_empirical_optima
+    source_ids: [INT-REQ-A7, INT-HCONF-3]
+    direction: limits
+    applicability_boundary: no_external_causal_optimality_claim
+    fact_and_inference:
+      fact: Human_confirmed_requirement_sets_minima_and_anti_formality_rule
+      inference: external_Delphi_source_is_not_needed_to_authorize_policy
+    constraint_on_B: rounds_are_auditable_substantive_functions_with_continue_rule_not_empirically_optimal_constants
+
+  - evidence_id: E-017
+    classification: Human_project_policy_evidence
+    origin: {path: 证据索引_v1.yml, native_key: fact_and_inference}
+    research_question_ids: [RQ-01, RQ-05]
+    claim: external_research_activation_and_source_normalization_routing_are_Human_project_policy
+    source_ids: [INT-REQ-A7, INT-HCONF-3]
+    direction: supports
+    applicability_boundary: current_project_authority_and_tool_history
+    fact_and_inference:
+      fact: A_v7_defines_model_recommendation_and_Human_decision_route
+      inference: loader_and_validator_surface_unauthorized_dispatch_attempts
+    constraint_on_B: external_action_model_and_Human_authorization_are_distinct_objects
+
+  - evidence_id: E-018
+    classification: internal_repository_or_execution
+    origin: {path: 证据索引_v1.yml, native_key: fact_and_inference}
+    research_question_ids: [RQ-06]
+    claim: no_BATCH_01_result_requires_a_new_independent_subsystem_or_changes_A_v7
+    source_ids: [INT-REQ-A7, INT-GRANULARITY-FIRST-ORDER]
+    direction: supports_stop_for_open_discovery_iteration_1
+    applicability_boundary: narrowed_BATCH_02_was_required_for_three_main_mechanism_boundaries
+    fact_and_inference:
+      fact: Batch_01_sources_support_or_limit_existing_A_v7_objects_only
+      inference: remaining_research_was_narrowed_to_three_high_EIG_boundaries
+    constraint_on_B: no_global_event_bus_graph_database_or_new_permission_system_is_implied
+
+  - evidence_id: E-019
+    classification: external_fact
+    origin: {path: 证据索引_v2.yml, native_key: facts_and_inference}
+    research_question_ids: [RQ-01, RQ-05]
+    claim: inquiry_and_automated_assistance_should_balance_uncertainty_expected_value_timing_and_Human_interruption_cost
+    source_ids: [SRC-HORVITZ-MIXED-INITIATIVE-1999]
+    direction: supports
+    applicability_boundary: scheduling_UI_testbed_and_design_principles_not_universal_numeric_rule
+    fact_and_inference:
+      fact: Horvitz_principles_require_attention_to_uncertainty_cost_benefit_timing_dialog_cost_direct_control_and_poor_guess_cost
+      inference: project_router_uses_explainable_ordinal_scoring_and_explicit_defer_or_stop_behavior
+    constraint_on_B: inquiry_item_and_trigger_evaluation_include_ordinal_value_cost_timing_and_user_control_fields
+
+  - evidence_id: E-020
+    classification: external_fact
+    origin: {path: 证据索引_v2.yml, native_key: facts_and_inference}
+    research_question_ids: [RQ-02, RQ-06]
+    claim: topic_issue_fact_question_position_argument_and_issue_relationships_are_distinct_discourse_elements
+    source_ids: [SRC-IBIS-KUNZ-RITTEL-1970]
+    direction: supports
+    applicability_boundary: working_paper_and_manual_system_not_a_requirement_to_copy_full_IBIS
+    fact_and_inference:
+      fact: original_IBIS_separates_topics_issues_fact_questions_positions_arguments_model_problems_and_relationships
+      inference: project_deliberation_objects_preserve_these_distinctions_while_keeping_Human_authority_and_truth_separate
+    constraint_on_B: B_includes_minimum_issue_objection_position_or_option_argument_and_relationship_objects_without_full_IBIS_subsystem_replication
+
+  - evidence_id: E-021
+    classification: external_fact
+    origin: {path: 证据索引_v2.yml, native_key: facts_and_inference}
+    research_question_ids: [RQ-05, RQ-06]
+    claim: intrinsic_LLM_self_correction_without_external_feedback_is_not_reliable_enough_to_clear_high_severity_reasoning_findings_by_default
+    source_ids: [SRC-SELF-CORRECTION-LIMITS]
+    direction: supports_with_scope_limit
+    applicability_boundary: not_all_tasks_not_all_models_and_not_external_feedback_assisted_verification
+    fact_and_inference:
+      fact: accepted_ICLR_work_reports_struggle_and_possible_degradation_for_intrinsic_reasoning_self_correction
+      inference: project_defaults_high_severity_clearance_to_independent_verification_while_allowing_local_executor_checks
+    constraint_on_B: review_record_tracks_reviewer_independence_external_feedback_and_exception_rule
+
+classification_coverage:
+  external_fact_entries: [E-001, E-002, E-003, E-004, E-005, E-006, E-007, E-019, E-020, E-021]
+  internal_repository_or_execution_entries: [E-008, E-009, E-014, E-018]
+  Human_project_policy_evidence_entries: [E-010, E-011, E-012, E-013, E-016, E-017]
+  limiting_or_negative_entries: [E-015]
+  disjoint: true
+  exhaustive_E_001_through_E_021: true
+  duplicate_entry_ids: []
+  missing_entry_ids: []
+
+Human_project_policy_objects:
+  - {policy_id: POL-001, rule: full_activation_minimum_five_substantive_rounds, source_refs: [INT-REQ-A7, INT-HCONF-3]}
+  - {policy_id: POL-002, rule: ordinary_bearing_update_minimum_two_incremental_rounds, source_refs: [INT-REQ-A7, INT-HCONF-3]}
+  - {policy_id: POL-003, rule: external_research_requires_model_recommendation_and_Human_authorization, source_refs: [INT-REQ-A7, INT-HCONF-3]}
+  - {policy_id: POL-004, rule: primary_model_is_default_source_normalization_executor_and_NotebookLM_is_not_default_priority, source_refs: [INT-REQ-A7, INT-HCONF-3]}
+  - {policy_id: POL-005, rule: main_mechanism_first_order_and_second_order_granularity_routing, source_refs: [INT-REQ-A7, INT-HCONF-3]}
+  - {policy_id: POL-006, rule: ordinary_local_choice_must_not_require_Human_escalation_when_all_positive_predicates_hold, source_refs: [INT-GRANULARITY-REVIEW, INT-GRANULARITY-FIRST-ORDER]}
+
+project_inference_objects:
+  - inference_id: INF-001
+    statement: dependency_graph_and_materiality_rules_scope_confirmation_invalidation
+    supported_by: [E-004, E-006, E-015]
+    validation_required: true
+    fail_closed_unknown_dependency: true
+  - inference_id: INF-002
+    statement: typed_gap_question_value_cost_timing_and_Human_control_form_the_inquiry_router
+    supported_by: [E-001, E-019]
+    validation_required: true
+  - inference_id: INF-003
+    statement: issue_position_argument_objection_and_option_disposition_need_separate_durable_objects
+    supported_by: [E-002, E-020]
+    validation_required: true
+  - inference_id: INF-004
+    statement: executor_self_review_cannot_clear_high_severity_finding_without_independent_verification_or_explicit_exception
+    supported_by: [E-007, E-021]
+    validation_required: true
+
+research_question_coverage:
+  RQ-01: {status: sufficient_for_Stage_03, evidence_refs: [E-001, E-019, E-016, E-017]}
+  RQ-02: {status: sufficient_for_Stage_03, evidence_refs: [E-002, E-003, E-005, E-007, E-020]}
+  RQ-03: {status: sufficient_for_Stage_03_with_project_inference, evidence_refs: [E-004, E-006, E-014, E-015]}
+  RQ-04: {status: sufficient_for_Stage_04_feasibility, evidence_refs: [E-008, E-009]}
+  RQ-05: {status: sufficient_for_policy_typing_and_tests, evidence_refs: [E-002, E-003, E-007, E-010, E-011, E-016, E-017, E-019, E-021]}
+  RQ-06: {status: saturated_for_main_mechanism_scope, evidence_refs: [E-007, E-018, E-020, E-021]}
+  RQ-07: {status: sufficient_as_internal_policy_and_engineering_constraint, evidence_refs: [E-011, E-012, E-013]}
+
+completion_assessment:
+  all_21_entries_use_canonical_fact_and_inference_key: true
+  every_bearing_claim_typed: true
+  stable_source_or_policy_or_inference_for_each_bearing_claim: true
+  original_source_relationships_resolved: true
+  load_bearing_primary_rechecks_complete: true
+  partial_access_visible: true
+  report_consensus_not_counted_as_independence: true
+  material_source_conflict_unresolved: false
+  A_v7_revision_required: false
+  second_order_detail_divergence_open: false
+  Stage_03_consumer_ready: true

@@ -1,0 +1,102 @@
+artifact:
+  kind: Stage_03_active_result_contract_manifest
+  version: 1
+  task_id: os-v2-stage-collaborative-deliberation-result-modeling-001
+  created_on: 2026-08-04T02:54:00-07:00
+  status: active_complete
+
+exact_authority_chain:
+  requirement:
+    path: ../../../run-20260803-阶段协同推演闭环需求建模-001/01_任务输入/A_需求建模_v7.yml
+    blob_sha: bab36c48b822f40571089b4bdd6876073209fb34
+  requirement_Human_confirmation:
+    path: ../../../run-20260803-阶段协同推演闭环需求建模-001/01_任务输入/Human确认_需求建模_v3.yml
+    blob_sha: caec737ebec327269ad0cb662f2e98830adce04b
+  result_model_Human_confirmation:
+    path: ../01_任务输入/Human确认_结果建模_v1.yml
+    blob_sha: 905d9e0747abb8e856bf6beffbf4debf022d75a7
+
+active_contract_artifacts:
+  - order: 1
+    path: B_结果建模_v1.yml
+    blob_sha: 6e9998e7161bb542bc4a7705c5a097797e6f67a6
+    role: Human_confirmed_frozen_semantic_base
+  - order: 2
+    path: B_v1一阶必要修复叠加层_v1.yml
+    blob_sha: 35f42eeea68d1721b06e9f14650788117b50a143
+    role: first_order_result_contract_repair_overlay
+  - order: 3
+    path: B_v1一阶必要修复失败码补全_v1.yml
+    blob_sha: 2aae10cdbb6bb031dac606f36e43dfb0a97f2c16
+    role: first_order_failure_code_union_completion
+
+review_chain:
+  first_review:
+    verdict: FAIL
+    reviewed_head: 6faa9ae140b4474b5029f3b3941163205ddb0c39
+    result_record: ../07_审核/独立结果模型审核结果与修复决策_v1.yml
+  repair_re_review:
+    verdict: PASS_WITH_NON_BLOCKING_NOTES
+    reviewed_head: bca607a073f3418acb57cda264e9707938a3e8e5
+    result_record:
+      path: ../07_审核/独立结果模型修复复审结果与非阻塞项处置_v1.yml
+      blob_sha: 3ea05f7644dea016d60450d6880f093250109e24
+    blocker: 0
+    major: 0
+    minor: 1
+    note: 2
+  nonblocking_minor_closure:
+    finding_id: MINOR-N1
+    closure_artifact:
+      path: B_v1一阶必要修复失败码补全_v1.yml
+      blob_sha: 2aae10cdbb6bb031dac606f36e43dfb0a97f2c16
+    re_review_required: false
+
+consumption_contract:
+  required_mode: union_in_listed_order
+  single_artifact_consumption: prohibited
+  B_v1_semantic_precedence: base_unless_explicitly_augmented_or_measurement_superseded
+  overlay_precedence:
+    semantic_additions: additive
+    inaccurate_measurements: superseded_by_overlay_measurements
+    failure_code_completeness: union_of_all_three_artifacts
+  historical_B_v1_values_that_must_not_be_consumed_as_active_measurements:
+    - completion_for_result_modeling.named_result_objects_mapped_41
+  historical_self_check_values_that_must_not_be_consumed_as_active_measurements:
+    - B_v1内部一致性自检_v1.yml.checks.named_result_objects.mapped_in_B_41
+  validator_requirement: consumer_must_verify_exact_blobs_before_use
+
+active_measurements:
+  main_mechanism_refs: 8
+  result_object_families: 8
+  catalog_unique_object_types: 45
+  main_mechanism_required_result_names: 47
+  resolved_by_catalog_or_composition: 47
+  unresolved_result_names: 0
+  state_dimensions: 10
+  active_cross_dimension_invariants: 16
+  canonical_required_counterexamples: 15
+  canonical_counterexamples_covered: 15
+  every_active_invariant_violation_code_in_complete_failure_union: true
+
+complete_failure_code_union_rule:
+  sources:
+    - B_结果建模_v1.yml.failure_codes_required_for_Stage_04_and_06
+    - B_v1一阶必要修复叠加层_v1.yml.MAJOR_1_reasoned_disposition_guard.failure_code_addition
+    - B_v1一阶必要修复失败码补全_v1.yml.failure_code_completion.add_required_failure_codes
+  invariant_coverage: complete
+  gate_or_validator_codes_without_corresponding_invariant: allowed
+
+stage_gates:
+  independent_result_model_re_review_accepted: true
+  nonblocking_minor_closed: true
+  Stage_03_completion_allowed: true
+  Stage_04_solution_modeling_allowed_after_Stage_03_completion_pointer: true
+  implementation_execution_allowed: false
+
+prohibitions:
+  - modify_bound_B_v1
+  - consume_B_v1_alone
+  - create_B_successor_without_material_event_and_Human_reconfirmation
+  - treat_overlay_as_Stage_04_solution
+  - select_implementation_algorithm_or_runtime_in_Stage_03

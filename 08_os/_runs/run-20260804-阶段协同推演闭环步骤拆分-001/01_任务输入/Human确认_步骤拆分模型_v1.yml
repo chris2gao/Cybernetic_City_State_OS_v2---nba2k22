@@ -1,0 +1,54 @@
+artifact:
+  kind: Human_confirmation_step_decomposition_model
+  version: 1
+  task_id: os-v2-stage-collaborative-deliberation-step-decomposition-001
+  confirmed_on: 2026-08-04T03:46:00-07:00
+  authority: Human
+
+confirmed_artifact:
+  path: ../05_步骤拆分/步骤拆分模型_v1.yml
+  blob_sha: 8be5af8c2b13aac3b45127bbdb3b2f4ed566a06f
+  artifact_kind: stage_collaborative_deliberation_step_decomposition_model
+  version: 1
+
+confirmation_statement: >-
+  Human 同意以 blob SHA 8be5af8c2b13aac3b45127bbdb3b2f4ed566a06f 对应的
+  步骤拆分模型_v1.yml 作为“阶段协同推演闭环”的 Stage 05 步骤拆分模型，
+  完成精确版本绑定，并提交独立步骤拆分审核。
+
+confirmation_scope:
+  authorized:
+    - bind_exact_step_decomposition_model_v1_blob_as_current_Stage_05_candidate
+    - create_durable_Human_confirmation_record
+    - update_Stage_05_task_and_run_to_awaiting_independent_review
+    - create_independent_step_decomposition_review_dispatch
+    - allow_targeted_first_order_repairs_after_review_when_confirmed_plan_semantics_are_preserved
+  not_authorized:
+    - modify_confirmed_step_decomposition_model_v1_after_binding
+    - create_plan_successor_without_material_event_analysis_and_required_Human_reconfirmation
+    - enter_development_Stage_06_before_independent_step_plan_review_acceptance
+    - create_P1_through_P7_implementation_branches
+    - dispatch_or_execute_implementation_tasks
+    - modify_canonical_workflow_registry_boot_loader_or_master
+
+version_binding:
+  exact_blob_required: true
+  bound_blob_sha: 8be5af8c2b13aac3b45127bbdb3b2f4ed566a06f
+  modification_after_binding_allowed: false
+  successor_rule: append_only_successor_plus_material_event_analysis_plus_required_Human_reconfirmation
+
+stage_gate:
+  Stage_05_Human_binding_complete: true
+  independent_step_decomposition_review_required: true
+  development_Stage_06_start_allowed: false
+  implementation_branch_creation_allowed: false
+  implementation_execution_allowed: false
+  next_allowed_action: independent_step_decomposition_review_only
+
+source_message:
+  received_text:
+    - 确认 步骤拆分模型_v1.yml，精确 blob SHA 8be5af8c2b13aac3b45127bbdb3b2f4ed566a06f
+    - 同意以该版本作为阶段协同推演闭环的 Stage 05 步骤拆分模型，完成 Human 精确版本绑定，并提交独立步骤拆分审核。
+    - 本确认只授权步骤拆分模型绑定与独立审核，不授权进入 Stage 06，不授权创建 P1–P7 实现分支，不授权派发执行模型，不授权修改 canonical、workflow、registry、boot、loader 或 master。
+
+status: confirmed_awaiting_independent_step_decomposition_review

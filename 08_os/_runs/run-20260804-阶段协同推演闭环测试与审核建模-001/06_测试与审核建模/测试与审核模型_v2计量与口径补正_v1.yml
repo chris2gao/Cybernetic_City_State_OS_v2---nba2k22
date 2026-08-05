@@ -1,0 +1,65 @@
+artifact:
+  kind: test_review_model_v2_measurement_and_wording_correction
+  version: 1
+  task_id: os-v2-stage-collaborative-deliberation-test-review-modeling-001
+  created_on: 2026-08-04T05:20:00-07:00
+  status: active_nonblocking_closure
+
+basis:
+  active_v2_model_blob: 37fc774bb8fbea00a8eb13a70ca364ba7c7123e9
+  independent_re_review_result: ../07_审核/独立测试与审核模型_v2复审结果与非阻塞项处置_v1.yml
+  finding: MINOR_1_named_test_units_measurement
+
+measurement_correction:
+  original_declared:
+    primary_test_groups: 22
+    required_special_checks: 35
+    named_test_units: 57
+  corrected_taxonomy:
+    primary_test_groups: 22
+    ordinary_required_special_checks: 35
+    self_check_units:
+      count: 2
+      ids:
+        - SC-SELF-00
+        - SC-SELF-01
+    all_special_check_units: 37
+    named_test_units_total: 59
+  equation: 22_primary_test_groups_plus_35_ordinary_special_checks_plus_2_self_checks_equals_59
+  original_direction: actual_units_exceeded_declared_total
+  hidden_coverage_gap: false
+
+crosswalk_scope_clarification:
+  mapped_source_assertions:
+    acceptance: 49
+    blocking_failures: 29
+  supplemental_units_outside_step_plan_crosswalk:
+    - SC-P2-02
+    - SC-P5-01
+    - SC-P7-02
+    - SC-SELF-01
+  reason: supplemental_checks_not_source_acceptance_or_source_blocking_failure
+  supplemental_does_not_replace_crosswalk: true
+
+schema_wording_clarification:
+  authoritative_trigger: >-
+    当通用建模 substrate、workflow stage schema 与 task-specific schema 的联合表示能力
+    仍不足以表达某一领域承重维度时，必须引入领域专用 schema；不得因现有字段已填满而通过。
+  general_stage_and_task_schema_insufficiency_required: true
+  unknown_adequacy: fail_closed
+  semantic_change_from_confirmed_rule: false
+
+scope:
+  modifies_bound_v2_blob: false
+  modifies_supporting_union_blobs: false
+  changes_test_oracle_semantics: false
+  changes_package_ownership: false
+  changes_object_catalog: false
+  changes_failure_code_union: false
+  changes_crosswalk_rows: false
+  new_Human_confirmation_required: false
+  new_independent_review_required: false
+
+consumption:
+  downstream_measurement_source: this_artifact
+  active_v2_union_remains_exactly_Human_bound_four_artifacts: true

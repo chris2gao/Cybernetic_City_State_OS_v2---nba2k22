@@ -1,0 +1,107 @@
+artifact:
+  kind: solution_model_first_order_required_repair_overlay
+  version: 1
+  task_id: os-v2-stage-collaborative-deliberation-solution-modeling-001
+  created_on: 2026-08-04T03:31:00-07:00
+  status: active_complete
+
+baseline:
+  bound_solution_model:
+    path: 实现方案模型_v1.yml
+    blob_sha: 9f93ce2f563eeac79cc5b565f8b01298020363ef
+    modified: false
+  Human_confirmation:
+    path: ../01_任务输入/Human确认_实现方案模型_v1.yml
+    blob_sha: b7d855e300e6bd38072fb55632b975e40f838935
+  independent_review:
+    path: ../07_审核/独立实现方案审核结果与非阻塞项处置_v1.yml
+    verdict: PASS_WITH_NON_BLOCKING_NOTES
+    source_finding: MINOR-1
+
+active_solution_contract:
+  consume_together:
+    - 实现方案模型_v1.yml@9f93ce2f563eeac79cc5b565f8b01298020363ef
+    - 实现方案模型_v1一阶必要修复叠加层_v1.yml@resolve_current_blob
+  semantic_rule: bound_solution_plus_additive_forward_compatibility_and_decomposition_constraints
+  single_artifact_consumption: prohibited
+
+repair_classification:
+  class: first_order_required_detail_for_forward_compatibility_and_integration
+  within_confirmed_scope: true
+  locally_verifiable: true
+  current_seven_profiles_changed: false
+  new_profile_created_now: false
+  new_subsystem_protocol_policy_or_lifecycle: false
+  solution_v2_required: false
+  new_Human_confirmation_required: false
+
+future_workflow_stage_extension_point:
+  trigger: >-
+    canonical workflow 增加、恢复、删除、重命名或重新编号任一阶段，尤其是 A v7 已排定的
+    “实现方案建模”阶段恢复为独立 canonical workflow 阶段。
+  classification: material_event_requiring_dependency_impact_before_activation
+  current_profile_set_remains: seven_profiles_matching_current_canonical_workflow
+  no_placeholder_eighth_profile_now: true
+  required_dependency_impact_targets:
+    - canonical_workflow_stage_inventory_and_version
+    - 阶段profiles_v1.yml
+    - 阶段profile契约_v1.yml_when_new_fields_are_required
+    - stage_collaborative_deliberation_registry_entry_and_version
+    - stage_collaborative_deliberation_boot_manifest_and_version
+    - execution_loader_profile_resolution_and_exclusions
+    - affected_workflow_stage_profile_reference
+    - static_validator_expected_profile_inventory
+    - receipt_profile_id_and_version_validation
+    - regression_fixtures_and_stage_count_assertions
+  transition_rule: >-
+    在 dependency_impact_result 明确 affected、unaffected 与 unknown scope，所需增量轮次完成，
+    exact profile set 版本通过 Human 确认与独立审核之前，不得把新增阶段标记为可加载或 active。
+  unknown_impact: fail_closed
+  partial_profile_activation: prohibited
+  unaffected_current_profiles: remain_valid_only_when_explicitly_justified
+  update_mode: append_only_successor_versions_no_silent_rewrite
+  required_execution_package: dedicated_profile_extension_package_or_scoped_successor_to_P5
+  rollback: restore_exact_prior_profile_boot_registry_loader_versions_with_Human_authority_and_receipt
+
+stage_number_namespace_discipline:
+  mechanism_development_stage_namespace:
+    prefix: development_Stage_
+    examples:
+      - development_Stage_04_solution_modeling
+      - development_Stage_05_step_decomposition
+      - development_Stage_06_test_review_modeling
+  canonical_workflow_stage_namespace:
+    prefix: workflow_stage_
+    current_examples:
+      - workflow_stage_04_test_generation
+      - workflow_stage_05_step_decomposition
+      - workflow_stage_06_execution
+  rule: >-
+    任何任务包、契约、测试名称与审核记录在可能产生歧义时必须写完整 namespace；
+    裸 Stage_04/05/06 只能在上下文已明确为机制开发序列时使用。
+  validator_or_lint_requirement: Stage_05_must_define_check_for_ambiguous_cross_namespace_references
+
+complete_failure_code_union_discipline:
+  Stage_03_baseline_count: 26
+  source_contract_manifest: ../../../run-20260804-阶段协同推演闭环结果建模-001/03_结果建模/Stage03活动结果契约清单_v1.yml
+  Stage_05_obligation:
+    P2_object_state_transition_contracts: carry_all_26_codes_or_exact_machine_resolvable_source_refs
+    P3_router_validator_and_negative_fixtures: validate_exact_union_and_every_active_invariant_code_coverage
+  truncation_or_selective_copy: prohibited
+  count_is_baseline_not_runtime_threshold: true
+  future_change_rule: recompute_from_active_contract_union_not_hardcode_26_as_eternal_constant
+
+scope_stop:
+  do_not_create_eighth_profile_before_canonical_stage_exists: true
+  do_not_redesign_profile_storage: true
+  do_not_create_dynamic_plugin_or_stage_registry_subsystem: true
+  do_not_modify_bound_solution_model: true
+  no_additional_forward_compatibility_work_without_material_event: true
+
+stage_gate:
+  MINOR_1_closed: true
+  NOTE_1_closed: true
+  NOTE_2_closed: true
+  re_review_required: false
+  Stage_04_completion_allowed_after_internal_validation: true
+  Stage_05_start_allowed_in_this_file: false

@@ -1,0 +1,71 @@
+artifact:
+  kind: result_model_B_first_order_failure_code_completion
+  version: 1
+  task_id: os-v2-stage-collaborative-deliberation-result-modeling-001
+  created_on: 2026-08-04T02:54:00-07:00
+  status: active_complete_nonblocking_minor_closed
+
+baseline:
+  bound_B:
+    path: B_结果建模_v1.yml
+    blob_sha: 6e9998e7161bb542bc4a7705c5a097797e6f67a6
+    modified: false
+  repair_overlay:
+    path: B_v1一阶必要修复叠加层_v1.yml
+    blob_sha: 35f42eeea68d1721b06e9f14650788117b50a143
+  independent_re_review:
+    path: ../07_审核/独立结果模型修复复审结果与非阻塞项处置_v1.yml
+    verdict: PASS_WITH_NON_BLOCKING_NOTES
+    source_finding: MINOR-N1
+
+classification:
+  class: first_order_required_detail_for_test_and_integration_completeness
+  required_for:
+    - deterministic_Stage_04_failure_contract_consumption
+    - complete_Stage_06_invariant_negative_testing
+    - auditability_of_invariant_to_failure_code_mapping
+  within_confirmed_scope: true
+  locally_verifiable: true
+  new_result_family: false
+  new_subsystem_protocol_policy_or_lifecycle: false
+  B_v2_required: false
+  new_Human_confirmation_required: false
+
+failure_code_completion:
+  purpose: >-
+    补齐 B v1 十六条活动不变量中未进入 failure_codes_required_for_Stage_04_and_06
+    命名清单的五个 violation_code。该补全不改变不变量语义，只建立完整消费并集。
+  add_required_failure_codes:
+    - option_selection_used_as_truth
+    - silent_or_unscoped_invalidation
+    - unverified_model_agreement_as_independent_confirmation
+    - execution_without_current_authority
+    - collapsed_state_dimensions
+  previously_added_by_repair_overlay:
+    - headcount_used_as_disposition
+  completeness_rule: >-
+    Stage_04 与 Stage_06 的完整失败码集合是 B v1 failure_codes_required_for_Stage_04_and_06、
+    修复叠加层 failure_code_addition 与本文件 add_required_failure_codes 的去重并集。
+  invariant_rule: every_active_cross_dimension_invariant_violation_code_must_resolve_in_complete_failure_code_union
+  gate_validator_codes_without_invariant_are_allowed: true
+
+canonical_counterexample_effect:
+  CEX_06:
+    violation_code: unverified_model_agreement_as_independent_confirmation
+    now_in_complete_failure_code_union: true
+  CEX_07:
+    violation_code: execution_without_current_authority
+    now_in_complete_failure_code_union: true
+  other_counterexample_semantics_changed: false
+
+scope_stop:
+  do_not_create_independent_failure_code_registry: true
+  do_not_create_new_DSL_or_schema_language: true
+  do_not_select_Stage_04_serialization_or_validator_implementation: true
+  no_additional_failure_code_expansion_without_direct_active_invariant_or_gate_requirement: true
+
+stage_gate:
+  MINOR_N1_closed: true
+  re_review_required: false
+  Stage_03_completion_allowed_after_active_contract_manifest_and_internal_validation: true
+  Stage_04_start_allowed_in_this_file: false

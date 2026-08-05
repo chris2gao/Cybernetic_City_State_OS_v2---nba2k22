@@ -1,0 +1,55 @@
+completion_pointer:
+  packet_id: os-v2-stage-collaborative-deliberation-impl-p3-p7-integrated-001
+  status: complete_awaiting_Human_activation_or_integration_decision
+  source_branch: dev/os-v2-stage-collaborative-deliberation-impl-p3-p7-integrated-001
+  source_base: bf233aafd4b7c6db00a1065ffa686abf51cd98bb
+  independently_reviewed_implementation_head: d18de2c0f24f6448b8dc81d4c8aa7825173fabf9
+  completion_parent_head: 9dee450eab3baf1e2461269a59934b441f4f5532
+  source_head_rule: exact_remote_branch_head_containing_this_pointer_and_final_run_state
+  implementation:
+    internal_workstreams: [P3, P4, P5, P6, P7]
+    router_failure_contract_blob: ab81f480d70ccd146b8af4fefaed79cb12ec7a81
+    validator_blob: 218c1f17c3958e372be362850d6bf6d75bdb86e8
+    boot_manifest_blob: 037e4164a4d0f2cdee1133b989403b71355cddc2
+    workflow_profile_references: 7
+    failure_code_union: 26
+    canonical_counterexamples: 15
+  validation:
+    executor_regression:
+      fixture_cases: 35
+      passed: 35
+      failed: 0
+      regression_result_blob: 305064f93d4f4d786daace2f4688b22399eb715d
+      independent_review_claimed: false
+    independent_review:
+      reviewer: cc_opus_5
+      verdict: PASS_WITH_NON_BLOCKING_NOTES
+      acceptance_passed: 34/34
+      findings: {blocker: 0, major: 0, minor: 2, note: 3}
+      reviewed_head: d18de2c0f24f6448b8dc81d4c8aa7825173fabf9
+      result_record_blob: 698fc69c6f6375d0aa1eb2d8dc855b2be9247b5d
+      report_sha256: 0f88558f7bc681c83754aecfc0e770aa066584a060f6d161a4f2b5b0ce94fa5b
+  nonblocking_activation_prerequisites:
+    - add_real_tree_static_validation_for_exactly_seven_workflow_reference_files_and_matching_profile_IDs
+    - add_expected_exit_0_to_static_positive_snapshot_fixture
+    handling_rule: close_both_in_one_activation_preparation_patch_before_activation_or_master_integration
+  candidate_state:
+    staged_inert: true
+    activated: false
+    master_integrated: false
+  repository_state:
+    reviewed_report_master_head: 8e58df168f8f58d9eadcf56fa651b1c11bfa31de
+    current_master_head_at_completion: 05cf8b67ecf01896b669ad0582ed05371391b866
+    current_master_content_delta_from_reviewed_report_master: zero
+    future_master_integration_requires_fresh_exact_compare: true
+  next_owner: Human
+  next_allowed_decisions:
+    - authorize_single_activation_preparation_patch
+    - after_patch_and_independent_verification_authorize_activation
+    - authorize_or_defer_master_integration_against_current_exact_master
+  prohibitions:
+    - activate_before_closing_nonblocking_activation_prerequisites
+    - modify_or_merge_master_without_new_Human_gate
+    - force_push
+    - rebase
+    - squash

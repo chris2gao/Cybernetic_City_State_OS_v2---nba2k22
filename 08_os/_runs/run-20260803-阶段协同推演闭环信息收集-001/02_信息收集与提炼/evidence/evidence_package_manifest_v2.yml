@@ -1,0 +1,167 @@
+schema_version: citystate.stage_02_evidence_package_manifest.v2
+run_id: run-20260803-阶段协同推演闭环信息收集-001
+task_id: os-v2-stage-collaborative-deliberation-information-collection-001
+created_on: 2026-08-04
+status: active_complete_review_accepted_and_minors_repaired
+
+repository:
+  full_name: chris2gao/Cybernetic_City_State_OS_v2---core
+  branch: dev/os-v2-stage-collaborative-deliberation-information-collection-001
+  reviewed_head: 773f503ec1777b3ccd8df8bcde9cb9c774ef1058
+  remote_master_reference: 8e58df168f8f58d9eadcf56fa651b1c11bfa31de
+
+requirement:
+  path: ../../../../run-20260803-阶段协同推演闭环需求建模-001/01_任务输入/A_需求建模_v7.yml
+  blob_sha: bab36c48b822f40571089b4bdd6876073209fb34
+  Human_confirmation:
+    path: ../../../../run-20260803-阶段协同推演闭环需求建模-001/01_任务输入/Human确认_需求建模_v3.yml
+    blob_sha: caec737ebec327269ad0cb662f2e98830adce04b
+
+independent_review:
+  result: PASS_WITH_NON_BLOCKING_NOTES
+  findings: {blocker: 0, major: 0, minor: 3, note: 3}
+  result_record:
+    path: ../../07_审核/独立Stage02证据审核结果与非阻塞项处置_v1.yml
+    blob_sha: da128e7e85b7cf1e64343ac94e93822646dd5a67
+  reviewer_modified_branch: false
+
+source_reports:
+  - path: ../../../../run-20260803-阶段协同推演闭环需求建模-001/02_信息收集与提炼/human_deep_research/DR_A_追问与信息建模方法论_报告_v1.md
+    blob_sha: 302278afae260a6ee7f27374902da3337a17fcfb
+    role: discovery_only_not_independent_confirmation
+  - path: ../../../../run-20260803-阶段协同推演闭环需求建模-001/02_信息收集与提炼/human_deep_research/DR_B_讨论与共同理解方法论_报告_v1.md
+    blob_sha: fcb4ca546b17bf82af52071b1c6955d6c6064853
+    role: discovery_only_not_independent_confirmation
+
+artifacts:
+  - artifact_id: mining_target_v1_history
+    path: 00_挖掘目标与领域_v1.yml
+    blob_sha: 88080f842fb69aa04f9872521b5c70268698eb67
+    status: superseded_history
+  - artifact_id: mining_target
+    path: 00_挖掘目标与领域_v2.yml
+    blob_sha: 0eed896fab476c4b7b7d51a357e36d6725fdd95a
+    status: active_complete
+  - artifact_id: internal_evidence_v1_history
+    path: 01_内部证据_v1.yml
+    blob_sha: 7e56eb0dceb0591fd584d2fefc9b067b12b23169
+    status: superseded_history
+  - artifact_id: internal_evidence
+    path: 01_内部证据_v2.yml
+    blob_sha: 3501e0248af6beabe0108eb42a1bb6384cba524e
+    status: active_complete
+  - artifact_id: normalization_queue
+    path: 02_信源归一化工作队列_v1.yml
+    blob_sha: ce9b4448c3737395509632813f3a6bb48adb2de0
+    status: completed_with_EIG_dispositions
+  - artifact_id: Batch_01_partial_history
+    path: 03_外部一手来源复验_BATCH01_v1.yml
+    blob_sha: 936aacf93d23155bad6760074bfeb86ea3e7f5f3
+    status: superseded_history
+  - artifact_id: Batch_01_complete
+    path: 04_外部一手来源复验_BATCH01_v2.yml
+    blob_sha: 54a5a51285de4458eac144a4b3c65640b0cc8f41
+    status: active_complete
+  - artifact_id: Batch_02_narrowed_complete
+    path: 05_外部一手来源复验_BATCH02_v1.yml
+    blob_sha: 170d93656c09f216845de16ccca561948c5cfdef
+    status: active_complete
+  - artifact_id: evidence_index_v1_history
+    path: 证据索引_v1.yml
+    blob_sha: 41c36483709eb8eb7595677af7396878fdeb027b
+    status: superseded_history
+  - artifact_id: evidence_index_v2_history
+    path: 证据索引_v2.yml
+    blob_sha: 6bcdf27a4602b41b625c80b359af433b528af368
+    status: superseded_history
+  - artifact_id: evidence_index
+    path: 证据索引_v3.yml
+    blob_sha: dcd6db4cf1cef5475bad6cb57186470f1b53a6a7
+    status: active_complete
+  - artifact_id: feasibility_judgment_v1_history
+    path: 可行性判断_v1.yml
+    blob_sha: fbd8a939cf1d58e23c899b2b2494af789fdb9352
+    status: superseded_history
+  - artifact_id: feasibility_judgment
+    path: 可行性判断_v2.yml
+    blob_sha: 66bc9881fd0082f1b36aebada4ac7ead6c18e657
+    status: active_complete
+  - artifact_id: boundary_record_v1_history
+    path: 边界记录_v1.yml
+    blob_sha: 824b97ec9616c56630c7fd92f7df65b5a65fd786
+    status: superseded_history
+  - artifact_id: boundary_record
+    path: 边界记录_v2.yml
+    blob_sha: a3a74946412969f717215f513f8243d235756cf1
+    status: active_complete
+  - artifact_id: source_usage_v1_history
+    path: 信源使用记录_v1.yml
+    blob_sha: 2a2b3b12498d2ad103264d0093e035b56d481743
+    status: superseded_history
+  - artifact_id: source_usage
+    path: 信源使用记录_v2.yml
+    blob_sha: f7d7c2e5fa489bb23cfdff31aa1f3447ddcee21f
+    status: active_complete
+  - artifact_id: manifest_v1_history
+    path: evidence_package_manifest_v1.yml
+    blob_sha: 909ce33f94a27a6fdf0689ff6bd44b6c26eac5b9
+    status: superseded_history
+
+review_repairs:
+  MINOR_1:
+    issue: manifest_history_incomplete
+    closure: v2_registers_mining_target_v1_and_internal_evidence_v1_and_all_other_successor_chains
+  MINOR_2:
+    issue: E_017_missing_from_claim_type_usage
+    closure: source_usage_v2_has_disjoint_exhaustive_21_entry_taxonomy
+  MINOR_3:
+    issue: fact_and_inference_vs_facts_and_inference_key_drift
+    closure: evidence_index_v3_materializes_all_21_entries_under_fact_and_inference
+  NOTE_PATH:
+    issue: bare_relative_path_to_first_order_detail_closure
+    closure: boundary_record_v2_uses_repository_rooted_and_verified_relative_path
+
+package_summary:
+  stable_source_ids: 29
+  external_primary_or_official_sources_rechecked: 10
+  deferred_nonblocking_sources: 5
+  bearing_evidence_entries: 21
+  Human_project_policy_objects: 6
+  project_inference_objects: 4
+  blocking_unresolved_items: 0
+  unresolved_material_source_conflicts: 0
+  open_second_order_detail_events: 0
+  external_tool_required: false
+
+completion_checks:
+  current_requirement_is_A_v7: true
+  all_artifact_history_chains_registered: true
+  all_21_bearing_entries_use_canonical_fact_and_inference: true
+  all_21_bearing_entries_have_disjoint_exhaustive_classification: true
+  E_017_classified: true
+  all_referenced_paths_resolve: true
+  original_and_shared_source_origins_resolved: true
+  primary_rechecks_complete_for_bearing_external_claims: true
+  partial_access_and_negative_results_visible: true
+  report_agreement_not_counted_as_independence: true
+  granularity_policy_and_review_obligations_traceable: true
+  EIG_stop_decision_recorded: true
+  feasibility_judgment: supported
+  independent_Stage_02_review: accepted
+  all_nonblocking_minors_closed: true
+  A_v7_modified: false
+  new_Human_confirmation_required: false
+  Stage_02_completion_pointer_allowed: true
+  Stage_03_start_allowed_after_completion_pointer: true
+
+consumer_entrypoint:
+  manifest: evidence_package_manifest_v2.yml
+  evidence_index: 证据索引_v3.yml
+  feasibility_judgment: 可行性判断_v2.yml
+  boundary_record: 边界记录_v2.yml
+  source_usage: 信源使用记录_v2.yml
+  rule: Stage_03_must_not_use_superseded_versions_as_active_inputs
+
+next_gate:
+  type: Stage_02_completion_pointer
+  next_task: os-v2-stage-collaborative-deliberation-result-modeling-001

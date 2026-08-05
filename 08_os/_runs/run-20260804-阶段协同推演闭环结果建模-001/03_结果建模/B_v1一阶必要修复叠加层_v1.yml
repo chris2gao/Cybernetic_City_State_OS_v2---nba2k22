@@ -1,0 +1,181 @@
+artifact:
+  kind: result_model_B_first_order_required_repair_overlay
+  version: 1
+  task_id: os-v2-stage-collaborative-deliberation-result-modeling-001
+  created_on: 2026-08-04T02:16:00-07:00
+  status: active_candidate_awaiting_independent_re_review
+
+baseline:
+  bound_B:
+    path: B_结果建模_v1.yml
+    blob_sha: 6e9998e7161bb542bc4a7705c5a097797e6f67a6
+    modified: false
+  Human_confirmation:
+    path: ../01_任务输入/Human确认_结果建模_v1.yml
+    blob_sha: 905d9e0747abb8e856bf6beffbf4debf022d75a7
+    authority_clause: allow_targeted_repairs_after_review_when_first_order_and_semantics_preserved
+  independent_review:
+    path: ../07_审核/独立结果模型审核结果与修复决策_v1.yml
+    verdict: FAIL
+    blocking_finding: MAJOR-1
+
+active_contract_rule:
+  Stage_04_and_Stage_06_must_consume:
+    - B_结果建模_v1.yml@6e9998e7161bb542bc4a7705c5a097797e6f67a6
+    - B_v1一阶必要修复叠加层_v1.yml@resolve_current_blob
+  overlay_scope: >-
+    只补齐已确认语义的可观察字段、不变量、失败码、负例、组合映射和实测计数；
+    不新增结果家族，不选择实现文件、算法、阈值或运行时。
+  precedence:
+    semantic_contract: union_of_bound_B_and_overlay
+    measurement_and_coverage_assertions: overlay_supersedes_inaccurate_B_and_self_check_assertions
+    historical_artifacts: preserved_not_active_for_measurement
+
+repair_classification:
+  main_mechanism_ref: MM-03
+  classification: first_order_required_detail
+  required_for:
+    - correctness
+    - testability
+    - evidence_traceability
+    - deterministic_Stage_04_consumption
+  within_confirmed_scope: true
+  locally_verifiable: true
+  new_subsystem_policy_or_lifecycle: false
+  new_Human_confirmation_required: false
+
+MAJOR_1_reasoned_disposition_guard:
+  source_finding: MAJOR-1
+  source_evidence_refs: [E-002, E-020]
+
+  required_distinction_addition:
+    - counting_participants_votes_majorities_or_headcount_is_not_reasoned_issue_or_option_treatment
+
+  object_contract_additions:
+    objection_disposition_record:
+      add_required_fields:
+        - disposition_basis
+      disposition_basis_contract:
+        required_meaning: reasoned_treatment_of_the_issue_or_objection
+        may_include:
+          - argument_refs
+          - evidence_refs
+          - criteria_result
+          - explicit_reason
+          - authority_ref_when_authority_is_relevant
+        prohibited_as_sole_basis:
+          - vote_count
+          - majority_count
+          - participant_headcount
+          - silence
+          - objector_withdrawal_or_absence
+    option_disposition_record:
+      add_required_fields:
+        - disposition_basis
+      disposition_basis_contract:
+        required_meaning: reasoned_treatment_against_declared_criteria_arguments_evidence_and_valid_Human_decision_when_selected
+        prohibited_as_sole_basis:
+          - vote_count
+          - majority_count
+          - participant_headcount
+          - popularity_without_reasoned_criteria
+
+  cross_dimension_invariant_addition:
+    invariant_id: INV-16
+    rule: vote_majority_or_headcount_does_not_constitute_issue_objection_or_option_disposition
+    nuance: counting_may_be_recorded_as_context_but_cannot_satisfy_reasoned_disposition_by_itself
+    violation_code: headcount_used_as_disposition
+
+  failure_code_addition:
+    - headcount_used_as_disposition
+
+  Stage_06_negative_case_addition:
+    - vote_or_majority_used_as_issue_objection_or_option_disposition
+
+MINOR_1_measurement_correction:
+  source_finding: MINOR-1
+  measurement_method: parse_active_B_result_object_catalog_and_main_mechanism_required_results
+  corrected_measurements:
+    object_families: 8
+    catalog_unique_object_types: 45
+    main_mechanism_required_result_names: 47
+    catalog_or_composition_resolved_result_names_after_overlay: 47
+    unresolved_main_mechanism_result_names_after_overlay: 0
+  superseded_measurement_assertions:
+    - B_结果建模_v1.yml.completion_for_result_modeling.named_result_objects_mapped_41
+    - B_v1内部一致性自检_v1.yml.checks.named_result_objects.mapped_in_B_41
+    - 结果建模讨论_第1轮_v1.yml.round_output.named_result_objects_count_41_as_final_B_measurement
+  semantic_effect: none_objects_were_missing_but_measurement_and_validation_method_were_inaccurate
+
+MINOR_2_composition_mapping:
+  source_finding: MINOR-2
+  mappings:
+    - required_result_name: dormant_or_simple_route_reason
+      contract_type: explicit_field_composition
+      resolves_to:
+        - object_type: trigger_evaluation_result
+          required_field: dormant_or_simple_route_reason
+        - object_type: stage_receipt
+          required_field: activation_mode_or_dormant_reason
+      rule: no_separate_duplicate_object_required
+    - required_result_name: question_value_cost_timing_and_stop_result
+      contract_type: explicit_multi_location_composition
+      resolves_to:
+        - block: inquiry_and_evidence_family.question_value_result
+        - object_type: inquiry_item
+          required_fields:
+            - expected_information_value
+            - acquisition_and_Human_interruption_cost
+            - timing
+            - stop_or_escalation_condition
+      rule: all_components_are_required_for_the_named_result_to_be_complete
+
+NOTE_1_test_completion:
+  source_note: NOTE-1
+  Stage_06_negative_case_addition:
+    - execution_complete_marked_verified_without_execution_verification_result
+  guard_refs:
+    - review_execution_loading_family.invariants.implementation_complete_does_not_equal_verification_pass
+    - authority_invariants.execution_does_not_equal_verification
+    - state_dimensions.SD-10.implemented_unverified_vs_verified
+
+canonical_counterexample_crosswalk:
+  canonical_set_id: Stage03-required-counterexamples-v1
+  authoritative_for_Stage_06: true
+  rule: every_case_requires_a_guard_and_a_negative_test_identifier
+  cases:
+    - {case_id: CEX-01, scenario: simple_lookup_wrongly_activates_full_mechanism, guard_refs: [activation_success_conditions], failure_codes: [unjustified_full_activation], negative_case: full_mechanism_activates_for_simple_lookup}
+    - {case_id: CEX-02, scenario: load_bearing_gap_silently_skips_trigger_evaluation, guard_refs: [activation_success_conditions], failure_codes: [load_bearing_gap_silently_skipped], negative_case: load_bearing_gap_skips_trigger_evaluation}
+    - {case_id: CEX-03, scenario: silence_or_reply_presence_is_used_as_grounding_or_agreement, guard_refs: [INV-03], failure_codes: [silence_or_response_as_agreement], negative_case: silence_used_as_grounding_or_agreement}
+    - {case_id: CEX-04, scenario: vote_majority_or_headcount_is_used_as_disposition, guard_refs: [INV-16], failure_codes: [headcount_used_as_disposition], negative_case: vote_or_majority_used_as_issue_objection_or_option_disposition}
+    - {case_id: CEX-05, scenario: model_recommendation_is_used_as_Human_authorization, guard_refs: [INV-06], failure_codes: [recommendation_used_as_authorization], negative_case: recommendation_used_as_Human_authorization}
+    - {case_id: CEX-06, scenario: multiple_model_agreement_is_used_as_independent_confirmation, guard_refs: [INV-10], failure_codes: [unverified_model_agreement_as_independent_confirmation], negative_case: consensus_or_model_agreement_used_as_fact_or_independent_confirmation}
+    - {case_id: CEX-07, scenario: stale_confirmation_authorizes_after_material_event, guard_refs: [INV-09, INV-12], failure_codes: [execution_without_current_authority], negative_case: stale_confirmation_used_after_material_event}
+    - {case_id: CEX-08, scenario: second_order_detail_silently_enters_scope, guard_refs: [granularity_routing], failure_codes: [unapproved_second_order_scope_expansion], negative_case: second_order_detail_silently_enters_scope}
+    - {case_id: CEX-09, scenario: ordinary_local_choice_is_escalated_to_Human, guard_refs: [INV-15], failure_codes: [unjustified_micro_approval_escalation], negative_case: ordinary_local_choice_escalated_to_Human}
+    - {case_id: CEX-10, scenario: main_mechanism_priority_omits_required_core_result, guard_refs: [common_result_object_contract.unknown_required_field_rule], failure_codes: [premature_completion], negative_case: main_mechanism_priority_omits_required_core_result}
+    - {case_id: CEX-11, scenario: executor_self_review_clears_blocker_or_major, guard_refs: [INV-11], failure_codes: [executor_self_clearance], negative_case: executor_self_clears_blocker_or_major}
+    - {case_id: CEX-12, scenario: stage_profile_lacks_main_mechanism_ref, guard_refs: [mechanism_ref_does_not_substitute_for_main_mechanism_ref], failure_codes: [stage_profile_main_obligation_missing], negative_case: stage_profile_missing_main_mechanism_ref}
+    - {case_id: CEX-13, scenario: receipt_lacks_open_detail_divergence_event_refs, guard_refs: [receipt_missing_required_field_is_invalid], failure_codes: [receipt_detail_visibility_missing], negative_case: receipt_missing_open_detail_divergence_event_refs}
+    - {case_id: CEX-14, scenario: missing_partial_or_stale_loader_chain_continues, guard_refs: [missing_partial_stale_or_unjustified_skip_fails_closed], failure_codes: [missing_partial_or_stale_load_fail_open], negative_case: missing_or_stale_loader_component_continues}
+    - {case_id: CEX-15, scenario: execution_complete_is_treated_as_verification_passed, guard_refs: [implementation_complete_does_not_equal_verification_pass, SD-10], failure_codes: [premature_completion], negative_case: execution_complete_marked_verified_without_execution_verification_result}
+
+active_completion_measurements_after_overlay:
+  five_substantive_rounds_completed: 5
+  main_mechanism_refs_defined: 8
+  catalog_unique_object_types: 45
+  main_mechanism_required_result_names: 47
+  resolved_by_catalog_or_composition: 47
+  state_dimensions_defined: 10
+  active_cross_dimension_invariants: 16
+  canonical_required_counterexamples: 15
+  canonical_required_counterexamples_covered: 15
+  blocking_result_model_gap_found_after_repair: false
+  second_order_detail_divergence_found: false
+  Stage_04_solution_selected: false
+
+stage_gate:
+  Stage_03_complete: false
+  Stage_04_start_allowed: false
+  independent_re_review_required: true
+  next_allowed_action: validate_overlay_and_dispatch_independent_re_review

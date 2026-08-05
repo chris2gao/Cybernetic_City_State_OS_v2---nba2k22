@@ -1,0 +1,87 @@
+artifact:
+  kind: package_blocking_failure_to_negative_test_ids_crosswalk
+  version: 1
+  task_id: os-v2-stage-collaborative-deliberation-test-review-modeling-001
+  source_step_plan_blob: 8be5af8c2b13aac3b45127bbdb3b2f4ed566a06f
+counts:
+  packages: 7
+  blocking_failures: 29
+  mapped: 29
+  unresolved: 0
+rows:
+  P1:
+    missing_or_unbound_basis:
+    - TG-P1-03
+    profile_inventory_or_required_field_mismatch:
+    - TG-P1-02
+    workflow_copy_of_mechanism_body:
+    - TG-P1-01
+    - TG-P5-01
+    non_inert_candidate:
+    - TG-P1-01
+  P2:
+    45_47_0_10_16_measurement_mismatch:
+    - TG-P2-01
+    - TG-P2-02
+    duplicate_object_created_for_composition_mapping:
+    - TG-P2-01
+    invariant_or_transition_or_receipt_contract_incomplete:
+    - TG-P2-02
+    - TG-P2-03
+  P3:
+    incomplete_or_selectively_copied_failure_union:
+    - TG-P3-01
+    - SC-P3-02
+    nondeterministic_or_unbounded_router:
+    - TG-P3-02
+    internal_error_returns_zero:
+    - TG-P3-03
+    missing_exit_class_fixture:
+    - TG-P3-03
+  P4:
+    version_or_discovery_mismatch:
+    - TG-P4-01
+    missing_partial_or_stale_load_continues:
+    - TG-P4-02
+    - SC-P4-02
+    loading_chain_marked_active:
+    - SC-P4-03
+  P5:
+    missing_duplicate_or_wrong_profile_reference:
+    - TG-P5-01
+    copied_body:
+    - TG-P5-01
+    ambiguous_stage_namespace:
+    - TG-P5-02
+    - SC-P3-05
+    future_eighth_profile_pre_activated:
+    - TG-P5-02
+    - SC-P1-03
+    active_reference_before_Human_gate:
+    - SC-P5-03
+  P6:
+    missing_validator_mode_coverage:
+    - SC-P6-01
+    counterexample_or_failure_code_mismatch:
+    - TG-P6-04
+    formalistic_round_counted:
+    - SC-P6-04
+    invalid_receipt_accepted:
+    - TG-P6-04
+    canonical_live_state_written:
+    - SC-P6-06
+  P7:
+    regression_or_allowlist_failure:
+    - TG-P7-01
+    - TG-P7-02
+    unbound_package_artifact_or_test:
+    - TG-P7-01
+    incomplete_rollback:
+    - TG-P7-03
+    - SC-P7-03
+    blocker_or_major_from_independent_review:
+    - TG-P7-04
+    activation_without_Human_authorization:
+    - TG-P7-05
+    - SC-P7-04
+completeness_rule: every_blocking_failure_has_at_least_one_existing_negative_test_id

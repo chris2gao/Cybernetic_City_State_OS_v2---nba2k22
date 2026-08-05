@@ -1,0 +1,483 @@
+artifact:
+  kind: stage_collaborative_deliberation_test_review_model
+  version: 2
+  task_id: os-v2-stage-collaborative-deliberation-test-review-modeling-001
+  created_on: '2026-08-04'
+  status: targeted_successor_complete_pending_exact_Human_binding
+  supersedes:
+    path: 测试与审核模型_v1.yml
+    blob_sha: 80681d6d980ce24330c29823cf44f1adb7244dfe
+baseline:
+  Stage_05_completion:
+    blob_sha: c151e1db7fd406651d21f05e5bc7ceea0135f20c
+    exact_parent_head: 5e92dac4ef2dc90864320c92b7640ccf6eeef8d5
+  step_plan_blob: 8be5af8c2b13aac3b45127bbdb3b2f4ed566a06f
+  solution_blobs:
+  - 9f93ce2f563eeac79cc5b565f8b01298020363ef
+  - e2316bfa10ed07f9db6b6ab8aaad9ebcb9d7ce56
+  result_contract_manifest_blob: bf8fc764419ce029b2fd2e144fc85ae5792d8a46
+  failed_review:
+    head: e65e162767421e747d071c53da0e11ab2ef3e879
+    verdict: FAIL
+    findings:
+      blocker: 1
+      major: 1
+      minor: 0
+      note: 2
+    report_sha256: 3de801984ba5f2f0a6ba948d2a0241102049d03136268825073da00917dd243b
+successor_contract:
+  bound_v1_modified: false
+  BLOCKER_1: valid_YAML_mapping_shape_and_mandatory_self_parse_gate
+  MAJOR_1: exact_49_acceptance_plus_29_blocking_crosswalk_files
+  Human_material_event: schema_adequacy_is_required_in_addition_to_field_occupancy
+  new_exact_Human_confirmation_required: true
+  fresh_cc_re_review_required: true
+modeling_rounds:
+  original_five: complete
+  incremental_repair:
+  - round_id: DELTA-R1
+    function: audit_and_schema_adequacy_impact
+    status: complete
+  - round_id: DELTA-R2
+    function: successor_crosswalk_parse_and_freeze
+    status: complete
+purpose: 冻结 P1–P7 实现前的机器可消费测试、故障注入、审核、回滚和权限门；同时验证schema建模充分性而非只验证字段存在。
+non_goals:
+- new_test_framework_DSL_or_failure_registry
+- dynamic_package_or_plugin_orchestration
+- change_package_ownership
+- create_P1_through_P7_branches
+- authorize_implementation_execution
+- authorize_activation_or_master_integration
+- modify_canonical_workflow_registry_boot_loader_or_master
+- new_object_type_or_failure_code_for_schema_adequacy
+namespace_discipline:
+  development_Stage_06: test_review_modeling
+  workflow_stage_06: execution
+  full_namespace_required_when_both_sequences_are_in_scope: true
+  ambiguous_numeric_stage_reference: test_failure
+structural_baseline:
+  packages: 7
+  package_order:
+  - P1
+  - P2
+  - P3
+  - P4
+  - P5
+  - P6
+  - P7
+  primary_test_groups: 22
+  required_special_checks: 35
+  named_test_units: 57
+  validator_modes: 4
+  nonzero_exit_classes: 10
+  canonical_counterexamples: 15
+  failure_code_union_current_baseline: 26
+  object_types: 45
+  MM_result_names: 47
+  unresolved_names: 0
+  state_dimensions: 10
+  active_invariants: 16
+  workflow_profiles: 7
+  step_plan_acceptance_assertions: 49
+  step_plan_blocking_failures: 29
+  crosswalk_rows: 78
+active_supporting_contracts:
+  acceptance_crosswalk:
+    path: package_acceptance_to_test_ids_crosswalk_v1.yml
+    blob_sha: 86264b1db6d35db002332af2044d7dcd902fb33a
+    rows: 49
+    unresolved: 0
+  blocking_crosswalk:
+    path: package_blocking_failure_to_negative_test_ids_crosswalk_v1.yml
+    blob_sha: 061223a0fc3bee6b022ea0d65e85b7a5fe045fec
+    rows: 29
+    unresolved: 0
+  schema_adequacy:
+    path: 主建模schema充分性测试契约_v1.yml
+    blob_sha: 2a2d3374bd76666450421550de331f0a6a0fd157
+  consumption_rule: v2_and_all_three_exact_supporting_contracts_are_one_active_union
+case_contract:
+  required_fields:
+  - test_id
+  - package_id
+  - layer
+  - source_acceptance_or_blocking_failure_ref
+  - active_contract_refs
+  - exact_fixture_or_candidate_ref
+  - preconditions
+  - action
+  - expected_exit_class
+  - expected_failure_codes
+  - expected_artifacts_or_state
+  - prohibited_side_effects
+  - cleanup_or_rollback_check
+  - evidence_output
+  - schema_adequacy_oracle_when_applicable
+  exact_version_binding_required: true
+  field_presence_only_as_completeness_oracle: prohibited
+  unexpected_exception_as_expected_failure: prohibited
+  skipped_required_test_without_Human_disposition: prohibited
+layers:
+  L0: self_parse_exact_reference_and_crosswalk_completeness
+  L1: static_schema_reference_count_and_allowlist
+  L2: contract_router_state_invariant_failure_and_schema_adequacy_semantics
+  L3: loading_profile_instance_material_event_and_receipt_behavior
+  L4: package_acceptance_blocking_failure_rollback_and_exact_head
+  L5: full_chain_regression_independent_review_and_Human_activation_gate
+oracles:
+  self_validation:
+  - v2_and_supporting_YAML_parse_before_candidate_freeze
+  - exact_supporting_blobs_match
+  - all_78_assertions_have_nonempty_existing_test_ID_mappings
+  structural:
+  - machine_files_parse_and_exact_refs_resolve
+  - counts_are_recomputed_not_trusted
+  - changed_paths_subset_exact_allowlist
+  - one_primary_owner_per_path
+  - schema_sources_and_applicability_boundaries_traceable
+  semantic:
+  - all_16_invariants_have_failure_resolution
+  - failure_union_recomputed_and_currently_26
+  - all_15_counterexamples_have_guard_code_fixture
+  - ordinary_local_choice_no_Human_scope_gate
+  - headcount_not_reasoned_disposition
+  - execution_complete_not_verification_passed
+  - field_occupancy_not_model_completeness
+  - bearing_dimensions_represented_irrelevant_or_unknown_disposed
+  - domain_schema_required_when_general_schema_insufficient
+  behavioral:
+  - exit_0_only_for_valid_candidate
+  - exit_10_through_19_nonzero_and_distinguishable
+  - unauthorized_action_no_side_effect
+  - partial_publish_no_valid_receipt
+  - missing_partial_stale_unknown_invalid_or_unauthorized_fails_closed
+  - field_full_but_bearing_dimension_missing_fails_nonzero
+  authority:
+  - exact_durable_Human_authorization
+  - test_pass_is_not_authority
+  - executor_no_independent_review_or_self_clearance
+  regression:
+  - next_package_base_exact_prior_accepted_head
+  - failed_package_not_promoted
+  - protected_history_and_master_unchanged
+  - candidate_inactive_before_Human_gate
+self_validation_catalog:
+  SC-SELF-00: successor_and_supporting_YAML_parse_and_exact_ref_resolution
+  SC-SELF-01: 49_plus_29_assertion_crosswalk_completeness
+test_catalog:
+  P1:
+    groups:
+    - group_id: TG-P1-01
+      subject: canonical_public_method_inert_boundary
+    - group_id: TG-P1-02
+      subject: seven_profile_contract_and_required_fields
+    - group_id: TG-P1-03
+      subject: exact_source_manifest_and_basis_blobs
+    required_special_checks:
+    - test_id: SC-P1-01
+      subject: result_contract_and_solution_basis_subdirectories_have_explicit_manifest_entries
+    - test_id: SC-P1-02
+      subject: no_boot_registry_loader_or_workflow_ref_in_P1_delta
+    - test_id: SC-P1-03
+      subject: future_eighth_profile_not_pre_activated
+    - test_id: SC-P1-04
+      subject: field_occupancy_is_not_model_completeness
+    - test_id: SC-P1-05
+      subject: model_space_sources_and_applicability_boundaries_are_explicit
+  P2:
+    groups:
+    - group_id: TG-P2-01
+      subject: object_catalog_45_names_47_unresolved_0_and_composition
+    - group_id: TG-P2-02
+      subject: ten_states_sixteen_invariants_and_append_only_transitions
+    - group_id: TG-P2-03
+      subject: receipt_schema_structure
+    required_special_checks:
+    - test_id: SC-P2-01
+      subject: generic_complete_substitution_prohibited
+    - test_id: SC-P2-02
+      subject: rejected_transition_durable
+    - test_id: SC-P2-03
+      subject: every_invariant_code_has_complete_union_resolution
+    - test_id: SC-P2-04
+      subject: dormant_and_active_receipt_schema_visibility_complete
+    - test_id: SC-P2-05
+      subject: schema_adequacy_uses_existing_objects_without_new_catalog_type
+    - test_id: SC-P2-06
+      subject: every_load_bearing_dimension_is_represented_irrelevant_with_reason_or_unknown_blocked
+  P3:
+    groups:
+    - group_id: TG-P3-01
+      subject: recomputed_complete_failure_code_union
+    - group_id: TG-P3-02
+      subject: deterministic_routers_and_fail_closed_unknowns
+    - group_id: TG-P3-03
+      subject: static_validator_and_exit_classes
+    required_special_checks:
+    - test_id: SC-P3-01
+      subject: union_recomputed_equals_current_baseline_26
+    - test_id: SC-P3-02
+      subject: selective_copy_or_hardcoded_eternal_26_rejected
+    - test_id: SC-P3-03
+      subject: every_router_has_order_input_output_failure_and_stop
+    - test_id: SC-P3-04
+      subject: no_universal_numeric_threshold
+    - test_id: SC-P3-05
+      subject: ambiguous_stage_namespace_rejected
+    - test_id: SC-P3-06
+      subject: field_full_but_load_bearing_dimension_missing_fails
+    - test_id: SC-P3-07
+      subject: domain_schema_insufficiency_or_unknown_adequacy_fails_closed
+  P4:
+    groups:
+    - group_id: TG-P4-01
+      subject: boot_loader_registry_discovery_versions
+    - group_id: TG-P4-02
+      subject: fail_closed_loading_and_no_stale_fallback
+    required_special_checks:
+    - test_id: SC-P4-01
+      subject: static_validator_pass_before_staging_acceptance
+    - test_id: SC-P4-02
+      subject: partial_or_stale_load_has_no_valid_receipt
+    - test_id: SC-P4-03
+      subject: loading_chain_staged_not_active
+  P5:
+    groups:
+    - group_id: TG-P5-01
+      subject: seven_reference_files_and_reference_not_copy
+    - group_id: TG-P5-02
+      subject: namespace_and_future_stage_extension_material_event
+    required_special_checks:
+    - test_id: SC-P5-01
+      subject: each_reference_has_ten_required_fields
+    - test_id: SC-P5-02
+      subject: future_stage_rule_referenced_not_pre_activated
+    - test_id: SC-P5-03
+      subject: active_reference_before_Human_gate_rejected
+  P6:
+    groups:
+    - group_id: TG-P6-01
+      subject: dormant_full_incremental_and_round_substance
+    - group_id: TG-P6-02
+      subject: material_event_dependency_invalidation_and_reconfirmation
+    - group_id: TG-P6-03
+      subject: granularity_external_action_and_Human_gates
+    - group_id: TG-P6-04
+      subject: review_execution_verification_and_receipt_behavior
+    required_special_checks:
+    - test_id: SC-P6-01
+      subject: all_four_validator_modes_have_positive_and_negative_runs
+    - test_id: SC-P6-02
+      subject: full_requires_five_substantive_rounds
+    - test_id: SC-P6-03
+      subject: incremental_requires_two_substantive_rounds
+    - test_id: SC-P6-04
+      subject: formalistic_round_not_counted
+    - test_id: SC-P6-05
+      subject: unauthorized_action_has_no_side_effect
+    - test_id: SC-P6-06
+      subject: no_fixture_writes_canonical_live_state
+  P7:
+    groups:
+    - group_id: TG-P7-01
+      subject: exact_package_chain_changed_path_and_blob_manifest
+    - group_id: TG-P7-02
+      subject: full_clean_checkout_regression
+    - group_id: TG-P7-03
+      subject: rollback_partial_failure_and_audit_history
+    - group_id: TG-P7-04
+      subject: independent_full_diff_review_dispatch
+    - group_id: TG-P7-05
+      subject: Human_activation_and_master_integration_gate
+    required_special_checks:
+    - test_id: SC-P7-01
+      subject: every_P1_to_P6_completion_pointer_bound
+    - test_id: SC-P7-02
+      subject: clean_checkout_not_cached_workspace
+    - test_id: SC-P7-03
+      subject: rollback_manifest_complete
+    - test_id: SC-P7-04
+      subject: tests_or_review_do_not_auto_authorize_activation
+    - test_id: SC-P7-05
+      subject: master_unmodified_before_exact_Human_gate
+receipt_test_ownership:
+  schema_structure_owner: P2
+  loading_chain_behavior_owners:
+  - P4
+  - P6
+  final_regression_owner: P7
+  schema_failure_must_not_be_assigned_to_P4_only: true
+validator_matrix:
+  modes:
+    static:
+    - P1
+    - P2
+    - P3
+    - P4
+    - P5
+    instance:
+    - P2
+    - P3
+    - P4
+    - P5
+    - P6
+    material_event:
+    - P1
+    - P3
+    - P5
+    - P6
+    review_execution:
+    - P3
+    - P6
+    - P7
+  exit_classes:
+    10:
+      failure: missing_required_path_or_object
+      expected_effect: no_valid_receipt
+    11:
+      failure: schema_or_version_mismatch
+      expected_effect: load_or_transition_blocked
+    12:
+      failure: partial_or_stale_load
+      expected_effect: no_fallback
+    13:
+      failure: unresolved_reference_or_dependency
+      expected_effect: affected_progression_blocked
+    14:
+      failure: invariant_violation
+      expected_effect: durable_failure_record
+    15:
+      failure: unauthorized_action_or_transition
+      expected_effect: no_side_effect
+    16:
+      failure: profile_or_gate_failure
+      expected_effect: stage_not_started_or_completed
+    17:
+      failure: invalid_or_incomplete_receipt
+      expected_effect: stage_not_complete
+    18:
+      failure: review_execution_or_allowlist_violation
+      expected_effect: package_not_accepted
+    19:
+      failure: validator_internal_error
+      expected_effect: nonzero_and_visible
+  valid_fixture_exit: 0
+canonical_counterexample_matrix:
+  set_id: Stage03-required-counterexamples-v1
+  cases:
+    CEX-01:
+      expected_code: unjustified_full_activation
+      fixture_ref: fixtures/instance/counterexamples/CEX-01.yml
+    CEX-02:
+      expected_code: load_bearing_gap_silently_skipped
+      fixture_ref: fixtures/instance/counterexamples/CEX-02.yml
+    CEX-03:
+      expected_code: silence_or_response_as_agreement
+      fixture_ref: fixtures/instance/counterexamples/CEX-03.yml
+    CEX-04:
+      expected_code: headcount_used_as_disposition
+      fixture_ref: fixtures/instance/counterexamples/CEX-04.yml
+    CEX-05:
+      expected_code: recommendation_used_as_authorization
+      fixture_ref: fixtures/instance/counterexamples/CEX-05.yml
+    CEX-06:
+      expected_code: unverified_model_agreement_as_independent_confirmation
+      fixture_ref: fixtures/instance/counterexamples/CEX-06.yml
+    CEX-07:
+      expected_code: execution_without_current_authority
+      fixture_ref: fixtures/instance/counterexamples/CEX-07.yml
+    CEX-08:
+      expected_code: unapproved_second_order_scope_expansion
+      fixture_ref: fixtures/instance/counterexamples/CEX-08.yml
+    CEX-09:
+      expected_code: unjustified_micro_approval_escalation
+      fixture_ref: fixtures/instance/counterexamples/CEX-09.yml
+    CEX-10:
+      expected_code: premature_completion
+      fixture_ref: fixtures/instance/counterexamples/CEX-10.yml
+    CEX-11:
+      expected_code: executor_self_clearance
+      fixture_ref: fixtures/instance/counterexamples/CEX-11.yml
+    CEX-12:
+      expected_code: stage_profile_main_obligation_missing
+      fixture_ref: fixtures/instance/counterexamples/CEX-12.yml
+    CEX-13:
+      expected_code: receipt_detail_visibility_missing
+      fixture_ref: fixtures/instance/counterexamples/CEX-13.yml
+    CEX-14:
+      expected_code: missing_partial_or_stale_load_fail_open
+      fixture_ref: fixtures/instance/counterexamples/CEX-14.yml
+    CEX-15:
+      expected_code: premature_completion
+      fixture_ref: fixtures/instance/counterexamples/CEX-15.yml
+  rule: all_15_have_guard_fixture_expected_code_nonzero_and_no_prohibited_side_effect
+additional_crosswalk_contracts:
+  invariant_to_failure_code_to_fixture:
+    rows: 16
+    resolution: Stage03_active_contract::invariants[INV_ID].failure_code
+    test_ids:
+    - TG-P2-02
+    - TG-P3-01
+    - TG-P6-04
+  validator_mode_to_runs: all_four_modes_have_positive_and_negative_runs
+  exit_class_to_fixture: each_10_through_19_has_targeted_static_fixture
+  path_owner_to_allowlist: P1_through_P7_each_have_exact_owner_tests
+  authority_gate_to_rejection: external_execution_review_activation_gates_have_no_side_effect_negatives
+  rollback_to_target: failed_package_partial_publish_and_full_rollback_have_exact_target_and_history_checks
+  completeness_rule: any_unresolved_cell_blocks_package_or_final_acceptance
+review_protocol:
+  package_self_check:
+    required: true
+    independent: false
+    may_not_clear_blocker_or_major: true
+  package_independent_review:
+    reviewer: cc_opus_5
+    branch_modification_allowed: false
+    results:
+    - PASS
+    - PASS_WITH_NON_BLOCKING_NOTES
+    - FAIL
+  final_full_diff_review:
+    reviewer: cc_opus_5
+    base: exact_P1_base
+    head: exact_P7_head
+    branch_modification_allowed: false
+  Human_gate_after_review: bind_exact_head_merge_method_rollback_and_post_checks_before_activation
+role_assignment_recommendation:
+  implementation_executor: current_project_lead_model
+  independent_package_and_final_reviewer: cc_opus_5
+  status: candidate_only_not_execution_authorization
+  override_rule: cc_implementation_requires_third_fresh_reviewer
+execution_readiness_gate:
+  required_before_P1:
+  - v2_exact_Human_confirmation
+  - fresh_v2_independent_review_acceptance
+  - blocker_and_major_zero_or_valid_Human_disposition
+  - active_upstream_contracts_unchanged_or_event_resolved
+  - exact_v2_union_in_executor_packet
+  - Human_execution_authorization
+  P1_exact_base: head_containing_Stage06_completion_pointer_and_Human_execution_authorization
+  implementation_authorized: false
+  P1_through_P7_branches_created: false
+completion_for_test_review_modeling:
+  five_rounds: 5
+  repair_rounds: 2
+  packages: 7
+  primary_test_groups: 22
+  special_checks: 35
+  named_test_units: 57
+  validator_modes: 4
+  exit_classes: 10
+  counterexamples: 15
+  failure_union: 26
+  acceptance_crosswalk_rows: 49
+  blocking_crosswalk_rows: 29
+  unresolved_crosswalk_rows: 0
+  schema_adequacy_covered: true
+  coverage_gaps: 0
+  blocking_gap: false
+  implementation_authorized: false
+  exact_Human_confirmation: pending
+  independent_review: pending
+  next: exact_Human_confirmation_of_v2_union

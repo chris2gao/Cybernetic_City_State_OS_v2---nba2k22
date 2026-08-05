@@ -1,0 +1,59 @@
+artifact:
+  kind: main_modeling_schema_adequacy_test_contract
+  version: 1
+  task_id: os-v2-stage-collaborative-deliberation-test-review-modeling-001
+  material_event_id: MIE-002-Stage06-parse-crosswalk-schema-adequacy
+core_rule: field_occupancy_is_necessary_but_not_sufficient_for_model_completeness
+model_space_sources:
+  general_modeling_substrate:
+  - goal_and_success_obligation
+  - schema_field_and_missing_element
+  - atomic_claim_and_evidence
+  - assumption_and_uncertainty
+  - terminology_and_scope
+  - option_criterion_and_tradeoff
+  - risk_and_failure_mode
+  - actor_role_and_authority
+  - artifact_version_dependency_and_confirmation_scope
+  - main_mechanism_detail_dependency_and_scope
+  workflow_stage_schema: stage_profile.required_model_fields_plus_start_and_completion_gates
+  task_specific_schema: Human_goal_success_conditions_downstream_consumers_risk_and_authority
+  domain_specific_schema: required_when_general_and_stage_schemas_cannot_represent_domain_bearing_dimensions
+  evidence_basis: external_fact_internal_execution_Human_policy_and_project_inference_are_distinct_and_traceable
+bearing_dimension_test: changing_the_dimension_could_change_target_decision_risk_test_authority_dependency_version_validity_or_downstream_acceptance
+completion_oracle:
+  allowed_dispositions:
+  - represented_with_supported_value
+  - explicitly_irrelevant_with_reason_and_scope
+  - unknown_with_blocking_or_deferred_disposition_and_revisit_trigger
+  all_fields_present_alone: must_not_pass
+  unknown_schema_adequacy: fail_closed
+  domain_schema_absence: activate_inquiry_or_record_blocking_gap
+  existing_failure_codes:
+  - load_bearing_gap_silently_skipped
+  - premature_completion
+  - missing_required_path_or_object
+  - schema_or_version_mismatch
+test_bindings:
+  P1:
+  - SC-P1-04
+  - SC-P1-05
+  P2:
+  - SC-P2-05
+  - SC-P2-06
+  P3:
+  - SC-P3-06
+  - SC-P3-07
+  P6:
+  - TG-P6-01
+  - TG-P6-02
+  - TG-P6-03
+  P7:
+  - TG-P7-02
+  - TG-P7-04
+constraints:
+  new_object_type: false
+  new_failure_code: false
+  package_ownership_changed: false
+  object_catalog_remains_45: true
+  failure_union_remains_current_26: true

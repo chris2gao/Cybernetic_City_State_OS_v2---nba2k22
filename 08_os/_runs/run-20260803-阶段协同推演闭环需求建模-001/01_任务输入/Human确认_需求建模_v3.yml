@@ -1,0 +1,51 @@
+artifact:
+  kind: Human_confirmation
+  version: 3
+  task_id: os-v2-stage-collaborative-deliberation-requirement-001
+  amendment_task_id: os-v2-stage-collaborative-deliberation-granularity-amendment-001
+  confirmed_on: 2026-08-04T00:10:00-07:00
+  authority: Human
+  status: confirmed_pending_independent_delta_review
+  supersedes: Human确认_需求建模_v2.yml
+
+confirmed_artifact:
+  path: 08_os/_runs/run-20260803-阶段协同推演闭环需求建模-001/01_任务输入/A_需求建模_v7.yml
+  blob_sha: bab36c48b822f40571089b4bdd6876073209fb34
+  version: 7
+  supersedes_artifact:
+    path: 08_os/_runs/run-20260803-阶段协同推演闭环需求建模-001/01_任务输入/A_需求建模_v6.yml
+    blob_sha: 4adf2bf7f68a9f717a524960b98c649e233c8a5c
+
+Human_statement: >-
+  确认 A_需求建模_v7.yml，精确 blob SHA：
+  bab36c48b822f40571089b4bdd6876073209fb34。
+  同意以该版本替代 A v6，完成实现颗粒度需求增量第 2 轮，并提交独立增量审核。
+
+confirmation_scope:
+  - adopt_primary_mechanism_priority_and_detail_recursion_escalation_policy
+  - distinguish_main_mechanism_first_order_required_detail_and_second_order_detail_divergence
+  - allow_model_resolution_only_for_minimum_sufficient_first_order_required_details
+  - require_Human_decision_before_second_order_scope_expansion
+  - fail_closed_when_pending_detail_blocks_correctness_safety_testability_or_integration
+  - require_durable_deferral_record_for_nonblocking_second_order_details
+  - prohibit_using_granularity_policy_to_omit_required_core_behavior
+  - bind_state_machine_stage_profile_receipt_and_validator_obligations_to_A_v7
+
+version_effects:
+  current_requirement_model: A_需求建模_v7.yml
+  current_requirement_blob: bab36c48b822f40571089b4bdd6876073209fb34
+  A_v6_effect: superseded_preserved_as_history_not_valid_for_downstream_progression
+  Human_confirmation_v2_effect: superseded_preserved_as_history
+  granularity_incremental_round_2: complete
+  independent_requirement_delta_review: required
+  Stage_02_resume_allowed: false
+
+not_authorized_by_this_confirmation:
+  - modify_A_v7_after_binding
+  - resume_Stage_02_before_independent_delta_review_acceptance
+  - enter_Stage_03
+  - modify_workflow_mechanism_canonical_registry_boot_or_loader
+  - dispatch_implementation_executor
+  - modify_master
+
+next_gate: independent_requirement_delta_review_of_exact_A_v7_blob_and_amendment_delta
