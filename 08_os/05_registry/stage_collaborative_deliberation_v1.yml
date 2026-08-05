@@ -2,9 +2,11 @@ schema_version: stage_collaborative_deliberation.registry.v1
 registry_entry_version: 1
 mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
 mechanism_version: 1
-activation_state: staged_inert
+activation_state: active_dormant
+default_route: dormant
 discovery:
   public_method: 08_os/03_mechanisms/stage_collaborative_deliberation/方法论_v1.md
+  activation_state: 08_os/03_mechanisms/stage_collaborative_deliberation/激活状态_v1.yml
   profiles:
     contract: 08_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml
     set: 08_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml
@@ -14,11 +16,24 @@ discovery:
     state_transition_invariant: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/状态转换与不变量契约_v1.yml
     router_failure: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/路由与失败契约_v1.yml
     load_receipt: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml
-    validator: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py
+    validator_base: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py
+    validator: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py
   boot_manifest: 08_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml
   loader: 08_os/06_execution/boot/stage_collaborative_deliberation/README.md
   workflow_reference_pattern: 08_os/01_workflow/*/实现/阶段协同推演profile引用_v1.yml
   evidence_basis: 08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/source_manifest_v1.yml
+activation:
+  state_ref:
+    path: 08_os/03_mechanisms/stage_collaborative_deliberation/激活状态_v1.yml
+    blob_sha: 8fcab2a3c92629e9c8a801a78128adb467aa5bab
+  authorization_ref:
+    path: 08_os/_runs/run-20260804-阶段协同推演闭环激活-001/01_任务输入/Human授权_全局机制激活_v1.yml
+    blob_sha: 5d9d8be9e55c0c904a86907592b70d0a852d1567
+  globally_loadable: true
+  evaluate_profile_triggers: true
+  create_live_session_by_default: false
+  per_task_profile_gate_required: true
+  external_action_authorization_remains_separate: true
 runtime:
   instance_root_pattern: <run-root>/<stage-output-root>/stage_collaborative_deliberation/
   runs_and_runtime_are_registry_structure: false
@@ -28,5 +43,5 @@ failure_surfacing:
   validator_exit_codes: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
   durable_failure_record_required: true
 stale_fallback: prohibited
-activation_requires_separate_Human_authorization: true
-master_integration_authorized: false
+master_integrated: true
+global_activation_authorized: true
