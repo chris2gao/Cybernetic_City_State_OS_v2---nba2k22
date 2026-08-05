@@ -1,0 +1,17 @@
+artifact: stage_collaborative_deliberation_requirement_basis_v1
+status: active_exact_basis
+sources:
+- id: INT-REQ-A7
+  path: 08_os/_runs/run-20260803-阶段协同推演闭环需求建模-001/01_任务输入/A_需求建模_v7.yml
+  blob_sha: bab36c48b822f40571089b4bdd6876073209fb34
+  role: Human_confirmed_requirement_model
+- id: INT-HCONF-3
+  path: 08_os/_runs/run-20260803-阶段协同推演闭环需求建模-001/01_任务输入/Human确认_需求建模_v3.yml
+  blob_sha: caec737ebec327269ad0cb662f2e98830adce04b
+  role: exact_Human_requirement_confirmation
+binding_rules:
+  current_requirement_only: A_v7
+  older_versions: audit_only
+  five_and_two_round_minima_are_Human_policy: true
+  external_research_route_is_Human_policy: true
+  granularity_and_second_order_gate_are_Human_policy: true
