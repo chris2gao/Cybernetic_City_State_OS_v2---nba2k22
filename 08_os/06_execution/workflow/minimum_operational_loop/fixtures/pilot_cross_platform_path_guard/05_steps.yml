@@ -1,0 +1,63 @@
+schema_version: citystate.workflow.artifact.v1
+run_id: pilot-cross-platform-repository-logical-path-001
+stage_id: workflow_stage_05_step_decomposition
+artifact_kind: step_package
+artifact_version: 1
+status: complete
+input_refs:
+- stage_id: workflow_stage_04_test_generation
+  path: 04_tests.yml
+  artifact_version: 1
+  sha256: 1bf9568342afca8cb0462830b375e231d6743f61b3722d1acaface79800f30c2
+deliberation_receipt:
+  mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
+  activation_state: active_dormant
+  profile_id: workflow_stage_05_step_decomposition
+  route: dormant
+  receipt_status: valid
+  session_id: null
+  task_gate_ref: null
+  Human_authorization_ref: null
+payload:
+  steps:
+  - step_id: S-1
+    depends_on: []
+    action: Replace host-dependent Path stringification with forward-slash string composition.
+    test_ids:
+    - T-1
+    - T-2
+    - T-4
+    retry_budget: 3
+    exits:
+    - pass
+    - retry
+    - invalidate_upstream
+  - step_id: S-2
+    depends_on:
+    - S-1
+    action: Update exact validator blob bindings in boot and seven workflow references.
+    test_ids:
+    - T-3
+    retry_budget: 3
+    exits:
+    - pass
+    - retry
+    - invalidate_upstream
+  - step_id: S-3
+    depends_on:
+    - S-2
+    action: Run guard, static, fixture and negative regression on Windows.
+    test_ids:
+    - T-1
+    - T-2
+    - T-3
+    - T-4
+    retry_budget: 3
+    exits:
+    - pass
+    - retry
+    - invalidate_upstream
+  upstream_invalidation_targets:
+  - workflow_stage_03_result_modeling
+  - workflow_stage_02_information_collection
+  - workflow_stage_01_requirement_modeling
