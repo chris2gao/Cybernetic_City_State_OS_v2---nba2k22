@@ -1,0 +1,79 @@
+repair_record:
+  task_id: os-v2-stage-collaborative-deliberation-activation-001
+  finding_id: MAJOR-1
+  source_review:
+    filename: 2026-08-05_阶段协同推演闭环_全局激活候选_最终独立审核_FAIL.md
+    sha256: b1af7bad86e30fc5451186f3bc61c0e23830649b599c744457e35a499cdc90e1
+    reviewed_head: 3b9243f608fdce13eeff5b446861bea51058d758
+    verdict: FAIL
+    findings: {blocker: 0, major: 1, minor: 0, note: 2}
+  branch: dev/os-v2-stage-collaborative-deliberation-activation-001
+  exact_master_base: 161163a4a762a33ad7c5b4382bccaa4023c7d0e5
+  repaired_content_head: 6f066794106c33be98de3cf4dba3cb4ad75cd245
+problem:
+  path: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py
+  field: validate_static_repo.base_validator_path
+  prior_expression: str(Path(ACTIVE_VALIDATOR_PATH).with_name(BASE_VALIDATOR_NAME))
+  failure: Windows_Path_string_used_backslashes_while_repository_contract_paths_use_forward_slashes
+  observed_exit_on_Windows_complete_checkout: 13
+repair:
+  replacement_expression: ACTIVE_VALIDATOR_PATH.rsplit("/", 1)[0] + "/" + BASE_VALIDATOR_NAME
+  prior_validator_blob: 58e85b50adff1f336a9fad06536db56831229088
+  repaired_validator_blob: 8222b7b70f11a2e24902f76c4dcd5be0f26c26df
+  machine_semantics_changed: false
+  exit_code_contract_changed: false
+  validation_order_changed: false
+  activation_semantics_changed: false
+binding_updates:
+  boot_manifest:
+    path: 08_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml
+    prior_blob: 3bf99c249b3d9fbed5cca7b4e3d313412d4de837
+    repaired_blob: f513cc58473f19c0c0c2948676a14b7feff76159
+    validator_ref_updated: true
+  workflow_references:
+    count: 7
+    all_validator_ref_blob_sha: 8222b7b70f11a2e24902f76c4dcd5be0f26c26df
+  registry:
+    update_required: false
+    reason: registry_machine_contracts_validator_is_path_only_and_contains_no_validator_blob
+repair_diff_from_failed_review_head:
+  commits: 9
+  changed_paths: 9
+  paths:
+    - 08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py
+    - 08_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml
+    - 08_os/01_workflow/01_需求建模/实现/阶段协同推演profile引用_v1.yml
+    - 08_os/01_workflow/02_信息收集与提炼/实现/阶段协同推演profile引用_v1.yml
+    - 08_os/01_workflow/03_结果建模/实现/阶段协同推演profile引用_v1.yml
+    - 08_os/01_workflow/04_测试生成/实现/阶段协同推演profile引用_v1.yml
+    - 08_os/01_workflow/05_步骤拆分/实现/阶段协同推演profile引用_v1.yml
+    - 08_os/01_workflow/06_执行/实现/阶段协同推演profile引用_v1.yml
+    - 08_os/01_workflow/07_测试执行/实现/阶段协同推演profile引用_v1.yml
+executor_revalidation:
+  cross_platform_path_probe:
+    old_Windows_value: 08_os\\03_mechanisms\\stage_collaborative_deliberation\\实现\\verify_stage_collaborative_deliberation.py
+    repaired_Windows_and_POSIX_value: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py
+    result: PASS
+  fixture_regression:
+    total: 35
+    passed: 35
+    failed: 0
+    mode_distribution: {static: 12, instance: 18, material_event: 2, review_execution: 3}
+  canonical_runtime_guard:
+    baseline: 0
+    prohibited_names_tested: [objects, transitions, events, receipts, sessions, failures, _runtime]
+    all_prohibited_exit: 15
+    restored: 0
+  full_private_Windows_checkout_static:
+    status: pending_independent_re_review
+    executor_environment_limit: no_private_repo_network_or_checkout
+review_requirement:
+  reviewer: cc_opus_5
+  scope: MAJOR-1_repair_plus_regression
+  must_run_on_Windows_complete_checkout: true
+  branch_modification_allowed: false
+candidate_state:
+  target: active_dormant
+  master_activated: false
+  master_modified: false
+verdict: ready_for_independent_re_review
