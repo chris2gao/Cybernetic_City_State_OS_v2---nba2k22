@@ -2,11 +2,13 @@
 
 这是一个全局、按条件调用、默认休眠的协同建模机制。它在承重目标、语义、证据、方案、风险、异议、权责或版本有效性不足以支持可靠决定时，建立可追溯追问与有状态讨论；在不需要时保持休眠。
 
-## 当前集成边界
+## 当前集成与激活边界
 
-本目录包含公共方法、阶段 profile 契约、七个阶段 profile、精确依据材料、结果对象与状态/不变量契约、路由与失败契约、加载与 receipt 契约、validator 及测试 fixture。对应 boot、registry、loader 和七个 workflow reference 位于各自 canonical 区。
+本目录包含公共方法、阶段 profile 契约、七个阶段 profile、精确依据材料、结果对象与状态/不变量契约、路由与失败契约、加载与 receipt 契约、激活状态、validator 及测试 fixture。对应 boot、registry、loader 和七个 workflow reference 位于各自 canonical 区。
 
-当前状态为 `staged_inert`：代码与引用可以被静态验证，但机制尚未 activation。把本机制接入 master 只建立可发现、可验证的休眠候选，不自动改变任何 workflow 的运行行为；activation 必须另行获得 Human 精确授权。
+当前全局状态为 `active_dormant`：机制已可被七个 workflow 阶段发现、加载并评估触发条件，但默认路线仍为 `dormant`，不会自动创建讨论 session。只有命中当前 profile 的条件并满足任务级 start gate 与权限要求时，才进入 full 或 incremental；全局激活不替代外部行动授权、不可逆操作授权或当前任务的其他 Human 门。
+
+当前运行状态的权威记录是 `激活状态_v1.yml`。核心机器契约的既有 blob 保持不变；其中历史 `staged_inert` candidate-state 字段仅表示激活前候选状态，由该 append-only 激活记录对当前运行状态作明确后继解释。
 
 ## 核心判断
 
@@ -29,16 +31,18 @@
 
 - `方法论_v1.md`：激活、建模空间、缺口识别、追问、讨论、停止、变更与权责方法；
 - `阶段profile契约_v1.yml`：阶段 profile 的机器可读字段与不变量；
-- `阶段profiles_v1.yml`：当前七个 workflow 阶段的 staged profile 集；
+- `阶段profiles_v1.yml`：当前七个 workflow 阶段的 profile 集，默认路线均为 dormant；
+- `激活状态_v1.yml`：当前全局 active-dormant 状态、Human 授权、后继解释与回滚目标；
 - `依据材料/`：需求、证据、结果契约、方案、测试与 Human 授权的精确来源清单；
 - `实现/`：结果对象、状态转换、路由失败、加载 receipt、validator 与 fixture。
 
 ## 运行原则
 
 - reference-not-copy：阶段只引用 profile，不复制机制正文；
+- default dormant：全局可加载不等于每个任务自动进入讨论；
 - reasoned disposition：票数或模型数量不能代替对异议的理由化处置；
 - authority separation：事实支持、共同理解、偏好、决定、授权、执行、审核和验证分开；
 - append-only change control：已确认版本通过后继产物、影响分析和再确认更新；
 - fail closed：缺失、部分、陈旧、未知、无效或未授权时阻断；
 - no self-review：执行者自检不能代替独立审核；
-- no automatic authority：测试通过或模型一致不能自动授权执行、激活或集成。
+- no automatic authority：测试通过、模型一致或全局激活不能自动授权外部行动、不可逆操作或其他任务执行。
