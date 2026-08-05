@@ -1,0 +1,93 @@
+validation_result:
+  task_id: os-v2-stage-collaborative-deliberation-activation-001
+  branch: dev/os-v2-stage-collaborative-deliberation-activation-001
+  exact_base: 161163a4a762a33ad7c5b4382bccaa4023c7d0e5
+  tested_content_head: 25e84069d22407fa610eab6a9ce4621c798c43f6
+  target_state: active_dormant
+  executor: current_project_lead_model
+  independent_review_claimed: false
+scope:
+  changed_paths: 20
+  system_paths: 18
+  run_paths: 2
+  unexpected_paths: 0
+  master_modified: false
+state_transition:
+  globally_discoverable: true
+  globally_loadable: true
+  default_route: dormant
+  create_live_session_by_default: false
+  full_or_incremental_requires_profile_trigger_and_task_gate: true
+  external_action_authority_preserved: true
+  canonical_live_instance_state: prohibited
+append_only_preservation:
+  unchanged_core_blobs:
+    profile_contract: b765bcce6c7c6bcf3613000f93ddc1086124c817
+    profile_set: a5a6a9cd888a4760aea36c332743700b32f9aef2
+    result_object_contract: b33beb8b256e78061b0638c714264b500ada20c8
+    state_transition_contract: e54ca08ffe48fcaf49d58330b0629aff6993e520
+    router_failure_contract: ab81f480d70ccd146b8af4fefaed79cb12ec7a81
+    load_receipt_contract: 5014cc63d2e83d9e7b951748d65c23ce877e90b2
+    validator_base: 3de5d56bb6cca8d0be708ddfd1e38f170b79f011
+  current_state_overlay_blob: 8fcab2a3c92629e9c8a801a78128adb467aa5bab
+  Human_authorization_blob: 5d9d8be9e55c0c904a86907592b70d0a852d1567
+current_artifacts:
+  method_blob: 26ff753881614072c61fb8c239c71a712dbaff80
+  validator_v2_blob: 58e85b50adff1f336a9fad06536db56831229088
+  canonical_runtime_guard_blob: baffeeb0bc08d2e8478f1a14b6b73c2943d47b22
+  boot_manifest_blob: 3bf99c249b3d9fbed5cca7b4e3d313412d4de837
+  registry_blob: 515c1d7e1689a4760c4d2d5ad56e61584787e4e7
+  positive_snapshot_blob: 3c4d789ce97e1b14c87deb39da61f45f4442d170
+  workflow_reference_blobs:
+    stage_01: e4df6758f0f4efedb35cd0c2de485448bffa4536
+    stage_02: 1e1d444ed76fa50a1dbeefe61438aa1aba4df4c4
+    stage_03: f80fb99f4247dca7485daaf8e34017bbccff5b8e
+    stage_04: 6107ad980f6cf8f3cb75a1d4c5715c19dc850c61
+    stage_05: 4a0f0b9fb7c8142990bcd2f5d92a7030f06c5fe2
+    stage_06: 729fc1abf3a303834949892a992a4ae2fbcafe10
+    stage_07: 953b112b9fb1298d4f439d00eca3ca046bd5f465
+executor_tests:
+  Python_syntax:
+    validator_v2: PASS
+    canonical_runtime_guard: PASS
+  projected_static:
+    exact_validator_v2_source: true
+    exit: 0
+    limitation: projected_required_tree_because_executor_environment_cannot_resolve_or_clone_private_GitHub
+  fixture_regression:
+    total: 35
+    passed: 35
+    failed: 0
+    mode_distribution: {static: 12, instance: 18, material_event: 2, review_execution: 3}
+    delegation_rule: v2_reuses_unchanged_accepted_v1_non_static_logic
+  static_negative_probes:
+    missing_workflow_reference: 16
+    extra_workflow_reference: 16
+    duplicate_profile_id: 16
+    unknown_profile_id: 16
+    stale_exact_reference: 13
+    boot_not_active_dormant: 15
+    invalid_activation_authorization: 15
+    automatic_live_session_default: 15
+  canonical_runtime_guard:
+    baseline: 0
+    prohibited_receipts_directory_present: 15
+    restored: 0
+remote_checks:
+  branch_head_matches_tested_content_head: true
+  branch_behind_master: 0
+  master_head: 161163a4a762a33ad7c5b4382bccaa4023c7d0e5
+  master_unchanged: true
+  exact_readbacks:
+    validator_v2: PASS
+    boot_manifest: PASS
+    registry: PASS
+    stage_01_reference: PASS
+review_requirement:
+  reviewer: cc_opus_5
+  must_run_on_complete_private_checkout:
+    - canonical_runtime_guard_baseline
+    - validator_v2_static
+    - fixture_regression_35
+    - active_state_and_exact_reference_probes
+verdict: ready_for_one_consolidated_independent_review
