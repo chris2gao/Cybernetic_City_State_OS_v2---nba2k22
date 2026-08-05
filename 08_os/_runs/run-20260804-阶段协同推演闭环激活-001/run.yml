@@ -1,0 +1,46 @@
+run_id: run-20260804-阶段协同推演闭环激活-001
+task_id: os-v2-stage-collaborative-deliberation-activation-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+branch: dev/os-v2-stage-collaborative-deliberation-activation-001
+exact_base_sha: 161163a4a762a33ad7c5b4382bccaa4023c7d0e5
+status: executing
+objective: Activate the globally integrated mechanism as active_dormant without creating live instance state or bypassing task-level gates.
+operation_policy:
+  single_active_model_serial_operation: true
+  one_large_task: true
+  executor: current_project_lead_model
+  independent_reviewer: cc_opus_5
+  executor_claims_independent_review: false
+authority:
+  Human_authorization_path: 01_任务输入/Human授权_全局机制激活_v1.yml
+  target_state: active_dormant
+activation_semantics:
+  globally_loadable: true
+  globally_discoverable: true
+  default_route: dormant
+  full_or_incremental_requires_profile_trigger: true
+  task_level_authority_preserved: true
+  external_action_authority_preserved: true
+candidate_state:
+  master_activated: false
+  activation_branch_only: true
+validation:
+  YAML_parse: pending
+  static_validator: pending
+  fixture_regression: pending
+  reference_probes: pending
+  exact_blob_binding: pending
+unresolved:
+  blocker: []
+  major: []
+  minor: []
+next_action:
+  owner: current_project_lead_model
+  action: update_activation_state_and_validation_chain
+prohibitions:
+  - modify_master_before_independent_review_and_new_Human_gate
+  - create_canonical_live_instance_state
+  - bypass_task_or_external_action_authority
+  - force_push
+  - rebase
+  - squash
