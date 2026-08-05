@@ -14,6 +14,7 @@ BASE_VALIDATOR_NAME = "verify_stage_collaborative_deliberation.py"
 ACTIVATION_STATE_PATH = "08_os/03_mechanisms/stage_collaborative_deliberation/激活状态_v1.yml"
 AUTHORIZATION_PATH = "08_os/_runs/run-20260804-阶段协同推演闭环激活-001/01_任务输入/Human授权_全局机制激活_v1.yml"
 ACTIVE_VALIDATOR_PATH = "08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py"
+RECEIPT_PROVENANCE_PATH = "08_os/_runs/run-20260804-阶段协同推演闭环实现执行-001/P2/07_测试执行/P2_stage_receipt来源声明补全叠加层_v1.yml"
 EXPECTED_ACTIVE_STATE = "active_dormant"
 EXPECTED_PROFILE_IDS = {
     "workflow_stage_01_requirement_modeling",
@@ -88,9 +89,28 @@ def load_order_entry(boot: dict[str, Any], role: str) -> dict[str, Any] | None:
     return None
 
 
+def validate_exact_ref(ref: Any, path: str, blob_sha: str) -> bool:
+    return isinstance(ref, dict) and ref.get("path") == path and ref.get("blob_sha") == blob_sha
+
+
 def validate_static_repo(repo_root: Path) -> int:
     base_validator_path = str(Path(ACTIVE_VALIDATOR_PATH).with_name(BASE_VALIDATOR_NAME))
+    artifact_paths = {
+        "public_method": base.REQUIRED_STATIC_PATHS[1],
+        "profile_contract": base.REQUIRED_STATIC_PATHS[2],
+        "profile_set": base.REQUIRED_STATIC_PATHS[3],
+        "result_object_contract": base.REQUIRED_STATIC_PATHS[4],
+        "state_transition_contract": base.REQUIRED_STATIC_PATHS[5],
+        "router_failure_contract": base.REQUIRED_STATIC_PATHS[6],
+        "load_receipt_contract": base.REQUIRED_STATIC_PATHS[7],
+        "receipt_provenance_overlay": RECEIPT_PROVENANCE_PATH,
+        "activation_state": ACTIVATION_STATE_PATH,
+        "activation_authorization": AUTHORIZATION_PATH,
+        "validator_base": base_validator_path,
+        "validator": ACTIVE_VALIDATOR_PATH,
+    }
     required_paths = list(base.REQUIRED_STATIC_PATHS) + [
+        RECEIPT_PROVENANCE_PATH,
         ACTIVATION_STATE_PATH,
         AUTHORIZATION_PATH,
         ACTIVE_VALIDATOR_PATH,
@@ -107,10 +127,7 @@ def validate_static_repo(repo_root: Path) -> int:
         registry = load_mapping(repo_root, base.REQUIRED_STATIC_PATHS[10])
         activation = load_mapping(repo_root, ACTIVATION_STATE_PATH)
         authorization_doc = load_mapping(repo_root, AUTHORIZATION_PATH)
-        activation_blob = git_blob_sha(repo_root / ACTIVATION_STATE_PATH)
-        authorization_blob = git_blob_sha(repo_root / AUTHORIZATION_PATH)
-        base_validator_blob = git_blob_sha(repo_root / base_validator_path)
-        active_validator_blob = git_blob_sha(repo_root / ACTIVE_VALIDATOR_PATH)
+        artifact_blobs = {role: git_blob_sha(repo_root / path) for role, path in artifact_paths.items()}
     except Exception:
         return 11
 
@@ -133,17 +150,24 @@ def validate_static_repo(repo_root: Path) -> int:
     workflow_ids = [ref.get("profile_id") for ref in workflow_refs]
     if len(set(workflow_ids)) != 7 or set(workflow_ids) != EXPECTED_PROFILE_IDS:
         return 16
+    workflow_exact_refs = {
+        "mechanism_ref": "public_method",
+        "profile_contract_ref": "profile_contract",
+        "profile_set_ref": "profile_set",
+        "receipt_ref": "load_receipt_contract",
+        "activation_state_ref": "activation_state",
+        "validator_ref": "validator",
+    }
     for ref in workflow_refs:
         if ref.get("status") != "active_reference":
             return 15
         if ref.get("activation_state") != EXPECTED_ACTIVE_STATE or ref.get("default_route") != "dormant":
             return 15
-        state_ref = ref.get("activation_state_ref", {})
-        if state_ref.get("path") != ACTIVATION_STATE_PATH or state_ref.get("blob_sha") != activation_blob:
-            return 13
-        validator_ref = ref.get("validator_ref", {})
-        if validator_ref.get("path") != ACTIVE_VALIDATOR_PATH or validator_ref.get("blob_sha") != active_validator_blob:
-            return 13
+        if ref.get("reference_not_copy") is not True or ref.get("mechanism_body_copied") is not False:
+            return 14
+        for ref_field, role in workflow_exact_refs.items():
+            if not validate_exact_ref(ref.get(ref_field), artifact_paths[role], artifact_blobs[role]):
+                return 13
 
     measurements = result_contract.get("measurements", {})
     if measurements.get("catalog_unique_object_types") != 45:
@@ -202,21 +226,16 @@ def validate_static_repo(repo_root: Path) -> int:
     if boot.get("required_versions", {}).get("validator") != 2:
         return 11
 
-    expected_entries = {
-        "activation_state": {"role": "activation_state", "path": ACTIVATION_STATE_PATH, "blob_sha": activation_blob},
-        "activation_authorization": {"role": "activation_authorization", "path": AUTHORIZATION_PATH, "blob_sha": authorization_blob},
-        "validator_base": {"role": "validator_base", "path": base_validator_path, "blob_sha": base_validator_blob},
-        "validator": {"role": "validator", "path": ACTIVE_VALIDATOR_PATH, "blob_sha": active_validator_blob},
-    }
-    for role, expected_entry in expected_entries.items():
+    for role, path in artifact_paths.items():
+        expected_entry = {"role": role, "path": path, "blob_sha": artifact_blobs[role]}
         if load_order_entry(boot, role) != expected_entry:
             return 13
 
     registry_state_ref = registry.get("activation", {}).get("state_ref", {})
     registry_auth_ref = registry.get("activation", {}).get("authorization_ref", {})
-    if registry_state_ref.get("path") != ACTIVATION_STATE_PATH or registry_state_ref.get("blob_sha") != activation_blob:
+    if not validate_exact_ref(registry_state_ref, artifact_paths["activation_state"], artifact_blobs["activation_state"]):
         return 13
-    if registry_auth_ref.get("path") != AUTHORIZATION_PATH or registry_auth_ref.get("blob_sha") != authorization_blob:
+    if not validate_exact_ref(registry_auth_ref, artifact_paths["activation_authorization"], artifact_blobs["activation_authorization"]):
         return 13
     machine_contracts = registry.get("discovery", {}).get("machine_contracts", {})
     if machine_contracts.get("validator_base") != base_validator_path or machine_contracts.get("validator") != ACTIVE_VALIDATOR_PATH:
