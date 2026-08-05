@@ -38,6 +38,17 @@
 七个阶段机制各自独立，某一个换实现不影响其他。所以顺序是：
 先让整条链接得上，再回头把每一环做好。
 
+## 最小可运行闭环
+
+跨阶段机器契约位于 `实现/七阶段最小运行契约_v1.yml`；七个阶段分别提供
+`实现/最小运行schema_v1.yml`。Boot 位于
+`../02_boot/workflow_minimum_operational_loop/`，统一 loader/runner 位于
+`../06_execution/workflow/minimum_operational_loop/`。
+
+该闭环只实现确定性控制面：阶段顺序、类型化产物、版本与哈希、协同推演 receipt、冻结测试、
+执行 allowlist、重试与上游失效、独立验证和完成。需求、证据、B、测试、步骤及实现内容仍由
+模型或 Human 判断产生；runner 不把认知生成伪装成确定性程序。
+
 ## 链条
 
 ```
