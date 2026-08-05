@@ -1,0 +1,61 @@
+schema_version: citystate.workflow.artifact.v1
+run_id: pilot-cross-platform-repository-logical-path-001
+stage_id: workflow_stage_07_test_execution
+artifact_kind: verification_package
+artifact_version: 1
+status: complete
+input_refs:
+- stage_id: workflow_stage_03_result_modeling
+  path: 03_result.yml
+  artifact_version: 1
+  sha256: 632c4f2df9c70b6ee3e1924c210f56aee18e2449dcbf782cecf013cd768737e3
+- stage_id: workflow_stage_04_test_generation
+  path: 04_tests.yml
+  artifact_version: 1
+  sha256: 1bf9568342afca8cb0462830b375e231d6743f61b3722d1acaface79800f30c2
+- stage_id: workflow_stage_06_execution
+  path: 06_execution.yml
+  artifact_version: 1
+  sha256: b8f3bb1f97590a3c2c1dad981140bfc5a671d3091342497f00903081388332a0
+deliberation_receipt:
+  mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
+  activation_state: active_dormant
+  profile_id: workflow_stage_07_test_execution
+  route: dormant
+  receipt_status: valid
+  session_id: null
+  task_gate_ref: null
+  Human_authorization_ref: null
+payload:
+  reviewer_role: cc_Opus_5
+  verdict: PASS_WITH_NON_BLOCKING_NOTES
+  test_results:
+  - test_id: T-1
+    status: passed
+    actual: Forward-slash logical path under Windows semantics.
+  - test_id: T-2
+    status: passed
+    actual: Same logical path under POSIX semantics.
+  - test_id: T-3
+    status: passed
+    actual: v2 static returned 0 in a 1073-file byte-exact Windows checkout.
+  - test_id: T-4
+    status: passed
+    actual: No backslash present.
+  implementation_claims:
+  - claim_id: IC-1
+    statement: The one-line fix removed the platform-dependent path conversion.
+    result_claim_ids:
+    - B-1
+    - B-2
+    evidence_claim_ids:
+    - E-1
+    - E-2
+  - claim_id: IC-2
+    statement: The repaired exact-reference chain passed independent Windows validation.
+    result_claim_ids:
+    - B-3
+    evidence_claim_ids:
+    - E-3
+  upstream_invalidation: null
+  completion: true
