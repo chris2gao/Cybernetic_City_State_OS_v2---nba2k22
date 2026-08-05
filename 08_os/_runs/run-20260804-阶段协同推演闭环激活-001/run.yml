@@ -3,7 +3,7 @@ task_id: os-v2-stage-collaborative-deliberation-activation-001
 repository: chris2gao/Cybernetic_City_State_OS_v2---core
 branch: dev/os-v2-stage-collaborative-deliberation-activation-001
 exact_base_sha: 161163a4a762a33ad7c5b4382bccaa4023c7d0e5
-status: executing
+status: candidate_ready_for_consolidated_independent_review
 objective: Activate the globally integrated mechanism as active_dormant without creating live instance state or bypassing task-level gates.
 operation_policy:
   single_active_model_serial_operation: true
@@ -13,30 +13,54 @@ operation_policy:
   executor_claims_independent_review: false
 authority:
   Human_authorization_path: 01_任务输入/Human授权_全局机制激活_v1.yml
+  Human_authorization_blob: 5d9d8be9e55c0c904a86907592b70d0a852d1567
   target_state: active_dormant
+  master_publication_authorized_now: false
 activation_semantics:
   globally_loadable: true
   globally_discoverable: true
   default_route: dormant
-  full_or_incremental_requires_profile_trigger: true
+  create_live_session_by_default: false
+  full_or_incremental_requires_profile_trigger_and_task_gate: true
   task_level_authority_preserved: true
   external_action_authority_preserved: true
+  canonical_live_instance_state: prohibited
+candidate:
+  tested_content_head: 25e84069d22407fa610eab6a9ce4621c798c43f6
+  validation_record_commit: 9cfc18266103930cd723712b471307515c145608
+  validation_record_path: 07_测试执行/全局激活验证结果_v1.yml
+  validation_record_blob: 6cb624e9d382a8619086f4e203af626406e3e46e
+  review_dispatch_commit: 83d26aacc3f6771b1f99766a96d1d4d1696462f6
+  review_dispatch_path: 07_测试执行/独立全局激活审核派单_v1.md
+  review_dispatch_blob: 92462398bf4654e1306b1e2141cff3ae9ddd10e0
+  source_head_rule: exact_remote_branch_head_containing_dispatch_and_this_final_run_state
+scope:
+  system_paths: 18
+  run_paths: 4
+  expected_changed_paths: 22
+  unexpected_paths: 0
+validation:
+  Python_syntax: PASS
+  projected_static_exit: 0
+  fixture_regression: 35/35
+  fixture_mode_distribution: {static: 12, instance: 18, material_event: 2, review_execution: 3}
+  workflow_reference_probes: {baseline: 0, missing: 16, extra: 16, duplicate: 16, unknown: 16}
+  stale_exact_reference_exit: 13
+  invalid_activation_state_or_authority_exit: 15
+  canonical_runtime_guard: {baseline: 0, prohibited_live_path: 15, restored: 0}
+  actual_complete_private_checkout: pending_independent_review
 candidate_state:
+  activation_branch_target: active_dormant
   master_activated: false
   activation_branch_only: true
-validation:
-  YAML_parse: pending
-  static_validator: pending
-  fixture_regression: pending
-  reference_probes: pending
-  exact_blob_binding: pending
 unresolved:
   blocker: []
   major: []
   minor: []
 next_action:
-  owner: current_project_lead_model
-  action: update_activation_state_and_validation_chain
+  owner: cc_opus_5
+  action: independently_review_complete_activation_diff_and_reproduce_tests_on_full_checkout
+  branch_modification_allowed: false
 prohibitions:
   - modify_master_before_independent_review_and_new_Human_gate
   - create_canonical_live_instance_state
