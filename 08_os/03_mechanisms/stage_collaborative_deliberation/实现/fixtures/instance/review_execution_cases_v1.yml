@@ -1,0 +1,44 @@
+fixture_kind: review_execution_suite
+cases:
+- case_id: RE-PASS
+  expected_exit: 0
+  data:
+    task_ref: t
+    branch: b
+    base: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    head: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+    allowlist: [p]
+    changed_paths: [p]
+    Human_authorization_ref: h
+    executor: executor
+    independent_reviewer: reviewer
+    implementation_complete: true
+    verification: {status: verified}
+- case_id: RE-SELF-REVIEW
+  expected_exit: 18
+  data:
+    task_ref: t
+    branch: b
+    base: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    head: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+    allowlist: [p]
+    changed_paths: [p]
+    Human_authorization_ref: h
+    executor: same
+    independent_reviewer: same
+    implementation_complete: true
+    verification: {status: verified}
+- case_id: RE-UNVERIFIED
+  expected_exit: 18
+  data:
+    task_ref: t
+    branch: b
+    base: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    head: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+    allowlist: [p]
+    changed_paths: [p]
+    Human_authorization_ref: h
+    executor: executor
+    independent_reviewer: reviewer
+    implementation_complete: true
+    verification: {status: pending}
