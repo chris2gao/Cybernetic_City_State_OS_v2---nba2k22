@@ -1,0 +1,18 @@
+fixture_kind: static_exit_suite
+cases:
+- {case_id: EXIT-10, expected_exit: 10, data: {missing_required_paths: [x]}}
+- {case_id: EXIT-11, expected_exit: 11, data: {schema_mismatch: [x]}}
+- {case_id: EXIT-12, expected_exit: 12, data: {stale_components: [x]}}
+- {case_id: EXIT-13, expected_exit: 13, data: {unresolved_refs: [x]}}
+- {case_id: EXIT-14, expected_exit: 14, data: {invariant_violations: [INV-X]}}
+- {case_id: EXIT-15, expected_exit: 15, data: {unauthorized_actions: [x]}}
+- {case_id: EXIT-16, expected_exit: 16, data: {profile_gate_errors: [x]}}
+- {case_id: EXIT-17, expected_exit: 17, data: {receipt_errors: [x]}}
+- {case_id: EXIT-18, expected_exit: 18, data: {review_execution_errors: [x]}}
+- {case_id: EXIT-19, expected_exit: 19, data: {internal_error: simulated}}
+- case_id: SC-P3-05-AMBIGUOUS-STAGE-NAMESPACE
+  expected_exit: 11
+  expected_failure: schema_or_version_mismatch
+  data:
+    schema_mismatch:
+      - development_Stage_04_used_as_workflow_stage_04_test_generation
