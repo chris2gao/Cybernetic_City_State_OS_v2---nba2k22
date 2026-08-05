@@ -1,0 +1,50 @@
+schema_version: stage_collaborative_deliberation.activation_state.v1
+mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
+mechanism_version: 1
+activation_state_record_version: 1
+current_activation_state: active_dormant
+default_route: dormant
+effective_base: 161163a4a762a33ad7c5b4382bccaa4023c7d0e5
+Human_authorization_ref:
+  path: 08_os/_runs/run-20260804-阶段协同推演闭环激活-001/01_任务输入/Human授权_全局机制激活_v1.yml
+  decision: authorize_global_mechanism_activation
+  authorized_target_state: active_dormant
+runtime_effect:
+  globally_discoverable: true
+  globally_loadable: true
+  evaluate_profile_triggers: true
+  create_live_session_by_default: false
+  canonical_live_instance_state: prohibited
+  full_or_incremental_route_requires:
+    - matching_profile_trigger
+    - current_task_start_gate
+    - current_task_authority_when_required
+  external_action_requires_separate_Human_authorization: true
+  irreversible_action_requires_separate_Human_authorization: true
+supersession:
+  rule: this_append_only_record_is_authoritative_for_current_runtime_activation_state
+  superseded_runtime_interpretations:
+    - 08_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml#/status
+    - 08_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml#/candidate_state
+    - 08_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml#/status
+    - 08_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml#/profiles/*/candidate_state
+    - 08_os/03_mechanisms/stage_collaborative_deliberation/实现/结果对象契约_v1.yml#/status
+    - 08_os/03_mechanisms/stage_collaborative_deliberation/实现/结果对象契约_v1.yml#/candidate_state
+    - 08_os/03_mechanisms/stage_collaborative_deliberation/实现/状态转换与不变量契约_v1.yml#/status
+    - 08_os/03_mechanisms/stage_collaborative_deliberation/实现/状态转换与不变量契约_v1.yml#/candidate_state
+    - 08_os/03_mechanisms/stage_collaborative_deliberation/实现/路由与失败契约_v1.yml#/status
+    - 08_os/03_mechanisms/stage_collaborative_deliberation/实现/路由与失败契约_v1.yml#/candidate_state
+    - 08_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml#/status
+    - 08_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml#/candidate_state
+  preserved_contract_semantics:
+    - profile_count_7
+    - object_types_45
+    - result_names_47
+    - state_dimensions_10
+    - active_invariants_16
+    - failure_codes_26
+    - routers_5
+rollback:
+  target_state: staged_inert
+  target_master: 161163a4a762a33ad7c5b4382bccaa4023c7d0e5
+  requires_Human_authorization: true
