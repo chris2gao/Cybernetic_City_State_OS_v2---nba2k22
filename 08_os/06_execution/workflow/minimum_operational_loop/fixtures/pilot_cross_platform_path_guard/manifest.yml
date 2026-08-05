@@ -1,0 +1,36 @@
+schema_version: citystate.workflow.run_manifest.v1
+run_id: pilot-cross-platform-repository-logical-path-001
+workflow_id: citystate_seven_stage_minimum_operational_loop
+workflow_version: 1
+route: normal
+deliberation_default_route: dormant
+artifacts:
+- stage_id: workflow_stage_01_requirement_modeling
+  path: 01_requirement.yml
+  artifact_version: 1
+  sha256: 11a5aea60da22db8023fa6b4950795caf0ed13b33fac364e7019076da8cf5288
+- stage_id: workflow_stage_02_information_collection
+  path: 02_evidence.yml
+  artifact_version: 1
+  sha256: c1cb64991c41befe5736faecb0381a889f97d304281725e8f3e5f7a71211e801
+- stage_id: workflow_stage_03_result_modeling
+  path: 03_result.yml
+  artifact_version: 1
+  sha256: 632c4f2df9c70b6ee3e1924c210f56aee18e2449dcbf782cecf013cd768737e3
+- stage_id: workflow_stage_04_test_generation
+  path: 04_tests.yml
+  artifact_version: 1
+  sha256: 1bf9568342afca8cb0462830b375e231d6743f61b3722d1acaface79800f30c2
+- stage_id: workflow_stage_05_step_decomposition
+  path: 05_steps.yml
+  artifact_version: 1
+  sha256: bc4d686d6a0bc6469c1290481427a930d2021c8175a1f4ebfc8241e5168151c3
+- stage_id: workflow_stage_06_execution
+  path: 06_execution.yml
+  artifact_version: 1
+  sha256: b8f3bb1f97590a3c2c1dad981140bfc5a671d3091342497f00903081388332a0
+- stage_id: workflow_stage_07_test_execution
+  path: 07_verification.yml
+  artifact_version: 1
+  sha256: c4bca28b8eab6f000c00b867d63896e5abd773124678bc1eb50038b2f87f0e8f
+completion_expected: true
