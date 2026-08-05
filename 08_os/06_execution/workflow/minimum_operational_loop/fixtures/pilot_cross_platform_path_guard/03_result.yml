@@ -1,0 +1,57 @@
+schema_version: citystate.workflow.artifact.v1
+run_id: pilot-cross-platform-repository-logical-path-001
+stage_id: workflow_stage_03_result_modeling
+artifact_kind: result_package
+artifact_version: 1
+status: complete
+input_refs:
+- stage_id: workflow_stage_01_requirement_modeling
+  path: 01_requirement.yml
+  artifact_version: 1
+  sha256: 11a5aea60da22db8023fa6b4950795caf0ed13b33fac364e7019076da8cf5288
+- stage_id: workflow_stage_02_information_collection
+  path: 02_evidence.yml
+  artifact_version: 1
+  sha256: c1cb64991c41befe5736faecb0381a889f97d304281725e8f3e5f7a71211e801
+deliberation_receipt:
+  mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
+  activation_state: active_dormant
+  profile_id: workflow_stage_03_result_modeling
+  route: dormant
+  receipt_status: valid
+  session_id: null
+  task_gate_ref: null
+  Human_authorization_ref: null
+payload:
+  result_id: B-POSIX-LOGICAL-PATH-001
+  claims:
+  - result_claim_id: B-1
+    statement: Repository logical path composition uses forward-slash string operations.
+    evidence_claim_ids:
+    - E-1
+    - E-2
+  - result_claim_id: B-2
+    statement: Platform-native Path conversion occurs only when resolving the logical path under a filesystem root.
+    evidence_claim_ids:
+    - E-1
+    - E-2
+  - result_claim_id: B-3
+    statement: The corrected validator is acceptable only when Windows static validation returns 0.
+    evidence_claim_ids:
+    - E-3
+  requirement_satisfaction:
+  - criterion_id: SC-1
+    result_claim_ids:
+    - B-1
+    - B-2
+  - criterion_id: SC-2
+    result_claim_ids:
+    - B-1
+  - criterion_id: SC-3
+    result_claim_ids:
+    - B-3
+  alternatives_rejected:
+  - alternative: str(Path(ACTIVE_VALIDATOR_PATH).with_name(BASE_VALIDATOR_NAME))
+    reason: Produces backslashes on Windows and breaks exact repository-path comparisons.
+    evidence_claim_ids:
+    - E-1
