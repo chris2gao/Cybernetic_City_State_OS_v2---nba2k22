@@ -3,7 +3,7 @@ task_id: os-v2-stage-collaborative-deliberation-activation-001
 repository: chris2gao/Cybernetic_City_State_OS_v2---core
 branch: dev/os-v2-stage-collaborative-deliberation-activation-001
 exact_base_sha: 161163a4a762a33ad7c5b4382bccaa4023c7d0e5
-status: candidate_ready_for_consolidated_independent_review
+status: candidate_ready_for_independent_re_review
 objective: Activate the globally integrated mechanism as active_dormant without creating live instance state or bypassing task-level gates.
 operation_policy:
   single_active_model_serial_operation: true
@@ -25,44 +25,49 @@ activation_semantics:
   task_level_authority_preserved: true
   external_action_authority_preserved: true
   canonical_live_instance_state: prohibited
-candidate:
-  tested_content_head: 25e84069d22407fa610eab6a9ce4621c798c43f6
-  validation_record_commit: 9cfc18266103930cd723712b471307515c145608
-  validation_record_path: 07_测试执行/全局激活验证结果_v1.yml
-  validation_record_blob: 6cb624e9d382a8619086f4e203af626406e3e46e
-  review_dispatch_commit: 83d26aacc3f6771b1f99766a96d1d4d1696462f6
-  review_dispatch_path: 07_测试执行/独立全局激活审核派单_v1.md
-  review_dispatch_blob: 92462398bf4654e1306b1e2141cff3ae9ddd10e0
-  source_head_rule: exact_remote_branch_head_containing_dispatch_and_this_final_run_state
-scope:
-  system_paths: 18
-  run_paths: 4
-  expected_changed_paths: 22
-  unexpected_paths: 0
-validation:
-  Python_syntax: PASS
-  projected_static_exit: 0
+prior_independent_review:
+  reviewed_head: 3b9243f608fdce13eeff5b446861bea51058d758
+  verdict: FAIL
+  findings: {blocker: 0, major: 1, minor: 0, note: 2}
+  report_filename: 2026-08-05_阶段协同推演闭环_全局激活候选_最终独立审核_FAIL.md
+  report_sha256: b1af7bad86e30fc5451186f3bc61c0e23830649b599c744457e35a499cdc90e1
+  finding: MAJOR-1_Windows_repository_path_separator
+repair:
+  repaired_content_head: 6f066794106c33be98de3cf4dba3cb4ad75cd245
+  validator_blob: 8222b7b70f11a2e24902f76c4dcd5be0f26c26df
+  boot_manifest_blob: f513cc58473f19c0c0c2948676a14b7feff76159
+  changed_paths_from_failed_review_head: 9
+  change_shape: one_line_validator_fix_plus_eight_exact_blob_binding_updates
+  repair_record_path: 07_测试执行/MAJOR-1_Windows路径修复与复验_v1.yml
+  repair_record_blob: 60a35e8ef3c976603c6c0e53b7cc4259db62b8c9
+  repair_record_commit: 038d9fa80115d71842a93e4f6dc143a3fa19d1e8
+revalidation:
+  cross_platform_path_probe: PASS
+  Windows_and_POSIX_repository_path: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py
   fixture_regression: 35/35
   fixture_mode_distribution: {static: 12, instance: 18, material_event: 2, review_execution: 3}
-  workflow_reference_probes: {baseline: 0, missing: 16, extra: 16, duplicate: 16, unknown: 16}
-  stale_exact_reference_exit: 13
-  invalid_activation_state_or_authority_exit: 15
-  canonical_runtime_guard: {baseline: 0, prohibited_live_path: 15, restored: 0}
-  actual_complete_private_checkout: pending_independent_review
+  canonical_runtime_guard: {baseline: 0, seven_prohibited_paths: 15, restored: 0}
+  complete_private_Windows_checkout_static: pending_independent_re_review
+re_review_dispatch:
+  path: 07_测试执行/独立全局激活MAJOR-1修复复审派单_v1.md
+  blob: 8eeb342b7eed698d2f23e75014a5858a2f5db96f
+  commit: c96a4e0954d81af2e7284511bf07f9a6afc48277
+  source_head_rule: exact_remote_branch_head_containing_re_review_dispatch_and_this_final_run_state
 candidate_state:
   activation_branch_target: active_dormant
   master_activated: false
   activation_branch_only: true
 unresolved:
   blocker: []
-  major: []
+  major:
+    - MAJOR-1_repaired_pending_independent_closure
   minor: []
 next_action:
   owner: cc_opus_5
-  action: independently_review_complete_activation_diff_and_reproduce_tests_on_full_checkout
+  action: independently_re_review_MAJOR-1_on_complete_Windows_checkout_and_reproduce_regression
   branch_modification_allowed: false
 prohibitions:
-  - modify_master_before_independent_review_and_new_Human_gate
+  - modify_master_before_independent_re_review_and_new_Human_gate
   - create_canonical_live_instance_state
   - bypass_task_or_external_action_authority
   - force_push
