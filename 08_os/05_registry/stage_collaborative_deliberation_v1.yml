@@ -1,0 +1,32 @@
+schema_version: stage_collaborative_deliberation.registry.v1
+registry_entry_version: 1
+mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
+mechanism_version: 1
+activation_state: staged_inert
+discovery:
+  public_method: 08_os/03_mechanisms/stage_collaborative_deliberation/方法论_v1.md
+  profiles:
+    contract: 08_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml
+    set: 08_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml
+    expected_current_count: 7
+  machine_contracts:
+    result_object: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/结果对象契约_v1.yml
+    state_transition_invariant: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/状态转换与不变量契约_v1.yml
+    router_failure: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/路由与失败契约_v1.yml
+    load_receipt: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml
+    validator: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py
+  boot_manifest: 08_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml
+  loader: 08_os/06_execution/boot/stage_collaborative_deliberation/README.md
+  workflow_reference_pattern: 08_os/01_workflow/*/实现/阶段协同推演profile引用_v1.yml
+  evidence_basis: 08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/source_manifest_v1.yml
+runtime:
+  instance_root_pattern: <run-root>/<stage-output-root>/stage_collaborative_deliberation/
+  runs_and_runtime_are_registry_structure: false
+  canonical_live_instance_state: prohibited
+failure_surfacing:
+  policy: fail_closed
+  validator_exit_codes: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+  durable_failure_record_required: true
+stale_fallback: prohibited
+activation_requires_separate_Human_authorization: true
+master_integration_authorized: false
