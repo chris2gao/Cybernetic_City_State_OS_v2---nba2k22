@@ -1,0 +1,33 @@
+schema_version: citystate.workflow.artifact.v1
+run_id: pilot-cross-platform-repository-logical-path-001
+stage_id: workflow_stage_01_requirement_modeling
+artifact_kind: requirement_package
+artifact_version: 1
+status: complete
+input_refs: []
+deliberation_receipt:
+  mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
+  activation_state: active_dormant
+  profile_id: workflow_stage_01_requirement_modeling
+  route: dormant
+  receipt_status: valid
+  session_id: null
+  task_gate_ref: null
+  Human_authorization_ref: null
+payload:
+  requirement_id: REQ-POSIX-LOGICAL-PATH-001
+  objective: Repository logical paths remain forward-slash strings on Windows and POSIX.
+  success_criteria:
+  - criterion_id: SC-1
+    statement: Computed repository path equals the expected forward-slash validator path.
+  - criterion_id: SC-2
+    statement: Computed repository path contains no backslash on Windows.
+  - criterion_id: SC-3
+    statement: Static validation returns 0 in a byte-exact Windows checkout.
+  constraints:
+  - Do not change activation semantics, validation order, exit-code contracts or profile set.
+  - Keep repository logical paths distinct from platform-native filesystem paths.
+  Human_confirmation:
+    confirmed: true
+    artifact_version: 1
+    confirmation_ref: Human_authorized_activation_repair_and_publication_chain_2026-08-05
