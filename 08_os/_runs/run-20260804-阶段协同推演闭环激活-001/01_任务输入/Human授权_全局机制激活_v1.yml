@@ -1,0 +1,35 @@
+authorization:
+  authorization_id: stage-collaborative-deliberation-global-activation-001
+  issued_at: '2026-08-04T22:18:00-07:00'
+  actor: Human
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  task_id: os-v2-stage-collaborative-deliberation-activation-001
+  branch: dev/os-v2-stage-collaborative-deliberation-activation-001
+  exact_master_base: 161163a4a762a33ad7c5b4382bccaa4023c7d0e5
+  decision: authorize_global_mechanism_activation
+  authorized_target_state: active_dormant
+  meaning:
+    - mechanism_is_loadable_and_discoverable_by_all_seven_workflow_stages
+    - default_route_remains_dormant
+    - full_or_incremental_deliberation_requires_profile_trigger_and_current_task_gate
+    - this_authorization_does_not_pre_authorize_external_actions_or_irreversible_operations
+  execution_topology:
+    one_large_serial_task: true
+    executor: current_project_lead_model
+    independent_review_after_complete_execution: true
+  authorized_scope:
+    - update_mechanism_and_contract_activation_state
+    - update_boot_registry_loader_and_workflow_references
+    - update_validator_and_fixtures_for_active_dormant_state
+    - maintain_all_exact_blob_bindings
+    - add_activation_run_evidence_and_handoff
+  prohibitions:
+    - force_push
+    - rebase
+    - squash
+    - merge_commit
+    - create_live_instance_state_in_canonical
+    - bypass_profile_trigger_or_task_authority
+    - treat_global_activation_as_external_action_authorization
+    - modify_unrelated_mechanisms_or_workflows
+  master_publication_authorized_now: false
