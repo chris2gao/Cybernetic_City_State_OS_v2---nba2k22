@@ -1,0 +1,132 @@
+schema_version: stage_collaborative_deliberation.result_object_contract.v1
+mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
+mechanism_version: 1
+status: staged_inert
+package_owner: P2
+source_contract_union:
+  - {path: 08_os/_runs/run-20260804-阶段协同推演闭环结果建模-001/03_结果建模/B_结果建模_v1.yml, blob_sha: 6e9998e7161bb542bc4a7705c5a097797e6f67a6}
+  - {path: 08_os/_runs/run-20260804-阶段协同推演闭环结果建模-001/03_结果建模/B_v1一阶必要修复叠加层_v1.yml, blob_sha: 35f42eeea68d1721b06e9f14650788117b50a143}
+  - {path: 08_os/_runs/run-20260804-阶段协同推演闭环结果建模-001/03_结果建模/B_v1一阶必要修复失败码补全_v1.yml, blob_sha: 2aae10cdbb6bb031dac606f36e43dfb0a97f2c16}
+consumption_rule: consume_exact_union
+common_envelope:
+  required_fields: [object_id, object_type, schema_version, mechanism_version, main_mechanism_ref, session_id, stage_id, created_by_actor_ref, authority_or_evidence_refs, exact_artifact_version_or_blob, status, scope, dependency_refs, supersedes_or_parent_refs, created_at, validation_result]
+  durability_rule: load_bearing_result_objects_must_not_exist_only_in_chat
+  version_rule: accepted_objects_are_superseded_not_silently_rewritten
+  unknown_required_field: fail_closed
+  one_current_object_version_per_file: true
+actor_and_authority:
+  actor_classes: [model, Human, external_tool, executor, independent_reviewer]
+  authority_classes: [observation_or_tool_result, epistemic_assessment, recommendation, Human_decision, Human_authorization, execution, independent_verification]
+  separation_rules: [recommendation_is_not_decision_or_authorization, Human_authorization_does_not_change_epistemic_truth, execution_does_not_equal_verification, reviewer_recommendation_does_not_equal_adoption, independence_requires_metadata]
+model_schema_adequacy:
+  field_occupancy_alone_is_complete: false
+  bearing_dimension_test: changing_the_dimension_could_change_target_decision_risk_test_authority_dependency_version_validity_or_downstream_acceptance
+  allowed_dispositions: [represented_with_supported_value, explicitly_irrelevant_with_reason_and_scope, unknown_with_blocking_or_deferred_disposition_and_revisit_trigger]
+  domain_schema_required_when_general_stage_and_task_schemas_are_insufficient: true
+  unknown_adequacy: fail_closed
+object_families:
+  activation_and_session_family: [trigger_evaluation_result, activation_decision_candidate, Human_activation_authorization, deliberation_session_record, round_result]
+  inquiry_and_evidence_family: [model_element_record, inquiry_item, evidence_reference, atomic_claim_record, uncertainty_and_assumption_record]
+  grounding_and_deliberation_family: [semantic_grounding_record, issue_record, position_or_option_record, argument_record, objection_disposition_record, option_disposition_record, residual_disagreement_record]
+  authority_and_confirmation_family: [recommendation_record, Human_decision_record, authorization_record, confirmation_record, waiver_or_exception_record]
+  change_and_version_family: [material_event_record, dependency_impact_result, invalidation_record, successor_and_supersession_record, reconfirmation_requirement]
+  implementation_granularity_family: [detail_granularity_evaluation, detail_divergence_event, Human_detail_scope_decision, deferred_detail_record]
+  external_action_family: [external_action_model, Human_external_action_authorization, returned_material_record, external_material_ingestion_result]
+  review_execution_loading_family: [independent_review_record, finding_record, finding_disposition_record, execution_authorization_record, execution_result_record, execution_verification_record, stage_profile_result, mechanism_load_result, stage_receipt, failure_and_blocking_result]
+object_type_required_fields:
+  trigger_evaluation_result: [evaluated_trigger_conditions, load_bearing_gap_refs, activation_needed, dormant_or_simple_route_reason, validator_result]
+  activation_decision_candidate: [recommended_mode, expected_value_cost_and_risk, unresolved_model_elements]
+  Human_activation_authorization: [decision, authorized_mode, exact_plan_version, scope_and_validity, next_allowed_state]
+  deliberation_session_record: [goal_and_boundary_version, participant_refs, stage_profile_ref, required_round_functions, current_round, open_blockers]
+  round_result: [round_number, round_function, inputs, substantive_analysis, objections_and_counterexamples, decisions_or_updates, unresolved_items, continue_or_stop_result, substantive_validation]
+  model_element_record: [element_type, required_state, current_gap, downstream_decision_impact]
+  inquiry_item: [target_model_element_ref, gap_type, question_or_action, target_actor_or_source, priority_and_reason, expected_information_value, acquisition_and_Human_interruption_cost, timing, acceptance_condition, evidence_requirement, stop_or_escalation_condition]
+  evidence_reference: [stable_source_id, exact_location, original_or_shared_origin, access_limitations, claim_scope]
+  atomic_claim_record: [claim_text, claim_type, evidence_state, supporting_and_conflicting_evidence_refs, applicability_boundary, fact_and_inference]
+  uncertainty_and_assumption_record: [uncertainty_type, assumption_text, evidence_gap, risk_and_irreversibility, verification_or_expiry_condition]
+  semantic_grounding_record: [participant_refs, subject_ref, purpose_and_scope, positive_grounding_evidence, unresolved_semantic_differences, sufficiency_result]
+  issue_record: [issue_type, question_or_problem, related_claim_or_option_refs, blocking_classification, current_disposition]
+  position_or_option_record: [position_or_option, proponent_ref, criteria_and_tradeoffs, supporting_and_opposing_argument_refs]
+  argument_record: [argument_type, target_issue_or_option_ref, premises_and_evidence_refs, counterargument_refs]
+  objection_disposition_record: [objection_ref, addressed_result, accommodated_result, reason, blocking_effect, authority_ref, disposition_basis]
+  option_disposition_record: [option_ref, disposition, criteria_result, Human_decision_ref_when_selected, disposition_basis]
+  residual_disagreement_record: [disagreement_refs, nonblocking_basis, retained_risk, revisit_trigger]
+  recommendation_record: [recommended_action, rationale, alternatives, expected_value_cost_time_and_risk, authority_needed]
+  Human_decision_record: [decision, alternatives_considered, accepted_and_rejected_scope, residual_risk_acceptance, exact_candidate_version, next_allowed_state]
+  authorization_record: [authorized_action, exact_task_or_action_model_version, scope, allowlist_and_prohibitions, validity_and_revocation_conditions]
+  confirmation_record: [confirmed_artifact_ref, exact_blob, confirmed_scope, confirming_actor_ref, prerequisites, invalidation_status]
+  waiver_or_exception_record: [waived_requirement, reason, residual_risk, scope_and_expiry, authority_ref]
+  material_event_record: [event_type, source_artifact_or_external_material_ref, observed_change, affected_candidate_versions, materiality_assessment, assessor_role]
+  dependency_impact_result: [dependency_graph_version, affected_object_refs, unaffected_object_refs, unknown_dependency_refs, impact_class_per_object, fail_closed_required]
+  invalidation_record: [impacted_confirmation_or_assessment_ref, prior_valid_scope, invalidated_scope, retained_scope, effect, required_redeliberation_rounds, required_reconfirmation]
+  successor_and_supersession_record: [prior_artifact_ref_and_blob, successor_artifact_ref_and_blob, supersedes_relation, retained_history_rule]
+  reconfirmation_requirement: [target_artifact_ref_and_exact_blob, affected_scope, confirming_actor, prerequisite_rounds_and_review, next_allowed_state]
+  detail_granularity_evaluation: [originating_detail, classification, matched_and_rejected_predicates, blocking_correctness_safety_testability_or_integration, result]
+  detail_divergence_event: [originating_detail, newly_generated_detail_questions, trigger_predicates, impact_if_deferred, blocking_classification, minimum_sufficient_option, expansion_option, defer_or_split_option, cost_time_risk_and_residual_risk, model_recommendation]
+  Human_detail_scope_decision: [detail_event_ref, decision, accepted_scope, rejected_or_deferred_scope, residual_risk_acceptance, next_allowed_state, exact_version_binding]
+  deferred_detail_record: [detail_event_ref, Human_decision_ref, reason_for_deferral, nonblocking_basis, residual_risk, prohibited_implicit_scope, revisit_trigger]
+  external_action_model: [unresolved_model_element_refs, objective_and_expected_use, questions, scope_and_non_goals, proposed_owner_and_tool, capability_and_independence_reason, internal_reference_inputs, external_model_attachments, complete_prompt_or_operating_instructions, output_format_and_return_path, provenance_requirements, acceptance_and_rejection_conditions, failure_and_stop_conditions, expected_value_cost_time_and_risk]
+  Human_external_action_authorization: [action_ref, decision, approved_scope, modifications, cost_or_risk_acceptance, exact_action_model_version, next_allowed_state]
+  returned_material_record: [action_ref, producing_actor_or_tool, exact_artifact_ref_and_blob, provenance_and_source_inventory, independence_metadata, access_and_format_limitations]
+  external_material_ingestion_result: [returned_material_ref, acceptance_or_rejection, stable_source_mapping_refs, fact_policy_inference_typing, conflicts_and_limits, material_event_ref_when_bearing, affected_model_element_refs, required_redeliberation, next_allowed_state]
+  independent_review_record: [reviewed_artifact_or_head, review_base, reviewer_identity_and_role, independence_metadata, methods_and_tools, findings_by_severity, verdict, branch_modified_by_reviewer]
+  finding_record: [severity, exact_path_field_or_line, observed_problem, impact, repair_requirement, blocking_effect]
+  finding_disposition_record: [finding_ref, disposition, authority, repair_artifact_refs, residual_risk, re_review_required]
+  execution_authorization_record: [exact_task_packet_ref_and_blob, Human_actor_ref, authorized_branch_and_base, allowed_changed_paths, prohibited_actions, validity_and_revocation_conditions]
+  execution_result_record: [executor_identity_and_role, task_packet_ref, base_and_head, changed_paths, commits, test_results, deviations_and_detail_events, completion_claim]
+  execution_verification_record: [execution_ref, verifier_role, exact_head, test_and_failure_injection_results, semantic_traceability_result, unresolved_findings, verdict]
+  stage_profile_result: [mechanism_ref, main_mechanism_ref, required_model_fields, trigger_evaluation_result_ref, discussion_focus, external_action_triggers, material_event_triggers, granularity_evaluation_required, open_detail_divergence_event_refs, deferred_detail_record_refs, start_gate_result, completion_gate_result, failure_and_rollback_targets, prohibited_actions]
+  mechanism_load_result: [mechanism_version, boot_manifest_version, loader_version, registry_entry_version, stage_profile_version, loaded_paths, missing_partial_or_stale_paths, validator_exit_code, load_status]
+  stage_receipt: [receipt_schema_version, mechanism_version, active_contract_version, boot_manifest_version, registry_version, loader_version, profile_id_and_version, loaded_paths, missing_partial_or_stale_paths, trigger_evaluation_result_ref, activation_mode_or_dormant_reason, main_mechanism_ref, detail_granularity_evaluation_result, open_detail_divergence_event_refs, deferred_detail_record_refs, gate_results, validator_mode_and_exit_code, exact_candidate_version, created_by_actor_ref, created_at]
+  failure_and_blocking_result: [failure_code, affected_object_or_transition, evidence, blocking_scope, surfaced_at, rollback_or_recovery_target, Human_action_required]
+family_contracts:
+  inquiry_and_evidence_family:
+    gap_types: [missing_field, unknown_fact, unverified_assumption, terminology_ambiguity, claim_conflict, insufficient_evidence, lack_of_capability, true_unknown]
+    question_value_result:
+      default: ordinal_explainable
+      positive_factors: [expected_information_gain, downstream_impact, risk_and_irreversibility, blocker_reduction]
+      negative_factors: [acquisition_cost, Human_interruption_cost, execution_risk]
+      numeric_mode_allowed_only_when: [candidate_domain_is_discrete_and_typed, probabilities_are_reasonably_calibrated, action_utility_is_defined, calculation_and_assumptions_are_auditable]
+  grounding_and_deliberation_family:
+    objection_disposition_basis: {required: true, prohibited_as_sole_basis: [vote_count, majority_count, participant_headcount, silence, objector_withdrawal_or_absence]}
+    option_disposition_basis: {required: true, prohibited_as_sole_basis: [vote_count, majority_count, participant_headcount, popularity_without_reasoned_criteria]}
+  implementation_granularity_family:
+    classifications: [main_mechanism, first_order_required_detail, ordinary_local_choice, second_order_detail_divergence, classification_blocked_insufficient_information]
+    ordinary_local_choice_must_not_require_Human_escalation: true
+  external_action_family:
+    recommendation_or_action_model_is_not_authorization: true
+    authorization_binds_exact_action_model_version: true
+    returned_material_requires_ingestion_before_candidate_ready: true
+  review_execution_loading_family:
+    executor_does_not_self_review: true
+    implementation_complete_does_not_equal_verification_pass: true
+    missing_partial_stale_or_unjustified_skip_fails_closed: true
+    receipt_missing_required_field_is_invalid: true
+    mechanism_ref_does_not_substitute_for_main_mechanism_ref: true
+main_mechanism_required_result_names:
+  MM-01: [trigger_evaluation_result, activation_decision_candidate, Human_activation_authorization, dormant_or_simple_route_reason, deliberation_session_record]
+  MM-02: [model_element_record, inquiry_item, uncertainty_and_assumption_record, evidence_reference, atomic_claim_record, question_value_cost_timing_and_stop_result]
+  MM-03: [round_result, semantic_grounding_record, issue_record, position_or_option_record, argument_record, objection_disposition_record, option_disposition_record, residual_disagreement_record]
+  MM-04: [recommendation_record, Human_decision_record, authorization_record, confirmation_record, waiver_or_exception_record, external_action_model, Human_external_action_authorization, returned_material_record, external_material_ingestion_result]
+  MM-05: [material_event_record, dependency_impact_result, invalidation_record, successor_and_supersession_record, reconfirmation_requirement]
+  MM-06: [detail_granularity_evaluation, detail_divergence_event, Human_detail_scope_decision, deferred_detail_record]
+  MM-07: [independent_review_record, finding_record, finding_disposition_record, execution_authorization_record, execution_result_record, execution_verification_record]
+  MM-08: [stage_profile_result, mechanism_load_result, stage_receipt, failure_and_blocking_result]
+resolution_rule:
+  direct: every_required_result_name_equal_to_a_catalog_object_type_resolves_to_that_object_type
+  exceptions: [dormant_or_simple_route_reason, question_value_cost_timing_and_stop_result]
+composition_mappings:
+  dormant_or_simple_route_reason:
+    resolves_to:
+      - {object_type: trigger_evaluation_result, required_field: dormant_or_simple_route_reason}
+      - {object_type: stage_receipt, required_field: activation_mode_or_dormant_reason}
+    duplicate_object_required: false
+  question_value_cost_timing_and_stop_result:
+    resolves_to:
+      - {block_ref: '#/family_contracts/inquiry_and_evidence_family/question_value_result'}
+      - {object_type: inquiry_item, required_fields: [expected_information_value, acquisition_and_Human_interruption_cost, timing, stop_or_escalation_condition]}
+    all_components_required: true
+    duplicate_object_required: false
+measurements: {object_families: 8, catalog_unique_object_types: 45, main_mechanism_required_result_names: 47, resolved_by_catalog: 45, resolved_by_composition: 2, unresolved_result_names: 0}
+generic_complete_substitution: prohibited
+candidate_state: {loadable_now: false, activatable_now: false, reason: P2 adds inert machine contracts only; P3-P6 loading and validation chain is absent.}
