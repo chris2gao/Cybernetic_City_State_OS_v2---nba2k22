@@ -1,0 +1,42 @@
+run_id: run-20260804-阶段协同推演闭环master接入-001
+task_id: os-v2-stage-collaborative-deliberation-master-integration-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+branch: dev/os-v2-stage-collaborative-deliberation-master-integration-001
+exact_base_sha: 05cf8b67ecf01896b669ad0582ed05371391b866
+accepted_source_head: 0c6f08554636ade9b3120db03cadfe6dfa87861b
+status: candidate_building
+objective: Rebuild the accepted mechanism on current master as a staged-inert integration candidate.
+operation_policy:
+  single_active_model_serial_operation: true
+  executor: current_project_lead_model
+  independent_reviewer: cc_opus_5
+  executor_claims_independent_review: false
+authority:
+  Human_authorization_path: 01_任务输入/Human授权_staged-inert_master接入_v1.yml
+  accepted_completion_pointer_blob: 40ec1c48aa6604356c7f1ba87be7a39440816002
+scope:
+  manifest: 01_任务输入/接入范围与证据闭包_v1.yml
+  master_rebinding: 01_任务输入/master基准重绑定_v1.yml
+candidate_state:
+  staged_inert: true
+  activated: false
+  master_integrated: false
+validation:
+  static_validator: pending
+  fixture_regression: pending
+  exact_reference_check: pending
+  scope_check: pending
+unresolved:
+  blocker: []
+  major: []
+  minor: []
+next_action:
+  owner: current_project_lead_model
+  action: finish_selected_rebuild_and_run_integration_validation
+prohibitions:
+  - activate_mechanism
+  - modify_master
+  - include_unrelated_changes
+  - force_push
+  - rebase
+  - squash
