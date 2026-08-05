@@ -1,5 +1,5 @@
 schema_version: stage_collaborative_deliberation.workflow_profile_ref.v1
-status: staged_inert
+status: active_reference
 workflow_stage_id: workflow_stage_01_requirement_modeling
 development_stage_namespace: development_Stage_01
 mechanism_ref: {path: 08_os/03_mechanisms/stage_collaborative_deliberation/方法论_v1.md, blob_sha: 162ba4b7f9706a76cbb568d65ded61e7cd7f2aeb}
@@ -9,7 +9,9 @@ profile_id: workflow_stage_01_requirement_modeling
 profile_version: 1
 gate_refs: {start: profile.start_gate, completion: profile.completion_gate}
 receipt_ref: {path: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml, blob_sha: 5014cc63d2e83d9e7b951748d65c23ce877e90b2}
-validator_ref: {path: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py, blob_sha: 3de5d56bb6cca8d0be708ddfd1e38f170b79f011}
+activation_state_ref: {path: 08_os/03_mechanisms/stage_collaborative_deliberation/激活状态_v1.yml, blob_sha: 8fcab2a3c92629e9c8a801a78128adb467aa5bab}
+validator_ref: {path: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py, blob_sha: 4fa705917a86d99c372edf065a3153189b6e47c0}
 reference_not_copy: true
 mechanism_body_copied: false
-activation_state: staged_inert
+activation_state: active_dormant
+default_route: dormant
