@@ -1,0 +1,78 @@
+validation_result:
+  task_id: os-v2-seven-stage-minimum-operational-loop-001
+  branch: dev/os-v2-seven-stage-minimum-operational-loop-001
+  exact_base: c81a116226a57f0047b55b924fad1771c1b81029
+  tested_content_head: 4b34e1bdc88e786dd32a51f3c9326800d05d2dc3
+  executor: current_project_lead_model
+  independent_review_claimed: false
+scope:
+  commits: 25
+  changed_paths: 34
+  behind_master: 0
+  unexpected_paths: 0
+  master_modified: false
+implementation:
+  workflow_contract_blob: f7a65a0efd2f31de3d60f14b465f6796f09f0a54
+  boot_manifest_blob: f2d61f58a1531e5a24ab2168de58adc31bb0fa71
+  registry_blob: d66733281ba7577456c8073240c1731607d99e7e
+  runner_blob: a321203ad03d79e3ed109e41cb2bf1f539b5e71c
+  test_blob: fc91123ee17bc799c2b4ec7f9aa4a93a76aee8e9
+  stage_schema_blobs:
+    stage_01: de1e41ce6f55b3118d54b26cccf60645e4c0d22b
+    stage_02: 03ebd435956cd284a852f61c1e59703e22727351
+    stage_03: f9bb219cedcc16059010508e493fb19be7194b7e
+    stage_04: 562345231881458ca1f7e464dc2c024fb18ecbdf
+    stage_05: 049e149a8ca59cbfcdda40c52991d29e25655ee3
+    stage_06: 79531b602852f8e4bdb9fc045cbc457a6f06ab1b
+    stage_07: 219c1aa7dd2276237291b090438f43243457e78a
+  pilot_blob_readback:
+    requirement: 9d1014c1254d82a3ffcbec5ae374cd3a796f4588
+    evidence: da0c56646255882685071435fcb75e5c2297905b
+    result: 39f72ec2f111fd448f2979edad3fd004a0154f29
+    frozen_tests: 164cf6fdbe73e1d6aa38e5939d00aeff1535e99d
+    steps: ac1a2b31878714620b16b0f6270069457bdc74ed
+    execution: a36d309070f64d40f57b4e9e37025890d73f78db
+    verification: a85077c309fdd8ee07de75ded218073f07e67303
+    manifest: 5ea8ce663619e5b74e93b76796ed1055db020a32
+control_plane_boundaries:
+  deterministic:
+  - stage_order
+  - typed_artifact_identity
+  - predecessor_hash_binding
+  - deliberation_receipt
+  - frozen_test_digest
+  - execution_allowlist
+  - retry_and_invalidation
+  - independent_review_identity
+  - completion
+  semantic_generation_remains_model_or_Human: true
+  canonical_live_instance_state_created: false
+executor_tests:
+  projected_static:
+    exit: 0
+    skip_subvalidators: true
+    reason: executor_environment_cannot_clone_private_repository
+  pilot_validation:
+    exit: 0
+    seven_stage_hash_chain: PASS
+    dormant_receipts: 7/7
+  unit_regression:
+    total: 21
+    passed: 21
+    failed: 0
+    covered_exit_codes: [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40]
+  materialize_pilot:
+    exit: 0
+    completion_written: true
+    canonical_output_rejection: 40
+  remote_exact_blob_alignment:
+    runner: PASS
+    test: PASS
+    pilot_files: 8/8
+pending_independent_checkout_tests:
+- python 08_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py static <repo-root>
+- python -m unittest 08_os/06_execution/workflow/minimum_operational_loop/test_minimum_operational_loop.py
+- context_management_validator_exit_0
+- stage_collaborative_runtime_guard_exit_0
+- stage_collaborative_v2_static_exit_0
+verdict: ready_for_one_consolidated_independent_review
