@@ -44,7 +44,11 @@
 与加载面。收窄派单和 worktree/clone 只提供 `workspace_partition`；技术拒绝只能由
 经正负例验证的 ACL、容器、受限 tool root 或网关提供。
 
-## 状态
+## 最小运行状态
 
-**阶段实现仍在发展。** skill 与工具的配置属 `04_skills_and_tools/`；
-全局上下文加载与文件边界不在本阶段重复实现。
+`实现/最小运行schema_v1.yml` 与统一 runner 已实现执行者身份、精确写入 allowlist、实际写入集合、
+冻结测试摘要、逐步骤尝试记录和未授权写入拒绝。每个步骤必须有完整且连续的尝试记录，最终以
+`pass` 结束；预算耗尽或 `invalidate_upstream` 不能伪装成完成。
+
+执行内容仍由后端模型与确定性工具产生；当前最小控制面不构成 ACL、容器或受限 tool root，
+也不把声明的 allowlist 冒充技术访问边界。
