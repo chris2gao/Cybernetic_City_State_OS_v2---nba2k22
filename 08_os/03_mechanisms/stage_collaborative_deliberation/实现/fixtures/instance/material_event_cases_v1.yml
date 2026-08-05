@@ -1,0 +1,20 @@
+fixture_kind: material_event_suite
+cases:
+- case_id: ME-PASS
+  expected_exit: 0
+  data:
+    event_id: e1
+    exact_source_ref: blob:abc
+    dependency_graph_version: v1
+    impact: {affected: [a], unaffected: [b], unknown: []}
+    unknown_scope_blocked: true
+    successor_or_reconfirmation_recorded: true
+- case_id: ME-UNKNOWN-FAIL
+  expected_exit: 13
+  data:
+    event_id: e2
+    exact_source_ref: blob:def
+    dependency_graph_version: v1
+    impact: {affected: [a], unaffected: [], unknown: [x]}
+    unknown_scope_blocked: false
+    successor_or_reconfirmation_recorded: true
