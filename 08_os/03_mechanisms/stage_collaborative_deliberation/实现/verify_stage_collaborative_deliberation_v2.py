@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import importlib.util
 import json
 import sys
@@ -13,8 +14,6 @@ BASE_VALIDATOR_NAME = "verify_stage_collaborative_deliberation.py"
 ACTIVATION_STATE_PATH = "08_os/03_mechanisms/stage_collaborative_deliberation/激活状态_v1.yml"
 AUTHORIZATION_PATH = "08_os/_runs/run-20260804-阶段协同推演闭环激活-001/01_任务输入/Human授权_全局机制激活_v1.yml"
 ACTIVE_VALIDATOR_PATH = "08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py"
-ACTIVATION_STATE_BLOB = "8fcab2a3c92629e9c8a801a78128adb467aa5bab"
-AUTHORIZATION_BLOB = "5d9d8be9e55c0c904a86907592b70d0a852d1567"
 EXPECTED_ACTIVE_STATE = "active_dormant"
 EXPECTED_PROFILE_IDS = {
     "workflow_stage_01_requirement_modeling",
@@ -38,6 +37,12 @@ def load_base_validator() -> Any:
 
 
 base = load_base_validator()
+
+
+def git_blob_sha(path: Path) -> str:
+    payload = path.read_bytes()
+    header = f"blob {len(payload)}\0".encode("ascii")
+    return hashlib.sha1(header + payload).hexdigest()
 
 
 def validate_static_fixture(data: dict[str, Any]) -> int:
@@ -84,6 +89,7 @@ def load_order_entry(boot: dict[str, Any], role: str) -> dict[str, Any] | None:
 
 
 def validate_static_repo(repo_root: Path) -> int:
+    base_validator_path = str(Path(ACTIVE_VALIDATOR_PATH).with_name(BASE_VALIDATOR_NAME))
     required_paths = list(base.REQUIRED_STATIC_PATHS) + [
         ACTIVATION_STATE_PATH,
         AUTHORIZATION_PATH,
@@ -101,6 +107,10 @@ def validate_static_repo(repo_root: Path) -> int:
         registry = load_mapping(repo_root, base.REQUIRED_STATIC_PATHS[10])
         activation = load_mapping(repo_root, ACTIVATION_STATE_PATH)
         authorization_doc = load_mapping(repo_root, AUTHORIZATION_PATH)
+        activation_blob = git_blob_sha(repo_root / ACTIVATION_STATE_PATH)
+        authorization_blob = git_blob_sha(repo_root / AUTHORIZATION_PATH)
+        base_validator_blob = git_blob_sha(repo_root / base_validator_path)
+        active_validator_blob = git_blob_sha(repo_root / ACTIVE_VALIDATOR_PATH)
     except Exception:
         return 11
 
@@ -124,10 +134,15 @@ def validate_static_repo(repo_root: Path) -> int:
     if len(set(workflow_ids)) != 7 or set(workflow_ids) != EXPECTED_PROFILE_IDS:
         return 16
     for ref in workflow_refs:
-        if ref.get("activation_state") != EXPECTED_ACTIVE_STATE:
+        if ref.get("status") != "active_reference":
+            return 15
+        if ref.get("activation_state") != EXPECTED_ACTIVE_STATE or ref.get("default_route") != "dormant":
             return 15
         state_ref = ref.get("activation_state_ref", {})
-        if state_ref.get("path") != ACTIVATION_STATE_PATH or state_ref.get("blob_sha") != ACTIVATION_STATE_BLOB:
+        if state_ref.get("path") != ACTIVATION_STATE_PATH or state_ref.get("blob_sha") != activation_blob:
+            return 13
+        validator_ref = ref.get("validator_ref", {})
+        if validator_ref.get("path") != ACTIVE_VALIDATOR_PATH or validator_ref.get("blob_sha") != active_validator_blob:
             return 13
 
     measurements = result_contract.get("measurements", {})
@@ -177,31 +192,34 @@ def validate_static_repo(repo_root: Path) -> int:
     if authorization.get("master_publication_authorized_now") is not False:
         return 15
 
-    if boot.get("activation_state") != EXPECTED_ACTIVE_STATE:
+    if boot.get("activation_state") != EXPECTED_ACTIVE_STATE or boot.get("default_route") != "dormant":
         return 15
-    if registry.get("activation_state") != EXPECTED_ACTIVE_STATE:
+    if registry.get("activation_state") != EXPECTED_ACTIVE_STATE or registry.get("default_route") != "dormant":
         return 15
-    if boot.get("default_route") != "dormant" or registry.get("default_route") != "dormant":
-        return 16
+    expected_command = f"python {ACTIVE_VALIDATOR_PATH} static <repo-root>"
+    if boot.get("static_validator", {}).get("command") != expected_command:
+        return 11
+    if boot.get("required_versions", {}).get("validator") != 2:
+        return 11
 
-    state_entry = load_order_entry(boot, "activation_state")
-    auth_entry = load_order_entry(boot, "activation_authorization")
-    base_validator_entry = load_order_entry(boot, "validator_base")
-    active_validator_entry = load_order_entry(boot, "validator")
-    if state_entry != {"role": "activation_state", "path": ACTIVATION_STATE_PATH, "blob_sha": ACTIVATION_STATE_BLOB}:
-        return 13
-    if auth_entry != {"role": "activation_authorization", "path": AUTHORIZATION_PATH, "blob_sha": AUTHORIZATION_BLOB}:
-        return 13
-    if not isinstance(base_validator_entry, dict) or base_validator_entry.get("path") != str(Path(ACTIVE_VALIDATOR_PATH).with_name(BASE_VALIDATOR_NAME)):
-        return 13
-    if not isinstance(active_validator_entry, dict) or active_validator_entry.get("path") != ACTIVE_VALIDATOR_PATH:
-        return 13
+    expected_entries = {
+        "activation_state": {"role": "activation_state", "path": ACTIVATION_STATE_PATH, "blob_sha": activation_blob},
+        "activation_authorization": {"role": "activation_authorization", "path": AUTHORIZATION_PATH, "blob_sha": authorization_blob},
+        "validator_base": {"role": "validator_base", "path": base_validator_path, "blob_sha": base_validator_blob},
+        "validator": {"role": "validator", "path": ACTIVE_VALIDATOR_PATH, "blob_sha": active_validator_blob},
+    }
+    for role, expected_entry in expected_entries.items():
+        if load_order_entry(boot, role) != expected_entry:
+            return 13
 
     registry_state_ref = registry.get("activation", {}).get("state_ref", {})
     registry_auth_ref = registry.get("activation", {}).get("authorization_ref", {})
-    if registry_state_ref.get("path") != ACTIVATION_STATE_PATH or registry_state_ref.get("blob_sha") != ACTIVATION_STATE_BLOB:
+    if registry_state_ref.get("path") != ACTIVATION_STATE_PATH or registry_state_ref.get("blob_sha") != activation_blob:
         return 13
-    if registry_auth_ref.get("path") != AUTHORIZATION_PATH or registry_auth_ref.get("blob_sha") != AUTHORIZATION_BLOB:
+    if registry_auth_ref.get("path") != AUTHORIZATION_PATH or registry_auth_ref.get("blob_sha") != authorization_blob:
+        return 13
+    machine_contracts = registry.get("discovery", {}).get("machine_contracts", {})
+    if machine_contracts.get("validator_base") != base_validator_path or machine_contracts.get("validator") != ACTIVE_VALIDATOR_PATH:
         return 13
     if registry.get("runtime", {}).get("canonical_live_instance_state") != "prohibited":
         return 15
