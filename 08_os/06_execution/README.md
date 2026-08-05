@@ -41,5 +41,9 @@ nicety — this is the area whose failures would otherwise be silent by construc
 
 - `boot/context_management/README.md`：读取 boot 清单和 registry，注入最小活动定义，
   排除原始研究报告、运行历史与私有 scratch，并运行结构 validator。
+- `boot/stage_collaborative_deliberation/README.md`：加载 active-dormant 阶段协同推演机制。
+- `workflow/minimum_operational_loop/`：加载七阶段契约和七份 schema，验证上下文管理与
+  阶段协同推演前置条件，并提供 static、run validation 和只读 pilot materialization。
 
-加载 receipt 必须记录机制版本和实际读取项；缺项、旧版本或 stale 均失败退出。
+加载 receipt 必须记录机制版本和实际读取项；缺项、旧版本或 stale 均失败退出。七阶段 runner
+只实现确定性控制面，不生成需求、证据、B、测试、步骤或实现语义。
