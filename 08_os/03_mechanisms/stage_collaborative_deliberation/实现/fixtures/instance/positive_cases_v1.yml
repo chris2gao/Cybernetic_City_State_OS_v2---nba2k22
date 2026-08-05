@@ -1,0 +1,45 @@
+fixture_kind: instance_positive_suite
+cases:
+- case_id: POS-DORMANT
+  expected_exit: 0
+  data:
+    activation_mode: dormant
+    dormant_reason: simple_lookup
+    rounds: []
+    receipt: &receipt
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      loader_version: 1
+      profile_id_and_version: workflow_stage_06_execution@1
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: simple_lookup
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'
+- case_id: POS-FULL
+  expected_exit: 0
+  data:
+    activation_mode: full
+    rounds: [{substantive: true}, {substantive: true}, {substantive: true}, {substantive: true}, {substantive: true}]
+    receipt:
+      <<: *receipt
+      activation_mode_or_dormant_reason: full
+- case_id: POS-INCREMENTAL
+  expected_exit: 0
+  data:
+    activation_mode: incremental
+    rounds: [{substantive: true}, {substantive: true}]
+    receipt:
+      <<: *receipt
+      activation_mode_or_dormant_reason: incremental
