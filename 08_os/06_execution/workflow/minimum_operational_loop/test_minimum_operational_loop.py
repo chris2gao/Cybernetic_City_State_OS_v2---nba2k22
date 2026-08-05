@@ -26,18 +26,25 @@ def rebind(root:Path):
       loop.EXPECTED_STAGE_IDS[5]:loop.EXPECTED_STAGE_IDS[3:5],
       loop.EXPECTED_STAGE_IDS[6]:[loop.EXPECTED_STAGE_IDS[2],loop.EXPECTED_STAGE_IDS[3],loop.EXPECTED_STAGE_IDS[5]],
     }
-    hashes={};versions={}
+    hashes={}
+    versions={}
     for sid in loop.EXPECTED_STAGE_IDS:
-        path=root/file_by[sid];data=load(path)
+        path=root/file_by[sid]
+        data=load(path)
         data["input_refs"]=[{"stage_id":p,"path":file_by[p],"artifact_version":versions[p],"sha256":hashes[p]} for p in pred[sid]]
-        save(path,data);hashes[sid]=hashlib.sha256(path.read_bytes()).hexdigest();versions[sid]=data["artifact_version"]
-    for item in manifest["artifacts"]:item["sha256"]=hashes[item["stage_id"]]
+        save(path,data)
+        hashes[sid]=hashlib.sha256(path.read_bytes()).hexdigest()
+        versions[sid]=data["artifact_version"]
+    for item in manifest["artifacts"]:
+        item["sha256"]=hashes[item["stage_id"]]
     save(root/"manifest.yml",manifest)
 
 class MinimumLoopTests(unittest.TestCase):
     def copy_fixture(self)->Path:
-        temp=Path(tempfile.mkdtemp());self.addCleanup(lambda:shutil.rmtree(temp,ignore_errors=True))
-        shutil.copytree(FIXTURE,temp/"run");return temp/"run"
+        temp=Path(tempfile.mkdtemp())
+        self.addCleanup(lambda:shutil.rmtree(temp,ignore_errors=True))
+        shutil.copytree(FIXTURE,temp/"run")
+        return temp/"run"
     def mutate(self,name,fn):
         root=self.copy_fixture();p=root/name;data=load(p);fn(data);save(p,data);rebind(root);return root
     def test_positive_fixture(self):self.assertEqual(loop.validate_run(FIXTURE)[0],0)
@@ -68,10 +75,12 @@ class MinimumLoopTests(unittest.TestCase):
         self.assertEqual(loop.validate_run(self.mutate("07_verification.yml",f))[0],38)
     def test_invalidation_blocks_completion(self):self.assertEqual(loop.validate_run(self.mutate("07_verification.yml",lambda d:d["payload"].update(upstream_invalidation={"target":"workflow_stage_03_result_modeling"})))[0],39)
     def test_materialize_pilot(self):
-        temp=Path(tempfile.mkdtemp());self.addCleanup(lambda:shutil.rmtree(temp,ignore_errors=True));repo=temp/"repo";repo.mkdir();src=repo/loop.PILOT_PATH;src.parent.mkdir(parents=True);shutil.copytree(FIXTURE,src)
+        temp=Path(tempfile.mkdtemp());self.addCleanup(lambda:shutil.rmtree(temp,ignore_errors=True))
+        repo=temp/"repo";repo.mkdir();src=repo/loop.PILOT_PATH;src.parent.mkdir(parents=True);shutil.copytree(FIXTURE,src)
         code,findings=loop.materialize_pilot(repo,temp/"out");self.assertEqual((code,findings),(0,[]));self.assertTrue((temp/"out/workflow_completion.yml").is_file())
     def test_prohibited_canonical_output(self):
-        temp=Path(tempfile.mkdtemp());self.addCleanup(lambda:shutil.rmtree(temp,ignore_errors=True));repo=temp/"repo";repo.mkdir();src=repo/loop.PILOT_PATH;src.parent.mkdir(parents=True);shutil.copytree(FIXTURE,src)
+        temp=Path(tempfile.mkdtemp());self.addCleanup(lambda:shutil.rmtree(temp,ignore_errors=True))
+        repo=temp/"repo";repo.mkdir();src=repo/loop.PILOT_PATH;src.parent.mkdir(parents=True);shutil.copytree(FIXTURE,src)
         self.assertEqual(loop.materialize_pilot(repo,repo/"08_os/01_workflow/_runtime")[0],40)
     def test_manifest_identity(self):
         root=self.copy_fixture();m=load(root/"manifest.yml");m["workflow_id"]="wrong";save(root/"manifest.yml",m);self.assertEqual(loop.validate_run(root)[0],33)
