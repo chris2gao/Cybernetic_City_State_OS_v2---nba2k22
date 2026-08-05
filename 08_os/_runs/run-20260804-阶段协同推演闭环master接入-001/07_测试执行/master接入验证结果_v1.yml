@@ -1,0 +1,56 @@
+validation_result:
+  task_id: os-v2-stage-collaborative-deliberation-master-integration-001
+  tested_content_head: 236cb73ae16a76048929e009c2393f57b353a00a
+  exact_master_base: 05cf8b67ecf01896b669ad0582ed05371391b866
+  executor: current_project_lead_model
+  independent_review_claimed: false
+remote_tree_validation:
+  changed_paths_before_validation_records: 67
+  behind_master: 0
+  out_of_scope_paths: 0
+  exact_system_and_fixture_blob_readbacks: 23
+  exact_system_and_fixture_blob_mismatches: 0
+  evidence_and_lineage_paths_added_by_direct_blob_reference: 30
+  evidence_blob_reencoding: false
+  intentional_document_updates: 2
+  activation_state_changes: 0
+local_execution:
+  environment:
+    Python: available
+    PyYAML: available
+    private_GitHub_checkout: unavailable_no_network_or_local_authenticated_clone
+  validator_syntax_compile: PASS
+  isolated_validator_consumed_path_projection:
+    static_baseline_exit: 0
+    missing_workflow_reference_exit: 16
+    extra_eighth_workflow_reference_exit: 16
+    duplicate_profile_id_exit: 16
+    unknown_profile_id_exit: 16
+    restored_static_exit: 0
+    probes_passed: 6/6
+  fixture_regression:
+    total: 35
+    passed: 35
+    failed: 0
+    mode_counts:
+      static: 12
+      instance: 18
+      material_event: 2
+      review_execution: 3
+limitations:
+  - executor_could_not_materialize_a_byte_for_byte_private_repository_checkout_in_the_local_container
+  - local_static_execution_used_the_exact_validator_and_exact_fixtures_with_a_validator_consumed_path_projection
+  - remote_exact_blob_readback_independently_proves_the_branch_system_files_equal_the_accepted_blobs
+required_independent_review_action:
+  - checkout_or_materialize_the_exact_remote_review_head
+  - run_static_validator_against_the_actual_full_tree_and_require_exit_0
+  - rerun_all_35_fixture_cases
+  - verify_the_two_updated_READMEs_do_not_change_machine_semantics
+verdict:
+  executor_status: ready_for_independent_master_integration_review
+  blocker: 0
+  major: 0
+  minor: 0
+  true_checkout_static_pending_independent_review: true
+  activation_performed: false
+  master_modified: false
