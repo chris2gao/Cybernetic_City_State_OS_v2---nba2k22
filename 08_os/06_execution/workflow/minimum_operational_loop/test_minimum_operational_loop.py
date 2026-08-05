@@ -41,10 +41,8 @@ def rebind(root:Path):
 
 class MinimumLoopTests(unittest.TestCase):
     def copy_fixture(self)->Path:
-        temp=Path(tempfile.mkdtemp())
-        self.addCleanup(lambda:shutil.rmtree(temp,ignore_errors=True))
-        shutil.copytree(FIXTURE,temp/"run")
-        return temp/"run"
+        temp=Path(tempfile.mkdtemp());self.addCleanup(lambda:shutil.rmtree(temp,ignore_errors=True))
+        shutil.copytree(FIXTURE,temp/"run");return temp/"run"
     def mutate(self,name,fn):
         root=self.copy_fixture();p=root/name;data=load(p);fn(data);save(p,data);rebind(root);return root
     def test_positive_fixture(self):self.assertEqual(loop.validate_run(FIXTURE)[0],0)
@@ -59,7 +57,8 @@ class MinimumLoopTests(unittest.TestCase):
     def test_full_receipt_requires_authority(self):
         def f(d):d["deliberation_receipt"].update(route="full",session_id="S1")
         self.assertEqual(loop.validate_run(self.mutate("01_requirement.yml",f))[0],34)
-    def test_unfrozen_tests(self):self.assertEqual(loop.validate_run(self.mutate("04_tests.yml",lambda d:d["payload"].update(frozen=False)))[0],35)
+    def test_unfrozen_tests(self):
+        self.assertEqual(loop.validate_run(self.mutate("04_tests.yml",lambda d:d["payload"].update(frozen=False)))[0],35)
     def test_test_digest_drift(self):
         def f(d):d["payload"]["tests"][0]["expected"]="weakened"
         self.assertEqual(loop.validate_run(self.mutate("04_tests.yml",f))[0],35)
@@ -69,11 +68,13 @@ class MinimumLoopTests(unittest.TestCase):
     def test_retry_budget(self):
         def f(d):d["payload"]["attempts"][0]["attempt"]=4
         self.assertEqual(loop.validate_run(self.mutate("06_execution.yml",f))[0],37)
-    def test_review_independence(self):self.assertEqual(loop.validate_run(self.mutate("07_verification.yml",lambda d:d["payload"].update(reviewer_role="current_project_lead_model")))[0],38)
+    def test_review_independence(self):
+        self.assertEqual(loop.validate_run(self.mutate("07_verification.yml",lambda d:d["payload"].update(reviewer_role="current_project_lead_model")))[0],38)
     def test_failed_test(self):
         def f(d):d["payload"]["test_results"][0]["status"]="failed"
         self.assertEqual(loop.validate_run(self.mutate("07_verification.yml",f))[0],38)
-    def test_invalidation_blocks_completion(self):self.assertEqual(loop.validate_run(self.mutate("07_verification.yml",lambda d:d["payload"].update(upstream_invalidation={"target":"workflow_stage_03_result_modeling"})))[0],39)
+    def test_invalidation_blocks_completion(self):
+        self.assertEqual(loop.validate_run(self.mutate("07_verification.yml",lambda d:d["payload"].update(upstream_invalidation={"target":"workflow_stage_03_result_modeling"})))[0],39)
     def test_materialize_pilot(self):
         temp=Path(tempfile.mkdtemp());self.addCleanup(lambda:shutil.rmtree(temp,ignore_errors=True))
         repo=temp/"repo";repo.mkdir();src=repo/loop.PILOT_PATH;src.parent.mkdir(parents=True);shutil.copytree(FIXTURE,src)
@@ -84,7 +85,8 @@ class MinimumLoopTests(unittest.TestCase):
         self.assertEqual(loop.materialize_pilot(repo,repo/"08_os/01_workflow/_runtime")[0],40)
     def test_manifest_identity(self):
         root=self.copy_fixture();m=load(root/"manifest.yml");m["workflow_id"]="wrong";save(root/"manifest.yml",m);self.assertEqual(loop.validate_run(root)[0],33)
-    def test_receipt_mechanism_id(self):self.assertEqual(loop.validate_run(self.mutate("01_requirement.yml",lambda d:d["deliberation_receipt"].update(mechanism_id="wrong")))[0],34)
+    def test_receipt_mechanism_id(self):
+        root=self.mutate("01_requirement.yml",lambda d:d["deliberation_receipt"].update(mechanism_id="wrong"));self.assertEqual(loop.validate_run(root)[0],34)
     def test_step_dependency_cycle(self):
         def f(d):d["payload"]["steps"][0]["depends_on"]=["S-3"]
         self.assertEqual(loop.validate_run(self.mutate("05_steps.yml",f))[0],37)
