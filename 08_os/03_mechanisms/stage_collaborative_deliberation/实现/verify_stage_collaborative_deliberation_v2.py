@@ -94,7 +94,7 @@ def validate_exact_ref(ref: Any, path: str, blob_sha: str) -> bool:
 
 
 def validate_static_repo(repo_root: Path) -> int:
-    base_validator_path = str(Path(ACTIVE_VALIDATOR_PATH).with_name(BASE_VALIDATOR_NAME))
+    base_validator_path = ACTIVE_VALIDATOR_PATH.rsplit("/", 1)[0] + "/" + BASE_VALIDATOR_NAME
     artifact_paths = {
         "public_method": base.REQUIRED_STATIC_PATHS[1],
         "profile_contract": base.REQUIRED_STATIC_PATHS[2],
