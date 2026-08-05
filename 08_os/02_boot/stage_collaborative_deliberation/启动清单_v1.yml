@@ -2,7 +2,8 @@ schema_version: stage_collaborative_deliberation.boot_manifest.v1
 mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
 mechanism_version: 1
 boot_manifest_version: 1
-activation_state: staged_inert
+activation_state: active_dormant
+default_route: dormant
 load_order:
   - {role: public_method, path: 08_os/03_mechanisms/stage_collaborative_deliberation/方法论_v1.md, blob_sha: 162ba4b7f9706a76cbb568d65ded61e7cd7f2aeb}
   - {role: profile_contract, path: 08_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml, blob_sha: b765bcce6c7c6bcf3613000f93ddc1086124c817}
@@ -12,7 +13,10 @@ load_order:
   - {role: router_failure_contract, path: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/路由与失败契约_v1.yml, blob_sha: ab81f480d70ccd146b8af4fefaed79cb12ec7a81}
   - {role: load_receipt_contract, path: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml, blob_sha: 5014cc63d2e83d9e7b951748d65c23ce877e90b2}
   - {role: receipt_provenance_overlay, path: 08_os/_runs/run-20260804-阶段协同推演闭环实现执行-001/P2/07_测试执行/P2_stage_receipt来源声明补全叠加层_v1.yml, blob_sha: 73893d82175ef66fb3ee004236fa2e8a2b8d6135}
-  - {role: validator, path: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py, blob_sha: 3de5d56bb6cca8d0be708ddfd1e38f170b79f011}
+  - {role: activation_state, path: 08_os/03_mechanisms/stage_collaborative_deliberation/激活状态_v1.yml, blob_sha: 8fcab2a3c92629e9c8a801a78128adb467aa5bab}
+  - {role: activation_authorization, path: 08_os/_runs/run-20260804-阶段协同推演闭环激活-001/01_任务输入/Human授权_全局机制激活_v1.yml, blob_sha: 5d9d8be9e55c0c904a86907592b70d0a852d1567}
+  - {role: validator_base, path: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py, blob_sha: 3de5d56bb6cca8d0be708ddfd1e38f170b79f011}
+  - {role: validator, path: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py, blob_sha: 4fa705917a86d99c372edf065a3153189b6e47c0}
 required_versions:
   mechanism: 1
   profile_contract: 1
@@ -21,12 +25,16 @@ required_versions:
   state_transition_contract: 1
   router_failure_contract: 1
   load_receipt_contract: 1
-  validator: 1
+  activation_state_record: 1
+  validator_base: 1
+  validator: 2
 failure_policy: fail_closed_on_missing_partial_stale_unknown_invalid_or_unauthorized
 static_validator:
-  command: python 08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py static <repo-root>
+  command: python 08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py static <repo-root>
   expected_exit: 0
 stale_fallback: prohibited
 receipt_required_for_dormant_and_active_routes: true
-activation_requires_separate_Human_authorization: true
-master_integration_authorized: false
+master_integrated: true
+global_activation_authorized: true
+per_task_profile_gate_required: true
+external_action_authorization_remains_separate: true
