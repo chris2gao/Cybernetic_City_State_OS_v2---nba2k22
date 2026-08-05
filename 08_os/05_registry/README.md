@@ -55,6 +55,10 @@ that is neither present nor correctly ignored.
 
 - `context_management_v1.yml`：上下文管理的 canonical 机制、boot adapter、
   execution loader/validator、活动开发规范、受保护历史和阶段二拆分补充。
+- `stage_collaborative_deliberation_v1.yml`：阶段协同推演闭环的 active-dormant 状态、
+  boot、validator、七个 workflow 引用与运行边界。
+- `workflow_minimum_operational_loop_v1.yml`：七阶段最小运行契约、阶段 schema、boot、
+  统一 runner、回归测试和跨平台路径 pilot。
 - `skills_and_tools_v1.yml`：确定性工具的 Human 选型与接入评估入口；仅注册
   文档，不表示工具已安装、激活或进入 boot。
 - `repository_guards_v1.yml`：git 按约定路径从仓库引用图**外部**读取的守卫文件
