@@ -1,0 +1,102 @@
+schema_version: stage_collaborative_deliberation.load_receipt_contract.v1
+mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
+mechanism_version: 1
+status: staged_inert
+package_owner: P2
+source_contract_union:
+- path: 08_os/_runs/run-20260804-阶段协同推演闭环结果建模-001/03_结果建模/B_结果建模_v1.yml
+  blob_sha: 6e9998e7161bb542bc4a7705c5a097797e6f67a6
+- path: 08_os/_runs/run-20260804-阶段协同推演闭环结果建模-001/03_结果建模/B_v1一阶必要修复叠加层_v1.yml
+  blob_sha: 35f42eeea68d1721b06e9f14650788117b50a143
+- path: 08_os/_runs/run-20260804-阶段协同推演闭环结果建模-001/03_结果建模/B_v1一阶必要修复失败码补全_v1.yml
+  blob_sha: 2aae10cdbb6bb031dac606f36e43dfb0a97f2c16
+mechanism_load_result:
+  object_type: mechanism_load_result
+  required_fields:
+  - mechanism_version
+  - boot_manifest_version
+  - loader_version
+  - registry_entry_version
+  - stage_profile_version
+  - loaded_paths
+  - missing_partial_or_stale_paths
+  - validator_exit_code
+  - load_status
+  load_status_values:
+  - not_attempted
+  - dormant_valid
+  - loaded_valid
+  - failed_missing
+  - failed_partial
+  - failed_stale
+  - failed_unknown
+  - failed_invalid
+  - failed_unauthorized
+  missing_partial_stale_unknown_invalid_or_unauthorized: fail_closed
+  stale_fallback: prohibited
+stage_receipt:
+  object_type: stage_receipt
+  receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+  required_fields:
+  - receipt_schema_version
+  - mechanism_version
+  - active_contract_version
+  - boot_manifest_version
+  - registry_version
+  - loader_version
+  - profile_id_and_version
+  - loaded_paths
+  - missing_partial_or_stale_paths
+  - trigger_evaluation_result_ref
+  - activation_mode_or_dormant_reason
+  - main_mechanism_ref
+  - detail_granularity_evaluation_result
+  - open_detail_divergence_event_refs
+  - deferred_detail_record_refs
+  - gate_results
+  - validator_mode_and_exit_code
+  - exact_candidate_version
+  - created_by_actor_ref
+  - created_at
+  required_visibility:
+    dormant:
+    - trigger_evaluation_result_ref
+    - activation_mode_or_dormant_reason
+    - main_mechanism_ref
+    - open_detail_divergence_event_refs
+    - deferred_detail_record_refs
+    - gate_results
+    - validator_mode_and_exit_code
+    full_or_incremental:
+    - loaded_paths
+    - missing_partial_or_stale_paths
+    - trigger_evaluation_result_ref
+    - activation_mode_or_dormant_reason
+    - main_mechanism_ref
+    - detail_granularity_evaluation_result
+    - open_detail_divergence_event_refs
+    - deferred_detail_record_refs
+    - gate_results
+    - validator_mode_and_exit_code
+    - exact_candidate_version
+  dormant_route_requires_receipt: true
+  valid_only_after_validator_pass: true
+  missing_required_field: invalid_receipt
+  partial_publish: invalid_no_valid_receipt
+atomic_publish_sequence:
+- write_runtime_candidate
+- validate_schema_invariants_references_and_authority
+- atomically_publish_durable_artifacts
+- publish_receipt_after_success
+side_effect_rules:
+  unauthorized_action: reject_without_side_effect
+  dangling_dependency: fail_closed
+  canonical_live_instance_state: prohibited
+measurements:
+  dormant_visibility_complete: true
+  active_visibility_complete: true
+  receipt_required_fields: 20
+candidate_state:
+  loadable_now: false
+  activatable_now: false
+  reason: P4 boot-loader-registry chain and P3 validator do not yet exist.
