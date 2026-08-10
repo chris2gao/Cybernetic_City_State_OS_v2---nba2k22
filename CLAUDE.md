@@ -32,5 +32,5 @@ destructive Git, history rewriting, runtime or scheduler activation, secrets, an
 objective changes. `core` history is never rewritten. Which transport must prove
 what before publishing is section 1.1 of
 `08_os/开发入口与单窗口任务规范_v1.md`; who may publish at all is
-`.ai/REPOSITORY_PUBLISHER_AUTHORITY.yml`. Never read or expose credentials or key
+`08_os/05_registry/repository_publisher_authority_v1.yml`. Never read or expose credentials or key
 files.

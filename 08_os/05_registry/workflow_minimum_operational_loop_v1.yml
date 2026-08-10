@@ -52,10 +52,10 @@ entries:
   deletion_rule: protected
 runtime_roots:
   shared_os_development: 08_os/_runs/<run-id>/
-  domain_workflow: .ai/PROGRAM_RUNS/<run-id>/
+  domain_workflow: 08_os/07_content/_runs/<run-id>/
   canonical_live_instance_state: prohibited
 excluded:
 - 08_os/_runs/**
-- .ai/PROGRAM_RUNS/**
+- 08_os/07_content/_runs/**
 - '**/_runtime/**'
 - role private and scratch

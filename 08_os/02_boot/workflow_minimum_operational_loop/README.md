@@ -5,4 +5,4 @@
 
 默认协同路线为 `dormant`，每阶段仍必须产生有效 receipt；本入口不自动创建 session，
 不授权外部行动或不可逆操作。运行产物只进入 `08_os/_runs/<run-id>/`、
-`.ai/PROGRAM_RUNS/<run-id>/` 或仓库外目录，不得进入 canonical 路径。
+`08_os/07_content/_runs/<run-id>/` 或仓库外目录，不得进入 canonical 路径。

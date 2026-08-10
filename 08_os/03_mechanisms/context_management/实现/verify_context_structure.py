@@ -121,13 +121,13 @@ def check_boot_and_contract() -> None:
         }
         expected = {
             "os_development_run": ("08_os/_runs/<run-id>/", "core"),
-            "domain_runtime_run": (".ai/PROGRAM_RUNS/<run-id>/", "domain"),
+            "domain_runtime_run": ("08_os/07_content/_runs/<run-id>/", "domain"),
             "os_development_private_runtime": (
                 "08_os/_runs/<run-id>/_runtime/",
                 "core_runtime_untracked",
             ),
             "domain_private_runtime": (
-                ".ai/PROGRAM_RUNS/<run-id>/_runtime/",
+                "08_os/07_content/_runs/<run-id>/_runtime/",
                 "domain_runtime_untracked",
             ),
         }
@@ -278,8 +278,8 @@ def check_active_text() -> None:
 def check_runtime_and_evidence() -> None:
     ignored_paths = {
         "08_os/_runs/*/_runtime/": "08_os/_runs/example/_runtime/private.txt",
-        ".ai/PROGRAM_RUNS/*/_runtime/": (
-            ".ai/PROGRAM_RUNS/example/_runtime/private.txt"
+        "08_os/07_content/_runs/*/_runtime/": (
+            "08_os/07_content/_runs/example/_runtime/private.txt"
         ),
     }
     for rule, probe in ignored_paths.items():
@@ -339,15 +339,18 @@ def check_ownership() -> None:
         "08_os/_runs/",
         "08_os/claude与人类的开发对话日志.md",
     }
-    expected_domain = {"08_os/07_content/", ".ai/PROGRAM_RUNS/"}
+    # The domain run root moved under 08_os/07_content/ on 2026-08-10, so it is
+    # covered by that entry rather than listed beside it. Listing both would be a
+    # prefix overlap and CM024 below would - correctly - report it.
+    expected_domain = {"08_os/07_content/"}
     for missing in sorted(expected_core - set(core)):
         finding("CM022_CORE_OWNERSHIP_MISSING", missing)
     for missing in sorted(expected_domain - set(domain)):
         finding("CM023_DOMAIN_OWNERSHIP_MISSING", missing)
     if "08_os/_runs/" in domain:
         finding("CM031_OS_RUN_DOMAIN_OWNED", "08_os/_runs/")
-    if ".ai/PROGRAM_RUNS/" in core:
-        finding("CM032_DOMAIN_RUN_CORE_OWNED", ".ai/PROGRAM_RUNS/")
+    if "08_os/07_content/_runs/" in core:
+        finding("CM032_DOMAIN_RUN_CORE_OWNED", "08_os/07_content/_runs/")
     for left in core:
         for right in domain:
             if left.startswith(right) or right.startswith(left):
@@ -359,22 +362,22 @@ def check_active_ownership_text() -> None:
         "08_os/README.md": {
             "08_os/_runs/",
             "core-owned",
-            ".ai/PROGRAM_RUNS/",
+            "08_os/07_content/_runs/",
             "domain-owned",
         },
         "08_os/03_mechanisms/context_management/文件隔离与产物生命周期_v1.md": {
             "08_os/_runs/",
             "core-owned",
-            ".ai/PROGRAM_RUNS/",
-            "domain-owned",
-        },
-        "08_os/_dev/开发产物与文件隔离规范_v1.md": {
-            "08_os/_runs/",
-            "core-owned",
-            ".ai/PROGRAM_RUNS/",
+            "08_os/07_content/_runs/",
             "domain-owned",
         },
     }
+    # 08_os/_dev/开发产物与文件隔离规范_v1.md was checked here until 2026-08-10.
+    # It was dropped when the domain run root moved: _dev holds active design and
+    # superseded versions, so requiring current path tokens in it made a historical
+    # document a live contract surface. The two canonical files above are the ones
+    # that must stay current; the _dev copy keeps naming the old root and is
+    # correct as history.
     for relative, tokens in required_tokens.items():
         text = (REPO / relative).read_text(encoding="utf-8")
         missing = sorted(token for token in tokens if token not in text)

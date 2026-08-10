@@ -67,4 +67,4 @@
 workspace partition、访问边界、发布 allowlist、stale 与生命周期由
 `../03_mechanisms/context_management/` 统一定义。共享 OS/workflow/mechanism 的
 开发与验证证据放 `../_runs/<run-id>/`；领域业务 workflow 的运行流量放
-`.ai/PROGRAM_RUNS/<run-id>/`。两类 private scratch 均不进入 Git。
+`08_os/07_content/_runs/<run-id>/`。两类 private scratch 均不进入 Git。

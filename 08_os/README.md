@@ -42,13 +42,13 @@ it does not get an entry; it gets removed.
 `03_mechanisms/context_management/`；启动清单位于
 `02_boot/context_management/`；加载和验证入口位于
 `06_execution/boot/context_management/`。共享 OS 的耐久开发证据位于 `_runs/`；
-领域业务与领域 workflow 的运行流量位于 `.ai/PROGRAM_RUNS/`。两类运行的私有
+领域业务与领域 workflow 的运行流量位于 `08_os/07_content/_runs/`。两类运行的私有
 `_runtime/` 均不跟踪。
 
 ## Ownership
 
 `CORE_MANIFEST.yml` 将 OS 机制区域和保存共享 OS 开发/验证历史的 `08_os/_runs/`
-列为 core-owned；`08_os/07_content/` 与领域运行根 `.ai/PROGRAM_RUNS/` 为
+列为 core-owned；`08_os/07_content/` 与领域运行根 `08_os/07_content/_runs/` 为
 domain-owned。两个集合不得重叠。
 # 全局通讯机制接入
 

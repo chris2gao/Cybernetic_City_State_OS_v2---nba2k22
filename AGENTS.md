@@ -116,7 +116,7 @@ authority. Apply them only within the current task's authorized scope.
   compare-and-swap, keep the diff inside the allowed paths, and read the
   resulting remote head back rather than assuming it. Report the value you read.
 - Publication authority itself, and which acts remain action-bound even under the
-  widest Human grant, are in `.ai/REPOSITORY_PUBLISHER_AUTHORITY.yml`. A provider
+  widest Human grant, are in `08_os/05_registry/repository_publisher_authority_v1.yml`. A provider
   name authorizes nothing there — it is text the caller writes about itself.
 
 ## Test And Review Expectations

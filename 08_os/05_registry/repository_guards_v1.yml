@@ -15,6 +15,10 @@ mechanism_version: 1
 # answer what loads the path, how the path is discovered, or when a failure
 # becomes visible. Those are this registry's questions, and the two are not
 # substitutes for each other.
+#
+# Publication authority is a third question again - who may publish at all, and
+# what the publication must carry - and it is answered by
+# 08_os/05_registry/repository_publisher_authority_v1.yml, registered below.
 
 guards:
   - path: ".githooks/pre-push"
@@ -38,9 +42,9 @@ guards:
       allowlist checked against the actual diff, and a read-back of the resulting
       remote head. See section 1.1 of
       08_os/开发入口与单窗口任务规范_v1.md for the matrix and
-      .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml for who may publish at all.
-      Reporting `hook_guard: passed` from a non-local_git transport is a false
-      receipt, not a technicality.
+      08_os/05_registry/repository_publisher_authority_v1.yml for who may publish
+      at all. Reporting `hook_guard: passed` from a non-local_git transport is a
+      false receipt, not a technicality.
     discovery: >-
       hardcoded default in git. Nothing inside the tree references this file as
       an execution dependency, so no in-repository analysis can reveal it.
@@ -129,4 +133,33 @@ guards:
     evidence: "the LF check in .githooks/install.ps1"
     cache_dirs: []
     failure_surfacing: "never until misuse"
+    deletion_rule: protected
+
+  - path: "08_os/05_registry/repository_publisher_authority_v1.yml"
+    purpose: >-
+      Who may publish to this repository, what an activated publisher may do
+      without asking again, which acts stay action-bound under the widest grant,
+      and that core history is never rewritten regardless of grant. It is the
+      authority half of the pair: this registry says what loads a guard, that file
+      says who may publish at all.
+    loader: >-
+      any executor before a write that leaves its own worktree, on every
+      publication transport
+    loader_class: in_repo_program
+    transport_scope: all
+    discovery: >-
+      referenced from AGENTS.md, AGENT_WORKING_DISCIPLINE.md section 6,
+      08_os/开发入口与单窗口任务规范_v1.md section 1.1, .githooks/README.md and this
+      registry.
+    evidence: >-
+      migrated from .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml on 2026-08-10 by
+      08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001 with authority semantics
+      preserved and the old-communication-plane commentary rewritten. The
+      migration run records the old path, the old blob sha and every consumer
+      updated in the same change.
+    cache_dirs: []
+    failure_surfacing: >-
+      not at push time. A publisher that never reads it can still push, so the
+      failure shows up as an unauthorized or unevidenced publication after the
+      fact - which is why the file is discovered from five places rather than one.
     deletion_rule: protected

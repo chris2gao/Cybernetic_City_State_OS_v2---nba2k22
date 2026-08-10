@@ -1,0 +1,111 @@
+schema_version: citystate.migration_closure_verification.v1
+task_id: os-v2-pre-deletion-migration-final-whitelist-001
+run_id: run-20260810-旧OS退役前迁移与最终白名单-001
+generated_from: 04_验证/verify_migration_closure.py
+result: PASS
+
+active_surface_definition: >-
+  08_os/** minus 08_os/_runs/** minus 08_os/_dev/**, plus the fifteen tracked non-08
+  files that survive the approved deletion. _dev holds active design and superseded
+  versions - the file placement table says "supersede, do not erase history" - so a
+  superseded draft naming an old path is correct as history rather than a live
+  dependency, and _runs is past run evidence for the same reason. Both are counted
+  separately below instead of being dropped.
+active_surface_files: 245
+
+annotation_only_exclusions:
+  rule: >-
+    Three active-surface files legitimately name an old path without depending on
+    it. They are excluded from the dependency count and every excluded line is
+    printed verbatim by the script, so the exclusion can be judged rather than
+    trusted. The one way this could hide a real dependency - an ownership list
+    entry, which is a live declaration and not an annotation - is closed by a
+    separate direct check of the manifest's two machine-read keys.
+  files:
+    - path: CORE_MANIFEST.yml
+      reason: >-
+        ownership inventory of physically present paths; its own header states that
+        ownership is not activity, so naming a legacy path is its job
+    - path: 08_os/claude与人类的开发对话日志.md
+      reason: development log, same historical class as _dev/ and _runs/
+    - path: 08_os/05_registry/repository_guards_v1.yml
+      reason: carries the migration provenance of the file that moved
+
+checks:
+  - id: M1_publisher_authority
+    token: .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml
+    active_dependency_hits: 0
+    annotation_lines:
+      - "08_os/05_registry/repository_guards_v1.yml:155 - migration provenance in the new entry's evidence field"
+      - "CORE_MANIFEST.yml:147 - legacy-group ownership entry for a file still physically present"
+    historical_mentions: 9
+    verdict: PASS
+  - id: M2_token_profile
+    token: .ai/TOKEN_USAGE_PROFILE.md
+    active_dependency_hits: 0
+    annotation_lines:
+      - "08_os/claude与人类的开发对话日志.md:760 - development log recording a past correction"
+      - "CORE_MANIFEST.yml:131 - legacy-group ownership entry"
+    historical_mentions: 12
+    verdict: PASS
+    note: >-
+      The last active pointer was section 12 of the OS entry. It now names
+      AGENT_WORKING_DISCIPLINE.md sections 2 and 7 for the discipline, section 7 of
+      the entry itself for the risk tiers, and the migrated authority file for
+      publication - all three of which already held that content.
+  - id: M3_domain_run_root
+    token: .ai/PROGRAM_RUNS
+    active_dependency_hits: 0
+    annotation_lines:
+      - "CORE_MANIFEST.yml:176 - comment recording that the root moved"
+    historical_mentions: 21
+    verdict: PASS
+  - id: M3_manifest_ownership_entry_removed
+    check: >-
+      no list entry under either machine-read ownership key still names the old run
+      root. Checked directly rather than through the annotation exclusion, because a
+      list entry is a declaration and not a comment.
+    entries_remaining: 0
+    verdict: PASS
+  - id: M4_system_summary_structured_ref
+    token: "path: 系统机制总结.md"
+    active_dependency_hits: 0
+    historical_mentions: 2
+    verdict: PASS
+  - id: M1_migrated_authority_clean
+    check: >-
+      the migrated authority file carries no old-communication-plane dependency:
+      .ai/PROTOCOL, .ai/communication_compliance, .ai/TASKS, .ai/lanes,
+      .ai/load_profiles, .ai/STATE.yml, .ai/INBOX, .ai/OUTBOX, mailbox
+    tokens_present: 0
+    verdict: PASS
+  - id: new_authority_consumers
+    count: 8
+    note: >-
+      AGENTS.md, AGENT_WORKING_DISCIPLINE.md, CLAUDE.md, GEMINI.md,
+      .githooks/README.md, 08_os/开发入口与单窗口任务规范_v1.md,
+      08_os/05_registry/repository_guards_v1.yml and the migrated file itself. Six
+      were repointed by this task; the registry entry and the self-reference are new.
+
+separately_verified:
+  - check: context-management structure validator with the new domain runtime root
+    command: python 08_os/03_mechanisms/context_management/实现/verify_context_structure.py
+    result: "context-management structure: PASS"
+    exit: 0
+  - check: repository default check set
+    command: python 08_os/06_execution/task_discipline/quiet_verify/quiet_verify.py
+    result: 4/4 ok
+    exit: 0
+
+known_limits:
+  - >-
+    A zero dependency count is a statement about the active surface as defined
+    above, not about the whole tree. 08_os/_dev/** still names the old run root in
+    four files and 08_os/_runs/** in twenty-one; both are historical by the file
+    placement rules and neither is in this task's allowed paths.
+  - >-
+    The validator previously required the literal old run root token in
+    08_os/_dev/开发产物与文件隔离规范_v1.md. That requirement was removed rather than
+    satisfied: requiring current path tokens inside _dev made a superseded design
+    document a live contract surface, which contradicts what _dev is for. The two
+    canonical files it still checks are unchanged in that respect.

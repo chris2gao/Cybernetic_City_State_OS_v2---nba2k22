@@ -70,6 +70,6 @@ a CLI that never invokes hooks is not unguarded and not unpermitted — it owes 
 different, equivalent set of checks. That matrix is section 1.1 of
 `08_os/开发入口与单窗口任务规范_v1.md`; who may publish at all, and which acts stay
 action-bound even under the widest Human grant, is
-`.ai/REPOSITORY_PUBLISHER_AUTHORITY.yml`. Reporting `hook_guard: passed` on a
+`08_os/05_registry/repository_publisher_authority_v1.yml`. Reporting `hook_guard: passed` on a
 transport that cannot run this hook is an invalid completion pointer, and so is
 treating `not_applicable_transport` as nothing to prove.

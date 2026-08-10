@@ -1,7 +1,7 @@
 schema_version: context_management.file_layout.v1
 mechanism_version: 1
 keep_roots:
-  - .ai/PROGRAM_RUNS/
+  - 08_os/07_content/_runs/
   - 08_os/01_workflow/
   - 08_os/02_boot/
   - 08_os/03_mechanisms/
@@ -10,7 +10,7 @@ keep_roots:
   - 08_os/_dev/
   - 08_os/_runs/
 declared_roots:
-  - .ai/PROGRAM_RUNS/
+  - 08_os/07_content/_runs/
   - 08_os/01_workflow/
   - 08_os/02_boot/context_management/
   - 08_os/03_mechanisms/context_management/
@@ -51,7 +51,7 @@ classes:
     registry: false
     lifecycle: retain_per_run_policy
   - id: domain_runtime_run
-    path: .ai/PROGRAM_RUNS/<run-id>/
+    path: 08_os/07_content/_runs/<run-id>/
     ownership: domain
     tracked: when_durable
     registry: false
@@ -63,7 +63,7 @@ classes:
     registry: false
     lifecycle: delete_on_completion
   - id: domain_private_runtime
-    path: .ai/PROGRAM_RUNS/<run-id>/_runtime/
+    path: 08_os/07_content/_runs/<run-id>/_runtime/
     ownership: domain_runtime_untracked
     tracked: false
     registry: false
@@ -79,7 +79,7 @@ runtime_policy:
   preferred_location: outside_repository
   repository_fallback:
     os_development_run: 08_os/_runs/<run-id>/_runtime/
-    domain_runtime_run: .ai/PROGRAM_RUNS/<run-id>/_runtime/
+    domain_runtime_run: 08_os/07_content/_runs/<run-id>/_runtime/
   must_be_ignored: true
 publish_policy:
   mode: explicit_allowlist

@@ -8,7 +8,7 @@ created_at: 2026-07-29
     主张: 第一代 OS 的上下文机制不是全仓库预读，而是固定启动控制面、单一角色 Profile、当前任务引用和条件协议组成的懒加载结构。
     方向: 支持
     来源:
-      path: 系统机制总结.md
+      path: 08_os/03_mechanisms/context_management/依据材料/系统机制总结_历史输入_v1.md
       location: 第 7–11 行附近
       类型: 第一代系统盘点
     适用性: 证明角色化加载与按需引用已经在真实系统中使用过，可作为第二代候选机制，不代表应继承其文件集合。
@@ -18,7 +18,7 @@ created_at: 2026-07-29
     主张: 第一代完整初始化约有 13 个公共控制文件，不同角色再增加 2–6 个固定扩展，并动态读取当前任务引用。
     方向: 支持并限制
     来源:
-      path: 系统机制总结.md
+      path: 08_os/03_mechanisms/context_management/依据材料/系统机制总结_历史输入_v1.md
       location: 第二层完整上下文初始化、第三层角色 Profile
       类型: 第一代系统盘点
     适用性: 证明角色 Profile 可行；同时说明固定控制集可能偏重，第二代必须实测 token 与加载必要性，不能整体复制。
@@ -28,7 +28,7 @@ created_at: 2026-07-29
     主张: 第一代在 source 分支的 neutral STATE/INBOX 与 review 分支活动版本之间存在误读风险，不能把空状态当成当前任务状态。
     方向: 反例
     来源:
-      path: 系统机制总结.md
+      path: 08_os/03_mechanisms/context_management/依据材料/系统机制总结_历史输入_v1.md
       location: 完整初始化部分关于 STATE.yml 与 INBOX.md 的说明
       类型: 第一代失败风险
     适用性: 状态声明若与实际产物或分支脱节，会恢复错误上下文。
@@ -38,7 +38,7 @@ created_at: 2026-07-29
     主张: 第一代同一上下文中的 fast path 只读取当前 Human 指令、STATE、必要时 INBOX，以及 signal 的全部非空引用。
     方向: 支持
     来源:
-      path: 系统机制总结.md
+      path: 08_os/03_mechanisms/context_management/依据材料/系统机制总结_历史输入_v1.md
       location: 通信与 Handoff 协议栈的 fast path
       类型: 第一代运行经验
     适用性: 证明“固定入口 + 引用展开”可减少重复加载。
@@ -48,7 +48,7 @@ created_at: 2026-07-29
     主张: 第一代 Role Memory 只加载 core memory 与当前角色对应 memory，其他角色记忆不加载。
     方向: 支持
     来源:
-      path: 系统机制总结.md
+      path: 08_os/03_mechanisms/context_management/依据材料/系统机制总结_历史输入_v1.md
       location: Role Memory 机制
       类型: 第一代运行经验
     适用性: 已有按角色分配固定上下文的先例。
@@ -58,7 +58,7 @@ created_at: 2026-07-29
     主张: 测试、Schema、validator、fixture 和路由文件可能不进入模型上下文，但仍属于真实运行依赖。
     方向: 支持
     来源:
-      path: 系统机制总结.md
+      path: 08_os/03_mechanisms/context_management/依据材料/系统机制总结_历史输入_v1.md
       location: 系统实际存在三种使用、通信合规与 Release Binding
       类型: 第一代系统盘点
     适用性: 模型上下文与系统执行依赖必须分开建模。
@@ -98,7 +98,7 @@ created_at: 2026-07-29
     主张: 第一代大型任务与长周期 Program 已有 preflight、allowed paths、checkpoint、rollback、issue log 与 exact-head review 等成熟机制，但尚无通用自动编排引擎。
     方向: 支持并限制
     来源:
-      path: 系统机制总结.md
+      path: 08_os/03_mechanisms/context_management/依据材料/系统机制总结_历史输入_v1.md
       location: 大任务执行分两层、但目前还缺少什么
       类型: 第一代系统盘点
     适用性: 可提取版本引用、检查点和审核思想；不应把完整 Program 控制面直接移植到第一版上下文机制。

@@ -157,7 +157,7 @@ so its silence elsewhere proves nothing — read the remote for that. What each
 transport must prove instead is the matrix in section 1.1 of
 `08_os/开发入口与单窗口任务规范_v1.md`; who may publish at all, and which acts stay
 action-bound even under the widest grant, is
-`.ai/REPOSITORY_PUBLISHER_AUTHORITY.yml`.
+`08_os/05_registry/repository_publisher_authority_v1.yml`.
 
 *Paid for once:* an executor with only a connector read "I cannot run
 `git config --get core.hooksPath`" as "I am not permitted to publish", withheld a

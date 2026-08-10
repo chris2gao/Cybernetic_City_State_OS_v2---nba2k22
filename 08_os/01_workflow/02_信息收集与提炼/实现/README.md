@@ -25,7 +25,7 @@
 
 - 规格与理由——在上一级；
 - 共享 OS 机制开发/验证产生的证据——放在 `_runs/<run-id>/`；
-- 领域业务任务的运行流量——放在 `.ai/PROGRAM_RUNS/<run-id>/`；
+- 领域业务任务的运行流量——放在 `08_os/07_content/_runs/<run-id>/`；
 - 全局上下文隔离、发布、stale 与生命周期规范——放在 `03_mechanisms/context_management/`；
 - 不承担状态、溯源或方法论证据的普通临时文件。
 

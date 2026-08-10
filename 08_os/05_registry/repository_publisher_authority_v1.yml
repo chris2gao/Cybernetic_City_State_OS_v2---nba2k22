@@ -1,0 +1,135 @@
+schema_version: citystate.authority.v1
+mechanism_version: 1
+
+# Who may publish to this repository, and what a publication has to prove.
+#
+# Written because a real block carried the wrong diagnosis. An executor reported
+# that it could not publish because it could not run
+# `git config --get core.hooksPath`. Both halves were true and neither was a
+# permission problem. The repository had defined exactly one publication
+# transport - a local clone with a shell - so an executor holding only a GitHub
+# API connector fell outside the only gate that existed. The gate did not refuse
+# it. The gate had nothing to say about it, and "undefined" was being read as
+# "forbidden" by one executor while the same executor published a proposal branch
+# through that same undefined transport. An undefined transport produces exactly
+# that: inconsistent self-adjudication, not safety.
+#
+# Three files answer three different questions and none substitutes for another:
+#   CORE_MANIFEST.yml                                        who may author a path
+#   08_os/05_registry/repository_guards_v1.yml                what external tool loads a guard
+#   08_os/05_registry/repository_publisher_authority_v1.yml   what an executor may
+#                                                             publish, and what
+#                                                             evidence the
+#                                                             publication carries
+#
+# Loaded by: any executor before a write that leaves its own worktree.
+# Discovered from: AGENTS.md, AGENT_WORKING_DISCIPLINE.md section 6, and
+#   08_os/开发入口与单窗口任务规范_v1.md sections 1.1 and 6.
+# Core-owned. A domain that could edit its own copy could widen its own grant.
+#
+# Migration note, 2026-08-10: this file was moved here from
+# .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml by task
+# os-v2-pre-deletion-migration-final-whitelist-001, because the old path is on
+# the surface being retired while the authority itself is live. Authority
+# semantics are unchanged: root authority, identity binding, the grant, the
+# capability set, the action-bound destructive set, the core-history prohibition
+# and the recognized transports are carried across as they stood. Commentary that
+# resolved into the old communication plane was rewritten, not preserved, and no
+# compatibility pointer is left at the old path.
+
+root_authority: Human
+
+# The single rule that keeps everything below safe.
+#
+# A provider name is text the caller writes about itself. It authenticates
+# nothing: anything able to emit `provider: ChatGPT` would inherit every
+# capability in this file. So authority binds to the Human instruction and to the
+# host or connector principal that carried it - never to the name, and never to a
+# role label, load profile, receipt or model-generated human_gate field.
+identity:
+  self_declared_provider_name_is_authority: false
+  accepted_bindings:
+    - trusted_host_injected
+    - connector_authenticated
+    - local_authenticated
+  on_missing_or_unverifiable_binding: fail_closed
+
+# The Human grant of record. Durable until superseded by a change to this file in
+# master. A chat message asserting a wider grant does not widen it; it is a
+# request to amend this file.
+grant:
+  granted_by: Human
+  granted_on: 2026-08-01
+  authorization_ref: >-
+    Human instruction of 2026-08-01 granting top-tier repository write authority
+    to the decision-making executors while keeping destructive Git action-bound.
+    The request document that prompted it sits on the legacy surface scheduled for
+    retirement; the grant does not depend on it. This file is the durable record,
+    and amending the grant means amending this file in master.
+  grants_to: occupants_of_existing_stable_roles
+  # What "role" means is answered by the active OS, not by this file and not by
+  # the retired communication plane: the role table in AGENT_WORKING_DISCIPLINE.md
+  # says what each role produces, and section 7 of
+  # 08_os/开发入口与单窗口任务规范_v1.md binds who occupies it for a given task
+  # through the packet's `publisher` and `executor_profile` blocks. Whether an
+  # occupant may write is a capability question answered here; it was deliberately
+  # not turned into a new identity, because inventing one would make a two-file
+  # unblock wait on a schema migration.
+  role_definition_source:
+    - AGENT_WORKING_DISCIPLINE.md
+    - 08_os/开发入口与单窗口任务规范_v1.md section 7
+  activated_by:
+    - current_explicit_Human_instruction
+    - authenticated_Human_approved_durable_delegation
+  role_alone_authorizes: false
+
+# What an activated publisher may do without asking again.
+capabilities:
+  read_repository: true
+  create_branch: true
+  update_task_branch: true
+  create_update_delete_files_in_authorized_scope: true
+  commit: true
+  push_source_branch: true
+  open_update_pull_request: true
+  fast_forward_master: true
+  merge_when_strategy_is_Human_approved: true
+  remote_readback_and_audit: true
+  # Moved out of the destructive set on 2026-08-02. Deleting a merged branch
+  # loses no information: its commits stay reachable from master. It is not in
+  # the same class as rewriting history, and pairing them meant every cleanup
+  # reached for `--no-verify`, which unlocks both. Record name and sha before
+  # deleting an unmerged branch - those commits do become collectable.
+  delete_remote_branch: true
+
+# Not "insufficient permission". These are unrecoverable, so each one needs a
+# current Human authorization bound to that specific action - being trusted does
+# not make an unrecoverable act recoverable.
+destructive_or_irreversible:
+  force_push: action_bound_Human_authorization_required
+  rewrite_published_history: action_bound_Human_authorization_required
+  delete_master_or_repository: action_bound_Human_authorization_required
+  change_repository_visibility_or_credentials: action_bound_Human_authorization_required
+  activate_runtime_scheduler_or_coordinator: action_bound_Human_authorization_required
+
+# One prohibition that no grant lifts, because its cost is structural rather than
+# a matter of trust. Every domain repository shares an ancestor with core; one
+# rewrite breaks mergeability for all of them simultaneously and nothing repairs
+# it afterwards. The blast radius does not shrink when the author is competent.
+core_history_rewrite: prohibited_regardless_of_grant
+
+# Publication transports. The matrix itself, with the per-transport gates, lives
+# in 08_os/开发入口与单窗口任务规范_v1.md section 1.1; this list exists so that an
+# unknown transport fails closed even for a reader that never reaches that file.
+recognized_transports:
+  - local_git
+  - github_api_connector
+  - github_cli
+unknown_transport: blocked
+
+# Never stored here: tokens, credentials, key material, or any claim of identity
+# that the repository itself would have to take on faith.
+never_stored:
+  - credentials_or_tokens
+  - key_files
+  - self_declared_model_identity_as_proof
