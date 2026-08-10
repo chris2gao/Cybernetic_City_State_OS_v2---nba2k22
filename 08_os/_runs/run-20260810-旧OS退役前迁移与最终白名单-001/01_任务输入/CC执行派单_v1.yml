@@ -1,0 +1,59 @@
+schema_version: citystate.backend_dispatch.v1
+task_id: os-v2-pre-deletion-migration-final-whitelist-001
+run_id: run-20260810-旧OS退役前迁移与最终白名单-001
+status: authorized_for_execution
+executor: Claude_Code
+reviewer: ChatGPT_independent_project_reviewer
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+work_branch: dev/os-v2-pre-deletion-migration-final-whitelist-001
+expected_master_at_dispatch: eb4be95a25cb4b0929def284a7fb4b6a412aed55
+minimum_start_ancestor: c932eafb53881ae32d5dd926391bb1d23e7fdade
+task_ref: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/01_任务输入/任务包_v1.yml
+
+start_gate:
+  - fresh-read remote master exact 40-char SHA
+  - require master == expected_master_at_dispatch; otherwise stop before writes
+  - require work branch linearly descends from minimum_start_ancestor
+  - read AGENT_WORKING_DISCIPLINE.md and AGENTS.md from the branch/base
+  - read 08_os/README.md and 08_os/开发入口与单窗口任务规范_v1.md
+  - read task_ref in full
+
+execution_instruction: >-
+  Execute the packet exactly in order. This is a migration-and-final-whitelist task,
+  not the physical mass-deletion task. Do not re-open the Human decision on the prior
+  453 delete candidates or 01_Research_Reports/**: import those exact paths into the
+  final direct-delete list. Do not delete them in this task.
+
+critical_points:
+  - publisher authority moves to 08_os/05_registry/repository_publisher_authority_v1.yml; preserve semantics, remove obsolete old-OS commentary, update every active consumer
+  - .ai/TOKEN_USAGE_PROFILE.md gets no new canonical copy; remove its final active pointer because useful discipline is already in AGENT_WORKING_DISCIPLINE.md
+  - .ai/PROGRAM_RUNS/ semantics move to 08_os/07_content/_runs/ atomically across machine contract/validator/registry/docs/manifest/.gitignore
+  - 系统机制总结.md evidence source moves into 08_os context-management evidence with provenance and all seven active refs updated
+  - .ai/token_profile/** six measurement files are preserved only as historical evidence in this run, not as an authority
+  - CORE_MANIFEST ownership is normalized for the retained shared root surface; physical legacy paths still present must not be falsely described as already deleted
+  - fix the stale 06_Silicon_Index sentence in 08_os/07_content/README.md
+  - task packets use top-level allowed_changed_paths; do not introduce scope.allowed_write_paths
+  - no compatibility shim and no fallback to old .ai paths
+  - no master push
+
+publication:
+  work_branch_non_force_push: authorized
+  master_push: prohibited
+  merge: prohibited
+  rebase: prohibited
+  cherry_pick: prohibited
+  force_push: prohibited
+
+return:
+  status_exact: ready_for_independent_review
+  include:
+    - implementation_commit_or_commits
+    - final_remote_branch_head
+    - changed_paths
+    - migration_summary_M1_to_M5
+    - ownership_and_stale_text_summary
+    - final_non08_whitelist
+    - final_direct_delete_count_and_pointer
+    - zero_unassigned_partition_result
+    - validation_summary
+    - master_before_after
