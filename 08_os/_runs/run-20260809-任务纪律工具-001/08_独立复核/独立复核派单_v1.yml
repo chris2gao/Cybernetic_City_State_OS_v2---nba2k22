@@ -120,12 +120,18 @@ known_open_items_declared_by_executor:
   note: >-
     以下由执行者主动声明，列出是为了避免复核者把"已知未做"误当成"隐瞒"。
     它们不是免检项：复核者仍应判断这些声明是否完整、是否还有未声明的缺口。
+  items:
   - master 未修改也未合并；合并需合并时点的 Human 明确授权
   - .pytest_cache 三处目录权限异常未处理，仅用 .git/info/exclude 消除 git 噪声
   - git 配置与 .git/info/exclude 不进 Git，不随合并传播，换机器需重设
   - quiet_verify 内置检查集硬编码四个既有校验器路径，这些路径变动时需同任务更新
   - preflight 的 git 管道部分未做跨平台矩阵测试，仅在 Windows/Python 3.14 上真实调用过
   - 未提供 token 节省数字，因为没有同规模任务的实测对照
+  - >-
+    执行者在 c0c0024e 与 ab1310d7 两次提交里推送过 YAML 结构错误的 run 产物，
+    原因是解析检查跑了但没被设为门；已在后续提交修复，并记入
+    07_测试执行/验证结果_v1.yml 的 executor_incident_log。
+    请自行确认 candidate_head 上所有 run 产物均可 safe_load 且为单文档。
 
 out_of_scope_for_this_review:
   - 是否应当合并到 master（属 Human 授权，不属复核判定）

@@ -46,10 +46,10 @@ positive_results:
   exit_code: 0
   note: 11 条全部为 UTF-8 原文路径；未跟踪目录已展开为文件而非目录条目
 
+negative_probes_purpose: >-
+  一个只在成功路径上跑过的校验器，等于没有证据。以下四条故意制造违规，
+  确认工具会拒绝而不是沉默通过。
 negative_probes:
-  purpose: >-
-    一个只在成功路径上跑过的校验器，等于没有证据。以下三条故意制造违规，
-    确认工具会拒绝而不是沉默通过。
 - probe: path_ledger 对一个刻意收窄的 allowlist（只允许 registry 一个文件）
   expected: exit 1 并逐条列出越界路径
   observed: exit 1，stderr 逐条打印 outside_allowlist
@@ -60,7 +60,7 @@ negative_probes:
   passed: true
 - probe: quiet_verify 注入一个必然失败的检查（退出码 7）
   expected: exit 1，摘要显示 0/1，并展开尾部
-  observed: "deliberate_fail exit=7 FAILED" 与 "checks 0/1 ok"，exit 1
+  observed: 输出 deliberate_fail exit=7 FAILED 与 checks 0/1 ok，exit 1
   passed: true
 - probe: path_ledger 单元测试中的真 Git 临时仓
   setup: 仓库故意配成 core.quotepath=true 且 status.showUntrackedFiles=normal
@@ -101,3 +101,27 @@ limitations:
   未做跨平台矩阵测试；纯函数部分由单元测试覆盖
 - quiet_verify 内置检查集硬编码四个既有校验器路径；这些路径变动时需同任务更新
 - 本记录中的 token 收益未给出数字，因为尚无同规模任务的实测对照
+
+executor_incident_log_note: >-
+  记录本任务内执行者自己犯的错。隐去它会让后面的读者以为过程是干净的。
+executor_incident_log:
+- incident: 运行了 YAML 解析检查却没有据其结果拦住提交
+  detail: >-
+    验证结果_v1.yml 与 独立复核派单_v1.yml 两处 YAML 结构错误
+    （在同一层混用 mapping 键与序列项；一处双引号标量后又跟了内容），
+    在提交脚本里已经打印了 ParserError，但脚本没有把它设为门，于是照常 commit 并 push。
+  commits_affected: [c0c0024e83314c1ae3dbe2b70f9959ba68f14ce1, ab1310d7f83086cd1a46823c37e895f402cafe85]
+  fixed_in: 后续提交
+  root_cause: 检查存在但不是门；"跑过"被当成了"通过"
+  systemic_note: >-
+    这正是本任务 quiet_verify 想解决的问题的另一面：光有检查不够，必须让退出码决定流程。
+    当前 quiet_verify 内置检查集不含 run 产物的 YAML 良构性检查，属已知缺口。
+- incident: 两次 PowerShell 单行命令引号错误
+  detail: 在 -Command 的双引号串里引用 $LASTEXITCODE，产生两屏 parser error
+  root_cause: 违反 AGENT_WORKING_DISCIPLINE.md 第 2 节"多语句写成 .ps1 文件再执行"
+  fixed_in: 之后全部改为 .ps1 文件执行
+
+follow_up_findings_not_fixed_in_this_task:
+- finding: quiet_verify 默认检查集应包含 run 目录 YAML 良构性检查
+  reason_not_fixed: 属新增能力，超出本任务已声明范围；按单窗口纪律记为 finding 而不扩 diff
+  suggested_owner: 下一个 task_discipline 任务
