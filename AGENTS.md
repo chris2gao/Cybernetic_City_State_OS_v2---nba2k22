@@ -41,6 +41,33 @@ Vendor-specific mechanics, and nothing else, belong here:
 
 - Codex: use `apply_patch` for manual file edits.
 
+## Engineering Design Principles
+
+These are design defaults, not grants of deletion, modification, or publication
+authority. Apply them only within the current task's authorized scope.
+
+1. Do not preserve backward compatibility by default. When an artifact or behavior
+   is obsolete, require an independent review of its removal; after that review
+   passes, delete it instead of adding compatibility layers, migrations,
+   deprecation paths, or fallbacks.
+2. Choose the simplest implementation that fully satisfies the current
+   requirements. Do not add speculative abstractions, extension points, or
+   configuration layers.
+3. In a layered system, establish the smallest working end-to-end path first, then
+   add layers incrementally. Never dismantle a working slice merely to accommodate
+   incomplete complexity.
+4. Keep components modular, with clear boundaries and separation of concerns.
+5. Prefer mature, actively maintained libraries. Do not reimplement an available
+   capability without a concrete, task-relevant reason.
+6. Before adding a dependency or writing a custom implementation, inspect the
+   project's existing dependencies and the capabilities they already provide.
+7. Make architecture decisions for the long-term target. Do not accept a knowingly
+   temporary "use this now and replace it later" design; this does not justify
+   speculative implementation beyond current requirements.
+8. For material design problems, first study how mature products and established
+   patterns solve the same problem. Adapt a proven pattern instead of inventing a
+   new one from scratch.
+
 ## Safety Rules
 
 - Do not run destructive git commands such as `git reset --hard` or `git checkout --` without explicit approval.
