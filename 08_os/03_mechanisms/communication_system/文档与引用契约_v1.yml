@@ -1,0 +1,33 @@
+schema_version: citystate.communication.document_and_refs.v1
+new_long_document:
+  default_encoding: Markdown_with_minimal_YAML_front_matter
+  structured_alternative: safe_subset_YAML
+  required_front_matter:
+    - document_id
+    - task_id
+    - author_endpoint_id
+    - author_task_role
+    - purpose
+    - privacy_class
+  optional_front_matter:
+    - supersedes
+  immutable_after_publication: true
+  correction: new_version_and_new_message_reference
+existing_repository_resource:
+  may_be_referenced_directly: true
+  rewrite_to_add_front_matter: prohibited
+required_refs:
+  semantics: exact_direct_nonrecursive_read_set
+  may_be_empty: true
+  directory_scan: prohibited
+  recursive_reference_expansion: prohibited
+  default_all_sender_index_read: prohibited
+  missing_ref: fail_closed
+bootstrap_load_order:
+  - manifest
+  - own_endpoint_card
+  - own_role_context_entry
+  - exact_message
+  - direct_required_refs_in_declared_order
+  - authorization_ref_when_present_and_not_already_loaded
+

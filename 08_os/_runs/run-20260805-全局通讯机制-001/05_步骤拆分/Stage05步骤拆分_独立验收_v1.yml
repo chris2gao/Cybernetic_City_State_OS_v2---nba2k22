@@ -1,0 +1,145 @@
+schema_version: citystate.stage05_independent_review.v1
+review_id: stage05-step-decomposition-independent-review-001
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+status: rejected_correction_required
+
+review_basis:
+  primary_remote_git: true
+  executor_report_trusted_as_evidence: false
+  executor_self_validator_treated_as_semantic_proof: false
+  uploaded_handoff_used_as_secondary_context_only: true
+
+repository_state:
+  master_head: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  master_modified: false
+  work_branch: dev/os-v2-global-communication-system-001
+  reviewed_submission_head: 49c3d9914b54140e527a6521d627240bb34ae147
+  submission_head_readback_matches: true
+  submission_start_head: 8c0f835513b61883e2bd2efda0ed2ebebd0b5c98
+  linear_submission_commits: 1
+  changed_paths:
+    - 08_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/05_steps.yml
+    - 08_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/实现/validate_05_steps.py
+    - 08_os/_runs/run-20260805-全局通讯机制-001/run.yml
+  stage06_changes_observed: false
+
+accepted_properties:
+  formal_stage05_schema_shape: true
+  stage04_predecessor_blob_bound: 360571b6b29a3baecd753dc45611457da9ab6bf2
+  stage04_normalized_tests_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+  frozen_test_count: 50
+  all_frozen_tests_covered: true
+  step_count: 10
+  dependency_graph_acyclic_and_serializable: true
+  retry_budgets_in_range_1_to_3: true
+  exits_exactly_pass_retry_invalidate_upstream: true
+  duplicate_test_mappings_have_rationale: true
+  frozen_stage04_candidate_specs_unchanged: true
+  stage06_not_started: true
+
+blocking_findings:
+  - finding_id: STAGE05-B01
+    severity: blocker
+    title: planned_stage06_paths_violate_exact_task_allowlist
+    evidence:
+      task_packet_allowed_changed_paths:
+        - 08_os/03_mechanisms/communication_system/**
+        - 08_os/02_boot/communication_system/**
+        - 08_os/05_registry/communication_system_v1.yml
+        - 08_os/06_execution/boot/communication_system/**
+      stage05_planned_roots:
+        - 08_os/03_mechanisms/global_communication_system/
+        - 08_os/02_boot/global_communication_system/
+        - 08_os/05_registry/global_communication_system_v1.yml
+        - 08_os/06_execution/communication/
+    impact: >-
+      Stage06 按当前计划施工会写入未获 Human 授权的路径；exact changed-path allowlist 是权限边界，
+      不能由 Stage05 或 Stage06 执行者自行改名、扩展或替换。
+    required_correction:
+      - 把所有 canonical source/boot/registry/execution intended paths 改为任务包已授权的精确路径族。
+      - 不得以“Stage06 与 registry 再决定确切目录名”为由延后；这些目录边界已由任务包固定。
+      - 08_os/_communication/<repository_id>/ 只可作为 B_v3 定义的运行时逻辑载体引用；本实现任务不得创建 canonical live instance state，且它不属于当前 implementation changed-path allowlist。
+
+  - finding_id: STAGE05-B02
+    severity: blocker
+    title: stage06_entry_Human_gate_not_modeled_as_executable_prerequisite
+    evidence:
+      stage05_authorization: Human授权_进入阶段五_v1.yml
+      observed_enter_stage_06_execution: false
+      current_S01_prerequisite: old_stage05_authorization_remains_false
+    impact: >-
+      S-01 是 Stage06 第一施工步骤，但当前计划没有要求新的 Stage06 Human authorization artifact
+      作为机器可检查的开始条件。旧 Stage05 授权保持 false 只能证明“之前没授权”，不能证明“现在可施工”。
+    required_correction:
+      - 保留旧 Stage05 authorization 的 enter_stage_06_execution:false 不变。
+      - 在 Stage05 计划中定义新的 Stage06 Human gate artifact/ref 作为 S-01 开始前提。
+      - S-01 必须要求该新授权明确 enter_stage_06_execution:true，并绑定 reviewed 05_steps artifact/head。
+      - 未取得该授权时 Stage06 executor 必须 fail-closed，不得创建任何实现文件。
+
+  - finding_id: STAGE05-B03
+    severity: blocker
+    title: mandatory_stage06_execution_package_missing_from_plan
+    evidence:
+      stage06_schema: 08_os/01_workflow/06_执行/实现/最小运行schema_v1.yml
+      required_artifact: 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/06_execution.yml
+      required_payload_fields:
+        - executor_role
+        - allowed_write_paths
+        - actual_write_paths
+        - frozen_test_package_sha256
+        - attempts
+        - unauthorized_write_attempts
+      current_plan: S10 claims Stage06 complete without assigning materialization/validation of 06_execution.yml
+    impact: >-
+      即使 S-01..S-10 的代码与测试全部完成，当前计划也无法满足七阶段 workflow 对 Stage06 的正式完成契约。
+    required_correction:
+      - 在步骤计划中明确由 Stage06 哪一步持续/最终物化 06_执行/06_execution.yml。
+      - execution package 必须绑定 Stage04 frozen package 与最终 accepted Stage05 05_steps.yml。
+      - 每个 step 的真实 attempt/retry、actual_write_paths 和 unauthorized_write_attempts 必须可累计并在最终包中校验。
+      - S-10 只有在 06_execution.yml schema/integrity validation 通过后才可宣称 Stage06 complete 并交 Stage07。
+
+validator_coverage_gap:
+  status: correction_required
+  finding: >-
+    validate_05_steps.py 当前只检查字段、test coverage、dependency graph、retry/exits 与 invalidation；
+    未校验 intended_changed_paths/path_ownership_model 是否属于任务包 exact changed-path allowlist，
+    也未校验 Stage06 mandatory execution-package closure。
+  required_correction:
+    - 增加任务包 allowed_changed_paths 与 Stage05 planned paths 的确定性 subset 检查。
+    - 增加 Stage06 schema closure 检查，确保计划包含 06_execution.yml 的生成与校验责任。
+    - 对 Stage06 Human gate prerequisite 做结构化检查；不得只搜索说明文字。
+
+non_blocking_observations:
+  - upstream_invalidation_targets 包含 Stage01/02，而现有步骤直接 invalidate 只指向 Stage03/04；可保留为完整 contract，但应避免造成执行者可绕过 Human gate 直接重开更早阶段的误解。
+  - S10 在 Stage06 内运行全部 frozen tests 可作为执行者自检，但不能替代 Stage07 的独立验证。
+
+stage_decision:
+  stage05_independent_review_passed: false
+  stage05_correction_required: true
+  stage05_same_task_review_correction_allowed: true
+  stage03_reopen_required: false
+  stage04_reopen_required: false
+  frozen_tests_may_change: false
+  stage06_authorized: false
+  stage06_must_not_start: true
+
+correction_scope:
+  allowed:
+    - 08_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/05_steps.yml
+    - 08_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/实现/validate_05_steps.py
+    - 08_os/_runs/run-20260805-全局通讯机制-001/run.yml
+    - 08_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/*review_or_correction_metadata*
+  prohibited:
+    - any Stage04 test/spec/candidate/harness/result change
+    - any Stage06 implementation file
+    - any B_v3 or earlier-stage semantic artifact change
+    - master modification
+    - rebase
+    - amend
+    - squash
+    - force_push
+    - merge_commit
+    - history_rewrite
+
+next_required_status: ready_for_independent_stage05_rereview

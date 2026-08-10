@@ -1,0 +1,22 @@
+schema_version: citystate.stage05_Human_authorization.v1
+run_id: run-20260805-全局通讯机制-001
+task_id: os-v2-global-communication-system-001
+status: authorized
+
+Human_statement: >-
+  Stage 04 正式冻结通过后继续本任务；允许进入 Stage 05 步骤拆分，
+  可由项目负责人指定适合的独立模型执行，但不得提前进入 Stage 06 实现。
+
+binding:
+  frozen_test_package: ../04_测试生成/04_tests.yml
+  frozen_test_package_git_blob_sha: 360571b6b29a3baecd753dc45611457da9ab6bf2
+  normalized_tests_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+  independent_freeze_review: ../04_测试生成/Stage04正式冻结包_独立验收_v1.yml
+  independent_freeze_review_commit: 18a4ee8355ccec5da8d75c4fb05c16e6c295c2e4
+
+authorization:
+  enter_stage_05_step_decomposition: true
+  create_05_steps_yml: true
+  modify_frozen_stage04_tests: false
+  enter_stage_06_execution: false
+  modify_master: false

@@ -1,0 +1,68 @@
+schema_version: citystate.communication.navigation_archive.v1
+discovery:
+  owner: task_navigation_owner
+  allowed_fields:
+    - active_task_roots
+    - archived_task_roots
+  purpose: locate_task_roots_only
+  prohibited:
+    - message_body
+    - sender_index_entry
+    - delivery_state
+    - full_history
+Human_current:
+  owner: task_navigation_owner
+  minimal_fields:
+    - task_id
+    - title
+    - current_stage_or_checkpoint
+    - important_refs
+    - pending_Human_decision
+    - last_material_update
+  material_triggers:
+    - task_started
+    - Human_decision_required
+    - material_block_or_risk
+    - stage_completed
+    - final_result_ready
+    - Human_requests
+  ordinary_message_update: prohibited
+default_load:
+  active_current_task_only: true
+  archive_requires:
+    - exact_archive_pointer
+    - Human_explicit_request
+archive:
+  prerequisite_evidence:
+    source: physically_readable_files_inside_active_task_root
+    required_refs:
+      - completion_pointer_ref
+      - material_residuals_ref
+      - private_runtime_policy_ref
+    github_convergence_ref: required_when_GitHub_copy_required
+    caller_boolean_only: prohibited
+  preconditions:
+    - final_result_or_completion_pointer_exists
+    - material_failures_and_residuals_recorded_when_any
+    - required_GitHub_convergence_complete
+    - private_runtime_not_needed_as_durable_source
+  action_order:
+    - validate_public_task_and_durable_prerequisite
+    - move_whole_task_active_to_archive
+    - update_discovery
+    - delete_explicit_untracked_private_runtime
+  private_runtime_delete_guard:
+    repository_internal_runtime_must_be_untracked: true
+    repository_internal_runtime_must_be_ignored: true
+  public_history_categories_preserved:
+    - indexes
+    - messages
+    - documents
+    - Human
+    - final_results
+    - material_failures
+public_task_prohibited:
+  - private_runtime
+  - _runtime
+  - private_reasoning
+secure_erasure_claim: false

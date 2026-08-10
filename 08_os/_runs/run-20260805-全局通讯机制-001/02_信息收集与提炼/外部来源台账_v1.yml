@@ -1,0 +1,214 @@
+schema_version: citystate.research_source_ledger.v1
+ledger_id: global-communication-source-ledger-001
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+created_at: 2026-08-05T07:08:00-07:00
+research_mode: Deep_Research
+source_policy:
+  technical_claims: primary_or_official_sources_only
+  fact_inference_separation: required
+  legacy_OS_as_initial_design_input: prohibited
+
+sources:
+  - source_id: SRC-A2A-1
+    title: Agent2Agent Protocol Specification 1.0.0
+    publisher: A2A Protocol Working Group
+    source_type: official_specification
+    url: https://github.com/a2aproject/A2A/blob/main/docs/specification.md
+    accessed_at: 2026-08-05T06:55:00-07:00
+    verified_facts:
+      - A2A targets interoperability between independent agents built with different frameworks, languages, or vendors.
+      - AgentCard separates identity, capabilities, skills, interfaces, and authentication requirements.
+      - The core data model separates Task, Message, Part, Artifact, and AgentCard.
+      - Messages should not be used to deliver task outputs; results should be returned as Artifacts.
+      - Critical information must not rely on transient Messages because message persistence and reconnect delivery are not guaranteed.
+      - A2A includes streaming, task lifecycle state, and push-notification mechanisms.
+    project_relevance:
+      adopt_candidates:
+        - endpoint identity and capability separation
+        - lightweight message versus external result artifact separation
+        - explicit task identity
+        - content modality or file reference rather than forced inline text
+      reject_for_v1:
+        - autonomous server-to-server interaction
+        - streaming updates
+        - push notifications
+        - detailed task-state lifecycle
+      limitation: A2A is a network service protocol; this project is a Human-triggered file relay and should not inherit A2A operational complexity.
+
+  - source_id: SRC-MCP-ROOTS-1
+    title: Model Context Protocol Roots
+    publisher: Model Context Protocol
+    source_type: official_specification
+    url: https://modelcontextprotocol.io/specification/2025-03-26/client/roots
+    accessed_at: 2026-08-05T06:58:00-07:00
+    verified_facts:
+      - Roots define filesystem boundaries visible to a server and are identified by file URIs.
+      - Root capability is declared explicitly rather than inferred from product identity.
+      - User interfaces may let users choose project or workspace roots.
+      - List-change notification support is optional.
+    project_relevance:
+      adopt_candidates:
+        - configured local root
+        - endpoint capability declaration
+        - explicit workspace boundaries
+      reject_for_v1:
+        - root-change notifications
+        - automatic discovery or monitoring
+      limitation: MCP roots describe client-server filesystem exposure, not model-to-model task messaging.
+
+  - source_id: SRC-MCP-RESOURCES-1
+    title: Model Context Protocol Resources
+    publisher: Model Context Protocol
+    source_type: official_specification
+    url: https://modelcontextprotocol.io/specification/2025-11-25/server/resources
+    accessed_at: 2026-08-05T06:58:00-07:00
+    verified_facts:
+      - Resources are identified by URI and may represent text or binary content.
+      - A client can list resources and read a selected resource by exact URI.
+      - Resource subscription and list-change notification features are optional.
+    project_relevance:
+      adopt_candidates:
+        - exact path or URI as long-content reference
+        - read referenced resources only when needed
+      reject_for_v1:
+        - subscription
+        - notification-driven refresh
+      limitation: The project uses repository and host paths rather than implementing MCP transport.
+
+  - source_id: SRC-MCP-LIFECYCLE-1
+    title: Model Context Protocol Lifecycle
+    publisher: Model Context Protocol
+    source_type: official_specification
+    url: https://modelcontextprotocol.io/specification/2025-11-25/basic/lifecycle
+    accessed_at: 2026-08-05T06:58:00-07:00
+    verified_facts:
+      - Protocol version and capabilities are negotiated before normal operation.
+      - Parties should use only capabilities successfully negotiated.
+    project_relevance:
+      adopt_candidates:
+        - endpoint cards declare actual capabilities
+        - unsupported carrier or capability fails closed
+      reject_for_v1:
+        - live connection lifecycle
+        - automatic negotiation session
+      limitation: This project performs static task-time capability declaration rather than connection negotiation.
+
+  - source_id: SRC-OPENAI-HANDOFF-1
+    title: OpenAI Agents SDK Handoffs
+    publisher: OpenAI
+    source_type: official_documentation
+    url: https://openai.github.io/openai-agents-python/handoffs/
+    accessed_at: 2026-08-05T06:55:00-07:00
+    verified_facts:
+      - Handoffs transfer work to a specific destination agent.
+      - Small structured metadata can be supplied as handoff input.
+      - Input filters can restrict what prior history the receiving agent sees.
+      - Without filtering, the receiving agent may receive the entire previous conversation history.
+    project_relevance:
+      adopt_candidates:
+        - one intended recipient per message
+        - compact handoff metadata
+        - explicit context filtering
+      reject_for_v1:
+        - model-selected autonomous handoff execution
+        - whole-conversation transfer by default
+      limitation: The SDK assumes an active orchestration runtime; this project requires Human relay.
+
+  - source_id: SRC-W3C-PROV-1
+    title: PROV-O The PROV Ontology
+    publisher: W3C
+    source_type: W3C_recommendation
+    url: https://www.w3.org/TR/prov-o/
+    accessed_at: 2026-08-05T06:55:00-07:00
+    verified_facts:
+      - PROV-O separates Entity, Activity, and Agent as starting-point concepts.
+      - Agent represents responsibility for an activity or entity.
+    project_relevance:
+      adopt_candidates:
+        - distinguish endpoint identity, message or document entity, and relay or publication activity
+      reject_for_v1:
+        - full ontology
+        - RDF or semantic-web dependency
+      limitation: Only the conceptual separation is useful; the complete ontology is excessive for this task.
+
+  - source_id: SRC-GIT-OBJECTS-1
+    title: Git Internals - Git Objects
+    publisher: Git project
+    source_type: official_documentation
+    url: https://git-scm.com/book/en/v2/Git-Internals-Git-Objects
+    accessed_at: 2026-08-05T06:55:00-07:00
+    verified_facts:
+      - Git is a content-addressable filesystem.
+      - Stored content receives a key that can later retrieve the same content.
+    project_relevance:
+      adopt_candidates:
+        - GitHub carrier can bind content through Git blob and commit identity
+      reject_for_v1:
+        - additional per-message digest when Git identity already provides sufficient content binding
+      limitation: Git identity does not prove Human approval, intended recipient, or semantic correctness.
+
+  - source_id: SRC-JSON-1
+    title: RFC 8259 JSON Data Interchange Format
+    publisher: IETF
+    source_type: Internet_standard
+    url: https://www.rfc-editor.org/rfc/rfc8259.html
+    accessed_at: 2026-08-05T07:01:00-07:00
+    verified_facts:
+      - JSON is a lightweight, text-based, language-independent data interchange format.
+      - Object names should be unique; duplicate-name handling differs across implementations and may be unpredictable.
+    project_relevance:
+      adopt_candidates:
+        - JSON remains a machine-format candidate
+        - duplicate-key negative tests are required if JSON is chosen
+      limitation: The standard does not determine Human readability or project-specific information density.
+
+  - source_id: SRC-YAML-1
+    title: YAML 1.2.2 Specification
+    publisher: YAML Language Development Team
+    source_type: official_specification
+    url: https://yaml.org/spec/1.2.2/
+    accessed_at: 2026-08-05T07:01:00-07:00
+    verified_facts:
+      - YAML mappings are unordered associations whose keys must be unique.
+      - Loading can fail because of malformed streams, unresolved aliases or tags, invalid content, or non-unique keys.
+    project_relevance:
+      adopt_candidates:
+        - YAML remains a Human-readable structured-format candidate
+        - strict loader behavior and duplicate-key tests are required if YAML is chosen
+      limitation: Common libraries may not enforce every specification failure consistently.
+
+  - source_id: SRC-JSON-SCHEMA-1
+    title: JSON Schema Draft 2020-12
+    publisher: JSON Schema project
+    source_type: official_specification
+    url: https://json-schema.org/draft/2020-12
+    accessed_at: 2026-08-05T07:01:00-07:00
+    verified_facts:
+      - JSON Schema provides structural validation vocabularies for JSON instances.
+    project_relevance:
+      adopt_candidates:
+        - deterministic schema validation for a selected structured message format
+      limitation: Schema validation cannot prove that message content is semantically sufficient or correct.
+
+  - source_id: SRC-ANTHROPIC-MEMORY-1
+    title: Manage Claude memory
+    publisher: Anthropic
+    source_type: official_documentation
+    url: https://docs.anthropic.com/zh-CN/docs/claude-code/memory
+    accessed_at: 2026-08-05T07:04:00-07:00
+    verified_facts:
+      - CLAUDE.md memory files are automatically loaded into Claude Code context.
+      - Imported memory files can recursively import other files to a bounded depth.
+    project_relevance:
+      adopt_candidates:
+        - keep stable operating instructions separate from task communication traffic
+      reject_for_v1:
+        - placing live messages or long task documents in globally auto-loaded CLAUDE memory
+      limitation: Behavior applies to Claude Code and cannot be assumed for all endpoint products.
+
+research_integrity:
+  source_facts_are_not_design_verdicts: true
+  project_adoption_requires_stage_03_modeling: true
+  rejected_features_recorded: true
+  raw_search_transcript_not_durable: true

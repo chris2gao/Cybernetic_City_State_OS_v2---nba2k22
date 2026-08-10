@@ -1,0 +1,181 @@
+schema_version: citystate.communication_system.stage04_mixed_execution_independent_review.v1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+review_status: rejected_correction_required
+stage_04_freeze_allowed: false
+stage_05_allowed: false
+
+review_scope:
+  work_branch: dev/os-v2-global-communication-system-001
+  dispatch_head: bb4c296b25288ae87b9ecee20f3cdc1b5a80964e
+  submission_relation_to_dispatch: one_linear_commit_ahead
+  exact_submission_head: connector_did_not_expose_branch_tip_sha
+  submission_head_identity_rule: direct_parent_of_this_review_commit
+  master_head: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  master_unchanged: true
+
+execution_provenance:
+  reported_by_Human:
+    first_part_model: Claude_Opus_4_6
+    continuation_model: Gemini
+  durable_runner_identity: Antigravity_Gemini_v3
+  exact_model_handoff_boundary_recorded: false
+  required_execution_result_file_present: false
+  missing_required_path: 04_测试生成/Opus最终定点修复_执行结果_v1.yml
+
+accepted_partial_results:
+  - exactly one linear submission commit after dispatch
+  - changes remained within stage04 implementation, results, review file, plus deletion of the three authorized root helpers
+  - build_harness_v2.py is absent from current tree
+  - build_runner_v2.py is absent from current tree
+  - generate_runner.py is absent from current tree
+  - pre-edit independent review exists and accurately identifies the prior defects
+  - three v3 result files exist
+  - synthetic full reports 50 PASS and zero other statuses
+  - mutation suite reports 50 PASS and zero other statuses
+  - baseline reports 50 EXPECTED_FAIL with zero FAIL, ERROR, or BLOCKED_EXTERNAL
+  - frozen specs and candidate were not modified in the submission diff
+
+blocking_findings:
+  - finding_id: MIX-F01
+    severity: critical
+    statement: forty-one tests still use one generic fixture-action-evaluator implementation rather than frozen case-specific semantics
+    evidence:
+      generic_test_count: 41
+      fixture_content: only_test_id
+      evaluator_behavior_nonmutation: no_exception_means_PASS
+      affected_tests:
+        - GC-T001_to_GC-T003
+        - GC-T008_to_GC-T030
+        - GC-T035_to_GC-T049
+    implication: synthetic_conforming 50 PASS does not prove the frozen fixture and oracle for those tests
+
+  - finding_id: MIX-F02
+    severity: critical
+    statement: mutation proof remains circular at the evaluator boundary
+    evidence:
+      evaluator_receives_expected_frozen_failure_code: true
+      evaluator_accepts_any_ValueError_RuntimeError_or_CommunicationSystemError: true
+      evaluator_returns_the_preloaded_expected_code: true
+      observation_to_code_mapping_is_case_specific: false
+    implication: mutation 50 PASS does not prove independent derivation of fifty failure codes
+
+  - finding_id: MIX-F03
+    severity: critical
+    statement: SyntheticMutatingAdapter mutates by raising generic exceptions selected by active test id rather than producing case-specific observable state
+    evidence:
+      active_mutation_is_test_id: true
+      validate_message_behavior: raise_generic_ValueError
+      publish_and_archive_behavior: raise_generic_RuntimeError
+      concrete_field_set_path_event_or_trace_mutation_for_each_case: false
+    implication: adapter and evaluator can pass without exercising the frozen behavior
+
+  - finding_id: MIX-F04
+    severity: critical
+    statement: GC-T033 does not execute or verify the required same-path conflict handling
+    evidence:
+      setup_creates_remote_and_local_conflicting_commits: true
+      pull_merge_or_convergence_attempt_in_conforming_path: false
+      exact_conflict_path_observed_and_asserted: false
+      automatic_continuation_stop_observed_and_asserted: false
+    implication: SAME_PATH_CONFLICT oracle is not established
+
+  - finding_id: MIX-F05
+    severity: critical
+    statement: Git mutation branches directly raise frozen failure-code strings
+    evidence:
+      GC-T031_mutation: raises_RuntimeError_GIT_CONVERGENCE
+      GC-T032_mutation: raises_RuntimeError_DISJOINT_SENDER_CONVERGENCE
+      GC-T033_mutation: raises_ValueError_SAME_PATH_CONFLICT
+      GC-T034_mutation: raises_ValueError_NON_FAST_FORWARD
+    implication: failure code is not derived from an observed Git outcome
+
+  - finding_id: MIX-F06
+    severity: critical
+    statement: GC-T050 still does not score each fixture result against the frozen experiment packet
+    evidence:
+      mutation_directly_raises_frozen_code: true
+      conforming_checks_only:
+        - recovered.task_id_field_present
+        - recovered.required_refs_or_exact_paths_field_present
+      exact_expected_value_comparison: false
+      requested_action_comparison: false
+      authority_interpretation_comparison: false
+      exact_required_refs_set_comparison: false
+    implication: CROSS_MODEL_SEMANTIC_RECOVERY oracle remains incomplete
+
+  - finding_id: MIX-F07
+    severity: high
+    statement: all three durable v3 results are bound to the dispatch commit rather than the submitted implementation bytes
+    evidence:
+      result_tested_commit: bb4c296b25288ae87b9ecee20f3cdc1b5a80964e
+      dispatch_head: bb4c296b25288ae87b9ecee20f3cdc1b5a80964e
+      runner_and_result_changes_committed_after_tested_commit: true
+    implication: remote final bytes were not proven by the persisted runs
+
+  - finding_id: MIX-F08
+    severity: high
+    statement: result contract is incomplete
+    missing_metadata:
+      - candidate_sha256
+      - complete_semantic_specs_sha256
+      - runner_blob_or_sha256
+      - adapter_version
+      - exact_execution_provenance_for_model_handoff
+    implication: result identity is insufficient for freezing
+
+  - finding_id: MIX-F09
+    severity: high
+    statement: harness does not prove conforming and mutation paths for every evaluator
+    evidence:
+      harness_checks_test_count: true
+      harness_runs_aggregate_full_and_mutation: true
+      per_test_conforming_observation_asserted: false
+      per_test_mutated_observation_asserted: false
+      wrong_mutation_rejected_per_test: false
+    implication: aggregate 50 counts can conceal shared generic behavior
+
+  - finding_id: MIX-F10
+    severity: high
+    statement: required final execution receipt is absent
+    evidence:
+      required_path: 04_测试生成/Opus最终定点修复_执行结果_v1.yml
+      present: false
+    implication: required commands, exact exit codes, final remote head, and remaining limitations are not durably recorded
+
+result_file_observations:
+  preimplementation_baseline_v3:
+    tested_commit: bb4c296b25288ae87b9ecee20f3cdc1b5a80964e
+    PASS: 0
+    EXPECTED_FAIL: 50
+    FAIL: 0
+    ERROR: 0
+    BLOCKED_EXTERNAL: 0
+  synthetic_conforming_full_v3:
+    tested_commit: bb4c296b25288ae87b9ecee20f3cdc1b5a80964e
+    PASS: 50
+    EXPECTED_FAIL: 0
+    FAIL: 0
+    ERROR: 0
+    BLOCKED_EXTERNAL: 0
+  mutation_suite_v3:
+    tested_commit: bb4c296b25288ae87b9ecee20f3cdc1b5a80964e
+    PASS: 50
+    EXPECTED_FAIL: 0
+    FAIL: 0
+    ERROR: 0
+    BLOCKED_EXTERNAL: 0
+
+minimum_remaining_correction:
+  - replace all forty-one generic tests with case-specific fixtures, actions, observations, and evaluators derived from frozen specs
+  - evaluator must receive only observation and independently map it to the frozen failure code
+  - mutation input may identify test_id but must not contain or directly raise the frozen failure code
+  - mutation must change a concrete field, set, path, event, trace, or state transition for every case
+  - implement and assert actual GC-T033 conflict attempt, exact conflict path, and stopped continuation
+  - implement exact GC-T050 packet-to-response scoring for every fixture_result
+  - rerun after committing implementation bytes in a clean checkout of the exact commit under test
+  - persist complete result identity metadata and required execution receipt
+
+freeze_gate:
+  satisfied: false
+  reason: aggregate_success_counts_are_not_supported_by_case_specific_primary_oracles_and_results_do_not_bind_tested_bytes

@@ -1,0 +1,61 @@
+schema_version: citystate.stage06_Human_authorization.v1
+run_id: run-20260805-全局通讯机制-001
+task_id: os-v2-global-communication-system-001
+status: authorized
+authorized_date: 2026-08-10
+
+Human_statement: "好的，发吧。"
+authorization_interpretation: >-
+  在 Stage 05 独立复审通过后，Human 明确授权本任务进入 Stage 06 执行，
+  并授权发布 Codex 施工派单。该授权仅覆盖已接受的 Stage05 v2 步骤包所定义的
+  Stage06 实现，不构成 master 发布、上游语义产物修改、冻结测试修改或历史重写授权。
+
+authority: current_explicit_Human_instruction
+
+binding:
+  accepted_stage05_step_package_ref: 08_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/05_steps.yml
+  accepted_stage05_step_package_artifact_version: 2
+  accepted_stage05_step_package_git_blob_sha: 9422de27de6794ba2c247c7dae3dcddaa5c9e562
+  accepted_stage05_submission_head: 514f10ee956983d562addef4e2002db4bebc0e82
+  accepted_work_branch_head: 514f10ee956983d562addef4e2002db4bebc0e82
+  accepted_stage05_review_ref: 08_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/Stage05步骤拆分_独立复审_v1.yml
+  accepted_stage05_review_commit: a7f3bc3925dc37def673b445c90c2919c573e12f
+  accepted_stage05_review_git_blob_sha: 2c6f9a69d9709646dc9ba3a20aee5cbf708e7957
+  stage04_frozen_package_ref: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/04_tests.yml
+  stage04_frozen_package_git_blob_sha: 360571b6b29a3baecd753dc45611457da9ab6bf2
+  stage04_normalized_tests_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+  authorization_basis_remote_head: 3ba1d101d044f2b77ea5ac9c4d19f6583b627cbe
+  master_head_at_authorization: c7a508abbcda58361fc9b649236d44b706e0bdd4
+
+authorization:
+  enter_stage_06_execution: true
+  publish_stage06_executor_dispatch: true
+  stage06_executor: Codex
+  modify_frozen_stage04_tests: false
+  modify_stage05_step_package: false
+  modify_stage05_independent_reviews: false
+  modify_B_v3_or_earlier_semantic_artifacts: false
+  modify_master: false
+  self_authorization: false
+  force_push_or_history_rewrite: false
+
+execution_constraints:
+  execution_order: S-01_through_S-10_serial
+  frozen_tests_immutable: true
+  retry_budget_authority: accepted_05_steps_yml
+  exits_authority: accepted_05_steps_yml
+  exact_changed_path_authority: 08_os/_runs/run-20260805-全局通讯机制-001/01_任务输入/任务包_v1.yml#allowed_changed_paths
+  stage06_entry_rule: >-
+    Executor must read the actual remote work-branch head before any write. The physical start head
+    must descend linearly from authorization_basis_remote_head and must contain this authorization artifact.
+    Any intervening commits before executor work may only be Stage06 dispatch/run-state metadata created
+    under this Human authorization. Otherwise fail closed and request Human review.
+  no_automation_v1: true
+  no_polling_watcher_daemon_scheduler_auto_delivery_auto_ack_auto_progression: true
+  no_canonical_live_instance_state_under_08_os__communication: true
+
+completion_boundary:
+  required_execution_package: 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/06_execution.yml
+  stage06_executor_self_check_is_acceptance: false
+  final_executor_status: ready_for_independent_stage07_verification
+  stage07_independent_reviewer_must_differ_from_stage06_executor: true

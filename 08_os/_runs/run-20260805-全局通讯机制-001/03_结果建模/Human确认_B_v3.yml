@@ -1,0 +1,26 @@
+schema_version: citystate.communication_system.result_confirmation.v1
+run_id: run-20260805-全局通讯机制-001
+task_id: os-v2-global-communication-system-001
+status: confirmed
+confirmed_at: 2026-08-05T23:57:00-07:00
+
+Human_statement: >-
+  确认 B v3：314b76061a32d62bbcc49e2bf53b8968b2e194bd，授权进入阶段四测试生成。
+
+confirmed_artifact:
+  path: B_结果模型_v3.yml
+  git_blob_sha: 314b76061a32d62bbcc49e2bf53b8968b2e194bd
+  artifact_version: 3
+  exact_match_required: true
+
+authorization:
+  stage_03_result_modeling_complete: true
+  enter_stage_04_test_generation: true
+  freeze_test_package_without_separate_exact_Human_confirmation: false
+  enter_stage_05_step_decomposition: false
+
+interpretation:
+  B_v3_is_normative_for_downstream: true
+  B_v1_and_B_v2_are_history_only: true
+  stage_04_must_generate_tests_from_evidence_not_from_B: true
+  test_candidate_requires_exact_Human_freeze_confirmation_before_04_tests_yml: true

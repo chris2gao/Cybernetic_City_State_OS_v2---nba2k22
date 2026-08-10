@@ -1,0 +1,32 @@
+schema_version: citystate.communication.git_convergence.v1
+invocation: explicit_Human_or_authorized_executor_command
+scope: current_task_repository_shareable_paths_only
+sequence:
+  - require_clean_worktree_before_remote_integration
+  - fetch_exact_current_task_branch
+  - compare_local_remote_and_merge_base
+  - fast_forward_only_when_local_is_ancestor_of_remote
+  - fail_closed_on_divergence_or_same_path_conflict
+  - stage_each_exact_allowlisted_task_path
+  - commit_when_staged_delta_exists
+  - verify_remote_head_has_not_changed_since_fetch
+  - push_once_without_force
+  - read_back_remote_head
+disjoint_sender_owned_paths: ordinary_Git_convergence_allowed
+same_path_or_shared_navigation_conflict: fail_closed
+non_fast_forward: fail_closed
+automatic_retry_loop: prohibited
+force_push: prohibited
+rebase: prohibited
+merge_commit: prohibited
+escalation_route:
+  - task_navigation_owner
+  - Human
+failure_report_fields:
+  - failure_code
+  - local_head
+  - remote_head
+  - conflict_paths
+  - next_owner
+  - Human_escalation_required
+

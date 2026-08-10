@@ -1,0 +1,91 @@
+schema_version: citystate.communication_system.stage_03_joint_review_questions.v1
+run_id: run-20260805-全局通讯机制-001
+task_id: os-v2-global-communication-system-001
+batch_id: stage_03_joint_review_batch_003
+status: awaiting_Human_response
+
+resolved_before_this_batch:
+  - shared_index_replaced_by_task_bound_per_sender_indexes
+  - sender_sequence_00001_to_10000_per_task
+  - local_is_default_carrier
+  - GitHub_publication_triggers_are_Web_expected_recipient_or_Human_request_or_full_convergence
+  - requested_action_required_only_for_request_decision_required_blocked
+  - new_communication_documents_require_minimal_front_matter
+  - unresolved_Git_conflict_escalates_to_Human_and_decision_role
+  - automatic_polling_delivery_receipts_and_extra_state_not_added
+
+questions:
+  - id: BQ-16
+    topic: lifecycle_model
+    question: 任务完成后采用整体归档还是继续逐文件cleanup？
+    recommendation: A
+    options:
+      A: >-
+        公开task整体从active移动到archive；私有未跟踪_runtime单独删除。
+        不做逐文件提升与引用分析，归档任务不进入默认加载面。
+      B: 保留active目录并逐文件提升durable、删除runtime。
+      C: 所有task永久留在active，不归档不清理。
+
+  - id: BQ-17
+    topic: role_fields_in_message
+    question: canonical message是否直接携带sender与预期接收者的task role？
+    recommendation: A
+    options:
+      A: >-
+        加sender_task_role和expected_recipient_task_role；validator与endpoint card核对；
+        字段只用于上下文选择和职责说明，不授予权限。
+      B: 只写endpoint_id，接收方每次自行读取card推导role。
+      C: 只写role，不写endpoint_id。
+
+  - id: BQ-18
+    topic: canonical_publication_method
+    question: canonical消息的发布方式采用哪种？
+    recommendation: A
+    options:
+      A: >-
+        endpoint-native：Desktop/CLI用本地publisher与Git工具；Web用GitHub授权connector/API；
+        所有端产生同一canonical文件并通过同一validator契约。
+      B: 所有端都必须运行同一个CLI后消息才有效。
+      C: 允许任意手工文件，不要求统一validator。
+
+  - id: BQ-19
+    topic: Human_current
+    question: 是否保留Human/current极简导航页？
+    recommendation: A
+    options:
+      A: >-
+        保留，由架构与决策角色独占维护；只在任务开始、Human待决、重大阻塞/风险、
+        阶段完成、最终结果或Human要求时更新；正文不复制。
+      B: 取消，Human每次扫描所有sender index。
+      C: 每条消息都更新Human/current。
+
+  - id: BQ-20
+    topic: full_local_GitHub_convergence
+    question: 本地—GitHub完整收敛的安全边界如何定义？
+    recommendation: A
+    options:
+      A: >-
+        不做语义逐文件比对，但使用普通Git fetch/fast-forward/commit/push；
+        只同步repository_shareable task文件；同一路径冲突立即停止并交给决策角色和Human。
+      B: 无论远端状态如何都以本地目录覆盖线上，再拉回本地。
+      C: 每次逐文件内容比较并由模型判断合并。
+
+  - id: BQ-21
+    topic: task_navigation_owner
+    question: 是否将coordinator正式改名并绑定现有角色？
+    recommendation: A
+    options:
+      A: >-
+        改名task_navigation_owner，由当前架构与决策角色承担；维护manifest、Human/current、
+        任务开始/结束与同步/归档决策，不成为新角色且不增加权限。
+      B: 保留coordinator作为独立第四角色。
+      C: 完全不设导航责任人。
+
+response_shape:
+  BQ_16: A_or_B_or_C
+  BQ_17: A_or_B_or_C
+  BQ_18: A_or_B_or_C
+  BQ_19: A_or_B_or_C
+  BQ_20: A_or_B_or_C
+  BQ_21: A_or_B_or_C
+  additional_comments: optional

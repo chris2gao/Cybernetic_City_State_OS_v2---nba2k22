@@ -1,0 +1,32 @@
+schema_version: citystate.communication_system.test_freeze_confirmation.v1
+run_id: run-20260805-全局通讯机制-001
+task_id: os-v2-global-communication-system-001
+status: confirmed
+confirmed_at: 2026-08-09T22:16:00-08:00
+
+Human_statement: >-
+  授权冻结 Stage 04 测试候选；以已通过独立验收的当前 50 项测试候选及其精确测试摘要为冻结边界。
+
+confirmed_candidate:
+  path: 冻结测试候选_v1.yml
+  test_package_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+  test_count: 50
+  exact_match_required: true
+
+independent_review:
+  path: Stage04_Codex最终物理Oracle_独立验收_v1.yml
+  review_commit: 09f8279d00a503ca525adb2f8f2e692625889009
+  verdict: accepted_ready_for_Human_freeze
+
+authorization:
+  freeze_stage_04_test_candidate: true
+  materialize_formal_04_tests_yml: true
+  stage_04_content_mutation_after_freeze: false
+  enter_stage_05_after_valid_frozen_package: true
+  start_stage_05_immediately: false
+  modify_master: false
+
+interpretation:
+  frozen_identity_is_candidate_tests_sha256: true
+  stage_05_requires_valid_formal_frozen_test_package: true
+  this_confirmation_does_not_authorize_master_publication: true

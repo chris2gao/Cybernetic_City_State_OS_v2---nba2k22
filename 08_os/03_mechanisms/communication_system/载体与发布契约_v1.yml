@@ -1,0 +1,37 @@
+schema_version: citystate.communication.carrier_publication.v1
+default_publish_target: local
+GitHub_publish_triggers:
+  - expected_recipient_environment_is_web_cloud_model
+  - Human_explicitly_requests_GitHub_publication
+  - full_task_convergence_requested
+GitHub_without_trigger: fail_closed
+privacy_classes:
+  repository_shareable: may_enter_current_private_GitHub_task_folder
+  local_only: local_public_task_folder_only
+  forbidden: must_not_be_materialized_in_any_carrier
+publication_order:
+  - validate_documents_and_authorization_refs
+  - publish_immutable_canonical_message
+  - append_sender_owned_index
+  - emit_Human_relay_pointer
+  - update_Human_current_only_by_separate_material_event_command
+pointer_must_not_reference_unpublished_artifact: true
+sent_definition: carrier_write_operation_reported_success
+sent_does_not_mean:
+  - delivered
+  - opened
+  - read
+  - understood
+  - accepted
+Human_chat_pointer_required_fields:
+  - task_id
+  - message_id
+  - carrier
+  - exact_path_or_GitHub_ref
+  - sender_endpoint_id
+  - sender_task_role
+  - expected_recipient_endpoint_id
+  - expected_recipient_task_role
+  - one_line_routing_purpose
+background_behavior: prohibited
+

@@ -1,0 +1,142 @@
+schema_version: citystate.result_model.joint_review_packet.v1
+run_id: run-20260805-全局通讯机制-001
+task_id: os-v2-global-communication-system-001
+status: active
+baseline:
+  first_principles_B: B_结果模型_v1.yml
+  legacy_overlay: B_结果模型_v2.yml
+  accepted: false
+
+implementation_overview:
+  components:
+    - id: C1
+      name: task_space_initializer
+      purpose: create one task-scoped local or GitHub communication tree and minimal manifest/index/Human view
+    - id: C2
+      name: endpoint_cards
+      purpose: describe endpoint identity, environment, interface, role and current technical capabilities without granting authority
+    - id: C3
+      name: communication_documents
+      purpose: store long or detailed content as immutable task files; ordinary existing resources may be referenced directly
+    - id: C4
+      name: immutable_messages
+      purpose: store compact structured information plus exact direct refs under sender-owned sequence paths
+    - id: C5
+      name: Human_manual_pointer_relay
+      purpose: Human copies a compact pointer, selects actual recipient and decides whether the chain continues
+    - id: C6
+      name: endpoint_bootstrap
+      purpose: receiver loads manifest, own card, exact message and direct required refs only; missing material input fails closed
+    - id: C7
+      name: deterministic_tooling
+      purpose: initialize, validate, publish, update indexes with conflict protection, and preview/execute cleanup
+
+  normal_flow:
+    - initialize_or_open_task_space
+    - register_current_endpoint_instance
+    - author_long_document_or_reference_existing_resource_when_needed
+    - validate_and_publish_required_refs
+    - publish_new_immutable_sender_owned_message
+    - update_minimal_index_and_triggered_Human_view
+    - Human_relays_compact_pointer_to_selected_recipient
+    - receiver_bootstraps_exact_read_set
+    - receiver_acts_under_existing_task_authority_or_returns_new_blocked_response
+    - task_completion_cleanup_is_previewed_and_Human_confirmed
+
+load_bearing_gaps_for_Human_review:
+  - id: DR-01
+    topic: message_body_minimality
+    issue: >-
+      Candidate B requires title, summary, content, requested_action and required_refs. This may be more structured duplication than needed,
+      especially because Human previously emphasized that the message itself is information and models can understand content.
+  - id: DR-02
+    topic: cross_carrier_transition
+    issue: >-
+      Local and GitHub are separate carriers with no automatic sync. The exact manual rule for moving a repository_shareable local exchange
+      to a Web endpoint is not yet explicit enough.
+  - id: DR-03
+    topic: cleanup_reference_integrity
+    issue: >-
+      runtime messages and documents are removable, while durable decisions or final results may still point to them. Promotion or closure
+      rules must prevent cleanup from leaving broken durable references.
+  - id: DR-04
+    topic: shared_mutable_file_cost
+    issue: >-
+      index.yml and Human/current.yml are mutable shared surfaces. Their update value must justify head checks, conflict handling and extra writes.
+  - id: DR-05
+    topic: local_immutability_strength
+    issue: >-
+      Git provides immutable committed versions, but a local communication tree has no equivalent hard immutability unless tooling or file-system
+      controls are added. The v1 promise may need to be discipline-plus-validator rather than cryptographic immutability.
+  - id: DR-06
+    topic: exact_ref_semantics
+    issue: >-
+      Direct required_refs reduce context, but sender-declared closure may omit transitive dependencies. Receiver expansion must remain explicit
+      without turning into recursive scanning.
+
+first_discussion_batch:
+  - id: BQ-01
+    question: 消息正文是否继续保留 summary 与 content 两层？
+    options:
+      A: 保留两层；summary用于快速定位，content提供完整当前动作信息
+      B: 只保留content；title和message_type负责快速定位，避免重复
+      C: 短消息只保留purpose/requested_action/refs，其他内容全部外置
+    recommendation: B
+  - id: BQ-02
+    question: 本地消息需要转给Web模型时采用什么规则？
+    options:
+      A: Human授权后，将可共享文档和一条新消息发布到GitHub；新消息引用GitHub路径，不复制local_only内容
+      B: Human直接把本地消息正文复制到聊天
+      C: 本地和GitHub始终双写
+    recommendation: A
+  - id: BQ-03
+    question: runtime清理前如何保证耐久引用不失效？
+    options:
+      A: 任何被durable对象引用的消息或文档必须先提升到durable；清理工具只删除未提升对象
+      B: durable对象允许继续引用已删除runtime路径
+      C: 所有消息永久保留，不清理runtime/messages
+    recommendation: A
+  - id: BQ-04
+    question: 是否保留每个task的可变index.yml？
+    options:
+      A: 保留；仅追加最小条目，供Human复制和模型发现
+      B: 删除；完全依赖目录扫描
+      C: 只在GitHub保留，本地不保留
+    recommendation: A
+  - id: BQ-05
+    question: Human/current.yml是否作为默认持续维护对象？
+    options:
+      A: 仅在Human决策、material blocked、阶段完成、最终结果时更新
+      B: 每条消息更新
+      C: 不保留current.yml，需要时由AI从index生成
+    recommendation: A
+  - id: BQ-06
+    question: 本地“不可变消息”采用哪种强度？
+    options:
+      A: v1采用工具拒绝覆盖、序号只增和validator检查；不承诺OS级不可变
+      B: 必须设置文件系统只读/ACL后才算发布
+      C: 本地消息可原地修改
+    recommendation: A
+  - id: BQ-07
+    question: required_refs不足时接收方能否自行扩大读取？
+    options:
+      A: 只能读取消息直接列出的路径；不足时发blocked/request请求补充
+      B: 可以递归读取被引用文档中的所有引用
+      C: 可以扫描整个task目录自行判断
+    recommendation: A
+  - id: BQ-08
+    question: 共享GitHub写入冲突保护应用到哪些对象？
+    options:
+      A: sender-owned新消息/文档只需基于当前分支正常提交；manifest/index/Human current等共享可变对象必须检查预期head并在冲突时停止
+      B: 每个文件写入前后都做完整远端readback
+      C: 不做head冲突保护
+    recommendation: A
+
+closure_rule:
+  stop_questions_when:
+    - all_load_bearing_gaps_are_resolved
+    - remaining_points_are_reversible_implementation_details
+    - revised_B_can_map_every_A_success_criterion_without_hidden_assumption
+  stage_04_entry_requires:
+    - explicit_Human_confirmation_of_final_B_blob
+    - explicit_Human_authorization_to_generate_tests

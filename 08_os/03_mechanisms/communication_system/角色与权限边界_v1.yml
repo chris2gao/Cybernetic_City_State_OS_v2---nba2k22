@@ -1,0 +1,31 @@
+schema_version: citystate.communication.role_permission_boundary.v1
+role_fields:
+  - sender_task_role
+  - expected_recipient_task_role
+purposes:
+  - Human_routing
+  - context_selection
+  - endpoint_card_consistency_validation
+grants_authority: false
+self_declared_identity_grants_authority: false
+validator_grants_authority: false
+authority_sources:
+  - current_task
+  - current_task_role
+  - current_Human_authorization
+  - repository_and_tool_guards
+authority_binding:
+  current_task_authority_must_match:
+    - task_id
+    - writer_endpoint_id
+    - writer_task_role
+    - requested_action
+  Human_authorization_must_be:
+    - physically_readable_inside_task_root
+    - directly_listed_in_required_refs
+    - bound_to_task_writer_and_action
+beyond_role_action:
+  authorization_ref_required: true
+  authorization_ref_must_be_readable: true
+  authorization_ref_must_appear_in_required_refs: true
+self_authorization: prohibited

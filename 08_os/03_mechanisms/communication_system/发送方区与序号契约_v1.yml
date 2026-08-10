@@ -1,0 +1,31 @@
+schema_version: citystate.communication.sender_zone.v1
+scope_key: task_id + sender_endpoint_id
+owned_paths:
+  - indexes/<sender_endpoint_id>.yml
+  - messages/<sender_endpoint_id>/
+  - documents/<sender_endpoint_id>/
+cross_sender_write: prohibited
+sequence:
+  minimum: 1
+  maximum: 10000
+  filename_width: 5
+  reset_on_new_task: true
+  reuse_within_task: prohibited
+  exhaustion: fail_closed_without_automatic_retry
+sender_index:
+  one_per_sender_per_task: true
+  append_only: true
+  entry_fields:
+    - sequence
+    - message_id
+    - title
+    - message_type
+    - expected_recipient_endpoint_id
+    - expected_recipient_task_role
+    - exact_message_path
+  prohibited_fields:
+    - message_body
+    - long_summary
+    - delivery_state
+  every_entry_target_must_exist: true
+

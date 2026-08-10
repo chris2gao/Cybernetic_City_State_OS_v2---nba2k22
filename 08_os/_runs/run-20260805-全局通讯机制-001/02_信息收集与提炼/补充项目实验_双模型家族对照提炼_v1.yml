@@ -1,0 +1,136 @@
+schema_version: citystate.communication_system.supplementary_experiment_synthesis.v1
+artifact_id: supplementary-cross-family-synthesis-001
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+status: complete_for_available_same_host_endpoints
+created_at: 2026-08-05T20:35:00-07:00
+
+scope:
+  experiment_packet: 02_信息收集与提炼/多模型实验包_v1.yml
+  compared_results:
+    - path: 02_信息收集与提炼/antigravity_desktop_executor_01_result.yml
+      blob_sha: c287304a3e0876070d54aa3a710c85f924e73898
+      endpoint_id: antigravity-desktop-executor-01
+      model_family: Gemini
+      verdict: accepted
+    - path: 02_信息收集与提炼/antigravity_desktop_opus_executor_01_result.yml
+      blob_sha: 5e391016dc93696f763578cd8e19e6c5ebb01baa
+      endpoint_id: antigravity-desktop-opus-executor-01
+      model_family: Anthropic_Claude
+      verdict: accepted_with_locatable_errors
+  shared_host: Antigravity_Desktop
+  Deep_Research: false
+  required_for_stage_02_completion: false
+
+method:
+  same_fixture_set: true
+  prior_result_isolation:
+    Gemini: not_applicable_first_result
+    Opus: self_reported_not_read
+  evaluation_axes:
+    - exact_field_recovery
+    - exact_required_path_recovery
+    - authority_semantics
+    - ambiguity_detection
+    - context_loading_boundary
+  rule: plausible_natural_language_is_not_sufficient_without_field_level_comparison
+
+shared_supported_observations:
+  - id: S-01
+    claim: tested structured YAML and compact JSON both preserved the core message semantics for both model families
+    strength: two_model_families_same_host
+  - id: S-02
+    claim: free-text pointer syntax remained understandable but introduced greater deterministic parsing ambiguity
+    strength: two_model_families_same_host
+  - id: S-03
+    claim: long content may remain external while the message carries an exact document reference
+    strength: two_model_families_same_host
+  - id: S-04
+    claim: the receiver should load explicit refs only and should not scan the whole task directory or recursively expand nested refs by default
+    strength: two_model_families_same_host
+  - id: S-05
+    claim: authorization_ref was understood as a pointer to authority evidence rather than as authority created by the communication message itself
+    strength: two_model_families_same_host_with_one_path_recovery_error
+
+format_findings:
+  structured_over_free_text:
+    supported: true
+    reason:
+      - stable named fields
+      - unambiguous multi-value refs
+      - easier field-level validation
+  YAML_over_JSON:
+    frozen: false
+    observation: both endpoints preferred YAML for Human readability and repository diff review
+    reason_not_frozen: preference was tested only inside one host application and semantic recovery was equivalent in the fixture
+  title_required:
+    frozen: false
+    observations:
+      Gemini: removable_without_information_loss
+      Opus: no_field_removal_recommended
+  timestamp_required:
+    frozen: false
+    observations:
+      Gemini: requested
+      Opus: requested
+    interpretation: repeated_model_preference_not_yet_a_requirement_because_A_v2_prioritizes_minimal_fields_and_no_staleness_failure_was_executed
+  protocol_version_required:
+    frozen: false
+    observations:
+      Gemini: requested
+      Opus: not_listed_as_material
+
+located_errors:
+  - id: E-OPUS-01
+    fixture: F3-free-text-pointer
+    error: Opus claimed message_id was absent although planner-004 was present in the fixture
+    implication: natural-language confidence cannot replace exact fixture comparison
+  - id: E-OPUS-02
+    fixtures:
+      - F1-minimal-yaml-index
+      - F2-compact-json-index
+      - F3-free-text-pointer
+    error: Opus correctly explained that authorization evidence must be read but omitted its path from exact_paths_to_read
+    implication: semantic authority interpretation and exact required-path set must be tested separately
+  - id: E-FIXTURE-01
+    fixture: F3-free-text-pointer
+    issue: the free-text shape does not define robust encoding for multiple refs or future structured relations
+    implication: free text should not be the canonical machine carrier
+
+constraints_for_B:
+  - canonical message carrier should be structured rather than convention-dependent prose
+  - message content should remain a lightweight index and place long material behind exact refs
+  - refs loading should be direct and non-recursive by default
+  - authorization evidence paths must be represented in the same exact-path recovery surface as other required documents
+  - B must not add timestamp, protocol_version, verdict_summary, or priority solely because one or both endpoints suggested them; each field requires independent necessity justification
+  - B must preserve Human-selected routing and must not infer that expected_recipient creates delivery or execution authority
+
+constraints_for_frozen_tests:
+  - compare every required recovered field against exact fixture values
+  - compare required document paths as sets, including authorization evidence paths
+  - separately test authority interpretation from path extraction
+  - reject plausible but factually incorrect prose
+  - test that free-text carrier is not accepted as deterministic canonical input
+  - test direct-ref loading without directory scan or recursive expansion
+
+boundary:
+  proven:
+    - semantic comprehension across Gemini and Anthropic Claude model families inside Antigravity Desktop
+  not_proven:
+    - Claude_Code_Desktop_host_behavior
+    - Codex_Desktop_host_behavior
+    - terminal_client_behavior
+    - web_model_private_repository_access
+    - actual_cross_carrier_delivery
+    - concurrency_or_multi_writer_behavior
+    - transport_security
+  future_non_blocking_validation:
+    - Claude_Code_Desktop_when_quota_available
+    - Codex_Desktop_when_quota_available
+
+use:
+  may_inform_stage_02_final_evidence: true
+  may_inform_B: true
+  may_inform_frozen_tests: true
+  may_complete_stage_02_by_itself: false
+  may_freeze_final_wire_format: false

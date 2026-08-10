@@ -1,0 +1,103 @@
+schema_version: citystate.communication_system.result_model_joint_review_questions.v1
+artifact_id: B-joint-review-questions-batch-002
+run_id: run-20260805-全局通讯机制-001
+task_id: os-v2-global-communication-system-001
+status: awaiting_Human_answers
+basis:
+  main_implementation_explanation: B_主要实现说明_v1.md
+  Human_response_batch_001: Human答复_共同审阅批次001_v1.yml
+  result_candidate: B_结果模型_v2.yml
+
+question_policy:
+  ask_only_load_bearing_questions: true
+  fixed_round_count: false
+  stop_when: Human_has_sufficient_visibility_and_no_material_architecture_gap_remains
+
+questions:
+  - id: BQ-09
+    topic: coordinator_after_sender_owned_indexes
+    why_load_bearing: >-
+      共享消息 index 已取消，需要重新确定 coordinator 是否仍是必要角色，以及其写入范围是否会成为瓶颈。
+    options:
+      A: >-
+        保留 coordinator，但只负责 manifest、Human/current、全局发现记录和任务开始/结束；
+        不维护消息聚合，不参与普通消息发布。
+      B: 取消 coordinator；产生事件的 endpoint 直接更新共享文件并使用 expected-HEAD 保护。
+      C: coordinator 同时维护全部 sender index 的聚合副本。
+    recommendation: A
+
+  - id: BQ-10
+    topic: sender_index_lifecycle
+    why_load_bearing: >-
+      sender index 指向 runtime 消息；必须确定它是否随 runtime 清理，避免永久保存大量已清理路径。
+    options:
+      A: >-
+        sender index 位于 runtime/indexes，随 runtime 消息一起清理；durable 对象必须直接引用已提升的 durable 文件，
+        不依赖 sender index。
+      B: sender index 永久保留在 durable，即使消息已经清理。
+      C: 取消 sender index，只依靠消息文件名中的序号。
+    recommendation: A
+
+  - id: BQ-11
+    topic: tool_enforcement_boundary
+    why_load_bearing: >-
+      决定系统是强工具协议还是文档纪律，也决定序号、不可变性和索引一致性由谁保证。
+    options:
+      A: >-
+        canonical 消息与 sender index 更新必须通过 publisher CLI；长文档可以由模型正常编辑，
+        但发布消息前必须通过 validator。禁止手工创建或改写 canonical 消息。
+      B: 模型可直接按模板创建消息和索引，只要事后 validator 通过。
+      C: 所有消息、文档、决定和结果都必须通过 CLI 生成。
+    recommendation: A
+
+  - id: BQ-12
+    topic: GitHub_head_change_behavior
+    why_load_bearing: >-
+      多 sender 在同一任务分支发布时 HEAD 经常变化；完全失败会增加 Human 摩擦，自动重试又可能掩盖冲突。
+    options:
+      A: >-
+        HEAD 变化时精确检查新增 diff；若只涉及其他 sender 的独占目录，publisher 允许基于新 HEAD 自动重做一次提交；
+        若涉及自身路径或共享文件则 fail-closed。最多一次，不轮询。
+      B: 任何 HEAD 变化都 fail-closed，必须 Human 重新触发。
+      C: 不检查 HEAD，直接提交并依赖 Git 冲突结果。
+    recommendation: A
+
+  - id: BQ-13
+    topic: Human_current_writer
+    why_load_bearing: Human/current 是共享可变入口，需要单一写入责任以避免多端覆盖。
+    options:
+      A: 只有 coordinator 更新；由于只在重大事件更新，预计不会形成高频瓶颈。
+      B: 产生重大事件的 endpoint 直接更新，并使用 expected-HEAD 保护。
+      C: Human/current 取消，所有 Human 视图按需临时生成。
+    recommendation: A
+
+  - id: BQ-14
+    topic: requested_action_field
+    why_load_bearing: >-
+      BQ-01 已删除 summary；是否保留 requested_action 决定消息能否快速区分“信息”与“需要执行的动作”。
+    options:
+      A: 保留为必填字段；无动作时明确写 none。
+      B: 删除，所有动作意图都写入 content。
+      C: 仅 request、decision_required、blocked 三类消息要求该字段。
+    recommendation: C
+
+  - id: BQ-15
+    topic: long_document_header
+    why_load_bearing: 决定长文档的隐私分类、作者和用途能否脱离消息后仍被正确识别。
+    options:
+      A: >-
+        通讯系统新建的长文档必须有最小 front matter：document_id、task_id、author_endpoint_id、purpose、privacy_class；
+        已有源码、任务包和测试文件可直接引用而无需改写。
+      B: front matter 可选，所有元数据只存在消息中。
+      C: 所有被引用文件都必须重写成带 front matter 的通讯文档。
+    recommendation: A
+
+expected_response_shape:
+  BQ-09: A|B|C|custom
+  BQ-10: A|B|C|custom
+  BQ-11: A|B|C|custom
+  BQ-12: A|B|C|custom
+  BQ-13: A|B|C|custom
+  BQ-14: A|B|C|custom
+  BQ-15: A|B|C|custom
+  additional_comments: optional

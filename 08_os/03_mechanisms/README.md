@@ -39,3 +39,7 @@ assessed one at a time, not copied wholesale.
 - `context_management/`：全局上下文管理、文件隔离、产物生命周期、发布边界与结构验证。
 
 工作流只引用该机制，不在 `01_workflow/` 内保留第二份实例。
+# 全局通讯机制
+
+`communication_system/` 定义每任务公开通讯空间、端点与消息契约、精确引用、人工发布、
+Git 收敛、导航和整体归档。canonical 机制目录只保存定义，不保存 live message/session state。

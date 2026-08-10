@@ -1,0 +1,89 @@
+schema_version: citystate.information_collection.external_report_receipt.v1
+artifact_id: global-communication-external-reports-receipt-001
+run_id: run-20260805-全局通讯机制-001
+task_id: os-v2-global-communication-system-001
+status: complete_with_declared_asymmetry
+recorded_at: 2026-08-05T20:58:00-07:00
+updated_at: 2026-08-05T21:29:00-07:00
+
+expected_contract:
+  independent_lanes: 2
+  complete_markdown_report_per_lane: true
+  lanes_mutually_unaware: true
+  exact_return_paths:
+    ChatGPT: 02_信息收集与提炼/evidence/01_ChatGPT_外部检索_v1.md
+    Gemini: 02_信息收集与提炼/evidence/02_Gemini_外部检索_v1.md
+
+Human_clarification_ref: ../Human澄清_外部报告身份_v1.yml
+
+received:
+  ChatGPT:
+    supplied_filename: chatgpt - deep-research-report.md
+    supplied_bytes: 16925
+    supplied_sha256: 13afcf89f8574456d641f9c5c09d961e330c60018556f1b5d0eac45876c0d7e6
+    repository_path: 02_信息收集与提炼/evidence/01_ChatGPT_外部检索_v1.md
+    repository_blob_sha: a0c409ca7c034698229df9c35b5d58c67f135700
+    artifact_identity: Human_designated_final_ChatGPT_lane_output
+    lane_output_returned: true
+    structural_character: summary_oriented_research_deliverable
+    durable_limits:
+      - source_register_and_search_paths_are_not_fully_reproduced_in_the_repository_text
+      - inline_turn_citations_are_not_resolvable_from_the_repository_artifact
+      - exact_source_overlap_counting_is_not_defensible
+    evidence_use:
+      semantic_lane_results: allowed
+      source_candidates: allowed_subject_to_primary_source_verification
+      exact_source_overlap_counting: prohibited
+      numeric_capture_recapture: prohibited
+      satisfy_lane_return_requirement: true_by_Human_clarification
+
+  Gemini:
+    supplied_filename: Gemini Deep Research - AI通讯机制深度研究.md
+    supplied_bytes: 53199
+    supplied_sha256: 64ebf63c49309191ce0350a4015df69d6df0ca43408cdc8bac8d498056f4f338
+    repository_path: 02_信息收集与提炼/evidence/02_Gemini_外部检索_v1.md
+    repository_blob_sha: 5684d36691209c582b91fb725e69ecb32e53e16b
+    artifact_identity: Human_designated_final_Gemini_lane_output
+    lane_output_returned: true
+    structural_character: detailed_report_with_source_table_and_search_paths
+    required_sections_present:
+      - research_scope_and_method
+      - source_and_access_limits
+      - RQ_01_through_RQ_06_findings
+      - reusable_pattern_catalogue
+      - Human_routing_failure_catalogue
+      - supporting_and_limiting_claims
+      - conflicts_and_version_differences
+      - unresolved_questions_and_experiments
+      - inaccessible_and_uncovered_areas
+      - source_table
+      - search_paths
+    evidence_use:
+      semantic_lane_results: allowed
+      source_candidates: allowed_subject_to_primary_source_verification
+      low_quality_numeric_claims: prohibited_without_primary_verification
+      satisfy_lane_return_requirement: true
+
+repository_copy_integrity:
+  supplied_uploads_are_authoritative_source_bytes: true
+  repository_copies_created_through_text_connector: true
+  supplied_sha256_values_preserve_source_file_identity: true
+  repository_blob_shas_preserve_repository_copy_identity: true
+
+NotebookLM_decision:
+  used: false
+  mandatory: false
+  reason:
+    - direct_comparison_already_identified_common_claims_conflicts_and_asymmetry
+    - key_claims_were_checked_against_primary_sources
+    - NotebookLM_would_not_remove_the_ChatGPT_source_reproducibility_limit
+    - additional_manual_file_transport_has_low_expected_information_gain
+
+completion:
+  reports_returned_count: 2
+  Human_designated_final_lane_outputs: 2
+  lane_return_contract_complete: true
+  source_reproducibility_symmetric: false
+  limitations_durable: true
+  missing_file_blocker: false
+  next_required_action: finalize_evidence_package_and_enter_result_modeling

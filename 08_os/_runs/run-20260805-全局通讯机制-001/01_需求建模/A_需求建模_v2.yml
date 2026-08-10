@@ -1,0 +1,520 @@
+schema_version: citystate.communication_system.requirement_model.v2
+artifact_id: A-global-communication-system-001
+artifact_version: 2
+status: candidate_pending_exact_Human_confirmation
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+created_at: 2026-08-05T06:41:00-07:00
+created_by_role: foreground_planner
+
+source_base:
+  branch: master
+  head: c7a508abbcda58361fc9b649236d44b706e0bdd4
+work_branch: dev/os-v2-global-communication-system-001
+
+supersession:
+  prior_artifact:
+    path: 08_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/A_需求建模_v1.yml
+    blob_sha: 9438d8dac289e67b119f25cc943351b6e17b6546
+  effect: >-
+    v2 保留 v1 未被 Human 修正的目标与边界，取代 v1 的流程充分性、复杂投递状态、
+    全量完整性校验和过度字段化方案。v1 仍作为历史证据，不再作为阶段二入口。
+
+Human_evidence:
+  process_correction: 08_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/重要信息事件_Human流程修正_v1.yml
+  inquiry_set: 08_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/需求追问清单_v1.yml
+  answer_batches:
+    - 08_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/Human答复_批次001_v1.yml
+    - 08_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/Human答复_批次002_v1.yml
+    - 08_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/Human答复_批次003_v1.yml
+    - 08_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/Human答复_批次004_v1.yml
+    - 08_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/Human答复_批次005_v1.yml
+    - 08_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/Human答复_批次006_v1.yml
+  interpretation_correction: 08_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/批次004解释纠正_v1.yml
+
+modeling_discipline:
+  governing_principles:
+    - simple_before_general
+    - high_cohesion_low_coupling
+    - one_task_one_window
+    - one_task_one_communication_space
+    - one_active_task_when_practical
+    - Human_supervised_manual_relay
+    - information_complete_accurate_and_dense_before_short
+    - ignore_non_load_bearing_details_until_result_modeling_or_implementation
+  ask_or_freeze_only_when:
+    - architecture_or_scope_changes
+    - Human_authority_or_security_boundary_changes
+    - cross_endpoint_interoperability_changes
+    - failure_semantics_or_data_loss_risk_changes
+    - irreversible_or_high_cost_lock_in
+    - material_acceptance_test_changes
+  defer_when:
+    - naming_without_semantic_effect
+    - exact_minor_field_order
+    - formatting_preference
+    - internal_helper_design
+    - reversible_implementation_choice
+    - executor_measurable_detail_without_Human_value_judgment
+
+collaborative_deliberation:
+  route: full
+  status: completed_for_A_v2
+  Human_inquiry_batches: 6
+  ordinary_detail_questions_closed: true
+  remaining_questions_policy: only_new_load_bearing_gap
+
+Human_goal: >-
+  为本地 Desktop 模型、Web 模型、CLI 本地模型和 Human 建立新的全局通讯机制。
+  通讯由 Human 触发并中转；本地可访问端优先通过本地文件，Web 或跨机器端通过当前任务
+  工作分支中的 GitHub 文件。聊天框只传简洁指针。消息与长内容分离，使模型读取和输出时
+  保持信息完整、准确、高密度，并尽量减少重复读取和聊天上下文累积。
+
+success_definition:
+  - every_message_identifies_sender_and_expected_recipient
+  - Human_controls_actual_routing_and_whether_the_chain_continues
+  - local_and_Web_endpoints_can_locate_required_information_by_exact_pointer
+  - message_text_remains_small_and_long_content_is_externalized
+  - recipient_loads_only_direct_message_and_explicitly_required_paths_by_default
+  - no_automatic_polling_delivery_or_state_progression_exists
+  - communication_does_not_duplicate_or_override_task_permission_system
+  - task_runtime_can_be_cleaned_by_fixed_subtree_without_reading_file_contents
+  - deterministic_tests_cover_supported_routes_and_material_failure_cases
+
+scope:
+  included:
+    - endpoint_identity_cards
+    - sender_and_expected_recipient_addressing
+    - one_task_one_communication_space
+    - machine_global_local_root_partitioned_by_repository_and_task
+    - current_task_branch_GitHub_traffic
+    - Human_triggered_manual_relay
+    - lightweight_message_index_and_pointer
+    - external_long_documents
+    - minimal_task_manifest_and_global_discovery_index
+    - minimal_Human_title_and_pointer_view
+    - task_role_authority_reference_when_required
+    - fixed_durable_and_runtime_subtrees
+    - privacy_classification
+    - Deep_Research_and_Human_relayed_multi_model_experiment
+    - validators_and_tests_needed_for_the_v1_contract
+  excluded:
+    - old_dot_ai_protocol_modification
+    - old_protocol_compatibility
+    - old_OS_deletion
+    - global_dot_claude_migration
+    - automatic_watcher_polling_daemon_scheduler_or_cron
+    - automatic_local_GitHub_synchronization
+    - automatic_delivery_or_notification
+    - automatic_state_progression
+    - complex_delivery_receipt_state_machine
+    - opened_read_understood_or_accepted_tracking
+    - message_payload_digest
+    - mandatory_send_readback
+    - attachment_subprotocol
+    - durable_actual_recipient_or_relay_record
+    - durable_coordinator_handover_record
+    - full_permission_matrix_inside_communication_system
+    - strong_OS_level_local_access_control
+
+endpoint_model:
+  classes:
+    - desktop_local_model
+    - web_cloud_model
+    - terminal_local_model
+    - Human
+  instance_rule: >-
+    每个窗口、CLI 会话、机器或独立运行实例使用不同 endpoint_id；同一产品不能共享实例身份。
+  endpoint_card:
+    scope: current_task
+    required_fields:
+      - endpoint_id
+      - principal_class
+      - model_or_product
+      - environment_class
+      - interface_class
+      - task_role
+      - local_file_read
+      - local_file_write
+      - GitHub_read
+      - GitHub_write
+      - instance_label
+    authority_effect: none
+  identity_separation:
+    - provider_or_product
+    - environment_class
+    - interface_class
+    - endpoint_instance
+    - task_role
+    - capability_profile
+    - task_authority
+  self_declared_identity_grants_authority: false
+
+task_topology:
+  communication_space: one_task_only
+  concurrent_task_bodies_in_one_space: prohibited
+  preferred_project_operation: one_active_task_when_practical
+  task_coordinator:
+    required: true
+    selected_by: Human
+    responsibilities:
+      - maintain_task_manifest
+      - maintain_minimal_message_index
+      - maintain_minimal_Human_current_view
+    protected_action_authority: none_by_role_name
+    change_method: Human_oral_or_chat_instruction_is_sufficient
+    durable_handover_record: false
+  global_index:
+    purpose: discovery_only
+    minimal_fields:
+      - repository_id
+      - task_id
+      - task_root
+      - carrier
+      - coordinator_endpoint_id
+      - status
+      - last_Human_update_at
+    prohibited:
+      - message_body
+      - full_history
+      - sensitive_content
+      - global_communication_state_machine
+
+carrier_model:
+  local:
+    use_when: all_required_endpoints_can_access_same_configured_local_root
+    root: configurable_machine_global_communication_root
+    partition: repository_id_then_task_id
+  GitHub:
+    use_when:
+      - any_required_endpoint_is_Web_only
+      - endpoints_do_not_share_local_root
+      - cross_machine_or_durable_shared_access_is_required
+    location: current_task_work_branch
+    repository: current_business_repository
+  chat:
+    normal_use: compact_pointer_and_optional_short_Human_summary
+    long_payload_default: prohibited
+    emergency_payload:
+      allowed: true
+      trigger:
+        - intended_file_carrier_temporarily_unavailable
+        - Human_explicitly_selects_emergency_chat
+      requirements:
+        - bounded_and_complete_for_specific_action
+        - no_local_only_or_forbidden_data
+        - materialize_as_file_after_carrier_recovery
+        - chat_must_not_remain_only_durable_source
+      numeric_limit: determine_in_stage_02
+  automatic_cross_carrier_sync: false
+  Human_selects_or_confirms_transition: true
+
+routing_and_Human_control:
+  sender_declares:
+    - sender_endpoint_id
+    - expected_recipient_endpoint_id
+  expected_recipient_meaning: sender_recommendation_not_binding_destination
+  Human_may:
+    - forward_to_expected_recipient
+    - forward_to_different_recipient
+    - not_forward
+    - delay_forwarding
+    - end_communication_chain
+  actual_recipient_record: not_required
+  relay_record: not_required
+  receiving_endpoint_knows_actual_receipt_from_current_interaction: true
+  automatic_recipient_resolution_or_delivery: prohibited
+
+permission_boundary:
+  communication_message_sets_permission: false
+  default_authority_source:
+    - current_task
+    - current_task_role
+    - current_Human_authorization
+  within_role_action: receiving_endpoint_may_act_under_existing_task_authority
+  beyond_role_action:
+    precondition: explicit_Human_authorization_obtained_before_execution
+    receiver_requirement: authorization_evidence_is_available_or_readable
+    communication_role: carry_exact_authorization_ref_when_material
+  communication_system_must_not:
+    - infer_permission_from_message_content
+    - grant_permission_from_sender_role_or_model_brand
+    - duplicate_full_task_permission_matrix
+    - override_repository_or_execution_guards
+  Human_forwarding_effect: >-
+    Human 转发表示 Human 选择让接收方处理该消息；接收方仍受当前任务角色权限约束。
+    超越角色的行为只有在存在预先取得的明确 Human 授权时才可执行。
+
+message_model:
+  design: lightweight_information_and_index
+  one_expected_recipient_per_transport_message: true
+  immutable_after_publication: true
+  sequence:
+    owner: sender_endpoint
+    rule: monotonically_increasing_per_sender_within_task
+  message_id_composition:
+    - task_id
+    - sender_endpoint_id
+    - sender_message_seq
+  message_types:
+    - request
+    - response
+    - result
+    - decision_required
+    - correction
+    - blocked
+  required_metadata:
+    - message_id
+    - task_id
+    - title
+    - message_type
+    - sender_endpoint_id
+    - expected_recipient_endpoint_id
+  required_information:
+    - summary
+    - content
+    - requested_action_or_none
+    - required_refs
+  optional_relationships:
+    - in_reply_to
+    - supersedes
+    - references
+    - thread_context_refs
+  response_rule:
+    response_message_requires_one_primary_in_reply_to: true
+    separate_response_expected_field: false
+    whether_response_is_wanted: expressed_in_message_content_or_requested_action
+  correction_rule:
+    method: new_immutable_message_with_supersedes
+    modify_old_message: prohibited
+  summary_rule: current_change_or_core_conclusion_with_minimal_duplication
+  content_rule: complete_information_needed_for_current_action
+  optional_dimensions_when_material:
+    - facts
+    - decisions
+    - assumptions
+    - unknowns
+    - constraints
+    - risks
+  empty_optional_sections: prohibited
+  message_digest: false
+  attachment_metadata: false
+
+long_document_model:
+  purpose: store_information_too_large_for_lightweight_message
+  storage: local_or_GitHub_under_task_space
+  message_reference: exact_path
+  receiver_behavior: read_path_only_when_needed_or_marked_required
+  minimum_header:
+    - document_id
+    - task_id
+    - author_endpoint_id
+    - purpose
+    - privacy_class
+  optional_header:
+    - supersedes
+  immutable_after_publication: true
+  correction: new_version_and_new_message_reference
+  digest_required: false
+  separate_attachment_protocol: false
+
+pointer_contract:
+  Human_chat_pointer_fields:
+    - task_id
+    - message_id
+    - carrier
+    - exact_path_or_GitHub_ref
+    - sender_endpoint_id
+    - expected_recipient_endpoint_id
+    - one_line_purpose
+  one_line_purpose_rule: routing_purpose_only_not_second_copy_of_message_conclusion
+  recipient_bootstrap_load:
+    - task_manifest
+    - own_endpoint_card
+    - exact_message
+    - direct_required_refs
+  default_history_scan: prohibited
+  recursive_reference_loading: prohibited
+  older_context: load_only_when_explicitly_required
+
+message_index:
+  per_task: one_mutable_minimal_index
+  entry_fields:
+    - message_id
+    - title
+    - exact_path
+    - sender_endpoint_id
+    - expected_recipient_endpoint_id
+    - message_type
+  prohibited:
+    - message_body
+    - long_summary
+    - delivery_state
+    - read_state
+    - understanding_state
+
+sent_and_failure_semantics:
+  sent_definition: carrier_write_or_publish_operation_reports_success
+  mandatory_physical_readback: false
+  optional_lightweight_validation:
+    allowed: true
+    condition: incremental_cost_is_negligible
+  sent_does_not_mean:
+    - recipient_opened
+    - recipient_read
+    - recipient_understood
+    - recipient_accepted
+  success_response: represented_by_new_message_if_any
+  send_failure:
+    immediate_surface: short_Human_error_or_blocked_message_when_possible
+    durable_record_only_when:
+      - blocks_current_action
+      - may_change_final_conclusion
+      - represents_material_risk
+  routine_repaired_tool_errors: not_persisted
+
+Human_view:
+  default_persistent_form:
+    - title
+    - index_refs
+  generated_report_by_default: false
+  AI_summary_generation: on_demand_from_Human_selected_index
+  update_policy: important_change_or_Human_request_only
+  per_message_update: false
+  Human_decisions_and_final_results: durable_separate_documents
+
+privacy:
+  classes:
+    repository_shareable: may_enter_current_private_GitHub_repository
+    local_only: local_task_space_only
+    forbidden: must_not_be_stored_in_any_communication_carrier
+  forbidden_examples:
+    - passwords
+    - access_tokens
+    - private_keys
+    - authentication_files
+    - unnecessary_highly_sensitive_data
+  GitHub_allows:
+    - repository_shareable
+  local_allows:
+    - repository_shareable
+    - local_only
+  privacy_check_required_before_GitHub_publication: true
+
+logical_directory_layout:
+  same_for_local_and_GitHub: true
+  carrier_root_differs: true
+  task_root:
+    manifest.yml: durable
+    endpoints/: durable
+    index.yml: durable
+    Human/: durable_minimal_view_and_decisions
+    durable/:
+      Human_decisions/: durable
+      final_results/: durable
+      material_failures/: durable
+    runtime/:
+      messages/<sender_endpoint_id>/: removable
+      documents/<author_endpoint_id>/: removable_unless_promoted
+      scratch/: removable
+  GitHub_exclusions:
+    - local_only_content
+    - forbidden_content
+    - rebuildable_cache
+  canonical_paths_must_not_hold_live_messages: true
+  runtime_messages_are_not_registry_entries: true
+
+lifecycle_and_cleanup:
+  automatic_cleanup: false
+  cleanup_trigger:
+    - decision_model_asks_Human_at_task_completion
+    - Human_initiates
+  cleanup_method: delete_fixed_runtime_subtrees_without_reading_document_contents
+  promotion_before_cleanup: >-
+    需要长期保存的文档先提升到 durable 对应目录；未提升的 runtime 文档视为可清理。
+  preserve:
+    - manifest
+    - endpoint_cards_needed_for_audit
+    - minimal_index_when_required_for_durable_refs
+    - Human_decisions
+    - final_results
+    - material_failures
+  remove_when_Human_triggers:
+    - runtime/messages
+    - runtime/documents_not_promoted
+    - runtime/scratch
+    - rebuildable_cache
+
+research_authorization:
+  stage_02_after_exact_A_v2_confirmation:
+    Deep_Research: authorized
+    Human_relayed_multi_model_experiment: authorized
+  research_boundaries:
+    - use_first_principles_A_v2_as_question_source
+    - separate_source_facts_project_experiments_and_model_inference
+    - external_service_actions_remain_Human_triggered
+    - do_not_use_old_OS_as_initial_design_baseline
+    - raw_long_material_is_path_referenced_not_pasted_into_chat
+  required_outputs:
+    - one_refined_evidence_package
+    - primary_source_provenance
+    - representative_project_experiments
+    - rejected_options_and_reasons
+    - mapping_from_A_requirements_to_evidence_or_no_evidence
+  old_communication_comparison:
+    timing: after_first_principles_B_result_model_is_complete
+    purpose: gap_and_failure_mode_check_only
+    compatibility_effect: none
+
+stage_02_research_questions:
+  - which_message_encoding_best_preserves_complete_accurate_dense_information_with_low_total_context_cost
+  - which_minimal_pointer_fields_are_sufficient_across_local_Web_and_CLI_endpoints
+  - which_file_formats_support_deterministic_parsing_and_Human_readability_without_excess_structure
+  - what_is_the_practical_cost_value_of_optional_lightweight_send_validation
+  - what_numeric_emergency_chat_limit_is_safe_and_useful
+  - which_cross_platform_path_and_filename_constraints_are_load_bearing
+  - which_failure_cases_require_durable_evidence
+  - how_well_models_follow_exact_pointer_and_non_recursive_loading_rules
+  - whether_minimal_index_and_title_Human_view_is_sufficient_in_representative_tasks
+
+acceptance_requirements_for_future_implementation:
+  - Human_trigger_only
+  - no_background_or_automatic_delivery
+  - one_task_space_rejects_cross_task_message
+  - endpoint_identity_and_expected_recipient_required
+  - Human_can_route_to_any_endpoint_without_durable_relay_record
+  - recipient_loads_exact_pointer_and_direct_refs_only
+  - long_content_externalized_and_exactly_referenced
+  - message_and_long_document_immutability_enforced
+  - no_digest_requirement
+  - no_mandatory_readback_requirement
+  - minimal_message_index_contains_no_body_or_delivery_state
+  - task_permission_system_remains_external
+  - beyond_role_action_requires_explicit_Human_authorization_evidence
+  - local_only_and_forbidden_data_rejected_from_GitHub
+  - fixed_runtime_subtree_can_be_cleaned_without_content_inspection
+  - old_dot_ai_communication_paths_unchanged
+
+resolved_load_bearing_questions: true
+remaining_implementation_details:
+  policy: determine_in_stage_02_B_or_execution_without_Human_question_unless_load_bearing
+  examples:
+    - exact_schema_language
+    - minor_field_order
+    - helper_program_internal_structure
+    - reversible_file_naming_details
+    - optional_low_cost_validation_implementation
+
+Human_confirmation_gate:
+  required: true
+  binds:
+    artifact_path: 08_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/A_需求建模_v2.yml
+    artifact_blob_sha: pending_physical_readback
+  on_confirm:
+    - freeze_A_v2_as_stage_02_input
+    - begin_authorized_Deep_Research
+    - begin_authorized_project_experiments
+  on_reject_or_modify:
+    - preserve_v2_candidate
+    - create_successor_version
+    - do_not_begin_stage_02

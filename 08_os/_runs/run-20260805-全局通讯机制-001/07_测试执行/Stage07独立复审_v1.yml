@@ -1,0 +1,78 @@
+schema_version: citystate.stage07_independent_rereview.v1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+status: accepted
+verdict: PASS
+review_standard: principal_implementation_correct_and_frozen_acceptance_surface_physically_coupled
+
+reviewed_submission:
+  correction_dispatch_v3_head: ab587ff11222aaf598087f4d04d1c524bc739c19
+  implementation_commit_I2: 281395038a3d10a1aabe625db65ee6e8cc5e40cb
+  tested_implementation_commit_I3: 6ecf0699ae77447dd1eee5cf90e7d17a9441bab3
+  result_commit_R2: 9aeaa2fca0d4f44b736eae236430def2224a42ce
+  remote_master_observed: 52e00fe13d6a2e385abfaf1e2618c70f3278926c
+  merge_base_with_master: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  branch_behind_master: 8
+  branch_ahead_master: 175
+
+frozen_bindings:
+  Stage04_git_blob_sha: 360571b6b29a3baecd753dc45611457da9ab6bf2
+  Stage05_git_blob_sha: 9422de27de6794ba2c247c7dae3dcddaa5c9e562
+  B_v3_git_blob_sha: 314b76061a32d62bbcc49e2bf53b8968b2e194bd
+  accepted_as_unchanged: true
+
+independent_findings:
+  STAGE07-B01-FROZEN-PRODUCTION-ORACLE-SHADOWING:
+    status: closed
+    basis:
+      - production bridge imports and invokes Stage06 validator, publisher, convergence, archive, navigation, sender-zone and parity implementations directly
+      - no Stage04 StrictValidationAdapter business fallback is present in the reviewed production bridge
+      - document validation is routed through CommunicationValidator.validate_document
+      - three negative coupling controls break real Stage06 routes for GC-T033, GC-T039 and GC-T045 and are detected by the frozen evaluator
+  STAGE07-B02-AUTHORITY-AND-ROLE-BOUNDARY-NOT-END-TO-END:
+    status: closed_for_principal_implementation
+    basis:
+      - protected action validation binds task id, writer endpoint, writer task role and requested action to current task authority
+      - Human authorization must be a required ref, physically readable inside the task root and granted for the bound task/writer/action
+      - Human/current update path now validates structured task and writer authority rather than role labels alone
+  STAGE07-B03-ARCHIVE-PRIVATE-RUNTIME-PRECONDITIONS-INCOMPLETE:
+    status: closed
+    basis:
+      - archive requires physically readable completion, residual and private-runtime policy refs inside the active task root
+      - GitHub convergence evidence is required when a GitHub copy is required
+      - repository-internal private runtime is rejected if tracked or not ignored before deletion
+      - whole-task move and discovery update are coupled with rollback on discovery-update failure
+  STAGE07-B04-PUBLICATION-AND-BOOTSTRAP-PHYSICAL-CLOSURE-GAPS:
+    status: closed
+    basis:
+      - receiver bootstrap resolves exact files under task root and rejects globs, missing refs, endpoint mismatch and role mismatch
+      - publication validates endpoint cards and required documents before creating the immutable message
+      - sender index update occurs after message creation and message is rolled back if index finalization fails
+      - explicit GitHub republication copies repository-shareable material first, then publishes message and sender index, then performs one non-force convergence and remote readback
+
+execution_evidence_assessment:
+  executor_report_is_not_independent_evidence: true
+  physically_inspected_primary_git_diff: true
+  correction_commit_chain_linear_from_v3: true
+  correction_commit_count: 3
+  I3_only_trace_hygiene_change: true
+  R2_result_only_shape_consistent: true
+  tested_commit_binding: 6ecf0699ae77447dd1eee5cf90e7d17a9441bab3
+  mechanism_regression: 47_of_47_passed
+  frozen_production_full: 50_of_50_passed
+  frozen_mutation_suite: 50_of_50_passed
+  negative_coupling_controls: 3_of_3_passed
+  all_frozen_cases_report_nonempty_physical_trace: true
+  execution_package_validator_findings: 0
+
+nonblocking_notes:
+  - This acceptance judges the principal implementation and the frozen acceptance surface; it does not claim every future hardening edge case is exhaustively proven.
+  - The task branch intentionally remains diverged from the newer master. Stage07 acceptance does not itself authorize or define master integration.
+
+completion:
+  stage07_independent_rereview_passed: true
+  prior_blocking_findings_remaining: []
+  implementation_accepted: true
+  master_publication_authorized: false
+  task_branch_fast_forwardable_to_current_master: false
+  next_gate: Human_project_lead_decision_on_completion_and_master_integration

@@ -1,0 +1,65 @@
+schema_version: citystate.communication_system.stage_04_candidate_self_check.v1
+run_id: run-20260805-全局通讯机制-001
+task_id: os-v2-global-communication-system-001
+status: targeted_candidate_check_passed_full_repository_check_pending
+checked_at: 2026-08-06T00:28:00-07:00
+
+inputs:
+  candidate: 冻结测试候选_v1.yml
+  candidate_declared_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+  spec_blobs:
+    - 2913280e9bced46055e2f4c39979758785aa4550
+    - 2e761ae4df25b68f45289017f8fd78482ce80709
+    - 95c0fbf1ef8d2e7fead99f5d0b15778af9b832b8
+    - 269418233b2edcaea0fcb58af835717982246323
+    - e3a2563da01344e9bd2f07842e70e8759b22d12c
+
+local_targeted_check:
+  exit_code: 0
+  parsed_spec_groups: 5
+  verified_git_blob_shas: 5
+  test_count: 50
+  unique_test_ids: 50
+  sequential_test_ids: GC-T001_through_GC-T050
+  unique_failure_codes: 50
+  evidence_claim_coverage: E-01_through_E-10
+  A_success_criterion_coverage: AC-01_through_AC-09
+  scoring_required_test_count: 1
+  findings: []
+
+normalized_identities:
+  candidate_index_object:
+    description: >-
+      冻结候选 tests 列表中的索引记录；每条记录包含 test_id、证据与需求绑定、
+      精确 spec_ref、spec Git blob、优先级、自动化类型和 failure_code。
+    sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+    matches_candidate: true
+  complete_semantic_spec_objects:
+    description: 五个规格文件中50条完整fixture与oracle对象的规范化摘要
+    sha256: 9b506c7b1d4b95f296ad398a9c4b4187ed135333a12cb59e236ed467366971e5
+    purpose: supplementary_exact_semantic_identity
+
+important_distinction:
+  candidate_index_digest_binds_specs_indirectly_through_exact_git_blob: true
+  complete_semantic_digest_is_not_the_current_candidate_tests_digest: true
+
+not_executed:
+  - full_private_repository_static_runner
+  - executable_50_test_harness
+  - preimplementation_failure_baseline
+  - context_management_validator
+  - stage_collaborative_runtime_guard
+  - stage_collaborative_static_validator
+
+execution_environment_limit:
+  current_web_runtime_has_private_repository_connector_but_no_direct_repository_clone_network
+  gh_cli_available: false
+  implication: targeted_blob_based_validation_is_valid_but_does_not_replace_repository_local_execution
+
+freeze_eligibility:
+  eligible_now: false
+  remaining:
+    - generate_executable_runner_and_fixtures
+    - run_repository_local_static_and_candidate_validators
+    - record_expected_preimplementation_test_result
+    - obtain_exact_Human_freeze_authorization

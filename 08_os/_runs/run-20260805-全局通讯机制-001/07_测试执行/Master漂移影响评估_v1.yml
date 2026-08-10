@@ -1,0 +1,80 @@
+schema_version: citystate.stage07_master_drift_assessment.v1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+status: assessed_nonsemantic_but_operationally_material
+
+physical_state:
+  previous_task_master: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  current_remote_master: 596db847374ecb1546d343228fb6d0756a9fc9b4
+  master_advance_commits: 7
+  work_branch_before_assessment: ffbdb6b3da3135246574ab9657c6117cc7507ef1
+  work_branch_vs_master:
+    status: diverged
+    ahead_by: 168
+    behind_by: 7
+    merge_base: c7a508abbcda58361fc9b649236d44b706e0bdd4
+
+master_delta:
+  changed_paths:
+    - 08_os/05_registry/task_discipline_v1.yml
+    - 08_os/06_execution/README.md
+    - 08_os/06_execution/task_discipline/README.md
+    - 08_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py
+    - 08_os/06_execution/task_discipline/path_ledger/test_changed_path_ledger.py
+    - 08_os/06_execution/task_discipline/preflight/preflight_task_context.py
+    - 08_os/06_execution/task_discipline/preflight/test_preflight_task_context.py
+    - 08_os/06_execution/task_discipline/quiet_verify/quiet_verify.py
+    - 08_os/06_execution/task_discipline/quiet_verify/test_quiet_verify.py
+    - 08_os/_runs/run-20260809-任务纪律工具-001/01_任务输入/任务包_v1.yml
+    - 08_os/_runs/run-20260809-任务纪律工具-001/07_测试执行/验证结果_v1.yml
+    - 08_os/_runs/run-20260809-任务纪律工具-001/08_独立复核/独立复核派单_v1.yml
+    - 08_os/_runs/run-20260809-任务纪律工具-001/08_独立复核/独立复核派单_v2.yml
+    - 08_os/_runs/run-20260809-任务纪律工具-001/08_独立复核/独立复核结论摘要与Human裁决_v1.yml
+    - 08_os/开发入口与单窗口任务规范_v1.md
+  communication_system_canonical_paths_changed: false
+  stage04_frozen_paths_changed: false
+  stage05_paths_changed: false
+  stage06_communication_implementation_paths_changed: false
+  task_run_paths_changed: false
+  overlapping_path_with_task_surface:
+    - 08_os/06_execution/README.md
+
+impact_decision:
+  communication_system_semantics_invalidated: false
+  frozen_tests_invalidated: false
+  Stage05_plan_invalidated: false
+  Stage07_blockers_changed: false
+  existing_correction_dispatch_v1_still_executable_as_written: false
+  reason_v1_invalid: expected_master_is_stale_and_start_rule_requires_fail_closed_on_master_change
+  correction_may_continue_on_existing_work_branch: true
+  merge_master_into_work_branch_now: prohibited_for_this_correction
+  rebase_onto_master: prohibited
+  cherry_pick_unrelated_master_commits_into_task_branch: prohibited_for_scope_cleanliness
+  master_publication_readiness_after_Stage07: not_yet_resolved
+
+current_master_process_rules:
+  apply_current_master_working_discipline: true
+  latest_development_entry_ref: master:08_os/开发入口与单窗口任务规范_v1.md
+  task_discipline_tools_exist_only_on_new_master: true
+  copy_task_discipline_tools_into_this_task_branch: prohibited
+  required_executor_behavior:
+    - read current remote master before any write
+    - read current master versions of AGENT_WORKING_DISCIPLINE.md, AGENTS.md, and 08_os/开发入口与单窗口任务规范_v1.md
+    - preserve output caps, physical changed-path accounting, and explicit preflight facts using equivalent read-only commands when the new helper tools are absent from the task branch
+    - do not modify 08_os/06_execution/README.md during this correction unless a new project-lead instruction explicitly reopens that shared path
+
+continuation_rule:
+  authorized_expected_master: 596db847374ecb1546d343228fb6d0756a9fc9b4
+  authorized_master_drift_from_task_base_commits: 7
+  authorized_master_drift_is_unrelated_to_communication_semantics: true
+  branch_may_remain_behind_master_during_stage06_correction_and_stage07_rereview: true
+  branch_history_must_continue_linearly_from_existing_task_branch: true
+  if_master_moves_again_before_executor_write: stop_and_return_for_new_drift_assessment
+  if_any_new_master_change_touches_communication_system_or_frozen_task_inputs: stop_and_return
+  if_any_write_to_master_or_history_rewrite_would_be_required: stop_and_return
+
+future_integration_note: >-
+  Passing Stage07 on the existing task branch will not by itself make the branch fast-forwardable to the
+  now-advanced master. After Stage07 acceptance, project lead must separately determine a clean publication
+  integration path that preserves both the emergency task-discipline commits and the accepted communication
+  system without rebase, force push, history rewrite, or unauthorized merge semantics.

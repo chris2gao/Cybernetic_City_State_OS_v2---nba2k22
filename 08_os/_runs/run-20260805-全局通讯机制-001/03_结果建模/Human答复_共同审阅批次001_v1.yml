@@ -1,0 +1,91 @@
+schema_version: citystate.communication_system.result_model_joint_review_response.v1
+artifact_id: B-joint-review-Human-response-batch-001
+run_id: run-20260805-全局通讯机制-001
+task_id: os-v2-global-communication-system-001
+status: complete
+recorded_at: 2026-08-05T22:38:00-07:00
+source:
+  discussion_packet: B_共同审阅讨论包_v1.yml
+  Human_chat_instruction: current_conversation
+
+Human_decisions:
+  BQ-01:
+    selection: B
+    normalized_decision: >-
+      删除消息级 summary 字段。title 与 message_type 用于定位，content 承担当前动作所需的完整信息；
+      不在短消息中复制同一结论。
+
+  BQ-02:
+    selection: A
+    normalized_decision: >-
+      本地通讯需要转交 Web 模型时，由 Human 确认后将 repository_shareable 文档重新发布到当前任务
+      GitHub 分支，并生成新的 GitHub 消息引用 GitHub 可访问路径；local_only 与 forbidden 内容不得迁移。
+      该行为是 Human 控制的重新发布，不是自动同步或双写。
+
+  BQ-03:
+    selection: A
+    normalized_decision: >-
+      durable 对象不得依赖清理后消失的 runtime 对象。清理前必须提升仍被 durable 结果、决定或失败记录
+      依赖的消息或文档；cleanup 工具必须拒绝删除仍存在 durable 引用的 runtime 对象。
+
+  BQ-04:
+    selection: B
+    normalized_decision: >-
+      取消 task 级共享消息 index.yml。每个 sender_endpoint_id 在每个 task 中独立维护自己的追加式消息索引，
+      与自身消息目录同属 sender 写入边界；因此多端发布不争用一个共享索引。本任务每个 sender 预留
+      1 到 10000 的消息序号范围，单个 task 的单个 sender 不得超过 10000 条消息。
+    implementation_direction:
+      sender_index_path_pattern: runtime/indexes/<sender_endpoint_id>.yml
+      message_sequence_range: 1..10000
+      sequence_width: 5
+      first_sequence: '00001'
+      last_sequence: '10000'
+      shared_task_message_index: prohibited
+      aggregation: generated_on_demand_only
+      overflow_behavior: fail_closed_and_require_new_Human_design_decision
+
+  BQ-05:
+    selection: A
+    normalized_decision: >-
+      保留 Human/current.yml，但只在 Human 决策、重大阻塞或风险、阶段完成、最终结果就绪或 Human 明确请求时更新；
+      不随每条消息更新，不生成持续报告。
+
+  BQ-06:
+    selection: A
+    normalized_decision: >-
+      本地消息的不可变性由 publisher 拒绝覆盖、sender 序号单调增加和 validator 检测提供；
+      v1 不承诺 OS 级、ACL 级或密码学不可变。
+
+  BQ-07:
+    selection: A
+    normalized_decision: >-
+      接收方发现 required_refs 不足时不得自行扫描 task 目录或递归展开引用；必须生成 blocked 或 request 消息，
+      精确列出缺失信息，由 Human 决定是否补充和转发。
+
+  BQ-08:
+    selection: A
+    normalized_decision: >-
+      sender-owned 的新消息、新文档和 sender index 使用追加式写入；manifest、Human/current 等少量共享可变文件
+      在 GitHub 写入前绑定预期 branch HEAD，HEAD 变化时 fail-closed。成功路径不要求每个文件发布后完整远端 readback。
+
+joint_review_expectation:
+  Human_requires_internal_operation_explanation: true
+  explanation_should_cover:
+    - primary_components
+    - creation_and_publication_flow
+    - local_and_GitHub_carriers
+    - sender_index_and_10000_range
+    - receiver_loading
+    - permission_and_Human_authorization
+    - failure_and_correction
+    - Human_view
+    - runtime_promotion_and_cleanup
+    - deterministic_tools
+    - necessary_optional_and_problematic_parts
+  discussion_round_count_fixed: false
+  stop_when: Human_has_sufficient_information_to_confirm_or_revise_B
+
+stage_effect:
+  B_v2_confirmed: false
+  stage_04_entry: prohibited
+  next_action: publish_main_implementation_explanation_then_continue_load_bearing_discussion

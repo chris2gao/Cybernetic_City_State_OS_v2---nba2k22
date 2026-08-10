@@ -1,0 +1,249 @@
+schema_version: citystate.workflow.stage_artifact.v1
+artifact_schema_version: 1
+run_id: run-20260805-全局通讯机制-001
+stage_id: workflow_stage_06_execution
+artifact_kind: execution_package
+artifact_version: 1
+status: complete
+input_refs:
+  - stage_id: workflow_stage_04_test_generation
+    path: ../04_测试生成/04_tests.yml
+    git_blob_sha: 360571b6b29a3baecd753dc45611457da9ab6bf2
+    sha256: 46af0d98d6097067c59cefc82b31d3986380c4d6c8a71ead334afbcb00735dbd
+    normalized_tests_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+  - stage_id: workflow_stage_05_step_decomposition
+    path: ../05_步骤拆分/05_steps.yml
+    artifact_version: 2
+    git_blob_sha: 9422de27de6794ba2c247c7dae3dcddaa5c9e562
+deliberation_receipt:
+  mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
+  activation_state: active_dormant
+  profile_id: workflow_stage_06_execution
+  receipt_status: valid
+  route: full
+  session_id: S-CD-global-communication-001
+  task_gate_ref: Human授权_进入阶段六_v1.yml
+  Human_authorization_ref: Human授权_进入阶段六_v1.yml
+  independent_review_ref: null
+  independent_review_status: correction_ready_for_independent_stage07_rereview
+payload:
+  executor_role: backend_execution_and_handoff
+  allowed_write_paths:
+    - 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/**
+    - 08_os/_runs/run-20260805-全局通讯机制-001/run.yml
+    - 08_os/03_mechanisms/communication_system/**
+    - 08_os/02_boot/communication_system/**
+    - 08_os/05_registry/communication_system_v1.yml
+    - 08_os/06_execution/boot/communication_system/**
+    - 08_os/README.md
+    - 08_os/02_boot/README.md
+    - 08_os/03_mechanisms/README.md
+    - 08_os/05_registry/README.md
+    - 08_os/_runs/run-20260805-全局通讯机制-001/07_测试执行/stage07_correction_metadata_v3.yml
+  correction_base_commit: ab587ff11222aaf598087f4d04d1c524bc739c19
+  implementation_commit_I2: 281395038a3d10a1aabe625db65ee6e8cc5e40cb
+  tested_implementation_commit_I3: 6ecf0699ae77447dd1eee5cf90e7d17a9441bab3
+  actual_write_paths:
+    - 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/06_execution.yml
+    - 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/frozen_stage04_production_full_results.yml
+    - 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/frozen_stage04_production_mutation_suite_results.yml
+    - 08_os/_runs/run-20260805-全局通讯机制-001/07_测试执行/stage07_correction_metadata_v3.yml
+    - 08_os/_runs/run-20260805-全局通讯机制-001/run.yml
+    - 08_os/03_mechanisms/communication_system/导航与归档契约_v1.yml
+    - 08_os/03_mechanisms/communication_system/角色与权限边界_v1.yml
+    - 08_os/06_execution/boot/communication_system/README.md
+    - 08_os/06_execution/boot/communication_system/archive/archive_task.py
+    - 08_os/06_execution/boot/communication_system/archive/navigation.py
+    - 08_os/06_execution/boot/communication_system/archive/test_archive.py
+    - 08_os/06_execution/boot/communication_system/convergence/converge_task.py
+    - 08_os/06_execution/boot/communication_system/convergence/test_convergence.py
+    - 08_os/06_execution/boot/communication_system/publisher/publish_message.py
+    - 08_os/06_execution/boot/communication_system/publisher/republish_github.py
+    - 08_os/06_execution/boot/communication_system/publisher/test_github_republication.py
+    - 08_os/06_execution/boot/communication_system/publisher/test_publisher.py
+    - 08_os/06_execution/boot/communication_system/validator/receiver_bootstrap.py
+    - 08_os/06_execution/boot/communication_system/validator/run_frozen_stage04_tests.py
+    - 08_os/06_execution/boot/communication_system/validator/sender_zone.py
+    - 08_os/06_execution/boot/communication_system/validator/stage04_production_adapter.py
+    - 08_os/06_execution/boot/communication_system/validator/test_production_oracle_coupling.py
+    - 08_os/06_execution/boot/communication_system/validator/test_receiver_bootstrap.py
+    - 08_os/06_execution/boot/communication_system/validator/test_sender_zone.py
+    - 08_os/06_execution/boot/communication_system/validator/test_validator.py
+    - 08_os/06_execution/boot/communication_system/validator/validate_communication_system.py
+  frozen_test_package_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+  attempts:
+    - step_id: S-01
+      attempt: 1
+      result: pass
+      actual_write_paths:
+        - 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/06_execution.yml
+        - 08_os/03_mechanisms/communication_system/README.md
+        - 08_os/03_mechanisms/communication_system/通讯契约_v1.yml
+        - 08_os/05_registry/communication_system_v1.yml
+        - 08_os/06_execution/boot/communication_system/task_space_initializer/__init__.py
+        - 08_os/06_execution/boot/communication_system/task_space_initializer/initialize_task_space.py
+        - 08_os/06_execution/boot/communication_system/task_space_initializer/test_initializer.py
+      unauthorized_write_attempts: []
+    - step_id: S-02
+      attempt: 1
+      result: pass
+      actual_write_paths:
+        - 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/06_execution.yml
+        - 08_os/03_mechanisms/communication_system/端点卡契约_v1.yml
+        - 08_os/03_mechanisms/communication_system/角色与权限边界_v1.yml
+        - 08_os/06_execution/boot/communication_system/validator/__init__.py
+        - 08_os/06_execution/boot/communication_system/validator/validate_communication_system.py
+        - 08_os/06_execution/boot/communication_system/validator/test_validator.py
+      unauthorized_write_attempts: []
+    - step_id: S-03
+      attempt: 1
+      result: pass
+      actual_write_paths:
+        - 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/06_execution.yml
+        - 08_os/03_mechanisms/communication_system/消息契约_v1.yml
+        - 08_os/06_execution/boot/communication_system/validator/validate_communication_system.py
+        - 08_os/06_execution/boot/communication_system/validator/test_validator.py
+        - 08_os/06_execution/boot/communication_system/validator/fixtures/valid_message.yml
+        - 08_os/06_execution/boot/communication_system/validator/fixtures/invalid_duplicate_key.yml
+      unauthorized_write_attempts: []
+    - step_id: S-04
+      attempt: 1
+      result: retry
+      actual_write_paths:
+        - 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/06_execution.yml
+        - 08_os/03_mechanisms/communication_system/发送方区与序号契约_v1.yml
+        - 08_os/06_execution/boot/communication_system/validator/sender_zone.py
+        - 08_os/06_execution/boot/communication_system/validator/test_sender_zone.py
+      unauthorized_write_attempts: []
+    - step_id: S-04
+      attempt: 2
+      result: pass
+      actual_write_paths:
+        - 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/06_execution.yml
+        - 08_os/06_execution/boot/communication_system/task_space_initializer/test_initializer.py
+        - 08_os/06_execution/boot/communication_system/validator/sender_zone.py
+        - 08_os/06_execution/boot/communication_system/validator/test_sender_zone.py
+        - 08_os/06_execution/boot/communication_system/validator/test_validator.py
+      unauthorized_write_attempts: []
+    - step_id: S-05
+      attempt: 1
+      result: pass
+      actual_write_paths:
+        - 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/06_execution.yml
+        - 08_os/03_mechanisms/communication_system/文档与引用契约_v1.yml
+        - 08_os/03_mechanisms/communication_system/接收方bootstrap_v1.md
+        - 08_os/06_execution/boot/communication_system/validator/validate_communication_system.py
+        - 08_os/06_execution/boot/communication_system/validator/receiver_bootstrap.py
+        - 08_os/06_execution/boot/communication_system/validator/test_receiver_bootstrap.py
+      unauthorized_write_attempts: []
+    - step_id: S-06
+      attempt: 1
+      result: pass
+      actual_write_paths:
+        - 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/06_execution.yml
+        - 08_os/03_mechanisms/communication_system/载体与发布契约_v1.yml
+        - 08_os/06_execution/boot/communication_system/publisher/__init__.py
+        - 08_os/06_execution/boot/communication_system/publisher/publish_message.py
+        - 08_os/06_execution/boot/communication_system/publisher/test_publisher.py
+        - 08_os/06_execution/boot/communication_system/validator/validate_communication_system.py
+      unauthorized_write_attempts: []
+    - step_id: S-07
+      attempt: 1
+      result: retry
+      actual_write_paths:
+        - 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/06_execution.yml
+        - 08_os/03_mechanisms/communication_system/Git收敛契约_v1.yml
+        - 08_os/06_execution/boot/communication_system/convergence/__init__.py
+        - 08_os/06_execution/boot/communication_system/convergence/converge_task.py
+        - 08_os/06_execution/boot/communication_system/convergence/test_convergence.py
+      unauthorized_write_attempts: []
+    - step_id: S-07
+      attempt: 2
+      result: pass
+      actual_write_paths:
+        - 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/06_execution.yml
+        - 08_os/06_execution/boot/communication_system/convergence/converge_task.py
+      unauthorized_write_attempts: []
+    - step_id: S-08
+      attempt: 1
+      result: pass
+      actual_write_paths:
+        - 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/06_execution.yml
+        - 08_os/03_mechanisms/communication_system/导航与归档契约_v1.yml
+        - 08_os/06_execution/boot/communication_system/archive/__init__.py
+        - 08_os/06_execution/boot/communication_system/archive/archive_task.py
+        - 08_os/06_execution/boot/communication_system/archive/navigation.py
+        - 08_os/06_execution/boot/communication_system/archive/test_archive.py
+      unauthorized_write_attempts: []
+    - step_id: S-09
+      attempt: 1
+      result: pass
+      actual_write_paths:
+        - 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/06_execution.yml
+        - 08_os/03_mechanisms/communication_system/纠正与跨端一致性_v1.yml
+        - 08_os/06_execution/boot/communication_system/validator/parity.py
+        - 08_os/06_execution/boot/communication_system/validator/test_parity.py
+        - 08_os/06_execution/boot/communication_system/fixtures/cross_endpoint/local_message.yml
+        - 08_os/06_execution/boot/communication_system/fixtures/cross_endpoint/web_message.yml
+        - 08_os/06_execution/boot/communication_system/fixtures/cross_endpoint/scoring_binding_v1.yml
+      unauthorized_write_attempts: []
+    - step_id: S-10
+      attempt: 1
+      result: retry
+      actual_write_paths:
+        - 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/06_execution.yml
+        - 08_os/02_boot/communication_system/启动清单_v1.yml
+        - 08_os/05_registry/communication_system_v1.yml
+        - 08_os/06_execution/boot/communication_system/README.md
+        - 08_os/06_execution/boot/communication_system/validator/stage04_production_adapter.py
+        - 08_os/06_execution/boot/communication_system/validator/run_frozen_stage04_tests.py
+        - 08_os/06_execution/boot/communication_system/validator/validate_execution_package.py
+        - 08_os/README.md
+        - 08_os/02_boot/README.md
+        - 08_os/03_mechanisms/README.md
+        - 08_os/05_registry/README.md
+        - 08_os/06_execution/README.md
+        - 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/frozen_stage04_production_full_results.yml
+        - 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/frozen_stage04_production_mutation_suite_results.yml
+        - 08_os/_runs/run-20260805-全局通讯机制-001/run.yml
+      unauthorized_write_attempts: []
+    - step_id: S-10
+      attempt: 2
+      result: pass
+      actual_write_paths:
+        - 08_os/_runs/run-20260805-全局通讯机制-001/06_执行/06_execution.yml
+        - 08_os/06_execution/boot/communication_system/validator/validate_execution_package.py
+      unauthorized_write_attempts: []
+  unauthorized_write_attempts: []
+  self_check_evidence:
+    tested_implementation_commit: 6ecf0699ae77447dd1eee5cf90e7d17a9441bab3
+    mechanism_unit_tests:
+      total: 47
+      passed: 47
+      failed: 0
+    frozen_stage04_full:
+      result_ref: frozen_stage04_production_full_results.yml
+      total: 50
+      passed: 50
+      failed: 0
+    frozen_stage04_mutation_suite:
+      result_ref: frozen_stage04_production_mutation_suite_results.yml
+      total: 50
+      exact_failure_codes_observed: 50
+      failed: 0
+    mutation_independence_negative_controls:
+      total: 3
+      passed: 3
+      representative_groups: [GC-T033, GC-T039, GC-T045]
+    physical_GitHub_republication_regression:
+      material_before_message_before_index: true
+      ordinary_single_push_readback: true
+    original_validator_exit_codes:
+      validate_05_steps: 0
+      minimum_operational_loop_static: 0
+      context_management_structure: 0
+      no_canonical_live_state: 0
+      stage_collaborative_deliberation_static: 0
+      communication_system_static: 0
+    executor_self_check_is_independent_acceptance: false
+    next_gate: Stage07_independent_verification_by_different_reviewer

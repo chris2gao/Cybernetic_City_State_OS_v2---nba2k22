@@ -1,0 +1,113 @@
+schema_version: citystate.communication_system.legacy_gap_comparison.v1
+run_id: run-20260805-全局通讯机制-001
+task_id: os-v2-global-communication-system-001
+status: complete
+comparison_order:
+  first_principles_B_completed_first: true
+  B_ref: B_结果模型_v1.yml
+  legacy_used_as_compatibility_requirement: false
+  legacy_mutated: false
+
+legacy_inputs:
+  - path: .ai/HANDOFF_COMMON_CONVENTIONS.md
+    blob_sha: 3e46d55fbce607b6e1c260e5d6fe0df0ac9d48cc
+  - path: .ai/AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md
+    blob_sha: 548a5eea981c4c2c245610056dd9157a5e9c1662
+  - path: .ai/lanes/lane_envelope.schema.json
+    blob_sha: 4e8d48bac03dbd988c5c5a4c057ffcafbc0f408f
+  - path: .ai/TOKEN_USAGE_PROFILE.md
+    blob_sha: 47302a5cf9ce04f51cc916a9b524b9e0b320f3bb
+  - path: .ai/communication_compliance/README.md
+    blob_sha: 95430660d638a5731198ec383f8707721bf5615b
+
+reusable_lessons:
+  - id: L-01
+    lesson: role_environment_instance_and_authority_must_remain_orthogonal
+    already_in_B: true
+    B_claims: [B-R03, B-R09]
+  - id: L-02
+    lesson: every_required_non_null_ref_is_dereferenced_and_missing_ref_fails_closed
+    already_in_B: true
+    B_claims: [B-R06, B-R07]
+  - id: L-03
+    lesson: referenced_artifacts_must_be_published_before_the_pointer_message
+    already_in_B: false
+    action: add_to_B_v2
+  - id: L-04
+    lesson: optional_mutable_index_is_updated_after_authoritative_message_publication
+    already_in_B: partial
+    action: add_publication_order_to_B_v2
+  - id: L-05
+    lesson: sender_owned_paths_reduce_multi_writer_conflicts
+    already_in_B: partial
+    action: make_writer_ownership_explicit_in_B_v2
+  - id: L-06
+    lesson: shared_GitHub_mutable_writes_need_observed_head_conflict_protection_and_fail_closed_behavior
+    already_in_B: false
+    action: add_minimal_non_fast_forward_or_compare_and_swap_guard_to_B_v2
+  - id: L-07
+    lesson: structured_parser_must_reject_duplicate_keys_multi_document_YAML_tags_anchors_aliases_and_merge_keys
+    already_in_B: false
+    action: add_safe_YAML_subset_to_validator_method
+  - id: L-08
+    lesson: exact_content_identity_should_reuse_Git_commit_or_blob_when_material
+    already_in_B: true
+    B_claims: [B-R13]
+  - id: L-09
+    lesson: targeted_reference_loading_and_no_repeated_protocol_reads_reduce_cost_without_skipping_required_evidence
+    already_in_B: true
+    B_claims: [B-R06]
+  - id: L-10
+    lesson: deterministic_positive_and_adversarial_fixtures_are_required_for_validator_trust
+    already_in_B: partial
+    action: make_negative_validator_fixtures_explicit_in_stage_four
+
+legacy_features_rejected:
+  - feature: provider_branded_frozen_wire_role_names
+    reason: conflicts_with_provider_neutral_endpoint_identity
+  - feature: one_central_ai_review_latest_branch_as_global_bus
+    reason: conflicts_with_current_task_branch_and_one_task_one_space
+  - feature: frozen_seven_field_direction_specific_signals
+    reason: duplicates_two_provider_role_topology_and_cannot_express_general_endpoint_pairs
+  - feature: full_coordination_state_machine_and_consumed_packet_tracking
+    reason: Human_rejected_delivery_read_understood_and_acceptance_state_complexity
+  - feature: required_timestamp_lane_epoch_and_base_review_head_on_every_message
+    reason: non_load_bearing_for_current_low_concurrency_task_space_and_duplicates_manifest_or_Git_context
+  - feature: mandatory_Human_brief_generation_and_bounded_expression_for_every_material_event
+    reason: new_Human_view_is_minimal_and_generated_on_demand
+  - feature: repository_level_non_self_authenticating_transition_proof_chain
+    reason: communication_v1_does_not_own_task_permission_or_transition_authorization
+  - feature: automatic_retry_budget_and_timeout_coordination
+    reason: outside_Human_manual_low_volume_v1_boundary
+  - feature: fixed_local_bus_path_and_automatic_30_day_GC
+    reason: new_root_is_configurable_and_cleanup_is_Human_triggered
+
+load_bearing_gaps_found:
+  - gap_id: G-01
+    name: publication_order
+    required_change: write_and_validate_required_artifacts_first_then_message_then_mutable_index_or_Human_view
+  - gap_id: G-02
+    name: writer_ownership_and_shared_mutable_conflict_guard
+    required_change: sender_writes_only_own_message_and_document_paths; coordinator_writes_manifest_index_Human_view; GitHub_shared_mutable_write_fails_on_changed_expected_head
+  - gap_id: G-03
+    name: safe_YAML_subset
+    required_change: deterministic_parser_rejects_ambiguous_or_executable_YAML_features
+  - gap_id: G-04
+    name: validator_self_tests
+    required_change: frozen_negative_fixtures_must_prove_each_rejection_rule_before_validator_is_trusted
+
+non_gaps:
+  - actual_recipient_record
+  - receiver_acknowledgment
+  - delivery_state_machine
+  - per_message_timestamp
+  - per_message_protocol_epoch
+  - custom_payload_digest
+  - provider_specific_role_mapping
+  - automatic_watcher_or_polling
+
+conclusion:
+  B_v1_semantic_architecture_survives: true
+  A_reopen_required: false
+  B_v2_required: true
+  B_v2_scope: four_legacy_derived_implementation_closures_only

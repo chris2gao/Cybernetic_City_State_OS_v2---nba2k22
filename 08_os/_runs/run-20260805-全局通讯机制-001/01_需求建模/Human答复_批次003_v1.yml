@@ -1,0 +1,48 @@
+schema_version: citystate.communication_system.Human_answer_batch.v1
+artifact_id: Human-answer-global-communication-003
+batch_id: requirement-inquiry-batch-003
+task_id: os-v2-global-communication-system-001
+created_at: 2026-08-05T06:07:00-07:00
+source_branch: dev/os-v2-global-communication-system-001
+status: confirmed
+answers:
+  IQ-21:
+    decision: A
+    normalized: one_expected_recipient_per_transfer_message
+  IQ-22:
+    decision: confirm
+    normalized: adopt_minimal_endpoint_card_fields
+  IQ-23:
+    decision: A
+    normalized: one_Human_selected_coordinator_endpoint_per_task
+  IQ-24:
+    decision: A
+    normalized: Human_supplies_exact_message_pointer_and_receiver_loads_only_required_refs
+  IQ-25:
+    decision: confirm_with_cost_correction
+    normalized:
+      sent_definition: write_or_publish_operation_reports_success
+      mandatory_readback: false
+      optional_lightweight_validation: allowed_only_when_incremental_cost_is_negligible
+      recipient_open_understand_accept_tracking: prohibited
+      rationale: avoid_extra_tool_calls_and_context_cost_for_delivery_proof
+  IQ-26:
+    decision: A
+    normalized: sender_endpoint_monotonic_sequence
+  IQ-27:
+    decision: A
+    normalized: preserve_logical_message_id_and_payload_digest_with_separate_Human_relay_record
+  IQ-28:
+    decision: A
+    normalized: load_direct_parent_and_required_refs_only_then_expand_on_demand
+  IQ-29:
+    decision: A
+    normalized: fail_closed_without_directory_or_chat_history_inference
+  IQ-30:
+    decision: confirm
+    normalized: bounded_Human_chosen_emergency_chat_payload_with_later_file_materialization
+invariants_added:
+  - deterministic_validation_must_not_be_required_when_its_incremental_cost_exceeds_its_practical_value
+  - sent_is_not_received_understood_or_accepted
+  - receiver_context_expansion_is_explicit_and_on_demand
+  - no_background_or_automatic_delivery

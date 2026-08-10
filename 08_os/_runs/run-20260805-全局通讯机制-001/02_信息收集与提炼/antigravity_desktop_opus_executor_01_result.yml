@@ -1,0 +1,142 @@
+schema_version: citystate.manual_multi_model_experiment_response.v1
+experiment_id: global-communication-cross-model-001
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+dispatch_artifact_id: supplementary-antigravity-opus-communication-dispatch-001
+responded_at: 2026-08-06T03:27:00Z
+
+endpoint:
+  endpoint_id: antigravity-desktop-opus-executor-01
+  model_or_product: Claude Opus 4.6 (Thinking) via Google Antigravity Desktop
+  environment_class: desktop_local_model
+  host_application: Antigravity Desktop (language_server.exe)
+  operating_system: Windows
+  note: >-
+    Antigravity is a Google DeepMind product; the model powering this session is
+    Anthropic Claude Opus 4.6 (Thinking), selected by the user in the Antigravity
+    model selector. The host injects system prompts and tool definitions but does
+    not alter the model family.
+
+prior_results_read: false
+prohibited_reads_honored:
+  - old_communication_protocol: not_read
+  - complete_task_history: not_read
+  - antigravity_desktop_executor_01_result.yml: not_read
+  - other_model_experiment_answers: not_read
+
+fixture_results:
+
+  - fixture_id: F1-minimal-yaml-index
+    recovered:
+      task_id: os-v2-global-communication-system-001
+      sender_endpoint_id: chatgpt-web-planner-01
+      expected_recipient_endpoint_id: claude-code-cli-executor-01
+      message_type_and_purpose: >-
+        request — 要求 CLI executor 执行一次超出其默认角色的受保护发布操作。
+      exact_paths_to_read:
+        - 08_os/_runs/run-x/06_执行/发布任务包.yml
+      authority_interpretation: >-
+        authorization_ref 指向一份独立的 Human 授权文件
+        (08_os/_runs/run-x/durable/Human_decisions/授权发布.yml)。
+        这意味着 executor 在执行前必须读取并验证该授权的存在与范围。
+        该授权是"受保护发布"所必需的，因为此操作超出了 executor 的默认角色权限。
+        authorization_ref 本身是一个指针，不是授权体——需要解引用后才能确认
+        授权范围、授权时间和授权人。
+    ambiguity: none
+    missing_field: >-
+      缺少 priority/urgency 字段，但在最小索引中不影响语义恢复。
+      缺少 created_at/timestamp，接收方无法判断消息新鲜度。
+
+  - fixture_id: F2-compact-json-index
+    recovered:
+      task_id: os-v2-global-communication-system-001
+      sender_endpoint_id: chatgpt-web-planner-01
+      expected_recipient_endpoint_id: claude-code-cli-executor-01
+      message_type_and_purpose: >-
+        request — 与 F1 完全相同的语义：执行超出默认角色的受保护发布。
+      exact_paths_to_read:
+        - 08_os/_runs/run-x/06_执行/发布任务包.yml
+      authority_interpretation: >-
+        与 F1 相同。authorization_ref 指向 Human 授权文件，executor 必须在
+        行动前解引用并验证授权范围。JSON 格式没有引入任何语义差异。
+    ambiguity: none
+    missing_field: >-
+      与 F1 相同：缺少 timestamp 和 priority。JSON 格式本身不引入额外缺口。
+
+  - fixture_id: F3-free-text-pointer
+    recovered:
+      task_id: os-v2-global-communication-system-001
+      sender_endpoint_id: chatgpt-web-planner-01
+      expected_recipient_endpoint_id: claude-code-cli-executor-01
+      message_type_and_purpose: >-
+        request — 执行超出默认角色的受保护发布。语义可恢复但需要解析自由文本管道分隔格式。
+      exact_paths_to_read:
+        - 08_os/_runs/run-x/06_执行/发布任务包.yml
+      authority_interpretation: >-
+        auth= 前缀隐含 authorization_ref 语义，指向同一 Human 授权文件。
+        但自由文本格式使得 auth 的语义依赖于读者对 "auth=" 约定的先验理解。
+        如果读者不认识该约定，auth= 可能被理解为普通 metadata 而非强制授权前置条件。
+    ambiguity: >-
+      管道分隔的自由文本存在解析歧义：(1) message_id 未出现在此格式中——无法确定
+      这是 planner-004 还是新的消息；(2) path= 和 auth= 的键名是约定而非 schema，
+      读者需要先验知识才能正确解析；(3) 多值 refs 在管道格式中如何分隔未定义。
+    missing_field: >-
+      message_id 缺失（F1/F2 中有 planner-004）。timestamp 同样缺失。
+      管道格式没有为 in_reply_to 或多 refs 预留结构。
+
+  - fixture_id: F4-long-content-reference
+    recovered:
+      task_id: os-v2-global-communication-system-001
+      sender_endpoint_id: claude-code-desktop-reviewer-01
+      expected_recipient_endpoint_id: chatgpt-web-planner-01
+      message_type_and_purpose: >-
+        response — reviewer 向 planner 返回 B 结果模型的审核意见，
+        是对 planner-001 的回复。
+      exact_paths_to_read:
+        - 08_os/_runs/run-x/03_结果建模/审核意见_v1.md
+      authority_interpretation: >-
+        本消息没有 authorization_ref。这是合理的：response 类型消息报告
+        审核结果，不执行受保护操作，因此不需要额外授权。in_reply_to: planner-001
+        建立了消息链追溯。
+    ambiguity: none
+    missing_field: >-
+      缺少 verdict 或 status 字段——接收方需要打开审核意见文档才能知道结论
+      是 accept/reject/fix_required。一个可选的顶层 verdict 摘要字段可以减少
+      不必要的文件读取。
+    special_question_answer: >-
+      在形成回应前，我会且仅会读取 refs 中列出的精确路径：
+      08_os/_runs/run-x/03_结果建模/审核意见_v1.md。
+      我不会扫描整个 task 目录，不会递归读取审核意见文档中引用的所有文件。
+      理由：(1) 懒加载法则要求只读取任务明确需要的文件；(2) 通讯索引的 refs
+      字段就是"接收方需要读什么"的完整声明；(3) 如果审核意见内部引用了更多文件，
+      那是一个需要新消息或显式扩展 refs 的场景，不是接收方自行递归展开的场景。
+      递归读取会打破索引的边界控制能力，使得一条消息的实际读取范围不可预测。
+
+comparison:
+  preferred_format: F1
+  reason: >-
+    F1（YAML 结构化索引）的信息恢复与 F2（JSON）完全一致，但 YAML 的可读性更好、
+    注释友好且与本仓库既有 schema 约定一致。F2 在机器间传输效率更高但人类审核成本略增。
+    F3（自由文本）引入了解析歧义、丢失了 message_id、且无法可靠表达多值字段。
+    F1 是人机可读性与结构化精度的最佳平衡点。
+  fields_that_can_be_removed_without_information_loss: []
+  fields_that_are_missing_and_material:
+    - field: timestamp/created_at
+      reason: >-
+        接收方无法判断消息新鲜度，在异步多模型环境中可能导致处理过期请求。
+    - field: verdict_summary (for response type)
+      reason: >-
+        response 类消息缺少顶层摘要，接收方必须打开引用文档才能知道结论方向。
+
+limitations:
+  - >-
+    本 endpoint 与先前 Gemini 执行共享同一 Antigravity Desktop 宿主应用程序，
+    因此不能验证宿主差异对协议理解的影响——只能验证模型家族差异。
+  - >-
+    本 endpoint 无法验证 Claude Code Desktop、Codex CLI 或 Web Claude
+    等其他产品运行时的协议理解行为。
+  - >-
+    实验不涉及实际消息传输；只测试从极简索引恢复语义的能力。
+  - >-
+    本模型（Claude Opus 4.6）与先前可能存在的 Claude 系列响应属于同一模型家族，
+    不构成独立模型家族样本。

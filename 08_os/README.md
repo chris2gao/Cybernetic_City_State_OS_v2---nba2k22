@@ -50,3 +50,8 @@ it does not get an entry; it gets removed.
 `CORE_MANIFEST.yml` 将 OS 机制区域和保存共享 OS 开发/验证历史的 `08_os/_runs/`
 列为 core-owned；`08_os/07_content/` 与领域运行根 `.ai/PROGRAM_RUNS/` 为
 domain-owned。两个集合不得重叠。
+# 全局通讯机制接入
+
+供应商无关、Human 触发与 Human 中转的通讯契约位于
+`03_mechanisms/communication_system/`，启动清单位于
+`02_boot/communication_system/启动清单_v1.yml`。V1 不包含自动投递或状态推进。

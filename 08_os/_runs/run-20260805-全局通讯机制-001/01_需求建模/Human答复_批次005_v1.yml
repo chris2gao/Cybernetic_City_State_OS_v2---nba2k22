@@ -1,0 +1,158 @@
+schema_version: citystate.communication_system.Human_requirement_answers.v1
+artifact_id: Human-answer-global-communication-batch-005
+artifact_version: 1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+recorded_at: 2026-08-05T06:30:00-07:00
+source_branch: dev/os-v2-global-communication-system-001
+inquiry_batch: requirement-inquiry-batch-005
+status: recorded_with_one_authority_scope_pending_closure
+
+answers:
+  IQ-41:
+    selected: A
+    normalized_decision:
+      external_document_minimum_header:
+        - document_id
+        - task_id
+        - author_endpoint_id
+        - purpose
+        - privacy_class
+      optional:
+        - supersedes
+      digest_required: false
+
+  IQ-42:
+    selected: A
+    normalized_decision:
+      published_long_document: immutable
+      correction_method: new_version_referenced_by_new_message
+      mutable_operational_surfaces:
+        - task_manifest
+        - minimal_task_index
+
+  IQ-43:
+    selected: B
+    Human_statement: Human转发即批准消息中发送方提出的全部动作
+    normalized_decision:
+      Human_forwarding_is_approval_signal: true
+      recipient_may_treat_explicit_requested_actions_as_approved: true
+      implicit_or_unwritten_actions: not_approved
+      exact_protected_action_scope: pending_next_inquiry
+    reason_for_pending_scope: >-
+      “全部动作”是否包含source/master发布、删除、运行时激活、秘密材料处理等受保护动作，
+      必须在A v2中精确闭合，不能从一般转发动作无限推断。
+
+  IQ-44:
+    selected: no_new_field
+    normalized_decision:
+      response_expected_field: prohibited_in_v1
+      interpretation: >-
+        消息本身承载信息和要求；模型通过消息内容理解是否需要回应，
+        不为此增加独立协议字段或状态。
+
+  IQ-45:
+    selected: confirm
+    normalized_decision:
+      Human_may:
+        - not_forward
+        - change_actual_recipient
+        - delay_forwarding
+        - end_the_communication_chain
+      expected_recipient_is_sender_recommendation: true
+
+  IQ-46:
+    selected: A
+    normalized_decision:
+      durable_failure_record_required_when:
+        - current_action_is_blocked
+        - failure_may_change_or_limit_the_result
+      minor_immediately_repaired_errors: no_durable_record_required
+      full_tool_retry_log: prohibited_by_default
+
+  IQ-47:
+    selected: simplified_on_demand_view
+    Human_statement: >-
+      评估视图构建和更新的成本与价值；采用简洁方式。
+      需要报告时可由Human复制索引视图并让AI生成，或只保存索引和标题。
+    normalized_decision:
+      persistent_Human_view:
+        default_content:
+          - title
+          - exact_index_refs
+        full_generated_report: false
+        update_on_every_message: false
+      on_demand_Human_summary:
+        trigger: Human_request
+        generated_by_model_from_selected_index_refs: true
+        required_to_be_persisted: false
+      coordinator_responsibility_reduced_to:
+        - task_manifest
+        - minimal_task_index
+
+  IQ-48:
+    selected: confirm
+    normalized_decision:
+      task_manifest_role: entry_and_discovery_only
+      fields:
+        - repository_id
+        - task_id
+        - task_goal
+        - task_root
+        - work_branch
+        - base_head
+        - coordinator_endpoint_id
+        - endpoint_card_refs
+        - current_index_ref
+        - status
+      prohibited:
+        - full_message_history
+        - repeated_long_content
+        - model_reasoning_transcript
+
+  IQ-49:
+    selected: Human_triggered_structural_cleanup
+    Human_statement: >-
+      任务完成后由决策模型询问，或者Human主动触发。
+      文件必须结构化存放，使每个任务清理相同结构区域，无需读取文档内容。
+    normalized_decision:
+      automatic_cleanup: false
+      cleanup_trigger:
+        - decision_model_asks_Human_at_task_completion
+        - Human_initiates_directly
+      fixed_structure_required: true
+      cleanup_by_known_path_classes_without_content_inspection: true
+      task_root_partition:
+        durable_keep:
+          - manifest
+          - endpoint_cards
+          - Human_decisions
+          - final_result
+          - material_failures
+        removable_runtime:
+          - messages
+          - relays
+          - temporary_documents
+          - caches
+          - scratch
+      destructive_cleanup_requires_current_Human_trigger: true
+
+  IQ-50:
+    selected: confirm
+    normalized_decision:
+      stage_02_outputs:
+        - one_distilled_evidence_package
+        - separate_source_facts_project_experiments_and_model_inferences
+        - raw_long_materials_as_exact_refs_only
+        - map_each_A_requirement_to_evidence_or_no_evidence
+        - do_not_paste_research_body_into_chat
+
+superseded_prior_interpretations:
+  - persistent_full_Human_current_view
+  - mandatory_view_update_on_each_material_message
+  - separate_response_expected_protocol_field
+
+next_gate:
+  required: true
+  subject: close_exact_scope_of_Human_forwarding_as_approval
+  then: finish_remaining_architecture_questions_and_generate_A_v2_candidate

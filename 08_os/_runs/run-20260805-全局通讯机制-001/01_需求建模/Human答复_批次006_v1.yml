@@ -1,0 +1,87 @@
+schema_version: citystate.communication_system.Human_requirement_answers.v1
+artifact_id: Human-answer-global-communication-batch-006
+artifact_version: 1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+recorded_at: 2026-08-05T06:41:00-07:00
+status: accepted_for_A_v2_synthesis
+
+answers:
+  IQ-51:
+    decision: task_role_authority_with_pre_authorized_exception
+    normalized_rule: >-
+      通讯消息本身不设置、不扩大也不授予权限。接收方默认只拥有当前任务与任务角色已经授予的权限。
+      当所请求行为超越接收方任务角色时，发送方、决策模型或其他责任方应在执行前向 Human 取得
+      针对该行为的明确授权；接收方能够读取或获得该明确授权证据后，方可执行相关行为。
+    communication_system_role:
+      - carry_authorization_reference_when_material
+      - do_not_evaluate_or_duplicate_full_permission_system
+      - do_not_treat_message_content_as_authority
+
+  IQ-52:
+    answer: A
+    decision: communication_system_does_not_own_permission_evaluation
+
+  IQ-53:
+    answer: A
+    decision: no_durable_actual_recipient_or_relay_record
+
+  IQ-54:
+    answer: A
+    decision: minimal_mutable_task_message_index
+    entry_fields:
+      - message_id
+      - title
+      - exact_path
+      - sender_endpoint_id
+      - expected_recipient_endpoint_id
+      - message_type
+    prohibited:
+      - message_body
+      - delivery_state
+      - read_state
+      - long_summary
+
+  IQ-55:
+    answer: confirm
+    decision: fixed_durable_and_runtime_subtrees
+    cleanup_without_content_inspection: true
+
+  IQ-56:
+    answer: A
+    decision: same_logical_layout_for_local_and_GitHub
+    carrier_difference:
+      local: repository_shareable_or_local_only
+      GitHub: repository_shareable_only
+
+  IQ-57:
+    answer: A
+    decision: retain_six_message_types
+    values:
+      - request
+      - response
+      - result
+      - decision_required
+      - correction
+      - blocked
+
+work_discipline_reconfirmation:
+  Human_statement: >-
+    实现产生的细节上的细节，除非特别重要，否则忽略，以防陷入细节麻烦。
+  binding_interpretation:
+    ask_or_freeze_only_when:
+      - changes_architecture_or_scope
+      - changes_Human_authority_or_security_boundary
+      - changes_cross_endpoint_interoperability
+      - changes_failure_semantics_or_data_loss_risk
+      - creates_irreversible_or_high_cost_lock_in
+      - materially_changes_acceptance_tests
+    defer_to_result_modeling_or_implementation_when:
+      - naming_without_semantic_effect
+      - exact_minor_field_order
+      - formatting_preference
+      - internal_helper_design
+      - readily_reversible_implementation_choice
+      - detail_measurable_by_executor_without_Human_value_judgment
+    effect_on_remaining_requirement_phase: >-
+      不再进行常规实现细节追问。先生成 A v2；只有综合模型发现新的承重缺口时，才增量询问 Human。

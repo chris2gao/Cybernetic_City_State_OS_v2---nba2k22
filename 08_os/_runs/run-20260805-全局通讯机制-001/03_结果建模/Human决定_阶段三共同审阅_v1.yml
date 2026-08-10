@@ -1,0 +1,28 @@
+schema_version: citystate.result_model.Human_deliberation_event.v1
+run_id: run-20260805-全局通讯机制-001
+task_id: os-v2-global-communication-system-001
+recorded_at: 2026-08-05T22:21:00-07:00
+status: active
+
+Human_direction:
+  B_v2_confirmed: false
+  stage_04_authorized: false
+  action: reopen_stage_03_for_joint_review_and_questions
+  inquiry_round_count: adaptive_until_information_sufficient
+  review_focus:
+    - main_result_shape
+    - main_implementation_flow
+    - load_bearing_architecture_choices
+    - cost_and_value_of_mutable_views_and_indexes
+    - failure_and_cleanup_semantics
+  do_not_expand_into:
+    - minor_field_order
+    - helper_function_design
+    - naming_without_semantic_effect
+    - reversible_low_level_implementation_details
+
+supersedes_pending_gate:
+  prior_state: B_v2_pending_exact_Human_confirmation
+  effect: >-
+    B v2 remains a candidate and evidence-bearing discussion baseline, but it is not accepted.
+    Stage 03 remains active until Human explicitly confirms a revised or retained B artifact.

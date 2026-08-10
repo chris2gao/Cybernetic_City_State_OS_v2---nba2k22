@@ -1,0 +1,195 @@
+schema_version: citystate.information_collection.evidence_index.v1
+run_id: run-20260805-全局通讯机制-001
+task_id: os-v2-global-communication-system-001
+status: complete
+requirement_version: 2
+
+research_questions:
+  - id: RQ-01
+    type: open_discovery
+    question: Human手动中转条件下有哪些可复用的跨端通讯模式
+    capture_unit: mechanism_pattern
+  - id: RQ-02
+    type: directed_verification
+    question: 轻量消息索引与长内容外置是否工程可行
+  - id: RQ-03
+    type: directed_verification
+    question: 默认只读直接引用、不递归历史的收益与失败边界是什么
+  - id: RQ-04
+    type: open_discovery
+    question: Human手动路由有哪些重要失败模式
+    capture_unit: failure_mode
+  - id: RQ-05
+    type: directed_verification
+    question: 一task一空间及runtime/durable分区是否合理
+  - id: RQ-06
+    type: open_discovery
+    question: 跨模型通讯边界应如何选择结构化文本表达
+    capture_unit: encoding_and_validation_pattern
+
+sources:
+  - source_id: DR-CHATGPT
+    name: ChatGPT Deep Research final lane output
+    type: external_research_lane
+    path: 01_ChatGPT_外部检索_v1.md
+    reliability: B
+    limits:
+      - summary_oriented
+      - source_level_citations_not_fully_reproducible_in_repository
+  - source_id: DR-GEMINI
+    name: Gemini Deep Research final lane output
+    type: external_research_lane
+    path: 02_Gemini_外部检索_v1.md
+    reliability: B
+    limits:
+      - mixed_primary_and_secondary_sources
+      - low_quality_numeric_claims_require_rejection_or_verification
+  - source_id: SRC-CLAIM-CHECK
+    name: Microsoft Azure Architecture Center Claim-Check pattern
+    type: industry_official
+    reliability: A
+  - source_id: SRC-A2A
+    name: A2A Protocol specification
+    type: authoritative_standard
+    reliability: A
+  - source_id: SRC-MCP
+    name: Model Context Protocol official server concepts
+    type: authoritative_standard
+    reliability: A
+  - source_id: SRC-LOST-MIDDLE
+    name: Lost in the Middle, TACL 2024
+    type: peer_reviewed
+    reliability: A
+  - source_id: SRC-FORMAT-RESTRICTION
+    name: Let Me Speak Freely, EMNLP Industry 2024
+    type: peer_reviewed
+    reliability: A
+  - source_id: SRC-GIT-OBJECTS
+    name: Pro Git Git Objects
+    type: industry_official
+    reliability: A
+  - source_id: SRC-GITHUB-DELETE
+    name: GitHub documentation on sensitive data and history rewriting
+    type: industry_official
+    reliability: A
+  - source_id: SRC-RUNTIME-PARTITION
+    name: XDG runtime directory and Kubernetes ephemeral storage analogues
+    type: authoritative_standard_and_official_docs
+    reliability: A
+  - source_id: EXP-ANTIGRAVITY-GEMINI
+    name: Antigravity Gemini protocol comprehension result
+    type: project_experiment
+    path: ../antigravity_desktop_executor_01_result.yml
+    reliability: B
+  - source_id: EXP-ANTIGRAVITY-OPUS
+    name: Antigravity Opus protocol comprehension result
+    type: project_experiment
+    path: ../antigravity_desktop_opus_executor_01_result.yml
+    reliability: B
+
+claims:
+  - evidence_id: E-01
+    research_question_ids: [RQ-01, RQ-02]
+    claim: 长内容可以外置，轻量消息只携带精确引用并由接收方按需读取
+    direction: support
+    source_refs: [SRC-CLAIM-CHECK, SRC-A2A, SRC-MCP, DR-CHATGPT, DR-GEMINI]
+    independent_source_count: 3
+    information_confidence: 5
+    boundary: 外置内容引入可访问性、版本和生命周期成本
+    B_constraint: message_and_document_separation
+  - evidence_id: E-02
+    research_question_ids: [RQ-03]
+    claim: 默认加载全部历史会增加上下文负担且长上下文利用存在位置敏感
+    direction: support
+    source_refs: [SRC-LOST-MIDDLE, DR-CHATGPT, DR-GEMINI]
+    independent_source_count: 2
+    information_confidence: 5
+    boundary: 直接引用闭包不足时按需加载也会失败
+    B_constraint: direct_refs_by_default_with_fail_closed_expansion_request
+  - evidence_id: E-03
+    research_question_ids: [RQ-03]
+    claim: 发送方声明的直接引用集合不能被假定为绝对完整
+    direction: limit
+    source_refs: [DR-CHATGPT, DR-GEMINI, EXP-ANTIGRAVITY-OPUS]
+    independent_source_count: 2
+    information_confidence: 4
+    boundary: 接收方不得自行递归扫描，应通过新消息请求缺失上下文
+    B_constraint: blocked_message_on_missing_material_reference
+  - evidence_id: E-04
+    research_question_ids: [RQ-04]
+    claim: Human手动中转可作为路由、披露和授权治理门，但不是可靠投递机制
+    direction: support_with_limit
+    source_refs: [DR-CHATGPT, DR-GEMINI]
+    independent_source_count: 2
+    information_confidence: 4
+    boundary: 不保证送达、顺序、唯一性或理解
+    B_constraint: no_delivery_state_machine_or_reliability_claim
+  - evidence_id: E-05
+    research_question_ids: [RQ-05]
+    claim: 一task一通讯空间以及runtime与durable固定分区具有成熟相邻工程依据
+    direction: support
+    source_refs: [SRC-RUNTIME-PARTITION, SRC-GITHUB-DELETE, DR-CHATGPT, DR-GEMINI]
+    independent_source_count: 3
+    information_confidence: 5
+    boundary: 清理当前runtime不等于清除Git历史、镜像或备份
+    B_constraint: fixed_cleanup_subtree_and_precise_erasure_claim
+  - evidence_id: E-06
+    research_question_ids: [RQ-06]
+    claim: 结构化轻量索引比自由文本更适合确定性机器解析
+    direction: support
+    source_refs: [EXP-ANTIGRAVITY-GEMINI, EXP-ANTIGRAVITY-OPUS]
+    independent_source_count: 2
+    information_confidence: 4
+    boundary: 两个模型共享同一Antigravity宿主，不能证明跨宿主兼容
+    B_constraint: minimal_structured_boundary
+  - evidence_id: E-07
+    research_question_ids: [RQ-06]
+    claim: 严格输出格式约束可能损害复杂推理，因此结构化约束只应作用于最终通讯边界
+    direction: limit
+    source_refs: [SRC-FORMAT-RESTRICTION, DR-GEMINI, DR-CHATGPT]
+    independent_source_count: 2
+    information_confidence: 4
+    boundary: 不要求记录或传播模型私有推理过程
+    B_constraint: separate_reasoning_freedom_from_minimal_message_serialization
+  - evidence_id: E-08
+    research_question_ids: [RQ-02, RQ-03]
+    claim: 精确路径不总是精确内容身份
+    direction: limit
+    source_refs: [SRC-GIT-OBJECTS, DR-CHATGPT, DR-GEMINI]
+    independent_source_count: 2
+    information_confidence: 5
+    boundary: 普通消息不需要自定义digest；内容精确性承重时使用已有Git branch/head/blob
+    B_constraint: optional_existing_content_identity_when_material
+  - evidence_id: E-09
+    research_question_ids: [RQ-02, RQ-06]
+    claim: 自然语言解释合理不能替代精确字段和必读路径集合验证
+    direction: support
+    source_refs: [EXP-ANTIGRAVITY-OPUS, EXP-ANTIGRAVITY-GEMINI]
+    independent_source_count: 2
+    information_confidence: 5
+    boundary: 单端点可能生成貌似合理但字段错误的答案
+    test_constraint: field_by_field_and_exact_required_ref_set_assertions
+  - evidence_id: E-10
+    research_question_ids: [RQ-06]
+    claim: 当前证据不能证明YAML、JSON或Markdown中存在跨模型唯一最优格式
+    direction: unresolved_bounded
+    source_refs: [DR-CHATGPT, DR-GEMINI, SRC-FORMAT-RESTRICTION, EXP-ANTIGRAVITY-GEMINI, EXP-ANTIGRAVITY-OPUS]
+    independent_source_count: 4
+    information_confidence: 5
+    boundary: B选择最小语义模型，编码由可测试性与现有仓库规范决定
+    B_constraint: do_not_claim_universal_format_optimum
+
+rejected_or_non_bearing_claims:
+  - coordination_failures_approximately_35_percent
+  - explicit_state_validation_reduces_failures_approximately_70_percent
+  - TOON_token_savings_30_to_60_percent_as_general_rule
+  - Markdown_retry_rate_5_to_15_percent_as_general_rule
+  - automatic_watcher_or_retry_state_machine_is_required
+  - Chain_of_Thought_must_be_persisted
+
+completion:
+  atomic_claims_indexed: true
+  key_claims_have_primary_or_independent_support: true
+  conflicts_resolved_or_durable: true
+  source_asymmetry_recorded: true
+  feasibility_basis_complete: true

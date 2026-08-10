@@ -1,0 +1,126 @@
+schema_version: citystate.communication_system.stage04_targeted_correction_review.v1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+reviewed_submission_head: 5d2d4c23fa160b3b6231ee1832a6b7bba73ee59b
+review_status: rejected_correction_required
+stage_04_freeze_allowed: false
+stage_05_allowed: false
+
+remote_verification:
+  branch: dev/os-v2-global-communication-system-001
+  branch_head: 5d2d4c23fa160b3b6231ee1832a6b7bba73ee59b
+  base_checkpoint: 8c5c16a1e3175a1266a0d85da35ad65c517ab1c7
+  linear_ahead_commits: 2
+  master_head: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  master_unchanged: true
+
+accepted_partial_work:
+  - prior seven out_of_scope paths were removed from current tree
+  - adapter contract was separated into its own module
+  - runner has three named modes and atomic result writing helper
+  - frozen test_id and failure_code startup comparison exists
+  - canonical fixtures from prior correction remain on B_v3 field names
+
+blocking_findings:
+  - finding_id: S04-R2-F01
+    severity: critical
+    statement: synthetic_conforming_full persisted result is not 50 PASS
+    evidence:
+      path: 04_测试生成/results/synthetic_conforming_full_v2.yml
+      tested_commit: e8c1128b0bf4bd39e967fede3799e9764ae4c3aa
+      counts:
+        PASS: 48
+        FAIL: 2
+        EXPECTED_FAIL: 0
+        ERROR: 0
+        BLOCKED_EXTERNAL: 0
+      failed_tests: [GC-T006, GC-T050]
+      exit_code: 1
+    implication: stated completion claim is contradicted by durable primary output
+
+  - finding_id: S04-R2-F02
+    severity: critical
+    statement: most tests still do not execute their frozen fixture-action-oracle semantics
+    evidence:
+      generic_fixture_factory_only_contains:
+        - test_id
+        - _should_fail_test_id
+        - _expected_failure
+      generic_evaluator_rule: any adapter call that does not raise is PASS
+      affected_scope: most of GC-T001..GC-T049 excluding limited YAML and Git branches
+    implication: pass means no exception rather than frozen behavior satisfied
+
+  - finding_id: S04-R2-F03
+    severity: critical
+    statement: mutation proof is circular and can parrot the expected failure code
+    evidence:
+      expected_failure_code_is_passed_into_fixture: true
+      synthetic_adapter_reads_expected_failure_code: true
+      synthetic_adapter_raises_same_code_without_observation_mutation: true
+    implication: mutation suite cannot prove evaluators independently derive 50 failure codes
+
+  - finding_id: S04-R2-F04
+    severity: critical
+    statement: real Git tests do not implement the four frozen Git scenarios
+    evidence:
+      GC-T031: creates a local repository and commit but no bare remote or remote-ahead convergence
+      GC-T032: no distinct sender-zone scenario branch exists
+      GC-T033: no same-path conflict scenario branch exists
+      GC-T034: creates two non-overlapping local branches and attempts merge, not a rejected non-fast-forward push
+    implication: Git convergence and conflict oracles are not established
+
+  - finding_id: S04-R2-F05
+    severity: high
+    statement: GC-T050 uses the wrong comparison model
+    evidence:
+      compares: top-level values of two result files against each other
+      fields_used: [task_id, sender_endpoint_id, expected_recipient_endpoint_id, message_type, purpose, authority]
+      required_behavior: score each fixture_result against frozen experiment packet expectations including exact required_refs set
+      persisted_result: FAIL_Field_mismatch_task_id
+    implication: cross-model semantic recovery oracle is invalid and currently failing
+
+  - finding_id: S04-R2-F06
+    severity: high
+    statement: GC-T006 regex is over-escaped and fails to detect the frozen fixture
+    evidence:
+      persisted_result: FAIL_Fixture_did_not_violate_constraint
+    implication: safe YAML conforming run cannot reach 50 PASS
+
+  - finding_id: S04-R2-F07
+    severity: high
+    statement: claimed baseline and mutation durable result files are absent from remote commit
+    missing_paths:
+      - 04_测试生成/results/preimplementation_baseline_v2.yml
+      - 04_测试生成/results/mutation_suite_v2.yml
+    implication: reported run evidence is not durable or reviewable
+
+  - finding_id: S04-R2-F08
+    severity: high
+    statement: current tree still contains new out-of-scope root helper files
+    paths:
+      - build_harness_v2.py
+      - build_runner_v2.py
+      - generate_runner.py
+    implication: write allowlist and task isolation remain violated
+
+  - finding_id: S04-R2-F09
+    severity: high
+    statement: harness expectations conflict with persisted primary result
+    evidence:
+      harness_asserts:
+        synthetic_full_PASS: 50
+        mutation_PASS: 50
+      persisted_synthetic_full_PASS: 48
+      persisted_synthetic_full_exit_code: 1
+    implication: claimed successful harness command cannot be accepted without new exact command receipt
+
+required_correction_invariants:
+  - failure_code_must_not_be_passed_to_adapter_fixture_or_observation
+  - evaluator_alone_maps_observation_to_frozen_failure_code
+  - each_test_has_case_specific_fixture_action_observation_and_evaluator
+  - synthetic_conforming_full_must_be_50_PASS
+  - mutation_suite_must_trigger_50_codes_by_observation_mutation_not_code_echo
+  - GC-T031_to_GC-T034_use_real_temporary_git_repositories_and_local_bare_remote
+  - GC-T050_scores_each_frozen_fixture_response_against_experiment_packet_expected_values
+  - all_persisted_results_bind_final_tested_commit_and_runner_identity
+  - current_tree_contains_no_root_generation_helpers

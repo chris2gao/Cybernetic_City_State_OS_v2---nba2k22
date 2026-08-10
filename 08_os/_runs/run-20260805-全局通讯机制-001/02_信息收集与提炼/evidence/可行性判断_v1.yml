@@ -1,0 +1,70 @@
+schema_version: citystate.information_collection.feasibility_judgment.v1
+workflow_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+requirement_version: 2
+evidence_version: 1
+status: complete
+judgment: partially_supported
+feasibility_basis_complete: true
+
+bearing_statement: >-
+  证据支持构建一个低到中等消息量、Human 手动中转、task 隔离、轻量索引与长文档外置、
+  直接引用按需加载、权限独立于消息、runtime/durable 固定分区的 v1 通讯机制。
+  证据不支持把 Human 中转描述为可靠投递系统，也不支持建立自动轮询、完整消息状态机、
+  全局唯一最优格式或彻底数据擦除承诺。
+
+supported_parts:
+  - claim: lightweight_message_index_and_external_long_documents_are_feasible
+    evidence_refs: [V-01, V-02, V-03, antigravity-cross-family]
+  - claim: direct_reference_loading_reduces_context_burden_when_closure_is_sufficient
+    evidence_refs: [V-03, V-04, antigravity-cross-family]
+  - claim: task_scoped_workspace_with_runtime_durable_partition_is_feasible
+    evidence_refs: [V-08, V-07]
+  - claim: Human_manual_routing_can_serve_as_governance_and_disclosure_gate
+    evidence_refs: [ChatGPT-lane-final, Gemini-lane-final]
+  - claim: minimal_structured_boundary_is_preferable_to_free_text_for_machine_stability
+    evidence_refs: [antigravity-cross-family, V-05]
+
+refuted_or_limited_parts:
+  - claim: exact_path_alone_always_identifies_exact_content
+    evidence_refs: [V-06]
+    consequence: use_existing_Git_branch_head_or_blob_identity_when_content_exactness_is_material
+  - claim: direct_refs_are_proven_complete
+    evidence_refs: [V-04, ChatGPT-lane-final, Gemini-lane-final]
+    consequence: receiver_must_fail_closed_and_request_more_context_when_required_input_is_missing
+  - claim: Human_routing_guarantees_delivery_order_or_comprehension
+    evidence_refs: [ChatGPT-lane-final, Gemini-lane-final]
+    consequence: make_no_reliability_claim_and_use_new_messages_for_blocked_or_response_states
+  - claim: one_format_is_cross_model_optimal
+    evidence_refs: [V-05, antigravity-cross-family]
+    consequence: freeze_only_minimal_semantics_then_select_encoding_by_tests
+  - claim: runtime_cleanup_erases_repository_history_or_external_copies
+    evidence_refs: [V-07]
+    consequence: scope_cleanup_claim_to_current_fixed_runtime_tree
+
+unresolved_parts:
+  - question: Claude_Code_Desktop_and_Codex_Desktop_host_compatibility
+    impact: medium
+    blocks: []
+    next_action: future_validation_when_quota_available
+  - question: exact_final_wire_encoding_and_minimal_field_set
+    impact: medium
+    blocks: [workflow_stage_04_test_generation]
+    next_action: decide_in_B_then_freeze_by_cross_endpoint_tests
+  - question: source_level_numeric_coverage_across_Deep_Research_lanes
+    impact: low
+    blocks: []
+    next_action: preserve_as_unmeasured_due_to_report_structure_asymmetry
+
+stop_decision:
+  stop: true
+  basis:
+    - both_Human_designated_final_research_lane_outputs_are_present
+    - directed_primary_source_verification_is_sufficient_for_current_load_bearing_claims
+    - supplementary_same_host_cross_family_experiment_is_saturated
+    - semantic_overlap_and_conflicts_are_resolved_or_durable
+    - exact_source_capture_recapture_is_not_defensible_and_not_needed_for_B
+    - additional_research_or_NotebookLM_would_not_change_feasibility_B_structure_or_acceptance_tests
+  residual_risk: >-
+    ChatGPT 路线的来源级复现信息少于 Gemini，因此不声明精确来源覆盖率；
+    Claude Code Desktop 与 Codex Desktop 的真实宿主兼容性仍需未来补测。

@@ -1,0 +1,47 @@
+schema_version: citystate.communication_system.result_review_response.v1
+run_id: run-20260805-全局通讯机制-001
+task_id: os-v2-global-communication-system-001
+batch_id: stage-03-joint-review-003
+recorded_at: 2026-08-05T23:46:00-07:00
+status: complete
+
+Human_decisions:
+  BQ-16:
+    selected: A
+    decision: >-
+      公开 task 通讯目录在任务完成后整体从 active 移入 archive；真正私有、未跟踪的
+      role runtime 或 scratch 不归档，按上下文机制在完成后删除。
+  BQ-17:
+    selected: A
+    decision: >-
+      canonical message 增加 sender_task_role 与 expected_recipient_task_role；角色字段用于
+      路由、上下文选择与一致性校验，不授予权限。
+  BQ-18:
+    selected: A
+    decision: >-
+      各 endpoint 使用原生可用工具发布：本地 Desktop/CLI 使用终端、Git 与可选 publisher；
+      Web 使用已授权 GitHub connector/API。canonicality 来自同一 schema、路径、所有权与
+      validator 契约，不来自某一个强制 CLI。
+  BQ-19:
+    selected: A
+    decision: >-
+      保留 Human/current.yml，由当前 task 的架构与决策角色承担 task_navigation_owner 职责，
+      仅在任务开始、Human 决策、重大阻塞或风险、阶段完成、最终结果或 Human 请求时更新。
+  BQ-20:
+    selected: A
+    decision: >-
+      本地与 GitHub 收敛不做模型语义比对；使用普通 Git fetch/fast-forward/commit/push。
+      保留 non-fast-forward、同路径冲突与远端 head 变化保护；无法机械解决时交给架构与
+      决策角色及 Human。
+  BQ-21:
+    selected: A
+    decision: >-
+      不创建 coordinator 新角色。task_navigation_owner 是当前任务架构与决策角色承担的
+      导航职责集合，不改变审核角色、执行角色或 Human 的既有权限边界。
+
+joint_review_completion:
+  fixed_round_count_required: false
+  load_bearing_questions_remaining: 0
+  information_sufficient_for_B_v3: true
+  next_action: generate_self_contained_B_v3_then_request_exact_Human_confirmation
+  stage_04_authorized: false

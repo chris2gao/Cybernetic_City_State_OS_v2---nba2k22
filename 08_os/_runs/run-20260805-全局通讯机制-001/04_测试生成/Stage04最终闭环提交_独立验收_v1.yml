@@ -1,0 +1,136 @@
+schema_version: citystate.communication_system.stage04_independent_review.v1
+review_id: stage04-final-closure-independent-review-001
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+reviewed_branch: dev/os-v2-global-communication-system-001
+reviewed_master_head: c7a508abbcda58361fc9b649236d44b706e0bdd4
+reviewed_submission_head: 804e58cba2e8f4fb91225580aa1d00010cd949a5
+reported_implementation_commit: 837b931acdc554803aa239f7ec3e9f43cac52601
+reported_result_commit: 804e58cba2e8f4fb91225580aa1d00010cd949a5
+
+status: rejected_correction_required
+stage_04_freeze_allowed: false
+stage_05_allowed: false
+Human_action_required_now: false
+
+physical_git_acceptance:
+  master_unchanged: true
+  branch_linear_from_prior_review: true
+  commits_since_prior_review: 2
+  implementation_commit_is_implementation_only: true
+  result_commit_is_results_only: true
+  persisted_tested_commit_exactly_equals_implementation_commit: true
+  implementation_changed_after_results: false
+
+accepted_fixes:
+  - publication_chain_is_now_correctly_separated
+  - persisted_results_bind_837b931acdc554803aa239f7ec3e9f43cac52601
+  - preimplementation_baseline_mode_is_real_and_persisted
+  - GC-T050_frozen_real_model_results_are_now_reached_by_the_strict_scorer
+  - GC-T050_required_ref_comparison_uses_exact_set_equality_not_subset
+  - GC-T041_now_uses_real_filesystem_reads_and_writes_instead_of_loaded_content_sentinel
+  - GC-T045_now_mutates_the_physical_index_file_for_some_invalid_forms
+
+blocking_findings:
+  - id: S04-FINAL3-F01
+    severity: critical
+    issue: GC-T050_real_failure_is_not_normalized_to_the_frozen_failure_code
+    evidence:
+      baseline_status: FAIL
+      baseline_exit_code: 1
+      persisted_reason: "Wrong violation: Unrelated exception: authority_interpretation exact semantic requirement failed"
+    required:
+      - every_field_level_semantic_failure_defined_by_GC-T050_must_map_to_CROSS_MODEL_SEMANTIC_RECOVERY
+      - unrelated_framework_failures_must_still_remain_unrelated
+    consequence: baseline_gate_not_satisfied
+
+  - id: S04-FINAL3-F02
+    severity: critical
+    issue: GC-T045_does_not_implement_all_frozen_invalid_forms_or_valid_append
+    evidence:
+      modify_entry_case: absent_from_mutation_actions
+      missing_pointer_case: action_branch_is_pass
+      valid_append_case: no_append_operation_is_implemented
+      mutation_forms_are_combined_in_one_execution: true
+    frozen_requirement:
+      - delete_existing_entry_rejected
+      - mutate_existing_entry_rejected
+      - embedded_message_body_rejected
+      - missing_message_pointer_rejected
+      - valid_append_preserves_prior_entries
+    required: exercise_and_score_each_subcase_independently
+
+  - id: S04-FINAL3-F03
+    severity: critical
+    issue: GC-T042_remains_a_sentinel_message_field_test_not_a_discovery_yml_roots_only_oracle
+    current_shape: validate_message_with_discovery_scope_boolean
+    frozen_requirement: create_real_discovery_yml_with_prohibited_message_body_index_delivery_state_or_history_and_reject_it
+
+  - id: S04-FINAL3-F04
+    severity: high
+    issue: GC-T041_is_real_IO_but_not_yet_the_frozen_default_context_read_trace
+    current_shape: explicit_action_load_active_or_load_archive_copies_a_known_file
+    missing:
+      - default_loader_or_read_trace_over_active_and_archive_roots
+      - exact_archive_pointer_exception
+      - Human_request_exception
+    frozen_requirement: only_active_current_task_is_loaded_by_default
+
+  - id: S04-FINAL3-F05
+    severity: high
+    issue: GC-T043_and_GC-T044_still_encode_policy_outcome_through_action_labels
+    evidence:
+      update_material_and_update_ordinary_both_write_state_new: true
+      update_authorized_and_update_unauthorized_both_write_state_new: true
+      evaluator_uses_action_label_to_decide_whether_same_write_is_valid: true
+    required:
+      - fixture_contains_raw_event_type_or_writer_role_authority
+      - adapter_applies_policy_from_that_state
+      - evaluator_scores_persisted_state_without_preloaded_outcome_label
+
+  - id: S04-FINAL3-F06
+    severity: high
+    issue: GC-T039_does_not_cover_the_complete_frozen_public_archive_fixture
+    current_public_fixture:
+      - messages
+      - documents
+    missing:
+      - sender_indexes
+      - Human_decisions
+      - final_results
+      - material_failures
+      - discovery_update
+
+  - id: S04-FINAL3-F07
+    severity: high
+    issue: GC-T040_does_not_cover_all_private_runtime_oracle_dimensions
+    current_check: private_runtime_absent_from_archive
+    missing:
+      - ignored_or_external_private_runtime_sentinel_case
+      - tracked_Git_content_absence_check
+      - deletion_after_durable_prerequisites_check
+
+  - id: S04-FINAL3-F08
+    severity: high
+    issue: GC-T033_and_GC-T034_still_lack_structured_control_trace_evidence_for_full_frozen_oracle
+    missing:
+      GC-T033:
+        - exact_conflict_path_in_escalation_payload_to_task_navigation_owner_and_Human
+        - explicit_no_push_after_conflict_trace
+      GC-T034:
+        - explicit_force_flag_trace
+        - explicit_retry_count_zero
+        - explicit_remote_head_unchanged_after_rejected_push
+
+review_decision:
+  continue_same_task: true
+  continue_same_branch: true
+  new_task_required: false
+  stage_04_freeze: prohibited
+  stage_05_entry: prohibited
+  next_checkpoint: targeted_correction_of_remaining_oracle_gaps
+  do_not_change:
+    - frozen_test_candidate
+    - frozen_specs
+    - accepted_publication_chain_structure
+    - exact_set_GC-T050_reference_comparison

@@ -1,0 +1,89 @@
+schema_version: citystate.communication_system.stage04_local_execution_review.v1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+status: accepted_as_partial_infrastructure_rejected_as_stage04_completion
+
+source:
+  endpoint_id: antigravity-desktop-opus-stage04-executor-01
+  model: Claude Opus 4.6 Thinking via Google Antigravity Desktop
+  result_path: 04_测试生成/本地执行结果_Antigravity_Opus_v1.yml
+  result_blob_sha: c32e779d8208947e76d3ce6eb89a86ed8acc0d1b
+  execution_commit: ad4e133e2801a66780abf4d41896c992c6033ca1
+  reported_push_head: 7c899ba62db34cb6978ed3b3ba2084ce4802c43f
+  independently_read_back_head: 7c899ba62db34cb6978ed3b3ba2084ce4802c43f
+  master_head: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  master_unchanged: true
+  changed_paths_within_dispatch_allowlist: true
+
+accepted_outputs:
+  - candidate validator and digest checks
+  - safe-YAML fixtures for duplicate keys, multi-document input, aliases, merge keys and custom tags
+  - canonical-message fixture skeletons
+  - harness self-test framework
+  - five actually executed preimplementation checks: GC-T004, GC-T005, GC-T006, GC-T007, GC-T050
+  - repository-global validator exit-code record
+
+blocking_findings:
+  - finding_id: S04-R01
+    severity: blocking
+    statement: >-
+      GC-T001-T003 and GC-T008-T049 are not implemented as executable tests. The runner
+      registers a generic handler that unconditionally returns EXPECTED_FAIL instead of
+      executing each frozen fixture and oracle.
+    evidence:
+      path: 04_测试生成/实现/run_stage04_executable_tests.py
+      blob_sha: 4578a7a1a5157e3b38cbdad2b932d896c0c4b5a0
+      symbols:
+        - generate_expected_fail_handler
+        - HANDLERS population loop for ranges 1-3 and 8-49
+    effect: >-
+      The test package cannot detect future implementation regressions and cannot become
+      the unchanged stage-07 acceptance suite.
+  - finding_id: S04-R02
+    severity: blocking
+    statement: >-
+      The --mode argument does not change test semantics. Full mode would continue to emit
+      45 EXPECTED_FAIL results, so stage-07 cannot require real PASS/FAIL outcomes.
+    effect: full-mode acceptance is not implemented
+  - finding_id: S04-R03
+    severity: blocking
+    statement: >-
+      Canonical-message fixtures use legacy-like fields such as type, sender, recipient and
+      timestamp instead of the B v3 canonical fields message_type, sender_endpoint_id,
+      sender_task_role, expected_recipient_endpoint_id, expected_recipient_task_role,
+      content and required_refs. The mismatch is hidden because those tests are placeholders.
+    affected_fixtures:
+      - fixtures/canonical_message/valid_request.yml
+      - fixtures/canonical_message/valid_result_no_action.yml
+      - fixtures/canonical_message/request_missing_action.yml
+      - fixtures/canonical_message/prohibited_delivery_state.yml
+      - fixtures/canonical_message/prohibited_summary.yml
+      - fixtures/canonical_message/message_id_mismatch.yml
+  - finding_id: S04-R04
+    severity: blocking
+    statement: >-
+      The 14 harness tests verify discovery, uniqueness, fixture presence, deterministic output
+      and zero ERROR count, but do not verify that every frozen test has a concrete oracle
+      implementation or that baseline and full modes differ correctly.
+  - finding_id: S04-R05
+    severity: non_blocking_recording_issue
+    statement: >-
+      The result receipt records final_branch_head as ad4e133e..., while the actual remote push
+      head is 7c899ba.... This is caused by the self-referential final receipt commit and must
+      be resolved by external remote readback, not by trusting the embedded value.
+
+required_correction:
+  - implement a real handler or executable adapter for every GC-T001 through GC-T050
+  - prohibit unconditional expected-result handlers
+  - preimplementation-baseline may translate a concrete missing implementation target into EXPECTED_FAIL
+  - full mode must never emit EXPECTED_FAIL; missing target or oracle mismatch must be FAIL, harness faults ERROR
+  - replace canonical-message fixtures with exact B v3 field names and path/message-id semantics
+  - add harness tests proving all 50 handlers are concrete, all referenced fixtures exist, and modes differ
+  - preserve test semantics, IDs, evidence bindings, failure codes and candidate digest
+  - rerun all required validators and record exact exit codes
+
+stage_effect:
+  stage_04_complete: false
+  test_freeze_allowed: false
+  stage_05_allowed: false
+  next_action: independent_Gemini_review_and_correction

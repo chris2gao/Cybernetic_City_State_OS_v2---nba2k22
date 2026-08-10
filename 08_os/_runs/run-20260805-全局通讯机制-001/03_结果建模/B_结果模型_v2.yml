@@ -1,0 +1,168 @@
+schema_version: citystate.communication_system.result_model_overlay.v1
+artifact_id: B-global-communication-system-001
+artifact_version: 2
+status: candidate_pending_exact_Human_confirmation
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+created_at: 2026-08-05T22:02:00-07:00
+
+normative_resolution:
+  base_model:
+    path: B_结果模型_v1.yml
+    git_blob_sha: b15cb9eb609cc044fbc22b62843161e01a79318c
+  legacy_gap_comparison:
+    path: 旧系统只读缺口对照_v1.yml
+  effect: >-
+    B v2 的完整规范等于 B v1 加上本文件列出的四项明确修订；未被本文件修改的
+    B v1 主张、结果形态、实现方法、需求映射和拒绝项全部保持有效。
+  implicit_legacy_inheritance: prohibited
+  old_protocol_compatibility_required: false
+
+amendments:
+  - amendment_id: B2-A01
+    target: result_shape.message_contract
+    name: publication_order
+    add:
+      publication_order:
+        - publish_and_validate_every_required_ref_and_authorization_ref
+        - publish_immutable_message
+        - update_mutable_message_index
+        - update_Human_current_view_only_when_triggered
+      pointer_must_not_reference_unpublished_artifact: true
+      index_is_authoritative_message_source: false
+    evidence_claim_ids: [E-01, E-03, E-09]
+    legacy_lesson_ids: [L-03, L-04]
+
+  - amendment_id: B2-A02
+    target: result_shape.writer_and_conflict_contract
+    name: ownership_and_GitHub_conflict_guard
+    add:
+      writer_ownership:
+        sender_endpoint:
+          - runtime/messages/<sender_endpoint_id>/
+          - runtime/documents/<sender_endpoint_id>/
+        task_coordinator:
+          - manifest.yml
+          - index.yml
+          - Human/current.yml
+        Human_or_explicitly_authorized_role:
+          - Human/decisions/
+          - durable/final_results/
+          - durable/material_failures/
+      cross_writer_write: prohibited_without_explicit_task_authority
+      GitHub_write_precondition:
+        - observe_current_task_branch_head_once_before_mutable_or_shared_write
+        - write_only_expected_owned_paths
+      conflict_behavior:
+        changed_expected_head_or_non_fast_forward: fail_closed
+        automatic_retry_loop: false
+        next_action: surface_exact_conflict_and_require_new_Human_or_task_iteration
+      successful_path_remote_readback: not_mandatory
+    evidence_claim_ids: [E-04, E-05, E-08]
+    legacy_lesson_ids: [L-05, L-06]
+
+  - amendment_id: B2-A03
+    target: implementation_methods.B-M02
+    name: safe_YAML_subset
+    add:
+      parser_profile:
+        encoding: UTF-8
+        documents_per_file: 1
+        duplicate_keys: reject
+        custom_tags: reject
+        anchors_and_aliases: reject
+        merge_keys: reject
+        executable_or_object_construction_features: reject
+        unknown_required_fields: reject
+        unknown_optional_fields: preserve_or_ignore_only_when_contract_allows
+      path_validation:
+        directory_ref_where_file_required: reject
+        symlink_or_submodule_for_GitHub_communication_artifact: reject
+        path_outside_declared_task_root: reject_unless_explicit_external_required_ref_allowed_by_task
+      validator_authority: validation_only_never_grants_task_permission
+    evidence_claim_ids: [E-06, E-09]
+    legacy_lesson_ids: [L-07]
+
+  - amendment_id: B2-A04
+    target: implementation_methods.B-M08
+    name: validator_negative_fixtures
+    add:
+      frozen_negative_cases_required:
+        - missing_required_field
+        - duplicate_YAML_key
+        - multi_document_YAML
+        - alias_or_merge_key
+        - malformed_message_id_or_sequence
+        - sender_path_ownership_violation
+        - expected_head_conflict
+        - required_ref_missing
+        - authorization_ref_not_in_required_refs
+        - recursive_scan_attempt
+        - repository_shareable_violation
+        - forbidden_data_marker
+        - mutation_of_published_message
+        - index_points_to_missing_message
+        - natural_language_semantically_plausible_but_wrong_exact_field
+      validator_release_rule: positive_and_negative_suite_must_pass_before_protocol_use
+      tests_establish: validator_behavior_not_B_correctness
+    evidence_claim_ids: [E-03, E-06, E-09]
+    legacy_lesson_ids: [L-10]
+
+new_or_refined_claims:
+  - claim_id: B-R16
+    statement: 所有必读文件与授权文件先发布并通过低成本校验，随后发布不可变消息，最后更新可变索引和Human视图
+    evidence_claim_ids: [E-01, E-03, E-09]
+    legacy_lesson_ids: [L-03, L-04]
+    result_or_method: result
+  - claim_id: B-R17
+    statement: 发送方只写自身消息与文档目录，coordinator只写共享导航文件；共享GitHub写入在预期head变化时fail-closed
+    evidence_claim_ids: [E-04, E-05, E-08]
+    legacy_lesson_ids: [L-05, L-06]
+    result_or_method: result
+  - claim_id: B-R18
+    statement: v1 YAML只接受确定性安全子集，拒绝重复键、多文档、标签、锚点、别名和merge key
+    evidence_claim_ids: [E-06, E-09]
+    legacy_lesson_ids: [L-07]
+    result_or_method: method
+  - claim_id: B-R19
+    statement: 通讯validator投入使用前必须通过已知应拒绝输入的冻结负例测试
+    evidence_claim_ids: [E-03, E-06, E-09]
+    legacy_lesson_ids: [L-10]
+    result_or_method: method
+
+requirement_satisfaction_additions:
+  - success_criterion: local_and_Web_endpoints_can_locate_required_information_by_exact_pointer
+    add_result_claim_ids: [B-R16]
+  - success_criterion: deterministic_tests_cover_supported_routes_and_material_failure_cases
+    add_result_claim_ids: [B-R17, B-R18, B-R19]
+
+alternatives_rejected_additions:
+  - alternative: publish_pointer_before_referenced_artifacts
+    reason: permits_dangling_or_stale_pointer
+  - alternative: all_endpoints_write_shared_index_and_manifest
+    reason: increases_conflict_and_ownership_ambiguity
+  - alternative: retry_shared_branch_conflict_automatically
+    reason: violates_Human_supervision_and_can_overwrite_new_context
+  - alternative: unrestricted_YAML
+    reason: parser_ambiguity_and_unsafe_features_are_not_needed_for_minimal_protocol
+  - alternative: trust_validator_without_negative_self_tests
+    reason: validator_bug_would_silently_admit_invalid_messages
+
+explicit_non_adoptions_from_legacy:
+  - provider_branded_wire_roles
+  - frozen_seven_field_direction_specific_message
+  - ai_review_latest_as_global_bus
+  - full_delivery_and_consumption_state_machine
+  - mandatory_timestamp_or_lane_epoch_per_message
+  - mandatory_actual_recipient_or_acknowledgment
+  - repository_transition_authorization_proof_chain
+  - automatic_retry_polling_or_30_day_GC
+
+final_validation:
+  first_principles_B_completed_before_legacy_read: true
+  legacy_comparison_only_added_four_closure_amendments: true
+  A_reopen_required: false
+  every_new_claim_has_evidence_claim_ids: true
+  every_new_claim_has_legacy_lesson_ids: true
+  all_A_success_criteria_remain_mapped: true
+  ready_for_exact_Human_confirmation: true

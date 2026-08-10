@@ -1,0 +1,68 @@
+schema_version: citystate.communication_system.stage_03_Human_review_response.v1
+run_id: run-20260805-全局通讯机制-001
+task_id: os-v2-global-communication-system-001
+batch_id: stage_03_joint_review_batch_002
+status: recorded
+recorded_at: 2026-08-05T23:33:00-07:00
+
+Human_corrections_and_decisions:
+  sender_sequence:
+    selected_scope: task_bound_per_sender
+    selected_range: 1_to_10000
+    reset_rule: new_task_starts_from_00001
+    archive_effect: archived_index_preserves_old_sequence_but_does_not_affect_new_task
+    non_selected_global_fallback_note: if_sender_sequence_were_not_task_bound_then_max_would_be_1000000
+
+  carrier_default_and_Web_publication:
+    default_carrier: local
+    publish_to_GitHub_when_any:
+      - expected_recipient_is_Web_model
+      - Human_requests_GitHub_publication
+      - Human_or_decision_role_triggers_full_local_online_convergence
+    full_convergence_intent:
+      - publish_latest_repository_shareable_local_task_files_to_current_task_branch
+      - bring_latest_current_task_branch_files_to_local_copy
+      - no_semantic_file_by_file_comparison_required
+      - same_branch_and_sequential_task_execution_should_normally_avoid_conflict
+      - conflict_indicates_ordering_or_design_problem_and_escalates_to_Human_and_decision_role
+    privacy_limits:
+      - local_only_never_published_to_GitHub
+      - forbidden_never_materialized
+
+  lifecycle:
+    preferred_model: whole_task_archive_instead_of_content_aware_cleanup
+    reason:
+      - one_task_is_already_a_complete_isolated_folder
+      - archive_is_lower_cost_than_per_file_promotion_and_reference_analysis
+      - history_should_be_retained
+      - archived_tasks_must_not_enter_current_task_default_loading
+    task_bound_sender_index: confirmed
+    private_scratch: remains_outside_durable_archive_and_is_deleted_per_context_management
+
+  role_and_context_alignment:
+    do_not_create_new_coordinator_role: true
+    use_existing_roles_and_context_profiles: true
+    proposed_navigation_owner_role: architecture_and_decision_role
+    review_role_remains_independent: true
+    execution_roles_remain_existing_Codex_or_Antigravity: true
+    proposed_message_role_fields:
+      - sender_task_role
+      - expected_recipient_task_role
+    role_fields_authority_effect: none
+
+  prior_question_resolutions:
+    BQ_10: A
+    BQ_12: A_with_Human_and_decision_role_escalation_if_unresolved
+    BQ_14: C
+    BQ_15: A
+
+  questions_requiring_explanation_before_final_choice:
+    - BQ_11_canonical_message_and_publisher
+    - BQ_13_Human_current_purpose_and_owner
+
+supersession_effect:
+  - shared_message_index_remains_rejected
+  - per_sender_index_is_task_bound
+  - content_aware_runtime_cleanup_is_no_longer_preferred
+  - B_v2_remains_unconfirmed
+  - stage_04_remains_unauthorized

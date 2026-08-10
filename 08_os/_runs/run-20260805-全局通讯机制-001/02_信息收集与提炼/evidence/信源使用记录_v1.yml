@@ -1,0 +1,98 @@
+schema_version: citystate.information_collection.source_usage_record.v1
+run_id: run-20260805-全局通讯机制-001
+task_id: os-v2-global-communication-system-001
+status: complete
+access_date: 2026-08-05
+
+external_lanes:
+  - source_id: DR-CHATGPT
+    path: 01_ChatGPT_外部检索_v1.md
+    use:
+      - semantic_pattern_discovery
+      - governance_and_distributed_system_failure_candidates
+    limits:
+      - summary_oriented_final_output
+      - inline_citation_targets_not_repository_resolvable
+      - source_overlap_not_numerically_counted
+  - source_id: DR-GEMINI
+    path: 02_Gemini_外部检索_v1.md
+    use:
+      - semantic_pattern_discovery
+      - failure_mode_catalogue
+      - source_candidate_discovery
+      - format_constraint_candidates
+    limits:
+      - primary_and_secondary_sources_mixed
+      - several_numeric_claims_rejected
+
+primary_or_authoritative_sources_used:
+  - source_id: SRC-CLAIM-CHECK
+    purpose: verify_external_payload_and_reference_pattern
+    result: used
+  - source_id: SRC-A2A
+    purpose: verify_message_artifact_task_context_separation_as_analogue
+    result: used_with_automation_features_rejected
+  - source_id: SRC-MCP
+    purpose: verify_URI_resource_and_application_controlled_context_loading_as_analogue
+    result: used_with_subscriptions_rejected
+  - source_id: SRC-LOST-MIDDLE
+    purpose: verify_long_context_position_sensitivity
+    result: used
+  - source_id: SRC-FORMAT-RESTRICTION
+    purpose: verify_reasoning_cost_of_strict_format_constraint
+    result: used_with_boundary
+  - source_id: SRC-GIT-OBJECTS
+    purpose: distinguish_path_from_content_identity
+    result: used
+  - source_id: SRC-GITHUB-DELETE
+    purpose: bound_cleanup_and_erasure_claims
+    result: used
+  - source_id: SRC-RUNTIME-PARTITION
+    purpose: verify_runtime_durable_partition_as_adjacent_practice
+    result: used_as_analogue
+
+project_experiments_used:
+  - source_id: EXP-ANTIGRAVITY-GEMINI
+    path: ../antigravity_desktop_executor_01_result.yml
+    result: accepted
+  - source_id: EXP-ANTIGRAVITY-OPUS
+    path: ../antigravity_desktop_opus_executor_01_result.yml
+    result: accepted_with_locatable_errors
+  - synthesis: ../补充项目实验_双模型家族对照提炼_v1.yml
+
+source_independence:
+  critical_claims:
+    message_document_separation: independently_supported
+    direct_reference_loading: independently_supported_with_completeness_limit
+    Human_governance_not_reliability: two_lane_semantic_support
+    runtime_durable_partition: independently_supported_as_analogue
+    structured_boundary_vs_free_text: two_model_family_same_host_support
+  exact_Deep_Research_source_overlap: not_computed
+  reason:
+    - lane_output_structure_asymmetry
+    - equal_capture_probability_assumption_not_met
+    - numeric_coverage_not_needed_for_current_decision
+
+rejected_inputs:
+  - claim: coordination_failures_approximately_35_percent
+    reason: no_stable_primary_empirical_support_identified
+  - claim: explicit_state_validation_reduces_failures_approximately_70_percent
+    reason: no_stable_primary_empirical_support_identified
+  - claim: TOON_token_savings_30_to_60_percent_as_general_rule
+    reason: context_and_shape_dependent_secondary_claim
+  - claim: Markdown_retry_rate_5_to_15_percent_as_general_rule
+    reason: no_cross_model_primary_benchmark_supporting_generalization
+
+NotebookLM:
+  used: false
+  decision_basis: expected_information_gain
+  reasons:
+    - direct_comparison_was_sufficient
+    - primary_source_verification_resolved_bearing_claims
+    - no_material_unresolved_semantic_matching_problem_remained
+
+completion:
+  source_use_visible: true
+  access_limits_visible: true
+  first_party_and_secondary_roles_separated: true
+  rejected_claims_visible: true

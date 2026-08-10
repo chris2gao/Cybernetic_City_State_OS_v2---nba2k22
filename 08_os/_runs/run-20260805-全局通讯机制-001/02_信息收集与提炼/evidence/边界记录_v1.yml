@@ -1,0 +1,86 @@
+schema_version: citystate.information_collection.boundary_record.v1
+run_id: run-20260805-全局通讯机制-001
+task_id: os-v2-global-communication-system-001
+status: complete
+
+searched:
+  - research_question_ids: [RQ-01, RQ-02, RQ-03, RQ-04, RQ-05, RQ-06]
+    route: ChatGPT_Deep_Research
+    result: Human_designated_final_output_received_summary_oriented
+  - research_question_ids: [RQ-01, RQ-02, RQ-03, RQ-04, RQ-05, RQ-06]
+    route: Gemini_Deep_Research
+    result: Human_designated_final_output_received_detailed
+  - research_question_ids: [RQ-01, RQ-02, RQ-03, RQ-05, RQ-06]
+    route: primary_source_targeted_verification
+    result: load_bearing_claims_verified_or_bounded
+  - research_question_ids: [RQ-02, RQ-03, RQ-06]
+    route: Antigravity_Gemini_and_Opus_protocol_comprehension_experiment
+    result: same_host_cross_family_comparison_complete
+
+empty_returns: []
+
+truncations_and_representation_limits:
+  - source: ChatGPT_Deep_Research_lane
+    limit: source_register_search_paths_and_inline_citation_targets_are_not_fully_reproducible_from_repository_text
+    handling: accept_semantic_lane_output; verify_load_bearing_claims_against_primary_sources; do_not_compute_exact_source_overlap
+  - source: Gemini_Deep_Research_lane
+    limit: some_primary_papers_were_reached_through_secondary_sources_according_to_report
+    handling: verify_load_bearing_claims_against_identified_primary_publications
+  - source: repository_working_mirrors
+    limit: supplied_upload_sha256_and_repository_blob_sha_are_distinct_identity_layers
+    handling: preserve_both_in_receipt
+
+inaccessible_sources:
+  - source: ChatGPT_inline_turn_citations
+    reason: original_Deep_Research_session_citation_objects_are_not_repository_resources
+    handling: treat_as_non_reproducible_lane_detail_and_use_primary_verification_for_bearing_claims
+  - source: Gemini_report_arXiv_HTML_attempts
+    reason: source_report_declared_access_failure
+    handling: key_format_restriction_claim_verified_against_ACL_Anthology_primary_publication
+
+search_asymmetry:
+  - lanes: [ChatGPT, Gemini]
+    difference: ChatGPT_final_output_is_summary_oriented_while_Gemini_output_contains_detailed_source_table_and_search_paths
+    effect_on_coverage: semantic_overlap_is_valid; exact_source_overlap_and_capture_recapture_are_not_claimed
+  - lanes: [ChatGPT, Gemini]
+    difference: Gemini_emphasizes_industry_blogs_and_recent_agent_frameworks; ChatGPT_emphasizes_standards_governance_and_distributed_system_analogues
+    effect_on_coverage: complementary_discovery_spaces_strengthen_pattern_breadth_but_prevent_equal_capture_assumption
+
+source_quality_limits:
+  rejected_numeric_claims:
+    - coordination_failures_approximately_35_percent
+    - explicit_state_validation_reduces_failures_approximately_70_percent
+    - TOON_token_savings_30_to_60_percent_as_general_rule
+    - Markdown_retry_rate_5_to_15_percent_as_general_rule
+  reason: not_stably_supported_by_identified_primary_empirical_sources
+  allowed_use: discovery_leads_only
+
+scope_limits:
+  supported_operating_boundary:
+    - low_to_moderate_message_volume
+    - high_value_Human_supervised_tasks
+    - explicit_repository_or_local_file_artifacts
+    - one_task_per_communication_space
+  not_established:
+    - high_concurrency_reliability
+    - hard_real_time_delivery
+    - regulated_secure_erasure
+    - cross_host_compatibility_for_Claude_Code_Desktop_and_Codex_Desktop
+    - automatic_delivery_or_polling
+
+NotebookLM:
+  used: false
+  mandatory: false
+  reason:
+    - direct_comparison_and_primary_verification_are_sufficient
+    - key_conflicts_are_already_resolved_or_durable
+    - it_cannot_improve_source_reproducibility_of_the_summary_oriented_lane
+    - expected_information_gain_is_low
+
+closure:
+  Human_clarification_ref: ../Human澄清_外部报告身份_v1.yml
+  all_expected_Human_designated_lane_outputs_received: true
+  feasibility_basis_complete: true
+  exact_numeric_coverage_claimed: false
+  residual_limits_are_durable: true
+  further_information_collection_required: false

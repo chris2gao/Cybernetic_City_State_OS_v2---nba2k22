@@ -1,0 +1,39 @@
+schema_version: citystate.communication_system.result_model_joint_review_state.v1
+artifact_id: B-joint-review-state-001
+run_id: run-20260805-全局通讯机制-001
+task_id: os-v2-global-communication-system-001
+status: active_awaiting_batch_002
+
+result_model_state:
+  B_v2_candidate_ref: B_结果模型_v2.yml
+  B_v2_confirmed: false
+  B_v3_generated: false
+  stage_04_authorized: false
+
+joint_review:
+  Human_requested_internal_operation_visibility: true
+  fixed_round_count: false
+  completed_batches:
+    - discussion_questions: B_共同审阅讨论包_v1.yml
+      Human_response: Human答复_共同审阅批次001_v1.yml
+  main_implementation_explanation: B_主要实现说明_v1.md
+  current_questions: B_共同审阅问题批次002_v1.yml
+
+accepted_batch_001_changes:
+  - remove_message_summary_field
+  - Human_controlled_local_to_GitHub_republication
+  - durable_must_not_depend_on_cleaned_runtime
+  - per_sender_append_only_index
+  - per_sender_sequence_range_00001_to_10000
+  - Human_current_only_for_material_updates
+  - tool_level_local_immutability_not_OS_level
+  - no_implicit_context_expansion
+  - shared_GitHub_files_use_expected_HEAD_guard
+
+superseded_candidate_elements:
+  - shared_task_message_index
+  - coordinator_maintains_all_message_entries
+
+current_stop_condition: >-
+  Human has enough visibility into components, ownership, publication, reading, permission, failure and cleanup behavior;
+  all remaining architecture-affecting questions are resolved; then generate one consolidated B v3 for exact confirmation.

@@ -1,0 +1,113 @@
+schema_version: citystate.communication_system.stage04_three_commit_final_review.v1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+reviewed_final_remote_head: ac77a085e2eeafaaf78ef9910c81d487fd30181c
+review_status: rejected_correction_required
+stage_04_freeze_allowed: false
+stage_05_allowed: false
+
+remote_verification:
+  branch: dev/os-v2-global-communication-system-001
+  implementation_commit: 791e1b80b83a2e7619de213d4d223d302c9b7c91
+  result_commit: c229678615dff4dcc1ba053f7fa2feb2add4e846
+  final_binding_commit: ac77a085e2eeafaaf78ef9910c81d487fd30181c
+  chain_is_linear: true
+  commits_after_prior_review: 3
+  master_head: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  master_unchanged: true
+
+accepted_partial_work:
+  - implementation result and binding commits are separate and linear
+  - result files bind tested_commit to implementation_commit
+  - root helper files remain absent
+  - changed paths remain within stage04 scope
+  - harness includes conforming correct-mutation wrong-mutation and unrelated-exception test shapes
+
+blocking_findings:
+  - finding_id: S04-3C-F01
+    severity: critical
+    statement: preimplementation baseline fails all 50 tests
+    evidence:
+      tested_commit: 791e1b80b83a2e7619de213d4d223d302c9b7c91
+      counts:
+        PASS: 0
+        EXPECTED_FAIL: 0
+        FAIL: 50
+        ERROR: 0
+      exit_code: 1
+      required_stage04_baseline:
+        FAIL: 0
+        ERROR: 0
+        BLOCKED_EXTERNAL: 0
+        EXPECTED_FAIL: allowed_when_stage06_capability_missing
+        exit_code: 0
+    implication: stage04 preimplementation harness contract is not satisfied
+
+  - finding_id: S04-3C-F02
+    severity: critical
+    statement: fifty handwritten tests are templated test-id echoes rather than frozen semantic fixtures
+    evidence:
+      fixture_pattern: '{id: GC-Txxx, data: mutated_GC-Txxx or conforming}'
+      evaluator_pattern: match Concrete mutation error GC-Txxx then raise frozen failure_code
+      adapter_pattern: mutated_ prefix is converted back to test id and echoed as exception text
+    implication: mutation proof is still circular by test identity and does not derive violations from business observations
+
+  - finding_id: S04-3C-F03
+    severity: critical
+    statement: frozen business semantics are not implemented for key cases
+    evidence:
+      GC-T004_to_T007: fixtures do not contain actual YAML cases in the runner test path
+      GC-T031_to_T034: runner passes placeholder local remote master values rather than constructing frozen Git scenarios
+      GC-T050: fixture is only mutated_GC-T050 or conforming and does not read or score the frozen multi-model experiment packet
+      archive_route_authority_reference_cases: use the same id/data template instead of concrete state
+    implication: synthetic full 50 PASS does not prove the frozen test specification
+
+  - finding_id: S04-3C-F04
+    severity: critical
+    statement: verify_specs is disabled
+    evidence:
+      implementation: 'def verify_specs(root: Path): return True, ""'
+    implication: runner no longer validates exact test_id and failure_code binding to the five frozen specs
+
+  - finding_id: S04-3C-F05
+    severity: high
+    statement: harness negative checks validate template identity rather than business mutations
+    evidence:
+      wrong_mutation_changes: fixture.data from mutated_GC-Txxx to mutated_GC-Tyyy
+      correct_mutation_oracle: evaluator matches Concrete mutation error plus test id
+      unrelated_exception_check: only prevents an arbitrary RuntimeError from matching the template
+    implication: harness cannot detect semantic dilution of individual frozen cases
+
+  - finding_id: S04-3C-F06
+    severity: critical
+    statement: final binding commit changes implementation bytes after the tested implementation commit
+    evidence:
+      final_binding_commit_changed:
+        - receipt
+        - synthetic_adapters.py
+      implementation_change: ProductionTestAdapter changed from pass to multiple NotImplementedError methods
+    implication: final remote tree is not byte-identical to the tested implementation and therefore is not covered by the persisted test evidence
+
+  - finding_id: S04-3C-F07
+    severity: high
+    statement: receipt remote binding is still incorrect
+    evidence:
+      receipt_result_commit: c229678615dff4dcc1ba053f7fa2feb2add4e846
+      receipt_final_remote_head: c229678615dff4dcc1ba053f7fa2feb2add4e846
+      actual_final_remote_head: ac77a085e2eeafaaf78ef9910c81d487fd30181c
+    implication: final publication readback is not durably bound
+
+required_next_actions:
+  - restore real verify_specs comparison against all five frozen spec files
+  - implement actual case-specific business fixtures observations and evaluators rather than id/data templates
+  - implement actual safe-YAML Git routing archive authority reference navigation and GC-T050 experiment semantics
+  - make baseline convert only missing production capabilities to EXPECTED_FAIL and exit 0 with no FAIL or ERROR
+  - rerun harness and all required validators on a clean exact implementation commit
+  - create result-only commit with tested_commit bound to that implementation commit
+  - do not modify implementation after tests; final binding commit may update receipt only
+  - record actual final remote head in a subsequent pointer/receipt without changing tested implementation bytes
+
+stage_decision:
+  freeze_candidate: prohibited
+  enter_stage_05: prohibited
+  Human_action_required_now: none

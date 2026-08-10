@@ -1,0 +1,666 @@
+schema_version: citystate.workflow.stage_artifact.v1
+artifact_schema_version: 1
+run_id: run-20260805-全局通讯机制-001
+stage_id: workflow_stage_04_test_generation
+artifact_kind: frozen_test_package
+artifact_version: 1
+status: complete
+input_refs:
+- stage_id: workflow_stage_01_requirement_modeling
+  path: ../01_需求建模/A_需求建模_v2.yml
+  artifact_version: 2
+  git_blob_sha: e91f32b54224d6048df25cca080a259db380911f
+  sha256: 56e3a97cdb323a836965f6e9d8e61a44006f3a20b7967d3ae8c7438ecd72af2e
+  exact_Human_confirmation_ref: ../01_需求建模/Human确认_A_v2.yml
+- stage_id: workflow_stage_02_information_collection
+  path: ../02_信息收集与提炼/02_evidence.yml
+  artifact_version: 1
+  git_blob_sha: 99a62194b22cee4712b25dc422b932ebe00d7ba6
+  sha256: 464b7ddbad05e89fb91c2f3792ba21d34d63cf49f50735c2e8efe33b18c1f120
+- stage_id: workflow_stage_03_result_modeling
+  path: ../03_结果建模/03_result.yml
+  artifact_version: 1
+  git_blob_sha: 95af30c59962fdf324c51e952d9ce4f7ba9cb422
+  sha256: 848b5c4a1d86e5e8175a28ce3381185195dba5074ec0e1bf01bdfbcf1eb33f2b
+  Human_confirmation_ref: ../03_结果建模/Human确认_B_v3.yml
+deliberation_receipt:
+  mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
+  activation_state: active_dormant
+  profile_id: workflow_stage_04_test_generation
+  receipt_status: valid
+  route: full
+  session_id: S-CD-global-communication-001
+  task_gate_ref: Human确认_冻结测试_v1.yml
+  Human_authorization_ref: Human确认_冻结测试_v1.yml
+  independent_review_ref: Stage04_Codex最终物理Oracle_独立验收_v1.yml
+payload:
+  frozen: true
+  freeze_authorization_ref: Human确认_冻结测试_v1.yml
+  freeze_authorization_git_blob_sha: ec5e4df546fc52200886242d462dbbed03cc3a35
+  freeze_authorization_sha256: 7682f2a235327b6a13367a003ab6724479c2b7b987b75408f36691411ffc8c0e
+  candidate_ref: 冻结测试候选_v1.yml
+  independent_review_ref: Stage04_Codex最终物理Oracle_独立验收_v1.yml
+  tests:
+  - test_id: GC-T001
+    evidence_claim_ids:
+    - E-06
+    - E-09
+    criterion_ids:
+    - AC-01
+    - AC-09
+    spec_ref: specs/测试组_01_消息与YAML_v1.yml
+    spec_git_blob_sha: 2913280e9bced46055e2f4c39979758785aa4550
+    priority: blocking
+    automation: required
+    failure_code: VALID_MESSAGE_REQUIRED
+  - test_id: GC-T002
+    evidence_claim_ids:
+    - E-06
+    - E-09
+    - E-10
+    criterion_ids:
+    - AC-01
+    - AC-09
+    spec_ref: specs/测试组_01_消息与YAML_v1.yml
+    spec_git_blob_sha: 2913280e9bced46055e2f4c39979758785aa4550
+    priority: blocking
+    automation: required
+    failure_code: RESULT_OPTIONAL_ACTION
+  - test_id: GC-T003
+    evidence_claim_ids:
+    - E-06
+    - E-09
+    criterion_ids:
+    - AC-09
+    spec_ref: specs/测试组_01_消息与YAML_v1.yml
+    spec_git_blob_sha: 2913280e9bced46055e2f4c39979758785aa4550
+    priority: blocking
+    automation: required
+    failure_code: REQUESTED_ACTION_REQUIRED
+  - test_id: GC-T004
+    evidence_claim_ids:
+    - E-06
+    - E-09
+    criterion_ids:
+    - AC-09
+    spec_ref: specs/测试组_01_消息与YAML_v1.yml
+    spec_git_blob_sha: 2913280e9bced46055e2f4c39979758785aa4550
+    priority: blocking
+    automation: required
+    failure_code: YAML_DUPLICATE_KEY
+  - test_id: GC-T005
+    evidence_claim_ids:
+    - E-06
+    - E-09
+    criterion_ids:
+    - AC-09
+    spec_ref: specs/测试组_01_消息与YAML_v1.yml
+    spec_git_blob_sha: 2913280e9bced46055e2f4c39979758785aa4550
+    priority: blocking
+    automation: required
+    failure_code: YAML_MULTI_DOCUMENT
+  - test_id: GC-T006
+    evidence_claim_ids:
+    - E-06
+    - E-09
+    criterion_ids:
+    - AC-09
+    spec_ref: specs/测试组_01_消息与YAML_v1.yml
+    spec_git_blob_sha: 2913280e9bced46055e2f4c39979758785aa4550
+    priority: blocking
+    automation: required
+    failure_code: YAML_ALIAS_OR_MERGE
+  - test_id: GC-T007
+    evidence_claim_ids:
+    - E-06
+    - E-09
+    criterion_ids:
+    - AC-09
+    spec_ref: specs/测试组_01_消息与YAML_v1.yml
+    spec_git_blob_sha: 2913280e9bced46055e2f4c39979758785aa4550
+    priority: blocking
+    automation: required
+    failure_code: YAML_CUSTOM_TAG
+  - test_id: GC-T008
+    evidence_claim_ids:
+    - E-04
+    - E-09
+    criterion_ids:
+    - AC-02
+    - AC-06
+    - AC-09
+    spec_ref: specs/测试组_01_消息与YAML_v1.yml
+    spec_git_blob_sha: 2913280e9bced46055e2f4c39979758785aa4550
+    priority: blocking
+    automation: required
+    failure_code: PROHIBITED_DELIVERY_STATE
+  - test_id: GC-T009
+    evidence_claim_ids:
+    - E-06
+    - E-09
+    - E-10
+    criterion_ids:
+    - AC-04
+    - AC-09
+    spec_ref: specs/测试组_01_消息与YAML_v1.yml
+    spec_git_blob_sha: 2913280e9bced46055e2f4c39979758785aa4550
+    priority: blocking
+    automation: required
+    failure_code: PROHIBITED_SUMMARY_FIELD
+  - test_id: GC-T010
+    evidence_claim_ids:
+    - E-06
+    - E-09
+    criterion_ids:
+    - AC-01
+    - AC-09
+    spec_ref: specs/测试组_01_消息与YAML_v1.yml
+    spec_git_blob_sha: 2913280e9bced46055e2f4c39979758785aa4550
+    priority: blocking
+    automation: required
+    failure_code: MESSAGE_ID_PATH_MISMATCH
+  - test_id: GC-T011
+    evidence_claim_ids:
+    - E-05
+    - E-09
+    criterion_ids:
+    - AC-09
+    spec_ref: specs/测试组_02_序号角色权限引用_v1.yml
+    spec_git_blob_sha: 2e761ae4df25b68f45289017f8fd78482ce80709
+    priority: blocking
+    automation: required
+    failure_code: SEQUENCE_REUSE
+  - test_id: GC-T012
+    evidence_claim_ids:
+    - E-05
+    - E-09
+    criterion_ids:
+    - AC-09
+    spec_ref: specs/测试组_02_序号角色权限引用_v1.yml
+    spec_git_blob_sha: 2e761ae4df25b68f45289017f8fd78482ce80709
+    priority: blocking
+    automation: required
+    failure_code: SEQUENCE_EXHAUSTED
+  - test_id: GC-T013
+    evidence_claim_ids:
+    - E-05
+    - E-06
+    criterion_ids:
+    - AC-08
+    - AC-09
+    spec_ref: specs/测试组_02_序号角色权限引用_v1.yml
+    spec_git_blob_sha: 2e761ae4df25b68f45289017f8fd78482ce80709
+    priority: blocking
+    automation: required
+    failure_code: TASK_SCOPED_SEQUENCE
+  - test_id: GC-T014
+    evidence_claim_ids:
+    - E-05
+    - E-09
+    criterion_ids:
+    - AC-09
+    spec_ref: specs/测试组_02_序号角色权限引用_v1.yml
+    spec_git_blob_sha: 2e761ae4df25b68f45289017f8fd78482ce80709
+    priority: blocking
+    automation: required
+    failure_code: SENDER_ZONE_OWNERSHIP
+  - test_id: GC-T015
+    evidence_claim_ids:
+    - E-04
+    - E-09
+    criterion_ids:
+    - AC-01
+    - AC-07
+    - AC-09
+    spec_ref: specs/测试组_02_序号角色权限引用_v1.yml
+    spec_git_blob_sha: 2e761ae4df25b68f45289017f8fd78482ce80709
+    priority: blocking
+    automation: required
+    failure_code: ENDPOINT_ROLE_MISMATCH
+  - test_id: GC-T016
+    evidence_claim_ids:
+    - E-04
+    - E-09
+    criterion_ids:
+    - AC-02
+    - AC-07
+    - AC-09
+    spec_ref: specs/测试组_02_序号角色权限引用_v1.yml
+    spec_git_blob_sha: 2e761ae4df25b68f45289017f8fd78482ce80709
+    priority: blocking
+    automation: required
+    failure_code: ROLE_IS_NOT_AUTHORITY
+  - test_id: GC-T017
+    evidence_claim_ids:
+    - E-03
+    - E-04
+    - E-09
+    criterion_ids:
+    - AC-07
+    - AC-09
+    spec_ref: specs/测试组_02_序号角色权限引用_v1.yml
+    spec_git_blob_sha: 2e761ae4df25b68f45289017f8fd78482ce80709
+    priority: blocking
+    automation: required
+    failure_code: AUTH_REF_NOT_REQUIRED
+  - test_id: GC-T018
+    evidence_claim_ids:
+    - E-04
+    - E-09
+    criterion_ids:
+    - AC-02
+    - AC-07
+    - AC-09
+    spec_ref: specs/测试组_02_序号角色权限引用_v1.yml
+    spec_git_blob_sha: 2e761ae4df25b68f45289017f8fd78482ce80709
+    priority: blocking
+    automation: required
+    failure_code: MESSAGE_SELF_AUTHORIZATION
+  - test_id: GC-T019
+    evidence_claim_ids:
+    - E-02
+    - E-03
+    - E-09
+    criterion_ids:
+    - AC-03
+    - AC-05
+    - AC-09
+    spec_ref: specs/测试组_02_序号角色权限引用_v1.yml
+    spec_git_blob_sha: 2e761ae4df25b68f45289017f8fd78482ce80709
+    priority: blocking
+    automation: required
+    failure_code: REQUIRED_REF_MISSING
+  - test_id: GC-T020
+    evidence_claim_ids:
+    - E-09
+    criterion_ids:
+    - AC-03
+    - AC-05
+    - AC-09
+    spec_ref: specs/测试组_02_序号角色权限引用_v1.yml
+    spec_git_blob_sha: 2e761ae4df25b68f45289017f8fd78482ce80709
+    priority: blocking
+    automation: required
+    failure_code: REQUIRED_REF_SET_MISMATCH
+  - test_id: GC-T021
+    evidence_claim_ids:
+    - E-02
+    - E-03
+    - E-09
+    criterion_ids:
+    - AC-05
+    - AC-09
+    spec_ref: specs/测试组_03_上下文文档隐私发布_v1.yml
+    spec_git_blob_sha: 95c0fbf1ef8d2e7fead99f5d0b15778af9b832b8
+    priority: blocking
+    automation: required
+    failure_code: UNAUTHORIZED_CONTEXT_EXPANSION
+  - test_id: GC-T022
+    evidence_claim_ids:
+    - E-02
+    - E-03
+    criterion_ids:
+    - AC-03
+    - AC-05
+    - AC-09
+    spec_ref: specs/测试组_03_上下文文档隐私发布_v1.yml
+    spec_git_blob_sha: 95c0fbf1ef8d2e7fead99f5d0b15778af9b832b8
+    priority: blocking
+    automation: required
+    failure_code: BOOTSTRAP_READ_SET
+  - test_id: GC-T023
+    evidence_claim_ids:
+    - E-01
+    - E-02
+    criterion_ids:
+    - AC-03
+    - AC-04
+    - AC-05
+    - AC-09
+    spec_ref: specs/测试组_03_上下文文档隐私发布_v1.yml
+    spec_git_blob_sha: 95c0fbf1ef8d2e7fead99f5d0b15778af9b832b8
+    priority: blocking
+    automation: required
+    failure_code: LONG_CONTENT_EXTERNALIZATION
+  - test_id: GC-T024
+    evidence_claim_ids:
+    - E-01
+    - E-05
+    criterion_ids:
+    - AC-03
+    - AC-04
+    - AC-09
+    spec_ref: specs/测试组_03_上下文文档隐私发布_v1.yml
+    spec_git_blob_sha: 95c0fbf1ef8d2e7fead99f5d0b15778af9b832b8
+    priority: blocking
+    automation: required
+    failure_code: DOCUMENT_FRONT_MATTER_REQUIRED
+  - test_id: GC-T025
+    evidence_claim_ids:
+    - E-01
+    criterion_ids:
+    - AC-03
+    - AC-04
+    - AC-09
+    spec_ref: specs/测试组_03_上下文文档隐私发布_v1.yml
+    spec_git_blob_sha: 95c0fbf1ef8d2e7fead99f5d0b15778af9b832b8
+    priority: blocking
+    automation: required
+    failure_code: EXISTING_RESOURCE_REFERENCE
+  - test_id: GC-T026
+    evidence_claim_ids:
+    - E-04
+    - E-05
+    criterion_ids:
+    - AC-02
+    - AC-03
+    - AC-07
+    - AC-09
+    spec_ref: specs/测试组_03_上下文文档隐私发布_v1.yml
+    spec_git_blob_sha: 95c0fbf1ef8d2e7fead99f5d0b15778af9b832b8
+    priority: blocking
+    automation: required
+    failure_code: LOCAL_ONLY_GITHUB_BLOCK
+  - test_id: GC-T027
+    evidence_claim_ids:
+    - E-04
+    - E-05
+    criterion_ids:
+    - AC-07
+    - AC-09
+    spec_ref: specs/测试组_03_上下文文档隐私发布_v1.yml
+    spec_git_blob_sha: 95c0fbf1ef8d2e7fead99f5d0b15778af9b832b8
+    priority: blocking
+    automation: required
+    failure_code: FORBIDDEN_DATA
+  - test_id: GC-T028
+    evidence_claim_ids:
+    - E-04
+    - E-05
+    criterion_ids:
+    - AC-02
+    - AC-03
+    - AC-06
+    - AC-09
+    spec_ref: specs/测试组_03_上下文文档隐私发布_v1.yml
+    spec_git_blob_sha: 95c0fbf1ef8d2e7fead99f5d0b15778af9b832b8
+    priority: blocking
+    automation: required
+    failure_code: LOCAL_DEFAULT_ROUTE
+  - test_id: GC-T029
+    evidence_claim_ids:
+    - E-01
+    - E-04
+    criterion_ids:
+    - AC-02
+    - AC-03
+    - AC-04
+    - AC-09
+    spec_ref: specs/测试组_03_上下文文档隐私发布_v1.yml
+    spec_git_blob_sha: 95c0fbf1ef8d2e7fead99f5d0b15778af9b832b8
+    priority: blocking
+    automation: required
+    failure_code: WEB_REPUBLICATION_REQUIRED
+  - test_id: GC-T030
+    evidence_claim_ids:
+    - E-04
+    criterion_ids:
+    - AC-02
+    - AC-03
+    - AC-09
+    spec_ref: specs/测试组_03_上下文文档隐私发布_v1.yml
+    spec_git_blob_sha: 95c0fbf1ef8d2e7fead99f5d0b15778af9b832b8
+    priority: blocking
+    automation: required
+    failure_code: HUMAN_GITHUB_TRIGGER
+  - test_id: GC-T031
+    evidence_claim_ids:
+    - E-05
+    - E-08
+    - E-09
+    criterion_ids:
+    - AC-03
+    - AC-09
+    spec_ref: specs/测试组_04_Git收敛路由归档_v1.yml
+    spec_git_blob_sha: 269418233b2edcaea0fcb58af835717982246323
+    priority: blocking
+    automation: required
+    failure_code: GIT_CONVERGENCE
+  - test_id: GC-T032
+    evidence_claim_ids:
+    - E-05
+    - E-08
+    criterion_ids:
+    - AC-03
+    - AC-09
+    spec_ref: specs/测试组_04_Git收敛路由归档_v1.yml
+    spec_git_blob_sha: 269418233b2edcaea0fcb58af835717982246323
+    priority: blocking
+    automation: required
+    failure_code: DISJOINT_SENDER_CONVERGENCE
+  - test_id: GC-T033
+    evidence_claim_ids:
+    - E-08
+    - E-09
+    criterion_ids:
+    - AC-03
+    - AC-09
+    spec_ref: specs/测试组_04_Git收敛路由归档_v1.yml
+    spec_git_blob_sha: 269418233b2edcaea0fcb58af835717982246323
+    priority: blocking
+    automation: required
+    failure_code: SAME_PATH_CONFLICT
+  - test_id: GC-T034
+    evidence_claim_ids:
+    - E-08
+    - E-09
+    criterion_ids:
+    - AC-03
+    - AC-09
+    spec_ref: specs/测试组_04_Git收敛路由归档_v1.yml
+    spec_git_blob_sha: 269418233b2edcaea0fcb58af835717982246323
+    priority: blocking
+    automation: required
+    failure_code: NON_FAST_FORWARD
+  - test_id: GC-T035
+    evidence_claim_ids:
+    - E-01
+    - E-03
+    - E-09
+    criterion_ids:
+    - AC-03
+    - AC-04
+    - AC-05
+    - AC-09
+    spec_ref: specs/测试组_04_Git收敛路由归档_v1.yml
+    spec_git_blob_sha: 269418233b2edcaea0fcb58af835717982246323
+    priority: blocking
+    automation: required
+    failure_code: DANGLING_POINTER_PREVENTED
+  - test_id: GC-T036
+    evidence_claim_ids:
+    - E-04
+    criterion_ids:
+    - AC-02
+    - AC-06
+    - AC-09
+    spec_ref: specs/测试组_04_Git收敛路由归档_v1.yml
+    spec_git_blob_sha: 269418233b2edcaea0fcb58af835717982246323
+    priority: blocking
+    automation: required
+    failure_code: HUMAN_ROUTE_OVERRIDE
+  - test_id: GC-T037
+    evidence_claim_ids:
+    - E-04
+    criterion_ids:
+    - AC-02
+    - AC-06
+    - AC-09
+    spec_ref: specs/测试组_04_Git收敛路由归档_v1.yml
+    spec_git_blob_sha: 269418233b2edcaea0fcb58af835717982246323
+    priority: blocking
+    automation: required
+    failure_code: SENT_SCOPE
+  - test_id: GC-T038
+    evidence_claim_ids:
+    - E-04
+    criterion_ids:
+    - AC-06
+    - AC-09
+    spec_ref: specs/测试组_04_Git收敛路由归档_v1.yml
+    spec_git_blob_sha: 269418233b2edcaea0fcb58af835717982246323
+    priority: blocking
+    automation: required
+    failure_code: AUTOMATIC_DELIVERY_PROHIBITED
+  - test_id: GC-T039
+    evidence_claim_ids:
+    - E-05
+    criterion_ids:
+    - AC-08
+    - AC-09
+    spec_ref: specs/测试组_04_Git收敛路由归档_v1.yml
+    spec_git_blob_sha: 269418233b2edcaea0fcb58af835717982246323
+    priority: blocking
+    automation: required
+    failure_code: WHOLE_TASK_ARCHIVE
+  - test_id: GC-T040
+    evidence_claim_ids:
+    - E-05
+    criterion_ids:
+    - AC-07
+    - AC-08
+    - AC-09
+    spec_ref: specs/测试组_04_Git收敛路由归档_v1.yml
+    spec_git_blob_sha: 269418233b2edcaea0fcb58af835717982246323
+    priority: blocking
+    automation: required
+    failure_code: PRIVATE_RUNTIME_LEAK
+  - test_id: GC-T041
+    evidence_claim_ids:
+    - E-02
+    - E-05
+    criterion_ids:
+    - AC-05
+    - AC-08
+    - AC-09
+    spec_ref: specs/测试组_05_导航索引纠正跨端_v1.yml
+    spec_git_blob_sha: e3a2563da01344e9bd2f07842e70e8759b22d12c
+    priority: blocking
+    automation: required
+    failure_code: ARCHIVE_DEFAULT_LOAD
+  - test_id: GC-T042
+    evidence_claim_ids:
+    - E-02
+    - E-05
+    criterion_ids:
+    - AC-03
+    - AC-05
+    - AC-09
+    spec_ref: specs/测试组_05_导航索引纠正跨端_v1.yml
+    spec_git_blob_sha: e3a2563da01344e9bd2f07842e70e8759b22d12c
+    priority: blocking
+    automation: required
+    failure_code: DISCOVERY_SCOPE
+  - test_id: GC-T043
+    evidence_claim_ids:
+    - E-02
+    - E-05
+    criterion_ids:
+    - AC-02
+    - AC-03
+    - AC-09
+    spec_ref: specs/测试组_05_导航索引纠正跨端_v1.yml
+    spec_git_blob_sha: e3a2563da01344e9bd2f07842e70e8759b22d12c
+    priority: blocking
+    automation: required
+    failure_code: HUMAN_CURRENT_TRIGGER
+  - test_id: GC-T044
+    evidence_claim_ids:
+    - E-04
+    - E-05
+    criterion_ids:
+    - AC-07
+    - AC-09
+    spec_ref: specs/测试组_05_导航索引纠正跨端_v1.yml
+    spec_git_blob_sha: e3a2563da01344e9bd2f07842e70e8759b22d12c
+    priority: blocking
+    automation: required
+    failure_code: HUMAN_CURRENT_OWNER
+  - test_id: GC-T045
+    evidence_claim_ids:
+    - E-05
+    - E-09
+    criterion_ids:
+    - AC-01
+    - AC-03
+    - AC-09
+    spec_ref: specs/测试组_05_导航索引纠正跨端_v1.yml
+    spec_git_blob_sha: e3a2563da01344e9bd2f07842e70e8759b22d12c
+    priority: blocking
+    automation: required
+    failure_code: SENDER_INDEX_INTEGRITY
+  - test_id: GC-T046
+    evidence_claim_ids:
+    - E-06
+    - E-09
+    criterion_ids:
+    - AC-01
+    - AC-09
+    spec_ref: specs/测试组_05_导航索引纠正跨端_v1.yml
+    spec_git_blob_sha: e3a2563da01344e9bd2f07842e70e8759b22d12c
+    priority: blocking
+    automation: required
+    failure_code: IMMUTABLE_CORRECTION
+  - test_id: GC-T047
+    evidence_claim_ids:
+    - E-08
+    criterion_ids:
+    - AC-03
+    - AC-09
+    spec_ref: specs/测试组_05_导航索引纠正跨端_v1.yml
+    spec_git_blob_sha: e3a2563da01344e9bd2f07842e70e8759b22d12c
+    priority: blocking
+    automation: required
+    failure_code: CONTENT_IDENTITY_BOUNDARY
+  - test_id: GC-T048
+    evidence_claim_ids:
+    - E-06
+    - E-09
+    - E-10
+    criterion_ids:
+    - AC-01
+    - AC-03
+    - AC-09
+    spec_ref: specs/测试组_05_导航索引纠正跨端_v1.yml
+    spec_git_blob_sha: e3a2563da01344e9bd2f07842e70e8759b22d12c
+    priority: blocking
+    automation: required
+    failure_code: ENDPOINT_CANONICAL_PARITY
+  - test_id: GC-T049
+    evidence_claim_ids:
+    - E-07
+    criterion_ids:
+    - AC-04
+    - AC-07
+    - AC-09
+    spec_ref: specs/测试组_05_导航索引纠正跨端_v1.yml
+    spec_git_blob_sha: e3a2563da01344e9bd2f07842e70e8759b22d12c
+    priority: blocking
+    automation: required
+    failure_code: PRIVATE_REASONING_PROHIBITED
+  - test_id: GC-T050
+    evidence_claim_ids:
+    - E-06
+    - E-09
+    criterion_ids:
+    - AC-01
+    - AC-03
+    - AC-05
+    - AC-07
+    - AC-09
+    spec_ref: specs/测试组_05_导航索引纠正跨端_v1.yml
+    spec_git_blob_sha: e3a2563da01344e9bd2f07842e70e8759b22d12c
+    priority: blocking
+    automation: scoring_required
+    failure_code: CROSS_MODEL_SEMANTIC_RECOVERY
+  test_package_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b

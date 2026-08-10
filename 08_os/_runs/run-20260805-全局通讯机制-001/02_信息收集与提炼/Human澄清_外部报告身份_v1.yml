@@ -1,0 +1,32 @@
+schema_version: citystate.information_collection.Human_clarification.v1
+artifact_id: Human-clarification-external-report-identity-001
+run_id: run-20260805-全局通讯机制-001
+task_id: os-v2-global-communication-system-001
+status: complete
+recorded_at: 2026-08-05T21:29:00-07:00
+
+Human_statement:
+  supplied_files_are_the_final_lane_outputs: true
+  filename_mapping:
+    ChatGPT:
+      supplied_filename: chatgpt - deep-research-report.md
+      canonical_repository_path: 02_信息收集与提炼/evidence/01_ChatGPT_外部检索_v1.md
+    Gemini:
+      supplied_filename: Gemini Deep Research - AI通讯机制深度研究.md
+      canonical_repository_path: 02_信息收集与提炼/evidence/02_Gemini_外部检索_v1.md
+  rename_and_reupload_required: false
+
+interpretation:
+  - filename_difference_does_not_change_artifact_identity
+  - no_additional_ChatGPT_file_is_expected_from_Human
+  - ChatGPT_output_is_accepted_as_that_lane_final_output
+  - its_summary_oriented_structure_and_unresolvable_inline_citations_remain_durable_evidence_limits
+  - those_limits_do_not_create_a_missing_file_blocker
+
+process_effect:
+  retract_prior_interpretation: missing_complete_ChatGPT_file
+  preserve:
+    - source_reproducibility_asymmetry
+    - no_numeric_capture_recapture_claim
+    - primary_source_verification_for_load_bearing_claims
+  next_action: finalize_stage_02_under_EIG_stop_rule

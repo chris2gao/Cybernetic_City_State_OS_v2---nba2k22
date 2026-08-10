@@ -1,0 +1,82 @@
+schema_version: citystate.stage04_freeze_verification.v1
+review_id: stage04-formal-freeze-independent-verification-001
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+status: accepted
+
+review_basis:
+  primary_remote_git: true
+  executor_report_trusted_as_evidence: false
+  formal_stage_schema_checked: true
+  frozen_candidate_identity_preserved: true
+
+repository_state:
+  master_head: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  master_modified: false
+  work_branch: dev/os-v2-global-communication-system-001
+  freeze_submission_head: 6a219ff11acf0c343af3bdbc7846385549d0eae5
+  freeze_submission_head_readback_matches: true
+
+submission_chain:
+  start_head: 87348932b0d3f7436046004929fc5e125b013a3f
+  pre_freeze_harness_hardening_commit: 07c95b084e57e81503079b5ad80366f42d6944d2
+  formal_freeze_commit: 6a219ff11acf0c343af3bdbc7846385549d0eae5
+  linear_history: true
+  changed_paths_since_start:
+    - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/run_stage04_executable_tests.py
+    - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/synthetic_adapters.py
+    - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/04_tests.yml
+    - 08_os/_runs/run-20260805-全局通讯机制-001/run.yml
+  candidate_or_spec_changed: false
+
+formal_frozen_package:
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/04_tests.yml
+  git_blob_sha: 360571b6b29a3baecd753dc45611457da9ab6bf2
+  schema_version: citystate.workflow.stage_artifact.v1
+  stage_id: workflow_stage_04_test_generation
+  artifact_kind: frozen_test_package
+  artifact_version: 1
+  status: complete
+  predecessor_bindings_present:
+    stage_01: true
+    stage_02: true
+    stage_03: true
+  deliberation_receipt_profile: workflow_stage_04_test_generation
+  frozen: true
+  freeze_authorization_ref: Human确认_冻结测试_v1.yml
+  independent_review_ref: Stage04_Codex最终物理Oracle_独立验收_v1.yml
+  normalized_tests_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+  candidate_normalized_tests_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+  exact_candidate_test_identity_preserved: true
+  test_count: 50
+
+pre_freeze_harness_hardening:
+  status: accepted_non_blocking
+  scope:
+    - GC-T031
+    - GC-T032
+  candidate_or_spec_semantics_changed: false
+  observations:
+    - evaluator now fails closed on unrelated action exceptions instead of silently continuing
+    - mutation paths retain real Git operations and are judged from resulting repository/filesystem state
+    - GC-T031 bad convergence removes the sender-owned local result and is detected by the existing oracle
+    - GC-T032 bad disjoint convergence removes one sender zone after convergence and is detected by the existing oracle
+  disposition: accepted_as_pre_freeze_executable_harness_hardening
+
+run_state_observed_at_submission:
+  status: ready_for_independent_freeze_verification
+  stage_04_frozen: true
+  Human_freeze_authorized: true
+  formal_frozen_package_validated: true
+  stage_05_authorized: false
+
+stage_decision:
+  independent_freeze_verification_passed: true
+  stage_04_frozen: true
+  stage_04_complete: true
+  stage_05_may_now_be_authorized: true
+  stage_05_started_by_this_review: false
+
+notes:
+  - The previously reported local validator executions are not treated as independently observed process output by this GitHub-only review; acceptance is based on the physical frozen artifact, unchanged candidate/spec identity, remote ancestry, and direct semantic inspection of the only post-review harness patch.
+  - No master publication is authorized or performed by this review.

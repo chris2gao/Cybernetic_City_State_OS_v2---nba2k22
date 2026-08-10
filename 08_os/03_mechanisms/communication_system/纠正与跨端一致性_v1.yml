@@ -1,0 +1,28 @@
+schema_version: citystate.communication.correction_endpoint_parity.v1
+published_message:
+  mutation: prohibited
+  correction_method: publish_new_correction_message
+correction_message:
+  message_type: correction
+  supersedes_required: true
+  superseded_message_must_exist: true
+content_identity:
+  canonicality_depends_on:
+    - schema
+    - path
+    - sender_ownership
+    - task_scoped_sequence
+    - immutable_bytes_after_publication
+  canonicality_does_not_depend_on:
+    - provider
+    - model_self_description
+    - endpoint_interface
+    - carrier_implementation
+endpoint_parity:
+  local_and_Web_use_same_message_field_set: true
+  local_and_Web_use_same_validator: true
+  semantic_projection_must_match: true
+cross_model_scoring:
+  authority: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/04_tests.yml#GC-T050
+  new_scoring_criteria: prohibited
+

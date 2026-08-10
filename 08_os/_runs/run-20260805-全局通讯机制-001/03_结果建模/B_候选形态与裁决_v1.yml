@@ -1,0 +1,126 @@
+schema_version: citystate.result_model.candidate_analysis.v1
+run_id: run-20260805-全局通讯机制-001
+task_id: os-v2-global-communication-system-001
+status: complete
+basis:
+  requirement_ref: ../01_需求建模/A_需求建模_v2.yml
+  evidence_ref: ../02_信息收集与提炼/02_evidence.yml
+  legacy_protocol_used_as_input: false
+
+parameters:
+  - id: P-01
+    dimension: communication_scope
+    values: [one_global_stream, per_repository_stream, one_task_one_space]
+  - id: P-02
+    dimension: delivery_control
+    values: [automatic_delivery, polling, Human_manual_relay]
+  - id: P-03
+    dimension: payload_shape
+    values: [full_content_in_message, lightweight_index_plus_external_documents]
+  - id: P-04
+    dimension: context_loading
+    values: [full_history, recursive_refs, direct_required_refs_on_demand]
+  - id: P-05
+    dimension: permission_location
+    values: [message_grants_permission, duplicated_permission_matrix, external_task_authority_with_optional_Human_authorization_ref]
+  - id: P-06
+    dimension: carrier_topology
+    values: [chat_only, GitHub_only, local_only, mirrored_logical_structure_over_local_or_GitHub]
+  - id: P-07
+    dimension: message_encoding
+    values: [free_text, compact_JSON, minimal_YAML]
+  - id: P-08
+    dimension: lifecycle
+    values: [no_cleanup, per_file_content_review_cleanup, fixed_runtime_subtree_Human_cleanup]
+  - id: P-09
+    dimension: delivery_state
+    values: [full_receipt_state_machine, sent_operation_only_plus_new_messages]
+
+hard_constraints:
+  - one_task_one_communication_space
+  - Human_manual_relay
+  - no_automatic_polling_or_delivery
+  - lightweight_index_plus_external_documents
+  - direct_required_refs_on_demand
+  - permission_outside_message
+  - same_logical_structure_for_local_and_GitHub
+  - fixed_runtime_subtree_cleanup
+  - no_delivery_receipt_state_machine
+
+candidate_combinations:
+  - candidate_id: C-01
+    name: automated_agent_bus
+    shape:
+      delivery: automatic_delivery
+      state: full_receipt_state_machine
+      payload: structured_messages_and_artifacts
+    verdict: rejected
+    inconsistencies:
+      - violates_Human_manual_relay
+      - violates_no_automatic_delivery
+      - adds_nonrequired_state_cost
+    evidence_claim_ids: [E-04]
+  - candidate_id: C-02
+    name: chat_only_free_text
+    shape:
+      carrier: chat_only
+      encoding: free_text
+      payload: full_content_in_message
+    verdict: rejected
+    inconsistencies:
+      - violates_external_long_document_requirement
+      - accumulates_chat_context
+      - weak_deterministic_parsing
+    evidence_claim_ids: [E-01, E-02, E-06, E-09]
+  - candidate_id: C-03
+    name: GitHub_only_rich_envelope
+    shape:
+      carrier: GitHub_only
+      encoding: compact_JSON
+      payload: rich_envelope
+      state: full_receipt_state_machine
+    verdict: rejected
+    inconsistencies:
+      - excludes_shared_local_fast_path
+      - overfields_messages
+      - duplicates_delivery_state_not_required_by_A
+    evidence_claim_ids: [E-04, E-10]
+  - candidate_id: C-04
+    name: dual_carrier_minimal_task_space
+    shape:
+      scope: one_task_one_space
+      delivery: Human_manual_relay
+      carrier: local_or_GitHub_with_same_logical_structure
+      encoding: minimal_YAML
+      payload: lightweight_index_plus_external_documents
+      context: direct_required_refs_on_demand
+      permission: external_task_authority_with_optional_Human_authorization_ref
+      lifecycle: fixed_runtime_subtree_Human_cleanup
+      state: sent_operation_only_plus_new_messages
+    verdict: selected
+    evidence_claim_ids: [E-01, E-02, E-03, E-04, E-05, E-06, E-07, E-08, E-09, E-10]
+    selection_reason: >-
+      这是满足全部 Human 已确认边界的最小组合。YAML 只作为 v1 的仓库和 Human 友好编码，
+      不作为跨模型普遍最优主张；复杂推理不受消息 schema 约束，只有最终通讯边界结构化。
+
+sensitivity:
+  - change: replace_minimal_YAML_with_compact_JSON
+    effect: core_semantics_unchanged
+    decision: defer_as_future_encoding_option_not_v1_default
+  - change: add_timestamp_to_every_message
+    effect: adds_cost_without_A_requirement_or_proven_benefit_for_current_low_concurrency_boundary
+    decision: reject_as_required_field
+  - change: add_custom_digest_to_every_message
+    effect: violates_A_and_duplicates_Git_content_identity
+    decision: reject
+  - change: add_receiver_acknowledgment
+    effect: creates_delivery_state_semantics_rejected_by_Human
+    decision: reject
+  - change: allow_receiver_recursive_scan
+    effect: unbounded_context_and_privacy_risk
+    decision: reject
+  - change: remove_title
+    effect: harms_Human_and_index_scan_value_at_low_cost
+    decision: retain
+
+final_candidate: C-04

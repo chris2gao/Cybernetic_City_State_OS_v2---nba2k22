@@ -1,0 +1,190 @@
+schema_version: citystate.communication_system.stage04_final_targeted_correction_dispatch.v1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+status: ready_for_execution
+
+repository:
+  name: chris2gao/Cybernetic_City_State_OS_v2---core
+  work_branch: dev/os-v2-global-communication-system-001
+  correction_base_head: 5d2d4c23fa160b3b6231ee1832a6b7bba73ee59b
+  required_review_commit: 3ca8876e95524a3a172303787abdbef488359a99
+  expected_master_head: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  allowed_pre_execution_delta_paths:
+    - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/Gemini第二次定点返修_独立审查_v1.yml
+    - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/最终定点修复派单_Antigravity_Opus_v1.yml
+
+target_endpoint:
+  endpoint_id: antigravity-desktop-opus-stage04-final-corrector-01
+  host: Google Antigravity Desktop
+  required_model: Claude Opus 4.6 Thinking
+  task_role: execution_and_independent_correction
+
+purpose: >-
+  独立复核并定点修复阶段四测试基础设施。不得采信Gemini完成结论；
+  必须使50条冻结测试拥有真实fixture-action-observation-evaluator语义，
+  生成可复核的baseline、synthetic full和mutation结果。不得进入阶段五或阶段六。
+
+mandatory_read_order:
+  - remote master exact 40-character SHA
+  - remote work branch exact 40-character SHA
+  - AGENT_WORKING_DISCIPLINE.md
+  - 08_os/README.md
+  - 08_os/开发入口与单窗口任务规范_v1.md
+  - 08_os/01_workflow/实现/七阶段最小运行契约_v1.yml
+  - 08_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/A_需求建模_v2.yml
+  - 08_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼/02_evidence.yml
+  - 08_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼/多模型实验包_v1.yml
+  - 08_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼/antigravity_desktop_executor_01_result.yml
+  - 08_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼/antigravity_desktop_opus_executor_01_result.yml
+  - 08_os/_runs/run-20260805-全局通讯机制-001/03_结果建模/B_结果模型_v3.yml
+  - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/冻结测试候选_v1.yml
+  - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/specs/测试组_01_消息与YAML_v1.yml
+  - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/specs/测试组_02_序号角色权限引用_v1.yml
+  - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/specs/测试组_03_上下文文档隐私发布_v1.yml
+  - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/specs/测试组_04_Git收敛路由归档_v1.yml
+  - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/specs/测试组_05_导航索引纠正跨端_v1.yml
+  - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/Gemini第二次定点返修_独立审查_v1.yml
+  - current stage04 implementation and fixtures only
+
+write_allowlist:
+  modify_or_add_under:
+    - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/
+    - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/fixtures/
+    - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/results/
+  result_and_review_files:
+    - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/Opus最终定点修复_修改前独立复核_v1.yml
+    - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/Opus最终定点修复_执行结果_v1.yml
+  delete_exact_paths:
+    - build_harness_v2.py
+    - build_runner_v2.py
+    - generate_runner.py
+  forbidden_modifications:
+    - master
+    - 08_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/
+    - 08_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼/
+    - 08_os/_runs/run-20260805-全局通讯机制-001/03_结果建模/
+    - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/冻结测试候选_v1.yml
+    - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/specs/
+
+execution_requirements:
+  - id: C01
+    requirement: before editing, write an independent primary-code review recording exact defects and source locations
+
+  - id: C02
+    requirement: delete the three current root helper files by ordinary git rm in a new commit; no history rewrite
+
+  - id: C03
+    requirement: >-
+      Replace the circular mutation protocol. Frozen failure_code must never be passed into an adapter,
+      fixture, action input, observation, or mutation instruction. Only the evaluator may map an observed
+      mismatch to the frozen failure_code.
+
+  - id: C04
+    requirement: >-
+      Define a typed immutable TestCase for every GC-T001..GC-T050 with explicit fixture_factory,
+      action/invoke, observation contract, evaluator, and frozen failure_code. Shared helpers are allowed,
+      but each case must provide case-specific data and assertions; no PASS merely because no exception occurred.
+
+  - id: C05
+    requirement: >-
+      SyntheticConformingAdapter must return concrete observable outputs satisfying each case.
+      Synthetic mutation execution must alter a concrete field, set, path, event, command trace, or state transition;
+      evaluator independently derives the exact frozen failure_code. Mutation id may be passed, failure_code may not.
+
+  - id: C06
+    requirement: >-
+      GC-T004..GC-T007 must exercise an explicit safe-YAML parser boundary. Fix GC-T006 escaping and test anchors,
+      aliases, and merge keys as distinct subcases. A regex that only recognizes fixture text is insufficient as
+      production oracle; scanner/parser rejection must be represented by the adapter contract.
+
+  - id: C07
+    requirement: >-
+      GC-T031..GC-T034 must create real temporary Git repositories and a local bare remote.
+      GC-T031 verifies remote-ahead non-overlapping convergence and final local==remote head.
+      GC-T032 verifies two sender-owned non-overlapping paths converge and push.
+      GC-T033 creates an actual same-path conflict, verifies continuation stops and exact conflict path is surfaced.
+      GC-T034 performs an actual rejected non-fast-forward push and proves no force flag and no automatic retry.
+
+  - id: C08
+    requirement: >-
+      GC-T050 must read the frozen experiment packet and score each fixture_result in each model response against
+      the packet's expected task_id, sender_endpoint_id, expected_recipient_endpoint_id,
+      message_type_and_purpose, authority_interpretation, requested_action when applicable, and exact required_refs set.
+      Do not compare the two response files to each other and do not accept field presence alone.
+
+  - id: C09
+    requirement: >-
+      Startup validation must compare the exact 50 test_ids and failure_codes in code against all five frozen specs.
+      Harness must prove every evaluator has both a conforming PASS path and a mutation-derived exact failure path.
+
+  - id: C10
+    requirement: >-
+      Persist all three final outputs under stage04/results using atomic non-overwriting writes:
+      preimplementation_baseline_v3.yml, synthetic_conforming_full_v3.yml, mutation_suite_v3.yml.
+      Each binds final tested_commit, candidate SHA256, semantic-specs SHA256, runner blob/SHA256,
+      adapter id/version, mode, exact command, exit code, and per-test expected/observed/status/failure_code.
+
+required_outcomes:
+  preimplementation_baseline:
+    adapter: production
+    ERROR: 0
+    FAIL: 0
+    BLOCKED_EXTERNAL: 0
+    EXPECTED_FAIL: allowed_only_when_concrete_stage06_capability_is_missing
+    exit_code: 0
+  synthetic_conforming_full:
+    adapter: synthetic_conforming
+    PASS: 50
+    EXPECTED_FAIL: 0
+    FAIL: 0
+    ERROR: 0
+    BLOCKED_EXTERNAL: 0
+    exit_code: 0
+  mutation_suite:
+    mutated_cases: 50
+    exact_frozen_failure_codes_derived_by_evaluators: 50
+    wrong_or_missing_codes: 0
+    ERROR: 0
+    exit_code: 0
+
+required_commands:
+  - python 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/validate_test_candidate.py --repo-root .
+  - python -m pytest 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/test_stage04_harness.py -v
+  - python 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/run_stage04_executable_tests.py --repo-root . --mode preimplementation-baseline --adapter production
+  - python 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/run_stage04_executable_tests.py --repo-root . --mode full --adapter synthetic_conforming
+  - python 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/run_stage04_executable_tests.py --repo-root . --mode mutation-suite --adapter synthetic_mutating
+  - python 08_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py static .
+  - python 08_os/03_mechanisms/context_management/实现/verify_context_structure.py
+  - python 08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_no_canonical_live_state.py .
+  - python 08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py static .
+
+publication_rules:
+  - commit and push only to dev/os-v2-global-communication-system-001
+  - ordinary fast-forward push only
+  - no rebase, amend, squash, force push, history rewrite, or master update
+  - before push verify exact changed paths against allowlist
+  - after push fetch and read back exact remote branch head
+
+return_fields:
+  - endpoint_id
+  - actual_model
+  - pre_edit_review_path
+  - final_result_path
+  - branch
+  - final_remote_head
+  - exact_changed_paths
+  - root_helper_paths_absent
+  - test_case_count
+  - evaluator_count
+  - conforming_pass_path_count
+  - mutation_failure_path_count
+  - baseline_counts_and_exit_code
+  - synthetic_full_counts_and_exit_code
+  - mutation_counts_and_exit_code
+  - real_Git_scenario_results_GC-T031_to_GC-T034
+  - GC-T050_exact_scoring_summary
+  - required_command_exit_codes
+  - frozen_spec_changed
+  - candidate_changed
+  - master_changed
+  - remaining_limitations

@@ -1,0 +1,24 @@
+schema_version: citystate.communication.endpoint_card.v1
+one_card_per_endpoint_instance_per_task: true
+required_fields:
+  - endpoint_id
+  - principal_class
+  - model_or_product
+  - environment_class
+  - interface_class
+  - task_role
+  - local_file_read
+  - local_file_write
+  - GitHub_read
+  - GitHub_write
+  - instance_label
+  - role_context_entry_ref
+capability_fields:
+  - local_file_read
+  - local_file_write
+  - GitHub_read
+  - GitHub_write
+capability_rule: truthful_current_capability_only
+identity_or_capability_claim_grants_authority: false
+path: endpoints/<endpoint_id>.yml
+

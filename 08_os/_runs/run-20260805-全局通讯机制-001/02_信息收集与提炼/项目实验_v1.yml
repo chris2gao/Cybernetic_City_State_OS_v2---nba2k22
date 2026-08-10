@@ -1,0 +1,174 @@
+schema_version: citystate.communication_project_experiments.v1
+experiment_set_id: global-communication-project-experiments-001
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+created_at: 2026-08-05T07:16:00-07:00
+executor: ChatGPT_web_foreground_planner
+status: deterministic_local_experiments_completed_manual_multi_model_pending
+
+objective_definition:
+  token_best_use_priority:
+    - preserve_information_completeness
+    - preserve_factual_state_and_authority_accuracy
+    - maximize_useful_information_density
+    - avoid_repeated_reading_and_chat_context_accumulation
+    - reduce_physical_size_only_when_above_are_not_degraded
+  raw_token_count_as_universal_target: false
+
+representative_corpus:
+  scenario_count: 6
+  scenarios:
+    - simple_request_with_one_external_result_ref
+    - response_with_direct_parent
+    - correction_with_supersedes
+    - blocked_response_with_failure_ref
+    - final_result_pointer
+    - action_requiring_separate_Human_authorization_ref
+  required_semantic_facts:
+    - task identity
+    - message identity
+    - title or purpose
+    - message type
+    - sender endpoint
+    - expected recipient endpoint
+    - direct parent when applicable
+    - superseded message when applicable
+    - exact external refs
+    - separate authorization ref when applicable
+
+experiments:
+  - experiment_id: EXP-01-representation-density
+    question: Which representation preserves the required semantic facts with the least persistent communication overhead?
+    candidates:
+      prose_pointer:
+        deterministic_machine_parse: false
+        average_bytes: 233.17
+        median_bytes: 229
+        average_lines: 1
+        required_fact_coverage: not_machine_scored
+      minimal_yaml_index:
+        deterministic_machine_parse: true
+        average_bytes: 323.33
+        median_bytes: 319
+        average_lines: 10
+        required_fact_coverage: 1.0
+      compact_json_index:
+        deterministic_machine_parse: true
+        average_bytes: 348.33
+        median_bytes: 344
+        average_lines: 1
+        required_fact_coverage: 1.0
+      rich_yaml_envelope:
+        deterministic_machine_parse: true
+        average_bytes: 943.33
+        median_bytes: 940
+        average_lines: 32
+        required_fact_coverage: 1.0
+    derived_measurements:
+      rich_yaml_to_minimal_yaml_size_ratio: 2.918
+      compact_json_to_minimal_yaml_size_ratio: 1.077
+      prose_pointer_to_minimal_yaml_size_ratio: 0.721
+    finding:
+      - The rich envelope added nearly three times the bytes without increasing required semantic coverage in this corpus.
+      - The byte difference between minimal YAML and compact JSON was small relative to the architectural gain from externalizing long content.
+      - Free-form prose was physically smallest but did not provide deterministic field extraction.
+    scope_limit:
+      - Six project-specific scenarios are not a universal benchmark.
+      - Model-family tokenization was not measured and is not the primary objective.
+      - Final format remains a stage_03 choice supported by later cross-model tests.
+
+  - experiment_id: EXP-02-long-content-externalization
+    question: What is the persistent message-size effect of keeping long content outside the message index?
+    baseline_index_bytes: 278
+    cases:
+      - long_content_characters: 1024
+        embedded_message_bytes: 2933
+        external_index_bytes: 278
+        embedded_to_index_ratio: 10.55
+      - long_content_characters: 8192
+        embedded_message_bytes: 21419
+        external_index_bytes: 278
+        embedded_to_index_ratio: 77.05
+      - long_content_characters: 32768
+        embedded_message_bytes: 84799
+        external_index_bytes: 278
+        embedded_to_index_ratio: 305.03
+    finding:
+      - External documents keep the message index effectively constant while inline messages grow with payload size.
+      - The largest context saving comes from path-based externalization and selective reading, not punctuation-level format optimization.
+    scope_limit: Byte size is a transport and context proxy, not a direct measure of semantic quality.
+
+  - experiment_id: EXP-03-schema-negative-cases
+    question: Can a small schema reject common routing and completeness errors?
+    validator: Python jsonschema Draft 2020-12
+    cases:
+      valid_minimal_message: accepted
+      missing_task_id: rejected
+      recipient_array_when_one_recipient_required: rejected
+      empty_refs: rejected
+      unknown_message_type: rejected
+      unexpected_payload_digest: rejected
+    finding:
+      - A small schema can enforce the minimal stable contract without introducing delivery-state fields.
+      - Schema validation proves structure only; it cannot prove that a referenced document is accurate or sufficient.
+
+  - experiment_id: EXP-04-duplicate-key-parser-behavior
+    question: Do common parsers automatically fail closed on duplicate fields?
+    inputs:
+      json: '{"task_id":"A","task_id":"B"}'
+      yaml: "task_id: A\ntask_id: B\n"
+    observed_common_library_behavior:
+      Python_json_loads: accepted_and_kept_last_value_B
+      Python_yaml_safe_load: accepted_and_kept_last_value_B
+    finding:
+      - Selecting JSON or YAML does not by itself guarantee duplicate-key rejection.
+      - If strict duplicate rejection becomes part of the frozen contract, the loader or validator must test it explicitly.
+    scope_limit: This observation covers the tested Python libraries, not every parser implementation.
+
+  - experiment_id: EXP-05-direct-versus-recursive-ref-loading
+    question: What is the context expansion risk of recursively following incidental refs?
+    simulated_graph:
+      direct_required_refs: 1
+      incidental_refs_per_document: 5
+      incidental_depth: 2
+    loads:
+      direct_only: 1
+      recursive: 31
+      multiplier: 31
+    finding:
+      - A direct-only load rule prevents a short message from unintentionally expanding a large reference graph.
+      - The sender must make the action-complete required reference set explicit.
+    scope_limit: The multiplier is a controlled example, not a prediction of every task.
+
+  - experiment_id: EXP-06-view-generation-cost-model
+    question: Should a persistent Human report be regenerated for every message?
+    compared_patterns:
+      persistent_full_report_each_message:
+        repeated_synthesis: true
+        duplicate_state_risk: high
+        context_and_write_cost: proportional_to_message_count_and_report_size
+      title_and_index_view:
+        repeated_synthesis: false
+        persistent_content:
+          - title
+          - exact_message_or_document_refs
+        AI_summary_generation: on_Human_request
+    finding:
+      - The index-only current view has lower persistent cost and avoids maintaining a second semantic version of message content.
+      - Human-readable synthesis should be generated on demand from selected refs unless a material decision or final result requires a durable document.
+    evidence_class: project_modeling_inference
+
+manual_multi_model_experiment:
+  status: packet_prepared_not_run
+  independence_requirement: responses_must_come_from_actual_other_endpoint_models_via_Human_relay
+  reason_not_simulated: one_model_family_cannot_supply_independent_cross_model_evidence
+  packet_ref: 02_信息收集与提炼/多模型实验包_v1.yml
+
+reproducibility:
+  deterministic_tools_used:
+    - Python standard json
+    - PyYAML safe_load_and_safe_dump
+    - jsonschema Draft202012Validator
+    - UTF_8_byte_counts
+  network_calls_in_experiments: none
+  raw_hidden_reasoning_recorded: false

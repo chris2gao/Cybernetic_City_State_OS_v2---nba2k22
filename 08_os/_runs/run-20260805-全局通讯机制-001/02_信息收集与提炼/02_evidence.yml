@@ -1,0 +1,80 @@
+schema_version: citystate.workflow.stage_artifact.v1
+artifact_schema_version: 1
+run_id: run-20260805-全局通讯机制-001
+stage_id: workflow_stage_02_information_collection
+artifact_kind: evidence_package
+artifact_version: 1
+status: complete
+
+input_refs:
+  - stage_id: workflow_stage_01_requirement_modeling
+    path: ../01_需求建模/A_需求建模_v2.yml
+    git_blob_sha: e91f32b54224d6048df25cca080a259db380911f
+    exact_Human_confirmation_ref: ../01_需求建模/Human确认_A_v2.yml
+
+Human_clarification_ref: Human澄清_外部报告身份_v1.yml
+
+deliberation_receipt:
+  route: full
+  activation_state: active_dormant
+  session_id: S-CD-global-communication-001
+  task_gate: A_v2_exactly_confirmed
+  Human_authorization_ref: ../01_需求建模/Human确认_A_v2.yml
+  process_correction_ref: 阶段二流程纠正_v1.yml
+
+payload:
+  research_questions:
+    ref: evidence/证据索引_v1.yml#research_questions
+    count: 6
+    types:
+      open_discovery: 3
+      directed_verification: 3
+  sources:
+    index_ref: evidence/证据索引_v1.yml#sources
+    usage_record_ref: evidence/信源使用记录_v1.yml
+    external_lane_outputs:
+      - evidence/01_ChatGPT_外部检索_v1.md
+      - evidence/02_Gemini_外部检索_v1.md
+    external_report_receipt_ref: evidence/00_外部报告接收与完整性_v1.yml
+    primary_source_verification_complete_for_load_bearing_claims: true
+  claims:
+    index_ref: evidence/证据索引_v1.yml#claims
+    count: 10
+    conflicts_and_overlap_ref: evidence/03_双路线重合与矛盾_v1.md
+    feasibility_ref: evidence/可行性判断_v1.yml
+    boundary_ref: evidence/边界记录_v1.yml
+  completion:
+    feasibility_basis_complete: true
+    judgment: partially_supported
+    stop: true
+    stop_basis:
+      - both_Human_designated_final_research_lane_outputs_received
+      - load_bearing_claims_verified_or_bounded
+      - supplementary_cross_family_experiment_saturated
+      - conflicts_resolved_or_durable
+      - additional_research_and_NotebookLM_have_low_expected_information_gain
+    conflicts_resolved_or_durable: true
+    exact_numeric_source_coverage_claimed: false
+    residual_risks:
+      - ChatGPT_lane_source_reproducibility_is_weaker_than_Gemini_lane
+      - Claude_Code_Desktop_and_Codex_Desktop_host_compatibility_not_yet_tested
+      - final_wire_encoding_and_field_set_must_be_selected_in_B_and_frozen_by_tests
+    stage_03_can_start_without_chat_history: true
+
+bearing_constraints_for_B:
+  - keep_messages_lightweight_and_externalize_long_content
+  - load_only_direct_required_refs_by_default
+  - fail_closed_and_send_new_blocked_or_request_message_when_material_context_is_missing
+  - treat_Human_as_governance_router_not_delivery_reliability_system
+  - keep_permission_authority_outside_communication_message
+  - include_authorization_ref_in_exact_required_read_set_for_protected_actions
+  - use_existing_Git_branch_head_or_blob_identity_only_when_content_exactness_is_material
+  - do_not_add_default_delivery_receipt_state_machine_or_custom_message_digest
+  - cleanup_only_fixed_runtime_current_tree_and_do_not_claim_secure_erasure
+  - constrain_only_final_message_boundary_not_private_reasoning_process
+  - validate_semantics_field_by_field_and_required_refs_as_exact_sets
+
+NotebookLM:
+  used: false
+  mandatory: false
+  reason: low_expected_information_gain

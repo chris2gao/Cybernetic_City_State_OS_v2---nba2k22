@@ -1,0 +1,61 @@
+schema_version: citystate.communication.message.v1
+encoding: safe_subset_YAML
+one_file_per_message: true
+path_pattern: messages/<sender_endpoint_id>/<zero_padded_seq>_<message_type>.yml
+message_id_pattern: <task_id>::<sender_endpoint_id>::<zero_padded_seq>
+sequence_range: ['00001', '10000']
+immutable_after_publication: true
+required_fields:
+  - message_id
+  - task_id
+  - title
+  - message_type
+  - sender_endpoint_id
+  - sender_task_role
+  - expected_recipient_endpoint_id
+  - expected_recipient_task_role
+  - content
+  - required_refs
+requested_action_required_for:
+  - request
+  - decision_required
+  - blocked
+allowed_message_types:
+  - request
+  - response
+  - result
+  - decision_required
+  - correction
+  - blocked
+optional_fields:
+  - requested_action
+  - in_reply_to
+  - supersedes
+  - references
+  - authorization_ref
+  - facts
+  - decisions
+  - assumptions
+  - unknowns
+  - constraints
+  - risks
+prohibited_fields:
+  - summary
+  - delivery_state
+  - delivered
+  - read_state
+  - read
+  - understood_state
+  - accepted_state
+  - actual_recipient_record
+  - message_custom_digest
+  - protocol_version
+  - private_chain_of_thought
+safe_YAML:
+  encoding: UTF-8
+  documents_per_file: 1
+  duplicate_keys: reject
+  custom_tags: reject
+  anchors_aliases_and_merge_keys: reject
+  executable_object_construction: reject
+

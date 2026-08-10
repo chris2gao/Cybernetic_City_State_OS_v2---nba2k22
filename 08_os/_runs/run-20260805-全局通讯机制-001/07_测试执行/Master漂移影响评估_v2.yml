@@ -1,0 +1,64 @@
+schema_version: citystate.stage07_master_drift_assessment.v1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+status: assessed_nonsemantic_but_operationally_material
+
+physical_state:
+  prior_assessed_master: 596db847374ecb1546d343228fb6d0756a9fc9b4
+  current_remote_master: 52e00fe13d6a2e385abfaf1e2618c70f3278926c
+  new_master_advance_commits_since_prior_assessment: 1
+  new_master_commit: 52e00fe13d6a2e385abfaf1e2618c70f3278926c
+  new_master_commit_message: "docs(agents): add engineering design principles"
+  task_branch_before_assessment: 59f0914d369660211fa57fd1992c4776a9a5a499
+  original_task_merge_base: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  task_branch_expected_behind_master_after_this_master_move: 8
+
+new_master_delta:
+  changed_paths:
+    - AGENTS.md
+  communication_system_canonical_paths_changed: false
+  stage04_frozen_paths_changed: false
+  stage05_paths_changed: false
+  stage06_communication_implementation_paths_changed: false
+  task_run_paths_changed: false
+  existing_shared_path_overlap_added: false
+  semantic_summary: >-
+    The new master commit adds repository-wide engineering design defaults to AGENTS.md only. It does not
+    alter the communication-system architecture, frozen Stage04 tests, accepted Stage05 plan, Stage06 code,
+    or this task's run evidence. The new principles are process/design defaults and explicitly grant no
+    deletion, modification, or publication authority.
+
+impact_decision:
+  communication_system_semantics_invalidated: false
+  frozen_tests_invalidated: false
+  Stage05_plan_invalidated: false
+  Stage07_blockers_changed: false
+  prior_correction_dispatch_v2_still_executable_as_written: false
+  reason_v2_invalid: expected_master_is_stale_and_v2_requires_new_drift_assessment_if_master_moves_again
+  correction_may_continue_on_existing_work_branch: true
+  merge_master_into_work_branch_now: prohibited_for_this_correction
+  rebase_onto_master: prohibited
+  cherry_pick_master_commit_into_task_branch: prohibited_for_scope_cleanliness
+
+current_master_process_effect:
+  new_AGENTS_rules_apply_to_executor: true
+  engineering_design_principles_are_authority: false
+  material_effect_on_correction:
+    - prefer the simplest implementation that fully closes B01-B04
+    - avoid speculative abstractions or compatibility fallbacks
+    - preserve modular boundaries and existing dependency reuse where applicable
+    - do not interpret removal/default guidance as authority to modify frozen or prohibited paths
+  semantic_conflict_with_existing_stage07_correction: false
+
+continuation_rule:
+  authorized_expected_master: 52e00fe13d6a2e385abfaf1e2618c70f3278926c
+  authorized_total_master_drift_from_task_base_commits: 8
+  branch_may_remain_behind_master_during_stage06_correction_and_stage07_rereview: true
+  branch_history_must_continue_linearly_from_existing_task_branch: true
+  if_master_moves_again_before_executor_write: stop_and_return_for_new_drift_assessment
+  if_any_new_master_change_touches_communication_system_or_frozen_task_inputs: stop_and_return
+  if_any_write_to_master_or_history_rewrite_would_be_required: stop_and_return
+
+future_integration_note: >-
+  Stage07 PASS will still require a separate publication-integration decision because the long-running task
+  branch and current master have diverged. Do not solve that integration during the Stage06 correction.

@@ -1,0 +1,182 @@
+schema_version: citystate.communication_evidence_package.v1
+artifact_id: E-global-communication-system-001
+artifact_version: 1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+status: candidate_pending_manual_cross_model_results
+created_at: 2026-08-05T07:23:00-07:00
+
+inputs:
+  confirmed_requirement_model:
+    path: 01_需求建模/A_需求建模_v2.yml
+    blob_sha: e91f32b54224d6048df25cca080a259db380911f
+  Human_confirmation: 01_需求建模/Human确认_A_v2.yml
+  external_source_ledger: 02_信息收集与提炼/外部来源台账_v1.yml
+  project_experiments: 02_信息收集与提炼/项目实验_v1.yml
+  manual_multi_model_packet: 02_信息收集与提炼/多模型实验包_v1.yml
+
+fact_findings:
+  - finding_id: E-F01
+    statement: Independent agent protocols separate agent identity and capabilities from the work message itself.
+    evidence_refs:
+      - SRC-A2A-1
+      - SRC-MCP-LIFECYCLE-1
+    supports_requirement_areas:
+      - endpoint_instance_identity
+      - capability_based_carrier_selection
+    inference: false
+
+  - finding_id: E-F02
+    statement: A2A explicitly separates Messages from Artifacts and recommends outputs as Artifacts rather than message bodies.
+    evidence_refs:
+      - SRC-A2A-1
+    supports_requirement_areas:
+      - lightweight_message_index
+      - external_long_documents
+    inference: false
+
+  - finding_id: E-F03
+    statement: Exact URI or path resources and explicit filesystem roots are established patterns for selective context access.
+    evidence_refs:
+      - SRC-MCP-ROOTS-1
+      - SRC-MCP-RESOURCES-1
+    supports_requirement_areas:
+      - configured_local_root
+      - exact_path_refs
+      - on_demand_reading
+    inference: false
+
+  - finding_id: E-F04
+    statement: Handoff systems may pass the entire conversation by default, but explicit input filtering can restrict the receiving agent context.
+    evidence_refs:
+      - SRC-OPENAI-HANDOFF-1
+    supports_requirement_areas:
+      - direct_parent_and_required_refs_only
+      - no_full_history_default
+    inference: false
+
+  - finding_id: E-F05
+    statement: Git content is content-addressed and can be identified by Git object and commit identity.
+    evidence_refs:
+      - SRC-GIT-OBJECTS-1
+    supports_requirement_areas:
+      - GitHub_carrier_content_binding
+      - no_redundant_message_digest
+    inference: false
+
+  - finding_id: E-F06
+    statement: JSON and YAML specifications both expect unique mapping or object keys, but common tested Python parsers accepted duplicates and retained the final value.
+    evidence_refs:
+      - SRC-JSON-1
+      - SRC-YAML-1
+      - EXP-04-duplicate-key-parser-behavior
+    supports_requirement_areas:
+      - malformed_or_ambiguous_input_handling
+    inference: mixed_source_fact_and_project_observation
+
+  - finding_id: E-F07
+    statement: Claude Code automatically loads CLAUDE memory files into context, so live task messages placed there would create persistent context accumulation.
+    evidence_refs:
+      - SRC-ANTHROPIC-MEMORY-1
+    supports_requirement_areas:
+      - stable_boot_instructions_separate_from_task_traffic
+      - future_global_CLAUDE_cleanup_task
+    inference: project_application_of_product_fact
+
+project_experiment_findings:
+  - finding_id: E-X01
+    statement: In the six-scenario corpus, a rich delivery envelope was 2.918 times the average byte size of a minimal YAML index with no increase in required semantic coverage.
+    evidence_refs:
+      - EXP-01-representation-density
+    supports_requirement_areas:
+      - necessary_fields_only
+      - no_delivery_state_machine
+
+  - finding_id: E-X02
+    statement: Externalizing long content produced much larger savings than choosing between minimal YAML and compact JSON.
+    evidence_refs:
+      - EXP-01-representation-density
+      - EXP-02-long-content-externalization
+    supports_requirement_areas:
+      - message_as_index
+      - path_based_long_content
+      - physical_format_secondary_to_context_topology
+
+  - finding_id: E-X03
+    statement: A compact schema rejected missing task identity, multiple recipients, empty refs, unknown message type, and unexpected digest fields.
+    evidence_refs:
+      - EXP-03-schema-negative-cases
+    supports_requirement_areas:
+      - minimal_machine_contract
+      - single_expected_recipient
+
+  - finding_id: E-X04
+    statement: Direct-only reference loading avoided a controlled 31-times expansion caused by recursive incidental references.
+    evidence_refs:
+      - EXP-05-direct-versus-recursive-ref-loading
+    supports_requirement_areas:
+      - required_refs_are_direct
+      - sender_declares_action_complete_ref_set
+
+  - finding_id: E-X05
+    statement: A title-and-index Human view avoids persistent duplicate synthesis; narrative summaries can be generated on demand from selected refs.
+    evidence_refs:
+      - EXP-06-view-generation-cost-model
+    supports_requirement_areas:
+      - minimal_Human_current_view
+      - AI_generated_summary_on_demand
+    evidence_class: project_modeling_inference
+
+rejected_external_features:
+  - feature: A2A_task_status_lifecycle
+    reason: conflicts_with_sent_then_wait_for_new_message_and_adds_state_cost
+  - feature: A2A_streaming_and_push_notifications
+    reason: conflicts_with_Human_triggered_manual_relay
+  - feature: MCP_subscriptions_and_list_change_notifications
+    reason: conflicts_with_no_polling_no_watcher_and_no_automatic_progression
+  - feature: automatic_model_selected_handoffs
+    reason: Human_decides_actual_recipient
+  - feature: full_PROV_ontology
+    reason: conceptual_identity_provenance_separation_is_enough
+  - feature: live_messages_in_CLAUDE_memory
+    reason: auto_loaded_context_should_contain_stable_instructions_not_task_traffic
+
+format_status:
+  frozen: false
+  current_supported_candidates:
+    - minimal_YAML_index
+    - compact_JSON_index
+  free_text_only_as_canonical_machine_message: not_recommended_pending_cross_model_result
+  reason_not_frozen:
+    - six_scenario_corpus_is_small
+    - Human_and_model_readability_requires_actual_cross_model_evidence
+    - byte_difference_between_minimal_YAML_and_compact_JSON_is_not_architecturally_material
+
+unresolved_evidence:
+  - item_id: E-U01
+    question: Do different endpoint model families recover the same routing, authority, and required-path semantics from the candidate indexes?
+    resolution_method: Human_relay_manual_multi_model_experiment
+    packet_ref: 02_信息收集与提炼/多模型实验包_v1.yml
+    blocks_stage_02_completion: true
+  - item_id: E-U02
+    question: Which candidate produces fewer materially ambiguous interpretations across actual web, desktop, and terminal endpoints?
+    resolution_method: Human_relay_manual_multi_model_experiment
+    packet_ref: 02_信息收集与提炼/多模型实验包_v1.yml
+    blocks_stage_02_completion: true
+
+stage_03_constraints_already_supported:
+  - keep_one_task_one_communication_space
+  - keep_one_runtime_instance_one_endpoint_identity
+  - keep_Human_manual_relay_and_actual_recipient_choice
+  - keep_message_as_small_index_and_long_content_as_external_document
+  - keep_direct_required_refs_only
+  - keep_no_delivery_tracking_beyond_success_or_material_failure
+  - keep_authority_outside_the_message_protocol
+  - keep_fixed_durable_and_runtime_subtrees_for_content_free_cleanup
+  - keep_local_and_GitHub_logically_isomorphic
+
+integrity:
+  source_facts_project_observations_and_inferences_separated: true
+  legacy_OS_compared: false
+  old_dot_ai_modified: false
+  no_claim_that_stage_02_is_complete: true

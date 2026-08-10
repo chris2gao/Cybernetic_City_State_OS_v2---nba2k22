@@ -1,0 +1,140 @@
+schema_version: citystate.communication_system.Human_requirement_answers.v1
+artifact_id: Human-answer-global-communication-002
+artifact_version: 1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+inquiry_batch_id: requirement-inquiry-batch-002
+answered_at: 2026-08-05T05:59:00-07:00
+answered_by: Human
+status: confirmed
+
+answers:
+  IQ-11:
+    selected: A
+    normalized_decision:
+      fixed_message_types:
+        - request
+        - response
+        - result
+        - decision_required
+        - correction
+        - blocked
+      rule: use_a_small_closed_set_in_v1
+
+  IQ-12:
+    selected: A
+    normalized_decision:
+      reply_relation: one_primary_in_reply_to
+      additional_related_material: references
+      complex_multi_parent_message_graph: prohibited_in_v1
+
+  IQ-13:
+    selected: A
+    normalized_decision:
+      correction_method: immutable_successor_message_with_supersedes
+      original_message_mutation: prohibited
+      superseded_message_retained: true
+
+  IQ-14:
+    selected: adopt_recommended_core
+    normalized_decision:
+      required_message_body_fields:
+        - summary
+        - content
+        - requested_action_or_none
+        - required_refs
+      optional_when_material:
+        - facts
+        - decisions
+        - assumptions
+        - unknowns
+        - constraints
+        - risks
+      empty_optional_sections: prohibited
+
+  IQ-15:
+    selected: A
+    normalized_decision:
+      task_endpoint_card: required
+      per_message_identity_fields:
+        - sender_endpoint_id
+        - expected_recipient_endpoint_id
+      repeat_full_endpoint_profile_per_message: prohibited
+
+  IQ-16:
+    selected: A
+    normalized_decision:
+      preserve_sender_expected_recipient: true
+      Human_relay_fields:
+        - actual_recipient_endpoint_id
+        - relay_override_reason
+      Human_actual_recipient_selection_authoritative_for_delivery: true
+      Human_relay_override_does_not_modify_original_message: true
+
+  IQ-17:
+    selected: A
+    normalized_decision:
+      github_traffic_location: current_task_work_branch
+      endpoint_write_partition: one_endpoint_one_owned_subdirectory
+      publication_guard: exact_expected_head_compare_and_swap
+      per_model_branch: prohibited_in_v1
+      shared_all_task_communication_branch: prohibited_in_v1
+
+  IQ-18:
+    selected: A
+    normalized_decision:
+      Human_current_view: one_mutable_current_view_per_task
+      immutable_Human_records:
+        - material_Human_decisions
+        - final_result
+        - significant_failure_or_blocker
+      one_Human_document_per_model_message: prohibited
+
+  IQ-19:
+    selected: confirm
+    normalized_decision:
+      privacy_classes:
+        repository_shareable:
+          allowed_carriers:
+            - local
+            - current_private_GitHub_repository
+        local_only:
+          allowed_carriers:
+            - local
+          GitHub_publication: prohibited
+        forbidden:
+          examples:
+            - password
+            - access_token
+            - private_key
+            - authentication_file
+            - unnecessary_highly_sensitive_information
+          storage_in_any_communication_carrier: prohibited
+
+  IQ-20:
+    selected: A
+    normalized_decision:
+      task_close_preserve:
+        - final_manifest
+        - Human_decisions
+        - final_result
+        - necessary_failure_evidence
+      task_close_delete_when_rebuildable:
+        - intermediate_messages
+        - caches
+        - temporary_attachments
+      deletion_gate: durable_facts_and_required_evidence_preserved_first
+
+cross_answer_invariants:
+  - message_publication_is_immutable
+  - response_and_correction_are_new_messages
+  - message_schema_remains_compact_and_omits_unused_optional_sections
+  - Human_relay_override_preserves_both_sender_intent_and_Human_actual_choice
+  - one_task_one_branch_and_one_task_communication_space_remain_primary
+  - privacy_class_controls_carrier_eligibility
+  - lifecycle_cleanup_occurs_only_after_durable_facts_are_preserved
+
+supersedes: null
+required_next_step:
+  - continue_requirement_inquiry_batch_003
+  - generate_A_v2_only_after_all_load_bearing_questions_are_resolved

@@ -1,0 +1,30 @@
+schema_version: citystate.communication_system.stage04_local_execution_state.v1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+status: dispatched_to_local_executor
+
+current_branch:
+  name: dev/os-v2-global-communication-system-001
+  dispatch_base_head: 7900321929257a0b4205ea40770892873aa61997
+  dispatch_commit: 0b694479c97b31577672212e831f93e63dbdb131
+
+executor:
+  endpoint_id: antigravity-desktop-opus-stage04-executor-01
+  model: Claude Opus 4.6 Thinking
+  host: Google Antigravity Desktop
+  task_role: execution
+
+dispatch_ref: 本地执行派单_Antigravity_Opus_v1.yml
+
+stage_boundary:
+  test_semantic_specs_generated: true
+  executable_test_harness_complete: false
+  local_full_repository_validation_complete: false
+  exact_Human_freeze_requested: false
+  stage_05_authorized: false
+
+next_checkpoint:
+  - receive_pushed_execution_result
+  - independently_verify_primary_diff_and_command_results
+  - optionally_dispatch_Gemini_independent_review
+  - only_then_prepare_exact_Human_freeze_candidate

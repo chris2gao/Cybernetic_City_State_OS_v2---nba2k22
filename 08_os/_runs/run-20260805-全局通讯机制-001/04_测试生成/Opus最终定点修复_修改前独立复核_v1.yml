@@ -1,0 +1,185 @@
+schema_version: citystate.communication_system.stage04_pre_edit_independent_review.v1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+reviewed_head: bb4c296b25288ae87b9ecee20f3cdc1b5a80964e
+reviewer_endpoint: antigravity-desktop-opus-stage04-final-corrector-01
+review_timestamp: 2026-08-06T13:34:00Z
+review_method: independent primary-code audit before any edits
+
+remote_verification:
+  master_head: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  master_matches_dispatch: true
+  branch_head: bb4c296b25288ae87b9ecee20f3cdc1b5a80964e
+  correction_base_head_in_ancestry: true
+
+files_reviewed:
+  - 04_测试生成/实现/run_stage04_executable_tests.py
+  - 04_测试生成/实现/validate_test_candidate.py
+  - 04_测试生成/实现/test_stage04_harness.py
+  - 04_测试生成/Gemini第二次定点返修_独立审查_v1.yml
+  - 04_测试生成/fixtures/safe_yaml/*.yml (5 files)
+  - 04_测试生成/fixtures/canonical_message/*.yml (6 files)
+  - build_harness_v2.py (root)
+  - build_runner_v2.py (root)
+  - generate_runner.py (root)
+
+independent_findings:
+  - finding_id: OPUS-F01
+    severity: critical
+    location: run_stage04_executable_tests.py:29-34
+    statement: >-
+      generic_fixture_factory passes frozen failure_code into fixture dict as _expected_failure.
+      This violates the fundamental prohibition: failure_code must never enter adapter/fixture/action/observation.
+    code_evidence: |
+      def generic_fixture_factory(test_id, failure_code, should_mutate):
+          return {
+              "test_id": test_id,
+              "_should_fail_test_id": test_id if should_mutate else None,
+              "_expected_failure": failure_code if should_mutate else None
+          }
+    dispatch_requirement_violated: C03, C05
+
+  - finding_id: OPUS-F02
+    severity: critical
+    location: run_stage04_executable_tests.py:36-60
+    statement: >-
+      evaluate_generic treats any adapter call that does not raise CommunicationSystemError as PASS.
+      No actual observable output is checked. A no-op adapter achieves 50 PASS.
+    code_evidence: |
+      # Line 49: return "PASS", None  (reached if no exception)
+    dispatch_requirement_violated: C04
+
+  - finding_id: OPUS-F03
+    severity: critical
+    location: run_stage04_executable_tests.py:70-109
+    statement: >-
+      evaluate_git_convergence passes failure_code directly to adapter.converge_task_branch via test_ctx.
+      Git tests GC-T031..T034 share a single function that does not create a bare remote.
+      GC-T031 creates a local commit but no remote-ahead scenario.
+      GC-T032/GC-T033 have no scenario-specific logic at all — they fall through to PASS.
+      GC-T034 creates two local branches and attempts merge instead of testing rejected non-fast-forward push.
+    dispatch_requirement_violated: C03, C07
+
+  - finding_id: OPUS-F04
+    severity: critical
+    location: run_stage04_executable_tests.py:111-149
+    statement: >-
+      GC-T050 (evaluate_gc_t050) compares top-level fields of two response files against EACH OTHER
+      instead of scoring each fixture_result against the frozen experiment packet's expected values.
+      It checks fields [task_id, sender_endpoint_id, expected_recipient_endpoint_id, message_type,
+      purpose, authority] at the top level of the response dict — those fields don't exist there.
+      The experiment data has fixture_results arrays with per-fixture recovered fields.
+    dispatch_requirement_violated: C08
+
+  - finding_id: OPUS-F05
+    severity: critical
+    location: run_stage04_executable_tests.py:151-186 (run_yaml_harness)
+    statement: >-
+      GC-T006 uses regex with OVER-ESCAPED patterns (double-escaped backslashes in Python raw strings)
+      that don't match the fixture content. The regex r'(?:^|\\s)&\\w+' contains literal backslash-s
+      instead of whitespace pattern. This causes GC-T006 to return FAIL in conforming mode.
+    code_evidence: |
+      # Line 202: regex_checks=[r'(?:^|\\\\s)&\\\\w+', r'(?:^|\\\\s)\\\\*\\\\w+', r'<<\\\\s*:']
+      # The \\\\s is literal backslash-s, not \s whitespace
+    dispatch_requirement_violated: C06
+
+  - finding_id: OPUS-F06
+    severity: critical
+    location: run_stage04_executable_tests.py:188-328
+    statement: >-
+      40+ tests (GC-T001..T003, GC-T008..T030, GC-T035..T049) all use identical generic_fixture_factory
+      with no case-specific fixture data, action semantics, observation contract, or evaluator logic.
+      They are indistinguishable stubs that pass/fail based solely on whether the adapter raises.
+    dispatch_requirement_violated: C04
+
+  - finding_id: OPUS-F07
+    severity: high
+    location: repository root
+    statement: >-
+      Three out-of-scope root helper files remain in tracked tree:
+      build_harness_v2.py (3326B), build_runner_v2.py (33720B), generate_runner.py (18059B).
+    dispatch_requirement_violated: C02
+
+  - finding_id: OPUS-F08
+    severity: high
+    location: run_stage04_executable_tests.py:455-464
+    statement: >-
+      In mutation-suite mode, the result dict sets failure_code from the adapter's returned reason
+      string rather than from the evaluator independently deriving it from observation.
+      The failure_code field in results is set to `reason if status == "PASS" and args.mode == "mutation-suite"`
+      — meaning it echoes whatever the adapter returned.
+    dispatch_requirement_violated: C05
+
+  - finding_id: OPUS-F09
+    severity: medium
+    location: run_stage04_executable_tests.py:498-505
+    statement: >-
+      Result filenames use _v2 suffix instead of required _v3.
+      The dispatch requires preimplementation_baseline_v3.yml, synthetic_conforming_full_v3.yml,
+      mutation_suite_v3.yml.
+    dispatch_requirement_violated: C10
+
+  - finding_id: OPUS-F10
+    severity: medium
+    location: run_stage04_executable_tests.py:473
+    statement: >-
+      runner_identity is "Antigravity_Gemini_v2" which is inaccurate for Opus execution.
+      Result files should bind the actual adapter id/version.
+
+gemini_review_confirmation:
+  S04-R2-F01_confirmed: true
+  S04-R2-F02_confirmed: true
+  S04-R2-F03_confirmed: true
+  S04-R2-F04_confirmed: true
+  S04-R2-F05_confirmed: true
+  S04-R2-F06_confirmed: true
+  S04-R2-F07_confirmed: true
+  S04-R2-F08_confirmed: true
+  S04-R2-F09_confirmed: true
+
+correction_plan:
+  - step: 1
+    action: git rm build_harness_v2.py build_runner_v2.py generate_runner.py
+    requirement: C02
+
+  - step: 2
+    action: >-
+      Rewrite the entire test infrastructure with typed TestCase dataclasses, explicit per-case
+      fixture_factory/action/observation/evaluator, SyntheticConformingAdapter that returns
+      concrete observable outputs, and SyntheticMutatingAdapter that mutates concrete fields.
+      failure_code NEVER enters any adapter, fixture, or action. Only evaluators map observations
+      to frozen failure_codes.
+    requirement: C03, C04, C05
+
+  - step: 3
+    action: >-
+      Fix GC-T006 to use proper YAML scanner/parser rejection via StrictSafeLoader that forbids
+      anchors and aliases, plus separate merge-key detection.
+    requirement: C06
+
+  - step: 4
+    action: >-
+      Rewrite GC-T031..T034 with real temporary Git repos and local bare remote.
+      GC-T031: remote-ahead with non-overlapping fast-forward.
+      GC-T032: two sender zones converge non-overlapping paths.
+      GC-T033: same-path conflict on diverged heads, verify conflict path surfaced.
+      GC-T034: rejected non-fast-forward push, verify no force flag.
+    requirement: C07
+
+  - step: 5
+    action: >-
+      Rewrite GC-T050 to read frozen experiment packet expected values and score each
+      fixture_result in each model response against those expectations field-by-field,
+      including exact required_refs set comparison.
+    requirement: C08
+
+  - step: 6
+    action: >-
+      Verify specs match frozen test_ids and failure_codes at startup. Harness proves
+      every evaluator has both conforming PASS path and mutation-derived failure path.
+    requirement: C09
+
+  - step: 7
+    action: >-
+      Save results as _v3 with full metadata binding.
+    requirement: C10

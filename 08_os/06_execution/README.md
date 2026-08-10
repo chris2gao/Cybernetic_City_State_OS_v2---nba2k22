@@ -56,3 +56,7 @@ nicety — this is the area whose failures would otherwise be silent by construc
 
 加载 receipt 必须记录机制版本和实际读取项；缺项、旧版本或 stale 均失败退出。七阶段 runner
 只实现确定性控制面，不生成需求、证据、B、测试、步骤或实现语义。
+# 通讯系统
+
+`boot/communication_system/` 提供显式初始化、纯校验、人工发布、单次 Git 收敛和整体归档入口。
+它不启动后台进程，运行实例由任务配置的通讯根承载，不写入 canonical 机制目录。

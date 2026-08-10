@@ -1,0 +1,90 @@
+schema_version: citystate.communication_system.stage04_second_independent_review.v1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+status: rejected_targeted_correction_required
+
+reviewed_submission:
+  endpoint_id: antigravity-desktop-gemini-stage04-reviewer-01
+  reviewed_head: d48df1797c67f0f8708c9767e58f5bacd55d4ba4
+  parent_head: bc619d6c67ff7cf81d9163398296030abaff601f
+  linear_ahead_by: 1
+  master_head_verified_unchanged: c7a508abbcda58361fc9b649236d44b706e0bdd4
+
+accepted_improvements:
+  - canonical_message fixtures now use B_v3 field names
+  - preimplementation and full modes map missing capability to different statuses
+  - full mode exits nonzero when FAIL or EXPECTED_FAIL exists
+  - candidate identity and test semantics were not intentionally changed
+  - prior Opus defects were correctly identified in the pre-correction review record
+
+blocking_findings:
+  - finding_id: G2-C01
+    severity: critical
+    title: forty_five_tests_still_have_no_executable_behavior_oracle
+    evidence:
+      - CommunicationTestAdapter methods all immediately raise MissingCapabilityError
+      - run_test calls each adapter method with no fixture or case arguments
+      - TEST_CASES stores prose setup/action/expected_observation but no executable fixture factory or evaluator
+      - only GC-T004 through GC-T007 and GC-T050 have execute_specific logic
+    consequence: >-
+      The runner proves only mode-dependent remapping of a missing capability. It cannot exercise a future
+      stage-six implementation or decide whether its behavior satisfies forty-five frozen test oracles.
+
+  - finding_id: G2-C02
+    severity: critical
+    title: capability_mapping_is_not_semantically_specific
+    evidence:
+      - sequence, ownership, authority, receiver bootstrap, publication, Git convergence and archive cases
+        are frequently mapped to validate_message rather than their declared capability interface
+    consequence: adapter_contract_does_not_bind_the_behavior_under_test
+
+  - finding_id: G2-C03
+    severity: critical
+    title: harness_checks_metadata_presence_not_oracle_executability
+    evidence:
+      - harness only checks that capability/setup/action/expected_observation keys exist
+      - failure_code reachability test only checks that a nonempty string exists
+      - baseline/full tests explicitly expect MissingCapabilityError status conversion
+      - no conforming synthetic adapter demonstrates all fifty tests can PASS
+      - no mutant adapter demonstrates each frozen failure_code can be reached
+    consequence: placeholder_behavior_was_renamed_but_not_eliminated
+
+  - finding_id: G2-H01
+    severity: high
+    title: cross_model_test_is_not_exactly_scored
+    evidence:
+      - GC-T050 returns PASS when two experiment files merely exist
+      - identities, roles, authority interpretation and exact required-ref sets are not compared to frozen expectations
+
+  - finding_id: G2-H02
+    severity: high
+    title: write_allowlist_and_task_isolation_violated
+    out_of_scope_paths:
+      - .ai/TASKS/personal-path-gate-integration-001.md
+      - 08_os/_runs/run-016-转义路径盲区修复/06_执行/reproduce_blindness_before_fix.ps1
+      - 08_os/_runs/run-016-转义路径盲区修复/run.yml
+      - build_harness.py
+      - build_runner.py
+      - full_results.yml
+      - preimpl_results.yml
+    consequence: dirty_worktree_or_unscoped_files_were_committed_to_the_task_branch
+
+  - finding_id: G2-M01
+    severity: medium
+    title: required_post_correction_result_receipt_missing
+    expected_path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/独立复核与纠正结果_Antigravity_Gemini_v1.yml
+    observed: only_pre_correction_review_record_exists
+
+freeze_decision:
+  stage_04_candidate_freezable: false
+  stage_05_may_start: false
+  reason: executable_oracle_and_write_scope_gates_not_satisfied
+
+required_next_action:
+  - remove_all_out_of_scope_paths_by_new_commit_without_history_rewrite
+  - implement_real_fixture_action_oracle_execution_for_all_fifty_tests
+  - provide_adapter_injection_contract_for_future_stage_six_implementation
+  - prove_all_fifty_tests_pass_with_a_conforming_synthetic_adapter
+  - prove_each_failure_code_is_reachable_with_targeted_mutation
+  - retain_baseline_missing_capability_expected_fail_and_full_missing_capability_fail_semantics
+  - produce_exact_post_correction_receipt_and_persisted_results_under_stage_04

@@ -1,0 +1,125 @@
+schema_version: citystate.communication_system.Human_requirement_answers.v1
+artifact_id: Human-answer-batch-004
+artifact_version: 1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+recorded_at: 2026-08-05T06:18:00-07:00
+source_branch: dev/os-v2-global-communication-system-001
+answer_batch: requirement-inquiry-batch-004
+
+answers:
+  IQ-31:
+    selected: A
+    normalized_decision: >-
+      Human中转聊天指针包含task_id、message_id、carrier、精确路径或GitHub ref、
+      sender_endpoint_id、expected_recipient_endpoint_id和one_line_purpose。
+
+  IQ-32:
+    selected: A
+    normalized_decision: >-
+      one_line_purpose只描述消息用途，不重复正文事实、结论或详细要求；
+      文件内容是唯一正式内容来源。
+
+  IQ-33:
+    selected: confirm
+    normalized_decision:
+      task_root_layout:
+        - manifest
+        - endpoints
+        - messages
+        - relays
+        - documents
+        - Human
+        - failures
+        - archive
+      message_partition: messages/<sender_endpoint_id>/
+      endpoint_partition: endpoints/<endpoint_id>.yml
+      note: >-
+        documents用于长内容和其他独立文件；消息文本仅保存轻量索引与动作信息。
+
+  IQ-34:
+    selected: A
+    normalized_decision: >-
+      本地与GitHub task通讯目录保持基本同构；GitHub不包含local_only数据和可重建缓存。
+
+  IQ-35:
+    selected: confirm
+    normalized_decision:
+      message_summary: current_change_or_core_purpose_for_fast_orientation
+      message_content: compact_index_and_complete_routing_or_action_information
+      long_content: external_document_referenced_by_exact_path
+      required_refs: exact_paths_to_required_external_documents
+      anti_duplication: message_must_not_repeat_long_document_body
+
+  IQ-36:
+    selected: A
+    normalized_decision: >-
+      不自动递归解引用；默认只读取消息直接声明的required_refs。
+      发送方负责提供完成当前动作所需的直接引用集合。
+
+  IQ-37:
+    selected: Human_override
+    normalized_decision: >-
+      不建立独立附件元数据协议。大型日志、diff、图片、数据文件或其他长内容
+      直接存放在本地或GitHub task目录中的独立文件；消息只提供精确路径。
+      接收方仅在需要时读取该路径。
+    removed_default_fields:
+      - attachment_type
+      - attachment_summary
+      - attachment_digest
+      - attachment_required_flag
+
+  IQ-38:
+    selected: B
+    normalized_decision: >-
+      不建立coordinator交接记录。预期接收者与协调建议均不构成确定路由或义务；
+      Human最终决定是否采纳发送方建议、转交给哪个模型以及是否需要回应。
+      Human可通过当前聊天口头告知新的操作安排。
+    consequence:
+      coordinator_endpoint: optional_operational_hint_only
+      coordinator_single_writer_contract: not_required_in_v1
+      coordinator_handover_artifact: prohibited_by_default
+
+  IQ-39:
+    selected: confirm
+    normalized_decision:
+      global_index_purpose: active_task_discovery_only
+      fields:
+        - repository_id
+        - task_id
+        - task_root
+        - carrier
+        - status
+        - last_Human_update_at
+      optional_field:
+        - coordinator_endpoint_id
+      prohibited_content:
+        - message_body
+        - full_history
+        - sensitive_content
+      note: coordinator_endpoint_id_if_present_is_non_authorizing_hint
+
+  IQ-40:
+    selected: Human_override_no_digest
+    normalized_decision: >-
+      消息文本不计算payload_digest。消息文本是轻量索引；长内容始终放入独立文档，
+      消息通过精确路径引用。GitHub文件已有commit/blob身份，本地普通索引也不强制哈希。
+    digest_policy:
+      message_digest: prohibited_by_default
+      long_document_digest: not_required_by_communication_protocol
+      carrier_native_identity: may_be_used_when_already_available_without_extra_protocol_cost
+
+cross_cutting_decisions:
+  message_is_lightweight_index: true
+  long_content_is_external_document: true
+  direct_path_is_sufficient_for_external_content: true
+  attachment_subprotocol: false
+  coordinator_state_machine: false
+  expected_recipient_is_advisory: true
+  Human_final_routing_authority: true
+  message_digest_required: false
+
+superseded_recommendations:
+  - batch_004_IQ_37_attachment_metadata_recommendation
+  - batch_004_IQ_38_coordinator_handover_recommendation
+  - batch_004_IQ_40_optional_digest_recommendation

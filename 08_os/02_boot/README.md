@@ -32,6 +32,7 @@ These are candidates for porting, not decisions. Each needs assessing on its own
 
 - `context_management/启动清单_v1.yml`：上下文管理加载顺序、版本与失败行为；
 - `context_management/README.md`：入口边界与 receipt 要求。
+- `communication_system/启动清单_v1.yml`：Human 中转通讯契约与纯校验入口；加载时不创建运行实例。
 
 启动区只声明“启动时读什么”；机制方法论和生命周期定义位于
 `../03_mechanisms/context_management/`。

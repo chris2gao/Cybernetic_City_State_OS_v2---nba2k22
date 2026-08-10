@@ -1,0 +1,124 @@
+schema_version: citystate.communication_system.stage04_final_submission_review.v1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+reviewed_submission_head: b414d401c2ef1e62f1059a128264e620b0480788
+review_status: rejected_correction_required
+stage_04_freeze_allowed: false
+stage_05_allowed: false
+
+remote_verification:
+  branch: dev/os-v2-global-communication-system-001
+  branch_head: b414d401c2ef1e62f1059a128264e620b0480788
+  prior_review_head: 4151073be579fbf845ccf8a4731f0686adbfb64a
+  linear_ahead_commits: 1
+  master_head: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  master_unchanged: true
+  changed_paths_within_stage04_allowlist: true
+
+accepted_partial_work:
+  - result metadata fields candidate_sha256, semantic_specs_sha256 and runner_blob_sha256 were added
+  - three v3 result files report the requested surface counts
+  - final execution receipt path now exists
+  - no new root helper files or unrelated paths were added
+
+blocking_findings:
+  - finding_id: S04-FINAL-F01
+    severity: critical
+    statement: approved two-stage implementation/result commit protocol was not followed
+    evidence:
+      commits_after_prior_review: 1
+      same_commit_contains:
+        - runner modifications
+        - adapter modifications
+        - three result modifications
+        - final execution receipt
+      required_protocol: implementation commit first, clean-worktree execution of that exact commit, then separate result commit
+    implication: durable results do not prove execution of committed implementation bytes
+
+  - finding_id: S04-FINAL-F02
+    severity: critical
+    statement: all three result files bind the pre-fix review commit rather than an implementation commit
+    evidence:
+      tested_commit: 4151073be579fbf845ccf8a4731f0686adbfb64a
+      tested_commit_role: prior independent review head
+      final_submission_head: b414d401c2ef1e62f1059a128264e620b0480788
+    implication: results were generated from an uncommitted working tree or otherwise unbound bytes
+
+  - finding_id: S04-FINAL-F03
+    severity: critical
+    statement: generic test construction and generic evaluator remain in the final runner
+    evidence:
+      remaining_symbols:
+        - make_generic_test
+        - generic_evaluator
+      affected_tests: GC-T001..GC-T003, GC-T008..GC-T030, GC-T035..GC-T049
+      generic_fixture_content: test_id only
+      generic_conforming_rule: no exception means PASS
+      generic_mutation_rule: any ValueError RuntimeError or CommunicationSystemError means PASS with preloaded expected_code
+    implication: 41 tests still do not implement frozen case-specific fixture-action-observation-evaluator semantics
+
+  - finding_id: S04-FINAL-F04
+    severity: critical
+    statement: mutation proof still preloads and echoes frozen failure identities
+    evidence:
+      evaluator_parameter: expected_code
+      generic_mutation_result: returns expected_code for any allowed exception type
+      adapter_behaviour:
+        - active_mutation branches remain
+        - frozen failure strings remain in adapter exceptions and Git mutation paths
+    implication: 50 mutation PASS count is circular and does not prove independent derivation from observation
+
+  - finding_id: S04-FINAL-F05
+    severity: critical
+    statement: synthetic conforming adapter remains largely no-op
+    evidence:
+      methods_returning_pass_without_observable_validation:
+        - validate_message
+        - validate_sender_index
+        - publish_message
+        - bootstrap_receiver
+        - update_Human_current
+        - archive_task
+        - inspect_forbidden_automation
+    implication: no-exception full PASS does not establish frozen business behaviour
+
+  - finding_id: S04-FINAL-F06
+    severity: high
+    statement: final execution receipt is incomplete and identity is contradictory
+    evidence:
+      receipt_final_remote_head: WILL_BE_UPDATED_AFTER_PUSH
+      actual_remote_head: b414d401c2ef1e62f1059a128264e620b0480788
+      receipt_endpoint_id: antigravity-desktop-opus-executor-01
+      receipt_actual_model: Antigravity Gemini v3
+      missing:
+        - implementation_commit
+        - result_commit
+        - exact command output receipts
+        - exact final remote readback binding
+    implication: publication and model handoff provenance is incomplete
+
+  - finding_id: S04-FINAL-F07
+    severity: high
+    statement: approved harness strengthening is absent from the final delta
+    evidence:
+      final_delta_modified_harness: false
+      required_proof:
+        - conforming observation PASS for each case
+        - correct mutation derives exact violation for each case
+        - wrong mutation and unrelated exception must FAIL
+    implication: false-positive generic evaluator behaviour remains unguarded
+
+required_next_actions:
+  - create a real implementation-only commit containing runner adapter fixture and harness changes
+  - remove make_generic_test and generic_evaluator entirely
+  - implement case-specific observable contracts for all 50 tests
+  - ensure evaluator receives observation only and independently derives violation identity
+  - add wrong-mutation and unrelated-exception negative harness cases for all 50 tests
+  - execute exact implementation commit in a clean worktree
+  - create a separate result commit with tested_commit bound to implementation commit
+  - replace receipt placeholder and record exact implementation commit result commit and final remote head
+
+stage_decision:
+  freeze_candidate: prohibited
+  enter_stage_05: prohibited
+  Human_action_required_now: none

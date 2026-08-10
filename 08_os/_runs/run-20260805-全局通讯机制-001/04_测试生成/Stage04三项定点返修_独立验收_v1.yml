@@ -1,0 +1,162 @@
+schema_version: citystate.stage04.independent_acceptance.v1
+review_id: stage04-three-case-targeted-review-001
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+review_role: independent_reviewer
+status: rejected_correction_required
+
+repository:
+  master_head: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  master_modified: false
+  branch: dev/os-v2-global-communication-system-001
+  prior_review_head: 3d7b6bdd1568f2c74847ec656c6a647824c812d5
+  implementation_commit: bfa7c2c8170aa30256bf044946b03eb3554e4191
+  result_commit: 8928546ff0bd0edfbc49ae3ac749b28907db4a27
+  submitted_remote_head: 8928546ff0bd0edfbc49ae3ac749b28907db4a27
+
+physical_chain:
+  commits_after_prior_review: 2
+  implementation_only_commit: true
+  results_only_commit: true
+  result_tested_commit: bfa7c2c8170aa30256bf044946b03eb3554e4191
+  binding_correct: true
+
+accepted:
+  - id: GC-T050
+    status: accepted_targeted_fix
+    observations:
+      - real frozen model evidence reaches strict scorer
+      - exact required-ref equality remains enforced
+      - field-level exact semantic failure now maps to CROSS_MODEL_SEMANTIC_RECOVERY
+      - persisted baseline records the real frozen evidence failure rather than Wrong violation
+    persisted_baseline:
+      EXPECTED_FAIL: 49
+      FAIL: 1
+      ERROR: 0
+      exit_code: 1
+      GC-T050_status: FAIL
+      GC-T050_reason: CROSS_MODEL_SEMANTIC_RECOVERY
+    note: baseline_is_not_a_zero_exit_green_run
+
+partial_not_accepted:
+  - id: GC-T042
+    severity: critical
+    issue: real_discovery_file_IO_added_but_frozen_roots_only_oracle_not_implemented
+    current:
+      conforming_document:
+        scope: all
+      rejected_key:
+        - execution_payload
+    frozen_oracle_requires:
+      - discovery_contains_roots_only
+      - reject_message_body
+      - reject_sender_index_entry
+      - reject_delivery_state
+      - reject_full_history
+    required_correction:
+      - define_allowed_discovery_root_structure
+      - validate_actual_discovery_yml_against_allowed_roots
+      - exercise_each_prohibited_content_class_independently
+
+  - id: GC-T045
+    severity: critical
+    issue: real_index_IO_added_but_frozen_sender_index_oracle_still_incomplete
+    current:
+      valid_append: appends_msg_new_string
+      mutation_actions_combined:
+        - delete_entry
+        - modify_entry
+        - embed_body
+        - missing_pointer
+      referenced_message_existence_check: false
+      independent_invalid_subcases: false
+    frozen_oracle_requires:
+      - delete_existing_entry_rejected_independently
+      - modify_existing_entry_rejected_independently
+      - embedded_message_body_rejected_independently
+      - missing_message_pointer_rejected_independently
+      - valid_append_preserves_all_prior_entries
+      - every_pointer_resolves_to_existing_message
+    required_correction:
+      - create_real_referenced_message_files
+      - validate_pointer_existence
+      - split_four_invalid_forms_into_independent_subcases
+      - verify_valid_append_preserves_prior_entries_and_points_to_existing_message
+
+remaining_prior_blockers_unchanged:
+  - id: GC-T041
+    severity: high
+    issue: default_context_oracle_incomplete
+    missing:
+      - actual_read_trace
+      - exact_archive_pointer_exception
+      - Human_request_exception
+
+  - id: GC-T043_GC-T044
+    severity: high
+    issue: policy_still_driven_by_preloaded_action_labels
+    current_actions:
+      - update_material
+      - update_ordinary
+      - update_authorized
+      - update_unauthorized
+    required:
+      - raw_event_semantics_drive_material_trigger
+      - raw_writer_role_and_explicit_authority_drive_Human_current_write_policy
+
+  - id: GC-T039
+    severity: high
+    issue: whole_public_archive_fixture_incomplete
+    missing:
+      - sender_indexes
+      - Human_decisions
+      - final_results
+      - material_failures
+      - discovery_update
+
+  - id: GC-T040
+    severity: high
+    issue: private_runtime_oracle_incomplete
+    missing:
+      - ignored_or_external_private_runtime_case
+      - tracked_Git_absence_check
+      - durable_prerequisite_then_delete_check
+
+  - id: GC-T033_GC-T034
+    severity: high
+    issue: conflict_and_non_fast_forward_control_trace_incomplete
+    GC-T033_missing:
+      - escalation_payload_with_exact_conflict_path
+      - explicit_no_push_after_conflict_trace
+    GC-T034_missing:
+      - explicit_force_flag_trace
+      - explicit_retry_count_zero
+      - remote_head_unchanged_after_rejected_push
+
+summary:
+  prior_remaining_blocker_groups: 8
+  targeted_groups_submitted: 3
+  fully_closed_this_round: 1
+  partially_improved_but_still_blocking: 2
+  untouched_prior_blocker_groups: 5
+  remaining_blocker_groups: 7
+
+stage_decision:
+  stage_04_freeze_allowed: false
+  stage_05_allowed: false
+  Human_action_required_now: false
+
+next_action:
+  type: same_task_same_branch_targeted_correction
+  preserve:
+    - publication_chain
+    - tested_commit_binding
+    - GC-T050_exact_scoring_and_mapping
+  correct:
+    - GC-T042
+    - GC-T045
+    - GC-T041
+    - GC-T043_GC-T044
+    - GC-T039
+    - GC-T040
+    - GC-T033_GC-T034

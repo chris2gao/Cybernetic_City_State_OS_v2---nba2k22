@@ -1,0 +1,108 @@
+schema_version: citystate.communication_system.stage04_preimplementation_baseline.v1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+baseline_recorded_at: 2026-08-06T08:30:00Z
+
+tested_commit: 40af80bdcd7ffa7d975a89d8e902853bba711a4e
+
+commands:
+  - command: python validate_test_candidate.py --repo-root .
+    exit_code: 0
+  - command: python -m pytest test_stage04_harness.py -v
+    exit_code: 0
+    test_count: 14
+    passed: 14
+  - command: python run_stage04_executable_tests.py --repo-root . --mode preimplementation-baseline
+    exit_code: 0
+  - command: python run_minimum_operational_loop.py static .
+    exit_code: 0
+  - command: python verify_context_structure.py
+    exit_code: 0
+  - command: python verify_no_canonical_live_state.py .
+    exit_code: 0
+  - command: python verify_stage_collaborative_deliberation_v2.py static .
+    exit_code: 0
+
+command_exit_codes: [0, 0, 0, 0, 0, 0, 0]
+
+candidate_validator_result: PASS
+harness_self_test_result: 14/14 PASS
+
+discovered_test_count: 50
+
+counts_by_status:
+  PASS: 5
+  EXPECTED_FAIL: 45
+  FAIL: 0
+  ERROR: 0
+  BLOCKED_EXTERNAL: 0
+
+tests_by_status:
+  PASS:
+    - GC-T004
+    - GC-T005
+    - GC-T006
+    - GC-T007
+    - GC-T050
+  EXPECTED_FAIL:
+    - GC-T001
+    - GC-T002
+    - GC-T003
+    - GC-T008
+    - GC-T009
+    - GC-T010
+    - GC-T011
+    - GC-T012
+    - GC-T013
+    - GC-T014
+    - GC-T015
+    - GC-T016
+    - GC-T017
+    - GC-T018
+    - GC-T019
+    - GC-T020
+    - GC-T021
+    - GC-T022
+    - GC-T023
+    - GC-T024
+    - GC-T025
+    - GC-T026
+    - GC-T027
+    - GC-T028
+    - GC-T029
+    - GC-T030
+    - GC-T031
+    - GC-T032
+    - GC-T033
+    - GC-T034
+    - GC-T035
+    - GC-T036
+    - GC-T037
+    - GC-T038
+    - GC-T039
+    - GC-T040
+    - GC-T041
+    - GC-T042
+    - GC-T043
+    - GC-T044
+    - GC-T045
+    - GC-T046
+    - GC-T047
+    - GC-T048
+    - GC-T049
+  FAIL: []
+  ERROR: []
+  BLOCKED_EXTERNAL: []
+
+unexpected_failures: []
+errors: []
+blocked_external: []
+
+baseline_interpretation: >-
+  4 safe-YAML structural tests (GC-T004 through GC-T007) deterministically pass by
+  rejecting duplicate keys, multi-document YAML, anchors/aliases/merge keys, and custom
+  tags. GC-T050 passes via deterministic field-by-field scoring of 2 frozen cross-model
+  experiment responses (Gemini and Opus). 45 tests correctly produce EXPECTED_FAIL because
+  the communication system validator, publisher, receiver bootstrap, convergence, and
+  archiver are not yet implemented — these are stage 06 implementation targets.
+  0 harness ERRORs confirms the test infrastructure is functional.
