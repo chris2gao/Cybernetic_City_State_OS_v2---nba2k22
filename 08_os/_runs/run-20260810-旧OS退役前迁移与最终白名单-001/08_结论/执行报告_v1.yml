@@ -1,9 +1,82 @@
 schema_version: citystate.execution_report.v1
 task_id: os-v2-pre-deletion-migration-final-whitelist-001
 run_id: run-20260810-旧OS退役前迁移与最终白名单-001
-status: ready_for_independent_review
+status: ready_for_independent_rereview
 executor: Claude_Code
 reviewer: ChatGPT_independent_project_reviewer
+
+correction_rounds:
+  - round: 1
+    trigger_review: 09_独立复核/ChatGPT独立复核_v1.yml at 79be7b073b1d298cdbdd086994543a5035ba62c6
+    reviewed_head: 6c53965a77aca42270f00eb60bc243005ad1197e
+    verdict_received: REVISE_NARROW_CORRECTION
+    blocking_finding: R1_M3_active_dev_files_wrongly_excluded
+    upheld: >-
+      The finding is correct and the error was mine. I excluded 08_os/_dev/**
+      wholesale as historical and then reported M3 active hits = 0 on that basis.
+      08_os/README.md defines _dev as holding active development design AND
+      superseded versions, so directory membership never established status - and
+      three of the four files still naming the old run root carry "状态：活动" in their
+      own headers. This is the second time in this task that I narrowed what counts
+      as a problem and the check passed as a result, which is exactly what the
+      previous report said a reviewer should re-derive rather than accept.
+    reviewer_claims_checked_before_acting:
+      - claim: IMPLEMENTATION_PLAN_v0.2.md, WORKFLOW_BACKBONE_v0.3.md and WORKFLOW_MECHANISM_v0.2.md declare 状态：活动
+        verified: true
+        evidence: line 3 of each file
+      - claim: 开发产物与文件隔离规范_v1.md is a current entry, not a superseded version
+        verified: true
+        evidence: it carries no supersession line, unlike the four v0.1/v0.2 files beside it
+      - claim: _dev mixes active and superseded material
+        verified: true
+        evidence: >-
+          08_os/README.md area table, "活动设计与被取代版本"; measured, 4 of 16 _dev files
+          carry a "状态：已被 ... 取代" line and the rest do not
+    what_changed:
+      - >-
+        The four current _dev documents were updated to 08_os/07_content/_runs,
+        5 occurrences. After the change no file under 08_os/_dev/ contains the old
+        token at all.
+      - >-
+        verify_migration_closure.py no longer excludes any directory as historical.
+        Status is per file, from the file's own marker - the repository's existing
+        "状态：已被 ... 取代" supersession line, or a status: historical_input_evidence
+        provenance header - and skipped files are printed with the marker that
+        skipped them. Superseded hits are counted and reported in their own column
+        rather than dropped.
+      - >-
+        The validator's active-ownership-text check on
+        08_os/_dev/开发产物与文件隔离规范_v1.md, which this task removed earlier the same
+        day on the same faulty reasoning, is restored against the new run root.
+      - >-
+        CORE_MANIFEST no longer implies core holds nothing at the remaining
+        domain-owned paths: it states that 25 files under 01_Research_Reports/ are
+        still physically tracked, that their deletion is approved, and that the
+        deletion belongs to the next task which has not run.
+    measured_result:
+      superseded_dev_files_still_carrying_the_token: 0
+      note: >-
+        The review anticipated that some superseded _dev references would legitimately
+        remain and be reported separately. Measured, none do: the four files that
+        declare supersession never contained the token. Reported as measured.
+    scope_extension:
+      finding: >-
+        08_os/_dev/** is not in the packet's allowed_changed_paths, and the Human's
+        correction instruction requires four files in it to be changed. A current
+        explicit Human instruction outranks the packet, so the edits are authorized,
+        but the packet's list is now narrower than the authorization.
+      action_taken: >-
+        The dispatch input was not edited - rewriting a dispatch after the fact
+        destroys the record of what was ordered. The amendment is recorded in
+        04_验证/allowlist_amended_v1.yml with its authority and its exact four added
+        paths, and BOTH ledger results are reported below rather than only the
+        passing one.
+    unchanged_as_required:
+      final_delete_list: 490
+      final_whitelist: 6 retain + 9 deferred
+      predecessor_453: reproduced, not re-adjudicated
+      physical_deletions: 0
+      master: eb4be95a25cb4b0929def284a7fb4b6a412aed55
 
 master_before_after:
   expected_at_dispatch: eb4be95a25cb4b0929def284a7fb4b6a412aed55
@@ -261,7 +334,14 @@ validation:
         python 08_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py
         --base 51d8be2e42403d11620e7cee86aa7b7074f8f52a
         --packet 01_任务输入/任务包_v1.yml
-      result: "paths=45 allowlist=ok"
+      result_round_0: "paths=45 allowlist=ok"
+      result_round_1_against_the_packet_as_written: "paths=50 allowlist=VIOLATION(4)"
+      result_round_1_against_the_authorized_scope: "paths=51 allowlist=ok"
+      violation_explanation: >-
+        The four violations are exactly the four 08_os/_dev/ files the Human's
+        correction instruction names. They are authorized and outside the packet's
+        list at the same time; see correction_rounds.scope_extension and
+        04_验证/allowlist_amended_v1.yml. Both numbers are reported.
       exit: 0
       base_choice_differs_from_the_packet: >-
         The packet names physical_master_expected as the base. Run against master the

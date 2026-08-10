@@ -16,6 +16,16 @@ purpose: >-
   re-adjudicating anything.
 
 status: candidate_ready_for_independent_review
+review_state: corrected_once_awaiting_rereview
+correction_round_1:
+  review_ref: 09_独立复核/ChatGPT独立复核_v1.yml @ 79be7b073b1d298cdbdd086994543a5035ba62c6
+  blocking_finding: R1_M3_active_dev_files_wrongly_excluded - upheld
+  scope: >-
+    four current 08_os/_dev documents, the closure scanner's status rule, the
+    restored validator ownership-text check, CORE_MANIFEST transition truth, and
+    this run's own records. No change to the delete list, the whitelist, the 453,
+    or the tracked tree.
+  scope_extension_recorded: 04_验证/allowlist_amended_v1.yml
 
 outputs:
   - 02_迁移/token_profile_legacy_measurements/**

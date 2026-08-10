@@ -5,13 +5,24 @@ generated_from: 04_验证/verify_migration_closure.py
 result: PASS
 
 active_surface_definition: >-
-  08_os/** minus 08_os/_runs/** minus 08_os/_dev/**, plus the fifteen tracked non-08
-  files that survive the approved deletion. _dev holds active design and superseded
-  versions - the file placement table says "supersede, do not erase history" - so a
-  superseded draft naming an old path is correct as history rather than a live
-  dependency, and _runs is past run evidence for the same reason. Both are counted
-  separately below instead of being dropped.
-active_surface_files: 244
+  08_os/** minus 08_os/_runs/**, plus the fifteen tracked non-08 files that survive
+  the approved deletion, minus the files that declare their own supersession or
+  historical status. 08_os/_dev/ is IN the active surface: 08_os/README.md defines
+  it as holding active development design AND superseded versions, so directory
+  membership establishes nothing. Status is per file, by the file's own marker -
+  either the repository's existing supersession line "状态：已被 <newer> 取代", or a
+  provenance header declaring status: historical_input_evidence. Superseded files
+  are counted and reported separately, never edited to remove a token.
+active_surface_files: 253
+corrected_in_round_1: >-
+  The first version of this scanner excluded 08_os/_dev/** wholesale as historical
+  and reported M3 active hits = 0 on that basis. Independent review rejected it and
+  was right: four current _dev documents still named the old run root - three
+  carrying "状态：活动" and one being the developer-readable entry for the machine
+  contract. Directory membership was never evidence of status. The exclusion is
+  replaced by the per-file marker rule above, the four files were updated, and the
+  validator's ownership-text check on 08_os/_dev/开发产物与文件隔离规范_v1.md - which
+  this task had removed earlier the same day on the same bad reasoning - is restored.
 scan_order_note: >-
   The counts in this file were produced after two corrections the scanner itself
   forced, both recorded rather than quietly folded in. Its first run counted five
@@ -88,8 +99,22 @@ checks:
     active_dependency_hits: 0
     annotation_lines:
       - "CORE_MANIFEST.yml:176 - comment recording that the root moved"
-    historical_mentions: 21
+    superseded_or_historical_file_hits: 0
+    run_evidence_mentions: 22
     verdict: PASS
+    scope_now_includes_dev: >-
+      The zero is measured with 08_os/_dev/ inside the active surface, not with it
+      excluded. Five occurrences across four current _dev documents were rewritten
+      in this correction round: IMPLEMENTATION_PLAN_v0.2.md, WORKFLOW_BACKBONE_v0.3.md
+      and WORKFLOW_MECHANISM_v0.2.md each carry "状态：活动", and
+      开发产物与文件隔离规范_v1.md is the current developer-readable entry for the machine
+      contract and carries no supersession marker.
+    superseded_dev_files_measured: >-
+      Four _dev files declare supersession - IMPLEMENTATION_PLAN_v0.1.md,
+      WORKFLOW_BACKBONE_v0.2.md, WORKFLOW_MECHANISM_v0.1.md and 决定_谁执行_v0.1.md.
+      None of them contains the old token, so the "superseded hits allowed and
+      reported separately" bucket is empty for M3. Reported as measured rather than
+      assumed: the review anticipated survivors here and there are none.
   - id: M3_manifest_ownership_entry_removed
     check: >-
       no list entry under either machine-read ownership key still names the old run
@@ -130,12 +155,17 @@ separately_verified:
 known_limits:
   - >-
     A zero dependency count is a statement about the active surface as defined
-    above, not about the whole tree. 08_os/_dev/** still names the old run root in
-    four files and 08_os/_runs/** in twenty-one; both are historical by the file
-    placement rules and neither is in this task's allowed paths.
+    above, not about the whole tree. 08_os/_runs/** still mentions the old run root
+    22 times. Those are run records - each a statement about one past task, not a
+    contract anything loads - and rewriting them would falsify what those tasks did.
   - >-
-    The validator previously required the literal old run root token in
-    08_os/_dev/开发产物与文件隔离规范_v1.md. That requirement was removed rather than
-    satisfied: requiring current path tokens inside _dev made a superseded design
-    document a live contract surface, which contradicts what _dev is for. The two
-    canonical files it still checks are unchanged in that respect.
+    Status is taken from a file's own marker. A current document that forgot to
+    declare itself would be scanned as active, which is the safe direction; a
+    retired document that forgot its supersession line would also be scanned as
+    active and would surface as a dependency hit rather than be silently skipped.
+    Both failure modes point at "report it", not at "assume it is fine".
+  - >-
+    The validator's ownership-text check on 08_os/_dev/开发产物与文件隔离规范_v1.md was
+    removed earlier on 2026-08-10 and is restored here. Removing it was the same
+    error as excluding the directory: it treated a current entry document as
+    history because of where it lives.

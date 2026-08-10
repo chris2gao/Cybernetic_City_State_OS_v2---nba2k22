@@ -371,13 +371,20 @@ def check_active_ownership_text() -> None:
             "08_os/07_content/_runs/",
             "domain-owned",
         },
+        # Restored 2026-08-10 after independent review. It was dropped earlier that
+        # day on the reasoning that _dev is historical - but 08_os/README.md defines
+        # _dev as holding active design AND superseded versions, and this file is the
+        # current developer-readable entry for the machine contract, carrying no
+        # supersession marker. Directory membership never established its status; the
+        # per-file marker does. It has been updated to the current run root and is
+        # checked again.
+        "08_os/_dev/开发产物与文件隔离规范_v1.md": {
+            "08_os/_runs/",
+            "core-owned",
+            "08_os/07_content/_runs/",
+            "domain-owned",
+        },
     }
-    # 08_os/_dev/开发产物与文件隔离规范_v1.md was checked here until 2026-08-10.
-    # It was dropped when the domain run root moved: _dev holds active design and
-    # superseded versions, so requiring current path tokens in it made a historical
-    # document a live contract surface. The two canonical files above are the ones
-    # that must stay current; the _dev copy keeps naming the old root and is
-    # correct as history.
     for relative, tokens in required_tokens.items():
         text = (REPO / relative).read_text(encoding="utf-8")
         missing = sorted(token for token in tokens if token not in text)

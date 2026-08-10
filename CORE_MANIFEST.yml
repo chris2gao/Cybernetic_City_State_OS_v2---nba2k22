@@ -165,8 +165,14 @@ core_owned_paths:
 # predecessor run: README.md is core-owned - it is the entry that declares which
 # OS is active, and a domain that could rewrite it could contradict core about
 # that. PROJECT_CONTEXT.md is neither: it is scheduled for deletion and is listed
-# in the legacy group above so that nothing edits it in the meantime. Core ships
-# nothing at the remaining paths in this list.
+# in the legacy group above so that nothing edits it in the meantime.
+#
+# One measured exception remains, and it is a fact about today rather than a
+# policy: core still physically tracks 25 files under 01_Research_Reports/. Their
+# deletion is approved and belongs to the next mechanical task, which has not run.
+# Until it does, "core ships nothing here" is true of every path in this list
+# except that one, and this file says so rather than describing a tree that does
+# not yet exist.
 domain_owned_paths:
   - "01_Research_Reports/"
   - "02_Protocols/"

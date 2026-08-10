@@ -3,13 +3,27 @@
 
 Active surface, stated once so every count below means the same thing:
 
-    08_os/** minus 08_os/_runs/** minus 08_os/_dev/**
+    08_os/** minus 08_os/_runs/**
   + the tracked non-08 files that survive the approved deletion
+  minus the files that declare their own supersession or historical status
 
-08_os/_dev/ holds active design and superseded versions - the file placement table
-calls it "supersede, do not erase history" - so a superseded draft naming an old
-path is correct as history and is counted separately rather than treated as a
-live dependency. 08_os/_runs/** is past run evidence for the same reason.
+08_os/_dev/ is IN the active surface. An earlier version of this script excluded
+the whole directory as historical and independent review rejected that, correctly:
+08_os/README.md defines _dev as holding active development design AND superseded
+versions, so directory membership establishes nothing about a file's status. A
+file is historical here only when it says so itself, in one of two forms:
+
+  - a supersession line, "状态：已被 <newer file> 取代", which is already this
+    repository's convention for a retired version;
+  - a provenance header declaring status: historical_input_evidence, used for
+    documents migrated byte-exact off the retiring surface.
+
+Superseded files are counted and reported separately rather than dropped, and are
+never edited just to remove an old token: rewriting a retired version to match the
+present destroys the design-evolution trail that keeping it is for.
+
+08_os/_runs/** stays outside the active surface because a run record is by
+definition a statement about one past task, not a contract anything loads.
 
 Each check reports the surviving hits rather than only a verdict, because "zero"
 is the claim being made and an unexplained hit is exactly what would falsify it.
@@ -72,6 +86,25 @@ ANNOTATION_ONLY = {
 # when written, exactly like 08_os/_dev/ and 08_os/_runs/.
 HISTORICAL_STATUS_MARKER = "status: historical_input_evidence"
 
+# The repository's existing convention for a retired version, e.g.
+#   > 状态：已被 `WORKFLOW_BACKBONE_v0.3.md` 取代；保留用于设计演进追溯。
+# Matched on the file's own opening lines so a passing mention deeper in a document
+# cannot silence it.
+SUPERSEDED_MARKER_PREFIX = "状态：已被"
+SUPERSEDED_MARKER_SUFFIX = "取代"
+HEADER_LINES = 40
+
+
+def declared_status(text: str) -> str | None:
+    head = text.splitlines()[:HEADER_LINES]
+    joined = "\n".join(head)
+    if HISTORICAL_STATUS_MARKER in joined:
+        return "historical_input_evidence"
+    for line in head:
+        if SUPERSEDED_MARKER_PREFIX in line and SUPERSEDED_MARKER_SUFFIX in line:
+            return "superseded"
+    return None
+
 SURVIVING_NON08 = [
     "AGENTS.md",
     "AGENT_WORKING_DISCIPLINE.md",
@@ -110,26 +143,24 @@ def main() -> int:
     tracked = [p for p in git("ls-files", root=str(root)).splitlines() if p]
     active = [
         p for p in tracked
-        if p.startswith("08_os/")
-        and not p.startswith("08_os/_runs/")
-        and not p.startswith("08_os/_dev/")
+        if p.startswith("08_os/") and not p.startswith("08_os/_runs/")
     ] + [p for p in SURVIVING_NON08 if p in tracked]
-    historical = [
-        p for p in tracked
-        if p.startswith("08_os/_runs/") or p.startswith("08_os/_dev/")
-    ]
+    historical = [p for p in tracked if p.startswith("08_os/_runs/")]
 
     texts = {}
-    declared_historical = []
+    declared_historical: dict[str, str] = {}
+    superseded_texts: dict[str, str] = {}
     for rel in active:
         try:
             text = (root / rel).read_text(encoding="utf-8", errors="replace")
         except OSError:
             continue
-        if HISTORICAL_STATUS_MARKER in "\n".join(text.splitlines()[:40]):
-            declared_historical.append(rel)
+        status = declared_status(text)
+        if status is None:
+            texts[rel] = text
             continue
-        texts[rel] = text
+        declared_historical[rel] = status
+        superseded_texts[rel] = text
     hist_texts = {}
     for rel in historical:
         try:
@@ -140,11 +171,11 @@ def main() -> int:
     report: dict[str, object] = {
         "active_surface_files": len(texts),
         "historical_files_scanned_separately": len(hist_texts),
-        "declared_historical_on_the_active_surface": declared_historical,
+        "declared_historical_by_their_own_marker": declared_historical,
         "checks": {},
     }
-    for rel in declared_historical:
-        print(f"declared historical (provenance header): {rel}")
+    for rel, status in sorted(declared_historical.items()):
+        print(f"declared {status} by its own marker: {rel}")
     failed = False
 
     for check, token in OLD_TOKENS.items():
@@ -160,14 +191,22 @@ def main() -> int:
                 hits.append(rel)
         hits = sorted(hits)
         hist = sum(1 for text in hist_texts.values() if token in text)
+        superseded_hits = sorted(
+            rel for rel, text in superseded_texts.items() if token in text
+        )
         report["checks"][check] = {
             "token": token,
             "active_dependency_hits": hits,
             "annotation_only_lines": annotated,
-            "historical_mentions": hist,
+            "superseded_or_historical_file_hits": superseded_hits,
+            "run_evidence_mentions": hist,
         }
         print(f"{check}: dependency_hits={len(hits)} "
-              f"annotation_lines={len(annotated)} historical_mentions={hist}")
+              f"annotation_lines={len(annotated)} "
+              f"superseded_file_hits={len(superseded_hits)} "
+              f"run_evidence_mentions={hist}")
+        for rel in superseded_hits:
+            print(f"   superseded  {rel} ({declared_historical[rel]})")
         for rel in hits:
             print(f"   DEPENDENCY {rel}")
         for line in annotated:

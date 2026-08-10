@@ -60,7 +60,7 @@
 
 提取后的机制 canonical 落 `03_mechanisms/`；`02_boot/` 只保存启动入口，
 `06_execution/` 只保存加载/验证入口。共享 OS 开发/验证证据落 core-owned
-`_runs/<run-id>/`；领域业务运行流量落 domain-owned `.ai/PROGRAM_RUNS/<run-id>/`。
+`_runs/<run-id>/`；领域业务运行流量落 domain-owned `08_os/07_content/_runs/<run-id>/`。
 两者都不注册，角色私有 runtime 不跟踪。
 
 ## 五、决定状态
