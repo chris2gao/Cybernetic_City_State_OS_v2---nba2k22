@@ -99,5 +99,68 @@ class TestWorktreeAgainstRealGit(unittest.TestCase):
         self.assertIn("seed.txt", ledger.worktree_paths(self.repo))
 
 
+class TestRenameRegressionF1(unittest.TestCase):
+    """Review finding F1: a rename must surface BOTH paths.
+
+    Moving a file from a directory the allowlist does not cover into one it does
+    is a change to an uncovered path. With git's default rename detection the
+    ledger saw only the new name and reported the change as compliant.
+    """
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.repo = Path(self._tmp.name)
+        self._g("init", "-q", "-b", "main")
+        self._g("config", "user.email", "t@example.invalid")
+        self._g("config", "user.name", "test")
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def _g(self, *args):
+        return subprocess.run(["git", *args], cwd=self.repo, check=False,
+                              stdout=subprocess.PIPE,
+                              stderr=subprocess.DEVNULL).stdout.decode("utf-8")
+
+    def test_rename_reports_old_and_new_path(self):
+        (self.repo / "outside.txt").write_text("same content, so git sees a rename\n",
+                                               encoding="utf-8")
+        self._g("add", "-A")
+        self._g("commit", "-qm", "base")
+        base = self._g("rev-parse", "HEAD").strip()
+
+        (self.repo / "inside").mkdir()
+        self._g("mv", "outside.txt", "inside/renamed.txt")
+        self._g("commit", "-qm", "rename")
+
+        paths = ledger.committed_paths(self.repo, base, "HEAD")
+        self.assertIn("inside/renamed.txt", paths)
+        self.assertIn("outside.txt", paths, "F1: the vacated path must not disappear")
+
+    def test_rename_out_of_allowlist_is_reported_as_violation(self):
+        (self.repo / "outside.txt").write_text("payload\n", encoding="utf-8")
+        self._g("add", "-A")
+        self._g("commit", "-qm", "base")
+        base = self._g("rev-parse", "HEAD").strip()
+        (self.repo / "inside").mkdir()
+        self._g("mv", "outside.txt", "inside/renamed.txt")
+        self._g("commit", "-qm", "rename")
+
+        paths = ledger.committed_paths(self.repo, base, "HEAD")
+        _, outside = ledger.classify(paths, ["inside/**"])
+        self.assertEqual(outside, ["outside.txt"])
+
+    def test_non_ascii_rename_keeps_both_utf8_paths(self):
+        (self.repo / "旧路径.txt").write_text("内容\n", encoding="utf-8")
+        self._g("add", "-A")
+        self._g("commit", "-qm", "base")
+        base = self._g("rev-parse", "HEAD").strip()
+        self._g("mv", "旧路径.txt", "新路径.txt")
+        self._g("commit", "-qm", "rename")
+
+        paths = ledger.committed_paths(self.repo, base, "HEAD")
+        self.assertEqual(paths, {"旧路径.txt", "新路径.txt"})
+
+
 if __name__ == "__main__":
     unittest.main()

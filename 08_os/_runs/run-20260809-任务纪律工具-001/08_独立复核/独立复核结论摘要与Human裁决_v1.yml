@@ -77,38 +77,50 @@ executor_recommendation:
   estimated_fix_size: 五处局部改动，均为一行到十行量级
   recommendation_accepted: false
 
-Human_override:
-  authority: current_explicit_Human_instruction
-  date: 2026-08-09
+Human_decision_sequence:
+- step: 1
   decision: 接受当前版本并合并 master
-  human_reasoning: >-
-    主要实现无问题，其余属细节与流程问题，不阻碍主线价值。
-  executor_conditions_stated_before_executing:
-  - 四条已确认缺陷必须写成显式已知问题留在仓库，不得只留在聊天里
-  - registry 与 README 中"工具绝不写入仓库内容"的不实声明必须在合并前改正
-  conditions_satisfied: true
-  behaviour_unchanged_in_this_merge: true
-  merge_method: fast_forward_master_to_branch_head
-  merge_creates_no_merge_commit: true
+  reasoning: 主要实现无问题，其余属细节与流程问题
+  executor_conditions_applied_first:
+  - 四条已确认缺陷写成显式已知问题留在仓库
+  - registry 与 README 中"工具绝不写入仓库内容"的不实声明改正为事实描述
+  outcome: 已执行文档条件；行为代码未改
+- step: 2
+  event: master 推送被 .githooks/pre-push 守卫拒绝
+  guard_message: >-
+    BLOCKED push to refs/heads/master without authorization.
+    master moves only after independent audit and a human gate.
+  executor_action: 停止并回报，未设置 CITYSTATE_ALLOW_MASTER
+  executor_reasoning: >-
+    守卫写明的前提是"独立审计通过 + 人类门"。人类门有，审计是 REJECT，
+    两个前提只满足一个。绕过守卫是与"合并"不同的第二个动作，需要单独授权。
+  nothing_was_sent: true
+  master_head_after: c7a508abbcda58361fc9b649236d44b706e0bdd4
+- step: 3
+  decision: 先修 F1 与 F2 再谈推送
+  reasoning: 采纳执行者关于两个假阴性缺陷的意见
+  outcome: F1、F2 已修并补回归测试；F3、F4 仍开放
 
 state_of_record:
   independent_review_passed: false
-  merged_under_human_override: true
-  tools_carry_known_defects: [F1, F2, F3, F4]
+  merged_to_master: false
+  master_head: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  guard_never_bypassed: true
+  defects_fixed: [F1, F2]
+  defects_still_open: [F3, F4]
   defects_are_documented_in:
   - 08_os/06_execution/task_discipline/README.md
   - 08_os/05_registry/task_discipline_v1.yml
   - 本文件
 
-follow_up_task_required:
+remaining_scope:
   status: open
-  scope:
-  - F1 committed_paths 加 --no-renames 并补跨提交 rename 回归测试
-  - F2 preflight 三态化 verified / not_read / mismatch，未核验不得渲染 ok
-  - F3 门禁校验原始标量字面量
-  - F4 失败输出加字符上限
-  - 重新生成精确绑定的复核派单
-  reviewer_rule: 必须由未参与编写的新窗口复核，且不得由本次复核者沿用旧结论
+  items:
+  - F3 门禁校验原始标量字面量，使 yes/on 不再开门
+  - F4 失败输出在行截断之后再加字符上限
+  reviewer_rule: >-
+    必须由未参与编写的新窗口复核，且不得由本次复核者沿用旧结论。
+    第二轮复核应针对本轮 F1/F2 修复重新设计破坏用例，不得复用第一轮的判定。
   note: >-
     在该任务完成前，任何引用这三个工具作为验收证据的报告，都必须同时引用本文件，
     否则那份报告的证据强度会被高估。

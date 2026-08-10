@@ -47,22 +47,22 @@ python 08_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py \
     --base <exact_base_sha> --packet 08_os/_runs/<run-id>/01_任务输入/任务包_v1.yml
 ```
 
-## 已知缺陷（未修，请先读）
+## 复核状态与已知缺陷
 
-这套工具的独立复核结论是 **REJECT_CORRECTION_REQUIRED**，由 Human 明示覆盖后合并。
-下列缺陷已由执行者独立复现并确认，**尚未修复**。完整记录与 Human 裁决见
+第一次独立复核结论是 **REJECT_CORRECTION_REQUIRED**。两个假阴性缺陷已修，
+两个未修。完整记录见
 `08_os/_runs/run-20260809-任务纪律工具-001/08_独立复核/独立复核结论摘要与Human裁决_v1.yml`。
 
-| 编号 | 工具 | 缺陷 | 后果 |
+| 编号 | 工具 | 缺陷 | 状态 |
 |---|---|---|---|
-| F1 | path_ledger | 跨提交的 rename 只报新路径，旧路径不出现 | 把 allowlist 外的文件搬入允许目录时会报"全部合规"，即**假阴性** |
-| F2 | preflight | `--no-remote` 时未核验 master，摘要行仍打印 `ok` | 把"未读取"呈现为"已通过" |
-| F3 | preflight | 授权门接受 YAML 1.1 裸 `yes` / `on`，却拒绝字符串 `'true'` | 严格度不一致 |
-| F4 | quiet_verify | 失败输出只按行封顶，单行超长时不封顶 | 与"封顶输出"这一卖点矛盾 |
+| F1 | path_ledger | 跨提交 rename 只报新路径，旧路径不出现（假阴性） | **已修**：`--no-renames`，改名呈现为 delete + add；3 个回归测试 |
+| F2 | preflight | `--no-remote` 时未核验 master，摘要仍打印 `ok` | **已修**：master 核验三态化，未核验即阻塞，除非显式 `--accept-unverified-master`，且摘要如实标注 |
+| F3 | preflight | 授权门接受 YAML 1.1 裸 `yes` / `on`，却拒绝字符串 `'true'` | 未修 |
+| F4 | quiet_verify | 失败输出只按行封顶，单行超长时不封顶 | 未修 |
 
-**因此：** 在这些缺陷修好并通过新的独立复核之前，不要把这三个工具的输出当作
-可独立成立的验收证据。特别是 F1——`allowlist=ok` 目前**不能**排除改名类越界，
-收尾时仍需人工确认本次改动是否包含 rename。
+**因此：** F3 影响的是授权门的严格度一致性——写门禁文件时请用字面 `true`，不要用
+`yes` / `on`。F4 意味着某个失败检查如果吐出超长单行，输出仍可能很大。
+这两条修好并通过新的独立复核之前，本工具集尚未获得独立验收。
 
 ## 边界
 

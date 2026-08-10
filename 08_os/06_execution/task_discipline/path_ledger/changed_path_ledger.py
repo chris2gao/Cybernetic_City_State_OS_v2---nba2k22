@@ -62,7 +62,15 @@ def _git(repo_root: Path, *args: str) -> str:
 
 
 def committed_paths(repo_root: Path, base: str, head: str) -> set[str]:
-    out = _git(repo_root, "diff", "--name-only", "-z", f"{base}..{head}")
+    """Paths changed between two commits, with renames reported as delete + add.
+
+    `--no-renames` is load-bearing, not a style choice. With rename detection on
+    (git's default), moving a file reports only its new path, so a file moved out
+    of a directory the allowlist does not cover would never appear in the ledger —
+    a false negative in the one place this tool must not have one.
+    Reviewed as STAGE05-review finding F1.
+    """
+    out = _git(repo_root, "diff", "--name-only", "--no-renames", "-z", f"{base}..{head}")
     return {p for p in out.split("\0") if p}
 
 

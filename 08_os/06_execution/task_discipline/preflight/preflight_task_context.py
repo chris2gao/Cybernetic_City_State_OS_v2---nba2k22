@@ -117,17 +117,29 @@ def collect(repo_root: Path, packet: dict, use_remote: bool) -> dict:
         report["remote_branch"] = refs.get(f"refs/heads/{branch}") if branch else None
         expected = (packet.get("publisher") or {}).get("expected_remote_master_head")
         report["expected_remote_master"] = expected
-        report["master_unchanged"] = (
-            None if not expected else report["remote_master"] == expected
-        )
+        if not expected:
+            report["master_verification"] = "no_expectation_declared"
+            report["master_unchanged"] = None
+        else:
+            unchanged = report["remote_master"] == expected
+            report["master_unchanged"] = unchanged
+            report["master_verification"] = "verified_unchanged" if unchanged else "moved"
     else:
         report.update(remote_master=None, remote_branch=None,
-                      expected_remote_master=None, master_unchanged=None)
+                      expected_remote_master=None, master_unchanged=None,
+                      master_verification="not_read")
     return report
 
 
-def hard_failures(report: dict, require_clean: bool) -> list[str]:
-    """Only conditions that must stop a write. Everything else is informational."""
+def hard_failures(report: dict, require_clean: bool,
+                  accept_unverified_master: bool = False) -> list[str]:
+    """Conditions that must stop a write.
+
+    Review finding F2: "not read" is not "verified". An unread master used to
+    leave `master_unchanged` at None, which fell through every check and let the
+    summary print `ok` for something the tool had never looked at. Unverified is
+    now a failure unless the caller says in so many words that it accepts it.
+    """
     failures = []
     if require_clean and report["dirty_path_count"]:
         failures.append(f"worktree_dirty:{report['dirty_path_count']}")
@@ -137,8 +149,12 @@ def hard_failures(report: dict, require_clean: bool) -> list[str]:
         failures.append("head_not_descended_from_declared_base")
     if report["branch_declared"] and report["branch_actual"] != report["branch_declared"]:
         failures.append(f"branch_mismatch:{report['branch_actual']}")
-    if report["master_unchanged"] is False:
+
+    verification = report.get("master_verification")
+    if verification == "moved":
         failures.append(f"remote_master_moved:{report['remote_master']}")
+    elif verification in {"not_read", "no_expectation_declared"} and not accept_unverified_master:
+        failures.append(f"master_not_verified:{verification}")
     return failures
 
 
@@ -149,8 +165,12 @@ def render(report: dict, gate: dict | None, failures: list[str]) -> str:
         f"local_head      {report['local_head']}",
         f"remote_branch   {report['remote_branch'] or '(not read)'}",
         f"remote_master   {report['remote_master'] or '(not read)'}"
-        + ("" if report["master_unchanged"] is None
-           else "  unchanged" if report["master_unchanged"] else "  MOVED"),
+        + {
+            "verified_unchanged": "  verified unchanged",
+            "moved": "  MOVED",
+            "not_read": "  NOT VERIFIED (remote not read)",
+            "no_expectation_declared": "  NOT VERIFIED (packet declares no expected head)",
+        }.get(report.get("master_verification"), "  NOT VERIFIED"),
         f"base            {report['base_declared']}"
         + ("" if report["head_descends_from_base"] is None
            else "  (descends)" if report["head_descends_from_base"] else "  (NOT ancestor)"),
@@ -164,7 +184,14 @@ def render(report: dict, gate: dict | None, failures: list[str]) -> str:
     if gate is not None:
         state = "OPEN" if gate["open"] else ("present_but_closed" if gate["present"] else "ABSENT")
         lines.append(f"gate            {state}  {gate['path']}")
-    lines.append(f"preflight       {'ok' if not failures else 'BLOCKED'}")
+    if failures:
+        summary = "BLOCKED"
+    elif report.get("master_verification") != "verified_unchanged":
+        # F2: never render a bare ok for a state the tool did not actually check.
+        summary = "ok WITH UNVERIFIED MASTER (explicitly accepted by caller)"
+    else:
+        summary = "ok"
+    lines.append(f"preflight       {summary}")
     return "\n".join(lines)
 
 
@@ -176,6 +203,9 @@ def main(argv: list[str] | None = None) -> int:
                         help="skip ls-remote; remote SHAs report as not read")
     parser.add_argument("--allow-dirty", action="store_true",
                         help="do not treat a dirty worktree as a hard failure")
+    parser.add_argument("--accept-unverified-master", action="store_true",
+                        help="proceed even though master was not verified; the summary "
+                             "line will say so rather than reporting a bare ok")
     parser.add_argument("--gate", help="authorization gate yaml to inspect")
     parser.add_argument("--gate-key", default="authorization.enter_stage_06_execution")
     parser.add_argument("--json", action="store_true")
@@ -193,7 +223,8 @@ def main(argv: list[str] | None = None) -> int:
         print(f"preflight_error: {exc}", file=sys.stderr)
         return 3
 
-    failures = hard_failures(report, require_clean=not args.allow_dirty)
+    failures = hard_failures(report, require_clean=not args.allow_dirty,
+                             accept_unverified_master=args.accept_unverified_master)
     if args.json:
         print(json.dumps({"report": report, "gate": gate, "hard_failures": failures},
                          ensure_ascii=False, indent=2))
