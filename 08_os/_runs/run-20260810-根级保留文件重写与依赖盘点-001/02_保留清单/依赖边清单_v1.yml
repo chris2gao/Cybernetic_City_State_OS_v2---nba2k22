@@ -159,18 +159,15 @@ active_edges:
       domain_creation.use names the script as the only sanctioned way to create a
       domain, against the folder-copy failure mode. README.md repeats the pointer.
 
-  - from_path: Human_standing_instruction
-    to_path: .ai/HANDOFF_COMMON_CONVENTIONS.md
-    edge_type: external_convention_dependency
+  - from_path: .gitignore
+    to_path: .ai/PROGRAM_RUNS/
+    edge_type: explicit_path_reference
     active_after_rewrite: true
     evidence: >-
-      Not discoverable from the repository graph: no tracked file references this
-      path. The Human's standing instruction names it - "完整规则以仓库的
-      .ai/HANDOFF_COMMON_CONVENTIONS.md#4.1 与金库的 _简报系统布局.md 为准" - and the
-      file does carry that section: line 61 "### 4.1 Brief Vault (城邦简报) Routing",
-      lines 63-88 defining the vault root, the per-repository suffix rule and the
-      03_决策档案 target. Deleting it removes the cited authority for where every
-      decision record lands.
+      line 19, rule `.ai/PROGRAM_RUNS/*/_runtime/`, with the naming comment at line
+      17. Added in correction round 1. It belongs in the relocation closure: if the
+      run root moves and this rule does not, private domain runtime stops being
+      ignored and starts showing up in status output and path ledgers.
 
   - from_path: host_application_claude_code
     to_path: .claude/settings.json
@@ -207,6 +204,29 @@ active_edges:
       01_内部证据_v1.md, 07c_证据索引草案_v1.yml and requirement/A_需求建模_v{1,2}.yml.
       The citation is to content, so deleting the file breaks a re-checkable
       citation inside active-OS canonical material.
+
+# ---------------------------------------------------------------------------
+# WITHDRAWN edges: asserted in round 1, not supported by evidence a reviewer can
+# re-derive. Kept visible rather than deleted, because a claim that was made and
+# then dropped is itself part of the record.
+# ---------------------------------------------------------------------------
+withdrawn_edges:
+  - from_path: Human_standing_instruction
+    to_path: .ai/HANDOFF_COMMON_CONVENTIONS.md
+    edge_type: external_convention_dependency
+    active_after_rewrite: unproven
+    asserted_in: round 1, head ef332d2
+    withdrawn_in: correction round 1
+    what_survives_verification: >-
+      That no tracked file references the path, and that the file contains the
+      brief-vault routing at lines 61-88 - the vault root, the per-repository suffix
+      rule and the 03_决策档案 target.
+    what_does_not: >-
+      That a current Human instruction designates this file as the authority for that
+      routing. The edge was asserted from the executing session's own context, and no
+      durable reference for it exists in the task packet, the repository, or any
+      immutable ref. An executor's recollection is not evidence a reviewer can
+      re-derive, so the item moved to Human_decision_required as a provisional keep.
 
 # ---------------------------------------------------------------------------
 # INACTIVE edges: mentions that exist but do not make the target live.

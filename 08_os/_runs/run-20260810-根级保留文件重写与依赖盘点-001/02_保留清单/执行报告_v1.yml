@@ -2,10 +2,39 @@ schema_version: citystate.execution_report.v1
 task_id: os-v2-root-global-retention-rewrite-001
 run_id: run-20260810-根级保留文件重写与依赖盘点-001
 repository: chris2gao/Cybernetic_City_State_OS_v2---core
-status: ready_for_independent_review
+status: ready_for_independent_rereview
 executor: Claude_Code
 reviewer: ChatGPT_independent_project_reviewer
 Human_deletion_gate: not_opened
+
+correction_rounds:
+  - round: 1
+    trigger_review: 08_独立复核/ChatGPT独立复核_v1.yml at c49132d922bcb87dbeaf9f054d940af85d963422
+    reviewed_head: ef332d29124242bf6d9c498131aa83a9f796fa4e
+    verdict_received: REVISE_NARROW_CORRECTION
+    scope: this run's inventory, edges, report and count/verification evidence only
+    step_1_root_rewrite_touched: false
+    findings_addressed: [R1, R2, R3, N1, N2, N3]
+    reviewer_claims_checked_before_acting:
+      - claim: .gitignore carries a .ai/PROGRAM_RUNS rule
+        verified: true
+        evidence: line 19 `.ai/PROGRAM_RUNS/*/_runtime/`, comment at line 17
+      - claim: new-domain.ps1 still names 08_Domain_Applications/ and 03_Daily_Execution/
+        verified: true
+        evidence: line 99
+      - claim: the hook test has nine cases, not five
+        verified: true
+        evidence: line 1 header, nine Case invocations at lines 49-60, line 64 "all 9 cases as specified"
+      - claim: "moving .ai/PROGRAM_RUNS/ changes retain 15 -> 14 and migrate 4 -> 5"
+        verified: false
+        measurement: >-
+          .ai/PROGRAM_RUNS/ holds zero tracked files, so it never entered a file-count
+          bucket. The reviewer's expected numbers are entry counts; this inventory's
+          totals are file counts. The reclassification is correct and has been made;
+          the predicted file-count movement is not. The two units are now reported
+          separately - bucket_totals in files, declaration_only_entries in entries -
+          so the ambiguity that produced the mismatch cannot recur. The file-count
+          movement in this round comes from R2 instead: migrate 4 -> 3, Human 33 -> 34.
 
 master_before_after:
   expected_at_dispatch: eb4be95a25cb4b0929def284a7fb4b6a412aed55
@@ -104,44 +133,64 @@ step_2_inventory:
     - 07_测试执行/classify_counts.py        # measured every bucket total
     - 07_测试执行/verify_rewrite.py         # R1-R4 validation
   measured:
-    tracked_files_total: 1307
+    unit: tracked files
     tracked_outside_08_os: 505
     retain_non_08: 15
-    migrate_then_delete_source: 4
+    migrate_then_delete_source: 3
     delete_candidate: 453
-    Human_decision_required: 33
+    Human_decision_required: 34
     unassigned: 0
+    declaration_only_entries: 1   # .ai/PROGRAM_RUNS/, zero tracked files
+    note: >-
+      tracked_files_total moves with this run's own evidence files and is therefore
+      not quoted here as a fixed number; classify_counts.py prints it fresh.
   exact_root_and_global_files_proposed_to_retain:
-    - AGENTS.md
-    - AGENT_WORKING_DISCIPLINE.md
-    - CLAUDE.md
-    - GEMINI.md
-    - README.md
-    - CORE_MANIFEST.yml
-    - new-domain.ps1
-    - .gitignore
-    - .gitattributes
+    - path: AGENTS.md
+    - path: AGENT_WORKING_DISCIPLINE.md
+    - path: CLAUDE.md
+    - path: GEMINI.md
+    - path: README.md
+    - path: CORE_MANIFEST.yml
+    - path: new-domain.ps1
+      rewrite_required_before_final_cutover: true
+      reason: line 99 still directs new domains to 08_Domain_Applications/ and 03_Daily_Execution/
+    - path: .gitignore
+      rewrite_required_before_final_cutover: true
+      reason: lines 17 and 19 encode the current .ai/PROGRAM_RUNS run root
+    - path: .gitattributes
   exact_non08_linked_files_proposed_to_retain:
-    - .githooks/pre-push
-    - .githooks/install.ps1
-    - .githooks/test_pre_push_logic.ps1
-    - .githooks/.gitattributes
-    - .githooks/README.md
-    - .claude/settings.json
-    - .ai/PROGRAM_RUNS/        # declared path root, zero tracked files in core
+    - path: .githooks/pre-push
+    - path: .githooks/install.ps1
+    - path: .githooks/test_pre_push_logic.ps1
+    - path: .githooks/.gitattributes
+    - path: .githooks/README.md
+    - path: .claude/settings.json
+  retain_means: >-
+    protected from deletion. It does not mean protected from change: two of the nine
+    root files above carry rewrite_required_before_final_cutover and must be
+    revalidated against the final layout before the physical replacement closes.
   exact_migrate_before_delete_items:
     - path: .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml
       blocks: deletion of .ai/
-      reason: live publication authority for seven files across the active OS and the retained surface
+      reason: >-
+        the only tracked .ai file that is directly load-bearing for repository
+        publication authority: 08_os entry section 1.1,
+        08_os/05_registry/repository_guards_v1.yml, four retained root files and the
+        guard README all resolve to it
     - path: .ai/TOKEN_USAGE_PROFILE.md
       blocks: its own deletion
       reason: 08_os entry section 12 still cites it; content already absorbed, pointer is not
-    - path: .ai/HANDOFF_COMMON_CONVENTIONS.md
-      blocks: deletion of .ai/
-      reason: section 4.1 is the cited authority for brief-vault routing; no repository file references it
     - path: 系统机制总结.md
       blocks: its own deletion
       reason: cited by path in seven active-OS context-management evidence records
+    - path: .ai/PROGRAM_RUNS/
+      tracked_files_in_core: 0
+      blocks: deletion of .ai/
+      reason: >-
+        declared domain run root. 20 files and 45 occurrences name it, four of them
+        machine-enforced: the context validator (10), the machine file-layout contract
+        (5), CORE_MANIFEST.yml (3) and .gitignore (2). Reclassified from retain in
+        correction round 1; full closure in the inventory.
   delete_candidates_observed_not_deleted:
     06_Silicon_Index: 63
     ai_communication_plane: 281
@@ -149,6 +198,7 @@ step_2_inventory:
     legacy_root_documents: 11
     generated_navigation_root: 5
   unresolved_Human_decisions:
+    - handoff_common_conventions_external_only
     - research_reports_in_core
     - project_context_and_architecture
     - ownership_of_root_readme
@@ -211,37 +261,59 @@ findings:
       Ownership lists left unchanged - that is a Human decision. Only the prose was
       corrected to state the measured exception. Raised as ownership_of_root_readme.
 
-  - id: publisher_authority_is_the_single_blocking_dependency_on_dot_ai
+  - id: publisher_authority_is_the_only_dot_ai_file_load_bearing_for_publication
     severity: high
+    corrected_in_round_1: >-
+      Round 1 titled this "the single blocking dependency on .ai", which is wider
+      than the evidence and wider than the same report's own list: three other items
+      also block deleting .ai/. Narrowed to the proposition actually established.
     measured: >-
-      Of 290 tracked files under .ai/, exactly three carry a live dependency after
-      the rewrite, and only .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml is load-bearing
-      for the active OS: the 08_os entry section 1.1 and
-      08_os/05_registry/repository_guards_v1.yml both resolve publication authority
-      to it, as do four retained root files and the guard README.
+      Of 290 tracked files under .ai/, exactly one is directly load-bearing for
+      repository publication authority: .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml. The
+      08_os entry section 1.1 and 08_os/05_registry/repository_guards_v1.yml both
+      resolve "who may publish" to it, as do four retained root files and the guard
+      README. This says nothing about other kinds of dependency on .ai/.
     action_taken: >-
       Classified migrate_then_delete_source. Its migration is a declared non-goal of
-      this task, so .ai/ cannot be deleted until that migration lands.
+      this task.
+    what_blocks_deleting_dot_ai_in_total: >-
+      Four items, not one: this file, .ai/TOKEN_USAGE_PROFILE.md (one surviving
+      08_os pointer), .ai/PROGRAM_RUNS/ (declared run root, machine-enforced) and
+      .ai/HANDOFF_COMMON_CONVENTIONS.md (provisional keep pending a Human decision).
 
   - id: handoff_conventions_is_invisible_to_the_reference_graph
-    severity: high
+    severity: medium
     measured: >-
       .ai/HANDOFF_COMMON_CONVENTIONS.md is referenced by no tracked file, so every
       reference-graph pass classifies it as unused. Its section 4.1, lines 61-88,
-      is the authority the Human's standing instruction cites for brief-vault
-      routing - the vault root, the per-repository suffix rule and the 03_决策档案
-      target.
+      does define brief-vault routing - the vault root, the per-repository suffix
+      rule and the 03_决策档案 target.
+    corrected_in_round_1: >-
+      Round 1 promoted it to migrate_then_delete_source on the strength of an
+      external Human standing instruction quoted from the executing session's own
+      context. That is not evidence a reviewer can re-derive: no durable reference
+      for it exists in the packet, the repository, or any immutable ref. The claim is
+      withdrawn as a proven dependency and the edge is recorded under withdrawn_edges.
     action_taken: >-
-      Classified migrate_then_delete_source. Recorded because a purely mechanical
-      closure would have deleted it.
+      Moved to Human_decision_required as a provisional keep-until-Human-decides
+      item. Still recorded prominently, because a purely mechanical closure deletes
+      it and the asymmetry is unequal: deleting it loses the cited source of the
+      brief-vault rule, keeping it costs one stale file for one more round.
 
   - id: dot_ai_program_runs_is_an_empty_but_load_bearing_path
     severity: medium
     measured: >-
-      .ai/PROGRAM_RUNS/ holds zero tracked files in core, yet five active-OS files
-      name it and verify_context_structure.py fails with CM023 if CORE_MANIFEST
-      drops it. An inventory driven by file counts would have treated it as absent.
-    action_taken: Classified retain_non_08 as a declared path root.
+      .ai/PROGRAM_RUNS/ holds zero tracked files in core, yet 20 files and 45
+      occurrences name it - the context validator alone 10 times - and
+      verify_context_structure.py fails with CM023 if CORE_MANIFEST drops it. An
+      inventory driven by file counts would have treated it as absent.
+    corrected_in_round_1: >-
+      Round 1 classified it retain_non_08. Under the task's own definitions that is
+      wrong: retain means "must remain after the old OS is physically deleted", and
+      this path sits on the legacy surface and is meant to move. Reclassified
+      migrate_then_delete_source with its full relocation closure, .gitignore
+      included.
+    action_taken: See migrate_then_delete_source in the inventory.
 
 # ---------------------------------------------------------------------------
 # Validation. Executor evidence, reported separately from claims.
@@ -274,9 +346,19 @@ validation:
     - check: R4 CORE_MANIFEST parses, keeps both machine keys, no ownership overlap, every core-owned path exists
       result: "0 problems"
       exit: 0
-    - check: bucket assignment completeness
+    - check: bucket assignment completeness, correction round 1
       command: python 07_测试执行/classify_counts.py
-      result: "505 non-08 files, 0 unassigned, bucket sum equals file count"
+      result: >-
+        505 non-08 files; retain 15, migrate 3, delete 453, Human 34, unassigned 0;
+        sum equals file count; declaration-only .ai/PROGRAM_RUNS/ confirmed at 0
+        tracked files, which the script now asserts rather than assumes
+      exit: 0
+    - check: reviewer factual claims re-measured before acting
+      result: >-
+        .gitignore PROGRAM_RUNS rule present (line 19); new-domain.ps1 legacy paths
+        present (line 99); hook test is nine cases (line 1 header, nine Case calls,
+        line 64). The predicted bucket movement was not reproduced and is answered in
+        correction_rounds.
       exit: 0
     - check: git diff --cached --check
       result: no whitespace errors
@@ -295,5 +377,31 @@ validation:
   not_run:
     - 08_os/06_execution/task_discipline own unit tests (unchanged by this task)
     - any check requiring a second clone or a second transport
+
+acceptance_criteria_from_review:
+  - criterion: corrected bucket definitions and totals are internally consistent
+    met: >-
+      Yes. Files and entries are now counted in separate tables with the unit named
+      on each, and classify_counts.py fails if any non-08 path is unassigned or if a
+      declaration-only entry turns out to hold tracked files.
+  - criterion: every retain item that still requires a future rewrite is explicitly marked
+    met: >-
+      Yes. new-domain.ps1 and .gitignore carry rewrite_required_before_final_cutover
+      with the exact line that forces it. The other seven retained root files and the
+      six retained linked files carry no such marker, checked line by line this round.
+  - criterion: every migrate-before-delete item names its migration closure
+    met: >-
+      Yes. Publisher authority names its consumers; TOKEN_USAGE_PROFILE names the one
+      surviving pointer; 系统机制总结.md names the seven evidence records;
+      .ai/PROGRAM_RUNS/ names all 20 files and 45 occurrences, split into
+      machine-enforced, documentation, and superseded drafts that need no rewrite.
+  - criterion: external-only dependencies are distinguished from repository-proven ones
+    met: >-
+      Yes, and one was demoted for it. The withdrawn_edges section exists so a claim
+      that was made and dropped stays visible.
+  - criterion: final summary is safe to use as the Human's pre-deletion whitelist
+    met: >-
+      With one stated limit. The whitelist is safe for what it lists; it does not
+      authorise deletion, and four items must be resolved before .ai/ can go at all.
 
 next_owner: foreground_independent_review

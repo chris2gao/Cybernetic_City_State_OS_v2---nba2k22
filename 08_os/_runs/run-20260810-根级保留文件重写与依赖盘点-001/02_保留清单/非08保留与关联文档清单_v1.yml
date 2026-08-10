@@ -22,11 +22,25 @@ scope:
       exactly one bucket and fails if any path is unassigned or the sum does not
       equal the file count.
   bucket_totals:
+    unit: tracked files
     retain_non_08: 15
-    migrate_then_delete_source: 4
+    migrate_then_delete_source: 3
     delete_candidate: 453
-    Human_decision_required: 33
+    Human_decision_required: 34
     unassigned: 0
+  declaration_only_entries:
+    unit: classification entries carrying zero tracked files
+    note: >-
+      Counted separately on purpose. A file-count table and an entry-count table are
+      different numbers, and reading one as the other is what made the first round's
+      review expect retain 15 -> 14 and migrate 4 -> 5.
+    entries:
+      - path: .ai/PROGRAM_RUNS/
+        classification: migrate_then_delete_source
+        tracked_files: 0
+  entry_level_changes_this_correction_round:
+    - ".ai/PROGRAM_RUNS/ retain_non_08 -> migrate_then_delete_source (0 files, so no file bucket moves)"
+    - ".ai/HANDOFF_COMMON_CONVENTIONS.md migrate_then_delete_source -> Human_decision_required (1 file: migrate 4 -> 3, Human 33 -> 34)"
   deletion_performed: false
   move_or_rename_performed: false
 
@@ -148,10 +162,23 @@ retain_non_08:
     classification: retain_non_08
     dependency_type: git_hook_support_dependency
     referenced_by: [08_os/05_registry/repository_guards_v1.yml]
-    why_needed_or_why_not: The guard's five-case behavioural test, including the case that caught a 0-byte hook.
+    why_needed_or_why_not: >-
+      The guard's nine-case decision-table test, driven through stdin instead of the
+      network: delete an ordinary branch, fast-forward push to a feature branch, a
+      brand-new feature branch, delete master with the env var, push master with the
+      env var, and the four refusals - delete master without it, push master without
+      it, non-fast-forward over a feature branch, and non-fast-forward over master
+      even with the env var.
     migration_target_if_required: null
-    evidence_ref: byte-identical to base this run
+    evidence_ref: >-
+      .githooks/test_pre_push_logic.ps1 line 1 "Nine cases against .githooks/pre-push",
+      nine Case invocations at lines 49-60, line 64 "all 9 cases as specified".
+      Byte-identical to base this run.
     confidence: high
+    corrected_in_round_1: >-
+      The first round said five-case. That number came from the 2026-08-01 decision
+      record's 5/5 table, which was true when written, not from this file. Counted
+      physically this round.
 
   - path_or_glob: .githooks/.gitattributes
     classification: retain_non_08
@@ -182,6 +209,12 @@ retain_non_08:
     migration_target_if_required: null
     evidence_ref: raw_edges_v1.yml target '.gitignore'
     confidence: high
+    rewrite_required_before_final_cutover: true
+    rewrite_reason: >-
+      Retained does not mean retained unchanged. Lines 17 and 19 encode the current
+      domain run root - a comment naming .ai/PROGRAM_RUNS and the rule
+      `.ai/PROGRAM_RUNS/*/_runtime/`. Both must be rewritten in the same change that
+      relocates that root, or private domain runtime stops being ignored.
 
   - path_or_glob: .gitattributes
     classification: retain_non_08
@@ -219,29 +252,20 @@ retain_non_08:
     migration_target_if_required: null
     evidence_ref: CORE_MANIFEST.yml domain_creation
     confidence: high
+    rewrite_required_before_final_cutover: true
+    rewrite_reason: >-
+      Line 99 tells the operator to "put this domain's material under
+      08_Domain_Applications/ and 03_Daily_Execution/". Both are domain_owned_paths
+      that hold no tracked file in core, and neither is part of the new OS layout, so
+      a domain created after the cutover would be pointed at a structure that no
+      longer exists. Protect the file from deletion, but its post-creation
+      instructions and the domain procedure it prints must be revalidated against the
+      final layout before the physical replacement is closed.
 
-  - path_or_glob: .ai/PROGRAM_RUNS/
-    classification: retain_non_08
-    dependency_type: machine_schema_dependency
-    referenced_by:
-      - 08_os/03_mechanisms/context_management/实现/文件布局契约_v1.yml
-      - 08_os/03_mechanisms/context_management/实现/verify_context_structure.py
-      - 08_os/01_workflow/实现/七阶段最小运行契约_v1.yml
-      - 08_os/05_registry/workflow_minimum_operational_loop_v1.yml
-      - 08_os/02_boot/workflow_minimum_operational_loop/README.md
-      - 08_os/README.md
-      - CORE_MANIFEST.yml
-    why_needed_or_why_not: >-
-      This is a declared path root, not a set of files: it holds zero tracked files
-      in core by design, because it is domain-owned. Five active-OS files and one
-      validator name it, and the validator fails if CORE_MANIFEST drops it. Deleting
-      .ai/ wholesale would therefore break the active machine contract even though
-      the directory is empty here.
-    migration_target_if_required: >-
-      Relocating the domain run root is an explicit non-goal of this task and needs
-      its own change across the machine contract, the registry and the validator.
-    evidence_ref: 依赖边清单_v1.yml active_edges
-    confidence: high
+  # .ai/PROGRAM_RUNS/ was classified retain_non_08 in round 1. Reclassified to
+  # migrate_then_delete_source below: the definition of retain_non_08 is "must remain
+  # after the old OS is physically deleted", and this path sits on the legacy surface
+  # and is meant to move. See migrate_then_delete_source.
 
 # ===========================================================================
 # 2. MIGRATE, THEN DELETE THE SOURCE
@@ -294,22 +318,88 @@ migrate_then_delete_source:
     confidence: high
     blocking_for_deletion_of: .ai/TOKEN_USAGE_PROFILE.md
 
-  - path_or_glob: .ai/HANDOFF_COMMON_CONVENTIONS.md
+  - path_or_glob: .ai/PROGRAM_RUNS/
     classification: migrate_then_delete_source
-    dependency_type: external_convention_dependency
-    referenced_by: [Human standing instruction]
+    dependency_type: machine_schema_dependency
+    tracked_files_in_core: 0
+    referenced_by:
+      - 08_os/03_mechanisms/context_management/实现/verify_context_structure.py
+      - 08_os/03_mechanisms/context_management/实现/文件布局契约_v1.yml
+      - 08_os/03_mechanisms/context_management/文件隔离与产物生命周期_v1.md
+      - 08_os/03_mechanisms/context_management/开发总结_v1.md
+      - 08_os/01_workflow/实现/七阶段最小运行契约_v1.yml
+      - 08_os/01_workflow/README.md
+      - 08_os/01_workflow/02_信息收集与提炼/README.md
+      - 08_os/01_workflow/02_信息收集与提炼/实现/README.md
+      - 08_os/01_workflow/02_信息收集与提炼/实现/运行验证补充_v1.md
+      - 08_os/02_boot/workflow_minimum_operational_loop/README.md
+      - 08_os/05_registry/context_management_v1.yml
+      - 08_os/05_registry/workflow_minimum_operational_loop_v1.yml
+      - 08_os/README.md
+      - 08_os/开发入口与单窗口任务规范_v1.md
+      - 08_os/_dev/IMPLEMENTATION_PLAN_v0.2.md
+      - 08_os/_dev/WORKFLOW_BACKBONE_v0.3.md
+      - 08_os/_dev/WORKFLOW_MECHANISM_v0.2.md
+      - 08_os/_dev/开发产物与文件隔离规范_v1.md
+      - CORE_MANIFEST.yml
+      - .gitignore
     why_needed_or_why_not: >-
-      No tracked file references it, so every repository-graph pass classifies it as
-      unused. It is not: the Human's standing instruction names it as the authority
-      for brief-vault routing, and section 4.1 at line 61 does define the vault root
-      E:\newStand\城邦简报, the per-repository suffix rule and the 03_决策档案 target.
-      Deleting it removes the cited authority for where every decision record lands.
+      Reclassified from retain_non_08 in correction round 1. The semantics are
+      required - the active OS needs a declared domain run root - but the current path
+      sits on the legacy .ai/ surface, which is what migrate_then_delete_source means.
+      It holds zero tracked files in core because it is domain-owned, so it is a
+      declaration rather than a set of files, and a file-count pass sees nothing to
+      keep while the machine contract still depends on the name.
     migration_target_if_required: >-
-      Section 4.1's routing rule needs a home in the retained surface or under
-      08_os/** before this file can go. The rest of the file (role defaults,
-      forbidden actions, Git defaults, communication and pointer defaults) is old-OS
-      material and should be re-derived rather than carried across.
-    evidence_ref: .ai/HANDOFF_COMMON_CONVENTIONS.md lines 61-88
+      A domain run root outside .ai/. Relocating it is an explicit non-goal of this
+      task. Until that change lands, .ai/ cannot be deleted.
+    migration_closure:
+      measured: >-
+        git grep -c PROGRAM_RUNS over the live surface plus .gitignore and
+        CORE_MANIFEST.yml, excluding 08_os/_runs/: 20 files, 45 occurrences.
+      machine_enforced:
+        - path: 08_os/03_mechanisms/context_management/实现/verify_context_structure.py
+          occurrences: 10
+          why: >-
+            expected_domain requires the literal '.ai/PROGRAM_RUNS/' in
+            CORE_MANIFEST.domain_owned_paths (CM023), forbids it in core_owned_paths
+            (CM032), and check_active_ownership_text requires the literal token in
+            08_os/README.md and in 文件隔离与产物生命周期_v1.md.
+        - path: 08_os/03_mechanisms/context_management/实现/文件布局契约_v1.yml
+          occurrences: 5
+          why: the machine file-layout contract names it as the domain run root and its _runtime child
+        - path: CORE_MANIFEST.yml
+          occurrences: 3
+          why: domain_owned_paths entry read by the validator
+        - path: .gitignore
+          occurrences: 2
+          why: >-
+            line 19 rule `.ai/PROGRAM_RUNS/*/_runtime/` and the line 17 comment above
+            it. If the root moves and this rule does not, private domain runtime stops
+            being ignored and starts appearing in status and in path ledgers.
+      documentation_and_contract_text:
+        - 08_os/README.md (2)
+        - 08_os/开发入口与单窗口任务规范_v1.md (2)
+        - 08_os/01_workflow/实现/七阶段最小运行契约_v1.yml (1)
+        - 08_os/01_workflow/README.md (1)
+        - 08_os/01_workflow/02_信息收集与提炼/README.md (1)
+        - 08_os/01_workflow/02_信息收集与提炼/实现/README.md (1)
+        - 08_os/01_workflow/02_信息收集与提炼/实现/运行验证补充_v1.md (1)
+        - 08_os/02_boot/workflow_minimum_operational_loop/README.md (1)
+        - 08_os/05_registry/context_management_v1.yml (2)
+        - 08_os/05_registry/workflow_minimum_operational_loop_v1.yml (2)
+        - 08_os/03_mechanisms/context_management/文件隔离与产物生命周期_v1.md (3)
+        - 08_os/03_mechanisms/context_management/开发总结_v1.md (3)
+      superseded_design_drafts_not_requiring_rewrite:
+        - 08_os/_dev/IMPLEMENTATION_PLAN_v0.2.md (1)
+        - 08_os/_dev/WORKFLOW_BACKBONE_v0.3.md (1)
+        - 08_os/_dev/WORKFLOW_MECHANISM_v0.2.md (1)
+        - 08_os/_dev/开发产物与文件隔离规范_v1.md (2)
+      note: >-
+        The closure is what a relocation task must change atomically. Every path in
+        it except .gitignore and CORE_MANIFEST.yml is inside 08_os/**, which this task
+        may not write, so the relocation cannot be partially started here.
+    evidence_ref: 依赖边清单_v1.yml active_edges; git grep -c PROGRAM_RUNS
     confidence: high
     blocking_for_deletion_of: .ai/
 
@@ -431,6 +521,33 @@ delete_candidate_summary:
 # 4. HUMAN DECISION REQUIRED
 # ===========================================================================
 Human_decision_required:
+  - id: handoff_common_conventions_external_only
+    path_or_glob: .ai/HANDOFF_COMMON_CONVENTIONS.md
+    files: 1
+    dependency_type: external_convention_dependency_unverified
+    classification_change: migrate_then_delete_source -> Human_decision_required (correction round 1)
+    question: >-
+      Keep this file until the Human rules on it, or let it go with the rest of .ai/?
+    what_is_established: >-
+      Two things, both checkable. No tracked file in this repository references the
+      path - so every reference-graph pass classifies it as unused. And the file does
+      contain the brief-vault routing it is credited with: line 61 "### 4.1 Brief
+      Vault (城邦简报) Routing", lines 63-88 defining the vault root, the
+      per-repository suffix rule and the 03_决策档案 target.
+    what_is_not_established: >-
+      That an external Human instruction currently designates this file as the
+      authority for that routing. Round 1 asserted that edge from the executing
+      session's own context. There is no durable, checkable reference for it in this
+      task's packet, in the repository, or in any immutable ref, and an executor's
+      recollection of an instruction is not evidence a reviewer can re-derive. The
+      claim is therefore withdrawn as a proven dependency.
+    provisional_treatment: >-
+      Keep until the Human decides. The asymmetry is the reason: if it is live and is
+      deleted, the cited source of the brief-vault rule is gone; if it is dead and is
+      kept, one stale file survives a round longer.
+    evidence_ref: .ai/HANDOFF_COMMON_CONVENTIONS.md lines 61-88; raw_edges_v1.yml (no live-surface referrer)
+    confidence: high
+
   - id: research_reports_in_core
     path_or_glob: 01_Research_Reports/**
     files: 25

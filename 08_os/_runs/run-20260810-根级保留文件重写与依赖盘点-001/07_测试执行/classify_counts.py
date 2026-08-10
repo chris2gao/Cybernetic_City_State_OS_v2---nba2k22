@@ -36,12 +36,25 @@ RETAIN = {
 MIGRATE = {
     ".ai/REPOSITORY_PUBLISHER_AUTHORITY.yml",
     ".ai/TOKEN_USAGE_PROFILE.md",
-    ".ai/HANDOFF_COMMON_CONVENTIONS.md",
     "系统机制总结.md",
 }
 
 HUMAN_PREFIX = ("01_Research_Reports/", ".ai/token_profile/")
-HUMAN_EXACT = {"PROJECT_CONTEXT.md", "ARCHITECTURE.md"}
+HUMAN_EXACT = {
+    "PROJECT_CONTEXT.md",
+    "ARCHITECTURE.md",
+    # Correction round 1: its only claimed edge is an external Human standing
+    # instruction that cannot be verified from this task's Git evidence. Provisional
+    # keep until the Human decides, not a proven repository dependency.
+    ".ai/HANDOFF_COMMON_CONVENTIONS.md",
+}
+
+# Path roots that carry a classification but no tracked file in this repository.
+# They are counted as declarations, never as files, so that an entry-level table and
+# a file-count table can never be read as the same number.
+DECLARATION_ONLY = {
+    ".ai/PROGRAM_RUNS/": "migrate_then_delete_source",
+}
 
 DELETE_GROUPS = {
     "06_Silicon_Index": ("06_Silicon_Index/",),
@@ -149,6 +162,13 @@ def main() -> int:
         print(f"  {group}: {count}")
     generated = [p for p in non08 if is_generated_artifact(p)]
     print(f"cross_cutting_generated_navigation_artifacts: {len(generated)}")
+
+    print("declaration_only_entries (classified, zero tracked files):")
+    for path, name in sorted(DECLARATION_ONLY.items()):
+        present = sum(1 for p in tracked if p.startswith(path))
+        print(f"  {path} -> {name}, tracked_files={present}")
+        if present:
+            unassigned.append(f"{path} declared file-less but has {present} tracked files")
     for path in unassigned:
         print(f"  UNASSIGNED {path}")
     total = sum(buckets[k] for k in buckets)
