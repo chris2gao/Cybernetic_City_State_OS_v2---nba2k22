@@ -1,0 +1,138 @@
+schema_version: citystate.task_packet.v1
+task_id: os-v2-legacy-physical-deletion-001
+run_id: run-20260810-旧OS物理删除-001
+status: authorized_for_backend_execution
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+
+base:
+  accepted_predecessor_head: 3a185a25f85e71d07098eddf0c74e0a96748ea48
+  physical_master_expected: eb4be95a25cb4b0929def284a7fb4b6a412aed55
+work_branch: dev/os-v2-legacy-physical-deletion-001
+executor: Claude_Code
+reviewer: ChatGPT_independent_project_reviewer
+
+objective: >-
+  Consume the already independently accepted exact deletion list and mechanically
+  remove exactly those 490 tracked non-08 files from the work branch, update the
+  repository ownership manifest so it truthfully describes the post-deletion tree,
+  produce deletion receipts and verification evidence, and push the work branch to
+  GitHub for independent review. Do not re-adjudicate file semantics.
+
+Human_authorization:
+  granted: true
+  instruction_date: 2026-08-10
+  scope: exact deletion list only; update resulting work branch on GitHub
+  master_publication: false
+
+accepted_inputs:
+  delete_list:
+    path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/03_最终清单/最终直接删除清单_v1.yml
+    required_blob_sha1: 162f59cbd101cbfa8a725981f835762ae829aafe
+    required_count: 490
+  whitelist:
+    path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/03_最终清单/最终非08白名单_v1.yml
+    required_blob_sha1: b92adfc064860ddf29ca5549c34c6d6d7d111a7f
+    expected_retain: 6
+    expected_deferred: 9
+    expected_total_survivors_outside_08: 15
+  migration_closure:
+    path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/03_最终清单/迁移闭包验证_v1.yml
+    required_blob_sha1: 07ef4d4b2781290b0ed7f266f505ffa71f5fea22
+
+execution_rules:
+  semantic_readjudication: prohibited
+  delete_exactly_listed_tracked_files: true
+  delete_additional_paths: prohibited
+  delete_any_08_os_path: prohibited
+  broad_directory_cleanup: prohibited
+  git_clean: prohibited
+  broad_rm_rf: prohibited
+  git_add_dot_or_A: prohibited
+  force_push: prohibited
+  rebase: prohibited
+  squash: prohibited
+  amend: prohibited
+  history_rewrite: prohibited
+  master_push: prohibited
+  preserve_untracked_and_ignored_local_files: true
+  note: >-
+    This prohibition specifically includes .ssh/**, .claude/settings.local.json,
+    _runtime/**, caches and any other ignored/untracked local file. The delete list
+    authorizes tracked files only. Do not use a directory-level delete that could
+    sweep local-only files together with tracked legacy files.
+
+deleted_path_authority:
+  mode: exact_list_blob
+  rule: >-
+    The 490 path entries in the accepted delete-list blob are the complete deletion
+    allowlist. Generate any temporary machine allowlist directly from that file.
+    A path not present in that exact blob is not authorized for deletion.
+
+allowed_non_deletion_changes:
+  - CORE_MANIFEST.yml
+  - 08_os/_runs/run-20260810-旧OS物理删除-001/**
+
+CORE_MANIFEST_post_delete_rule:
+  - remove legacy physical-inventory entries for paths actually deleted
+  - remove retired .ai communication-plane entries that were present only while physical files existed
+  - preserve retained global ownership and active 08_os ownership
+  - preserve domain-owned conceptual paths where they remain valid ownership declarations
+  - update transition/deletion prose to state the exact mechanical deletion actually occurred
+  - do not perform the future 08_os-to-root cutover rewrite in this task
+
+start_gate:
+  - remote master must still equal eb4be95a25cb4b0929def284a7fb4b6a412aed55
+  - work branch must descend from 3a185a25f85e71d07098eddf0c74e0a96748ea48
+  - delete-list blob must equal 162f59cbd101cbfa8a725981f835762ae829aafe
+  - whitelist blob must equal b92adfc064860ddf29ca5549c34c6d6d7d111a7f
+  - delete-list count must equal 490
+  - every delete-list path must be tracked before deletion
+  - no delete-list path may start with 08_os/
+  - delete set and 15-path whitelist set must have zero overlap
+  - if any gate fails, stop before deletion
+
+required_method:
+  - materialize the exact 490 path set from the accepted YAML
+  - capture a pre-delete tracked-tree receipt and ignored/untracked name inventory without reading secret contents
+  - delete each authorized tracked file safely by exact path; prefer git rm -- <exact-path> or an equivalently exact index-aware method
+  - do not collapse deletion to parent-directory rm commands
+  - update CORE_MANIFEST.yml only after deletion set is mechanically verified
+  - produce machine-verifiable deletion receipts in this run
+
+required_post_delete_invariants:
+  - exactly 490 accepted tracked files are absent from the Git index
+  - no additional tracked file is deleted
+  - no path under 08_os/** is deleted
+  - tracked files outside 08_os/** equal exactly the accepted 15-path whitelist
+  - the 14 whitelist files other than CORE_MANIFEST.yml retain their pre-task blobs
+  - CORE_MANIFEST.yml is the only non-08 whitelist file allowed to change
+  - ignored/untracked local-only names are not removed by this task
+  - no legacy physical-inventory entry remains in CORE_MANIFEST.yml for a file/path deleted by this task where the entry existed only to describe physical presence
+  - migration closure remains PASS on the surviving active surface
+
+required_validation:
+  - independent set equality: pre_delete_non08_tracked = delete_490 union whitelist_15
+  - independent set equality: post_delete_non08_tracked = whitelist_15
+  - exact deleted set = accepted delete_490
+  - git diff --check
+  - context-management structure validator PASS
+  - repository default checks 4/4 PASS
+  - migration closure PASS
+  - no 08_os deletion
+  - whitelist blob-integrity check for 14 unchanged survivors
+  - CORE_MANIFEST post-delete truth check
+
+required_outputs:
+  - 08_os/_runs/run-20260810-旧OS物理删除-001/03_删除结果/删除回执_v1.yml
+  - 08_os/_runs/run-20260810-旧OS物理删除-001/03_删除结果/删除后非08树_v1.yml
+  - 08_os/_runs/run-20260810-旧OS物理删除-001/04_验证/verify_exact_deletion.py
+  - 08_os/_runs/run-20260810-旧OS物理删除-001/08_结论/执行报告_v1.yml
+  - 08_os/_runs/run-20260810-旧OS物理删除-001/run.yml
+
+publication:
+  target: dev/os-v2-legacy-physical-deletion-001
+  push_work_branch: authorized
+  remote_readback_required: true
+  master: prohibited
+
+completion_status: ready_for_independent_review
