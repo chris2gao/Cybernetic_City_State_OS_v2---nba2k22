@@ -1,0 +1,50 @@
+schema_version: citystate.registry.v1
+registry_id: task_discipline_v1
+area: 08_os/06_execution/task_discipline
+status: active
+purpose: >-
+  登记任务纪律工具：开工前上下文预检、统一安静验证入口、物理变更路径账本。
+  三者只读取与报告，不授权任何动作，也不修改仓库内容。
+origin_run: 08_os/_runs/run-20260809-任务纪律工具-001/
+entries:
+- path: 08_os/06_execution/task_discipline/README.md
+  purpose: 三个工具的边界、退出码与用法
+  loader: Human 与执行者阅读
+  loader_class: external_tool_convention
+  discovery: registry entry 与 08_os/06_execution/README.md
+  evidence: 08_os/_runs/run-20260809-任务纪律工具-001/07_测试执行/验证结果_v1.yml
+  cache_dirs: []
+  failure_surfacing: 工具行为与文档不符时在下一次任务收尾暴露
+  deletion_rule: human_decision_required
+- path: 08_os/06_execution/task_discipline/preflight/preflight_task_context.py
+  purpose: 一次性输出真实 HEAD、祖先关系、hook 守卫、工作区状态、allowlist、禁止项与授权门状态
+  loader: 执行者在首次写入前手动调用
+  loader_class: in_repo_program
+  discovery: 08_os/开发入口与单窗口任务规范_v1.md 第 1.2 节
+  evidence: 08_os/06_execution/task_discipline/preflight/test_preflight_task_context.py
+  cache_dirs: []
+  failure_surfacing: 退出码 1 表示硬前提失败，3 表示输入或 git 错误
+  deletion_rule: human_decision_required
+- path: 08_os/06_execution/task_discipline/quiet_verify/quiet_verify.py
+  purpose: 统一验证入口；通过时每检查一行加一行摘要，失败时才打印尾部输出
+  loader: 执行者与审查者手动调用
+  loader_class: in_repo_program
+  discovery: 08_os/开发入口与单窗口任务规范_v1.md 第 1.2 节
+  evidence: 08_os/06_execution/task_discipline/quiet_verify/test_quiet_verify.py
+  cache_dirs: []
+  failure_surfacing: 退出码 1 表示有检查未达预期退出码
+  deletion_rule: human_decision_required
+- path: 08_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py
+  purpose: 从 git diff -z 与 git status -z -uall 生成规范化 UTF-8 变更路径集合，并与任务包 allowed_changed_paths 求子集
+  loader: 执行者在收尾时手动调用；审查者复算
+  loader_class: in_repo_program
+  discovery: 08_os/开发入口与单窗口任务规范_v1.md 第 1.2 节
+  evidence: 08_os/06_execution/task_discipline/path_ledger/test_changed_path_ledger.py
+  cache_dirs: []
+  failure_surfacing: 退出码 1 表示有变更路径越出 allowlist
+  deletion_rule: human_decision_required
+invariants:
+  tools_never_authorize: true
+  tools_never_write_repository_content: true
+  path_ledger_independent_of_repo_git_config: true
+  no_watcher_scheduler_or_daemon: true
