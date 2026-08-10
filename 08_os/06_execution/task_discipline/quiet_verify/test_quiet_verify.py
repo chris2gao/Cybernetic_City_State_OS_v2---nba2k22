@@ -22,6 +22,16 @@ def check(name, code, noise=""):
     return {"name": name, "cmd": [PY, "-c", script]}
 
 
+def generated_check(name, code, expr):
+    """Output built inside the child process.
+
+    Passing a large literal on argv hits the Windows command-line limit
+    (WinError 206), so anything big has to be generated on the far side.
+    """
+    return {"name": name, "cmd": [PY, "-c",
+                                  f"import sys; sys.stdout.write({expr}); sys.exit({code})"]}
+
+
 class TestRunCheck(unittest.TestCase):
     def setUp(self):
         self._tmp = tempfile.TemporaryDirectory()
@@ -42,6 +52,24 @@ class TestRunCheck(unittest.TestCase):
         self.assertFalse(r["ok"])
         self.assertEqual(len(r["tail"].splitlines()), 20)
         self.assertIn("l499", r["tail"])
+
+    def test_single_huge_line_is_capped_by_characters(self):
+        """F4: bounding by lines alone is not bounding."""
+        r = qv.run_check(generated_check("one_huge_line", 1, "'X'*300000"), self.root,
+                         tail=20, max_chars=4000)
+        self.assertFalse(r["ok"])
+        self.assertLess(len(r["tail"]), 4200, "F4: a single line must still be capped")
+        self.assertIn("characters dropped", r["tail"])
+
+    def test_cap_keeps_the_end_of_the_output(self):
+        r = qv.run_check(generated_check("bad", 1, "'A'*9000 + 'TAIL_MARKER'"), self.root,
+                         tail=20, max_chars=1000)
+        self.assertIn("TAIL_MARKER", r["tail"])
+
+    def test_output_under_the_cap_is_untouched(self):
+        r = qv.run_check(check("bad", 1, "short output\n"), self.root,
+                         tail=20, max_chars=4000)
+        self.assertEqual(r["tail"], "short output")
 
     def test_expected_nonzero_exit_counts_as_ok(self):
         c = check("expects_2", 2)

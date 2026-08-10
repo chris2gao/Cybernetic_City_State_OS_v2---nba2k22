@@ -55,6 +55,35 @@ class TestGate(unittest.TestCase):
     def test_missing_key_is_not_open(self):
         self.assertFalse(self._gate("authorization: {}\n")["open"])
 
+    def test_yaml11_yes_does_not_open_the_gate(self):
+        """F3: YAML 1.1 resolves yes to True; the gate must still refuse it."""
+        g = self._gate("authorization:\n  enter_stage_06_execution: yes\n")
+        self.assertIs(g["value"], True, "PyYAML still resolves yes to True")
+        self.assertFalse(g["open"], "F3: only the literal true may open the gate")
+        self.assertIn("literal", g["reason"])
+
+    def test_yaml11_on_does_not_open_the_gate(self):
+        g = self._gate("authorization:\n  enter_stage_06_execution: on\n")
+        self.assertFalse(g["open"])
+
+    def test_capitalised_True_does_not_open_the_gate(self):
+        g = self._gate("authorization:\n  enter_stage_06_execution: True\n")
+        self.assertFalse(g["open"], "the contract says lowercase true")
+
+    def test_literal_true_opens_and_records_raw(self):
+        g = self._gate("authorization:\n  enter_stage_06_execution: true\n")
+        self.assertTrue(g["open"])
+        self.assertEqual(g["raw"], "true")
+        self.assertEqual(g["reason"], "open")
+
+    def test_false_records_reason_not_true(self):
+        g = self._gate("authorization:\n  enter_stage_06_execution: false\n")
+        self.assertEqual(g["reason"], "not_true")
+
+    def test_absent_gate_records_reason_absent(self):
+        g = pf.read_gate(self.root / "nope.yml", "authorization.enter_stage_06_execution")
+        self.assertEqual(g["reason"], "absent")
+
 
 class TestHardFailures(unittest.TestCase):
     def test_clean_report_has_none(self):

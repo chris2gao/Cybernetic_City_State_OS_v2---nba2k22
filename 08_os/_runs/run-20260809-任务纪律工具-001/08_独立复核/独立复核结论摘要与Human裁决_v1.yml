@@ -99,25 +99,38 @@ Human_decision_sequence:
 - step: 3
   decision: 先修 F1 与 F2 再谈推送
   reasoning: 采纳执行者关于两个假阴性缺陷的意见
-  outcome: F1、F2 已修并补回归测试；F3、F4 仍开放
+  outcome: F1、F2 已修并补回归测试；F3、F4 暂留
+- step: 4
+  question: 主要实现完成没？修流程不如修实现
+  executor_answer: >-
+    F3 与 F4 同样是实现缺陷而非流程问题——yes 能开授权门是判定逻辑，
+    输出不按字符封顶是截断逻辑。执行者接受"重生成派单属流程开销"的批评，
+    转而直接修完剩余两条。
+  outcome: F3、F4 已修；四条行为缺陷全部关闭；测试 33 → 51
+
+post_fix_probe_rerun:
+  note: 用发现缺陷时的同一批探针复验，非新写的成功用例
+  F1: committed_paths 现返回 ['inside/renamed.txt', 'outside_allowlist.txt']，旧路径出现
+  F2: --no-remote 现 exit 1 且渲染 BLOCKED；显式接受时渲染 ok WITH UNVERIFIED MASTER
+  F3: 'true→open；yes→not open；on→not open；''true''→not open；1→not open'
+  F4: 单行 300000 字符的失败输出，tail 从 300000 降到 4034 并标注丢弃字符数
 
 state_of_record:
   independent_review_passed: false
+  second_review_dispatched: true
   merged_to_master: false
   master_head: c7a508abbcda58361fc9b649236d44b706e0bdd4
   guard_never_bypassed: true
-  defects_fixed: [F1, F2]
-  defects_still_open: [F3, F4]
+  defects_fixed: [F1, F2, F3, F4]
+  defects_still_open: []
   defects_are_documented_in:
   - 08_os/06_execution/task_discipline/README.md
   - 08_os/05_registry/task_discipline_v1.yml
   - 本文件
 
 remaining_scope:
-  status: open
-  items:
-  - F3 门禁校验原始标量字面量，使 yes/on 不再开门
-  - F4 失败输出在行截断之后再加字符上限
+  status: 无待修实现项；仅剩第二轮独立复核
+  items: []
   reviewer_rule: >-
     必须由未参与编写的新窗口复核，且不得由本次复核者沿用旧结论。
     第二轮复核应针对本轮 F1/F2 修复重新设计破坏用例，不得复用第一轮的判定。

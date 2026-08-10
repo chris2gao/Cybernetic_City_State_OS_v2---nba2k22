@@ -47,22 +47,21 @@ python 08_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py \
     --base <exact_base_sha> --packet 08_os/_runs/<run-id>/01_任务输入/任务包_v1.yml
 ```
 
-## 复核状态与已知缺陷
+## 复核状态
 
-第一次独立复核结论是 **REJECT_CORRECTION_REQUIRED**。两个假阴性缺陷已修，
-两个未修。完整记录见
+第一次独立复核结论是 **REJECT_CORRECTION_REQUIRED**，四条行为缺陷经执行者独立复现后
+成立，**现已全部修复**。完整记录见
 `08_os/_runs/run-20260809-任务纪律工具-001/08_独立复核/独立复核结论摘要与Human裁决_v1.yml`。
 
-| 编号 | 工具 | 缺陷 | 状态 |
+| 编号 | 工具 | 缺陷 | 修法 |
 |---|---|---|---|
-| F1 | path_ledger | 跨提交 rename 只报新路径，旧路径不出现（假阴性） | **已修**：`--no-renames`，改名呈现为 delete + add；3 个回归测试 |
-| F2 | preflight | `--no-remote` 时未核验 master，摘要仍打印 `ok` | **已修**：master 核验三态化，未核验即阻塞，除非显式 `--accept-unverified-master`，且摘要如实标注 |
-| F3 | preflight | 授权门接受 YAML 1.1 裸 `yes` / `on`，却拒绝字符串 `'true'` | 未修 |
-| F4 | quiet_verify | 失败输出只按行封顶，单行超长时不封顶 | 未修 |
+| F1 | path_ledger | 跨提交 rename 只报新路径（假阴性） | `--no-renames`，改名呈现为 delete + add |
+| F2 | preflight | `--no-remote` 未核验 master 仍打印 `ok` | 核验四态化；未核验即阻塞，除非显式 `--accept-unverified-master`，且摘要如实标注 |
+| F3 | preflight | 授权门接受 YAML 1.1 裸 `yes` / `on` | 同时要求解析值为 `True` 且字面量为小写 `true`，并记录 `raw` 与 `reason` |
+| F4 | quiet_verify | 失败输出只按行封顶 | 行截断后再加 `--max-chars`（默认 4000）字符硬上限 |
 
-**因此：** F3 影响的是授权门的严格度一致性——写门禁文件时请用字面 `true`，不要用
-`yes` / `on`。F4 意味着某个失败检查如果吐出超长单行，输出仍可能很大。
-这两条修好并通过新的独立复核之前，本工具集尚未获得独立验收。
+测试 33 → 51。修复后重跑原始探针：F1 旧路径已出现，F3 `yes`/`on` 均 `open=False`，
+F4 单行 30 万字符降到 4,034。**尚未经过第二轮独立复核。**
 
 ## 边界
 

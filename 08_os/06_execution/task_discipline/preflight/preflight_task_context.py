@@ -67,19 +67,54 @@ def dotted_get(data, dotted: str):
     return node
 
 
+def raw_scalar(text: str, dotted: str) -> str | None:
+    """The literal scalar written at a dotted path, before YAML type resolution."""
+    node = yaml.compose(text)
+    for key in dotted.split("."):
+        if not isinstance(node, yaml.MappingNode):
+            return None
+        nxt = None
+        for k, v in node.value:
+            if isinstance(k, yaml.ScalarNode) and k.value == key:
+                nxt = v
+                break
+        if nxt is None:
+            return None
+        node = nxt
+    return node.value if isinstance(node, yaml.ScalarNode) else None
+
+
 def read_gate(gate_path: Path, dotted: str) -> dict:
+    """Read an authorization gate.
+
+    Review finding F3: YAML 1.1 resolves `yes` and `on` to True, so a gate could
+    be opened by a token that does not read as the required `true`. The gate now
+    requires both the resolved value to be boolean True and the literal scalar to
+    be `true`, so what opens the gate is exactly what the contract says opens it.
+    """
     if yaml is None:
         raise RuntimeError("PyYAML is required to read a gate file")
     if not gate_path.exists():
-        return {"path": str(gate_path).replace("\\", "/"), "present": False, "value": None,
-                "open": False}
-    value = dotted_get(yaml.safe_load(gate_path.read_text(encoding="utf-8")) or {}, dotted)
+        return {"path": str(gate_path).replace("\\", "/"), "present": False,
+                "value": None, "raw": None, "open": False, "reason": "absent"}
+    text = gate_path.read_text(encoding="utf-8")
+    value = dotted_get(yaml.safe_load(text) or {}, dotted)
+    raw = raw_scalar(text, dotted)
+    is_open = value is True and raw == "true"
+    if value is True and raw != "true":
+        reason = f"resolved_true_but_literal_is_{raw!r}_require_lowercase_true"
+    elif is_open:
+        reason = "open"
+    else:
+        reason = "not_true"
     return {
         "path": str(gate_path).replace("\\", "/"),
         "present": True,
         "key": dotted,
         "value": value,
-        "open": value is True,
+        "raw": raw,
+        "open": is_open,
+        "reason": reason,
     }
 
 

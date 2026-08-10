@@ -69,7 +69,21 @@ def load_checks(path: Path) -> list[dict]:
     return checks
 
 
-def run_check(check: dict, repo_root: Path, tail: int) -> dict:
+def bounded_tail(output: str, tail: int, max_chars: int) -> str:
+    """Last `tail` lines, then hard-capped at `max_chars`.
+
+    Review finding F4: bounding by lines alone is not bounding. A single
+    300,000-character line satisfied `tail=20` and came back whole — in the one
+    tool whose entire purpose is to cap what reaches the caller.
+    """
+    text = "\n".join(output.strip().splitlines()[-tail:])
+    if len(text) <= max_chars:
+        return text
+    dropped = len(text) - max_chars
+    return f"[...{dropped} characters dropped...]\n{text[-max_chars:]}"
+
+
+def run_check(check: dict, repo_root: Path, tail: int, max_chars: int = 4000) -> dict:
     cmd = [str(part) for part in check["cmd"]]
     expected = check.get("expect_exit", 0)
     proc = subprocess.run(
@@ -82,7 +96,7 @@ def run_check(check: dict, repo_root: Path, tail: int) -> dict:
         "exit_code": proc.returncode,
         "expected_exit": expected,
         "ok": ok,
-        "tail": "" if ok else "\n".join(output.strip().splitlines()[-tail:]),
+        "tail": "" if ok else bounded_tail(output, tail, max_chars),
     }
 
 
@@ -97,6 +111,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--repo-root", default=".")
     parser.add_argument("--tail", type=int, default=20,
                         help="lines of output kept from a failing check")
+    parser.add_argument("--max-chars", type=int, default=4000,
+                        help="hard character cap applied after the line cap")
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args(argv)
 
@@ -107,7 +123,7 @@ def main(argv: list[str] | None = None) -> int:
         return 3
 
     repo_root = Path(args.repo_root).resolve()
-    results = [run_check(check, repo_root, args.tail) for check in checks]
+    results = [run_check(check, repo_root, args.tail, args.max_chars) for check in checks]
 
     if args.json:
         print(json.dumps({"results": results, "summary": summarize(results)},

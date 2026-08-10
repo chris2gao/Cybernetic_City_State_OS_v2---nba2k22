@@ -54,7 +54,7 @@ invariants:
   path_ledger_independent_of_repo_git_config: true
   no_watcher_scheduler_or_daemon: true
 
-known_defects_status: 第一次独立复核 REJECT；两个假阴性缺陷已修，两个未修，等待新的独立复核
+known_defects_status: 第一次独立复核 REJECT；四条行为缺陷已全部修复，等待第二轮独立复核
 known_defects_record: 08_os/_runs/run-20260809-任务纪律工具-001/08_独立复核/独立复核结论摘要与Human裁决_v1.yml
 independent_review_passed: false
 known_defects:
@@ -76,13 +76,17 @@ known_defects:
 - id: F3
   tool: preflight
   defect: 授权门接受 YAML 1.1 裸 yes/on，与拒绝字符串 'true' 的严格度不一致
-  status: open
-  workaround: 门禁文件一律写字面 true
+  status: fixed
+  fix: >-
+    read_gate 同时要求 safe_load 解析值为 True 且原始标量字面量为小写 true；
+    返回值新增 raw 与 reason 字段，使拒绝原因可读
+  regression_tests: 6
 - id: F4
   tool: quiet_verify
   defect: 失败输出只按行封顶，单行超长时不封顶
-  status: open
-  workaround: 失败检查若可能吐出超长单行，先在检查侧自行截断
+  status: fixed
+  fix: bounded_tail 在行截断之后再施加 max_chars 字符硬上限，默认 4000，并标注丢弃字符数
+  regression_tests: 4
 evidence_strength_caveat: >-
-  在 F3 与 F4 修复并通过新的独立复核之前，任何把这三个工具的输出当作验收证据的报告，
-  都必须同时引用 known_defects_record，否则会高估证据强度。
+  四条缺陷已修，但本工具集尚未通过第二轮独立复核。在那之前，
+  把这三个工具的输出当作验收证据的报告应同时引用 known_defects_record。
