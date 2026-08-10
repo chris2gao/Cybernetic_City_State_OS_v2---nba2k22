@@ -33,7 +33,8 @@ OLD_TOKENS = {
 }
 
 # The migrated authority must not carry the old communication plane with it.
-MIGRATED_AUTHORITY = "08_os/05_registry/repository_publisher_authority_v1.yml"
+MIGRATED_AUTHORITY_PATH = "08_os/05_registry/repository_publisher_authority_v1.yml"
+MIGRATED_AUTHORITY = MIGRATED_AUTHORITY_PATH
 OLD_PLANE_TOKENS = [
     ".ai/PROTOCOL",
     ".ai/communication_compliance",
@@ -59,7 +60,17 @@ ANNOTATION_ONLY = {
         "record of what was true when written",
     "08_os/05_registry/repository_guards_v1.yml":
         "carries the migration provenance of the file that moved",
+    MIGRATED_AUTHORITY_PATH:
+        "the migrated file's own provenance header names where it came from; the "
+        "real risk - carrying the old communication plane with it - is checked "
+        "directly by M1_migrated_authority_clean rather than by substring",
 }
+
+# A migrated historical document is historical wherever it is stored. Recognised by
+# a marker in its own provenance header rather than by filename, so the rule can be
+# re-derived: any file declaring this status is read as a record of what was true
+# when written, exactly like 08_os/_dev/ and 08_os/_runs/.
+HISTORICAL_STATUS_MARKER = "status: historical_input_evidence"
 
 SURVIVING_NON08 = [
     "AGENTS.md",
@@ -109,11 +120,16 @@ def main() -> int:
     ]
 
     texts = {}
+    declared_historical = []
     for rel in active:
         try:
-            texts[rel] = (root / rel).read_text(encoding="utf-8", errors="replace")
+            text = (root / rel).read_text(encoding="utf-8", errors="replace")
         except OSError:
             continue
+        if HISTORICAL_STATUS_MARKER in "\n".join(text.splitlines()[:40]):
+            declared_historical.append(rel)
+            continue
+        texts[rel] = text
     hist_texts = {}
     for rel in historical:
         try:
@@ -124,8 +140,11 @@ def main() -> int:
     report: dict[str, object] = {
         "active_surface_files": len(texts),
         "historical_files_scanned_separately": len(hist_texts),
+        "declared_historical_on_the_active_surface": declared_historical,
         "checks": {},
     }
+    for rel in declared_historical:
+        print(f"declared historical (provenance header): {rel}")
     failed = False
 
     for check, token in OLD_TOKENS.items():

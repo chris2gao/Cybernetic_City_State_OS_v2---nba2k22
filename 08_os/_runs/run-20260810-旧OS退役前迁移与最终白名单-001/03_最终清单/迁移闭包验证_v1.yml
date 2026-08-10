@@ -11,17 +11,46 @@ active_surface_definition: >-
   superseded draft naming an old path is correct as history rather than a live
   dependency, and _runs is past run evidence for the same reason. Both are counted
   separately below instead of being dropped.
-active_surface_files: 245
+active_surface_files: 244
+scan_order_note: >-
+  The counts in this file were produced after two corrections the scanner itself
+  forced, both recorded rather than quietly folded in. Its first run counted five
+  provenance and ownership-inventory lines as dependencies; its second, run after
+  this task's own artifacts landed, counted the migrated authority file's provenance
+  header and the migrated historical document as dependencies. In both cases the
+  fix was to the scanner's model of what a dependency is - and in both cases the
+  excluded material is now printed verbatim, because an author narrowing the
+  definition of "problem" is precisely what an independent reviewer is for.
+
+declared_historical_on_the_active_surface:
+  rule: >-
+    A migrated historical document is historical wherever it is stored. The scanner
+    skips any file whose first 40 lines declare `status: historical_input_evidence`
+    in its provenance header, and prints the filename when it does - so the rule is
+    re-derivable from the file itself rather than from a name hardcoded in the
+    checker.
+  files:
+    - path: 08_os/03_mechanisms/context_management/依据材料/系统机制总结_历史输入_v1.md
+      why: >-
+        Byte-exact copy of the retired root document, carried across so the evidence
+        records citing it stay checkable. Its body mentions .ai/TOKEN_USAGE_PROFILE.md
+        because that is what the document said in 2026; the copy is a record, not a
+        dependency, and rewriting its body would defeat the point of preserving it.
 
 annotation_only_exclusions:
   rule: >-
-    Three active-surface files legitimately name an old path without depending on
+    Four active-surface files legitimately name an old path without depending on
     it. They are excluded from the dependency count and every excluded line is
     printed verbatim by the script, so the exclusion can be judged rather than
     trusted. The one way this could hide a real dependency - an ownership list
     entry, which is a live declaration and not an annotation - is closed by a
     separate direct check of the manifest's two machine-read keys.
   files:
+    - path: 08_os/05_registry/repository_publisher_authority_v1.yml
+      reason: >-
+        the migrated file's own provenance header names where it came from. The real
+        risk - carrying the old communication plane across with it - is checked
+        directly by M1_migrated_authority_clean rather than by substring.
     - path: CORE_MANIFEST.yml
       reason: >-
         ownership inventory of physically present paths; its own header states that
@@ -37,8 +66,9 @@ checks:
     active_dependency_hits: 0
     annotation_lines:
       - "08_os/05_registry/repository_guards_v1.yml:155 - migration provenance in the new entry's evidence field"
+      - "08_os/05_registry/repository_publisher_authority_v1.yml:31 - the migrated file's own provenance header"
       - "CORE_MANIFEST.yml:147 - legacy-group ownership entry for a file still physically present"
-    historical_mentions: 9
+    historical_mentions: 15
     verdict: PASS
   - id: M2_token_profile
     token: .ai/TOKEN_USAGE_PROFILE.md

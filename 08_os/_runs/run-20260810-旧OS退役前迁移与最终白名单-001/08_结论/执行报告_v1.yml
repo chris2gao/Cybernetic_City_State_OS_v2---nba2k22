@@ -288,15 +288,21 @@ validation:
       exit: 0
   independently_reproduced: false
   independence_disclosure: >-
-    All of the above was produced by the executing session. Two checks were adjusted
-    mid-run rather than merely re-run, and both adjustments are the reviewer's to
-    judge: the closure scanner initially counted five annotation lines as
-    dependencies, so three files were declared annotation-only with their reasons and
-    every excluded line is now printed verbatim, plus a direct check of the manifest's
-    machine-read keys that the exclusion cannot mask; and the deferred bucket's
-    measured rule was widened by one named exception after it put new-domain.ps1 in
-    the wrong bucket. An author widening the definition of "not a problem" is exactly
-    the move a reviewer should re-derive from the raw output rather than accept.
+    All of the above was produced by the executing session, and three checks were
+    adjusted mid-run rather than merely re-run. Each adjustment narrowed what counts
+    as a problem, which is the move a reviewer should re-derive from the raw output
+    rather than accept:
+      1. the closure scanner counted five provenance and ownership-inventory lines as
+         dependencies, so four files are now declared annotation-only with stated
+         reasons, every excluded line is printed verbatim, and a direct check of the
+         manifest's two machine-read keys closes the one gap the exclusion could mask;
+      2. it then counted this task's own migrated historical document as a dependency,
+         so files declaring `status: historical_input_evidence` in their provenance
+         header are now treated as historical - recognised by that marker rather than
+         by filename, and printed when skipped;
+      3. the deferred bucket's measured rule was widened by one named exception after
+         it put new-domain.ps1 in the wrong bucket.
+    In every case the raw output is in the run so the judgement can be re-made.
   not_run:
     - deletion of anything on the final list - out of scope by the packet
     - any check requiring a second clone or a second publication transport
