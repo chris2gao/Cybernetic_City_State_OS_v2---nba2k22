@@ -45,6 +45,31 @@ entries:
   deletion_rule: human_decision_required
 invariants:
   tools_never_authorize: true
-  tools_never_write_repository_content: true
+  tool_code_itself_writes_no_repository_content: true
+  user_supplied_checks_run_with_caller_privileges: true
+  user_supplied_checks_may_write: >-
+    quiet_verify --checks 执行调用者声明的任意命令，这些命令能写仓库。
+    "不写入"只对工具自身代码成立，不对被它调用的检查成立。此处曾写成
+    tools_never_write_repository_content: true，是不实声明，已于合并前改正。
   path_ledger_independent_of_repo_git_config: true
   no_watcher_scheduler_or_daemon: true
+
+known_defects_status: 独立复核 REJECT 后由 Human 覆盖合并，缺陷未修
+known_defects_record: 08_os/_runs/run-20260809-任务纪律工具-001/08_独立复核/独立复核结论摘要与Human裁决_v1.yml
+independent_review_passed: false
+known_defects:
+- id: F1
+  tool: path_ledger
+  defect: 跨提交的 rename 只报新路径，旧路径不出现，可能给出假阴性
+- id: F2
+  tool: preflight
+  defect: --no-remote 时未核验 master 仍渲染 preflight ok
+- id: F3
+  tool: preflight
+  defect: 授权门接受 YAML 1.1 裸 yes/on，与拒绝字符串 'true' 的严格度不一致
+- id: F4
+  tool: quiet_verify
+  defect: 失败输出只按行封顶，单行超长时不封顶
+evidence_strength_caveat: >-
+  在上述缺陷修复并通过新的独立复核之前，任何把这三个工具的输出当作验收证据的报告，
+  都必须同时引用 known_defects.record，否则会高估证据强度。

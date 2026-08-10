@@ -47,9 +47,28 @@ python 08_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py \
     --base <exact_base_sha> --packet 08_os/_runs/<run-id>/01_任务输入/任务包_v1.yml
 ```
 
+## 已知缺陷（未修，请先读）
+
+这套工具的独立复核结论是 **REJECT_CORRECTION_REQUIRED**，由 Human 明示覆盖后合并。
+下列缺陷已由执行者独立复现并确认，**尚未修复**。完整记录与 Human 裁决见
+`08_os/_runs/run-20260809-任务纪律工具-001/08_独立复核/独立复核结论摘要与Human裁决_v1.yml`。
+
+| 编号 | 工具 | 缺陷 | 后果 |
+|---|---|---|---|
+| F1 | path_ledger | 跨提交的 rename 只报新路径，旧路径不出现 | 把 allowlist 外的文件搬入允许目录时会报"全部合规"，即**假阴性** |
+| F2 | preflight | `--no-remote` 时未核验 master，摘要行仍打印 `ok` | 把"未读取"呈现为"已通过" |
+| F3 | preflight | 授权门接受 YAML 1.1 裸 `yes` / `on`，却拒绝字符串 `'true'` | 严格度不一致 |
+| F4 | quiet_verify | 失败输出只按行封顶，单行超长时不封顶 | 与"封顶输出"这一卖点矛盾 |
+
+**因此：** 在这些缺陷修好并通过新的独立复核之前，不要把这三个工具的输出当作
+可独立成立的验收证据。特别是 F1——`allowlist=ok` 目前**不能**排除改名类越界，
+收尾时仍需人工确认本次改动是否包含 rename。
+
 ## 边界
 
-- 三者都不写仓库内容，也不改 Git 状态。
+- 工具自身代码不写仓库内容，也不改 Git 状态。但 `quiet_verify --checks` 执行的是
+  调用者声明的任意命令，**那些命令能写仓库**——"不写入"只对工具自身成立。
+- `path_ledger` 不展开 submodule 内部的脏文件；子模块内的改动不在它的账本里。
 - `preflight` 报告"门开着"只等于"那个文件此刻写着 true"，不等于动作被允许；
   权限仍然只来自当前 Human 指令与 canonical 协议。
 - `quiet_verify` 通过只证明所列命令在本次会话的这棵工作树上通过，不证明更宽的命题。

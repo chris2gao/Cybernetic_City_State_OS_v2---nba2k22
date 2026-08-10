@@ -1,0 +1,114 @@
+schema_version: citystate.review_outcome_and_human_override.v1
+review_id: task-discipline-tooling-independent-review-001
+task_id: os-v2-task-discipline-tooling-001
+run_id: run-20260809-任务纪律工具-001
+
+why_this_file_exists: >-
+  独立复核结论 REJECT_CORRECTION_REQUIRED，而 Human 决定覆盖该结论并合并 master。
+  这个组合必须留在仓库里而不是只留在聊天里：master 上从此存在一套被独立复核否决过、
+  由 Human 明示放行的工具。后来的读者有权知道这一点，以及否决的具体理由。
+
+independent_review:
+  verdict: REJECT_CORRECTION_REQUIRED
+  reviewer_context: 隔离重建的审查克隆，未提交、未推送、未修改 master
+  reviewer_conclusion_file_location: 仅存在于复核者的隔离克隆，未进入本仓
+  reviewer_conclusion_not_in_repository: true
+  reviewer_reported_usage: 317665 tokens / 约 13 分 28 秒
+  question_results:
+    PASS: [Q1, Q6, Q8]
+    PASS_WITH_NOTE: [Q5]
+    FAIL: [Q2, Q3, Q4, Q7]
+  reviewer_independently_confirmed_positives:
+  - 33 项单测通过
+  - quiet_verify checks 4/4
+  - 13 条变更路径均在 allowlist 内
+  - 规范第 1.2 节的 4720→3599 与 113→45 按 CRLF 口径可复现
+  - 所有 run YAML 可解析
+
+executor_reproduction_note: >-
+  执行者未照单接受也未照单驳回，而是自己写探针复现。四条行为类 finding 全部成立。
+  复现脚本为临时产物，不入库；下列为观察到的实际输出。
+executor_reproduction_of_findings:
+- finding_id: F1
+  title: path_ledger 漏报 rename 的旧路径
+  probe: 临时仓中 git mv outside_allowlist.txt inside/renamed.txt 后跨提交比对
+  observed: committed_paths 只返回 ['inside/renamed.txt']，旧路径不出现
+  impact: 把 allowlist 外的文件搬入允许目录时，账本会报告"全部合规"（假阴性）
+  root_cause: git diff --name-only 默认启用改名检测
+  known_fix: 为该 diff 加 --no-renames，使改名呈现为 delete + add 两条
+  confirmed: true
+- finding_id: F2
+  title: preflight --no-remote 未核验 master 仍输出 preflight ok
+  observed: master_unchanged 为 None 时不计入 hard_failures，摘要行仍打印 ok
+  impact: 工具层面把"未读取"呈现为"已通过"，与"未验证不宣告成功"直接冲突
+  known_fix: 区分 verified / not_read 三态，未核验时不得渲染 ok，或要求显式接受标志
+  confirmed: true
+- finding_id: F3
+  title: YAML 1.1 裸 yes/on 会开门
+  observed: 'true→open, yes→open, on→open, ''true''(字符串)→not open, 1→not open'
+  impact: 授权门的松紧不一致；字符串 'true' 被拒而 yes 被接受
+  known_fix: 除 value is True 外，另行校验原始标量字面量为 true
+  confirmed: true
+- finding_id: F4
+  title: 失败检查的输出只按行封顶，不按字符
+  observed: 单行 300000 字符的失败输出，tail=20 下原样返回 300000 字符
+  impact: 以"封顶输出"为唯一卖点的工具在失败路径上不封顶
+  known_fix: 在行截断之后再加字符上限
+  confirmed: true
+- finding_id: F5
+  title: registry 的 tools_never_write_repository_content 为不实声明
+  observed: 自定义 check 成功在目标目录创建了文件
+  impact: 机器契约里的一句假话
+  action_taken_before_merge: 已改为事实描述（见本次提交）
+  confirmed: true
+- finding_id: F6
+  title: 派单绑定过期
+  observed: 派单声明候选 c0c0024e，实际远端头为 69cbfa4e，blob 绑定随之不符
+  cause: 执行者在生成派单后又推了一次 YAML 修复提交，未重新生成绑定
+  assessment: 纯流程缺陷，与实现无关；执行者与 Human 判断一致
+  confirmed: true
+
+executor_recommendation:
+  recommendation: 先返修再合并
+  argued: >-
+    F1 与 F2 是假阴性：一个会漏报路径的账本、一个不查就说 ok 的预检。
+    这套工具的全部价值主张是"别让声明宽于证据"，带着这两条合入 master
+    等于把它要消灭的失败模式制度化，而且后续每个任务都会引用它。
+  estimated_fix_size: 五处局部改动，均为一行到十行量级
+  recommendation_accepted: false
+
+Human_override:
+  authority: current_explicit_Human_instruction
+  date: 2026-08-09
+  decision: 接受当前版本并合并 master
+  human_reasoning: >-
+    主要实现无问题，其余属细节与流程问题，不阻碍主线价值。
+  executor_conditions_stated_before_executing:
+  - 四条已确认缺陷必须写成显式已知问题留在仓库，不得只留在聊天里
+  - registry 与 README 中"工具绝不写入仓库内容"的不实声明必须在合并前改正
+  conditions_satisfied: true
+  behaviour_unchanged_in_this_merge: true
+  merge_method: fast_forward_master_to_branch_head
+  merge_creates_no_merge_commit: true
+
+state_of_record:
+  independent_review_passed: false
+  merged_under_human_override: true
+  tools_carry_known_defects: [F1, F2, F3, F4]
+  defects_are_documented_in:
+  - 08_os/06_execution/task_discipline/README.md
+  - 08_os/05_registry/task_discipline_v1.yml
+  - 本文件
+
+follow_up_task_required:
+  status: open
+  scope:
+  - F1 committed_paths 加 --no-renames 并补跨提交 rename 回归测试
+  - F2 preflight 三态化 verified / not_read / mismatch，未核验不得渲染 ok
+  - F3 门禁校验原始标量字面量
+  - F4 失败输出加字符上限
+  - 重新生成精确绑定的复核派单
+  reviewer_rule: 必须由未参与编写的新窗口复核，且不得由本次复核者沿用旧结论
+  note: >-
+    在该任务完成前，任何引用这三个工具作为验收证据的报告，都必须同时引用本文件，
+    否则那份报告的证据强度会被高估。
