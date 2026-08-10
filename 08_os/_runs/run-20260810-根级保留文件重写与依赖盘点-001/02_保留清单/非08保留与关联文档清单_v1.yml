@@ -1,0 +1,556 @@
+schema_version: citystate.retention_inventory.v1
+task_id: os-v2-root-global-retention-rewrite-001
+run_id: run-20260810-根级保留文件重写与依赖盘点-001
+derived_from_head: 4bd8d4d6094721d69676d2e02ca2fa7118167107
+base_master: eb4be95a25cb4b0929def284a7fb4b6a412aed55
+
+scope:
+  covers: every tracked path outside 08_os/**
+  excluded_from_itemized_decision: 08_os/**
+  excluded_reason: >-
+    Human instruction for this run: 08_os/** is retained as a whole and is not
+    adjudicated file by file. Confirmed: no entry below proposes any action on an
+    08_os path.
+  counts:
+    tracked_files_total: 1307
+    tracked_files_under_08_os: 802
+    tracked_files_outside_08_os: 505
+    measured_by: 07_测试执行/classify_counts.py at head 4bd8d4d, exit 0
+    note: >-
+      The 08_os figure includes this run's own evidence files. Bucket totals below
+      are produced by that script, which assigns every tracked non-08 path to
+      exactly one bucket and fails if any path is unassigned or the sum does not
+      equal the file count.
+  bucket_totals:
+    retain_non_08: 15
+    migrate_then_delete_source: 4
+    delete_candidate: 453
+    Human_decision_required: 33
+    unassigned: 0
+  deletion_performed: false
+  move_or_rename_performed: false
+
+classification_meanings:
+  retain_non_08: must remain after the old OS is physically deleted
+  migrate_then_delete_source: >-
+    the capability or data-root semantics are still required, but the current
+    source path sits on the legacy surface; the source may only be deleted after
+    the named migration lands
+  delete_candidate: no active dependency remains after the step-1 rewrite
+  Human_decision_required: >-
+    the evidence does not establish whether the artifact should survive, or the
+    answer is a preference rather than a fact
+
+# ===========================================================================
+# 1. RETAIN
+# ===========================================================================
+retain_non_08:
+  - path_or_glob: AGENTS.md
+    classification: retain_non_08
+    dependency_type: loader_router_reference
+    referenced_by: [CLAUDE.md, GEMINI.md, README.md, 08_os/开发入口与单窗口任务规范_v1.md, CORE_MANIFEST.yml]
+    why_needed_or_why_not: >-
+      Backend startup contract, engineering design principles, Git and publication
+      discipline. Discovered directly by Codex and by Antigravity's directory-scoped
+      rule walk, so it is loaded whether or not anything points at it.
+    migration_target_if_required: null
+    evidence_ref: rewritten this run; 08_os spec section 12 权威参考 lists it as 后端执行入口
+    confidence: high
+
+  - path_or_glob: AGENT_WORKING_DISCIPLINE.md
+    classification: retain_non_08
+    dependency_type: canonical_authority_reference
+    referenced_by: [AGENTS.md, CLAUDE.md, GEMINI.md, README.md, .githooks/README.md, 08_os/开发入口与单窗口任务规范_v1.md]
+    why_needed_or_why_not: >-
+      The only place the paid-for failure modes are recorded with their incidents.
+      The 08_os entry defers to it by name for whole-repository output control,
+      evidence honesty and irreversible-action discipline rather than repeating them.
+    migration_target_if_required: null
+    evidence_ref: 08_os spec opening paragraph and section 12; rewritten this run
+    confidence: high
+
+  - path_or_glob: CLAUDE.md
+    classification: retain_non_08
+    dependency_type: external_tool_conventional_load
+    referenced_by: [AGENTS.md, GEMINI.md, README.md, CORE_MANIFEST.yml]
+    why_needed_or_why_not: Root router discovered by Claude Code by filename convention.
+    migration_target_if_required: null
+    evidence_ref: rewritten this run
+    confidence: high
+
+  - path_or_glob: GEMINI.md
+    classification: retain_non_08
+    dependency_type: external_tool_conventional_load
+    referenced_by: [AGENTS.md, CLAUDE.md, README.md]
+    why_needed_or_why_not: >-
+      Root router discovered by Antigravity's directory-scoped rule walk, which
+      loads every GEMINI.md and AGENTS.md from the edited file up to the root. The
+      loading behaviour is recorded from the shipped language_server.exe, not assumed.
+    migration_target_if_required: null
+    evidence_ref: GEMINI.md "What Antigravity actually loads"; rewritten this run
+    confidence: high
+
+  - path_or_glob: README.md
+    classification: retain_non_08
+    dependency_type: loader_router_reference
+    referenced_by: [AGENTS.md, CLAUDE.md, GEMINI.md, CORE_MANIFEST.yml]
+    why_needed_or_why_not: >-
+      Repository root entry for Human and model. Rewritten to declare 08_os/** the
+      sole active OS and everything else legacy.
+    migration_target_if_required: null
+    evidence_ref: rewritten this run
+    confidence: high
+    note: >-
+      Listed under domain_owned_paths in CORE_MANIFEST.yml while core physically
+      ships it. See Human_decision_required/ownership_of_root_readme.
+
+  - path_or_glob: CORE_MANIFEST.yml
+    classification: retain_non_08
+    dependency_type: machine_schema_dependency
+    referenced_by:
+      - 08_os/03_mechanisms/context_management/实现/verify_context_structure.py
+      - 08_os/05_registry/README.md
+      - 08_os/05_registry/repository_guards_v1.yml
+      - 08_os/README.md
+      - new-domain.ps1
+    why_needed_or_why_not: >-
+      A live machine consumer inside the active OS reads core_owned_paths and
+      domain_owned_paths by name and fails on missing entries or ownership overlap.
+      It also carries the domain merge freeze and the domain creation procedure.
+    migration_target_if_required: null
+    evidence_ref: verify_context_structure.py check_ownership() line 325ff
+    confidence: high
+
+  - path_or_glob: .githooks/pre-push
+    classification: retain_non_08
+    dependency_type: git_hook_support_dependency
+    referenced_by: [.githooks/install.ps1, .githooks/test_pre_push_logic.ps1, 08_os/05_registry/repository_guards_v1.yml]
+    why_needed_or_why_not: >-
+      The local-transport guard: refuses non-fast-forward pushes with no override
+      and gates master behind CITYSTATE_ALLOW_MASTER. Registered OS machinery.
+    migration_target_if_required: null
+    evidence_ref: 08_os/05_registry/repository_guards_v1.yml; byte-identical to base this run
+    confidence: high
+
+  - path_or_glob: .githooks/install.ps1
+    classification: retain_non_08
+    dependency_type: git_hook_support_dependency
+    referenced_by: [.githooks/README.md, 08_os/05_registry/repository_guards_v1.yml]
+    why_needed_or_why_not: >-
+      core.hooksPath is local config and does not travel with a merge, so a fresh
+      clone is unguarded until this runs. It proves itself by provoking a real
+      refused push rather than checking that a file exists.
+    migration_target_if_required: null
+    evidence_ref: 08_os/05_registry/repository_guards_v1.yml; byte-identical to base this run
+    confidence: high
+
+  - path_or_glob: .githooks/test_pre_push_logic.ps1
+    classification: retain_non_08
+    dependency_type: git_hook_support_dependency
+    referenced_by: [08_os/05_registry/repository_guards_v1.yml]
+    why_needed_or_why_not: The guard's five-case behavioural test, including the case that caught a 0-byte hook.
+    migration_target_if_required: null
+    evidence_ref: byte-identical to base this run
+    confidence: high
+
+  - path_or_glob: .githooks/.gitattributes
+    classification: retain_non_08
+    dependency_type: git_hook_support_dependency
+    referenced_by: [08_os/05_registry/repository_guards_v1.yml]
+    why_needed_or_why_not: Keeps the hook LF-normalised; a CRLF hook does not execute.
+    migration_target_if_required: null
+    evidence_ref: registry line 124; byte-identical to base this run
+    confidence: high
+
+  - path_or_glob: .githooks/README.md
+    classification: retain_non_08
+    dependency_type: git_hook_support_dependency
+    referenced_by: [CORE_MANIFEST.yml, 08_os/05_registry/repository_guards_v1.yml]
+    why_needed_or_why_not: >-
+      Documents what the guard refuses, what it cannot do, and that it covers one
+      transport only. Rewritten this run to point at the transport matrix and the
+      publisher authority instead of the old protocol.
+    migration_target_if_required: null
+    evidence_ref: rewritten this run
+    confidence: high
+
+  - path_or_glob: .gitignore
+    classification: retain_non_08
+    dependency_type: external_tool_conventional_load
+    referenced_by: [git, 08_os/03_mechanisms/context_management/文件隔离与产物生命周期_v1.md]
+    why_needed_or_why_not: Git-native; the active OS's file-isolation rules depend on it.
+    migration_target_if_required: null
+    evidence_ref: raw_edges_v1.yml target '.gitignore'
+    confidence: high
+
+  - path_or_glob: .gitattributes
+    classification: retain_non_08
+    dependency_type: external_tool_conventional_load
+    referenced_by: [git]
+    why_needed_or_why_not: >-
+      Git-native EOL/text attributes for the whole tree. No repository file
+      references it; the raw scan's only hit resolves to the substring inside
+      .githooks/.gitattributes. It is live by Git convention, not by citation.
+    migration_target_if_required: null
+    evidence_ref: raw_edges_v1.yml target '.gitattributes'; frozen by this task's prohibitions
+    confidence: high
+
+  - path_or_glob: .claude/settings.json
+    classification: retain_non_08
+    dependency_type: external_tool_conventional_load
+    referenced_by: [host application Claude Code]
+    why_needed_or_why_not: >-
+      Tool-loaded permission file. Its deny rules are treated in this project as a
+      real boundary rather than a convention. Nothing in the repository points at
+      it, so a reference-graph pass alone would classify it as unused.
+    migration_target_if_required: null
+    evidence_ref: 08_os/claude与人类的开发对话日志.md line 149
+    confidence: medium
+    note: Not declared anywhere in CORE_MANIFEST.yml. See Human_decision_required/claude_dir_ownership.
+
+  - path_or_glob: new-domain.ps1
+    classification: retain_non_08
+    dependency_type: loader_router_reference
+    referenced_by: [CORE_MANIFEST.yml, README.md]
+    why_needed_or_why_not: >-
+      The only sanctioned way to create a domain repository. A folder copy carries
+      core's remotes, which is how a stray push writes into the wrong repository.
+      The capability has no replacement inside 08_os/**.
+    migration_target_if_required: null
+    evidence_ref: CORE_MANIFEST.yml domain_creation
+    confidence: high
+
+  - path_or_glob: .ai/PROGRAM_RUNS/
+    classification: retain_non_08
+    dependency_type: machine_schema_dependency
+    referenced_by:
+      - 08_os/03_mechanisms/context_management/实现/文件布局契约_v1.yml
+      - 08_os/03_mechanisms/context_management/实现/verify_context_structure.py
+      - 08_os/01_workflow/实现/七阶段最小运行契约_v1.yml
+      - 08_os/05_registry/workflow_minimum_operational_loop_v1.yml
+      - 08_os/02_boot/workflow_minimum_operational_loop/README.md
+      - 08_os/README.md
+      - CORE_MANIFEST.yml
+    why_needed_or_why_not: >-
+      This is a declared path root, not a set of files: it holds zero tracked files
+      in core by design, because it is domain-owned. Five active-OS files and one
+      validator name it, and the validator fails if CORE_MANIFEST drops it. Deleting
+      .ai/ wholesale would therefore break the active machine contract even though
+      the directory is empty here.
+    migration_target_if_required: >-
+      Relocating the domain run root is an explicit non-goal of this task and needs
+      its own change across the machine contract, the registry and the validator.
+    evidence_ref: 依赖边清单_v1.yml active_edges
+    confidence: high
+
+# ===========================================================================
+# 2. MIGRATE, THEN DELETE THE SOURCE
+# ===========================================================================
+migrate_then_delete_source:
+  - path_or_glob: .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml
+    classification: migrate_then_delete_source
+    dependency_type: canonical_authority_reference
+    referenced_by:
+      - 08_os/开发入口与单窗口任务规范_v1.md
+      - 08_os/05_registry/repository_guards_v1.yml
+      - AGENTS.md
+      - AGENT_WORKING_DISCIPLINE.md
+      - CLAUDE.md
+      - GEMINI.md
+      - .githooks/README.md
+    why_needed_or_why_not: >-
+      Live and load-bearing: it answers who may publish at all and which acts stay
+      action-bound under the widest Human grant. Seven files across the active OS,
+      the retained root surface and the guard documentation resolve to it. It is
+      also core-owned for the same reason .githooks/ is - a domain able to edit its
+      own copy could widen its own publication grant.
+    migration_target_if_required: >-
+      A canonical location under 08_os/** - the registry area is the natural home
+      given 08_os/05_registry/repository_guards_v1.yml already points at it. Its
+      migration is a declared non-goal of this task, so the source stays.
+    evidence_ref: 08_os spec section 1.1; repository_guards_v1.yml line 41
+    confidence: high
+    blocking_for_deletion_of: .ai/
+
+  - path_or_glob: .ai/TOKEN_USAGE_PROFILE.md
+    classification: migrate_then_delete_source
+    dependency_type: canonical_authority_reference
+    referenced_by: [08_os/开发入口与单窗口任务规范_v1.md]
+    why_needed_or_why_not: >-
+      After the rewrite exactly one live pointer survives: section 12 of the 08_os
+      entry lists it as the authority for "token 与风险层级". The risk tiers it names
+      are already fully defined in section 7 of that same entry, and this run
+      absorbed its remaining Layer-1 discipline into AGENT_WORKING_DISCIPLINE.md -
+      complete command capture with exit codes, immutable-versus-mutable caching
+      with a fresh read before a protected action, dated routing-only persistence,
+      resume by explicit session id, and tool-ACL fail-closed on secrets (the last
+      into AGENTS.md Safety Rules). What remains is the dangling pointer, not the
+      content.
+    migration_target_if_required: >-
+      No content migration needed. One line: 08_os spec section 12 must stop citing
+      this path. Editing 08_os/** is prohibited this task, so it is returned as a
+      finding.
+    evidence_ref: 08_os spec section 12; commit 4bd8d4d absorbing the discipline
+    confidence: high
+    blocking_for_deletion_of: .ai/TOKEN_USAGE_PROFILE.md
+
+  - path_or_glob: .ai/HANDOFF_COMMON_CONVENTIONS.md
+    classification: migrate_then_delete_source
+    dependency_type: external_convention_dependency
+    referenced_by: [Human standing instruction]
+    why_needed_or_why_not: >-
+      No tracked file references it, so every repository-graph pass classifies it as
+      unused. It is not: the Human's standing instruction names it as the authority
+      for brief-vault routing, and section 4.1 at line 61 does define the vault root
+      E:\newStand\城邦简报, the per-repository suffix rule and the 03_决策档案 target.
+      Deleting it removes the cited authority for where every decision record lands.
+    migration_target_if_required: >-
+      Section 4.1's routing rule needs a home in the retained surface or under
+      08_os/** before this file can go. The rest of the file (role defaults,
+      forbidden actions, Git defaults, communication and pointer defaults) is old-OS
+      material and should be re-derived rather than carried across.
+    evidence_ref: .ai/HANDOFF_COMMON_CONVENTIONS.md lines 61-88
+    confidence: high
+    blocking_for_deletion_of: .ai/
+
+  - path_or_glob: 系统机制总结.md
+    classification: migrate_then_delete_source
+    dependency_type: explicit_path_reference
+    referenced_by:
+      - 08_os/03_mechanisms/context_management/依据材料/evidence/00_挖掘目标与领域_v1.md
+      - 08_os/03_mechanisms/context_management/依据材料/evidence/00_挖掘目标与领域_v1.yml
+      - 08_os/03_mechanisms/context_management/依据材料/evidence/01_内部证据_v1.md
+      - 08_os/03_mechanisms/context_management/依据材料/evidence/01_内部证据_v1.yml
+      - 08_os/03_mechanisms/context_management/依据材料/evidence/07c_证据索引草案_v1.yml
+      - 08_os/03_mechanisms/context_management/依据材料/requirement/A_需求建模_v1.yml
+      - 08_os/03_mechanisms/context_management/依据材料/requirement/A_需求建模_v2.yml
+    why_needed_or_why_not: >-
+      Cited by `path:` in active-OS evidence records for the context-management
+      mechanism. The citation is to content, so deleting the file turns seven
+      canonical evidence records into unresolvable references - the exact failure
+      the discipline's "citations that can still be checked months later" is about.
+      It is a legacy root document, so retention in place is not the answer either.
+    migration_target_if_required: 08_os/03_mechanisms/context_management/依据材料/
+    evidence_ref: 01_内部证据_v1.yml lines 11, 21, 31, 41
+    confidence: medium
+
+# ===========================================================================
+# 3. DELETE CANDIDATES - observed, not deleted
+# ===========================================================================
+delete_candidate_summary:
+  total_paths: 453
+  deleted_this_run: 0
+  grouping_rule: >-
+    Location decides the group, so a generated index.md inside a legacy tree is
+    counted with that tree and nothing is counted twice. Across all non-08 paths,
+    107 files are generated navigation artifacts (index.md, abstracts.json,
+    repository_index_manifest.json, search_results.json); only the 5 at the
+    repository root form their own group below.
+  groups:
+    - path_or_glob: 06_Silicon_Index/**
+      files: 63
+      dependency_type: none_after_rewrite
+      referenced_by: [CORE_MANIFEST.yml retirement inventory, 08_os/07_content/README.md prose]
+      why_needed_or_why_not: >-
+        The old bootstrap, constitution digest, awakening contract and silicon-index
+        routing. Step 1 removed every startup reference to it from AGENTS.md,
+        CLAUDE.md, GEMINI.md and README.md. The only remaining live-surface mention
+        is one stale prose sentence in a domain-owned file. Nothing loads it.
+      evidence_ref: raw_edges_v1.yml target '06_Silicon_Index/'
+      confidence: high
+
+    - path_or_glob: .ai/** except REPOSITORY_PUBLISHER_AUTHORITY.yml, TOKEN_USAGE_PROFILE.md, HANDOFF_COMMON_CONVENTIONS.md, token_profile/ and the PROGRAM_RUNS/ declaration
+      files: 281
+      dependency_type: none_after_rewrite
+      referenced_by: [CORE_MANIFEST.yml retirement inventory]
+      why_needed_or_why_not: >-
+        The old communication plane: PROTOCOL.md, PROTOCOL_ADHERENCE.md,
+        HANDOFF_INIT_PROMPT.md, CODEX_WORK_MECHANISM_PROTOCOL.md,
+        CODEX_TASK_INPUT_CONTRACT.md, DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md,
+        LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md, TOKEN_USAGE_OPERATIONAL_NORMS.md,
+        AUTONOMOUS_HANDOFF_COMMUNICATION_v0.1.md, MECHANISM_REGISTRY.yml,
+        COMMUNICATION_DRIFT_LEDGER.yml, DECISIONS.md, index.md, the STATE/INBOX/
+        OUTBOX/HUMAN_BRIEF mailbox quartet, load_profiles/ (4), lanes/ (12),
+        role_memory/ (7), token_profile/ (6), communication_compliance/ (207),
+        TASKS/ (5), CODEX_REPORTS/ (15), HUMAN_BRIEFS/ (2) and runs/ (12).
+        After step 1 no root file and no active-OS file resolves to any of them.
+        The one apparent exception, .ai/PROTOCOL.md in a path-ledger test, is a
+        synthetic string in a temporary repository and not a read of the file.
+      evidence_ref: 依赖边清单_v1.yml inactive_edges; raw_edges_v1.yml
+      confidence: high
+      note: >-
+        .ai/token_profile/ holds six measurement records. Deleting them loses the
+        measured history behind the token discipline, not a capability. Flagged
+        under Human_decision_required/token_profile_measurements.
+
+    - path_or_glob: generated navigation artifacts at the repository root
+      files: 5
+      dependency_type: none_after_rewrite
+      referenced_by: []
+      why_needed_or_why_not: >-
+        index.md, abstracts.json, repository_index_manifest.json,
+        search_results.json and the generator generate_repository_indexes.py. The
+        generator hardcodes 06_Silicon_Index paths and AGENTS.md and never mentions
+        08_os, so it indexes a tree that is being retired; nothing in the active OS
+        reads its output. A further 102 generated index.md files sit inside the
+        legacy trees and are counted with those trees.
+      evidence_ref: generate_repository_indexes.py lines 197-232; raw_edges scan
+      confidence: high
+
+    - path_or_glob: legacy root documents
+      files: 11
+      dependency_type: none_after_rewrite
+      referenced_by: [CORE_MANIFEST.yml retirement inventory]
+      why_needed_or_why_not: >-
+        00_City_State_Routing_Table.md, 3号方案.md, True_Fork_Protocol.md,
+        INSTANCE_CONFIG.md, 城邦系统需要实现的目标原则.md,
+        "Plan 3 External Augmentation OS 总体架构设计方案 v0.1.md",
+        开发分支与合并进度总账.md, 未完成任务备忘录.yml, agent-run.ps1,
+        agent-status.ps1, agent-stop.ps1. No live-surface reference after step 1.
+        The three agent-*.ps1 scripts drive the previous runtime.
+      evidence_ref: raw_edges_v1.yml; git ls-files root listing
+      confidence: high
+      note: >-
+        开发分支与合并进度总账.md and 未完成任务备忘录.yml are ledgers whose content may
+        still be wanted as history even though nothing loads them.
+
+    - path_or_glob: legacy content trees
+      files: 93
+      dependency_type: none_after_rewrite
+      referenced_by: [CORE_MANIFEST.yml retirement inventory]
+      why_needed_or_why_not: >-
+        04_Parliament/ (62), system_backbone/ (13), 07_Compiler/ (8),
+        05_Carbon_Index/ (5), 07_Silicon_Private_Zones/ (2), campaigns/ (2) and
+        .claude/index.md. The previous system's parliament, backbone, compiler,
+        human index and campaign scaffolding. No active-OS file resolves to any of
+        them; 07_Compiler/ additionally holds executable Python that nothing invokes.
+      evidence_ref: raw_edges_v1.yml
+      confidence: high
+
+# ===========================================================================
+# 4. HUMAN DECISION REQUIRED
+# ===========================================================================
+Human_decision_required:
+  - id: research_reports_in_core
+    path_or_glob: 01_Research_Reports/**
+    files: 25
+    dependency_type: ownership_manifest_dependency
+    question: >-
+      CORE_MANIFEST.yml lists 01_Research_Reports/ under domain_owned_paths with the
+      comment that core ships none, and core ships 25 files there. One of the two is
+      wrong. Either the files are core material and the ownership line is, or the
+      ownership line is right and these are a domain's research left in core.
+    why_evidence_is_insufficient: >-
+      Nothing loads them either way, so the reference graph cannot decide it. The
+      answer is a property decision.
+    evidence_ref: CORE_MANIFEST.yml domain_owned_paths; git ls-files '01_Research_Reports'
+    confidence: high
+
+  - id: project_context_and_architecture
+    path_or_glob: [PROJECT_CONTEXT.md, ARCHITECTURE.md]
+    files: 2
+    dependency_type: none_after_rewrite
+    question: >-
+      This task was explicitly prohibited from rewriting either file. After step 1
+      no active-OS file and no retained root file depends on them; the only mention
+      is the rewritten AGENTS.md sentence saying they describe the previous system.
+      They are therefore delete candidates on the evidence, but the prohibition
+      means the decision is the Human's: rewrite them for the new OS, retire them,
+      or keep them as historical description.
+    why_evidence_is_insufficient: >-
+      The evidence settles that nothing loads them. It does not settle whether the
+      architecture description they carry should be reproduced anywhere.
+    evidence_ref: raw_edges_v1.yml targets 'PROJECT_CONTEXT.md' and 'ARCHITECTURE.md'
+    confidence: high
+
+  - id: ownership_of_root_readme
+    path_or_glob: [README.md, PROJECT_CONTEXT.md]
+    dependency_type: ownership_manifest_dependency
+    question: >-
+      Both are declared domain-owned while core physically ships them, and this run
+      rewrote README.md in core as the root entry. Should they move to
+      core_owned_paths, or stay domain-owned and be replaced per domain after a fork?
+    why_evidence_is_insufficient: >-
+      Changing an ownership declaration changes what a domain merge is allowed to
+      touch. This rewrite therefore left both lists unchanged and corrected only the
+      prose that claimed core ships nothing at those paths.
+    evidence_ref: CORE_MANIFEST.yml domain_owned_paths comment, amended this run
+    confidence: high
+
+  - id: gemini_md_not_core_owned
+    path_or_glob: GEMINI.md
+    dependency_type: ownership_manifest_dependency
+    question: >-
+      CLAUDE.md and AGENTS.md are core-owned; GEMINI.md, its exact counterpart, is
+      in neither list. A domain could edit it locally with no merge conflict.
+    why_evidence_is_insufficient: >-
+      Adding an entry is an ownership decision, and omission is not a false claim,
+      so this run reported it instead of deciding it.
+    evidence_ref: CORE_MANIFEST.yml core_owned_paths
+    confidence: high
+
+  - id: os_entry_spec_not_core_owned
+    path_or_glob: 08_os/开发入口与单窗口任务规范_v1.md
+    dependency_type: ownership_manifest_dependency
+    question: >-
+      Every sibling 08_os area is core-owned, and this file is the entry the whole
+      project routes new windows to, but it is not listed. A domain could edit its
+      own copy of the rules that govern publication gates.
+    why_evidence_is_insufficient: >-
+      Same as above, and the path is inside 08_os/**, which this run may not touch.
+    evidence_ref: CORE_MANIFEST.yml core_owned_paths; 08_os/README.md
+    confidence: high
+
+  - id: claude_dir_ownership
+    path_or_glob: .claude/
+    dependency_type: external_tool_conventional_load
+    question: >-
+      .claude/settings.json is a live tool-loaded permission boundary and appears in
+      neither ownership list. Should it be core-owned like .githooks/, on the same
+      reasoning that a domain able to widen its own deny rules widens a shared
+      boundary?
+    why_evidence_is_insufficient: The parallel to .githooks/ is an argument, not evidence.
+    evidence_ref: CORE_MANIFEST.yml; 08_os/claude与人类的开发对话日志.md line 149
+    confidence: medium
+
+  - id: token_profile_measurements
+    path_or_glob: .ai/token_profile/**
+    files: 6
+    dependency_type: none_after_rewrite
+    question: >-
+      These are measurement records, not rules. Nothing loads them, but they are the
+      evidence behind the token discipline that is now written into
+      AGENT_WORKING_DISCIPLINE.md. Keep the measurements, or keep only the conclusion?
+    why_evidence_is_insufficient: Whether past measurements stay checkable is a value call.
+    evidence_ref: raw_edges_v1.yml; .ai/TOKEN_USAGE_PROFILE.md Layer 2
+    confidence: medium
+
+  - id: stale_content_readme_sentence
+    path_or_glob: 08_os/07_content/README.md
+    dependency_type: explicit_path_reference
+    question: >-
+      Line 21 still describes 06_Silicon_Index/ as the directory that holds the
+      bootstrap every instance starts from. That is false after step 1. The file is
+      inside 08_os/** and domain-owned, so this run may not edit it.
+    why_evidence_is_insufficient: Not a decision problem - an out-of-scope edit needing its own task.
+    evidence_ref: 08_os/07_content/README.md line 21
+    confidence: high
+
+  - id: os_entry_section_12_pointer
+    path_or_glob: 08_os/开发入口与单窗口任务规范_v1.md
+    dependency_type: canonical_authority_reference
+    question: >-
+      Section 12 still cites .ai/TOKEN_USAGE_PROFILE.md as the authority for token
+      and risk tiers. After this run the discipline lives in
+      AGENT_WORKING_DISCIPLINE.md and the tiers in section 7 of that same entry, so
+      the pointer outlives its target. Editing 08_os/** is prohibited here.
+    why_evidence_is_insufficient: Not a decision problem - an out-of-scope edit needing its own task.
+    evidence_ref: 08_os spec section 12
+    confidence: high
+
+confirmation:
+  08_os_excluded_from_itemized_retention_decision: true
+  statement: >-
+    No entry in this inventory proposes retaining, migrating or deleting any
+    individual file under 08_os/**. The four 08_os paths that appear above appear
+    as referrers, or as findings about their own content, never as decision subjects.

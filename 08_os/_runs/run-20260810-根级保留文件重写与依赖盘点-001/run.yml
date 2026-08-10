@@ -1,0 +1,48 @@
+schema_version: citystate.run.v1
+run_id: run-20260810-根级保留文件重写与依赖盘点-001
+task_id: os-v2-root-global-retention-rewrite-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+
+base:
+  branch: master
+  head: eb4be95a25cb4b0929def284a7fb4b6a412aed55
+branch: dev/os-v2-root-global-retention-rewrite-001
+
+ownership: core
+purpose: >-
+  Rewrite the root-level global files that will be retained so that 08_os/** is the
+  only active OS fact source, then derive - from the rewritten bytes rather than
+  from prior assumptions - a retention inventory for every tracked path outside
+  08_os/**.
+
+status: candidate_ready_for_independent_review
+
+outputs:
+  - 02_保留清单/非08保留与关联文档清单_v1.yml
+  - 02_保留清单/依赖边清单_v1.yml
+  - 02_保留清单/执行报告_v1.yml
+  - 07_测试执行/verify_rewrite.py
+  - 07_测试执行/scan_non08_references.py
+  - 07_测试执行/classify_counts.py
+  - 07_测试执行/raw_edges_v1.yml
+  - 07_测试执行/allowlist_v1.yml
+
+validation:
+  changed_path_ledger: passed
+  repository_default_checks: 4/4 passed
+  referenced_path_resolution: 74 checked, 0 unresolved
+  frozen_hook_infrastructure: byte-identical to base
+  manifest_ownership_contract: 0 problems
+  bucket_assignment: 505 non-08 files, 0 unassigned
+  independently_reproduced: false
+
+lifecycle:
+  retain: true
+  reason: >-
+    The inventory is the input to a Human deletion decision and to the migrations it
+    depends on, so it has to stay checkable after those actions are taken.
+  runtime_dir_tracked: false
+
+human_gate:
+  deletion: not_opened
+  master_publication: not_requested

@@ -1,0 +1,299 @@
+schema_version: citystate.execution_report.v1
+task_id: os-v2-root-global-retention-rewrite-001
+run_id: run-20260810-根级保留文件重写与依赖盘点-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+status: ready_for_independent_review
+executor: Claude_Code
+reviewer: ChatGPT_independent_project_reviewer
+Human_deletion_gate: not_opened
+
+master_before_after:
+  expected_at_dispatch: eb4be95a25cb4b0929def284a7fb4b6a412aed55
+  read_before_first_write: eb4be95a25cb4b0929def284a7fb4b6a412aed55
+  read_after_completion: eb4be95a25cb4b0929def284a7fb4b6a412aed55
+  master_modified: false
+  method: git ls-remote origin master, read twice, not carried from the dispatch text
+
+branch:
+  work_branch: dev/os-v2-root-global-retention-rewrite-001
+  dispatch_head: ee848d1cbdf46dfc8e4215a47e97abb7daddfda9
+  base_is_ancestor_of_head: true
+  descends_from_minimum_start_ancestor: true
+
+# ---------------------------------------------------------------------------
+# Step 1
+# ---------------------------------------------------------------------------
+step_1_rewrite:
+  commit: 4bd8d4d6094721d69676d2e02ca2fa7118167107
+  files: 7
+  summary:
+    AGENTS.md: >-
+      Startup Rules replaced. Was: read 06_Silicon_Index/AI_Bootstrap_Sequence.md
+      first, then .ai/TOKEN_USAGE_PROFILE.md, then one .ai/load_profiles manifest,
+      then .ai/PROTOCOL.md and .ai/STATE.yml for handoff work, then
+      .ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md. Now: fresh remote master SHA,
+      AGENT_WORKING_DISCIPLINE.md, this file, the current task, and the two 08_os
+      entry documents only when the task touches the OS. Declares the retained
+      global surface and states that everything else outside 08_os/** is legacy and
+      not a source of truth. Engineering Design Principles, Git workflow including
+      the transport paragraph, and test/review expectations kept unchanged. One
+      Safety Rule added, absorbing the old profile's tool-ACL and secrets
+      fail-closed item.
+    AGENT_WORKING_DISCIPLINE.md: >-
+      Header no longer defers to .ai/PROTOCOL.md; it defers to the 08_os entry.
+      Section 2 gains three habits absorbed from the old token profile: failure by
+      signature rather than command spelling, complete command capture with exit
+      code and full stdout/stderr summarised only at presentation, and the
+      immutable-versus-mutable caching rule with a fresh read before a protected
+      action. Section 7 gains dated routing-only persistence and resume-by-explicit
+      -session-id. The roles table drops the vendor column: roles are stable, and
+      who fills one is decided in the task packet. Research-report routing no longer
+      points at a legacy folder as active.
+    GEMINI.md: >-
+      Read order replaced with the same five steps. The measured "What Antigravity
+      actually loads" section is kept verbatim, because it records what was read out
+      of the shipped language_server.exe rather than what was assumed.
+    CLAUDE.md: >-
+      Reduced to a router. The bootstrap-then-load-profile startup, the
+      backend_execution_and_handoff role claim, the frozen seven-field wire schema
+      and the .ai/PROTOCOL plus ai/review/latest mailbox routing are gone. Role,
+      model and reasoning level now come from the task packet.
+    README.md: >-
+      Rewritten as the repository root entry. Declares 08_os/** the sole active OS,
+      tabulates the retained global surface, states that everything else outside it
+      is legacy awaiting Human retirement and is not a source of truth for startup,
+      communication, state, tasks, roles or navigation, and points at this run's
+      inventory. The previous City-State folder tour and the "AI Agent Override"
+      instruction to read the old bootstrap first are gone.
+    CORE_MANIFEST.yml: >-
+      Both machine-read keys kept, and all twelve entries the validator requires.
+      core_owned_paths regrouped by comment into retained global surface, active OS,
+      and legacy pending retirement. Four entries naming paths absent from the
+      tracked tree removed - 07_Execution_Plans/, 0号方案.md, 1号方案.md, 2号方案.md -
+      with the removal and its evidence recorded in a comment, because a manifest
+      that names absent paths cannot detect drift. AGENT_WORKING_DISCIPLINE.md added
+      on the strength of its own tracked self-declaration. A transition_status block
+      states that nothing has been deleted. The domain_owned_paths comment claiming
+      core ships nothing at those paths corrected to name the measured exception.
+    .githooks/README.md: >-
+      Opening line no longer credits "the protocol"; it names section 6 of
+      AGENT_WORKING_DISCIPLINE.md. The run-007 reference resolved to its full path.
+      A paragraph added stating that the hook covers one transport, that the API and
+      CLI transports owe the equivalent gates in section 1.1 of the 08_os entry, and
+      that reporting hook_guard passed on a transport that cannot run the hook is an
+      invalid completion pointer.
+  not_done_deliberately:
+    - No compatibility shim, alias or redirect was added for any old-OS path.
+    - .ai/** untouched.
+    - PROJECT_CONTEXT.md and ARCHITECTURE.md untouched.
+    - .githooks/pre-push, install.ps1, test_pre_push_logic.ps1 and .gitattributes untouched.
+    - No file deleted, moved or renamed.
+    - No 08_os canonical, registry, workflow, mechanism, execution or _dev file changed.
+
+# ---------------------------------------------------------------------------
+# Step 2
+# ---------------------------------------------------------------------------
+step_2_inventory:
+  input: the rewritten bytes at 4bd8d4d, not the pre-rewrite assumptions in the task packet
+  outputs:
+    - 02_保留清单/非08保留与关联文档清单_v1.yml
+    - 02_保留清单/依赖边清单_v1.yml
+    - 02_保留清单/执行报告_v1.yml
+  tooling:
+    - 07_测试执行/scan_non08_references.py  # produced raw_edges_v1.yml
+    - 07_测试执行/classify_counts.py        # measured every bucket total
+    - 07_测试执行/verify_rewrite.py         # R1-R4 validation
+  measured:
+    tracked_files_total: 1307
+    tracked_outside_08_os: 505
+    retain_non_08: 15
+    migrate_then_delete_source: 4
+    delete_candidate: 453
+    Human_decision_required: 33
+    unassigned: 0
+  exact_root_and_global_files_proposed_to_retain:
+    - AGENTS.md
+    - AGENT_WORKING_DISCIPLINE.md
+    - CLAUDE.md
+    - GEMINI.md
+    - README.md
+    - CORE_MANIFEST.yml
+    - new-domain.ps1
+    - .gitignore
+    - .gitattributes
+  exact_non08_linked_files_proposed_to_retain:
+    - .githooks/pre-push
+    - .githooks/install.ps1
+    - .githooks/test_pre_push_logic.ps1
+    - .githooks/.gitattributes
+    - .githooks/README.md
+    - .claude/settings.json
+    - .ai/PROGRAM_RUNS/        # declared path root, zero tracked files in core
+  exact_migrate_before_delete_items:
+    - path: .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml
+      blocks: deletion of .ai/
+      reason: live publication authority for seven files across the active OS and the retained surface
+    - path: .ai/TOKEN_USAGE_PROFILE.md
+      blocks: its own deletion
+      reason: 08_os entry section 12 still cites it; content already absorbed, pointer is not
+    - path: .ai/HANDOFF_COMMON_CONVENTIONS.md
+      blocks: deletion of .ai/
+      reason: section 4.1 is the cited authority for brief-vault routing; no repository file references it
+    - path: 系统机制总结.md
+      blocks: its own deletion
+      reason: cited by path in seven active-OS context-management evidence records
+  delete_candidates_observed_not_deleted:
+    06_Silicon_Index: 63
+    ai_communication_plane: 281
+    legacy_content_trees: 93
+    legacy_root_documents: 11
+    generated_navigation_root: 5
+  unresolved_Human_decisions:
+    - research_reports_in_core
+    - project_context_and_architecture
+    - ownership_of_root_readme
+    - gemini_md_not_core_owned
+    - os_entry_spec_not_core_owned
+    - claude_dir_ownership
+    - token_profile_measurements
+    - stale_content_readme_sentence
+    - os_entry_section_12_pointer
+  confirmation_08_os_excluded_from_itemized_retention_decision: true
+
+# ---------------------------------------------------------------------------
+# Findings: where the dispatch, the packet or the repository disagreed with
+# what was measured. Reality was followed and the conflict is reported.
+# ---------------------------------------------------------------------------
+findings:
+  - id: packet_field_name_breaks_the_repository_ledger_tool
+    severity: medium
+    measured: >-
+      08_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py reads a
+      top-level key named allowed_changed_paths, which is also the field name
+      section 7 of the 08_os entry requires. This run's packet carries the list
+      under scope.allowed_write_paths, so the tool exits 3 on the packet itself.
+    action_taken: >-
+      The packet was not edited. The list was copied verbatim into
+      07_测试执行/allowlist_v1.yml under the name the tool reads, and the ledger ran
+      against that. Nothing was added or widened.
+    result: paths=10 allowlist=ok, exit 0
+
+  - id: os_entry_section_12_outlives_its_target
+    severity: medium
+    measured: >-
+      Section 12 of 08_os/开发入口与单窗口任务规范_v1.md still lists
+      .ai/TOKEN_USAGE_PROFILE.md as the authority for token and risk tiers. After
+      this rewrite it is the only live pointer to that file, while the tiers are
+      already defined in section 7 of the same document and the discipline is now in
+      AGENT_WORKING_DISCIPLINE.md.
+    action_taken: Not fixed - 08_os/** is prohibited this task. Returned as a finding.
+
+  - id: content_readme_describes_the_old_bootstrap_as_current
+    severity: low
+    measured: >-
+      08_os/07_content/README.md line 21 describes 06_Silicon_Index/ as the shared
+      directory holding the bootstrap every instance starts from. False after step 1.
+    action_taken: Not fixed - inside 08_os/** and domain-owned. Returned as a finding.
+
+  - id: manifest_named_four_absent_paths
+    severity: medium
+    measured: >-
+      core_owned_paths listed 07_Execution_Plans/, 0号方案.md, 1号方案.md and
+      2号方案.md; git ls-files at the base returns no entry at or under any of them.
+    action_taken: >-
+      Removed, with the removal and its evidence recorded as a comment in the file.
+      This records a false line being deleted, not a file being deleted.
+
+  - id: root_readme_and_project_context_are_shipped_by_core_while_declared_domain_owned
+    severity: medium
+    measured: Both are tracked in core; domain_owned_paths says core ships nothing there.
+    action_taken: >-
+      Ownership lists left unchanged - that is a Human decision. Only the prose was
+      corrected to state the measured exception. Raised as ownership_of_root_readme.
+
+  - id: publisher_authority_is_the_single_blocking_dependency_on_dot_ai
+    severity: high
+    measured: >-
+      Of 290 tracked files under .ai/, exactly three carry a live dependency after
+      the rewrite, and only .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml is load-bearing
+      for the active OS: the 08_os entry section 1.1 and
+      08_os/05_registry/repository_guards_v1.yml both resolve publication authority
+      to it, as do four retained root files and the guard README.
+    action_taken: >-
+      Classified migrate_then_delete_source. Its migration is a declared non-goal of
+      this task, so .ai/ cannot be deleted until that migration lands.
+
+  - id: handoff_conventions_is_invisible_to_the_reference_graph
+    severity: high
+    measured: >-
+      .ai/HANDOFF_COMMON_CONVENTIONS.md is referenced by no tracked file, so every
+      reference-graph pass classifies it as unused. Its section 4.1, lines 61-88,
+      is the authority the Human's standing instruction cites for brief-vault
+      routing - the vault root, the per-repository suffix rule and the 03_决策档案
+      target.
+    action_taken: >-
+      Classified migrate_then_delete_source. Recorded because a purely mechanical
+      closure would have deleted it.
+
+  - id: dot_ai_program_runs_is_an_empty_but_load_bearing_path
+    severity: medium
+    measured: >-
+      .ai/PROGRAM_RUNS/ holds zero tracked files in core, yet five active-OS files
+      name it and verify_context_structure.py fails with CM023 if CORE_MANIFEST
+      drops it. An inventory driven by file counts would have treated it as absent.
+    action_taken: Classified retain_non_08 as a declared path root.
+
+# ---------------------------------------------------------------------------
+# Validation. Executor evidence, reported separately from claims.
+# ---------------------------------------------------------------------------
+validation:
+  executor_evidence:
+    - check: changed-path ledger against the packet allowlist
+      command: python 08_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py --base eb4be95a... --packet 07_测试执行/allowlist_v1.yml
+      result: "paths=10 allowlist=ok"
+      exit: 0
+    - check: repository default check set
+      command: python 08_os/06_execution/task_discipline/quiet_verify/quiet_verify.py --tail 15
+      result: "workflow_static 0, context_structure 0, no_canonical_live_state 0, stage_deliberation_v2_static 0, checks 4/4 ok"
+      exit: 0
+    - check: R1 every repository-relative path referenced by a rewritten file resolves
+      command: python 07_测试执行/verify_rewrite.py --base eb4be95a...
+      result: "74 references checked, 0 unresolved"
+      exit: 0
+    - check: R2 legacy tokens surviving in the rewritten files
+      result: >-
+        38 hits, each explained: 7 are the deliberate publisher-authority reference;
+        29 are CORE_MANIFEST retirement-inventory entries and its PROGRAM_RUNS and
+        mailbox ownership lines; 1 is the AGENTS.md sentence declaring
+        PROJECT_CONTEXT.md and ARCHITECTURE.md historical; 1 is the README sentence
+        naming the legacy categories as inactive.
+      exit: 0
+    - check: R3 frozen .githooks executables byte-identical to base
+      result: "git diff --name-only base -- pre-push install.ps1 test_pre_push_logic.ps1 .gitattributes returned 0 paths"
+      exit: 0
+    - check: R4 CORE_MANIFEST parses, keeps both machine keys, no ownership overlap, every core-owned path exists
+      result: "0 problems"
+      exit: 0
+    - check: bucket assignment completeness
+      command: python 07_测试执行/classify_counts.py
+      result: "505 non-08 files, 0 unassigned, bucket sum equals file count"
+      exit: 0
+    - check: git diff --cached --check
+      result: no whitespace errors
+      exit: 0
+  independently_reproduced: false
+  independence_disclosure: >-
+    Every result above was produced by the executing session. R1 initially failed on
+    nine references and R2 on one; the R1 failures were vendor conventions the file
+    documents as absent and a sibling-relative reference, so the checker's model of a
+    resolvable reference was corrected and re-run, while the R2 hit was a real
+    surviving .ai/PROTOCOL.md dependency in AGENT_WORKING_DISCIPLINE.md and was fixed
+    in the file. That distinction - one checker corrected, one file corrected - is
+    exactly the kind of call an author should not be the only party to make. The
+    reviewer should re-run all four checks and re-derive the classifications from
+    raw_edges_v1.yml rather than accepting this report's reading of them.
+  not_run:
+    - 08_os/06_execution/task_discipline own unit tests (unchanged by this task)
+    - any check requiring a second clone or a second transport
+
+next_owner: foreground_independent_review
