@@ -13,31 +13,59 @@
 # Why it matters: before this file existed, "what counts as core" was tribal
 # knowledge, so an upgrade was a manual copy with no way to tell what had been
 # missed or what a domain had quietly changed.
+#
+# Machine consumer: 08_os/03_mechanisms/context_management/实现/verify_context_structure.py
+# reads `core_owned_paths` and `domain_owned_paths` by name, requires the active
+# 08_os entries to appear in the first and 08_os/07_content/ plus .ai/PROGRAM_RUNS/
+# in the second, and reports any prefix overlap between the two lists. Keep both
+# key names and those entries when editing.
 
 schema_version: "citystate.core_manifest.v1"
 core_repository: "git@github.com:chris2gao/Cybernetic_City_State_OS_v2---core.git"
 core_release: "unversioned_pre_release"
+
+# Ownership is not activity. This manifest says who may author a path, never that
+# the path is part of the running system. During the transition to the
+# second-generation OS the two answers differ, so the core list below is grouped:
+#
+#   1. retained global surface - stays after the transition
+#   2. active OS - 08_os/**, the only active OS in this repository
+#   3. legacy pending Human retirement - still present, still core-authored, but
+#      not a startup, communication, state, task, role or navigation source
+#
+# The groups are comments, not separate keys, because a second list would have to
+# be kept in sync with this one and would drift. The retirement inventory that
+# proposes what is kept, migrated or deleted is
+# 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/02_保留清单/.
+transition_status:
+  active_os: "08_os/**"
+  retirement_inventory: "08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/02_保留清单/"
+  deletion_state: >-
+    Nothing in the legacy group has been deleted or moved. This file describes the
+    physical tree as it is; a path listed here exists, and a path that has been
+    retired is removed from this file in the same change that retires it.
 
 # Paths owned by core. Domain repositories treat these as read-only.
 #
 # 01_Research_Reports and 02_Protocols were listed here in the first draft. That
 # was wrong and the first real content drop proved it: every domain builds its
 # own chain - 01 holds that domain's research, which produces its 02 protocols
-# and 03 execution principles, which produce the 08 system. Those are per-domain,
-# not core property. They now sit under domain_owned_paths.
-#
-# 06_Silicon_Index deliberately STAYS here. It is the shared bootstrap every
-# city-state instance starts from, so it is common by nature. Domain-specific
-# initialisation does not belong here either: each domain's agent will derive its
-# own and place it under 08_Domain_Applications.
+# and 03 execution principles. Those are per-domain, not core property. They now
+# sit under domain_owned_paths.
 core_owned_paths:
-  - "00_City_State_Routing_Table.md"
-  - "04_Parliament/"
-  - "05_Carbon_Index/"
-  - "06_Silicon_Index/"
-  - "07_Compiler/"
-  - "07_Execution_Plans/"
-  - "07_Silicon_Private_Zones/"
+  # --- 1. retained global surface -------------------------------------------
+  - "AGENTS.md"
+  - "AGENT_WORKING_DISCIPLINE.md"
+  - "CLAUDE.md"
+  # The push guard is core-owned for the same reason core history is never
+  # rewritten: the rule it enforces is shared. A domain that could edit its own
+  # copy could weaken its own guard, and the damage from a rewrite lands on every
+  # domain at once rather than only on the one that did it. Note that the hook
+  # files travel with a merge but `core.hooksPath` is local config and does not,
+  # so each clone still has to enable it once - see .githooks/README.md.
+  - ".githooks/"
+
+  # --- 2. active OS ----------------------------------------------------------
   # Second-generation OS machinery is shared core. Its _runs root retains
   # durable development, research, migration and validation evidence for the
   # shared OS itself; domain business run traffic is excluded below.
@@ -51,14 +79,20 @@ core_owned_paths:
   - "08_os/_dev/"
   - "08_os/_runs/"
   - "08_os/claude与人类的开发对话日志.md"
+
+  # --- 3. legacy pending Human retirement ------------------------------------
+  # Listed so that a domain does not edit them while they still exist. Their
+  # presence here is an authorship boundary and a retirement inventory, not a
+  # statement that anything still loads them.
+  - "00_City_State_Routing_Table.md"
+  - "04_Parliament/"
+  - "05_Carbon_Index/"
+  - "06_Silicon_Index/"
+  - "07_Compiler/"
+  - "07_Silicon_Private_Zones/"
   - "system_backbone/"
-  - "0号方案.md"
-  - "1号方案.md"
-  - "2号方案.md"
   - "3号方案.md"
-  - "AGENTS.md"
   - "ARCHITECTURE.md"
-  - "CLAUDE.md"
   - "INSTANCE_CONFIG.md"
   - "True_Fork_Protocol.md"
   - "城邦系统需要实现的目标原则.md"
@@ -71,41 +105,51 @@ core_owned_paths:
   - ".ai/CODEX_TASK_INPUT_CONTRACT.md"
   - ".ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md"
   - ".ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md"
-  # Core-owned for the same reason .githooks/ is: a domain able to edit its own
-  # copy could widen its own publication grant, and master and history are shared.
-  - ".ai/REPOSITORY_PUBLISHER_AUTHORITY.yml"
   - ".ai/load_profiles/"
   - ".ai/lanes/"
   - ".ai/communication_compliance/"
   - ".ai/role_memory/"
   - ".ai/token_profile/"
-  # The push guard is core-owned for the same reason core history is never
-  # rewritten: the rule it enforces is shared. A domain that could edit its own
-  # copy could weaken its own guard, and the damage from a rewrite lands on every
-  # domain at once rather than only on the one that did it. Note that the hook
-  # files travel with a merge but `core.hooksPath` is local config and does not,
-  # so each clone still has to enable it once - see .githooks/README.md.
-  - ".githooks/"
+  # Publication authority is still live: AGENTS.md, AGENT_WORKING_DISCIPLINE.md
+  # and 08_os/开发入口与单窗口任务规范_v1.md section 1.1 all resolve to it. It sits
+  # in the legacy tree only because its migration is a separate task, and it is
+  # core-owned for the same reason .githooks/ is - a domain able to edit its own
+  # copy could widen its own publication grant.
+  - ".ai/REPOSITORY_PUBLISHER_AUTHORITY.yml"
+  #
+  # Removed 2026-08-10 because no such path exists in the tracked tree, and a
+  # manifest that names absent paths cannot be used to detect drift:
+  #   07_Execution_Plans/, 0号方案.md, 1号方案.md, 2号方案.md
+  # Evidence: git ls-files at eb4be95a25cb4b0929def284a7fb4b6a412aed55 returns no
+  # entry under or equal to any of the four. This records a false line being
+  # removed, not a file being deleted.
 
-# Paths every domain owns for itself. Core never ships content here; each domain
-# repository fills them with its own material, so a core merge must not touch them.
+# Paths every domain owns for itself. Each domain repository fills them with its
+# own material, so a core merge must not touch them.
 #
 # 01 -> 02 -> 03 -> 08 is one chain, owned end to end by the domain: research
 # produces protocols, protocols produce execution principles, those produce the
 # system. Splitting the chain across the core/domain boundary would have made
 # every domain fight core for its own reasoning.
+#
+# Measured exception, 2026-08-10: core does ship README.md and PROJECT_CONTEXT.md
+# at these paths today, so "core ships nothing here" is true of the rest of the
+# list and not of those two. Whether they should move to core ownership or stay
+# domain-owned and be replaced per domain is an open Human decision, recorded in
+# the retirement inventory rather than decided here.
 domain_owned_paths:
   - "01_Research_Reports/"
   - "02_Protocols/"
   - "03_Daily_Execution/"
   - "08_Domain_Applications/"
   # Domain-specific content and domain workflow run traffic stay with each
-  # domain. The current domain run root is .ai/PROGRAM_RUNS/; a future
-  # second-generation domain run root requires separate approval and modelling.
+  # domain. The current domain run root is .ai/PROGRAM_RUNS/; it holds no tracked
+  # file in core by design, and the active OS refers to it by name - both
+  # 08_os/README.md and verify_context_structure.py require this entry.
   - "08_os/07_content/"
+  - ".ai/PROGRAM_RUNS/"
   - ".ai/TASKS/"
   - ".ai/CODEX_REPORTS/"
-  - ".ai/PROGRAM_RUNS/"
   - ".ai/HUMAN_BRIEFS/"
   - ".ai/USER_UPLOADS/"
   - ".ai/STATE.yml"
@@ -179,3 +223,4 @@ verification:
   - "no domain edits inside core_owned_paths"
   - "core merge completes without conflict, or every conflict is reported"
   - "domain tests and audits pass after the merge, before it is pushed"
+  - "every path listed in this file resolves in the tracked tree, except domain_owned_paths that core deliberately ships empty"

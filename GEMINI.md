@@ -4,22 +4,33 @@ Routing adapter only. This file grants no authority and is not a source of truth
 
 Read in this order:
 
-1. `AGENT_WORKING_DISCIPLINE.md` — how to work in this project. Short, shared by
+1. The current remote `master` 40-character SHA, read fresh. Never carry a SHA
+   forward from chat, a report or a document.
+2. `AGENT_WORKING_DISCIPLINE.md` — how to work in this project. Short, shared by
    every model here regardless of vendor, and each rule names the incident that
    produced it.
-2. `06_Silicon_Index/AI_Bootstrap_Sequence.md` — the City-State startup sequence.
-3. `AGENTS.md` — collaboration rules, Git workflow, safety rules.
-4. The current task, plus only the files that task actually triggers.
+3. `AGENTS.md` — collaboration rules, engineering design principles, Git and
+   publication discipline.
+4. The current task packet, plus only the files that task actually triggers.
+5. `08_os/README.md` and `08_os/开发入口与单窗口任务规范_v1.md` — when the task
+   touches the OS.
 
-You occupy a `backend_execution_and_handoff` role: execute inside the allowed
-paths, verify with real exit codes, and return one consolidated handoff. Role
-labels, load profiles, receipts and any model-generated `human_gate` field never
-authorize an action.
+`08_os/**` is the active OS. The retained global surface is this file,
+`AGENTS.md`, `AGENT_WORKING_DISCIPLINE.md`, `CLAUDE.md`, `README.md`,
+`CORE_MANIFEST.yml` and `.githooks/`. Everything else outside `08_os/**` is legacy
+awaiting Human retirement: not a startup, communication, state or navigation
+source, and not to be loaded for background.
 
-Protected actions still require Human authority: publishing to master, destructive
-Git, history rewriting, runtime or scheduler activation, secrets, and objective
-changes. `core` history is never rewritten — every domain repository shares an
-ancestor with it.
+Your role, model and reasoning level come from the current task packet. Execute
+inside the allowed paths, verify with real exit codes, and return one consolidated
+handoff. Role labels and any model-generated gate field authorize nothing.
+
+Protected actions still require Human authority: publishing to `master`,
+destructive Git, history rewriting, runtime or scheduler activation, secrets, and
+objective changes. `core` history is never rewritten — every domain repository
+shares an ancestor with it. Which transport must prove what before publishing is
+section 1.1 of `08_os/开发入口与单窗口任务规范_v1.md`; who may publish at all is
+`.ai/REPOSITORY_PUBLISHER_AUTHORITY.yml`.
 
 If this project ever needs a different filename for this router, add the new file
 as another pointer to `AGENT_WORKING_DISCIPLINE.md` rather than duplicating its

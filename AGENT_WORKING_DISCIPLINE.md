@@ -6,8 +6,8 @@ It is core-owned: edit it in the core repository, and `git merge core/master`
 carries it everywhere.
 
 This file is about *how* to work. It grants no authority and overrides no
-protocol. Where it meets `AGENTS.md`, `.ai/PROTOCOL.md` or a current Human
-instruction, those win.
+protocol. Where it meets `AGENTS.md`, the OS entry
+`08_os/开发入口与单窗口任务规范_v1.md`, or a current Human instruction, those win.
 
 Every rule below was paid for. The incident is named so the rule is not mistaken
 for style preference.
@@ -65,7 +65,18 @@ from that measurement, not estimates.
   53.5 KB of repeated parser errors. Outputs containing a PowerShell error
   averaged 3,655 characters against 1,717 for clean ones — **twice the cost**.
 - **On failure, do not re-run the same command unchanged.** Read the error,
-  change the hypothesis, and cap the output of the retry.
+  change the hypothesis, and cap the output of the retry. Treat a failure by its
+  signature, not by the spelling of the command: a repeat needs new evidence, a
+  new hypothesis or a new remedy to count as a second attempt.
+- **Capping what you fetch is not the same as discarding what ran.** Keep the exit
+  code and the complete stdout/stderr in a local log, and summarise only at the
+  point of presentation — expanding the failing part when it matters. A summary
+  written instead of the capture cannot be reopened when the next round disagrees.
+- **Cache what cannot change; re-read what can.** A blob hash or a commit's
+  content is immutable once observed. `HEAD`, branch status, worktree cleanliness
+  and gate state are not: invalidate them after any mutation, context boundary,
+  publication attempt or conflict, and read them fresh immediately before a
+  protected action rather than quoting an earlier reading.
 
 ### What is not worth optimising
 
@@ -167,6 +178,16 @@ after they had been accepted, and "master still holds residue" after a merge had
 cleaned it. Each stale line forced a later reader to work out which statement to
 believe.
 
+Two rules follow from that, and they are what make a stored note checkable later:
+
+- **Persist only stable, low-risk routing facts**, and store each one with the
+  reference it came from, the date it was last verified, and what would invalidate
+  it. Approvals, task state, gate status and anything sensitive are never standing
+  memory — they are read fresh from the repository every time.
+- **Resuming an earlier session is a re-entry, not a continuation.** Resume only by
+  explicit session identifier, and only after re-checking repository, task, current
+  head and authorization. "The latest session" is not an identifier.
+
 ## Roles and the flow between them
 
 Read this whole section even though only one part describes you. Every incident
@@ -181,15 +202,21 @@ the canonical protocol. This applies to every line below.
 
 ### Who does what
 
-| Role | Held by | Produces |
-|:--|:--|:--|
-| Foreground: dispatch, adjudication, verification | Claude | Task packets, verdicts, decision records |
-| Backend execution | Codex, Antigravity | Changed files, exit codes, one consolidated handoff |
-| Independent review | ChatGPT (dedicated project) | Accept / reject with the evidence it rests on |
-| Analysis and design discussion | ChatGPT (separate project) | Options, trade-offs, failure modes |
-| Deep research | Gemini web, ChatGPT web (separate project) | Sourced material and a first synthesis |
-| Closed-corpus refinement | NotebookLM | Citation-grounded comparison across supplied sources |
-| Scheduled cloud automation | Gemini Spark | Not in service; requires a custom MCP node |
+The roles are stable; who holds one is not. **Which provider and model fills a
+role for a given task is decided in that task's packet** — `executor_profile` and
+`verification_profile`, section 7 of `08_os/开发入口与单窗口任务规范_v1.md` — and
+changes without changing anything below. Do not read a vendor name written
+anywhere as architecture, and do not infer your own permissions from the role you
+were handed.
+
+| Role | Produces |
+|:--|:--|
+| Foreground: dispatch, adjudication, verification | Task packets, verdicts, decision records |
+| Backend execution | Changed files, exit codes, one consolidated handoff |
+| Independent review | Accept / reject with the evidence it rests on |
+| Analysis and design discussion | Options, trade-offs, failure modes |
+| Deep research | Sourced material and a first synthesis |
+| Closed-corpus refinement | Citation-grounded comparison across supplied sources |
 
 **Foreground.** Decide, verify, adjudicate. Write task packets and accept results.
 Do not do backend execution work unless the task is genuinely high-risk or the
@@ -216,11 +243,11 @@ passes disagree — that disagreement is the signal worth having.
 
 ### The two routing rules that are not negotiable
 
-1. **The reviewer never reviews its own family's output.** ChatGPT reviews
-   Gemini's reports; reports written by ChatGPT go to the foreground or to a fresh
-   review context with the conclusions stripped. Isolating contexts prevents
-   context leakage; it does nothing about a shared model's blind spots, which is
-   why this rule exists separately.
+1. **The reviewer never reviews its own family's output.** A report goes to a
+   different model family, or to the foreground, or to a fresh review context with
+   the conclusions stripped. Isolating contexts prevents context leakage; it does
+   nothing about a shared model's blind spots, which is why this rule exists
+   separately.
 2. **The author does not design the verification of their own work.** Where it
    matters, separate the two parties, or hand the reviewer the raw material with
    the conclusions removed.
@@ -234,8 +261,9 @@ report is not a finding; an executor's handoff is not an acceptance. Both become
 real only after someone who did not produce them has read the primary evidence,
 and only once the conclusion is written into the repository or the brief vault.
 
-Research reports land in `01_Research_Reports/`, which `CORE_MANIFEST.yml` marks
-domain-owned: each domain keeps its own, and core ships none.
+Durable evidence for shared OS work lands in `08_os/_runs/<run-id>/`. Where a
+domain's own research material lands is declared in `CORE_MANIFEST.yml` under
+`domain_owned_paths`: each domain keeps its own, and core ships none.
 
 ### What makes the accumulated material worth anything
 

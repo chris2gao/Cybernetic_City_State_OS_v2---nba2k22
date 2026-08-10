@@ -9,17 +9,34 @@ subsection rather than in the general rules.
 
 ## Startup Rules
 
-- The first repository read is `06_Silicon_Index/AI_Bootstrap_Sequence.md`.
-- Read `AGENT_WORKING_DISCIPLINE.md` early. It is short, applies to every model in
-  this project regardless of vendor, and is where the recurring failure modes are
-  written down with the incident that produced each one.
-- Before executing a task, read `.ai/TOKEN_USAGE_PROFILE.md` and follow its Layer 1 discipline.
-- At a context boundary, select exactly one routing manifest under `.ai/load_profiles/`; profiles and their metadata never authorize actions.
-- After Bootstrap, read the current Human task and only the constitutional, handoff, or domain files triggered by that task.
-- `README.md`, `PROJECT_CONTEXT.md`, and `ARCHITECTURE.md` are routing/navigation snapshots. Load them when they help locate scope or architecture; do not load them unconditionally and do not treat branch/task claims in them as current without Git or active-mailbox verification.
-- For AI handoff or model-to-model coordination tasks, read `.ai/PROTOCOL.md` and `.ai/STATE.yml` before acting when these files exist.
-- For Human-authorized long-run AI handoff programs, also read `.ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md` and preserve the task as one coherent objective unless a protected Human gate is reached.
-- If a referenced bootstrap or protocol file is missing, report that fact instead of fabricating its content.
+Startup is four reads and one conditional fifth. Nothing else loads by default.
+
+1. **The current remote `master` 40-character SHA, read fresh.** Never carry a SHA
+   forward from chat, a report, or a document.
+2. `AGENT_WORKING_DISCIPLINE.md`. Short, applies to every model in this project
+   regardless of vendor, and is where the recurring failure modes are written down
+   with the incident that produced each one.
+3. This file.
+4. The current task: objective, exact base SHA, allowed paths, prohibitions,
+   tests, and the completion pointer it must return.
+5. **When the task touches the OS:** `08_os/README.md` and
+   `08_os/开发入口与单窗口任务规范_v1.md`. That entry owns single-window rules,
+   file placement, registry synchronisation, run evidence, publication transport
+   gates and the Human gate. Then only the canonical files that task names.
+
+`08_os/**` is the active OS. The retained global surface outside it is this file,
+`AGENT_WORKING_DISCIPLINE.md`, `CLAUDE.md`, `GEMINI.md`, `README.md`,
+`CORE_MANIFEST.yml` and `.githooks/`. Everything else outside `08_os/**` is legacy
+awaiting Human retirement: it is not a startup, communication, state, task, role
+or navigation source of truth. Do not load it for background, and do not
+reintroduce a dependency on it — including in a file you are only passing through.
+
+`PROJECT_CONTEXT.md` and `ARCHITECTURE.md` describe the previous system. Treat any
+branch, task or architecture claim in them as historical unless physical Git
+evidence says otherwise.
+
+If a file this startup names is missing, report that fact instead of fabricating
+its content or substituting a nearby file.
 
 ## Backend Executor Working Rules
 
@@ -72,6 +89,10 @@ authority. Apply them only within the current task's authorized scope.
 
 - Do not run destructive git commands such as `git reset --hard` or `git checkout --` without explicit approval.
 - Avoid adding unverified implementation claims to documentation.
+- A tool being available is not the same as the task allowing it. Check the two
+  separately, use the narrowest permission that does the job, and fail closed on
+  secrets, credentials, `.env` files, keys and key stores: do not read them, do not
+  echo them, and report that you stopped rather than working around them.
 
 ## Git Workflow
 

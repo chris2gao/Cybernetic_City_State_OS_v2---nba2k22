@@ -1,40 +1,52 @@
-# Cybernetic City-State OS (Universal Knowledge Matrix Template)
+# Cybernetic City-State — core repository
 
-> [!CAUTION]
-> **🤖 AI 代理第一强制指令 (AI Agent Override)**：
-> 如果你是一个被唤醒的 AI 大模型，**你的第一动作必须是去调用文件读取工具读取 [06_Silicon_Index/AI_Bootstrap_Sequence.md](06_Silicon_Index/AI_Bootstrap_Sequence.md)**。严禁跳过、严禁凭借训练数据脑补。启动序列会告诉你如何按任务懒加载上下文，而不是全仓库摄入。
+This is the `core` repository of the City-State fork family. Core-owned material is
+authored here and reaches every domain repository through `git merge core/master`;
+core history is never rewritten, because every domain shares an ancestor with it.
 
-> **欢迎来到“赛博城邦”（Cybernetic City-State）通用信息底座。**
-> 这是一个专为人类高智宿主设计的、基于“物理隔离”与“极简多模型协作”的通用知识操作系统（Meta-OS）。
->
-> 这个底座被设计为一张**空白的骨架**。你可以将它装载任何学科矩阵（如：高阶数学、系统工程、医学分析等）。它旨在剥离人类记忆的随机性与注意力涣散，用绝对精确的文档流转和冰冷的硅基算力，将任何一个领域的学习或开发过程，铸造成一台完美运行的生产力引擎。
+## The active OS is `08_os/`
 
----
+**`08_os/` is the only active OS in this repository.** Its structure, mechanisms,
+registry, execution entrypoints and development rules are the current system:
 
-## 🗺️ 架构总览与导航 (Navigation)
+- [`08_os/README.md`](08_os/README.md) — what each area holds and what it does not.
+- [`08_os/开发入口与单窗口任务规范_v1.md`](08_os/开发入口与单窗口任务规范_v1.md) —
+  the entry every new working window reads: minimum load order, one window one
+  task, file placement, registry synchronisation, run evidence, publication
+  transport gates, independent review and the Human gate.
 
-本系统采用严格的降维结构，从深层知识矩阵，逐级降维成每天可执行的任务计划。
-**请根据你的身份（人类宿主 vs 硅基 AI 公民），选择你该进入的传送门。**
+Everything outside `08_os/` falls into exactly two categories.
 
-### 👤 如果你是【人类宿主 (The Human Host/Speaker)】
-**👉 请直接进入：[05_Carbon_Index/](05_Carbon_Index/)**
-作为城邦的主人（议长），你的算力极其宝贵，绝不能用来陷入底层代码或细枝末节的死锁。人类索引会告诉你如何作为唯一的消息总线，驱动各大模型在议会（Parliament）中为你进行跨学科辩论，提纯知识体系。
+**Retained global surface** — small, and it stays after the transition:
 
-### 🤖 如果你是【AI 自由公民 (Silicon Citizen)】
-**👉 请直接进入：[06_Silicon_Index/](06_Silicon_Index/)**
-作为在城邦中工作的智能体，你需要先执行文件开头的 `AI_Bootstrap_Sequence.md`。它会将你路由到 Plan 3 双引擎体系、Human Speaker 权力结构、运行时生命契约和任务相关的最小文档集合。
+| Path | Holds |
+| :--- | :--- |
+| `AGENT_WORKING_DISCIPLINE.md` | How to work here. Every rule names the incident that produced it. |
+| `AGENTS.md` | Backend working rules, engineering design principles, Git and publication discipline. |
+| `CLAUDE.md`, `GEMINI.md` | Vendor-discovered root routers. Pointers only. |
+| `CORE_MANIFEST.yml` | Core/domain ownership boundary, merge and domain-creation procedure. |
+| `.githooks/` | The push guard: non-fast-forward refusal and the `master` gate. |
+| `README.md` | This file. |
 
----
+**Legacy, awaiting Human retirement** — everything else outside `08_os/`,
+including the previous bootstrap, protocol, mailbox, state, load-profile and
+navigation material. It is still physically present and nothing has been deleted,
+but **it is not an active source of truth for startup, communication, state, tasks,
+roles or navigation.** Do not load it to "get context", and do not add a reference
+that makes it live again. The retirement inventory that decides what is kept,
+migrated or deleted is produced under
+`08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/`.
 
-## 🏛️ 底层目录释义 (System Folders)
-*以下是组成城邦的通用物理区块。你可以将它们作为装载任何新知识领域的容器。*
+## If you are a model waking up here
 
-* **`01_Research_Reports/`**：深渊真理库。存放你当前装载领域的底层文献、学术报告、核心教科书笔记。
-* **`02_Protocols/`**：城邦法典与学习法则。将研究报告转化为具体的操作规范或学习调度算法（例如：间隔重复协议、特定题型的解题标准）。
-* **`03_Daily_Execution/`**：应用执行层。这是最终交付给人类的成果库，包含人类每天需要执行的具体任务卡片、待刷题库、或者当日开发计划。
-* **`04_Parliament/`**：议事厅（多模型竞技场）。任何遇到瓶颈的难题、需要架构的知识图谱，都必须以文件形式建立 Issue，由人类议长主持各大模型在这里进行“正题-反题-合题”的辩论。
+Read, in this order: the current remote `master` 40-character SHA read fresh;
+`AGENT_WORKING_DISCIPLINE.md`; `AGENTS.md`; your task packet; then the two `08_os`
+entry documents above if the task touches the OS. Nothing else loads by default,
+and a SHA quoted in any document — including this one — is not evidence.
 
----
+## If you are the Human
 
-> **城邦最终信条：**
-> *Memory is biological. Systematization is mechanical. Emergence is eternal.*
+`CORE_MANIFEST.yml` records what core owns, what each domain owns, how a domain
+merges, and how a new domain is created (`new-domain.ps1`, never a folder copy).
+Domain merges are frozen by decision while the new OS is being built; the freeze
+and its reasoning are recorded in that file.
