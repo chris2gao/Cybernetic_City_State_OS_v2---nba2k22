@@ -1,0 +1,139 @@
+schema_version: citystate.independent_review_dispatch.v2
+review_id: task-discipline-tooling-independent-review-002
+task_id: os-v2-task-discipline-tooling-001
+run_id: run-20260809-任务纪律工具-001
+supersedes: 独立复核派单_v1.yml
+round: 2
+status: awaiting_independent_reviewer
+
+what_changed_since_round_1:
+  round_1_verdict: REJECT_CORRECTION_REQUIRED
+  round_1_record: 独立复核结论摘要与Human裁决_v1.yml
+  fixed_this_round: [F1, F2]
+  still_open: [F3, F4]
+  behaviour_of_quiet_verify_unchanged: true
+  master_never_moved: true
+
+binding_design_note: >-
+  v1 把 candidate_head 写死在派单里，而派单本身还要被提交，于是它一落地就过期
+  （复核者据此判定 F6）。v2 不再钉 head：请自行从远端读当前分支头，
+  并用下列 blob SHA 核对被审文件的确切内容。blob 绑定不随后续提交改变。
+
+repository:
+  repo: chris2gao/Cybernetic_City_State_OS_v2---core
+  branch: dev/os-v2-task-discipline-tooling-001
+  candidate_head: read_it_from_the_remote_yourself
+  base: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  expected_master: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  master_publication_authorized: false
+  guard_note: >-
+    .githooks/pre-push 已在本任务中实际拒绝过一次 master 推送，执行者未设置
+    CITYSTATE_ALLOW_MASTER，master 未移动。请自行回读确认。
+
+exact_blob_bindings:
+  preflight_task_context.py: 1e64c310384fcc45d08f93d5707d4159e1659da3
+  quiet_verify.py: 81cb501564853acfa699d627a90b6036b859ef11
+  changed_path_ledger.py: fda5e39b274e6111c3df259604632f3f53ca8475
+  task_discipline_v1.yml: fc59fba1b1cc69c5b285f2c2b970316a01d9a12f
+  独立复核结论摘要与Human裁决_v1.yml: 72f7618c01c830e9305383ffbaba3270aa2231b2
+  binding_caveat: >-
+    这些 blob 是本派单写作时的值。若你读到的文件 blob 与此不符，以你读到的为准，
+    并在结论里报告差异——不要假设派单是对的。
+
+reviewer_routing:
+  must_not_be: 撰写本任务产物的窗口、同一模型家族的延续会话，或第一轮复核者沿用旧结论
+  fresh_context_required: true
+  reviewer_authority: 判定 accept / reject，不授权合并，不得推送任何分支
+
+primary_focus_this_round:
+  note: >-
+    第一轮已判 PASS 的 Q1、Q6、Q8 与 PASS_WITH_NOTE 的 Q5 不必重跑，
+    除非你读代码时发现第一轮的判定本身可疑。本轮重点是两处修复是否真的修好，
+    以及修复有没有引入新问题。
+  R1_f1_rename_fix:
+    change: changed_path_ledger.committed_paths 增加 --no-renames
+    claim_to_test: 跨提交的 rename 现在同时报告旧路径与新路径
+    design_your_own_probes_for:
+    - 纯改名、改名加改内容、连环改名（a→b→c 跨多个提交）
+    - 删除后新增同名文件、大小写变更（Windows 不区分大小写）
+    - 目录整体移动
+    - --no-renames 是否让账本对某些场景变得过宽（误报也是缺陷）
+  R2_f2_master_verification_fix:
+    change: >-
+      master_verification 四态（verified_unchanged / moved / not_read /
+      no_expectation_declared）；后两态计入 hard_failures，除非
+      --accept-unverified-master；render 不再为未核验状态打印裸 ok
+    claim_to_test: 工具不会再把"未读取"呈现为"已通过"
+    design_your_own_probes_for:
+    - --no-remote 是否仍有任何路径能得到退出码 0 且摘要含裸 ok
+    - 任务包缺 publisher.expected_remote_master_head 时的行为
+    - --accept-unverified-master 是否会连带放过 moved（不应该）
+    - ls-remote 失败或返回空时落入哪一态
+  R3_no_regression:
+    claim_to_test: 42 项测试通过，四个既有全局校验器仍 exit 0
+  R4_documentation_truth:
+    claim_to_test: >-
+      README、registry 与结论摘要三处对 F1..F4 状态的描述一致，
+      且与代码实际行为一致；registry 中已不存在
+      tools_never_write_repository_content 这一不实不变量。
+  R5_open_defects_disclosed:
+    claim_to_test: F3、F4 仍开放这一事实在三处文档中都可见，未被淡化
+
+must_reproduce_independently:
+  - python -m pytest 08_os/06_execution/task_discipline -q
+  - python 08_os/06_execution/task_discipline/quiet_verify/quiet_verify.py
+  - >-
+    python 08_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py
+    --base c7a508abbcda58361fc9b649236d44b706e0bdd4
+    --packet 08_os/_runs/run-20260809-任务纪律工具-001/01_任务输入/任务包_v1.yml --list
+  - >-
+    python 08_os/06_execution/task_discipline/preflight/preflight_task_context.py
+    --packet 08_os/_runs/run-20260809-任务纪律工具-001/01_任务输入/任务包_v1.yml
+  - 所有 run 目录 YAML 可 safe_load 且为单文档
+own_negative_probes_required: true
+
+evidence_status:
+  executor_self_check: 07_测试执行/验证结果_v1.yml
+  treat_as: claim_not_evidence
+  executor_incident_disclosed: >-
+    该文件的 executor_incident_log 记录了执行者自己的两次失误（跑了检查却没设为门、
+    单行 PowerShell 引号错误）。它是自述，同样不作为证据。
+
+deliverable:
+  path: 08_os/_runs/run-20260809-任务纪律工具-001/08_独立复核/独立复核结论_v2.yml
+  landing_rule: >-
+    第一轮的结论文件只存在于复核者的隔离克隆，没有进入仓库，因此现在无法被引用。
+    本轮请把结论文件的完整内容回传，由前台落库；若你有写入权限，
+    也可只提交这一个文件到本分支，不得改动任何被审产物。
+  required_fields:
+  - review_id
+  - reviewer_identity_and_context
+  - reviewed_head_readback_40_sha
+  - blob_readback_and_any_mismatch_with_this_dispatch
+  - master_head_readback_40_sha
+  - independently_reproduced_commands_and_exit_codes
+  - own_negative_probes_and_outcomes
+  - R1_to_R5_findings
+  - changed_paths_recomputed_by_reviewer
+  - blocking_findings
+  - non_blocking_observations
+  - verdict
+  verdict_values: [PASS, PASS_WITH_NON_BLOCKING_NOTES, REJECT_CORRECTION_REQUIRED]
+  verdict_rules:
+  - 未独立重跑即给 PASS 无效
+  - R1 或 R2 无法判定时不得给 PASS
+  - F3 与 F4 仍开放这一事实本身不构成 REJECT，只要它们被如实披露且不影响 R1/R2 的成立
+  - PASS 不表示可以合并 master
+
+after_review:
+  if_pass: >-
+    交 Human 决定是否授权合并。注意 .githooks/pre-push 需要
+    CITYSTATE_ALLOW_MASTER=1 才放行 master，那是与"同意合并"分开的第二次明示授权。
+  if_reject: 同任务返修，范围限于任务包 allowed_changed_paths
+
+hard_prohibitions_for_reviewer:
+- 修改被审产物
+- 推送任何分支（结论文件除外，且需事先说明）
+- 修改 master
+- 设置 CITYSTATE_ALLOW_MASTER
+- 以执行者的自检结论替代自己的判断
