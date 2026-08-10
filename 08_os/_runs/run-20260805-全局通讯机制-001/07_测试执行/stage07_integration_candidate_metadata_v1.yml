@@ -1,0 +1,82 @@
+schema_version: citystate.communication_system.master_integration_candidate.v1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+status: ready_for_independent_master_integration_review
+
+source_binding:
+  master_base: 52e00fe13d6a2e385abfaf1e2618c70f3278926c
+  accepted_source_head: ebfd72db507a4d245229503f29653ef9e357a7e7
+  dispatch_head: 7e389590d6b7d319416b5034c3a98900ee173961
+  candidate_branch: integration/os-v2-global-communication-system-001
+  tested_implementation_commit: de0e7ba924e762ba891558a9c1f80ae1481e03e9
+  result_commit: commit_containing_this_metadata
+  master_is_ancestor_of_tested_commit: true
+  merge_base_with_master: 52e00fe13d6a2e385abfaf1e2618c70f3278926c
+  ahead_of_master: 1
+  behind_master: 0
+
+construction:
+  method: mechanical_tree_delta_materialization_on_fresh_master_descendant
+  shared_readme_rule: current_master_preserved_and_accepted_communication_section_added
+  merge_used: false
+  rebase_used: false
+  cherry_pick_used: false
+  squash_used: false
+  amend_used: false
+  force_push_used: false
+  history_rewrite_used: false
+  master_modified_or_pushed: false
+
+validation:
+  exact_tested_commit: de0e7ba924e762ba891558a9c1f80ae1481e03e9
+  communication_regression:
+    command: python -m pytest 08_os/06_execution/boot/communication_system -q
+    passed: 47
+    failed: 0
+    exit_code: 0
+  frozen_stage04_production_full:
+    passed: 50
+    failed: 0
+    exit_code: 0
+    external_result_sha256: 7e6d7f00a216214b29b0a371b02ffacd1568f70f7e703c245451b6297a41a7b3
+  frozen_stage04_production_mutation_suite:
+    passed: 50
+    failed: 0
+    exit_code: 0
+    external_result_sha256: f84c5f81a4c8ce13a986b70346802dcdf297d7e337162b9af9b07a12f6916bcf
+  production_oracle_negative_coupling_controls:
+    passed: 3
+    failed: 0
+    exit_code: 0
+  task_discipline_regression:
+    passed: 51
+    failed: 0
+    exit_code: 0
+  validator_exit_codes:
+    validate_05_steps: 0
+    minimum_operational_loop_static: 0
+    verify_context_structure: 0
+    verify_no_canonical_live_state: 0
+    verify_stage_collaborative_deliberation_v2_static: 0
+    communication_system_static: 0
+    changed_path_ledger: 0
+  changed_path_ledger:
+    path_count_at_tested_commit: 189
+    allowlist: ok
+
+preservation:
+  AGENTS_matches_master: true
+  task_discipline_tree_preserved: true
+  task_discipline_registry_preserved: true
+  development_entry_spec_preserved: true
+  task_discipline_run_preserved: true
+  shared_execution_README_preserves_task_discipline: true
+  shared_execution_README_adds_communication_system: true
+  frozen_stage04_accepted_stage05_and_B_v3_unchanged_from_accepted_source: true
+  canonical_live_communication_state_created: false
+
+publication:
+  candidate_push_authorized: true
+  master_publication_authorized: false
+  remote_candidate_head: pending_result_commit_and_push
+  independent_master_integration_acceptance_claimed: false

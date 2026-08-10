@@ -1,7 +1,7 @@
 schema_version: citystate.os_development_run.v1
 run_id: run-20260805-全局通讯机制-001
 task_id: os-v2-global-communication-system-001
-status: candidate_ready_for_independent_stage07_rereview
+status: stage_07_complete_master_integration_candidate_ready
 repository: chris2gao/Cybernetic_City_State_OS_v2---core
 base:
   branch: master
@@ -216,7 +216,7 @@ validation:
     independent_verification_passed: false
     same_task_correction_allowed: true
   stage_07:
-    status: correction_ready_for_independent_rereview
+    status: complete_master_integration_candidate_ready
     reviewer_role: independent_project_architecture_and_verification
     review_ref: 07_测试执行/Stage07独立验证_v1.yml
     review_commit: b8b144fb02f9b505edb3930e86b1558865eb6360
@@ -235,6 +235,13 @@ validation:
       frozen_full: 50_of_50_passed
       frozen_mutation_suite: 50_of_50_passed
       independent_acceptance_claimed: false
+    master_integration_candidate:
+      branch: integration/os-v2-global-communication-system-001
+      master_base: 52e00fe13d6a2e385abfaf1e2618c70f3278926c
+      accepted_source_head: ebfd72db507a4d245229503f29653ef9e357a7e7
+      tested_implementation_commit: de0e7ba924e762ba891558a9c1f80ae1481e03e9
+      result_metadata: 07_测试执行/stage07_integration_candidate_metadata_v1.yml
+      ready_for_independent_master_integration_review: true
   final_required:
     - context_management_validator_exit_0
     - stage_collaborative_runtime_guard_exit_0
