@@ -2,8 +2,8 @@ schema_version: citystate.stage02_conclusion.v1
 task_id: os-v2-global-model-capability-and-availability-routing-001
 run_id: run-20260811-全局模型能力与可用性机制-001
 stage: 02_信息收集与提炼
-status: complete
-completed_at: 2026-08-11
+status: qualification_execution_required_before_stage_03
+updated_at: 2026-08-11
 
 inputs:
   requirement: 01_需求建模/requirement/A_需求建模_v2.yml
@@ -23,15 +23,15 @@ research_questions:
 completion:
   independent_pass_requirement_satisfied: true
   provider_first_party_verification_complete_for_architecture_decisions: true
-  conflicts_resolved_or_durable: true
-  feasibility_basis_complete: true
+  external_claim_conflicts_resolved_or_durable: true
   actual_Antigravity_qualification_execution_complete: false
-  qualification_execution_blocking_stage_03: false
+  qualification_execution_blocking_stage_03: true
   rationale: >-
-    Stage 03 只需确定机制结构和 qualification contract；具体 Gemini/Opus 的 qualified task classes
-    必须由后续冻结任务实测产生，不能在 B 中预先编造资格结果。
+    Human 已确认的 A v2 将 Antigravity 各模型在本项目 mechanical、standard implementation、
+    semantic judgment、long-chain execution、review 上的可靠上限/下限列为高影响未解歧义，
+    并明确阻塞 Stage 03。阶段结论不得自行降低这个 blocking scope。
 
-stage_03_input_claims:
+resolved_evidence_ready_for_later_stage_03:
   - model + surface + parameter_profile 是路由基本对象。
   - 当前账户可用性采用 Human task-time override；默认 registered candidates available，不做自动额度探测。
   - task-model fit / reliable completion 是唯一优化方向；不进行 token/价格/额度经济优化。
@@ -39,9 +39,15 @@ stage_03_input_claims:
   - context_management、role mechanism、model routing、future task execution envelope 各自独立，通过小接口组合。
   - provider/API/catalog facts 与 project qualification evidence 分层；后者决定本 OS 内任务适配边界。
   - parameter profile 必须是 surface-specific，不能把 API-only 参数复制到 Web/Desktop。
-  - qualification 至少覆盖 mechanical、standard implementation、semantic judgment、long-chain closure、primary-diff review，并区分 hard gates 与 diagnostic metrics。
 
-stage_03_prohibitions:
+remaining_stage_02_work:
+  - 冻结 qualification fixtures 与 hidden success criteria。
+  - 由 Human 在 Antigravity 分别运行 Gemini 3.6 Flash、Gemini 3.1 Pro、Claude Opus 4.6 的指定测试。
+  - 记录 exact observed model label / reasoning level / execution result / rework rounds / boundary and evidence behavior。
+  - 独立评价 hard gates 与 diagnostic metrics，形成 task-class qualification matrix。
+  - 只有 qualification ambiguity 被解决或以明确 durable lower-confidence boundary 收口后，才能进入 Stage 03。
+
+prohibitions:
   - 不把被拒绝的 258K/250K 等弱来源数值写成 routing contract。
   - 不把 vendor benchmark 当 project qualification。
   - 不建立 quota watcher、自动 entitlement scraper、token/cost scorer。
