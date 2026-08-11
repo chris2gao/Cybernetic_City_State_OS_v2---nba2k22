@@ -1,0 +1,58 @@
+schema_version: citystate.publication_readback.v1
+run_id: run-20260811-执行简化与有界闭包规范升级-001
+task_id: os-v2-execution-simplicity-and-bounded-closure-001
+round: narrow_correction_after_independent_review
+purpose: >-
+  记录 completion_pointer_v1.yml 与窄修正验证结果无法写在自己内部的 SHA。
+  以下全部是推送后从远端 git ls-remote 读回的值，不是本地 HEAD，也不是期望值的复制。
+
+branch: dev/os-v2-execution-simplicity-and-bounded-closure-001
+transport: local_git
+hook_guard: passed
+
+commits_this_round:
+  - seq: 1
+    sha: ef361d172c688e58acd8b8982008a4c54d839be1
+    subject: "fix(os): separate authorized task-branch publication from protected publication"
+    contains:
+      - 01_os/开发入口与单窗口任务规范_v1.md（§2 scope 子句、§7 T3、§11 第 4 类）
+      - 07_测试执行/窄修正验证结果_v1.yml
+      - 08_结论/completion_pointer_v1.yml（状态与 narrow_correction_round 块）
+    remote_readback_after_push: ef361d172c688e58acd8b8982008a4c54d839be1
+  - seq: 2
+    sha: not_self_representable
+    subject: "docs(os): record narrow correction publication readback"
+    contains: 本文件
+    remote_readback_after_push: 见本任务 handoff 报告的最终 branch head 读回值
+
+branch_history_context:
+  reviewed_head_before_this_round: 4b5d104e039836afc633014db2c1fc808f0665b4
+  review_commit: 34c28f9a0f8274b7bfb29f3ec595a1518cabc2a6
+  review_file_modified_by_this_round: false
+
+master:
+  before_task: 4015a2a40bd0e9fa6f338b3551b86b7c42537fdd
+  read_immediately_before_push_this_round: 4015a2a40bd0e9fa6f338b3551b86b7c42537fdd
+  after_this_round: 4015a2a40bd0e9fa6f338b3551b86b7c42537fdd
+  modified: false
+  publication_requested: false
+
+destructive_operations:
+  force_push: false
+  rebase: false
+  squash: false
+  amend: false
+  history_rewrite: false
+  deletion_of_tracked_files: false
+
+publication_classification_of_this_round:
+  action: ordinary_authorized_task_branch_push
+  packet_authorization: source_write_authorized true（01_任务输入/任务包_v1.yml）
+  publisher_authority: repository_publisher_authority_v1.yml capabilities.push_source_branch true
+  transport: local_git（已认可）
+  gate: hook_guard passed
+  wrote_master: false
+  destructive_or_history_or_runtime_or_security: false
+  therefore: >-
+    按本轮修正后的第 11 节第 4 类反面条款，属于第 6 节正常执行流程，不构成停止条件，
+    也不使本任务成为 T3_high_risk。本条既是分类记录，也是该修正的一次自适用检验。
