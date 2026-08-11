@@ -1,7 +1,34 @@
 schema_version: citystate.completion_pointer.v1
 completion_pointer:
   packet_id: os-v2-execution-simplicity-and-bounded-closure-001
-  status: ready_for_independent_review
+  status: ready_for_independent_final_review
+
+  narrow_correction_round:
+    responds_to: 09_独立复核/ChatGPT独立复核_v1.yml
+    verdict_received: REVISE_NARROW_CORRECTION
+    blocking_finding: publication_taxonomy_conflation
+    reviewed_head: 4b5d104e039836afc633014db2c1fc808f0665b4
+    review_commit_on_branch: 34c28f9a0f8274b7bfb29f3ec595a1518cabc2a6
+    review_file_modified: false
+    canonical_files_changed: [01_os/开发入口与单窗口任务规范_v1.md]
+    canonical_files_untouched: [AGENT_WORKING_DISCIPLINE.md]
+    diff_vs_review_head: {files: 1, insertions: 22, deletions: 8, hunks: 3}
+    semantics: >-
+      区分两类 publication。已由当前任务包与 repository_publisher_authority_v1.yml 预先授权、
+      使用已认可 transport、发布门正常通过、不写 master、不涉及 destructive/history/runtime/
+      security 动作的普通 source/task branch push，属于第 6 节正常执行流程，不是 §11 第 4 类
+      停止条件，也不使任务成为 T3。受保护的 publication（未获授权者、未获当前 Human gate 的
+      master 发布、其他受保护共享状态）与既有 destructive/history/runtime/security 动作，
+      全部仍为 hard stop。
+    gates_weakened: none
+    section_6_modified: false
+    repository_publisher_authority_v1_yml_modified: false
+    new_mechanism_introduced: none
+    validation: 07_测试执行/窄修正验证结果_v1.yml
+    corrected_canonical_head: not_self_representable
+    corrected_canonical_head_note: >-
+      承载本轮修正的提交 SHA 与其远端读回值记录在 08_结论/窄修正发布读回_v1.yml。
+    nonblocking_finding_path_ledger_mismatch: deferred_to_separate_task_per_review
   source_branch: dev/os-v2-execution-simplicity-and-bounded-closure-001
   source_base: 4015a2a40bd0e9fa6f338b3551b86b7c42537fdd
   source_head: 0f351539f5ba6186cc8e1ee4ef70128437ab0c02

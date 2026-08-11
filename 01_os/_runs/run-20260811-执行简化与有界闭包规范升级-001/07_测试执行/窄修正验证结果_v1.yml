@@ -1,0 +1,125 @@
+schema_version: citystate.os_validation.v1
+run_id: run-20260811-执行简化与有界闭包规范升级-001
+task_id: os-v2-execution-simplicity-and-bounded-closure-001
+round: narrow_correction_after_independent_review
+measured_on: 2026-08-11
+executor: Claude Opus 5 (Claude Code)
+evidence_class: executor_measurement_not_independently_reproduced
+
+responds_to:
+  review: 09_独立复核/ChatGPT独立复核_v1.yml
+  reviewed_head: 4b5d104e039836afc633014db2c1fc808f0665b4
+  verdict: REVISE_NARROW_CORRECTION
+  blocking_finding: publication_taxonomy_conflation
+  review_commit_on_branch: 34c28f9a0f8274b7bfb29f3ec595a1518cabc2a6
+  review_file_modified_by_this_round: false
+
+scope:
+  canonical_files_changed_this_round:
+    - 01_os/开发入口与单窗口任务规范_v1.md
+  canonical_files_untouched_this_round:
+    - AGENT_WORKING_DISCIPLINE.md
+  diff_vs_review_head: {files: 1, insertions: 22, deletions: 8}
+  hunks: 3
+  hunk_locations:
+    - "§2 protected-action scope 子句"
+    - "§7 T3_high_risk 行 + 新增一段"
+    - "§11 第 4 类"
+  registry_touched: false
+  repository_publisher_authority_v1_yml_touched: false
+  section_6_touched: false
+  path_ledger_template_mismatch_touched: false   # 已判为独立后续任务
+
+required_checks:
+  V1_section6_still_permits_ordinary_authorized_push:
+    result: passed
+    evidence: >-
+      §6 第 3 条原文在整个任务中从未被修改（对 base 4015a2a 的全量 diff 中不存在涉及该行的
+      增删）：「测试并生成可回放证据，普通 push 工作分支，回传 completion pointer。」
+      §6 第 4 条同样未改：「由符合第 9 节的新窗口审核；Human 授权后才可普通 fast-forward
+      更新 `master`。」
+  V2_section11_no_longer_stops_ordinary_push:
+    result: passed
+    before: "4. **需要 protected action**：发布、master 写入、force、…"
+    after: >-
+      第 4 类改为「需要新增授权或 action-bound Human gate 的 publication / protected action」，
+      并显式写入反面条款：当前任务包已授权 source write / task-branch publication、
+      publisher authority 已允许该动作、使用已认可 transport、对应发布门正常通过、不写 master、
+      不涉及 destructive / history / runtime / security 动作时，普通 source/task branch push
+      属于第 6 节正常执行流程，不是本类停止条件，不产生新的 Human 逐次 gate。
+  V3_section7_no_longer_implies_T3_for_ordinary_push:
+    result: passed
+    before: "history；master 与共享发布影响面；…"
+    after: "history；master 或其他受保护共享状态的发布影响面；…"
+    added_clause: >-
+      「普通的 source/task branch 发布本身不使任务成为 T3_high_risk」，并指出把任务推入 T3 的是
+      master 或其他受保护共享状态的发布影响面，而不是"过程里发生过一次 publication"；
+      否则任何以 pushed completion pointer 收尾的实现任务都会被误判为 T3。
+  V4_protected_gates_all_retained:
+    result: passed
+    retained_in_class_4:
+      - 当前任务包与 repository_publisher_authority_v1.yml 尚未授权的 publication
+      - 未获得当前 Human gate 的 master 发布
+      - 其他受保护共享状态的发布
+      - force / rebase / squash / amend / history rewrite
+      - 删除
+      - runtime/scheduler 激活
+      - 不能普通 fast-forward
+      - 已登记 hooks 未正确启用，或本传输按 1.1 应跑的门未通过
+    retained_elsewhere_unchanged:
+      class_5_security: secrets、credentials、.env、key store；未授权网络/sudo/安装/模型调用/数据外发
+      section_6_4_master_gate: Human 授权后才可普通 fast-forward 更新 master（未改）
+      section_1_1_transport_matrix: 未改
+      repository_publisher_authority_v1_yml: 未改
+    keyword_census_in_file:
+      force: 5
+      rebase: 3
+      squash: 3
+      amend: 2
+      history_rewrite: 2
+      runtime_scheduler: 3
+      secrets: 2
+      credentials: 2
+      fast_forward: 2
+      master: 28
+    weakened_gates: none
+  V5_other_accepted_A_to_I_semantics_unchanged:
+    result: passed
+    evidence: >-
+      本轮 diff 仅 3 个 hunk，全部位于 publication taxonomy 相关位置。A、B、D 的自由度定义、
+      E 降档护栏、F reviewer 可驳回、G freshness、H 门收敛、I 六类分组结构本身均未改动；
+      第 11 节仍是六类，条数与顺序不变。AGENT_WORKING_DISCIPLINE.md 本轮零改动。
+  V6_git_diff_check:
+    result: passed
+    exit_code: 0
+    base: 4015a2a40bd0e9fa6f338b3551b86b7c42537fdd
+  V7_master_unchanged:
+    result: passed
+    master: 4015a2a40bd0e9fa6f338b3551b86b7c42537fdd
+    read_fresh_this_round: true
+    master_modified: false
+    master_publication_requested: false
+  V8_ordinary_remote_branch_readback:
+    result: recorded_in 08_结论/窄修正发布读回_v1.yml
+    note: 推送后从远端 git ls-remote 读回，不是本地 HEAD，也不是期望值的复制。
+
+encoding_and_line_endings:
+  01_os/开发入口与单窗口任务规范_v1.md:
+    bytes: 30089
+    crlf: 0
+    bare_lf: 512
+    bom: false
+  result: LF-only 与无 BOM 保持不变
+
+executor_note_on_third_hunk:
+  what: >-
+    §2 的 protected-action scope 子句原本也把无限定的「发布」列在其中，与被复核判定为 blocker
+    的第 11 类第 4 项是同一处 taxonomy conflation 的第二个实例。
+  why_included: >-
+    它在本轮授权边界内（同一文件），且由本轮 objective 已固定的规则算出——统一本文件内的
+    publication taxonomy。留着它会让同一概念在同一文件里有两个互相矛盾的表述，
+    违反"一个概念只在一个 canonical 位置完整定义"。
+  what_it_does_not_do: >-
+    不放宽任何授权：该句仍然声明 §2 不授权任何 protected action，只是把"发布"限定为
+    "受保护的 publication"，并把分类权指回第 11 节第 4 类唯一定义处。
+  reviewer_action: 若复核者认为超出窄修正范围，可要求回退此 hunk，其余两处独立成立。
