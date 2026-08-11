@@ -22,11 +22,24 @@ prohibitions:
   - history_rewrite
 outputs:
   scanner: 04_验证/scan_os_namespace_refs.py
+  review_manifest_builder: 04_验证/build_review_manifests.py
   full_scan: 04_验证/08_os引用扫描完整结果_v1.json
   mapping: 02_路径映射/08_to_01引用分类_v1.yml
+  reviewed_reference_scope: 02_路径映射/reviewed_reference_scope_v1.yml
+  manual_review_resolution: 02_路径映射/manual_review_resolution_v1.yml
   startup_inventory: 03_启动入口盘点/默认启动关系盘点_v1.yml
+  checkpoint_B_frozen_amendment: 03_启动入口盘点/Checkpoint_B冻结修正计划_v1.yml
+  verifier: 04_验证/verify_checkpoint_a.py
+  validation_result: 04_验证/验证结果_v1.yml
 validation:
-  status: candidate_ready_for_independent_review
+  status: checkpoint_A_ready_for_independent_rereview
+  final_partition:
+    total: 1094
+    rewrite_current_path: 1012
+    preserve_historical_literal: 82
+    manual_review: 0
+    overlap: 0
+    unassigned: 0
   independent_review_required: true
   next_checkpoint_gate: ChatGPT_independent_acceptance_of_checkpoint_A
-lifecycle: candidate_ready_for_independent_review_after_executor_validation
+lifecycle: checkpoint_A_ready_for_independent_rereview_after_executor_validation

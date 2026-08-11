@@ -1,0 +1,1850 @@
+schema_version: citystate.manual_review_resolution.v1
+source_commit: 818800595992d09e270082627b31642f04f1cc93
+decision_policy: explicit path-level semantic decisions with a two-line before/after override; no fallback
+original_manual_occurrences: 205
+resolutions:
+- occurrence_id: occ_55214d9f0981223ae74bb504
+  path: 08_os/_runs/run-007-上下文管理信息收集测试/artifacts/local-partition/README.md
+  line: 9
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-007-上下文管理信息收集测试/artifacts/local-partition/run_local_partition.py
+  final_classification: rewrite_current_path
+  semantic_group: durable_artifact_pointer
+  reason: The command or completion pointer must remain loadable after the namespace move.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_7f785b441803bbff21fa9e3d
+  path: 08_os/_runs/run-007-上下文管理信息收集测试/artifacts/local-partition/README.md
+  line: 10
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-007-上下文管理信息收集测试/artifacts/local-partition/run_local_partition.py
+  final_classification: rewrite_current_path
+  semantic_group: durable_artifact_pointer
+  reason: The command or completion pointer must remain loadable after the namespace move.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_0fba381beec46720a9866251
+  path: 08_os/_runs/run-007-上下文管理信息收集测试/artifacts/local-partition/results/command_log.json
+  line: 454
+  occurrence_on_line: 1
+  match: 08_os\\_runs\\run-007-上下文管理信息收集测试\\artifacts\\local-partition\\role_worker.py
+  final_classification: preserve_historical_literal
+  semantic_group: recorded_command_execution
+  reason: This JSON line records the command that was actually executed in the completed run.
+  expected_after_cutover: literal remains unchanged as recorded run evidence
+- occurrence_id: occ_c5a1f01002a9de23c512d739
+  path: 08_os/_runs/run-007-上下文管理信息收集测试/artifacts/local-partition/results/command_log.json
+  line: 533
+  occurrence_on_line: 1
+  match: 08_os\\_runs\\run-007-上下文管理信息收集测试\\artifacts\\local-partition\\role_worker.py
+  final_classification: preserve_historical_literal
+  semantic_group: recorded_command_execution
+  reason: This JSON line records the command that was actually executed in the completed run.
+  expected_after_cutover: literal remains unchanged as recorded run evidence
+- occurrence_id: occ_2b9bcc3f2916087089986460
+  path: 08_os/_runs/run-007-上下文管理信息收集测试/artifacts/local-partition/results/command_log.json
+  line: 683
+  occurrence_on_line: 1
+  match: 08_os\\_runs\\run-007-上下文管理信息收集测试\\artifacts\\local-partition\\role_worker.py
+  final_classification: preserve_historical_literal
+  semantic_group: recorded_command_execution
+  reason: This JSON line records the command that was actually executed in the completed run.
+  expected_after_cutover: literal remains unchanged as recorded run evidence
+- occurrence_id: occ_ef2fa73f124d73700b2e28cb
+  path: 08_os/_runs/run-007-上下文管理信息收集测试/artifacts/local-partition/results/command_log.json
+  line: 701
+  occurrence_on_line: 1
+  match: 08_os\\_runs\\run-007-上下文管理信息收集测试\\artifacts\\local-partition\\role_worker.py
+  final_classification: preserve_historical_literal
+  semantic_group: recorded_command_execution
+  reason: This JSON line records the command that was actually executed in the completed run.
+  expected_after_cutover: literal remains unchanged as recorded run evidence
+- occurrence_id: occ_7a1c2caa1e44eef110991189
+  path: 08_os/_runs/run-007-上下文管理信息收集测试/artifacts/local-partition/run_local_partition.py
+  line: 34
+  occurrence_on_line: 1
+  match: 08_os/01_workflow/context-management-mechanism/requirement/A_需求建模_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_1627a2b2b45ef7ce12512a9d
+  path: 08_os/_runs/run-007-上下文管理信息收集测试/artifacts/local-partition/run_local_partition.py
+  line: 35
+  occurrence_on_line: 1
+  match: 08_os/01_workflow/context-management-mechanism/evidence/00_挖掘目标与领域_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_a80c26a799f21102d6b17d6c
+  path: 08_os/_runs/run-007-上下文管理信息收集测试/artifacts/local-partition/run_local_partition.py
+  line: 36
+  occurrence_on_line: 1
+  match: 08_os/01_workflow/context-management-mechanism/evidence/01_内部证据_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_578c14653509f769c1aa2f64
+  path: 08_os/_runs/run-007-上下文管理信息收集测试/artifacts/local-partition/run_local_partition.py
+  line: 37
+  occurrence_on_line: 1
+  match: 08_os/01_workflow/context-management-mechanism/evidence/07a_机制同义裁定_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_99bf9ac2437a5a24f49d1806
+  path: 08_os/_runs/run-007-上下文管理信息收集测试/artifacts/local-partition/run_local_partition.py
+  line: 38
+  occurrence_on_line: 1
+  match: 08_os/01_workflow/context-management-mechanism/evidence/07b_开放发现统计_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_947c69049225ece03c89c971
+  path: 08_os/_runs/run-007-上下文管理信息收集测试/artifacts/local-partition/run_local_partition.py
+  line: 39
+  occurrence_on_line: 1
+  match: 08_os/01_workflow/context-management-mechanism/evidence/07c_证据索引草案_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_129b34c7e25b1d86b868001f
+  path: 08_os/_runs/run-007-上下文管理信息收集测试/artifacts/local-partition/run_local_partition.py
+  line: 40
+  occurrence_on_line: 1
+  match: 08_os/01_workflow/02_信息收集与提炼/实现/证据包schema_v1.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_7023d9f269028016f05e4a7a
+  path: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/run_validation.ps1
+  line: 18
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/check_jsonschema/invoke.ps1
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_e3a73682d415e922e3ce8841
+  path: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/run_validation.ps1
+  line: 19
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_0e27aea1bee2cb2c9862f4e2
+  path: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/validate_repository_state.py
+  line: 11
+  occurrence_on_line: 1
+  match: 08_os/05_registry/skills_and_tools_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_2877cba680146dce8201dc8c
+  path: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/validate_repository_state.py
+  line: 12
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-012-check-jsonschema安装接入验证/run.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_69a19c2477425158f9cc949a
+  path: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/validate_repository_state.py
+  line: 15
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/results.json
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_a6b35d48bd62d6315753e0d1
+  path: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/validate_repository_state.py
+  line: 19
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-012-check-jsonschema安装接入验证/01_任务输入
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_1f2dbef09d2e746858152c6d
+  path: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/validate_repository_state.py
+  line: 167
+  occurrence_on_line: 1
+  match: 08_os/04_skills_and_tools/README.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_893575c260e01f9984321cfe
+  path: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/validate_repository_state.py
+  line: 168
+  occurrence_on_line: 1
+  match: 08_os/04_skills_and_tools/check-jsonschema/README.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_06e92837aad094aa5e02e09f
+  path: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/validate_repository_state.py
+  line: 169
+  occurrence_on_line: 1
+  match: 08_os/05_registry/skills_and_tools_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_c5ae647fb6595765f5a8a8b3
+  path: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/validate_repository_state.py
+  line: 170
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/check_jsonschema/README.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_3c53c398148a787d0dee41f9
+  path: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/validate_repository_state.py
+  line: 171
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/check_jsonschema/invoke.ps1
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_ac5429b338c6ce345ebcb0a1
+  path: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/validate_repository_state.py
+  line: 172
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_5be541ef869280e8be58a928
+  path: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/validate_repository_state.py
+  line: 178
+  occurrence_on_line: 1
+  match: 08_os/02_boot
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_b806545858bce1c20d32b56e
+  path: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/validate_repository_state.py
+  line: 186
+  occurrence_on_line: 1
+  match: 08_os/02_boot
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_cbf64c8ed8e470740e75cdcf
+  path: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/validate_repository_state.py
+  line: 198
+  occurrence_on_line: 1
+  match: 08_os/04_skills_and_tools/README.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_6299d01b9e03f47578a76333
+  path: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/validate_repository_state.py
+  line: 199
+  occurrence_on_line: 1
+  match: 08_os/05_registry/skills_and_tools_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_4b4240f76cc4733047c8f106
+  path: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/validate_repository_state.py
+  line: 202
+  occurrence_on_line: 1
+  match: 08_os/04_skills_and_tools/check-jsonschema/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_f87baf7618ed29e5c012800e
+  path: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/validate_repository_state.py
+  line: 203
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/check_jsonschema/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_01adbe56cba23b02e58c4956
+  path: 08_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/validate_repository_state.py
+  line: 204
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-012-check-jsonschema安装接入验证/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_a7fbb8cff907804a65137ecd
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests/prepare_target.py
+  line: 12
+  occurrence_on_line: 1
+  match: '"08_os"'
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_5218c518da480f48c6455bdb
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/run_validation.py
+  line: 28
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/calibration
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_9d5a9ee016b791fd23b1f6d1
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/run_validation.py
+  line: 31
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_3b7298fa0db94fbf52d5ca3c
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/run_validation.py
+  line: 34
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_fd91be98e3cb0d6d35780d12
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/run_validation.py
+  line: 36
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/mutmut/invoke.sh
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_829802a4d47d067b817764fe
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/run_validation.py
+  line: 38
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_63c975ee253a5231405b9b5b
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/run_validation.py
+  line: 475
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/check_jsonschema/missing.py
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_f60041377e1f7e857265997f
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/run_validation.py
+  line: 488
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-013-mutmut安装接入验证/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_a6d69264be75ff29b006a050
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/run_validation.py
+  line: 608
+  occurrence_on_line: 1
+  match: 08_os/04_skills_and_tools/mutmut/README.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_ca2c4f311810132696f22927
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/run_validation.py
+  line: 609
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/mutmut/README.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_02b81bc2aad32b47c2e15ae4
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/run_validation.py
+  line: 610
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/mutmut/invoke.sh
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_736e8d73cd9fe91d0c65ad2e
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/run_validation.py
+  line: 611
+  occurrence_on_line: 1
+  match: 08_os/05_registry/skills_and_tools_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_92d7db30ee267813805bbcce
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/run_validation.sh
+  line: 8
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/run_validation.py
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_1e2a49cb5ba157d764c62ab2
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 16
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-013-mutmut安装接入验证
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_aae899ddd19a683f0ae6cb4b
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 17
+  occurrence_on_line: 1
+  match: 08_os/05_registry/skills_and_tools_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_0f60e5c26f75713d227d0f7b
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 26
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_5b99677c5096af6289436436
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 28
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/mutmut/invoke.sh
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_216c8c5b26e94d64ae9e4333
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 322
+  occurrence_on_line: 1
+  match: 08_os/02_boot
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_6ceb989c7992435e83d218f3
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 326
+  occurrence_on_line: 1
+  match: 08_os/02_boot
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_ee0d9139d70031afa2ff634e
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 332
+  occurrence_on_line: 1
+  match: 08_os/04_skills_and_tools/README.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_3004a296cbb8fc4ba6dd839e
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 333
+  occurrence_on_line: 1
+  match: 08_os/04_skills_and_tools/mutmut/README.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_a1d2c439f4e86373f1ee8a1f
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 334
+  occurrence_on_line: 1
+  match: 08_os/05_registry/skills_and_tools_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_1951c534c659c5d142f99575
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 335
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/mutmut/README.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_14503b1733eec223f3162e2d
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 344
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-013-mutmut安装接入验证/01_任务输入/environment_receipt.json
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_7952a16f3f9c936422ef2942
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 345
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-013-mutmut安装接入验证/01_任务输入/环境与安装回执.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_d76aafebe051005ab6bac394
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 346
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-013-mutmut安装接入验证/06_执行/变更清单.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_59719d0d7444ebfc828cdd1f
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 347
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/results.json
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_fbc20c642753f3ee9e334cab
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 348
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_f40658f29ef312d386e141f9
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 349
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/测试记录.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_e6c0c5f6adf9c9d84fcc55ec
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 350
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-013-mutmut安装接入验证/08_结论/审核回传.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_d8ae7060c92593b596d7cc5a
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 351
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-013-mutmut安装接入验证/run.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_74a8015cc9013bb80d9005f6
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 377
+  occurrence_on_line: 1
+  match: 08_os/02_boot/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_4b56bcf1d5221fd9e2936c41
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 378
+  occurrence_on_line: 1
+  match: 08_os/04_skills_and_tools/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_deeec991b79c2c629897ab95
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 379
+  occurrence_on_line: 1
+  match: 08_os/05_registry/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_f40bb683b49b86fb42e40d74
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 380
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/mutmut/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_bf1568df9d062b9ff2f9cd4d
+  path: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/validate_repository_state.py
+  line: 381
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/check_jsonschema/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_a7f4ce52d9c7c4bc079e22e8
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/compile_results.py
+  line: 179
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_02ac25c54fa41f66f128dffc
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/compile_results.py
+  line: 181
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_8182b7d40f0526dd7dbf0717
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/compile_results.py
+  line: 270
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_77b191e79be22b3aaf0b1ec1
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/compile_results.py
+  line: 288
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/cosmic_ray/invoke.sh
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_8221e98fd4a0361dfe25aa07
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/compile_results.py
+  line: 289
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/cosmic_ray/summarize.py
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_f250b374fc69b5b4449da9b0
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/redact_changed_text.py
+  line: 11
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-014-cosmic-ray安装对照验证
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_f67f98c3ce907fd4aeded675
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/rerun_all_experiments.sh
+  line: 23
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_0dda9bc02311efcca728645d
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/rerun_all_experiments.sh
+  line: 29
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_2cee174bf2391e33413a6a80
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/rerun_all_experiments.sh
+  line: 30
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_0799d7718c84445e03c14b16
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/run_validation.sh
+  line: 23
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-014-cosmic-ray安装对照验证
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_aa7ccbe211d8b9a763c83dcd
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/run_validation.sh
+  line: 37
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_1bd1439edf9652d374c02971
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/test_summarize.py
+  line: 12
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/cosmic_ray/summarize.py
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_2882951272308e593d9ded9b
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_repository_state.py
+  line: 14
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-014-cosmic-ray安装对照验证
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_05f8b9a2bc4c1be08b8f1348
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_repository_state.py
+  line: 16
+  occurrence_on_line: 1
+  match: 08_os/04_skills_and_tools/README.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_f01344046d2033fe4db363ec
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_repository_state.py
+  line: 17
+  occurrence_on_line: 1
+  match: 08_os/05_registry/skills_and_tools_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_74fe5ba28ae85b1c020e0b7d
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_repository_state.py
+  line: 20
+  occurrence_on_line: 1
+  match: 08_os/04_skills_and_tools/cosmic-ray/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_7d1d477ff8d2c6c464709517
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_repository_state.py
+  line: 21
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/cosmic_ray/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_1fb134e02c2f6c84df2ecca1
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_repository_state.py
+  line: 25
+  occurrence_on_line: 1
+  match: 08_os/02_boot/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_c26bc4f3d532b339a3e95938
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_repository_state.py
+  line: 26
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/check_jsonschema/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_2deed382d408602a6b936cf6
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_repository_state.py
+  line: 27
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/mutmut/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_3c596f11487faed571fd11b9
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_repository_state.py
+  line: 28
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-012-check-jsonschema安装接入验证/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_c98410bd0c7ad14b16d9252d
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_repository_state.py
+  line: 29
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-013-mutmut安装接入验证/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_28cdf36da701426e83a309b5
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_repository_state.py
+  line: 71
+  occurrence_on_line: 1
+  match: 08_os/05_registry/skills_and_tools_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_b68cd6f4ddff3d9288dd46e5
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_repository_state.py
+  line: 201
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/cosmic_ray/invoke.sh
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_5473fb4be5b9bd5a919d2386
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_repository_state.py
+  line: 208
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/cosmic_ray/invoke.sh
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_d9ad62b86844f59787931dee
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_repository_state.py
+  line: 212
+  occurrence_on_line: 1
+  match: 08_os/04_skills_and_tools/cosmic-ray/README.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_f9d858fda1f44bde96bf0d14
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_repository_state.py
+  line: 213
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/cosmic_ray/README.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_b12e5fa5b674c3c3b4d2e2e1
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_repository_state.py
+  line: 214
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/cosmic_ray/invoke.sh
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_6a96fdf090aea62cffb63a0b
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_repository_state.py
+  line: 215
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/cosmic_ray/summarize.py
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_04359c30d199c8babe506d7a
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_repository_state.py
+  line: 216
+  occurrence_on_line: 1
+  match: 08_os/05_registry/skills_and_tools_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_084cebcdca8a3ce5fde4022b
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_wrapper.py
+  line: 14
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/cosmic_ray/invoke.sh
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_69f074590fa67b8378fa8277
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_wrapper.py
+  line: 15
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/cosmic_ray/summarize.py
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_48d4d5c8e96f28b0912e439a
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_wrapper.py
+  line: 17
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/timeout_probe
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_5a2b8e109f85590f17985154
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_wrapper.py
+  line: 20
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-013-mutmut安装接入验证/07_测试执行/real_target_tests
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_96b8ccbe28acb22b880bf00f
+  path: 08_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/validate_wrapper.py
+  line: 23
+  occurrence_on_line: 1
+  match: 08_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_ca75ee421bfa6b7d4c2e7755
+  path: 08_os/_runs/run-20260804-阶段协同推演闭环激活-001/07_测试执行/MAJOR-1_Windows路径修复与复验_v1.yml
+  line: 14
+  occurrence_on_line: 1
+  match: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py
+  final_classification: rewrite_current_path
+  semantic_group: durable_validation_pointer
+  reason: This field remains a reproduction or validation pointer to a repository artifact.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_fd4ec062df889835c93d63b9
+  path: 08_os/_runs/run-20260804-阶段协同推演闭环激活-001/07_测试执行/MAJOR-1_Windows路径修复与复验_v1.yml
+  line: 29
+  occurrence_on_line: 1
+  match: 08_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: durable_validation_pointer
+  reason: This field remains a reproduction or validation pointer to a repository artifact.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_ad604d2f58891869b34cfa8b
+  path: 08_os/_runs/run-20260804-阶段协同推演闭环激活-001/07_测试执行/MAJOR-1_Windows路径修复与复验_v1.yml
+  line: 43
+  occurrence_on_line: 1
+  match: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py
+  final_classification: rewrite_current_path
+  semantic_group: durable_validation_pointer
+  reason: This field remains a reproduction or validation pointer to a repository artifact.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_a44df40c5610ce7e918cd917
+  path: 08_os/_runs/run-20260804-阶段协同推演闭环激活-001/07_测试执行/MAJOR-1_Windows路径修复与复验_v1.yml
+  line: 44
+  occurrence_on_line: 1
+  match: 08_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: durable_validation_pointer
+  reason: This field remains a reproduction or validation pointer to a repository artifact.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_3a386d2cce3316c4add3adb0
+  path: 08_os/_runs/run-20260804-阶段协同推演闭环激活-001/07_测试执行/MAJOR-1_Windows路径修复与复验_v1.yml
+  line: 45
+  occurrence_on_line: 1
+  match: 08_os/01_workflow/01_需求建模/实现/阶段协同推演profile引用_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: durable_validation_pointer
+  reason: This field remains a reproduction or validation pointer to a repository artifact.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_86f6a96258153c88d72ebc78
+  path: 08_os/_runs/run-20260804-阶段协同推演闭环激活-001/07_测试执行/MAJOR-1_Windows路径修复与复验_v1.yml
+  line: 46
+  occurrence_on_line: 1
+  match: 08_os/01_workflow/02_信息收集与提炼/实现/阶段协同推演profile引用_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: durable_validation_pointer
+  reason: This field remains a reproduction or validation pointer to a repository artifact.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_5d79845ca4e4929f3445cfc3
+  path: 08_os/_runs/run-20260804-阶段协同推演闭环激活-001/07_测试执行/MAJOR-1_Windows路径修复与复验_v1.yml
+  line: 47
+  occurrence_on_line: 1
+  match: 08_os/01_workflow/03_结果建模/实现/阶段协同推演profile引用_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: durable_validation_pointer
+  reason: This field remains a reproduction or validation pointer to a repository artifact.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_f70f06f3774a08046c274f72
+  path: 08_os/_runs/run-20260804-阶段协同推演闭环激活-001/07_测试执行/MAJOR-1_Windows路径修复与复验_v1.yml
+  line: 48
+  occurrence_on_line: 1
+  match: 08_os/01_workflow/04_测试生成/实现/阶段协同推演profile引用_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: durable_validation_pointer
+  reason: This field remains a reproduction or validation pointer to a repository artifact.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_ba8c965b6d9efb51183fe82a
+  path: 08_os/_runs/run-20260804-阶段协同推演闭环激活-001/07_测试执行/MAJOR-1_Windows路径修复与复验_v1.yml
+  line: 49
+  occurrence_on_line: 1
+  match: 08_os/01_workflow/05_步骤拆分/实现/阶段协同推演profile引用_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: durable_validation_pointer
+  reason: This field remains a reproduction or validation pointer to a repository artifact.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_96c543a248d0f7e93e6d10ac
+  path: 08_os/_runs/run-20260804-阶段协同推演闭环激活-001/07_测试执行/MAJOR-1_Windows路径修复与复验_v1.yml
+  line: 50
+  occurrence_on_line: 1
+  match: 08_os/01_workflow/06_执行/实现/阶段协同推演profile引用_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: durable_validation_pointer
+  reason: This field remains a reproduction or validation pointer to a repository artifact.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_bc9869f6f8a66a6b745a631e
+  path: 08_os/_runs/run-20260804-阶段协同推演闭环激活-001/07_测试执行/MAJOR-1_Windows路径修复与复验_v1.yml
+  line: 51
+  occurrence_on_line: 1
+  match: 08_os/01_workflow/07_测试执行/实现/阶段协同推演profile引用_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: durable_validation_pointer
+  reason: This field remains a reproduction or validation pointer to a repository artifact.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_1abc8aed9c0bb9512e89c489
+  path: 08_os/_runs/run-20260804-阶段协同推演闭环激活-001/07_测试执行/MAJOR-1_Windows路径修复与复验_v1.yml
+  line: 54
+  occurrence_on_line: 1
+  match: 08_os\\03_mechanisms\\stage_collaborative_deliberation\\实现\\verify_stage_collaborative_deliberation.py
+  final_classification: preserve_historical_literal
+  semantic_group: before_after_state
+  reason: The old/repaired Windows value is a measured before/after fact from the completed repair.
+  expected_after_cutover: literal remains unchanged because rewriting it would alter the recorded before/after state
+- occurrence_id: occ_da5230683e69cdd735650dac
+  path: 08_os/_runs/run-20260804-阶段协同推演闭环激活-001/07_测试执行/MAJOR-1_Windows路径修复与复验_v1.yml
+  line: 55
+  occurrence_on_line: 1
+  match: 08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py
+  final_classification: preserve_historical_literal
+  semantic_group: before_after_state
+  reason: The old/repaired Windows value is a measured before/after fact from the completed repair.
+  expected_after_cutover: literal remains unchanged because rewriting it would alter the recorded before/after state
+- occurrence_id: occ_ce2ab7a53d55c3d7696510b9
+  path: 08_os/_runs/run-20260804-阶段协同推演闭环激活-001/08_结论/completion_pointer.yml
+  line: 14
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-20260804-阶段协同推演闭环激活-001/07_测试执行/独立全局激活MAJOR-1修复复审结果_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: durable_artifact_pointer
+  reason: The command or completion pointer must remain loadable after the namespace move.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_d9ebf5079c4d5bdd721b5c3c
+  path: 08_os/_runs/run-20260805-七阶段最小运行闭环-001/08_结论/completion_pointer.yml
+  line: 11
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-20260805-七阶段最小运行闭环-001/07_测试执行/七阶段最小运行闭环验证结果_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: durable_artifact_pointer
+  reason: The command or completion pointer must remain loadable after the namespace move.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_028ca365e0e19e131a987d60
+  path: 08_os/_runs/run-20260805-七阶段最小运行闭环-001/08_结论/completion_pointer.yml
+  line: 17
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-20260805-七阶段最小运行闭环-001/07_测试执行/独立七阶段最小运行闭环审核结果_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: durable_artifact_pointer
+  reason: The command or completion pointer must remain loadable after the namespace move.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_4c8fae4252bbd2657035d27d
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼/antigravity_desktop_executor_01_result.yml
+  line: 13
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-x/06_执行/发布任务包.yml
+  final_classification: preserve_historical_literal
+  semantic_group: captured_model_output
+  reason: The literal is captured executor output describing the path vocabulary observed at that time.
+  expected_after_cutover: literal remains unchanged as recorded run evidence
+- occurrence_id: occ_9dea9ebb6b406aab01f2a7c9
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼/antigravity_desktop_executor_01_result.yml
+  line: 14
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-x/durable/Human_decisions/授权发布.yml
+  final_classification: preserve_historical_literal
+  semantic_group: captured_model_output
+  reason: The literal is captured executor output describing the path vocabulary observed at that time.
+  expected_after_cutover: literal remains unchanged as recorded run evidence
+- occurrence_id: occ_3c04617d2a2e621407eac563
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼/antigravity_desktop_executor_01_result.yml
+  line: 25
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-x/06_执行/发布任务包.yml
+  final_classification: preserve_historical_literal
+  semantic_group: captured_model_output
+  reason: The literal is captured executor output describing the path vocabulary observed at that time.
+  expected_after_cutover: literal remains unchanged as recorded run evidence
+- occurrence_id: occ_c9321fd38c8d1a8deedb4324
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼/antigravity_desktop_executor_01_result.yml
+  line: 26
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-x/durable/Human_decisions/授权发布.yml
+  final_classification: preserve_historical_literal
+  semantic_group: captured_model_output
+  reason: The literal is captured executor output describing the path vocabulary observed at that time.
+  expected_after_cutover: literal remains unchanged as recorded run evidence
+- occurrence_id: occ_93f1c690efe52fa076f1b84d
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼/antigravity_desktop_executor_01_result.yml
+  line: 37
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-x/06_执行/发布任务包.yml
+  final_classification: preserve_historical_literal
+  semantic_group: captured_model_output
+  reason: The literal is captured executor output describing the path vocabulary observed at that time.
+  expected_after_cutover: literal remains unchanged as recorded run evidence
+- occurrence_id: occ_5dc11f924fc51f4ed403675f
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼/antigravity_desktop_executor_01_result.yml
+  line: 38
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-x/durable/Human_decisions/授权发布.yml
+  final_classification: preserve_historical_literal
+  semantic_group: captured_model_output
+  reason: The literal is captured executor output describing the path vocabulary observed at that time.
+  expected_after_cutover: literal remains unchanged as recorded run evidence
+- occurrence_id: occ_45ce0720995740f9c3bc8532
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼/antigravity_desktop_executor_01_result.yml
+  line: 49
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-x/03_结果建模/审核意见_v1.md
+  final_classification: preserve_historical_literal
+  semantic_group: captured_model_output
+  reason: The literal is captured executor output describing the path vocabulary observed at that time.
+  expected_after_cutover: literal remains unchanged as recorded run evidence
+- occurrence_id: occ_f027c06c392c96223997209a
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/results/mutation_suite_v3.yml
+  line: 10
+  occurrence_on_line: 1
+  match: 08_os\_runs\run-20260805-全局通讯机制-001\04_测试生成\实现\run_stage04_executable_tests.py
+  final_classification: preserve_historical_literal
+  semantic_group: recorded_command_execution
+  reason: The literal is the frozen command observed in this historical test result.
+  expected_after_cutover: literal remains unchanged as recorded run evidence
+- occurrence_id: occ_9b21a038e68b3f824f6162af
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/results/preimplementation_baseline_v3.yml
+  line: 10
+  occurrence_on_line: 1
+  match: 08_os\_runs\run-20260805-全局通讯机制-001\04_测试生成\实现\run_stage04_executable_tests.py
+  final_classification: preserve_historical_literal
+  semantic_group: recorded_command_execution
+  reason: The literal is the frozen command observed in this historical test result.
+  expected_after_cutover: literal remains unchanged as recorded run evidence
+- occurrence_id: occ_c7f6feb784a1a42fa7ffd721
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/results/synthetic_conforming_full_v2.yml
+  line: 5
+  occurrence_on_line: 1
+  match: 08_os\_runs\run-20260805-全局通讯机制-001\04_测试生成\实现\run_stage04_executable_tests.py
+  final_classification: preserve_historical_literal
+  semantic_group: recorded_command_execution
+  reason: The literal is the frozen command observed in this historical test result.
+  expected_after_cutover: literal remains unchanged as recorded run evidence
+- occurrence_id: occ_1023db83ce50b0b5a889d75e
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/results/synthetic_conforming_full_v3.yml
+  line: 10
+  occurrence_on_line: 1
+  match: 08_os\_runs\run-20260805-全局通讯机制-001\04_测试生成\实现\run_stage04_executable_tests.py
+  final_classification: preserve_historical_literal
+  semantic_group: recorded_command_execution
+  reason: The literal is the frozen command observed in this historical test result.
+  expected_after_cutover: literal remains unchanged as recorded run evidence
+- occurrence_id: occ_12c20a5363eb9a11c0863c4f
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/run_stage04_executable_tests.py
+  line: 75
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_263ebde1a82db278a9e34561
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/run_stage04_executable_tests.py
+  line: 1559
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_e0bb7d0465a5a73f485e0863
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/run_stage04_executable_tests.py
+  line: 1588
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-x/06_执行/发布任务包.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_18ca6f096ee31fb0e42bacf8
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/run_stage04_executable_tests.py
+  line: 1588
+  occurrence_on_line: 2
+  match: 08_os/_runs/run-x/durable/Human_decisions/授权发布.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_20e930a2541123baddd9a427
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/run_stage04_executable_tests.py
+  line: 1589
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-x/durable/Human_decisions/授权发布.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_747d8a703cef6e3ed94b91d0
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/run_stage04_executable_tests.py
+  line: 1599
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-x/06_执行/发布任务包.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_19fcc3c276602ccfc1f1b23c
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/run_stage04_executable_tests.py
+  line: 1599
+  occurrence_on_line: 2
+  match: 08_os/_runs/run-x/durable/Human_decisions/授权发布.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_2403cde006a97e34ce312c15
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/run_stage04_executable_tests.py
+  line: 1610
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-x/06_执行/发布任务包.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_5d79d94d2bf03438146a26ec
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/run_stage04_executable_tests.py
+  line: 1610
+  occurrence_on_line: 2
+  match: 08_os/_runs/run-x/durable/Human_decisions/授权发布.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_8af63cab17154eebcf6c3624
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/run_stage04_executable_tests.py
+  line: 1621
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-x/03_结果建模/审核意见_v1.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_5cc291fab631d6802c21162a
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/run_stage04_executable_tests.py
+  line: 1684
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_7294856c5acd0836d1abf1ae
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/synthetic_adapters.py
+  line: 554
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-x/06_执行/发布任务包.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_1827a24a93836766745e3b18
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/synthetic_adapters.py
+  line: 554
+  occurrence_on_line: 2
+  match: 08_os/_runs/run-x/durable/Human_decisions/授权发布.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_ee11ecdea7f42f4a469afdcb
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/synthetic_adapters.py
+  line: 570
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-x/03_结果建模/审核意见_v1.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_4e3b2c8f5f5b2d9230f3b93f
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/validate_test_candidate.py
+  line: 69
+  occurrence_on_line: 1
+  match: '"08_os"'
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_00ba9dc3a932f1bdb48cd635
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/实现/validate_05_steps.py
+  line: 4
+  occurrence_on_line: 1
+  match: 08_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_036fca79cbc05f6e0a0a37b5
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/实现/validate_05_steps.py
+  line: 6
+  occurrence_on_line: 1
+  match: 08_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_e0e88b7c28b7b405dd02a0ea
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/实现/validate_05_steps.py
+  line: 10
+  occurrence_on_line: 1
+  match: 08_os/01_workflow/06_执行/实现/最小运行schema_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_0d99310de2db57bfb2270aaa
+  path: 08_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/实现/validate_05_steps.py
+  line: 39
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-20260805-全局通讯机制-001
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_053104857a0daf9b59419424
+  path: 08_os/_runs/run-20260810-旧OS物理删除-001/04_验证/verify_exact_deletion.py
+  line: 46
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-20260810-旧OS物理删除-001/04_验证/pre_delete_snapshot.json
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_72edb32d5ec7577cc335974b
+  path: 08_os/_runs/run-20260810-旧OS物理删除-001/04_验证/verify_exact_deletion.py
+  line: 49
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-20260810-旧OS物理删除-001/04_验证/tracked_python_snapshot.json
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_f47008ea0abe48f69e4a9fc1
+  path: 08_os/_runs/run-20260810-旧OS物理删除-001/04_验证/verify_exact_deletion.py
+  line: 66
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-20260810-旧OS物理删除-001/04_验证/verify_exact_deletion.py
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_c495461277e13a403f1394f0
+  path: 08_os/_runs/run-20260810-旧OS物理删除-001/04_验证/verify_exact_deletion.py
+  line: 108
+  occurrence_on_line: 1
+  match: '"08_os"'
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_80baec63c169731f975110a0
+  path: 08_os/_runs/run-20260810-旧OS物理删除-001/04_验证/verify_exact_deletion.py
+  line: 111
+  occurrence_on_line: 1
+  match: '"08_os"'
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_0136702f1ed096061b963963
+  path: 08_os/_runs/run-20260810-旧OS物理删除-001/04_验证/verify_exact_deletion.py
+  line: 185
+  occurrence_on_line: 1
+  match: 08_os/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_ea479d2fbfd07723781baa09
+  path: 08_os/_runs/run-20260810-旧OS物理删除-001/04_验证/verify_exact_deletion.py
+  line: 213
+  occurrence_on_line: 1
+  match: 08_os/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_a1a57aa8e9ae0ada71e22163
+  path: 08_os/_runs/run-20260810-旧OS物理删除-001/04_验证/verify_exact_deletion.py
+  line: 270
+  occurrence_on_line: 1
+  match: 08_os/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_cd11616745c35c91cdf04883
+  path: 08_os/_runs/run-20260810-旧OS物理删除-001/04_验证/verify_exact_deletion.py
+  line: 293
+  occurrence_on_line: 1
+  match: 08_os/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_d6347c6a26673be3ce608381
+  path: 08_os/_runs/run-20260810-旧OS物理删除-001/04_验证/verify_exact_deletion.py
+  line: 395
+  occurrence_on_line: 1
+  match: 08_os/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_3dea29f83f2b78d4470365c6
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/build_final_lists.py
+  line: 4
+  occurrence_on_line: 1
+  match: 08_os/**
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_7d1cb5ce32ae8dab4fab8070
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/build_final_lists.py
+  line: 7
+  occurrence_on_line: 1
+  match: 08_os/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_db481f64690016211656e926
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/build_final_lists.py
+  line: 19
+  occurrence_on_line: 1
+  match: 08_os/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_d266dee0e21aebafb6b1d163
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/build_final_lists.py
+  line: 38
+  occurrence_on_line: 1
+  match: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/classify_counts.py
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_749ee8dcdf2f5566ca54b24a
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/build_final_lists.py
+  line: 54
+  occurrence_on_line: 1
+  match: 08_os/05_registry/repository_publisher_authority_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_e4bce26e51673b1c8d305147
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/build_final_lists.py
+  line: 60
+  occurrence_on_line: 1
+  match: 08_os/03_mechanisms/context_management/依据材料/系统机制总结_历史输入_v1.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_e0cc1de40bd07719d75a4f1e
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/build_final_lists.py
+  line: 64
+  occurrence_on_line: 1
+  match: 08_os/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_9bff4f9c533e81a61bff9932
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/build_final_lists.py
+  line: 102
+  occurrence_on_line: 1
+  match: 08_os/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_5b96c698a3cd7731ea942e63
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/build_final_lists.py
+  line: 135
+  occurrence_on_line: 1
+  match: 08_os/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_42ad602826208619603f52f2
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/build_final_lists.py
+  line: 137
+  occurrence_on_line: 1
+  match: 08_os/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_d4042e59cb13d4f0d78800a5
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/build_final_lists.py
+  line: 157
+  occurrence_on_line: 1
+  match: 08_os/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_b9a4efb566cf057154e02eb7
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/build_final_lists.py
+  line: 190
+  occurrence_on_line: 1
+  match: 08_os/**
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_1e7622fcf2207276c274d4aa
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/build_final_lists.py
+  line: 218
+  occurrence_on_line: 1
+  match: 08_os/**
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_feca196bf88c00c2dbf24a1b
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/build_final_lists.py
+  line: 220
+  occurrence_on_line: 1
+  match: 08_os/\
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_19db1ccafb40a8b10f1a74bd
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/verify_migration_closure.py
+  line: 6
+  occurrence_on_line: 1
+  match: 08_os/**
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_52543b77c39bb4c1529178d5
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/verify_migration_closure.py
+  line: 6
+  occurrence_on_line: 2
+  match: 08_os/_runs/**
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_0c3f9d38fa1de1ade332d482
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/verify_migration_closure.py
+  line: 10
+  occurrence_on_line: 1
+  match: 08_os/_dev/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_570d899a29a0a7e627519ab8
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/verify_migration_closure.py
+  line: 12
+  occurrence_on_line: 1
+  match: 08_os/README.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_8a4b6077f08edd013b4a122d
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/verify_migration_closure.py
+  line: 25
+  occurrence_on_line: 1
+  match: 08_os/_runs/**
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_212c9258b71ae81b491b4aef
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/verify_migration_closure.py
+  line: 50
+  occurrence_on_line: 1
+  match: 08_os/05_registry/repository_publisher_authority_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_d9b05f059f052c7a14e9d059
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/verify_migration_closure.py
+  line: 75
+  occurrence_on_line: 1
+  match: 08_os/05_registry/repository_guards_v1.yml
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_8c7f73300f08bba9dfa4db40
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/verify_migration_closure.py
+  line: 86
+  occurrence_on_line: 1
+  match: 08_os/_dev/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_2383124e212567fe092bec81
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/verify_migration_closure.py
+  line: 86
+  occurrence_on_line: 2
+  match: 08_os/_runs/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_01155ee36dbef311ec0e0ce9
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/verify_migration_closure.py
+  line: 146
+  occurrence_on_line: 1
+  match: 08_os/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_b33cf54d317ce2d5ca7fc848
+  path: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/04_验证/verify_migration_closure.py
+  line: 146
+  occurrence_on_line: 2
+  match: 08_os/_runs/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_a8208701adb58e19b49c116f
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/classify_counts.py
+  line: 6
+  occurrence_on_line: 1
+  match: 08_os/**
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_b892a3604b73b2aa3995b9b1
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/classify_counts.py
+  line: 136
+  occurrence_on_line: 1
+  match: 08_os/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_219128d242bc4ccbfd702909
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/scan_non08_references.py
+  line: 2
+  occurrence_on_line: 1
+  match: 08_os/**
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_9caf19566cb50eea182414d3
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/scan_non08_references.py
+  line: 7
+  occurrence_on_line: 1
+  match: 08_os/**
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_d14af6bba19a16e37bb305f6
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/scan_non08_references.py
+  line: 7
+  occurrence_on_line: 2
+  match: 08_os/_runs/**
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_33bd6457055ee97c003413c6
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/scan_non08_references.py
+  line: 12
+  occurrence_on_line: 1
+  match: 08_os/_runs/**
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_1ff6841fcdd5e0b69f4b0e5c
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/scan_non08_references.py
+  line: 68
+  occurrence_on_line: 1
+  match: 08_os/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_efacda47948e5e4b4ce6487c
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/scan_non08_references.py
+  line: 78
+  occurrence_on_line: 1
+  match: 08_os/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_939eb0c35125dbee8110fdd3
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/scan_non08_references.py
+  line: 78
+  occurrence_on_line: 2
+  match: 08_os/_runs/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_a996d8e48d839673a654ad67
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/scan_non08_references.py
+  line: 81
+  occurrence_on_line: 1
+  match: 08_os/_runs/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_64cedf011d647fdef8bd6abc
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/verify_rewrite.py
+  line: 197
+  occurrence_on_line: 1
+  match: 08_os/README.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_4a60f13b0cb933b2307c2fcf
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/verify_rewrite.py
+  line: 198
+  occurrence_on_line: 1
+  match: 08_os/01_workflow/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_c8e1c7e339eadbcb19b47878
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/verify_rewrite.py
+  line: 199
+  occurrence_on_line: 1
+  match: 08_os/02_boot/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_dc7f474dcc7d92f0658b691f
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/verify_rewrite.py
+  line: 200
+  occurrence_on_line: 1
+  match: 08_os/03_mechanisms/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_56487e85aeae30e073d84f63
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/verify_rewrite.py
+  line: 201
+  occurrence_on_line: 1
+  match: 08_os/04_skills_and_tools/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_1e5f1d0a4ffc7d73269c7e91
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/verify_rewrite.py
+  line: 202
+  occurrence_on_line: 1
+  match: 08_os/05_registry/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_20fecf7ab7aec068b56f67bf
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/verify_rewrite.py
+  line: 203
+  occurrence_on_line: 1
+  match: 08_os/06_execution/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_a5840dffdfff2175b5a9f5d3
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/verify_rewrite.py
+  line: 204
+  occurrence_on_line: 1
+  match: 08_os/_dev/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_c487a521121c392097cc1a3b
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/verify_rewrite.py
+  line: 205
+  occurrence_on_line: 1
+  match: 08_os/_runs/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_d1a8c9ee7a8fef4756cebc45
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/verify_rewrite.py
+  line: 206
+  occurrence_on_line: 1
+  match: 08_os/claude与人类的开发对话日志.md
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os
+- occurrence_id: occ_364a0a644fca964d4577ccab
+  path: 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/07_测试执行/verify_rewrite.py
+  line: 210
+  occurrence_on_line: 1
+  match: 08_os/07_content/
+  final_classification: rewrite_current_path
+  semantic_group: executable_or_reproduction_pointer
+  reason: The executable, test, wrapper, or reproduction reference must resolve against the current repository tree.
+  expected_after_cutover: replace repository root segment 08_os with 01_os

@@ -68,6 +68,11 @@ RUN_RECORD_NAME_RE = re.compile(
     r"(?i)(?:allowlist|receipt|结论|结果|记录|回传|清单|报告|派单|复核|审核|验收|"
     r"状态|模型|需求|答复|确认|决定|声明|说明)"
 )
+BULK_EVIDENCE_RULES = {
+    "generated_run_snapshot_or_receipt",
+    "semantically_named_run_record",
+}
+FINAL_CLASSES = {"rewrite_current_path", "preserve_historical_literal"}
 
 
 class ScanError(RuntimeError):
@@ -133,6 +138,34 @@ def bounded(value: str, limit: int = 320) -> str:
     if len(cleaned) <= limit:
         return cleaned
     return cleaned[: limit - 1] + "…"
+
+
+def occurrence_id(commit: str, item: dict[str, Any]) -> str:
+    """Bind an occurrence to immutable source content and its exact position."""
+    parts = (
+        commit,
+        item["path"],
+        str(item["line"]),
+        str(item["column"]),
+        str(item["occurrence_on_line"]),
+        item["match"],
+        item["line_text"],
+    )
+    digest = hashlib.sha256("\0".join(parts).encode("utf-8")).hexdigest()
+    return "occ_" + digest[:24]
+
+
+def selector_key(item: dict[str, Any]) -> tuple[str, int, int, str]:
+    return (item["path"], int(item["line"]), int(item["column"]), item["match"])
+
+
+def load_yaml_document(path: Path, expected_schema: str) -> dict[str, Any]:
+    if yaml is None:
+        raise ScanError("PyYAML is required to read review manifests")
+    value = yaml.safe_load(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict) or value.get("schema_version") != expected_schema:
+        raise ScanError(f"unexpected or missing schema in {path}")
+    return value
 
 
 def looks_like_bound_record(text: str) -> bool:
@@ -275,6 +308,8 @@ def scan(repo_root: Path, commit: str, context_lines: int) -> dict[str, Any]:
                 )
 
     entries.sort(key=lambda item: (item["path"], item["line"], item["column"]))
+    for item in entries:
+        item["occurrence_id"] = occurrence_id(commit, item)
     file_hit_count = len({entry["path"] for entry in entries})
     classifications = Counter(entry["proposed_classification"] for entry in entries)
     return {
@@ -300,17 +335,171 @@ def scan(repo_root: Path, commit: str, context_lines: int) -> dict[str, Any]:
     }
 
 
+def rebuild_measurements(result: dict[str, Any]) -> None:
+    entries = result["entries"]
+    classifications = Counter(item["proposed_classification"] for item in entries)
+    result["text"]["files_with_08_os_reference"] = len({item["path"] for item in entries})
+    result["text"]["occurrences"] = len(entries)
+    result["classification"] = {
+        "rewrite_current_path": classifications["rewrite_current_path"],
+        "preserve_historical_literal": classifications["preserve_historical_literal"],
+        "manual_review": classifications["manual_review"],
+    }
+
+
+def apply_reference_scope(result: dict[str, Any], scope_path: Path) -> None:
+    """Remove generated echo surfaces while retaining exact reviewed historical facts."""
+    scope = load_yaml_document(scope_path, "citystate.os_namespace_reference_scope.v1")
+    if scope.get("source_commit") != result["source_commit"]:
+        raise ScanError("reference scope source_commit does not match scan source")
+    if set(scope.get("excluded_bulk_rules") or []) != BULK_EVIDENCE_RULES:
+        raise ScanError("reference scope bulk-rule declaration is incomplete")
+
+    retained_rows = scope.get("retained_historical_occurrences") or []
+    correction_rows = scope.get("classification_corrections") or []
+    retained = {selector_key(row): row for row in retained_rows}
+    corrections = {selector_key(row): row for row in correction_rows}
+    if len(retained) != len(retained_rows) or len(corrections) != len(correction_rows):
+        raise ScanError("duplicate selector in reference scope")
+
+    raw_entries = result["entries"]
+    raw_by_key = {selector_key(item): item for item in raw_entries}
+    if len(raw_by_key) != len(raw_entries):
+        raise ScanError("raw occurrence selector collision")
+    stale_retained = set(retained) - set(raw_by_key)
+    stale_corrections = set(corrections) - set(raw_by_key)
+    if stale_retained or stale_corrections:
+        raise ScanError("reference scope contains stale selectors")
+    for key, row in {**retained, **corrections}.items():
+        if row.get("occurrence_id") != raw_by_key[key]["occurrence_id"]:
+            raise ScanError("reference scope occurrence_id does not match immutable source content")
+    if any(raw_by_key[key]["classification_rule"] not in BULK_EVIDENCE_RULES for key in retained):
+        raise ScanError("retained historical selector does not point to excluded bulk evidence")
+
+    filtered: list[dict[str, Any]] = []
+    excluded = 0
+    for item in raw_entries:
+        key = selector_key(item)
+        if item["classification_rule"] in BULK_EVIDENCE_RULES and key not in retained:
+            excluded += 1
+            continue
+        if key in retained:
+            row = retained[key]
+            item["proposed_classification"] = "preserve_historical_literal"
+            item["classification_rule"] = "reviewed_frozen_historical_fact"
+            item["reason"] = row["reason"]
+            item["historical_reason"] = row["historical_reason"]
+            item["expected_after_cutover"] = (
+                "literal remains unchanged because changing it would rewrite the recorded past state"
+            )
+        if key in corrections:
+            row = corrections[key]
+            if item["proposed_classification"] != row.get("from_classification"):
+                raise ScanError("classification correction source class mismatch")
+            item["proposed_classification"] = row["final_classification"]
+            item["classification_rule"] = "independent_review_correction"
+            item["reason"] = row["reason"]
+            item["semantic_class"] = row["semantic_class"]
+            item["expected_after_cutover"] = "replace repository root segment 08_os with 01_os"
+        filtered.append(item)
+
+    result["entries"] = filtered
+    result["reference_scope"] = {
+        "manifest": scope_path.name,
+        "raw_occurrences": len(raw_entries),
+        "excluded_generated_echo_occurrences": excluded,
+        "retained_reviewed_historical_occurrences": len(retained),
+        "classification_corrections": len(corrections),
+    }
+    rebuild_measurements(result)
+
+
+def apply_manual_resolution(result: dict[str, Any], resolution_path: Path) -> None:
+    resolution = load_yaml_document(resolution_path, "citystate.manual_review_resolution.v1")
+    if resolution.get("source_commit") != result["source_commit"]:
+        raise ScanError("manual resolution source_commit does not match scan source")
+    rows = resolution.get("resolutions") or []
+    by_id = {row.get("occurrence_id"): row for row in rows}
+    if None in by_id or len(by_id) != len(rows):
+        raise ScanError("manual resolution has missing or duplicate occurrence_id")
+    manual = {
+        item["occurrence_id"]: item
+        for item in result["entries"]
+        if item["proposed_classification"] == "manual_review"
+    }
+    if set(by_id) != set(manual):
+        missing = len(set(manual) - set(by_id))
+        stale = len(set(by_id) - set(manual))
+        raise ScanError(f"manual resolution is not an exact cover: missing={missing} stale={stale}")
+
+    for item_id, item in manual.items():
+        row = by_id[item_id]
+        binding = (row.get("path"), row.get("line"), row.get("occurrence_on_line"), row.get("match"))
+        expected = (item["path"], item["line"], item["occurrence_on_line"], item["match"])
+        if binding != expected:
+            raise ScanError(f"manual resolution content binding mismatch: {item_id}")
+        final_class = row.get("final_classification")
+        if final_class not in FINAL_CLASSES:
+            raise ScanError(f"invalid final manual classification: {item_id}")
+        if not row.get("reason") or not row.get("semantic_group"):
+            raise ScanError(f"incomplete manual resolution: {item_id}")
+        item["proposed_classification"] = final_class
+        item["classification_rule"] = "explicit_manual_resolution"
+        item["reason"] = row["reason"]
+        item["expected_after_cutover"] = row["expected_after_cutover"]
+        if final_class == "rewrite_current_path":
+            item["semantic_class"] = row["semantic_group"]
+        else:
+            item["historical_reason"] = row["semantic_group"]
+
+    result["manual_resolution"] = {
+        "manifest": resolution_path.name,
+        "original_manual_occurrences": len(manual),
+        "covered": len(by_id),
+        "missing": 0,
+        "stale": 0,
+        "duplicates": 0,
+    }
+    rebuild_measurements(result)
+
+
+def attach_group_summaries(result: dict[str, Any]) -> None:
+    rewrite_groups: Counter[str] = Counter()
+    historical_groups: Counter[str] = Counter()
+    for item in result["entries"]:
+        classification = item["proposed_classification"]
+        if classification == "rewrite_current_path":
+            group = item.get("semantic_class") or "current_repository_path"
+            item["semantic_class"] = group
+            rewrite_groups[group] += 1
+        elif classification == "preserve_historical_literal":
+            group = item.get("historical_reason") or item["classification_rule"]
+            item["historical_reason"] = group
+            historical_groups[group] += 1
+    result["grouped_counts"] = {
+        "rewrite_current_path_by_semantic_class": dict(sorted(rewrite_groups.items())),
+        "preserve_historical_literal_by_reason": dict(sorted(historical_groups.items())),
+    }
+
+
 def mapping_document(result: dict[str, Any]) -> dict[str, Any]:
     entries = []
     for item in result["entries"]:
         entries.append(
             {
+                "occurrence_id": item["occurrence_id"],
                 "path": item["path"],
                 "line": item["line"],
                 "column": item["column"],
+                "occurrence_on_line": item["occurrence_on_line"],
                 "old_text": item["match"],
                 "classification": item["proposed_classification"],
                 "classification_rule": item["classification_rule"],
+                "semantic_group": (
+                    item.get("semantic_class")
+                    if item["proposed_classification"] == "rewrite_current_path"
+                    else item.get("historical_reason")
+                ),
                 "reason": item["reason"],
                 "expected_after_cutover": item["expected_after_cutover"],
             }
@@ -326,6 +515,13 @@ def mapping_document(result: dict[str, Any]) -> dict[str, Any]:
             "occurrences": result["text"]["occurrences"],
         },
         "classification": result["classification"],
+        "grouped_counts": result.get("grouped_counts", {}),
+        "closure": {
+            "overlap": 0,
+            "unassigned": result["classification"]["manual_review"],
+            "manual_resolution": result.get("manual_resolution"),
+            "reference_scope": result.get("reference_scope"),
+        },
         "entries": entries,
     }
 
@@ -350,6 +546,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--source-treeish", required=True)
     parser.add_argument("--output", required=True, help="complete JSON result path")
     parser.add_argument("--mapping-output", required=True, help="frozen YAML mapping path")
+    parser.add_argument("--reference-scope", help="reviewed scope manifest for generated evidence")
+    parser.add_argument("--manual-resolution", help="exact-cover final resolution for manual occurrences")
     parser.add_argument("--context-lines", type=int, default=1)
     args = parser.parse_args(argv)
 
@@ -357,6 +555,11 @@ def main(argv: list[str] | None = None) -> int:
         repo_root = Path(args.repo_root).resolve()
         commit = resolve_commit(repo_root, args.source_treeish)
         result = scan(repo_root, commit, max(0, min(args.context_lines, 3)))
+        if args.reference_scope:
+            apply_reference_scope(result, Path(args.reference_scope))
+        if args.manual_resolution:
+            apply_manual_resolution(result, Path(args.manual_resolution))
+        attach_group_summaries(result)
         write_json(Path(args.output), result)
         write_yaml(Path(args.mapping_output), mapping_document(result))
         digest = hashlib.sha256(

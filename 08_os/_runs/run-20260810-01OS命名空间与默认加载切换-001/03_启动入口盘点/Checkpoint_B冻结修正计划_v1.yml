@@ -1,0 +1,92 @@
+schema_version: citystate.checkpoint_b_frozen_amendment.v1
+task_id: os-v2-01-os-namespace-and-autoload-cutover-001
+checkpoint: A_inventory_and_mapping_freeze
+source_commit: 818800595992d09e270082627b31642f04f1cc93
+status: planned_only_not_executed
+
+planned_B:
+  physical_root:
+    from: 08_os/
+    to: 01_os/
+  compatibility_shim: false
+  root_lift: false
+  may_start_only_after: ChatGPT_independent_checkpoint_A_pass
+  Human_execution_preference_2026_08_10:
+    repository: core
+    method: deterministic_character_replacement_script
+    replacement_scope: only_occurrences_frozen_as_rewrite_current_path
+    protected_literals: preserve_historical_literal
+    final_step: rename_directory_08_os_to_01_os
+    requested_validation:
+      behavioral_test_suite: not_required
+      lexical_match_and_partition_closure: required
+
+findings:
+  F1_retirement_wording_stale:
+    decision: old_OS_physical_retirement_is_complete
+    B_actions:
+      - remove current-state "legacy awaiting Human retirement" wording from AGENTS.md
+      - inspect and remove equivalent current-state wording from CLAUDE.md and GEMINI.md if present
+      - correct README.md and CORE_MANIFEST.yml to state the completed retirement
+    historical_evidence_policy: do_not_rewrite_true_past_observations
+
+  F2_deleted_root_docs_stale_references:
+    deleted_tracked_documents:
+      - PROJECT_CONTEXT.md
+      - ARCHITECTURE.md
+    B_action: remove current startup guidance that tells an executor to load or rely on these deleted documents
+    historical_evidence_policy: preserve references that only state what an earlier run or architecture used
+
+  F3_unowned_OS_root_documents:
+    - from: 08_os/可使用的独立模型和角色.md
+      to_area: 01_os/04_skills_and_tools/
+      target_semantics:
+        - capability_inventory_only
+        - provider_or_model_name_grants_no_authority
+        - executor_and_reviewer_role_comes_from_current_task_packet_or_Human_authority
+        - synchronize_any_registry_entry_required_by_the_target_area
+      root_authority_after_B: false
+    - from: 08_os/后续验证候选关注点.md
+      to_area: 01_os/_dev/
+      record_date: 2026-07-29
+      target_semantics:
+        - historical_and_superseded_planning_record
+        - old_independent_repository_proposal_is_not_current_roadmap
+        - preserve_truthful_past_content
+      root_authority_after_B: false
+
+  F4_final_namespace_decision:
+    permanent_OS_root: 01_os/**
+    cancelled_future_design: 08_os/** -> repository root
+    B_actions:
+      - update CORE_MANIFEST.yml and all current planning text to the permanent 01_os namespace
+      - remove future-facing root-lift claims without altering historical receipts
+    compatibility_shim: prohibited
+
+  F5_default_loading_architecture:
+    shared_startup:
+      AGENTS.md:
+        role: shared_repository_startup_router
+    vendor_adapters:
+      Codex:
+        native_entry: AGENTS.md
+      Claude_Code:
+        native_entry: CLAUDE.md
+        role: thin_vendor_adapter
+      Gemini_Antigravity:
+        native_entry: GEMINI.md
+        role: thin_vendor_adapter
+    always_on_shared_route:
+      - AGENT_WORKING_DISCIPLINE.md
+      - 01_os/README.md
+      - 01_os/开发入口与单窗口任务规范_v1.md
+    task_context:
+      source: current_Human_task_or_existing_task_packet
+    history:
+      preload_all_runs: prohibited
+    human_window_contract: natural_language_task_is_sufficient_without_a_fixed_OS_initialization_prompt
+
+checkpoint_A_boundary:
+  canonical_or_root_router_files_modified: false
+  namespace_rename_executed: false
+  checkpoint_B_executed: false
