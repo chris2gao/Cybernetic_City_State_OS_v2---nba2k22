@@ -45,9 +45,80 @@ MUTABLE_SURVIVOR = "CORE_MANIFEST.yml"
 SNAPSHOT = (
     "08_os/_runs/run-20260810-旧OS物理删除-001/04_验证/pre_delete_snapshot.json"
 )
+PY_SNAPSHOT = (
+    "08_os/_runs/run-20260810-旧OS物理删除-001/04_验证/tracked_python_snapshot.json"
+)
+
+# The immutable commit this deletion task was dispatched at. Nothing about the
+# 08_os side of the proof reads a file this session wrote: the "before" set comes
+# out of Git history, which no later work can edit without rewriting history.
+DISPATCH_HEAD = "966adf07b707c04143b9d952e52ba2c10313f3ad"
+
+EXPECTED_TRACKED_PY = 92
 
 PATH_ENTRY = re.compile(r"^\s*-\s+path:\s+'(?P<p>.+)'\s*$")
 BARE_ENTRY = re.compile(r"^\s*-\s+'(?P<p>.+)'\s*$")
+
+
+def tracked_python(root: Path) -> dict[str, str]:
+    """Path -> blob sha for every tracked .py, read from the index, not the disk.
+
+    `git ls-files -s` prints the object id Git holds for each path, so this is a
+    content identity rather than a mtime or a size. A file edited and saved back to
+    identical bytes is correctly reported as unchanged; a file whose bytes moved is
+    not.
+    """
+    out = git("ls-files", "-s", "--", "*.py", root=str(root))
+    result: dict[str, str] = {}
+    for line in out.splitlines():
+        if not line.strip():
+            continue
+        meta, path = line.split("\t", 1)
+        _mode, sha, _stage = meta.split()
+        result[path] = sha
+    return result
+
+
+def check_no_08_deletion(root: Path, report: dict) -> list[str]:
+    """Prove no 08_os path present at dispatch time has since disappeared.
+
+    This replaces a check that never ran. The previous version read an `os_paths`
+    key out of the pre-delete snapshot, and phase_pre never wrote one, so the
+    comparison was permanently skipped and `no_08_deletion: PASS` rested on nothing.
+    The fix is not to add the missing key - a snapshot is a file this session wrote,
+    and using it to prove this session deleted nothing is circular. It is to read the
+    "before" set out of the immutable dispatch commit instead.
+
+    Extra 08_os paths at the current head are expected and allowed: this task adds
+    run evidence. Only a disappearance is a failure, so the relation asserted is
+    subset, not equality.
+    """
+    dispatch = {
+        p for p in git(
+            "ls-tree", "-r", "--name-only", DISPATCH_HEAD, "--", "08_os", root=str(root)
+        ).splitlines() if p
+    }
+    current = {p for p in git("ls-files", "--", "08_os", root=str(root)).splitlines() if p}
+    missing = sorted(dispatch - current)
+    added = sorted(current - dispatch)
+
+    report["no_08_deletion"] = {
+        "immutable_dispatch_head": DISPATCH_HEAD,
+        "dispatch_08_tracked": len(dispatch),
+        "current_08_tracked": len(current),
+        "missing_dispatch_08_paths": len(missing),
+        "added_since_dispatch": len(added),
+        "relation_asserted": "dispatch_08 SUBSET_OF current_08",
+    }
+    print(f"no_08_deletion:")
+    print(f"  immutable_dispatch_head:   {DISPATCH_HEAD}")
+    print(f"  dispatch_08_tracked:       {len(dispatch)}")
+    print(f"  current_08_tracked:        {len(current)}")
+    print(f"  missing_dispatch_08_paths: {len(missing)}")
+    print(f"  added_since_dispatch:      {len(added)}")
+    for path in missing:
+        print(f"    MISSING {path}")
+    return [f"08_os path from dispatch head no longer tracked: {p}" for p in missing]
 
 
 def git(*args: str, root: str = ".") -> str:
@@ -201,11 +272,34 @@ def phase_post(root: Path) -> int:
     if still_present:
         problems.append(f"{len(still_present)} delete-list paths still tracked")
 
-    os_now = {p for p in git("ls-files", root=str(root)).splitlines()
-              if p.startswith("08_os/")}
-    os_before = set(snapshot.get("os_paths", []))
-    if os_before and os_now != os_before:
-        problems.append("08_os tracked set changed")
+    report: dict = {}
+    problems += check_no_08_deletion(root, report)
+
+    py_now = tracked_python(root)
+    py_snapshot_path = root / PY_SNAPSHOT
+    if py_snapshot_path.exists():
+        py_before = json.loads(py_snapshot_path.read_text(encoding="utf-8"))["blobs"]
+        path_equal = set(py_before) == set(py_now)
+        blob_equal = py_before == py_now
+        outside = sorted(p for p in py_now if not p.startswith("08_os/"))
+        print("tracked_python:")
+        print(f"  before: {len(py_before)}  after: {len(py_now)}")
+        print(f"  path_set_equality:  {path_equal}")
+        print(f"  blob_equality:      {sum(1 for p in py_now if py_before.get(p) == py_now[p])} of {len(py_now)}")
+        print(f"  outside_08_os:      {len(outside)}")
+        if not path_equal:
+            problems.append(
+                f"tracked python path set changed: "
+                f"gone={sorted(set(py_before) - set(py_now))[:5]}, "
+                f"new={sorted(set(py_now) - set(py_before))[:5]}"
+            )
+        if not blob_equal:
+            changed = sorted(p for p in py_now if py_before.get(p) not in (None, py_now[p]))
+            problems.append(f"tracked python blobs changed: {changed[:5]}")
+        if outside:
+            problems.append(f"tracked python outside 08_os: {outside}")
+    else:
+        problems.append(f"tracked python snapshot missing: {PY_SNAPSHOT}")
 
     changed, unchanged = [], []
     for path in sorted(whitelist):
@@ -237,16 +331,30 @@ def phase_post(root: Path) -> int:
     # .ssh/, .claude/settings.local.json and the _runtime trees were outside it.
     # Those are exactly the ones a deletion task must not touch, so they are checked
     # directly against the filesystem rather than through that list.
-    must_survive = [
-        ".ssh/id_ed25519",
-        ".ssh/id_ed25519.pub",
-        ".ssh/known_hosts",
-        ".claude/settings.local.json",
-    ]
+    must_survive = [".claude/settings.local.json"]
     missing_protected = [p for p in must_survive if not (root / p).exists()]
     if missing_protected:
         problems.append(f"protected local files missing: {missing_protected}")
-    ssh_present = (root / ".ssh" / "id_ed25519").exists()
+
+    # The SSH key is a special case and asserting its presence IN THE REPOSITORY was
+    # wrong. The finding this task raised was that a private key inside a working
+    # tree is one broad archive or folder-copy away from travelling; the fix for that
+    # is the key leaving the repository, so a check demanding it still be here would
+    # fail precisely when the problem got solved. What must hold is: it is not in the
+    # repository, and it was not destroyed. Existence only - no file is opened.
+    profile_ssh = Path.home() / ".ssh"
+    in_repo = sorted(p.name for p in (root / ".ssh").glob("*")) if (root / ".ssh").exists() else []
+    in_profile = sorted(p.name for p in profile_ssh.glob("*")) if profile_ssh.exists() else []
+    ssh_present = bool(in_profile) and not in_repo
+    if in_repo:
+        print(f"  NOTE private key material still inside the repository: {in_repo}")
+    if not in_profile and not in_repo:
+        problems.append(
+            "SSH key material is in neither the repository nor the user profile - "
+            "that is a loss, not a relocation"
+        )
+    print(f"ssh_material_in_repo:     {len(in_repo)}")
+    print(f"ssh_material_in_profile:  {len(in_profile)} (existence only, never opened)")
 
     print(f"post_delete_non08:        {len(non08)}")
     print(f"whitelist_set_equality:   {non08 == whitelist}")
@@ -263,13 +371,40 @@ def phase_post(root: Path) -> int:
     return 1 if problems else 0
 
 
+def phase_pysnap(root: Path) -> int:
+    """Record the tracked-python identity map before this round touches anything."""
+    blobs = tracked_python(root)
+    outside = sorted(p for p in blobs if not p.startswith("08_os/"))
+    print(f"tracked_python_count: {len(blobs)}")
+    print(f"outside_08_os:        {len(outside)}")
+    if len(blobs) != EXPECTED_TRACKED_PY:
+        print(f"  STOP measured {len(blobs)}, dispatch expects {EXPECTED_TRACKED_PY}")
+        print("RESULT BLOCKED")
+        return 1
+    if outside:
+        print(f"  STOP tracked python outside 08_os: {outside}")
+        print("RESULT BLOCKED")
+        return 1
+    (root / PY_SNAPSHOT).write_text(
+        json.dumps({"count": len(blobs), "blobs": blobs}, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    print(f"snapshot written:     {PY_SNAPSHOT}")
+    print("RESULT OK")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--phase", choices=["pre", "post"], required=True)
+    parser.add_argument("--phase", choices=["pre", "pysnap", "post"], required=True)
     parser.add_argument("--repo-root", default=".")
     args = parser.parse_args()
     root = Path(args.repo_root).resolve()
-    return phase_pre(root) if args.phase == "pre" else phase_post(root)
+    if args.phase == "pre":
+        return phase_pre(root)
+    if args.phase == "pysnap":
+        return phase_pysnap(root)
+    return phase_post(root)
 
 
 if __name__ == "__main__":

@@ -1,9 +1,105 @@
 schema_version: citystate.execution_report.v1
 task_id: os-v2-legacy-physical-deletion-001
 run_id: run-20260810-旧OS物理删除-001
-status: ready_for_independent_review
+status: ready_for_independent_rereview
 executor: Claude_Code
 reviewer: ChatGPT_independent_project_reviewer
+
+correction_round_1:
+  trigger_review: 09_独立复核/ChatGPT独立复核_v1.yml at a68cc36fe9d6efa577abe7577795d4e1a2261568
+  reviewed_head: d66c6fa3adb542a55fd3b9f7c1f5bc65723ce88c
+  verdict_received: REVISE_NARROW_CORRECTION
+
+  A_no_08_deletion_proof_rebuilt:
+    finding_upheld: >-
+      R1 is correct and it is my bug. phase_post read `snapshot.get("os_paths", [])`
+      and phase_pre never wrote that key, so `if os_before and os_now != os_before`
+      could not execute. The reported no_08_deletion: PASS rested on a branch that
+      never ran. Nothing was deleted under 08_os - but nothing proved it either, and
+      an unprovable claim in a deletion receipt is the thing that matters.
+    why_not_patched_via_the_snapshot: >-
+      Adding the missing key would have made this session's own file the evidence
+      that this session deleted nothing, which is circular. The before-set now comes
+      out of the immutable dispatch commit instead, where no later work can touch it
+      without rewriting history.
+    method: >-
+      git ls-tree -r --name-only 966adf07b707c04143b9d952e52ba2c10313f3ad -- 08_os,
+      compared against git ls-files -- 08_os at the candidate head. The relation
+      asserted is subset, not equality, because this task legitimately adds run
+      evidence; only a disappearance is a failure.
+    result:
+      immutable_dispatch_head: 966adf07b707c04143b9d952e52ba2c10313f3ad
+      dispatch_08_tracked: 835
+      current_08_tracked: 842
+      missing_dispatch_08_paths: 0
+      added_since_dispatch: 7
+      verdict: PASS
+    unchanged: >-
+      The pinned 490 delete set, the 15-path whitelist and the 14 survivor blob
+      checks keep their original judgement semantics. Nothing about them was
+      regenerated, relaxed or re-derived.
+
+  B_tracked_python_protected:
+    measured_before_touching_anything: 92 tracked .py, 0 outside 08_os/
+    identity_basis: >-
+      git ls-files -s, so the map is path to Git blob object id. A content identity,
+      not a timestamp or a size: bytes that moved show up, bytes that did not do not.
+    result:
+      count_before: 92
+      count_after: 92
+      path_set_equality: true
+      blob_equality: 92 of 92
+      outside_08_os: 0
+    no_orphan_analysis_redone: >-
+      The dispatch forbids it and the earlier survey already answered it. Recorded
+      once more because it is the trap here: 27 files under
+      06_execution/boot/communication_system/ return zero hits when searched by
+      filename, and are registered by the path-set glob at
+      05_registry/communication_system_v1.yml line 14. A wildcard registry entry is
+      valid coverage; a filename search is the wrong instrument.
+
+  C_runtime_pydeps_deleted:
+    path: 08_os/_runs/run-20260805-全局通讯机制-001/_runtime/pydeps/
+    proofs_before_deletion:
+      exists: true
+      is_directory: true
+      leaf_name_exact: true
+      inside_the_declared_runtime_parent: true
+      not_reparse_point: true
+      resolves_inside_repository: true
+      tracked_descendants: 0
+    contents_read: false
+    note: >-
+      No PyYAML source and no .pyd was opened. Every proof is a question about paths,
+      Git status and filesystem attributes.
+    deleted: true
+    basis: >-
+      The file-layout contract classifies _runtime as untracked with lifecycle
+      delete_on_completion, and the owning run closed. This was the deletion that
+      contract already prescribed, not a new decision.
+
+  D_permission_blocked_caches:
+    scope: 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/**/.pytest_cache/
+    candidates_found: 2
+    all_five_proofs_held_for_both: true
+    deleted: 0
+    residual:
+      - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/.pytest_cache
+      - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/.pytest_cache
+    error: UnauthorizedAccessException on both
+    not_attempted: [takeown, icacls, owner change, elevation, parent permission edit]
+    reason: >-
+      The permission state is itself abnormal, and two cache directories are not
+      worth changing a security boundary to remove. Left for the Human.
+
+  E_final_cache_sweep:
+    ordering: >-
+      Run after every Python check, because the validators regenerate caches. Only
+      Git, path and status commands were run afterwards.
+    candidates: 3
+    deleted: 1
+    residual: 2 (the permission-blocked pair above)
+    guards: same five proofs; no git clean, no root-level recursive delete, no wildcard
 
 master_before_after:
   before: eb4be95a25cb4b0929def284a7fb4b6a412aed55
@@ -119,6 +215,61 @@ core_manifest_changes:
     - no 08_os to repository-root rewrite
     - no ownership reassignment
     - no anticipation of a tree that does not exist yet
+
+preservation_narrowed:
+  # Correction round 1, finding N1. The earlier wording implied an exhaustive
+  # filesystem proof that was never performed. What follows is only what was
+  # actually asserted, item by item, with the things NOT proven named as such.
+  1_tracked_tree_integrity: >-
+    Proven. Non-08 tracked set equals the pinned 15-path whitelist; the 490 pinned
+    paths are absent; no 08_os path present at the dispatch commit has disappeared.
+  2_tracked_python_integrity: >-
+    Proven. 92 before and after, path set equal, 92 of 92 blobs identical, none
+    outside 08_os/.
+  3_recorded_ordinary_untracked_files: >-
+    Proven for what was recorded, which is one entry. The pre-delete snapshot was
+    built with --exclude-standard and therefore never contained an ignored path; this
+    item covers only that list, checked by existence on disk.
+  4_explicit_protected_local_paths:
+    .claude/settings.local.json: present
+    .ssh/id_ed25519: >-
+      NOT in the repository, and not deleted by this task. See ssh_relocation below.
+    .ssh/id_ed25519.pub: same
+    .ssh/known_hosts: same
+  5_runtime_pydeps: explicitly authorized and deleted, with the seven proofs recorded above
+  6_cache_directories: explicitly disposable; 40 removed across this task's two sweeps
+  7_permission_blocked_residual:
+    - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/.pytest_cache
+    - 08_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/.pytest_cache
+  not_claimed: >-
+    No exhaustive enumeration of every ignored path in the working tree was
+    performed, so no such claim is made. The deletion method was exact per tracked
+    path and no broad clean or directory sweep was used outside the two guarded
+    cases, which is the reason this narrower set of assertions is sufficient.
+
+ssh_relocation:
+  observed: >-
+    .ssh/ is no longer inside the repository. Four files with the same names and the
+    same byte sizes - id_ed25519 387, id_ed25519.pub 83, known_hosts 828,
+    known_hosts.old 92 - are present in the user profile SSH directory. Existence and
+    metadata only; no file was opened.
+  not_this_task: >-
+    Nothing run in this round can move a file. The cache sweeps match a directory leaf
+    name of __pycache__ or .pytest_cache, and the guarded deletion targeted one exact
+    pydeps path. At the end of the previous round the four files were still in the
+    repository and the check recorded them as present.
+  most_likely: >-
+    The Human acted on this task's own recommendation to move the key out of the
+    working tree. That is stated as the likely explanation, not as a verified fact -
+    the executor cannot observe who moved it.
+  check_changed_and_why: >-
+    The post check asserted these four exist INSIDE the repository, and so it failed
+    at the exact moment the defect it was raised for got fixed. Demanding a private
+    key stay in a working tree is the opposite of the finding. It now asserts the
+    property actually wanted: no key material inside the repository, and key material
+    not destroyed - failing only if it is in neither place. The raw failing output is
+    recorded above so this narrowing can be re-derived.
+  awaiting_human_confirmation: true
 
 preservation:
   untracked_and_ignored_files_touched: 0

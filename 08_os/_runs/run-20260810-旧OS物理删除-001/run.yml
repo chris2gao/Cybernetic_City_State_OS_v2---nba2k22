@@ -17,6 +17,34 @@ purpose: >-
   them reviewed.
 
 status: candidate_ready_for_independent_review
+review_state: corrected_once_awaiting_rereview
+correction_round_1:
+  review_ref: 09_独立复核/ChatGPT独立复核_v1.yml @ a68cc36fe9d6efa577abe7577795d4e1a2261568
+  blocking_finding: R1_no_08_deletion_post_check_not_effective - upheld
+  what_changed:
+    - >-
+      The no-08-deletion proof is rebuilt from the immutable dispatch commit
+      966adf07b707c04143b9d952e52ba2c10313f3ad rather than from a snapshot this
+      session wrote. missing_dispatch_08_paths = 0 against 835 dispatch paths.
+    - >-
+      Tracked Python is snapshotted by Git blob identity before and after: 92 paths,
+      92 of 92 blobs unchanged, none outside 08_os/.
+    - >-
+      08_os/_runs/run-20260805-全局通讯机制-001/_runtime/pydeps/ deleted after seven
+      path/Git/filesystem proofs, without opening any file inside it.
+    - >-
+      One further cache directory removed; the two permission-blocked .pytest_cache
+      directories remain and are left to the Human without any privilege escalation.
+    - >-
+      The preservation report is narrowed to what was actually asserted, and the SSH
+      check now asserts that no key material is inside the repository rather than
+      that it still is.
+  unchanged:
+    pinned_490_delete_set: true
+    pinned_15_whitelist: true
+    survivor_blob_semantics: true
+    core_manifest_business_semantics: true
+    tracked_files_deleted_this_round: 0
 
 authority:
   delete_list: 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/03_最终清单/最终直接删除清单_v1.yml
