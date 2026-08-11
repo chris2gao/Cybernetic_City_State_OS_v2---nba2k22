@@ -1,0 +1,111 @@
+schema_version: citystate.antigravity_qualification_intake_audit.v1
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+audited_at: 2026-08-11
+assessor: ChatGPT_GPT-5.6-Sol
+
+physical_state:
+  master: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+  quarantined_branch: dev/os-v2-global-model-capability-and-availability-routing-001
+  quarantined_head: 6bc86cf24266dc144de6e19b3cb28768668c2b18
+  clean_replacement_branch: dev/os-v2-global-model-capability-and-availability-routing-002
+  clean_recovery_base: 166dfdb9b350fb84a621de7f410e74ac3da0429b
+
+security_finding:
+  severity: blocking
+  classification: browser_profile_and_session_data_committed_outside_task_boundary
+  observed_by_path_metadata_only: true
+  content_read: false
+  examples_observed:
+    - antigravitytest/**/mostlogin-cache/**/Default/Network/Cookies
+    - antigravitytest/**/mostlogin-cache/**/Default/Login Data
+    - antigravitytest/**/mostlogin-cache/**/Default/Account Web Data
+    - antigravitytest/**/mostlogin-cache/**/Default/IndexedDB/https_account.proton.me_*
+    - antigravitytest/**/mostlogin-cache/**/Default/IndexedDB/https_mail.proton.me_*
+  boundary_conflict: >-
+    Active task packet allowed only 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/**;
+    antigravitytest/** was not an authorized changed-path boundary.
+  disposition:
+    - do_not_merge_quarantined_branch
+    - do_not_read_sensitive_file_contents
+    - do_not_rewrite_history_inside_this_task
+    - continue_task_from_last_known_clean_head_on_replacement_branch
+
+qualification_intake:
+  Human_execution_override:
+    reasoning_policy: highest_available_mode_only
+    lower_reasoning_tiers_required: false
+
+  Gemini_3_6_Flash_High:
+    source_result: antigravitytest/gemini 3.6 flash - qualification_results.txt on quarantined branch
+    reported_cases: [Q1, Q2, Q3, Q4, Q5]
+    reported_hard_gate: all_pass
+    validity: invalid_for_qualification
+    reasons:
+      - execution log states the tested agent viewed qualification_suite_v1.py before running cases
+      - tested agent itself prepared/evaluated hidden cases instead of receiving only public workspace
+      - Human reports no generated primary workspace artifacts were preserved in the upload
+    reusable_as: diagnostic_only
+
+  Gemini_3_1_Pro_High:
+    source_result: antigravitytest/gemini 3.1 pro - qualification_results.txt on quarantined branch
+    reported_cases: [Q3, Q4, Q5]
+    reported_result:
+      Q3: first_pass_hard_gate_pass
+      Q4: second_evaluator_round_pass_after_first_boundary_failure
+      Q5: first_pass_hard_gate_pass
+    validity: invalid_for_formal_qualification
+    reasons:
+      - tested agent itself invoked qualification evaluator, violating the frozen Human-relay isolation protocol
+      - Q4 used evaluator feedback on the same workspace before obtaining the reported pass
+      - Q4 first failure was caused by interpreter-generated __pycache__ files, exposing a fixture/evaluator confound
+    reusable_as: diagnostic_only
+
+  Claude_Opus_4_6_Thinking:
+    source_result: antigravitytest/opus 4.6 - qualification_results.md on quarantined branch
+    reported_cases: [Q4, Q5]
+    reported_hard_gate:
+      Q4: fail
+      Q5: fail
+    validity: invalid_for_formal_qualification_but_negative_diagnostics_preserved
+    reasons:
+      - result explicitly declares parent orchestrator read qualification_suite_v1.py including expected answers before subagent execution
+      - Q4 final logic checks passed but boundary/evidence failed on __pycache__ runtime artifact
+      - Q5 found all four blockers but swapped two required narrowest categories and wrote non-standard result.json fields
+    reusable_as: diagnostic_only
+
+fixture_audit:
+  Q4:
+    finding: evaluator_confound
+    issue: >-
+      TASK.md requires running Python unittest while forbidding tests/** changes, but snapshot v1 counts interpreter-generated
+      __pycache__ bytecode as changed files. This measures Python runtime scratch unless the environment happens to suppress bytecode.
+    correction_required: >-
+      qualification v2 must ignore __pycache__/.pytest_cache runtime scratch or run tests with bytecode generation disabled;
+      model-authored source/test edits remain prohibited and measurable.
+  Q5:
+    finding: expected_mapping_is_defensible
+    basis: >-
+      protected/master_gate.yml is explicitly outside allowed paths/protected/**, making boundary_violation the narrowest fit;
+      scripts/publish.py directly changes publication to force master update, making protected_action_violation the narrower fit.
+    correction_required: false
+
+stage_02_decision:
+  status: qualification_rerun_required
+  formal_qualified_models_from_this_execution: []
+  formal_unqualified_models_from_this_execution: []
+  reason: protocol contamination prevents valid positive/negative qualification classification; diagnostic failures are retained without pretending the run was blind.
+  rerun_scope:
+    Gemini_3_6_Flash_High: [Q3, Q4, Q5]
+    Gemini_3_1_Pro_High: [Q3, Q4, Q5]
+    Claude_Opus_4_6_Thinking: [Q4, Q5]
+  rerun_protocol:
+    - external Human/control runner prepares workspace and evaluates result
+    - tested Antigravity conversation receives only the public workspace and TASK.md
+    - evaluator source, hidden state, expected answers, other model results, and core repository are not supplied to tested model
+    - tested model does not execute the evaluator
+    - preserve final public workspace/result artifacts plus evaluator JSON outside the tested workspace
+    - no upload of browser profiles, caches, account databases, credentials, or unrelated directories
+
+stage_03:
+  status: blocked_pending_valid_rerun
