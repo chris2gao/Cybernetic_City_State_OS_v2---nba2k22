@@ -1,0 +1,64 @@
+schema_version: citystate.independent_review.v1
+task_id: os-v2-01-os-namespace-and-autoload-cutover-001
+reviewed_executor_head: a1675717e0ccd5e4fdfb34dc5e0775ad1d9f6305
+reviewer: chatgpt-web-planner-01
+verdict: REVISE_NARROW_CORRECTION
+master_observed: 818800595992d09e270082627b31642f04f1cc93
+
+accepted_and_frozen:
+  direct_namespace_cutover: PASS
+  former_namespace_tracked_paths: 0
+  former_namespace_tracked_content_files: 0
+  permanent_OS_namespace: 01_os/**
+  root_lift_cancelled: true
+  compatibility_shim: false
+  executable_mode_restoration: PASS
+  legacy_retirement_wording_cleanup: PASS
+  deleted_PROJECT_CONTEXT_ARCHITECTURE_current_guidance_cleanup: PASS
+  communication_root_resolution:
+    precedence: [explicit_--root, environment_CITYSTATE_COMMUNICATION_ROOT, user_home_default]
+    verdict: PASS
+  formal_handoff_fail_closed_without_context: PASS
+  model_supplier_capability_inventory_relocation: PASS
+  superseded_planning_record_relocation: PASS
+  post_cutover_Human_override_receipt: PASS
+
+blocking_findings:
+  - id: R1_unconditional_OS_autoload_not_implemented
+    severity: blocking
+    evidence:
+      AGENTS.md: >-
+        Startup still says the OS entry is loaded only "When the task touches the OS".
+      CLAUDE.md: >-
+        CLAUDE router still loads the two 01_os entry documents only when the task touches the OS.
+      GEMINI.md: >-
+        GEMINI router still loads the two 01_os entry documents only when the task touches the OS.
+      README.md: >-
+        Model waking-up instructions still make the two 01_os entry documents conditional.
+    conflict_with_Human_target: >-
+      Human explicitly wants a new window to enter the new OS through vendor-default root instructions
+      without pasting a separate initialization prompt. The shared OS bootstrap therefore has to be
+      repository-wide always-on, while task-triggered canonical files and historical _runs remain selective.
+    minimum_correction:
+      - make 01_os/README.md and 01_os/开发入口与单窗口任务规范_v1.md unconditional startup reads
+      - keep AGENT_WORKING_DISCIPLINE.md and AGENTS.md as shared root entry
+      - make CLAUDE.md and GEMINI.md thin adapters to the same unconditional shared route
+      - treat the current Human natural-language request as valid task input even before a durable task packet exists
+      - if a durable task packet already exists, load it; otherwise material repository write work creates/records one before mutation under the OS discipline
+      - continue prohibiting default preload of all 01_os/_runs history
+      - update README.md waking-up instructions to the same contract
+
+nonblocking_observation:
+  communication_reply_without_context: >-
+    The executor's refusal to fabricate a canonical message without a valid communication context is correct
+    under the current contract and AGENTS rule. The deterministic local root resolution solves where a task
+    space lives, but it does not create endpoint cards or sender sequence state. No further communication
+    protocol expansion is required for acceptance of this task. If Human later wants one-command context
+    discovery/initialization, that should be a separate bounded usability task rather than weakening identity
+    or sequence requirements here.
+
+review_notes:
+  - executor modified the earlier ChatGPT review artifact only to remove two former-namespace lexical labels; this v2 review supersedes it as the current reviewer authority
+  - do not reopen the accepted direct namespace replacement or restore historical former-namespace literals
+  - do not add behavioral namespace testing
+  - master publication remains prohibited until final independent PASS and Human gate
