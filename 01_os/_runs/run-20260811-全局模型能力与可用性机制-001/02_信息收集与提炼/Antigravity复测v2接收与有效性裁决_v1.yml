@@ -1,0 +1,69 @@
+schema_version: citystate.antigravity_qualification_v2_intake.v1
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+assessed_at: 2026-08-11
+assessor: ChatGPT_GPT-5.6-Sol
+status: invalid_for_formal_qualification_due_blind_isolation_breach
+
+physical_repository_observation:
+  quarantined_branch: dev/os-v2-global-model-capability-and-availability-routing-001
+  contaminated_ancestor: 6bc86cf24266dc144de6e19b3cb28768668c2b18
+  latest_reported_sync_commit: dfe553d35ea61aa31ebac32f7f107a9b402723eb
+  relation: latest_commit_is_descendant_of_contaminated_ancestor
+  current_tip_cleanup_removes_paths_but_does_not_remove_historical_blobs: true
+  allowed_for_master_publication: false
+  active_clean_branch: dev/os-v2-global-model-capability-and-availability-routing-002
+
+Human_relayed_v2_runs:
+  Gemini_3_1_Pro_High:
+    cases: [Q3, Q4, Q5]
+    reported_hard_gate_pass: [Q3, Q4, Q5]
+    reported_Human_questions: 0
+    validity: diagnostic_only
+    invalidation_reason:
+      - tested Antigravity session viewed qualification_suite_v2.py
+      - tested Antigravity session itself executed prepare commands
+      - tested Antigravity session itself executed hidden evaluate commands
+      - therefore expected answers/evaluator logic were not blind from the tested system
+  Gemini_3_6_Flash_High:
+    cases_reported: [Q1, Q2, Q3, Q4, Q5]
+    required_cases_for_v2: [Q3, Q4, Q5]
+    reported_hard_gate_pass: [Q1, Q2, Q3, Q4, Q5]
+    reported_Human_questions: 0
+    validity: diagnostic_only
+    invalidation_reason:
+      - tested Antigravity session viewed qualification_suite_v2.py
+      - tested Antigravity session itself executed prepare commands
+      - tested Antigravity session itself executed hidden evaluate commands
+      - therefore expected answers/evaluator logic were not blind from the tested system
+
+accepted_diagnostic_signal:
+  - Both Gemini models can produce outputs satisfying the frozen evaluator when evaluator/test logic is visible.
+  - Gemini 3.1 Pro High showed no Human micro-gate requests in the relayed run.
+  - Gemini 3.6 Flash High showed no Human micro-gate requests in the relayed run.
+  - These observations do not establish blind project qualification or route eligibility.
+
+method_correction:
+  version: v3_physical_split
+  principle: >-
+    Replace instruction-only isolation with delivery isolation. The tested Antigravity workspace package must contain
+    only public Qx-work material. A separate Human-only control package contains evaluator and hidden states.
+  tested_model_must_not_receive:
+    - qualification evaluator source
+    - hidden state
+    - expected answers
+    - evaluator outputs before completion
+    - other models' results
+    - core repository
+  Human_actions:
+    - prepare/frozen public workspaces are delivered outside Antigravity
+    - Human opens only one public Qx-work directory in a fresh Antigravity conversation
+    - after model stops, Human runs evaluator from separate control package
+    - no evaluator feedback is returned to the model
+
+stage_02_gate:
+  status: blocked_pending_valid_blind_qualification
+  required_valid_runs:
+    Gemini_3_6_Flash_High: [Q3, Q4, Q5]
+    Gemini_3_1_Pro_High: [Q3, Q4, Q5]
+    Claude_Opus_4_6_Thinking: [Q4, Q5]
