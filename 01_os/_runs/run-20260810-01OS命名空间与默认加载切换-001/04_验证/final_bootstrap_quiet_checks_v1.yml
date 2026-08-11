@@ -1,0 +1,12 @@
+checks:
+  - name: final_bootstrap_static
+    cmd:
+      - python
+      - 01_os/_runs/run-20260810-01OS命名空间与默认加载切换-001/04_验证/verify_final_always_on_bootstrap.py
+  - name: correction_diff_check
+    cmd:
+      - git
+      - diff
+      - --check
+      - 89f7c916529961aef51cd235bc08e8be09a9d239
+      - --

@@ -9,7 +9,8 @@ subsection rather than in the general rules.
 
 ## Startup Rules
 
-Startup is four reads and one conditional fifth. Nothing else loads by default.
+Startup uses the repository-wide always-on bootstrap below. Nothing beyond the
+task-triggered steps loads by default.
 
 1. **The current remote `master` 40-character SHA, read fresh.** Never carry a SHA
    forward from chat, a report, or a document.
@@ -17,12 +18,21 @@ Startup is four reads and one conditional fifth. Nothing else loads by default.
    regardless of vendor, and is where the recurring failure modes are written down
    with the incident that produced each one.
 3. This file.
-4. The current task: objective, exact base SHA, allowed paths, prohibitions,
-   tests, and the completion pointer it must return.
-5. **When the task touches the OS:** `01_os/README.md` and
-   `01_os/开发入口与单窗口任务规范_v1.md`. That entry owns single-window rules,
-   file placement, registry synchronisation, run evidence, publication transport
-   gates and the Human gate. Then only the canonical files that task names.
+4. **Always read** `01_os/README.md` and
+   `01_os/开发入口与单窗口任务规范_v1.md`. Entering this repository is enough to
+   enter OS discipline; these two entry documents are not conditional on task
+   subject.
+5. Treat the current Human natural-language request as valid task input. Do not
+   require the Human to paste a fixed initialization prompt or a complete packet
+   before work can be understood.
+6. Load an existing durable task packet when present.
+7. If no durable task packet exists and the work will cause material repository
+   mutation, establish the task packet and run evidence before the first
+   business/canonical write, following the OS entry.
+8. Then read only the canonical files and registry entries the task actually
+   triggers.
+9. Never default-preload `01_os/_runs/**`; read only a run explicitly required by
+   the current task or its verification.
 
 `01_os/**` is the permanent active OS namespace. The retained global surface outside it is this file,
 `AGENT_WORKING_DISCIPLINE.md`, `CLAUDE.md`, `GEMINI.md`, `README.md`,

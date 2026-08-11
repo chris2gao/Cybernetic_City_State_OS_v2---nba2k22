@@ -3,12 +3,19 @@
 这是第二代 OS 的活动结构。系统定义、启动入口、全局机制、注册表、加载器、开发规范与
 运行证据分区保存；注册、实现与验证在同一变更中更新。
 
-## 新窗口开发入口
+## Repository-wide 新窗口入口
 
-处理 `01_os` 开发任务的新窗口，先读取
-[开发入口与单窗口任务规范_v1.md](开发入口与单窗口任务规范_v1.md)。该入口规定最小加载
-顺序、一个窗口一个任务、文件放置、registry、run 证据、分支、测试、独立审核和 Human
-接入门。任务专属材料按该入口继续加载，不默认读取全部 `_runs/` 历史。
+根级 router 对每个 repository working window 启用 repository-wide always-on
+bootstrap：fresh-read 远端 `master` 当前精确 40 位 SHA，读取
+`AGENT_WORKING_DISCIPLINE.md` 与 `AGENTS.md`，然后无条件读取 `01_os/README.md`（本文件）和
+`01_os/开发入口与单窗口任务规范_v1.md`（[打开文件](开发入口与单窗口任务规范_v1.md)）。
+进入本 repository 工作本身就进入 OS discipline；这不表示其余 OS 内容被全部加载。
+
+`current Human natural-language request` 本身就是有效 task input。已有
+`durable task packet` 时加载它；若尚无 packet 且工作会造成 `material repository
+mutation`，须按开发入口在第一次 business/canonical write 前建立 task packet 与 run
+evidence，不要求 Human 手工粘贴固定初始化包。随后只加载任务触发的 canonical 文件与
+registry；禁止 default-preload `01_os/_runs/**`。
 
 ## The seven areas
 

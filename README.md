@@ -34,10 +34,18 @@ to lift its contents into the repository root and no compatibility shim.
 
 ## If you are a model waking up here
 
-Read, in this order: the current remote `master` 40-character SHA read fresh;
-`AGENT_WORKING_DISCIPLINE.md`; `AGENTS.md`; your task packet; then the two `01_os`
-entry documents above if the task touches the OS. Nothing else loads by default,
-and a SHA quoted in any document — including this one — is not evidence.
+Use the repository-wide always-on bootstrap. Read, in this order: the current
+remote `master` 40-character SHA read fresh; `AGENT_WORKING_DISCIPLINE.md`;
+`AGENTS.md`; then, unconditionally, `01_os/README.md` and
+`01_os/开发入口与单窗口任务规范_v1.md`. A SHA quoted in any document — including
+this one — is not evidence.
+
+The current Human natural-language request is valid task input. Load an existing
+durable task packet when present. If none exists and the work will cause material
+repository mutation, establish the task packet and run evidence before the first
+business/canonical write; do not require a fixed initialization bundle from the
+Human. After that, load only task-triggered canonical files and registry entries.
+Never default-preload `01_os/_runs/**`.
 
 ## If you are the Human
 

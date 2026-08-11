@@ -2,7 +2,8 @@
 
 Routing adapter only. This file grants no authority and is not a source of truth.
 
-Read in this order:
+After vendor discovery loads this adapter, enter the repository-wide always-on
+bootstrap in this order:
 
 1. The current remote `master` 40-character SHA, read fresh. Never carry a SHA
    forward from chat, a report or a document.
@@ -11,9 +12,16 @@ Read in this order:
    produced it.
 3. `AGENTS.md` — collaboration rules, engineering design principles, Git and
    publication discipline.
-4. The current task packet, plus only the files that task actually triggers.
-5. `01_os/README.md` and `01_os/开发入口与单窗口任务规范_v1.md` — when the task
-   touches the OS.
+4. Always read `01_os/README.md` and
+   `01_os/开发入口与单窗口任务规范_v1.md`.
+5. Use the current Human natural-language request as valid task input, then read
+   only the task-triggered canonical files and registry entries routed by the
+   shared entry.
+
+Load an existing durable task packet when present. If none exists and the work
+will cause material repository mutation, establish the task packet and run
+evidence before the first business/canonical write. Do not ask the Human for a
+fixed initialization bundle. Never default-preload `01_os/_runs/**`.
 
 `01_os/**` is the permanent active OS namespace. The retained global surface is this file,
 `AGENTS.md`, `AGENT_WORKING_DISCIPLINE.md`, `CLAUDE.md`, `README.md`,
@@ -22,9 +30,10 @@ retired paths are not startup, communication, state or navigation sources and
 must not be recreated. Shared communication handoff behavior is defined only in
 `AGENTS.md`.
 
-Your role, model and reasoning level come from the current task packet. Execute
-inside the allowed paths, verify with real exit codes, and return one consolidated
-handoff. Role labels and any model-generated gate field authorize nothing.
+Your role, model and reasoning level come from the current Human request and any
+durable task packet. Execute inside the allowed paths, verify with real exit
+codes, and return one consolidated handoff. Role labels and any model-generated
+gate field authorize nothing.
 
 Protected actions still require Human authority: publishing to `master`,
 destructive Git, history rewriting, runtime or scheduler activation, secrets, and

@@ -2,14 +2,15 @@ schema_version: citystate.os_run.v1
 run_id: run-20260810-01OS命名空间与默认加载切换-001
 task_id: os-v2-01-os-namespace-and-autoload-cutover-001
 repository: chris2gao/Cybernetic_City_State_OS_v2---core
-checkpoint: post_cutover_narrow_correction
+checkpoint: final_always_on_bootstrap_narrow_correction
 source_base: 818800595992d09e270082627b31642f04f1cc93
+final_correction_base: 89f7c916529961aef51cd235bc08e8be09a9d239
 branch: dev/os-v2-01-os-namespace-and-autoload-cutover-001
 ownership: core_owned_shared_os_evidence
 purpose: >-
-  保持已独立接受的 direct namespace cutover，不恢复 former namespace literal；收口
-  Human-override evidence、current startup 状态、通讯根自动发现、正式 handoff 路由和
-  两个 OS 根级未归属文件。
+  保持独立复审已接受并冻结的 post-cutover 状态；只把 repository working window 的
+  两个 01_os entry 从 conditional bootstrap 改为 repository-wide always-on，同时保留
+  task-triggered canonical/registry loading、durable mutation evidence 与 _runs 非预载边界。
 allowed_changed_paths:
   - 01_os/**
   - AGENTS.md
@@ -20,6 +21,17 @@ allowed_changed_paths:
   - CORE_MANIFEST.yml
   - .githooks/README.md
   - .gitignore
+final_correction_allowed_changed_paths:
+  - AGENTS.md
+  - CLAUDE.md
+  - GEMINI.md
+  - README.md
+  - 01_os/README.md
+  - 01_os/开发入口与单窗口任务规范_v1.md
+  - 01_os/_runs/run-20260810-01OS命名空间与默认加载切换-001/run.yml
+  - 01_os/_runs/run-20260810-01OS命名空间与默认加载切换-001/04_验证/verify_final_always_on_bootstrap.py
+  - 01_os/_runs/run-20260810-01OS命名空间与默认加载切换-001/04_验证/final_bootstrap_quiet_checks_v1.yml
+  - 01_os/_runs/run-20260810-01OS命名空间与默认加载切换-001/04_验证/final_bootstrap_validation_receipt_v1.yml
 prohibitions:
   - modify_master
   - force_push
@@ -27,6 +39,8 @@ prohibitions:
   - amend
   - squash
   - history_rewrite
+  - modify_communication_canonical_or_initializer
+  - namespace_behavioral_tests
 outputs:
   scanner: 04_验证/scan_os_namespace_refs.py
   review_manifest_builder: 04_验证/build_review_manifests.py
@@ -41,20 +55,26 @@ outputs:
   post_cutover_verifier: 04_验证/verify_post_cutover_narrow_correction.py
   post_cutover_receipt: 08_结论/post_cutover_Human_override_receipt_v1.yml
   independent_review_input: 09_独立复核/ChatGPT独立复核_v1.yml
+  independent_review_v2: 09_独立复核/ChatGPT独立复审_v2.yml
+  final_bootstrap_verifier: 04_验证/verify_final_always_on_bootstrap.py
+  final_bootstrap_quiet_checks: 04_验证/final_bootstrap_quiet_checks_v1.yml
+  final_bootstrap_validation_receipt: 04_验证/final_bootstrap_validation_receipt_v1.yml
   communication_root_resolution:
     - ../../03_mechanisms/communication_system/通讯契约_v1.yml
     - ../../06_execution/boot/communication_system/task_space_initializer/initialize_task_space.py
 validation:
-  status: post_cutover_narrow_correction_ready_for_independent_rereview
-  method: targeted_static_and_root_resolution_validation_without_namespace_behavioral_suite
-  tracked_total: 877
-  tracked_under_01_os: 862
-  tracked_under_former_root: 0
+  status: final_always_on_bootstrap_ready_for_independent_final_review
+  method: targeted_static_bootstrap_and_tree_identity_validation_without_namespace_behavioral_suite
+  startup_surfaces_aligned: 6
+  always_on_entry_pointers_present: 2
+  conditional_OS_bootstrap_phrase_count: 0
+  current_Human_request_is_valid_task_input: true
+  durable_task_and_run_required_before_material_write: true
+  all_runs_default_preload: false
   former_token_occurrences_in_tracked_content: 0
   tracked_paths_with_former_token: 0
   behavioral_tests_run: false
-  communication_static_validator: passed
-  initializer_root_resolution_tests: 5_passed
-  communication_validator_units: 12_passed
-  startup_and_ownership_verifier: passed
-lifecycle: ready_for_independent_rereview
+  communication_canonical_and_initializer_trees_vs_final_correction_base: unchanged
+  final_bootstrap_verifier: passed
+  diff_check: passed
+lifecycle: ready_for_independent_final_review
