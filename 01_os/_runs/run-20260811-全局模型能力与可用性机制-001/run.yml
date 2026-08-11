@@ -3,28 +3,42 @@ run:
   run_id: run-20260811-全局模型能力与可用性机制-001
   task_id: os-v2-global-model-capability-and-availability-routing-001
   exact_base_sha: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
-  branch: dev/os-v2-global-model-capability-and-availability-routing-001
+  branch: dev/os-v2-global-model-capability-and-availability-routing-002
   owner: core
-  status: candidate_pending_stage1_Human_confirmation
+  status: stage02_qualification_rerun_required_after_security_and_isolation_breach
   purpose: >-
-    用七阶段 workflow 研究并设计全局模型能力/可用性/路由机制。阶段 1 先固定 Human 真正要求；
-    阶段 2 独立 deep research 验证 provider/product/model/surface 的当前事实；阶段 3 才形成结果模型。
-    在 evidence-backed design 经 Human 接受前，不进入 canonical 实现。
+    用七阶段 workflow 研究并设计全局模型能力/可用性/路由机制。Stage 1 的 A v2 已由 Human 确认；
+    Stage 2 的 provider research 与独立 research 已完成来源清洗。当前仅剩 Antigravity project qualification
+    需要在隔离修正后的最高 reasoning 模式冻结测试上取得可审计证据，之后才能进入 Stage 3。
+  branch_recovery:
+    previous_branch: dev/os-v2-global-model-capability-and-availability-routing-001
+    quarantined_head: 6bc86cf24266dc144de6e19b3cb28768668c2b18
+    last_known_clean_head: 166dfdb9b350fb84a621de7f410e74ac3da0429b
+    recovery_mode: new_branch_from_last_known_clean_head_no_history_rewrite
+    reason: >-
+      qualification 上传把 browser profile/cache 数据与任务外路径提交进原分支；原分支不得进入 master，
+      且任何敏感文件内容都不得被本任务读取。当前分支不继承该污染历史。
   workflow:
     stage_01_requirement_modeling:
-      status: active
-      artifact: 01_需求建模/requirement/A_需求建模_v1.yml
-      completion_requires: 01_需求建模/requirement/人类确认_v1.yml
+      status: complete
+      artifact: 01_需求建模/requirement/A_需求建模_v2.yml
+      Human_confirmation: 01_需求建模/requirement/人类确认_v2.yml
     stage_02_information_collection:
-      status: blocked_by_stage_01_confirmation
-      research_policy:
-        - primary_official_sources_first
-        - separate_vendor_capability_from_account_surface_availability
-        - label_Human_reported_observation_separately
-        - record_source_date_and_invalidation_condition
-        - at_least_one_independent_pass_without_prior_conclusions
+      status: active_qualification_rerun_required
+      research_status:
+        provider_first_party_pass: complete
+        independent_pass: complete_with_source_cleaning
+        reconciliation: complete
+      qualification_status:
+        original_execution: invalid_for_positive_qualification_due_protocol_breach
+        highest_reasoning_only: true
+        rerun_required: true
+        reasons:
+          - tested agents obtained evaluator access or evaluator-derived feedback, violating blind qualification protocol
+          - Gemini 3.6 Flash did not preserve primary public workspace artifacts for independent reproduction
+          - Q4 evaluator counted interpreter-generated __pycache__ scratch as model-authored boundary change and must be corrected
     stage_03_result_modeling:
-      status: blocked_by_stage_02
+      status: blocked_by_valid_qualification_evidence
     stage_04_test_generation:
       status: blocked_by_stage_03
     stage_05_step_decomposition:
@@ -36,27 +50,24 @@ run:
   current_scope:
     repository_writes: run_evidence_only
     canonical_mutation: prohibited_until_Human_boundary_gate
-  reported_initial_product_scope_from_Human:
+    quarantined_branch_reuse: prohibited
+  availability_rule:
+    registered_models_default: available
+    unavailable_only_by: explicit_Human_override
+    restored_by: explicit_Human_override
+    automatic_quota_probe: false
+  routing_optimization:
+    objective: task_model_fit_and_reliable_completion
+    token_or_price_optimization: false
+  active_product_scope:
     OpenAI:
-      subscription: ChatGPT Plus
-      surfaces:
-        - ChatGPT web
-        - Codex Desktop
+      surfaces: [ChatGPT web, Codex Desktop]
     Anthropic:
-      subscription: Claude Pro
-      surfaces:
-        - Claude Code Desktop
-      explicitly_deferred:
-        - Claude Code CLI
-    Google_or_Antigravity_surface:
-      subscription: Gemini Pro
-      surfaces:
-        - Gemini web
-        - Antigravity client
-      Human_reported_labels_to_verify:
+      surfaces: [Claude Code Desktop]
+      deferred: [Claude Code CLI]
+    Google_or_Antigravity:
+      surfaces: [Gemini web, Antigravity client]
+      qualified_labels_to_measure_at_highest_mode:
         - Gemini 3.1 Pro
         - Gemini 3.6 Flash
-        - Opus 4.6
-  important_distinction: >-
-    上述 product/model 名称与额度描述是 Human 对当前账户 UI 的观察起点，不等于厂商 capability、
-    entitlement 或参数事实。阶段 2 必须逐项验证或保留为 user-observed state。
+        - Claude Opus 4.6
