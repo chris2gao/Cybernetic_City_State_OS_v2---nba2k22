@@ -1,0 +1,25 @@
+schema_version: citystate.qualification_human_relay_package.v1
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+created_at: 2026-08-11
+
+frozen_plan:
+  ref: Antigravity资格测试计划_v1.yml
+  commit: 68c20710957af17ef5130074d56bb897eb389f57
+
+Human_relay_artifacts:
+  package_filename: Antigravity资格测试包_v1.zip
+  package_sha256: 8e0c3de0b94d7e8ec72289887950a6d5fbb168246e3f6e86ff7e7dbd09e8ba98
+  evaluator_filename: qualification_suite_v1.py
+  evaluator_sha256: bb0731cfd852665af03899ea86634fdcb4f18d88129d8fdd31316d31b2ff16d0
+  instructions_filename: Antigravity资格测试_使用说明_v1.md
+  instructions_sha256: 7013218d250083d3481c6f9fec474f2780a8f67bd25ed7a773a3ff1cb145f035
+
+security_and_validity:
+  - evaluator / hidden state 不提供给被测 Antigravity model。
+  - 被测 model 只打开 prepare 生成的 public workspace。
+  - 失败后 reasoning 升档重测必须重新 prepare 干净 workspace。
+  - Human 真实问答轮次需旁路记录；模型自报 human_questions_asked 只是 evidence-honesty 的一个被审对象。
+  - package/evaluator 是本阶段 Human relay 便利产物；仓库内 frozen plan 与 self-test receipt 是耐久规范/证据 pointer。
+
+stage_03_state: blocked_pending_real_Antigravity_qualification_results
