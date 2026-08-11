@@ -1,0 +1,61 @@
+schema_version: citystate.completion_pointer.v1
+completion_pointer:
+  packet_id: namespace-cutover-stale-blob-binding-repair-001
+  status: ready_for_independent_review
+  source_branch: codex/os-v2-stale-blob-binding-repair-001
+  source_base: cd90a9d9adedbfa2d0f1b90f245b4dde7a061716
+  source_head: de8d9a9d6ea5c0d92f5b0ce277e5bfdae30b233c
+  validation:
+    communication_static_exit_code: 0
+    context_management_exit_code: 0
+    canonical_live_state_guard_exit_code: 0
+    stage_collaborative_deliberation_static_exit_code: 0
+    seven_stage_minimum_loop_validate_exit_code: 0
+    seven_stage_minimum_loop_static_exit_code: 0
+    candidate_caused_failures: 0
+    stale_binding_before:
+      stage_collaborative: 47
+      pilot_deterministic_closure: 15
+      total: 62
+    stale_binding_after: 0
+    diff_scope: passed
+    git_diff_check_exit_code: 0
+    semantic_change: false
+    hook_guard: passed
+  repository:
+    binding_changed_paths:
+      - 01_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml
+      - 01_os/01_workflow/01_需求建模/实现/阶段协同推演profile引用_v1.yml
+      - 01_os/01_workflow/02_信息收集与提炼/实现/阶段协同推演profile引用_v1.yml
+      - 01_os/01_workflow/03_结果建模/实现/阶段协同推演profile引用_v1.yml
+      - 01_os/01_workflow/04_测试生成/实现/阶段协同推演profile引用_v1.yml
+      - 01_os/01_workflow/05_步骤拆分/实现/阶段协同推演profile引用_v1.yml
+      - 01_os/01_workflow/06_执行/实现/阶段协同推演profile引用_v1.yml
+      - 01_os/01_workflow/07_测试执行/实现/阶段协同推演profile引用_v1.yml
+      - 01_os/05_registry/stage_collaborative_deliberation_v1.yml
+      - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/03_result.yml
+      - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/04_tests.yml
+      - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/05_steps.yml
+      - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/06_execution.yml
+      - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/07_verification.yml
+      - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/manifest.yml
+    run_evidence_paths:
+      - 01_os/_runs/run-20260811-命名空间切换后stale-blob绑定修复-001/run.yml
+      - 01_os/_runs/run-20260811-命名空间切换后stale-blob绑定修复-001/01_任务输入/任务包_v1.yml
+      - 01_os/_runs/run-20260811-命名空间切换后stale-blob绑定修复-001/07_测试执行/验证结果_v1.yml
+    out_of_scope_paths: 0
+    binary_artifact_count: 0
+    tracked_worktree_clean_at_source_head: true
+    preexisting_legacy_runtime_untracked_count: 21
+    preexisting_legacy_runtime_touched: false
+  publication:
+    transport: local_git
+    replacement_gate: not_applicable
+    expected_remote_head: cd90a9d9adedbfa2d0f1b90f245b4dde7a061716
+    resulting_remote_head: not_read_no_publication
+    compare_and_swap: not_applicable
+    fast_forward_verified: not_applicable
+    push_performed: false
+    master_modified: false
+    force_push: false
+  next_owner: foreground_independent_review
