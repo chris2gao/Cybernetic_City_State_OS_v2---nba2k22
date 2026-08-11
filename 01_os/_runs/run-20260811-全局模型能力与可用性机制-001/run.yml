@@ -1,0 +1,62 @@
+schema_version: citystate.os_run.v1
+run:
+  run_id: run-20260811-全局模型能力与可用性机制-001
+  task_id: os-v2-global-model-capability-and-availability-routing-001
+  exact_base_sha: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+  branch: dev/os-v2-global-model-capability-and-availability-routing-001
+  owner: core
+  status: candidate_pending_stage1_Human_confirmation
+  purpose: >-
+    用七阶段 workflow 研究并设计全局模型能力/可用性/路由机制。阶段 1 先固定 Human 真正要求；
+    阶段 2 独立 deep research 验证 provider/product/model/surface 的当前事实；阶段 3 才形成结果模型。
+    在 evidence-backed design 经 Human 接受前，不进入 canonical 实现。
+  workflow:
+    stage_01_requirement_modeling:
+      status: active
+      artifact: 01_需求建模/requirement/A_需求建模_v1.yml
+      completion_requires: 01_需求建模/requirement/人类确认_v1.yml
+    stage_02_information_collection:
+      status: blocked_by_stage_01_confirmation
+      research_policy:
+        - primary_official_sources_first
+        - separate_vendor_capability_from_account_surface_availability
+        - label_Human_reported_observation_separately
+        - record_source_date_and_invalidation_condition
+        - at_least_one_independent_pass_without_prior_conclusions
+    stage_03_result_modeling:
+      status: blocked_by_stage_02
+    stage_04_test_generation:
+      status: blocked_by_stage_03
+    stage_05_step_decomposition:
+      status: blocked_by_stage_04
+    stage_06_execution:
+      status: blocked_by_Human_approved_implementation_boundary
+    stage_07_test_execution:
+      status: blocked_by_stage_06
+  current_scope:
+    repository_writes: run_evidence_only
+    canonical_mutation: prohibited_until_Human_boundary_gate
+  reported_initial_product_scope_from_Human:
+    OpenAI:
+      subscription: ChatGPT Plus
+      surfaces:
+        - ChatGPT web
+        - Codex Desktop
+    Anthropic:
+      subscription: Claude Pro
+      surfaces:
+        - Claude Code Desktop
+      explicitly_deferred:
+        - Claude Code CLI
+    Google_or_Antigravity_surface:
+      subscription: Gemini Pro
+      surfaces:
+        - Gemini web
+        - Antigravity client
+      Human_reported_labels_to_verify:
+        - Gemini 3.1 Pro
+        - Gemini 3.6 Flash
+        - Opus 4.6
+  important_distinction: >-
+    上述 product/model 名称与额度描述是 Human 对当前账户 UI 的观察起点，不等于厂商 capability、
+    entitlement 或参数事实。阶段 2 必须逐项验证或保留为 user-observed state。
