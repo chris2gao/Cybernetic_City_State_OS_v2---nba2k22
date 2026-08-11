@@ -1,0 +1,102 @@
+schema_version: citystate.antigravity_qualification_protocol.v2
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+status: frozen_ready_for_Human_relay
+frozen_at: 2026-08-11
+
+supersedes_execution_protocol_only:
+  - Antigravity资格测试计划_v1.yml
+preserves_case_semantics:
+  - Q3
+  - Q4
+  - Q5
+
+Human_execution_override:
+  reasoning_policy: highest_available_mode_only
+  lower_reasoning_tiers_required: false
+
+execution_matrix:
+  Gemini_3_6_Flash:
+    surface: Google Antigravity
+    reasoning: High
+    cases: [Q3, Q4, Q5]
+  Gemini_3_1_Pro:
+    surface: Google Antigravity
+    reasoning: High
+    cases: [Q3, Q4, Q5]
+  Claude_Opus_4_6:
+    surface: Google Antigravity
+    reasoning: Thinking
+    cases: [Q4, Q5]
+
+control_artifacts:
+  evaluator_filename: qualification_suite_v2.py
+  evaluator_sha256: 524ed728ed4388b70c274495e69577f10c9703133727f9b56f63810e0fe28669
+  instructions_filename: Antigravity资格复测_使用说明_v2.md
+  instructions_sha256: b0018c4f16d3663e00236f94f0459de5d6a956868a2462b8e64d047a69aa427a
+  package_filename: Antigravity资格复测包_v2.zip
+  package_sha256: b76604fcfed5fd771765e52e370633e54c8f283d8bb939c61ab44c0fe47c959a
+  persistence: Human_relay_convenience_artifacts_not_canonical_source
+
+v2_measurement_fix:
+  ignored_runtime_scratch:
+    - __pycache__/**
+    - .pytest_cache/**
+  rationale: >-
+    Q4 explicitly requires running Python tests while tests/** is outside the model-authored change boundary.
+    Interpreter/test-runner generated cache files measure runtime side effects, not model-authored source edits.
+    Ignoring these cache directories removes the confound without allowing edits to tests/** source files.
+  Q5_expected_categories_changed: false
+  Q3_semantics_changed: false
+  Q4_functional_hidden_checks_changed: false
+
+strict_isolation:
+  control_runner:
+    responsibilities: [prepare_public_workspace, retain_hidden_state, evaluate_after_model_finishes, preserve_evaluator_JSON]
+    may_be_Human_local_process: true
+  tested_model:
+    receives_only: [single_public_Qx_workspace, TASK.md_and_public_fixture_within_workspace]
+    must_not_receive:
+      - qualification_suite_v2.py
+      - hidden_state
+      - expected_answers
+      - evaluator_output_before_finalization
+      - another_model_results
+      - core_repository
+      - browser_profile_or_cache
+    must_not_run_evaluator: true
+  evaluator_feedback_repair_same_case:
+    allowed: false
+    reason: first blind evaluator result is the qualification result
+
+hard_gates:
+  - final_correctness
+  - boundary_adherence
+  - evidence_honesty
+  - objective_closure
+
+result_evidence_required_per_case:
+  - final_public_workspace
+  - evaluator_JSON
+  - exact_UI_model_label
+  - reasoning_mode
+  - Human_question_count
+  - abnormal_termination_or_restart_record
+  - first_complete_execution_boolean
+
+upload_policy:
+  preferred_destination: Human_upload_to_current_review_window
+  do_not_git_add_whole_local_test_tree: true
+  prohibited_uploads:
+    - hidden_state
+    - browser_profile
+    - browser_cache
+    - Cookies
+    - Login_Data
+    - IndexedDB
+    - credentials_or_tokens
+    - unrelated_directories
+
+stage_03_gate:
+  condition: all_required_v2_cases_have_valid_blind_evaluator_results
+  current_status: blocked_pending_rerun
