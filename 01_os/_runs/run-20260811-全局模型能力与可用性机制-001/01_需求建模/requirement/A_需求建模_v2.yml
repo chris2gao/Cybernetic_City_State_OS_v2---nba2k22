@@ -1,0 +1,194 @@
+schema_version: citystate.requirement_model.A.v1
+artifact:
+  task_id: os-v2-global-model-capability-and-availability-routing-001
+  run_id: run-20260811-全局模型能力与可用性机制-001
+  stage: 01_需求建模
+  version: 2
+  status: candidate_pending_Human_synonym_confirmation
+  supersedes: A_需求建模_v1.yml
+  source: current_Human_requirements_2026-08-11
+
+A:
+  目标: >-
+    建立一个低耦合、repository-wide、可按需加载的全局模型能力与任务路由机制。该机制维护经证据支持的
+    model / product-surface capability 与本项目实测表现；每个正式任务开始时，以“已登记模型默认可用、
+    Human availability override 为账户级可用性权威输入”为前提，结合当前任务角色、risk tier、task shape、
+    required capabilities 与 project-observed performance，选择最适合该任务的 model + surface + parameter profile。
+    路由优化目标是 task-model fit 与高质量完成任务，不优化 token 价格、成本或额度利用率。
+
+  成功判据:
+    - 描述: >-
+        模型路由能力作为独立全局机制存在，可由 workflow、规划窗口、执行窗口或审核窗口按需加载；
+        workflow 只引用/调用，不复制其模型目录、路由规则或实测数据。
+      可观察: true
+    - 描述: >-
+        每次任务路由明确输出 role、risk tier、task shape、required capabilities、Human availability override、
+        selected surface/model、parameter profile、routing basis 与关键限制；模型选择不改变 Human authority。
+      可观察: true
+    - 描述: >-
+        已登记模型默认 available；只有 Human 在任务开始或进行中明确声明 unavailable 才从候选集中移除，
+        Human 明确恢复后重新进入候选。机制不要求自动读取个人账户额度或 UI entitlement API。
+      可观察: true
+    - 描述: >-
+        capability profile 与 current Human availability override 分层；稳定能力知识带 source/ref、verified_at、
+        invalidation condition，Human 账户级 availability 输入不伪装成 vendor capability fact。
+      可观察: true
+    - 描述: >-
+        capability profile 至少覆盖当前 routing 所需的 context、reasoning controls、agent/tool 能力、coding、research、
+        multimodal/vision、速度/延迟特征、可用运行参数、surface 约束、已知限制与官方定位；厂商未公开项保持 unknown。
+      可观察: true
+    - 描述: >-
+        deep research 覆盖当前主要 surfaces：ChatGPT Plus web、Codex Desktop、Claude Pro 下 Claude Code Desktop、
+        Gemini Pro web、Antigravity；Claude Code CLI 本任务 deferred。API capability 不自动等同于这些产品 surface capability。
+      可观察: true
+    - 描述: >-
+        Human 在 Antigravity 中观察到的 Gemini 3.1 Pro、Gemini 3.6 Flash、Opus 4.6 均分别研究其真实身份、surface、
+        参数与官方能力；无法由官方材料映射的 label 保留为 Human-observed product label，不补猜。
+      可观察: true
+    - 描述: >-
+        vendor/official capability evidence 与 project-observed performance evidence 分栏保存，二者共同参与 routing，
+        任何官方 benchmark 或厂商定位不得覆盖本项目反复实测出的失败边界。
+      可观察: true
+    - 描述: >-
+        为 Antigravity 当前主要模型建立一组代表性冻结任务实测，覆盖至少机械确定性、常规实现、语义判断、
+        长链多步骤执行与审核/证据判断等任务形状；结果能够支持“哪些任务可路由、哪些任务不应路由”的经验边界，
+        而不是只给一个笼统好坏评分。
+      可观察: true
+    - 描述: >-
+        Antigravity 模型实测记录至少区分一次完成、返工轮次/根因、指令遵守、边界/authority 遵守、测试与证据诚实、
+        长链上下文保持和最终正确性；同一 frozen task 的比较条件与成功判据一致。
+      可观察: true
+    - 描述: >-
+        至少有一轮独立 deep-research pass 在不知道另一研究者结论的前提下从外部来源建立 claim/evidence；
+        之后才逐 claim reconciliation，冲突保留并追查来源，不以平均意见代替事实。
+      可观察: true
+    - 描述: >-
+        routing 不建立 token/cost 优化、额度库存经济、自动 fallback 链或 quota watcher。若 Human 将首选模型标为 unavailable，
+        只在剩余 available 候选中重新执行同一 task-fit routing。
+      可观察: true
+    - 描述: >-
+        最终设计与现有 workflow、context_management、未来 role mechanism 保持模块化：workflow 负责编排阶段；
+        context mechanism 负责上下文隔离；role mechanism 负责角色语义与分配；model-routing mechanism 负责模型/参数选择。
+      可观察: true
+    - 描述: >-
+        对 `01_os/开发入口与单窗口任务规范_v1.md` 的处理不制造第二套规则：repository bootstrap、Git/publication/evidence 等
+        全仓执行纪律继续由入口/纪律层承载；可复用的 task-envelope / role / model-routing 语义若形成独立机制，入口文件只保留
+        必需的稳定约束与 canonical pointer，不复制机制正文。
+      可观察: true
+
+  边界:
+    - 本任务只研究并设计 model capability / surface / task-fit routing 与 Antigravity model qualification evidence；不购买、升级、取消订阅。
+    - 不读取、保存或回显 token、cookie、credential、key、.env 或其他账户秘密。
+    - Claude Code CLI 当前不启用、不安装、不配置；仅记录为 deferred surface。
+    - Human 已登记的模型默认可用；本任务不建设自动 quota/availability crawler、watcher、scheduler 或账号切换系统。
+    - 不把 API model capability 自动等同于 ChatGPT/Claude/Gemini web、Codex/Claude Code Desktop 或 Antigravity product capability。
+    - 不以 token 价格、API 成本、会员额度利用率为模型路由优化目标。
+    - 不在本任务中最终重构 workflow、role mechanism、context mechanism、single-window/task-envelope 或 long-running-task mechanism；
+      只为当前模型路由机制定义与它们的接口边界，相关结构调整属于后续任务。
+    - 需求建模与研究阶段只写本 run evidence；阶段 3 以前不修改 canonical model-routing/entry/workflow 规则。
+
+  约束:
+    - 系统总体架构坚持独立、低耦合、模块化：跨阶段/跨任务复用能力优先做成 `03_mechanisms/**` 一类全局机制，workflow 通过 pointer/contract 调用而不复制机制实例。
+    - `01_workflow/**` 负责阶段顺序、输入输出与何时调用机制，不成为模型目录、角色目录、上下文实现或任务执行治理正文的长期存放处。
+    - 现有 `context_management` 是已存在的全局机制，后续角色与模型路由应与它组合实现“角色专属最小上下文”，而不是重复实现上下文隔离。
+    - Human 是当前个人账户模型可用性的权威输入：默认 available；Human 明确 unavailable 时立即排除；明确恢复后重新 available。
+    - 模型路由目标是选择“正好适合当前任务”的模型与参数，以任务质量/完成可靠性为核心，不以最便宜或 token 最省为目标。
+    - deep research 的外部技术事实优先 provider 官方一手资料；第三方 benchmark 只作为补充 performance/risk evidence。
+    - project-observed performance 必须来自可复现/可比较的真实或冻结任务证据；历史印象可用于提出假设，不直接升级为精确 capability claim。
+    - 模型 qualification 测试不应为了让某模型过关而降低成功判据；失败也是有效 routing evidence。
+    - 独立模型间仍保持 Human-triggered / Human-relayed communication，不在本任务增加自动跨模型投递。
+
+  术语:
+    - 词: 全局模型能力与任务路由机制
+      含义: >-
+        可独立加载的 repository-wide 全局机制；维护模型/产品 surface 能力与本项目 qualification evidence，并根据当前 task/role/risk
+        与 Human availability override 输出 model + surface + parameter profile。
+      别名: [模型路由机制, model routing mechanism]
+    - 词: 全局机制
+      含义: >-
+        跨 workflow 阶段或跨任务复用、具有自身 canonical contract/definition 的低耦合模块；workflow 通过引用调用，不复制其正文或实例。
+      别名: [global mechanism, mechanism module]
+    - 词: workflow
+      含义: 七阶段任务链的编排层，定义阶段顺序、输入输出、失效回退及何时调用全局机制，不承载跨阶段机制正文。
+      别名: [工作流]
+    - 词: task envelope
+      含义: >-
+        一个任务从目标、角色、单窗口边界、执行持续性、停止条件、证据、审核到 publication 的执行治理外壳；是否独立成全局机制由后续任务裁决。
+      别名: [任务执行机制, task execution envelope]
+    - 词: model
+      含义: 具体模型身份或产品 UI 暴露的模型标签；API model ID 与产品 UI label 不默认等同。
+      别名: [模型]
+    - 词: product surface
+      含义: 实际承载模型的产品/客户端环境，例如 ChatGPT web、Codex Desktop、Claude Code Desktop、Gemini web、Antigravity。
+      别名: [surface, 产品面, 客户端]
+    - 词: capability profile
+      含义: 带来源、验证时间和失效条件的模型/产品能力描述，不代表当前 Human 账户一定可用。
+      别名: [能力档案, capability catalog]
+    - 词: Human availability override
+      含义: >-
+        当前任务账户级可用性输入。已登记模型默认 available；Human 明确声明 unavailable 才排除，明确恢复后重新 available。
+      别名: [availability override, 可用性覆盖]
+    - 词: parameter profile
+      含义: 当前 product surface 实际支持、且适合当前任务的 reasoning/mode/tool/agent 等运行参数组合。
+      别名: [参数配置, reasoning profile]
+    - 词: project-observed performance
+      含义: >-
+        模型在本项目冻结/真实任务上的实测表现，包括正确性、一次完成、返工、边界遵守、证据诚实和长链执行表现；与 vendor capability 分栏。
+      别名: [项目实测表现, qualification evidence]
+    - 词: model qualification
+      含义: >-
+        用具有代表性且成功判据冻结的任务，对某 model + surface 的可路由任务上限/下限建立项目证据，不追求单一总分排名。
+      别名: [模型资格测试, 任务适配测试]
+
+  关联领域:
+    - 领域: LLM provider / product capability documentation
+      为什么相关: 核实模型身份、context、reasoning/tool/multimodal/coding/research 能力和产品 surface 参数边界。
+    - 领域: modular system architecture / plugin-style global mechanisms
+      为什么相关: 模型能力、角色、上下文和任务执行治理需独立低耦合，并由 workflow 编排而非互相复制。
+    - 领域: workflow orchestration
+      为什么相关: 模型路由会在多个阶段/角色被调用，但不应成为七阶段中的一个业务产物阶段。
+    - 领域: role-based context isolation
+      为什么相关: 后续 role mechanism 与现有 context_management 共同决定每种角色加载什么，model routing 决定谁占该角色。
+    - 领域: model evaluation / software engineering agent benchmarks
+      为什么相关: Antigravity 模型需要通过代表性 frozen tasks 建立项目内 task-fit 边界，而不是只依赖厂商 benchmark。
+    - 领域: human-in-the-loop availability control
+      为什么相关: Human 而非自动账户探测机制负责声明临时不可用/恢复。
+    - 领域: evidence provenance / freshness
+      为什么相关: vendor capability 与项目实测均会变化，需要 source、verified_at、失效条件和证据类型区分。
+    - 领域: independent review / experimental validity
+      为什么相关: research 和 model qualification 都必须避免同一模型自拟测试、自判结果造成自证。
+
+  假设:
+    - 假设: 模型路由属于跨阶段、跨任务复用能力，作为独立全局机制比写入 workflow 阶段正文更符合现有 OS 的模块化结构。
+      如果不成立会怎样: 阶段 3 应证明为什么它只属于某个 workflow 阶段，而不是复制一份并行机制。
+    - 假设: `01_os/开发入口与单窗口任务规范_v1.md` 同时包含“入口/仓库纪律”和“可被模块化的任务执行语义”，后续最合理方向可能是保留前者并将后者 pointer 到独立机制。
+      如果不成立会怎样: 后续 task-envelope 任务应保留该文件为单一 canonical，不做无收益拆分。
+    - 假设: 默认规划/执行按大任务、长时间、objective closure 运行属于跨 workflow 阶段甚至跨 planning/execution role 的治理能力，更接近独立 task-envelope mechanism，而不是某一阶段的方法论。
+      如果不成立会怎样: 后续第 4 任务应证明它是 workflow 控制面的一部分并只在 workflow canonical 中定义。
+    - 假设: Antigravity Gemini 模型在复杂项目任务上的高返工现象可以通过冻结代表任务稳定复现，并能形成比主观印象更可靠的 routing boundary。
+      如果不成立会怎样: routing 对这些模型只能保留较低 confidence 的历史观察，不能声称精确任务上限。
+    - 假设: Antigravity Opus 4.6 的 Human-observed quota 非常有限，但本任务不把 quota conservation 纳入自动 routing 目标。
+      如果不成立会怎样: 只有 Human 后续明确要求资源策略时才另立需求，不在本机制自行扩展。
+
+  未解歧义:
+    - 歧义: >-
+        Human 在 Antigravity 中看到的 Gemini 3.1 Pro、Gemini 3.6 Flash、Opus 4.6 的精确产品/模型身份、参数边界和官方能力分别是什么？
+      为何未解: 当前有 Human surface observation，但需阶段 2 独立外部研究核实或保持 product-label-only 状态。
+      影响: 高
+      阻塞范围: [03_结果建模, 04_测试生成, 05_步骤拆分, 06_执行, 07_测试执行]
+    - 歧义: >-
+        Antigravity 各模型在本项目机械、常规实现、语义判断、长链执行和审核任务上的可靠上限/下限是什么？
+      为何未解: 需要阶段 2/4 的代表性 frozen-task qualification evidence；历史返工经验只足以触发测试，不能替代测试结果。
+      影响: 高
+      阻塞范围: [03_结果建模, 04_测试生成, 05_步骤拆分, 06_执行, 07_测试执行]
+    - 歧义: >-
+        最终 model-routing global mechanism 的最小 canonical data/contract 应是什么，以及现有 §7.1 哪些内容应保留为稳定入口、哪些应由机制单独承载？
+      为何未解: 需要阶段 2 对产品变化频率、现有 OS 机制边界和成熟 routing/evaluation 模式取得证据后由阶段 3 裁决。
+      影响: 高
+      阻塞范围: [03_结果建模, 04_测试生成, 05_步骤拆分, 06_执行, 07_测试执行]
+
+validation_notes:
+  schema_slots_present: [目标, 成功判据, 边界, 约束, 术语, 关联领域, 假设, 未解歧义]
+  high_impact_ambiguities_have_blocking_scope: true
+  stage_02_can_start_after_Human_synonym_confirmation: true
+  canonical_design_not_precommitted: true
