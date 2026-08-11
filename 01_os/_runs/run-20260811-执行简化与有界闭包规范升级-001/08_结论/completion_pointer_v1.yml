@@ -1,0 +1,148 @@
+schema_version: citystate.completion_pointer.v1
+completion_pointer:
+  packet_id: os-v2-execution-simplicity-and-bounded-closure-001
+  status: ready_for_independent_review
+  source_branch: dev/os-v2-execution-simplicity-and-bounded-closure-001
+  source_base: 4015a2a40bd0e9fa6f338b3551b86b7c42537fdd
+  source_head: 0f351539f5ba6186cc8e1ee4ef70128437ab0c02
+  source_head_note: >-
+    0f35153 是实现提交，即本 pointer 描述的全部 canonical 与 run 变更所在的提交。
+    本 pointer 文件自身由其后一个提交带入分支，该提交的 SHA 与远端读回值见
+    publication.pointer_commit_* 字段；两者都不是复制的期望值。
+  risk_tier: T1_standard
+  risk_tier_basis_ref: 01_任务输入/任务包_v1.yml#task_packet.risk_tier_basis
+
+  validation:
+    tests: >-
+      物理事实检查全部实跑：ledger、git diff --check、既有 run 未改、禁止路径未触、
+      编码与换行、master before/after、远端读回。
+    candidate_caused_failures: 0
+    diff_scope: passed
+    diff_scope_basis: >-
+      本任务归因的 out-of-scope 路径为 0。changed_path_ledger 退出码为 1，完全由 21 个
+      先于本任务存在的未跟踪 legacy 残留 08_os/_runs/**/_runtime/* 触发；实测其最新 mtime
+      为 2026-08-10T21:54:38，早于本分支 ref 创建时间 2026-08-11T03:47:28，且前后计数均为 21，
+      08_os 下跟踪变更为 0。详见 07_测试执行/验证结果_v1.yml。
+    git_diff_check_exit_code: 0
+    hook_guard: passed
+    semantic_change: true
+    semantic_change_note: >-
+      本任务的目的就是修改规范语义，因此 semantic_change 为真。所有语义均来自 Human 于
+      2026-08-11 接受的 joint proposal 的 A–I 条，执行者未引入其中没有的裁决。
+    machine_semantic_gate: not_applicable
+    machine_semantic_gate_reason: >-
+      本仓无任何 validator 读取这两份散文文件；不存在能证明散文语义正确的机器门，
+      本任务没有制造一个。语义验收由 ChatGPT 从 primary diff 逐项映射 A–I。
+
+  repository:
+    canonical_changed_paths:
+      - AGENT_WORKING_DISCIPLINE.md
+      - 01_os/开发入口与单窗口任务规范_v1.md
+    run_evidence_paths:
+      - 01_os/_runs/run-20260811-执行简化与有界闭包规范升级-001/run.yml
+      - 01_os/_runs/run-20260811-执行简化与有界闭包规范升级-001/01_任务输入/任务包_v1.yml
+      - 01_os/_runs/run-20260811-执行简化与有界闭包规范升级-001/07_测试执行/验证结果_v1.yml
+      - 01_os/_runs/run-20260811-执行简化与有界闭包规范升级-001/08_结论/completion_pointer_v1.yml
+    out_of_scope_paths: 0
+    binary_artifact_count: 0
+    tracked_worktree_clean_at_source_head: true
+    preexisting_legacy_runtime_untracked_count: 21
+    preexisting_legacy_runtime_touched: false
+    existing_runs_modified: 0
+    forbidden_paths_touched: 0
+
+  net_additions:
+    new_files_outside_this_run: 0
+    new_task_packet_schema_fields: 0
+    new_machine_tools: 0
+    new_validators: 0
+    new_machine_gates: 0
+    new_workflows: 0
+    new_policy_documents: 0
+    canonical_files_touched: 2
+    canonical_sections_touched: 6
+
+  section_mapping:
+    A: AGENT_WORKING_DISCIPLINE.md §4 — 路径清单是 forecast，绑定的是边界；不新增字段
+    B: 01_os/开发入口与单窗口任务规范_v1.md §2 — allowed_changed_paths 为授权边界 + 两条继续条件 + 两种失败分支
+    C: 01_os/开发入口与单窗口任务规范_v1.md §2 尾段 — protected action 明确排除，引用既有权威条文
+    D: 01_os/开发入口与单窗口任务规范_v1.md §7 — risk_tier canonical 定义与四档表，T3 按 blast radius 且不可降档
+    E: 01_os/开发入口与单窗口任务规范_v1.md §7 — 降档护栏；动作授权不等于内容裁决
+    F: 01_os/开发入口与单窗口任务规范_v1.md §9 — 声明的低 tier 不自动成立，reviewer 可驳回
+    G: AGENT_WORKING_DISCIPLINE.md §2 freshness bullet — 无变更者不重复 polling；protected action 前 fresh read 仍强制
+    H: AGENT_WORKING_DISCIPLINE.md §2 failure bullet — 门收敛以严格收缩证明，不设固定轮数上限
+    I: 01_os/开发入口与单窗口任务规范_v1.md §11 — 九项停止条件重排为六类，无一删除
+
+  reworded_or_removed_existing_clauses:
+    reworded:
+      - file: 01_os/开发入口与单窗口任务规范_v1.md
+        section: "2"
+        from: 一组精确 allowed paths
+        to: 一个明确的 allowed paths 边界
+        reason: >-
+          "精确"此前被读成"开工前穷举文件清单"，与 AGENT_WORKING_DISCIPLINE.md §4 相抵触。
+          边界的无歧义要求未被削弱；最终 changed-path 的精确性仍由第 6、8、10 节承担。
+      - file: 01_os/开发入口与单窗口任务规范_v1.md
+        section: "7"
+        from: "`risk_tier` 是供应商无关的任务语义。"
+        to: 同一句 + canonical 定义、四档表与降档护栏
+        reason: 原句只声明 tier 是任务语义，未给判定标准；下游 §7.1 路由与 §9 独立性均依赖它。
+      - file: 01_os/开发入口与单窗口任务规范_v1.md
+        section: "11"
+        from: 九项停止条件的平铺句
+        to: 六类分组
+        reason: 平铺使记账边界与安全边界同权，执行者无法分级。
+    removed: []
+    removed_count: 0
+    protections_lost: none
+    protections_lost_proof: 07_测试执行/验证结果_v1.yml#protection_preservation_check
+
+  findings:
+    - id: F-ledger-template-mismatch
+      severity: non_blocking
+      summary: >-
+        changed_path_ledger.py:108 读取顶层 allowed_changed_paths，而 §7 任务包模板把字段
+        嵌在 task_packet: 之下；按模板书写的任务包直接喂给该工具会返回退出码 3。实测复现。
+      handling: >-
+        未修改工具、未修改模板（均在本任务禁止范围）。改用本 run gitignored _runtime/ 下的
+        顶层投影文件驱动 ledger，内容逐字取自本任务包 allowed_changed_paths。
+        不对任何历史 run 的 diff_scope 作断言——本任务未核查历史 run 如何运行该工具。
+      followup: >-
+        修哪一边属于第 2 节意义上的"选择"，不在本 objective 内，应另开窗口。
+
+  publication:
+    transport: local_git
+    replacement_gate: not_applicable
+    expected_remote_head: 0f351539f5ba6186cc8e1ee4ef70128437ab0c02
+    resulting_remote_head: 0f351539f5ba6186cc8e1ee4ef70128437ab0c02
+    resulting_remote_head_source: git ls-remote origin readback after push
+    compare_and_swap: not_applicable
+    fast_forward_verified: not_applicable
+    push_performed: true
+    push_scope: task_branch_only
+    master_before: 4015a2a40bd0e9fa6f338b3551b86b7c42537fdd
+    master_after: 4015a2a40bd0e9fa6f338b3551b86b7c42537fdd
+    master_modified: false
+    master_publication_requested: false
+    force_push: false
+    rebase: false
+    squash: false
+    amend: false
+    history_rewrite: false
+    relation_to_master_at_source_head:
+      ahead: 1
+      behind: 0
+      fast_forward_candidate: true
+    pointer_commit_sha: recorded_in_08_结论/发布读回_v1.yml
+    pointer_commit_note: >-
+      本文件所在提交的 SHA 无法写在它自己里面。该值与其远端读回值记录在同目录的
+      发布读回_v1.yml，由推送后从远端读回得到，不是本地假设。
+
+  next_owner: ChatGPT_independent_review
+  review_inputs_requested:
+    - primary diff 4015a2a..<branch head> 逐项映射 A–I
+    - 每个概念是否只有一个 canonical 定义，其余为 pointer
+    - 是否与旧条文矛盾
+    - 是否有保护规则被静默删除（对照 protection_preservation_check）
+    - 是否新增 schema / tool / workflow（对照 net_additions）
+    - risk-tier / T3 不可降档 / 降档护栏是否正确
