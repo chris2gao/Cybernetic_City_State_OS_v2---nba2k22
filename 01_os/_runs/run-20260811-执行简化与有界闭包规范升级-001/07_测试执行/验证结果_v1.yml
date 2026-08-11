@@ -1,0 +1,146 @@
+schema_version: citystate.os_validation.v1
+run_id: run-20260811-执行简化与有界闭包规范升级-001
+task_id: os-v2-execution-simplicity-and-bounded-closure-001
+measured_on: 2026-08-11
+executor: Claude Opus 5 (Claude Code)
+evidence_class: executor_measurement_not_independently_reproduced
+
+scope_honesty: >-
+  本仓没有任何 validator 读取 AGENT_WORKING_DISCIPLINE.md 或
+  01_os/开发入口与单窗口任务规范_v1.md（本轮实测确认：这两份文件不出现在任何 loader、
+  registry entry 的 loader 字段或 validator 的输入中）。因此**不存在能证明散文语义正确的
+  机器门**，本任务没有制造一个。以下全部是物理事实检查，不是语义正确性证明。
+  语义验收必须由 ChatGPT 从 primary diff 逐项映射 A–I。
+
+physical_preconditions:
+  remote_master_before: 4015a2a40bd0e9fa6f338b3551b86b7c42537fdd
+  local_base_used: 4015a2a40bd0e9fa6f338b3551b86b7c42537fdd
+  base_matches_remote_master: true
+  branch: dev/os-v2-execution-simplicity-and-bounded-closure-001
+  branch_created_from: 4015a2a40bd0e9fa6f338b3551b86b7c42537fdd
+  branch_name_free_before_creation: true
+  run_id_free_before_creation: true
+  hook_guard:
+    command: git config --get core.hooksPath
+    expected: .githooks
+    actual: .githooks
+    result: passed
+  transport: local_git
+
+changed_path_ledger:
+  tool: 01_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py
+  base: 4015a2a40bd0e9fa6f338b3551b86b7c42537fdd
+  path_count_total: 24
+  inside_allowlist: 3
+  inside_allowlist_paths:
+    - AGENT_WORKING_DISCIPLINE.md
+    - 01_os/开发入口与单窗口任务规范_v1.md
+    - 01_os/_runs/run-20260811-执行简化与有界闭包规范升级-001/01_任务输入/任务包_v1.yml
+  outside_allowlist_count: 21
+  outside_allowlist_attributable_to_this_task: 0
+  tool_exit_code: 1
+  exit_code_interpretation: >-
+    退出码 1 完全由 21 个**先于本任务存在**的未跟踪 legacy 残留
+    08_os/_runs/**/_runtime/* 产生，不由本任务的任何变更产生。ledger 的 worktree
+    路径集按设计包含未跟踪文件，因此这些残留必然出现在 outside_allowlist 中。
+    本任务未创建、未修改、未删除其中任何一个。
+  legacy_residue_untouched_proof:
+    file_count: 21
+    newest_mtime: 2026-08-10T21:54:38
+    branch_ref_created_at: 2026-08-11T03:47:28
+    all_legacy_mtimes_predate_branch_creation: true
+    count_at_preflight: 21
+    count_after_all_edits: 21
+    tracked_changes_under_08_os: 0
+  known_defects_reference: >-
+    path_ledger 属于 01_os/05_registry/task_discipline_v1.yml 登记的工具集，该 registry
+    记录 independent_review_passed: false 与 known_defects_record；引用本行结果时应同时引用
+    01_os/_runs/run-20260809-任务纪律工具-001/08_独立复核/独立复核结论摘要与Human裁决_v1.yml。
+
+finding_tool_template_mismatch:
+  severity: non_blocking_finding_reported_not_silently_worked_around
+  observed: >-
+    changed_path_ledger.py 第 108 行以 (data or {}).get("allowed_changed_paths") 读取
+    **顶层** key；而本文件第 7 节的任务包模板把全部字段嵌在 task_packet: 之下。
+    因此按第 7 节模板书写的任务包直接喂给该工具会得到
+    path_ledger_error: allowed_changed_paths missing or empty（退出码 3），实测复现。
+  what_this_task_did: >-
+    未修改工具、未修改第 7 节模板形状（两者都在本任务禁止范围内）。改为在本 run 的
+    gitignored _runtime/ 下生成一份仅含顶层 allowed_changed_paths 的 scratch 投影
+    （ledger_allowlist_projection.yml，内容逐字取自本任务包的 allowed_changed_paths），
+    用它驱动 ledger。该文件被 .gitignore:15 的 01_os/_runs/*/_runtime/ 命中，
+    实测 git check-ignore 退出码 0，不会进入提交。
+  not_claimed: >-
+    本任务**没有**核查历史 run 如何运行过该工具，因此不对任何历史 run 的 diff_scope
+    结论作任何断言。此处只报告工具与模板在当前 master 上的不一致这一可复现事实。
+  suggested_followup: >-
+    另开窗口决定是由工具支持嵌套读取，还是由第 7 节模板改为顶层键。属于第 2 节意义上的
+    "选择"，不在本任务 objective 之内，故不在本任务修复。
+
+diff_and_content_checks:
+  git_diff_check_exit_code: 0
+  files_changed_tracked: 2
+  insertions: 102
+  deletions: 11
+  existing_runs_modified: 0
+  forbidden_paths_untouched:
+    AGENTS.md: untouched
+    CLAUDE.md: untouched
+    GEMINI.md: untouched
+    README.md: untouched
+    01_os/README.md: untouched
+    CORE_MANIFEST.yml: untouched
+    01_os/05_registry/**: untouched
+    01_os/06_execution/**: untouched
+  encoding_and_line_endings:
+    AGENT_WORKING_DISCIPLINE.md:
+      before: {bytes: 15353, crlf: 0, bare_lf: 281, bom: false}
+      after:  {bytes: 17265, crlf: 0, bare_lf: 306, bom: false, utf8_strict_decode: valid}
+    01_os/开发入口与单窗口任务规范_v1.md:
+      before: {bytes: 23488, crlf: 0, bare_lf: 432, bom: false}
+      after:  {bytes: 28624, crlf: 0, bare_lf: 498, bom: false, utf8_strict_decode: valid}
+    result: LF-only 与无 BOM 均保持不变
+  binary_artifact_count: 0
+  personal_absolute_paths_in_canonical_diff: 0
+  secrets_or_credentials_read: none
+
+protection_preservation_check:
+  method: 逐条把改写前 §11 的九项停止条件映射到改写后的六类，确认无一丢失
+  mapping:
+    - original: base/branch/master 不符
+      now: class_1_physical_precondition_mismatch
+    - original: worktree 有外来变更
+      now: class_1_physical_precondition_mismatch
+    - original: run-id 冲突
+      now: class_1_physical_precondition_mismatch
+    - original: 需越出 allowed paths
+      now: class_2_authorized_boundary_exhausted
+    - original: canonical 语义需 Human 裁决
+      now: class_3_semantic_adjudication_required
+    - original: 已登记 hooks 未正确启用
+      now: class_4_protected_action_required
+    - original: 不能普通 fast-forward 或需要 force/rebase/squash
+      now: class_4_protected_action_required
+    - original: 未授权的网络、sudo、系统安装、模型调用或数据外发
+      now: class_5_security_boundary
+    - original: 测试不能证明声明
+      now: class_6_evidence_cannot_support_claim
+  unmappable_original_conditions: 0
+  protections_added_not_removed:
+    - secrets / credentials / .env / key store 显式进入第 5 类（此前只在 AGENTS.md Safety Rules）
+    - 删除与 amend 显式进入第 4 类
+    - 1.1 替代门跑不过显式进入第 4 类
+    - 无进展重复门显式进入第 6 类
+  authority_unchanged:
+    human_authority: unchanged
+    protected_action_gate: unchanged
+    master_gate: unchanged
+    publication_allowlist_precision: unchanged
+    security_boundary: unchanged
+    independent_review_separation: unchanged_and_strengthened_by_section_9_clause
+
+master_state:
+  before: 4015a2a40bd0e9fa6f338b3551b86b7c42537fdd
+  after: not_yet_read_at_this_stage
+  master_modified: false
+  master_publication_requested: false

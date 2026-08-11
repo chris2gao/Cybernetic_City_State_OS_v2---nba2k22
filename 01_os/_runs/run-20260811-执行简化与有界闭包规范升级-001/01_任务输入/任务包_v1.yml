@@ -1,0 +1,81 @@
+schema_version: citystate.task_packet.v1
+task_packet:
+  task_id: os-v2-execution-simplicity-and-bounded-closure-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T1_standard
+  risk_tier_basis: >-
+    本次 tier 按第 7 节的 canonical 定义判定：Human 在 2026-08-11 的消息中接受了
+    joint_proposal_ready_for_implementation 作为设计基线，并逐项写明 A–I 的规范意图，
+    因此执行者在整条 objective 路径上的剩余自由度是局部行文整合，可逆、局部，
+    不改变 contract / interface / semantic 归属 / ownership / structure，
+    不新增 schema、machine tool、validator 或 workflow，不触及 protected-action authority。
+    该裁决不是 blast-radius 降档：本任务本来就不含 T3 类动作。
+  exact_base_sha: 4015a2a40bd0e9fa6f338b3551b86b7c42537fdd
+  branch: dev/os-v2-execution-simplicity-and-bounded-closure-001
+  objective: >-
+    把已通过 cross-review 的合题方案最小化落入两份既有 canonical 文件，使 dispatch 边界、
+    allowed-paths 语义、risk-tier 定义、tier 降档护栏、freshness/polling、门收敛终止原则与
+    停止条件彼此一致；不新增 workflow、schema、字段、machine tool 或 policy 文件，
+    不放宽 Human authority、publication/master gate 或 security gate。
+  source_evidence:
+    - current remote master tree at 4015a2a40bd0e9fa6f338b3551b86b7c42537fdd
+    - current Human authorization message dated 2026-08-11 accepting
+      joint_proposal_ready_for_implementation as the design baseline (sections A-I)
+    - E:\newStand\城邦简报\core\03_决策档案\2026-08-11_任务纪律规范审查与合题方案_ClaudeOpus5_v1.md
+    - E:\newStand\城邦简报\core\03_决策档案\2026-08-11_任务纪律规范合题方案_Claude-ChatGPT碰撞后_v2.md
+  allowed_changed_paths:
+    - AGENT_WORKING_DISCIPLINE.md
+    - 01_os/开发入口与单窗口任务规范_v1.md
+    - 01_os/_runs/run-20260811-执行简化与有界闭包规范升级-001/**
+  required_tests:
+    - changed_path_ledger against this packet allowlist
+    - git diff --check
+    - no existing _runs path modified
+    - forbidden canonical paths untouched
+    - UTF-8 no BOM and LF-only preserved on both canonical files
+    - remote master unchanged before and after
+    - ordinary remote branch head readback
+  prohibitions:
+    - modify_or_publish_master
+    - force_push
+    - rebase
+    - squash
+    - amend
+    - history_rewrite
+    - modify_AGENTS_CLAUDE_GEMINI_README_01osREADME_CORE_MANIFEST
+    - modify_any_existing_run_evidence
+    - modify_registry_validator_tool_schema_or_workflow_implementation
+    - add_task_packet_schema_field
+    - create_parallel_policy_or_workflow_document
+    - touch_preexisting_untracked_legacy_runtime_files
+    - redesign_accepted_joint_proposal_semantics
+  required_completion_pointer: 08_结论/completion_pointer_v1.yml
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_write_authorized: true
+    master_write_authorized: false
+    destructive_git_authorized: false
+    authorization_ref: current_Human_message_2026-08-11_accepting_joint_proposal_sections_A_to_I
+    expected_remote_head: 4015a2a40bd0e9fa6f338b3551b86b7c42537fdd
+  executor_profile:
+    provider: Anthropic
+    model: Claude Opus 5 (Claude Code)
+    reasoning_effort: high
+    mode: standard
+    rollout_token_budget: null
+    routing_basis: >-
+      规范整合任务，需要同时持有两份 canonical 文件的既有语义与合题稿的全部裁决；
+      Human 在本次派单中直接指定执行者。
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: required
+    independent_reviewer: ChatGPT
+    different_model_family: true
+    different_measurement_tool: true
+    machine_gate_honesty: >-
+      本仓没有任何 validator 读取这两份散文文件，实测确认。因此不存在能证明散文语义正确的
+      机器门，本任务不制造一个。机器级只覆盖 base/branch/worktree、changed-path ledger、
+      allowlist closure、编码与换行一致性、git diff --check、既有 run 未被修改、
+      禁止路径未被触碰、master 未变、远端分支读回。实质验收由 ChatGPT 从 primary diff
+      逐项映射 A–I。

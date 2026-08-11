@@ -1,0 +1,140 @@
+schema_version: citystate.os_run.v1
+run_id: run-20260811-执行简化与有界闭包规范升级-001
+task_id: os-v2-execution-simplicity-and-bounded-closure-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+source_base: 4015a2a40bd0e9fa6f338b3551b86b7c42537fdd
+branch: dev/os-v2-execution-simplicity-and-bounded-closure-001
+ownership: core_owned_shared_os_evidence
+risk_tier: T1_standard
+purpose: >-
+  把已通过 Claude/ChatGPT cross-review 并由 Human 接受的合题方案，最小化落入两份既有
+  canonical 文件，使 dispatch 边界、allowed-paths 语义、risk-tier 定义、tier 降档护栏、
+  freshness/polling、确定性门收敛终止原则与停止条件彼此一致。这是兼容升级，不是新 workflow。
+allowed_changed_paths:
+  - AGENT_WORKING_DISCIPLINE.md
+  - 01_os/开发入口与单窗口任务规范_v1.md
+  - 01_os/_runs/run-20260811-执行简化与有界闭包规范升级-001/**
+prohibitions:
+  - modify_master
+  - force_push
+  - rebase
+  - squash
+  - amend
+  - history_rewrite
+  - modify_AGENTS_CLAUDE_GEMINI_README_01osREADME_CORE_MANIFEST
+  - modify_any_existing_run_evidence
+  - modify_registry_validator_tool_schema_or_workflow_implementation
+  - add_task_packet_schema_field
+  - create_parallel_policy_or_workflow_document
+  - touch_preexisting_untracked_legacy_runtime_files
+
+canonical_changes:
+  AGENT_WORKING_DISCIPLINE.md:
+    - section: "2 — Filter large output before you fetch it"
+      bullet: "On failure, do not re-run the same command unchanged"
+      change: extended_existing_bullet
+      semantics: >-
+        把既有的"重跑需要新证据/新假设/新 remedy 才算第二次尝试"延伸到 gate：门的失败集合
+        揭示同一确定性闭包时，修复后重跑算第二次尝试，前提是 failure/stale 集合严格收缩，
+        或该轮产生其他新证据/假设/remedy；无 intervening mutation、无收缩、无新东西即为重复，
+        说明该变换非确定性，停。明确"收缩而非固定轮数上限证明收敛，因此不设轮数上限"，
+        并指明这与单窗口规范第 11 节交付后修正预算是两个不同对象。
+      maps_to_dispatch_section: H
+    - section: "2 — Filter large output before you fetch it"
+      bullet: "Cache what cannot change; re-read what can"
+      change: extended_existing_bullet
+      semantics: >-
+        补齐反向规则：自上次读取以来没有 mutation、context boundary、conflict、
+        publication attempt/freshness requirement 或已知 external changer 时，
+        重复读取同一 remote state 不产生新证据，不得因"也许它自己变了"而 polling。
+        同时明确该节约永远不适用于 protected action 之前那次强制 fresh read。
+      maps_to_dispatch_section: G
+    - section: "4 — Dispatch objectives and red lines, not hard numbers"
+      change: added_paragraph_under_existing_principle
+      semantics: >-
+        路径清单适用同一原则：授权来自 objective、red lines 与 allowed_changed_paths 边界；
+        派单前能列出的文件是 diff 的 forecast，不是第二条更紧的边界；不要求派单者预言
+        确定性依赖图的每一片叶子；边界内触及未预报叶子不构成越权。边界含义与两条继续条件
+        只在单窗口规范第 2 节定义一次，且不新增任何任务包字段。
+      maps_to_dispatch_section: A
+  01_os/开发入口与单窗口任务规范_v1.md:
+    - section: "2 — 一个窗口一个任务"
+      change: reworded_existing_sentence_plus_inserted_rule
+      semantics: >-
+        "一组精确 allowed paths"改为"一个明确的 allowed paths 边界"；确立
+        allowed_changed_paths = 授权边界而非事前穷举，允许 exact path 与 bounded
+        prefix/path-set；两条继续条件（仍在边界内 + 由本 objective 已固定的规则从声明的
+        当前 source 确定性推导）与其判据；条件 1 失败 = dispatch boundary defect 上报，
+        不得自行扩边界；条件 2 失败 = 不修，记 finding。原句"不顺手修复其他问题"与
+        末段"发现旁支问题时只记录 finding…"逐字保留。
+      maps_to_dispatch_section: B
+    - section: "2 — 一个窗口一个任务（末尾 scope 子句）"
+      change: added_scope_clause_referencing_existing_authority
+      semantics: >-
+        推导规则只决定内容施工，不授权任何 protected action；发布、master、force、rebase、
+        squash、amend、history rewrite、删除、runtime/scheduler 激活、secret/credential
+        访问即使结果完全确定性也不因本节获得授权。引用既有权威条文，不复制完整 contract。
+      maps_to_dispatch_section: C
+    - section: "7 — 任务包必须包含的字段"
+      change: replaced_one_sentence_with_canonical_tier_definition
+      semantics: >-
+        risk_tier 的 canonical 定义 = 执行者在"从当前树到 completion pointer 的整条
+        objective 路径"上、在任务包所引 Human 内容裁决之后仍然拥有的决策自由度；
+        四档表；T3 按 blast radius 判定且不因 Human 已裁定具体内容而降档。
+      maps_to_dispatch_section: D
+    - section: "7 — 任务包必须包含的字段（降档护栏）"
+      change: added_paragraphs
+      semantics: >-
+        降档必须以可检查的 immutable ref 引用该裁决（authorization_ref / source_evidence），
+        不能只凭"Human 之前说过"；必须按整条 objective 衡量，不得拆成单次编辑逐个判低；
+        只降低该裁决真正消除的自由度；完整总则才可能到 T0，仍需套用的判准保留 semantic 层级；
+        publisher.authorization_ref 是动作授权，master_write_authorized 不产生 semantic 降档。
+      maps_to_dispatch_section: E
+    - section: "9 — 独立审核与 Human gate"
+      change: added_one_paragraph
+      semantics: >-
+        声明较低 risk_tier 不使该档自动成为事实；独立审核者可依据裁决 ref、primary evidence
+        与实际 diff 判定降档不成立并拒绝接受。明确这不新增审核流程。
+      maps_to_dispatch_section: F
+    - section: "11 — 停止条件与修正预算"
+      change: restructured_existing_list_into_six_classes
+      semantics: >-
+        原九项停止条件重排为六类（物理前提不符 / 授权边界耗尽 / 需要语义裁决 /
+        需要 protected action / 触及安全边界 / 证据不能支撑声明），无一删除；
+        补入 secrets-credentials、删除、amend、1.1 替代门与无进展重复门；
+        写明无法映射者不得静默删除须在 completion pointer 报告；
+        并声明交付后修正预算与一次施工内确定性门收敛是两个不同对象、互不覆盖、不设轮数上限。
+      maps_to_dispatch_section: I
+
+not_adopted:
+  fields_refused:
+    - repair_changed_paths
+    - deterministic_closure_paths
+    - deterministic_closure_policy
+    - mutation_class
+  historical_occurrences:
+    status: non_canonical_ad_hoc_run_metadata_no_schema_authority
+    location: 01_os/_runs/run-20260811-命名空间切换后stale-blob绑定修复-001/01_任务输入/任务包_v1.yml
+    action: 历史 evidence 不修改，本任务未触碰
+  simplicity: >-
+    AGENTS.md 工程原则 2 保持原状，未改动，也未在别处复述；未新增
+    "simplicity grants permission" 或 "simple tasks need less evidence" 之类规则。
+
+outputs:
+  task_packet: 01_任务输入/任务包_v1.yml
+  validation_result: 07_测试执行/验证结果_v1.yml
+  completion_pointer: 08_结论/completion_pointer_v1.yml
+
+validation:
+  status: candidate_ready_for_independent_review
+  method: >-
+    机器级仅覆盖物理事实（base/branch/worktree、changed-path ledger、allowlist closure、
+    编码与换行、git diff --check、既有 run 未改、禁止路径未触、master 未变、远端读回）。
+    本仓无任何 validator 读取这两份散文文件，故不存在证明散文语义正确的机器门，本任务未制造一个。
+  new_files_outside_run: 0
+  new_schema_fields: 0
+  new_machine_tools: 0
+  new_workflows: 0
+  new_policy_documents: 0
+lifecycle: candidate_ready_for_independent_review
+next_owner: ChatGPT_independent_review

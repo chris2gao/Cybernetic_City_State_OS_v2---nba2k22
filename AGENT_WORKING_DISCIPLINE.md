@@ -67,7 +67,16 @@ from that measurement, not estimates.
 - **On failure, do not re-run the same command unchanged.** Read the error,
   change the hypothesis, and cap the output of the retry. Treat a failure by its
   signature, not by the spelling of the command: a repeat needs new evidence, a
-  new hypothesis or a new remedy to count as a second attempt.
+  new hypothesis or a new remedy to count as a second attempt. A gate is judged
+  the same way. When a gate's failure set reveals one deterministic closure,
+  repairing it and re-running is a second attempt provided the failure or stale set
+  strictly contracts, or the round yields some other new evidence, hypothesis or
+  remedy. With no intervening mutation, no contraction and nothing new, the round
+  is repetition — and the transform it was supposed to close is not deterministic:
+  stop. Contraction, not a fixed round ceiling, is what proves convergence, so do
+  not impose one. This is convergence inside a single construction, a different
+  object from the post-delivery correction budget in section 11 of
+  `01_os/开发入口与单窗口任务规范_v1.md`.
 - **Capping what you fetch is not the same as discarding what ran.** Keep the exit
   code and the complete stdout/stderr in a local log, and summarise only at the
   point of presentation — expanding the failing part when it matters. A summary
@@ -76,7 +85,13 @@ from that measurement, not estimates.
   content is immutable once observed. `HEAD`, branch status, worktree cleanliness
   and gate state are not: invalidate them after any mutation, context boundary,
   publication attempt or conflict, and read them fresh immediately before a
-  protected action rather than quoting an earlier reading.
+  protected action rather than quoting an earlier reading. The rule runs both
+  ways: with no mutation, context boundary, conflict, publication attempt or
+  freshness requirement, and no known external changer since the last reading,
+  re-reading the same remote state produces no new evidence — do not poll on the
+  chance that it changed by itself. That economy never reaches the fresh read a
+  protected action requires. That one is mandatory, and "nothing was expected to
+  change" is not a reason to skip it before publishing.
 
 ### What is not worth optimising
 
@@ -111,6 +126,16 @@ cost. Give the conclusion and the delta.
 A task packet states the goal, the boundary, what must not happen, and how the
 result will be judged. It should not pin counts, path totals or SHAs that the
 executor can measure — those go stale between writing and running.
+
+A path list falls under the same rule. What authorizes the work is the objective,
+the red lines and the `allowed_changed_paths` boundary; the files a dispatcher can
+name before execution are a forecast of the diff, not a second and tighter
+boundary. A dispatcher is not expected to predict every leaf of a deterministic
+dependency graph, and an executor reaching an unforecast leaf **inside** the
+boundary has not exceeded its authorization. What that boundary means, and the two
+conditions under which an executor may keep working inside it, are defined once in
+section 2 of `01_os/开发入口与单窗口任务规范_v1.md`. No additional packet field
+carries this; the boundary field already in use is the whole mechanism.
 
 *Paid for 2026-07-25:* two dispatches specified a changed-path count ("15 paths",
 "14 paths") that no longer matched reality by execution time. One of them also
