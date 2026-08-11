@@ -1,0 +1,73 @@
+schema_version: citystate.independent_review.v1
+review_id: ChatGPT-independent-review-os-v2-execution-simplicity-and-bounded-closure-001-v1
+task_id: os-v2-execution-simplicity-and-bounded-closure-001
+reviewer: ChatGPT
+reviewed_branch: dev/os-v2-execution-simplicity-and-bounded-closure-001
+reviewed_head: 4b5d104e039836afc633014db2c1fc808f0665b4
+reviewed_base: 4015a2a40bd0e9fa6f338b3551b86b7c42537fdd
+master_at_review: 4015a2a40bd0e9fa6f338b3551b86b7c42537fdd
+verdict: REVISE_NARROW_CORRECTION
+
+accepted:
+  - AGENT_WORKING_DISCIPLINE section 2 gate convergence uses evidence/contraction rather than a fixed in-construction round cap
+  - AGENT_WORKING_DISCIPLINE section 2 freshness rule prohibits evidence-free remote polling while preserving mandatory protected-action fresh reads
+  - AGENT_WORKING_DISCIPLINE section 4 correctly distinguishes authorization boundary from pre-work diff forecast
+  - single-window section 2 defines allowed_changed_paths as an authorization boundary and preserves one-window-one-task
+  - deterministic derivation rule remains inside the existing authorized boundary and does not self-expand it
+  - risk_tier is defined by remaining executor discretion across the whole objective after durable Human content adjudication
+  - T3 is blast-radius based and non-downgradable by content adjudication
+  - publisher action authorization is explicitly separated from content adjudication
+  - independent reviewer may reject an incorrectly lowered risk tier
+  - no new canonical schema field, machine tool, validator, policy file or workflow was introduced
+
+blocking_finding:
+  id: publication_taxonomy_conflation
+  severity: blocking_before_master
+  files:
+    - 01_os/开发入口与单窗口任务规范_v1.md
+  locations:
+    - section 7 T3_high_risk description
+    - section 11 class 4 protected action
+  observed: >-
+    Section 11 says any of the six classes causes stop-and-return, while class 4 names unqualified
+    publication as a protected action. Existing section 6 still requires ordinary work-branch push after
+    validation, and repository_publisher_authority_v1.yml explicitly grants push_source_branch without a
+    new per-push Human action gate. Therefore the new wording can be read to force a Human micro-gate before
+    an otherwise pre-authorized source-branch publication. Section 7 also uses "master and shared publication
+    blast radius" in T3 wording without distinguishing protected shared-state publication from ordinary
+    authorized task-branch publication; because the objective path ends at a pushed completion pointer, this
+    can over-classify ordinary implementation tasks as T3.
+  required_correction: >-
+    Introduce no new mechanism. Clarify the existing publication taxonomy in the same file: ordinary
+    source/task-branch publication already authorized by the current task packet plus
+    repository_publisher_authority_v1.yml remains part of normal section 6 execution and is not itself a
+    class-4 stop. Class 4 covers publication/protected actions that are not already authorized by the current
+    authority/packet, actions that require an action-bound Human gate, master/shared protected-state
+    publication, failed required publication gates, non-fast-forward conditions, and destructive/history
+    actions. Align the T3 wording with the same distinction so a normal authorized task-branch push does not
+    itself imply T3.
+  prohibited_fix: >-
+    Do not weaken master, destructive Git, runtime/scheduler, secret/security or publication gate rules; do
+    not change repository_publisher_authority_v1.yml; do not create a second publication policy.
+
+nonblocking_finding:
+  id: path_ledger_task_packet_shape_mismatch
+  disposition: separate_followup_task
+  observed: >-
+    Executor evidence reports changed_path_ledger.py reads allowed_changed_paths at top level while the
+    canonical task packet template nests it under task_packet. The implementation used a gitignored projection
+    file rather than changing either side, which is acceptable for this task because both tool and template
+    were outside the authorized scope. Final Git compare independently shows this candidate changed only the two
+    allowed canonical files plus this task run evidence. The mismatch should be repaired separately.
+
+review_evidence:
+  compare_base_to_candidate:
+    ahead: 3
+    behind: 0
+    canonical_files_modified: 2
+  remote_branch_readback: exact_match
+  master_unchanged: true
+  primary_diff_reviewed: true
+
+next_owner: Claude_Code_Opus_5_narrow_correction
+master_publication_authorized: false
