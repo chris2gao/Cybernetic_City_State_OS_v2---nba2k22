@@ -1,0 +1,98 @@
+schema_version: citystate.independent_review.v1
+task_id: os-v2-01-os-namespace-and-autoload-cutover-001
+run_id: run-20260810-01OS命名空间与默认加载切换-001
+reviewer: ChatGPT_independent_reviewer
+reviewed_executor_head: ea97bb4be0c7c65ecda2c28aee7ed4bce2ae34bd
+reviewed_master: 818800595992d09e270082627b31642f04f1cc93
+verdict: REVISE_NARROW_CORRECTION
+
+scope_verdicts:
+  direct_namespace_cutover: PASS
+  whole_task_ready_for_master: false
+
+namespace_cutover_findings:
+  branch_relation:
+    status: ahead
+    ahead_by: 7
+    behind_by: 0
+    merge_base: 818800595992d09e270082627b31642f04f1cc93
+  former_root_probe:
+    path: 08_os/README.md
+    result: not_found_at_reviewed_head
+  active_root_probe:
+    path: 01_os/README.md
+    result: present
+  implementation:
+    path: 01_os/_runs/run-20260810-01OS命名空间与默认加载切换-001/04_验证/apply_namespace_cutover.py
+    assessment: deterministic_all_tracked_byte_replacement_then_inner_path_rename_then_final_root_rename
+  executor_receipt:
+    tracked_total: 874
+    tracked_under_01_os: 859
+    tracked_under_former_root: 0
+    former_token_occurrences_in_tracked_content: 0
+    tracked_paths_with_former_token: 0
+    behavioral_tests_run: false
+  executable_mode_restore_commit: ccf7273e51029b0ffa690b60cd370ddf1f642076
+  conclusion: >-
+    Human explicitly chose lexical namespace replacement without historical-literal exceptions or behavioral testing.
+    No concrete blocker was found in that scoped namespace cutover.
+
+blocking_followup:
+  - id: F1_cutover_evidence_supersession
+    severity: narrow_blocker_for_task_closure
+    evidence:
+      - 01_os/_runs/run-20260810-01OS命名空间与默认加载切换-001/04_验证/验证结果_v1.yml
+      - 01_os/_runs/run-20260810-01OS命名空间与默认加载切换-001/01_任务输入/任务包_v1.yml
+    finding: >-
+      The Human-authorized all-tracked lexical replacement also rewrote Checkpoint-A evidence. Some old assertions now
+      describe 01_os-to-01_os or still say rename_performed=false. Do not restore former namespace literals. Add one
+      post-cutover receipt / Human-override record and explicitly mark the pre-cutover Checkpoint-A evidence superseded
+      for current-state acceptance.
+  - id: F2_startup_current_state_cleanup
+    severity: narrow_blocker_for_autoload_scope
+    evidence:
+      - AGENTS.md
+      - CLAUDE.md
+      - GEMINI.md
+      - README.md
+      - CORE_MANIFEST.yml
+    finding: >-
+      Current startup documents still contain legacy-awaiting-retirement or future-root-lift wording despite completed
+      retirement and the Human decision that 01_os is permanent. Remove current-state contradictions; historical receipts
+      need not be semantically repaired.
+  - id: F3_communication_context_discovery
+    severity: narrow_blocker_for_autoload_scope
+    evidence:
+      - 01_os/03_mechanisms/communication_system/通讯契约_v1.yml
+      - 01_os/06_execution/boot/communication_system/task_space_initializer/initialize_task_space.py
+      - AGENTS.md
+    finding: >-
+      The local logical root is only a placeholder and the initializer requires an explicit --root, so a correctly loaded
+      executor still has to ask the Human where the communication root is. Define deterministic machine-global root
+      resolution. Recommended minimal rule: explicit --root overrides CITYSTATE_COMMUNICATION_ROOT, which overrides
+      Path.home()/.citystate/communication.
+  - id: F4_communication_reply_routing
+    severity: narrow_blocker_for_autoload_scope
+    finding: >-
+      Do not hardcode chatgpt-web-planner-01 or any recipient endpoint in AGENTS.md. When a valid communication manifest
+      and endpoint card are supplied/discovered, formal cross-model handoff must use canonical message YAML and identities,
+      roles, task_id and sequence must come from that task space. Without a valid communication context, executors must not
+      invent a formal message; ordinary Human-facing output remains allowed.
+  - id: F5_unowned_os_root_documents
+    severity: narrow_blocker_for_final_startup_surface
+    evidence:
+      - 01_os/可使用的独立模型和角色.md
+      - 01_os/后续验证候选关注点.md
+      - CORE_MANIFEST.yml
+    finding: >-
+      Resolve the two tracked OS-root documents before task closure. Move the capability inventory under
+      01_os/04_skills_and_tools/ with explicit non-authority semantics and move the superseded planning note under
+      01_os/_dev/, synchronizing registry/ownership where required.
+
+minimal_correction_policy:
+  preserve_namespace_cutover: true
+  restore_08_os_literals: false
+  rerun_behavioral_test_suite: false
+  require_lexical_recutover: false
+  allowed_approach: small_post_cutover_semantic_and_bootstrap_followup_commits
+  master_publication: blocked_until_independent_rereview_PASS
