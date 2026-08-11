@@ -358,6 +358,19 @@ def validate_static_repository(repo_root: Path) -> None:
         if not (root / relative).is_file():
             raise CommunicationValidationError(f"boot_ref_missing:{relative}")
     mechanism = os_root / "03_mechanisms/communication_system"
+    communication_contract = load_yaml(mechanism / "通讯契约_v1.yml")
+    expected_root_resolution = {
+        "precedence": [
+            "explicit_--root",
+            "environment_CITYSTATE_COMMUNICATION_ROOT",
+            "user_home_default",
+        ],
+        "environment_variable": "CITYSTATE_COMMUNICATION_ROOT",
+        "default_expression": 'Path.home() / ".citystate" / "communication"',
+        "repository_partition": "<resolved_communication_root>/<repository_id>/",
+    }
+    if communication_contract.get("local_root_resolution") != expected_root_resolution:
+        raise CommunicationValidationError("communication_root_resolution_contract_invalid")
     for contract in mechanism.glob("*.yml"):
         load_yaml(contract)
     local = load_yaml(

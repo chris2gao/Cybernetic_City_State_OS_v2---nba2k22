@@ -17,12 +17,12 @@ Read in this order:
    registry, run evidence, publication transport gates and the Human gate.
 6. Only the canonical files the task actually names.
 
-`01_os/**` is the active OS. Material elsewhere in this repository is either
+`01_os/**` is the permanent active OS namespace. Material elsewhere in this repository is
 retained global infrastructure — this file, `AGENTS.md`,
 `AGENT_WORKING_DISCIPLINE.md`, `GEMINI.md`, `README.md`, `CORE_MANIFEST.yml`,
-`.githooks/` — or legacy awaiting Human retirement. Legacy paths are not a
-startup, communication, state, task or navigation source of truth; do not load
-them to "get context" and do not restore a dependency on them.
+`.githooks/` — and nothing else is a current startup surface. Physical legacy
+retirement is complete. Do not recreate a retired path or restore a dependency on
+one. Shared communication handoff behavior is defined only in `AGENTS.md`.
 
 Your role, model and reasoning level come from the current task packet, not from
 this file. A role label authorizes nothing.

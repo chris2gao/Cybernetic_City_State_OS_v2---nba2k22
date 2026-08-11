@@ -50,10 +50,10 @@ transition_status:
     the whitelist rather than assumed. Nothing under 01_os/** was deleted, and no
     history was rewritten: the retired content stays reachable in this repository's
     history, which is what makes deleting it recoverable at all.
-  not_done_here: >-
-    The eventual move of 01_os/** to the repository root. Nine of the fifteen
-    surviving files name current 01_os/ paths and will need rewriting when it
-    happens; that is a separate task and this file does not anticipate it.
+  permanent_namespace: >-
+    01_os/** is the permanent OS namespace. The former future root-lift proposal
+    is cancelled; no move into the repository root and no compatibility shim is
+    planned.
 
 # Paths owned by core. Domain repositories treat these as read-only.
 #

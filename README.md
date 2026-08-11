@@ -15,9 +15,8 @@ registry, execution entrypoints and development rules are the current system:
   task, file placement, registry synchronisation, run evidence, publication
   transport gates, independent review and the Human gate.
 
-Everything outside `01_os/` falls into exactly two categories.
-
-**Retained global surface** — small, and it stays after the transition:
+The physical retirement is complete. Everything tracked outside `01_os/` is the
+small retained global surface below:
 
 | Path | Holds |
 | :--- | :--- |
@@ -28,14 +27,10 @@ Everything outside `01_os/` falls into exactly two categories.
 | `.githooks/` | The push guard: non-fast-forward refusal and the `master` gate. |
 | `README.md` | This file. |
 
-**Legacy, awaiting Human retirement** — everything else outside `01_os/`,
-including the previous bootstrap, protocol, mailbox, state, load-profile and
-navigation material. It is still physically present and nothing has been deleted,
-but **it is not an active source of truth for startup, communication, state, tasks,
-roles or navigation.** Do not load it to "get context", and do not add a reference
-that makes it live again. The retirement inventory that decides what is kept,
-migrated or deleted is produced under
-`01_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/`.
+The former bootstrap, protocol, mailbox, state, load-profile and navigation
+surface has been physically retired. Do not recreate it or make it live through a
+new reference. `01_os/**` is the permanent OS namespace: there is no future plan
+to lift its contents into the repository root and no compatibility shim.
 
 ## If you are a model waking up here
 

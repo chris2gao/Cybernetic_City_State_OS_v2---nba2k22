@@ -15,11 +15,12 @@ Read in this order:
 5. `01_os/README.md` and `01_os/开发入口与单窗口任务规范_v1.md` — when the task
    touches the OS.
 
-`01_os/**` is the active OS. The retained global surface is this file,
+`01_os/**` is the permanent active OS namespace. The retained global surface is this file,
 `AGENTS.md`, `AGENT_WORKING_DISCIPLINE.md`, `CLAUDE.md`, `README.md`,
-`CORE_MANIFEST.yml` and `.githooks/`. Everything else outside `01_os/**` is legacy
-awaiting Human retirement: not a startup, communication, state or navigation
-source, and not to be loaded for background.
+`CORE_MANIFEST.yml` and `.githooks/`. Physical legacy retirement is complete;
+retired paths are not startup, communication, state or navigation sources and
+must not be recreated. Shared communication handoff behavior is defined only in
+`AGENTS.md`.
 
 Your role, model and reasoning level come from the current task packet. Execute
 inside the allowed paths, verify with real exit codes, and return one consolidated

@@ -10,8 +10,16 @@ operating_boundary:
   automatic_task_progression: prohibited
   polling_watcher_daemon_scheduler: prohibited
 logical_roots:
-  local: <configured_machine_global_communication_root>/<repository_id>/
+  local: <resolved_communication_root>/<repository_id>/
   GitHub: 01_os/_communication/<repository_id>/
+local_root_resolution:
+  precedence:
+    - explicit_--root
+    - environment_CITYSTATE_COMMUNICATION_ROOT
+    - user_home_default
+  environment_variable: CITYSTATE_COMMUNICATION_ROOT
+  default_expression: Path.home() / ".citystate" / "communication"
+  repository_partition: <resolved_communication_root>/<repository_id>/
 shared_structure:
   active_root: active/
   archive_root: archive/
@@ -60,4 +68,3 @@ canonical_paths_must_not_contain:
   - endpoint_runtime_state
   - private_reasoning
   - secrets_or_credentials
-

@@ -2,6 +2,15 @@ schema_version: citystate.registry.v1
 registry_id: skills_and_tools_v1
 mechanism_version: 1
 entries:
+  - path: 01_os/04_skills_and_tools/模型与供应商能力清单_v1.md
+    purpose: 供 Human 做任务路由时参考的模型、产品、环境与 capability inventory，不授予 authority
+    loader: Human-directed task routing review
+    loader_class: external_tool_convention
+    discovery: referenced from 01_os/04_skills_and_tools/README.md
+    evidence: file authority disclaimer and current task authority rules in AGENTS.md
+    cache_dirs: []
+    failure_surfacing: next Human task routing review
+    deletion_rule: human_decision_required
   - path: 01_os/04_skills_and_tools/README.md
     purpose: 外部 skill 与确定性工具的分类、可用性验证规则和 Human 文档入口
     loader: human-directed tools review

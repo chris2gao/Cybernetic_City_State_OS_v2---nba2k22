@@ -2,7 +2,9 @@
 
 所有入口均为一次性显式命令；加载本目录不会启动后台进程或产生 live state。
 
-- `task_space_initializer/initialize_task_space.py`：在配置的本地通讯根创建任务空间；
+- `task_space_initializer/initialize_task_space.py`：在本地通讯根创建任务空间；`--root`
+  可选，解析优先级为显式参数、`CITYSTATE_COMMUNICATION_ROOT`、最后
+  `Path.home() / ".citystate" / "communication"`；
 - `validator/validate_communication_system.py`：纯校验入口，不授权、不发布；
 - `validator/receiver_bootstrap.py`：按精确 pointer 读取封闭上下文集合；
 - `publisher/publish_message.py`：发布单条不可变消息并输出供 Human 转交的 pointer；

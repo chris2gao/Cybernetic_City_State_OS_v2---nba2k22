@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import argparse
+import os
 import re
 import sys
+from collections.abc import Mapping
 from pathlib import Path
 
 import yaml
@@ -17,6 +19,7 @@ MANIFEST_FIELDS = {
     "lifecycle_status", "communication_contract_version",
 }
 SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
+COMMUNICATION_ROOT_ENV = "CITYSTATE_COMMUNICATION_ROOT"
 
 
 def _dump(data: object) -> str:
@@ -37,6 +40,23 @@ def _write_exact_or_create(path: Path, content: str) -> None:
             raise ValueError(f"existing_artifact_conflict:{path}")
         return
     path.write_text(content, encoding="utf-8", newline="\n")
+
+
+def resolve_communication_root(
+    explicit_root: Path | None,
+    *,
+    environ: Mapping[str, str] | None = None,
+    home: Path | None = None,
+) -> Path:
+    """Resolve the machine-global communication root with canonical precedence."""
+    if explicit_root is not None:
+        return explicit_root.expanduser().resolve()
+    environment = os.environ if environ is None else environ
+    configured = environment.get(COMMUNICATION_ROOT_ENV, "").strip()
+    if configured:
+        return Path(configured).expanduser().resolve()
+    resolved_home = Path.home() if home is None else home
+    return (resolved_home / ".citystate" / "communication").resolve()
 
 
 def initialize(root: Path, repository_id: str, task_id: str, task_goal: str,
@@ -113,7 +133,7 @@ def initialize(root: Path, repository_id: str, task_id: str, task_goal: str,
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--root", required=True, type=Path)
+    parser.add_argument("--root", type=Path)
     parser.add_argument("--repository-id", required=True)
     parser.add_argument("--task-id", required=True)
     parser.add_argument("--task-goal", required=True)
@@ -122,7 +142,8 @@ def main() -> int:
     parser.add_argument("--role-context-ref", action="append", default=[])
     args = parser.parse_args()
     try:
-        task = initialize(args.root, args.repository_id, args.task_id, args.task_goal,
+        root = resolve_communication_root(args.root)
+        task = initialize(root, args.repository_id, args.task_id, args.task_goal,
                           args.navigation_owner, args.privacy_policy_ref,
                           args.role_context_ref)
     except (OSError, ValueError, yaml.YAMLError) as exc:
@@ -134,4 +155,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

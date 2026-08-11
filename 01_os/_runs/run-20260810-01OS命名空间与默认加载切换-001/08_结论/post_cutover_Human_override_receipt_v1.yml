@@ -1,0 +1,67 @@
+schema_version: citystate.post_cutover_human_override_receipt.v1
+task_id: os-v2-01-os-namespace-and-autoload-cutover-001
+run_id: run-20260810-01OS命名空间与默认加载切换-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+branch: dev/os-v2-01-os-namespace-and-autoload-cutover-001
+candidate_parent_head: abab6f042e61cba85852287b811c21100c83cad2
+master_observed_before: 818800595992d09e270082627b31642f04f1cc93
+status: ready_for_independent_rereview_after_executor_validation
+
+authority_and_supersession:
+  direct_namespace_cutover:
+    status: accepted_by_independent_review
+    review_ref: 01_os/_runs/run-20260810-01OS命名空间与默认加载切换-001/09_独立复核/ChatGPT独立复核_v1.yml
+    reviewed_executor_head: ea97bb4be0c7c65ecda2c28aee7ed4bce2ae34bd
+  Human_override: >-
+    Human explicitly authorized literal replacement across all tracked content without historical-literal exceptions,
+    followed by the final physical root rename. The accepted direct cutover supersedes Checkpoint A as the source of
+    current namespace state.
+  superseded_for_current_state_acceptance:
+    - 01_os/_runs/run-20260810-01OS命名空间与默认加载切换-001/01_任务输入/任务包_v1.yml
+    - 01_os/_runs/run-20260810-01OS命名空间与默认加载切换-001/04_验证/验证结果_v1.yml
+  supersession_boundary: >-
+    These two artifacts remain pre-cutover evidence. Statements produced by the lexical replacement, including
+    same-source-and-target namespace expressions or rename_performed=false, do not determine current state and are not
+    repaired one by one. No former namespace literal is restored.
+  independent_review_pointer_lexical_closure: >-
+    The independent-review commit introduced two occurrences of the former token while describing its absence and the
+    no-restore policy. This correction replaces only those two labels with former_namespace wording; the review verdict,
+    reviewed heads, probe result and correction requirements are unchanged. No other historical run is semantically cleaned.
+
+current_state_authorities:
+  - physical tracked tree at the reviewed branch head
+  - this post-cutover receipt
+  - current root startup documents and CORE_MANIFEST.yml
+  - current communication contracts, implementation and registry
+
+validation:
+  status: executor_validation_complete
+  namespace_behavioral_suite: intentionally_not_run
+  results:
+    lexical_startup_and_ownership_verifier:
+      command: python 01_os/_runs/run-20260810-01OS命名空间与默认加载切换-001/04_验证/verify_post_cutover_narrow_correction.py
+      result: >-
+        passed; tracked_total=877, tracked_under_01_os=862, former namespace paths=0,
+        former namespace content files=0, startup pointers=11, owned OS-root files=3,
+        moved registered documents=2
+    communication_static_validator:
+      command: >-
+        python 01_os/06_execution/boot/communication_system/validator/validate_communication_system.py static .
+      result: validation_passed
+    initializer_root_resolution:
+      command: >-
+        python -m unittest
+        01_os/06_execution/boot/communication_system/task_space_initializer/test_initializer.py -v
+      result: 5 passed, including explicit root, environment root, home default and root-optional CLI coverage
+    communication_validator_units:
+      command: >-
+        python -m unittest 01_os/06_execution/boot/communication_system/validator/test_validator.py -v
+      result: 12 passed
+    yaml_parse: passed_for_changed_machine_readable_artifacts
+    diff_check: passed
+    remote_readback: required_after_publication_and_reported_in_completion_handoff
+
+publication:
+  master_modified: false
+  master_publication_requested: false
+  independent_rereview_required: true

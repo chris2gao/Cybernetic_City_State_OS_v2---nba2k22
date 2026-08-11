@@ -2,13 +2,14 @@ schema_version: citystate.os_run.v1
 run_id: run-20260810-01OS命名空间与默认加载切换-001
 task_id: os-v2-01-os-namespace-and-autoload-cutover-001
 repository: chris2gao/Cybernetic_City_State_OS_v2---core
-checkpoint: direct_namespace_cutover
+checkpoint: post_cutover_narrow_correction
 source_base: 818800595992d09e270082627b31642f04f1cc93
 branch: dev/os-v2-01-os-namespace-and-autoload-cutover-001
 ownership: core_owned_shared_os_evidence
 purpose: >-
-  按 Human 最新覆盖指令，对全部 tracked 文件内容执行无历史例外的 namespace 字符替换，
-  并在最后一步把 OS 根目录改名为 01_os。
+  保持已独立接受的 direct namespace cutover，不恢复 former namespace literal；收口
+  Human-override evidence、current startup 状态、通讯根自动发现、正式 handoff 路由和
+  两个 OS 根级未归属文件。
 allowed_changed_paths:
   - 01_os/**
   - AGENTS.md
@@ -37,13 +38,23 @@ outputs:
   checkpoint_B_frozen_amendment: 03_启动入口盘点/Checkpoint_B冻结修正计划_v1.yml
   verifier: 04_验证/verify_checkpoint_a.py
   validation_result: 04_验证/验证结果_v1.yml
+  post_cutover_verifier: 04_验证/verify_post_cutover_narrow_correction.py
+  post_cutover_receipt: 08_结论/post_cutover_Human_override_receipt_v1.yml
+  independent_review_input: 09_独立复核/ChatGPT独立复核_v1.yml
+  communication_root_resolution:
+    - ../../03_mechanisms/communication_system/通讯契约_v1.yml
+    - ../../06_execution/boot/communication_system/task_space_initializer/initialize_task_space.py
 validation:
-  status: namespace_cutover_complete
-  method: lexical_and_path_closure_only_per_Human_instruction
-  tracked_total: 874
-  tracked_under_01_os: 859
+  status: post_cutover_narrow_correction_ready_for_independent_rereview
+  method: targeted_static_and_root_resolution_validation_without_namespace_behavioral_suite
+  tracked_total: 877
+  tracked_under_01_os: 862
   tracked_under_former_root: 0
   former_token_occurrences_in_tracked_content: 0
   tracked_paths_with_former_token: 0
   behavioral_tests_run: false
-lifecycle: namespace_cutover_complete
+  communication_static_validator: passed
+  initializer_root_resolution_tests: 5_passed
+  communication_validator_units: 12_passed
+  startup_and_ownership_verifier: passed
+lifecycle: ready_for_independent_rereview

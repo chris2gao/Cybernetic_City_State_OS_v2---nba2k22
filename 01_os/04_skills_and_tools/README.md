@@ -26,6 +26,9 @@ that check is part of the entry rather than a note beside it.
 
 ## Human documents
 
+- [模型与供应商能力清单_v1.md](模型与供应商能力清单_v1.md)：仅供任务路由参考的
+  capability inventory；供应商、模型与能力均不授予 authority，实际角色来自 current
+  task 与 Human authority。
 - [工具选型_v1.md](工具选型_v1.md)：run-005 形成的候选与替代路线快照。
 - [确定性工具接入收益与风险评估_v1.md](确定性工具接入收益与风险评估_v1.md)：
   安装前的收益、风险、资源、按需加载与准入测试决策依据。

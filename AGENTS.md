@@ -24,16 +24,14 @@ Startup is four reads and one conditional fifth. Nothing else loads by default.
    file placement, registry synchronisation, run evidence, publication transport
    gates and the Human gate. Then only the canonical files that task names.
 
-`01_os/**` is the active OS. The retained global surface outside it is this file,
+`01_os/**` is the permanent active OS namespace. The retained global surface outside it is this file,
 `AGENT_WORKING_DISCIPLINE.md`, `CLAUDE.md`, `GEMINI.md`, `README.md`,
-`CORE_MANIFEST.yml` and `.githooks/`. Everything else outside `01_os/**` is legacy
-awaiting Human retirement: it is not a startup, communication, state, task, role
-or navigation source of truth. Do not load it for background, and do not
-reintroduce a dependency on it — including in a file you are only passing through.
-
-`PROJECT_CONTEXT.md` and `ARCHITECTURE.md` describe the previous system. Treat any
-branch, task or architecture claim in them as historical unless physical Git
-evidence says otherwise.
+`CORE_MANIFEST.yml` and `.githooks/`. Physical retirement of the former legacy
+surface is complete; no legacy path outside this retained surface is a startup,
+communication, state, task, role or navigation source of truth. Do not recreate
+one or reintroduce a dependency on one — including in a file you are only passing
+through. `01_os/**` will not later be lifted into the repository root and has no
+compatibility shim.
 
 If a file this startup names is missing, report that fact instead of fabricating
 its content or substituting a nearby file.
@@ -57,6 +55,24 @@ any other — because every one of them loads this file.
 Vendor-specific mechanics, and nothing else, belong here:
 
 - Codex: use `apply_patch` for manual file edits.
+
+## Formal Cross-Model Handoffs
+
+When the current task already supplies a valid communication context or exact
+communication pointer, a formal cross-model handoff uses the canonical safe-subset
+YAML defined by `01_os/03_mechanisms/communication_system/消息契约_v1.yml`.
+Read `task_id`, sender and expected-recipient endpoint IDs and task roles from the
+current task manifest and endpoint cards, and read the next sequence from the
+sender index. Never hardcode or infer any endpoint, role, task ID or sequence.
+
+If the communication context is absent or any required field is unavailable, do
+not fabricate a formal message. Ordinary Human-facing output remains valid. Ask
+for the missing exact communication pointer only when the Human asks to establish
+or continue a communication task.
+
+This route remains Human-triggered and Human-relayed. It does not authorize or
+start automatic delivery, acknowledgment, task progression, polling, watchers,
+daemons or schedulers.
 
 ## Engineering Design Principles
 

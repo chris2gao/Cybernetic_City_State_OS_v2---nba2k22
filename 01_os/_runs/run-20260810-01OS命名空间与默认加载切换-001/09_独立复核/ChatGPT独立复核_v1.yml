@@ -17,7 +17,7 @@ namespace_cutover_findings:
     behind_by: 0
     merge_base: 818800595992d09e270082627b31642f04f1cc93
   former_root_probe:
-    path: 08_os/README.md
+    path: former_namespace/README.md
     result: not_found_at_reviewed_head
   active_root_probe:
     path: 01_os/README.md
@@ -91,7 +91,7 @@ blocking_followup:
 
 minimal_correction_policy:
   preserve_namespace_cutover: true
-  restore_08_os_literals: false
+  restore_former_namespace_literals: false
   rerun_behavioral_test_suite: false
   require_lexical_recutover: false
   allowed_approach: small_post_cutover_semantic_and_bootstrap_followup_commits
