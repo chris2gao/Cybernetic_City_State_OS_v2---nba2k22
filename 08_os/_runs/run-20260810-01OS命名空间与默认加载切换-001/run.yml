@@ -1,0 +1,32 @@
+schema_version: citystate.os_run.v1
+run_id: run-20260810-01OS命名空间与默认加载切换-001
+task_id: os-v2-01-os-namespace-and-autoload-cutover-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+checkpoint: A_inventory_and_mapping_freeze
+source_base: 818800595992d09e270082627b31642f04f1cc93
+branch: dev/os-v2-01-os-namespace-and-autoload-cutover-001
+ownership: core_owned_shared_os_evidence
+purpose: >-
+  在不执行 rename、不改写 active path reference 的前提下，确定性盘点 08_os
+  物理 namespace 与 tracked text references，逐 occurrence 分类并冻结 08_to_01 mapping。
+allowed_changed_paths:
+  - 08_os/_runs/run-20260810-01OS命名空间与默认加载切换-001/**
+prohibitions:
+  - rename_08_os_to_01_os
+  - modify_existing_canonical_or_business_files
+  - modify_master
+  - force_push
+  - rebase
+  - amend
+  - squash
+  - history_rewrite
+outputs:
+  scanner: 04_验证/scan_os_namespace_refs.py
+  full_scan: 04_验证/08_os引用扫描完整结果_v1.json
+  mapping: 02_路径映射/08_to_01引用分类_v1.yml
+  startup_inventory: 03_启动入口盘点/默认启动关系盘点_v1.yml
+validation:
+  status: candidate_ready_for_independent_review
+  independent_review_required: true
+  next_checkpoint_gate: ChatGPT_independent_acceptance_of_checkpoint_A
+lifecycle: candidate_ready_for_independent_review_after_executor_validation

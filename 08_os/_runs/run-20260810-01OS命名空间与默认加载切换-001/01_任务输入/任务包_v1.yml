@@ -1,0 +1,38 @@
+schema_version: citystate.os_task_packet.v1
+task_id: os-v2-01-os-namespace-and-autoload-cutover-001
+run_id: run-20260810-01OS命名空间与默认加载切换-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T2_semantic
+exact_base_sha: 818800595992d09e270082627b31642f04f1cc93
+branch: dev/os-v2-01-os-namespace-and-autoload-cutover-001
+objective: Checkpoint A — inventory plus mapping freeze for 08_os/** to 01_os/**.
+allowed_changed_paths:
+  - 08_os/_runs/run-20260810-01OS命名空间与默认加载切换-001/**
+required_tests:
+  - python -m pytest 08_os/_runs/run-20260810-01OS命名空间与默认加载切换-001/04_验证/test_scan_os_namespace_refs.py -q
+  - scanner positive run against exact base plus byte-identical repeatability run
+  - python 08_os/_runs/run-20260810-01OS命名空间与默认加载切换-001/04_验证/verify_checkpoint_a.py
+  - changed_path_ledger against this packet allowlist
+  - git diff --check
+  - remote branch head readback
+explicit_prohibitions:
+  - git_mv_08_os_01_os
+  - modify_active_path_refs
+  - modify_AGENTS_CLAUDE_GEMINI
+  - delete_files
+  - compatibility_shim
+  - root_cutover
+  - master_publication
+  - force_push
+  - rebase
+  - amend
+  - squash
+  - history_rewrite
+publisher:
+  publication_transport: local_git
+  development_branch_write_authorized: true
+  master_write_authorized: false
+  expected_remote_master_head: 818800595992d09e270082627b31642f04f1cc93
+required_completion_pointer:
+  status: checkpoint_A_ready_for_independent_review
+  next_owner: ChatGPT_independent_review

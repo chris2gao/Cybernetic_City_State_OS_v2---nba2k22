@@ -1,0 +1,79 @@
+schema_version: citystate.checkpoint_validation_result.v1
+task_id: os-v2-01-os-namespace-and-autoload-cutover-001
+checkpoint: A_inventory_and_mapping_freeze
+source_base: 818800595992d09e270082627b31642f04f1cc93
+branch: dev/os-v2-01-os-namespace-and-autoload-cutover-001
+executor_role: backend_execution_and_handoff
+independent_verification_passed: false
+independent_verification_note: >-
+  本文件只记录执行者自检。Checkpoint B 必须等待 ChatGPT 新会话从 primary evidence
+  独立验收 Checkpoint A；本执行窗口不把自己的测试当成最终验收。
+
+inventory:
+  tracked_total_at_source_base: 860
+  tracked_under_08_os: 845
+  tracked_text_files_scanned: 860
+  skipped_non_text: 0
+  files_with_08_os_reference: 299
+  total_occurrences: 4680
+  classification:
+    rewrite_current_path: 821
+    preserve_historical_literal: 3654
+    manual_review: 205
+  manual_review_boundary: >-
+    主要为旧 run 中仍具可执行性的 Python/PowerShell/Shell 证据；仅凭位于 _runs
+    不能确定它是冻结 replay 还是仍被当前调用，因此保守留给独立审核。
+
+positive_results:
+  - check: scanner against exact immutable source base
+    exit_code: 0
+    result: >-
+      scan_ok; complete JSON and YAML mapping written; source commit bound to
+      818800595992d09e270082627b31642f04f1cc93
+  - check: python -m pytest test_scan_os_namespace_refs.py -q
+    exit_code: 0
+    result: 7 passed
+  - check: verify_checkpoint_a.py
+    exit_code: 0
+    result: >-
+      mapping/scan counts and entries agree; startup file set complete; 01_os absent;
+      independent git ls-tree physical count agrees; negative invalid-treeish probe returns 2
+  - check: repeat scanner against same immutable source base
+    exit_code: 0
+    result: complete JSON and YAML outputs are byte-identical to the first run
+  - check: changed_path_ledger against task packet
+    exit_code: 0
+    result: allowlist ok
+  - check: git diff --check
+    exit_code: 0
+    result: no whitespace errors
+
+repeatability:
+  normalized_result_sha256: 1452f3fe5292cb2d16eaf2da50b75b795f5d89532b7f2890cd22f787e4b62fa3
+  full_json_sha256: d714033975c33cee003aebde42aa8bbf20d227df3de498d86ebc511be743b1b9
+  repeat_json_sha256: d714033975c33cee003aebde42aa8bbf20d227df3de498d86ebc511be743b1b9
+  mapping_yaml_sha256: b57b5b9a79f851ae5eded0aa8ade75acbcf9f3adac09ffba98d6514a40c698ee
+  repeat_mapping_sha256: b57b5b9a79f851ae5eded0aa8ade75acbcf9f3adac09ffba98d6514a40c698ee
+
+negative_probes:
+  - probe: invalid source treeish
+    expected: exit 2 and no output artifacts
+    observed: exit 2 and no output artifacts
+    passed: true
+  - probe: bare narrative token without slash/backslash/quotes
+    expected: no repository-path hit
+    observed: unit test passed
+    passed: true
+  - probe: run directory position without record semantics
+    expected: manual_review rather than automatic historical classification
+    observed: unit test passed
+    passed: true
+
+scope:
+  allowed_prefix: 08_os/_runs/run-20260810-01OS命名空间与默认加载切换-001/
+  existing_canonical_files_modified: 0
+  rename_performed: false
+  deletion_performed: false
+  compatibility_shim_added: false
+  master_modified: false
+  checkpoint_B_started: false
