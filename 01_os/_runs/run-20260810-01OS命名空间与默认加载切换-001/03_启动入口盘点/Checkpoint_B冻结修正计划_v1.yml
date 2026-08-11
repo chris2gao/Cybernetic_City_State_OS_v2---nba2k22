@@ -2,12 +2,10 @@ schema_version: citystate.checkpoint_b_frozen_amendment.v1
 task_id: os-v2-01-os-namespace-and-autoload-cutover-001
 checkpoint: A_inventory_and_mapping_freeze
 source_commit: 818800595992d09e270082627b31642f04f1cc93
-status: planned_only_not_executed
+status: namespace_cutover_executed_other_B_findings_not_claimed
 
 planned_B:
-  physical_root:
-    from: 01_os/
-    to: 01_os/
+  physical_root_current: 01_os/
   compatibility_shim: false
   root_lift: false
   may_start_only_after: waived_by_latest_Human_instruction
@@ -16,10 +14,15 @@ planned_B:
     method: deterministic_character_replacement_script
     replacement_scope: all_tracked_file_content
     protected_literals: none_Human_explicitly_overrode_history_preservation
-    final_step: rename_directory_01_os_to_01_os
+    final_step: root_directory_renamed_to_01_os
     requested_validation:
       behavioral_test_suite: not_required
       lexical_match_and_partition_closure: required
+  execution_result:
+    namespace_cutover: complete
+    former_root_tracked_paths: 0
+    former_token_tracked_content_occurrences: 0
+    behavioral_tests_run: false
 
 findings:
   F1_retirement_wording_stale:
