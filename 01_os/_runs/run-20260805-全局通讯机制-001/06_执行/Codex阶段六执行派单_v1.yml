@@ -1,0 +1,200 @@
+schema_version: citystate.stage06_execution_dispatch.v1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+executor: Codex
+status: authorized_for_execution
+
+repository:
+  repo: chris2gao/Cybernetic_City_State_OS_v2---core
+  branch: dev/os-v2-global-communication-system-001
+  minimum_authorized_start_ancestor: c06cbfcc44ea0e58164ccab1fe4a8f7c16cbf00c
+  expected_master: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  master_publication_authorized: false
+  start_rule: >-
+    Before any write, read the physical remote master and work-branch heads. The work-branch head must
+    descend linearly from minimum_authorized_start_ancestor. Commits after that ancestor and before
+    executor work may only be this dispatch and the corresponding run-state metadata. If master is no
+    longer exactly expected_master, or the branch history is not linear/recognized, stop fail-closed and
+    report the physical state. Do not rebase, amend, squash, merge-commit, force-push, or rewrite history.
+
+executor_configuration:
+  requested_model_display: GPT-5.6 Sol
+  mode: Goal
+  reasoning_effort: High
+  single_active_executor: true
+  parallel_agents: false
+  max_is_default: false
+  escalation_to_max_requires_new_project_lead_or_Human_assignment: true
+
+Human_gate:
+  ref: Human授权_进入阶段六_v1.yml
+  authorization_commit: c06cbfcc44ea0e58164ccab1fe4a8f7c16cbf00c
+  required_assertion: enter_stage_06_execution == true
+  self_authorization_prohibited: true
+
+accepted_stage05:
+  step_package: ../05_步骤拆分/05_steps.yml
+  artifact_version: 2
+  git_blob_sha: 9422de27de6794ba2c247c7dae3dcddaa5c9e562
+  accepted_submission_head: 514f10ee956983d562addef4e2002db4bebc0e82
+  independent_rereview: ../05_步骤拆分/Stage05步骤拆分_独立复审_v1.yml
+  independent_rereview_commit: a7f3bc3925dc37def673b445c90c2919c573e12f
+  independent_rereview_git_blob_sha: 2c6f9a69d9709646dc9ba3a20aee5cbf708e7957
+
+frozen_stage04:
+  package: ../04_测试生成/04_tests.yml
+  git_blob_sha: 360571b6b29a3baecd753dc45611457da9ab6bf2
+  normalized_tests_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+  test_count: 50
+  immutable: true
+
+required_reads_in_order:
+  - AGENT_WORKING_DISCIPLINE.md
+  - 01_os/README.md
+  - 01_os/开发入口与单窗口任务规范_v1.md
+  - 01_os/_runs/run-20260805-全局通讯机制-001/run.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/01_任务输入/任务包_v1.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/03_结果建模/B_结果模型_v3.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/04_tests.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/run_stage04_executable_tests.py
+  - 01_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/05_steps.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/实现/validate_05_steps.py
+  - 01_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/Stage05步骤拆分_独立复审_v1.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/06_执行/Human授权_进入阶段六_v1.yml
+  - 01_os/01_workflow/06_执行/实现/最小运行schema_v1.yml
+
+objective: >-
+  Execute the accepted Stage05 v2 step package exactly as S-01 through S-10, serially, to implement the
+  global multi-endpoint Human-relayed communication system. Preserve the V1 boundary: Human-triggered and
+  Human-relayed only; no polling, watcher, daemon, scheduler, automatic delivery, automatic acknowledgment,
+  automatic task-state progression, or canonical live instance state. Produce a complete Stage06 execution
+  package and stop for independent Stage07 verification. Do not self-accept the implementation.
+
+execution_protocol:
+  order: [S-01, S-02, S-03, S-04, S-05, S-06, S-07, S-08, S-09, S-10]
+  follow_each_step_exactly_from: ../05_步骤拆分/05_steps.yml
+  retry_budget_source: ../05_步骤拆分/05_steps.yml
+  allowed_exits: [pass, retry, invalidate_upstream]
+  on_invalidate_upstream: >-
+    Stop implementation immediately. Do not alter the upstream artifact. Persist the physical finding and
+    return the exact invalidate target/reason for Human/project-lead decision.
+  attempt_recording: >-
+    For every actual attempt, record step_id, attempt number, result, actual_write_paths, and any
+    unauthorized_write_attempts as the work occurs. Do not reconstruct or estimate attempt history later.
+  intermediate_commits: allowed_if_intentional_and_linear
+  one_commit_per_step: not_required
+  history_rewrite: prohibited
+
+stage06_allowed_write_paths:
+  - 01_os/_runs/run-20260805-全局通讯机制-001/06_执行/**
+  - 01_os/_runs/run-20260805-全局通讯机制-001/run.yml
+  - 01_os/03_mechanisms/communication_system/**
+  - 01_os/02_boot/communication_system/**
+  - 01_os/05_registry/communication_system_v1.yml
+  - 01_os/06_execution/boot/communication_system/**
+  - 01_os/README.md
+  - 01_os/02_boot/README.md
+  - 01_os/03_mechanisms/README.md
+  - 01_os/05_registry/README.md
+  - 01_os/06_execution/README.md
+
+read_only_or_prohibited_paths:
+  - 01_os/_runs/run-20260805-全局通讯机制-001/06_执行/Human授权_进入阶段六_v1.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/**
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/**
+  - 01_os/_runs/run-20260805-全局通讯机制-001/03_结果建模/**
+  - 01_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼/**
+  - 01_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/**
+  - 01_os/_runs/run-20260805-全局通讯机制-001/01_任务输入/**
+  - 01_os/_communication/**
+  - .ai/**
+  - 06_Silicon_Index/**
+  - master
+
+hard_prohibitions:
+  - modify_any_frozen_test_spec_candidate_harness_or_stage04_result
+  - modify_accepted_05_steps_or_Stage05_review_artifacts
+  - modify_B_v3_or_earlier_semantic_artifacts
+  - edit_or_replace_Human_stage06_authorization
+  - write_01_os__communication_canonical_live_state
+  - polling
+  - watcher
+  - daemon
+  - scheduler
+  - automatic_delivery
+  - automatic_acknowledgment
+  - automatic_task_state_progression
+  - rebase
+  - amend
+  - squash
+  - force_push
+  - merge_commit
+  - history_rewrite
+  - git_add_dot
+  - git_add_A
+  - modify_master
+
+pre_write_checks:
+  - verify physical remote master and branch heads
+  - verify git config --get core.hooksPath equals .githooks before publication commits
+  - verify Human Stage06 authorization is present and true
+  - verify accepted 05_steps.yml blob is exactly 9422de27de6794ba2c247c7dae3dcddaa5c9e562
+  - verify Stage04 04_tests.yml blob is exactly 360571b6b29a3baecd753dc45611457da9ab6bf2
+  - if local branch is behind remote, synchronize only by fetch plus ordinary fast-forward; never pull --rebase
+
+required_stage06_artifact:
+  path: 06_execution.yml
+  schema: 01_os/01_workflow/06_执行/实现/最小运行schema_v1.yml
+  required_payload_fields:
+    - executor_role
+    - allowed_write_paths
+    - actual_write_paths
+    - frozen_test_package_sha256
+    - attempts
+    - unauthorized_write_attempts
+  required_bindings:
+    - Stage04 frozen package
+    - accepted Stage05 v2 step package
+  required_integrity:
+    - actual_write_paths_subset_of_allowed_write_paths
+    - allowed_write_paths_subset_of_task_packet_allowed_changed_paths
+    - frozen_test_package_sha256_must_match_stage_04
+    - attempts_must_respect_step_retry_budget
+    - attempts_must_cover_every_step_id_S01_to_S10
+    - last_attempt_result_per_step_must_be_pass
+    - unauthorized_write_attempts_must_be_empty
+
+final_validation_required:
+  - python 01_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/实现/validate_05_steps.py
+  - python 01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py static .
+  - python 01_os/03_mechanisms/context_management/实现/verify_context_structure.py
+  - python 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_no_canonical_live_state.py .
+  - python 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py static .
+  - execute the frozen Stage04 production test surface against the real Stage06 implementation and require GC-T001..GC-T050 to pass under the frozen definitions
+  - validate 06_execution.yml against the Stage06 schema and integrity rules
+  - verify exact changed paths from physical Git against this dispatch and the task packet
+  - verify remote branch head after push
+  - verify master remains unchanged
+
+final_submission_requirements:
+  status: ready_for_independent_stage07_verification
+  report:
+    - physical_start_head_40_sha
+    - physical_master_head_before_and_after
+    - final_remote_head_40_sha
+    - implementation_commit_shas_in_order
+    - exact_changed_paths
+    - 06_execution_yml_git_blob_sha
+    - Stage04_frozen_blob_readback
+    - frozen_test_result_summary_GC_T001_to_GC_T050
+    - validator_exit_codes
+    - core_hooksPath_readback
+    - any_retries_by_step
+    - confirmation_no_unauthorized_write_attempts
+    - confirmation_no_rebase_amend_squash_force_push_merge_commit_history_rewrite
+    - confirmation_no_Stage04_or_Stage05_mutation
+    - confirmation_no_master_modification
+  do_not_claim:
+    - independent_acceptance
+    - Stage07_completion
+    - master_publication

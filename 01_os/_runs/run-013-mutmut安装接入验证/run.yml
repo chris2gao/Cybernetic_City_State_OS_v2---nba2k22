@@ -1,0 +1,105 @@
+schema_version: os_development_run.v1
+run_id: run-013-mutmut安装接入验证
+task_id: mutmut-wsl-installation-validation-001
+implementation_base: 31ce5812bf34e7e4fc338543841973246a6a2467
+dispatch_head: df37a47c793b949ef727653c5c2871c9e717f271
+work_branch: codex/mutmut-wsl-installation-validation-001
+ownership: core
+run_class: tool_installation_and_on_demand_validation
+purpose: 在 WSL 用户态隔离环境验证 mutmut、校准 mutation 语义并接入单文件按需 loader
+tool:
+  name: mutmut
+  version: 3.6.0
+  installation_manager: dedicated_virtualenv_pip
+  runtime: Python 3.14.4
+  status: verified_on_demand
+  mount: on_demand_wsl_cli
+  default_loaded: false
+  mcp_exposed: false
+  expected_version: 3.6.0
+  version_gate: exact_runtime_probe_before_mutation
+  workspace_policy: wsl_linux_filesystem_clean_git_worktree
+  target_policy: explicit_single_python_file_allowlist
+  canonical_wrapper: 01_os/06_execution/tools/mutmut/invoke.sh
+outputs:
+  tool_contract: 01_os/04_skills_and_tools/mutmut/README.md
+  loader_contract: 01_os/06_execution/tools/mutmut/README.md
+  wrapper: 01_os/06_execution/tools/mutmut/invoke.sh
+  environment_receipt: 01_os/_runs/run-013-mutmut安装接入验证/01_任务输入/environment_receipt.json
+  validation_receipt: 01_os/_runs/run-013-mutmut安装接入验证/07_测试执行/results.json
+  conclusion: 01_os/_runs/run-013-mutmut安装接入验证/08_结论/mutmut系统职责与收益.md
+  review_handoff: 01_os/_runs/run-013-mutmut安装接入验证/08_结论/审核回传.md
+records:
+  environment_summary: 01_os/_runs/run-013-mutmut安装接入验证/01_任务输入/环境与安装回执.md
+  validation_matrix: 01_os/_runs/run-013-mutmut安装接入验证/03_方案设计/验证矩阵.md
+  change_record: 01_os/_runs/run-013-mutmut安装接入验证/06_执行/变更清单.md
+  test_record: 01_os/_runs/run-013-mutmut安装接入验证/07_测试执行/测试记录.md
+validation:
+  wsl_linux_filesystem_clone: passed
+  dedicated_virtualenv_installation: passed
+  fork_probe: passed
+  calibration_weak_repeat: passed
+  calibration_strengthened_repeat: passed
+  real_target_initial: passed_with_test_gaps
+  real_target_strengthened_repeat: passed
+  equivalent_survivor_proof: passed
+  wrapper_success_repeat: passed
+  wrapper_fail_closed_boundaries: passed
+  temporary_cleanup: passed
+  no_resident_mutmut_process: passed
+  boot_non_reference: passed
+  mcp_not_exposed: passed
+  canonical_absolute_user_path_scan: passed
+  scoped_high_confidence_secret_scan: passed
+  context_structure_validator: passed
+  ai_pytest: 45_passed_22_subtests_passed
+  check_jsonschema_run_012_repository_validation: passed
+  full_pytest_candidate: 11_failed_4_passed
+  full_pytest_implementation_base: 11_failed_1_passed
+  full_pytest_failure_node_ids_identical_to_base: true
+  candidate_caused_full_pytest_failures: 0
+measurement:
+  calibration_weak: 3_killed_5_survived_of_8
+  calibration_strengthened: 6_killed_2_equivalent_survived_of_8
+  real_target_initial: 118_killed_11_survived_of_129
+  real_target_strengthened: 127_killed_2_equivalent_survived_of_129
+  resident_processes_after_run: 0
+  exact_model_tokens: not_observable
+  peak_process_tree_memory: not_observable_reliably
+  context_claim: proxy_not_billing_tokens
+  system_install_performed: false
+  sudo_used: false
+evidence_consistency_revision:
+  task_id: mutmut-evidence-consistency-fix-001
+  work_branch: codex/mutmut-evidence-consistency-fix-001
+  reviewed_candidate: 382750bad85231736920ab0f04a992b8a91f408c
+  finding:
+    MMV-R01: resolved
+  wsl_local_remote_tracking_master_at_start: 987ff40fa0317053bf0484f6e3556976e560f63b
+  wsl_local_remote_tracking_master_at_end: 987ff40fa0317053bf0484f6e3556976e560f63b
+  implementation_base: 31ce5812bf34e7e4fc338543841973246a6a2467
+  authoritative_remote_master_at_handoff:
+    sha: 31ce5812bf34e7e4fc338543841973246a6a2467
+    source: git_ls_remote
+    ref: refs/heads/master
+    observed_at_utc: "2026-07-30T10:28:13.4705781Z"
+    command_exit_code: 0
+  candidate_relation:
+    merge_base_with_implementation_base: 31ce5812bf34e7e4fc338543841973246a6a2467
+    implementation_base_ahead: 0
+    candidate_ahead: 14
+    local_remote_tracking_ref_used_for_relation: false
+  local_clone_fallback_tracking_ref_authoritative: false
+  mutation_retest: not_run_accepted_without_retest
+  full_pytest_retest: not_run_no_code_or_test_semantics_changed
+  validation:
+    run_013_repository_state_validator: passed
+    json_yaml_parse: passed
+    correction_changed_path_allowlist: passed
+    reviewed_candidate_results_preserved: passed
+    forbidden_candidate_blobs_unchanged: passed
+    git_diff_check: passed
+    context_structure_validator: passed
+    ai_pytest: 45_passed_22_subtests_passed
+    check_jsonschema_run_012_repository_validator: passed
+status: evidence_consistency_corrected_on_work_branch

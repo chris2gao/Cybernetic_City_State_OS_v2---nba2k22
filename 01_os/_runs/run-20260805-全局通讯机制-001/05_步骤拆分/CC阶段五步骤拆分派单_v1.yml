@@ -1,0 +1,156 @@
+schema_version: citystate.stage05_dispatch.v1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+executor: CC
+execution_scope: Stage05_step_decomposition_only
+status: authorized_for_execution
+
+repository:
+  repo: chris2gao/Cybernetic_City_State_OS_v2---core
+  branch: dev/os-v2-global-communication-system-001
+  minimum_authorized_start_ancestor: d25a4f80d769130e12770f5feb0c5f83ff73f47e
+  approved_run_state_transition_commit: 877d964d347ba38f56684826113a033d2d30c243
+  start_rule: >-
+    Before any executor write, read the actual remote branch head. It must descend linearly from
+    minimum_authorized_start_ancestor, and any commits after that ancestor but before executor work
+    must be limited to this dispatch correction and approved Stage05 run-state transition/review metadata.
+    Use the physically read remote head as physical_start_head; do not rely on a self-referential SHA stored in this packet.
+  expected_master: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  master_publication_authorized: false
+
+continuity:
+  same_task: true
+  same_branch: true
+  create_new_task_id: false
+  stage_04_frozen: true
+  enter_stage_06: false
+
+first_actions:
+  - Read actual remote master 40-character SHA; do not trust the expected value as physical truth.
+  - Read actual remote work-branch 40-character SHA and apply repository.start_rule before making changes.
+  - Record that readback as physical_start_head in the final report.
+  - Read AGENT_WORKING_DISCIPLINE.md.
+  - Read 01_os/开发入口与单窗口任务规范_v1.md.
+  - Verify git config --get core.hooksPath equals .githooks before publication.
+  - Do not rebase, amend, squash, force-push, create a merge commit, or rewrite history.
+
+required_reads:
+  - 01_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/Human授权_进入阶段五_v1.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/04_tests.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/Stage04正式冻结包_独立验收_v1.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/03_结果建模/B_结果模型_v3.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/03_结果建模/03_result.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/01_任务输入/任务包_v1.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/run.yml
+  - 01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml
+
+stage05_contract:
+  stage_id: workflow_stage_05_step_decomposition
+  artifact_kind: step_package
+  artifact_filename: 05_steps.yml
+  required_predecessor: workflow_stage_04_test_generation
+  payload_required_fields:
+    - steps
+    - upstream_invalidation_targets
+  each_step_requires_test_ids: true
+  retry_budget_range: [1, 3]
+  exact_allowed_exits:
+    - pass
+    - retry
+    - invalidate_upstream
+
+objective: >-
+  Convert the frozen Stage 04 acceptance surface and confirmed B v3 architecture into an ordered,
+  implementation-ready Stage 05 step package. The decomposition must minimize shared-write risk,
+  preserve Human-relayed/no-automation boundaries, and make every implementation step directly
+  traceable to frozen test IDs. Do not implement any Stage 06 code in this task.
+
+planning_rules:
+  - Treat 04_tests.yml and its 50 test IDs as immutable acceptance criteria.
+  - Do not add, remove, weaken, reinterpret, or renumber frozen tests.
+  - Do not modify any Stage 04 candidate/spec/result/test-harness file.
+  - Derive implementation work from confirmed B v3 plus frozen tests; do not invent compatibility requirements for legacy .ai communication.
+  - Preserve vendor-independent endpoint architecture and Human-triggered/Human-relayed V1 boundary.
+  - No polling, watcher, daemon, scheduler, automatic delivery, automatic acknowledgement, or automatic task-state progression.
+  - Prefer ordered serial checkpoints over parallel writes to shared communication metadata.
+  - Separate public Git-tracked artifacts from private/untracked runtime explicitly.
+  - Every step must identify exact intended changed-path families or files and exact frozen test IDs it is responsible for satisfying.
+  - Every frozen test ID GC-T001 through GC-T050 must be covered by at least one step; avoid unexplained orphan tests.
+  - A test may map to multiple steps only when the dependency is real and stated.
+  - Steps must be executable in order and have explicit prerequisites, outputs, validation commands/checks, retry_budget, and exit handling.
+  - retry_budget must be integer 1, 2, or 3.
+  - exits must be exactly pass/retry/invalidate_upstream.
+  - invalidate_upstream must name the exact upstream artifact/checkpoint that must be reopened and why; do not silently alter frozen tests.
+  - Include a cross-step dependency graph or equivalent ordered dependency description inside the step package if the schema permits additional fields.
+  - Include a test_coverage_matrix inside the payload if schema permits additional fields, mapping all GC-T001..GC-T050 to responsible step IDs.
+
+recommended_decomposition_shape:
+  - bootstrap_and_contracts
+  - endpoint_cards_and_roles
+  - canonical_message_and_safe_yaml
+  - sender_zone_sequence_and_index
+  - documents_context_and_required_refs
+  - local_web_publication_and_Human_relay
+  - Git_convergence_conflict_and_NFF_fail_closed
+  - discovery_Human_current_archive_and_private_runtime
+  - correction_content_identity_endpoint_parity
+  - validators_boot_integration_and_final_pre_execution_gate
+
+required_output:
+  primary:
+    - 01_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/05_steps.yml
+  optional_supporting_artifacts:
+    - only under 01_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/
+  run_yml:
+    - may update only after 05_steps.yml passes the relevant workflow/schema/static validation
+    - must not mark Stage 06 started
+
+validation_requirements:
+  - validate 05_steps.yml against Stage 05 minimal schema and common workflow contract
+  - verify exact predecessor binding to formal Stage 04 frozen package
+  - verify all steps have nonempty frozen test_ids
+  - verify all GC-T001..GC-T050 are covered
+  - verify every retry_budget is in [1,3]
+  - verify every exit set is exactly pass/retry/invalidate_upstream
+  - verify upstream_invalidation_targets are explicit and do not mutate frozen Stage 04 tests
+  - run relevant repository workflow/context/runtime/static validators available for this stage
+  - verify changed paths remain inside authorized Stage 05 run subtree plus run.yml if updated
+  - remote readback after normal push
+  - verify master remains unchanged
+
+hard_prohibitions:
+  - Stage06 implementation
+  - modifications to 04_tests.yml
+  - modifications to Stage04 specs/candidate/harness/results
+  - modifications to B_v3 or prior stage artifacts
+  - modifications to master
+  - rebase
+  - amend
+  - squash
+  - force_push
+  - merge_commit
+  - history_rewrite
+  - automation_or_polling_added_to_V1
+
+final_report:
+  status_allowed: ready_for_independent_stage05_review
+  status_prohibited:
+    - stage05_accepted
+    - stage06_ready
+    - stage06_started
+  required_fields:
+    - physical_master_head
+    - physical_start_head
+    - final_remote_head_40_sha
+    - changed_paths
+    - 05_steps_yml_git_blob_sha
+    - stage04_predecessor_binding
+    - step_count
+    - all_50_test_ids_covered
+    - uncovered_test_ids
+    - duplicate_test_mappings_with_rationale
+    - retry_budget_validation
+    - exits_validation
+    - validator_results
+    - confirmation_no_stage06_changes
+    - confirmation_no_rebase_force_amend_squash_merge_commit

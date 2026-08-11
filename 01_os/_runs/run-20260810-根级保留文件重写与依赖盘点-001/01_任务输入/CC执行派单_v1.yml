@@ -1,0 +1,50 @@
+schema_version: citystate.backend_dispatch.v1
+task_id: os-v2-root-global-retention-rewrite-001
+run_id: run-20260810-根级保留文件重写与依赖盘点-001
+status: authorized_for_execution
+executor: Claude_Code
+reviewer: ChatGPT_independent_project_reviewer
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+work_branch: dev/os-v2-root-global-retention-rewrite-001
+expected_master_at_dispatch: eb4be95a25cb4b0929def284a7fb4b6a412aed55
+minimum_start_ancestor: 3a8784601a0ca44d99c4e06fbe00b6885bdc410c
+task_ref: 01_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/01_任务输入/任务包_v1.yml
+
+start_gate:
+  - fresh-read remote master exact 40-char SHA
+  - require master == expected_master_at_dispatch; otherwise stop before writes and report master_moved
+  - require current work branch linearly descends from this dispatch history
+  - read AGENT_WORKING_DISCIPLINE.md and AGENTS.md from current master
+  - read 01_os/README.md and 01_os/开发入口与单窗口任务规范_v1.md from current master
+  - read task_ref in full
+
+execution_order:
+  - step_1_rewrite_primary_retained_root_files
+  - freeze_rewritten_bytes
+  - step_2_inventory_non_08_dependency_closure_from_rewritten_bytes
+  - validate_and_publish_work_branch
+
+independence_requirement: >-
+  Do not treat prior ChatGPT classifications as conclusions. Use them only as questions to test.
+  Derive the final retain/migrate/delete/Human-decision classifications from the rewritten files and primary repository evidence.
+
+publication:
+  work_branch_non_force_push: authorized
+  master_push: prohibited
+  merge: prohibited
+  rebase: prohibited
+  force_push: prohibited
+
+return:
+  status_exact: ready_for_independent_review
+  include:
+    - implementation_commit_or_commits
+    - final_remote_branch_head
+    - changed_paths
+    - rewritten_file_summary
+    - retain_non_08_list
+    - migrate_then_delete_source_list
+    - delete_candidate_summary
+    - unresolved_Human_decisions
+    - validation_summary
+    - master_before_after

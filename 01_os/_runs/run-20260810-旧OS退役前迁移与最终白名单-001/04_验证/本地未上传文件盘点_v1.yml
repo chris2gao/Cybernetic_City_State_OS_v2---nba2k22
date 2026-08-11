@@ -1,0 +1,79 @@
+schema_version: citystate.local_only_inventory.v1
+task_id: os-v2-pre-deletion-migration-final-whitelist-001
+run_id: run-20260810-旧OS退役前迁移与最终白名单-001
+measured_on: 2026-08-10
+
+purpose: >-
+  The independent reviewer reads GitHub, so anything present only in the local
+  working tree is invisible to it. This inventory names what exists locally and is
+  not tracked, so that "useful, keep" and "not useful, delete" is a decision made
+  on evidence rather than discovered later. Nothing here was deleted by this task.
+
+method:
+  untracked: git ls-files --others --exclude-standard
+  ignored: git ls-files --others --ignored --exclude-standard
+  note: >-
+    Two directories could not be read while scanning and are reported as such
+    rather than as empty: 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/.pytest_cache/
+    and its 实现/ sibling both returned Permission denied. Per the execution-environment
+    convention, an executor does not delete a directory whose permissions are
+    themselves abnormal; that goes to the Human.
+
+untracked_not_ignored:
+  count: 13
+  assessment: keep - this task's own output, staged and committed by this task
+  detail: >-
+    11 files under 01_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/, plus the two
+    migrated files 01_os/03_mechanisms/context_management/依据材料/系统机制总结_历史输入_v1.md
+    and 01_os/05_registry/repository_publisher_authority_v1.yml.
+
+ignored_local_only:
+  - path: .ssh/
+    files: 4
+    names: [id_ed25519, id_ed25519.pub, known_hosts, known_hosts.old]
+    contents_read: false
+    assessment: Human_decision_required
+    finding: >-
+      A private SSH key sits inside the repository working tree. It is correctly
+      git-ignored and is not on GitHub, so nothing has leaked, and this task did not
+      open, move or delete it. It is still worth a decision, because being ignored
+      protects it from `git add` and from nothing else: a broad archive step, a
+      folder copy, or any tool that walks the directory rather than the index will
+      carry it. That is the same failure mode new-domain.ps1 exists to prevent for
+      remotes - a folder copy taking things a clone would not. The safe end state is
+      a key that lives in the user profile SSH directory and is referenced from
+      there, not one that lives inside a repository.
+    recommended: move out of the repository tree; Human action, not executor action
+
+  - path: .claude/settings.local.json
+    files: 1
+    assessment: keep, local-only by design
+    note: >-
+      Machine-local companion to the tracked .claude/settings.json. It is
+      intentionally not shared: settings.json carries the shared deny rules and is
+      now core-owned, while the .local file holds this workstation's own choices.
+
+  - path: 01_os/_runs/*/_runtime/
+    files: 33
+    assessment: delete when the owning run closes - already the declared lifecycle
+    detail: >-
+      29 files are a vendored PyYAML tree under
+      run-20260805-全局通讯机制-001/_runtime/pydeps/ plus two stage outputs; 4 are this
+      task's own migration scripts and one is the predecessor's edge filter. The file
+      layout contract already classifies _runtime as untracked with
+      lifecycle delete_on_completion, so no new rule is needed - only the deletion
+      that the rule already prescribes, by the owner of each run.
+
+  - path: __pycache__/ and .pytest_cache/
+    files: 6 readable, 2 directories unreadable
+    assessment: delete, regenerable
+    detail: >-
+      Compiled caches under .ai/, 06_Silicon_Index/, 07_Compiler/ and 01_os/. They
+      regenerate on the next run. The two unreadable .pytest_cache directories are
+      the ones named in `method` above and are a Human matter because the permission
+      state itself is abnormal.
+
+summary_for_the_reviewer: >-
+  Nothing local-only is load-bearing for the migrations or the whitelist. The one
+  item that matters is .ssh/ inside the tree, which is a placement question rather
+  than a leak, and it is raised for the Human rather than acted on.

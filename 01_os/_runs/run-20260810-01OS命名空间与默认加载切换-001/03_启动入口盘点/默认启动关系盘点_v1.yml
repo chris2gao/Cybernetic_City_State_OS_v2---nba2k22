@@ -1,0 +1,76 @@
+schema_version: citystate.startup_relationship_inventory.v1
+task_id: os-v2-01-os-namespace-and-autoload-cutover-001
+checkpoint: A_inventory_and_mapping_freeze
+source_commit: 818800595992d09e270082627b31642f04f1cc93
+inspection_mode: read_only
+inspected_files:
+  - AGENTS.md
+  - AGENT_WORKING_DISCIPLINE.md
+  - CLAUDE.md
+  - GEMINI.md
+  - README.md
+  - CORE_MANIFEST.yml
+  - 01_os/README.md
+  - 01_os/开发入口与单窗口任务规范_v1.md
+
+target_architecture:
+  shared_canonical_startup_router: AGENTS.md
+  codex_discovery: AGENTS.md
+  claude_discovery: CLAUDE.md
+  gemini_antigravity_discovery: GEMINI.md
+  thin_adapters_route_to: AGENTS.md
+  shared_router_always_loads:
+    - AGENT_WORKING_DISCIPLINE.md
+    - 01_os/README.md
+    - 01_os/开发入口与单窗口任务规范_v1.md
+  human_new_window_input: natural_language_task_only
+  default_run_history_loading: prohibited
+
+current_relationships:
+  AGENTS.md:
+    current: shared backend/router rules conditionally load the two OS entries only when a task touches the OS
+    required_after_cutover: >-
+      remain the shared canonical startup router, always route repository work through the discipline and the
+      two 01_os startup entries, and replace current 01_os registry/publication paths
+    checkpoint_A_action: no_change
+  AGENT_WORKING_DISCIPLINE.md:
+    current: shared work/evidence discipline contains active 01_os entry, registry, and run-evidence paths
+    required_after_cutover: rewrite only current resolver/routing paths; preserve sentences that truly record past facts
+    checkpoint_A_action: no_change
+  CLAUDE.md:
+    current: vendor-discovered root router duplicates the five-step startup sequence and current 01_os paths
+    required_after_cutover: become a thin Claude Code adapter to AGENTS.md plus only Claude-specific discovery mechanics
+    checkpoint_A_action: no_change
+  GEMINI.md:
+    current: vendor-discovered root router duplicates startup and current 01_os paths plus Antigravity discovery mechanics
+    required_after_cutover: become a thin Gemini/Antigravity adapter to AGENTS.md plus only provider-specific discovery mechanics
+    checkpoint_A_action: no_change
+  README.md:
+    current: declares 01_os as the only active OS and routes new contributors to the two 01_os startup entries
+    required_after_cutover: declare 01_os as the permanent OS root and route to the two 01_os startup entries
+    checkpoint_A_action: no_change
+  CORE_MANIFEST.yml:
+    current: >-
+      active_os and core/domain ownership path-sets use 01_os; the commentary also carries the now-cancelled proposal
+      to move OS contents to repository root
+    required_after_cutover: >-
+      bind active_os, core-owned OS paths, domain-owned content/run paths, and registry references to 01_os;
+      remove or correct the cancelled root-cutover future claim without altering genuine historical receipts
+    checkpoint_A_action: no_change
+  01_os/README.md:
+    current: canonical OS directory/ownership/router README at the current namespace root
+    required_after_cutover: become 01_os/README.md and update root-qualified current paths while preserving run-history policy
+    checkpoint_A_action: no_change
+  01_os/开发入口与单窗口任务规范_v1.md:
+    current: canonical single-window, registry, evidence, publication, and Human-gate entry at the current namespace root
+    required_after_cutover: >-
+      become 01_os/开发入口与单窗口任务规范_v1.md and rewrite every current loader, registry, run-root,
+      authority, tool, and completion path; continue prohibiting default loading of all _runs
+    checkpoint_A_action: no_change
+
+freeze_decisions:
+  permanent_os_root_after_cutover: 01_os/
+  cancelled_design: move_OS_contents_to_repository_root
+  compatibility_shim: prohibited
+  checkpoint_B_may_start_only_after: ChatGPT_independent_acceptance_of_checkpoint_A
+  checkpoint_A_modified_any_inspected_file: false

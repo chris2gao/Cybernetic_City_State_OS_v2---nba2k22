@@ -1,0 +1,89 @@
+task_packet:
+  task_id: os-v2-seven-stage-minimum-operational-loop-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T2_semantic
+  exact_base_sha: c81a116226a57f0047b55b924fad1771c1b81029
+  branch: dev/os-v2-seven-stage-minimum-operational-loop-001
+  objective: >-
+    Build one minimum operational seven-stage workflow control loop that validates typed
+    artifacts, stage receipts, frozen tests, bounded execution, retry/invalidation,
+    independent verification and completion, and prove it with the cross-platform
+    repository-logical-path pilot.
+  completion_policy:
+    one_large_task: true
+    single_model_serial_execution: true
+    completion_preserving: true
+    ordered_internal_checkpoints: true
+    one_consolidated_independent_review: true
+    same_task_review_correction: true
+  source_evidence:
+    - 01_os/01_workflow/README.md
+    - 01_os/01_workflow/01_需求建模/README.md
+    - 01_os/01_workflow/02_信息收集与提炼/README.md
+    - 01_os/01_workflow/03_结果建模/README.md
+    - 01_os/01_workflow/04_测试生成/README.md
+    - 01_os/01_workflow/05_步骤拆分/README.md
+    - 01_os/01_workflow/06_执行/README.md
+    - 01_os/01_workflow/07_测试执行/README.md
+    - 01_os/03_mechanisms/context_management/README.md
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/激活状态_v1.yml
+  allowed_changed_paths:
+    - 01_os/01_workflow/README.md
+    - 01_os/01_workflow/实现/**
+    - 01_os/01_workflow/01_需求建模/README.md
+    - 01_os/01_workflow/01_需求建模/实现/最小运行schema_v1.yml
+    - 01_os/01_workflow/02_信息收集与提炼/README.md
+    - 01_os/01_workflow/02_信息收集与提炼/实现/最小运行schema_v1.yml
+    - 01_os/01_workflow/03_结果建模/README.md
+    - 01_os/01_workflow/03_结果建模/实现/最小运行schema_v1.yml
+    - 01_os/01_workflow/04_测试生成/README.md
+    - 01_os/01_workflow/04_测试生成/实现/最小运行schema_v1.yml
+    - 01_os/01_workflow/05_步骤拆分/README.md
+    - 01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml
+    - 01_os/01_workflow/06_执行/README.md
+    - 01_os/01_workflow/06_执行/实现/最小运行schema_v1.yml
+    - 01_os/01_workflow/07_测试执行/README.md
+    - 01_os/01_workflow/07_测试执行/实现/最小运行schema_v1.yml
+    - 01_os/02_boot/workflow_minimum_operational_loop/**
+    - 01_os/05_registry/README.md
+    - 01_os/05_registry/workflow_minimum_operational_loop_v1.yml
+    - 01_os/06_execution/README.md
+    - 01_os/06_execution/workflow/minimum_operational_loop/**
+    - 01_os/_runs/run-20260805-七阶段最小运行闭环-001/**
+  required_tests:
+    - python 01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py static <repo-root>
+    - python 01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py validate <pilot-fixture-root>
+    - python -m unittest 01_os/06_execution/workflow/minimum_operational_loop/test_minimum_operational_loop.py
+    - existing context-management validator
+    - existing stage-collaborative-deliberation runtime guard and v2 static validator
+  required_completion_pointer: 01_os/_runs/run-20260805-七阶段最小运行闭环-001/08_结论/completion_pointer.yml
+  publisher:
+    principal_binding: connector_authenticated
+    publication_transport: github_api_connector
+    source_write_authorized: false
+    master_write_authorized: false
+    destructive_git_authorized: false
+    authorization_ref: current_Human_confirmation_start_message_2026-08-05
+    expected_remote_head: c81a116226a57f0047b55b924fad1771c1b81029
+  executor_profile:
+    provider: OpenAI
+    model: GPT-5.6 Thinking
+    reasoning_effort: high
+    mode: standard
+    rollout_token_budget: null
+    routing_basis: cross-stage architecture, deterministic validation and repository publication
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: cc_Opus_5
+    different_model_family: true
+    different_measurement_tool: true
+  prohibitions:
+    - modify_master_without_post_review_Human_gate
+    - force_push
+    - rebase
+    - squash
+    - create_live_instance_state_under_canonical_paths
+    - make_cognitive_generation_claims_for_the_deterministic_runner
+    - modify_stage_collaborative_deliberation_or_context_management_semantics
+    - weaken_test_freeze_or_independent_review_boundaries

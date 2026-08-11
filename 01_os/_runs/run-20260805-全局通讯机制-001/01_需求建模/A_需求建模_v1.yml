@@ -1,0 +1,514 @@
+schema_version: citystate.communication_system.requirement_model.v1
+artifact_id: A-global-communication-system-001
+artifact_version: 1
+status: candidate_pending_exact_Human_confirmation
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+created_by_role: foreground_planner
+created_at: 2026-08-05T04:54:00-07:00
+source_base:
+  branch: master
+  head: c7a508abbcda58361fc9b649236d44b706e0bdd4
+task_packet_ref: 01_os/_runs/run-20260805-全局通讯机制-001/01_任务输入/任务包_v1.yml
+
+collaborative_deliberation:
+  mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
+  activation_state: active_dormant
+  route: full
+  trigger_conditions_matched:
+    - new_global_cross_environment_mechanism
+    - load_bearing_identity_addressing_authority_and_lifecycle_dimensions
+    - multiple_carriers_with_different_visibility
+    - Human_supervision_and_token_economy_require_tradeoff_modeling
+  task_start_gate:
+    exact_task_id_known: true
+    exact_base_known: true
+    task_packet_exists: true
+    current_Human_start_authority: true
+  session_creation:
+    required_for_full_route: true
+    session_id: S-CD-global-communication-001
+    scope: requirement_modeling_only
+  substantive_rounds:
+    - round: 1
+      function: goal_success_scope_and_current_model
+      result: represented_below
+    - round: 2
+      function: gaps_sources_Human_actions_and_unknowns
+      result: represented_below
+    - round: 3
+      function: candidates_roles_carriers_topology_and_contracts
+      result: represented_below
+    - round: 4
+      function: risks_counterexamples_stop_conditions_and_prohibitions
+      result: represented_below
+    - round: 5
+      function: final_requirement_model_version_and_Human_confirmation_scope
+      result: pending_exact_Human_confirmation
+
+Human_goal:
+  statement: >-
+    建立 01_os 的全局通讯机制，使本地 Desktop 模型、Web 云端模型、CLI 本地模型和 Human
+    能在 Human 主动触发和中转下，通过适合各端能力的文件载体交换高密度、低重复、可追溯的信息，
+    显著减少聊天框累积上下文，同时保持 Human 监督、显式边界和可验证失败行为。
+  one_goal: true
+  downstream_consumers:
+    - future_01_os_tasks
+    - Desktop_local_model_instances
+    - Web_cloud_model_instances
+    - CLI_local_model_instances
+    - Human_operator
+    - independent_review_windows
+
+scope:
+  included:
+    - endpoint_instance_and_capability_model
+    - sender_recipient_and_group_addressing
+    - local_file_carrier_for_local_capable_endpoints
+    - GitHub_file_carrier_when_any_recipient_is_web_only_or_cross_machine_durability_is_required
+    - chat_pointer_and_compact_Human_operational_summary
+    - Human_document_view
+    - Human_triggered_manual_relay
+    - structured_machine_payload
+    - message_integrity_ordering_duplicate_replay_and_stale_handling
+    - acknowledgments_receipts_and_manual_delivery_evidence
+    - token_and_context_cost_measurement
+    - canonical_boot_registry_loader_validator_and_runtime_layout
+    - privacy_secret_and_wrong_recipient_boundaries
+    - cross_platform_paths_encodings_and_atomic_publication
+    - deterministic_validation_and_adversarial_tests
+  excluded:
+    - automatic_polling
+    - watcher_daemon_scheduler_cron_or_background_agent
+    - automatic_local_GitHub_synchronization
+    - automatic_message_delivery
+    - automatic_state_progression
+    - runtime_or_Coordinator_activation
+    - old_dot_ai_protocol_modification
+    - old_OS_deletion
+    - global_dot_claude_or_host_configuration_migration
+    - legacy_compatibility_adapter
+    - strong_OS_level_access_control_implementation
+  future_separate_tasks:
+    - legacy_OS_and_dot_ai_communication_deletion_after_cutover
+    - global_dot_claude_and_related_host_configuration_migration
+    - optional_strong_access_boundary
+    - optional_automation_only_after_new_Human_authorization
+
+actors_and_endpoint_classes:
+  - class_id: endpoint_class_desktop_local_model
+    principal_class: model
+    examples: [claude_code_desktop, codex_desktop, antigravity_desktop]
+    defining_capabilities:
+      local_filesystem_read: true
+      local_filesystem_write: true
+      github_read: variable
+      github_write: variable
+      terminal_execution: variable
+      chat_output: true
+  - class_id: endpoint_class_web_cloud_model
+    principal_class: model
+    examples: [chatgpt_web, gemini_web]
+    defining_capabilities:
+      local_filesystem_read: false
+      local_filesystem_write: false
+      github_read: true_or_connector_dependent
+      github_write: connector_dependent
+      terminal_execution: false
+      chat_output: true
+  - class_id: endpoint_class_terminal_local_model
+    principal_class: model
+    examples: [claude_code_cli]
+    current_nonexample: codex_cli_not_currently_available
+    defining_capabilities:
+      local_filesystem_read: true
+      local_filesystem_write: true
+      github_read: true_or_environment_dependent
+      github_write: true_or_environment_dependent
+      terminal_execution: true
+      chat_output: terminal_output
+  - class_id: endpoint_class_Human
+    principal_class: Human
+    defining_capabilities:
+      initiates_tasks_and_relay: true
+      reads_chat_and_Human_documents: true
+      final_protected_authority: true
+      may_copy_or_point_between_endpoints: true
+
+identity_model_requirements:
+  - requirement_id: A-ID-001
+    requirement: Every participating runtime instance has an endpoint_id unique within the task.
+    disposition: represented_with_supported_value
+  - requirement_id: A-ID-002
+    requirement: Provider or product name, environment class, protocol role, lane instance, capability profile, and authority binding remain separate dimensions.
+    disposition: represented_with_supported_value
+  - requirement_id: A-ID-003
+    requirement: Self-declared model provider or role never authenticates identity or grants permission.
+    disposition: represented_with_supported_value
+  - requirement_id: A-ID-004
+    requirement: Routing is selected from current capabilities and intended recipients, not from provider name alone.
+    disposition: represented_with_supported_value
+  - requirement_id: A-ID-005
+    requirement: The same product may have multiple endpoint instances and environment classes without identity collision.
+    disposition: represented_with_supported_value
+
+addressing_requirements:
+  - requirement_id: A-ADDR-001
+    requirement: A message declares exactly one sender endpoint.
+    disposition: represented_with_supported_value
+  - requirement_id: A-ADDR-002
+    requirement: Recipients may be exact endpoint instances, explicit Human, or a defined role/group resolved against the current task endpoint registry.
+    disposition: represented_with_supported_value
+  - requirement_id: A-ADDR-003
+    requirement: Broadcast is exceptional, explicit, and must not be inferred from a missing recipient.
+    disposition: represented_with_supported_value
+  - requirement_id: A-ADDR-004
+    requirement: Wrong, missing, unresolved, or ambiguous recipients fail closed and create no delivery claim.
+    disposition: represented_with_supported_value
+  - requirement_id: A-ADDR-005
+    requirement: One-to-many delivery records per-recipient status rather than a single aggregate success boolean.
+    disposition: represented_with_supported_value
+
+Human_trigger_and_relay_requirements:
+  - requirement_id: A-HR-001
+    requirement: Every communication transfer begins from a current Human action or a model output explicitly presented to Human for relay.
+    disposition: represented_with_supported_value
+  - requirement_id: A-HR-002
+    requirement: Human chooses or confirms the next recipient and initiates the receiving endpoint interaction.
+    disposition: represented_with_supported_value
+  - requirement_id: A-HR-003
+    requirement: The system may prepare files and pointers but must not watch, poll, push, notify, or progress autonomously.
+    disposition: represented_with_supported_value
+  - requirement_id: A-HR-004
+    requirement: A manual relay receipt distinguishes prepared, presented_to_Human, relayed_by_Human, opened_by_recipient, acknowledged, and rejected_or_blocked.
+    disposition: represented_with_supported_value
+  - requirement_id: A-HR-005
+    requirement: Absence of acknowledgment must not be interpreted as receipt, agreement, approval, or execution.
+    disposition: represented_with_supported_value
+
+carrier_requirements:
+  - requirement_id: A-CAR-001
+    requirement: Local file is preferred when every required recipient can access the same configured local runtime root.
+    disposition: represented_with_supported_value
+  - requirement_id: A-CAR-002
+    requirement: GitHub file is required when any required recipient is web-only, recipients do not share a local root, or durable cross-machine review is required.
+    disposition: represented_with_supported_value
+  - requirement_id: A-CAR-003
+    requirement: Chat carries only a compact pointer and bounded Human-facing summary; long model payloads, logs, prompts, reports, and diffs remain external files.
+    disposition: represented_with_supported_value
+  - requirement_id: A-CAR-004
+    requirement: Local and GitHub carriers do not synchronize automatically in v1.
+    disposition: represented_with_supported_value
+  - requirement_id: A-CAR-005
+    requirement: Human explicitly selects or accepts a carrier transition and the new carrier receives a new integrity-bound artifact.
+    disposition: represented_with_supported_value
+  - requirement_id: A-CAR-006
+    requirement: Carrier selection exposes why the selected carrier is reachable by every intended recipient.
+    disposition: represented_with_supported_value
+  - requirement_id: A-CAR-007
+    requirement: Local runtime root is configurable and never hardcoded to one user or drive.
+    disposition: represented_with_supported_value
+
+content_and_encoding_requirements:
+  - requirement_id: A-CONT-001
+    requirement: Machine content separates facts, evidence, decisions, assumptions, unknowns, constraints, state changes, requested actions, expected response, and authority requirements.
+    disposition: represented_with_supported_value
+  - requirement_id: A-CONT-002
+    requirement: Machine payload and Human view are separate artifacts or separate validated sections with explicit refs.
+    disposition: represented_with_supported_value
+  - requirement_id: A-CONT-003
+    requirement: The encoding is not selected before reproducible comparison of YAML, JSON, JSONL, Markdown with machine front matter, and pointer-plus-external-payload.
+    disposition: represented_with_supported_value
+  - requirement_id: A-CONT-004
+    requirement: Encoding evaluation measures model token cost, deterministic parsing, schema validation, Human readability, partial-read efficiency, append behavior, and corruption detection.
+    disposition: represented_with_supported_value
+  - requirement_id: A-CONT-005
+    requirement: Large payloads can be indexed and selectively dereferenced without reading the full file.
+    disposition: represented_with_supported_value
+  - requirement_id: A-CONT-006
+    requirement: Unknown fields, duplicate keys, malformed documents, truncation, or unsupported schema versions fail closed for state-bearing messages.
+    disposition: represented_with_supported_value
+
+message_integrity_and_state_requirements:
+  - requirement_id: A-MSG-001
+    requirement: Each durable message has immutable event identity, task identity, sender lane sequence, schema version, creation time, content digest, sender ref, recipients, and carrier metadata.
+    disposition: represented_with_supported_value
+  - requirement_id: A-MSG-002
+    requirement: Message body, attachments, Human view, and predecessor refs are integrity-bound.
+    disposition: represented_with_supported_value
+  - requirement_id: A-MSG-003
+    requirement: Duplicate event IDs, replayed sequence numbers, sequence rollback, hash mismatch, and conflicting successors fail closed.
+    disposition: represented_with_supported_value
+  - requirement_id: A-MSG-004
+    requirement: Out-of-order but otherwise valid messages remain pending until missing predecessors are resolved or Human explicitly disposes them.
+    disposition: represented_with_supported_value
+  - requirement_id: A-MSG-005
+    requirement: Stale is determined from explicit dependency fingerprints or supersession relations, not age alone.
+    disposition: represented_with_supported_value
+  - requirement_id: A-MSG-006
+    requirement: Partial, missing, stale, malformed, unauthorized, or wrong-recipient loads produce durable failure or blocked receipts and never silently fall back.
+    disposition: represented_with_supported_value
+  - requirement_id: A-MSG-007
+    requirement: A message or receipt reports observed state but never authorizes its own requested action.
+    disposition: represented_with_supported_value
+
+context_and_token_requirements:
+  - requirement_id: A-TOK-001
+    requirement: A new task uses one window and one task identity; a new window loads only bootstrap, current task entry, endpoint entry, and required refs.
+    disposition: represented_with_supported_value
+  - requirement_id: A-TOK-002
+    requirement: Continuous work in the same window uses a fast path and does not reload the complete communication mechanism unless its version changes or state conflicts.
+    disposition: represented_with_supported_value
+  - requirement_id: A-TOK-003
+    requirement: Chat output contains no long task or report body when a reachable file carrier exists.
+    disposition: represented_with_supported_value
+  - requirement_id: A-TOK-004
+    requirement: Token optimization cannot omit decisive evidence, required fields, failure records, or Human authority boundaries.
+    disposition: represented_with_supported_value
+  - requirement_id: A-TOK-005
+    requirement: Research establishes representative corpus measurements rather than assuming one syntax is universally token-optimal across model families.
+    disposition: represented_with_supported_value
+
+file_partition_and_lifecycle_requirements:
+  - requirement_id: A-FILE-001
+    requirement: Canonical mechanism paths store definitions, schemas, boot, registry, loader, validator, and tests only.
+    disposition: represented_with_supported_value
+  - requirement_id: A-FILE-002
+    requirement: Live messages, endpoint instances, lanes, receipts, and task communication state exist only under configured runtime or run traffic roots.
+    disposition: represented_with_supported_value
+  - requirement_id: A-FILE-003
+    requirement: Local runtime messages are not registered as system structure and are cleaned or archived by explicit lifecycle rules.
+    disposition: represented_with_supported_value
+  - requirement_id: A-FILE-004
+    requirement: GitHub communication traffic is separated from canonical definitions and is not added to the registry as individual messages.
+    disposition: represented_with_supported_value
+  - requirement_id: A-FILE-005
+    requirement: Private and secret-bearing data must not be published to GitHub; a negative sentinel test is mandatory.
+    disposition: represented_with_supported_value
+  - requirement_id: A-FILE-006
+    requirement: Local directory layout is workspace_partition only and does not claim enforced access control.
+    disposition: represented_with_supported_value
+  - requirement_id: A-FILE-007
+    requirement: Deletion occurs only after durable facts, failures, receipts, and required audit refs are preserved.
+    disposition: represented_with_supported_value
+
+Human_view_requirements:
+  - requirement_id: A-HV-001
+    requirement: Human receives compact chat status and can open a durable Human-readable document for detail.
+    disposition: represented_with_supported_value
+  - requirement_id: A-HV-002
+    requirement: Human documents separate verified status, unresolved uncertainty, requested decision, risks, evidence refs, and non-authorizing model recommendation.
+    disposition: represented_with_supported_value
+  - requirement_id: A-HV-003
+    requirement: Human documents must not expose private model scratch, hidden reasoning transcripts, secrets, or unnecessary raw logs.
+    disposition: represented_with_supported_value
+  - requirement_id: A-HV-004
+    requirement: Human decisions bind an exact artifact version and scope; a general conversational acknowledgment cannot be expanded beyond its explicit object.
+    disposition: represented_with_supported_value
+
+security_authority_and_privacy_requirements:
+  - requirement_id: A-SEC-001
+    requirement: Transport reachability, identity authentication, task authority, and protected-action authorization are separate dimensions.
+    disposition: represented_with_supported_value
+  - requirement_id: A-SEC-002
+    requirement: No message payload, sender role, route, receipt, test result, or model consensus grants protected authority.
+    disposition: represented_with_supported_value
+  - requirement_id: A-SEC-003
+    requirement: Secrets, credentials, tokens, key files, private configuration, and unnecessary personal data are forbidden in GitHub carriers.
+    disposition: represented_with_supported_value
+  - requirement_id: A-SEC-004
+    requirement: Wrong-recipient and overbroad-recipient cases are tested as privacy failures.
+    disposition: represented_with_supported_value
+  - requirement_id: A-SEC-005
+    requirement: Strong local access control is explicitly outside v1 and requires a separate threat model and allow-deny tests.
+    disposition: explicitly_irrelevant_with_reason_and_scope
+    reason: v1 provides cooperative workspace partition and Human relay, not a production security sandbox
+  - requirement_id: A-SEC-006
+    requirement: External action, irreversible operation, protected path mutation, source or master publication, runtime activation, and objective change retain separate Human gates.
+    disposition: represented_with_supported_value
+
+cross_platform_and_atomicity_requirements:
+  - requirement_id: A-XP-001
+    requirement: Repository logical paths use forward slashes; host-local path resolution is isolated behind configuration and adapters.
+    disposition: represented_with_supported_value
+  - requirement_id: A-XP-002
+    requirement: UTF-8, newline handling, filename normalization, reserved names, path length, and case sensitivity are tested on supported host classes.
+    disposition: represented_with_supported_value
+  - requirement_id: A-XP-003
+    requirement: Local durable publication uses temporary write, flush where available, atomic rename, digest readback, and receipt-after-success semantics.
+    disposition: represented_with_supported_value
+  - requirement_id: A-XP-004
+    requirement: GitHub publication uses exact expected head, non-force compare-and-swap, exact path allowlist, changed-path verification, and remote readback.
+    disposition: represented_with_supported_value
+  - requirement_id: A-XP-005
+    requirement: A pointer is not published before all referenced artifacts exist and pass validation on the selected carrier.
+    disposition: represented_with_supported_value
+
+legacy_system_boundary:
+  initial_A_influenced_by_legacy: false
+  stage_02_research_uses_legacy_as_source: false
+  initial_B_influenced_by_legacy: false
+  comparison_after_B_required: true
+  comparison_outputs:
+    - potentially_missing_requirement
+    - potentially_missing_failure_mode
+    - potentially_useful_invariant_or_test
+    - adopt_reject_or_defer_disposition
+  compatibility_requirement: false
+  legacy_mutation: prohibited
+  legacy_deletion: separate_future_task_after_cutover
+
+success_obligations:
+  - success_id: A-SUCCESS-001
+    obligation: Four endpoint classes can be represented without binding architecture to current provider names.
+  - success_id: A-SUCCESS-002
+    obligation: A deterministic router selects local or GitHub carrier from recipient reachability and explicit Human choice.
+  - success_id: A-SUCCESS-003
+    obligation: Long machine content is file-based and chat remains pointer-plus-compact-Human-summary.
+  - success_id: A-SUCCESS-004
+    obligation: Human relay is required and every automatic delivery or progression attempt is rejected.
+  - success_id: A-SUCCESS-005
+    obligation: Every durable communication has sender, recipients, sequence, integrity, lifecycle, and receipt semantics.
+  - success_id: A-SUCCESS-006
+    obligation: Missing partial stale malformed duplicate replay wrong-recipient and unauthorized cases fail closed.
+  - success_id: A-SUCCESS-007
+    obligation: Encoding choice is supported by reproducible token and parser evidence.
+  - success_id: A-SUCCESS-008
+    obligation: Canonical definitions and live traffic are physically and semantically separated.
+  - success_id: A-SUCCESS-009
+    obligation: GitHub publication never includes private local payloads and passes explicit allowlist readback.
+  - success_id: A-SUCCESS-010
+    obligation: Independent reviewer can reproduce static and adversarial validation from an exact candidate head.
+  - success_id: A-SUCCESS-011
+    obligation: New mechanism integrates with 01_os boot registry and execution without modifying old .ai communications.
+  - success_id: A-SUCCESS-012
+    obligation: Cutover and old-system deletion remain impossible without a later explicit Human task.
+
+risks_and_failure_modes:
+  - risk_id: A-RISK-001
+    risk: Human may relay an outdated or wrong pointer.
+    required_control: exact_task_event_digest_recipient_and_supersession_visibility
+  - risk_id: A-RISK-002
+    risk: Local-only content may be selected for a Web recipient.
+    required_control: capability_based_reachability_validation
+  - risk_id: A-RISK-003
+    risk: GitHub may receive private or secret-bearing content.
+    required_control: classification_allowlist_and_negative_sentinel_test
+  - risk_id: A-RISK-004
+    risk: Provider names may become architectural authority labels.
+    required_control: orthogonal_endpoint_role_capability_and_authority_models
+  - risk_id: A-RISK-005
+    risk: Append-only lanes may diverge or replay.
+    required_control: monotonic_sequence_predecessor_digest_and_conflict_receipt
+  - risk_id: A-RISK-006
+    risk: Token optimization may overcompress and remove necessary semantics.
+    required_control: required_field_and_evidence_completeness_tests
+  - risk_id: A-RISK-007
+    risk: Human-readable and machine-readable representations may drift.
+    required_control: shared_source_refs_and_digest_bound_rendering_or_consistency_validation
+  - risk_id: A-RISK-008
+    risk: Manual delivery status may be overstated.
+    required_control: separate_prepared_presented_relayed_opened_acknowledged_states
+  - risk_id: A-RISK-009
+    risk: Canonical directories may accumulate live state.
+    required_control: prohibited_path_guard_and_static_validator
+  - risk_id: A-RISK-010
+    risk: Legacy comparison may silently reintroduce old architecture.
+    required_control: post_B_timing_and_explicit_adopt_reject_defer_disposition
+
+assumptions_and_unknowns:
+  - item_id: A-UNK-001
+    item: Exact local runtime root and host configuration discovery method.
+    disposition: unknown_with_deferred_disposition_and_revisit_trigger
+    blocking_now: false
+    revisit_trigger: result_modeling_after_cross_platform_research
+  - item_id: A-UNK-002
+    item: Exact GitHub communication traffic root for the new system.
+    disposition: unknown_with_deferred_disposition_and_revisit_trigger
+    blocking_now: false
+    revisit_trigger: result_modeling_after_lifecycle_and_cutover_analysis
+  - item_id: A-UNK-003
+    item: Final structured encoding.
+    disposition: unknown_with_blocking_disposition
+    blocking_stage: stage_03_result_modeling
+    revisit_trigger: completion_of_encoding_benchmark
+  - item_id: A-UNK-004
+    item: Whether Human view is rendered from machine payload or authored independently with a consistency contract.
+    disposition: unknown_with_blocking_disposition
+    blocking_stage: stage_03_result_modeling
+    revisit_trigger: Human_readability_and_drift_testing
+  - item_id: A-UNK-005
+    item: Supported local operating systems beyond the current Windows host.
+    disposition: unknown_with_deferred_disposition_and_revisit_trigger
+    blocking_now: false
+    revisit_trigger: task_packet_or_host_inventory_for_cutover
+
+implementation_granularity_boundary:
+  main_mechanism:
+    - endpoint_and_capability_registry_contract
+    - communication_event_and_payload_contract
+    - carrier_router_and_Human_relay_contract
+    - lifecycle_receipt_and_failure_contract
+    - boot_registry_loader_validator_and_tests
+  first_order_required_details:
+    - schema_versioning
+    - exact_recipient_resolution
+    - token_benchmark_corpus
+    - atomic_local_write
+    - GitHub_CAS_and_readback
+    - private_sentinel
+    - cross_platform_path_adapter
+  ordinary_local_choices:
+    - internal_function_names
+    - fixture_file_order
+    - non_semantic_error_text
+  second_order_detail_triggers:
+    - new_daemon_watcher_or_scheduler
+    - new_security_sandbox_or_DACL_system
+    - new_external_message_broker
+    - automatic_local_GitHub_replication
+    - new_credential_or_identity_provider
+    - runtime_or_Coordinator_activation
+    - legacy_cutover_or_deletion
+
+schema_adequacy:
+  four_layers_checked:
+    general_modeling_substrate: true
+    workflow_stage_schema: true
+    task_specific_schema: true
+    domain_specific_schema_needed: true
+  domain_specific_schema_scope:
+    - endpoint_capabilities
+    - carrier_reachability
+    - manual_relay_states
+    - structured_message_dimensions
+    - delivery_and_acknowledgment_states
+    - token_measurement
+  bearing_dimensions_with_no_disposition: 0
+  adequacy_result: sufficient_for_Human_confirmation_and_stage_02_research
+
+Human_confirmation_request:
+  requested_action: confirm_or_reject_exact_A_blob
+  confirmation_scope:
+    - Human_goal
+    - included_and_excluded_scope
+    - endpoint_classes_and_capability_based_routing
+    - D1_through_D8_decisions_as_encoded
+    - Human_triggered_manual_relay_only
+    - no_legacy_compatibility_constraint
+    - no_automation_in_v1
+    - stage_02_research_boundary
+    - post_B_legacy_comparison_boundary
+    - success_obligations
+  confirmation_must_bind:
+    artifact_path: 01_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/A_需求建模_v1.yml
+    artifact_version: 1
+    blob_sha: to_be_read_back_after_publication
+  on_confirmation:
+    - create_append_only_Human_confirmation_artifact
+    - create_stage_01_minimum_artifact_with_confirmed_A_ref
+    - begin_stage_02_research
+  on_rejection_or_revision:
+    - preserve_this_candidate
+    - create_successor_A_version
+    - do_not_begin_stage_02

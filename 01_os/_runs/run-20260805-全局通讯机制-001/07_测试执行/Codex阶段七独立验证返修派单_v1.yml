@@ -1,0 +1,242 @@
+schema_version: citystate.stage07_correction_dispatch.v1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+executor: Codex
+status: authorized_same_task_stage06_correction_for_stage07_rereview
+
+repository:
+  repo: chris2gao/Cybernetic_City_State_OS_v2---core
+  branch: dev/os-v2-global-communication-system-001
+  minimum_authorized_start_ancestor: 5794c95a21d623adb44d7367f4df300bbf650bd0
+  expected_master: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  master_publication_authorized: false
+  start_rule: >-
+    Before any write, read physical remote master and work-branch heads. The work branch must descend
+    linearly from minimum_authorized_start_ancestor. Any commits after that ancestor before executor work
+    may only be this correction dispatch and corresponding run-state metadata. If master differs from
+    expected_master or the branch contains unrecognized work, stop fail-closed. Never rebase, amend,
+    squash, merge-commit, force-push, or rewrite history.
+
+executor_configuration:
+  requested_model_display: GPT-5.6 Sol
+  mode: Goal
+  reasoning_effort: High
+  single_active_executor: true
+  parallel_agents: false
+  max_is_default: false
+  escalation_to_max_requires_new_project_lead_or_Human_assignment: true
+
+review_authority:
+  independent_review_ref: Stage07独立验证_v1.yml
+  independent_review_commit: b8b144fb02f9b505edb3930e86b1558865eb6360
+  reviewed_implementation_commit: f773ce7d97ecab1f6ccb4930c9a0165df663a2a5
+  reviewed_evidence_commit: 9ebd0501fd301a2c4f02e3dda933f1736ba08a54
+  verdict: rejected_correction_required
+  blockers:
+    - STAGE07-B01-FROZEN-PRODUCTION-ORACLE-SHADOWING
+    - STAGE07-B02-AUTHORITY-AND-ROLE-BOUNDARY-NOT-END-TO-END
+    - STAGE07-B03-ARCHIVE-PRIVATE-RUNTIME-PRECONDITIONS-INCOMPLETE
+    - STAGE07-B04-PUBLICATION-AND-BOOTSTRAP-PHYSICAL-CLOSURE-GAPS
+
+frozen_authority:
+  Stage04_package: ../04_测试生成/04_tests.yml
+  Stage04_git_blob_sha: 360571b6b29a3baecd753dc45611457da9ab6bf2
+  Stage04_normalized_tests_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+  Stage04_may_change: false
+  accepted_Stage05_package: ../05_步骤拆分/05_steps.yml
+  accepted_Stage05_git_blob_sha: 9422de27de6794ba2c247c7dae3dcddaa5c9e562
+  Stage05_may_change: false
+  B_v3_git_blob_sha: 314b76061a32d62bbcc49e2bf53b8968b2e194bd
+  B_v3_may_change: false
+
+required_reads:
+  - AGENT_WORKING_DISCIPLINE.md
+  - 01_os/README.md
+  - 01_os/开发入口与单窗口任务规范_v1.md
+  - 01_os/_runs/run-20260805-全局通讯机制-001/run.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/07_测试执行/Stage07独立验证_v1.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/01_任务输入/任务包_v1.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/03_结果建模/B_结果模型_v3.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/04_tests.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/specs/测试组_02_序号角色权限引用_v1.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/specs/测试组_03_上下文文档隐私发布_v1.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/specs/测试组_04_Git收敛路由归档_v1.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/specs/测试组_05_导航索引纠正跨端_v1.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/run_stage04_executable_tests.py
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/synthetic_adapters.py
+  - 01_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/05_steps.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/06_执行/06_execution.yml
+  - 01_os/06_execution/boot/communication_system/validator/stage04_production_adapter.py
+  - 01_os/06_execution/boot/communication_system/validator/run_frozen_stage04_tests.py
+  - 01_os/06_execution/boot/communication_system/validator/validate_communication_system.py
+  - 01_os/06_execution/boot/communication_system/publisher/publish_message.py
+  - 01_os/06_execution/boot/communication_system/convergence/converge_task.py
+  - 01_os/06_execution/boot/communication_system/archive/archive_task.py
+  - 01_os/06_execution/boot/communication_system/archive/navigation.py
+  - 01_os/06_execution/boot/communication_system/validator/sender_zone.py
+  - 01_os/06_execution/boot/communication_system/validator/receiver_bootstrap.py
+
+objective: >-
+  Correct the Stage06 implementation and its frozen-production bridge so GC-T001..GC-T050 are measured
+  against the real Stage06 system. Preserve the frozen tests, accepted Stage05 plan, B_v3, Human-relayed
+  V1 boundary, and exact task allowlist. Do not redesign the architecture and do not weaken an oracle.
+
+B01_production_oracle_requirements:
+  prohibited:
+    - mutation_marker_to_expected_error_mapping_as_business_evaluation
+    - test_id_to_expected_failure_code_mapping_as_business_evaluation
+    - fallback_or_delegation_to_Stage04_StrictValidationAdapter_for_business_behavior
+    - no_op_validate_document
+    - treating_source_string_checks_as_physical_behavior_proof
+  required:
+    - >-
+      A frozen compact fixture may be translated into a concrete Stage06 message, document, task tree,
+      endpoint card set, Git repository, or authority state, but the action must call real Stage06 code.
+    - >-
+      Pass/fail evidence must be derived from real return values/exceptions and measured physical post-state:
+      exact files, bytes, Git refs, argv/return codes, read/write traces, index state, or archive state.
+    - every frozen case GC-T001..GC-T050 must have an explicit real-implementation route
+    - production bridge must fail closed if a required real route is absent
+    - validate_document must call actual Stage06 document validation
+
+B02_authority_role_requirements:
+  frozen_refs: [GC-T015, GC-T016, GC-T017, GC-T018, GC-T044]
+  required:
+    - endpoint-card sender/recipient task-role binding is enforced on the real processing/publication path
+    - protected beyond-role action cannot be authorized by role or content text
+    - authorization_ref must be physically readable and included in required_refs when required
+    - independent current Human authorization is physically checked for protected action authority
+    - >-
+      Human/current ordinary write authority must derive from structured state containing current task,
+      writer endpoint, writer task role, navigation owner, current authority, and optional explicit Human
+      authorization; a simple endpoint-id equality or bare boolean authorization is insufficient
+    - rejected Human/current writes must leave bytes unchanged
+
+B03_archive_requirements:
+  frozen_refs: [GC-T039, GC-T040, GC-T041]
+  required:
+    - use the real Stage06 archive implementation for frozen physical scenarios
+    - preserve indexes/messages/documents/Human/final_results/material_failures as a whole public task archive
+    - discovery is updated after the move
+    - private runtime never enters archive or tracked Git content
+    - use physical Git evidence such as git ls-files to distinguish tracked content before private deletion
+    - durable prerequisites are verified before private-runtime deletion
+    - required convergence/material residual/private-runtime durable-source preconditions are fail-closed
+    - archive default-load tests use the real Stage06 context resolver and structured read traces
+
+B04_publication_bootstrap_requirements:
+  frozen_refs: [GC-T019, GC-T021, GC-T022, GC-T024, GC-T026, GC-T027, GC-T029, GC-T030, GC-T035]
+  required:
+    - new communication documents referenced for publication are validated before canonical message visibility
+    - malformed/missing required document causes zero visible canonical message and zero new sender-index entry
+    - controlled Web/Human GitHub republication physically publishes repository-shareable required material first, then message, then index
+    - local-only/forbidden material is physically blocked before GitHub publication
+    - receiver bootstrap binds expected recipient identity/task role to the actual endpoint card
+    - receiver bootstrap preserves the exact bounded direct read set and does not recursively expand context
+    - failed index completion must not create a misleading successfully-published state; physical bytes/index state must satisfy GC-T035
+
+physical_groups_that_must_not_use_synthetic_business_fallback:
+  GC-T033: actual_same_path_Git_conflict_with_exact_unresolved_paths_and_escalation
+  GC-T034: actual_stale_non_fast_forward_push_with_argv_rc_ls_remote_before_after_no_force_no_retry
+  GC-T039: actual_whole_public_task_archive_and_discovery_update
+  GC-T040: actual_git_tracked_state_plus_private_runtime_delete_after_durable_prerequisite
+  GC-T041: actual_archive_read_authorization_and_structured_read_trace
+  GC-T043: actual_Human_current_byte_snapshot_and_material_trigger_update
+  GC-T044: actual_structured_authority_and_rejected_write_unchanged_bytes
+  GC-T045: actual_sender_index_files_and_target_existence_state
+
+mutation_independence_requirement: >-
+  Add real negative controls proving the frozen production runner depends on Stage06 behavior. For representative
+  groups, deliberately alter or inject a broken Stage06 behavior in an isolated test context and show the frozen
+  production oracle detects it. Do not mutate frozen Stage04 files and do not persist broken canonical code.
+
+commit_and_evidence_protocol:
+  required_shape: new_implementation_commit_I2_then_exact_runs_then_result_only_commit_R2
+  implementation_commit_I2:
+    contains: corrected_Stage06_implementation_and_production_bridge_only_plus_in_progress_execution_record_if_needed
+  execution:
+    - run mechanism unit/regression tests
+    - run frozen production full GC-T001..GC-T050 against exact I2
+    - run frozen mutation-suite GC-T001..GC-T050 against exact I2
+    - run all repository validators required by original Stage06 dispatch
+  result_only_commit_R2:
+    contains_only:
+      - new_or_updated_Stage06_result_files
+      - final_06_execution_evidence_binding
+      - run_state_submission_metadata
+    rule: every persisted test result must bind tested_commit exactly to I2
+  if_implementation_bytes_change_after_runs: create_I3_and_rerun_everything
+  manual_rebinding_of_tested_commit_without_exact_rerun: prohibited
+
+allowed_changed_paths:
+  - 01_os/06_execution/boot/communication_system/**
+  - 01_os/03_mechanisms/communication_system/**
+  - 01_os/02_boot/communication_system/**
+  - 01_os/05_registry/communication_system_v1.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/06_执行/**
+  - 01_os/_runs/run-20260805-全局通讯机制-001/07_测试执行/*correction_metadata*
+  - 01_os/_runs/run-20260805-全局通讯机制-001/run.yml
+  - 01_os/README.md
+  - 01_os/02_boot/README.md
+  - 01_os/03_mechanisms/README.md
+  - 01_os/05_registry/README.md
+  - 01_os/06_execution/README.md
+
+read_only_or_prohibited:
+  - 01_os/_runs/run-20260805-全局通讯机制-001/01_任务输入/**
+  - 01_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/**
+  - 01_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼/**
+  - 01_os/_runs/run-20260805-全局通讯机制-001/03_结果建模/**
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/**
+  - 01_os/_runs/run-20260805-全局通讯机制-001/05_步骤拆分/**
+  - 01_os/_runs/run-20260805-全局通讯机制-001/06_执行/Human授权_进入阶段六_v1.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/06_执行/Codex阶段六执行派单_v1.yml
+  - 01_os/_communication/**
+  - .ai/**
+  - 06_Silicon_Index/**
+  - master
+
+hard_prohibitions:
+  - change_or_replace_any_frozen_test_or_Stage04_oracle
+  - change_accepted_Stage05_plan
+  - change_B_v3_or_earlier_semantic_artifact
+  - weaken_failure_codes_or_acceptance_semantics
+  - add_automation_polling_watcher_daemon_scheduler_auto_delivery_auto_ack_auto_progression
+  - create_canonical_live_state_under_01_os__communication
+  - rebase
+  - amend
+  - squash
+  - merge_commit
+  - force_push
+  - history_rewrite
+  - git_add_dot
+  - git_add_A
+  - modify_master
+
+final_submission:
+  status: ready_for_independent_stage07_rereview
+  report_required:
+    - physical_start_head_40_sha
+    - physical_master_head_before_and_after
+    - implementation_commit_I2_40_sha
+    - result_only_commit_R2_40_sha
+    - final_remote_head_40_sha
+    - exact_changed_paths_by_commit
+    - production_adapter_git_blob_sha
+    - confirmation_no_Stage04_StrictValidationAdapter_business_fallback
+    - confirmation_no_marker_to_expected_code_business_mapping
+    - representative_physical_trace_refs_for_GC_T033_T034_T039_T040_T041_T043_T044_T045
+    - frozen_full_result_ref_blob_and_tested_commit
+    - frozen_mutation_result_ref_blob_and_tested_commit
+    - total_pass_fail_for_both_modes
+    - mechanism_regression_test_summary
+    - validator_exit_codes
+    - core_hooksPath_readback
+    - retries_or_failed_attempts
+    - unauthorized_write_attempts
+    - confirmation_Stage04_Stage05_Bv3_unchanged
+    - confirmation_master_unchanged
+  do_not_claim:
+    - independent_acceptance
+    - Stage07_completion
+    - master_publication

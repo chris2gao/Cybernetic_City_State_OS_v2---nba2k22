@@ -1,0 +1,245 @@
+schema_version: citystate.task_packet.v1
+task_id: os-v2-root-global-retention-rewrite-001
+run_id: run-20260810-根级保留文件重写与依赖盘点-001
+status: authorized_for_backend_execution
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+base:
+  branch: master
+  head: eb4be95a25cb4b0929def284a7fb4b6a412aed55
+work_branch: dev/os-v2-root-global-retention-rewrite-001
+executor: Claude_Code
+reviewer: ChatGPT_independent_project_reviewer
+
+objective: >-
+  在不删除旧 OS、不移动 01_os、不修改新 OS canonical 的前提下，先把确定会保留的根级全局
+  文档改写为“当前 01_os 是唯一活动 OS 事实源”的过渡版本；随后从这些改写后的保留文件出发，
+  做一次非 01_os 路径的真实依赖闭包盘点，形成 Human 可裁决的保留/迁移/删除候选清单。
+
+Human_intent:
+  - 本轮只做两个步骤：先重写，再统计。
+  - 01_os/** 整体保留，本轮不对其内部文件逐项做保留裁决。
+  - 不因旧文件现存就把它算作应保留；必须区分活动依赖、过渡依赖、历史描述和删除候选。
+  - CC 执行，ChatGPT 独立审查；双方需对最终保留清单达成一致后才进入物理删除阶段。
+
+scope:
+  rewrite_primary_files:
+    - AGENTS.md
+    - AGENT_WORKING_DISCIPLINE.md
+    - GEMINI.md
+    - CLAUDE.md
+    - README.md
+    - CORE_MANIFEST.yml
+    - .githooks/README.md
+  retained_infrastructure_no_semantic_code_change_expected:
+    - .githooks/pre-push
+    - .githooks/install.ps1
+    - .githooks/test_pre_push_logic.ps1
+    - .githooks/.gitattributes
+  analysis_output:
+    - 01_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/02_保留清单/非08保留与关联文档清单_v1.yml
+    - 01_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/02_保留清单/依赖边清单_v1.yml
+    - 01_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/02_保留清单/执行报告_v1.yml
+  allowed_write_paths:
+    - AGENTS.md
+    - AGENT_WORKING_DISCIPLINE.md
+    - GEMINI.md
+    - CLAUDE.md
+    - README.md
+    - CORE_MANIFEST.yml
+    - .githooks/README.md
+    - 01_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/**
+  forbidden_write_paths:
+    - 01_os/01_workflow/**
+    - 01_os/02_boot/**
+    - 01_os/03_mechanisms/**
+    - 01_os/04_skills_and_tools/**
+    - 01_os/05_registry/**
+    - 01_os/06_execution/**
+    - 01_os/07_content/**
+    - 01_os/_dev/**
+    - .ai/**
+    - PROJECT_CONTEXT.md
+    - ARCHITECTURE.md
+    - .githooks/pre-push
+    - .githooks/install.ps1
+    - .githooks/test_pre_push_logic.ps1
+    - .githooks/.gitattributes
+  deletion_authorized: false
+  move_or_rename_authorized: false
+  master_publication_authorized: false
+
+step_1_rewrite:
+  goal: >-
+    让未来会保留的根级文件停止把旧 OS 当成启动、通讯、状态、任务、角色或导航事实源；
+    在当前过渡期明确 01_os/** 是活动 OS。
+  source_of_truth:
+    - physical Git state at current master/base
+    - current Human instruction
+    - 01_os/README.md
+    - 01_os/开发入口与单窗口任务规范_v1.md
+    - directly relevant active 01_os canonical/registry files
+    - current repository publication authority only where new OS has not yet migrated it
+  rewrite_rules:
+    AGENTS.md:
+      preserve:
+        - provider-neutral backend working rules
+        - Engineering Design Principles
+        - Git safety/publication transport discipline
+        - evidence/test/review expectations
+      remove_or_replace:
+        - 06_Silicon_Index bootstrap startup
+        - .ai TOKEN/load-profile/protocol/state/mailbox startup dependencies
+        - old communication workflow assumptions
+      desired_startup: >-
+        fresh remote master SHA -> root working discipline and AGENTS/current task -> 01_os entry when OS work is triggered -> task-specific canonical refs only.
+    AGENT_WORKING_DISCIPLINE.md:
+      preserve:
+        - land durable output
+        - bounded tool output
+        - verify physical state before claims/actions
+        - evidence/claim boundary
+        - irreversible action discipline
+        - honest durable memory
+        - role separation and independent review principles that remain valid
+      remove_or_replace:
+        - old .ai protocol/mailbox/lane dependencies
+        - obsolete provider-specific role ownership presented as permanent architecture
+        - old OS directory routing
+      requirement: >-
+        absorb only still-useful token/context principles needed globally so deletion of old token-profile files does not lose essential discipline.
+    GEMINI.md:
+      purpose: thin Gemini/Antigravity root router only
+      preserve:
+        - verified Antigravity root rule-loading facts that remain useful
+      replace:
+        - old bootstrap/load-profile routing with root discipline + AGENTS + current task + active 01_os entry
+    CLAUDE.md:
+      purpose: thin Claude Code root router only
+      replace:
+        - old seven-field mailbox/load-profile/token protocol routing with root discipline + AGENTS + current task + active 01_os entry
+    README.md:
+      purpose: Human/AI repository root entry
+      requirement:
+        - declare 01_os/** as the sole active OS during transition
+        - state that legacy material outside the retained global surface is not an active OS source
+        - route readers to current new-OS entrypoints
+        - do not preserve old City-State folder tour as current architecture
+    CORE_MANIFEST.yml:
+      purpose: retain core/domain ownership function without falsely treating legacy OS as active architecture
+      requirements:
+        - remain truthful to the physical repository during transition
+        - distinguish retained global infrastructure, active 01_os core surface, domain-owned surface, and legacy paths pending Human retirement
+        - legacy path listings are descriptive retirement inventory, not operational dependencies
+        - do not claim already-deleted/moved state before Human performs it
+        - preserve any machine-compatible keys needed by current consumers unless primary evidence proves they can change safely
+    .githooks/README.md:
+      purpose: document retained Git guard infrastructure
+      requirement:
+        - describe current non-fast-forward and Human master gate accurately
+        - point to current transport/publication authority sources where useful
+        - remove wording that depends on the old OS architecture
+  non_goals:
+    - do not migrate REPOSITORY_PUBLISHER_AUTHORITY in this task
+    - do not relocate .ai/PROGRAM_RUNS in this task
+    - do not rewrite PROJECT_CONTEXT.md or ARCHITECTURE.md
+    - do not rewrite 01_os paths for the future root move
+    - do not create compatibility shims for the old OS
+
+step_2_dependency_inventory:
+  prerequisite: step_1 rewritten files committed or otherwise frozen as exact bytes on this work branch
+  goal: >-
+    从改写后的保留文件和 retained .githooks infrastructure 出发，统计 01_os/** 之外所有直接、
+    传递或外部约定式关联文件，并按“必须保留 / 必须迁移后才能删 / 可删除 / 需 Human 裁决”分类。
+  exclude_from_itemized_retention_decision:
+    - 01_os/**
+  include_dependency_types:
+    - explicit repository-relative path reference
+    - canonical authority reference
+    - loader/router reference
+    - external-tool conventional load dependency
+    - machine schema/validator dependency
+    - Git hook support dependency
+    - ownership/manifest dependency
+  distinguish_non_dependencies:
+    - historical incident examples
+    - legacy retirement inventory entries
+    - prose mentioning an obsolete path only to say it is obsolete
+    - superseded compatibility examples
+  required_classifications:
+    retain_non_08:
+      meaning: must remain after old OS physical deletion
+    migrate_then_delete_source:
+      meaning: capability/data-root semantics still required but current source path is under legacy surface
+    delete_candidate:
+      meaning: no active dependency remains after step_1 rewrite
+    Human_decision_required:
+      meaning: evidence does not establish whether the artifact should survive
+  expected_known_questions_to_resolve_from_primary_evidence:
+    - whether .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml remains a live temporary dependency
+    - whether .ai/PROGRAM_RUNS/** remains a live new-OS path dependency
+    - whether PROJECT_CONTEXT.md and ARCHITECTURE.md are referenced after rewrite
+    - whether any old .ai protocol/state/load-profile/lane/compliance file remains live after rewrite
+    - whether any legacy root document is still operationally referenced
+  inventory_file_fields:
+    - path_or_glob
+    - classification
+    - dependency_type
+    - referenced_by
+    - why_needed_or_why_not
+    - migration_target_if_required
+    - evidence_ref
+    - confidence
+  dependency_edge_fields:
+    - from_path
+    - to_path
+    - edge_type
+    - active_after_rewrite
+    - evidence
+  final_summary_must_state:
+    - exact root/global files proposed to retain
+    - exact non_08 linked files/globs proposed to retain
+    - exact migrate-before-delete items
+    - delete candidates observed but not deleted
+    - unresolved Human decisions
+    - confirmation that 01_os/** was excluded from itemized retention decision
+
+quality_bar:
+  - Rewrite for the new OS target, not for backward compatibility with the old OS.
+  - Do not invent future post-move root paths; use current active 01_os paths until the later move task.
+  - No old OS file may remain referenced merely because it existed before.
+  - Conversely, do not remove a live dependency without identifying where its required capability will migrate.
+  - Root retained files should be concise and non-duplicative: routers point; canonical mechanisms define.
+  - CORE_MANIFEST must not become a false picture of the current physical tree.
+  - Dependency inventory must come from rewritten bytes and physical repository evidence, not from the pre-rewrite assumptions in this task packet.
+
+validation:
+  required:
+    - verify work branch descends from exact base master
+    - exact changed-path ledger against allowed_write_paths
+    - all rewritten Markdown/YAML parse or structural checks applicable to their format
+    - search rewritten retained files for old startup/communication paths and explain every remaining hit
+    - verify every active non-08 reference in rewritten files resolves physically at candidate head
+    - verify PROJECT_CONTEXT.md and ARCHITECTURE.md are not required by rewritten retained files unless explicitly returned as a finding
+    - verify no .ai protocol/state/load-profile/lane/compliance dependency survives accidentally
+    - verify .githooks executable files are byte-identical to base
+    - verify no 01_os canonical/registry/dev file changed except this run evidence subtree
+  report_executor_evidence_separately_from_claims: true
+
+Git_policy:
+  one_task: true
+  one_branch: true
+  ordinary_commits_only: true
+  no_merge: true
+  no_rebase: true
+  no_cherry_pick: true
+  no_amend: true
+  no_squash: true
+  no_force_push: true
+  explicit_staging_only: true
+  push_work_branch: authorized
+  push_master: prohibited
+
+completion:
+  expected_status: ready_for_independent_review
+  Human_deletion_gate: not_opened
+  next_responsibility: ChatGPT_independent_review

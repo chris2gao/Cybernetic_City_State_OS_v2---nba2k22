@@ -1,0 +1,78 @@
+schema_version: citystate.run.v1
+run_id: run-20260810-旧OS退役前迁移与最终白名单-001
+task_id: os-v2-pre-deletion-migration-final-whitelist-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+
+base:
+  physical_master: eb4be95a25cb4b0929def284a7fb4b6a412aed55
+  accepted_predecessor_head: c932eafb53881ae32d5dd926391bb1d23e7fdade
+branch: dev/os-v2-pre-deletion-migration-final-whitelist-001
+
+ownership: core
+purpose: >-
+  Move every load-bearing dependency off the retiring surface, settle the ownership
+  questions the predecessor left open, and produce a final non-08 whitelist and a
+  final direct-delete list that a mechanical deletion task can consume without
+  re-adjudicating anything.
+
+status: accepted_ready_for_mechanical_deletion
+review_state: independently_accepted_after_one_correction
+correction_round_1:
+  review_ref: 09_独立复核/ChatGPT独立复核_v1.yml @ 79be7b073b1d298cdbdd086994543a5035ba62c6
+  blocking_finding: R1_M3_active_dev_files_wrongly_excluded - upheld_and_closed
+  scope: >-
+    four current 01_os/_dev documents, the closure scanner's status rule, the
+    restored validator ownership-text check, CORE_MANIFEST transition truth, and
+    this run's own records. No change to the delete list, the whitelist, the 453,
+    or the tracked tree.
+  scope_extension_recorded: 04_验证/allowlist_amended_v1.yml
+final_review:
+  ref: 09_独立复核/ChatGPT独立复审_v2.yml
+  commit: d4ce7605979f8bf637b3224483cd55e9f7480f60
+  verdict: PASS
+  reviewed_executor_head: d7126c7ff06f763a42fbc98b2f3628bbd7aeea69
+
+outputs:
+  - 02_迁移/token_profile_legacy_measurements/**
+  - 03_最终清单/最终非08白名单_v1.yml
+  - 03_最终清单/最终直接删除清单_v1.yml
+  - 03_最终清单/迁移闭包验证_v1.yml
+  - 04_验证/build_final_lists.py
+  - 04_验证/verify_migration_closure.py
+  - 04_验证/本地未上传文件盘点_v1.yml
+  - 08_结论/执行报告_v1.yml
+  - 09_独立复核/ChatGPT独立复审_v2.yml
+
+migrations:
+  M1: .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml -> 01_os/05_registry/repository_publisher_authority_v1.yml
+  M2: .ai/TOKEN_USAGE_PROFILE.md - last active pointer removed, no new canonical copy
+  M3: .ai/PROGRAM_RUNS/ -> 01_os/07_content/_runs/
+  M4: 系统机制总结.md -> 01_os/03_mechanisms/context_management/依据材料/系统机制总结_历史输入_v1.md
+  M5: .ai/token_profile/** -> 02_迁移/token_profile_legacy_measurements/ (evidence only)
+
+validation:
+  context_management_validator: PASS with the new domain runtime root
+  repository_default_checks: 4/4 passed
+  migration_closure: PASS, 0 active dependency hits on any migrated-from path with current _dev included
+  final_partition: 505 non-08 files, 490 exact delete, 6 retain, 9 deferred, 0 unassigned, 0 overlap, no 01_os path in delete list
+  independently_reproduced: reviewed_primary_files_and_correction_scope
+
+physical_actions:
+  deletions: 0
+  moves_or_renames: 0
+  master_publication: none
+
+lifecycle:
+  retain: true
+  reason: >-
+    This run is the input to the physical deletion task and the record of what each
+    migration moved and why. It has to stay checkable after the deletion runs.
+  runtime_dir_tracked: false
+
+human_gate:
+  deletion: open_for_exact_490_list_only
+  exact_delete_list: 03_最终清单/最终直接删除清单_v1.yml
+  exact_delete_list_blob: 162f59cbd101cbfa8a725981f835762ae829aafe
+  additional_paths: prohibited
+  01_os_deletion: prohibited
+  master_publication: not_requested

@@ -1,0 +1,69 @@
+schema_version: citystate.communication_system.supplementary_experiment_receipt.v1
+artifact_id: supplementary-antigravity-communication-result-001
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+status: accepted_as_supplementary_project_evidence
+recorded_at: 2026-08-05T20:14:00-07:00
+
+experiment:
+  packet_ref: 02_信息收集与提炼/多模型实验包_v1.yml
+  classification: cross_model_protocol_comprehension_experiment
+  Deep_Research: false
+  required_for_stage_02_completion: false
+  execution_trigger: Human_voluntary_manual_relay
+
+result:
+  path: 02_信息收集与提炼/antigravity_desktop_executor_01_result.yml
+  blob_sha: c287304a3e0876070d54aa3a710c85f924e73898
+  endpoint_id: antigravity-desktop-executor-01
+  model_or_product: gemini-2.5-pro
+  model_family: Gemini
+  environment_class: desktop_local_model
+  Human_reported_commit_and_push_success: true
+  physical_remote_readback: passed
+  branch_delta_from_previous_planner_head:
+    previous_head: 30730d1bca9e3e8fba7568da8f0b6be8c73de60e
+    ahead_by: 1
+    behind_by: 0
+    changed_paths:
+      - 01_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼/antigravity_desktop_executor_01_result.yml
+
+acceptance_check:
+  endpoint_and_model_identified: true
+  required_shape_semantically_satisfied: true
+  all_fixtures_answered: true
+  independence_overclaim_absent: true
+  exact_result_path_returned_by_Human: true
+  verdict: accepted
+
+observed_results:
+  semantic_recovery:
+    F1_minimal_yaml: complete
+    F2_compact_json: complete
+    F3_free_text: complete_with_machine_parsing_ambiguity
+    F4_long_content_reference: complete
+  direct_reference_loading:
+    result: supported_in_this_endpoint
+    behavior: read_only_explicit_ref_and_do_not_scan_or_recurse_by_default
+  structured_vs_free_text:
+    result: structured_index_reduced_machine_parsing_ambiguity
+
+non_binding_endpoint_opinions:
+  - preferred_format_F1_yaml
+  - title_can_be_removed
+  - timestamp_is_missing_and_material
+  - explicit_protocol_version_is_missing_and_material
+  rule: these_are_single_endpoint_observations_not_requirement_changes
+
+limitations:
+  - one_endpoint_only
+  - one_Gemini_family_result_only
+  - self_declared_model_identity
+  - no_transport_security_or_cross_channel_delivery_test
+  - cannot_freeze_final_format_or_fields
+
+use_in_later_stages:
+  may_inform_B: true
+  may_inform_frozen_tests: true
+  may_replace_external_Deep_Research: false
+  may_by_itself_complete_stage_02: false

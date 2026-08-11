@@ -1,0 +1,139 @@
+schema_version: citystate.review_outcome_and_human_override.v1
+review_id: task-discipline-tooling-independent-review-001
+task_id: os-v2-task-discipline-tooling-001
+run_id: run-20260809-任务纪律工具-001
+
+why_this_file_exists: >-
+  独立复核结论 REJECT_CORRECTION_REQUIRED，而 Human 决定覆盖该结论并合并 master。
+  这个组合必须留在仓库里而不是只留在聊天里：master 上从此存在一套被独立复核否决过、
+  由 Human 明示放行的工具。后来的读者有权知道这一点，以及否决的具体理由。
+
+independent_review:
+  verdict: REJECT_CORRECTION_REQUIRED
+  reviewer_context: 隔离重建的审查克隆，未提交、未推送、未修改 master
+  reviewer_conclusion_file_location: 仅存在于复核者的隔离克隆，未进入本仓
+  reviewer_conclusion_not_in_repository: true
+  reviewer_reported_usage: 317665 tokens / 约 13 分 28 秒
+  question_results:
+    PASS: [Q1, Q6, Q8]
+    PASS_WITH_NOTE: [Q5]
+    FAIL: [Q2, Q3, Q4, Q7]
+  reviewer_independently_confirmed_positives:
+  - 33 项单测通过
+  - quiet_verify checks 4/4
+  - 13 条变更路径均在 allowlist 内
+  - 规范第 1.2 节的 4720→3599 与 113→45 按 CRLF 口径可复现
+  - 所有 run YAML 可解析
+
+executor_reproduction_note: >-
+  执行者未照单接受也未照单驳回，而是自己写探针复现。四条行为类 finding 全部成立。
+  复现脚本为临时产物，不入库；下列为观察到的实际输出。
+executor_reproduction_of_findings:
+- finding_id: F1
+  title: path_ledger 漏报 rename 的旧路径
+  probe: 临时仓中 git mv outside_allowlist.txt inside/renamed.txt 后跨提交比对
+  observed: committed_paths 只返回 ['inside/renamed.txt']，旧路径不出现
+  impact: 把 allowlist 外的文件搬入允许目录时，账本会报告"全部合规"（假阴性）
+  root_cause: git diff --name-only 默认启用改名检测
+  known_fix: 为该 diff 加 --no-renames，使改名呈现为 delete + add 两条
+  confirmed: true
+- finding_id: F2
+  title: preflight --no-remote 未核验 master 仍输出 preflight ok
+  observed: master_unchanged 为 None 时不计入 hard_failures，摘要行仍打印 ok
+  impact: 工具层面把"未读取"呈现为"已通过"，与"未验证不宣告成功"直接冲突
+  known_fix: 区分 verified / not_read 三态，未核验时不得渲染 ok，或要求显式接受标志
+  confirmed: true
+- finding_id: F3
+  title: YAML 1.1 裸 yes/on 会开门
+  observed: 'true→open, yes→open, on→open, ''true''(字符串)→not open, 1→not open'
+  impact: 授权门的松紧不一致；字符串 'true' 被拒而 yes 被接受
+  known_fix: 除 value is True 外，另行校验原始标量字面量为 true
+  confirmed: true
+- finding_id: F4
+  title: 失败检查的输出只按行封顶，不按字符
+  observed: 单行 300000 字符的失败输出，tail=20 下原样返回 300000 字符
+  impact: 以"封顶输出"为唯一卖点的工具在失败路径上不封顶
+  known_fix: 在行截断之后再加字符上限
+  confirmed: true
+- finding_id: F5
+  title: registry 的 tools_never_write_repository_content 为不实声明
+  observed: 自定义 check 成功在目标目录创建了文件
+  impact: 机器契约里的一句假话
+  action_taken_before_merge: 已改为事实描述（见本次提交）
+  confirmed: true
+- finding_id: F6
+  title: 派单绑定过期
+  observed: 派单声明候选 c0c0024e，实际远端头为 69cbfa4e，blob 绑定随之不符
+  cause: 执行者在生成派单后又推了一次 YAML 修复提交，未重新生成绑定
+  assessment: 纯流程缺陷，与实现无关；执行者与 Human 判断一致
+  confirmed: true
+
+executor_recommendation:
+  recommendation: 先返修再合并
+  argued: >-
+    F1 与 F2 是假阴性：一个会漏报路径的账本、一个不查就说 ok 的预检。
+    这套工具的全部价值主张是"别让声明宽于证据"，带着这两条合入 master
+    等于把它要消灭的失败模式制度化，而且后续每个任务都会引用它。
+  estimated_fix_size: 五处局部改动，均为一行到十行量级
+  recommendation_accepted: false
+
+Human_decision_sequence:
+- step: 1
+  decision: 接受当前版本并合并 master
+  reasoning: 主要实现无问题，其余属细节与流程问题
+  executor_conditions_applied_first:
+  - 四条已确认缺陷写成显式已知问题留在仓库
+  - registry 与 README 中"工具绝不写入仓库内容"的不实声明改正为事实描述
+  outcome: 已执行文档条件；行为代码未改
+- step: 2
+  event: master 推送被 .githooks/pre-push 守卫拒绝
+  guard_message: >-
+    BLOCKED push to refs/heads/master without authorization.
+    master moves only after independent audit and a human gate.
+  executor_action: 停止并回报，未设置 CITYSTATE_ALLOW_MASTER
+  executor_reasoning: >-
+    守卫写明的前提是"独立审计通过 + 人类门"。人类门有，审计是 REJECT，
+    两个前提只满足一个。绕过守卫是与"合并"不同的第二个动作，需要单独授权。
+  nothing_was_sent: true
+  master_head_after: c7a508abbcda58361fc9b649236d44b706e0bdd4
+- step: 3
+  decision: 先修 F1 与 F2 再谈推送
+  reasoning: 采纳执行者关于两个假阴性缺陷的意见
+  outcome: F1、F2 已修并补回归测试；F3、F4 暂留
+- step: 4
+  question: 主要实现完成没？修流程不如修实现
+  executor_answer: >-
+    F3 与 F4 同样是实现缺陷而非流程问题——yes 能开授权门是判定逻辑，
+    输出不按字符封顶是截断逻辑。执行者接受"重生成派单属流程开销"的批评，
+    转而直接修完剩余两条。
+  outcome: F3、F4 已修；四条行为缺陷全部关闭；测试 33 → 51
+
+post_fix_probe_rerun:
+  note: 用发现缺陷时的同一批探针复验，非新写的成功用例
+  F1: committed_paths 现返回 ['inside/renamed.txt', 'outside_allowlist.txt']，旧路径出现
+  F2: --no-remote 现 exit 1 且渲染 BLOCKED；显式接受时渲染 ok WITH UNVERIFIED MASTER
+  F3: 'true→open；yes→not open；on→not open；''true''→not open；1→not open'
+  F4: 单行 300000 字符的失败输出，tail 从 300000 降到 4034 并标注丢弃字符数
+
+state_of_record:
+  independent_review_passed: false
+  second_review_dispatched: true
+  merged_to_master: false
+  master_head: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  guard_never_bypassed: true
+  defects_fixed: [F1, F2, F3, F4]
+  defects_still_open: []
+  defects_are_documented_in:
+  - 01_os/06_execution/task_discipline/README.md
+  - 01_os/05_registry/task_discipline_v1.yml
+  - 本文件
+
+remaining_scope:
+  status: 无待修实现项；仅剩第二轮独立复核
+  items: []
+  reviewer_rule: >-
+    必须由未参与编写的新窗口复核，且不得由本次复核者沿用旧结论。
+    第二轮复核应针对本轮 F1/F2 修复重新设计破坏用例，不得复用第一轮的判定。
+  note: >-
+    在该任务完成前，任何引用这三个工具作为验收证据的报告，都必须同时引用本文件，
+    否则那份报告的证据强度会被高估。

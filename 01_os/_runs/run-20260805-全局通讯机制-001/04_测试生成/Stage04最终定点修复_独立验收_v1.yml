@@ -1,0 +1,152 @@
+schema_version: citystate.communication_system.stage04_final_targeted_correction_review.v1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+review_status: rejected_correction_required
+stage_04_freeze_allowed: false
+stage_05_allowed: false
+
+remote_verification:
+  master_head: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  master_unchanged: true
+  branch: dev/os-v2-global-communication-system-001
+  reviewed_remote_head: 169ab2bb9038908362399d47713c7cd750b7b227
+  implementation_commit: 289db6fcfafb911718dacf9209a58745ad753157
+  result_commit: 169ab2bb9038908362399d47713c7cd750b7b227
+  implementation_to_result_linear: true
+  result_commit_changes_results_only: true
+  implementation_bytes_changed_after_testing: false
+
+accepted_partial_work:
+  - implementation and persisted-result commits are separated and linear
+  - all three persisted result files bind tested_commit to 289db6fcfafb911718dacf9209a58745ad753157
+  - verify_specs no longer unconditionally returns true and now compares runner ids/failure_codes against the five spec files
+  - prior mutated_GC-Txxx exception echo was removed from the primary runner
+  - master remains unchanged
+
+blocking_findings:
+  - finding_id: S04-FINAL-F01
+    severity: critical
+    statement: correction introduced files outside the exact execution write allowlist
+    evidence:
+      unexpected_paths:
+        - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/cases.json
+        - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/generate_cases.py
+        - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/write_runner_v6.py
+      allowed_execution_roots:
+        - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/**
+        - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/fixtures/**
+        - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/results/**
+    implication: exact-path publication discipline was violated and generated helper artifacts remain in the stage root
+
+  - finding_id: S04-FINAL-F02
+    severity: critical
+    statement: persisted preimplementation baseline was not produced in the required baseline mode
+    evidence:
+      path: 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/results/preimplementation_baseline_v3.yml
+      recorded_run_mode: full
+      recorded_command: run_stage04_executable_tests.py --repo-root . --mode full --adapter production --replace
+      required_mode: preimplementation-baseline
+      observed_counts:
+        PASS: 0
+        EXPECTED_FAIL: 50
+        FAIL: 0
+        ERROR: 0
+        BLOCKED_EXTERNAL: 0
+        exit_code: 0
+      runner_behavior: production EXPECTED_FAIL mapping is keyed to adapter identity and EXPECTED_FAIL_STAGE06 rather than being restricted to preimplementation-baseline mode
+    implication: the claimed baseline gate is not the required execution and full-mode missing-capability semantics are diluted
+
+  - finding_id: S04-FINAL-F03
+    severity: critical
+    statement: GC-T031 through GC-T034 still do not execute the frozen real Git oracles
+    evidence:
+      fixture_shape: '{scenario: GC-T03x, mutated: boolean}'
+      action: adapter.run_git_scenario(fix_data)
+      adapter_behavior:
+        GC-T031: mutated_boolean_directly_raises_Git_convergence_failed
+        GC-T032: mutated_boolean_directly_raises_Disjoint_sender_convergence_failed
+        GC-T033: mutated_boolean_directly_raises_Same_path_conflict_detected
+        GC-T034: mutated_boolean_directly_raises_Non_fast_forward_push_rejected
+      absent_required_evidence:
+        - temporary_git_repository_creation
+        - local_bare_remote
+        - actual_fetch_fast_forward_or_push
+        - actual_same_path_conflict_path_observation
+        - actual_non_fast_forward_rejection
+        - force_flag_command_trace
+        - automatic_retry_absence_trace
+    implication: 50-of-50 synthetic success does not prove Git convergence, conflict, or non-fast-forward semantics
+
+  - finding_id: S04-FINAL-F04
+    severity: critical
+    statement: GC-T050 still does not read or score the frozen multi-model experiment packet
+    evidence:
+      fixture_shape: '{cross_model: true, mutated: boolean}'
+      action: adapter.score_cross_model(fix_data)
+      adapter_behavior: mutated_boolean_directly_raises_Cross_model_semantic_recovery_failed
+      absent_required_scoring:
+        - task_id
+        - sender_endpoint_id
+        - expected_recipient_endpoint_id
+        - message_type_and_purpose
+        - authority_interpretation
+        - requested_action_when_applicable
+        - exact_required_refs_set
+      frozen_packet_and_model_result_reads_in_oracle: absent
+    implication: GC-T050 is still a synthetic flag test and does not prove cross-family semantic recovery
+
+  - finding_id: S04-FINAL-F05
+    severity: high
+    statement: GC-T006 does not satisfy the required distinct anchor alias and merge-key subcases
+    evidence:
+      mutation_fixture: 'anchor: &A value plus alias: *A'
+      distinct_merge_key_mutation_in_primary_case: absent
+      required: anchor_alias_and_merge_key_exercised_as_distinct_subcases
+    implication: the explicit safe-YAML merge-key requirement remains unproven
+
+  - finding_id: S04-FINAL-F06
+    severity: critical
+    statement: wrong-mutation harness no longer proves rejection of the wrong business mutation
+    evidence:
+      behavior: current case action is applied to the next case mutation fixture
+      only_failure_assertion: fail only if evaluator raises the current case exact frozen failure_code
+      missing_assertion: evaluator_must_raise_or_otherwise_reject_wrong_mutation
+      silent_evaluator_return: passes_the_test
+    implication: a diluted evaluator that ignores wrong mutations can satisfy the harness
+
+  - finding_id: S04-FINAL-F07
+    severity: critical
+    statement: multiple non-Git semantic cases remain direct sentinel-to-error synthetic stubs instead of frozen state observations
+    evidence_examples:
+      GC-T039: archive_task checks task_id == GC-T039 and mutated then directly raises Whole task archive failed
+      GC-T040: archive_task checks task_id == GC-T040 and mutated then directly raises Private runtime leaked to archive
+      GC-T050: score_cross_model checks cross_model and mutated then directly raises fixed error text
+    implication: removal of test-id exception echo did not yet establish executable archive/state/scoring semantics
+
+  - finding_id: S04-FINAL-F08
+    severity: high
+    statement: verify_specs does not complete the requested three-way frozen binding
+    evidence:
+      implemented_checks:
+        - five spec files contain 50 unique sequential ids
+        - runner test_id to failure_code map equals spec map
+      missing_check:
+        - frozen candidate test_id and failure_code map equals the five specs and runner
+    implication: startup validation can miss candidate-to-spec drift
+
+required_next_actions:
+  - delete the three out-of-allowlist stage-root generator/helper artifacts in an ordinary new commit
+  - implement actual temporary-repository Git scenarios for GC-T031 through GC-T034
+  - implement GC-T050 by reading the frozen experiment packet and both frozen model-result files and scoring every required field plus exact required_refs sets
+  - implement distinct GC-T006 anchor alias and merge-key executions
+  - replace remaining sentinel-to-fixed-error stubs with concrete state/result observations for archive routing navigation authority publication and related cases
+  - strengthen wrong-mutation harness so every case proves the wrong mutation is actively rejected without mapping to the current frozen failure_code
+  - extend verify_specs to compare frozen candidate ids/failure_codes as well as specs and runner
+  - run the production baseline using the exact preimplementation-baseline mode and restrict EXPECTED_FAIL_STAGE06 handling to that mode only
+  - rerun all required validators and preserve implementation/result commit separation
+
+stage_decision:
+  freeze_candidate: prohibited
+  enter_stage_05: prohibited
+  Human_action_required_now: none
+  next_action: same_task_same_branch_targeted_correction

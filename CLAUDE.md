@@ -12,12 +12,12 @@ Read in this order:
    publication discipline.
 4. The current task packet: objective, exact base SHA, allowed paths,
    prohibitions, tests, completion pointer.
-5. `08_os/README.md` and `08_os/开发入口与单窗口任务规范_v1.md` — when the task
+5. `01_os/README.md` and `01_os/开发入口与单窗口任务规范_v1.md` — when the task
    touches the OS. That entry defines the single-window rules, file placement,
    registry, run evidence, publication transport gates and the Human gate.
 6. Only the canonical files the task actually names.
 
-`08_os/**` is the active OS. Material elsewhere in this repository is either
+`01_os/**` is the active OS. Material elsewhere in this repository is either
 retained global infrastructure — this file, `AGENTS.md`,
 `AGENT_WORKING_DISCIPLINE.md`, `GEMINI.md`, `README.md`, `CORE_MANIFEST.yml`,
 `.githooks/` — or legacy awaiting Human retirement. Legacy paths are not a
@@ -31,6 +31,6 @@ Protected actions still require Human authority: publishing to `master`,
 destructive Git, history rewriting, runtime or scheduler activation, secrets, and
 objective changes. `core` history is never rewritten. Which transport must prove
 what before publishing is section 1.1 of
-`08_os/开发入口与单窗口任务规范_v1.md`; who may publish at all is
-`08_os/05_registry/repository_publisher_authority_v1.yml`. Never read or expose credentials or key
+`01_os/开发入口与单窗口任务规范_v1.md`; who may publish at all is
+`01_os/05_registry/repository_publisher_authority_v1.yml`. Never read or expose credentials or key
 files.

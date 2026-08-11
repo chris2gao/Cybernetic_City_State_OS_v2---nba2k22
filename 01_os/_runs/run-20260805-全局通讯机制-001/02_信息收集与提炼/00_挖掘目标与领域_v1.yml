@@ -1,0 +1,106 @@
+schema_version: citystate.stage02.research_scope.v1
+artifact_id: global-communication-stage02-scope-001
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+requirement_ref:
+  path: 01_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/A_需求建模_v2.yml
+  blob_sha: e91f32b54224d6048df25cca080a259db380911f
+status: ready_for_independent_external_research
+
+mining_goal:
+  supports_feasibility: >-
+    找到可复查的外部事实、标准、工程经验和失败案例，证明或限制一种由 Human 手动触发与中转、
+    以轻量消息索引指向本地或 GitHub 长文档、跨本地模型与 Web 模型工作的通讯机制是否可行。
+  challenges_feasibility: >-
+    找到会使上述机制无法保持信息完整、事实准确、高密度、低上下文成本、可清理、可审计或
+    权限边界清晰的反例、失效模式和不可兼容约束。
+
+research_questions:
+  - id: RQ-01
+    type: 开放发现
+    question: >-
+      在 Human 监督、无自动轮询和无自动投递的条件下，跨本地与 Web AI 端点交换任务信息，
+      已知有哪些可复用的通讯模式、上下文压缩模式、文件/产物交接模式与失败模式？
+    purpose: 约束B的总体拓扑、消息与长文档分离以及Human中转模型
+    capture_unit: distinct_communication_or_handoff_pattern
+    stop_condition: 再增加一种模式不会改变B或测试结构
+  - id: RQ-02
+    type: 定向核实
+    question: >-
+      将短消息限制为身份、目标、类型、标题和精确路径，并把长内容放在独立文档中，
+      是否有证据表明能降低上下文负担，同时维持或提高信息完整性和准确性？
+    purpose: 检验轻量索引消息这一承重假设
+    capture_unit: null
+    stop_condition: 关键主张获得独立来源支持、限制或明确未决
+  - id: RQ-03
+    type: 定向核实
+    question: >-
+      只加载直接消息和明确引用、禁止默认递归展开全部历史，在哪些条件下有利，
+      又会在哪些条件下造成遗漏、错误决策或上下文断裂？
+    purpose: 约束按需加载、required refs和发送方上下文责任
+    capture_unit: null
+    stop_condition: 正反证据及适用边界足以生成测试
+  - id: RQ-04
+    type: 开放发现
+    question: >-
+      Human 手动中转与发送方预期目标、Human实际路由之间，常见的身份、寻址、权限、隐私、
+      过期指针、错误接收者和责任归因失败有哪些？
+    purpose: 约束endpoint identity、expected recipient、Human authority与失败处理
+    capture_unit: distinct_failure_mode
+    stop_condition: 新失效模式不再改变字段、边界或测试类别
+  - id: RQ-05
+    type: 定向核实
+    question: >-
+      一个task一个独立通讯空间、固定durable/runtime目录、任务结束后Human触发整区清理，
+      对高内聚、低耦合、可追溯与隐私管理有哪些已知收益和风险？
+    purpose: 约束目录与生命周期模型
+    capture_unit: null
+    stop_condition: 目录隔离与清理风险获得足够工程证据或明确未决
+  - id: RQ-06
+    type: 定向核实
+    question: >-
+      对跨模型文本通讯而言，YAML、JSON、Markdown加机器头部等格式的选择，
+      是否存在跨模型普遍最优结论；还是应优先根据完整性、可读性、解析稳定性和维护成本选择？
+    purpose: 防止以单一tokenizer或字节数替代整体通讯质量
+    capture_unit: null
+    stop_condition: 能明确哪些结论可泛化、哪些必须由项目实验决定
+
+research_domains:
+  - domain: agent_and_model_interoperability_standards
+    why_relevant: 提供消息、产物、能力、身份、任务与资源分离的现有约束
+    question_refs: [RQ-01, RQ-02, RQ-03, RQ-04]
+  - domain: human_in_the_loop_workflows_and_manual_handoff
+    why_relevant: 直接覆盖Human中转、审批、路由偏差和责任边界
+    question_refs: [RQ-01, RQ-04]
+  - domain: context_engineering_and_information_retrieval
+    why_relevant: 评估按需加载、引用闭包、上下文压缩和遗漏风险
+    question_refs: [RQ-02, RQ-03, RQ-06]
+  - domain: distributed_systems_event_and_artifact_design
+    why_relevant: 提供不可变消息、可变索引、外置产物、陈旧引用与一致性经验
+    question_refs: [RQ-01, RQ-04, RQ-05]
+  - domain: filesystem_workspace_and_data_lifecycle
+    why_relevant: 评估固定目录、隔离、清理、跨平台路径与隐私
+    question_refs: [RQ-05]
+  - domain: structured_data_formats_for_llm_and_human_collaboration
+    why_relevant: 评估格式选择但不预设最低token即最佳
+    question_refs: [RQ-02, RQ-06]
+
+source_priority:
+  - authoritative_standards_and_protocol_specs
+  - peer_reviewed_or_primary_research
+  - official_engineering_documentation_and_repositories
+  - detailed_industry_postmortems_and_failure_reports
+  - practitioner_material_as_supplement
+
+time_scope:
+  preference: 2022-01-01_to_present_for_current_AI_systems
+  stable_foundational_material: allowed_without_time_limit
+  version_and_publication_date_required: true
+
+researcher_constraints:
+  repository_access_required: false
+  project_protocol_knowledge_required: false
+  recommend_single_best_solution: prohibited
+  distinguish_source_fact_and_researcher_inference: required
+  report_queries_empty_returns_truncations_and_inaccessible_sources: required
+  challenge_current_hypotheses: required

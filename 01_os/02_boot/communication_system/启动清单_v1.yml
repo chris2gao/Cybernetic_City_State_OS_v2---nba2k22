@@ -1,0 +1,23 @@
+schema_version: citystate.communication.boot_manifest.v1
+mechanism_version: 1
+load_order:
+  - 01_os/03_mechanisms/communication_system/通讯契约_v1.yml
+  - 01_os/03_mechanisms/communication_system/端点卡契约_v1.yml
+  - 01_os/03_mechanisms/communication_system/角色与权限边界_v1.yml
+  - 01_os/03_mechanisms/communication_system/消息契约_v1.yml
+  - 01_os/03_mechanisms/communication_system/发送方区与序号契约_v1.yml
+  - 01_os/03_mechanisms/communication_system/文档与引用契约_v1.yml
+  - 01_os/03_mechanisms/communication_system/载体与发布契约_v1.yml
+  - 01_os/03_mechanisms/communication_system/Git收敛契约_v1.yml
+  - 01_os/03_mechanisms/communication_system/导航与归档契约_v1.yml
+  - 01_os/03_mechanisms/communication_system/纠正与跨端一致性_v1.yml
+  - 01_os/05_registry/communication_system_v1.yml
+  - 01_os/06_execution/boot/communication_system/validator/validate_communication_system.py
+failure_behavior: fail_closed_without_fallback_or_implicit_history_scan
+invocation: explicit_Human_or_authorized_task_executor_only
+background_processes_started: false
+canonical_live_state_created_by_boot: false
+receipt_fields:
+  - mechanism_version
+  - actual_read_paths
+  - validator_exit_code

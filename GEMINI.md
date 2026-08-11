@@ -12,12 +12,12 @@ Read in this order:
 3. `AGENTS.md` — collaboration rules, engineering design principles, Git and
    publication discipline.
 4. The current task packet, plus only the files that task actually triggers.
-5. `08_os/README.md` and `08_os/开发入口与单窗口任务规范_v1.md` — when the task
+5. `01_os/README.md` and `01_os/开发入口与单窗口任务规范_v1.md` — when the task
    touches the OS.
 
-`08_os/**` is the active OS. The retained global surface is this file,
+`01_os/**` is the active OS. The retained global surface is this file,
 `AGENTS.md`, `AGENT_WORKING_DISCIPLINE.md`, `CLAUDE.md`, `README.md`,
-`CORE_MANIFEST.yml` and `.githooks/`. Everything else outside `08_os/**` is legacy
+`CORE_MANIFEST.yml` and `.githooks/`. Everything else outside `01_os/**` is legacy
 awaiting Human retirement: not a startup, communication, state or navigation
 source, and not to be loaded for background.
 
@@ -29,8 +29,8 @@ Protected actions still require Human authority: publishing to `master`,
 destructive Git, history rewriting, runtime or scheduler activation, secrets, and
 objective changes. `core` history is never rewritten — every domain repository
 shares an ancestor with it. Which transport must prove what before publishing is
-section 1.1 of `08_os/开发入口与单窗口任务规范_v1.md`; who may publish at all is
-`08_os/05_registry/repository_publisher_authority_v1.yml`.
+section 1.1 of `01_os/开发入口与单窗口任务规范_v1.md`; who may publish at all is
+`01_os/05_registry/repository_publisher_authority_v1.yml`.
 
 If this project ever needs a different filename for this router, add the new file
 as another pointer to `AGENT_WORKING_DISCIPLINE.md` rather than duplicating its

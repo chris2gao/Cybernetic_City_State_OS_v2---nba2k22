@@ -1,0 +1,67 @@
+schema_version: citystate.stage02.process_correction.v1
+correction_id: stage02-deep-research-routing-correction-001
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+created_at: 2026-08-05T19:46:00-07:00
+status: active
+
+trigger:
+  source: Human
+  finding: >-
+    Deep Research 必须由不了解仓库、也不使用本项目通讯协议的独立研究模型执行；
+    Human 将自包含研究任务文件交给独立模型，并把完整报告回存到派单指定路径。
+
+error:
+  withdrawn_instruction: >-
+    要求 Gemini Web 与 Claude Code 读取仓库内多模型实验包、理解分支和通讯协议，
+    再将结果保存到仓库路径。
+  classification: cross_model_protocol_usability_experiment_not_Deep_Research
+  why_invalid_for_stage02_Deep_Research:
+    - researcher_was_expected_to_know_repository
+    - researcher_was_expected_to_use_project_communication_protocol
+    - request_was_not_a_self_contained_research_question
+    - independent_parallel_search_contract_was_not_followed
+    - exact_external_upload_and_return_contract_was_incomplete
+
+withdrawal:
+  path: 02_信息收集与提炼/多模型实验包_v1.yml
+  status: withdrawn_not_to_be_sent
+  downstream_use: prohibited
+
+prior_artifacts_disposition:
+  02_信息收集与提炼/外部来源台账_v1.yml:
+    status: preliminary_planner_scan_only
+    stage_completion_evidence: false
+  02_信息收集与提炼/项目实验_v1.yml:
+    status: preliminary_internal_fixture_only
+    stage_completion_evidence: false
+  02_信息收集与提炼/证据包_v1.yml:
+    status: invalidated_as_stage02_evidence_package
+    stage_completion_evidence: false
+  reason: independent_Deep_Research_reports_not_yet_returned
+
+canonical_process_refs:
+  - 01_os/01_workflow/02_信息收集与提炼/README.md
+  - 01_os/01_workflow/02_信息收集与提炼/工具使用_DeepResearch与NotebookLM.md
+  - 01_os/01_workflow/02_信息收集与提炼/实现/执行清单_v1.md
+  - 01_os/01_workflow/02_信息收集与提炼/实现/证据包schema_v1.md
+
+corrected_route:
+  research_lanes:
+    - lane_id: ChatGPT_Deep_Research
+      independent: true
+      repository_knowledge_required: false
+      project_protocol_required: false
+    - lane_id: Gemini_Deep_Research
+      independent: true
+      repository_knowledge_required: false
+      project_protocol_required: false
+  same_self_contained_research_input: true
+  lanes_mutually_unaware: true
+  Human_transport: manual_file_upload_and_report_return
+  merge_and_overlap_analysis: performed_after_both_reports_return
+
+stage_state:
+  Deep_Research_completed: false
+  stage_02_completed: false
+  next_gate: Human_runs_both_independent_research_lanes_and_returns_exact_reports

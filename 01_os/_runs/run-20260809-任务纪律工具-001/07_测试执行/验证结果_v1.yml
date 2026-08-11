@@ -1,0 +1,127 @@
+schema_version: citystate.task_verification_result.v1
+task_id: os-v2-task-discipline-tooling-001
+run_id: run-20260809-任务纪律工具-001
+work_branch: dev/os-v2-task-discipline-tooling-001
+source_head: c7a508abbcda58361fc9b649236d44b706e0bdd4
+executor_role: backend_execution_and_handoff
+independent_verification_passed: false
+independent_verification_note: >-
+  本文件是执行者自检记录。作者设计自己产物的验证，按 AGENT_WORKING_DISCIPLINE.md
+  第 5 节属于已知失败模式；合并 master 前应由未参与编写的一方复核。
+
+environment:
+  os: Windows
+  shell: PowerShell
+  python: 3.14
+  git_config_applied_this_task:
+    scope_local: [core.quotepath=false, status.showUntrackedFiles=all, core.precomposeunicode=true]
+    scope_global: [core.quotepath=false, core.precomposeunicode=true]
+    git_info_exclude_appended: ['.pytest_cache/', '__pycache__/']
+    note: 这些是 .git 配置与本地排除，不进 Git，不随分支合并传播
+
+positive_results:
+- check: python -m pytest 01_os/06_execution/task_discipline -q
+  result: 33 passed
+  exit_code: 0
+- check: preflight --packet <本任务包> --allow-dirty
+  observed:
+    branch: dev/os-v2-task-discipline-tooling-001
+    local_head: c7a508abbcda58361fc9b649236d44b706e0bdd4
+    remote_master: c7a508abbcda58361fc9b649236d44b706e0bdd4
+    master_unchanged: true
+    head_descends_from_base: true
+    hooks_path: .githooks
+    dirty_paths: 11
+  exit_code: 0
+- check: quiet_verify（内置四项全局校验器）
+  result: checks 4/4 ok
+  detail:
+  - workflow_static exit=0
+  - context_structure exit=0
+  - no_canonical_live_state exit=0
+  - stage_deliberation_v2_static exit=0
+  exit_code: 0
+- check: path_ledger --base c7a508ab --packet <本任务包>
+  result: paths=11 allowlist=ok
+  exit_code: 0
+  note: 11 条全部为 UTF-8 原文路径；未跟踪目录已展开为文件而非目录条目
+
+negative_probes_purpose: >-
+  一个只在成功路径上跑过的校验器，等于没有证据。以下四条故意制造违规，
+  确认工具会拒绝而不是沉默通过。
+negative_probes:
+- probe: path_ledger 对一个刻意收窄的 allowlist（只允许 registry 一个文件）
+  expected: exit 1 并逐条列出越界路径
+  observed: exit 1，stderr 逐条打印 outside_allowlist
+  passed: true
+- probe: preflight 在脏工作区且不加 --allow-dirty
+  expected: exit 1，渲染 preflight BLOCKED
+  observed: exit 1，输出末行 "preflight       BLOCKED"
+  passed: true
+- probe: quiet_verify 注入一个必然失败的检查（退出码 7）
+  expected: exit 1，摘要显示 0/1，并展开尾部
+  observed: 输出 deliberate_fail exit=7 FAILED 与 checks 0/1 ok，exit 1
+  passed: true
+- probe: path_ledger 单元测试中的真 Git 临时仓
+  setup: 仓库故意配成 core.quotepath=true 且 status.showUntrackedFiles=normal
+  expected: 未跟踪目录仍被展开为逐个文件，中文路径不出现八进制转义
+  observed: 断言通过（test_untracked_dir_expands_and_keeps_utf8）
+  passed: true
+
+changed_paths:
+- 01_os/05_registry/task_discipline_v1.yml
+- 01_os/06_execution/README.md
+- 01_os/06_execution/task_discipline/README.md
+- 01_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py
+- 01_os/06_execution/task_discipline/path_ledger/test_changed_path_ledger.py
+- 01_os/06_execution/task_discipline/preflight/preflight_task_context.py
+- 01_os/06_execution/task_discipline/preflight/test_preflight_task_context.py
+- 01_os/06_execution/task_discipline/quiet_verify/quiet_verify.py
+- 01_os/06_execution/task_discipline/quiet_verify/test_quiet_verify.py
+- 01_os/_runs/run-20260809-任务纪律工具-001/01_任务输入/任务包_v1.yml
+- 01_os/开发入口与单窗口任务规范_v1.md
+changed_paths_source: path_ledger 自身输出，非手工维护
+changed_paths_within_allowlist: true
+
+scope_decisions:
+- decision: 把 01_os/06_execution/README.md 纳入本任务 allowlist
+  reason: >-
+    新增一个 06_execution area 必须同步该目录的 area 清单与"当前加载器"小节，
+    属于单窗口规范第 4 节 registry 同步义务，不是顺手修改。
+  boundary: 仅追加 task_discipline 条目，未改动该文件其他内容。
+
+not_done:
+- master 未修改，也未合并；合并属受保护发布，需合并时点的 Human 明确授权
+- .pytest_cache 目录权限异常未处理：已用 .git/info/exclude 消除 git 噪声，
+  但目录本身仍不可读，删除交给 Human
+- 未新增任何 watcher/scheduler/daemon
+
+limitations:
+- preflight 的 git 管道部分（ls-remote、merge-base、status）由本仓一次真实调用覆盖，
+  未做跨平台矩阵测试；纯函数部分由单元测试覆盖
+- quiet_verify 内置检查集硬编码四个既有校验器路径；这些路径变动时需同任务更新
+- 本记录中的 token 收益未给出数字，因为尚无同规模任务的实测对照
+
+executor_incident_log_note: >-
+  记录本任务内执行者自己犯的错。隐去它会让后面的读者以为过程是干净的。
+executor_incident_log:
+- incident: 运行了 YAML 解析检查却没有据其结果拦住提交
+  detail: >-
+    验证结果_v1.yml 与 独立复核派单_v1.yml 两处 YAML 结构错误
+    （在同一层混用 mapping 键与序列项；一处双引号标量后又跟了内容），
+    在提交脚本里已经打印了 ParserError，但脚本没有把它设为门，于是照常 commit 并 push。
+  commits_affected: [c0c0024e83314c1ae3dbe2b70f9959ba68f14ce1, ab1310d7f83086cd1a46823c37e895f402cafe85]
+  fixed_in: 后续提交
+  root_cause: 检查存在但不是门；"跑过"被当成了"通过"
+  systemic_note: >-
+    这正是本任务 quiet_verify 想解决的问题的另一面：光有检查不够，必须让退出码决定流程。
+    当前 quiet_verify 内置检查集不含 run 产物的 YAML 良构性检查，属已知缺口。
+- incident: 两次 PowerShell 单行命令引号错误
+  detail: 在 -Command 的双引号串里引用 $LASTEXITCODE，产生两屏 parser error
+  root_cause: 违反 AGENT_WORKING_DISCIPLINE.md 第 2 节"多语句写成 .ps1 文件再执行"
+  fixed_in: 之后全部改为 .ps1 文件执行
+
+follow_up_findings_not_fixed_in_this_task:
+- finding: quiet_verify 默认检查集应包含 run 目录 YAML 良构性检查
+  reason_not_fixed: 属新增能力，超出本任务已声明范围；按单窗口纪律记为 finding 而不扩 diff
+  suggested_owner: 下一个 task_discipline 任务

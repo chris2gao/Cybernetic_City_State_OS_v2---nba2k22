@@ -1,0 +1,462 @@
+schema_version: citystate.communication_system.result_model.v1
+artifact_id: B-global-communication-system-001
+artifact_version: 1
+status: first_principles_complete_pending_legacy_comparison
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+created_at: 2026-08-05T21:46:00-07:00
+
+input_refs:
+  requirement_model:
+    path: ../01_需求建模/A_需求建模_v2.yml
+    git_blob_sha: e91f32b54224d6048df25cca080a259db380911f
+  evidence_package:
+    path: ../02_信息收集与提炼/02_evidence.yml
+  candidate_analysis:
+    path: B_候选形态与裁决_v1.yml
+
+modeling_boundary:
+  legacy_dot_ai_protocol_used_as_design_input: false
+  provider_specific_protocol_concepts_frozen: false
+  v1_operating_boundary:
+    - low_to_moderate_message_volume
+    - Human_supervised_manual_relay
+    - one_task_per_communication_space
+    - local_files_or_current_task_GitHub_branch
+    - no_automatic_delivery_polling_or_state_progression
+
+result_id: global-communication-system-v1
+
+result_shape:
+  summary: >-
+    每个 task 拥有一个逻辑同构的通讯空间。模型将完整工作内容写入本地或 GitHub 的任务文件，
+    将跨模型消息写成不可变的极简 YAML 索引；Human 只在聊天中转发一个紧凑指针并决定实际接收模型。
+    接收方先加载 manifest、自己的 endpoint card、目标消息和消息显式 required_refs；默认不扫描目录、
+    不递归历史。消息不授予权限，越权动作必须引用独立 Human 授权。任务结束后由决策模型询问或
+    Human 主动触发固定 runtime 子树清理。
+
+  logical_roots:
+    local:
+      root: configured_machine_global_communication_root
+      task_root_pattern: <root>/<repository_id>/<task_id>/
+      absent_or_inaccessible_behavior: fail_closed_and_report_exact_missing_root
+    GitHub:
+      global_index: 01_os/_communication/index.yml
+      task_root_pattern: 01_os/_communication/tasks/<task_id>/
+      branch: current_task_work_branch
+      repository: current_business_repository
+    selection:
+      local_when: all_required_endpoints_share_the_configured_local_root
+      GitHub_when:
+        - any_required_endpoint_is_Web_only
+        - endpoints_are_on_different_machines
+        - durable_shared_repository_access_is_required
+      automatic_sync: false
+      Human_selects_carrier: true
+
+  task_directory:
+    manifest.yml: durable_task_entry
+    endpoints/: durable_endpoint_cards
+    index.yml: mutable_minimal_message_index
+    Human/current.yml: mutable_title_and_pointer_view
+    Human/decisions/: durable_Human_decisions
+    durable/final_results/: durable_final_results
+    durable/material_failures/: durable_material_failures
+    runtime/messages/<sender_endpoint_id>/: immutable_messages_removable_at_cleanup
+    runtime/documents/<author_endpoint_id>/: immutable_communication_documents_removable_unless_promoted
+    runtime/scratch/: removable_working_material
+
+  manifest_contract:
+    required_fields:
+      - repository_id
+      - task_id
+      - task_goal
+      - task_root
+      - carrier
+      - work_branch_or_local_scope
+      - base_head_when_GitHub
+      - coordinator_endpoint_id
+      - endpoint_card_refs
+      - message_index_ref
+      - Human_current_view_ref
+      - privacy_policy_ref
+      - lifecycle_status
+    authority_effect: none
+    communication_contract_version_location: manifest_only
+    per_message_protocol_version_required: false
+
+  endpoint_card_contract:
+    one_card_per_endpoint_instance: true
+    required_fields:
+      - endpoint_id
+      - principal_class
+      - model_or_product
+      - environment_class
+      - interface_class
+      - task_role
+      - local_file_read
+      - local_file_write
+      - GitHub_read
+      - GitHub_write
+      - instance_label
+    grants_authority: false
+    capability_claim_rule: truthful_current_capability_only
+
+  message_contract:
+    encoding: YAML
+    encoding_claim: v1_repository_and_Human_friendly_choice_not_universal_optimum
+    one_file_per_message: true
+    immutable_after_publication: true
+    owner: sender_endpoint
+    path_pattern: runtime/messages/<sender_endpoint_id>/<zero_padded_seq>_<message_type>.yml
+    message_id_pattern: <task_id>::<sender_endpoint_id>::<zero_padded_seq>
+    required_fields:
+      - message_id
+      - task_id
+      - title
+      - message_type
+      - sender_endpoint_id
+      - expected_recipient_endpoint_id
+      - summary
+      - content
+      - requested_action
+      - required_refs
+    field_rules:
+      expected_recipient_endpoint_id: sender_recommendation_only
+      summary: one_current_change_or_core_conclusion
+      content: complete_information_needed_for_the_current_action
+      requested_action: explicit_text_or_none
+      required_refs: exact_nonrecursive_read_set; may_be_empty
+    allowed_types:
+      - request
+      - response
+      - result
+      - decision_required
+      - correction
+      - blocked
+    optional_fields_when_material:
+      - in_reply_to
+      - supersedes
+      - references
+      - authorization_ref
+      - facts
+      - decisions
+      - assumptions
+      - unknowns
+      - constraints
+      - risks
+    prohibited:
+      - empty_optional_sections
+      - delivery_state
+      - read_state
+      - understood_state
+      - accepted_state
+      - actual_recipient_record
+      - message_digest
+      - private_chain_of_thought
+    authorization_rule:
+      authorization_ref_allowed_only_when_action_exceeds_existing_task_role: true
+      authorization_ref_must_also_appear_in_required_refs: true
+      message_itself_grants_permission: false
+    correction_rule:
+      mutate_old_message: false
+      create_new_message_with_supersedes: true
+
+  ref_contract:
+    representation: string
+    local_form: absolute_or_task_root_relative_path
+    GitHub_normal_form: <repository>@<branch>:<path>
+    GitHub_content_exact_form_when_material: <repository>@<40_char_commit_or_blob>:<path>
+    ordinary_custom_digest_required: false
+    receiver_default:
+      - read_manifest
+      - read_own_endpoint_card
+      - read_exact_message
+      - read_each_direct_required_ref
+    directory_scan: prohibited_by_default
+    recursive_ref_expansion: prohibited_by_default
+    missing_material_ref_behavior:
+      - do_not_guess
+      - do_not_expand_history_implicitly
+      - produce_blocked_or_request_message_with_exact_missing_ref
+
+  communication_document_contract:
+    default_encoding: Markdown_with_YAML_front_matter
+    structured_alternative: YAML
+    minimum_header:
+      - document_id
+      - task_id
+      - author_endpoint_id
+      - purpose
+      - privacy_class
+    optional_header:
+      - supersedes
+    immutable_after_publication: true
+    correction: create_new_version_and_reference_it_from_new_message
+    raw_existing_resource_rule: may_be_referenced_without_rewriting_as_communication_document
+    separate_attachment_protocol: false
+
+  message_index_contract:
+    path: index.yml
+    mutable: true
+    writer: Human_selected_task_coordinator
+    entry_fields:
+      - message_id
+      - title
+      - exact_path
+      - sender_endpoint_id
+      - expected_recipient_endpoint_id
+      - message_type
+    prohibited:
+      - body
+      - long_summary
+      - delivery_or_read_state
+    rebuildable_from_message_files: true
+
+  Human_view_contract:
+    path: Human/current.yml
+    mutable: true
+    writer: Human_selected_task_coordinator
+    default_content:
+      - important_titles
+      - exact_index_or_document_refs
+      - current_decision_needed_when_any
+    update_when:
+      - task_started
+      - Human_decision_needed
+      - material_blocked_or_risk
+      - stage_completed
+      - final_result_ready
+      - Human_requests
+    generated_report_by_default: false
+    on_demand_summary: Human_may_copy_selected_index_to_AI
+
+  Human_chat_pointer:
+    encoding: compact_YAML_or_equivalent_plain_text
+    required_fields:
+      - task_id
+      - message_id
+      - carrier
+      - exact_path_or_GitHub_ref
+      - sender_endpoint_id
+      - expected_recipient_endpoint_id
+      - one_line_purpose
+    purpose_semantics: routing_purpose_not_second_body_summary
+    forwarding_effect:
+      - Human_selects_actual_recipient_and_whether_to_continue
+      - receiving_model_may_process_under_existing_task_authority
+      - beyond_role_action_still_requires_readable_explicit_Human_authorization
+
+  send_and_failure_semantics:
+    sent: carrier_write_or_publish_operation_reports_success
+    mandatory_readback: false
+    optional_validation: only_when_incremental_cost_is_negligible
+    sent_does_not_mean:
+      - opened
+      - read
+      - understood
+      - accepted
+    response: new_message_if_any
+    material_failure_persistence:
+      - blocks_current_action
+      - may_change_final_conclusion
+      - represents_material_risk
+    routine_repaired_tool_error_persistence: false
+
+  privacy_contract:
+    classes:
+      repository_shareable: may_be_written_to_current_private_GitHub_task_space
+      local_only: local_task_space_only
+      forbidden: must_not_be_materialized_in_any_communication_carrier
+    GitHub_prepublication_check: required
+    forbidden_examples:
+      - passwords
+      - access_tokens
+      - private_keys
+      - authentication_files
+      - unnecessary_highly_sensitive_data
+    strong_OS_level_access_control_in_scope: false
+
+  cleanup_contract:
+    automatic: false
+    trigger:
+      - decision_model_asks_Human_at_task_completion
+      - Human_initiates
+    preview: list_fixed_runtime_subtrees_and_promotable_documents_without_reading_bodies
+    execute_only_after_Human_confirmation: true
+    delete:
+      - runtime/messages
+      - runtime/documents_not_promoted
+      - runtime/scratch
+    preserve:
+      - manifest.yml
+      - endpoints
+      - index.yml_when_referenced_by_durable_records
+      - Human/decisions
+      - durable/final_results
+      - durable/material_failures
+    erasure_claim: current_task_runtime_tree_only_not_Git_history_mirrors_backups_or_provider_copies
+
+claims:
+  - claim_id: B-R01
+    statement: 每个任务拥有独立通讯空间，只有全局发现索引跨任务存在
+    evidence_claim_ids: [E-05]
+    result_or_method: result
+  - claim_id: B-R02
+    statement: 本地与GitHub载体使用同一逻辑目录和对象语义，仅根路径与隐私边界不同
+    evidence_claim_ids: [E-01, E-05]
+    result_or_method: result
+  - claim_id: B-R03
+    statement: endpoint身份、产品、环境、接口、任务角色、能力和权限彼此分离
+    evidence_claim_ids: [E-04]
+    result_or_method: result
+  - claim_id: B-R04
+    statement: 每条消息是发送方拥有的不可变轻量YAML信息索引，长内容不默认进入消息
+    evidence_claim_ids: [E-01, E-06, E-07, E-10]
+    result_or_method: result
+  - claim_id: B-R05
+    statement: 长内容进入独立不可变通讯文档或现有资源，消息仅给精确引用
+    evidence_claim_ids: [E-01, E-08]
+    result_or_method: result
+  - claim_id: B-R06
+    statement: 接收方默认只加载manifest、自身endpoint card、目标消息和直接required_refs
+    evidence_claim_ids: [E-02, E-03]
+    result_or_method: result
+  - claim_id: B-R07
+    statement: material引用缺失或不可读时接收方fail-closed并通过新消息请求补充
+    evidence_claim_ids: [E-03, E-09]
+    result_or_method: result
+  - claim_id: B-R08
+    statement: expected recipient是发送方建议，Human决定实际转发、延迟、忽略或终止
+    evidence_claim_ids: [E-04]
+    result_or_method: result
+  - claim_id: B-R09
+    statement: 消息不授予权限，越权动作必须有独立Human授权引用且纳入必读集合
+    evidence_claim_ids: [E-03, E-09]
+    result_or_method: result
+  - claim_id: B-R10
+    statement: sent只表示载体写入成功，不建立送达、已读、理解或接受状态机
+    evidence_claim_ids: [E-04]
+    result_or_method: result
+  - claim_id: B-R11
+    statement: Human当前视图和消息索引保持极简可重建，不复制消息正文
+    evidence_claim_ids: [E-02, E-05]
+    result_or_method: result
+  - claim_id: B-R12
+    statement: runtime与durable固定分区允许Human触发的结构化清理且不夸大擦除效果
+    evidence_claim_ids: [E-05]
+    result_or_method: result
+  - claim_id: B-R13
+    statement: 普通引用不计算自定义digest，内容精确性承重时复用Git branch/head/blob身份
+    evidence_claim_ids: [E-08]
+    result_or_method: result
+  - claim_id: B-R14
+    statement: 最终通讯边界结构化，模型内部复杂推理不受该消息schema约束且不保存私有推理
+    evidence_claim_ids: [E-07]
+    result_or_method: result
+  - claim_id: B-R15
+    statement: 语义验证逐字段并精确比较required_refs集合，不能只判断回答整体是否合理
+    evidence_claim_ids: [E-09]
+    result_or_method: result
+
+implementation_methods:
+  - method_id: B-M01
+    type: document
+    name: communication_contract_and_templates
+    purpose: 定义manifest、endpoint card、message、document header、index、Human pointer和cleanup契约
+    supports_claims: [B-R01, B-R02, B-R03, B-R04, B-R05, B-R08, B-R10, B-R11, B-R12]
+    evidence_claim_ids: [E-01, E-04, E-05, E-06, E-10]
+  - method_id: B-M02
+    type: script
+    name: deterministic_validator
+    purpose: 校验必填字段、ID与路径、隐私类、消息不可变关系、authorization_ref属于required_refs以及禁止字段
+    supports_claims: [B-R04, B-R07, B-R09, B-R13, B-R15]
+    evidence_claim_ids: [E-03, E-08, E-09]
+  - method_id: B-M03
+    type: script
+    name: task_space_initializer
+    purpose: 在选定载体创建固定任务目录、manifest、index和Human当前视图骨架
+    supports_claims: [B-R01, B-R02, B-R11, B-R12]
+    evidence_claim_ids: [E-05]
+  - method_id: B-M04
+    type: script
+    name: message_publisher
+    purpose: 在发送方目录生成下一序号不可变消息并按低成本方式更新index
+    supports_claims: [B-R04, B-R10, B-R11]
+    evidence_claim_ids: [E-06, E-09]
+  - method_id: B-M05
+    type: prompt_or_skill
+    name: endpoint_bootstrap
+    purpose: 指示接收模型只加载manifest、自身card、目标消息和direct refs，并在缺失时fail-closed
+    supports_claims: [B-R06, B-R07, B-R09]
+    evidence_claim_ids: [E-02, E-03, E-09]
+  - method_id: B-M06
+    type: process
+    name: Human_manual_relay
+    purpose: Human复制紧凑指针、选择实际接收模型并决定是否继续
+    supports_claims: [B-R08, B-R09, B-R10]
+    evidence_claim_ids: [E-04]
+  - method_id: B-M07
+    type: script
+    name: cleanup_preview_and_execute
+    purpose: 仅按固定runtime路径生成清理预览，Human确认后删除，不读取正文判断
+    supports_claims: [B-R12]
+    evidence_claim_ids: [E-05]
+  - method_id: B-M08
+    type: test_fixture
+    name: cross_endpoint_semantic_fixtures
+    purpose: 对不同模型端点逐字段验证消息恢复、权限解释、必读路径集合和非递归读取
+    supports_claims: [B-R04, B-R06, B-R07, B-R09, B-R15]
+    evidence_claim_ids: [E-06, E-09]
+
+requirement_satisfaction:
+  - success_criterion: every_message_identifies_sender_and_expected_recipient
+    result_claim_ids: [B-R03, B-R04]
+  - success_criterion: Human_controls_actual_routing_and_whether_the_chain_continues
+    result_claim_ids: [B-R08]
+  - success_criterion: local_and_Web_endpoints_can_locate_required_information_by_exact_pointer
+    result_claim_ids: [B-R02, B-R05, B-R06]
+  - success_criterion: message_text_remains_small_and_long_content_is_externalized
+    result_claim_ids: [B-R04, B-R05]
+  - success_criterion: recipient_loads_only_direct_message_and_explicitly_required_paths_by_default
+    result_claim_ids: [B-R06, B-R07]
+  - success_criterion: no_automatic_polling_delivery_or_state_progression_exists
+    result_claim_ids: [B-R08, B-R10]
+  - success_criterion: communication_does_not_duplicate_or_override_task_permission_system
+    result_claim_ids: [B-R03, B-R09]
+  - success_criterion: task_runtime_can_be_cleaned_by_fixed_subtree_without_reading_file_contents
+    result_claim_ids: [B-R12]
+  - success_criterion: deterministic_tests_cover_supported_routes_and_material_failure_cases
+    result_claim_ids: [B-R07, B-R09, B-R13, B-R15]
+
+alternatives_rejected:
+  - alternative: automatic_delivery_or_polling
+    reason: conflicts_with_Human_supervision_and_A
+    evidence_claim_ids: [E-04]
+  - alternative: chat_as_primary_long_content_carrier
+    reason: context_accumulation_and_non_durable_pointer_problem
+    evidence_claim_ids: [E-01, E-02]
+  - alternative: free_text_as_machine_canonical_message
+    reason: cross_family_experiment_found_deterministic_parsing_ambiguity
+    evidence_claim_ids: [E-06, E-09]
+  - alternative: recursive_context_expansion
+    reason: unbounded_context_and_privacy_surface
+    evidence_claim_ids: [E-02, E-03]
+  - alternative: per_message_custom_digest
+    reason: Human_rejected_and_existing_Git_identity_is_sufficient_when_material
+    evidence_claim_ids: [E-08]
+  - alternative: delivery_receipt_state_machine
+    reason: Human_rejected_and_manual_router_is_not_a_reliable_bus
+    evidence_claim_ids: [E-04]
+  - alternative: mandatory_timestamp_priority_or_verdict_fields
+    reason: not_required_for_current_semantics_and_adds_non_load_bearing_cost
+    evidence_claim_ids: [E-10]
+  - alternative: automatic_cleanup
+    reason: conflicts_with_Human_trigger_and_increases_wrong_target_deletion_risk
+    evidence_claim_ids: [E-05]
+
+validation_summary:
+  every_result_claim_has_evidence_claim_ids: true
+  every_success_criterion_has_result_claim_mapping: true
+  result_shape_and_implementation_methods_both_present: true
+  legacy_comparison_may_now_start: true

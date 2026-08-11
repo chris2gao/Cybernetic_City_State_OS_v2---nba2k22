@@ -1,0 +1,211 @@
+schema_version: citystate.task_packet.v1
+task_id: os-v2-pre-deletion-migration-final-whitelist-001
+run_id: run-20260810-旧OS退役前迁移与最终白名单-001
+status: authorized_for_backend_execution
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+base:
+  accepted_predecessor_head: c932eafb53881ae32d5dd926391bb1d23e7fdade
+  physical_master_expected: eb4be95a25cb4b0929def284a7fb4b6a412aed55
+work_branch: dev/os-v2-pre-deletion-migration-final-whitelist-001
+executor: Claude_Code
+reviewer: ChatGPT_independent_project_reviewer
+
+objective: >-
+  在不执行大规模旧文件物理删除的前提下，先解决上一轮删除白名单中所有 migrate-before-delete
+  与 Human 待裁决项，把活动新 OS 对旧 .ai/ 和旧根文件的承重依赖迁走或裁决清楚；然后生成一份
+  可直接用于下一步机械删除的最终非 08 白名单与最终删除清单。01_os/** 本轮仍整体保留。
+
+Human_decisions:
+  delete_without_further_semantic_comparison:
+    - previous_inventory_453_delete_candidates
+    - 01_Research_Reports/**
+    - PROJECT_CONTEXT.md
+    - ARCHITECTURE.md
+    - .ai/HANDOFF_COMMON_CONVENTIONS.md
+  retain:
+    - .claude/settings.json
+  delegated_to_project_architecture_and_fixed_by_this_packet:
+    root_readme_ownership: core_owned
+    GEMINI_ownership: core_owned
+    os_entry_spec_ownership: core_owned
+    claude_settings_ownership: core_owned
+    token_profile_measurements: migrate_evidence_into_this_run_then_old_source_delete_candidate
+    stale_08_content_bootstrap_sentence: fix
+    os_entry_section_12_token_pointer: fix
+    old_manifest_absent_paths: already_fixed_in_predecessor_no_further_action
+    prior_packet_allowed_write_paths_mismatch: historical_instance_error_not_canonical_defect
+
+architecture_decisions:
+  active_OS: 01_os/**
+  publisher_authority:
+    old: .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml
+    new: 01_os/05_registry/repository_publisher_authority_v1.yml
+    rule: preserve authority semantics but rewrite obsolete old-OS commentary/references; no compatibility shim
+  domain_runtime_root:
+    old: .ai/PROGRAM_RUNS/
+    new: 01_os/07_content/_runs/
+    reason: domain-owned workflow/business run traffic belongs with domain content/results, not OS mechanism state
+    future_after_08_root_move: 07_content/_runs/
+  token_profile:
+    old_authority: .ai/TOKEN_USAGE_PROFILE.md
+    action: remove final active pointer; do not migrate old authority file
+    retained_discipline: already absorbed into AGENT_WORKING_DISCIPLINE.md
+  legacy_system_summary:
+    old: 系统机制总结.md
+    new: 01_os/03_mechanisms/context_management/依据材料/系统机制总结_历史输入_v1.md
+    action: preserve content/evidence trace, update active evidence refs, old root source becomes delete candidate
+  token_measurement_evidence:
+    old: .ai/token_profile/**
+    new: 01_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/02_迁移/token_profile_legacy_measurements/**
+    action: preserve measurement evidence only; old path becomes delete candidate
+
+# Correct canonical field name. Do not use scope.allowed_write_paths.
+allowed_changed_paths:
+  - AGENTS.md
+  - AGENT_WORKING_DISCIPLINE.md
+  - GEMINI.md
+  - CLAUDE.md
+  - README.md
+  - CORE_MANIFEST.yml
+  - .gitignore
+  - .githooks/README.md
+  - 01_os/README.md
+  - 01_os/开发入口与单窗口任务规范_v1.md
+  - 01_os/07_content/README.md
+  - 01_os/01_workflow/**
+  - 01_os/02_boot/workflow_minimum_operational_loop/**
+  - 01_os/03_mechanisms/context_management/**
+  - 01_os/05_registry/context_management_v1.yml
+  - 01_os/05_registry/workflow_minimum_operational_loop_v1.yml
+  - 01_os/05_registry/repository_guards_v1.yml
+  - 01_os/05_registry/repository_publisher_authority_v1.yml
+  - 01_os/06_execution/**
+  - 01_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/**
+
+forbidden_changed_paths:
+  - .ai/**
+  - PROJECT_CONTEXT.md
+  - ARCHITECTURE.md
+  - 01_Research_Reports/**
+  - 系统机制总结.md
+  - new-domain.ps1
+  - .claude/settings.json
+  - .githooks/pre-push
+  - .githooks/install.ps1
+  - .githooks/test_pre_push_logic.ps1
+  - .githooks/.gitattributes
+
+physical_deletion_this_task: false
+move_or_rename_legacy_sources_this_task: false
+master_publication_authorized: false
+
+ordered_steps:
+  - id: M1
+    action: migrate_publisher_authority
+    requirements:
+      - create new canonical authority at architecture_decisions.publisher_authority.new
+      - preserve root_authority, identity binding, grant semantics, capabilities, destructive/action-bound rules, core-history prohibition, recognized transports
+      - remove obsolete .ai/PROTOCOL, communication_compliance, old TASKS commentary from the migrated text
+      - update every active/ref retained consumer from old path to new path
+      - update repository guard registry coherently
+  - id: M2
+    action: retire_token_profile_authority_pointer
+    requirements:
+      - remove/replace 01_os development-entry section 12 pointer to .ai/TOKEN_USAGE_PROFILE.md
+      - prove no active root/new-OS authority depends on that old file after change
+  - id: M3
+    action: relocate_domain_runtime_root_semantics
+    requirements:
+      - replace active .ai/PROGRAM_RUNS/ contract with 01_os/07_content/_runs/
+      - update machine layout contract, validator, active registries, workflow contracts/readmes, OS README, development entry, CORE_MANIFEST and .gitignore
+      - update only active/canonical references; superseded _dev/history may remain historical if clearly non-active
+      - domain ownership remains domain-owned
+      - private _runtime remains untracked/ignored and lifecycle semantics unchanged
+      - validator must no longer require literal .ai/PROGRAM_RUNS/
+  - id: M4
+    action: migrate_legacy_system_summary_evidence
+    requirements:
+      - copy exact substantive source into new 01_os context-management evidence location
+      - preserve provenance to old source path and source blob/hash if practical
+      - update the seven active evidence/requirement path refs that currently point to root 系统机制总结.md
+      - prove no active evidence ref requires the old root source afterward
+  - id: M5
+    action: preserve_token_measurement_evidence
+    requirements:
+      - copy the six tracked .ai/token_profile measurement files into this run evidence subtree
+      - record old path + blob sha for each
+      - do not make those measurements an active OS authority
+  - id: D1
+    action: ownership_cleanup
+    requirements:
+      - CORE_MANIFEST retained global core-owned surface includes at least AGENTS.md, AGENT_WORKING_DISCIPLINE.md, CLAUDE.md, GEMINI.md, README.md, CORE_MANIFEST.yml, .githooks/, .gitignore, .gitattributes, .claude/settings.json, new-domain.ps1
+      - 01_os/开发入口与单窗口任务规范_v1.md is covered by core ownership
+      - PROJECT_CONTEXT.md remains physically present but planned for deletion, not an active/domain ownership premise
+      - do not claim authorized deletions already happened
+  - id: D2
+    action: fix_stale_new_OS_text
+    requirements:
+      - fix 01_os/07_content/README.md sentence that describes 06_Silicon_Index bootstrap as current
+      - do not erase historical lesson; make historical tense/status explicit
+  - id: F1
+    action: produce_final_whitelist_and_delete_list
+    outputs:
+      - 01_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/03_最终清单/最终非08白名单_v1.yml
+      - 01_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/03_最终清单/最终直接删除清单_v1.yml
+      - 01_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/03_最终清单/迁移闭包验证_v1.yml
+    final_delete_list_rules:
+      - import the predecessor's exact 453 delete-candidate tracked paths without re-adjudicating their semantics
+      - add 01_Research_Reports/**, PROJECT_CONTEXT.md, ARCHITECTURE.md, .ai/HANDOFF_COMMON_CONVENTIONS.md
+      - add old migration sources only after proving their active dependencies were removed: .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml, .ai/TOKEN_USAGE_PROFILE.md, .ai/token_profile/**, 系统机制总结.md
+      - .ai/PROGRAM_RUNS/ has zero tracked files in core; record removal of the old declared root separately, not as a fake file count
+      - no path under 01_os/** may appear in delete list
+      - every tracked path outside 01_os/** must end in exactly one of: final_retain, final_delete_authorized, deferred_until_root_move_rewrite
+
+final_retain_expected_minimum:
+  - AGENTS.md
+  - AGENT_WORKING_DISCIPLINE.md
+  - CLAUDE.md
+  - GEMINI.md
+  - README.md
+  - CORE_MANIFEST.yml
+  - .gitignore
+  - .gitattributes
+  - .claude/settings.json
+  - .githooks/**
+  - new-domain.ps1
+
+deferred_until_root_move_rewrite:
+  - new-domain.ps1
+  - root/retained routers that still correctly point at current 01_os paths
+
+validation:
+  - start gate: fresh remote master must equal physical_master_expected and work branch must descend accepted_predecessor_head
+  - step 1 predecessor root rewrite bytes must remain semantically preserved except necessary path updates caused by these migrations
+  - exact changed-path ledger from this packet's top-level allowed_changed_paths
+  - repository default checks pass
+  - context-management validator passes with new domain runtime root
+  - no active root/new-OS reference to .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml
+  - no active root/new-OS reference to .ai/TOKEN_USAGE_PROFILE.md
+  - no active machine/canonical reference to .ai/PROGRAM_RUNS/
+  - no active evidence path reference requiring root 系统机制总结.md
+  - migrated publisher authority has no old protocol/mailbox/lane/compliance dependency
+  - CORE_MANIFEST parses, has no ownership overlap, and remains truthful to physical undeleted tree
+  - final whitelist/delete list partition all tracked non-08 files with zero unassigned and zero overlap
+  - 01_os/** absent from delete list
+
+Git_policy:
+  ordinary_commits_only: true
+  no_merge: true
+  no_rebase: true
+  no_cherry_pick: true
+  no_amend: true
+  no_squash: true
+  no_force_push: true
+  explicit_staging_only: true
+  work_branch_push: authorized
+  master_push: prohibited
+
+completion:
+  expected_status: ready_for_independent_review
+  next_owner: ChatGPT_independent_project_reviewer
+  physical_deletion_gate: remains_closed_until_independent_review_passes

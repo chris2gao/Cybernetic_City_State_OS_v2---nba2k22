@@ -1,0 +1,61 @@
+schema_version: citystate.registry.v1
+registry_id: workflow_minimum_operational_loop_v1
+workflow_id: citystate_seven_stage_minimum_operational_loop
+workflow_version: 1
+status: minimum_operational
+entries:
+- path: 01_os/01_workflow/实现/{README.md,七阶段最小运行契约_v1.yml}
+  purpose: 七阶段最小运行闭环的跨阶段机器契约与语义边界
+  loader: 01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py
+  loader_class: in_repo_program
+  discovery: referenced from workflow boot manifest
+  evidence: 01_os/02_boot/workflow_minimum_operational_loop/启动清单_v1.yml
+  cache_dirs: []
+  failure_surfacing: next workflow static validation
+  deletion_rule: protected
+- path: 01_os/01_workflow/*/实现/最小运行schema_v1.yml
+  purpose: 七个阶段的类型化最小产物 schema
+  loader: 01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py
+  loader_class: in_repo_program
+  discovery: listed in workflow contract and boot manifest
+  evidence: 01_os/01_workflow/实现/七阶段最小运行契约_v1.yml
+  cache_dirs: []
+  failure_surfacing: next workflow static or run validation
+  deletion_rule: protected
+- path: 01_os/02_boot/workflow_minimum_operational_loop/**
+  purpose: 七阶段最小运行闭环的启动顺序、前置机制与失败策略
+  loader: OS workflow bootstrap
+  loader_class: host_application
+  discovery: documented convention and registry
+  evidence: 01_os/02_boot/workflow_minimum_operational_loop/README.md
+  cache_dirs: []
+  failure_surfacing: next workflow boot
+  deletion_rule: protected
+- path: 01_os/06_execution/workflow/minimum_operational_loop/{README.md,run_minimum_operational_loop.py,test_minimum_operational_loop.py}
+  purpose: 七阶段统一 loader、validator、pilot materializer 与回归测试
+  loader: Python and OS workflow execution entry
+  loader_class: in_repo_program
+  discovery: referenced from boot manifest
+  evidence: 01_os/06_execution/workflow/minimum_operational_loop/README.md
+  cache_dirs:
+  - <run-root>/_runtime/
+  failure_surfacing: next static, validation or unit-test run
+  deletion_rule: protected
+- path: 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/**
+  purpose: 跨平台仓库逻辑路径七阶段端到端只读 pilot fixture
+  loader: run_minimum_operational_loop.py validate or materialize-pilot
+  loader_class: in_repo_program
+  discovery: hardcoded pilot fixture path
+  evidence: 01_os/_runs/run-20260805-七阶段最小运行闭环-001/07_测试执行/验证结果_v1.yml
+  cache_dirs: []
+  failure_surfacing: next static or pilot validation
+  deletion_rule: protected
+runtime_roots:
+  shared_os_development: 01_os/_runs/<run-id>/
+  domain_workflow: 01_os/07_content/_runs/<run-id>/
+  canonical_live_instance_state: prohibited
+excluded:
+- 01_os/_runs/**
+- 01_os/07_content/_runs/**
+- '**/_runtime/**'
+- role private and scratch

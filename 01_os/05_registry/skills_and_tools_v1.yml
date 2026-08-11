@@ -1,0 +1,207 @@
+schema_version: citystate.registry.v1
+registry_id: skills_and_tools_v1
+mechanism_version: 1
+entries:
+  - path: 01_os/04_skills_and_tools/README.md
+    purpose: 外部 skill 与确定性工具的分类、可用性验证规则和 Human 文档入口
+    loader: human-directed tools review
+    loader_class: external_tool_convention
+    discovery: referenced from 01_os/05_registry/skills_and_tools_v1.yml
+    evidence: 01_os/_runs/run-011-确定性工具接入收益风险评估/06_执行/变更清单.md
+    cache_dirs: []
+    failure_surfacing: next human tools review
+    deletion_rule: protected
+  - path: 01_os/04_skills_and_tools/工具选型_v1.md
+    purpose: run-005 形成的确定性操作候选与替代路线历史快照
+    loader: human-directed tools review
+    loader_class: external_tool_convention
+    discovery: referenced from 01_os/04_skills_and_tools/README.md
+    evidence: 01_os/_runs/run-005-确定性工具调研/04_合并结论.md
+    cache_dirs: []
+    failure_surfacing: next human tools review
+    deletion_rule: human_decision_required
+  - path: 01_os/04_skills_and_tools/确定性工具接入收益与风险评估_v1.md
+    purpose: 安装前的收益风险、环境、token、按需加载、准入测试与 Human 决策依据
+    loader: human-directed tools review
+    loader_class: external_tool_convention
+    discovery: referenced from 01_os/04_skills_and_tools/README.md
+    evidence: 01_os/_runs/run-011-确定性工具接入收益风险评估/06_执行/变更清单.md
+    cache_dirs: []
+    failure_surfacing: next human tools review
+    deletion_rule: protected
+  - path: 01_os/04_skills_and_tools/check-jsonschema/README.md
+    purpose: check-jsonschema 已验证版本、OS 职责边界、生命周期与复验入口
+    loader: human or task-directed tools review
+    loader_class: external_tool_convention
+    discovery: referenced from 01_os/04_skills_and_tools/README.md
+    evidence: 01_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/results.json
+    cache_dirs: []
+    failure_surfacing: next check-jsonschema invocation or revalidation
+    deletion_rule: protected
+  - path: 01_os/06_execution/tools/check_jsonschema/README.md
+    purpose: check-jsonschema 按需 loader、退出码和 fail-closed 调用契约
+    loader: task-directed tool invocation
+    loader_class: external_tool_convention
+    discovery: referenced from tool README and registry metadata
+    evidence: 01_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/results.json
+    cache_dirs: []
+    failure_surfacing: next check-jsonschema invocation
+    deletion_rule: protected
+  - path: 01_os/06_execution/tools/check_jsonschema/invoke.ps1
+    purpose: 执行 schema closure 与版本门、解析本地输入并保留 CLI 退出码
+    loader: PowerShell task executor
+    loader_class: in_repo_program
+    discovery: canonical_wrapper in tools registry
+    evidence: 01_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/results.json
+    cache_dirs: []
+    failure_surfacing: current invocation
+    deletion_rule: protected
+  - path: 01_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py
+    purpose: 对 canonical JSON schema 执行无网络、无外部文件的引用闭包预检
+    loader: check-jsonschema PowerShell wrapper
+    loader_class: in_repo_program
+    discovery: sibling dependency of canonical_wrapper
+    evidence: 01_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/results.json
+    cache_dirs: []
+    failure_surfacing: current invocation before version probe or validation
+    deletion_rule: protected
+  - path: 01_os/04_skills_and_tools/mutmut/README.md
+    purpose: mutmut 已验证版本、OS 职责、等价 survivor 与复验边界
+    loader: human or task-directed tools review
+    loader_class: external_tool_convention
+    discovery: referenced from 01_os/04_skills_and_tools/README.md
+    evidence: 01_os/_runs/run-013-mutmut安装接入验证/07_测试执行/results.json
+    cache_dirs: []
+    failure_surfacing: next mutmut invocation or revalidation
+    deletion_rule: protected
+  - path: 01_os/06_execution/tools/mutmut/README.md
+    purpose: mutmut WSL loader、退出码、单文件 allowlist 与 fail-closed 调用契约
+    loader: task-directed tool invocation
+    loader_class: external_tool_convention
+    discovery: referenced from tool registry metadata
+    evidence: 01_os/_runs/run-013-mutmut安装接入验证/07_测试执行/results.json
+    cache_dirs:
+      - /tmp/citystate-mutmut.*
+    failure_surfacing: current invocation
+    deletion_rule: protected
+  - path: 01_os/06_execution/tools/mutmut/invoke.sh
+    purpose: 在 WSL 临时归档中对一个显式 allowlisted Python 文件执行 baseline 与 mutation
+    loader: Bash task executor
+    loader_class: in_repo_program
+    discovery: canonical_wrapper in tools registry
+    evidence: 01_os/_runs/run-013-mutmut安装接入验证/07_测试执行/results.json
+    cache_dirs:
+      - /tmp/citystate-mutmut.*
+    failure_surfacing: current invocation
+    deletion_rule: protected
+  - path: 01_os/04_skills_and_tools/cosmic-ray/README.md
+    purpose: Cosmic Ray 已验证版本、互补 operator reach、成本、timeout 修正与复验边界
+    loader: human or task-directed tools review
+    loader_class: external_tool_convention
+    discovery: referenced from 01_os/04_skills_and_tools/README.md
+    evidence: 01_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/results.json
+    cache_dirs: []
+    failure_surfacing: next Cosmic Ray invocation or revalidation
+    deletion_rule: protected
+  - path: 01_os/06_execution/tools/cosmic_ray/README.md
+    purpose: Cosmic Ray WSL loader、结构化对象摘要、退出码与 fail-closed 调用契约
+    loader: task-directed tool invocation
+    loader_class: external_tool_convention
+    discovery: referenced from tool registry metadata
+    evidence: 01_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/results.json
+    cache_dirs:
+      - /tmp/citystate-cosmic-ray.*
+    failure_surfacing: current invocation
+    deletion_rule: protected
+  - path: 01_os/06_execution/tools/cosmic_ray/invoke.sh
+    purpose: 在 WSL 临时归档中运行一个显式 allowlisted Python 文件的 local mutation session
+    loader: Bash task executor
+    loader_class: in_repo_program
+    discovery: canonical_wrapper in tools registry
+    evidence: 01_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/results.json
+    cache_dirs:
+      - /tmp/citystate-cosmic-ray.*
+    failure_surfacing: current invocation
+    deletion_rule: protected
+  - path: 01_os/06_execution/tools/cosmic_ray/summarize.py
+    purpose: 将 session dump 归一化并把 timeout、incomplete 与 worker error 从 killed 中剥离
+    loader: sibling dependency of Cosmic Ray canonical_wrapper
+    loader_class: in_repo_program
+    discovery: canonical_wrapper fixed helper path
+    evidence: 01_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/results.json
+    cache_dirs: []
+    failure_surfacing: current invocation
+    deletion_rule: protected
+tools:
+  - name: check-jsonschema
+    version: 0.37.4
+    status: verified_on_demand
+    mount: on_demand_cli
+    default_loaded: false
+    mcp_exposed: false
+    expected_version: 0.37.4
+    version_gate: exact_runtime_probe_before_validation
+    schema_reference_policy: self_contained_json_fragment_only
+    schema_preflight: 01_os/06_execution/tools/check_jsonschema/inspect_schema_refs.py
+    validation_command: >-
+      pwsh -NoProfile -File
+      01_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/run_validation.ps1
+    validated_at: "2026-07-30"
+    evidence: 01_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/results.json
+    upgrade_and_revalidation: >-
+      After any version, runtime, wrapper or schema-policy change, rerun run-012
+      metaschema, positive, core negative, reference-closure, version-drift,
+      five-repeat, Unicode-path and unavailable-tool tests.
+    canonical_wrapper: 01_os/06_execution/tools/check_jsonschema/invoke.ps1
+  - name: mutmut
+    version: 3.6.0
+    status: verified_on_demand
+    mount: on_demand_wsl_cli
+    default_loaded: false
+    mcp_exposed: false
+    expected_version: 3.6.0
+    version_gate: exact_runtime_probe_before_mutation
+    workspace_policy: wsl_linux_filesystem_clean_git_worktree
+    target_policy: explicit_single_python_file_allowlist
+    validation_command: >-
+      bash
+      01_os/_runs/run-013-mutmut安装接入验证/07_测试执行/run_validation.sh
+      /absolute/path/to/dedicated-mutmut-venv
+    validated_at: "2026-07-30"
+    evidence: 01_os/_runs/run-013-mutmut安装接入验证/07_测试执行/results.json
+    upgrade_and_revalidation: >-
+      After any mutmut, Python, wrapper, target configuration or test-semantics
+      change, rerun run-013 calibration, real target, wrapper boundary and
+      repository-state validation.
+    canonical_wrapper: 01_os/06_execution/tools/mutmut/invoke.sh
+  - name: cosmic-ray
+    version: 8.4.6
+    python_version: 3.14.4
+    pytest_version: 9.1.1
+    include_system_site_packages: false
+    status: verified_on_demand
+    mount: on_demand_wsl_cli
+    default_loaded: false
+    mcp_exposed: false
+    expected_version: 8.4.6
+    version_gate: exact_cosmic_ray_python_pytest_and_isolated_pyvenv_before_session_init
+    python_environment: PYTHONPATH_PYTHONHOME_PYTHONUSERBASE_unset
+    workspace_policy: wsl_linux_filesystem_clean_git_worktree
+    target_policy: explicit_single_python_file_allowlist
+    distributor: local
+    workers: 1
+    unsafe_outcome_policy: timeout_incomplete_incompetent_or_worker_error_exit_72
+    validation_command: >-
+      bash
+      01_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/run_validation.sh
+      /absolute/path/to/dedicated-cosmic-ray-venv
+    validated_at: "2026-08-01"
+    evidence: 01_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/results.json
+    upgrade_and_revalidation: >-
+      After any Cosmic Ray, Python, pytest, wrapper, summary, local distributor,
+      target configuration or test-semantics change, rerun run-014 calibration,
+      timeout, real target, wrapper matrix and repository-state validation.
+    canonical_wrapper: 01_os/06_execution/tools/cosmic_ray/invoke.sh
+excluded:
+  - candidate packages, runtimes, MCP servers, and skills not explicitly listed under tools
+  - 01_os/_runs/**

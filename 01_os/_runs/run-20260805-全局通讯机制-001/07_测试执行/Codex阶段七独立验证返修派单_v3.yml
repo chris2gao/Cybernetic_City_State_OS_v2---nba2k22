@@ -1,0 +1,122 @@
+schema_version: citystate.stage07_correction_dispatch.v3
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+executor: Codex
+status: authorized_same_task_stage06_correction_for_stage07_rereview
+supersedes: Codex阶段七独立验证返修派单_v2.yml
+
+master_drift_assessment:
+  ref: Master漂移影响评估_v2.yml
+  assessment_commit: d4710e0942d85ffa13507b2845ea4decce19eb12
+  previous_expected_master: 596db847374ecb1546d343228fb6d0756a9fc9b4
+  current_expected_master: 52e00fe13d6a2e385abfaf1e2618c70f3278926c
+  new_master_advance_commits: 1
+  total_master_advance_from_original_task_base: 8
+  semantic_impact_on_communication_system: none_observed
+  operational_impact: stale_master_gate_plus_new_repository_engineering_design_defaults
+
+repository:
+  repo: chris2gao/Cybernetic_City_State_OS_v2---core
+  branch: dev/os-v2-global-communication-system-001
+  minimum_authorized_start_ancestor: d4710e0942d85ffa13507b2845ea4decce19eb12
+  expected_master: 52e00fe13d6a2e385abfaf1e2618c70f3278926c
+  expected_merge_base_with_master: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  expected_behind_master_at_dispatch: 8
+  master_publication_authorized: false
+  master_integration_during_correction: prohibited
+  start_rule: >-
+    Before any write, read the physical remote master and work-branch heads. Master must still equal
+    52e00fe13d6a2e385abfaf1e2618c70f3278926c. The work branch must descend linearly from
+    minimum_authorized_start_ancestor; commits after that ancestor and before executor work may only be
+    this v3 dispatch or explicitly named correction metadata. The branch is intentionally allowed to remain
+    behind master by the eight already-assessed unrelated commits. Do not merge, rebase, cherry-pick,
+    force-push, amend, squash, or otherwise integrate/rewrite history. If master moves again, or any new
+    master delta touches communication_system paths, Stage04/Stage05/B_v3/task-run inputs, stop fail-closed
+    and return for a new project-lead drift assessment.
+
+executor_configuration:
+  requested_model_display: GPT-5.6 Sol
+  mode: Goal
+  reasoning_effort: High
+  single_active_executor: true
+  parallel_agents: false
+  max_is_default: false
+
+current_master_rules:
+  must_read_from_current_master_before_work:
+    - AGENT_WORKING_DISCIPLINE.md
+    - AGENTS.md
+    - 01_os/开发入口与单窗口任务规范_v1.md
+    - 01_os/06_execution/task_discipline/README.md
+  new_AGENTS_engineering_design_principles_apply: true
+  engineering_principles_grant_no_new_authority: true
+  task_branch_does_not_contain_new_task_discipline_tools: true
+  do_not_copy_or_cherry_pick_those_tools_into_task_branch: true
+  required_equivalent_behavior:
+    - collect physical master head, task-branch head, merge base, branch ahead/behind, worktree cleanliness, allowlist, prohibitions, and authorization before writes
+    - cap successful verification output and only expand failure evidence
+    - generate final changed-path ledger from physical Git with unquoted UTF-8 exact paths and all untracked files expanded
+    - preserve transport-specific publication gates and exact remote readback
+
+shared_path_protection:
+  emergency_master_overlap:
+    - 01_os/06_execution/README.md
+  correction_rule: >-
+    Do not modify 01_os/06_execution/README.md in this correction. It contains independent master-side
+    task_discipline work and is not needed to close Stage07 B01-B04.
+
+base_correction_authority:
+  inherit_all_semantic_requirements_from:
+    - Codex阶段七独立验证返修派单_v1.yml
+    - Codex阶段七独立验证返修派单_v2.yml
+  independent_review_ref: Stage07独立验证_v1.yml
+  blockers_unchanged:
+    - STAGE07-B01-FROZEN-PRODUCTION-ORACLE-SHADOWING
+    - STAGE07-B02-AUTHORITY-AND-ROLE-BOUNDARY-NOT-END-TO-END
+    - STAGE07-B03-ARCHIVE-PRIVATE-RUNTIME-PRECONDITIONS-INCOMPLETE
+    - STAGE07-B04-PUBLICATION-AND-BOOTSTRAP-PHYSICAL-CLOSURE-GAPS
+  frozen_Stage04_git_blob_sha: 360571b6b29a3baecd753dc45611457da9ab6bf2
+  accepted_Stage05_git_blob_sha: 9422de27de6794ba2c247c7dae3dcddaa5c9e562
+  B_v3_git_blob_sha: 314b76061a32d62bbcc49e2bf53b8968b2e194bd
+  all_three_are_immutable: true
+
+allowed_changed_paths_override:
+  rule: same_as_v2
+  allowed:
+    - 01_os/06_execution/boot/communication_system/**
+    - 01_os/03_mechanisms/communication_system/**
+    - 01_os/02_boot/communication_system/**
+    - 01_os/05_registry/communication_system_v1.yml
+    - 01_os/_runs/run-20260805-全局通讯机制-001/06_执行/**
+    - 01_os/_runs/run-20260805-全局通讯机制-001/07_测试执行/*correction_metadata*
+    - 01_os/_runs/run-20260805-全局通讯机制-001/run.yml
+    - 01_os/README.md
+    - 01_os/02_boot/README.md
+    - 01_os/03_mechanisms/README.md
+    - 01_os/05_registry/README.md
+  prohibited_shared_path:
+    - 01_os/06_execution/README.md
+
+commit_and_evidence_protocol:
+  required_shape: new_implementation_commit_I2_then_exact_runs_then_result_only_commit_R2
+  tested_commit_binding: exact_physical_I2_only
+  implementation_change_after_run: create_new_I3_and_rerun_all
+  manual_result_rebinding: prohibited
+  frozen_production_full_and_mutation_suite: both_required
+  all_original_v1_validator_and_report_requirements: required
+
+final_submission:
+  status: ready_for_independent_stage07_rereview
+  additional_report_required:
+    - physical_master_head_before_and_after_must_equal_52e00fe13d6a2e385abfaf1e2618c70f3278926c
+    - report_branch_behind_master_count_and_merge_base
+    - confirmation_no_master_integration_attempt
+    - confirmation_no_write_to_01_os_06_execution_README_md
+    - confirmation_current_master_rules_were_read
+    - confirmation_new_AGENTS_engineering_principles_were_read
+    - confirmation_new_task_discipline_tools_were_not_copied_into_task_branch
+  do_not_claim:
+    - independent_acceptance
+    - Stage07_completion
+    - master_publication
+    - task_branch_fast_forwardable_to_current_master

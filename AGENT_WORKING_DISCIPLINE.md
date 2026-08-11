@@ -7,7 +7,7 @@ carries it everywhere.
 
 This file is about *how* to work. It grants no authority and overrides no
 protocol. Where it meets `AGENTS.md`, the OS entry
-`08_os/开发入口与单窗口任务规范_v1.md`, or a current Human instruction, those win.
+`01_os/开发入口与单窗口任务规范_v1.md`, or a current Human instruction, those win.
 
 Every rule below was paid for. The incident is named so the rule is not mistaken
 for style preference.
@@ -155,9 +155,9 @@ writing to master through one of them is the same announced action as writing to
 master through another. The local pre-push hook covers only the local transport,
 so its silence elsewhere proves nothing — read the remote for that. What each
 transport must prove instead is the matrix in section 1.1 of
-`08_os/开发入口与单窗口任务规范_v1.md`; who may publish at all, and which acts stay
+`01_os/开发入口与单窗口任务规范_v1.md`; who may publish at all, and which acts stay
 action-bound even under the widest grant, is
-`08_os/05_registry/repository_publisher_authority_v1.yml`.
+`01_os/05_registry/repository_publisher_authority_v1.yml`.
 
 *Paid for once:* an executor with only a connector read "I cannot run
 `git config --get core.hooksPath`" as "I am not permitted to publish", withheld a
@@ -204,7 +204,7 @@ the canonical protocol. This applies to every line below.
 
 The roles are stable; who holds one is not. **Which provider and model fills a
 role for a given task is decided in that task's packet** — `executor_profile` and
-`verification_profile`, section 7 of `08_os/开发入口与单窗口任务规范_v1.md` — and
+`verification_profile`, section 7 of `01_os/开发入口与单窗口任务规范_v1.md` — and
 changes without changing anything below. Do not read a vendor name written
 anywhere as architecture, and do not infer your own permissions from the role you
 were handed.
@@ -261,7 +261,7 @@ report is not a finding; an executor's handoff is not an acceptance. Both become
 real only after someone who did not produce them has read the primary evidence,
 and only once the conclusion is written into the repository or the brief vault.
 
-Durable evidence for shared OS work lands in `08_os/_runs/<run-id>/`. Where a
+Durable evidence for shared OS work lands in `01_os/_runs/<run-id>/`. Where a
 domain's own research material lands is declared in `CORE_MANIFEST.yml` under
 `domain_owned_paths`: each domain keeps its own, and core ships none.
 

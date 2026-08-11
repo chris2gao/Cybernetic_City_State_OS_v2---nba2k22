@@ -1,0 +1,87 @@
+schema_version: os_development_run.v1
+run_id: run-014-cosmic-ray安装对照验证
+task_id: cosmic-ray-wsl-installation-validation-001
+correction_task_id: cosmic-ray-final-evidence-runtime-correction-002
+implementation_base: a6261cf3a8f0e0263b41a6ec32a3dd6c16ed653c
+dispatch_head: 452f19a8d86fad32da002d24368cc204124e9084
+work_branch: codex/cosmic-ray-wsl-installation-validation-001
+ownership: core
+run_class: tool_installation_comparative_validation_and_on_demand_integration
+purpose: 在 WSL 用户态验证 Cosmic Ray、与 mutmut 同输入对照并接入 fail-closed 单文件 loader
+tool:
+  name: cosmic-ray
+  version: 8.4.6
+  runtime: Python 3.14.4
+  test_runner: pytest 9.1.1
+  validation_parser: PyYAML 6.0.3
+  include_system_site_packages: false
+  installation_manager: dedicated_virtualenv_pip
+  status: verified_on_demand
+  mount: on_demand_wsl_cli
+  default_loaded: false
+  mcp_exposed: false
+  distributor: local
+  workers: 1
+  version_gate: exact_cosmic_ray_python_pytest_and_isolated_pyvenv_before_session_init
+  python_environment: PYTHONPATH_PYTHONHOME_PYTHONUSERBASE_unset
+  workspace_policy: wsl_linux_filesystem_clean_git_worktree
+  target_policy: explicit_single_python_file_allowlist
+  canonical_wrapper: 01_os/06_execution/tools/cosmic_ray/invoke.sh
+outputs:
+  tool_contract: 01_os/04_skills_and_tools/cosmic-ray/README.md
+  loader_contract: 01_os/06_execution/tools/cosmic_ray/README.md
+  wrapper: 01_os/06_execution/tools/cosmic_ray/invoke.sh
+  summary_helper: 01_os/06_execution/tools/cosmic_ray/summarize.py
+  environment_receipt: 01_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/evidence/environment_receipt.json
+  validation_receipt: 01_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/results.json
+  conclusion: 01_os/_runs/run-014-cosmic-ray安装对照验证/08_结论/Cosmic Ray系统职责与收益.md
+  review_handoff: 01_os/_runs/run-014-cosmic-ray安装对照验证/08_结论/审核回传.md
+records:
+  environment_summary: 01_os/_runs/run-014-cosmic-ray安装对照验证/01_任务输入/环境与安装回执.md
+  official_evidence: 01_os/_runs/run-014-cosmic-ray安装对照验证/01_任务输入/官方证据.md
+  validation_matrix: 01_os/_runs/run-014-cosmic-ray安装对照验证/03_方案设计/验证矩阵.md
+  change_record: 01_os/_runs/run-014-cosmic-ray安装对照验证/06_执行/变更清单.md
+  test_record: 01_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/测试记录.md
+validation:
+  dedicated_virtualenv_installation: passed
+  python_3_14_compatibility: passed
+  calibration_weak_repeat: passed
+  calibration_strengthened_repeat: passed
+  decorator_semantics: passed
+  timeout_semantics: passed_with_wrapper_correction
+  real_target_repeat: passed
+  survivor_proofs: passed
+  wrapper_matrix: 38_passed
+  results_environment_exact_match: passed
+  committed_personal_paths: 0
+  evidence_files: 208
+  temporary_cleanup: passed
+  no_resident_process: passed
+  canonical_source_unchanged: passed
+  final_regression: passed_with_baseline_equivalence
+  candidate_caused_full_pytest_failures: 0
+  ai_pytest: 45_passed_22_subtests_passed
+  full_pytest_implementation_base: 11_failed_4_passed
+  full_pytest_candidate: 11_failed_16_passed
+  full_pytest_failed_node_ids_exact_match: true
+  context_structure_validator: passed
+  run_012_repository_validator: 7_passed
+  path_redaction_scan: passed
+  binary_artifact_count: 0
+  historical_run_013_scope_validator: not_applicable_to_later_approved_tool_paths
+measurement:
+  weak_cosmic_ray: 48_killed_20_survived_of_68
+  weak_mutmut: 5_killed_5_survived_of_10
+  strong_cosmic_ray: 56_killed_12_survived_of_68
+  strong_mutmut: 7_killed_3_survived_of_10
+  timeout_cosmic_ray_semantic: 8_killed_1_timeout_1_survived_of_10
+  timeout_mutmut: 3_killed_2_timeout_of_5
+  real_cosmic_ray: 41_killed_16_survived_1_worker_exception_of_58
+  real_mutmut: 127_killed_2_survived_of_129
+  real_cosmic_ray_survivors: 12_equivalent_or_noise_4_genuine_gaps
+  exact_model_tokens: not_observable
+  peak_process_tree_memory: not_observable_reliably
+  context_claim: proxy_not_billing_tokens
+  system_install_performed: false
+  sudo_used: false
+status: integrated_and_verified_on_demand

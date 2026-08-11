@@ -1,0 +1,33 @@
+schema_version: citystate.run.v1
+
+task: 08os-reference-graph-enumeration-001
+title: 引用图事实盘点 · 枚举半（T06a）
+base: 07cdc1c76b38bc5a65dbcfb72376f1b6008b5626
+branch: agent/reference-inventory-enumeration-001
+ownership: core
+executor: Claude Opus 5
+risk_tier: T0_mechanical
+
+purpose: >-
+  为 T07 的引用图合同裁决提供可复放的事实层。只做枚举与解析，
+  不做语义分类；normative / instance / example / template / fixture 的判定
+  属于 T06b，由独立会话完成。
+
+run_id_note: >-
+  取 run-016 而非首个空缺的 run-015。T11 与本任务并发执行，
+  而"首门确认未占用"这条规则只对串行有效：两个窗口同时检查会同时看到同一个空缺。
+  并发下的 run-id 分配没有加锁，这是一条应交 T10 处理的机制缺口。
+
+outputs:
+  - 01_os/_runs/run-016-引用图事实盘点枚举/06_执行/枚举结果_v1.md
+  - 01_os/_runs/run-016-引用图事实盘点枚举/06_执行/path_references.csv
+
+validation:
+  corpus_files: 113
+  path_references_total: 391
+  path_references_distinct: 136
+  genuinely_unresolved: 1
+  reproducible: true
+
+status: candidate_ready_for_independent_review
+next_owner: T06b_classification_then_independent_review

@@ -1,0 +1,67 @@
+schema_version: context_management.migration_map.v1
+run_id: run-008-上下文管理结构迁移
+inventory_completed_before_move: true
+source_root: 01_os/01_workflow/context-management-mechanism
+destination_root: 01_os/03_mechanisms/context_management/依据材料
+inventory:
+  source_file_count: 20
+  requirement_file_count: 4
+  evidence_file_count: 16
+  run_007_file_count: 16
+  source_yaml_markdown_identical_pairs:
+    - [evidence/00_挖掘目标与领域_v1.yml, evidence/00_挖掘目标与领域_v1.md]
+    - [evidence/01_内部证据_v1.yml, evidence/01_内部证据_v1.md]
+move_rules:
+  - from: 01_os/01_workflow/context-management-mechanism/requirement/**
+    to: 01_os/03_mechanisms/context_management/依据材料/requirement/**
+    method: git_mv
+  - from: 01_os/01_workflow/context-management-mechanism/evidence/**
+    to: 01_os/03_mechanisms/context_management/依据材料/evidence/**
+    method: git_mv
+exact_path_map:
+  requirement:
+    - A_需求建模_v1.yml
+    - A_需求建模_v2.yml
+    - 人类确认_v1.yml
+    - 人类确认_v2.yml
+  evidence:
+    - 00_挖掘目标与领域_v1.md
+    - 00_挖掘目标与领域_v1.yml
+    - 01_内部证据_v1.md
+    - 01_内部证据_v1.yml
+    - 02_ChatGPT外部检索_v1.md
+    - 03_独立检索与综合派单_v1.md
+    - 06_NotebookLM_第三方匹配_v1.md
+    - 07_证据索引与可行性判断_v1.yml
+    - 07a_机制同义裁定_v1.yml
+    - 07b_开放发现统计_v1.yml
+    - 07c_证据索引草案_v1.yml
+    - 08_Codex_本机分区运行试验任务_v1.yml
+    - 09_本机默认分区试验_v1.md
+    - chatgpt - deep-research-report.md
+    - gemini - Multi-Model OS Context Research.md
+    - README.md
+historical_reference_policy:
+  preserve_original_narrative:
+    - 01_os/claude与人类的开发对话日志.md
+    - 01_os/_runs/run-007-上下文管理信息收集测试/**
+    - superseded design versions
+  explanation: >-
+    上述材料是发生时事实；其中旧路径不作为活动加载或执行入口。run-008 映射提供
+    old-to-new 解释，活动文档和最终证据机器引用改为新 canonical 路径。
+proposed_additional_paths:
+  - path: 01_os/_dev/决定_谁执行.md
+    finding: 仍含“每角色一个工作树是边界”的旧决定措辞
+    disposition: >-
+      不在本任务允许修改清单内，因此未编辑；活动 WORKFLOW_MECHANISM_v0.2、
+      阶段六 README 和全局机制已明确取代该边界判断。
+    blocks_validator: false
+required_semantic_preservation:
+  A_v2: required
+  human_confirmation_v2: required
+  final_evidence: required
+  PART_01_status: failed
+  workspace_partition_is_enforced_boundary: false
+  publish_allowlist_required: true
+  broad_git_staging_forbidden: true
+  residual_risk_count: 3

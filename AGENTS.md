@@ -19,14 +19,14 @@ Startup is four reads and one conditional fifth. Nothing else loads by default.
 3. This file.
 4. The current task: objective, exact base SHA, allowed paths, prohibitions,
    tests, and the completion pointer it must return.
-5. **When the task touches the OS:** `08_os/README.md` and
-   `08_os/开发入口与单窗口任务规范_v1.md`. That entry owns single-window rules,
+5. **When the task touches the OS:** `01_os/README.md` and
+   `01_os/开发入口与单窗口任务规范_v1.md`. That entry owns single-window rules,
    file placement, registry synchronisation, run evidence, publication transport
    gates and the Human gate. Then only the canonical files that task names.
 
-`08_os/**` is the active OS. The retained global surface outside it is this file,
+`01_os/**` is the active OS. The retained global surface outside it is this file,
 `AGENT_WORKING_DISCIPLINE.md`, `CLAUDE.md`, `GEMINI.md`, `README.md`,
-`CORE_MANIFEST.yml` and `.githooks/`. Everything else outside `08_os/**` is legacy
+`CORE_MANIFEST.yml` and `.githooks/`. Everything else outside `01_os/**` is legacy
 awaiting Human retirement: it is not a startup, communication, state, task, role
 or navigation source of truth. Do not load it for background, and do not
 reintroduce a dependency on it — including in a file you are only passing through.
@@ -109,14 +109,14 @@ authority. Apply them only within the current task's authorized scope.
   can create branches, write files and update refs, but cannot read or set
   `core.hooksPath` and cannot run a local hook. State which transport you are on
   before publishing, and run that transport's gate — the matrix is section 1.1 of
-  `08_os/开发入口与单窗口任务规范_v1.md`. An unrecognized transport is blocked.
+  `01_os/开发入口与单窗口任务规范_v1.md`. An unrecognized transport is blocked.
 - Lacking a local hook is not lacking permission, and is not grounds for
   withholding a finished artifact. The API path substitutes a real gate for the
   hook: bind an expected 40-character head, write with a non-force
   compare-and-swap, keep the diff inside the allowed paths, and read the
   resulting remote head back rather than assuming it. Report the value you read.
 - Publication authority itself, and which acts remain action-bound even under the
-  widest Human grant, are in `08_os/05_registry/repository_publisher_authority_v1.yml`. A provider
+  widest Human grant, are in `01_os/05_registry/repository_publisher_authority_v1.yml`. A provider
   name authorizes nothing there — it is text the caller writes about itself.
 
 ## Test And Review Expectations

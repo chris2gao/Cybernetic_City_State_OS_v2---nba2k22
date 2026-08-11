@@ -1,0 +1,139 @@
+schema_version: citystate.communication_system.stage04_independent_review_correction_dispatch.v1
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+status: ready_for_execution
+
+repository:
+  name: chris2gao/Cybernetic_City_State_OS_v2---core
+  work_branch: dev/os-v2-global-communication-system-001
+  review_base_head: 7c899ba62db34cb6978ed3b3ba2084ce4802c43f
+  required_review_record_commit: ceeac698218a06b52e0972fe7d89e803e9f93536
+  expected_master_head: c7a508abbcda58361fc9b649236d44b706e0bdd4
+
+target_endpoint:
+  endpoint_id: antigravity-desktop-gemini-stage04-reviewer-01
+  host: Google Antigravity Desktop
+  required_model: available Gemini model in Antigravity
+  task_role: independent_review_and_correction
+
+objective: >-
+  Independently inspect the primary diff from 40af80bdcd7ffa7d975a89d8e902853bba711a4e
+  through the current branch, determine whether the stage-04 artifacts are genuinely executable
+  frozen-test candidates, record the review before editing, and correct confirmed blocking defects.
+  Do not trust the Opus receipt or planner findings without checking source code and fixtures.
+
+minimum_load_order:
+  - remote master exact 40-character SHA
+  - 01_os/README.md
+  - 01_os/开发入口与单窗口任务规范_v1.md
+  - 01_os/01_workflow/04_测试生成/README.md
+  - 01_os/01_workflow/04_测试生成/实现/最小运行schema_v1.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/03_结果建模/B_结果模型_v3.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/冻结测试候选_v1.yml
+  - all five files under 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/specs/
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/本地执行派单_Antigravity_Opus_v1.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/本地执行结果_Antigravity_Opus_v1.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/本地执行结果接收与独立审查_v1.yml
+  - primary diff 40af80bdcd7ffa7d975a89d8e902853bba711a4e...current_branch_head
+
+review_first_requirement:
+  before_any_correction:
+    write: 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/独立复核记录_Antigravity_Gemini_v1.yml
+    include:
+      - independently_verified_changed_paths
+      - findings_by_severity
+      - whether_each_of_GC-T001_through_GC-T050_has_a_real_executable_oracle
+      - whether_preimplementation_and_full_modes_have_distinct_semantics
+      - whether_fixtures_match_B_v3
+      - whether_Opus_counts_are_reproducible
+      - exact_source_locations_for_each_finding
+
+non_negotiable_test_semantics:
+  - do_not_modify_the_50_test_ids_titles_evidence_claim_ids_criterion_ids_or_failure_codes
+  - do_not_modify_the_candidate_normalized_test_index_digest
+  - do_not weaken an oracle to make the baseline pass
+  - every test GC-T001 through GC-T050 must have a concrete executable handler or adapter
+  - a handler must inspect a fixture, repository state, temporary Git repository, target interface, or frozen external result; it may not return a constant expected status
+  - preimplementation-baseline may return EXPECTED_FAIL only after a concrete check proves the required stage-06 target is absent or not yet compliant
+  - full mode must never return EXPECTED_FAIL
+  - full mode outcomes are PASS, FAIL, ERROR, or BLOCKED_EXTERNAL only
+  - test-program or fixture faults are ERROR, never EXPECTED_FAIL
+  - oracle mismatch is FAIL
+  - missing stage-06 target in full mode is FAIL
+  - GC-T050 must use deterministic field-by-field scoring and must preserve known Opus discrepancies rather than treating field presence alone as semantic correctness
+
+required_corrections_if_findings_confirmed:
+  - replace placeholder expected-fail generator with concrete test implementations for all 50 tests
+  - implement baseline/full mode distinction
+  - replace canonical-message fixtures with exact B v3 canonical fields and IDs
+  - add or generate all required fixtures, including temporary Git convergence/conflict and archive/privacy cases
+  - add a stable implementation adapter contract so stage-06 code can be tested without modifying frozen semantics
+  - add harness self-tests that fail if any test has no concrete handler, any handler is a constant-status placeholder, or full mode can emit EXPECTED_FAIL
+  - add harness tests for fixture-to-spec binding and B-v3 field names
+  - ensure GC-T006 tests anchors, aliases and merge keys as distinct subcases
+  - ensure GC-T050 scores exact recovered values and required-ref sets, not mere field presence
+
+allowed_write_paths:
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/独立复核记录_Antigravity_Gemini_v1.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/fixtures/
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现前基线_Antigravity_Gemini_v1.yml
+  - 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/独立复核与纠正结果_Antigravity_Gemini_v1.yml
+
+prohibited_writes:
+  - master
+  - 01_需求建模/
+  - 02_信息收集与提炼/
+  - 03_结果建模/
+  - 04_测试生成/specs/
+  - 04_测试生成/冻结测试候选_v1.yml
+  - 05_步骤拆分/
+  - 06_执行/
+  - 07_测试执行/
+  - canonical OS mechanism, registry, boot or execution paths
+
+required_commands_after_correction:
+  - python 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/validate_test_candidate.py --repo-root .
+  - python -m pytest 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/test_stage04_harness.py -v
+  - python 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/run_stage04_executable_tests.py --repo-root . --mode preimplementation-baseline
+  - python 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/实现/run_stage04_executable_tests.py --repo-root . --mode full
+  - python 01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py static .
+  - python 01_os/03_mechanisms/context_management/实现/verify_context_structure.py
+  - python 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_no_canonical_live_state.py .
+  - python 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py static .
+
+acceptance_before_return:
+  candidate_validator_exit_0: true
+  all_harness_self_tests_exit_0: true
+  discovered_test_count: 50
+  concrete_handler_count: 50
+  placeholder_constant_status_handler_count: 0
+  baseline_ERROR_count: 0
+  baseline_FAIL_count: 0
+  baseline_EXPECTED_FAIL_requires_concrete_missing_target_evidence: true
+  full_EXPECTED_FAIL_count: 0
+  full_ERROR_count: 0
+  full_expected_before_stage06: FAIL_for_unimplemented_targets_and_PASS_for_implementation_independent_checks
+  all_global_validators_exit_0: true
+  exact_changed_paths_within_allowlist: true
+  master_unchanged: true
+
+return_contract:
+  result_path: 01_os/_runs/run-20260805-全局通讯机制-001/04_测试生成/独立复核与纠正结果_Antigravity_Gemini_v1.yml
+  report:
+    - endpoint_id
+    - actual_model
+    - independent_review_verdict_before_correction
+    - confirmed_and_rejected_planner_findings
+    - exact_changed_paths
+    - branch
+    - push_head_40_char
+    - discovered_test_count
+    - concrete_handler_count
+    - placeholder_handler_count
+    - baseline_status_counts
+    - full_status_counts
+    - command_exit_codes
+    - remaining_limitations
+    - test_spec_defects_found
+    - master_unchanged_readback

@@ -1,0 +1,90 @@
+schema_version: citystate.pre_deletion_independent_rereview.v1
+task_id: os-v2-pre-deletion-migration-final-whitelist-001
+run_id: run-20260810-旧OS退役前迁移与最终白名单-001
+reviewer: ChatGPT_independent_project_reviewer
+reviewed_executor_head: d7126c7ff06f763a42fbc98b2f3628bbd7aeea69
+source_base: 51d8be2e42403d11620e7cee86aa7b7074f8f52a
+prior_review_commit: 79be7b073b1d298cdbdd086994543a5035ba62c6
+physical_master: eb4be95a25cb4b0929def284a7fb4b6a412aed55
+verdict: PASS
+physical_deletion_gate: open_for_exact_490_list_only
+
+physical_verification:
+  correction_range:
+    base: 79be7b073b1d298cdbdd086994543a5035ba62c6
+    head: d7126c7ff06f763a42fbc98b2f3628bbd7aeea69
+    commits: 1
+    changed_paths: 11
+  master_still_exact_base: true
+  master_modified: false
+  physical_deletions_in_migration_task: 0
+
+blocking_finding_resolution:
+  R1_M3_active_dev_files_wrongly_excluded:
+    status: closed
+    evidence:
+      - 01_os/_dev/IMPLEMENTATION_PLAN_v0.2.md now names 01_os/07_content/_runs/<run-id>/
+      - 01_os/_dev/WORKFLOW_BACKBONE_v0.3.md now names 01_os/07_content/_runs/<run-id>/
+      - 01_os/_dev/WORKFLOW_MECHANISM_v0.2.md now names 01_os/07_content/_runs/
+      - 01_os/_dev/开发产物与文件隔离规范_v1.md now names 01_os/07_content/_runs/ and is restored to validator ownership-text checks
+      - verify_migration_closure.py includes 01_os/_dev/** in the active surface and determines supersession/history per file marker rather than directory membership
+      - M3 active_dependency_hits is 0 with _dev included; superseded_or_historical_file_hits is also measured as 0
+  N1_CORE_MANIFEST_transition_truth:
+    status: closed
+    evidence: CORE_MANIFEST explicitly states that 25 01_Research_Reports files remain physically tracked pending the next mechanical deletion task
+
+scope_amendment_judgment:
+  status: accepted
+  reason: >-
+    The original task packet did not include the four _dev paths, while the correction instruction explicitly required exactly those four paths. The original packet was correctly preserved as immutable task history; the amendment is separately recorded in 04_验证/allowlist_amended_v1.yml. Ledger results against both the original packet and amended authorized scope are disclosed rather than hidden.
+
+final_partition:
+  tracked_non_08_files: 505
+  exact_delete_list_count: 490
+  final_retain_unchanged: 6
+  deferred_until_root_move_rewrite_unchanged: 9
+  unassigned: 0
+  overlap: 0
+  os_paths_in_delete_list: 0
+  delete_list_ref: 03_最终清单/最终直接删除清单_v1.yml
+  whitelist_ref: 03_最终清单/最终非08白名单_v1.yml
+  delete_list_blob_at_reviewed_head: 162f59cbd101cbfa8a725981f835762ae829aafe
+  whitelist_blob_at_reviewed_head: b92adfc064860ddf29ca5549c34c6d6d7d111a7f
+  unchanged_by_correction: true
+
+accepted_migrations:
+  M1_publisher_authority: PASS
+  M2_token_profile_pointer: PASS
+  M3_domain_runtime_root: PASS
+  M4_legacy_system_summary_evidence: PASS
+  M5_token_profile_legacy_evidence: PASS
+
+validation_judgment:
+  context_management_validator: accepted_PASS
+  repository_default_checks: accepted_4_of_4
+  migration_closure: accepted_PASS
+  final_partition: accepted_PASS
+  changed_path_ledger:
+    original_packet_result: VIOLATION_4_for_four_later_authorized_dev_paths
+    amended_authorized_scope_result: PASS
+    judgment: no_unauthorized_scope_expansion_observed
+
+nonblocking_notes:
+  - >-
+    01_os/_dev/IMPLEMENTATION_PLAN_v0.2.md still contains a design-discussion reference to .ai/CODEX_TASK_INPUT_CONTRACT.md. That source is within the Human-authorized predecessor delete set. This is not a loader/canonical dependency and does not block the Human's explicit direct-delete decision, but the active design document should be normalized during the later 01_os-to-root cleanup so it does not describe a retired option as current.
+  - >-
+    08_结论/执行报告_v1.yml contains older M3 prose from before correction as well as the correction-round section that supersedes it. The correction record and physical files are authoritative; this documentation residue does not change the gate.
+  - >-
+    Local-only .ssh/ material is outside Git and outside this remote deletion list. No leak was observed by the executor; moving local key material out of the repository working tree remains a Human workstation action.
+
+deletion_authorization_effect:
+  authorized_action: >-
+    A subsequent mechanical task may delete exactly the 490 tracked paths enumerated in 03_最终清单/最终直接删除清单_v1.yml, without re-adjudicating their semantics.
+  must_bind_exact_delete_list_blob: 162f59cbd101cbfa8a725981f835762ae829aafe
+  may_delete_any_additional_path: false
+  01_os_tree_deletion_authorized: false
+  root_move_authorized: false
+  master_publication_authorized: false
+
+final_judgment: >-
+  The migration-before-delete work is accepted. The exact 490-path direct-delete list is safe to hand to a purely mechanical deletion task under the Human's prior decision. The next task must consume that exact list/blob, delete no additional tracked path, preserve the 6+9 non-08 whitelist and all 01_os/** content, then independently verify the resulting physical tree before any master publication.

@@ -1,0 +1,71 @@
+schema_version: citystate.legacy_deletion_independent_rereview.v2
+task_id: os-v2-legacy-physical-deletion-001
+run_id: run-20260810-旧OS物理删除-001
+reviewer: ChatGPT_independent_project_reviewer
+reviewed_executor_head: 11c6b2608979b3b9ece3c4f78886ee0bc54bf716
+physical_master: eb4be95a25cb4b0929def284a7fb4b6a412aed55
+verdict: REVISE_NARROW_CORRECTION
+
+accepted:
+  exact_490_non08_deletion: PASS
+  post_delete_15_whitelist: PASS
+  immutable_history_no_08_deletion:
+    status: PASS
+    dispatch_head: 966adf07b707c04143b9d952e52ba2c10313f3ad
+    dispatch_08_tracked: 835
+    current_08_tracked: 842
+    missing_dispatch_08_paths: 0
+  tracked_python_integrity:
+    status: PASS
+    before: 92
+    after: 92
+    path_set_equal: true
+    blobs_equal: 92_of_92
+    outside_01_os: 0
+  runtime_pydeps_cleanup: PASS
+  permission_blocked_pytest_cache:
+    status: ACCEPTED_RESIDUAL
+    count: 2
+    acl_or_owner_change_required: false
+  master_modified: false
+
+blocking_findings:
+  - id: R2_SSH_MACHINE_PROOF_TOO_WEAK
+    finding: >-
+      verify_exact_deletion.py currently treats SSH material as preserved when the
+      repository .ssh directory is empty and the user profile .ssh directory has
+      any file at all. That does not machine-prove the report's narrower factual
+      claim that the four observed names exist in the user profile. Do not read key
+      contents. Prove only filename presence and metadata allowed by the task.
+    required_correction:
+      - assert repository-side .ssh contains no files
+      - assert exact expected profile names exist: id_ed25519, id_ed25519.pub, known_hosts, known_hosts.old
+      - optionally assert the already observed byte sizes 387, 83, 828, 92 without opening contents
+      - report each exact path/name result separately
+      - do not infer who moved the files
+  - id: R3_EXECUTION_REPORT_STALE_CONTRADICTION
+    finding: >-
+      execution report contains the new ssh_relocation section but also retains an
+      older preservation.ssh_private_key paragraph claiming .ssh/id_ed25519 is still
+      present in the repository. The durable report is internally contradictory.
+    required_correction:
+      - remove or explicitly mark the stale paragraph superseded
+      - make preservation wording consistent with the observed current location
+      - keep awaiting_human_confirmation unless the Human explicitly confirms who moved it
+
+nonblocking_notes:
+  - >-
+    The two permission-blocked .pytest_cache directories may remain. Do not change
+    ACLs, ownership or elevation merely to remove disposable cache.
+  - >-
+    This correction must not touch any tracked Python file, deletion list, whitelist,
+    CORE_MANIFEST ownership semantics, or restore/delete any tracked file.
+
+acceptance_after_correction:
+  - exact profile SSH filename presence is machine-checked without reading contents
+  - repository working tree contains no .ssh files
+  - report has no stale contradictory SSH-preservation claim
+  - 490/15 sets unchanged
+  - missing_dispatch_08_paths remains 0
+  - tracked Python remains 92 paths and 92/92 blobs identical
+  - master remains unchanged

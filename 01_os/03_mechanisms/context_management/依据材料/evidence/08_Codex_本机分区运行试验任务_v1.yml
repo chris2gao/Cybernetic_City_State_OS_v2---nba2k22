@@ -1,0 +1,132 @@
+operation: codex_execution
+status: ready_to_dispatch
+task_id: context-stage2-local-partition-001
+workflow_id: context-management-mechanism
+stage: 02_信息收集与提炼
+
+source_branch: master
+source_head: 8a3989ff6471e5c0de1d2a5fd2b5acfb79947595
+
+objective: >-
+  在当前本地开发环境中执行一个无管理员权限、无生产改动的最小运行试验，验证任务与角色默认分区、
+  固定角色入口恢复、结构化交接和上下文体积缩减是否能在正常工具路径下工作；同时如实记录
+  worktree/clone 不能构成访问边界、可用的主机或工具约束以及无法验证的部分。
+
+inputs:
+  - 01_os/03_mechanisms/context_management/依据材料/requirement/A_需求建模_v1.yml
+  - 01_os/03_mechanisms/context_management/依据材料/evidence/00_挖掘目标与领域_v1.yml
+  - 01_os/03_mechanisms/context_management/依据材料/evidence/01_内部证据_v1.yml
+  - 01_os/03_mechanisms/context_management/依据材料/evidence/07a_机制同义裁定_v1.yml
+  - 01_os/03_mechanisms/context_management/依据材料/evidence/07b_开放发现统计_v1.yml
+  - 01_os/01_workflow/02_信息收集与提炼/实现/证据包schema_v1.md
+
+allowed_paths:
+  - 01_os/03_mechanisms/context_management/依据材料/evidence/09_本机默认分区试验_v1.md
+  - 01_os/_runs/run-007-上下文管理信息收集测试/artifacts/local-partition/**
+
+forbidden_paths:
+  - 01_os/03_mechanisms/context_management/依据材料/requirement/**
+  - 01_os/01_workflow/02_信息收集与提炼/**
+  - 01_os/01_workflow/03_结果建模/**
+  - CORE_MANIFEST.yml
+  - .ai/**
+  - 除 allowed_paths 外的全部仓库文件
+
+safety_constraints:
+  - 不创建或删除操作系统用户。
+  - 不要求管理员权限，不修改系统级 ACL、注册表、防火墙或全局 Git 配置。
+  - 不安装 Docker、WSL、内核模块、MCP 服务或其他系统软件。
+  - 若现有环境已具备 Docker、WSL、权限 profile 或 allow-root 工具，可只在临时目录中试用；不可改变其全局配置。
+  - 不创建、删除或修改远程 GitHub 仓库、团队、密钥、PAT 或权限。
+  - 所有临时数据必须位于系统临时目录或 allowed_paths 下，并在报告中列出清理结果。
+  - 任何边界无法技术执行时必须记为 failed 或 blocked，不得以模型承诺代替测试。
+
+experiment_plan:
+  - id: ENV-01
+    name: 环境能力探测
+    actions:
+      - 记录 OS、shell、Git、Python、Docker/WSL 可用性、当前进程权限和可用文件访问约束。
+      - 不输出密钥、token、用户名之外的敏感环境变量值。
+    pass_condition: 能确定哪些隔离原语可在不提权、不安装软件的前提下测试。
+
+  - id: PART-01
+    name: 任务与角色工作区分区
+    actions:
+      - 在临时目录创建一个小型本地裸仓库或等价本地 Git 源。
+      - 为 planner、executor、reviewer 创建独立 clone 或工作目录。
+      - 每个角色写入唯一 sentinel 私有文件和一个允许发布的结构化 handoff 文件。
+      - 记录工作区创建、提交、交接与清理所需命令和耗时。
+    pass_condition: 正常工作路径只需进入本角色工作区即可完成读取、修改和发布交接。
+    mandatory_negative_result: 明确测试并记录 clone/worktree 本身是否阻止同一不受限 shell 读取兄弟目录；预期不能，不能包装成通过。
+
+  - id: BOUND-01
+    name: 可用边界原语抽查
+    actions:
+      - 若运行时已有受限工具 root、权限 profile、容器或无提权 ACL 能力，选成本最低的一项在临时目录抽查授权读与越界读。
+      - 若没有任何可用原语，记录 blocked，并说明缺少的能力。
+    pass_condition: 授权文件可读；越界路径在技术层被拒绝并有可观察错误。
+    allowed_outcomes: [passed, failed, blocked]
+
+  - id: RESTORE-01
+    name: 固定角色入口恢复
+    actions:
+      - 为 executor 生成一个固定结构化入口，包含任务标识、当前步骤、状态、待办、阻塞、精确输入版本和获准引用。
+      - 结束第一执行进程或清空其会话变量，以新进程只读取该入口和授权引用。
+      - 验证新进程能复述当前有效状态并完成一个确定性小步骤，不读取 planner/reviewer 私有文件。
+    pass_condition: 不依赖旧聊天或进程内变量完成恢复和下一步。
+
+  - id: HANDOFF-01
+    name: 结构化交接最小闭环
+    actions:
+      - planner 发布一个版本化任务 handoff。
+      - executor 消费并发布结果 handoff。
+      - reviewer 只读取结果 handoff、测试说明和实现产物，给出通过或不通过。
+      - 修改上游 handoff 的内容哈希，检查旧 executor/reviewer 入口能否被确定性标为 stale；若尚无 validator，只记录需实现的最小规则和可重复样例。
+    pass_condition: 跨角色闭环不需要直接读取其他角色私有区；版本不匹配可被脚本或明确确定性检查发现。
+
+  - id: SIZE-01
+    name: 上下文体积代理测量
+    actions:
+      - 统计全量任务材料、executor 最小入口包、reviewer 最小入口包的字节数、字符数和文件数。
+      - 若本地已有可信 tokenizer，可补充 token 数；否则不得把字符估算写成精确 token。
+    pass_condition: 报告可重复的体积差异，并说明它只证明输入缩减，不直接证明模型质量提升。
+
+required_outputs:
+  - path: 01_os/03_mechanisms/context_management/依据材料/evidence/09_本机默认分区试验_v1.md
+    content:
+      - 环境能力矩阵
+      - 每个实验的命令、输入、实际输出与 passed/failed/blocked
+      - clone/worktree 的真实边界结论
+      - 固定入口恢复结果
+      - handoff 与版本失效结果
+      - 上下文体积代理测量
+      - 临时文件清理记录
+      - 对 B 的约束，不做最终方案选择
+  - path: 01_os/_runs/run-007-上下文管理信息收集测试/artifacts/local-partition/
+    content:
+      - 可重复执行脚本
+      - 最小 fixture
+      - 非敏感日志
+      - 计算结果文件
+
+acceptance_tests:
+  - git diff --name-only <source_head>...HEAD 只包含 allowed_paths。
+  - 报告中的每个实验都有 passed、failed 或 blocked，不能只写叙述性结论。
+  - 至少存在一个授权读取正例和一个兄弟目录越界读取负例；若技术边界不可用，负例必须如实显示读取成功并使该方案失败。
+  - 新 executor 进程只依赖固定入口与授权引用完成恢复步骤。
+  - 版本哈希变化的 stale 判定有可重复脚本或明确 blocked 原因。
+  - 不包含凭证、token、私钥、完整环境变量或用户私有路径内容。
+  - 临时资源已清理，或逐项说明残留及原因。
+
+publication_policy:
+  source_push_authorized: false
+  work_branch: codex/context-stage2-local-partition-001
+  review_required: true
+  expected_final_state: committed_on_work_branch_not_merged
+
+completion_pointer_required:
+  - exact_commit_sha
+  - changed_paths
+  - test_commands
+  - experiment_summary
+  - blocked_capabilities

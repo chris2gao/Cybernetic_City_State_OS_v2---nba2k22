@@ -1,0 +1,152 @@
+schema_version: citystate.independent_retention_rereview.v1
+task_id: os-v2-root-global-retention-rewrite-001
+run_id: run-20260810-根级保留文件重写与依赖盘点-001
+reviewer: ChatGPT_independent_project_reviewer
+reviewed_executor_head: 3a7d620c867a7d298b62157416f9a381321634aa
+base_master: eb4be95a25cb4b0929def284a7fb4b6a412aed55
+prior_review_ref: 01_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/08_独立复核/ChatGPT独立复核_v1.yml
+prior_review_commit: c49132d922bcb87dbeaf9f054d940af85d963422
+verdict: PASS
+
+scope_judgment:
+  step_1_root_rewrite:
+    verdict: PASS
+    unchanged_since_accepted_commit: true
+    accepted_commit: 4bd8d4d6094721d69676d2e02ca2fa7118167107
+  step_2_dependency_inventory:
+    verdict: PASS
+    whitelist_safe_for_pre_deletion_planning: true
+    deletion_authorized_by_this_review: false
+
+physical_verification:
+  master_still_exact_base: true
+  master_head: eb4be95a25cb4b0929def284a7fb4b6a412aed55
+  correction_range:
+    base: c49132d922bcb87dbeaf9f054d940af85d963422
+    head: 3a7d620c867a7d298b62157416f9a381321634aa
+    commits: 1
+    changed_paths: 5
+    all_changed_paths_inside_run_evidence_subtree: true
+  step_1_root_files_changed_in_correction: false
+
+correction_findings:
+  R1_program_runs_wrong_bucket:
+    status: closed
+    judgment: >-
+      Reclassification to migrate_then_delete_source is correct. The executor also
+      correctly demonstrated that .ai/PROGRAM_RUNS/ contains zero tracked files in
+      core, so it belongs in a separate declaration-only entry table and does not
+      change the tracked-file bucket counts. The prior review's predicted 15->14 and
+      4->5 file-count movement mixed entry count with file count and is withdrawn.
+  R2_unverifiable_external_handoff_dependency:
+    status: closed
+    judgment: >-
+      The asserted Human-standing-instruction edge was withdrawn because no durable
+      current authority ref can be independently re-derived. The file is now
+      Human_decision_required with provisional keep-until-Human-decides treatment.
+  R3_new_domain_script_needs_cutover_rewrite_annotation:
+    status: closed
+    judgment: >-
+      new-domain.ps1 remains protected from deletion and is explicitly marked
+      rewrite_required_before_final_cutover because it still names
+      08_Domain_Applications/ and 03_Daily_Execution/.
+  N1_hook_test_count:
+    status: materially_closed_with_one_nonblocking_stale_sentence
+    judgment: >-
+      The retention inventory and execution report now correctly establish nine
+      cases from the physical test file. One sentence in dependency-edge evidence
+      still says "five-case guard test"; this is a documentation residue only and
+      does not affect any dependency edge or retention classification.
+  N2_dot_ai_single_blocker_wording:
+    status: closed
+    judgment: >-
+      The claim is narrowed to publisher authority being the only tracked .ai file
+      directly load-bearing for repository publication authority, while the report
+      separately lists all deletion constraints.
+  N3_gitignore_future_rewrite:
+    status: closed
+    judgment: >-
+      .gitignore is included in the PROGRAM_RUNS relocation closure and marked
+      rewrite_required_before_final_cutover.
+
+accepted_file_buckets:
+  unit: tracked_files_outside_01_os
+  total: 505
+  retain_non_08: 15
+  migrate_then_delete_source: 3
+  delete_candidate: 453
+  Human_decision_required: 34
+  unassigned: 0
+  declaration_only_entries:
+    - path: .ai/PROGRAM_RUNS/
+      classification: migrate_then_delete_source
+      tracked_files: 0
+
+accepted_retain_non_08:
+  - AGENTS.md
+  - AGENT_WORKING_DISCIPLINE.md
+  - CLAUDE.md
+  - GEMINI.md
+  - README.md
+  - CORE_MANIFEST.yml
+  - .githooks/pre-push
+  - .githooks/install.ps1
+  - .githooks/test_pre_push_logic.ps1
+  - .githooks/.gitattributes
+  - .githooks/README.md
+  - .gitignore
+  - .gitattributes
+  - .claude/settings.json
+  - new-domain.ps1
+
+retain_but_rewrite_before_final_cutover:
+  - path: .gitignore
+    reason: current private-runtime ignore rule names .ai/PROGRAM_RUNS/
+  - path: new-domain.ps1
+    reason: current post-creation instructions name legacy domain layout paths
+
+accepted_migrate_before_delete:
+  tracked_files:
+    - .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml
+    - .ai/TOKEN_USAGE_PROFILE.md
+    - 系统机制总结.md
+  declaration_only:
+    - .ai/PROGRAM_RUNS/
+
+accepted_provisional_keep_until_Human_decision:
+  - .ai/HANDOFF_COMMON_CONVENTIONS.md
+  - 01_Research_Reports/**
+  - PROJECT_CONTEXT.md
+  - ARCHITECTURE.md
+  - .ai/token_profile/**
+  note: >-
+    Additional Human-decision entries in the inventory concern ownership or stale
+    references for retained/01_os paths and therefore overlap these file buckets
+    rather than adding new tracked files.
+
+accepted_delete_candidate_count: 453
+
+remaining_pre_deletion_gates:
+  - migrate repository publication authority out of .ai and update all active refs
+  - remove/replace the surviving 01_os pointer to .ai/TOKEN_USAGE_PROFILE.md
+  - relocate .ai/PROGRAM_RUNS/ atomically across its measured closure, including .gitignore
+  - migrate the active 01_os evidence refs that point to 系统机制总结.md, or retain that source
+  - Human decision on .ai/HANDOFF_COMMON_CONVENTIONS.md
+  - Human decisions recorded in the inventory for research/history/ownership items
+
+nonblocking_evidence_notes:
+  - >-
+    02_保留清单/依赖边清单_v1.yml still contains one stale evidence sentence calling
+    .githooks/test_pre_push_logic.ps1 a five-case test. The physical file and the
+    corrected inventory establish nine cases; no classification depends on the count.
+  - >-
+    02_保留清单/执行报告_v1.yml retains an earlier changed-path-ledger result of
+    paths=10, while the final branch diff from master contains 19 changed paths.
+    This is stale report provenance, not a scope violation; the final physical diff
+    remains inside the authorized seven root files plus this run evidence subtree.
+
+final_judgment: >-
+  The rewritten root surface and corrected dependency inventory are accepted as the
+  joint ChatGPT/Claude-Code pre-deletion baseline. 01_os/** remains wholly retained
+  and excluded from itemized deletion decisions. No deletion, move, or master
+  publication is authorized by this acceptance.

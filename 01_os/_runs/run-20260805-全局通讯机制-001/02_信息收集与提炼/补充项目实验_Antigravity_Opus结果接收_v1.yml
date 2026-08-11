@@ -1,0 +1,103 @@
+schema_version: citystate.communication_system.supplementary_experiment_receipt.v1
+artifact_id: supplementary-antigravity-opus-communication-result-001
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+status: accepted_with_locatable_errors
+recorded_at: 2026-08-05T20:30:00-07:00
+
+experiment:
+  dispatch_ref: 02_信息收集与提炼/补充项目实验_Antigravity_Opus派单_v1.yml
+  packet_ref: 02_信息收集与提炼/多模型实验包_v1.yml
+  classification: same_host_different_model_family_protocol_comprehension_experiment
+  Deep_Research: false
+  required_for_stage_02_completion: false
+  execution_trigger: Human_manual_relay
+
+result:
+  path: 02_信息收集与提炼/antigravity_desktop_opus_executor_01_result.yml
+  blob_sha: 5e391016dc93696f763578cd8e19e6c5ebb01baa
+  commit_sha: 2068c4b8d8bb114ad24b39839bab0cb1017dec22
+  endpoint_id: antigravity-desktop-opus-executor-01
+  model_or_product: Claude Opus 4.6 Thinking via Google Antigravity Desktop
+  model_family: Anthropic_Claude
+  environment_class: desktop_local_model
+  host_application: Antigravity
+  physical_remote_readback: passed
+  exact_reported_head_matches_remote_branch: true
+  branch_delta_from_dispatch_head:
+    previous_head: dd5b2fa97576daa5219f939c2a4215280b407977
+    resulting_head: 2068c4b8d8bb114ad24b39839bab0cb1017dec22
+    ahead_by: 1
+    behind_by: 0
+    changed_paths:
+      - 01_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼/antigravity_desktop_opus_executor_01_result.yml
+
+acceptance_check:
+  endpoint_and_actual_model_identified: true
+  prohibited_prior_result_read_declared_absent: true
+  required_shape_semantically_satisfied: true
+  all_fixtures_answered: true
+  exact_result_path_returned_by_Human: true
+  exact_40_char_head_returned_and_verified: true
+  verdict: accepted_with_locatable_errors
+
+correct_recoveries:
+  - F1 core task, sender, expected recipient, type and purpose recovered
+  - F2 core task, sender, expected recipient, type and purpose recovered
+  - F3 core task, sender, expected recipient, type and purpose recovered
+  - F4 core task, reply relation, exact long-document ref and non-recursive loading recovered
+  - authorization_ref correctly interpreted as a pointer requiring scope verification before protected action
+  - structured YAML and JSON correctly judged less ambiguous than unconstrained prose
+
+locatable_errors:
+  - error_id: OPUS-E01
+    fixture_id: F3-free-text-pointer
+    claim_in_result: message_id planner-004 is absent
+    physical_fixture_fact: planner-004 is present immediately after the bracketed task_id
+    class: factual_recovery_error
+    consequence: >-
+      The endpoint overstated information loss in the free-text fixture. The remaining concerns about
+      schema ambiguity and multi-value extensibility still stand, but message_id loss is not proven by F3.
+  - error_id: OPUS-E02
+    fixtures:
+      - F1-minimal-yaml-index
+      - F2-compact-json-index
+      - F3-free-text-pointer
+    claim_in_result: exact_paths_to_read lists only the execution packet
+    physical_fixture_fact: >-
+      The result itself says the authorization_ref must be dereferenced and verified before execution;
+      therefore the authorization document is also a required read for the requested protected action.
+    class: response_shape_incompleteness
+    consequence: semantic authority interpretation is correct but the exact_paths_to_read field is incomplete
+
+same_host_cross_family_comparison:
+  Gemini_result_ref: 02_信息收集与提炼/antigravity_desktop_executor_01_result.yml
+  Opus_result_ref: 02_信息收集与提炼/antigravity_desktop_opus_executor_01_result.yml
+  common_findings:
+    - F1 YAML and F2 JSON preserve the tested core semantics
+    - free text is understandable but less reliable for deterministic parsing
+    - long content should remain external and be loaded only through explicit refs
+    - receiver should not scan the task directory or recursively expand references by default
+  material_difference:
+    - Gemini included both execution and authorization paths in exact_paths_to_read
+    - Opus correctly reasoned about authorization but omitted its path from exact_paths_to_read
+    - Opus introduced one false missing-message-id claim for F3
+  inference_boundary: >-
+    Two model families in one host support the basic architecture direction, but do not prove behavior in
+    Claude Code Desktop or Codex Desktop and do not justify freezing optional fields or final serialization.
+
+non_binding_endpoint_opinions:
+  - YAML preferred over JSON
+  - timestamp or created_at proposed
+  - priority or urgency proposed
+  - response verdict summary proposed
+  rule: single-endpoint design opinions are not requirement changes
+
+use_in_later_stages:
+  may_inform_B: true
+  may_inform_frozen_tests: true
+  may_replace_external_Deep_Research: false
+  may_by_itself_complete_stage_02: false
+  future_product_host_validation:
+    - Claude_Code_Desktop_when_quota_available
+    - Codex_Desktop_when_quota_available

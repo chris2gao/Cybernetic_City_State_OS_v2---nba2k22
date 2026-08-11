@@ -1,0 +1,81 @@
+schema_version: citystate.communication_system.supplementary_experiment_dispatch.v1
+artifact_id: supplementary-antigravity-opus-communication-dispatch-001
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+status: ready_for_Human_relay
+created_at: 2026-08-05T20:23:00-07:00
+
+classification:
+  experiment: cross_model_protocol_comprehension_experiment
+  Deep_Research: false
+  comparison_dimension: model_family_under_same_host_environment
+  host_environment: Antigravity_desktop
+  value: test_whether_semantic_recovery_depends_on_Gemini_family
+  limitations:
+    - same_host_as_prior_Gemini_result
+    - does_not_validate_Claude_Code_Desktop_product_runtime
+    - does_not_validate_Codex_Desktop_product_runtime
+    - does_not_validate_independent_transport_behavior
+
+Human_relay:
+  target_runtime_model_family: Anthropic_Claude_Opus
+  expected_endpoint_id: antigravity-desktop-opus-executor-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  branch: dev/os-v2-global-communication-system-001
+  read_only_input:
+    - 01_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼/多模型实验包_v1.yml
+  prohibited_reads:
+    - old_communication_protocol
+    - complete_task_history
+    - prior_Gemini_result
+  required_output_path: 01_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼/antigravity_desktop_opus_executor_01_result.yml
+  required_return_to_Human:
+    - endpoint_identity
+    - exact_result_path
+    - branch_name
+    - exact_40_char_head_after_push
+
+prompt: |-
+  补充跨模型通讯实验，不是 Deep Research。
+
+  你当前运行于 Antigravity Desktop，请使用当前实际 Claude Opus 模型完成测试，并在结果中如实声明模型名称与环境。
+
+  task_id: os-v2-global-communication-system-001
+  sender_endpoint_id: chatgpt-web-planner-01
+  expected_recipient_endpoint_id: antigravity-desktop-opus-executor-01
+  message_type: request
+  purpose: 在与 Gemini 相同的 Antigravity Desktop 宿主中，测试不同模型家族对轻量通讯索引的理解结果。
+
+  Repository:
+  chris2gao/Cybernetic_City_State_OS_v2---core
+
+  Branch:
+  dev/os-v2-global-communication-system-001
+
+  只读取：
+  01_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼/多模型实验包_v1.yml
+
+  不要读取：
+  - 旧通讯协议；
+  - 完整任务历史；
+  - antigravity_desktop_executor_01_result.yml；
+  - 其他模型的实验答案。
+
+  按实验包中的 required_response_shape 独立完成所有 fixture。
+
+  将结果保存并提交到：
+  01_os/_runs/run-20260805-全局通讯机制-001/02_信息收集与提炼/antigravity_desktop_opus_executor_01_result.yml
+
+  Push 到同一分支后，只返回：
+  1. endpoint 身份和实际模型名称；
+  2. 结果文档精确路径；
+  3. 分支名；
+  4. 提交后的 40 位 HEAD。
+
+acceptance:
+  - actual_endpoint_and_model_declared
+  - prior_Gemini_result_not_read
+  - required_shape_semantically_satisfied
+  - all_fixtures_answered
+  - exact_result_path_returned
+  - exact_40_char_head_returned

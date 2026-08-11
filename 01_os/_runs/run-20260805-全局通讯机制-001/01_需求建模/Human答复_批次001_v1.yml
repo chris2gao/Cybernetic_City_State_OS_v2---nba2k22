@@ -1,0 +1,102 @@
+schema_version: citystate.communication_system.Human_requirement_answers.v1
+artifact_id: Human-answer-batch-001
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+created_at: 2026-08-05T05:36:00-07:00
+status: accepted_as_requirement_input
+supersedes: null
+source:
+  interaction: current_Human_chat
+  inquiry_ref: 01_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/需求追问清单_v1.yml
+
+answers:
+  IQ-01:
+    decision: confirm
+    normalized_requirement: >-
+      token最佳使用按信息完整、事实状态权限准确、信息密度、避免重复读取与聊天上下文累积、
+      在前述目标不受损时减少token数量的顺序优化。
+
+  IQ-02:
+    decision: C
+    normalized_requirement: >-
+      v1采用一个task一个独立通讯空间，并提供只承担发现与定位的全局索引；
+      项目运行尽可能一次只进行一个task，以保持高内聚、低耦合并降低并发复杂度。
+    constraints:
+      - global_index_must_not_mix_task_payloads
+      - one_task_space_is_the_primary_runtime_unit
+      - multi_task_concurrency_is_not_a_v1_optimization_goal
+
+  IQ-03:
+    decision: A
+    normalized_requirement: >-
+      每个模型窗口或运行实例具有独立endpoint_id；每次模型通讯必须显式标明发送方身份和预期目标模型身份。
+    constraints:
+      - provider_name_is_not_endpoint_identity
+      - same_product_multiple_instances_are_distinct
+      - sender_identity_and_expected_recipient_identity_are_required
+
+  IQ-04:
+    decision: B
+    normalized_requirement: >-
+      本地采用机器级全局通讯根，并按repository_id和task_id分区；仓库canonical区不存放实时消息。
+
+  IQ-05:
+    decision: A_for_v1
+    normalized_requirement: >-
+      v1中Web模型需要访问的耐久通讯文件放在当前业务仓库的专用通讯流量目录；
+      独立全局通讯仓库不进入v1。
+
+  IQ-06:
+    decision: A
+    normalized_requirement: >-
+      正式消息发布后不可原地修改；补充、纠正、撤销和替代均通过新的后继消息表达。
+
+  IQ-07:
+    decision: B_with_Human_override
+    normalized_requirement: >-
+      发送方声明预期目标模型；Human拥有最终中转判断权，可选择、确认或改为其他目标端点，
+      并主动触发接收端读取。
+    required_distinction:
+      expected_recipient: sender_declared
+      actual_relay_recipient: Human_selected
+      divergence_must_be_explicit: true
+
+  IQ-08:
+    decision: simplify_to_sent_then_wait_for_response
+    normalized_requirement: >-
+      v1不建立prepared、opened、parsed、acknowledged等细粒度投递状态机；
+      发送方只记录消息已发送或已发布，然后等待接收方通过一条新的回应消息继续通讯。
+    token_and_complexity_reason: >-
+      过多投递检查会增加文件、状态、token和人工操作成本，而当前Human中转模式不需要证明每个中间步骤。
+    minimum_failure_rule: >-
+      若发送动作本身失败或Human发现目标不可达，记录blocked或send_failed；不得把无回应解释为已收到、同意或执行。
+
+  IQ-09:
+    decision: A
+    normalized_requirement: >-
+      文件载体暂时不可用时允许受限聊天框应急载荷；必须有明确上限、message_id、完整性摘要，
+      且载体恢复后将必要耐久信息文件化。
+
+  IQ-10:
+    decision: A
+    normalized_requirement: >-
+      阶段二授权有边界的Deep Research和Human手动中转的多模型小规模实验；
+      外部事实、项目实验和模型推断必须分层记录，所有外部调用和跨端传递仍由Human触发。
+
+resulting_design_invariants:
+  - one_task_one_communication_space
+  - global_index_for_discovery_only
+  - explicit_sender_endpoint_identity
+  - explicit_sender_expected_recipient_identity
+  - Human_controls_actual_relay_recipient
+  - immutable_published_messages
+  - sent_then_wait_for_new_response
+  - no_delivery_tracking_state_machine_in_v1
+  - local_machine_global_root_partitioned_by_repository_and_task
+  - repository_scoped_GitHub_traffic_for_v1
+  - bounded_chat_emergency_payload
+  - Deep_Research_and_manual_multi_model_experiments_authorized_for_stage_02
+
+workflow_effect:
+  requirement_model_successor: A_v2_pending_remaining_inquiry_batches
+  stage_02: remains_blocked_until_A_v2_exact_Human_confirmation

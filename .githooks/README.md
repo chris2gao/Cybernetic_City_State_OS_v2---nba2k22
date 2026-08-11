@@ -59,7 +59,7 @@ gate back off and leaves no trace that it happened.
 without invoking hooks.
 
 This is a guard, not an access boundary — the same distinction
-`08_os/_runs/run-007-上下文管理信息收集测试/` established between a workspace
+`01_os/_runs/run-007-上下文管理信息收集测试/` established between a workspace
 partition and an enforced boundary. It stops the accident, the stale habit and the
 agent that never considered the rule. It does not stop a caller that has decided to
 go around it, and it should never be cited as proof that history cannot have been
@@ -68,8 +68,8 @@ rewritten. For that, read the remote.
 It also covers exactly one transport. An executor pushing through the GitHub API or
 a CLI that never invokes hooks is not unguarded and not unpermitted — it owes a
 different, equivalent set of checks. That matrix is section 1.1 of
-`08_os/开发入口与单窗口任务规范_v1.md`; who may publish at all, and which acts stay
+`01_os/开发入口与单窗口任务规范_v1.md`; who may publish at all, and which acts stay
 action-bound even under the widest Human grant, is
-`08_os/05_registry/repository_publisher_authority_v1.yml`. Reporting `hook_guard: passed` on a
+`01_os/05_registry/repository_publisher_authority_v1.yml`. Reporting `hook_guard: passed` on a
 transport that cannot run this hook is an invalid completion pointer, and so is
 treating `not_applicable_transport` as nothing to prove.

@@ -1,0 +1,45 @@
+schema_version: citystate.registry.v1
+registry_id: communication_system_v1
+mechanism_version: 1
+entries:
+  - path: 01_os/03_mechanisms/communication_system/**
+    purpose: 供应商无关的全局通讯 canonical 契约与人工中转规则
+    loader: 01_os/06_execution/boot/communication_system/validator/validate_communication_system.py
+    loader_class: in_repo_program
+    discovery: referenced from boot manifest
+    evidence: 01_os/02_boot/communication_system/启动清单_v1.yml
+    cache_dirs: []
+    failure_surfacing: next validator run
+    deletion_rule: protected
+  - path: 01_os/06_execution/boot/communication_system/**
+    purpose: 初始化、校验、人工发布、收敛和归档的显式命令入口
+    loader: Human or authorized task executor
+    loader_class: external_tool_convention
+    discovery: referenced from boot manifest and mechanism README
+    evidence: 01_os/02_boot/communication_system/启动清单_v1.yml
+    cache_dirs:
+      - 01_os/_runs/<run-id>/_runtime/
+    failure_surfacing: next explicit command
+    deletion_rule: protected
+  - path: 01_os/02_boot/communication_system/**
+    purpose: 通讯机制启动读取顺序与失败策略
+    loader: OS bootstrap
+    loader_class: host_application
+    discovery: documented convention
+    evidence: 01_os/02_boot/communication_system/启动清单_v1.yml
+    cache_dirs: []
+    failure_surfacing: next boot
+    deletion_rule: protected
+  - path: 01_os/_runs/run-20260805-全局通讯机制-001/06_执行/06_execution.yml
+    purpose: 本次 Stage06 的逐步尝试、真实写入路径与冻结输入绑定
+    loader: Stage07 independent reviewer
+    loader_class: external_tool_convention
+    discovery: referenced from run state and Stage06 dispatch
+    evidence: 01_os/01_workflow/06_执行/实现/最小运行schema_v1.yml
+    cache_dirs: []
+    failure_surfacing: Stage06 closure validation
+    deletion_rule: protected
+excluded:
+  - 01_os/_communication/**
+  - 01_os/_runs/**/_runtime/**
+  - secrets_credentials_or_authentication_files

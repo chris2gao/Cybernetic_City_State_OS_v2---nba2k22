@@ -1,0 +1,43 @@
+schema_version: citystate.stage_collaborative_deliberation.material_event.v1
+event_id: ME-global-communication-requirement-process-correction-001
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+created_at: 2026-08-05T05:02:30-07:00
+source:
+  actor: Human
+  channel: current_chat
+  statement: >-
+    token最佳使用指模型读取和输出时保证信息完整、准确、高密度；阶段一没有执行追问机制，
+    阶段二没有询问是否使用 Deep Research。
+materiality: load_bearing
+observed_changes:
+  - token_optimization_objective_is_semantic_information_efficiency_not_universal_syntax_minimization
+  - stage_01_inquiry_process_was_incomplete
+  - stage_02_external_research_authorization_was_not_obtained
+impact:
+  affected:
+    - 01_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/A_需求建模_v1.yml#/context_and_token_requirements
+    - 01_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/A_需求建模_v1.yml#/research_questions
+    - 01_os/_runs/run-20260805-全局通讯机制-001/01_需求建模/Human确认_A_v1.yml#/next_allowed_state
+  unaffected:
+    - task_identity
+    - exact_base
+    - work_branch
+    - four_endpoint_classes
+    - Human_triggered_manual_relay
+    - no_automation_v1
+    - no_legacy_compatibility
+    - old_communication_system_nonmutation
+  unknown_dependencies:
+    - external_research_scope_until_Human_decision
+invalidation:
+  prior_A_semantic_scope: partially_retained
+  prior_A_process_completeness: invalidated
+  stage_02_progression: blocked_pending_inquiry_and_external_research_decision
+  prior_Human_confirmation: retained_as_confirmation_of_unaffected_scope_only
+required_next_actions:
+  - create_durable_inquiry_items
+  - obtain_Human_answers
+  - create_successor_A_v2
+  - obtain_exact_Human_confirmation_of_A_v2
+  - only_then_enter_stage_02

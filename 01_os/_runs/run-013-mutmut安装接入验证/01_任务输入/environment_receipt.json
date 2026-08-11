@@ -1,0 +1,224 @@
+{
+  "schema_version": "citystate.mutmut_environment_receipt.v1",
+  "generated_at_utc": "2026-07-30T10:09:50.047477+00:00",
+  "task_id": "mutmut-wsl-installation-validation-001",
+  "wsl_distribution": "Ubuntu",
+  "workspace": {
+    "filesystem_class": "WSL_Linux_filesystem",
+    "clone_path": "/home/gk/projects/Cybernetic_City_State_OS_v2---core",
+    "clone_method": "ordinary local clone fallback after noninteractive SSH clone did not complete",
+    "remote_restored_to": "git@github.com:chris2gao/Cybernetic_City_State_OS_v2---core.git"
+  },
+  "virtualenv": {
+    "path": "/home/gk/.venvs/core-mutmut-3.6.0",
+    "include_system_site_packages": false,
+    "mutmut_version": "3.6.0",
+    "file_count": 3753,
+    "bytes": 86162370
+  },
+  "commands": {
+    "whoami": {
+      "command": "whoami",
+      "arguments": [],
+      "started_utc": "2026-07-30T10:06:40.384261+00:00",
+      "duration_ms": 7.421,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 3,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "472238ca5e53f0239074f20fa69340e339cafb94695697d2f4ae27e0ef759638",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "uname": {
+      "command": "uname",
+      "arguments": [
+        "-a"
+      ],
+      "started_utc": "2026-07-30T10:06:40.391851+00:00",
+      "duration_ms": 6.596,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 125,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "2d3a816b1fcb417724f40cf3ae51757561b9d4b5f2c56c70aee8190d14aa95d2",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "python": {
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+      "arguments": [
+        "--version"
+      ],
+      "started_utc": "2026-07-30T10:06:40.398556+00:00",
+      "duration_ms": 3.857,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 14,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "63990b3ee50c49ab28d70e29c0f967f0c71330e39243ffeb4d3a8d5878c8a978",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "git": {
+      "command": "git",
+      "arguments": [
+        "--version"
+      ],
+      "started_utc": "2026-07-30T10:06:40.402482+00:00",
+      "duration_ms": 3.389,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 19,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "97452bcde974ef512f9552791fc4f6a3219a724877671fba270baca1a6075b74",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pip": {
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+      "arguments": [
+        "-m",
+        "pip",
+        "--version"
+      ],
+      "started_utc": "2026-07-30T10:06:40.405988+00:00",
+      "duration_ms": 744.448,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 95,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "fe1b53679b8420367a48660fe2b44166fefc66f286e23d52e13a2ef82843deaa",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pip_show_mutmut": {
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+      "arguments": [
+        "-m",
+        "pip",
+        "show",
+        "mutmut"
+      ],
+      "started_utc": "2026-07-30T10:06:41.150620+00:00",
+      "duration_ms": 777.758,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 375,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "54ed41b2fb9174b0fe8e0027ed1b13986b15dabcefed375ea6108e1a1cae1da7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pip_show_libcst": {
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+      "arguments": [
+        "-m",
+        "pip",
+        "show",
+        "libcst"
+      ],
+      "started_utc": "2026-07-30T10:06:41.928525+00:00",
+      "duration_ms": 741.864,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 4979,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "4e0b1f405b6b837ddcb46ffb50e5d44657f46a833c174b6d2bf9b7a388a51387",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pytest": {
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+      "arguments": [
+        "-m",
+        "pytest",
+        "--version"
+      ],
+      "started_utc": "2026-07-30T10:06:42.670531+00:00",
+      "duration_ms": 482.271,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 13,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "ef5a4d39b097310ed885c4a4dc78e963c7ef42c92ed56ab09571200962f53779",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "which_python": {
+      "command": "bash",
+      "arguments": [
+        "-lc",
+        "source '/home/gk/.venvs/core-mutmut-3.6.0/bin/activate' && command -v python"
+      ],
+      "started_utc": "2026-07-30T10:06:43.152913+00:00",
+      "duration_ms": 36.994,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 45,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "c0377457b066cea8c29c00d12d95a320e9381613cbcc7aa21b644340ea8cc1c5",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "which_mutmut": {
+      "command": "bash",
+      "arguments": [
+        "-lc",
+        "source '/home/gk/.venvs/core-mutmut-3.6.0/bin/activate' && command -v mutmut"
+      ],
+      "started_utc": "2026-07-30T10:06:43.190020+00:00",
+      "duration_ms": 38.807,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 45,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "0572564803adadb0afbd8cd6952badf9bbb87421144a949ecb9954393dd42b77",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "imports": {
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+      "arguments": [
+        "-c",
+        "import libcst, mutmut; print('imports-ok')"
+      ],
+      "started_utc": "2026-07-30T10:06:43.228984+00:00",
+      "duration_ms": 776.905,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 11,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "c8a46b5c7f5ecf647e6659e7e45432714ca2a46bd6f9719eee4d59828fd553d8",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "version": {
+      "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/mutmut",
+      "arguments": [
+        "--version"
+      ],
+      "started_utc": "2026-07-30T10:06:44.006075+00:00",
+      "duration_ms": 1990.715,
+      "exit_code": 0,
+      "stdout_utf8_bytes": 22,
+      "stderr_utf8_bytes": 0,
+      "stdout_sha256": "7f0c4b8b7125957a3b2b2e7487532da46bdea6017e26f8ddce505d1725375668",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "fork_probe": {
+    "command": "/home/gk/.venvs/core-mutmut-3.6.0/bin/python",
+    "arguments": [
+      "/home/gk/projects/Cybernetic_City_State_OS_v2---core/01_os/_runs/run-013-mutmut安装接入验证/01_任务输入/fork_probe.py"
+    ],
+    "started_utc": "2026-07-30T10:06:45.996966+00:00",
+    "duration_ms": 64.875,
+    "exit_code": 0,
+    "stdout_utf8_bytes": 124,
+    "stderr_utf8_bytes": 0,
+    "stdout_sha256": "d173e22280c7454ad75ff6a7c0938bea2aea8b7f268a0f9e4cbcfc8cde195df4",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "system_install_performed": false,
+  "sudo_used": false,
+  "credentials_used_or_recorded": false,
+  "wsl_local_remote_tracking_master_at_start": "987ff40fa0317053bf0484f6e3556976e560f63b",
+  "wsl_local_remote_tracking_master_at_end": "987ff40fa0317053bf0484f6e3556976e560f63b",
+  "implementation_base": "31ce5812bf34e7e4fc338543841973246a6a2467",
+  "reviewed_candidate": "382750bad85231736920ab0f04a992b8a91f408c",
+  "authoritative_remote_master_at_handoff": {
+    "sha": "31ce5812bf34e7e4fc338543841973246a6a2467",
+    "source": "git_ls_remote",
+    "ref": "refs/heads/master",
+    "observed_at_utc": "2026-07-30T10:28:13.4705781Z",
+    "command": "git ls-remote origin refs/heads/master",
+    "command_exit_code": 0
+  },
+  "candidate_relation": {
+    "merge_base_with_implementation_base": "31ce5812bf34e7e4fc338543841973246a6a2467",
+    "implementation_base_ahead": 0,
+    "candidate_ahead": 14,
+    "local_remote_tracking_ref_used_for_relation": false
+  },
+  "local_clone_fallback_note": "The local clone fallback copied a stale refs/remotes/origin/master value; that local remote-tracking ref is retained as machine history and is not authoritative remote state.",
+  "process_residue_count": 0
+}

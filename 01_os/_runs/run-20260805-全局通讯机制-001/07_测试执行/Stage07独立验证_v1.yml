@@ -1,0 +1,194 @@
+schema_version: citystate.stage07_independent_review.v1
+review_id: stage07-global-communication-independent-verification-001
+task_id: os-v2-global-communication-system-001
+run_id: run-20260805-全局通讯机制-001
+status: rejected_correction_required
+
+review_basis:
+  primary_remote_git: true
+  executor_report_trusted_as_evidence: false
+  executor_self_tests_treated_as_independent_proof: false
+  frozen_stage04_authority: ../04_测试生成/04_tests.yml
+  accepted_stage05_authority: ../05_步骤拆分/05_steps.yml
+  reviewer_role: independent_project_architecture_and_verification
+  reviewer_differs_from_stage06_executor: true
+
+repository_state:
+  master_head: c7a508abbcda58361fc9b649236d44b706e0bdd4
+  master_modified: false
+  work_branch: dev/os-v2-global-communication-system-001
+  stage06_start_head: 7b63fa2110ab3e7ae2dc0def5901ef7975abc204
+  implementation_commit: f773ce7d97ecab1f6ccb4930c9a0165df663a2a5
+  evidence_commit: 9ebd0501fd301a2c4f02e3dda933f1736ba08a54
+  reviewed_remote_head: 9ebd0501fd301a2c4f02e3dda933f1736ba08a54
+  implementation_chain_linear: true
+  evidence_commit_result_only: true
+  branch_behind_master: 0
+
+preservation_checks:
+  frozen_stage04_package:
+    path: ../04_测试生成/04_tests.yml
+    git_blob_sha: 360571b6b29a3baecd753dc45611457da9ab6bf2
+    unchanged: true
+  accepted_stage05_package:
+    path: ../05_步骤拆分/05_steps.yml
+    git_blob_sha: 9422de27de6794ba2c247c7dae3dcddaa5c9e562
+    unchanged: true
+  B_v3:
+    path: ../03_结果建模/B_结果模型_v3.yml
+    git_blob_sha: 314b76061a32d62bbcc49e2bf53b8968b2e194bd
+    unchanged: true
+  stage06_changed_paths_within_authorized_surface: true
+
+submitted_evidence:
+  execution_package:
+    path: ../06_执行/06_execution.yml
+    git_blob_sha: ab7f79fbfcbae07f2a4396d73b55f08a11add659
+    tested_implementation_commit: f773ce7d97ecab1f6ccb4930c9a0165df663a2a5
+  frozen_full_result:
+    path: ../06_执行/frozen_stage04_production_full_results.yml
+    git_blob_sha: 5876027ea8237920f49efb9de0752f8c04a04ffb
+    declared_total: 50
+    declared_passed: 50
+  frozen_mutation_result:
+    path: ../06_执行/frozen_stage04_production_mutation_suite_results.yml
+    git_blob_sha: e6ddd980969d9895588d5f3fb4eb5a54c2933a1b
+    declared_total: 50
+    declared_passed: 50
+  evidence_status: not_accepted_as_proof_of_frozen_semantics
+
+blocking_findings:
+  - finding_id: STAGE07-B01-FROZEN-PRODUCTION-ORACLE-SHADOWING
+    severity: blocking
+    decision: correction_required
+    observed:
+      - >-
+        01_os/06_execution/boot/communication_system/validator/stage04_production_adapter.py
+        implements validate_message and publish_message by directly matching compact Stage04 mutation-marker
+        fields such as missing_requested_action_test, sequence_mismatch, reuse_sequence, wrong_zone,
+        local_only, human_github, and similar markers to the exact expected legacy error strings.
+      - validate_document is a no-op in the production adapter.
+      - >-
+        Stage04ProductionAdapter.__getattr__ delegates every otherwise-unimplemented method to the
+        Stage04 synthetic StrictValidationAdapter supplied by run_frozen_stage04_tests.py.
+      - >-
+        Therefore physical-business cases including GC-T033/GC-T034 Git conflict/NFF,
+        GC-T039/GC-T040 archive/private runtime, GC-T041 archive read authority,
+        GC-T043/GC-T044 Human/current behavior, and GC-T045 sender-index integrity are executed by
+        the old Stage04 synthetic oracle rather than by the new Stage06 implementation.
+      - >-
+        The persisted 50/50 full and mutation-suite results consequently demonstrate that the bridge
+        recognizes the frozen fixture vocabulary; they do not demonstrate that the Stage06 system itself
+        satisfies every frozen oracle.
+    violated_principle: >-
+      A production adapter may translate an abstract frozen fixture into a physical implementation scenario,
+      but the business observation and failure must be derived from the Stage06 implementation and measured
+      post-state. Marker-to-code shadowing or delegation to the Stage04 synthetic business implementation is
+      not implementation evidence.
+    required_correction:
+      - remove all marker-to-expected-error business decisions from the production adapter
+      - remove fallback/delegation to Stage04 StrictValidationAdapter for business behavior
+      - make every GC-T001..GC-T050 action reach real Stage06 implementation code or a physical scenario driven by it
+      - derive evaluator-observable results from actual return values, exceptions, Git state, file bytes, read/write traces, and filesystem state
+      - validate documents through the actual Stage06 document validator; no no-op adapter method
+      - rerun all frozen tests against a new implementation commit and persist results in a later result-only commit
+
+  - finding_id: STAGE07-B02-AUTHORITY-AND-ROLE-BOUNDARY-NOT-END-TO-END
+    severity: blocking
+    decision: correction_required
+    frozen_refs: [GC-T015, GC-T016, GC-T017, GC-T018, GC-T044]
+    observed:
+      - >-
+        CommunicationValidator.validate_role_binding can compare roles and close authorization_ref into
+        required_refs, but publish_message.publish calls validate_message without endpoint cards and therefore
+        does not enforce endpoint-card role binding on the publication path.
+      - >-
+        The current publication path has no physical check that an architecture_and_decision role requesting
+        a protected action has independent current Human authorization; role text alone can reach ordinary
+        message publication if the message schema is otherwise valid.
+      - >-
+        archive/navigation.py update_Human_current authorizes ordinary ownership mainly by
+        writer_endpoint_id == navigation_owner_endpoint_id (or a boolean explicit_Human_authorization),
+        without validating the structured current-task role/authority state that the frozen ownership oracle
+        was designed to measure.
+      - the submitted frozen run does not expose these gaps because the relevant cases are marker-mapped or delegated to the Stage04 synthetic adapter.
+    required_correction:
+      - make endpoint-card role consistency part of the real message/publication path where the frozen contract requires it
+      - physically validate independent authorization artifacts for protected beyond-role actions; role/identity fields must never grant authority
+      - make Human/current ownership derive from structured current task, task role, navigation-owner identity, and current authority or explicit Human authorization
+      - wire GC-T015..018 and GC-T044 to those real checks and prove rejected writes leave physical state unchanged
+
+  - finding_id: STAGE07-B03-ARCHIVE-PRIVATE-RUNTIME-PRECONDITIONS-INCOMPLETE
+    severity: blocking
+    decision: correction_required
+    frozen_refs: [GC-T039, GC-T040, GC-T041]
+    observed:
+      - >-
+        archive_task.py validates public directories and moves the task, but its private-runtime deletion path
+        does not establish with Git state that each private runtime target is untracked/ignored before deletion.
+      - >-
+        It also does not physically enforce the full canonical archive preconditions such as required GitHub
+        convergence completion, durable material-failure/residual handling when applicable, and the assertion
+        that private runtime is not needed as a durable source.
+      - >-
+        Frozen GC-T039..041 are not exercising this implementation in the submitted production run because
+        archive_task/load_default_context are inherited from Stage04 StrictValidationAdapter.
+    required_correction:
+      - drive whole-task archive through the Stage06 archive implementation using real temporary task trees
+      - verify all six public-history categories remain intact and discovery changes correctly
+      - use physical Git evidence such as git ls-files to reject tracked private-runtime deletion/leak cases
+      - establish durable-prerequisite-before-delete ordering and archive read authorization with structured read traces
+
+  - finding_id: STAGE07-B04-PUBLICATION-AND-BOOTSTRAP-PHYSICAL-CLOSURE-GAPS
+    severity: blocking
+    decision: correction_required
+    frozen_refs: [GC-T019, GC-T021, GC-T022, GC-T024, GC-T026, GC-T027, GC-T029, GC-T030, GC-T035]
+    observed:
+      - >-
+        publish_message.py checks that required_refs exist before the message write but does not validate a
+        referenced new communication document's required front matter before publishing the message.
+        Thus a physically present but invalid communication document can still be referenced by a newly
+        visible canonical message, contrary to GC-T035 publication-order semantics.
+      - >-
+        The publisher exposes a carrier/trigger switch but does not itself implement the frozen successful
+        local-to-GitHub republication flow that publishes repository-shareable required documents first and
+        then creates the GitHub-readable message and sender index for GC-T029/GC-T030.
+      - >-
+        receiver_bootstrap.py reads an endpoint card but validates the message without binding the message's
+        expected recipient/task role to that card, so the physical receiver path is weaker than the role/context
+        closure represented by the frozen acceptance surface.
+      - the submitted production adapter replaces these end-to-end scenarios with compact marker rejection instead of exercising the physical flows.
+    required_correction:
+      - make required communication-document validation happen before canonical message visibility
+      - implement and test controlled GitHub republication order for Web/Human triggers without adding automation
+      - bind bootstrap recipient identity/role to the endpoint card while retaining the exact bounded read set
+      - ensure a failure before index append cannot leave a misleading visible message/index state; frozen dangling-pointer semantics must be observed physically
+
+accepted_properties:
+  - Stage06 Git history from authorized start to implementation and evidence commits is linear.
+  - Stage04, Stage05, B_v3, Human authorization, and master are unchanged.
+  - Stage06 canonical contracts preserve the V1 Human-triggered/Human-relayed and no-background-automation boundary.
+  - The actual Stage06 code contains useful implementation modules and unit tests; this review does not require a redesign of B_v3 or refreezing Stage04.
+  - The result-only evidence commit correctly binds its declared tested_commit to f773ce7d97ecab1f6ccb4930c9a0165df663a2a5, but that binding does not cure oracle shadowing.
+
+stage_decision:
+  stage07_independent_verification_passed: false
+  verdict: rejected_correction_required
+  completion: false
+  stage06_same_task_correction_allowed: true
+  stage03_reopen_required: false
+  stage04_reopen_required: false
+  frozen_tests_may_change: false
+  master_publication_allowed: false
+  unresolved_blockers:
+    - STAGE07-B01-FROZEN-PRODUCTION-ORACLE-SHADOWING
+    - STAGE07-B02-AUTHORITY-AND-ROLE-BOUNDARY-NOT-END-TO-END
+    - STAGE07-B03-ARCHIVE-PRIVATE-RUNTIME-PRECONDITIONS-INCOMPLETE
+    - STAGE07-B04-PUBLICATION-AND-BOOTSTRAP-PHYSICAL-CLOSURE-GAPS
+
+correction_acceptance_rule: >-
+  A correction is eligible for Stage07 rereview only after a new implementation commit changes the real
+  Stage06 implementation/production bridge, the complete frozen surface is executed against that exact
+  implementation commit without synthetic business fallback or marker-to-code shadowing, and a later
+  result-only commit persists the new physical evidence. Green self-authored unit tests remain supporting
+  evidence only and do not replace the frozen physical oracle.

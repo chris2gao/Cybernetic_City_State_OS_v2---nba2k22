@@ -1,0 +1,66 @@
+artifact:
+  kind: P2_stage_receipt_source_declaration_completion_overlay
+  version: 1
+  task_id: os-v2-stage-collaborative-deliberation-impl-p2-contracts-001
+  package_id: P2
+  created_on: 2026-08-04T19:22:00-07:00
+  status: active_first_order_provenance_overlay
+classification:
+  class: first_order_required_detail
+  purpose: close_provenance_declaration_gap_without_changing_reviewed_contract_semantics
+  semantic_expansion: false
+  new_object_family_or_type: false
+  new_failure_code: false
+  package_ownership_change: false
+  new_Human_confirmation_required: false
+  independent_re_review_required: false
+reviewed_contracts_preserved:
+  result_object_contract:
+    path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/结果对象契约_v1.yml
+    blob_sha: 672f0970edb4ddacb0068e71c76407d87e92ba11
+  load_receipt_contract:
+    path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml
+    blob_sha: 5014cc63d2e83d9e7b951748d65c23ce877e90b2
+  task_packet:
+    path: 01_os/_runs/run-20260804-阶段协同推演闭环实现执行-001/P2/01_任务输入/任务包_v1.yml
+    blob_sha: df0d9ee20dfb70bf1ca86dd8a1bc874f23464c80
+source_union_augmentation:
+  solution_model:
+    path: 01_os/_runs/run-20260804-阶段协同推演闭环实现方案建模-001/04_实现方案建模/实现方案模型_v1.yml
+    blob_sha: 9f93ce2f563eeac79cc5b565f8b01298020363ef
+    authoritative_pointer: /receipt/required_fields
+  solution_first_order_overlay:
+    path: 01_os/_runs/run-20260804-阶段协同推演闭环实现方案建模-001/04_实现方案建模/实现方案模型_v1一阶必要修复叠加层_v1.yml
+    blob_sha: e2316bfa10ed07f9db6b6ab8aaad9ebcb9d7ce56
+    role: namespace_and_future_extension_constraints
+  step_plan:
+    path: 01_os/_runs/run-20260804-阶段协同推演闭环步骤拆分-001/05_步骤拆分/步骤拆分模型_v1.yml
+    blob_sha: 8be5af8c2b13aac3b45127bbdb3b2f4ed566a06f
+    role: P2_path_ownership_acceptance_and_handoff_boundary
+stage_receipt_provenance:
+  active_field_set_count: 20
+  field_set_source: solution_model.receipt.required_fields
+  relation_to_B_v1:
+    B_v1_role: observable_result_semantics
+    solution_model_role: implementation_level_receipt_schema_refinement
+    renamed_fields:
+      trigger_evaluation_result: trigger_evaluation_result_ref
+      validator_exit_code: validator_mode_and_exit_code
+      stage_profile_version: profile_id_and_version
+    additional_fields_are_within_confirmed_solution_scope: true
+    semantic_conflict_with_B_union: false
+active_consumption_rule:
+  P2_effective_contract_union:
+    - reviewed_result_object_contract_at_exact_blob
+    - reviewed_state_transition_invariant_contract_at_exact_blob
+    - reviewed_load_receipt_contract_at_exact_blob
+    - this_provenance_overlay_at_exact_blob
+  P3_and_P7_must_consume_this_overlay: true
+  no_silent_fallback_to_B_only_receipt_fields: true
+closure_checks:
+  reviewed_contract_blobs_unchanged: true
+  all_three_added_source_blobs_are_exact_40_character_Git_blobs: true
+  receipt_field_count_changed: false
+  receipt_field_names_changed: false
+  acceptance_measurements_changed: false
+  result: PASS

@@ -1,0 +1,44 @@
+integration_scope:
+  task_id: os-v2-stage-collaborative-deliberation-master-integration-001
+  exact_base: 05cf8b67ecf01896b669ad0582ed05371391b866
+  accepted_source_head: 0c6f08554636ade9b3120db03cadfe6dfa87861b
+  policy: rebuild_selected_paths_from_accepted_exact_blobs_not_merge_full_341_commit_chain
+system_path_groups:
+  canonical:
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/**
+  boot:
+    - 01_os/02_boot/stage_collaborative_deliberation/**
+  registry:
+    - 01_os/05_registry/stage_collaborative_deliberation_v1.yml
+  loader:
+    - 01_os/06_execution/boot/stage_collaborative_deliberation/**
+  workflow_references:
+    - 01_os/01_workflow/*/实现/阶段协同推演profile引用_v1.yml
+evidence_closure:
+  selection_rule: include_only_paths_directly_named_by_canonical_basis_or_boot_plus_four_lineage_completion_pointers
+  direct_basis_and_boot_evidence_paths: 26
+  lineage_completion_pointer_paths: 4
+  exact_blob_reuse_required: true
+  historical_artifacts_are_not_rewritten: true
+integration_run_paths:
+  - 01_os/_runs/run-20260804-阶段协同推演闭环master接入-001/**
+intentional_document_updates:
+  - 01_os/03_mechanisms/stage_collaborative_deliberation/README.md
+  - 01_os/03_mechanisms/stage_collaborative_deliberation/实现/README.md
+  reason: replace_stale_P1_or_P2_package_boundary_description_with_complete_staged_inert_chain_description
+  machine_semantics_changed: false
+excluded:
+  - unreferenced_discussion_rounds
+  - superseded_candidate_versions
+  - unrelated_task_packets_and_runs
+  - dev_workflow_serial_norm_branch
+  - activation_state_changes
+  - master_updates
+acceptance:
+  - all_runtime_and_authority_refs_resolve
+  - selected_evidence_blobs_equal_accepted_source_blobs
+  - static_validator_exit_0_on_integration_tree
+  - all_35_fixture_cases_match_expected_exit
+  - seven_reference_only_workflow_profiles
+  - all_states_remain_staged_inert
+  - changed_paths_are_within_this_scope

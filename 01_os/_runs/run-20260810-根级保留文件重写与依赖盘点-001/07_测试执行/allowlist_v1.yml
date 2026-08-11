@@ -1,0 +1,22 @@
+# Derived allowlist for the changed-path ledger tool.
+#
+# Why this file exists: 01_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py
+# reads a TOP-LEVEL key named `allowed_changed_paths`, which is also the field name
+# 01_os/开发入口与单窗口任务规范_v1.md section 7 requires in a task packet. This run's
+# packet carries the same list under `scope.allowed_write_paths` instead, so the tool
+# exits 3 on the packet directly. The entries below are copied verbatim from
+# 01_任务输入/任务包_v1.yml `scope.allowed_write_paths`; nothing is added or widened.
+# The field-name mismatch is reported as a finding rather than fixed in the packet.
+
+source_packet: 01_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/01_任务输入/任务包_v1.yml
+source_key: scope.allowed_write_paths
+
+allowed_changed_paths:
+  - AGENTS.md
+  - AGENT_WORKING_DISCIPLINE.md
+  - GEMINI.md
+  - CLAUDE.md
+  - README.md
+  - CORE_MANIFEST.yml
+  - .githooks/README.md
+  - 01_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/**
