@@ -1,0 +1,74 @@
+schema_version: citystate.task_packet.v1
+task_packet:
+  task_id: os-v2-global-model-capability-and-availability-routing-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T2_semantic
+  exact_base_sha: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+  branch: dev/os-v2-global-model-capability-and-availability-routing-001
+  objective: >-
+    通过七阶段 workflow 建立“全局模型能力、当前可用性与任务路由”机制：先完成需求建模并由 Human
+    同义确认，再用独立 deep research 验证当前可用 provider / product surface / model 的真实能力、
+    参数、限制、额度与适配角色，形成 evidence-backed 结果模型；最终机制必须使每个任务开工前
+    fresh-check 当次实际可用模型与 surface，并依据任务角色、risk tier、任务形状、当前可用性与资源
+    约束选择 model + surface + parameter profile，而不是依赖长期静态模型表。
+  source_evidence:
+    - current Human request in this task dated 2026-08-11
+    - current remote master 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+    - AGENT_WORKING_DISCIPLINE.md
+    - AGENTS.md
+    - 01_os/README.md
+    - 01_os/开发入口与单窗口任务规范_v1.md
+    - 01_os/01_workflow/README.md
+    - 01_os/01_workflow/01_需求建模/README.md
+    - 01_os/01_workflow/01_需求建模/方法论_v0.2.md
+    - 01_os/01_workflow/01_需求建模/实现/需求建模schema_v1.md
+  allowed_changed_paths:
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/**
+  required_tests:
+    - stage-1 A uses all eight requirement-model slots and passes cross-field review
+    - Human confirmation is version-bound before stage 2 is treated as complete workflow input
+    - deep research keeps official/source-derived facts separate from Human-reported availability and inference
+    - at least one independent research pass must not receive another researcher's conclusions as input
+    - no model availability or quota claim is promoted to canonical without source date and invalidation condition
+    - no canonical implementation is written before Human approves the evidence-backed design and its implementation boundary
+  prohibitions:
+    - modify_master_without_Human_gate
+    - force_push
+    - rebase
+    - squash
+    - amend
+    - history_rewrite
+    - read_or_store_credentials_or_tokens
+    - purchase_or_change_subscription
+    - enable_Claude_Code_CLI_in_this_task
+    - fabricate_model_or_surface_availability
+    - treat_user_reported_model_labels_as_verified_vendor_facts
+    - edit_canonical_files_before_stage3_Human_boundary_gate
+  required_completion_pointer: 08_结论/completion_pointer_v1.yml
+
+  publisher:
+    principal_binding: connector_authenticated
+    publication_transport: github_api_connector
+    source_write_authorized: true
+    master_write_authorized: false
+    destructive_git_authorized: false
+    authorization_ref: current_Human_instruction_2026-08-11_start_first_workflow_task
+    expected_remote_head: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+
+  executor_profile:
+    provider: OpenAI
+    model: GPT-5.6 Sol
+    reasoning_effort: high
+    mode: standard
+    rollout_token_budget: null
+    routing_basis: >-
+      Human assigned the current ChatGPT planning window to start requirement modeling and orchestrate the workflow;
+      the repository's existing static model-routing table is itself part of the subject under review and is not used
+      as independent evidence for this task's model-selection conclusions.
+    authority: routing_only
+
+  verification_profile:
+    reproduce_before_change: required
+    independent_reviewer: different_model_family_after_candidate_implementation
+    different_model_family: true
+    different_measurement_tool: true
