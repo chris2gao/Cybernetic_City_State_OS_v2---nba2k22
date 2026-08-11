@@ -1,0 +1,46 @@
+schema_version: citystate.web_research_intake.v1
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+stage: 02_信息收集与提炼
+assessed_at: 2026-08-11
+assessor: ChatGPT_GPT-5.6-Sol
+
+inputs:
+  - researcher_label: Gemini_Web
+    Human_uploaded_filename: "gemini - 模型能力与路由机制研究.md"
+    sha256: a55c2a8125fa86cab1c2974a29a7d02c89a762b6d2a44fc431aeed3baa50bc60
+    classification: accepted_independent_pass_with_source_cleaning
+    use_in_reconciliation: true
+    reasons:
+      - 覆盖了 model/surface/parameter、架构蕴含和 Antigravity qualification 设计，方向与任务包一致。
+      - 明确区分了 model、surface、Human availability 与 project qualification，满足独立 pass 的核心目标。
+      - 报告混用官方、第三方、论坛、Reddit 等来源，且若干具体数值/结论超出一手证据支持范围，因此任何 claim 进入 evidence package 前必须逐条复核。
+    known_overclaims_or_errors:
+      - ChatGPT Plus Web 被写成可用 Extra High；OpenAI 当前官方 Plus 仅包含 GPT-5.6 Sol Medium/High，Extra High 不属于 Plus。
+      - 将 Codex Desktop 的 258K 作为稳定 usable context 上限，主要依据 Reddit，不能升级为 routing fact。
+      - 将 Antigravity Gemini 3.1 Pro 的 250K/300K 稳定上下文边界写成事实，缺乏可靠一手证据，拒绝采用。
+      - 将 Antigravity 后台固定由特定 Gemini 子模型承担索引/工具工作的说法写得过宽；当前官方 models 页只可安全证明存在不可自定义的 additional models，不支持该完整架构断言。
+      - 将 Opus 4.6 的稀缺额度引申为 OS 内 quota-conservation policy；Human 已明确本机制不做额度经济优化。
+
+  - researcher_label: GPT_Web
+    Human_uploaded_filename: "gpt - deep-research-report.md"
+    sha256: 6831a2010394428dc3f8b0ea3edaf10d1c627a03a7ae7aa48c5e26da5d50ef3a
+    classification: noncompliant_research_attempt
+    use_in_reconciliation: false
+    reasons:
+      - 报告自述未直接访问上传的 A v2 与网页研究任务包内容，而是依据标题和上下文推测主题。
+      - 研究主体偏移为一般需求建模、UML/SysML 与 Deep Research agent 综述，没有完成指定的 model/surface/parameter/qualification 调研。
+      - 未形成任务要求的 surface-by-surface claim/evidence matrix，也没有解决本任务核心研究问题。
+    disposition: retain_as_failed_attempt_not_evidence
+
+  - researcher_label: Claude_Web
+    classification: no_report
+    use_in_reconciliation: false
+    disposition: not_required_to_repeat
+    reason: A_v2_requires_at_least_one_independent_pass_and_Gemini_Web_supplies_one_after_source_cleaning
+
+independence_gate:
+  required_by_A_v2: at_least_one_independent_deep_research_pass
+  satisfied: true
+  satisfying_pass: Gemini_Web
+  note: acceptance_of_pass_does_not_accept_each_claim; claims_are_reconciled_by_source_strength
