@@ -1,0 +1,171 @@
+schema_version: citystate.execution_report.v1
+task_id: os-v2-legacy-physical-deletion-001
+run_id: run-20260810-旧OS物理删除-001
+status: ready_for_independent_review
+executor: Claude_Code
+reviewer: ChatGPT_independent_project_reviewer
+
+master_before_after:
+  before: eb4be95a25cb4b0929def284a7fb4b6a412aed55
+  after: eb4be95a25cb4b0929def284a7fb4b6a412aed55
+  modified: false
+  method: git ls-remote origin master, read at the start gate and after the push
+
+start_gate:
+  remote_master_matches_expected: true
+  branch_inherits_3a185a25f85e71d07098eddf0c74e0a96748ea48: true
+  delete_list_blob: 162f59cbd101cbfa8a725981f835762ae829aafe (match)
+  whitelist_blob: b92adfc064860ddf29ca5549c34c6d6d7d111a7f (match)
+  delete_paths_parsed: 490
+  whitelist_paths_parsed: 15
+  duplicates_in_delete_list: 0
+  delete_whitelist_overlap: 0
+  os_paths_in_delete_list: 0
+  delete_paths_not_tracked: 0
+  pre_delete_non08_equals_delete_union_whitelist: true
+  verdict: CLEARED_FOR_DELETION
+  note: >-
+    The gate is arithmetic, not judgement. Every question it asks - do the blobs
+    match, does the list have 490 entries, is it disjoint from the whitelist, does
+    their union equal the tracked tree - has one right answer that does not depend
+    on what any of the files are for. That is deliberate: this task was given a
+    reviewed decision to execute, and re-deriving the decision would have thrown
+    away the independence that made it worth trusting.
+
+deletion:
+  method: >-
+    One `git rm --` per exact path, 490 invocations, driven from the gate-verified
+    snapshot rather than re-parsed at delete time so the checked set and the deleted
+    set are the same object. The loop refuses any path starting with 08_os/ and
+    stops on the first non-zero exit.
+  prohibited_and_not_used: [git clean, "git add -A", "git add .", directory pathspec, wildcard, rm -rf]
+  deleted_tracked_files: 490
+  unexpected_deletions: 0
+  os_paths_deleted: 0
+  staged_non_deletion_changes_at_delete_time: 0
+  unstaged_worktree_changes_at_delete_time: 0
+  by_top_level:
+    .ai: 290
+    06_Silicon_Index: 63
+    04_Parliament: 62
+    01_Research_Reports: 25
+    ROOT_files: 19
+    system_backbone: 13
+    07_Compiler: 8
+    05_Carbon_Index: 5
+    07_Silicon_Private_Zones: 2
+    campaigns: 2
+    .claude: 1
+  claude_dir_note: >-
+    The single .claude deletion is .claude/index.md, a generated navigation file on
+    the reviewed list. .claude/settings.json survives and is core-owned;
+    .claude/settings.local.json is untracked and untouched.
+
+post_delete_state:
+  non08_tracked: 15
+  whitelist_set_equality: true
+  delete_list_paths_still_tracked: 0
+  survivors:
+    - AGENTS.md
+    - AGENT_WORKING_DISCIPLINE.md
+    - CLAUDE.md
+    - GEMINI.md
+    - README.md
+    - CORE_MANIFEST.yml
+    - .gitignore
+    - .gitattributes
+    - .claude/settings.json
+    - new-domain.ps1
+    - .githooks/pre-push
+    - .githooks/install.ps1
+    - .githooks/test_pre_push_logic.ps1
+    - .githooks/.gitattributes
+    - .githooks/README.md
+  blob_integrity:
+    unchanged: 14 of 14 non-manifest survivors
+    changed_by_design: CORE_MANIFEST.yml
+    how_proven: >-
+      Blob shas of all fifteen were snapshotted before the deletion and re-read
+      after. "Unchanged" is a comparison against a recorded value, not an assertion
+      that nothing was touched - the second cannot be proven after the fact.
+
+core_manifest_changes:
+  scope: physical fact only; no ownership policy changed and no root-move anticipated
+  removed:
+    - >-
+      The whole "legacy pending retirement" group from core_owned_paths: the
+      first-generation index and bootstrap directories, the root plan and
+      description documents including PROJECT_CONTEXT.md and ARCHITECTURE.md, and
+      the .ai/ communication plane including the publisher authority whose live
+      semantics had already moved into 08_os/05_registry/ in the predecessor run.
+    - >-
+      The retired .ai/ domain paths from domain_owned_paths - TASKS, CODEX_REPORTS,
+      HUMAN_BRIEFS, USER_UPLOADS, STATE.yml, INBOX.md, OUTBOX.md, HUMAN_BRIEF.md.
+  kept:
+    - the fifteen-file retained global surface, unchanged
+    - the active 08_os ownership block, unchanged
+    - the domain chain 01 -> 02 -> 03 -> 08 and 08_os/07_content/, which still hold
+    - the merge freeze, the domain creation procedure and the verification list
+  rewritten_prose:
+    - >-
+      transition_status now records the retirement as completed, names the authority
+      blob and the run, and states plainly that 490 files went and fifteen remain.
+      It previously said nothing had been deleted, which was true when written.
+    - >-
+      The domain_owned_paths comment said core still shipped 25 files under
+      01_Research_Reports/ and that the claim "core ships nothing here" was not yet
+      accurate. It is accurate now, and the note says so along with what changed.
+  not_done:
+    - no 08_os to repository-root rewrite
+    - no ownership reassignment
+    - no anticipation of a tree that does not exist yet
+
+preservation:
+  untracked_and_ignored_files_touched: 0
+  ssh_private_key: >-
+    .ssh/id_ed25519 is present, unread, unmoved and undeleted. It is untracked, so
+    it was never a deletion candidate - but a task that removes 490 files is exactly
+    when a key inside a working tree gets caught by accident, so its survival is
+    asserted as a checked post-condition rather than left implicit.
+  claude_local_settings: .claude/settings.local.json present
+  runtime_dirs: untouched and still ignored
+
+validation:
+  executor_evidence:
+    - check: pre-delete gate
+      command: python 04_验证/verify_exact_deletion.py --phase pre
+      result: CLEARED_FOR_DELETION
+      exit: 0
+    - check: post-delete exact-set equality, whitelist equality, blob integrity, untracked preservation
+      command: python 04_验证/verify_exact_deletion.py --phase post
+      result: >-
+        post_delete_non08=15, whitelist_set_equality=True,
+        delete_list_still_present=0, survivor_blobs_unchanged=14 of 14,
+        untracked 2 present 0 lost, ssh_key_untouched=True
+      exit: 0
+    - check: context-management structure validator
+      result: "context-management structure: PASS"
+      exit: 0
+    - check: repository default check set
+      result: "workflow_static 0, context_structure 0, no_canonical_live_state 0, stage_deliberation_v2_static 0, checks 4/4 ok"
+      exit: 0
+    - check: migration closure from the predecessor run
+      result: 0 active dependency hits on any migrated-from path
+      exit: 0
+    - check: git diff --check
+      result: clean
+      exit: 0
+  independently_reproduced: false
+  independence_disclosure: >-
+    All of the above was produced by the executing session. Unlike the two runs
+    before it, this one adjusted no check mid-flight and widened no definition: the
+    gate was written first, run first, and passed on the first attempt, and the
+    post-phase compares against a snapshot taken before anything was removed rather
+    than against the tree as it now stands. The reviewer should still re-run both
+    phases - the snapshot is a file this session wrote, and a check that reads its
+    own earlier output is only as good as that output.
+  not_run:
+    - any check requiring a second clone or a second publication transport
+    - restoration of any deleted path, which would need its own authorization
+
+next_owner: ChatGPT_independent_project_reviewer

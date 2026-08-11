@@ -26,25 +26,34 @@ core_repository: "git@github.com:chris2gao/Cybernetic_City_State_OS_v2---core.gi
 core_release: "unversioned_pre_release"
 
 # Ownership is not activity. This manifest says who may author a path, never that
-# the path is part of the running system. During the transition to the
-# second-generation OS the two answers differ, so the core list below is grouped:
+# the path is part of the running system. The core list below is in two groups:
 #
-#   1. retained global surface - stays after the transition
+#   1. retained global surface - everything core owns outside 08_os/**
 #   2. active OS - 08_os/**, the only active OS in this repository
-#   3. legacy pending Human retirement - still present, still core-authored, but
-#      not a startup, communication, state, task, role or navigation source
 #
-# The groups are comments, not separate keys, because a second list would have to
-# be kept in sync with this one and would drift. The retirement inventory that
-# proposes what is kept, migrated or deleted is
-# 08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/02_保留清单/.
+# The third group, "legacy pending retirement", is gone because the legacy tree is
+# gone. It held the first-generation bootstrap, protocol, mailbox, parliament,
+# compiler and backbone paths, and it existed so that a domain would not edit them
+# while they were still present. They are no longer present.
 transition_status:
   active_os: "08_os/**"
-  retirement_inventory: "08_os/_runs/run-20260810-根级保留文件重写与依赖盘点-001/02_保留清单/"
+  legacy_retirement: completed
+  retired_on: 2026-08-10
+  retired_by: 08_os/_runs/run-20260810-旧OS物理删除-001
+  authority: >-
+    08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/03_最终清单/最终直接删除清单_v1.yml,
+    blob 162f59cbd101cbfa8a725981f835762ae829aafe, 490 tracked files, independently
+    reviewed before the deletion ran.
   deletion_state: >-
-    Nothing in the legacy group has been deleted or moved. This file describes the
-    physical tree as it is; a path listed here exists, and a path that has been
-    retired is removed from this file in the same change that retires it.
+    490 tracked files outside 08_os/** were deleted. What survives outside 08_os/**
+    is exactly the fifteen files in group 1 below - that equality was proven against
+    the whitelist rather than assumed. Nothing under 08_os/** was deleted, and no
+    history was rewritten: the retired content stays reachable in this repository's
+    history, which is what makes deleting it recoverable at all.
+  not_done_here: >-
+    The eventual move of 08_os/** to the repository root. Nine of the fifteen
+    surviving files name current 08_os/ paths and will need rewriting when it
+    happens; that is a separate task and this file does not anticipate it.
 
 # Paths owned by core. Domain repositories treat these as read-only.
 #
@@ -101,57 +110,20 @@ core_owned_paths:
   # 2026-08-10 and is already covered by the 05_registry/ entry above.
   - "08_os/开发入口与单窗口任务规范_v1.md"
 
-  # --- 3. legacy pending Human retirement ------------------------------------
-  # Listed so that a domain does not edit them while they still exist. Their
-  # presence here is an authorship boundary and a retirement inventory, not a
-  # statement that anything still loads them.
+  # The legacy group that stood here until 2026-08-10 is removed, because every
+  # path it named has been deleted from the tracked tree. It listed the
+  # first-generation bootstrap and index directories - 00_City_State_Routing_Table.md,
+  # 04_Parliament/, 05_Carbon_Index/, 06_Silicon_Index/, 07_Compiler/,
+  # 07_Silicon_Private_Zones/, system_backbone/ - the root plan and description
+  # documents, PROJECT_CONTEXT.md and ARCHITECTURE.md, and the whole .ai/
+  # communication plane including the publisher authority that moved into
+  # 08_os/05_registry/ first. An entry leaves this file in the same change that
+  # deletes the path it names; that is what happened, and the deletion receipt is
+  # 08_os/_runs/run-20260810-旧OS物理删除-001/03_删除结果/删除回执_v1.yml.
   #
-  # As of 2026-08-10 every path in this group is on the approved direct-delete
-  # list produced by
-  # 08_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001/03_最终清单/最终直接删除清单_v1.yml.
-  # They are still listed because they are still physically present: this file
-  # describes the tree as it is, and each entry leaves in the same change that
-  # deletes the path it names.
-  - "PROJECT_CONTEXT.md"
-  - "00_City_State_Routing_Table.md"
-  - "04_Parliament/"
-  - "05_Carbon_Index/"
-  - "06_Silicon_Index/"
-  - "07_Compiler/"
-  - "07_Silicon_Private_Zones/"
-  - "system_backbone/"
-  - "3号方案.md"
-  - "ARCHITECTURE.md"
-  - "INSTANCE_CONFIG.md"
-  - "True_Fork_Protocol.md"
-  - "城邦系统需要实现的目标原则.md"
-  - ".ai/PROTOCOL.md"
-  - ".ai/PROTOCOL_ADHERENCE.md"
-  - ".ai/HANDOFF_INIT_PROMPT.md"
-  - ".ai/TOKEN_USAGE_PROFILE.md"
-  - ".ai/TOKEN_USAGE_OPERATIONAL_NORMS.md"
-  - ".ai/CODEX_WORK_MECHANISM_PROTOCOL.md"
-  - ".ai/CODEX_TASK_INPUT_CONTRACT.md"
-  - ".ai/DEFAULT_LARGE_TASK_EXECUTION_PROFILE.md"
-  - ".ai/LONG_RUN_AUTONOMOUS_PROGRAM_PROTOCOL.md"
-  - ".ai/load_profiles/"
-  - ".ai/lanes/"
-  - ".ai/communication_compliance/"
-  - ".ai/role_memory/"
-  - ".ai/token_profile/"
-  # Superseded 2026-08-10. Publication authority now lives at
-  # 08_os/05_registry/repository_publisher_authority_v1.yml and every active
-  # consumer was repointed in the same change. This path is retained in the list
-  # only because the file is still physically present and must not be edited by a
-  # domain in the meantime; it carries no live dependency.
-  - ".ai/REPOSITORY_PUBLISHER_AUTHORITY.yml"
-  #
-  # Removed 2026-08-10 because no such path exists in the tracked tree, and a
-  # manifest that names absent paths cannot be used to detect drift:
-  #   07_Execution_Plans/, 0号方案.md, 1号方案.md, 2号方案.md
-  # Evidence: git ls-files at eb4be95a25cb4b0929def284a7fb4b6a412aed55 returns no
-  # entry under or equal to any of the four. This records a false line being
-  # removed, not a file being deleted.
+  # Four other entries were removed on the same day for a different reason: they
+  # named paths that did not exist at all - 07_Execution_Plans/, 0号方案.md,
+  # 1号方案.md, 2号方案.md. That was a false line being deleted, not a file.
 
 # Paths every domain owns for itself. Each domain repository fills them with its
 # own material, so a core merge must not touch them.
@@ -161,18 +133,15 @@ core_owned_paths:
 # system. Splitting the chain across the core/domain boundary would have made
 # every domain fight core for its own reasoning.
 #
-# Settled 2026-08-10 by Human decision, closing the exception recorded in the
-# predecessor run: README.md is core-owned - it is the entry that declares which
-# OS is active, and a domain that could rewrite it could contradict core about
-# that. PROJECT_CONTEXT.md is neither: it is scheduled for deletion and is listed
-# in the legacy group above so that nothing edits it in the meantime.
+# Settled 2026-08-10 by Human decision: README.md is core-owned - it is the entry
+# that declares which OS is active, and a domain that could rewrite it could
+# contradict core about that. PROJECT_CONTEXT.md was neither core's nor a domain's
+# to keep and has been deleted.
 #
-# One measured exception remains, and it is a fact about today rather than a
-# policy: core still physically tracks 25 files under 01_Research_Reports/. Their
-# deletion is approved and belongs to the next mechanical task, which has not run.
-# Until it does, "core ships nothing here" is true of every path in this list
-# except that one, and this file says so rather than describing a tree that does
-# not yet exist.
+# As of 2026-08-10 core ships nothing at any path in this list. That was not true
+# earlier the same day - 25 files under 01_Research_Reports/ were still physically
+# tracked - and this file said so at the time. The deletion has now run, so the
+# plain statement is finally accurate rather than aspirational.
 domain_owned_paths:
   - "01_Research_Reports/"
   - "02_Protocols/"
@@ -185,17 +154,11 @@ domain_owned_paths:
   # overlap and the ownership check would report it. It holds no tracked file in
   # core by design.
   - "08_os/07_content/"
-  # The old communication-plane domain paths. All are on the approved
-  # direct-delete list and none carries a live dependency; they stay listed while
-  # the files are still physically present.
-  - ".ai/TASKS/"
-  - ".ai/CODEX_REPORTS/"
-  - ".ai/HUMAN_BRIEFS/"
-  - ".ai/USER_UPLOADS/"
-  - ".ai/STATE.yml"
-  - ".ai/INBOX.md"
-  - ".ai/OUTBOX.md"
-  - ".ai/HUMAN_BRIEF.md"
+  # The old communication-plane domain paths - .ai/TASKS/, .ai/CODEX_REPORTS/,
+  # .ai/HUMAN_BRIEFS/, .ai/USER_UPLOADS/, .ai/STATE.yml, .ai/INBOX.md,
+  # .ai/OUTBOX.md and .ai/HUMAN_BRIEF.md - were listed here until 2026-08-10 and
+  # are removed with the files. Domain run traffic now lives under
+  # 08_os/07_content/_runs/, which the entry above already covers.
 
 # Mechanics a domain repository follows. Recorded here so the procedure lives
 # with the manifest instead of in someone's memory.
