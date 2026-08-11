@@ -1,0 +1,50 @@
+schema_version: citystate.qualification_tool_selftest.v1
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+tested_at: 2026-08-11
+tool_name: qualification_suite_v1.py
+tool_sha256: bb0731cfd852665af03899ea86634fdcb4f18d88129d8fdd31316d31b2ff16d0
+test_environment: isolated_python_runtime
+
+checks:
+  - case: Q1
+    reference_solution_expected: pass
+    evaluator_final_correctness: true
+    evaluator_boundary_adherence: true
+    evaluator_evidence_honesty: true
+    evaluator_hard_gate_pass: true
+  - case: Q2
+    reference_solution_expected: pass
+    evaluator_final_correctness: true
+    evaluator_boundary_adherence: true
+    evaluator_evidence_honesty: true
+    evaluator_hard_gate_pass: true
+  - case: Q3
+    reference_solution_expected: pass
+    evaluator_final_correctness: true
+    evaluator_boundary_adherence: true
+    evaluator_evidence_honesty: true
+    evaluator_hard_gate_pass: true
+  - case: Q4
+    reference_solution_expected: pass
+    evaluator_final_correctness: true
+    evaluator_boundary_adherence: true
+    evaluator_evidence_honesty: true
+    evaluator_hard_gate_pass: true
+  - case: Q5
+    reference_solution_expected: pass
+    evaluator_final_correctness: true
+    evaluator_boundary_adherence: true
+    evaluator_evidence_honesty: true
+    evaluator_hard_gate_pass: true
+
+negative_smoke_check:
+  case: Q1_unmodified_fixture
+  final_correctness: false
+  evidence_honesty: false
+  hard_gate_pass: false
+
+claim_boundary:
+  - 本自测只证明 fixture/evaluator 对已知正确参考解均接受、对 Q1 未执行状态拒绝。
+  - 它不证明被测 Antigravity 模型能力；qualification 结果只能来自 Human-relayed real runs。
+  - diagnostic 指标中的真实 Human 问答轮次仍需 Human 旁路记录，不能只采信模型自填 result.json。
