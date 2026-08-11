@@ -1,0 +1,19 @@
+schema_version: citystate.run.v1
+run_id: run-20260811-命名空间切换后stale-blob绑定修复-001
+task_id: namespace-cutover-stale-blob-binding-repair-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+exact_base_sha: cd90a9d9adedbfa2d0f1b90f245b4dde7a061716
+branch: codex/os-v2-stale-blob-binding-repair-001
+ownership: core
+purpose: 修复 01_os 命名空间切换后阶段协同与 minimum-loop pilot 中的 stale binding deterministic closure，不改变机制语义。
+status: candidate_ready_for_independent_review
+outputs:
+  - 01_任务输入/任务包_v1.yml
+  - 07_测试执行/验证结果_v1.yml
+  - 08_结论/completion_pointer_v1.yml
+validation:
+  - stale binding before/after exact count
+  - five new OS initialization gates
+  - git diff --check
+  - exact changed-path scope
+lifecycle: durable_repair_evidence

@@ -1,0 +1,126 @@
+schema_version: citystate.validation_receipt.v1
+task_id: namespace-cutover-stale-blob-binding-repair-001
+exact_base_sha: cd90a9d9adedbfa2d0f1b90f245b4dde7a061716
+branch: codex/os-v2-stale-blob-binding-repair-001
+status: validation_passed_ready_for_independent_review
+
+authorized_repair:
+  repair_file_count: 9
+  stale_binding_before: 47
+  stale_binding_after: 0
+  changed_content_lines: 94
+  changed_blob_binding_lines: 94
+  changed_non_binding_lines: 0
+  diff_shape: 47_old_bindings_replaced_by_47_actual_tree_bindings
+
+actual_base_tree_bindings:
+  - path: 01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml
+    blob_sha: 01be0511ec2147b55e45154125b7aefcf6211c12
+  - path: 01_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml
+    blob_sha: 7cbf0cb368f6bb2c8f43bfd52e7d9d7bb6ff9c7b
+  - path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/结果对象契约_v1.yml
+    blob_sha: a82767b04d38eb5b73697eb9d8e8ce2538343ce1
+  - path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/状态转换与不变量契约_v1.yml
+    blob_sha: 10b18147c1652d712c943340afb11bb1bf47bbc3
+  - path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/路由与失败契约_v1.yml
+    blob_sha: f1c409d3012f8de98b3521c9d97db109598eaf68
+  - path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml
+    blob_sha: 4435019ffd5a08b95cd77c83e1169d1147745391
+  - path: 01_os/_runs/run-20260804-阶段协同推演闭环实现执行-001/P2/07_测试执行/P2_stage_receipt来源声明补全叠加层_v1.yml
+    blob_sha: 39daceab2c340d7934abcb2a4f27092f86a76495
+  - path: 01_os/03_mechanisms/stage_collaborative_deliberation/激活状态_v1.yml
+    blob_sha: 67f9cdc7b5873b13ca131263a93561f182f8b4ff
+  - path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_no_canonical_live_state.py
+    blob_sha: 419d69cfc064ecbb4652ac5f0eaf76f68e1ee4e0
+  - path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py
+    blob_sha: aab79dbb5226e2d504a136a5d3e6c3c3f62ceb19
+  - path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py
+    blob_sha: fc289c00080aa0567ab4212e52af7b763bb5ba13
+
+initialization_gates_initial_attempt:
+  - name: communication_static
+    exit_code: 0
+    result: validation_passed
+  - name: context_management_structure
+    exit_code: 0
+    result: context-management_structure_PASS
+  - name: canonical_live_state_guard
+    exit_code: 0
+    result: passed_no_output
+  - name: stage_collaborative_deliberation_static
+    exit_code: 0
+    result: passed_no_output
+  - name: seven_stage_minimum_operational_loop_static
+    exit_code: 1
+    result: pilot:workflow_stage_02_information_collection:02_evidence.yml
+
+out_of_scope_baseline_finding:
+  pilot_tree_diff_from_exact_base_exit_code: 0
+  pilot_tree_modified_by_candidate: false
+  manifest_binding_mismatches_observed:
+    - path: 02_evidence.yml
+      manifest_sha256: c1cb64991c41befe5736faecb0381a889f97d304281725e8f3e5f7a71211e801
+      actual_sha256: 2f191cd0fce787c5e91e45df31ee48d364b54de548132b36e42e2fd3e58eb990
+    - path: 06_execution.yml
+      manifest_sha256: b8f3bb1f97590a3c2c1dad981140bfc5a671d3091342497f00903081388332a0
+      actual_sha256: efbac759b9380432799f193a21eabad579e650c7ea1d95027bbc0cf5d7e7ee86
+  impact_at_discovery: seven-stage static gate could not pass without expanding the then-authorized changed paths
+  resolution: Human authorized same-root deterministic binding closure; resolved without semantic changes
+
+pilot_rebinding_simulation:
+  execution_location: ignored_current_run_runtime_plus_temporary_directory_outside_repository
+  repository_pilot_files_written: false
+  artifact_input_ref_replacements: 9
+  manifest_sha256_replacements: 6
+  minimal_additional_changed_paths:
+    - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/manifest.yml
+    - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/03_result.yml
+    - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/04_tests.yml
+    - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/05_steps.yml
+    - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/06_execution.yml
+    - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/07_verification.yml
+  note: 02_evidence.yml already contains the current bytes and needs no write
+  simulated_candidate_validate_exit_code: 0
+  semantic_payload_changes: 0
+
+pilot_rebinding_applied:
+  artifact_input_ref_replacements: 9
+  manifest_sha256_replacements: 6
+  modified_files: 6
+  untouched_current_artifact: 02_evidence.yml
+  final_artifact_sha256:
+    workflow_stage_02_information_collection: 2f191cd0fce787c5e91e45df31ee48d364b54de548132b36e42e2fd3e58eb990
+    workflow_stage_03_result_modeling: eb8624d066d282596cb895aa32b128cc7d064b379fff2d90e8b753d77c084ba3
+    workflow_stage_04_test_generation: 838e2b3f3b94c53e002ff071c0efc67d1d641afdba12e1912e33fedbb0b413cc
+    workflow_stage_05_step_decomposition: 2bdc7b0fb7c7f4374cd4e79ad40bf9eb971b20ab3f2d71a93b33d49014316bc1
+    workflow_stage_06_execution: f8f32ae3bf8d7ee2bd975efb5f892eeb356deb83109c59490cbfcf5d9189e2b8
+    workflow_stage_07_test_execution: 201c8b3c180b3bb6cfa9662f9aadd4a18b290e714e797148db83d3423d6e46d9
+  semantic_payload_changes: 0
+
+initialization_gates_final:
+  - name: communication_static
+    exit_code: 0
+    result: validation_passed
+  - name: context_management
+    exit_code: 0
+    result: context-management_structure_PASS
+  - name: canonical_live_state_guard
+    exit_code: 0
+    result: passed_no_output
+  - name: stage_collaborative_deliberation_static
+    exit_code: 0
+    result: passed_no_output
+  - name: seven_stage_minimum_loop_validate
+    exit_code: 0
+    result: passed_no_output
+  - name: seven_stage_minimum_loop_static
+    exit_code: 0
+    result: passed_no_output
+
+additional_checks:
+  git_diff_check_exit_code: 0
+  legacy_runtime_untracked_before: 21
+  legacy_runtime_untracked_after: 21
+  legacy_runtime_tracked_changes: 0
+  push_performed: false
+  master_modified: false

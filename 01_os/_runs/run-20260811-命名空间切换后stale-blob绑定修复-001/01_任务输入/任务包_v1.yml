@@ -1,0 +1,88 @@
+schema_version: citystate.task_packet.v1
+task_packet:
+  task_id: namespace-cutover-stale-blob-binding-repair-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T1_standard
+  exact_base_sha: cd90a9d9adedbfa2d0f1b90f245b4dde7a061716
+  branch: codex/os-v2-stale-blob-binding-repair-001
+  objective: >-
+    更新当前审计识别出的 9 个活动文件、47 处 stale blob binding，并完成同根因 minimum-loop
+    pilot deterministic binding closure，恢复完整新 OS 初始化门。
+  source_evidence:
+    - current remote master tree at cd90a9d9adedbfa2d0f1b90f245b4dde7a061716
+    - current Human authorization in this task dated 2026-08-11
+  repair_changed_paths:
+    - 01_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml
+    - 01_os/01_workflow/01_需求建模/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/01_workflow/02_信息收集与提炼/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/01_workflow/03_结果建模/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/01_workflow/04_测试生成/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/01_workflow/05_步骤拆分/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/01_workflow/06_执行/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/01_workflow/07_测试执行/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/05_registry/stage_collaborative_deliberation_v1.yml
+  deterministic_closure_paths:
+    - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/manifest.yml
+    - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/03_result.yml
+    - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/04_tests.yml
+    - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/05_steps.yml
+    - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/06_execution.yml
+    - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/07_verification.yml
+  allowed_changed_paths:
+    - 01_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml
+    - 01_os/01_workflow/01_需求建模/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/01_workflow/02_信息收集与提炼/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/01_workflow/03_结果建模/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/01_workflow/04_测试生成/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/01_workflow/05_步骤拆分/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/01_workflow/06_执行/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/01_workflow/07_测试执行/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/05_registry/stage_collaborative_deliberation_v1.yml
+    - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/manifest.yml
+    - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/03_result.yml
+    - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/04_tests.yml
+    - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/05_steps.yml
+    - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/06_execution.yml
+    - 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/07_verification.yml
+    - 01_os/_runs/run-20260811-命名空间切换后stale-blob绑定修复-001/**
+  required_tests:
+    - python 01_os/06_execution/boot/communication_system/validator/validate_communication_system.py static .
+    - python 01_os/03_mechanisms/context_management/实现/verify_context_structure.py
+    - python 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_no_canonical_live_state.py .
+    - python 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py static .
+    - python 01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py static .
+    - stale binding exact count equals zero
+    - git diff --check
+  prohibitions:
+    - modify_or_publish_master
+    - push_any_remote_branch
+    - force_push
+    - rebase
+    - amend
+    - squash
+    - history_rewrite
+    - alter_mechanism_profile_activation_or_validator_semantics
+    - reprocess_01_os_namespace
+    - touch_legacy_08_os_runtime_files
+  required_completion_pointer: 08_结论/completion_pointer_v1.yml
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_write_authorized: false
+    master_write_authorized: false
+    destructive_git_authorized: false
+    authorization_ref: current_Human_message_2026-08-11_deterministic_binding_closure
+    expected_remote_head: cd90a9d9adedbfa2d0f1b90f245b4dde7a061716
+  executor_profile:
+    provider: Codex
+    model: GPT-5
+    reasoning_effort: high
+    mode: standard
+    rollout_token_budget: null
+    routing_basis: 本地确定性 Git tree 绑定修复与验证
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: required
+    independent_reviewer: foreground_independent_review
+    different_model_family: true
+    different_measurement_tool: true
