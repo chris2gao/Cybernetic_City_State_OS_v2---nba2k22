@@ -1,0 +1,180 @@
+schema_version: citystate.evidence_reconciliation.v1
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+stage: 02_信息收集与提炼
+reconciled_at: 2026-08-11
+method: claim_level_source_strength_not_vote
+
+source_registry:
+  A2:
+    kind: Human_confirmed_requirement
+    ref: 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/01_需求建模/requirement/A_需求建模_v2.yml
+  CHATGPT_PASS:
+    kind: independent_provider_first_party_research
+    ref: 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/02_信息收集与提炼/DeepResearch_ChatGPT官方一手资料_v1.md
+  GEMINI_PASS:
+    kind: independent_web_research
+    ref: Human_upload_sha256:a55c2a8125fa86cab1c2974a29a7d02c89a762b6d2a44fc431aeed3baa50bc60
+  GPT_WEB_FAILED:
+    kind: noncompliant_research_attempt
+    ref: Human_upload_sha256:6831a2010394428dc3f8b0ea3edaf10d1c627a03a7ae7aa48c5e26da5d50ef3a
+  OAI_CHATGPT_56:
+    kind: provider_first_party
+    title: GPT-5.6 in ChatGPT
+    url: https://help.openai.com/en/articles/20001354-gpt-5-6-in-chatgpt
+    verified_at: 2026-08-11
+  OAI_GPT56_RELEASE:
+    kind: provider_first_party
+    title: GPT-5.6 - Frontier intelligence that scales with your ambition
+    url: https://openai.com/index/gpt-5-6/
+    verified_at: 2026-08-11
+  OAI_CODEX_APP:
+    kind: provider_first_party
+    title: Introducing the Codex app
+    url: https://openai.com/index/introducing-the-codex-app/
+    verified_at: 2026-08-11
+  ANTH_CODE_MODELS:
+    kind: provider_first_party
+    title: Claude Code model configuration
+    url: https://support.claude.com/en/articles/11940350-claude-code-model-configuration
+    verified_at: 2026-08-11
+  ANTH_PRO_CODE:
+    kind: provider_first_party
+    title: Use Claude Code with your Pro or Max plan
+    url: https://support.claude.com/en/articles/11145838-use-claude-code-with-your-pro-or-max-plan
+    verified_at: 2026-08-11
+  ANTH_CODE_USAGE:
+    kind: provider_first_party
+    title: Models, usage, and limits in Claude Code
+    url: https://support.claude.com/en/articles/14552983-models-usage-and-limits-in-claude-code
+    verified_at: 2026-08-11
+  GOOGLE_AG_MODELS:
+    kind: provider_first_party
+    title: Google Antigravity Models
+    url: https://antigravity.google/docs/models
+    verified_at: 2026-08-11
+  GOOGLE_AG_PRICING:
+    kind: provider_first_party
+    title: Google Antigravity Pricing
+    url: https://antigravity.google/pricing
+    verified_at: 2026-08-11
+  GOOGLE_GEMINI_THINKING:
+    kind: provider_first_party
+    title: Gemini thinking
+    url: https://ai.google.dev/gemini-api/docs/generate-content/thinking
+    verified_at: 2026-08-11
+  GOOGLE_AG_36:
+    kind: provider_first_party
+    title: Gemini 3.6 Flash in Google Antigravity
+    url: https://antigravity.google/blog/gemini-3-6-flash-in-google-antigravity
+    verified_at: 2026-08-11
+
+accepted_claims:
+  C01_surface_is_first_class:
+    claim: routing对象必须是 model + product_surface + parameter_profile，而不是只记录模型名。
+    evidence: [A2, CHATGPT_PASS, GEMINI_PASS, OAI_CHATGPT_56, OAI_CODEX_APP, ANTH_CODE_MODELS, GOOGLE_AG_MODELS]
+    strength: high
+    rationale: 同一家 provider 在 ChatGPT/Codex、Claude Web/Code、Gemini Web/Antigravity 暴露的模型、工具与参数不同。
+
+  C02_Human_availability_override:
+    claim: 已登记候选默认 available；只有 Human 明确 unavailable 才排除，恢复后重新可用；无需自动探测账户额度。
+    evidence: [A2, OAI_CHATGPT_56, ANTH_CODE_USAGE]
+    strength: requirement_plus_product_support
+    rationale: 这是 Human 已确认需求；官方产品也明确账户实际可选项会随 plan/rollout/usage 变化，Claude Code /model 是账户当前模型的 source of truth。
+
+  C03_routing_optimizes_fit_not_cost:
+    claim: 路由目标是当前任务的正确完成概率与 task-model-surface fit，不以 token/价格/额度经济性为优化目标。
+    evidence: [A2]
+    strength: Human_requirement
+
+  C04_ChatGPT_Plus_current_control:
+    claim: 标准 ChatGPT Plus 当前可使用 GPT-5.6 Sol Medium/High；Terra/Luna 不在标准 ChatGPT conversation 选择器中；Extra High/Pro 不属于 Plus。
+    evidence: [OAI_CHATGPT_56]
+    strength: high
+    invalidation: OpenAI product/model-picker update
+
+  C05_Codex_Plus_current_candidates:
+    claim: Codex 的 Plus 计划当前可选 GPT-5.6 Sol/Terra/Luna，并允许设置 effort；Codex product surface 原生面向多 agent、worktree 与 long-running work。
+    evidence: [OAI_CHATGPT_56, OAI_GPT56_RELEASE, OAI_CODEX_APP]
+    strength: high
+    invalidation: OpenAI Codex model/product update
+
+  C06_Claude_Code_Pro_is_active_surface:
+    claim: Claude Pro 包含 Claude Code；Claude Code 当前支持多个 Claude 型号，实际账户可选模型应在任务开始时以 /model 或 UI 观测为准。
+    evidence: [ANTH_PRO_CODE, ANTH_CODE_MODELS, ANTH_CODE_USAGE, A2]
+    strength: high
+    invalidation: Anthropic plan/model update
+
+  C07_Antigravity_model_labels_verified:
+    claim: 当前 Antigravity 官方 model selector 列出 Gemini 3.6 Flash Low/Medium/High、Gemini 3.1 Pro Low/High、Claude Opus 4.6 Thinking；Human 报告的三类标签是真实 product-surface label。
+    evidence: [GOOGLE_AG_MODELS, GEMINI_PASS]
+    strength: high
+    invalidation: Google Antigravity model catalog update
+
+  C08_Antigravity_Pro_access:
+    claim: Google AI Pro 当前官方 Antigravity models 表列出 Gemini 3.6 Flash、Gemini 3.1 Pro、Claude Sonnet/Opus 4.6；账户时点可用性仍由 Human UI observation 控制。
+    evidence: [GOOGLE_AG_MODELS, GOOGLE_AG_PRICING, A2]
+    strength: high
+    note: Google 历史缓存页面曾出现 plan matrix 差异，因此不将静态 entitlement 当账户事实。
+
+  C09_surface_parameter_profile_required:
+    claim: API reasoning/thinking 参数不能自动复制到 Web/Desktop；parameter profile 必须记录 surface 实际暴露档位。
+    evidence: [OAI_CHATGPT_56, OAI_GPT56_RELEASE, GOOGLE_AG_MODELS, GOOGLE_GEMINI_THINKING, CHATGPT_PASS, GEMINI_PASS]
+    strength: high
+
+  C10_project_qualification_required:
+    claim: vendor benchmark/capability 只能作为候选能力证据，不能替代本项目冻结任务的 qualification；尤其 Antigravity Gemini/Opus 必须通过项目实测确定任务上限。
+    evidence: [A2, CHATGPT_PASS, GEMINI_PASS, GOOGLE_AG_36]
+    strength: Human_requirement_plus_supporting_product_claim
+    note: Google 对 3.6 Flash 的更少循环/更少无关编辑是 vendor claim，只能用于设计测试假设，不能视为本项目 qualified。
+
+  C11_qualification_shape:
+    claim: qualification 应覆盖 mechanical、standard implementation、semantic judgment、long-chain closure、independent primary-diff review；hard gates 至少包括 final correctness、boundary adherence、evidence honesty、objective closure，返工轮数/过度工程/micro-gate 等作为诊断指标。
+    evidence: [A2, GEMINI_PASS, CHATGPT_PASS]
+    strength: design_implication_supported_by_two_independent_passes
+
+  C12_architecture_boundary:
+    claim: model routing 应形成独立 global mechanism；workflow 只负责编排/调用，context management 负责上下文，role mechanism 负责角色语义，后续 task execution envelope 负责长任务持续执行原则。
+    evidence: [A2, CHATGPT_PASS, GEMINI_PASS]
+    strength: Human_confirmed_architecture_direction
+
+rejected_or_downgraded_claims:
+  R01:
+    claim: ChatGPT Plus Web supports GPT-5.6 Extra High.
+    status: rejected
+    reason: OpenAI 当前官方表明确 Plus 只有 Medium/High。
+  R02:
+    claim: Codex Desktop usable context should be fixed at 258K.
+    status: rejected_as_routing_fact
+    reason: Gemini 报告主要依据 Reddit/非产品契约；API context 与 surface effective context不可据此等同。
+  R03:
+    claim: Antigravity Gemini 3.1 Pro should be routed using a 250K stable context ceiling because drift starts after 300K.
+    status: rejected
+    reason: 无可靠一手或本项目冻结实测支持。
+  R04:
+    claim: Antigravity always assigns codebase indexing/static analysis/file search/simple tool execution to Gemini 3.6 Flash background subagents.
+    status: rejected_as_overbroad
+    reason: 当前官方 models 页只确认有不可自定义 additional models，未支持该完整且固定的后台职责映射。
+  R05:
+    claim: Opus 4.6 scarcity requires a quota-conservation routing policy.
+    status: rejected_by_requirement
+    reason: Human 已明确本机制不做 token/额度经济优化；只有 unavailable override 会排除模型。
+  R06:
+    claim: GPT_Web_report contributes model-routing evidence.
+    status: rejected
+    reason: 研究未读取/执行任务包实质内容并偏离研究主题。
+
+conflicts_resolved:
+  - id: entitlement_vs_account_availability
+    resolution: provider docs describe general eligibility; Human task-time UI observation controls current account availability.
+  - id: API_parameter_vs_surface_parameter
+    resolution: keep both layers; surface route may only use parameters proven exposed on that surface.
+  - id: vendor_benchmark_vs_project_history
+    resolution: vendor benchmark never overrides project qualification; project frozen-task evidence determines OS task-fit status.
+  - id: cost_efficiency_vs_quality_fit
+    resolution: cost/price ignored for routing optimization by Human requirement.
+
+remaining_unknowns_for_stage_03_or_later:
+  - exact current Claude Code Desktop model label available in the Human Pro account at each future task start; resolve by Human observation, not research.
+  - Antigravity Gemini 3.6 Flash / 3.1 Pro / Opus 4.6 project qualification status; requires actual frozen-task execution after qualification fixtures are defined.
+  - final minimal contract/file layout for global model-routing mechanism; stage 03 result modeling must derive this from accepted claims without duplicating workflow/context/role responsibilities.
