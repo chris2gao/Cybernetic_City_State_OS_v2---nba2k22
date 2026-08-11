@@ -1,9 +1,37 @@
 schema_version: citystate.execution_report.v1
 task_id: os-v2-legacy-physical-deletion-001
 run_id: run-20260810-旧OS物理删除-001
-status: ready_for_independent_rereview
+status: ready_for_independent_final_review
 executor: Claude_Code
 reviewer: ChatGPT_independent_project_reviewer
+
+correction_round_2:
+  trigger: >-
+    Human ruling of 2026-08-10 on .ssh/, delivered alongside
+    09_独立复核/ChatGPT独立复审_v2.yml at c393bb3659a35d1c3dadf5986e8e90d5f58c9d28.
+  scope: evidence consolidation only; no tracked file deleted, restored, moved or renamed
+  what_changed:
+    - >-
+      The SSH check stopped asserting anything outside the repository. Two earlier
+      versions were wrong in opposite directions - one required the key files to
+      still be inside the repository, the other required them to be found in the user
+      profile - and both had a machine test overruling a decision that is the Human's.
+      It now observes one thing: .ssh/ is absent from the worktree.
+    - >-
+      The report's four generations of SSH statements are consolidated into one
+      current state plus a history block, with every superseded claim - including my
+      own relocation inference - explicitly marked superseded_by_Human_decision.
+    - >-
+      Tracked-Python integrity now names its single authorized exception instead of
+      failing on it or hiding it.
+  frozen_and_not_reopened:
+    delete_set_490: unchanged, all 490 paths remain absent
+    whitelist_15: unchanged, set equality holds
+    immutable_history_proof: unchanged, missing_dispatch_08_paths = 0
+    tracked_python: unchanged apart from the named instrument
+    runtime_pydeps: remains deleted, not restored
+    permission_blocked_caches: remain, nonblocking residual
+    core_manifest_semantics: untouched
 
 correction_round_1:
   trigger_review: 09_独立复核/ChatGPT独立复核_v1.yml at a68cc36fe9d6efa577abe7577795d4e1a2261568
@@ -232,10 +260,9 @@ preservation_narrowed:
     item covers only that list, checked by existence on disk.
   4_explicit_protected_local_paths:
     .claude/settings.local.json: present
-    .ssh/id_ed25519: >-
-      NOT in the repository, and not deleted by this task. See ssh_relocation below.
-    .ssh/id_ed25519.pub: same
-    .ssh/known_hosts: same
+    repository_dot_ssh: >-
+      absent, and that is the accepted end state - see ssh_final_state. It is no
+      longer a validation gate for this task and no external copy is looked for.
   5_runtime_pydeps: explicitly authorized and deleted, with the seven proofs recorded above
   6_cache_directories: explicitly disposable; 40 removed across this task's two sweeps
   7_permission_blocked_residual:
@@ -247,29 +274,95 @@ preservation_narrowed:
     path and no broad clean or directory sweep was used outside the two guarded
     cases, which is the reason this narrower set of assertions is sufficient.
 
-ssh_relocation:
-  observed: >-
-    .ssh/ is no longer inside the repository. Four files with the same names and the
-    same byte sizes - id_ed25519 387, id_ed25519.pub 83, known_hosts 828,
-    known_hosts.old 92 - are present in the user profile SSH directory. Existence and
-    metadata only; no file was opened.
-  not_this_task: >-
-    Nothing run in this round can move a file. The cache sweeps match a directory leaf
-    name of __pycache__ or .pytest_cache, and the guarded deletion targeted one exact
-    pydeps path. At the end of the previous round the four files were still in the
-    repository and the check recorded them as present.
-  most_likely: >-
-    The Human acted on this task's own recommendation to move the key out of the
-    working tree. That is stated as the likely explanation, not as a verified fact -
-    the executor cannot observe who moved it.
-  check_changed_and_why: >-
-    The post check asserted these four exist INSIDE the repository, and so it failed
-    at the exact moment the defect it was raised for got fixed. Demanding a private
-    key stay in a working tree is the opposite of the finding. It now asserts the
-    property actually wanted: no key material inside the repository, and key material
-    not destroyed - failing only if it is in neither place. The raw failing output is
-    recorded above so this narrowing can be re-derived.
-  awaiting_human_confirmation: true
+# ---------------------------------------------------------------------------
+# SSH: one current state, and the trail that led to it kept as history only.
+# ---------------------------------------------------------------------------
+ssh_final_state:
+  repository_dot_ssh_present: false
+  accepted_by_Human: true
+  restoration_required: false
+  external_copy_verification_required: false
+
+ssh_repository_state:
+  repository_dot_ssh_present: false
+  state: intentionally_removed_by_Human
+  restoration_required: false
+  external_preservation_required: false
+  operational_dependency: none_for_current_repository_workflow
+  human_statement: >-
+    Local GitHub operations already go through the GitHub CLI, so a .ssh/ directory
+    inside the repository worktree is not needed. Its removal was deliberate. This
+    records only that the current workflow does not depend on an in-repository
+    .ssh/; it is not a statement about how the CLI authenticates and creates no new
+    repository authority.
+
+ssh_history:
+  earlier_observation:
+    state: repository_dot_ssh_previously_present
+    context: >-
+      Raised by this task family as a finding - a private key inside a working tree
+      is one broad archive or folder copy away from travelling, which is the same
+      failure mode new-domain.ps1 exists to prevent for remotes. It was never read,
+      moved or deleted by any task.
+  later_observation:
+    state: repository_dot_ssh_absent
+  Human_final_decision:
+    state: intentionally_removed
+    restore: false
+    verify_external_copy: false
+
+superseded_by_Human_decision:
+  - claim: ".ssh/id_ed25519 is present in the repository and must remain so"
+    status: superseded
+    note: the earliest version of the check asserted this
+  - claim: ".ssh/ was relocated to the user profile"
+    status: superseded
+    note: >-
+      an inference from matching names and byte sizes, offered as likely rather than
+      verified. The Human has since stated the removal was deliberate, which settles
+      it; the relocation guess is not current fact and must not be cited as one.
+  - claim: "awaiting Human confirmation"
+    status: superseded
+    note: the confirmation was given
+  - claim: "key material must be proven not destroyed"
+    status: superseded
+    note: >-
+      No longer this task's responsibility, and it was the wrong shape of check
+      regardless: a machine test demanding the file exist somewhere else would have
+      stood in judgement over a decision that is the Human's to make.
+  check_now_asserts: >-
+    Only that .ssh/ is absent from the repository worktree. The checker searches
+    nothing outside the repository, reads no key material, and makes no claim about
+    any external copy.
+
+preservation_final:
+  tracked_tree:
+    proven: true
+  tracked_python:
+    proven: true
+    count: 92
+    path_equality: true
+    blob_identical: 91 of 92
+    authorized_exception: >-
+      08_os/_runs/run-20260810-旧OS物理删除-001/04_验证/verify_exact_deletion.py, this
+      task's own instrument, which successive Human corrections ordered corrected.
+      Named in the checker and its before/after blobs printed, on the same principle
+      as CORE_MANIFEST.yml: an exception that is not written down cannot be told
+      apart from an undetected change.
+    unauthorized_changes: 0
+  ordinary_untracked_snapshot:
+    scope: recorded_entries_only
+  claude_local_settings:
+    path: .claude/settings.local.json
+    present: true
+  repository_dot_ssh:
+    present: false
+    state: intentionally_removed_by_Human
+  runtime_pydeps:
+    state: intentionally_deleted
+  cache:
+    disposable: true
+    permission_blocked_residual: 2
 
 preservation:
   untracked_and_ignored_files_touched: 0

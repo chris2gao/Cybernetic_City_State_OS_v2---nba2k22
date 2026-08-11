@@ -16,8 +16,17 @@ purpose: >-
   the predecessor and re-opening them here would defeat the point of having had
   them reviewed.
 
-status: candidate_ready_for_independent_review
-review_state: corrected_once_awaiting_rereview
+status: candidate_ready_for_independent_final_review
+review_state: corrected_twice_awaiting_final_review
+correction_round_2:
+  trigger: Human ruling on .ssh/ delivered with 09_独立复核/ChatGPT独立复审_v2.yml @ c393bb3659a35d1c3dadf5986e8e90d5f58c9d28
+  scope: evidence consolidation only
+  ssh_final_state:
+    repository_dot_ssh_present: false
+    accepted_by_Human: true
+    restoration_required: false
+    external_copy_verification_required: false
+  frozen: [delete_set_490, whitelist_15, immutable_history_proof, tracked_python, runtime_pydeps, core_manifest_semantics]
 correction_round_1:
   review_ref: 09_独立复核/ChatGPT独立复核_v1.yml @ a68cc36fe9d6efa577abe7577795d4e1a2261568
   blocking_finding: R1_no_08_deletion_post_check_not_effective - upheld

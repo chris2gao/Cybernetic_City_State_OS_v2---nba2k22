@@ -56,6 +56,16 @@ DISPATCH_HEAD = "966adf07b707c04143b9d952e52ba2c10313f3ad"
 
 EXPECTED_TRACKED_PY = 92
 
+# The one tracked .py this task is allowed to change, and only because successive
+# Human corrections ordered this file itself to be corrected. It is the task's own
+# instrument, not OS Python. It is named here for the same reason CORE_MANIFEST.yml
+# is named as the mutable survivor: an exception that is not written down is
+# indistinguishable from an undetected change. Its before/after blobs are printed,
+# so the exception can be checked rather than taken on trust.
+AUTHORIZED_PY_MUTATION = (
+    "08_os/_runs/run-20260810-旧OS物理删除-001/04_验证/verify_exact_deletion.py"
+)
+
 PATH_ENTRY = re.compile(r"^\s*-\s+path:\s+'(?P<p>.+)'\s*$")
 BARE_ENTRY = re.compile(r"^\s*-\s+'(?P<p>.+)'\s*$")
 
@@ -280,22 +290,31 @@ def phase_post(root: Path) -> int:
     if py_snapshot_path.exists():
         py_before = json.loads(py_snapshot_path.read_text(encoding="utf-8"))["blobs"]
         path_equal = set(py_before) == set(py_now)
-        blob_equal = py_before == py_now
         outside = sorted(p for p in py_now if not p.startswith("08_os/"))
+        changed = sorted(
+            p for p in py_now if py_before.get(p) not in (None, py_now[p])
+        )
+        unauthorized = [p for p in changed if p != AUTHORIZED_PY_MUTATION]
+        identical = sum(1 for p in py_now if py_before.get(p) == py_now[p])
         print("tracked_python:")
         print(f"  before: {len(py_before)}  after: {len(py_now)}")
         print(f"  path_set_equality:  {path_equal}")
-        print(f"  blob_equality:      {sum(1 for p in py_now if py_before.get(p) == py_now[p])} of {len(py_now)}")
+        print(f"  blob_identical:     {identical} of {len(py_now)}")
         print(f"  outside_08_os:      {len(outside)}")
+        print(f"  unauthorized_changes: {len(unauthorized)}")
+        for path in changed:
+            tag = "AUTHORIZED" if path == AUTHORIZED_PY_MUTATION else "UNAUTHORIZED"
+            print(f"    {tag} {path}")
+            print(f"      before {py_before.get(path)}")
+            print(f"      after  {py_now[path]}")
         if not path_equal:
             problems.append(
                 f"tracked python path set changed: "
                 f"gone={sorted(set(py_before) - set(py_now))[:5]}, "
                 f"new={sorted(set(py_now) - set(py_before))[:5]}"
             )
-        if not blob_equal:
-            changed = sorted(p for p in py_now if py_before.get(p) not in (None, py_now[p]))
-            problems.append(f"tracked python blobs changed: {changed[:5]}")
+        if unauthorized:
+            problems.append(f"tracked python blobs changed: {unauthorized[:5]}")
         if outside:
             problems.append(f"tracked python outside 08_os: {outside}")
     else:
@@ -336,25 +355,25 @@ def phase_post(root: Path) -> int:
     if missing_protected:
         problems.append(f"protected local files missing: {missing_protected}")
 
-    # The SSH key is a special case and asserting its presence IN THE REPOSITORY was
-    # wrong. The finding this task raised was that a private key inside a working
-    # tree is one broad archive or folder-copy away from travelling; the fix for that
-    # is the key leaving the repository, so a check demanding it still be here would
-    # fail precisely when the problem got solved. What must hold is: it is not in the
-    # repository, and it was not destroyed. Existence only - no file is opened.
-    profile_ssh = Path.home() / ".ssh"
-    in_repo = sorted(p.name for p in (root / ".ssh").glob("*")) if (root / ".ssh").exists() else []
-    in_profile = sorted(p.name for p in profile_ssh.glob("*")) if profile_ssh.exists() else []
-    ssh_present = bool(in_profile) and not in_repo
-    if in_repo:
-        print(f"  NOTE private key material still inside the repository: {in_repo}")
-    if not in_profile and not in_repo:
+    # The repository .ssh/ directory was removed by the Human, deliberately, and the
+    # Human has ruled that its absence is the accepted end state: no restoration, no
+    # relocation to prove, no external copy to find. So the only thing left to observe
+    # is that it is absent from the worktree.
+    #
+    # Two earlier versions of this check were wrong in opposite directions - one
+    # required the four key files to still be inside the repository, the other
+    # required them to be found in the user profile instead. Both had a machine test
+    # standing in judgement over a decision that is the Human's to make. A checker
+    # does not get to overrule an instruction by demanding the file exist somewhere
+    # else, so this one asserts nothing beyond the repository boundary and searches
+    # nothing outside it.
+    repo_ssh_present = (root / ".ssh").exists()
+    if repo_ssh_present:
         problems.append(
-            "SSH key material is in neither the repository nor the user profile - "
-            "that is a loss, not a relocation"
+            ".ssh/ is present in the repository worktree; the accepted state is absent"
         )
-    print(f"ssh_material_in_repo:     {len(in_repo)}")
-    print(f"ssh_material_in_profile:  {len(in_profile)} (existence only, never opened)")
+    print(f"repository_dot_ssh_present: {repo_ssh_present}")
+    print("repository_dot_ssh_state:   intentionally_removed_by_Human (accepted)")
 
     print(f"post_delete_non08:        {len(non08)}")
     print(f"whitelist_set_equality:   {non08 == whitelist}")
@@ -364,7 +383,6 @@ def phase_post(root: Path) -> int:
     print(f"local_files_still_on_disk:{len(recorded) - len(lost)} of {len(recorded)}, "
           f"{len(lost)} lost, {len(became_tracked)} now tracked (committed by this run)")
     print(f"protected_local_present:  {len(must_survive) - len(missing_protected)} of {len(must_survive)}")
-    print(f"ssh_key_untouched:        {ssh_present}")
     for item in problems:
         print(f"  PROBLEM {item}")
     print("RESULT " + ("FAIL" if problems else "PASS"))
