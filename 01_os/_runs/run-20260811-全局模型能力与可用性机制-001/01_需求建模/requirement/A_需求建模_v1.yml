@@ -1,0 +1,172 @@
+schema_version: citystate.requirement_model.A.v1
+artifact:
+  task_id: os-v2-global-model-capability-and-availability-routing-001
+  run_id: run-20260811-全局模型能力与可用性机制-001
+  stage: 01_需求建模
+  version: 1
+  status: candidate_pending_Human_synonym_confirmation
+  source: current_Human_requirements_2026-08-11
+
+A:
+  目标: >-
+    建立一个 repository-wide 的全局模型能力、当前可用性与任务路由机制，使每个正式任务开工前
+    都基于当次真实可用的 provider / product surface / model 做 fresh-check，并结合任务角色、
+    risk tier、任务形状、资源/额度约束与该 surface 实际支持的参数，选择可审计的
+    model + surface + parameter profile；长期能力知识可复用，但动态可用性不得靠旧静态表猜测。
+
+  成功判据:
+    - 描述: >-
+        每个正式任务开始时都能形成带 observed_at/source 的 current availability snapshot，
+        并与较稳定的 model capability profile 明确分层；旧聊天或旧静态表不能冒充当前可用性。
+      可观察: true
+    - 描述: >-
+        单次路由结果明确给出 role、risk tier、task shape、surface、model、parameter profile、
+        routing basis 与关键限制；同一模型在不同 surface 上的能力/参数/额度差异不会被合并成一个假事实。
+      可观察: true
+    - 描述: >-
+        capability profile 至少覆盖当前任务实际需要的 context、reasoning controls、agent/tool 能力、
+        coding、research、multimodal/vision、速度/延迟特征、额度/使用限制、可用参数、已知限制、
+        source/ref、verified_at 与 invalidation condition；厂商未公开的字段保持 unknown，而不是补猜。
+      可观察: true
+    - 描述: >-
+        deep research 覆盖 Human 当前声明可用的主要 surfaces：ChatGPT Plus web、Codex Desktop、
+        Claude Pro 下的 Claude Code Desktop、Gemini Pro web 与 Antigravity；Claude Code CLI 本任务明确暂缓。
+        Human 报告的 Gemini 3.1 Pro、Gemini 3.6 Flash、Opus 4.6 等标签逐项核实身份与 surface，
+        无法由官方资料确认时保留为 user-observed label。
+      可观察: true
+    - 描述: >-
+        研究证据明确区分 official/vendor fact、product/plan entitlement fact、Human current-account
+        observation、independent measurement 与 inference；任何时变结论都带日期和失效条件。
+      可观察: true
+    - 描述: >-
+        至少有一轮 independent deep-research pass 在不知道另一研究者结论的前提下完成；阶段 2
+        对独立结果按 claim/evidence 对齐并显式保留冲突，不用平均意见代替事实核验。
+      可观察: true
+    - 描述: >-
+        最终机制能为 planner/architecture、backend executor、independent reviewer、deep researcher
+        等角色提供不同路由依据，并与 task packet 的 risk_tier / executor_profile /
+        verification_profile 对接；模型选择不改变 Human authority 或 protected-action gate。
+      可观察: true
+    - 描述: >-
+        现有 01_os/开发入口与单窗口任务规范_v1.md 中静态模型路由内容被 evidence-backed 方案
+        一致地保留、澄清、迁移或 supersede，不新增一套相互竞争的长期路由政策。
+      可观察: true
+    - 描述: >-
+        当某个 surface 的当前 availability、额度或参数无法可靠观测时，机制显式给出 unknown /
+        unavailable-to-verify 状态并按已定义策略处理，绝不凭模型名称、历史记忆或供应商品牌自行推断可用。
+      可观察: true
+
+  边界:
+    - 本任务研究并设计 model capability / availability / task routing；不购买、升级、取消或修改任何订阅。
+    - 本任务不读取、保存或回显 token、cookie、credential、key、.env 或其他账户秘密。
+    - Claude Code CLI 当前明确不启用、不安装、不配置；只可作为 deferred surface 记录，不进入当前 availability routing 候选。
+    - 不把 API model capability 自动等同于 ChatGPT/Claude/Gemini web 或 Desktop product capability；surface 必须分别建模。
+    - 不把 Human 报告的 UI 模型名称、额度多少直接写成 vendor-verified fact；阶段 2 负责验证或维持 user-observed 状态。
+    - 需求建模与研究阶段只写本 run evidence；在阶段 3 evidence-backed design 获 Human 接受并明确 implementation boundary 前，不修改 canonical。
+    - 本任务不建立自动购买、自动切账号、自动绕过额度、自动跨模型投递或后台 watcher/scheduler。
+
+  约束:
+    - 现有 repository-wide bootstrap、one-window-one-task、Human authority、independent review、publication/master gate 必须保持。
+    - 模型/产品/额度/参数属于高时变信息；current availability 必须 fresh-read/fresh-observe，稳定能力知识必须带 verified_at 与 invalidation condition。
+    - web/Desktop surfaces 可能没有机器可读的 entitlement/availability API；机制必须能诚实表示 observation source 与 unknown，不能要求读取账户秘密来“自动化”。
+    - deep research 的技术事实优先使用 provider 官方一手资料；第三方评测若使用，只能作为 performance/risk evidence，并与厂商能力声明分开。
+    - 研究结果不能因当前路由规范已有某个模型表而自证；现有表是被审对象之一。
+    - 独立模型间若无正式 communication task context，仍按 Human-triggered / Human-relayed 方式传递研究任务与结果。
+    - 机制设计应优先简单：不为尚不存在的 provider/surface 预建复杂插件体系；但必须给动态增加/失效提供清晰数据边界。
+
+  术语:
+    - 词: 全局模型能力与可用性路由机制
+      含义: >-
+        repository-wide 的任务启动机制：维护可追溯的能力知识，获取当次 surface/model 可用性，
+        再依据当前 task/role/risk/resource 选择具体 model + surface + parameter profile。
+      别名: [模型路由机制, model routing]
+    - 词: model
+      含义: 具体模型身份或产品 UI 暴露的模型标签；API model ID 与产品 UI label 不默认视为同一对象。
+      别名: [模型]
+    - 词: product surface
+      含义: 实际承载模型的产品/客户端环境，例如 ChatGPT web、Codex Desktop、Claude Code Desktop、Gemini web、Antigravity。
+      别名: [surface, 产品面, 客户端]
+    - 词: capability profile
+      含义: 带来源、验证时间与失效条件的较稳定模型/产品能力描述，不代表此刻账户一定可用。
+      别名: [能力档案, capability catalog]
+    - 词: current availability snapshot
+      含义: 某个具体任务开工时，对当前账户/环境实际可选择 model/surface/参数的时点观测记录。
+      别名: [availability preflight, 可用性快照, fresh-check]
+    - 词: parameter profile
+      含义: 当前 surface 真正支持且本任务采用的推理强度、模式、工具/agent 配置等运行参数集合；不把 API-only 参数套到不支持它的产品面。
+      别名: [参数配置, reasoning profile]
+    - 词: task routing
+      含义: 根据当前任务的 role、risk tier、task shape、availability 与资源限制选定执行/研究/审核模型及参数的可审计决策。
+      别名: [任务路由]
+    - 词: independent deep research
+      含义: >-
+        研究角色独立从来源构建 claim/evidence，不以另一研究者的结论作为输入；之后再由阶段 2 对齐、交叉验证和保留冲突。
+      别名: [独立深度研究]
+    - 词: 额度
+      含义: 某 subscription/product surface 下影响可用性的 usage allowance / rate or message limit / rolling quota 等资源约束；只有官方或当前账户观测支持时才声明具体数值。
+      别名: [quota, usage limit]
+
+  关联领域:
+    - 领域: LLM provider / model capability documentation
+      为什么相关: 要确认模型身份、上下文、reasoning/tool/multimodal/coding/research 等能力及参数边界。
+    - 领域: consumer subscription and product entitlement
+      为什么相关: Human 使用 Plus/Pro 等会员产品，实际可用性由产品/账户 entitlement 决定，不等同于 API catalog。
+    - 领域: desktop/web agent surfaces
+      为什么相关: Codex Desktop、Claude Code Desktop、Antigravity 与网页产品的工具、权限、参数和额度边界不同。
+    - 领域: runtime model routing and scheduling
+      为什么相关: 需要把 task role/risk/shape 和 current availability 转成单次可审计 route，而不是长期静态默认。
+    - 领域: workflow role separation and independent review
+      为什么相关: planner、executor、reviewer、researcher 的任务性质与独立性要求不同，不能只按“最强模型”统一路由。
+    - 领域: freshness / cache invalidation / observability
+      为什么相关: capability 可缓存而 availability 高频变化，必须定义 verified_at、source 与 invalidation。
+    - 领域: quota and resource management
+      为什么相关: 用户拥有不同会员与不同额度，路由需要在质量、稀缺额度和任务风险之间作有证据的选择。
+    - 领域: security and privacy
+      为什么相关: availability preflight 不能通过读取 token/cookie/key 等秘密来换取自动化。
+
+  假设:
+    - 假设: Human 当前报告的订阅与可访问产品面足以作为阶段 2 的初始研究 scope。
+      如果不成立会怎样: 研究会漏掉实际可用 surface，最终路由机制不完整；阶段 2 必须允许 Human 补充当前账户观察。
+    - 假设: provider 官方文档能够支持大部分稳定 capability/parameter claim，但不能完整证明某个个人账户此刻的 UI entitlement。
+      如果不成立会怎样: 需要提高独立本地/UI observation 的权重，并更严格地区分“能力存在”和“当前账户可用”。
+    - 假设: current availability 的变化频率高于核心 capability profile，因此二者应分层而不是写入同一长期静态表。
+      如果不成立会怎样: 两层数据可能是过度设计；阶段 2/3 应用实测变化证据决定最小结构。
+    - 假设: 现有单窗口规范 §7.1 的静态 model-routing 表包含会过时或与实际 surface 不一致的内容。
+      如果不成立会怎样: 最终设计可能只需增加 availability preflight 和来源/freshness，而无需迁移现有路由表主体。
+    - 假设: Human 报告的 Gemini 3.1 Pro、Gemini 3.6 Flash、Opus 4.6 是当前某个可见 surface 的真实 UI 标签，但精确 vendor identity/参数/额度尚未核实。
+      如果不成立会怎样: 阶段 2 应纠正 label mapping，并禁止把这些名字继续作为 routing fact。
+
+  未解歧义:
+    - 歧义: >-
+        各 web/Desktop surface 是否提供可机器读取的“当前账户可选模型/剩余额度/支持参数”接口，
+        还是必须依赖 Human/local UI observation 形成 availability snapshot？
+      为何未解: 需要逐产品官方文档与实际 surface 能力研究，不能从需求阶段猜测。
+      影响: 高
+      阻塞范围: [03_结果建模, 04_测试生成, 05_步骤拆分, 06_执行, 07_测试执行]
+    - 歧义: >-
+        Human 当前看到的 Gemini 3.1 Pro、Gemini 3.6 Flash、Opus 4.6 分别对应什么真实模型身份、
+        哪个 product surface、什么参数/额度语义？
+      为何未解: 当前只有 Human UI 观察，尚无独立官方来源映射。
+      影响: 高
+      阻塞范围: [03_结果建模, 04_测试生成, 05_步骤拆分, 06_执行, 07_测试执行]
+    - 歧义: >-
+        最终 route 是否需要同时给出 primary + fallback + scarce-quota conservation policy，还是只需要
+        每次任务选择一个当前最合适 route，并在不可用时重新 preflight？
+      为何未解: Human 已要求“更准确找准模型和参数”，但 fallback/额度保留策略的强度尚未单独指定；需结合 research 后由 Human 决定。
+      影响: 中
+      阻塞范围: [03_结果建模, 04_测试生成, 05_步骤拆分]
+    - 歧义: >-
+        evidence-backed global mechanism 最终应保留并改造单窗口规范 §7.1，还是把动态 capability /
+        availability 定义迁移到独立 03_mechanisms + boot/registry/execution 后让 §7.1 只保留 pointer？
+      为何未解: 这是阶段 3 的架构选择，必须建立在现有加载关系、更新频率和 research 证据上。
+      影响: 高
+      阻塞范围: [06_执行, 07_测试执行]
+
+cross_field_review:
+  all_eight_slots_present: true
+  success_criteria_observable: true
+  boundary_nonempty: true
+  goal_terms_defined: true
+  assumptions_have_consequences: true
+  high_impact_ambiguities_have_blocking_scope: true
+  stage_2_can_start_from_related_domains_and_assumptions_after_Human_confirmation: true
