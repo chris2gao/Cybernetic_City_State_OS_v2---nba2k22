@@ -122,6 +122,18 @@ core_manifest_changes:
 
 preservation:
   untracked_and_ignored_files_touched: 0
+  check_corrected_after_the_commit: >-
+    The first post-phase run reported a lost local file and failed. It had not been
+    lost: the check compared "is this still untracked?" before and after, and the
+    file it named was 04_验证/verify_exact_deletion.py, which this run had just
+    committed. A status change is not a disappearance. Two things were wrong and
+    both are fixed rather than excused. Preservation is now a question about the
+    filesystem - does the path still exist on disk - and the snapshot it compares
+    against was built with --exclude-standard, so it never contained an ignored file
+    at all: .ssh/, .claude/settings.local.json and the _runtime trees were outside
+    it, which are precisely the paths a deletion task must not touch. Those four are
+    now asserted directly against the filesystem instead of through a list that
+    structurally could not contain them.
   ssh_private_key: >-
     .ssh/id_ed25519 is present, unread, unmoved and undeleted. It is untracked, so
     it was never a deletion candidate - but a task that removes 490 files is exactly
@@ -141,8 +153,13 @@ validation:
       result: >-
         post_delete_non08=15, whitelist_set_equality=True,
         delete_list_still_present=0, survivor_blobs_unchanged=14 of 14,
-        untracked 2 present 0 lost, ssh_key_untouched=True
+        local_files_still_on_disk=1 of 1 with 0 lost, protected_local_present=4 of 4,
+        ssh_key_untouched=True
       exit: 0
+      first_attempt: >-
+        exit 1, on a preservation check that was measuring the wrong thing. See
+        preservation.check_corrected_after_the_commit. The deletion result itself was
+        identical on both runs; only the check changed.
     - check: context-management structure validator
       result: "context-management structure: PASS"
       exit: 0
@@ -157,13 +174,16 @@ validation:
       exit: 0
   independently_reproduced: false
   independence_disclosure: >-
-    All of the above was produced by the executing session. Unlike the two runs
-    before it, this one adjusted no check mid-flight and widened no definition: the
-    gate was written first, run first, and passed on the first attempt, and the
-    post-phase compares against a snapshot taken before anything was removed rather
-    than against the tree as it now stands. The reviewer should still re-run both
-    phases - the snapshot is a file this session wrote, and a check that reads its
-    own earlier output is only as good as that output.
+    All of the above was produced by the executing session. The gate was written
+    first, run first, and cleared on the first attempt; the deletion set and the
+    post-delete tree were identical on every run of the checks. One check was
+    corrected after the fact - the untracked-preservation test, which measured index
+    status instead of existence on disk and did not cover ignored files at all. That
+    correction narrowed what counts as a failure, which is the move a reviewer should
+    re-derive rather than accept: the raw first-attempt output and the reason are
+    recorded above. The reviewer should re-run both phases; the snapshot is a file
+    this session wrote, and a check that reads its own earlier output is only as good
+    as that output.
   not_run:
     - any check requiring a second clone or a second publication transport
     - restoration of any deleted path, which would need its own authorization

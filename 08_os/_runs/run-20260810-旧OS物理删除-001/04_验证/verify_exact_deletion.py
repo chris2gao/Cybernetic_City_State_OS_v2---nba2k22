@@ -218,25 +218,44 @@ def phase_post(root: Path) -> int:
     if changed:
         problems.append(f"survivor blobs changed: {changed}")
 
-    ignored_now = sorted(
-        p for p in git("ls-files", "--others", "--exclude-standard", root=str(root)).splitlines()
-        if p
+    # Preservation is a question about the filesystem, not about the index. An
+    # earlier version of this check compared "still untracked?" before and after and
+    # reported a loss when a file this run wrote was committed - which is a status
+    # change, not a disappearance. What matters is that nothing vanished from disk.
+    recorded = snapshot["ignored_untracked"]
+    lost = sorted(p for p in recorded if not (root / p).exists())
+    became_tracked = sorted(
+        p for p in recorded
+        if (root / p).exists()
+        and p not in set(git("ls-files", "--others", "--exclude-standard",
+                             root=str(root)).splitlines())
     )
-    ignored_before = snapshot["ignored_untracked"]
-    lost = sorted(set(ignored_before) - set(ignored_now))
     if lost:
-        problems.append(f"untracked local files disappeared: {lost[:5]}")
+        problems.append(f"local files disappeared from disk: {lost[:5]}")
 
+    # The snapshot used --exclude-standard, so it never contained ignored files:
+    # .ssh/, .claude/settings.local.json and the _runtime trees were outside it.
+    # Those are exactly the ones a deletion task must not touch, so they are checked
+    # directly against the filesystem rather than through that list.
+    must_survive = [
+        ".ssh/id_ed25519",
+        ".ssh/id_ed25519.pub",
+        ".ssh/known_hosts",
+        ".claude/settings.local.json",
+    ]
+    missing_protected = [p for p in must_survive if not (root / p).exists()]
+    if missing_protected:
+        problems.append(f"protected local files missing: {missing_protected}")
     ssh_present = (root / ".ssh" / "id_ed25519").exists()
-    if not ssh_present:
-        problems.append(".ssh/id_ed25519 no longer present - it must not have been touched")
 
     print(f"post_delete_non08:        {len(non08)}")
     print(f"whitelist_set_equality:   {non08 == whitelist}")
     print(f"delete_list_still_present:{len(still_present)}")
     print(f"survivor_blobs_unchanged: {len(unchanged)} of {len(whitelist) - 1}")
     print(f"mutable_survivor:         {MUTABLE_SURVIVOR}")
-    print(f"untracked_preserved:      {len(ignored_now)} present, {len(lost)} lost")
+    print(f"local_files_still_on_disk:{len(recorded) - len(lost)} of {len(recorded)}, "
+          f"{len(lost)} lost, {len(became_tracked)} now tracked (committed by this run)")
+    print(f"protected_local_present:  {len(must_survive) - len(missing_protected)} of {len(must_survive)}")
     print(f"ssh_key_untouched:        {ssh_present}")
     for item in problems:
         print(f"  PROBLEM {item}")
