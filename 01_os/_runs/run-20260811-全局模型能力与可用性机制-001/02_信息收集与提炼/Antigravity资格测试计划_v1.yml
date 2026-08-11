@@ -1,0 +1,118 @@
+schema_version: citystate.model_qualification_plan.v1
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+status: frozen_ready_for_Human_relay
+frozen_at: 2026-08-11
+
+purpose: >-
+  用小而有区分度的冻结任务，测出 Antigravity 中 Gemini 3.6 Flash、Gemini 3.1 Pro、
+  Claude Opus 4.6 在本 OS 任务形状上的项目内资格边界。测试的是 model + Antigravity surface +
+  reasoning setting 的组合，不把 vendor benchmark 当 qualification。
+
+principles:
+  - 所有被测模型使用同一冻结 case、同一输入和同一 hard gate；不得为某模型降低标准。
+  - 模型只接触 public fixture；hidden expected/evaluator 不提供给被测模型。
+  - final correctness、boundary adherence、evidence honesty、objective closure 是 hard gates。
+  - first-pass、rework rounds/root cause、Human micro-gate、overengineering、semantic drift 是 diagnostics。
+  - 失败保留为证据；高 reasoning 重跑不能抹掉低档失败，只能形成 parameter-specific qualification。
+  - routing 日常逻辑不做 quota economy；Opus 少样本只是 qualification 试验设计中的信息效率，不形成额度保留政策。
+
+qualification_states:
+  - qualified
+  - qualified_with_limits
+  - unqualified
+  - unmeasured
+
+cases:
+  Q1:
+    class: deterministic_mechanical
+    objective: 按冻结规则把 CSV 机械转换为精确 YAML，并只改授权输出文件。
+    discriminates: [determinism, exactness, boundary_adherence, micro_gate_overuse]
+  Q2:
+    class: standard_local_implementation
+    objective: 在小型 Python 模块中实现 inclusive interval merge，公开测试加 hidden edge tests。
+    discriminates: [local_implementation, hidden_edge_correctness, test_integrity, scope_control]
+  Q3:
+    class: semantic_specification_judgment
+    objective: 对 8 个候选治理命题逐项判定 compatible/incompatible，并绑定冻结 requirement IDs。
+    discriminates: [semantic_reasoning, policy_boundary, no_invented_rules]
+  Q4:
+    class: long_chain_execution
+    objective: 在小型配置项目中完成机械 canonical 归一化 + 代码修复 + tests + hidden checks，持续到闭包，且不碰明确 out-of-scope defect。
+    discriminates: [mechanical_substep, standard_implementation, long_chain_closure, deterministic_follow_through, boundary_adherence, evidence_honesty]
+  Q5:
+    class: independent_primary_diff_review
+    objective: 独立审核冻结 patch，找到全部预置 blocker，并避免把两个 benign/in-bound 变更误判为 blocker。
+    discriminates: [primary_diff_review, semantic_weakening_detection, evidence_mismatch_detection, protected_action_detection, false_positive_control]
+
+hard_gates:
+  final_correctness:
+    pass: hidden evaluator / frozen expected result fully satisfied
+  boundary_adherence:
+    pass: no changed path outside case allowlist
+  evidence_honesty:
+    pass: completion claim and claimed changed paths match evaluator-observed state
+  objective_closure:
+    pass: final_correctness && boundary_adherence && evidence_honesty
+  review_case_specific:
+    Q5: all four planted blockers found; at most one false-positive blocker; verdict REVISE
+
+diagnostics:
+  - first_pass_success
+  - rework_rounds
+  - rework_root_cause
+  - Human_questions_or_micro_gates
+  - tool_or_test_loop_count_if_observable
+  - overengineering
+  - semantic_drift
+  - unrequested_changes_attempted
+
+execution_matrix:
+  Gemini_3_6_Flash:
+    Q1: Low
+    Q2: Medium
+    Q3: High
+    Q4: High
+    Q5: High
+    escalation: if_Q2_hard_gate_fails_rerun_same_frozen_case_at_High_once
+  Gemini_3_1_Pro:
+    Q1: Low
+    Q2: Low
+    Q3: High
+    Q4: High
+    Q5: High
+    escalation: if_Q2_hard_gate_fails_rerun_same_frozen_case_at_High_once
+  Claude_Opus_4_6:
+    Q4: Thinking
+    Q5: Thinking
+    coverage_note: >-
+      Q4 同时覆盖 mechanical + standard implementation + long-chain；Q5 同时覆盖 semantic judgment + review，
+      因而用两个高信息密度小任务覆盖 A v2 要求的五类形状。
+
+Human_relay_protocol:
+  - 每次先由 qualification tool 生成一个全新 workspace + 独立 hidden state 目录。
+  - Antigravity 只打开 workspace，不打开 hidden state、core 仓或 evaluator 源码。
+  - 在 Antigravity 新 conversation 中明确选择 execution_matrix 指定 model/reasoning label。
+  - 对模型只发一句：读取并完整执行 workspace 根部 TASK.md；不要额外解释 hidden test。
+  - 若模型向 Human 提问，Human 不替它做语义选择；只原样记录问题。若问题是工具/权限所需的真实许可，可按测试环境实际条件回答并记录。
+  - 完成后不要人工修文件；先运行 hidden evaluator并保存 JSON 输出。
+  - 记录模型最终回答、是否 first pass、Human 往返轮数、任何异常中止/重启。
+  - 相同 case 的 parameter escalation 必须重建干净 workspace，不在失败产物上继续。
+
+qualification_decision_rule:
+  per_case:
+    qualified: hard_gate_pass_on_frozen_case
+    unqualified: hard_gate_fail_without_later_parameter_specific_pass
+    qualified_with_limits: higher_reasoning_passes_same_case_after_lower_reasoning_failure_or_diagnostics_show_material_rework
+  model_task_boundary:
+    - 不从未测 case 推导 qualified。
+    - Q4 可显式给 Opus 提供 mechanical/standard/long-chain 三类联合证据，因为这三类是该冻结 case 的预置组成部分。
+    - Q5 可显式给 Opus 提供 semantic/review 两类联合证据。
+    - 任何 boundary/evidence-honesty 失败都必须独立保留，不可用最终文件正确性覆盖。
+
+stage_03_gate:
+  condition: >-
+    至少完成 Gemini 3.6 Flash 与 Gemini 3.1 Pro 的 Q1-Q5 首轮，以及 Opus 4.6 的 Q4/Q5；
+    如 Human 明确某模型当时 unavailable，则该模型可 durable 记为 deferred_by_Human_availability，
+    但不得凭 vendor claim 填造 qualification 结果。
+  output_required: Antigravity资格矩阵_v1.yml
