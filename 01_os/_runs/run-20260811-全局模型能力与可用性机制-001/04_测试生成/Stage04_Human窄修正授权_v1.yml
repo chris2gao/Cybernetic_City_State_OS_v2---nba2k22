@@ -1,0 +1,56 @@
+schema_version: citystate.stage04.correction_authorization.v1
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+authorized_at: '2026-08-11'
+status: active
+
+Human_authorization:
+  source: Human_message_2026-08-11_authorized_planner_to_decide_after_stage07_fix_required
+  delegated_decision: true
+  planner_adjudication: 07_测试执行/Stage07阻塞接收与回退裁决_v1.yml
+  decision: reopen_stage04_narrow_correction
+
+trigger:
+  stage07_review: 07_测试执行/07_blocking_review_v1.yml
+  verdict: FIX_REQUIRED
+  confirmed_blockers: [F1, F2, F3]
+  test_defects_or_gaps:
+    - MR-T10 source_refs nonempty but not resolvability
+    - MR-T25 lexical overfire on evidence source identifier GOOGLE_AG_PRICING
+    - no evidence-backed test preventing unsupported Antigravity/Claude Opus 4.8 attribution
+    - validator runtime fail-closed coverage does not fully exercise B13
+
+authorized_write_boundary:
+  - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/04_测试生成/**
+
+authorized_actions:
+  - revise 04_tests.yml into a new artifact_version
+  - revise Stage04 independent validator and fixtures/mutations only as required by corrected evidence-derived tests
+  - add correction design note and new freeze receipt
+  - compute and freeze a new test_package_sha256
+
+prohibited_actions:
+  - modify canonical implementation
+  - modify Stage 01 A
+  - modify Stage 02 evidence
+  - modify Stage 03 B
+  - modify Stage 05 steps
+  - modify Stage 06 implementation/evidence
+  - modify Stage 07 reviewer evidence
+  - modify run.yml
+  - publish master
+  - reuse quarantined branch
+  - force/rebase/squash/amend/history rewrite
+
+old_freeze:
+  artifact_version: 2
+  test_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+  disposition: retained_historical_superseded_for_next_execution_cycle
+
+completion_condition: >-
+  corrected test package is independently self-tested with positive/negative/boundary evidence,
+  all corrected tests trace to A/Stage02 evidence, known F1/F2/F3 gaps have tests that can fail,
+  and a new freeze receipt/new digest is produced without canonical mutation.
+
+master_write_authorized: false
+marker: stage04_narrow_correction_authorized
