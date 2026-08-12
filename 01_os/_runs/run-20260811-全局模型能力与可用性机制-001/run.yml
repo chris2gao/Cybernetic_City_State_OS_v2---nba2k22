@@ -5,20 +5,17 @@ run:
   exact_base_sha: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
   branch: dev/os-v2-global-model-capability-and-availability-routing-002
   owner: core
-  status: stage06_waiting_for_Human_implementation_boundary_gate
+  status: stage06_authorized_awaiting_Codex_execution
   purpose: >-
-    用七阶段 workflow 建立低耦合的全局模型能力与任务路由机制。Stage 1 已由 Human 确认 A v3；
-    Stage 2 provider/独立 research 与 claim-level reconciliation 已完成；Antigravity formal qualification
-    已由 Human 显式关闭，既有非盲测试仅保留 diagnostic evidence。Stage 3 的 B v1 已完成。
-    Stage 4 已由独立 Claude Opus 5 / Cowork 角色生成并冻结 acceptance tests；A v3 的 YAML 序列化缺陷
-    已按 serialization-only 口径机械修复并完成 Stage 4 predecessor rebind，冻结 tests 与 digest 未变。
-    Stage 5 已按冻结测试把 canonical implementation 拆成四个 contract slice 与一个全包闭环步骤。
-    当前在进入 Stage 6 canonical mutation 前等待 Human 对 evidence-backed implementation boundary 的显式授权。
+    用七阶段 workflow 建立低耦合的全局模型能力与任务路由机制。Stage 1-5 已完成；Stage 4 的 28 条 acceptance tests
+    已冻结并在 A v3 serialization-only 修复后完成 predecessor rebind，digest 未变化。Human 已于 2026-08-11 显式授权
+    Stage 06 按 Stage 05 evidence-backed implementation boundary 执行。Stage 06 路由给 Codex Desktop / GPT-5.6 Sol，
+    以与 Claude Opus 5 / Cowork 的 Stage 04 test authorship 分离；不授权 master publication。
   branch_recovery:
     previous_branch: dev/os-v2-global-model-capability-and-availability-routing-001
     quarantined_head_latest_observed: dfe553d35ea61aa31ebac32f7f107a9b402723eb
     contaminated_ancestor: 6bc86cf24266dc144de6e19b3cb28768668c2b18
-    last_known_clean_head_before_recovery: 166dfdb9b350fb84a621de7f410e74ac3da0429b
+    last_known_clean_head_before_recovery: 166dfdb9b350fb84b7b6a4b8f14d691fd2b4fc7d
     recovery_mode: new_branch_from_last_known_clean_head_no_history_rewrite
     quarantined_branch_reuse: prohibited
   workflow:
@@ -56,29 +53,30 @@ run:
       rebind_receipt: 04_测试生成/Stage04上游重绑定回执_v1.yml
       acceptance_adjudication: 04_测试生成/Stage04接收裁决_v1.yml
       frozen_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
-      frozen_package_sha256_changed_by_rebind: false
       test_count: 28
-      test_kinds: {positive: 15, negative: 8, boundary: 5}
       test_content_changed: false
-      source_head_at_freeze: 528fe5c7b2b88bdd3318b431be015e6d543a4797
       independence_requirement: satisfied
     stage_05_step_decomposition:
       status: complete
       artifact: 05_步骤拆分/05_steps.yml
       artifact_version: 1
-      frozen_tests: 04_测试生成/04_tests.yml
-      frozen_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
       step_count: 5
       implementation_slices: 4
       final_closure_step: S5_full_package_closure
       retry_budget_each_step: 3
       exits: [pass, retry, invalidate_upstream]
-      constraints:
-        - 只能把 frozen test_id 绑定到 step，不得增删改任何一条冻结测试
-        - B13_failure_surfacing 的 requirement_satisfaction 映射遗漏以 Stage 05 执行映射补记，不修改 B 语义
     stage_06_execution:
-      status: waiting_for_explicit_Human_implementation_boundary_gate
-      proposed_boundary:
+      status: authorized_awaiting_Codex_execution
+      Human_authorization: 06_执行/Stage06_Human实施边界授权_v1.yml
+      active_task_packet: 01_任务输入/任务包_v4.yml
+      executor:
+        provider: OpenAI
+        surface: Codex Desktop
+        model: GPT-5.6 Sol
+        reasoning_effort: max_if_exposed_else_high
+        mode: standard
+        authority: routing_only
+      allowed_changed_paths:
         - 01_os/03_mechanisms/model_routing/**
         - 01_os/02_boot/model_routing/**
         - 01_os/06_execution/boot/model_routing/**
@@ -87,14 +85,17 @@ run:
         - 01_os/03_mechanisms/README.md
         - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/**
       protected_exclusions:
+        - 01_os/01_workflow/** semantic restructuring
+        - 01_os/03_mechanisms/context_management/** redesign
         - 01_os/05_registry/repository_publisher_authority_v1.yml
         - master publication
         - quarantined branch reuse
     stage_07_test_execution:
-      status: blocked_by_stage_06
+      status: blocked_by_stage_06_candidate_completion
   current_scope:
-    repository_writes: run_evidence_only_until_Human_implementation_boundary_gate
-    canonical_mutation: prohibited
+    repository_writes: authorized_stage06_boundary_only
+    canonical_mutation: authorized_within_stage06_boundary
+    master_publication: prohibited_without_new_Human_gate
     quarantined_branch_reuse: prohibited
   availability_rule:
     registered_models_default: available
@@ -104,16 +105,3 @@ run:
   routing_optimization:
     objective: task_model_fit_and_reliable_completion
     token_or_price_optimization: false
-  active_product_scope:
-    OpenAI:
-      surfaces: [ChatGPT web, Codex Desktop]
-    Anthropic:
-      surfaces: [Claude Code Desktop]
-      deferred: [Claude Code CLI]
-    Google_or_Antigravity:
-      surfaces: [Gemini web, Antigravity client]
-      Human_observed_labels:
-        - Gemini 3.1 Pro
-        - Gemini 3.6 Flash
-        - Claude Opus 4.6
-      formal_project_qualification: not_claimed
