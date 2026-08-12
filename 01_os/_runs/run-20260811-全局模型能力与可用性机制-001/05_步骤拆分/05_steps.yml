@@ -1,0 +1,216 @@
+schema_version: citystate.workflow.artifact.v1
+run_id: run-20260811-全局模型能力与可用性机制-001
+stage_id: workflow_stage_05_step_decomposition
+artifact_kind: step_package
+artifact_version: 1
+status: complete
+
+input_refs:
+  - stage_id: workflow_stage_04_test_generation
+    path: 04_测试生成/04_tests.yml
+    artifact_version: 2
+    sha256: 83a600381a0d1f902036d232f42cf13211241b6d13bcd43ebedd0f8c51f25ee1
+
+supporting_refs:
+  - path: 04_测试生成/freeze_receipt_v2.yml
+    test_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+  - path: 03_结果建模/B_结果模型_v1.yml
+    sha256: 263ee6dec1eabe91e1c9cf0b1637e50cea65f753c4f2c39a64e78047b0d16368
+  - path: 01_需求建模/requirement/A_需求建模_v3.yml
+    sha256: 09605f2cb2ce75bec8b7d96997357f34b9ec065787750cb7b935ff14872e2434
+
+deliberation_receipt:
+  mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
+  activation_state: active_dormant
+  profile_id: workflow_stage_05_step_decomposition
+  route: dormant
+  receipt_status: valid
+  session_id: null
+  task_gate_ref: null
+  Human_authorization_ref: null
+
+payload:
+  frozen_test_package:
+    path: 04_测试生成/04_tests.yml
+    artifact_version: 2
+    test_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+    mutation_rule: forbidden_in_stage05_and_stage06
+
+  decomposition_principle: >-
+    按可独立通过冻结 acceptance test 的 contract slice 拆分，而不是按文件逐个施工。
+    每个步骤只在其 test_ids 全绿后进入下一步；未绑定到当前步骤的测试可以暂时为红。
+    任何步骤不得修改 Stage 04 测试、fixture、mutation 或 validator 来取得通过。
+
+  steps:
+    - step_id: S1_core_routing_contract
+      order: 1
+      objective: >-
+        建立 model_routing 独立机制的核心契约与最小自描述：机制边界、routing inputs/outputs、
+        routing_only authority、Human availability、task-fit 选择顺序，以及 cost/quota/fallback 禁止规则。
+      depends_on: []
+      implementation_scope_candidate:
+        - 01_os/03_mechanisms/model_routing/**
+        - 01_os/03_mechanisms/README.md
+      test_ids: [MR-T01, MR-T04, MR-T05, MR-T06, MR-T07, MR-T08, MR-T25, MR-T26]
+      retry_budget: 3
+      exits: [pass, retry, invalidate_upstream]
+      pass_condition: 上述 8 个 frozen test 全部 passed=true；不得通过修改测试取得通过。
+      retry_condition: 失败可归因于本步骤的局部实现缺陷，且 retry_budget 尚未耗尽。
+      invalidate_upstream_condition: >-
+        若要使这些测试通过必须改变 Human availability、routing_only、no-cost/quota、no-auto-fallback
+        等已确认语义，停止实现并 invalidate workflow_stage_03_result_modeling；若冲突来自冻结测试本身，
+        invalidate workflow_stage_04_test_generation。
+
+    - step_id: S2_surface_catalog_and_project_evidence
+      order: 2
+      objective: >-
+        建立 model × product-surface catalog、surface-specific parameter profiles、freshness/source/confidence，
+        并把 project-observed evidence 独立分栏，明确 diagnostic/anecdotal 不能升级为 hard qualification。
+      depends_on: [S1_core_routing_contract]
+      implementation_scope_candidate:
+        - 01_os/03_mechanisms/model_routing/**
+      test_ids: [MR-T09, MR-T10, MR-T11, MR-T12, MR-T13, MR-T14, MR-T15, MR-T16]
+      retry_budget: 3
+      exits: [pass, retry, invalidate_upstream]
+      pass_condition: 上述 8 个 frozen test 全部 passed=true。
+      retry_condition: 失败来自 catalog/ledger 的字段、证据绑定、surface 参数或 unknown 表达缺陷，且预算尚有余。
+      invalidate_upstream_condition: >-
+        若当前 provider/surface 事实不足以诚实填充 required registered entries，invalidate
+        workflow_stage_02_information_collection；若 B 要求与证据冲突，invalidate workflow_stage_03_result_modeling；
+        若测试强迫无证据主张，invalidate workflow_stage_04_test_generation。
+
+    - step_id: S3_boot_registry_loader_and_failure_surfacing
+      order: 3
+      objective: >-
+        接通 boot manifest、execution loader、registry 和机制 validator，使版本/pointer/schema/freshness/duplicate-key
+        失效都能 fail closed，并确认没有后台 crawler/watcher/scheduler/probe。
+      depends_on: [S1_core_routing_contract, S2_surface_catalog_and_project_evidence]
+      implementation_scope_candidate:
+        - 01_os/03_mechanisms/model_routing/**
+        - 01_os/02_boot/model_routing/**
+        - 01_os/06_execution/boot/model_routing/**
+        - 01_os/05_registry/model_routing_v1.yml
+      test_ids: [MR-T03, MR-T21, MR-T22, MR-T23, MR-T24, MR-T27, MR-T28]
+      retry_budget: 3
+      exits: [pass, retry, invalidate_upstream]
+      pass_condition: 上述 7 个 frozen test 全部 passed=true，包括 MR-T24 对机制 validator 的真实负例运行。
+      retry_condition: 失败来自 pointer、registry coverage、version、validator 或 loader 的局部实现缺陷，且预算尚有余。
+      invalidate_upstream_condition: >-
+        若要通过只能放宽 fail-closed/freshness/registry 要求，invalidate workflow_stage_03_result_modeling；
+        若冻结负例本身错误，invalidate workflow_stage_04_test_generation。
+
+    - step_id: S4_entry_thinning_and_control_preservation
+      order: 4
+      objective: >-
+        将开发入口 §7.1 从 volatile model/price catalog 变薄为稳定 routing preflight + canonical pointer，
+        同时保持 workflow 不复制 catalog，并严格保留 §8/§9/§11、T3 与 publisher authority 控制。
+      depends_on: [S1_core_routing_contract, S2_surface_catalog_and_project_evidence, S3_boot_registry_loader_and_failure_surfacing]
+      implementation_scope_candidate:
+        - 01_os/开发入口与单窗口任务规范_v1.md
+        - 01_os/03_mechanisms/README.md
+      test_ids: [MR-T02, MR-T17, MR-T18, MR-T19, MR-T20]
+      retry_budget: 3
+      exits: [pass, retry, invalidate_upstream]
+      pass_condition: 上述 5 个 frozen test 全部 passed=true，且 publisher authority 字节基线不变。
+      retry_condition: 失败来自 §7.1 pointer/preflight 迁移或稳定控制锚点的局部编辑缺陷，且预算尚有余。
+      invalidate_upstream_condition: >-
+        若 thinning 与保留既有安全/发布/审核控制无法同时满足，invalidate workflow_stage_03_result_modeling；
+        若测试错误地要求删除非 routing 控制，invalidate workflow_stage_04_test_generation。
+
+    - step_id: S5_full_package_closure
+      order: 5
+      objective: >-
+        对完整候选树执行冻结包闭环，确认 28/28 全绿、package digest 未漂移、Stage 04 selftest 仍成立，
+        并把任何失败准确归因回 S1-S4 或上游，而不是增加新语义或修改测试。
+      depends_on:
+        - S1_core_routing_contract
+        - S2_surface_catalog_and_project_evidence
+        - S3_boot_registry_loader_and_failure_surfacing
+        - S4_entry_thinning_and_control_preservation
+      implementation_scope_candidate:
+        - no_new_semantic_scope
+      test_ids:
+        - MR-T01
+        - MR-T02
+        - MR-T03
+        - MR-T04
+        - MR-T05
+        - MR-T06
+        - MR-T07
+        - MR-T08
+        - MR-T09
+        - MR-T10
+        - MR-T11
+        - MR-T12
+        - MR-T13
+        - MR-T14
+        - MR-T15
+        - MR-T16
+        - MR-T17
+        - MR-T18
+        - MR-T19
+        - MR-T20
+        - MR-T21
+        - MR-T22
+        - MR-T23
+        - MR-T24
+        - MR-T25
+        - MR-T26
+        - MR-T27
+        - MR-T28
+      retry_budget: 3
+      exits: [pass, retry, invalidate_upstream]
+      pass_condition: >-
+        28/28 frozen acceptance tests passed；`package` 与 `selftest` 均 exit 0；
+        test_package_sha256 仍为 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478；
+        git diff/check 与授权边界一致。
+      retry_condition: >-
+        仅允许修复已授权 canonical boundary 内、可明确归因到 S1-S4 的实现缺陷；
+        失败归属哪个步骤就消耗该步骤/本闭环的剩余预算，不得创造新规则。
+      invalidate_upstream_condition: >-
+        三次预算耗尽，或失败表明 A/Stage02/B/冻结测试任一上游不成立时，停止并选择对应
+        workflow_stage_01_requirement_modeling / workflow_stage_02_information_collection /
+        workflow_stage_03_result_modeling / workflow_stage_04_test_generation 作为失效目标。
+
+  upstream_invalidation_targets:
+    - stage_id: workflow_stage_01_requirement_modeling
+      when: 实现暴露新的 Human 语义选择，现有 A 无法确定什么算正确。
+      action: stop_stage06_and_return_to_Human_requirement_gate
+    - stage_id: workflow_stage_02_information_collection
+      when: required current product/surface fact 缺失、过期或互相冲突，无法诚实形成 catalog entry。
+      action: refresh_only_the_blocking_evidence_then_rederive_downstream
+    - stage_id: workflow_stage_03_result_modeling
+      when: B 的结构或 contract 与冻结测试/已接受证据不可同时满足，且不是局部实现缺陷。
+      action: reopen_B_without_weakening_tests
+    - stage_id: workflow_stage_04_test_generation
+      when: frozen test 本身被证明错误、过拟合或与 A/证据冲突。
+      action: Human_gate_required_to_reopen_and_refreeze_tests
+
+  finding_F2_resolution_note: >-
+    B v1 的 requirement_satisfaction 表未显式列出 B13_failure_surfacing，这是 Stage 04 报告的 nonblocking F2。
+    本阶段不修改 B；通过 S3 将 B13 对应 frozen tests MR-T03/MR-T21/MR-T22/MR-T23/MR-T24/MR-T28
+    显式纳入实现步骤，并沿用 Stage 04 将其绑定到 A 成功判据 1 的裁决。该补记只完善执行映射，不改变 B 语义。
+
+  stage06_implementation_boundary_candidate:
+    canonical_paths:
+      - 01_os/03_mechanisms/model_routing/**
+      - 01_os/02_boot/model_routing/**
+      - 01_os/06_execution/boot/model_routing/**
+      - 01_os/05_registry/model_routing_v1.yml
+      - 01_os/开发入口与单窗口任务规范_v1.md
+      - 01_os/03_mechanisms/README.md
+    run_evidence_paths:
+      - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/**
+    explicitly_excluded:
+      - 01_os/01_workflow/** semantic restructuring
+      - 01_os/03_mechanisms/context_management/** redesign
+      - role mechanism implementation
+      - task-envelope/long-running mechanism implementation
+      - 01_os/05_registry/repository_publisher_authority_v1.yml
+      - Claude Code CLI enablement
+      - automated account/quota detection
+      - formal Antigravity qualification
+      - master publication
+    authorization_status: pending_explicit_Human_implementation_boundary_gate
+
+marker: stage05_step_package_complete_awaiting_Human_stage06_boundary_gate
