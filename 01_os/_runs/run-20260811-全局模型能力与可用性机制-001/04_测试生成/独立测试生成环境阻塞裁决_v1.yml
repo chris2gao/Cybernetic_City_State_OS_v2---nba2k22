@@ -1,0 +1,49 @@
+schema_version: citystate.stage04.environment_adjudication.v1
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+recorded_at: 2026-08-11
+
+attempt:
+  reported_surface: Cowork / Claude Agent SDK
+  reported_model: claude-sonnet-5
+  reported_reasoning_setting: not_exposed
+  reported_local_branch: dev/os-v2-global-model-capability-and-availability-routing-001
+  reported_local_head: dfe553d35ea61aa31ebac32f7f107a9b402723eb
+  reported_remote_fetch: failed_host_key_verification
+  reported_stage04_dispatch_visible: false
+
+remote_physical_verification:
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  active_branch: dev/os-v2-global-model-capability-and-availability-routing-002
+  verified_head_before_run_state_fix: 9baecf2aa9bf8a89ceb7b3cf764505e536cb118b
+  stage04_dispatch_present: true
+  dispatch_path: 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/04_测试生成/独立测试生成派单_v1.md
+  task_packet_v3_present: true
+  conclusion: >-
+    The attempt's statement that -002/dispatch did not exist was valid only for its stale local checkout and
+    inaccessible remote. It was not a statement about GitHub physical state.
+
+accepted_finding:
+  id: stale_run_yml
+  severity: blocking_for_state_coherence
+  disposition: fixed
+  detail: >-
+    Remote run.yml had not been advanced after Human closed Antigravity qualification and Stage 3 completed.
+    It still described Stage 2 qualification rerun as active. This was a real project evidence-maintenance defect.
+  fix_commit: 1e306f7239f311ed6d4ab44810d8620bab63ef56
+
+execution_adjudication:
+  stage04_attempt_valid_for_test_generation: false
+  reason:
+    - execution environment could not fresh-read the active task branch
+    - environment could not write/publish to the active task branch
+    - local checkout was the quarantined branch
+  no_test_failure_inferred: true
+  no_model_capability_failure_inferred: true
+  reroute_required: true
+
+next_environment_requirements:
+  - must be able to fresh-read dev/os-v2-global-model-capability-and-availability-routing-002 from GitHub
+  - must be able to write only the Stage 04 allowed run path and publish the task branch
+  - must not reuse quarantined -001 history
+  - exact model/UI label must be reported; reasoning control may be not_exposed when the surface does not expose one
