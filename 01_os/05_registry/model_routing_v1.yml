@@ -1,0 +1,40 @@
+schema_version: citystate.registry.v1
+registry_id: model_routing_v1
+mechanism_version: 1
+entries:
+  - path: 01_os/03_mechanisms/model_routing/**
+    purpose: 模型路由 canonical 契约、活动 surface 目录、独立项目观察账本与结构 validator
+    loader: 01_os/06_execution/boot/model_routing/README.md
+    loader_class: in_repo_program
+    discovery: referenced from model-routing boot manifest
+    evidence: 01_os/02_boot/model_routing/启动清单_v1.yml
+    cache_dirs: []
+    failure_surfacing: next explicit model-routing preflight or validator run
+    deletion_rule: protected
+  - path: 01_os/02_boot/model_routing/**
+    purpose: 模型路由加载顺序、版本、失败策略与 receipt 字段
+    loader: OS bootstrap when a formal task invokes model-routing preflight
+    loader_class: host_application
+    discovery: canonical pointer from the development entry specification
+    evidence: 01_os/02_boot/model_routing/启动清单_v1.yml
+    cache_dirs: []
+    failure_surfacing: next model-routing boot
+    deletion_rule: protected
+  - path: 01_os/06_execution/boot/model_routing/**
+    purpose: 模型路由显式 loader、validator invocation 与 fail-closed 行为
+    loader: Human or authorized task executor
+    loader_class: external_tool_convention
+    discovery: referenced from registry and boot documentation
+    evidence: 01_os/06_execution/boot/model_routing/README.md
+    cache_dirs: []
+    failure_surfacing: next explicit model-routing preflight
+    deletion_rule: protected
+  - path: 01_os/05_registry/model_routing_v1.yml
+    purpose: 模型路由机制、boot 和 loader 的注册与失效显现声明
+    loader: 01_os/06_execution/boot/model_routing/README.md
+    loader_class: in_repo_program
+    discovery: referenced from model-routing boot manifest
+    evidence: 01_os/02_boot/model_routing/启动清单_v1.yml
+    cache_dirs: []
+    failure_surfacing: next validator run
+    deletion_rule: protected

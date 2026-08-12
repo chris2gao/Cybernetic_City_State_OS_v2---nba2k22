@@ -1,0 +1,34 @@
+schema_version: citystate.model_routing.project_observation.v1
+mechanism_version: 1
+ledger_version: 1
+status: active
+observations:
+  - observation_id: antigravity_gemini_3_6_flash_nonblind_runs
+    surface_id: antigravity
+    model_label: Gemini 3.6 Flash
+    validity: diagnostic
+    confidence: low
+    source_ref: 02_信息收集与提炼/Stage02_证据结论_v2.yml#Antigravity_diagnostic_summary
+    task_shape: exercised_cases_in_v1_and_v2
+    observed_failure_or_strength: reported green cases, but evaluator and control logic were visible to the tested agent
+    routing_effect: caution_or_future_test_hypothesis_only
+
+  - observation_id: antigravity_gemini_3_1_pro_nonblind_runs
+    surface_id: antigravity
+    model_label: Gemini 3.1 Pro
+    validity: diagnostic
+    confidence: low
+    source_ref: 02_信息收集与提炼/Stage02_证据结论_v2.yml#Antigravity_diagnostic_summary
+    task_shape: exercised_cases_in_v1_and_v2
+    observed_failure_or_strength: reported green after protocol correction, but evaluator and control logic were visible
+    routing_effect: caution_or_future_test_hypothesis_only
+
+  - observation_id: antigravity_opus_4_6_isolation_failure
+    surface_id: antigravity
+    model_label: Claude Opus 4.6
+    validity: diagnostic
+    confidence: low
+    source_ref: 02_信息收集与提炼/Stage02_证据结论_v2.yml#Antigravity_diagnostic_summary
+    task_shape: exercised_cases_in_v1
+    observed_failure_or_strength: narrow failures and an explicit evaluator isolation breach
+    routing_effect: caution_or_future_test_hypothesis_only

@@ -37,6 +37,8 @@ assessed one at a time, not copied wholesale.
 ## 当前机制
 
 - `context_management/`：全局上下文管理、文件隔离、产物生命周期、发布边界与结构验证。
+- `model_routing/`：模型、产品 surface 与参数档案的证据化 task-fit 路由；输出仅具
+  `routing_only` authority。
 
 工作流只引用该机制，不在 `01_workflow/` 内保留第二份实例。
 # 全局通讯机制

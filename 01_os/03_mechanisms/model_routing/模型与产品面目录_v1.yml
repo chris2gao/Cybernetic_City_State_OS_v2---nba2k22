@@ -1,0 +1,241 @@
+schema_version: citystate.model_routing.catalog.v1
+mechanism_version: 1
+catalog_version: 1
+status: active
+entitlement_is_account_availability: false
+entries:
+  - provider: OpenAI
+    surface_id: chatgpt_web
+    model_label: GPT-5.6 Sol
+    registered: true
+    capabilities:
+      context: unknown
+      reasoning_controls: [Medium, High]
+      agent_and_tools: product_surface_managed
+      coding: supported
+      research: supported
+      multimodal_vision: supported
+      speed_latency: unknown
+    parameter_profiles:
+      - profile_id: chatgpt_plus_sol_medium
+        reasoning_levels: [Medium]
+        source_class: provider_product_documentation
+        surface_exposure_evidence: [OAI_CHATGPT_56]
+      - profile_id: chatgpt_plus_sol_high
+        reasoning_levels: [High]
+        source_class: provider_product_documentation
+        surface_exposure_evidence: [OAI_CHATGPT_56]
+    source_refs: [OAI_CHATGPT_56]
+    verified_at: '2026-08-11'
+    invalidation_conditions: [OpenAI product or model-picker update]
+    confidence: high
+
+  - provider: OpenAI
+    surface_id: codex_desktop
+    model_label: GPT-5.6 Sol
+    registered: true
+    capabilities:
+      context: unknown
+      reasoning_controls: surface_runtime_exposed_levels
+      agent_and_tools: supported
+      coding: supported
+      research: supported
+      multimodal_vision: unknown
+      speed_latency: unknown
+    parameter_profiles:
+      - profile_id: codex_sol_strongest_exposed
+        reasoning_levels: [high, max_if_exposed]
+        source_class: provider_product_documentation
+        surface_exposure_evidence: [OAI_CHATGPT_56, OAI_GPT56_RELEASE, OAI_CODEX_APP]
+    source_refs: [OAI_CHATGPT_56, OAI_GPT56_RELEASE, OAI_CODEX_APP]
+    verified_at: '2026-08-11'
+    invalidation_conditions: [OpenAI Codex model or product update]
+    confidence: high
+
+  - provider: OpenAI
+    surface_id: codex_desktop
+    model_label: GPT-5.6 Terra
+    registered: true
+    capabilities:
+      context: unknown
+      reasoning_controls: surface_runtime_exposed_levels
+      agent_and_tools: supported
+      coding: supported
+      research: supported
+      multimodal_vision: unknown
+      speed_latency: unknown
+    parameter_profiles:
+      - profile_id: codex_terra_task_fit
+        reasoning_levels: [low, medium, high]
+        source_class: provider_product_documentation
+        surface_exposure_evidence: [OAI_CHATGPT_56, OAI_GPT56_RELEASE, OAI_CODEX_APP]
+    source_refs: [OAI_CHATGPT_56, OAI_GPT56_RELEASE, OAI_CODEX_APP]
+    verified_at: '2026-08-11'
+    invalidation_conditions: [OpenAI Codex model or product update]
+    confidence: high
+
+  - provider: OpenAI
+    surface_id: codex_desktop
+    model_label: GPT-5.6 Luna
+    registered: true
+    capabilities:
+      context: unknown
+      reasoning_controls: surface_runtime_exposed_levels
+      agent_and_tools: supported
+      coding: supported
+      research: unknown
+      multimodal_vision: unknown
+      speed_latency: unknown
+    parameter_profiles:
+      - profile_id: codex_luna_task_fit
+        reasoning_levels: [low, medium]
+        source_class: provider_product_documentation
+        surface_exposure_evidence: [OAI_CHATGPT_56, OAI_GPT56_RELEASE, OAI_CODEX_APP]
+    source_refs: [OAI_CHATGPT_56, OAI_GPT56_RELEASE, OAI_CODEX_APP]
+    verified_at: '2026-08-11'
+    invalidation_conditions: [OpenAI Codex model or product update]
+    confidence: high
+
+  - provider: Anthropic
+    surface_id: claude_code_desktop
+    model_label: Sonnet 5
+    registered: true
+    capabilities:
+      context: unknown
+      reasoning_controls: account_and_surface_current_selection
+      agent_and_tools: supported
+      coding: supported
+      research: supported
+      multimodal_vision: unknown
+      speed_latency: unknown
+    parameter_profiles:
+      - profile_id: claude_code_account_current
+        reasoning_levels: [surface_current]
+        source_class: provider_product_documentation
+        surface_exposure_evidence: [ANTH_PRO_CODE, ANTH_CODE_MODELS, ANTH_CODE_USAGE]
+    source_refs: [ANTH_PRO_CODE, ANTH_CODE_MODELS, ANTH_CODE_USAGE]
+    verified_at: '2026-08-11'
+    invalidation_conditions: [Anthropic plan or model update, Human task-time model observation differs]
+    confidence: high
+
+  - provider: Google
+    surface_id: gemini_web
+    model_label: Gemini Pro current product label
+    registered: true
+    capabilities:
+      context: unknown
+      reasoning_controls: product_surface_managed
+      agent_and_tools: unknown
+      coding: supported
+      research: supported
+      multimodal_vision: supported
+      speed_latency: unknown
+    parameter_profiles:
+      - profile_id: gemini_web_pro_current
+        reasoning_levels: [surface_current]
+        source_class: independent_web_research
+        surface_exposure_evidence: [GEMINI_PASS]
+    source_refs: [GEMINI_PASS]
+    verified_at: '2026-08-11'
+    invalidation_conditions: [Gemini web product label or selector update]
+    confidence: medium
+
+  - provider: Google
+    surface_id: gemini_web
+    model_label: Gemini Flash current product label
+    registered: true
+    capabilities:
+      context: unknown
+      reasoning_controls: product_surface_managed
+      agent_and_tools: unknown
+      coding: supported
+      research: supported
+      multimodal_vision: supported
+      speed_latency: unknown
+    parameter_profiles:
+      - profile_id: gemini_web_flash_current
+        reasoning_levels: [surface_current]
+        source_class: independent_web_research
+        surface_exposure_evidence: [GEMINI_PASS]
+    source_refs: [GEMINI_PASS]
+    verified_at: '2026-08-11'
+    invalidation_conditions: [Gemini web product label or selector update]
+    confidence: medium
+
+  - provider: Google
+    surface_id: antigravity
+    model_label: Gemini 3.6 Flash
+    registered: true
+    capabilities:
+      context: unknown
+      reasoning_controls: [Low, Medium, High]
+      agent_and_tools: supported
+      coding: supported
+      research: unknown
+      multimodal_vision: unknown
+      speed_latency: unknown
+    parameter_profiles:
+      - profile_id: antigravity_gemini_3_6_flash
+        reasoning_levels: [Low, Medium, High]
+        source_class: provider_product_documentation
+        surface_exposure_evidence: [GOOGLE_AG_MODELS, GOOGLE_AG_36]
+    source_refs: [GOOGLE_AG_MODELS, GOOGLE_AG_36]
+    verified_at: '2026-08-11'
+    invalidation_conditions: [Google Antigravity model catalog update]
+    confidence: high
+
+  - provider: Google
+    surface_id: antigravity
+    model_label: Gemini 3.1 Pro
+    registered: true
+    capabilities:
+      context: unknown
+      reasoning_controls: [Low, High]
+      agent_and_tools: supported
+      coding: supported
+      research: unknown
+      multimodal_vision: unknown
+      speed_latency: unknown
+    parameter_profiles:
+      - profile_id: antigravity_gemini_3_1_pro
+        reasoning_levels: [Low, High]
+        source_class: provider_product_documentation
+        surface_exposure_evidence: [GOOGLE_AG_MODELS]
+    source_refs: [C08_Antigravity_Pro_access, GOOGLE_AG_MODELS]
+    verified_at: '2026-08-11'
+    invalidation_conditions: [Google Antigravity model catalog or plan update]
+    confidence: high
+
+  - provider: Anthropic
+    surface_id: antigravity
+    model_label: Claude Opus 4.6
+    registered: true
+    capabilities:
+      context: unknown
+      reasoning_controls: [Thinking]
+      agent_and_tools: supported
+      coding: supported
+      research: unknown
+      multimodal_vision: unknown
+      speed_latency: unknown
+    parameter_profiles:
+      - profile_id: antigravity_opus_4_6_thinking
+        reasoning_levels: [Thinking]
+        source_class: provider_product_documentation
+        surface_exposure_evidence: [C08_Antigravity_Pro_access, GOOGLE_AG_MODELS]
+    source_refs: [C08_Antigravity_Pro_access, GOOGLE_AG_MODELS]
+    verified_at: '2026-08-11'
+    invalidation_conditions: [Google Antigravity model catalog or plan update]
+    confidence: high
+
+  - provider: Anthropic
+    surface_id: antigravity
+    model_label: Claude Opus 4.8
+    registered: false
+    status: discovered_entitlement_conflict_needs_Human_task_time_observation
+    capabilities: unknown
+    parameter_profiles: []
+    source_refs: [GOOGLE_AG_MODELS, GEMINI_PASS]
+    verified_at: '2026-08-11'
+    invalidation_conditions: [Human task-time observation, Google Antigravity catalog update]
+    confidence: low

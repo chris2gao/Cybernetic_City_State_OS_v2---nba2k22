@@ -1,0 +1,104 @@
+schema_version: citystate.stage06.execution_evidence.v1
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+stage_id: workflow_stage_06_execution
+status: baseline_reproduced
+started_at: '2026-08-11'
+
+executor:
+  surface: Codex Desktop
+  model_ui_label: GPT-5.6 Sol
+  reasoning_setting: max
+  authority: routing_only
+
+physical_baseline:
+  source_branch: dev/os-v2-global-model-capability-and-availability-routing-002
+  source_head_fresh_remote: a97d32ddd24cc9a94aaedea8adb045d4cdf6308c
+  source_head_local_after_fast_forward: a97d32ddd24cc9a94aaedea8adb045d4cdf6308c
+  master_head_fresh_remote: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+  merge_base_with_master: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+  commits_ahead_of_master: 44
+  quarantined_branch: dev/os-v2-global-model-capability-and-availability-routing-001
+  quarantined_head_observed: dfe553d35ea61aa31ebac32f7f107a9b402723eb
+  quarantined_history_reused: false
+  preexisting_untracked_content_preserved: true
+  preexisting_untracked_content_note: >-
+    One research packet under this run and unrelated retained 08_os/_runs runtime files
+    were present before Stage 06. They are not implementation inputs and are not staged.
+
+frozen_baseline:
+  package:
+    exit_code: 0
+    result: 28 frozen tests; positive=15; negative=8; boundary=5
+    test_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+  selftest:
+    exit_code: 0
+    positive_good_fixture: 28/28
+    mutations_killed: 27/27
+    boundary_probes: 2/2
+  acceptance_expect_red:
+    exit_code: 0
+    passed: 5
+    total: 28
+    green_test_ids: [MR-T02, MR-T19, MR-T20, MR-T23, MR-T25]
+  git_diff_check_exit_code: 0
+  publisher_authority_sha256: ae9abdf5d729550511de857511a73d36c53f5d52d76e9f57c77b23ad19c29c1a
+  publisher_authority_matches_frozen_baseline: true
+
+steps:
+  S1:
+    status: passed
+    attempts:
+      - attempt: 1
+        test_ids: [MR-T01, MR-T04, MR-T05, MR-T06, MR-T07, MR-T08, MR-T25, MR-T26]
+        passed: 8
+        total: 8
+        implementation: core routing contract, mechanism README, and schema-discoverable catalog/ledger skeletons
+  S2:
+    status: passed
+    attempts:
+      - attempt: 1
+        test_ids: [MR-T09, MR-T10, MR-T11, MR-T12, MR-T13, MR-T14, MR-T15, MR-T16]
+        passed: 8
+        total: 8
+        implementation: evidence-backed surface catalog with 11 entries and a separate three-observation diagnostic ledger
+  S3:
+    status: passed
+    attempts:
+      - attempt: 1
+        test_ids: [MR-T03, MR-T21, MR-T22, MR-T23, MR-T24, MR-T27, MR-T28]
+        passed: 7
+        total: 7
+        mechanism_validator_static_exit_code: 0
+        freshness_mutation_validator_exit_code: 2
+        implementation: boot manifest, four-entry registry, explicit loader, and strict structural validator
+  S4:
+    status: passed
+    attempts:
+      - attempt: 1
+        test_ids: [MR-T02, MR-T17, MR-T18, MR-T19, MR-T20]
+        passed: 5
+        total: 5
+        publisher_authority_sha256: ae9abdf5d729550511de857511a73d36c53f5d52d76e9f57c77b23ad19c29c1a
+        implementation: replaced volatile entry catalog with stable preflight, canonical pointer, executor-profile binding, availability override, and routing-only boundary
+  S5:
+    status: passed_prepublication
+    attempts:
+      - attempt: 1
+        acceptance: 27/28
+        failed_test_ids: [MR-T25]
+        attribution: S2 catalog source identifier contained an economic-token substring even though it was only an evidence pointer
+        remedy: replace the pointer with the accepted Stage 02 claim identity and non-economic provider catalog pointer
+      - attempt: 2
+        acceptance: 28/28
+        package_exit_code: 0
+        selftest_exit_code: 0
+        frozen_test_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+        git_diff_check_exit_code: 0
+        publisher_authority_unchanged: true
+        binary_or_cache_artifacts: 0
+        personal_absolute_path_or_secret_pattern_matches: 0
+
+evidence_honesty:
+  independently_reproduced: false
+  note: Stage 06 executor produced and verified this implementation evidence; final independent review is deferred to a different-model-family Stage 07 session.

@@ -1,0 +1,55 @@
+schema_version: citystate.model_routing.contract.v1
+mechanism_version: 1
+status: active
+authority_effect: none
+
+inputs:
+  required:
+    - task_id
+    - role
+    - risk_tier
+    - task_shape
+    - required_capabilities
+  optional:
+    - Human_unavailable_models
+    - Human_restored_models
+    - surface_constraints
+    - project_evidence_refs
+  availability_default: all_registered_candidates_available
+
+availability_rule:
+  registered_default: available
+  unavailable_only_by: explicit_Human_override
+  restored_by: explicit_Human_override
+  automatic_quota_probe: false
+  static_entitlement_controls_account_availability: false
+
+decision_steps:
+  - apply_Human_availability_override
+  - eliminate_hard_capability_or_surface_mismatch
+  - assess_task_fit_using_vendor_surface_and_valid_project_evidence
+  - choose_strongest_reliable_task_fit
+  - choose_surface_supported_parameter_profile
+  - emit_route_with_evidence_and_limitations
+
+outputs:
+  required:
+    - provider
+    - surface
+    - model
+    - parameter_profile
+    - routing_basis
+    - evidence_refs
+    - limitations
+    - availability_assumption
+    - authority
+  authority_constant: routing_only
+
+prohibited_routing_inputs: [token_cost, price, quota_balance]
+on_primary_unavailable: rerun_task_fit_among_remaining_candidates
+
+failure_states:
+  - no_available_candidate_meets_hard_requirements
+  - selected_surface_parameter_not_evidence_supported
+  - required_catalog_entry_missing_or_stale_for_material_claim
+  - mechanism_or_registry_pointer_broken
