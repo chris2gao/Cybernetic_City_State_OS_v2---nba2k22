@@ -2,7 +2,7 @@ schema_version: citystate.stage06.execution_evidence.v1
 task_id: os-v2-global-model-capability-and-availability-routing-001
 run_id: run-20260811-全局模型能力与可用性机制-001
 stage_id: workflow_stage_06_execution
-status: baseline_reproduced
+status: candidate_ready_for_stage07
 started_at: '2026-08-11'
 
 executor:
@@ -102,3 +102,35 @@ steps:
 evidence_honesty:
   independently_reproduced: false
   note: Stage 06 executor produced and verified this implementation evidence; final independent review is deferred to a different-model-family Stage 07 session.
+
+closure:
+  canonical_implementation_commit: 3e3b608ac2c265d6aa4eb31471e8f1eae05603a4
+  source_base: a97d32ddd24cc9a94aaedea8adb045d4cdf6308c
+  implementation_changed_path_count: 11
+  final_branch_changed_path_count: 12
+  out_of_scope_path_count: 0
+  changed_paths:
+    - 01_os/02_boot/model_routing/启动清单_v1.yml
+    - 01_os/03_mechanisms/README.md
+    - 01_os/03_mechanisms/model_routing/README.md
+    - 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+    - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    - 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+    - 01_os/03_mechanisms/model_routing/项目观察证据_v1.yml
+    - 01_os/05_registry/model_routing_v1.yml
+    - 01_os/06_execution/boot/model_routing/README.md
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/06_执行/Stage06_执行证据_v1.yml
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/08_结论/completion_pointer_v1.yml
+    - 01_os/开发入口与单窗口任务规范_v1.md
+  publication:
+    transport: local_git
+    hook_guard: passed
+    hook_path: .githooks
+    push_performed: true
+    candidate_remote_head_read_back: 3e3b608ac2c265d6aa4eb31471e8f1eae05603a4
+    fast_forward_verified: true
+    force_push: false
+  master_head_after_candidate_push: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+  quarantined_head_after_candidate_push: dfe553d35ea61aa31ebac32f7f107a9b402723eb
+  unrelated_preexisting_untracked_content_preserved: true
+  marker: stage06_candidate_28_of_28_ready_for_stage07

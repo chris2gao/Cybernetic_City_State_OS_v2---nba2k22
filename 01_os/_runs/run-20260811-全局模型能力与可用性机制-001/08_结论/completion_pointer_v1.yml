@@ -1,0 +1,55 @@
+completion_pointer:
+  packet_id: os-v2-global-model-capability-and-availability-routing-001
+  stage: workflow_stage_06_execution
+  status: candidate_ready_for_stage07
+  executor:
+    surface: Codex Desktop
+    model: GPT-5.6 Sol
+    reasoning_setting: max
+  source_branch: dev/os-v2-global-model-capability-and-availability-routing-002
+  source_base: a97d32ddd24cc9a94aaedea8adb045d4cdf6308c
+  source_head: 3e3b608ac2c265d6aa4eb31471e8f1eae05603a4
+  validation:
+    frozen_test_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+    package: exit_0
+    selftest: exit_0
+    acceptance: 28/28
+    mechanism_validator: exit_0
+    freshness_negative_probe: exit_2
+    git_diff_check: exit_0
+    step_attempts:
+      S1: 1
+      S2: 1
+      S3: 1
+      S4: 1
+      S5: 2
+  repository:
+    changed_paths:
+      - 01_os/02_boot/model_routing/启动清单_v1.yml
+      - 01_os/03_mechanisms/README.md
+      - 01_os/03_mechanisms/model_routing/README.md
+      - 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+      - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+      - 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+      - 01_os/03_mechanisms/model_routing/项目观察证据_v1.yml
+      - 01_os/05_registry/model_routing_v1.yml
+      - 01_os/06_execution/boot/model_routing/README.md
+      - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/06_执行/Stage06_执行证据_v1.yml
+      - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/08_结论/completion_pointer_v1.yml
+      - 01_os/开发入口与单窗口任务规范_v1.md
+    out_of_scope_paths: 0
+    publisher_authority_unchanged: true
+    master_modified: false
+    quarantined_branch_reused: false
+    task_scoped_tracked_worktree_clean: true
+    worktree_clean: false
+    worktree_clean_note: preexisting user-owned untracked research packet and retained 08_os runtime files were preserved and excluded from both commits
+  publication:
+    transport: local_git
+    hook_guard: passed
+    candidate_resulting_remote_head: 3e3b608ac2c265d6aa4eb31471e8f1eae05603a4
+    fast_forward_verified: true
+    force_push: false
+  evidence_ref: 06_执行/Stage06_执行证据_v1.yml
+  next_owner: foreground_stage07_and_independent_review
+  marker: stage06_candidate_28_of_28_ready_for_stage07
