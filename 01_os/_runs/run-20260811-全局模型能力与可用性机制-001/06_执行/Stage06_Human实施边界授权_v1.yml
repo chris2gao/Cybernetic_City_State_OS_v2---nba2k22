@@ -1,0 +1,56 @@
+schema_version: citystate.stage06.human_implementation_boundary_authorization.v1
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+stage_id: workflow_stage_06_execution
+authorized_at: '2026-08-11'
+Human_instruction: '确认授权 Stage 06 按上述 boundary 执行。'
+
+source_branch: dev/os-v2-global-model-capability-and-availability-routing-002
+source_head_before_authorization_record: 7586d83fdd6990d3b87d75ab9a1bfd7d1e540fb8
+master_at_authorization: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+
+allowed_changed_paths:
+  - 01_os/03_mechanisms/model_routing/**
+  - 01_os/02_boot/model_routing/**
+  - 01_os/06_execution/boot/model_routing/**
+  - 01_os/05_registry/model_routing_v1.yml
+  - 01_os/开发入口与单窗口任务规范_v1.md
+  - 01_os/03_mechanisms/README.md
+  - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/**
+
+protected_exclusions:
+  - 01_os/01_workflow/** semantic restructuring
+  - 01_os/03_mechanisms/context_management/** redesign
+  - 01_os/05_registry/repository_publisher_authority_v1.yml
+  - role mechanism implementation
+  - task-envelope/long-running mechanism implementation
+  - Claude Code CLI enablement
+  - automated account/quota detection
+  - formal Antigravity qualification
+  - master publication
+  - dev/os-v2-global-model-capability-and-availability-routing-001 history reuse
+
+authority:
+  canonical_mutation_within_boundary: true
+  source_task_branch_publication: true
+  master_write_authorized: false
+  destructive_git_authorized: false
+  boundary_expansion_authorized: false
+
+frozen_test_binding:
+  path: 04_测试生成/04_tests.yml
+  artifact_version: 2
+  test_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+  mutation_allowed: false
+
+step_package:
+  path: 05_步骤拆分/05_steps.yml
+  artifact_version: 1
+  required_execution_order:
+    - S1_core_routing_contract
+    - S2_surface_catalog_and_project_evidence
+    - S3_boot_registry_loader_and_failure_surfacing
+    - S4_entry_thinning_and_control_preservation
+    - S5_full_package_closure
+
+status: authorized_for_stage06_execution
