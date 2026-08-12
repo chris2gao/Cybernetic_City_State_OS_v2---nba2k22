@@ -2,14 +2,30 @@ schema_version: citystate.workflow.artifact.v1
 run_id: run-20260811-全局模型能力与可用性机制-001
 stage_id: workflow_stage_04_test_generation
 artifact_kind: frozen_test_package
-artifact_version: 1
+artifact_version: 2
 status: complete
+
+artifact_version_history:
+  - artifact_version: 1
+    frozen_at: '2026-08-11'
+    freeze_receipt: 04_测试生成/freeze_receipt_v1.yml
+  - artifact_version: 2
+    rebound_at: '2026-08-11'
+    freeze_receipt: 04_测试生成/freeze_receipt_v2.yml
+    change: >-
+      仅重绑定 Stage 01 predecessor 的 sha256，因为上游 A v3 完成了 serialization-only 修复。
+      payload.tests 逐对象不变，payload.test_package_sha256 不变。见
+      04_测试生成/Stage04上游重绑定回执_v1.yml。
+    test_content_changed: false
 
 input_refs:
   - stage_id: workflow_stage_01_requirement_modeling
     path: 01_需求建模/requirement/A_需求建模_v3.yml
     artifact_version: 3
-    sha256: 53639427fd9ba9228fa406b7cd7afc4a23956ee67ed734c4854fc1a5de5884d0
+    sha256: 09605f2cb2ce75bec8b7d96997357f34b9ec065787750cb7b935ff14872e2434
+    sha256_superseded: 53639427fd9ba9228fa406b7cd7afc4a23956ee67ed734c4854fc1a5de5884d0
+    rebind_reason: upstream_yaml_serialization_only_repair
+    rebind_receipt: 01_需求建模/requirement/A_v3机械序列化修复回执_v1.yml
   - stage_id: workflow_stage_02_information_collection
     path: 02_信息收集与提炼/Stage02_证据结论_v2.yml
     artifact_version: 2

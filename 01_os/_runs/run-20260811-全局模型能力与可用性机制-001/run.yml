@@ -5,13 +5,14 @@ run:
   exact_base_sha: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
   branch: dev/os-v2-global-model-capability-and-availability-routing-002
   owner: core
-  status: stage04_complete_stage05_blocked_by_A_v3_yaml_serialization_repair
+  status: stage05_ready_for_step_decomposition
   purpose: >-
     用七阶段 workflow 建立低耦合的全局模型能力与任务路由机制。Stage 1 已由 Human 确认 A v3；
     Stage 2 provider/独立 research 与 claim-level reconciliation 已完成；Antigravity formal qualification
     已由 Human 显式关闭，既有非盲测试仅保留 diagnostic evidence。Stage 3 的 B v1 已完成。
     Stage 4 已由独立 Claude Opus 5 / Cowork 角色生成并冻结 acceptance tests，primary diff 已由规划窗口接收。
-    当前唯一 Stage 5 前置 blocker 是 A v3 的 YAML 序列化语法缺陷；其修复必须保持语义不变，并重新绑定/冻结 Stage 4 输入引用。
+    A v3 的 YAML 序列化缺陷已按 serialization-only 口径机械修复，语义未变；Stage 4 输入引用已重绑定，
+    冻结测试内容与 normalized test_package_sha256 均未改变。Stage 5 前置条件已全部解除。
   branch_recovery:
     previous_branch: dev/os-v2-global-model-capability-and-availability-routing-001
     quarantined_head_latest_observed: dfe553d35ea61aa31ebac32f7f107a9b402723eb
@@ -21,11 +22,16 @@ run:
     quarantined_branch_reuse: prohibited
   workflow:
     stage_01_requirement_modeling:
-      status: complete_with_known_serialization_defect_repair_required_before_stage05
+      status: complete
       artifact: 01_需求建模/requirement/A_需求建模_v3.yml
+      artifact_version: 3
+      artifact_sha256: 09605f2cb2ce75bec8b7d96997357f34b9ec065787750cb7b935ff14872e2434
       Human_confirmation: 01_需求建模/requirement/人类确认_v3.yml
       semantic_status: confirmed
-      serialization_status: invalid_yaml_plain_scalar_start
+      serialization_status: repaired_and_valid
+      serialization_repair_receipt: 01_需求建模/requirement/A_v3机械序列化修复回执_v1.yml
+      serialization_repair_class: serialization_only
+      semantic_change_by_repair: false
     stage_02_information_collection:
       status: complete
       research_status:
@@ -43,12 +49,26 @@ run:
     stage_04_test_generation:
       status: complete
       artifact: 04_测试生成/04_tests.yml
+      artifact_version: 2
+      freeze_receipt: 04_测试生成/freeze_receipt_v2.yml
+      previous_freeze_receipt: 04_测试生成/freeze_receipt_v1.yml
+      rebind_receipt: 04_测试生成/Stage04上游重绑定回执_v1.yml
       acceptance_adjudication: 04_测试生成/Stage04接收裁决_v1.yml
       frozen_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
-      source_head: 528fe5c7b2b88bdd3318b431be015e6d543a4797
+      frozen_package_sha256_changed_by_rebind: false
+      test_count: 28
+      test_kinds: {positive: 15, negative: 8, boundary: 5}
+      test_content_changed: false
+      source_head_at_freeze: 528fe5c7b2b88bdd3318b431be015e6d543a4797
       independence_requirement: satisfied
     stage_05_step_decomposition:
-      status: blocked_by_upstream_A_v3_yaml_serialization_repair_and_stage04_input_rebind
+      status: ready_for_step_decomposition
+      inputs:
+        frozen_tests: 04_测试生成/04_tests.yml
+        frozen_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+      constraints:
+        - 只能把 test_id 绑进 step，不得增删改任何一条冻结测试
+        - B13_failure_surfacing 的 requirement_satisfaction 映射遗漏在本阶段补记（F2，nonblocking）
     stage_06_execution:
       status: blocked_by_stage_05_and_Human_approved_implementation_boundary
     stage_07_test_execution:

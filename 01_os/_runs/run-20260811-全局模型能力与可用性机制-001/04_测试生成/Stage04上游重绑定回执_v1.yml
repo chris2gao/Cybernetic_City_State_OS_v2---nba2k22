@@ -1,0 +1,103 @@
+schema_version: citystate.stage04.predecessor_rebind_receipt.v1
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+stage_id: workflow_stage_04_test_generation
+rebound_at: '2026-08-11'
+
+what_this_is: >-
+  predecessor metadata 的重绑定，不是重新冻结测试。上游 A v3 完成了 serialization-only
+  修复，其字节因此改变；04_tests.yml 里对 Stage 01 的 sha256 绑定必须指向修复后的真实字节，
+  否则冻结包会绑在一个已经不存在的版本上。除这一处绑定与 artifact_version 外，
+  本次不触碰测试内容的任何一个字节。
+
+trigger:
+  finding: F1_A_v3_yaml_serialization
+  raised_in: 04_测试生成/测试设计说明_v1.md, 04_测试生成/freeze_receipt_v1.yml
+  adjudicated_in:
+    path: 04_测试生成/Stage04接收裁决_v1.yml
+    blob_sha1: 67270ea02eac268f15a346f6ce14ab67d829cc20
+    required_action: deterministic_serialization_repair_without_semantic_change_then_rebind_or_refreeze_stage04_inputs
+  upstream_repair_receipt: 01_需求建模/requirement/A_v3机械序列化修复回执_v1.yml
+  Human_authorization_ref: Human_dispatch_2026-08-11_mechanical_upstream_repair_and_stage04_predecessor_rebind
+
+changed_in_04_tests_yml:
+  - field: artifact_version
+    before: 1
+    after: 2
+  - field: input_refs[stage_01].sha256
+    before: 53639427fd9ba9228fa406b7cd7afc4a23956ee67ed734c4854fc1a5de5884d0
+    after: 09605f2cb2ce75bec8b7d96997357f34b9ec065787750cb7b935ff14872e2434
+  - field: artifact_version_history
+    change: added
+    note: 记录 v1 冻结与 v2 重绑定两次事件及各自 freeze receipt
+  - field: input_refs[stage_01].sha256_superseded / rebind_reason / rebind_receipt
+    change: added
+    note: 让被取代的旧绑定保持可读，而不是被静默覆盖
+
+unchanged_in_04_tests_yml:
+  input_refs_stage_01_path: 01_需求建模/requirement/A_需求建模_v3.yml
+  input_refs_stage_01_artifact_version: 3
+  input_refs_stage_02:
+    path: 02_信息收集与提炼/Stage02_证据结论_v2.yml
+    sha256: 0206000d2fd0882aa136a679364e43a02fdcbad3f8b3201c1fa77380a2e3f010
+  input_refs_stage_03:
+    path: 03_结果建模/B_结果模型_v1.yml
+    sha256: 263ee6dec1eabe91e1c9cf0b1637e50cea65f753c4f2c39a64e78047b0d16368
+  payload_tests: 逐对象完全一致，未新增、删除或修改任何 test
+  payload_test_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+  payload_frozen: true
+  payload_freeze_authorization_ref: unchanged
+  credential_selection_record: unchanged
+  method_qualification: unchanged
+  pre_implementation_check: unchanged
+  frozen_contract_surface: unchanged
+  not_covered_by_this_package: unchanged
+
+invariant_proof:
+  claim: 重绑定 predecessor metadata 未改变任何一条冻结测试
+  evidence:
+    - kind: diff_locality
+      detail: >-
+        git diff -U0 对 04_tests.yml 产生三个 hunk，位于第 5、8、25 行区域，
+        全部落在文件头部的 artifact 元数据与 input_refs 区；payload.tests 起始于其后，
+        无任何 hunk 触及。共 18 行新增、2 行删除，全部为元数据。
+    - kind: normalized_digest
+      detail: >-
+        payload.test_package_sha256 由 payload.tests 解析后重新序列化算出
+        （yaml.safe_dump sort_keys=True width=4096 再取 SHA-256）。
+        重绑定后重新计算仍为 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478，
+        与 freeze_receipt_v1 记录值逐字符相同。若任何一条测试的任何一个字段被改动，该值必变。
+    - kind: frozen_companion_bytes
+      detail: >-
+        validator、fixtures、mutations、测试设计说明、freeze_receipt_v1 的 SHA-256
+        与 freeze_receipt_v1 记录值全部相同（见 freeze_receipt_v2 的 unchanged_frozen_artifacts）。
+        git status 只报告两个 modified 文件：A v3 与 04_tests.yml。
+
+test_package_integrity:
+  test_count: 28
+  kinds: {positive: 15, negative: 8, boundary: 5}
+  test_content_changed: false
+  test_ids_changed: false
+  measurement_changed: false
+  pass_condition_changed: false
+  fixture_changed: false
+  mutation_set_changed: false
+  validator_logic_changed: false
+
+known_documentation_staleness:
+  - path: 04_测试生成/测试设计说明_v1.md
+    section: '§6 findings / F1'
+    detail: >-
+      F1 的正文按 Stage 04 冻结时点的事实写成（"A v3 不是合法 YAML"）。该缺陷现已修复，
+      因此 F1 的现状描述已过时。本派单明确禁止修改测试设计说明，故不改动它；
+      当前状态以本回执与 A_v3机械序列化修复回执_v1.yml 为准。
+  - path: 04_测试生成/freeze_receipt_v1.yml
+    section: predecessor_binding / findings.F1
+    detail: >-
+      v1 回执按当时事实绑定修复前的 A v3 sha256 并记录 F1 为未修复。
+      v1 保持原样不动，由 freeze_receipt_v2.yml 取代其绑定效力。
+
+superseded_by_nothing: true
+supersedes: none
+previous_freeze_receipt: 04_测试生成/freeze_receipt_v1.yml
+new_freeze_receipt: 04_测试生成/freeze_receipt_v2.yml

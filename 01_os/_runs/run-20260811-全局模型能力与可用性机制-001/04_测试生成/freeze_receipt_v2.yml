@@ -1,0 +1,210 @@
+schema_version: citystate.stage04.freeze_receipt.v2
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+stage_id: workflow_stage_04_test_generation
+frozen_at: '2026-08-11'
+rebound_at: '2026-08-11'
+frozen: true
+
+supersedes:
+  path: 04_测试生成/freeze_receipt_v1.yml
+  sha256: f95619ff39a75444b3de76bb01b70b61cccac452b936afd42b35d6973a05775c
+  disposition: 保留原样不动；v1 记录的是冻结时点事实，v2 只取代其 predecessor 绑定效力。
+
+rebind_reason: upstream_yaml_serialization_only_repair
+rebind_receipt: 04_测试生成/Stage04上游重绑定回执_v1.yml
+upstream_repair_receipt: 01_需求建模/requirement/A_v3机械序列化修复回执_v1.yml
+
+test_content_changed: false
+test_semantics_changed: false
+canonical_mutation: false
+implementation_mutation: false
+
+authority:
+  freeze_authorization_ref: 04_测试生成/独立测试生成派单_v2.md
+  rebind_authorization_ref: Human_dispatch_2026-08-11_mechanical_upstream_repair_and_stage04_predecessor_rebind
+  role: independent_test_designer
+  authority_effect: none
+  master_write_authorized: false
+
+execution_environment:
+  model: claude-opus-5
+  ui_label: Claude Desktop — Cowork mode (Claude Agent SDK host)
+  reasoning_setting: not_exposed
+  publication_transport: local_git
+  principal_binding: local_authenticated
+  hook_guard: passed
+  hook_guard_evidence: 'git config --get core.hooksPath -> .githooks'
+  python: 3.14.6
+  pyyaml: 6.0.3
+  os: Windows / PowerShell
+
+branch_state_at_rebind:
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  branch: dev/os-v2-global-model-capability-and-availability-routing-002
+  dispatch_declared_head: 4f0e47b1f892c169c5b7bf4fcac0022fb80d7b38
+  remote_head_read_fresh: 4f0e47b1f892c169c5b7bf4fcac0022fb80d7b38
+  dispatch_vs_measured: identical
+  local_advanced_by: fast_forward_only
+  remote_master_read_fresh: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+  quarantined_branch_untouched: dev/os-v2-global-model-capability-and-availability-routing-001
+  quarantined_head_observed: dfe553d35ea61aa31ebac32f7f107a9b402723eb
+
+test_package:
+  artifact: 04_测试生成/04_tests.yml
+  artifact_version: 2
+  artifact_sha256: 83a600381a0d1f902036d232f42cf13211241b6d13bcd43ebedd0f8c51f25ee1
+  artifact_sha256_v1: 2f878cf9bafb103feaceccbf345b1918887892774b7b70dae0c63bdd4fd48e72
+  test_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+  test_package_sha256_unchanged_from_v1: true
+  normalization: >-
+    sha256(yaml.safe_dump(payload.tests, allow_unicode=True, sort_keys=True, width=4096).encode('utf-8'))
+  normalization_source_of_truth: >-
+    01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py::normalized_sha256
+  test_count: 28
+  kinds: {positive: 15, negative: 8, boundary: 5}
+  line_ending_note: >-
+    仓库 .gitattributes 为 `* text=auto eol=lf`；本轮改动的文件已确认无 CRLF，
+    artifact_sha256 因此在新克隆的工作副本上可复现。
+
+predecessor_binding:
+  - stage_id: workflow_stage_01_requirement_modeling
+    path: 01_需求建模/requirement/A_需求建模_v3.yml
+    artifact_version: 3
+    sha256: 09605f2cb2ce75bec8b7d96997357f34b9ec065787750cb7b935ff14872e2434
+    sha256_superseded: 53639427fd9ba9228fa406b7cd7afc4a23956ee67ed734c4854fc1a5de5884d0
+    change: rebound_after_serialization_only_repair
+    semantic_change: false
+  - stage_id: workflow_stage_02_information_collection
+    path: 02_信息收集与提炼/Stage02_证据结论_v2.yml
+    artifact_version: 2
+    sha256: 0206000d2fd0882aa136a679364e43a02fdcbad3f8b3201c1fa77380a2e3f010
+    change: unchanged
+  - stage_id: workflow_stage_03_result_modeling
+    path: 03_结果建模/B_结果模型_v1.yml
+    artifact_version: 1
+    sha256: 263ee6dec1eabe91e1c9cf0b1637e50cea65f753c4f2c39a64e78047b0d16368
+    change: unchanged
+
+supporting_binding:
+  - path: 01_需求建模/requirement/人类确认_v3.yml
+    sha256: 1a1989f077c9288900215923b611b60bbb7a3f1af3ed9bf828e2672769eb2f17
+    change: unchanged
+  - path: 02_信息收集与提炼/证据对齐与冲突消解_v1.yml
+    sha256: 933b0db81ee0a5c0cd4c185f1cc4287e63c163ea5abde8cc9268756a99e6a832
+    change: unchanged
+  - path: 01_任务输入/任务包_v3.yml
+    sha256: c5a931d7c2f8618c5b0342b4eb15d40ec2984f6b993f9324434d144dd1c6938c
+    change: unchanged
+  - path: 04_测试生成/独立测试生成派单_v2.md
+    sha256: 6a5d5e3b4b6bfdfdc9c799292d0a731d5f1ae83d5e0bfeb09792265e20b60e41
+    change: unchanged
+  - path: 01_需求建模/requirement/A_v3机械序列化修复回执_v1.yml
+    sha256: 6ecfc3914178ba34876329541076a01100dccf95ebf29af8b04a162877b7acdb
+    change: added_this_round
+
+unchanged_frozen_artifacts_note: >-
+  以下 SHA-256 与 freeze_receipt_v1.yml 记录值逐字符相同，是"测试内容未变"的字节级证据。
+
+unchanged_frozen_artifacts:
+  - path: 04_测试生成/实现/verify_stage04_acceptance.py
+    sha256: 4d1b445776c3d50a12d31120db432aee77fb344185c6e84f365793b983e88803
+  - path: 04_测试生成/测试设计说明_v1.md
+    sha256: 7656d298aeb39dbb3db7a43392c1769c6e5a89c523175f823844a57bcdb4636f
+  - path: 04_测试生成/fixtures/mutations_v1.yml
+    sha256: 3898d42b954b31330693c97cf635aa83119d9993b088ce80e1120b9dc2f98d3f
+  - path: 04_测试生成/fixtures/good_tree/01_os/01_workflow/README.md
+    sha256: 9ee2e7b4bb3c8df3498b0d1669ce2cd06a1efda3c5ff648716608e835bdddd28
+  - path: 04_测试生成/fixtures/good_tree/01_os/02_boot/model_routing/启动清单_v1.yml
+    sha256: d6c3b19fff0e0b2ea022d3c447994054637e63c8f6db37d7c38050f3bc7b6559
+  - path: 04_测试生成/fixtures/good_tree/01_os/03_mechanisms/model_routing/README.md
+    sha256: 0e4b265ca9bb00ed540c41f27d67e4468989e0cbca93717c4bce3ebc5ff5b0b4
+  - path: 04_测试生成/fixtures/good_tree/01_os/03_mechanisms/model_routing/路由契约_v1.yml
+    sha256: 150964b5ccbca243e2a46bca0dd42e10b96a6208e88f8f80944caec6a50639e5
+  - path: 04_测试生成/fixtures/good_tree/01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    sha256: ac9abde4038e4ab83c1cfe8ff55e1b8160cc96c07f18d06341191b57495246f3
+  - path: 04_测试生成/fixtures/good_tree/01_os/03_mechanisms/model_routing/项目观察证据_v1.yml
+    sha256: 91854e3e6d944c2267893eaa9712df24387c3a95abd825dae2fafd57ac0136c0
+  - path: 04_测试生成/fixtures/good_tree/01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+    sha256: 864e154c787afdfeb762baba9c9b226c0333c58f614c1803d286c07e7667e228
+  - path: 04_测试生成/fixtures/good_tree/01_os/05_registry/model_routing_v1.yml
+    sha256: aee815629d37051816938fb27607e09af12c3ac85f4ebd31dbc7c8886db6f564
+  - path: 04_测试生成/fixtures/good_tree/01_os/06_execution/boot/model_routing/README.md
+    sha256: c79ee71c3f16e4b063540445ea8387a3465056d25fe4ec14c1ef60b41bd03a63
+  - path: 04_测试生成/fixtures/good_tree/01_os/开发入口与单窗口任务规范_v1.md
+    sha256: b26909f98fc753f6c90f437bdee137081169375cb862c5562e638e590eef34fb
+
+frozen_contract_surface:
+  mechanism_dir: 01_os/03_mechanisms/model_routing
+  boot_manifest: 01_os/02_boot/model_routing/启动清单_v1.yml
+  registry: 01_os/05_registry/model_routing_v1.yml
+  execution_loader_dir: 01_os/06_execution/boot/model_routing
+  schema_version_tokens:
+    contract: citystate.model_routing.contract.v
+    catalog: citystate.model_routing.catalog.v
+    project_observation_ledger: citystate.model_routing.project_observation.v
+  publisher_authority_baseline_sha256: ae9abdf5d729550511de857511a73d36c53f5d52d76e9f57c77b23ad19c29c1a
+  filenames_inside_mechanism_dir_are_not_frozen: true
+  change_from_v1: none
+
+validation_actually_run:
+  - command: 'strict YAML parse of A_需求建模_v3.yml'
+    result: OK
+    detail: PyYAML 6.0.3，拒绝重复键的 strict loader；修复前同一 loader 报 illegal '`' start
+  - command: 'verify_stage04_acceptance.py package <run_root>'
+    exit_code: 0
+    result: 28 frozen tests, positive=15 negative=8 boundary=5
+    digest: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+    upstream_defect_remaining: false
+  - command: 'verify_stage04_acceptance.py selftest'
+    exit_code: 0
+    positive_good_fixture: 28/28 green
+    negative_mutations_killed: 27/27
+    boundary_empty_tree: ok
+    boundary_mechanism_without_boot_or_registry: ok
+    identical_to_v1: true
+  - command: 'verify_stage04_acceptance.py acceptance . --expect-red'
+    exit_code: 0
+    result: 5/28 passed against the current repository
+    green_now: [MR-T02, MR-T19, MR-T20, MR-T23, MR-T25]
+    red_now_count: 23
+    identical_to_v1: true
+    reason_unchanged: >-
+      本轮未触碰 canonical，机制仍未实现；A v3 与 04_tests.yml 都不在 28 条 acceptance
+      检查的观察面内，因此基线不应改变——它确实没有改变。
+  - command: 'git diff --check'
+    exit_code: 0
+  - command: 'changed paths vs dispatch allowlist'
+    result: 0 out-of-scope paths
+
+evidence_honesty:
+  availability: proven — 上述命令在本会话实际运行并给出退出码
+  functional_correctness: partial — 本轮证明的是修复的机械性与冻结包的完整性，不是机制正确性
+  security_boundary: not_applicable — 未读取任何 credential/secret，未触网
+  repeatability: proven — 修复为单行确定性替换；三条 validator 命令确定性
+  integration: not_run — 机制尚未实现
+  independently_reproduced: false
+  independently_reproduced_note: >-
+    本轮修复与重绑定由同一会话执行与自验，未经第二方复现。
+    按 AGENT_WORKING_DISCIPLINE.md 第 5 节，这一事实必须写进报告。
+    最终独立审核仍须由不同会话执行。
+  self_review_boundary_note: >-
+    本会话是 04_tests.yml 的原作者。本轮改动被严格限制为机械重绑定，且"未改测试"这一
+    主张由字节级证据（不变的 test_package_sha256 与不变的 validator/fixtures 哈希）承载，
+    而不是由作者的自述承载。
+
+findings_status:
+  F1_A_v3_yaml_serialization: resolved_this_round
+  F2_B13_requirement_satisfaction_mapping: still_open_nonblocking_deferred_to_stage05
+  F3_blind_research_process_fact_not_covered: accepted_scope_boundary
+  F4_runtime_route_behavior_not_fully_static_testable: accepted_scope_boundary
+  F5_no_B_blocker: unchanged
+
+freeze_effect:
+  stage_05: 只能把 test_id 绑进 step，不得增删改任何一条测试
+  stage_06: 必须携带 test_package_sha256 = 72898d54…；任何漂移 fail closed
+  correction_route: >-
+    若发现测试本身写错，停止并升级 Human 重开 Stage 04 重新冻结，不得就地改绿。
+
+marker: stage04_rebound_after_A_v3_serialization_repair_ready_for_stage05
+next_owner: stage_05_step_decomposition

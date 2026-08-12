@@ -1,0 +1,100 @@
+schema_version: citystate.requirement_artifact_repair_receipt.v1
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+repaired_at: '2026-08-11'
+repair_class: serialization_only
+exact_changed_semantic_fields: none
+
+repaired_path: 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/01_需求建模/requirement/A_需求建模_v3.yml
+
+defect:
+  type: yaml_plain_scalar_illegal_first_character
+  location: line 56, inside A.约束
+  detail: >-
+    列表项的 plain scalar 以反引号 ` 开头。YAML 1.1/1.2 把反引号列为保留指示符，
+    不能作为 plain scalar 的首字符，因此整份文件在标准 parser 下抛
+    "found character '`' that cannot start any token"。
+    第 55 行同样含反引号，但出现在句中，不触发该规则——这是本缺陷只影响一行的原因。
+  declared_schema_that_could_not_be_read: citystate.requirement_model.A.v1
+  discovered_by: >-
+    Stage 04 independent test designer，见 04_测试生成/测试设计说明_v1.md 的 F1
+    与 04_测试生成/freeze_receipt_v1.yml 的 findings[F1]。
+  adjudicated_by:
+    path: 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/04_测试生成/Stage04接收裁决_v1.yml
+    blob_sha1: 67270ea02eac268f15a346f6ce14ab67d829cc20
+    verdict_field: findings.F1_A_v3_yaml_serialization.required_action
+
+repair:
+  method: 把该 plain scalar 原样包进 YAML double-quoted scalar
+  before: '    - `01_workflow/**` 只负责阶段顺序、输入输出、失效回退和机制调用时点。'
+  after: '    - "`01_workflow/**` 只负责阶段顺序、输入输出、失效回退和机制调用时点。"'
+  why_double_quoted_is_lossless: >-
+    该文本不含反斜杠，也不含双引号，是 YAML double-quoted 语境中仅有的两个转义字符。
+    因此 double-quoted 形式解析出的字符串与原本意图的 plain scalar 逐字符相同；
+    首尾也无空白，不涉及 plain scalar 的空白剥离差异。
+  a_v4_not_created: true
+  a_v4_not_created_reason: >-
+    Stage 04 已冻结的 validator 与 04_tests.yml 按 frozen test logic 绑定
+    01_需求建模/requirement/A_需求建模_v3.yml 这一路径。新建 A v4 会迫使修改冻结件，
+    而修改冻结件正是 01_os/01_workflow/04_测试生成/README.md 禁止的"循环内重新定义成功"。
+  history_preserved: true
+  history_preserved_note: 修复前的非法版本仍可从 git 历史读取；未做 amend / rebase / squash / history rewrite。
+
+hashes:
+  old_sha256: 53639427fd9ba9228fa406b7cd7afc4a23956ee67ed734c4854fc1a5de5884d0
+  new_sha256: 09605f2cb2ce75bec8b7d96997357f34b9ec065787750cb7b935ff14872e2434
+  old_blob_sha1: 1d8efe2004e2481f464a481155301e03559add41
+  new_blob_sha1: edeacb4b74aa636a7902fa6487f133a66d41b3dc
+  line_endings: LF（仓库 .gitattributes 为 `* text=auto eol=lf`，工作副本已确认无 CRLF）
+
+verification_actually_run:
+  script: 一次性 scratch 校验（已在完成后删除），逐项结果如下
+  changed_line_count: 1
+  changed_line_number: 56
+  line_count_before: 129
+  line_count_after: 129
+  old_parse: 'failed as expected: found character ''`'' that cannot start any token'
+  new_parse: OK （PyYAML 6.0.3，拒绝重复键的 strict loader）
+  parsed_scalar_equals_original_text: true
+  artifact_version_after_repair: 3
+  artifact_status_after_repair: Human_confirmed_scope_revision
+  schema_version_after_repair: citystate.requirement_model.A.v1
+  成功判据_count: 12
+  约束_count: 7
+
+unchanged_by_this_repair:
+  - A 的任何语义字段（目标、成功判据、边界、约束、术语、关联领域、假设、未解歧义）
+  - artifact.version（仍为 3）
+  - artifact.status
+  - 01_需求建模/requirement/人类确认_v3.yml
+  - 03_结果建模/B_结果模型_v1.yml
+  - 02_信息收集与提炼/** 全部 Stage 02 证据
+  - 04_测试生成/实现/verify_stage04_acceptance.py
+  - 04_测试生成/fixtures/**
+  - 04_测试生成/测试设计说明_v1.md
+  - 04_测试生成/freeze_receipt_v1.yml
+  - canonical 01_os/03_mechanisms/**
+  - 01_os/开发入口与单窗口任务规范_v1.md
+  - master
+  - quarantined dev/os-v2-global-model-capability-and-availability-routing-001
+
+authorization:
+  Human_authorization_ref: Human_dispatch_2026-08-11_mechanical_upstream_repair_and_stage04_predecessor_rebind
+  scope_granted:
+    - A_需求建模_v3.yml 的最小 YAML 序列化修复
+    - 本回执
+    - 04_测试生成/04_tests.yml 的 predecessor 重绑定
+    - 04_测试生成/freeze_receipt_v2.yml
+    - 04_测试生成/Stage04上游重绑定回执_v1.yml
+    - run.yml
+  scope_explicitly_denied:
+    - 重新解释、补充、删减或润色 A
+    - 修改任何一条冻结测试、fixture、mutation 或 validator 逻辑
+    - 进入 Stage 05 或 canonical implementation
+    - master write / force push / rebase / squash / amend / history rewrite
+
+downstream_effect:
+  stage04_predecessor_rebind_required: true
+  stage04_test_semantics_change_required: false
+  rebind_receipt: 04_测试生成/Stage04上游重绑定回执_v1.yml
+  new_freeze_receipt: 04_测试生成/freeze_receipt_v2.yml

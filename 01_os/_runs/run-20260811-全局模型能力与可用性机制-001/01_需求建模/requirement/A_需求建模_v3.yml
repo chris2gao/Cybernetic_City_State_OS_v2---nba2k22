@@ -53,7 +53,7 @@ A:
 
   约束:
     - 跨阶段/跨任务复用能力优先形成 `03_mechanisms/**` 独立全局机制，workflow 通过 pointer/contract 调用。
-    - `01_workflow/**` 只负责阶段顺序、输入输出、失效回退和机制调用时点。
+    - "`01_workflow/**` 只负责阶段顺序、输入输出、失效回退和机制调用时点。"
     - 现有 context_management 负责上下文隔离；未来 role mechanism 负责角色；本机制不复制二者职责。
     - Human 是个人账户当前可用性的权威输入；默认 available，明确 unavailable 才排除。
     - 路由以任务质量/可靠完成为核心，不以最便宜、token 最少或额度保存为目标。
