@@ -1,0 +1,70 @@
+schema_version: citystate.task_packet.v1
+task_packet:
+  task_id: os-v2-global-model-capability-and-availability-routing-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T2_semantic
+  exact_base_sha: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+  branch: dev/os-v2-global-model-capability-and-availability-routing-002
+  objective: >-
+    通过七阶段 workflow 建立低耦合的全局模型能力与任务路由机制：基于 Human-confirmed A v3、
+    provider/产品 surface 一手资料与独立 research，形成 evidence-backed 的 model + surface + parameter profile 路由；
+    当前账户可用性由 Human override，已登记模型默认 available，路由只优化 task-model fit / reliable completion。
+    Antigravity formal qualification 已由 Human 关闭，本任务不再以完成 qualification 为前提。
+  source_evidence:
+    - current Human requirements and explicit scope change dated 2026-08-11
+    - remote master 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/01_需求建模/requirement/A_需求建模_v3.yml
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/01_需求建模/requirement/人类确认_v3.yml
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/02_信息收集与提炼/DeepResearch_ChatGPT官方一手资料_v1.md
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/02_信息收集与提炼/证据对齐与冲突消解_v1.yml
+    - security-recovery source branch dev/os-v2-global-model-capability-and-availability-routing-001 remains quarantined and must not be merged or reused
+  allowed_changed_paths:
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/**
+  required_tests:
+    - A v3 and Human confirmation v3 remain version-bound
+    - provider facts remain separated from Human current availability and inference
+    - at least one valid blind independent deep-research pass remains evidence-backed
+    - invalid/nonblind Antigravity v1/v2 runs remain diagnostic-only and cannot become precise routing qualification claims
+    - Stage 3 B maps every retained success criterion to result claims and every result claim to evidence claims
+    - no canonical implementation is written before Human approves the evidence-backed implementation boundary
+  prohibitions:
+    - modify_master_without_Human_gate
+    - force_push
+    - rebase
+    - squash
+    - amend
+    - history_rewrite
+    - read_or_store_credentials_or_tokens
+    - read_committed_browser_profile_or_session_databases
+    - purchase_or_change_subscription
+    - enable_Claude_Code_CLI_in_this_task
+    - fabricate_model_or_surface_availability
+    - promote_invalid_Antigravity_tests_to_formal_qualification
+    - edit_canonical_files_before_stage3_Human_boundary_gate
+    - merge_or_reuse_quarantined_branch_history
+  required_completion_pointer: 08_结论/completion_pointer_v1.yml
+
+  publisher:
+    principal_binding: connector_authenticated
+    publication_transport: github_api_connector
+    source_write_authorized: true
+    master_write_authorized: false
+    destructive_git_authorized: false
+    authorization_ref: Human_instruction_2026-08-11_close_Antigravity_testing_and_continue
+    expected_remote_head: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+
+  executor_profile:
+    provider: OpenAI
+    model: GPT-5.6 Sol
+    reasoning_effort: high
+    mode: standard
+    rollout_token_budget: null
+    routing_basis: >-
+      Current planning/orchestration window continues the Human-confirmed workflow; the static routing table under review is not used as independent evidence.
+    authority: routing_only
+
+  verification_profile:
+    reproduce_before_change: required
+    independent_reviewer: different_model_family_after_candidate_implementation
+    different_model_family: true
+    different_measurement_tool: true
