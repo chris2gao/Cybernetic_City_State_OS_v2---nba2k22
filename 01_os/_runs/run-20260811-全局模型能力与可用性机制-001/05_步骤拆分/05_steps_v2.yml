@@ -1,0 +1,139 @@
+schema_version: citystate.workflow.artifact.v1
+run_id: run-20260811-全局模型能力与可用性机制-001
+stage_id: workflow_stage_05_step_decomposition
+artifact_kind: step_package
+artifact_version: 2
+status: complete
+
+supersedes:
+  path: 05_步骤拆分/05_steps.yml
+  artifact_version: 1
+  disposition: retained_as_historical_binding_to_stage04_v2
+
+input_refs:
+  - stage_id: workflow_stage_04_test_generation
+    path: 04_测试生成/04_tests.yml
+    artifact_version: 3
+    sha256: 16c737abde6e13c420c5468a0db322f05864a6a418891f6a9f41dfac6dcc2573
+
+supporting_refs:
+  - path: 04_测试生成/freeze_receipt_v3.yml
+    test_package_sha256: 848b691712166a968c821ad6e53cafaf477b86bf7b1d7773306ad4e6ebf3e48c
+  - path: 03_结果建模/B_结果模型_v1.yml
+    sha256: 263ee6dec1eabe91e1c9cf0b1637e50cea65f753c4f2c39a64e78047b0d16368
+  - path: 02_信息收集与提炼/证据对齐与冲突消解_v1.yml
+    sha256: 933b0db81ee0a5c0cd4c185f1cc4287e63c163ea5abde8cc9268756a99e6a832
+  - path: 07_测试执行/07_blocking_review_v1.yml
+    purpose: correction trigger only; does not redefine A/B semantics
+
+payload:
+  rebind_class: stage04_human_gated_corrected_refreeze
+  semantic_redecomposition: false
+  frozen_test_package:
+    path: 04_测试生成/04_tests.yml
+    artifact_version: 3
+    test_count: 35
+    test_kinds: {positive: 16, negative: 9, boundary: 10}
+    test_package_sha256: 848b691712166a968c821ad6e53cafaf477b86bf7b1d7773306ad4e6ebf3e48c
+    superseded_digest: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+    mutation_rule: forbidden_in_stage05_and_stage06_correction
+
+  mapping_change_summary:
+    S1_core_routing_contract:
+      changed: false
+      test_count: 8
+    S2_surface_catalog_and_project_evidence:
+      changed: true
+      added_test_ids: [MR-T29, MR-T30]
+      strengthened_existing: [MR-T10]
+      test_count: 10
+    S3_boot_registry_loader_and_failure_surfacing:
+      changed: true
+      added_test_ids: [MR-T31, MR-T32, MR-T33, MR-T34, MR-T35]
+      test_count: 12
+    S4_entry_thinning_and_control_preservation:
+      changed: false
+      test_count: 5
+    S5_full_package_closure:
+      changed: true
+      old_count: 28
+      new_count: 35
+
+  steps:
+    - step_id: S1_core_routing_contract
+      order: 1
+      objective: >-
+        保持已实现的核心 routing contract：routing_only authority、Human availability、task-fit 选择顺序、
+        no cost/quota scoring 与 no automatic fallback。修正轮不得为新测试引入新的 routing semantic。
+      depends_on: []
+      test_ids: [MR-T01, MR-T04, MR-T05, MR-T06, MR-T07, MR-T08, MR-T25, MR-T26]
+      expected_candidate_state_before_fix: pass
+      retry_budget: 3
+      exits: [pass, retry, invalidate_upstream]
+
+    - step_id: S2_surface_catalog_and_project_evidence
+      order: 2
+      objective: >-
+        修正 catalog evidence chain：source token 必须可从 canonical declared load surface 解析到 durable source；
+        source/evidence metadata 中的 pricing/cost 字样不构成经济路由；禁止当前证据不支持的 surface/model attribution，
+        包括 registered:false 的 antigravity + Claude Opus 4.8。
+      depends_on: [S1_core_routing_contract]
+      test_ids: [MR-T09, MR-T10, MR-T11, MR-T12, MR-T13, MR-T14, MR-T15, MR-T16, MR-T29, MR-T30]
+      known_red_on_retained_candidate: [MR-T10, MR-T29, MR-T30]
+      retry_budget: 3
+      exits: [pass, retry, invalidate_upstream]
+      invalidate_upstream_condition: >-
+        只有当 Stage02 source evidence 本身不存在/矛盾或 B08/B10 与已接受证据不可同时满足时才回退 Stage02/03；
+        已确认当前根因是 candidate implementation，不得以测试红灯为由重写 Stage02 evidence。
+
+    - step_id: S3_boot_registry_loader_and_failure_surfacing
+      order: 3
+      objective: >-
+        强化机制自身 validator，使 B13 的代表性失效在 runtime fail closed：registered/unregistered bogus source、
+        registry path/coverage 断裂、version binding 漂移、非法 cost/quota routing semantic、required pointer 断裂。
+      depends_on: [S1_core_routing_contract, S2_surface_catalog_and_project_evidence]
+      test_ids: [MR-T03, MR-T21, MR-T22, MR-T23, MR-T24, MR-T27, MR-T28, MR-T31, MR-T32, MR-T33, MR-T34, MR-T35]
+      known_red_on_retained_candidate: [MR-T31, MR-T32, MR-T34]
+      known_green_but_still_required: [MR-T33, MR-T35]
+      retry_budget: 3
+      exits: [pass, retry, invalidate_upstream]
+
+    - step_id: S4_entry_thinning_and_control_preservation
+      order: 4
+      objective: >-
+        保持现有 §7.1 thinning 与 §8/§9/§11/T3/publisher controls；本修正轮没有证据要求重新引入旧型号硬编码规则。
+      depends_on: [S1_core_routing_contract, S2_surface_catalog_and_project_evidence, S3_boot_registry_loader_and_failure_surfacing]
+      test_ids: [MR-T02, MR-T17, MR-T18, MR-T19, MR-T20]
+      expected_candidate_state_before_fix: pass
+      retry_budget: 3
+      exits: [pass, retry, invalidate_upstream]
+
+    - step_id: S5_full_package_closure
+      order: 5
+      objective: >-
+        对 corrected frozen package 做完整闭环；不得修改 Stage04 v3 测试、fixtures、mutations 或 verifier 来取得通过。
+      depends_on: [S1_core_routing_contract, S2_surface_catalog_and_project_evidence, S3_boot_registry_loader_and_failure_surfacing, S4_entry_thinning_and_control_preservation]
+      test_ids: [MR-T01, MR-T02, MR-T03, MR-T04, MR-T05, MR-T06, MR-T07, MR-T08, MR-T09, MR-T10, MR-T11, MR-T12, MR-T13, MR-T14, MR-T15, MR-T16, MR-T17, MR-T18, MR-T19, MR-T20, MR-T21, MR-T22, MR-T23, MR-T24, MR-T25, MR-T26, MR-T27, MR-T28, MR-T29, MR-T30, MR-T31, MR-T32, MR-T33, MR-T34, MR-T35]
+      retry_budget: 3
+      exits: [pass, retry, invalidate_upstream]
+      pass_condition: >-
+        35/35 corrected frozen acceptance tests passed；package/selftest exit 0；
+        test_package_sha256 == 848b691712166a968c821ad6e53cafaf477b86bf7b1d7773306ad4e6ebf3e48c；
+        publisher authority byte baseline unchanged；git diff --check and allowed boundary pass。
+
+  correction_scope:
+    implementation_boundary_changed: false
+    reuse_existing_Human_stage06_boundary: true
+    reason: >-
+      新增测试只加强 source resolution、已证据否定的 surface attribution 与 B13 failure surfacing，
+      所需 canonical paths 全部已在 Stage06_Human实施边界授权_v1.yml 的原授权集合内。
+    canonical_paths:
+      - 01_os/03_mechanisms/model_routing/**
+      - 01_os/02_boot/model_routing/**
+      - 01_os/06_execution/boot/model_routing/**
+      - 01_os/05_registry/model_routing_v1.yml
+      - 01_os/开发入口与单窗口任务规范_v1.md
+      - 01_os/03_mechanisms/README.md
+      - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/**
+
+marker: stage05_v2_rebound_ready_for_targeted_stage06_correction
