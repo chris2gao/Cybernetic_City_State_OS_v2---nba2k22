@@ -1,0 +1,129 @@
+schema_version: citystate.requirement_model.A.v1
+artifact:
+  task_id: os-v2-global-model-capability-and-availability-routing-001
+  run_id: run-20260811-全局模型能力与可用性机制-001
+  stage: 01_需求建模
+  version: 3
+  status: Human_confirmed_scope_revision
+  supersedes: A_需求建模_v2.yml
+  source: Human_scope_change_2026-08-11_close_Antigravity_testing_and_continue
+
+A:
+  目标: >-
+    建立一个低耦合、repository-wide、可按需加载的全局模型能力与任务路由机制。该机制维护经证据支持的
+    model / product-surface capability，并允许保存带证据等级的 project-observed performance；每个正式任务开始时，
+    以“已登记模型默认可用、Human availability override 为账户级可用性权威输入”为前提，结合当前任务角色、
+    risk tier、task shape、required capabilities 与可用证据，选择最适合该任务的 model + surface + parameter profile。
+    路由只优化 task-model fit 与可靠完成，不优化 token、价格或额度利用率。
+
+  成功判据:
+    - 描述: 模型路由作为独立全局机制存在；workflow 只调用，不复制模型目录、路由规则或活动数据。
+      可观察: true
+    - 描述: 每次路由输出 role、risk tier、task shape、required capabilities、Human availability override、selected surface/model、parameter profile、routing basis 与限制；路由不改变 Human authority。
+      可观察: true
+    - 描述: 已登记模型默认 available；仅 Human 明确 unavailable 时排除，Human 明确恢复后重新 available；不自动读取个人账户额度。
+      可观察: true
+    - 描述: capability profile 与 current Human availability 分层；稳定事实带 source/ref、verified_at、invalidation condition。
+      可观察: true
+    - 描述: capability profile 覆盖 routing 所需的 context、reasoning controls、agent/tool、coding、research、multimodal/vision、速度/延迟、surface 参数与限制；未知项保持 unknown。
+      可观察: true
+    - 描述: deep research 覆盖 ChatGPT Plus web、Codex Desktop、Claude Pro/Claude Code Desktop、Gemini Pro web、Antigravity；Claude Code CLI deferred；API capability 不自动等同产品 surface capability。
+      可观察: true
+    - 描述: Antigravity 中 Gemini 3.1 Pro、Gemini 3.6 Flash、Opus 4.6 的身份、surface、参数与官方能力按 evidence 记录；不能验证的 label 不补猜。
+      可观察: true
+    - 描述: vendor evidence 与 project-observed evidence 分栏；project evidence 标注 validity/confidence；隔离失败、自评或失效试验只能作为 diagnostic，不能升级成正式 qualification 或精确任务上限。
+      可观察: true
+    - 描述: 至少一轮 blind independent deep research 完成，之后逐 claim reconciliation，冲突按来源强度解决而不是投票。
+      可观察: true
+    - 描述: routing 不建立 token/cost 优化、额度库存经济、自动 fallback 链或 quota watcher；首选模型 unavailable 时只在剩余候选中重新做 task-fit routing。
+      可观察: true
+    - 描述: 最终设计与 workflow、context_management、未来 role mechanism 模块化分工；model-routing 只负责模型/surface/参数选择。
+      可观察: true
+    - 描述: 开发入口继续承载 repository bootstrap、Git/publication/evidence 等稳定纪律；独立机制正文不在入口或 workflow 中重复复制，只保留稳定约束和 pointer。
+      可观察: true
+
+  边界:
+    - Antigravity formal qualification 已由 Human 于 2026-08-11 明确关闭，不再是本任务完成条件。
+    - 已产生的 Antigravity v1/v2 结果只可作为 diagnostic，不声称正式 qualification 或精确任务上限。
+    - 不购买、升级、取消订阅；不读取、保存或回显 token、cookie、credential、key、.env 或其他账户秘密。
+    - Claude Code CLI 不启用、不安装、不配置。
+    - 不建设 quota/availability crawler、watcher、scheduler、账号切换系统或 token/cost scorer。
+    - 不在本任务中重构 workflow、role、context、single-window/task-envelope 或 long-running-task mechanism；仅定义接口边界。
+    - canonical implementation 仍需 Stage 3 之后的 Human implementation-boundary gate。
+
+  约束:
+    - 跨阶段/跨任务复用能力优先形成 `03_mechanisms/**` 独立全局机制，workflow 通过 pointer/contract 调用。
+    - `01_workflow/**` 只负责阶段顺序、输入输出、失效回退和机制调用时点。
+    - 现有 context_management 负责上下文隔离；未来 role mechanism 负责角色；本机制不复制二者职责。
+    - Human 是个人账户当前可用性的权威输入；默认 available，明确 unavailable 才排除。
+    - 路由以任务质量/可靠完成为核心，不以最便宜、token 最少或额度保存为目标。
+    - provider 技术事实优先一手资料；历史印象或失效测试只可形成低置信 diagnostic。
+    - 独立模型间继续 Human-triggered / Human-relayed，不新增自动跨模型通信。
+
+  术语:
+    - 词: 全局模型能力与任务路由机制
+      含义: repository-wide 独立机制；维护 model/surface capability 与证据分级项目观察，并按 task/role/risk + Human availability 输出 model + surface + parameter profile。
+      别名: [模型路由机制, model routing mechanism]
+    - 词: product surface
+      含义: 实际承载模型的产品/客户端，例如 ChatGPT web、Codex Desktop、Claude Code Desktop、Gemini web、Antigravity。
+      别名: [surface, 产品面]
+    - 词: capability profile
+      含义: 带来源、验证时间和失效条件的模型/产品能力描述，不代表当前 Human 账户一定可用。
+      别名: [能力档案]
+    - 词: Human availability override
+      含义: 当前任务账户级可用性输入；默认 available，Human 明确 unavailable 才排除，明确恢复后重新加入。
+      别名: [availability override]
+    - 词: parameter profile
+      含义: 当前 surface 实际支持且适合当前任务的 reasoning/mode/tool/agent 参数组合。
+      别名: [参数配置]
+    - 词: project-observed performance
+      含义: 项目真实/冻结任务观察；必须携带 evidence validity/confidence，无效隔离、自评或历史印象只能作为 diagnostic。
+      别名: [项目实测表现, project evidence]
+    - 词: model qualification
+      含义: 可选未来证据机制；本任务不再要求完成。
+      别名: [模型资格测试]
+
+  关联领域:
+    - 领域: LLM provider / product capability documentation
+      为什么相关: 核实模型身份、surface、参数、context 与工具能力。
+    - 领域: modular system architecture
+      为什么相关: 模型路由、角色、上下文和任务治理必须低耦合。
+    - 领域: workflow orchestration
+      为什么相关: workflow 调用路由机制但不承载机制正文。
+    - 领域: human-in-the-loop availability control
+      为什么相关: Human 负责账户当前可用性 override。
+    - 领域: evidence provenance / freshness
+      为什么相关: 模型与产品能力变化快，必须记录来源、时间、失效条件和证据等级。
+    - 领域: experimental validity
+      为什么相关: 未来若做 qualification，必须防止 evaluator/hidden state 泄漏和自评。
+
+  假设:
+    - 假设: model routing 是跨阶段/跨任务复用能力，应形成独立全局机制。
+      如果不成立会怎样: Stage 3 必须给出更强反证，否则不内嵌 workflow。
+    - 假设: 开发入口可逐步变薄，保留稳定纪律并 pointer 到独立 role/model/task mechanisms。
+      如果不成立会怎样: 后续任务应证明保留现有单一 canonical 更合适。
+    - 假设: long-running objective closure 更接近独立 task-envelope，而不是 model-routing 职责。
+      如果不成立会怎样: 留给后续第 4 任务裁决。
+    - 假设: Antigravity 历史返工印象与当前 v1/v2 失效试验不足以形成精确 routing boundary。
+      如果不成立会怎样: 只有未来获得方法有效的独立证据后才允许升级 route confidence。
+
+  未解歧义:
+    - 歧义: 各产品 surface 在未来任务时点的实际可选模型会变化。
+      为何未解: 这是设计上预期的动态账户状态，由 Human task-time observation 解决。
+      影响: 中
+      阻塞范围: []
+    - 歧义: Antigravity 各模型在本项目复杂任务上的精确可靠上限/下限是什么？
+      为何未解: Human 已关闭 formal qualification；现有试验仅 diagnostic。
+      影响: 中
+      阻塞范围: []
+    - 歧义: 最终 model-routing global mechanism 的最小 canonical contract/data shape，以及现有 §7.1 哪些内容应保留或迁出？
+      为何未解: 由 Stage 3 使用 A v3 与已接受 evidence 推导。
+      影响: 高
+      阻塞范围: [03_结果建模]
+
+validation_notes:
+  schema_slots_present: [目标, 成功判据, 边界, 约束, 术语, 关联领域, 假设, 未解歧义]
+  Human_scope_change_applied: true
+  Antigravity_formal_qualification_required: false
+  stage_03_unblocked_after_stage_02_scope_closure: true
+  canonical_design_not_precommitted: true
