@@ -1,0 +1,484 @@
+schema_version: citystate.workflow.stage_artifact.v1
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+stage_id: workflow_stage_07_test_execution
+artifact_kind: verification_package
+artifact_version: 2
+status: complete
+supersedes: 07_测试执行/07_blocking_review_v1.yml
+
+input_refs:
+  dispatch:
+    path: 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/07_测试执行/Stage07_最终独立复核派单_v2.md
+    sha256: a174cb6d08e8bbae6f70143c2ca755f7bd239fff39b10674eeafafea08a37cd5
+  workflow_stage_01_requirement:
+    path: 01_需求建模/requirement/A_需求建模_v3.yml
+    sha256: 09605f2cb2ce75bec8b7d96997357f34b9ec065787750cb7b935ff14872e2434
+  workflow_stage_02_evidence:
+    path: 02_信息收集与提炼/Stage02_证据结论_v2.yml
+    sha256: 0206000d2fd0882aa136a679364e43a02fdcbad3f8b3201c1fa77380a2e3f010
+  workflow_stage_03_result_modeling:
+    path: 03_结果建模/B_结果模型_v1.yml
+    sha256: 263ee6dec1eabe91e1c9cf0b1637e50cea65f753c4f2c39a64e78047b0d16368
+  workflow_stage_04_test_generation:
+    tests_path: 04_测试生成/04_tests.yml
+    tests_sha256: 16c737abde6e13c420c5468a0db322f05864a6a418891f6a9f41dfac6dcc2573
+    freeze_receipt_path: 04_测试生成/freeze_receipt_v3.yml
+    freeze_receipt_sha256: 2c824d7eb9a88906b5c45316e74656a033df00a344ab8d2c0a64efd906fe1e50
+    harness_path: 04_测试生成/实现/verify_stage04_acceptance.py
+    harness_sha256: 33469d20236e773ac3268e32da83d1a48b562fe629c34b2ec62ead926b31b3b8
+  workflow_stage_05_step_decomposition:
+    path: 05_步骤拆分/05_steps_v2.yml
+    sha256: 5e33c104c81de3e429c8a26adfb047057a16515ca5192a604aca0a896260bd86
+  workflow_stage_06_execution:
+    executor_handoff_path: 06_执行/Stage06_定点修正执行证据_v2.yml
+    executor_handoff_sha256: 5d03930d0c141c6b60fc59965d2eb4a73124d528b7f895d14cd4ba95c2274c7b
+    adjudication_path: 06_执行/Stage06定点修正候选接收裁决_v2.yml
+    adjudication_sha256: 6f5d141401092977da60a59d9916e3c143a55e15594d6b9742e4797a77173600
+    treated_as: routing_and_handoff_pointer_only_never_as_proof
+  prior_blocking_review:
+    path: 07_测试执行/07_blocking_review_v1.yml
+    sha256: 990911447d2e4d84ba7c776e5e938ac8870debbfcff71a9a72022fdd1ba75fb2
+
+deliberation_receipt:
+  stage_profile: stage07_fresh_final_independent_review
+  session_class: fresh_session_no_prior_context_of_this_run
+  reviewer_provider: Anthropic
+  reviewer_model: Claude Opus 5
+  reviewer_surface: Claude Desktop Cowork
+  reasoning_setting: not_exposed
+  measurement_environment: Windows PowerShell, CPython 3.14 (x64), Desktop Commander shell
+  session_independence:
+    not_stage06_codex_session: true
+    not_original_F1_F2_F3_reviewer_session: true
+    not_stage04_narrow_correction_session: true
+    basis: >-
+      This session began with a repository OS bootstrap only and held no prior context
+      of this run; every artifact below was read for the first time in this session.
+      The claim is about this session's context, which the reviewer can assert
+      directly; it is not a claim about Human session-management outside it.
+  different_model_family_from_executor: true
+  different_measurement_tool_from_executor: true
+  independent_harness: 07_测试执行/独立测量脚本_v2.py
+  independent_harness_imports: [stdlib, pyyaml]
+  independent_harness_excludes:
+    - 04_测试生成/实现/verify_stage04_acceptance.py helpers
+    - 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py helpers
+  authority_effect: none
+
+physical_git_state_read_fresh_at_review_start:
+  remote: git@github.com:chris2gao/Cybernetic_City_State_OS_v2---core.git
+  remote_master_head: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+  remote_task_branch: dev/os-v2-global-model-capability-and-availability-routing-002
+  remote_task_branch_head: 35a2bc333de472d094ad7d62eac5a5134f5f3de1
+  quarantined_branch: dev/os-v2-global-model-capability-and-availability-routing-001
+  quarantined_branch_head: dfe553d35ea61aa31ebac32f7f107a9b402723eb
+  quarantined_branch_used: false
+  dispatch_pointer_sha_matched_physical_head: true
+  local_worktree_at_review_start: 17e24eee8bfc58dfeb5d1a54f1d57310a5b21850
+  local_worktree_action: fast_forward_only_to_35a2bc33_no_history_rewrite
+  master_is_ancestor_of_task_branch: true
+  master_modified_by_this_review: false
+
+primary_diff_scope:
+  method: git diff computed by the reviewer; completion-pointer changed_paths not used as substitute
+  initial_implementation_range: a97d32ddd24cc9a94aaedea8adb045d4cdf6308c..3e3b608ac2c265d6aa4eb31471e8f1eae05603a4
+  initial_implementation_files_changed: 11
+  correction_range: 5fee938ad24660269d76428398866b145bd9d622..150e800e683d69b31d1336d8a9c0ad6d21c90ff2
+  correction_files_changed: 7
+  correction_changed_paths:
+    - 01_os/02_boot/model_routing/启动清单_v1.yml
+    - 01_os/03_mechanisms/model_routing/README.md
+    - 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+    - 01_os/03_mechanisms/model_routing/来源索引_v1.yml
+    - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    - 01_os/05_registry/model_routing_v1.yml
+    - 01_os/06_execution/boot/model_routing/README.md
+  post_correction_range: 150e800e683d69b31d1336d8a9c0ad6d21c90ff2..35a2bc333de472d094ad7d62eac5a5134f5f3de1
+  post_correction_changed_paths:
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/06_执行/Stage06_定点修正执行证据_v2.yml
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/06_执行/Stage06定点修正候选接收裁决_v2.yml
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/07_测试执行/Stage07_最终独立复核派单_v2.md
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/08_结论/completion_pointer_v2.yml
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/run.yml
+  post_correction_canonical_mutation: none
+  canonical_surface_vs_master:
+    file_count: 11
+    paths:
+      - 01_os/02_boot/model_routing/启动清单_v1.yml
+      - 01_os/03_mechanisms/README.md
+      - 01_os/03_mechanisms/model_routing/README.md
+      - 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+      - 01_os/03_mechanisms/model_routing/来源索引_v1.yml
+      - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+      - 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+      - 01_os/03_mechanisms/model_routing/项目观察证据_v1.yml
+      - 01_os/05_registry/model_routing_v1.yml
+      - 01_os/06_execution/boot/model_routing/README.md
+      - 01_os/开发入口与单窗口任务规范_v1.md
+    inside_B_implementation_boundary: true
+    out_of_scope_paths: 0
+  publisher_authority_registry_touched: false
+  git_diff_check_initial_range: 0
+  git_diff_check_correction_range: 0
+  binary_artifacts_added: 0
+  personal_absolute_paths_or_secrets_in_canonical_delta: none
+
+frozen_package_reproduction:
+  artifact_version: 3
+  declared_test_count: 35
+  observed_test_count: 35
+  duplicate_test_ids: []
+  expected_normalized_digest: 848b691712166a968c821ad6e53cafaf477b86bf7b1d7773306ad4e6ebf3e48c
+  reviewer_recomputed_digest: 848b691712166a968c821ad6e53cafaf477b86bf7b1d7773306ad4e6ebf3e48c
+  digest_match: true
+  digest_recomputation_method: >-
+    Reviewer re-implemented the normalization declared in freeze_receipt_v3.yml —
+    sha256(yaml.safe_dump(payload.tests, allow_unicode=True, sort_keys=True, width=4096)
+    .encode('utf-8')) — in the reviewer's own harness, without calling the Stage 04
+    harness digest helper.
+  commands_actually_run:
+    - command: python 04_测试生成/实现/verify_stage04_acceptance.py package <run_root>
+      exit_code: 0
+      result: "PASS package: 35 frozen tests (positive=16 negative=9 boundary=10), digest=848b6917...e48c"
+    - command: python 04_测试生成/实现/verify_stage04_acceptance.py acceptance <repo_root>
+      exit_code: 0
+      result: 35/35 passed against the real working tree, not a fixture tree
+    - command: python 04_测试生成/实现/verify_stage04_acceptance.py selftest <repo_root>
+      exit_code: 0
+      result: "good fixture 35/35 green; mutations killed 36/36; boundary empty_tree ok; boundary mechanism_without_boot_or_registry ok"
+    - command: python 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py static <repo_root>
+      exit_code: 0
+      result: validation_passed
+    - command: git diff --check <initial implementation range>
+      exit_code: 0
+      result: no output
+    - command: git diff --check <correction range>
+      exit_code: 0
+      result: no output
+
+test_results:
+  total: 35
+  passed: 35
+  failed: 0
+  candidate_caused_failures: 0
+  target_tree: real repository working tree at 35a2bc333de472d094ad7d62eac5a5134f5f3de1
+  results:
+    MR-T01: pass
+    MR-T02: pass
+    MR-T03: pass
+    MR-T04: pass
+    MR-T05: pass
+    MR-T06: pass
+    MR-T07: pass
+    MR-T08: pass
+    MR-T09: pass
+    MR-T10: pass
+    MR-T11: pass
+    MR-T12: pass
+    MR-T13: pass
+    MR-T14: pass
+    MR-T15: pass
+    MR-T16: pass
+    MR-T17: pass
+    MR-T18: pass
+    MR-T19: pass
+    MR-T20: pass
+    MR-T21: pass
+    MR-T22: pass
+    MR-T23: pass
+    MR-T24: pass
+    MR-T25: pass
+    MR-T26: pass
+    MR-T27: pass
+    MR-T28: pass
+    MR-T29: pass
+    MR-T30: pass
+    MR-T31: pass
+    MR-T32: pass
+    MR-T33: pass
+    MR-T34: pass
+    MR-T35: pass
+  mutation_kill: 36/36 reported by the Stage 04 selftest and treated as executor-side evidence only
+
+independent_measurement:
+  harness: 07_测试执行/独立测量脚本_v2.py
+  output: 07_测试执行/独立测量输出_v2.json
+  acceptance_probe_script: 07_测试执行/独立验收探针_v2.ps1
+  acceptance_probe_output: 07_测试执行/独立验收探针输出_v2.txt
+  method: >-
+    Each probe copies the canonical mechanism, boot, loader and registry surfaces into a
+    fresh temporary tree, applies one reviewer-authored defect, and runs the validator
+    declared by the boot manifest. The unmutated control copy must stay green so a red
+    result cannot come from the copy itself.
+  control:
+    probe: R00
+    exit_code: 0
+    verdict: control green — the copied tree validates before mutation
+  required_defect_classes:
+    - probe: R01
+      defect_class: registered entry with a bogus source ref
+      exit_code: 2
+      validator_message: "validation_rejected:source_ref_unresolvable:('chatgpt_web','GPT-5.6 Sol'):REVIEWER_BOGUS_SRC"
+      verdict: fail_closed
+    - probe: R02
+      defect_class: unregistered entry with a bogus source ref
+      exit_code: 2
+      validator_message: "validation_rejected:source_ref_unresolvable:('claude_code_desktop','Claude Opus 4.8'):REVIEWER_BOGUS_SRC"
+      verdict: fail_closed
+    - probe: R02b
+      defect_class: unregistered entry with bogus surface_exposure_evidence
+      exit_code: 2
+      verdict: fail_closed
+    - probe: R03
+      defect_class: registry path pointing at a nonexistent object
+      exit_code: 2
+      validator_message: "validation_rejected:registry_path_missing:01_os/05_registry/model_routing_reviewer_absent_v9.yml"
+      verdict: fail_closed
+    - probe: R04
+      defect_class: registry coverage entry deleted
+      exit_code: 2
+      validator_message: "validation_rejected:registry_coverage_missing:01_os/03_mechanisms/model_routing/..."
+      verdict: fail_closed
+    - probe: R05a
+      defect_class: catalog_version drift between boot manifest and catalog
+      exit_code: 2
+      validator_message: "validation_rejected:catalog_version_mismatch:{'catalog': 1, 'boot': 2}"
+      verdict: fail_closed
+    - probe: R05b
+      defect_class: source_index_version drift
+      exit_code: 2
+      validator_message: "validation_rejected:source_index_version_mismatch:{'source_index': 1, 'boot': 7}"
+      verdict: fail_closed
+    - probe: R05c
+      defect_class: mechanism_version drift
+      exit_code: 2
+      validator_message: "validation_rejected:mechanism_version_mismatch:{...}"
+      verdict: fail_closed
+    - probe: R06a
+      defect_class: price_weight added to routing contract inputs
+      exit_code: 2
+      validator_message: "validation_rejected:economic_routing_semantics:inputs.price_weight"
+      verdict: fail_closed
+    - probe: R06b
+      defect_class: quota_balance scoring added to routing decision steps
+      exit_code: 2
+      validator_message: "validation_rejected:economic_routing_semantics:decision_steps.[0].score_by_quota_balance"
+      verdict: fail_closed
+    - probe: R06c
+      defect_class: cheapest-first preference added to routing outputs
+      exit_code: 2
+      validator_message: "validation_rejected:economic_routing_semantics:outputs.required.[9].cheapest_available_model"
+      verdict: fail_closed
+    - probe: R07
+      defect_class: required boot load-order pointer broken
+      exit_code: 2
+      validator_message: "validation_rejected:boot_pointer_broken:01_os/03_mechanisms/model_routing/不存在的目录_v9.yml"
+      verdict: fail_closed
+    - probe: R08a
+      defect_class: boot validator pointer broken
+      exit_code: 2
+      validator_message: "validation_rejected:boot_validator_pointer_invalid"
+      verdict: fail_closed
+    - probe: R08b
+      defect_class: catalog source-index pointer broken
+      exit_code: 2
+      validator_message: "validation_rejected:catalog_source_index_pointer_invalid"
+      verdict: fail_closed
+    - probe: R08c
+      defect_class: boot registry pointer broken
+      exit_code: 2
+      validator_message: "validation_rejected:boot_registry_pointer_invalid"
+      verdict: fail_closed
+  required_defect_classes_summary: 8 of 8 dispatch-listed classes fail closed with non-zero exit
+  residual_strength_probes:
+    - probe: X04
+      description: an antigravity diagnostic observation silently upgraded to formal
+      canonical_validator: rejected (antigravity_formal_claim_prohibited)
+    - probe: X05
+      description: the discovered Opus 4.8 candidate flipped to registered with no new evidence
+      canonical_validator: rejected (capabilities_missing)
+    - probe: X06
+      description: Opus 4.8 moved back onto antigravity — the original F1 shape
+      canonical_validator: passed
+      frozen_acceptance_package: failed MR-T30, acceptance exit 1
+      assessment: F1 regression is guarded by the frozen package, not by the canonical validator
+    - probe: X02
+      description: price_weight smuggled into a catalog entry instead of the routing contract
+      canonical_validator: passed
+      frozen_acceptance_package: failed MR-T25, acceptance exit 1
+      assessment: caught, but only by the frozen package
+    - probe: X03
+      description: registry collapsed into a single over-broad 01_os/** wildcard
+      canonical_validator: passed
+      frozen_acceptance_package: failed MR-T32, acceptance exit 1
+      assessment: no wildcard false green observed at package level
+    - probe: X01
+      description: a used source keeps its kind but its only locator becomes a nonexistent in-repo path
+      canonical_validator: passed
+      frozen_acceptance_package: passed 35/35, acceptance exit 0
+      assessment: not caught by either layer — recorded as non-blocking note N1
+  acceptance_probe_control:
+    probe: CTRL
+    description: unmutated full working-tree copy
+    exit_code: 0
+    failing_tests: none
+
+blocker_closure:
+  F1:
+    title: Opus 4.8 surface attribution
+    closed: true
+    reviewer_evidence:
+      - catalog entry is provider Anthropic, surface_id claude_code_desktop, model_label Claude Opus 4.8,
+        registered false, status discovered_unregistered_needs_Human_task_time_observation
+      - the only Anthropic entry on surface_id antigravity is Claude Opus 4.6, matching Stage 02 C07/C08
+      - source_refs are ANTH_CODE_MODELS, ANTH_CODE_USAGE, GEMINI_PASS — all Anthropic-Claude-Code or
+        independent-research identities, consistent with the Stage 02 corpus where every first-party
+        Opus 4.8 statement names the Anthropic Claude / Claude Code access surface
+      - B10 permits recording Opus 4.8 as discovered/unregistered pending Human task-time observation;
+        the entry does exactly that and does not enter the default-available set
+      - reviewer probe X06 restored the defective binding and turned MR-T30 red, so the guard is live
+  F2:
+    title: source resolution / evidence laundering
+    closed: true
+    reviewer_evidence:
+      - >-
+        source index is reachable from the declaration surface — it is item 5 of the boot manifest
+        load_order, the catalog's source_index_ref points at it, and the boot manifest names both
+        the canonical validator and the registry
+      - 10 distinct tokens collected from catalog source_refs and parameter_profiles
+        surface_exposure_evidence; 0 unresolved against the canonical index
+      - 0 tokens shaped like a Stage 02 claim id, and no C<nn>_ string occurs anywhere in the catalog
+        or the source index — the C08_Antigravity_Pro_access-as-source-id shape is absent
+      - GOOGLE_AG_PRICING is present as provider_first_party with url https://antigravity.google/pricing
+        and is cited by 3 catalog positions; the real provider source identity was restored, not deleted
+      - >-
+        all 10 locators are durable as written — 9 absolute https provider URLs plus one
+        content-addressed Human_upload_sha256 ref
+      - 0 unused source ids; the index is not padded
+      - the 10 shared records carry byte-equivalent kind, title and locator values to the Stage 02
+        source_registry, so this is a filtered copy that preserves source class and locator semantics,
+        not a mechanical flattening
+      - the four Stage 02 records excluded from the canonical index are A2, CHATGPT_PASS, GPT_WEB_FAILED
+        and GOOGLE_GEMINI_THINKING; the first three resolve into 01_os/_runs/** or a noncompliant attempt
+        and the fourth is uncited, so excluding them is what keeps the canonical mechanism from depending
+        on a path the startup rules forbid preloading
+    residual: see non_blocking_notes N1
+  F3:
+    title: B13 failure surfacing
+    closed: true
+    reviewer_evidence:
+      - all 8 dispatch-listed defect classes produce a non-zero exit from the boot-declared validator
+        under reviewer-authored probes; see independent_measurement.required_defect_classes
+      - the unmutated control copy validates green, so the red results are caused by the defects
+      - probes were constructed from the mechanism declaration surface, not by calling the Stage 04
+        selftest or reusing its mutation table
+    residual: see non_blocking_notes N1 and N2
+
+implementation_claims_vs_B_and_evidence:
+  B01_module_boundary: satisfied — 01_os/03_mechanisms/model_routing/ is the only mechanism body; the entry spec and workflow point at it
+  B02_minimal_canonical_composition: satisfied — README, contract, catalog, ledger, source index, validator, boot manifest, loader, registry; no crawler, watcher or scoring engine
+  B03_routing_input_contract: satisfied — required inputs are exactly task_id, role, risk_tier, task_shape, required_capabilities
+  B04_routing_output_contract: satisfied — all nine outputs present, authority_constant routing_only
+  B05_availability_rule: satisfied — registered_default available, override only by explicit Human, automatic_quota_probe false
+  B06_selection_procedure: satisfied — six ordered decision steps, no economic scoring, prohibited_routing_inputs enumerated
+  B07_surface_specific_parameters: satisfied — parameter profiles are surface-scoped and each carries surface_exposure_evidence
+  B08_catalog_evidence_and_freshness: satisfied — every entry carries source_refs, verified_at, invalidation_conditions, confidence
+  B09_project_evidence_separation: satisfied — ledger separate, all three observations diagnostic, validator rejects an antigravity formal claim
+  B10_initial_current_surface_set: satisfied — five surfaces registered as specified; Opus 4.8 recorded as discovered/unregistered on the Anthropic surface
+  B11_entry_spec_thinning: satisfied — §7.1 is now a stable preflight rule plus a mechanism pointer; the price table, per-model routing table and Gemini restriction are gone
+  B12_preserve_nonrouting_controls: satisfied — §8, §9, §11, the T3 blast-radius definition and the task-packet verification_profile fields are unchanged, and the publisher authority registry is untouched
+  B13_failure_surfacing: satisfied for every failure mode B13 enumerates; see F3 and note N1
+  A_criterion_coverage: all twelve A v3 成功判据 map to a satisfied B claim; see note N4 for the one reading worth recording
+
+upstream_invalidation: false
+completion: true
+verdict: PASS_WITH_NON_BLOCKING_NOTES
+accepted: true
+next_owner: Human
+completion_marker: stage07_final_independent_verification_complete_ready_for_Human_integration_gate
+
+payload:
+  reviewer_role: stage07_fresh_final_independent_reviewer
+  verdict: PASS_WITH_NON_BLOCKING_NOTES
+  accepted: true
+  test_results: see top-level test_results — 35/35 passed, 0 candidate-caused failures
+  implementation_claims: see top-level implementation_claims_vs_B_and_evidence — B01 through B13 all satisfied
+  upstream_invalidation: false
+  completion: true
+
+schema_conformance:
+  shape_note: >-
+    The detailed blocks are kept at the top level to match the shape already established by
+    07_blocking_review_v1.yml in this same run. The payload block above carries the six
+    payload_required_fields of 最小运行schema_v1.yml so the schema predicate is met without
+    duplicating the evidence twice.
+  note: >-
+    The Stage 07 minimal schema rule verdict_must_be_accepted is satisfied by
+    accepted: true. The dispatch defines the verdict vocabulary for this review as
+    PASS or PASS_WITH_NON_BLOCKING_NOTES, so the verdict field carries the dispatch
+    value and the schema predicate is carried by the adjacent accepted field rather
+    than being silently reworded.
+  reviewer_role_differs_from_executor_role: true
+  all_required_tests_passed: true
+
+non_blocking_notes:
+  - id: N1
+    title: source locator durability is checked for presence, not for reachability
+    observation: >-
+      validate_source_index requires a kind plus one non-empty locator among url, ref and path.
+      Reviewer probe X01 replaced a cited source's url with a path to a file that does not exist,
+      kept kind, and both the canonical validator and the full 35-test package stayed green.
+    current_impact: none — all 10 current locators are durable as written
+    why_not_blocking: >-
+      Neither A nor B requires locator reachability, and MR-T29 states in its own not_frozen clause
+      that it freezes the existence of a reachable resolution contract rather than the strength of
+      each locator. Treating this as a blocker would freeze a reviewer preference that no accepted
+      evidence supports, which is the failure mode this dispatch warns about.
+    suggested_follow_up: a later task may extend the source index contract to require that a path
+      locator resolves and that a url locator is absolute; that is a new requirement, not a fix
+  - id: N2
+    title: two guards live in the frozen package rather than in the canonical mechanism
+    observation: >-
+      Probes X06 (Opus 4.8 rebound to antigravity) and X02 (price_weight inside a catalog entry)
+      pass the canonical validator and are caught only by MR-T30 and MR-T25.
+    current_impact: none while the run evidence travels with the repository
+    why_not_blocking: >-
+      B13 enumerates what the validator must surface and neither evidence-conformance of a surface
+      attribution nor an economic key outside the routing contract is on that list. The division of
+      labour is deliberate and MR-T30 documents it.
+    suggested_follow_up: if the frozen package is ever retired, the MR-T30 unsupported-combination
+      table should move into the canonical mechanism first
+  - id: N3
+    title: the 2026-08-01 model-routing authorization_ref no longer appears in canonical text
+    observation: >-
+      §7.1 previously carried an authorization_ref recording the Human grant that superseded the
+      "Codex always uses GPT-5.4" default and the blanket Gemini suspension. The thinned §7.1 and
+      the new mechanism carry no equivalent record.
+    current_impact: >-
+      none for routing behaviour — the restrictions that ref authorized were themselves removed by
+      B11, so there is no surviving rule whose provenance is now unbacked
+    why_not_blocking: B11 explicitly designates the Gemini restriction and the price table as content
+      that stops being a long-term entry-spec fact; the ref remains in git history at d5aef4b
+  - id: N4
+    title: A criterion 2 is satisfied jointly by the input contract and routing_basis, not by output fields
+    observation: >-
+      A v3 criterion 2 reads as though role, risk tier, task shape and required capabilities are
+      emitted in the route record. The contract's required outputs do not name them; B04 resolved
+      the criterion that way and B's requirement_satisfaction maps criterion 2 to B03 plus B04.
+    current_impact: none — the inputs are fixed in the task packet's executor_profile and the
+      rationale travels in routing_basis
+    why_not_blocking: this is an accepted upstream modelling choice, not a candidate defect; it is
+      recorded so the reading is not lost rather than rediscovered as a finding later
+
+risks_not_covered_by_this_review:
+  - The route selection procedure was never executed end to end; no routing decision was produced,
+    so this review proves structural and evidence discipline, not routing quality.
+  - Provider URLs in the source index were not fetched. Their durability is judged from locator
+    shape, not from a live retrieval, and provider pages change without notice.
+  - Reproducibility across operating systems was not measured; every command ran on one Windows
+    workstation with CPython 3.14.
+  - MR-T20's byte-identity baseline for the publisher authority registry was verified only by
+    confirming the file is absent from the master..HEAD diff.
+  - No independent check of whether the Stage 02 corpus itself is accurate; the review takes the
+    Human-accepted Stage 02 conclusions as given and checks only conformance to them.
