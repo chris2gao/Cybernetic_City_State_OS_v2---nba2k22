@@ -1,0 +1,230 @@
+schema_version: citystate.result_model.B.v1
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+stage: 03_结果建模
+version: 1
+status: complete
+created_at: 2026-08-11
+
+inputs:
+  A: 01_需求建模/requirement/A_需求建模_v3.yml
+  A_confirmation: 01_需求建模/requirement/人类确认_v3.yml
+  stage02: 02_信息收集与提炼/Stage02_证据结论_v2.yml
+  reconciliation: 02_信息收集与提炼/证据对齐与冲突消解_v1.yml
+  mechanism_architecture_evidence:
+    - 01_os/03_mechanisms/README.md
+    - 01_os/03_mechanisms/context_management/README.md
+    - 01_os/05_registry/context_management_v1.yml
+    - 01_os/02_boot/context_management/启动清单_v1.yml
+  current_entry_spec: 01_os/开发入口与单窗口任务规范_v1.md
+
+method:
+  name: ACH_competing_hypotheses
+  direction: evidence_eliminates_inconsistent_B_candidates
+
+candidate_hypotheses:
+  H1_static_entry_table:
+    proposition: 把当前所有 provider/model/参数/路由继续完整写在开发入口 §7.1。
+    verdict: rejected
+    inconsistent_evidence: [C01_surface_is_first_class, C04_ChatGPT_Plus_current_control, C05_Codex_Plus_current_candidates, C06_Claude_Code_Pro_is_active_surface, C07_Antigravity_model_labels_verified, C09_surface_parameter_profile_required, C12_architecture_boundary]
+    reason: >-
+      模型与 surface 高频变化且不同 surface 参数不同；把活动目录继续放在稳定入口会重复产生 stale data，且违背跨阶段机制独立化。
+  H2_workflow_embedded_routing:
+    proposition: 把模型目录和路由规则直接写进七阶段 workflow。
+    verdict: rejected
+    inconsistent_evidence: [C12_architecture_boundary]
+    reason: model routing 被规划、研究、执行、审核等多个角色/阶段复用，不属于单一 workflow stage。
+  H3_global_model_routing_mechanism:
+    proposition: 建立独立 `03_mechanisms/model_routing/`，由入口/workflow/角色窗口按需加载。
+    verdict: selected
+    supporting_evidence: [C01_surface_is_first_class, C02_Human_availability_override, C03_routing_optimizes_fit_not_cost, C09_surface_parameter_profile_required, C12_architecture_boundary]
+  H4_automated_scoring_and_quota_scheduler:
+    proposition: 自动抓账户额度、价格和模型状态，计算综合分数并维护 fallback/库存。
+    verdict: rejected
+    inconsistent_evidence: [C02_Human_availability_override, C03_routing_optimizes_fit_not_cost]
+    reason: Human 已明确可用性 override，且路由不优化 cost/token/quota；该方案增加无需求复杂度。
+  H5_mandatory_project_benchmark_gate:
+    proposition: 每个模型必须先通过冻结资格测试才能进入 routing catalog。
+    verdict: rejected_for_current_task
+    inconsistent_evidence: [Human_scope_change_2026-08-11]
+    reason: Human 已关闭 formal qualification；失效试验仅保留 diagnostic，不阻塞机制建设。
+
+B:
+  result_id: global_model_routing_mechanism_v1
+
+  claims:
+    B01_module_boundary:
+      statement: >-
+        新增独立 `01_os/03_mechanisms/model_routing/` 作为 model/surface/parameter routing 的唯一机制正文；
+        workflow、开发入口、未来 role mechanism 只通过 pointer/contract 调用，不复制模型目录。
+      evidence_claim_ids: [C12_architecture_boundary]
+
+    B02_minimal_canonical_composition:
+      statement: >-
+        v1 最小 canonical 只包含机制 README、稳定 routing contract、活动 model/surface catalog、project-observation ledger、
+        一个结构 validator；并配套 boot manifest、execution loader pointer 与 registry。不要建设自动联网 crawler、quota watcher 或评分引擎。
+      evidence_claim_ids: [C01_surface_is_first_class, C02_Human_availability_override, C03_routing_optimizes_fit_not_cost, C12_architecture_boundary]
+      target_paths:
+        - 01_os/03_mechanisms/model_routing/README.md
+        - 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+        - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+        - 01_os/03_mechanisms/model_routing/项目观察证据_v1.yml
+        - 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+        - 01_os/02_boot/model_routing/启动清单_v1.yml
+        - 01_os/06_execution/boot/model_routing/README.md
+        - 01_os/05_registry/model_routing_v1.yml
+
+    B03_routing_input_contract:
+      statement: >-
+        路由输入必须是 task_id、role、risk_tier、task_shape、required_capabilities、Human availability override；
+        role 的语义由未来 role mechanism 提供，本机制只消费 role label/requirements，不定义角色所有权。
+      evidence_claim_ids: [C02_Human_availability_override, C12_architecture_boundary]
+
+    B04_routing_output_contract:
+      statement: >-
+        每次路由输出 provider、surface、model、parameter_profile、routing_basis、evidence_refs、limitations、availability_assumption、authority=routing_only；
+        输出不授予 publication、filesystem、security 或 Human-gated authority。
+      evidence_claim_ids: [C01_surface_is_first_class, C09_surface_parameter_profile_required, C12_architecture_boundary]
+
+    B05_availability_rule:
+      statement: >-
+        catalog 中 `registered: true` 的候选默认 available；Human 明确 unavailable 时仅对当前任务/持续期排除，明确恢复后重新加入。
+        不从静态 entitlement、余额或自动 API 推断 Human 当前账户状态。
+      evidence_claim_ids: [C02_Human_availability_override]
+
+    B06_selection_procedure:
+      statement: >-
+        路由按固定顺序执行：先应用 Human availability；再按 required capabilities/surface constraints 淘汰硬不匹配；
+        再根据 provider capability、surface harness、task shape、risk 与有效 project evidence 选择最强 task-fit；最后选择该 surface 已证实支持的参数。
+        不计算价格/token/quota 分数。若 project evidence 无效或缺失，只降低 confidence，不伪造精确 task boundary。
+      evidence_claim_ids: [C01_surface_is_first_class, C03_routing_optimizes_fit_not_cost, C09_surface_parameter_profile_required]
+
+    B07_surface_specific_parameters:
+      statement: >-
+        参数能力按 surface 记录；API reasoning/thinking 枚举只能作为 background capability，不能未经产品证据直接成为 Web/Desktop profile。
+      evidence_claim_ids: [C09_surface_parameter_profile_required]
+
+    B08_catalog_evidence_and_freshness:
+      statement: >-
+        每个 model/surface entry 至少带 provider、surface_id、model_label、registered、capability summary、parameter profiles、source_refs、verified_at、invalidation_conditions、confidence；
+        高时变产品事实失效后标 stale/needs_refresh，不静默继续当 current fact。
+      evidence_claim_ids: [C04_ChatGPT_Plus_current_control, C05_Codex_Plus_current_candidates, C06_Claude_Code_Pro_is_active_surface, C07_Antigravity_model_labels_verified, C08_Antigravity_Pro_access]
+
+    B09_project_evidence_separation:
+      statement: >-
+        project-observation ledger 与 vendor catalog 分离。每条 observation 标 validity=[formal|diagnostic|anecdotal]、confidence、source_ref、task_shape、observed_failure_or_strength；
+        diagnostic/anecdotal 只能影响 routing basis/confidence，不能成为 hard qualification boundary。
+      evidence_claim_ids: [Human_confirmed_A_v3]
+
+    B10_initial_current_surface_set:
+      statement: >-
+        v1 catalog 至少登记当前已证实/已声明的 surface：ChatGPT Plus Web / GPT-5.6 Sol；Codex Desktop / GPT-5.6 Sol/Terra/Luna；
+        Claude Code Desktop / Sonnet 5；Gemini Web / current product-level Pro/Flash labels；Antigravity / Gemini 3.6 Flash、Gemini 3.1 Pro、Claude Opus 4.6。
+        对 Anthropic Opus 4.8 等 entitlement 存在冲突的候选可记录为 discovered/unregistered，只有 Human task-time observation 后才进入默认 available 集。
+      evidence_claim_ids: [C04_ChatGPT_Plus_current_control, C05_Codex_Plus_current_candidates, C06_Claude_Code_Pro_is_active_surface, C07_Antigravity_model_labels_verified, C08_Antigravity_Pro_access]
+
+    B11_entry_spec_thinning:
+      statement: >-
+        `开发入口与单窗口任务规范_v1.md` §7.1 只保留稳定规则：每个正式任务必须执行 model-routing preflight；availability 由 Human override；
+        selected route 写入 executor_profile；routing_only 不授权；完整活动 catalog/参数/模型推荐全部 pointer 到 model_routing mechanism。
+        现有 price table、按型号硬编码路由和过时 Gemini 限定不再作为入口长期事实。
+      evidence_claim_ids: [C01_surface_is_first_class, C02_Human_availability_override, C03_routing_optimizes_fit_not_cost, C12_architecture_boundary]
+
+    B12_preserve_nonrouting_controls:
+      statement: >-
+        从 §7.1 迁出模型特定内容时，不削弱 §8 测试证据、§9 独立审核、T3 blast-radius、publisher authority、protected action 等既有控制。
+        原 Sol 专属“反博弈”内容中与通用证据诚实/独立复验重叠的控制由 §8/§9 继续承载，不在新 catalog 中复制。
+      evidence_claim_ids: [C12_architecture_boundary]
+
+    B13_failure_surfacing:
+      statement: >-
+        机制失败必须可见：validator 检查 schema、required source/freshness fields、duplicate surface/model keys、非法 cost/quota routing fields、
+        registered entry 缺参数/来源、以及 entry/boot/registry pointer 断裂；task dispatch receipt 记录 mechanism version 与 loaded catalog version。
+      evidence_claim_ids: [C12_architecture_boundary]
+      architecture_evidence: [01_os/03_mechanisms/README.md, 01_os/03_mechanisms/context_management/README.md, 01_os/05_registry/context_management_v1.yml]
+
+  routing_contract_v1:
+    inputs:
+      required: [task_id, role, risk_tier, task_shape, required_capabilities]
+      optional: [Human_unavailable_models, Human_restored_models, surface_constraints, project_evidence_refs]
+      availability_default: all_registered_candidates_available
+    decision_steps:
+      - apply_Human_availability_override
+      - eliminate_hard_capability_or_surface_mismatch
+      - assess_task_fit_using_vendor_surface_and_valid_project_evidence
+      - choose_best_fit_without_cost_or_quota_scoring
+      - choose_surface_supported_parameter_profile
+      - emit_route_with_evidence_and_limitations
+    outputs:
+      required: [provider, surface, model, parameter_profile, routing_basis, evidence_refs, limitations, availability_assumption, authority]
+      authority_constant: routing_only
+    failure_states:
+      - no_available_candidate_meets_hard_requirements
+      - selected_surface_parameter_not_evidence_supported
+      - required_catalog_entry_missing_or_stale_for_material_claim
+      - mechanism_or_registry_pointer_broken
+
+  initial_routing_guidance:
+    planning_architecture_deep_research:
+      preference: ChatGPT_Plus_Web__GPT-5.6-Sol__High
+      confidence: high
+      basis: provider positioning + current surface evidence
+    coding_implementation:
+      preference_order:
+        - Claude_Code_Desktop__current_Human_confirmed_best_model
+        - Codex_Desktop__GPT-5.6-Terra_or_Sol
+        - Antigravity__candidate_only_when_task_fit_is_credible
+      confidence: medium
+      note: Claude exact account model is task-time Human observation; no hard Antigravity qualification boundary exists.
+    independent_review:
+      rule: prefer_different_model_family_from_implementation
+      mechanism_boundary: reviewer-family independence belongs to review/role discipline; model_routing only chooses among candidates satisfying that supplied requirement.
+    deterministic_mechanical:
+      rule: choose fastest/reliable available candidate only when deterministic rules are fixed; do not infer authorization from model choice.
+    high_risk_or_security_sensitive:
+      rule: choose strongest available model/surface that satisfies task requirements; T3/protected-action gates remain unchanged.
+
+  requirement_satisfaction:
+    criterion_01_global_mechanism: [B01_module_boundary, B02_minimal_canonical_composition]
+    criterion_02_route_output: [B03_routing_input_contract, B04_routing_output_contract]
+    criterion_03_availability: [B05_availability_rule]
+    criterion_04_capability_vs_availability: [B08_catalog_evidence_and_freshness]
+    criterion_05_capability_profile: [B07_surface_specific_parameters, B08_catalog_evidence_and_freshness]
+    criterion_06_surface_research_scope: [B10_initial_current_surface_set]
+    criterion_07_Antigravity_identity: [B10_initial_current_surface_set]
+    criterion_08_vendor_vs_project_evidence: [B09_project_evidence_separation]
+    criterion_09_independent_research: [Stage02_证据结论_v2]
+    criterion_10_no_cost_quota_routing: [B06_selection_procedure]
+    criterion_11_modular_architecture: [B01_module_boundary, B12_preserve_nonrouting_controls]
+    criterion_12_entry_spec_no_duplicate_rules: [B11_entry_spec_thinning]
+
+  alternatives_rejected: [H1_static_entry_table, H2_workflow_embedded_routing, H4_automated_scoring_and_quota_scheduler, H5_mandatory_project_benchmark_gate]
+
+  implementation_boundary_candidate:
+    canonical_additions:
+      - 01_os/03_mechanisms/model_routing/**
+      - 01_os/02_boot/model_routing/**
+      - 01_os/06_execution/boot/model_routing/**
+      - 01_os/05_registry/model_routing_v1.yml
+    canonical_modifications:
+      - 01_os/开发入口与单窗口任务规范_v1.md
+      - 01_os/03_mechanisms/README.md
+    explicitly_not_in_this_task:
+      - 01_os/01_workflow/** semantic restructuring
+      - role mechanism implementation
+      - context_management redesign
+      - long-running/task-envelope mechanism
+      - Claude Code CLI enablement
+      - automated account/quota detection
+      - formal Antigravity qualification
+
+  stage04_handoff:
+    tests_must_be_generated_independently_from_B_author: true
+    test_focus:
+      - mechanism is self-contained and registry/boot pointers resolve
+      - static entry §7.1 no longer contains volatile price/model catalog duplication
+      - catalog preserves provider/surface distinction and freshness fields
+      - routing contract applies Human availability override and never cost/quota scores
+      - invalid diagnostic evidence cannot create hard qualification claim
+      - routing output authority remains routing_only
+      - existing nonrouting publication/security/review controls remain intact
