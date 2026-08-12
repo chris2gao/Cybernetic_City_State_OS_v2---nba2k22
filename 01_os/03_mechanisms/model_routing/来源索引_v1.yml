@@ -1,0 +1,59 @@
+schema_version: citystate.model_routing.source_index.v1
+mechanism_version: 1
+source_index_version: 1
+status: active
+resolution_contract:
+  token_scope: catalog_source_refs_and_surface_exposure_evidence
+  required_record_fields: [kind]
+  required_locator_any_of: [url, ref, path]
+  registered_current_fact_requires_external_source: true
+sources:
+  OAI_CHATGPT_56:
+    kind: provider_first_party
+    title: GPT-5.6 in ChatGPT
+    url: https://help.openai.com/en/articles/20001354-gpt-5-6-in-chatgpt
+    verified_at: '2026-08-11'
+  OAI_GPT56_RELEASE:
+    kind: provider_first_party
+    title: GPT-5.6 - Frontier intelligence that scales with your ambition
+    url: https://openai.com/index/gpt-5-6/
+    verified_at: '2026-08-11'
+  OAI_CODEX_APP:
+    kind: provider_first_party
+    title: Introducing the Codex app
+    url: https://openai.com/index/introducing-the-codex-app/
+    verified_at: '2026-08-11'
+  ANTH_CODE_MODELS:
+    kind: provider_first_party
+    title: Claude Code model configuration
+    url: https://support.claude.com/en/articles/11940350-claude-code-model-configuration
+    verified_at: '2026-08-11'
+  ANTH_PRO_CODE:
+    kind: provider_first_party
+    title: Use Claude Code with your Pro or Max plan
+    url: https://support.claude.com/en/articles/11145838-use-claude-code-with-your-pro-or-max-plan
+    verified_at: '2026-08-11'
+  ANTH_CODE_USAGE:
+    kind: provider_first_party
+    title: Models, usage, and limits in Claude Code
+    url: https://support.claude.com/en/articles/14552983-models-usage-and-limits-in-claude-code
+    verified_at: '2026-08-11'
+  GEMINI_PASS:
+    kind: independent_web_research
+    ref: Human_upload_sha256:a55c2a8125fa86cab1c2974a29a7d02c89a762b6d2a44fc431aeed3baa50bc60
+    verified_at: '2026-08-11'
+  GOOGLE_AG_MODELS:
+    kind: provider_first_party
+    title: Google Antigravity Models
+    url: https://antigravity.google/docs/models
+    verified_at: '2026-08-11'
+  GOOGLE_AG_PRICING:
+    kind: provider_first_party
+    title: Google Antigravity Pricing
+    url: https://antigravity.google/pricing
+    verified_at: '2026-08-11'
+  GOOGLE_AG_36:
+    kind: provider_first_party
+    title: Gemini 3.6 Flash in Google Antigravity
+    url: https://antigravity.google/blog/gemini-3-6-flash-in-google-antigravity
+    verified_at: '2026-08-11'

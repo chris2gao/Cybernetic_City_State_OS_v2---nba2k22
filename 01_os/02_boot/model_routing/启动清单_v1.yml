@@ -1,6 +1,7 @@
 schema_version: citystate.model_routing.boot_manifest.v1
 mechanism_version: 1
 catalog_version: 1
+source_index_version: 1
 failure_policy: fail_closed_on_missing_partial_stale_or_invalid
 load_order:
   - path: 01_os/03_mechanisms/model_routing/README.md
@@ -11,6 +12,8 @@ load_order:
     purpose: current evidence-backed model and product-surface facts
   - path: 01_os/03_mechanisms/model_routing/项目观察证据_v1.yml
     purpose: separately graded project observations
+  - path: 01_os/03_mechanisms/model_routing/来源索引_v1.yml
+    purpose: canonical resolution of catalog evidence tokens to auditable source identities
 validator: 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
 registry: 01_os/05_registry/model_routing_v1.yml
 invocation: explicit_Human_or_authorized_task_executor_only
@@ -19,6 +22,7 @@ automatic_quota_probe: false
 receipt_required:
   - mechanism_version
   - catalog_version
+  - source_index_version
   - loaded_paths
   - validator_exit_code
   - selected_route_executor_profile_ref

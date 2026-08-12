@@ -4,11 +4,11 @@
 
 1. 读取 `01_os/02_boot/model_routing/启动清单_v1.yml`；
 2. 读取 `01_os/05_registry/model_routing_v1.yml`；
-3. 严格按清单读取契约、活动目录和项目观察账本；
+3. 严格按清单读取契约、活动目录、canonical source index 和项目观察账本；
 4. 显式运行清单声明的 validator：
    `python 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py static .`；
-5. 将最终选择写入当前任务的 `executor_profile`，并记录机制版本、目录版本、实际读取路径与
-   validator 退出码。
+5. 将最终选择写入当前任务的 `executor_profile`，并记录机制版本、目录版本、source index
+   版本、实际读取路径与 validator 退出码。
 
 ## 失败行为
 

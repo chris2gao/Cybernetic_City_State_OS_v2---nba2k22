@@ -3,6 +3,7 @@ mechanism_version: 1
 catalog_version: 1
 status: active
 entitlement_is_account_availability: false
+source_index_ref: 01_os/03_mechanisms/model_routing/来源索引_v1.yml
 entries:
   - provider: OpenAI
     surface_id: chatgpt_web
@@ -201,7 +202,7 @@ entries:
         reasoning_levels: [Low, High]
         source_class: provider_product_documentation
         surface_exposure_evidence: [GOOGLE_AG_MODELS]
-    source_refs: [C08_Antigravity_Pro_access, GOOGLE_AG_MODELS]
+    source_refs: [GOOGLE_AG_MODELS, GOOGLE_AG_PRICING]
     verified_at: '2026-08-11'
     invalidation_conditions: [Google Antigravity model catalog or plan update]
     confidence: high
@@ -222,20 +223,20 @@ entries:
       - profile_id: antigravity_opus_4_6_thinking
         reasoning_levels: [Thinking]
         source_class: provider_product_documentation
-        surface_exposure_evidence: [C08_Antigravity_Pro_access, GOOGLE_AG_MODELS]
-    source_refs: [C08_Antigravity_Pro_access, GOOGLE_AG_MODELS]
+        surface_exposure_evidence: [GOOGLE_AG_MODELS, GOOGLE_AG_PRICING]
+    source_refs: [GOOGLE_AG_MODELS, GOOGLE_AG_PRICING]
     verified_at: '2026-08-11'
     invalidation_conditions: [Google Antigravity model catalog or plan update]
     confidence: high
 
   - provider: Anthropic
-    surface_id: antigravity
+    surface_id: claude_code_desktop
     model_label: Claude Opus 4.8
     registered: false
-    status: discovered_entitlement_conflict_needs_Human_task_time_observation
+    status: discovered_unregistered_needs_Human_task_time_observation
     capabilities: unknown
     parameter_profiles: []
-    source_refs: [GOOGLE_AG_MODELS, GEMINI_PASS]
+    source_refs: [ANTH_CODE_MODELS, ANTH_CODE_USAGE, GEMINI_PASS]
     verified_at: '2026-08-11'
-    invalidation_conditions: [Human task-time observation, Google Antigravity catalog update]
+    invalidation_conditions: [Anthropic model update, Human task-time model observation]
     confidence: low

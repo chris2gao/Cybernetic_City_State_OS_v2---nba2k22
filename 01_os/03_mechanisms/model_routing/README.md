@@ -9,6 +9,7 @@ workflow 只引用本机制，不复制活动目录或路由规则。
 - `路由契约_v1.yml`：稳定输入、输出、选择顺序与权限边界；
 - `模型与产品面目录_v1.yml`：带来源、新鲜度和 surface 参数证据的活动事实；
 - `项目观察证据_v1.yml`：与供应商目录分离、带有效性等级的项目观察；
+- `来源索引_v1.yml`：把目录中的 source token 解析到 kind 与可审计 locator；
 - `实现/verify_model_routing.py`：结构、引用、新鲜度和禁止项 validator。
 
 boot 清单位于 `../../02_boot/model_routing/启动清单_v1.yml`，执行 loader 位于
