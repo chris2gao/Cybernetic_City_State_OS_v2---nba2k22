@@ -1,0 +1,447 @@
+schema_version: citystate.stage07.blocking_review.v1
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+stage_id: workflow_stage_07_test_execution
+artifact_kind: blocking_review
+artifact_version: 1
+status: stage07_incomplete
+reviewed_at: '2026-08-11'
+
+review_verdict: FIX_REQUIRED
+
+reviewer:
+  surface: Claude Desktop — Cowork mode (Claude Agent SDK host)
+  model_ui_label: Claude Opus 5
+  reasoning_setting: not_exposed
+  session: new_independent_session
+  role: independent_stage07_reviewer
+  authority: review_only
+
+executor_separation:
+  stage06_executor: Codex Desktop / GPT-5.6 Sol / max
+  stage04_test_author_surface: Claude Desktop — Cowork mode / Claude Opus 5
+  reviewer_differs_from_executor_session: true
+  reviewer_differs_from_executor_model_family: true
+  reviewer_shares_family_with_stage04_test_author: true
+  reviewer_shares_session_with_stage04_test_author: false
+  mitigation: >-
+    Frozen tests were re-derived only by execution, never edited. Every blocking
+    finding below rests on a measurement independent of both the Stage 04 test
+    package and the Stage 06 validator.
+
+physical_baseline_fresh_read:
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  branch: dev/os-v2-global-model-capability-and-availability-routing-002
+  remote_branch_head_read_at_review_start: 96837f1e9f80035654aade5f725162a997e14ab6
+  dispatch_message_head: 96837f1e9f80035654aade5f725162a997e14ab6
+  dispatch_message_head_matches_remote: true
+  remote_master: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+  master_modified: false
+  branch_head_is_ancestor_of_master: false
+  primary_diff_base: a97d32ddd24cc9a94aaedea8adb045d4cdf6308c
+  primary_diff_head: 3e3b608ac2c265d6aa4eb31471e8f1eae05603a4
+  base_is_ancestor_of_branch_head: true
+  merge_commits_in_range: 0
+  quarantined_branch: dev/os-v2-global-model-capability-and-availability-routing-001
+  quarantined_head_observed: dfe553d35ea61aa31ebac32f7f107a9b402723eb
+  quarantined_head_is_ancestor_of_branch_head: false
+  quarantined_branch_checked_out_or_merged_by_reviewer: false
+  advance_since_dispatch_creation: >-
+    677a4ebb -> 3e52c2ad -> 4ebb7b35 -> 96837f1e, all Stage 07 dispatch and run
+    evidence only; no canonical mutation. Normal fast-forward, review continued.
+
+input_refs:
+  workflow_stage_02_evidence:
+    path: 02_信息收集与提炼/Stage02_证据结论_v2.yml
+    sha256: 0206000d2fd0882aa136a679364e43a02fdcbad3f8b3201c1fa77380a2e3f010
+  workflow_stage_02_reconciliation:
+    path: 02_信息收集与提炼/证据对齐与冲突消解_v1.yml
+    sha256: 933b0db81ee0a5c0cd4c185f1cc4287e63c163ea5abde8cc9268756a99e6a832
+  workflow_stage_03_result_modeling:
+    path: 03_结果建模/B_结果模型_v1.yml
+    sha256: 263ee6dec1eabe91e1c9cf0b1637e50cea65f753c4f2c39a64e78047b0d16368
+  workflow_stage_04_test_generation:
+    path: 04_测试生成/04_tests.yml
+    sha256: 83a600381a0d1f902036d232f42cf13211241b6d13bcd43ebedd0f8c51f25ee1
+  workflow_stage_04_freeze_receipt:
+    path: 04_测试生成/freeze_receipt_v2.yml
+    sha256: d970a2ae1fd99544b692e58dcb0240676b3ab9318fac2adea246d0e80d9f6e35
+  workflow_stage_04_verifier:
+    path: 04_测试生成/实现/verify_stage04_acceptance.py
+    sha256: 4d1b445776c3d50a12d31120db432aee77fb344185c6e84f365793b983e88803
+  workflow_stage_06_execution:
+    path: 06_执行/Stage06_执行证据_v1.yml
+    sha256: 9f66394032e4204c3393ac617a12a31e76d753893a4e7d4d0c63bedacf2c9a64
+  workflow_stage_06_adjudication:
+    path: 06_执行/Stage06候选接收裁决_v1.yml
+    sha256: 076897e533456eec164e3a58786074b63512ad19fa898f347897c37668152862
+  entry_specification_after_candidate:
+    path: 01_os/开发入口与单窗口任务规范_v1.md
+    sha256: a79a58181c4242d85bdeece9d1172b696503f74ce4f3f88efb3da5e9107aa68c
+
+reviewer_executed_machine_evidence:
+  note: >-
+    Every line below was executed by the reviewer in this session on branch head
+    96837f1e. Stage 06 self-reported values were not copied.
+  stage04_package:
+    command: python <run>/04_测试生成/实现/verify_stage04_acceptance.py package <run>
+    exit_code: 0
+    result: 28 frozen tests (positive=15 negative=8 boundary=5)
+    observed_digest: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+    digest_matches_dispatch_baseline: true
+  stage04_selftest:
+    command: python <run>/04_测试生成/实现/verify_stage04_acceptance.py selftest
+    exit_code: 0
+    positive_good_fixture: 28/28
+    mutations_killed: 27/27
+    boundary_probes: 2/2
+  stage04_acceptance:
+    command: python <run>/04_测试生成/实现/verify_stage04_acceptance.py acceptance <repo-root>
+    exit_code: 0
+    passed: 28
+    total: 28
+    failed_test_ids: []
+  mechanism_validator:
+    command: python 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py static <repo-root>
+    exit_code: 0
+    stdout: validation_passed
+  git_diff_check:
+    command: git diff --check a97d32d..3e3b608
+    exit_code: 0
+    output: empty
+  publisher_authority:
+    path: 01_os/05_registry/repository_publisher_authority_v1.yml
+    reviewer_computed_sha256: ae9abdf5d729550511de857511a73d36c53f5d52d76e9f57c77b23ad19c29c1a
+    frozen_baseline_in_stage04_verifier: ae9abdf5d729550511de857511a73d36c53f5d52d76e9f57c77b23ad19c29c1a
+    matches: true
+    changed_in_range_a97d32d_to_head: false
+  frozen_test_directory_immutability:
+    path: 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/04_测试生成/**
+    changed_files_in_range_a97d32d_to_head: 0
+    byte_identical: true
+  primary_diff_scope:
+    changed_path_count: 11
+    out_of_scope_paths: 0
+    all_paths_inside_human_stage06_boundary: true
+    boundary_ref: 06_执行/Stage06_Human实施边界授权_v1.yml#allowed_changed_paths
+
+independent_measurement_not_using_executor_tooling:
+  replay_script: 07_测试执行/独立测量脚本_v1.py
+  method: >-
+    Own duplicate-key-rejecting YAML loader, own reachability closure over the
+    boot manifest load surface, own hashing, own registry cross-check. Neither
+    verify_model_routing.py nor verify_stage04_acceptance.py is imported or called.
+  M1_strict_yaml_parse: all_five_mechanism_and_boot_and_registry_files_parse_ok
+  M2_source_ref_resolution_from_declared_load_surface:
+    tokens_examined: 10
+    defined_in_load_surface: 0
+    opaque_token_no_resolution_entry: 10
+    canonical_pointer_to_any_source_index: false
+    resolvable_only_inside_unregistered_run_evidence:
+      - OAI_CHATGPT_56
+      - OAI_GPT56_RELEASE
+      - OAI_CODEX_APP
+      - ANTH_PRO_CODE
+      - ANTH_CODE_MODELS
+      - ANTH_CODE_USAGE
+      - GOOGLE_AG_MODELS
+      - GOOGLE_AG_36
+      - GEMINI_PASS
+    resolvable_to_no_source_anywhere:
+      - C08_Antigravity_Pro_access
+  M3_registry_cross_check:
+    uncovered_mechanism_files: 0
+    registry_paths_missing_on_disk: 0
+    validator_reads_registry_entries: false
+    validator_checks_entry_spec_pointer: false
+  M4_entry_specification_residue:
+    points_at_mechanism: true
+    residual_price_tokens: 0
+    residual_hardcoded_model_labels: 0
+  M6_cost_quota_mentions_in_mechanism:
+    count: 2
+    both_are_prohibition_declarations: true
+
+blocking_findings:
+  - finding_id: F1_opus48_false_surface_and_source_attribution
+    attack_point: R7-P3
+    severity: blocking
+    location: 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml (last entry)
+    observed:
+      provider: Anthropic
+      surface_id: antigravity
+      model_label: Claude Opus 4.8
+      registered: false
+      source_refs: [GOOGLE_AG_MODELS, GEMINI_PASS]
+    evidence_against:
+      - ref: 02_信息收集与提炼/证据对齐与冲突消解_v1.yml#C07_Antigravity_model_labels_verified
+        says: Antigravity selector lists Gemini 3.6 Flash, Gemini 3.1 Pro, Claude Opus 4.6.
+      - ref: 02_信息收集与提炼/证据对齐与冲突消解_v1.yml#C08_Antigravity_Pro_access
+        says: Google AI Pro Antigravity models table lists Gemini 3.6 Flash, Gemini 3.1 Pro, Claude Sonnet/Opus 4.6.
+      - ref: 02_信息收集与提炼/DeepResearch_ChatGPT官方一手资料_v1.md lines 69,75,76,85,92
+        says: >-
+          Every first-party statement about Opus 4.8 concerns the Anthropic Claude /
+          Claude Code access surface. Line 92 states explicitly that Opus 4.8 is a
+          candidate in the Human's Claude Code Pro account pending task-time observation.
+    reviewer_measurement: >-
+      Repository-wide scan for "4.8": zero occurrences bind Opus 4.8 to Antigravity in
+      any Stage 02 evidence file. The only binding is the catalog entry itself.
+    why_blocking: >-
+      Neither cited source supports the claim. Both cited sources support Opus 4.6 on
+      that surface. registered:false records the entry as an unverified candidate; it
+      does not make a false surface binding acceptable, and the validator skips all
+      source checks for unregistered entries, so nothing surfaces the error later.
+      B08 requires source-backed entries and B10 places the entitlement-conflict Opus 4.8
+      candidate on the Anthropic account surface, not on Antigravity.
+    root_cause: implementation_defect_plus_stage04_test_gap
+    stage04_gap: >-
+      No frozen test asserts that a catalog entry's surface binding is supported by the
+      source it cites. MR-T09 checks provider/surface separation structurally only.
+    upstream_invalidation_required: false
+    suggested_fix_boundary:
+      - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    suggested_fix: >-
+      Rebind the Opus 4.8 entry to surface_id claude_code_desktop with the Anthropic
+      first-party refs, or delete the entry. Do not keep it on antigravity.
+
+  - finding_id: F2_source_refs_unresolvable_and_laundered_citation
+    attack_point: R7-P1
+    severity: blocking
+    location: 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml (all entries)
+    observed:
+      opaque_tokens_from_load_surface: 10
+      canonical_sources_block_present: false
+      canonical_pointer_to_source_index: false
+      tokens_resolving_to_no_source_anywhere: [C08_Antigravity_Pro_access]
+    reasoning:
+      - >-
+        The mechanism's declared load surface is its boot manifest load_order plus
+        validator, registry and loader README. None of those defines OAI_*, GOOGLE_*,
+        ANTH_* or GEMINI_PASS. A reader who obeys the boot manifest cannot resolve a
+        single source_ref.
+      - >-
+        Nine of the ten resolve only in 01_os/_runs/**/证据对齐与冲突消解_v1.yml.
+        That file is unregistered by 开发入口 §4 and forbidden from default preload by
+        §1.7 and AGENTS.md startup rule 9. A canonical mechanism whose evidence chain
+        terminates in a path the OS forbids preloading is not auditable from itself.
+      - >-
+        C08_Antigravity_Pro_access is worse: it is a Stage 02 *claim* ID, not a source
+        ID. It appears in the source_registry of no file. It is cited as both
+        source_refs and surface_exposure_evidence on two registered Antigravity entries.
+    laundering_trace:
+      ref: 06_执行/Stage06_执行证据_v1.yml#steps.S5.attempts[0]
+      executor_recorded: >-
+        "S2 catalog source identifier contained an economic-token substring even though
+        it was only an evidence pointer; remedy: replace the pointer with the accepted
+        Stage 02 claim identity and non-economic provider catalog pointer"
+      reviewer_reading: >-
+        MR-T25 measures by line-level token scan (04_tests.yml: 逐行扫描机制目录下
+        yml/md/py，命中价格/额度 token 且该行无否定标记即失败). The real first-party source
+        GOOGLE_AG_PRICING (antigravity.google/pricing, the actual origin of C08's
+        per-plan model table) contains the substring PRICING and tripped that scan.
+        The remedy deleted the primary-source citation and substituted a project claim
+        ID. GOOGLE_AG_PRICING is now absent from the canonical mechanism entirely.
+        MR-T25's own fails_when is "价格表从入口 §7.1 被搬进机制目录" — a source URL
+        citation is not a price table, so the test over-fired and the chosen remedy
+        traded evidence integrity for a green light. This is the failure mode the
+        dispatch names as evidence laundering / satisfying the validator rather than
+        the objective.
+    why_blocking: >-
+      B08 requires每个 entry 带 source_refs 且为 evidence-backed. MR-T10 only measures
+      非空. Field non-emptiness was accepted as source auditability, which the dispatch
+      explicitly forbids. The defect is the missing resolution entry point, not missing
+      evidence: the underlying Stage 02 evidence is intact and correct.
+    root_cause: implementation_defect_plus_stage04_test_gap
+    stage04_gap:
+      - MR-T10 measures field non-emptiness, not resolvability.
+      - MR-T25 is an over-broad lexical scan that cannot distinguish a source-ID citation from a routing field.
+    upstream_invalidation_required: false
+    upstream_note: >-
+      Stage 02 and Stage 03 remain valid. Only the canonical link to them is broken.
+    suggested_fix_boundary:
+      - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+      - 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+      - 04_测试生成 (only if Human reopens the frozen package)
+    suggested_fix: >-
+      Add a canonical sources: block to the catalog mapping every token to kind/title/
+      url/verified_at, restore GOOGLE_AG_PRICING as the first-party citation for the
+      Antigravity plan table, replace the C08 claim ID with real source IDs, and make
+      the validator fail closed when a source_ref or surface_exposure_evidence token is
+      not defined in that block. Re-freezing MR-T25 to exempt a sources: block is a
+      Human decision, not a reviewer one.
+
+  - finding_id: F3_validator_does_not_deliver_B13
+    attack_point: R7-P4
+    severity: blocking
+    location: 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+    b13_promise_vs_implementation:
+      schema_and_duplicate_keys: implemented
+      duplicate_surface_model_identity: implemented
+      required_source_and_freshness_fields: implemented_for_registered_entries_only
+      surface_specific_parameter_evidence: implemented_as_nonempty_only
+      illegal_cost_quota_routing_fields: not_implemented
+      entry_boot_registry_pointer_breakage: partially_implemented
+      registry_coverage: not_implemented
+      diagnostic_evidence_cannot_hard_qualify: implemented
+    concrete_defects:
+      - id: D1
+        detail: >-
+          validate_static loads 01_os/05_registry/model_routing_v1.yml and then reads
+          only mechanism_version from it. registry["entries"] is never touched. The
+          registry is a dead read: no registered path is checked for existence and no
+          mechanism file is checked for coverage. B13 names registry coverage and
+          pointer breakage explicitly. MR-T21/MR-T28 do check it, but a frozen run test
+          is not the mechanism's runtime failure surfacing.
+      - id: D2
+        detail: >-
+          No cost/price/quota field scan exists anywhere in the validator, although B13
+          names 非法 cost/quota routing fields as a validator responsibility. The only
+          enforcement is MR-T25, outside the mechanism.
+      - id: D3
+        detail: >-
+          Line 126-129: an entry with registered:false short-circuits after a status
+          non-emptiness check. source_refs, verified_at, confidence and capability shape
+          go entirely unvalidated. This is the exact hole F1 passed through; the Opus 4.8
+          entry also carries capabilities as the scalar string "unknown" rather than a
+          mapping, which would fail validation for any registered entry.
+      - id: D4
+        detail: >-
+          The entry specification's pointer into the mechanism is never validated, so
+          "entry/boot/registry pointer 断裂" is only two-thirds covered.
+      - id: D5
+        detail: >-
+          boot manifest catalog_version and catalog catalog_version are both asserted
+          equal to the literal 1 independently, never cross-checked against each other.
+          A future version bump on one side passes.
+    why_blocking: >-
+      B02 lists the validator as one of five canonical components and B13 makes it the
+      failure-surfacing organ of the mechanism. Exit 0 today proves the frozen tests'
+      literal, not B13's promise. The dispatch instructs that this situation be reported
+      as blocker or upstream/test gap rather than passed on 28/28.
+    root_cause: implementation_defect_plus_stage04_test_gap
+    upstream_invalidation_required: false
+    suggested_fix_boundary:
+      - 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+    suggested_fix: >-
+      Consume registry["entries"] and fail closed on uncovered mechanism files and
+      missing registered paths; add the cost/quota field scan; validate unregistered
+      entries' source and capability shape instead of skipping them; cross-check
+      catalog_version between boot manifest and catalog.
+
+non_blocking_findings:
+  - finding_id: N1_cowork_opus5_surface_out_of_scope
+    attack_point: R7-P2
+    verdict: out_of_declared_scope_record_as_followup_not_blocker
+    reasoning: >-
+      A v3 success criterion 6 names the researched surfaces as ChatGPT Plus web,
+      Codex Desktop, Claude Pro / Claude Code Desktop, Gemini Pro web and Antigravity,
+      with Claude Code CLI deferred. B10 registers exactly that set and MR-T15 measures
+      exactly those five surface_ids. Cowork is neither in A v3 nor excluded by it —
+      it was not yet an observed surface when A v3 was confirmed.
+    first_hand_observation: >-
+      This review is itself running on Claude Desktop — Cowork mode / Claude Opus 5,
+      and Stage 04's freeze receipt already recorded that surface. Its existence is
+      therefore established, not speculative.
+    why_not_blocking: >-
+      B10 claims the catalog registers the surfaces Stage 02 verified; it does not claim
+      the catalog enumerates every surface that exists. A later-appearing surface does
+      not make the B10 statement false, and treating it as a blocker would retroactively
+      widen a Human-confirmed scope.
+    followup: >-
+      A separate catalog-update task should register (claude_desktop_cowork, Claude Opus 5)
+      with its own source evidence and a reasoning_setting: not_exposed parameter profile.
+      Until then routing must not claim Cowork/Opus 5 as an available candidate.
+
+  - finding_id: N2_entry_thinning_is_clean
+    verdict: pass
+    detail: >-
+      Reviewer scan of the post-candidate entry specification found zero residual price
+      tokens and zero residual hardcoded model labels, and the pointer to
+      01_os/03_mechanisms/model_routing resolves. The §7.1 replacement is a single diff
+      hunk (-85/+26); §8, §9, §11, the T-tier table, the publisher/executor_profile
+      distinction and every protected-action control are byte-unchanged. B11 and B12 hold.
+
+  - finding_id: N3_gemini_scope_restriction_and_authorization_ref_now_live_nowhere
+    verdict: non_blocking_recommend_human_decision
+    detail: >-
+      The deleted §7.1 carried a Human authorization ref (immutable_ref …@d5aef4b) and a
+      per-model restriction stating that Gemini 3.1 Pro does not take architecture
+      selection, semantic adjudication, security review, irreversible operations, master
+      publication or final independent acceptance. B11 explicitly authorized removing the
+      stale Gemini limitation from the entry, so its removal is in scope, but no artifact
+      inherited the substance: the catalog carries no per-model role restriction and the
+      routing contract has no field for one.
+    why_not_blocking: B11 authorized the removal; §9 still carries reviewer independence.
+    followup: >-
+      Human should decide whether per-model role restriction belongs to the routing
+      mechanism now or waits for the future role mechanism.
+
+  - finding_id: N4_untracked_file_inside_run_evidence_area
+    verdict: informational_preexisting_not_reviewer_scope
+    path: 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/01_需求建模/requirement/独立DeepResearch任务包_v2_网页模型.md
+    detail: >-
+      Untracked research packet inside the run's canonical evidence area, pre-existing and
+      disclosed by Stage 06 as preserved and unstaged. Reviewer did not stage, commit or
+      delete it.
+
+b01_b13_adjudication:
+  B01_module_boundary: satisfied
+  B02_minimal_canonical_composition: satisfied_structurally_but_validator_component_underdelivers_see_F3
+  B03_routing_input_contract: satisfied
+  B04_routing_output_contract: satisfied
+  B05_availability_rule: satisfied
+  B06_selection_procedure: satisfied
+  B07_surface_specific_parameters: structurally_satisfied_but_evidence_tokens_unresolvable_see_F2
+  B08_catalog_evidence_and_freshness: NOT_satisfied_see_F1_F2
+  B09_project_evidence_separation: satisfied
+  B10_initial_current_surface_set: NOT_satisfied_see_F1
+  B11_entry_spec_thinning: satisfied
+  B12_preserve_nonrouting_controls: satisfied
+  B13_failure_surfacing: NOT_satisfied_see_F3
+
+semantic_audit_checklist:
+  workflow_does_not_duplicate_catalog: pass
+  availability_is_registered_default_plus_human_override: pass
+  route_authority_constant_routing_only: pass
+  api_capability_not_masquerading_as_web_desktop_parameter: pass
+  project_observation_separated_from_vendor_catalog: pass
+  antigravity_nonblind_runs_remain_diagnostic: pass
+  entry_7_1_thinned_without_residual_price_or_static_model_routing: pass
+  sections_8_9_11_T3_publisher_authority_not_weakened: pass
+  no_quota_watcher_crawler_scheduler_fixed_fallback: pass
+  no_master_publication: pass
+  source_attribution_correct: FAIL
+  evidence_laundering_absent: FAIL
+  validator_depth_matches_B13: FAIL
+
+upstream_invalidation:
+  invalidate_stage02: false
+  invalidate_stage03: false
+  invalidate_stage04: partial_test_gap_recorded_not_invalidated
+  rationale: >-
+    Stage 02 evidence and the Stage 03 result model are correct and sufficient; the
+    candidate misreads them. The Stage 04 package is internally sound (28 frozen tests,
+    27/27 mutations killed) but has two identified gaps — MR-T10 measures source-field
+    non-emptiness rather than resolvability, and MR-T25's lexical scan cannot distinguish
+    a source citation from a routing field. Whether to reopen the frozen package is a
+    Human decision under 开发入口 §11; the reviewer does not reopen it.
+
+correction_budget:
+  post_delivery_correction_rounds_used: 1
+  rounds_remaining_before_escalation: 1
+  note: 开发入口 §11 allows at most two post-delivery rounds carrying new evidence, hypothesis or remedy.
+
+reviewer_boundary_compliance:
+  canonical_files_modified: 0
+  run_yml_modified: false
+  completion_pointer_modified: false
+  stage_02_03_04_05_06_evidence_modified: false
+  frozen_tests_modified: false
+  master_written: false
+  quarantined_branch_touched: false
+  paths_written_by_reviewer:
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/07_测试执行/**
+
+stage07_status: incomplete
+marker: stage07_independent_verification_fix_required
+next_owner: Human
