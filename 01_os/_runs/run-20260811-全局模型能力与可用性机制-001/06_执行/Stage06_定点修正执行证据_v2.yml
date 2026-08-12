@@ -1,0 +1,165 @@
+schema_version: citystate.stage06.targeted_correction_execution_evidence.v2
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+stage_id: workflow_stage_06_execution
+correction_round: 1
+status: corrected_candidate_ready_for_fresh_stage07
+started_at: '2026-08-11'
+
+executor:
+  surface: Codex Desktop
+  model_ui_label: GPT-5.6 Sol
+  reasoning_setting: max
+  mode: targeted_correction
+  authority: routing_only
+
+physical_baseline:
+  source_branch: dev/os-v2-global-model-capability-and-availability-routing-002
+  source_head_fresh_remote: 5fee938ad24660269d76428398866b145bd9d622
+  source_head_local_after_fast_forward: 5fee938ad24660269d76428398866b145bd9d622
+  master_head_fresh_remote: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+  merge_base_with_master: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+  quarantined_branch: dev/os-v2-global-model-capability-and-availability-routing-001
+  quarantined_head_observed: dfe553d35ea61aa31ebac32f7f107a9b402723eb
+  quarantined_history_reused: false
+  preexisting_untracked_content_preserved: true
+  preexisting_untracked_content_note: >-
+    One user-owned research packet under this run and unrelated retained 08_os runtime
+    files predated this correction. They are not implementation inputs and will not be staged.
+
+frozen_baseline:
+  stage04_tree_object: d74be7c8d7a0456a4e866989faebb29a4d241276
+  artifact_version: 3
+  artifact_sha256: 16c737abde6e13c420c5468a0db322f05864a6a418891f6a9f41dfac6dcc2573
+  verifier_sha256: 33469d20236e773ac3268e32da83d1a48b562fe629c34b2ec62ead926b31b3b8
+  test_package_sha256: 848b691712166a968c821ad6e53cafaf477b86bf7b1d7773306ad4e6ebf3e48c
+  package:
+    exit_code: 0
+    result: 35 frozen tests; positive=16; negative=9; boundary=10
+  selftest:
+    first_invocation: environment_timeout_before_result
+    completed_invocation_exit_code: 0
+    positive_good_fixture: 35/35
+    active_mutations_killed: 36/36
+    boundary_probes: 2/2
+  acceptance_expect_red:
+    exit_code: 0
+    passed: 29
+    total: 35
+    red_test_ids: [MR-T10, MR-T29, MR-T30, MR-T31, MR-T32, MR-T34]
+  mechanism_validator_static_exit_code: 0
+  git_diff_check_exit_code: 0
+
+protected_byte_baselines:
+  A_v3_sha256: 09605f2cb2ce75bec8b7d96997357f34b9ec065787750cb7b935ff14872e2434
+  Stage02_conclusion_sha256: 0206000d2fd0882aa136a679364e43a02fdcbad3f8b3201c1fa77380a2e3f010
+  Stage02_reconciliation_sha256: 933b0db81ee0a5c0cd4c185f1cc4287e63c163ea5abde8cc9268756a99e6a832
+  B_v1_sha256: 263ee6dec1eabe91e1c9cf0b1637e50cea65f753c4f2c39a64e78047b0d16368
+  publisher_authority_sha256: ae9abdf5d729550511de857511a73d36c53f5d52d76e9f57c77b23ad19c29c1a
+
+remedy_mapping:
+  F1:
+    finding: unsupported antigravity plus Claude Opus 4.8 attribution
+    remedy: rebound the discovered unregistered Claude Opus 4.8 candidate to claude_code_desktop with resolvable Anthropic and independent source identities
+  F2:
+    finding: opaque and laundered source identities
+    remedy: added a boot-loaded canonical source index and restored GOOGLE_AG_PRICING plus other provider primary-source identities
+  F3:
+    finding: mechanism validator does not fulfill B13
+    remedy: validator now checks source resolution, registry existence and coverage, version bindings, economic routing positions, and declared pointers
+
+steps:
+  S1:
+    status: passed
+    attempts:
+      - attempt: 1
+        test_ids: [MR-T01, MR-T04, MR-T05, MR-T06, MR-T07, MR-T08, MR-T25, MR-T26]
+        passed: 8
+        total: 8
+        mutation: none
+  S2:
+    status: passed
+    attempts:
+      - attempt: 1
+        test_ids: [MR-T09, MR-T10, MR-T11, MR-T12, MR-T13, MR-T14, MR-T15, MR-T16, MR-T29, MR-T30]
+        passed: 10
+        total: 10
+        remedies:
+          F1: removed the optional evidence-contradicted antigravity plus Claude Opus 4.8 entry
+          F2: added a boot-loaded canonical source index resolving 10 tokens and restored GOOGLE_AG_PRICING as a provider-first-party identity
+  S3:
+    status: passed
+    attempts:
+      - attempt: 1
+        test_ids: [MR-T03, MR-T21, MR-T22, MR-T23, MR-T24, MR-T27, MR-T28, MR-T31, MR-T32, MR-T33, MR-T34, MR-T35]
+        passed: 12
+        total: 12
+        mechanism_validator_static_exit_code: 0
+        representative_negative_probes:
+          unresolvable_registered_and_unregistered_sources: nonzero
+          registry_missing_path_and_coverage_gap: nonzero
+          mechanism_and_catalog_version_drift: nonzero
+          illegal_economic_routing_fields: nonzero
+          load_order_and_registry_pointer_breakage: nonzero
+  S4:
+    status: passed
+    attempts:
+      - attempt: 1
+        test_ids: [MR-T02, MR-T17, MR-T18, MR-T19, MR-T20]
+        passed: 5
+        total: 5
+        mutation: none
+  S5:
+    status: passed
+    attempts:
+      - attempt: 1
+        acceptance: 35/35
+        package_exit_code: 0
+        selftest_exit_code: 0
+        good_fixture: 35/35
+        active_mutations_killed: 36/36
+        test_package_sha256: 848b691712166a968c821ad6e53cafaf477b86bf7b1d7773306ad4e6ebf3e48c
+        mechanism_validator_static_exit_code: 0
+        git_diff_check_exit_code: 0
+        stage04_tree_unchanged: true
+        protected_upstream_hashes_unchanged: true
+        publisher_authority_unchanged: true
+        binary_or_cache_artifacts: 0
+        personal_absolute_path_or_secret_pattern_matches: 0
+
+evidence_honesty:
+  independently_reproduced: false
+  note: >-
+    The correction executor is self-verifying implementation behavior. This evidence is
+    not final independent acceptance; fresh Stage 07 review remains required.
+
+closure:
+  candidate_base: 5fee938ad24660269d76428398866b145bd9d622
+  correction_implementation_commit: 150e800e683d69b31d1336d8a9c0ad6d21c90ff2
+  corrected_result_head: 150e800e683d69b31d1336d8a9c0ad6d21c90ff2
+  canonical_changed_path_count: 7
+  final_branch_changed_path_count_including_evidence_and_pointer: 9
+  out_of_scope_path_count: 0
+  canonical_changed_paths:
+    - 01_os/02_boot/model_routing/启动清单_v1.yml
+    - 01_os/03_mechanisms/model_routing/README.md
+    - 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+    - 01_os/03_mechanisms/model_routing/来源索引_v1.yml
+    - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    - 01_os/05_registry/model_routing_v1.yml
+    - 01_os/06_execution/boot/model_routing/README.md
+  evidence_paths:
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/06_执行/Stage06_定点修正执行证据_v2.yml
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/08_结论/completion_pointer_v2.yml
+  publication:
+    transport: local_git
+    hook_guard: passed
+    hook_path: .githooks
+    implementation_push_performed: true
+    implementation_remote_head_read_back: 150e800e683d69b31d1336d8a9c0ad6d21c90ff2
+    fast_forward_verified: true
+    force_push: false
+  master_head_after_implementation_push: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+  quarantined_head_after_implementation_push: dfe553d35ea61aa31ebac32f7f107a9b402723eb
+  unrelated_preexisting_untracked_content_preserved: true
+  marker: stage06_corrected_candidate_35_of_35_ready_for_fresh_stage07

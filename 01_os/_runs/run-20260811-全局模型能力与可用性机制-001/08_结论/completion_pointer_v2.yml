@@ -1,0 +1,63 @@
+completion_pointer:
+  packet_id: os-v2-global-model-capability-and-availability-routing-001
+  stage: workflow_stage_06_execution
+  correction_round: 1
+  status: corrected_candidate_ready_for_fresh_stage07
+  executor:
+    surface: Codex Desktop
+    model: GPT-5.6 Sol
+    reasoning_setting: max
+    mode: targeted_correction
+  source_branch: dev/os-v2-global-model-capability-and-availability-routing-002
+  source_base: 5fee938ad24660269d76428398866b145bd9d622
+  source_head: 150e800e683d69b31d1336d8a9c0ad6d21c90ff2
+  validation:
+    frozen_artifact_version: 3
+    frozen_test_count: 35
+    frozen_test_package_sha256: 848b691712166a968c821ad6e53cafaf477b86bf7b1d7773306ad4e6ebf3e48c
+    package: exit_0
+    selftest: exit_0
+    good_fixture: 35/35
+    active_mutations_killed: 36/36
+    acceptance: 35/35
+    mechanism_validator: exit_0
+    git_diff_check: exit_0
+    step_attempts:
+      S1: 1
+      S2: 1
+      S3: 1
+      S4: 1
+      S5: 1
+  correction:
+    F1: Claude Opus 4.8 is discovered/unregistered on claude_code_desktop, never antigravity
+    F2: boot-loaded canonical source index resolves catalog evidence tokens and preserves provider primary-source identities including GOOGLE_AG_PRICING
+    F3: mechanism validator fails closed on source, registry, version, routing-semantic and pointer defects
+  repository:
+    changed_paths:
+      - 01_os/02_boot/model_routing/启动清单_v1.yml
+      - 01_os/03_mechanisms/model_routing/README.md
+      - 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+      - 01_os/03_mechanisms/model_routing/来源索引_v1.yml
+      - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+      - 01_os/05_registry/model_routing_v1.yml
+      - 01_os/06_execution/boot/model_routing/README.md
+      - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/06_执行/Stage06_定点修正执行证据_v2.yml
+      - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/08_结论/completion_pointer_v2.yml
+    out_of_scope_paths: 0
+    stage04_v3_unchanged: true
+    A_v3_Stage02_B_v1_unchanged: true
+    publisher_authority_unchanged: true
+    master_modified: false
+    quarantined_branch_reused: false
+    task_scoped_tracked_worktree_clean: true
+    worktree_clean: false
+    worktree_clean_note: preexisting user-owned research packet and retained 08_os runtime files were preserved and excluded from both commits
+  publication:
+    transport: local_git
+    hook_guard: passed
+    implementation_resulting_remote_head: 150e800e683d69b31d1336d8a9c0ad6d21c90ff2
+    fast_forward_verified: true
+    force_push: false
+  evidence_ref: 06_执行/Stage06_定点修正执行证据_v2.yml
+  next_owner: fresh_stage07_independent_review
+  marker: stage06_corrected_candidate_35_of_35_ready_for_fresh_stage07
