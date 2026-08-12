@@ -1,0 +1,339 @@
+schema_version: citystate.stage04.freeze_receipt.v3
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+stage_id: workflow_stage_04_test_generation
+refrozen_at: '2026-08-11'
+frozen: true
+round: Human_gated_narrow_correction
+
+supersedes:
+  - path: 04_测试生成/freeze_receipt_v1.yml
+    sha256: f95619ff39a75444b3de76bb01b70b61cccac452b936afd42b35d6973a05775c
+    disposition: 保留原样不动，historical。
+  - path: 04_测试生成/freeze_receipt_v2.yml
+    sha256: d970a2ae1fd99544b692e58dcb0240676b3ab9318fac2adea246d0e80d9f6e35
+    disposition: >-
+      保留原样不动。v2 记录的是 artifact_version 2 的冻结事实，包括那时为真的 27/27
+      mutation kill。它不是错误记录，只是不再是当前有效冻结。
+
+refreeze_reason: stage07_confirmed_frozen_test_gap_and_overfire
+test_content_changed: true
+test_semantics_changed: true
+canonical_mutation: false
+implementation_mutation: false
+
+authority:
+  freeze_authorization_ref: 04_测试生成/Stage04_Human窄修正授权_v1.yml
+  authorization_sha256: 324f1e09e608a2bb7ded1f037503c4a1a3519806c3a4671487534caf0cdc7145
+  adjudication_ref: 07_测试执行/Stage07阻塞接收与回退裁决_v1.yml
+  adjudication_sha256: bbd7aeac99bd21324a496b80d55c981e0960045ec8815008e06e121694592a7c
+  trigger_review_ref: 07_测试执行/07_blocking_review_v1.yml
+  trigger_review_sha256: 990911447d2e4d84ba7c776e5e938ac8870debbfcff71a9a72022fdd1ba75fb2
+  role: stage04_independent_test_designer_correction_round
+  authority_effect: none
+  master_write_authorized: false
+
+execution_environment:
+  model: claude-opus-5
+  ui_label: Claude Desktop — Cowork mode (Claude Agent SDK host)
+  reasoning_setting: not_exposed
+  publication_transport: local_git
+  principal_binding: local_authenticated
+  hook_guard: passed
+  hook_guard_evidence: 'git config --get core.hooksPath -> .githooks'
+  python: 3.14.6
+  pyyaml: 6.0.3
+  os: Windows / PowerShell
+
+branch_state:
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  branch: dev/os-v2-global-model-capability-and-availability-routing-002
+  dispatch_declared_head: d52e7dfe3d727137e5a8e61203cf920ef50293b1
+  remote_head_read_fresh: d52e7dfe3d727137e5a8e61203cf920ef50293b1
+  dispatch_vs_measured: identical
+  local_advanced_by: fast_forward_only
+  remote_master_read_fresh: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+  master_modified: false
+  quarantined_branch: dev/os-v2-global-model-capability-and-availability-routing-001
+  quarantined_head_observed: dfe553d35ea61aa31ebac32f7f107a9b402723eb
+  quarantined_branch_reused: false
+
+test_package:
+  artifact: 04_测试生成/04_tests.yml
+  artifact_version: 3
+  artifact_sha256: 16c737abde6e13c420c5468a0db322f05864a6a418891f6a9f41dfac6dcc2573
+  test_package_sha256: 848b691712166a968c821ad6e53cafaf477b86bf7b1d7773306ad4e6ebf3e48c
+  old_test_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+  old_test_package_status: superseded_by_Human_gated_corrected_package
+  old_artifact_version: 2
+  old_artifact_sha256: 83a600381a0d1f902036d232f42cf13211241b6d13bcd43ebedd0f8c51f25ee1
+  normalization: >-
+    sha256(yaml.safe_dump(payload.tests, allow_unicode=True, sort_keys=True, width=4096).encode('utf-8'))
+  normalization_source_of_truth: >-
+    01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py::normalized_sha256
+  test_count: 35
+  test_count_before: 28
+  kinds: {positive: 16, negative: 9, boundary: 10}
+  kinds_before: {positive: 15, negative: 8, boundary: 5}
+
+corrected_test_ids:
+  - test_id: MR-T10
+    change: >-
+      加入 source token 可解析性，以及"至少一个 source 解析为外部来源 kind"。
+      原有 freshness 字段断言保留不变。
+    addresses: F2
+  - test_id: MR-T25
+    change: >-
+      从逐行词法扫描改为按位置的结构扫描 + 货币行文本扫描；evidence 子树与取值 false
+      的禁止声明豁免。
+    addresses: F2
+
+added_test_ids:
+  - test_id: MR-T29
+    kind: positive
+    addresses: F2
+  - test_id: MR-T30
+    kind: negative
+    addresses: F1
+  - test_id: MR-T31
+    kind: boundary
+    addresses: F2 + F3
+  - test_id: MR-T32
+    kind: boundary
+    addresses: F3
+  - test_id: MR-T33
+    kind: boundary
+    addresses: F3
+  - test_id: MR-T34
+    kind: boundary
+    addresses: F3
+  - test_id: MR-T35
+    kind: boundary
+    addresses: F3
+
+retained_unchanged_test_ids:
+  - MR-T01
+  - MR-T02
+  - MR-T03
+  - MR-T04
+  - MR-T05
+  - MR-T06
+  - MR-T07
+  - MR-T08
+  - MR-T09
+  - MR-T11
+  - MR-T12
+  - MR-T13
+  - MR-T14
+  - MR-T15
+  - MR-T16
+  - MR-T17
+  - MR-T18
+  - MR-T19
+  - MR-T20
+  - MR-T21
+  - MR-T22
+  - MR-T23
+  - MR-T24
+  - MR-T26
+  - MR-T27
+  - MR-T28
+
+deleted_test_ids: []
+deletion_policy_note: >-
+  没有删除任何测试。MR-T10 与 MR-T25 是加强而非替换，原有断言仍在，只是不再单独构成
+  通过条件。
+
+predecessor_binding:
+  - stage_id: workflow_stage_01_requirement_modeling
+    path: 01_需求建模/requirement/A_需求建模_v3.yml
+    artifact_version: 3
+    sha256: 09605f2cb2ce75bec8b7d96997357f34b9ec065787750cb7b935ff14872e2434
+    change: unchanged
+  - stage_id: workflow_stage_02_information_collection
+    path: 02_信息收集与提炼/Stage02_证据结论_v2.yml
+    artifact_version: 2
+    sha256: 0206000d2fd0882aa136a679364e43a02fdcbad3f8b3201c1fa77380a2e3f010
+    change: unchanged
+  - stage_id: workflow_stage_03_result_modeling
+    path: 03_结果建模/B_结果模型_v1.yml
+    artifact_version: 1
+    sha256: 263ee6dec1eabe91e1c9cf0b1637e50cea65f753c4f2c39a64e78047b0d16368
+    change: unchanged
+
+supporting_binding:
+  - path: 02_信息收集与提炼/证据对齐与冲突消解_v1.yml
+    sha256: 933b0db81ee0a5c0cd4c185f1cc4287e63c163ea5abde8cc9268756a99e6a832
+    change: unchanged
+  - path: 01_需求建模/requirement/人类确认_v3.yml
+    sha256: 1a1989f077c9288900215923b611b60bbb7a3f1af3ed9bf828e2672769eb2f17
+    change: unchanged
+
+changed_artifacts_this_round:
+  - path: 04_测试生成/04_tests.yml
+    sha256: 16c737abde6e13c420c5468a0db322f05864a6a418891f6a9f41dfac6dcc2573
+  - path: 04_测试生成/实现/verify_stage04_acceptance.py
+    sha256: 33469d20236e773ac3268e32da83d1a48b562fe629c34b2ec62ead926b31b3b8
+    sha256_before: 4d1b445776c3d50a12d31120db432aee77fb344185c6e84f365793b983e88803
+  - path: 04_测试生成/fixtures/good_tree/01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    sha256: b76032834d39bd3b290c6bf5699f180c24ce234f3512b208317504e6945348bc
+    change: 加入 catalog_version 与 sources 解析块；Opus 4.8 保持在 claude_code_desktop
+  - path: 04_测试生成/fixtures/good_tree/01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+    sha256: 1956c3bd63ca186b23c3cefc91b6f5aa2e256d88a23dc80651420379a8ca8f63
+    change: 实现 B13 的七项 fail-closed 义务，使 MR-T31–T35 的正例侧成立
+  - path: 04_测试生成/fixtures/good_tree/01_os/02_boot/model_routing/启动清单_v1.yml
+    sha256: 5ed0993e5e97c7390d65690d87fea7ff87641fe4c9b0dd89c035a1ba7a2cab2c
+    change: 加入 catalog_version 供交叉核验
+  - path: 04_测试生成/fixtures/mutations_v2.yml
+    sha256: 97b83f560687f3de3aee260b3c23178c90cb2624ad1cdc7a322aa91a24c996da
+    change: 新增；活动变异集合
+  - path: 04_测试生成/Stage04窄修正测试设计说明_v1.md
+    sha256: b633c6cfa559885afc1078a74f811b5fed4f0b1aca4a6eeb4378779cf90ab27a
+    change: 新增
+
+unchanged_history_artifacts:
+  - path: 04_测试生成/fixtures/mutations_v1.yml
+    sha256: 3898d42b954b31330693c97cf635aa83119d9993b088ce80e1120b9dc2f98d3f
+    disposition: retained_for_history_not_deleted
+  - path: 04_测试生成/测试设计说明_v1.md
+    sha256: 7656d298aeb39dbb3db7a43392c1769c6e5a89c523175f823844a57bcdb4636f
+    disposition: retained_unchanged_describes_artifact_version_2
+  - path: 04_测试生成/fixtures/good_tree/01_os/03_mechanisms/model_routing/路由契约_v1.yml
+    sha256: 150964b5ccbca243e2a46bca0dd42e10b96a6208e88f8f80944caec6a50639e5
+  - path: 04_测试生成/fixtures/good_tree/01_os/03_mechanisms/model_routing/项目观察证据_v1.yml
+    sha256: 91854e3e6d944c2267893eaa9712df24387c3a95abd825dae2fafd57ac0136c0
+  - path: 04_测试生成/fixtures/good_tree/01_os/03_mechanisms/model_routing/README.md
+    sha256: 0e4b265ca9bb00ed540c41f27d67e4468989e0cbca93717c4bce3ebc5ff5b0b4
+  - path: 04_测试生成/fixtures/good_tree/01_os/05_registry/model_routing_v1.yml
+    sha256: aee815629d37051816938fb27607e09af12c3ac85f4ebd31dbc7c8886db6f564
+  - path: 04_测试生成/fixtures/good_tree/01_os/06_execution/boot/model_routing/README.md
+    sha256: c79ee71c3f16e4b063540445ea8387a3465056d25fe4ec14c1ef60b41bd03a63
+  - path: 04_测试生成/fixtures/good_tree/01_os/开发入口与单窗口任务规范_v1.md
+    sha256: b26909f98fc753f6c90f437bdee137081169375cb862c5562e638e590eef34fb
+  - path: 04_测试生成/fixtures/good_tree/01_os/01_workflow/README.md
+    sha256: 9ee2e7b4bb3c8df3498b0d1669ce2cd06a1efda3c5ff648716608e835bdddd28
+
+frozen_contract_surface:
+  mechanism_dir: 01_os/03_mechanisms/model_routing
+  boot_manifest: 01_os/02_boot/model_routing/启动清单_v1.yml
+  registry: 01_os/05_registry/model_routing_v1.yml
+  execution_loader_dir: 01_os/06_execution/boot/model_routing
+  schema_version_tokens:
+    contract: citystate.model_routing.contract.v
+    catalog: citystate.model_routing.catalog.v
+    project_observation_ledger: citystate.model_routing.project_observation.v
+  publisher_authority_baseline_sha256: ae9abdf5d729550511de857511a73d36c53f5d52d76e9f57c77b23ad19c29c1a
+  filenames_inside_mechanism_dir_are_not_frozen: true
+  source_resolution_entry_point:
+    required: true
+    filename_frozen: false
+    accepted_keys: [sources, source_registry, source_index, 来源]
+    reachability: boot manifest load_order / validator / registry / loader dir, plus one explicit *_ref hop
+  change_from_v2: source_resolution_entry_point added
+
+validation_actually_run:
+  - command: 'verify_stage04_acceptance.py package <run_root>'
+    exit_code: 0
+    result: 35 frozen tests, positive=16 negative=9 boundary=10
+    digest: 848b691712166a968c821ad6e53cafaf477b86bf7b1d7773306ad4e6ebf3e48c
+    upstream_defect_remaining: false
+    note: >-
+      A v3 现在严格可解析，因此 v2 receipt 里记录过的 UPSTREAM_DEFECT 行不再出现。
+  - command: 'verify_stage04_acceptance.py selftest .'
+    exit_code: 0
+    positive_good_fixture: 35/35 green
+    negative_mutations_killed: 36/36
+    boundary_empty_tree: ok
+    boundary_empty_tree_vacuous_green: [MR-T02, MR-T23, MR-T25, MR-T30]
+    boundary_mechanism_without_boot_or_registry: ok
+    boundary_probe_expected_red_now_includes: [MR-T29, MR-T31, MR-T32, MR-T33, MR-T34, MR-T35]
+  - command: 'verify_stage04_acceptance.py acceptance . --expect-red'
+    exit_code: 0
+    result: 29/35 passed against the current Stage 06 candidate
+    red_now: [MR-T10, MR-T29, MR-T30, MR-T31, MR-T32, MR-T34]
+    red_now_count: 6
+  - command: 'python 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py static <good_tree>'
+    exit_code: 0
+    note: fixture 机制 validator 在未变异的 good fixture 上通过
+
+candidate_red_to_finding_mapping:
+  MR-T10: F2_source_refs_unresolvable_and_laundered_citation
+  MR-T29: F2_source_refs_unresolvable_and_laundered_citation
+  MR-T30: F1_opus48_false_surface_and_source_attribution
+  MR-T31: F2_and_F3_validator_skips_source_validation
+  MR-T32: F3_registry_is_a_dead_read
+  MR-T34: F3_no_cost_quota_scan_in_mechanism_validator
+  all_three_findings_have_at_least_one_red_test: true
+  refreeze_precondition_met: true
+  refreeze_precondition_text: >-
+    派单第 183 行：corrected package 若在当前 candidate 上仍全绿则不得冻结。
+    实测 29/35，六条红灯覆盖 F1/F2/F3，前提成立。
+
+honest_greens_on_candidate:
+  note: >-
+    Stage 07 F3 的 D4（入口 pointer 未校验）与 D5（catalog_version 未真正交叉绑定）因此
+    降级为非阻塞实现观察，不写进冻结条件。冻结实现形状而非行为，等于把审核者的偏好当需求。
+  entries:
+    - test_id: MR-T33
+      observed: pass
+      why: >-
+        candidate 的 validator 把 catalog_version 与 mechanism_version 都与字面量 1 比较，
+        因此两组漂移探针恰好被判红。这是较弱的实现，但它确实 fail closed。
+    - test_id: MR-T35
+      observed: pass
+      why: >-
+        candidate 检查 boot load_order 路径存在性，并把 boot.registry 与字面量路径比较，
+        因此两组指针探针都被判红。
+
+selftest_reverse_guarantees:
+  - claim: 含 pricing 字样的真实来源标识不再单独触发 no-cost-routing 测试
+    evidence: >-
+      good fixture 的 sources 块中保留 GOOGLE_AG_PRICING（kind: provider_first_party,
+      url: https://antigravity.google/pricing），fixture 35/35 全绿。
+  - claim: 真正的经济路由语义仍然失败
+    evidence: M31 把 selection_scoring.price_weight 加进路由契约，杀红 MR-T25（collateral MR-T08）。
+  - claim: registered:false 不豁免与证据矛盾的 attribution
+    evidence: M29 把 Opus 4.8 挪到 antigravity 并保持 registered:false，杀红 MR-T30。
+  - claim: 一手来源被项目 claim id 顶替会失败
+    evidence: M30 把 source_refs 缩成单个 C04 claim id，杀红 MR-T10。
+  - claim: unregistered entry 的 bogus source 会触发机制 validator 负例
+    evidence: MR-T31 的第二个探针要求 unregistered entry 的不可解析 source 也非零退出；M32 杀红它。
+  - claim: registry 断裂 / 版本漂移 / 指针漂移会触发机制 validator 负例
+    evidence: M33 杀红 MR-T32，M34 杀红 MR-T33，M36 杀红 MR-T35。
+
+evidence_honesty:
+  availability: proven — 上述命令在本会话实际运行并给出退出码
+  functional_correctness: >-
+    partial — 本轮证明的是修正后测试包自身的杀伤力与不误伤，不是机制正确性。
+    机制仍未满足新包（29/35）。
+  security_boundary: not_applicable — 未读取任何 credential/secret，未触网
+  repeatability: >-
+    proven — package/selftest/acceptance 三条命令确定性；digest 由 canonical
+    normalization 计算，可在新克隆上复现
+  integration: not_run — 机制尚未修正
+  independently_reproduced: false
+  independently_reproduced_note: >-
+    本包由本会话设计并自测，未经第二方复现。按 AGENT_WORKING_DISCIPLINE.md 第 5 节，
+    这一事实必须写进报告。最终独立审核仍须由新的独立会话执行。
+  role_overlap_disclosure: >-
+    派单第 7 行与 Human 本轮消息都要求新会话；实测本会话即产出 F1/F2/F3 的 Stage 07
+    复核会话（Stage07阻塞接收与回退裁决_v1.yml#review_input.reviewer 记录的正是它）。
+    矛盾已在开工前报告，Human 裁定"本会话继续，并如实披露角色重合"。
+    硬约束（与 Stage 06 Codex executor 不同会话、不同模型族）成立；
+    未覆盖风险：设计者与 finding 产出者同一，缓解手段是每条修正都锚回
+    A / Stage02 evidence / B claim mapping，见 Stage04窄修正测试设计说明_v1.md 第 0、2 节。
+  self_review_boundary_note: >-
+    v1/v2 的 04_tests.yml 作者同样是 Claude Opus 5 / Cowork 会话；该同族关系
+    freeze_receipt_v2.yml 已记录。本轮不因此自称独立。
+
+freeze_effect:
+  stage_05: >-
+    只能把 test_id 绑进 step，不得增删改任何一条测试。Stage 05 需重绑定：
+    测试集合由 28 条变为 35 条。
+  stage_06: 必须携带 test_package_sha256 = 848b6917…；任何漂移 fail closed
+  correction_route: >-
+    若再次发现测试本身写错，停止并升级 Human 重开 Stage 04，不得就地改绿。
+    按开发入口 §11，本任务的交付后修正预算已用 1 轮，剩 1 轮。
+
+marker: stage04_corrected_refreeze_ready_for_stage05_rebind
+next_owner: stage_05_step_decomposition_rebind_or_narrow_rederive

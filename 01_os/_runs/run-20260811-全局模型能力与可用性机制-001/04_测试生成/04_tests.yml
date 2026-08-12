@@ -2,7 +2,7 @@ schema_version: citystate.workflow.artifact.v1
 run_id: run-20260811-全局模型能力与可用性机制-001
 stage_id: workflow_stage_04_test_generation
 artifact_kind: frozen_test_package
-artifact_version: 2
+artifact_version: 3
 status: complete
 
 artifact_version_history:
@@ -17,6 +17,21 @@ artifact_version_history:
       payload.tests 逐对象不变，payload.test_package_sha256 不变。见
       04_测试生成/Stage04上游重绑定回执_v1.yml。
     test_content_changed: false
+  - artifact_version: 3
+    refrozen_at: '2026-08-11'
+    freeze_receipt: 04_测试生成/freeze_receipt_v3.yml
+    change: >-
+      Human-gated 窄修正。Stage 07 独立复核（07_测试执行/07_blocking_review_v1.yml）证明
+      v2 包不充分：MR-T10 只验 source_refs 非空而非可解析；MR-T25 的逐行词法扫描把
+      evidence source identifier 的 PRICING 子串误判为 cost-routing，实际诱导了一次
+      evidence laundering；没有测试能拦住与证据矛盾的 surface/model attribution；
+      机制自带 validator 对 B13 的多个负例不 fail closed。
+      本轮改写 MR-T10 与 MR-T25，新增 MR-T29–MR-T35，测试数 28 → 35。
+      旧 digest 72898d54… 由 Human-gated corrected package supersede。
+    test_content_changed: true
+    authorization_ref: 04_测试生成/Stage04_Human窄修正授权_v1.yml
+    adjudication_ref: 07_测试执行/Stage07阻塞接收与回退裁决_v1.yml
+    old_test_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
 
 input_refs:
   - stage_id: workflow_stage_01_requirement_modeling
@@ -69,6 +84,9 @@ credential_selection_record:
     - vendor 事实与 project 观察的分栏及证据等级
     - 入口 §7.1 变薄的同时 §8/§9/T3/publisher authority 不被削弱
     - 决策原语中不出现 cost/token/quota、自动 fallback 链与后台探测
+    - 来源可从机制自身声明的加载面解析，而不是只有非空字段（artifact_version 3 新增）
+    - 与已接受证据矛盾的 surface/model attribution 必须失败（artifact_version 3 新增）
+    - 机制自带 validator 对 B13 代表性负例 fail closed（artifact_version 3 新增）
   why_these: >-
     这八组属性是 Stage 02 已接受 claim 中"可被结构化观察"的那部分。A 的成功判据里凡是
     描述运行期行为却无法在静态树上判定的（例如"每次路由输出…"），一律降级为对契约声明的
@@ -83,11 +101,13 @@ credential_selection_record:
     完全相同的 yaml.safe_dump(sort_keys=True, width=4096) + SHA-256。
 
 method_qualification:
-  testability: 每条检查都能在任意树上运行并返回二值结果；good fixture 全绿、27 条 mutation 全部被杀。
-  peer_review: 待 Stage 04 之后的独立审核窗口执行；本包由非 B 作者、非实现方生成。
+  testability: 每条检查都能在任意树上运行并返回二值结果；good fixture 35/35 全绿、36 条 mutation 全部被杀。
+  peer_review: >-
+    v1/v2 未经外部复核即冻结，Stage 07 因此发现两处设计缺陷。v3 的修正方向由独立 Stage 07
+    复核证据驱动；最终复核仍待新的独立会话执行。
   known_error_rate: >-
-    以 mutation kill rate 量化：27/27（100%）。这是本套检查对已声明违规形态的杀伤率，
-    不等于对未预期违规形态的覆盖率。
+    以 mutation kill rate 量化：36/36（100%）。这是本套检查对已声明违规形态的杀伤率，
+    不等于对未预期违规形态的覆盖率——v2 的 27/27 曾同样是 100%，却漏掉了 Stage 07 找到的三类。
   operating_standard: 实现/verify_stage04_acceptance.py 的三个子命令（package / acceptance / selftest）。
   general_acceptance: 沿用本仓既有 validator 形态（communication_system、context_management、minimum_operational_loop）。
 
@@ -123,8 +143,9 @@ frozen_contract_surface:
 
 payload:
   frozen: true
-  freeze_authorization_ref: 04_测试生成/独立测试生成派单_v2.md@dev/os-v2-global-model-capability-and-availability-routing-002
-  test_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+  freeze_authorization_ref: 04_测试生成/Stage04_Human窄修正授权_v1.yml@dev/os-v2-global-model-capability-and-availability-routing-002
+  freeze_authorization_ref_v2: 04_测试生成/独立测试生成派单_v2.md@dev/os-v2-global-model-capability-and-availability-routing-002
+  test_package_sha256: 848b691712166a968c821ad6e53cafaf477b86bf7b1d7773306ad4e6ebf3e48c
   tests:
     - test_id: MR-T01
       kind: positive
@@ -252,11 +273,21 @@ payload:
       subject_result_claim_ids: [B08_catalog_evidence_and_freshness]
       evidence_claim_ids: [C04_ChatGPT_Plus_current_control, C05_Codex_Plus_current_candidates, C06_Claude_Code_Pro_is_active_surface, C07_Antigravity_model_labels_verified, C08_Antigravity_Pro_access]
       success_criterion_index: 4
-      measurement: 每条 registered entry 的 source_refs/verified_at/invalidation_conditions/confidence 非空，verified_at 为 ISO 日期。
-      pass_condition: 全部齐备。
+      measurement: >-
+        每条 registered entry 的 source_refs/verified_at/invalidation_conditions/confidence 非空，
+        verified_at 为 ISO 日期；并且 source_refs 的每个 token 都能在机制自身可达的
+        source-resolution index 中解析，其中至少一个解析结果的 kind 属于外部来源
+        （provider_first_party / independent_web_research / product_surface_documentation 等）。
+      pass_condition: 字段齐备、全部可解析，且不是只靠项目内部 claim id 支撑。
       can_fail: true
-      fails_when: 高时变产品事实以无来源、无时间的断言形式长期留存。
+      fails_when: >-
+        高时变产品事实以无来源、无时间的断言形式长期留存；或用非空 opaque token 冒充来源；
+        或把一手来源替换成项目自己的 claim id（Stage 07 F2 记录的实际形态）。
       baseline_2026_08_11: fail
+      corrected_in_artifact_version: 3
+      correction_reason: >-
+        v2 只测非空。Stage 07 实测：candidate 的 10 个 token 从机制声明加载面无一可解析，
+        其中 C08_Antigravity_Pro_access 是 claim id 而非 source id。
 
     - test_id: MR-T11
       kind: positive
@@ -442,15 +473,29 @@ payload:
 
     - test_id: MR-T25
       kind: negative
-      title: no cost, price or quota fields anywhere in the mechanism
+      title: no economic routing semantics in the mechanism; citations are not routing fields
       subject_result_claim_ids: [B06_selection_procedure, B02_minimal_canonical_composition]
-      evidence_claim_ids: [C03_routing_optimizes_fit_not_cost, R05]
+      evidence_claim_ids: [C03_routing_optimizes_fit_not_cost, R05, GOOGLE_AG_PRICING]
       success_criterion_index: 10
-      measurement: 逐行扫描机制目录下 yml/md/py，命中价格/额度 token 且该行无否定标记即失败。
-      pass_condition: 零命中。
+      measurement: >-
+        按位置而非按词法判定。结构扫描：机制目录下 YAML 文档中，出现在路由语义位置
+        （非 sources/source_registry/source_refs/surface_exposure_evidence/evidence_refs/
+        prohibited_routing_inputs/invalidation_conditions 子树，且取值不为 false）的
+        price/cost/quota/budget/balance 键或值即失败。文本扫描：md/py 中的货币行
+        （$ + 数字）或 per-1M-token 计价文本即失败。
+      pass_condition: 路由位置零命中，且无迁入的价目表。
       can_fail: true
-      fails_when: 价格表从入口 §7.1 被搬进机制目录，而不是被删除。
+      fails_when: >-
+        price_weight / quota_balance 之类进入路由输入、评分或决策步骤；
+        或价格表从入口 §7.1 被搬进机制目录。
+      does_not_fail_when: >-
+        source id、title、URL 或 evidence metadata 中出现 pricing/cost 字样。
+        一条名为 GOOGLE_AG_PRICING 的一手来源引用是 citation，不是 cost-routing logic。
       baseline_2026_08_11: pass_vacuously
+      corrected_in_artifact_version: 3
+      correction_reason: >-
+        v2 的逐行词法扫描对 GOOGLE_AG_PRICING 误伤，Stage 06 executor 为让灯变绿删掉了
+        真实一手来源（Stage 07 F2）。测试自身诱导了它本该防止的失真。
 
     - test_id: MR-T26
       kind: negative
@@ -491,6 +536,141 @@ payload:
         出现 05_registry/README.md 描述过的那类文件：确实被加载，但可达性分析看不见，
         于是在下一次清理中被正确地删掉。
       baseline_2026_08_11: fail
+
+    - test_id: MR-T29
+      kind: positive
+      title: every catalog source token resolves from the declared load surface
+      subject_result_claim_ids: [B08_catalog_evidence_and_freshness, B02_minimal_canonical_composition]
+      evidence_claim_ids: [C04_ChatGPT_Plus_current_control, C09_surface_parameter_profile_required, GOOGLE_AG_MODELS, GOOGLE_AG_PRICING]
+      success_criterion_index: 4
+      measurement: >-
+        从 boot 清单的 load_order、validator、registry 与 loader 目录构成的声明加载面出发
+        （允许一次显式 *_ref pointer 跳转），收集 sources/source_registry/source_index/来源
+        任一键下的解析表；catalog 中 source_refs 与 surface_exposure_evidence 的每个 token
+        必须在该表中解析到一条同时带 kind 与 url/ref/path 定位符的记录。
+      pass_condition: 解析表存在且全部 token 可解析。
+      can_fail: true
+      fails_when: >-
+        机制只写非空 opaque token，或把解析入口放在 01_os/_runs/** —— 那是开发入口 §4
+        不注册、§1.7 与 AGENTS.md 启动规则 9 禁止 default-preload 的路径，机制因此无法自证。
+      not_frozen: >-
+        解析表的文件名与具体位置不冻结。冻结的是"存在一个从声明加载面可达的解析契约"，
+        以及它的可验证行为。
+      baseline_2026_08_11: fail
+      added_in_artifact_version: 3
+
+    - test_id: MR-T30
+      kind: negative
+      title: no surface/model attribution that the accepted evidence contradicts
+      subject_result_claim_ids: [B10_initial_current_surface_set, B08_catalog_evidence_and_freshness]
+      evidence_claim_ids: [C07_Antigravity_model_labels_verified, C08_Antigravity_Pro_access, GOOGLE_AG_MODELS]
+      success_criterion_index: 7
+      measurement: >-
+        对照冻结的 known-unsupported 组合表判定。当前唯一条目：
+        surface_id=antigravity 且 model_label 匹配 /opus\s*4\.8/。
+        判定与 registered 取值无关。
+      pass_condition: catalog 不含任何该表中的组合。
+      can_fail: true
+      fails_when: >-
+        出现 C07/C08 正面否定的 surface/model 绑定。C07 与 C08 都把 Antigravity selector
+        列为 Gemini 3.6 Flash / Gemini 3.1 Pro / Claude (Sonnet|Opus) 4.6；Stage 02 语料中
+        每一条关于 Opus 4.8 的一手陈述都指向 Anthropic Claude / Claude Code surface。
+      registered_false_is_not_an_exemption: >-
+        registered:false 记录的是"未核实候选"，不是"允许写错 surface"。Stage 07 F1 正是
+        这一形态，且机制 validator 对 unregistered entry 直接跳过来源校验。
+      not_frozen: >-
+        只冻结当前证据集正面否定的组合，不假装测试程序能理解任意未来产品页语义。
+        将来若有证据支持该绑定，须重开 Stage 04 —— 这正是本条的用意。
+      baseline_2026_08_11: pass_vacuously
+      added_in_artifact_version: 3
+
+    - test_id: MR-T31
+      kind: boundary
+      title: mechanism validator fails closed on an unresolvable source ref
+      subject_result_claim_ids: [B13_failure_surfacing, B08_catalog_evidence_and_freshness]
+      evidence_claim_ids: [C12_architecture_boundary, C04_ChatGPT_Plus_current_control]
+      success_criterion_index: 1
+      measurement: >-
+        复制机制/boot/registry 到临时树，分两次探针：把某条 registered entry、以及某条
+        unregistered entry 的 source_refs 换成无法解析的 token，各运行一次 boot 清单声明的
+        validator（static 模式），两次都要求非零退出码。
+      pass_condition: 两次探针均非零退出。
+      can_fail: true
+      fails_when: >-
+        机制 validator 只检查字段存在性，或对 unregistered entry 直接跳过来源校验——
+        Stage 07 F3 实测的 D3 洞。
+      baseline_2026_08_11: fail
+      added_in_artifact_version: 3
+
+    - test_id: MR-T32
+      kind: boundary
+      title: mechanism validator fails closed on a broken registry path or coverage gap
+      subject_result_claim_ids: [B13_failure_surfacing, B02_minimal_canonical_composition]
+      evidence_claim_ids: [C12_architecture_boundary]
+      success_criterion_index: 1
+      measurement: >-
+        两次探针：(a) 向 registry 追加一条 path 指向不存在的目录；(b) 删掉覆盖机制目录的
+        那条 registry entry，使机制文件失去覆盖。各运行一次声明的 validator，均要求非零退出码。
+      pass_condition: 两次探针均非零退出。
+      can_fail: true
+      fails_when: >-
+        validator 读入 registry 却只取 mechanism_version，从不消费 entries——
+        Stage 07 F3 的 D1：registry 是一次死读。
+      baseline_2026_08_11: fail
+      added_in_artifact_version: 3
+
+    - test_id: MR-T33
+      kind: boundary
+      title: mechanism validator fails closed on version drift including catalog_version
+      subject_result_claim_ids: [B13_failure_surfacing]
+      evidence_claim_ids: [C12_architecture_boundary]
+      success_criterion_index: 1
+      measurement: >-
+        两次探针：(a) 抬高 registry 的 mechanism_version 造成三处不一致；
+        (b) 抬高 catalog 的 catalog_version 使其与 boot 清单声明不一致。
+        各运行一次声明的 validator，均要求非零退出码。
+      pass_condition: 两次探针均非零退出。
+      can_fail: true
+      fails_when: 版本漂移不显现，加载 receipt 记录的版本不再可信。
+      measures_behaviour_not_shape: >-
+        本条只要求"漂移能被判红"。用字面量 pin 死版本号也能通过——那是较弱的实现，
+        但它确实 fail closed。是否要求真正的交叉绑定属于实现选择，A/B 未规定，不冻结。
+      baseline_2026_08_11: pass
+      added_in_artifact_version: 3
+
+    - test_id: MR-T34
+      kind: boundary
+      title: mechanism validator fails closed on an illegal cost or quota routing field
+      subject_result_claim_ids: [B13_failure_surfacing, B06_selection_procedure]
+      evidence_claim_ids: [C12_architecture_boundary, C03_routing_optimizes_fit_not_cost, R05]
+      success_criterion_index: 1
+      measurement: >-
+        两次探针：(a) 向路由契约注入 selection_scoring.price_weight；
+        (b) 把 quota_balance 加进 contract.inputs.optional。
+        各运行一次声明的 validator，均要求非零退出码。
+      pass_condition: 两次探针均非零退出。
+      can_fail: true
+      fails_when: >-
+        B13 点名的"非法 cost/quota routing fields"只由 Stage 04 外层测试拦截，
+        机制自身在 boot 时看不见它——Stage 07 F3 的 D2。
+      baseline_2026_08_11: fail
+      added_in_artifact_version: 3
+
+    - test_id: MR-T35
+      kind: boundary
+      title: mechanism validator fails closed on a broken declared pointer
+      subject_result_claim_ids: [B13_failure_surfacing, B02_minimal_canonical_composition]
+      evidence_claim_ids: [C12_architecture_boundary]
+      success_criterion_index: 1
+      measurement: >-
+        两次探针：(a) 删掉 boot 清单 load_order 中第一个实际存在的文件；
+        (b) 把 boot 清单的 registry 指向一个不存在的路径。
+        各运行一次声明的 validator，均要求非零退出码。
+      pass_condition: 两次探针均非零退出。
+      can_fail: true
+      fails_when: 声明必须可达的 pointer 断裂却不显现。
+      baseline_2026_08_11: pass
+      added_in_artifact_version: 3
 
 not_covered_by_this_package:
   - criterion_index: 9

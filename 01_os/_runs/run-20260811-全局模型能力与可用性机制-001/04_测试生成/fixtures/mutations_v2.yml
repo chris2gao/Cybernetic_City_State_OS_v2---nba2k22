@@ -1,0 +1,288 @@
+schema_version: citystate.stage04.mutation_set.v2
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+supersedes:
+  path: fixtures/mutations_v1.yml
+  disposition: >-
+    retained_for_history。v1 原样保留，它记录的是 artifact_version 2 的杀伤集合。
+    删掉它会抹去 Stage 07 证明存在的那两处设计缺陷（MR-T10 只测非空、MR-T25 词法误伤）
+    曾经存在的痕迹。
+purpose: >-
+  每条 mutation 把 good_tree 改成一棵"看起来完整但违反某一条已接受证据"的树，
+  用来证明对应验收检查确实能杀死它。检查杀不掉自己的 mutation，等于该检查不可失败，
+  按 01_os/01_workflow/04_测试生成/实现/测试schema_v1.md 属于不合格测试。
+  collateral（顺带变红的其他检查）被记录但不算失败，因为一处违规常常同时破坏多个契约面。
+
+correction_round_note: >-
+  M28–M36 是本轮新增，对应 Stage 07 确认的 F1/F2/F3。M15 与 M23 的锚点随 fixture
+  修正而更新，语义不变。M01–M27 的其余部分逐字保持 v1。
+
+good_tree_assembly:
+  committed: fixtures/good_tree/**
+  materialized_at_runtime:
+    - path: 01_os/05_registry/repository_publisher_authority_v1.yml
+      source: 从被测仓库根目录原样复制
+      reason: >-
+        MR-T20 断言该文件字节不变。把 canonical 内容复制进 run 目录会产生第二份权威副本，
+        因此 fixture 不提交它，改为在 selftest 组装临时树时复制。
+
+mutations:
+  - mutation_id: M01
+    target_check: MR-T01
+    file: 01_os/03_mechanisms/model_routing/README.md
+    operation: delete_file
+
+  - mutation_id: M02
+    target_check: MR-T04
+    file: 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+    operation: delete_line
+    find: '    - task_shape'
+
+  - mutation_id: M03
+    target_check: MR-T06
+    file: 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+    operation: replace
+    find: 'authority_constant: routing_only'
+    replace: 'authority_constant: execution'
+
+  - mutation_id: M04
+    target_check: MR-T08
+    file: 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+    operation: replace
+    find: '  - choose_best_fit_by_task_model_surface_fit_only'
+    replace: '  - minimize_token_cost_across_candidates'
+
+  - mutation_id: M05
+    target_check: MR-T10
+    file: 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    operation: replace
+    find: "    verified_at: '2026-08-11'\n    invalidation_conditions: [OpenAI product or model-picker update]"
+    replace: '    invalidation_conditions: [OpenAI product or model-picker update]'
+
+  - mutation_id: M06
+    target_check: MR-T12
+    file: 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    operation: replace
+    find: '        reasoning_levels: [medium, high]'
+    replace: '        reasoning_levels: [medium, high, extra_high]'
+
+  - mutation_id: M07
+    target_check: MR-T14
+    file: 01_os/03_mechanisms/model_routing/项目观察证据_v1.yml
+    operation: replace
+    find: "    validity: diagnostic\n    confidence: low\n    observed_failure_or_strength: reported all exercised cases green"
+    replace: "    validity: formal\n    confidence: high\n    max_task_tier: T2_semantic\n    observed_failure_or_strength: reported all exercised cases green"
+
+  - mutation_id: M08
+    target_check: MR-T15
+    file: 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    operation: replace
+    find: '    surface_id: codex_desktop'
+    replace: '    surface_id: unlabelled_surface'
+
+  - mutation_id: M09
+    target_check: MR-T17
+    file: 01_os/开发入口与单窗口任务规范_v1.md
+    operation: append
+    append: "\n| `Sol` | 旗舰 | `$5 / $30` | 架构决策、独立复核 |\n"
+
+  - mutation_id: M10
+    target_check: MR-T19
+    file: 01_os/开发入口与单窗口任务规范_v1.md
+    operation: delete_line
+    find: '## 9. 独立审核与 Human gate'
+
+  - mutation_id: M11
+    target_check: MR-T20
+    file: 01_os/05_registry/repository_publisher_authority_v1.yml
+    operation: append
+    append: "\n# weakened by an unauthorized Stage 06 edit\n"
+
+  - mutation_id: M12
+    target_check: MR-T21
+    file: 01_os/02_boot/model_routing/启动清单_v1.yml
+    operation: replace
+    find: '  - path: 01_os/03_mechanisms/model_routing/路由契约_v1.yml'
+    replace: '  - path: 01_os/03_mechanisms/model_routing/不存在的契约_v1.yml'
+
+  - mutation_id: M13
+    target_check: MR-T22
+    file: 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+    operation: replace
+    find: 'mechanism_version: 1'
+    replace: 'mechanism_version: 2'
+
+  - mutation_id: M14
+    target_check: MR-T23
+    file: 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    operation: append
+    append: "entitlement_is_account_availability: false\n"
+
+  - mutation_id: M15
+    target_check: MR-T24
+    file: 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+    operation: replace
+    find: "    if findings:\n        for f in sorted(set(findings)):\n            print(f\"FAIL {f}\")\n        return 1"
+    replace: "    if findings:\n        for f in sorted(set(findings)):\n            print(f\"WARN {f}\")\n        return 0"
+
+  - mutation_id: M16
+    target_check: MR-T26
+    file: 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+    operation: append
+    append: "fallback_chain: [chatgpt_web, codex_desktop, antigravity]\n"
+
+  - mutation_id: M17
+    target_check: MR-T27
+    file: 01_os/02_boot/model_routing/启动清单_v1.yml
+    operation: replace
+    find: 'background_processes_started: false'
+    replace: 'background_processes_started: true'
+
+  - mutation_id: M18
+    target_check: MR-T28
+    operations:
+      - file: 01_os/06_execution/boot/model_routing/加载注意事项.md
+        operation: create_file
+        content: "# 未登记的加载说明\n\n本文件存在于加载器目录，但 registry 没有覆盖它。\n"
+      - file: 01_os/05_registry/model_routing_v1.yml
+        operation: replace
+        find: '  - path: 01_os/06_execution/boot/model_routing/**'
+        replace: '  - path: 01_os/06_execution/boot/model_routing/README.md'
+
+  - mutation_id: M19
+    target_check: MR-T13
+    file: 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    operation: replace
+    find: "    confidence: high\n\n  - provider: OpenAI\n    surface_id: codex_desktop"
+    replace: "    confidence: high\n    validity: diagnostic\n\n  - provider: OpenAI\n    surface_id: codex_desktop"
+
+  - mutation_id: M20
+    target_check: MR-T09
+    file: 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    operation: replace
+    find: "    surface_id: antigravity\n    model_label: Claude Opus 4.6 Thinking"
+    replace: "    surface_id: antigravity\n    model_label: Gemini 3.6 Flash"
+
+  - mutation_id: M21
+    target_check: MR-T02
+    file: 01_os/01_workflow/04_测试生成/模型目录副本_v1.yml
+    operation: create_file
+    content: "schema_version: citystate.model_routing.catalog.v1\nentries: []\n"
+
+  - mutation_id: M22
+    target_check: MR-T07
+    file: 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+    operation: delete_line
+    find: '  restored_by: explicit_Human_override'
+
+  - mutation_id: M23
+    target_check: MR-T11
+    file: 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    operation: delete_line
+    find: '        surface_exposure_evidence: [OAI_CHATGPT_56, C04_ChatGPT_Plus_current_control]'
+
+  - mutation_id: M24
+    target_check: MR-T16
+    file: 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    operation: replace
+    find: '      reasoning_controls: medium_high_only'
+    replace: '      reasoning_controls:'
+
+  - mutation_id: M25
+    target_check: MR-T18
+    file: 01_os/开发入口与单窗口任务规范_v1.md
+    operation: delete_line
+    find: '01_os/03_mechanisms/model_routing/'
+
+  - mutation_id: M26
+    target_check: MR-T25
+    file: 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    operation: append
+    append: "default_price_per_1m_input: 5\n"
+
+  - mutation_id: M27
+    target_check: MR-T05
+    file: 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+    operation: delete_line
+    find: '    - limitations'
+
+  # ---- correction round: Stage 07 F1 / F2 / F3 -------------------------
+
+  - mutation_id: M28
+    target_check: MR-T29
+    rationale: >-
+      F2。移除机制自带的 source-resolution 入口后，catalog 的 source token 从声明
+      加载面无法解析——这正是 Stage 06 candidate 的实际状态。
+    file: 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    operation: replace
+    find: "\nsources:\n"
+    replace: "\nsources_moved_out_of_the_load_surface:\n"
+
+  - mutation_id: M29
+    target_check: MR-T30
+    rationale: >-
+      F1。把 Opus 4.8 从 Anthropic 自身 surface 挪到 antigravity，且保持
+      registered:false，证明"未登记"不能豁免与证据矛盾的 attribution。
+    file: 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    operation: replace
+    find: "    surface_id: claude_code_desktop\n    model_label: Claude Opus 4.8"
+    replace: "    surface_id: antigravity\n    model_label: Claude Opus 4.8"
+
+  - mutation_id: M30
+    target_check: MR-T10
+    rationale: >-
+      F2 的洗白形态：把一手来源换成项目内部 claim id，字段仍非空。旧 MR-T10 放行，
+      修正后的 MR-T10 必须判红。
+    file: 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    operation: replace
+    find: '    source_refs: [OAI_CHATGPT_56, C04_ChatGPT_Plus_current_control]'
+    replace: '    source_refs: [C04_ChatGPT_Plus_current_control]'
+
+  - mutation_id: M31
+    target_check: MR-T25
+    rationale: >-
+      修正后的 MR-T25 不再靠词法命中，因此必须证明它仍能抓住真正的经济路由语义：
+      把 quota_balance 作为路由输入加进契约。
+    file: 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+    operation: append
+    append: "selection_scoring:\n  price_weight: 0.4\n  task_fit_weight: 0.6\n"
+
+  - mutation_id: M32
+    target_check: MR-T31
+    rationale: F3。机制 validator 不再对无法解析的 source ref fail closed。
+    file: 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+    operation: replace
+    find: "                findings.append(f\"unresolvable_source_ref:{tok}\")\n                continue"
+    replace: "                continue"
+
+  - mutation_id: M33
+    target_check: MR-T32
+    rationale: F3。机制 validator 不再检查 registry path 存在性与覆盖。
+    file: 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+    operation: replace
+    find: "    if isinstance(reg, dict):\n        patterns: list[str] = []"
+    replace: "    if False:\n        patterns: list[str] = []"
+
+  - mutation_id: M34
+    target_check: MR-T33
+    rationale: F3。机制 validator 不再交叉核对 catalog_version。
+    file: 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+    operation: replace
+    find: "    if boot_cv is None or cat_cv is None:\n        findings.append(f\"catalog_version_unbound:boot={boot_cv} catalog={cat_cv}\")\n    elif boot_cv != cat_cv:\n        findings.append(f\"catalog_version_drift:boot={boot_cv} catalog={cat_cv}\")"
+    replace: "    if False:\n        findings.append('disabled')"
+
+  - mutation_id: M35
+    target_check: MR-T34
+    rationale: F3。机制 validator 不再拒绝路由位置上的 cost/quota 字段。
+    file: 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+    operation: replace
+    find: "            for hit in economic_hits(doc, f\"{name}.\"):\n                findings.append(hit)"
+    replace: "            pass"
+
+  - mutation_id: M36
+    target_check: MR-T35
+    rationale: F3。机制 validator 不再对 load_order 断裂 fail closed。
+    file: 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+    operation: replace
+    find: "                findings.append(f\"broken_pointer:load_order:{rel}\")"
+    replace: "                pass"

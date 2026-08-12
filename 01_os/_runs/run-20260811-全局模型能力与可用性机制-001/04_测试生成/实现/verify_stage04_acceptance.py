@@ -99,8 +99,67 @@ VALIDITY_VALUES = {"formal", "diagnostic", "anecdotal"}
 
 # Pure prohibitions. On a tree containing nothing they are vacuously satisfied,
 # which is the correct meaning of "must not contain". Their non-vacuity is proven
-# by mutation kill (M21, M14, M26), not by the empty-tree probe.
-VACUOUS_ON_EMPTY = {"MR-T02", "MR-T23", "MR-T25"}
+# by mutation kill (M21, M14, M26, M31), not by the empty-tree probe.
+VACUOUS_ON_EMPTY = {"MR-T02", "MR-T23", "MR-T25", "MR-T30"}
+
+# --------------------------------------------------------------------------
+# correction round (artifact_version 3)
+#
+# Stage 07 proved the v2 package insufficient in three ways. The constants below
+# carry the corrected semantics; the rationale is in Stage04窄修正测试设计说明_v1.md.
+# --------------------------------------------------------------------------
+
+# A source-resolution entry point may live under any of these keys, in any
+# document reachable from the mechanism's declared load surface. The filename is
+# deliberately NOT frozen: what is frozen is that such an entry point exists and
+# resolves.
+SOURCE_INDEX_KEYS = ("sources", "source_registry", "source_index", "来源")
+SOURCE_LOCATORS = ("url", "ref", "path")
+
+# A source that is only a project-internal claim cannot be the sole backing for a
+# current product fact. A v3 约束: "provider 技术事实优先一手资料；历史印象或失效
+# 测试只可形成低置信 diagnostic". Stage 02 source_registry uses exactly this
+# taxonomy split.
+EXTERNAL_SOURCE_KINDS = {
+    "provider_first_party",
+    "independent_web_research",
+    "independent_provider_first_party_research",
+    "vendor_documentation",
+    "product_surface_documentation",
+}
+
+# Surface/model bindings that the accepted Stage 02 evidence positively
+# contradicts. C07 and C08 both enumerate the Antigravity selector as
+# Gemini 3.6 Flash / Gemini 3.1 Pro / Claude (Sonnet|Opus) 4.6. Every first-party
+# statement about Opus 4.8 in the Stage 02 corpus concerns the Anthropic Claude /
+# Claude Code surface. Frozen as an explicit table, not as a guess about future
+# product pages: a later evidence round that registers Opus 4.8 on Antigravity
+# must reopen Stage 04, which is the point.
+UNSUPPORTED_SURFACE_MODEL = [
+    {
+        "surface_id": "antigravity",
+        "model_pattern": r"opus\s*4\.8",
+        "evidence": "C07_Antigravity_model_labels_verified + C08_Antigravity_Pro_access",
+        "why": "Stage 02 places Opus 4.8 on the Anthropic Claude Code surface, and "
+               "enumerates Antigravity as carrying Opus 4.6",
+    },
+]
+
+# Economic *routing* semantics, as distinct from evidence citation. The scan that
+# uses this is positional: a source id, title or URL containing "pricing" is a
+# citation, and MR-T25 must not fire on it. That lexical overfire is what drove
+# the Stage 06 executor to delete a real first-party source.
+ECONOMIC_RE = re.compile(
+    r"(price|pricing|cost|quota|budget|balance|billing|cheapest|"
+    r"minimize_token|minimize_cost|token_spend)",
+    re.IGNORECASE,
+)
+EVIDENCE_EXEMPT_KEYS = {
+    "sources", "source_registry", "source_index", "来源",
+    "source_refs", "surface_exposure_evidence", "evidence_refs",
+    "prohibited_routing_inputs", "invalidation_conditions",
+}
+NEGATION_RE = re.compile(r"(prohibit|forbidden|not_used|never|no_|false)", re.IGNORECASE)
 
 COST_TOKEN_RE = re.compile(
     r"(price|pricing|cost_per|per_1m|token_cost|token_price|quota_balance|"
@@ -248,6 +307,69 @@ class Tree:
             return []
         entries = cat.get("entries", [])
         return [e for e in entries if isinstance(e, dict)]
+
+    # -- correction round helpers ------------------------------------------
+
+    def load_surface_docs(self) -> list[Any]:
+        """Documents a reader obeying the boot manifest actually reaches.
+
+        This is the whole point of MR-T29: the mechanism must be auditable from
+        its own declared load surface, not from 01_os/_runs/**, which
+        开发入口 §1.7 and AGENTS.md startup rule 9 forbid preloading.
+        """
+        docs: list[Any] = []
+        boot = self.boot()
+        if isinstance(boot, dict):
+            docs.append(boot)
+            for item in boot.get("load_order", []) or []:
+                rel = item.get("path") if isinstance(item, dict) else item
+                if not rel:
+                    continue
+                p = self.path(str(rel))
+                if p.is_file() and p.suffix.lower() in (".yml", ".yaml"):
+                    try:
+                        docs.append(load_yaml_strict(p))
+                    except Exception:  # noqa: BLE001
+                        pass
+            # one explicit pointer hop: boot may name a separate index file
+            for key, val in boot.items():
+                if str(key).endswith("_ref") and isinstance(val, str):
+                    p = self.path(val)
+                    if p.is_file() and p.suffix.lower() in (".yml", ".yaml"):
+                        try:
+                            docs.append(load_yaml_strict(p))
+                        except Exception:  # noqa: BLE001
+                            pass
+        reg = self.registry()
+        if isinstance(reg, dict):
+            docs.append(reg)
+        return docs
+
+    def source_index(self) -> dict:
+        index: dict = {}
+        for doc in self.load_surface_docs():
+            if not isinstance(doc, dict):
+                continue
+            for key in SOURCE_INDEX_KEYS:
+                block = doc.get(key)
+                if isinstance(block, dict):
+                    index.update(block)
+        return index
+
+    def catalog_source_tokens(self) -> dict[str, set[str]]:
+        """token -> set of entry labels that cite it, registered or not."""
+        out: dict[str, set[str]] = {}
+        for e in self.catalog_entries():
+            label = f"{e.get('surface_id')}::{e.get('model_label')}"
+            toks = {str(x) for x in (e.get("source_refs") or [])}
+            for pr in e.get("parameter_profiles") or []:
+                if isinstance(pr, dict):
+                    ev = pr.get("surface_exposure_evidence")
+                    seq = ev if isinstance(ev, list) else ([ev] if ev else [])
+                    toks |= {str(x) for x in seq}
+            for t in toks:
+                out.setdefault(t, set()).add(label)
+        return out
 
 
 Result = tuple[bool, str]
@@ -501,9 +623,24 @@ def t10(t: Tree) -> Result:
         va = str(e.get("verified_at", ""))
         if va and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", va):
             problems.append(f"{label}: verified_at not an ISO date")
+        # correction round: a non-empty token is not an auditable source.
+        # At least one cited source must resolve to an external source kind, so a
+        # project-internal claim id cannot silently replace a primary citation.
+        index = t.source_index()
+        refs = [str(x) for x in (e.get("source_refs") or [])]
+        unresolved = [r for r in refs if not isinstance(index.get(r), dict)]
+        if unresolved:
+            problems.append(f"{label}: source_refs do not resolve: {sorted(unresolved)[:3]}")
+            continue
+        kinds = {str(index[r].get("kind", "")) for r in refs}
+        if not (kinds & EXTERNAL_SOURCE_KINDS):
+            problems.append(
+                f"{label}: no external source; only {sorted(kinds)} "
+                "(a project claim id cannot be the sole backing for a product fact)"
+            )
     if problems:
         return False, "; ".join(problems[:5])
-    return True, f"{len(entries)} registered entries carry all freshness fields"
+    return True, f"{len(entries)} registered entries carry resolvable, externally-backed freshness"
 
 
 @check("MR-T11", "parameter profiles are surface-scoped and evidence-bound")
@@ -825,26 +962,54 @@ def t24(t: Tree) -> Result:
     return True, f"mechanism validator exits {proc.returncode} on the freshness mutation"
 
 
-@check("MR-T25", "no cost, price or quota fields anywhere in the mechanism")
+def economic_positions(node: Any, path: str = "") -> list[str]:
+    """Economic tokens in routing-semantic positions only.
+
+    Evidence subtrees are skipped by key, and a boolean-false field is a
+    prohibition declaration rather than a routing input. This replaces the v2
+    whole-file lexical scan, which fired on the source identifier
+    GOOGLE_AG_PRICING and thereby induced the removal of a real first-party
+    citation (Stage 07 F2).
+    """
+    found: list[str] = []
+    if isinstance(node, dict):
+        for k, v in node.items():
+            if str(k) in EVIDENCE_EXEMPT_KEYS:
+                continue
+            if v is False:
+                continue
+            if ECONOMIC_RE.search(str(k)) and not NEGATION_RE.search(str(k)):
+                found.append(f"{path}{k}")
+            found.extend(economic_positions(v, f"{path}{k}."))
+    elif isinstance(node, list):
+        for i, v in enumerate(node):
+            found.extend(economic_positions(v, f"{path}[{i}]."))
+    elif isinstance(node, str):
+        m = ECONOMIC_RE.search(node)
+        if m and not NEGATION_RE.search(node):
+            found.append(f"{path}<{m.group(0)}>")
+    return found
+
+
+@check("MR-T25", "no economic routing semantics in the mechanism; citations are not routing fields")
 def t25(t: Tree) -> Result:
-    offenders = []
+    offenders: list[str] = []
+    # structural: YAML documents, positionally
+    for p, doc in t.mech_docs().items():
+        offenders.extend(f"{p.name}:{hit}" for hit in economic_positions(doc))
+    # textual: a migrated price table is a table of currency rows, which is what
+    # B11 forbids moving out of the entry spec. Prose and source URLs are not.
     for p in t.mech_files():
-        if p.suffix.lower() not in (".yml", ".yaml", ".md", ".py"):
+        if p.suffix.lower() not in (".md", ".py"):
             continue
-        body = p.read_text(encoding="utf-8", errors="replace")
-        for ln_no, line in enumerate(body.splitlines(), 1):
-            stripped = line.strip()
-            if stripped.startswith("#") or stripped.startswith("//"):
-                continue
-            m = COST_TOKEN_RE.search(line)
-            if not m:
-                continue
-            if re.search(r"(prohibited|forbidden|not_used|: false|never|no_)", line, re.I):
-                continue
-            offenders.append(f"{p.name}:{ln_no}: {m.group(0)}")
+        for ln_no, line in enumerate(
+            p.read_text(encoding="utf-8", errors="replace").splitlines(), 1
+        ):
+            if PRICE_ROW_RE.search(line) or re.search(r"per\s*1M\s*token", line, re.I):
+                offenders.append(f"{p.name}:{ln_no}: price row")
     if offenders:
         return False, "; ".join(offenders[:6])
-    return True, "no active cost, price or quota field in the mechanism body"
+    return True, "no economic field in a routing position and no migrated price table"
 
 
 @check("MR-T26", "no automatic fallback chain; unavailability re-runs task fit")
@@ -915,6 +1080,277 @@ def t28(t: Tree) -> Result:
     if uncovered:
         return False, "unregistered: " + "; ".join(uncovered[:6])
     return True, f"{len(patterns)} registry patterns cover every mechanism file"
+
+
+@check("MR-T29", "every catalog source token resolves from the declared load surface")
+def t29(t: Tree) -> Result:
+    entries = t.catalog_entries()
+    if not entries:
+        return False, "catalog has no entries"
+    index = t.source_index()
+    if not index:
+        return False, (
+            "no source-resolution entry point reachable from the boot manifest "
+            "load surface; source tokens are opaque"
+        )
+    tokens = t.catalog_source_tokens()
+    if not tokens:
+        return False, "catalog cites no source tokens at all"
+    problems = []
+    for tok in sorted(tokens):
+        rec = index.get(tok)
+        if not isinstance(rec, dict):
+            problems.append(f"{tok}: unresolvable (cited by {sorted(tokens[tok])[:2]})")
+            continue
+        if not str(rec.get("kind", "")).strip():
+            problems.append(f"{tok}: index entry declares no kind")
+        if not any(str(rec.get(k, "")).strip() for k in SOURCE_LOCATORS):
+            problems.append(f"{tok}: index entry carries no url/ref/path locator")
+    if problems:
+        return False, "; ".join(problems[:6])
+    return True, f"{len(tokens)} source tokens resolve to kind+locator in the mechanism's own index"
+
+
+@check("MR-T30", "no surface/model attribution that the accepted evidence contradicts")
+def t30(t: Tree) -> Result:
+    offenders = []
+    for e in t.catalog_entries():
+        surface = str(e.get("surface_id", "")).strip().lower()
+        model = str(e.get("model_label", "")).strip()
+        for rule in UNSUPPORTED_SURFACE_MODEL:
+            if surface != rule["surface_id"]:
+                continue
+            if re.search(rule["model_pattern"], model, re.IGNORECASE):
+                offenders.append(
+                    f"{surface}::{model} registered={e.get('registered')!r} "
+                    f"contradicts {rule['evidence']} ({rule['why']})"
+                )
+    if offenders:
+        return False, "; ".join(offenders[:4])
+    return True, "no catalog entry asserts an evidence-contradicted surface/model binding"
+
+
+# --------------------------------------------------------------------------
+# mechanism-validator probes (MR-T24, MR-T31 .. MR-T35)
+#
+# B13 makes the mechanism's own validator the failure-surfacing organ. A frozen
+# Stage 04 check finding a defect is not the same thing: Stage 04 does not run at
+# mechanism boot time. Each probe therefore mutates a copy of the mechanism
+# surface and requires the *declared* validator to exit non-zero.
+# --------------------------------------------------------------------------
+
+
+def _stage_mechanism_copy(t: Tree, dest: Path) -> None:
+    for sub in (MECH_DIR, LOADER_DIR, str(Path(BOOT_MANIFEST).parent).replace("\\", "/")):
+        src = t.path(sub)
+        if src.is_dir():
+            shutil.copytree(src, dest / sub)
+    if t.exists(REGISTRY):
+        (dest / REGISTRY).parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(t.path(REGISTRY), dest / REGISTRY)
+
+
+def probe_mechanism_validator(t: Tree, label: str, mutate) -> Result:
+    """Copy the mechanism surface, mutate it, require the declared validator to fail."""
+    boot = t.boot()
+    if not isinstance(boot, dict):
+        return False, f"{BOOT_MANIFEST} missing or unparseable"
+    rel = boot.get("validator")
+    if not rel or not t.exists(str(rel)):
+        return False, f"declared validator {rel!r} does not resolve"
+    cat_path, _ = t.catalog()
+    if cat_path is None:
+        return False, "catalog not found"
+    rel_cat = cat_path.relative_to(t.root).as_posix()
+    with tempfile.TemporaryDirectory() as td:
+        probe = Path(td) / "tree"
+        _stage_mechanism_copy(t, probe)
+        try:
+            applied = mutate(probe, rel_cat)
+        except Exception as exc:  # noqa: BLE001
+            return False, f"{label}: probe could not be constructed: {type(exc).__name__}: {exc}"
+        if applied is False:
+            return False, f"{label}: no anchor in the tree to mutate"
+        try:
+            proc = subprocess.run(
+                [sys.executable, str(probe / str(rel)), "static", str(probe)],
+                capture_output=True,
+                timeout=180,
+                cwd=str(probe),
+            )
+        except Exception as exc:  # noqa: BLE001
+            return False, f"validator not runnable: {type(exc).__name__}"
+        if proc.returncode == 0:
+            return False, f"mechanism validator returned 0 on {label}"
+    return True, f"mechanism validator exits {proc.returncode} on {label}"
+
+
+def _load_probe_yaml(probe: Path, rel: str):
+    return load_yaml_strict(probe / rel)
+
+
+def _write_probe_yaml(probe: Path, rel: str, doc: Any) -> None:
+    (probe / rel).write_text(
+        yaml.safe_dump(doc, allow_unicode=True, sort_keys=False, width=4096),
+        encoding="utf-8",
+    )
+
+
+@check("MR-T31", "mechanism validator fails closed on an unresolvable source ref")
+def t31(t: Tree) -> Result:
+    def mutate_registered(probe: Path, rel_cat: str):
+        doc = _load_probe_yaml(probe, rel_cat)
+        for e in doc.get("entries", []) or []:
+            if isinstance(e, dict) and e.get("registered") is True and e.get("source_refs"):
+                e["source_refs"] = ["BOGUS_SOURCE_THAT_RESOLVES_NOWHERE"]
+                _write_probe_yaml(probe, rel_cat, doc)
+                return True
+        return False
+
+    def mutate_unregistered(probe: Path, rel_cat: str):
+        doc = _load_probe_yaml(probe, rel_cat)
+        for e in doc.get("entries", []) or []:
+            if isinstance(e, dict) and e.get("registered") is False:
+                e["source_refs"] = ["BOGUS_UNREGISTERED_SOURCE"]
+                _write_probe_yaml(probe, rel_cat, doc)
+                return True
+        return False
+
+    for label, fn in (
+        ("a registered entry citing an unresolvable source", mutate_registered),
+        ("an unregistered entry citing an unresolvable source", mutate_unregistered),
+    ):
+        ok, detail = probe_mechanism_validator(t, label, fn)
+        if not ok:
+            return False, detail
+    return True, "validator fails closed on bogus source refs for registered and unregistered entries"
+
+
+@check("MR-T32", "mechanism validator fails closed on a broken registry path or coverage gap")
+def t32(t: Tree) -> Result:
+    def mutate_missing_path(probe: Path, rel_cat: str):
+        doc = _load_probe_yaml(probe, REGISTRY)
+        entries = doc.get("entries") or []
+        if not entries or not isinstance(entries[0], dict):
+            return False
+        entries.append(
+            {
+                **{k: v for k, v in entries[0].items()},
+                "path": "01_os/03_mechanisms/model_routing_that_does_not_exist/**",
+            }
+        )
+        doc["entries"] = entries
+        _write_probe_yaml(probe, REGISTRY, doc)
+        return True
+
+    def mutate_coverage_gap(probe: Path, rel_cat: str):
+        doc = _load_probe_yaml(probe, REGISTRY)
+        entries = [
+            e
+            for e in (doc.get("entries") or [])
+            if isinstance(e, dict) and not str(e.get("path", "")).startswith(MECH_DIR)
+        ]
+        if len(entries) == len(doc.get("entries") or []):
+            return False
+        doc["entries"] = entries
+        _write_probe_yaml(probe, REGISTRY, doc)
+        return True
+
+    for label, fn in (
+        ("a registry entry whose path does not exist", mutate_missing_path),
+        ("a registry that no longer covers the mechanism directory", mutate_coverage_gap),
+    ):
+        ok, detail = probe_mechanism_validator(t, label, fn)
+        if not ok:
+            return False, detail
+    return True, "validator fails closed on both registry path breakage and coverage gaps"
+
+
+@check("MR-T33", "mechanism validator fails closed on version drift including catalog_version")
+def t33(t: Tree) -> Result:
+    def mutate_mechanism_version(probe: Path, rel_cat: str):
+        doc = _load_probe_yaml(probe, REGISTRY)
+        doc["mechanism_version"] = int(doc.get("mechanism_version") or 1) + 1
+        _write_probe_yaml(probe, REGISTRY, doc)
+        return True
+
+    def mutate_catalog_version(probe: Path, rel_cat: str):
+        doc = _load_probe_yaml(probe, rel_cat)
+        doc["catalog_version"] = int(doc.get("catalog_version") or 1) + 1
+        _write_probe_yaml(probe, rel_cat, doc)
+        return True
+
+    for label, fn in (
+        ("mechanism_version drift between registry and contract", mutate_mechanism_version),
+        ("catalog_version drift between catalog and boot manifest", mutate_catalog_version),
+    ):
+        ok, detail = probe_mechanism_validator(t, label, fn)
+        if not ok:
+            return False, detail
+    return True, "validator cross-binds mechanism_version and catalog_version"
+
+
+@check("MR-T34", "mechanism validator fails closed on an illegal cost or quota routing field")
+def t34(t: Tree) -> Result:
+    contract_path, _ = t.contract()
+    if contract_path is None:
+        return False, "routing contract not found"
+    rel_contract = contract_path.relative_to(t.root).as_posix()
+
+    def mutate_price_weight(probe: Path, rel_cat: str):
+        doc = _load_probe_yaml(probe, rel_contract)
+        doc["selection_scoring"] = {"price_weight": 0.4, "task_fit_weight": 0.6}
+        _write_probe_yaml(probe, rel_contract, doc)
+        return True
+
+    def mutate_quota_input(probe: Path, rel_cat: str):
+        doc = _load_probe_yaml(probe, rel_contract)
+        inputs = doc.get("inputs")
+        if not isinstance(inputs, dict):
+            return False
+        opt = list(inputs.get("optional") or [])
+        opt.append("quota_balance")
+        inputs["optional"] = opt
+        _write_probe_yaml(probe, rel_contract, doc)
+        return True
+
+    for label, fn in (
+        ("a price_weight scoring field in the routing contract", mutate_price_weight),
+        ("quota_balance added as a routing input", mutate_quota_input),
+    ):
+        ok, detail = probe_mechanism_validator(t, label, fn)
+        if not ok:
+            return False, detail
+    return True, "validator rejects economic weighting and quota inputs in routing positions"
+
+
+@check("MR-T35", "mechanism validator fails closed on a broken declared pointer")
+def t35(t: Tree) -> Result:
+    def mutate_load_order(probe: Path, rel_cat: str):
+        boot_rel = BOOT_MANIFEST
+        doc = _load_probe_yaml(probe, boot_rel)
+        for item in doc.get("load_order", []) or []:
+            rel = item.get("path") if isinstance(item, dict) else item
+            target = probe / str(rel)
+            if target.is_file():
+                target.unlink()
+                return True
+        return False
+
+    def mutate_registry_pointer(probe: Path, rel_cat: str):
+        doc = _load_probe_yaml(probe, BOOT_MANIFEST)
+        doc["registry"] = "01_os/05_registry/model_routing_absent_v1.yml"
+        _write_probe_yaml(probe, BOOT_MANIFEST, doc)
+        return True
+
+    for label, fn in (
+        ("a load_order file that no longer exists", mutate_load_order),
+        ("a boot manifest pointing at an absent registry", mutate_registry_pointer),
+    ):
+        ok, detail = probe_mechanism_validator(t, label, fn)
+        if not ok:
+            return False, detail
+    return True, "validator fails closed on load_order and registry pointer breakage"
 
 
 # --------------------------------------------------------------------------
@@ -1262,7 +1698,11 @@ def apply_one(tree: Path, mut: dict) -> None:
 
 def cmd_selftest(here: Path, repo_root: Path, as_json: bool) -> int:
     fixtures = here.parent / "fixtures"
-    muts_path = fixtures / "mutations_v1.yml"
+    # v2 is the active set for artifact_version 3. v1 is retained unmodified as
+    # history: deleting it would hide the design defect the correction round fixed.
+    muts_path = fixtures / "mutations_v2.yml"
+    if not muts_path.is_file():
+        muts_path = fixtures / "mutations_v1.yml"
     if not muts_path.is_file():
         print(f"environment_error: {muts_path} not found")
         return 2
@@ -1346,7 +1786,13 @@ def cmd_selftest(here: Path, repo_root: Path, as_json: bool) -> int:
         (partial / "01_os/05_registry/model_routing_v1.yml").unlink(missing_ok=True)
         _, rows = run_acceptance(partial)
         red = {r["test_id"] for r in rows if not r["passed"]}
-        need = {"MR-T21", "MR-T22", "MR-T24", "MR-T27", "MR-T28", "MR-T03"}
+        need = {
+            "MR-T21", "MR-T22", "MR-T24", "MR-T27", "MR-T28", "MR-T03",
+            # correction round: without the boot manifest there is no declared
+            # load surface, so neither source resolution nor any validator probe
+            # can be satisfied.
+            "MR-T29", "MR-T31", "MR-T32", "MR-T33", "MR-T34", "MR-T35",
+        }
         ok = need.issubset(red)
         report["boundary"].append(
             {

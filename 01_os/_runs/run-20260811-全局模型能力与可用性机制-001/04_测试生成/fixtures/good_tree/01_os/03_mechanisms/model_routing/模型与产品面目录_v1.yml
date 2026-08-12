@@ -1,8 +1,91 @@
 schema_version: citystate.model_routing.catalog.v1
 mechanism_version: 1
+catalog_version: 1
 status: fixture_not_canonical
 entitlement_is_account_availability: false
 identity_key: [surface_id, model_label]
+
+# Source-resolution entry point.
+#
+# Reachable from the mechanism's declared load surface (this file is named in the
+# boot manifest load_order), so every token used in source_refs and
+# surface_exposure_evidence can be resolved without reading 01_os/_runs/**, which
+# 开发入口 §1.7 forbids preloading.
+#
+# GOOGLE_AG_PRICING is present on purpose: it is a real first-party source whose
+# identifier contains "PRICING". A citation is not a cost-routing field, and
+# MR-T25 must not fire on it.
+sources:
+  OAI_CHATGPT_56:
+    kind: provider_first_party
+    title: GPT-5.6 in ChatGPT
+    url: https://help.openai.com/en/articles/20001354-gpt-5-6-in-chatgpt
+    verified_at: '2026-08-11'
+  OAI_CODEX_APP:
+    kind: provider_first_party
+    title: Introducing the Codex app
+    url: https://openai.com/index/introducing-the-codex-app/
+    verified_at: '2026-08-11'
+  ANTH_PRO_CODE:
+    kind: provider_first_party
+    title: Use Claude Code with your Pro or Max plan
+    url: https://support.claude.com/en/articles/11145838-use-claude-code-with-your-pro-or-max-plan
+    verified_at: '2026-08-11'
+  ANTH_CODE_MODELS:
+    kind: provider_first_party
+    title: Claude Code model configuration
+    url: https://support.claude.com/en/articles/11940350-claude-code-model-configuration
+    verified_at: '2026-08-11'
+  GOOGLE_AG_MODELS:
+    kind: provider_first_party
+    title: Google Antigravity Models
+    url: https://antigravity.google/docs/models
+    verified_at: '2026-08-11'
+  GOOGLE_AG_PRICING:
+    kind: provider_first_party
+    title: Google Antigravity Pricing
+    url: https://antigravity.google/pricing
+    verified_at: '2026-08-11'
+  GEMINI_PASS:
+    kind: independent_web_research
+    title: independent research pass held as durable task evidence
+    ref: 02_信息收集与提炼/证据对齐与冲突消解_v1.yml#source_registry.GEMINI_PASS
+    verified_at: '2026-08-11'
+  C04_ChatGPT_Plus_current_control:
+    kind: project_evidence_claim
+    title: ChatGPT Plus current control surface
+    ref: 02_信息收集与提炼/证据对齐与冲突消解_v1.yml#accepted_claims.C04_ChatGPT_Plus_current_control
+    verified_at: '2026-08-11'
+  C05_Codex_Plus_current_candidates:
+    kind: project_evidence_claim
+    title: Codex Plus current candidates
+    ref: 02_信息收集与提炼/证据对齐与冲突消解_v1.yml#accepted_claims.C05_Codex_Plus_current_candidates
+    verified_at: '2026-08-11'
+  C06_Claude_Code_Pro_is_active_surface:
+    kind: project_evidence_claim
+    title: Claude Code is an active Pro surface
+    ref: 02_信息收集与提炼/证据对齐与冲突消解_v1.yml#accepted_claims.C06_Claude_Code_Pro_is_active_surface
+    verified_at: '2026-08-11'
+  C07_Antigravity_model_labels_verified:
+    kind: project_evidence_claim
+    title: Antigravity model labels verified
+    ref: 02_信息收集与提炼/证据对齐与冲突消解_v1.yml#accepted_claims.C07_Antigravity_model_labels_verified
+    verified_at: '2026-08-11'
+  C08_Antigravity_Pro_access:
+    kind: project_evidence_claim
+    title: Google AI Pro Antigravity access
+    ref: 02_信息收集与提炼/证据对齐与冲突消解_v1.yml#accepted_claims.C08_Antigravity_Pro_access
+    verified_at: '2026-08-11'
+  C09_surface_parameter_profile_required:
+    kind: project_evidence_claim
+    title: surface parameter profile required
+    ref: 02_信息收集与提炼/证据对齐与冲突消解_v1.yml#accepted_claims.C09_surface_parameter_profile_required
+    verified_at: '2026-08-11'
+  entitlement_vs_account_availability:
+    kind: project_conflict_resolution
+    title: entitlement does not equal current account availability
+    ref: 02_信息收集与提炼/证据对齐与冲突消解_v1.yml#conflicts_resolved.entitlement_vs_account_availability
+    verified_at: '2026-08-11'
 
 entries:
   - provider: OpenAI
@@ -21,8 +104,8 @@ entries:
       - profile_id: chatgpt_web_sol_high
         reasoning_levels: [medium, high]
         source_class: product_surface_documentation
-        surface_exposure_evidence: C04_ChatGPT_Plus_current_control
-    source_refs: [C04_ChatGPT_Plus_current_control, OAI_CHATGPT_56]
+        surface_exposure_evidence: [OAI_CHATGPT_56, C04_ChatGPT_Plus_current_control]
+    source_refs: [OAI_CHATGPT_56, C04_ChatGPT_Plus_current_control]
     verified_at: '2026-08-11'
     invalidation_conditions: [OpenAI product or model-picker update]
     confidence: high
@@ -43,8 +126,8 @@ entries:
       - profile_id: codex_terra_medium
         reasoning_levels: [low, medium, high]
         source_class: product_surface_documentation
-        surface_exposure_evidence: C05_Codex_Plus_current_candidates
-    source_refs: [C05_Codex_Plus_current_candidates, OAI_CODEX_APP]
+        surface_exposure_evidence: [OAI_CODEX_APP, C05_Codex_Plus_current_candidates]
+    source_refs: [OAI_CODEX_APP, C05_Codex_Plus_current_candidates]
     verified_at: '2026-08-11'
     invalidation_conditions: [OpenAI Codex model or product update]
     confidence: high
@@ -65,8 +148,8 @@ entries:
       - profile_id: claude_code_default
         reasoning_levels: [unknown]
         source_class: product_surface_documentation
-        surface_exposure_evidence: C06_Claude_Code_Pro_is_active_surface
-    source_refs: [C06_Claude_Code_Pro_is_active_surface, ANTH_CODE_MODELS, ANTH_PRO_CODE]
+        surface_exposure_evidence: [ANTH_CODE_MODELS, C06_Claude_Code_Pro_is_active_surface]
+    source_refs: [ANTH_CODE_MODELS, ANTH_PRO_CODE, C06_Claude_Code_Pro_is_active_surface]
     verified_at: '2026-08-11'
     invalidation_conditions: [Anthropic plan or model update, task-time /model observation differs]
     confidence: high
@@ -87,8 +170,8 @@ entries:
       - profile_id: gemini_web_default
         reasoning_levels: [unknown]
         source_class: product_surface_documentation
-        surface_exposure_evidence: C09_surface_parameter_profile_required
-    source_refs: [C09_surface_parameter_profile_required]
+        surface_exposure_evidence: [GEMINI_PASS, C09_surface_parameter_profile_required]
+    source_refs: [GEMINI_PASS, C09_surface_parameter_profile_required]
     verified_at: '2026-08-11'
     invalidation_conditions: [Google Gemini product update]
     confidence: medium
@@ -109,8 +192,8 @@ entries:
       - profile_id: antigravity_flash_high
         reasoning_levels: [low, medium, high]
         source_class: product_surface_documentation
-        surface_exposure_evidence: C07_Antigravity_model_labels_verified
-    source_refs: [C07_Antigravity_model_labels_verified, GOOGLE_AG_MODELS]
+        surface_exposure_evidence: [GOOGLE_AG_MODELS, C07_Antigravity_model_labels_verified]
+    source_refs: [GOOGLE_AG_MODELS, C07_Antigravity_model_labels_verified]
     verified_at: '2026-08-11'
     invalidation_conditions: [Google Antigravity model catalog update]
     confidence: high
@@ -131,10 +214,10 @@ entries:
       - profile_id: antigravity_opus46_thinking
         reasoning_levels: [thinking]
         source_class: product_surface_documentation
-        surface_exposure_evidence: C08_Antigravity_Pro_access
-    source_refs: [C07_Antigravity_model_labels_verified, C08_Antigravity_Pro_access]
+        surface_exposure_evidence: [GOOGLE_AG_MODELS, GOOGLE_AG_PRICING]
+    source_refs: [GOOGLE_AG_MODELS, GOOGLE_AG_PRICING, C08_Antigravity_Pro_access]
     verified_at: '2026-08-11'
-    invalidation_conditions: [Google Antigravity model catalog update]
+    invalidation_conditions: [Google Antigravity model catalog or plan update]
     confidence: high
 
   - provider: Anthropic
@@ -146,7 +229,7 @@ entries:
       context: unknown
       reasoning_controls: unknown
     parameter_profiles: []
-    source_refs: [entitlement_vs_account_availability]
+    source_refs: [ANTH_CODE_MODELS, entitlement_vs_account_availability]
     verified_at: '2026-08-11'
     invalidation_conditions: [Human observes the label in the account model selector]
     confidence: low
