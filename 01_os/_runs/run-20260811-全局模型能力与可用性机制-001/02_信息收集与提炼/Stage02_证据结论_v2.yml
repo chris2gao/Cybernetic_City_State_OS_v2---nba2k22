@@ -1,0 +1,78 @@
+schema_version: citystate.stage02_conclusion.v1
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+stage: 02_信息收集与提炼
+version: 2
+status: complete
+updated_at: 2026-08-11
+supersedes: Stage02_证据结论_v1.yml
+
+inputs:
+  requirement: 01_需求建模/requirement/A_需求建模_v3.yml
+  Human_confirmation: 01_需求建模/requirement/人类确认_v3.yml
+  first_party_pass: DeepResearch_ChatGPT官方一手资料_v1.md
+  independent_pass: Human_upload_sha256:a55c2a8125fa86cab1c2974a29a7d02c89a762b6d2a44fc431aeed3baa50bc60
+  reconciliation: 证据对齐与冲突消解_v1.yml
+  invalid_experiments:
+    - Antigravity资格执行接收与安全审计_v1.yml
+    - Antigravity复测v2接收与有效性裁决_v1.yml
+
+completion:
+  independent_pass_requirement_satisfied: true
+  provider_first_party_verification_complete_for_architecture_decisions: true
+  external_claim_conflicts_resolved_or_durable: true
+  Antigravity_formal_qualification_required: false
+  Antigravity_formal_qualification_status: closed_by_Human_scope_change
+  invalid_Antigravity_runs_preserved_as_diagnostic_only: true
+  stage_03_unblocked: true
+
+accepted_for_stage_03:
+  - C01_surface_is_first_class
+  - C02_Human_availability_override
+  - C03_routing_optimizes_fit_not_cost
+  - C04_ChatGPT_Plus_current_control
+  - C05_Codex_Plus_current_candidates
+  - C06_Claude_Code_Pro_is_active_surface
+  - C07_Antigravity_model_labels_verified
+  - C08_Antigravity_Pro_access
+  - C09_surface_parameter_profile_required
+  - C12_architecture_boundary
+
+scope_revision_effect_on_prior_claims:
+  C10_project_qualification_required:
+    prior_status: accepted_requirement
+    new_status: superseded_by_Human_scope_change
+    retained_truth: vendor benchmark does not equal project qualification; however this task no longer requires formal qualification.
+  C11_qualification_shape:
+    prior_status: accepted_design_implication
+    new_status: optional_future_method_only
+    retained_truth: may be reused if Human later reopens qualification, but it is not part of current completion path.
+
+Antigravity_diagnostic_summary:
+  Gemini_3_6_Flash_High:
+    observation: v1/v2 reported all exercised cases green
+    evidence_validity: invalid_for_formal_qualification
+    reason: tested agent accessed evaluator/control logic and self-ran prepare/evaluate
+  Gemini_3_1_Pro_High:
+    observation: v1/v2 reported exercised cases green after the first protocol was corrected
+    evidence_validity: invalid_for_formal_qualification
+    reason: tested agent accessed evaluator/control logic and self-ran prepare/evaluate
+  Claude_Opus_4_6_Thinking:
+    observation: v1 exposed narrow Q4/Q5 failures plus explicit isolation breach
+    evidence_validity: invalid_for_formal_qualification
+    reason: evaluator/expected-answer isolation was not preserved
+  routing_effect: >-
+    These observations may justify caution or future testing hypotheses, but they do not create precise qualified/unqualified task boundaries.
+
+resolved_evidence_ready_for_stage_03:
+  - routing object is model + product_surface + parameter_profile.
+  - current account availability is Human task-time override; registered candidates default available.
+  - routing optimizes task-model fit / reliable completion, not cost/token/quota economics.
+  - surface-specific parameters must be recorded; API settings are not copied blindly to Web/Desktop.
+  - model routing is an independent global mechanism; workflow calls it, context management and role mechanisms remain separate responsibilities.
+  - stable entry/discipline files should point to the mechanism rather than becoming a volatile model catalog.
+  - current product facts require source/ref, verified_at and invalidation conditions.
+  - no exact Antigravity project task ceiling is claimed in this task.
+
+stage_03_question:
+  - derive the minimal canonical contract/data layout and the smallest safe change to existing §7.1 without duplicating workflow/context/role responsibilities.
