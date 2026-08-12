@@ -1,0 +1,86 @@
+schema_version: citystate.stage06.candidate_adjudication.v1
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+stage_id: workflow_stage_06_execution
+adjudicated_at: '2026-08-11'
+status: accepted_for_independent_stage07
+
+physical_binding:
+  source_branch: dev/os-v2-global-model-capability-and-availability-routing-002
+  dispatch_base: a97d32ddd24cc9a94aaedea8adb045d4cdf6308c
+  implementation_commit: 3e3b608ac2c265d6aa4eb31471e8f1eae05603a4
+  evidence_head: f89a81ba26f2e697fa1423a37185b28728d82ae0
+  commit_count_from_dispatch: 2
+  remote_head_readback: f89a81ba26f2e697fa1423a37185b28728d82ae0
+  remote_readback_identical: true
+
+primary_diff_adjudication:
+  changed_path_count: 12
+  out_of_scope_paths: 0
+  implementation_commit_shape:
+    canonical_and_initial_evidence_only: true
+    completion_pointer_added: false
+  result_commit_shape:
+    only_stage06_evidence_and_completion_pointer: true
+    canonical_changed: false
+  frozen_stage04_paths_changed: false
+  publisher_authority_path_changed: false
+  quarantined_branch_reused: false
+  master_modified: false
+
+candidate_validation_claims_received:
+  frozen_test_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+  acceptance: 28/28
+  package_exit_code: 0
+  selftest_exit_code: 0
+  mechanism_validator_exit_code: 0
+  freshness_negative_probe_exit_code: 2
+  publisher_authority_unchanged: true
+  evidence_honesty: executor_self_verified_not_independently_reproduced
+
+planning_window_semantic_spotcheck:
+  routing_contract:
+    Human_availability_override: present
+    registered_default_available: present
+    routing_only_authority: present
+    cost_token_quota_scoring_prohibited: present
+    automatic_fallback_chain_prohibited: present
+  project_observation_ledger:
+    antigravity_v1_v2_promoted_to_formal: false
+    diagnostic_low_confidence_preserved: true
+  entry_spec:
+    volatile_price_model_table_removed: true
+    stable_model_routing_preflight_and_pointer_present: true
+    section_8_9_11_controls_still_present_in_candidate: true
+
+verdict:
+  stage06_candidate: ACCEPT_FOR_STAGE07
+  meaning: >-
+    该裁决只表示候选实现的物理 diff、授权边界与初步语义 spot-check 足以进入独立 Stage 07；
+    不等于最终实现验收，不采信 executor 的 28/28 作为独立复现结果。
+
+mandatory_stage07_attack_points:
+  - id: R7-P1_source_ref_resolvability
+    question: >-
+      canonical catalog 中 OAI_*/GOOGLE_*/ANTH_* 等 source_refs 是否能从 canonical pointer 或耐久证据
+      确定性解析到真实来源；如果只是非空 opaque token，则判断是否违反 evidence-backed/source-ref 意图。
+  - id: R7-P2_newly_observed_cowork_surface
+    question: >-
+      本任务 Stage 04 已实际记录 Claude Desktop — Cowork mode / Claude Opus 5，而 v1 catalog 只把
+      Claude Code Desktop / Sonnet 5 登记为 Claude 主 surface。判断这是 A/B scope 外的新观察可留作
+      follow-up，还是已经足以使 current-surface/catalog completeness 主张失真。
+  - id: R7-P3_unregistered_opus48_surface_binding
+    question: >-
+      catalog 将 Claude Opus 4.8 作为 antigravity 上的 unregistered/discovered entitlement-conflict entry。
+      独立核对 Stage 02 evidence 是否支持该具体 surface 绑定；若证据只支持 Anthropic/Claude 自身 surface，
+      不得把“unregistered”当成可以容忍错误 surface attribution 的理由。
+  - id: R7-P4_validator_depth
+    question: >-
+      verify_model_routing.py 是否真正实现 B13 所需 fail-closed 语义，而不仅仅满足冻结测试的最低字面；
+      特别核对 source/freshness/pointer/registry coverage 与 parameter surface evidence。
+
+next:
+  stage: workflow_stage_07_test_execution
+  reviewer_must_be_independent_from_stage06_executor: true
+  preferred_model_family: Anthropic
+  canonical_fix_during_review: prohibited
