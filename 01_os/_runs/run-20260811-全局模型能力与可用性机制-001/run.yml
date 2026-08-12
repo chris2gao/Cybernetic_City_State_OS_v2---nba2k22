@@ -5,15 +5,15 @@ run:
   exact_base_sha: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
   branch: dev/os-v2-global-model-capability-and-availability-routing-002
   owner: core
-  status: stage04_narrow_correction_authorized_awaiting_independent_test_designer
+  status: stage06_correction_round_1_dispatched_to_Codex
   purpose: >-
     用七阶段 workflow 建立低耦合的全局模型能力与任务路由机制。Stage 1-3 保持 complete。
-    Stage 06 Codex candidate 曾在旧 Stage 04 package 上取得 28/28，但新的 Claude Opus 5 独立
-    Stage 07 reviewer 复现 28/28 后仍发现三个 blocking semantic findings：Opus 4.8 surface/source
-    attribution 错误、canonical source refs 不可解析且发生一次为过 MR-T25 而证据洗白、机制 validator
-    未完整兑现 B13。规划窗口独立核验后确认 Stage 02/03 不失效，根因是 implementation defect +
-    Stage 04 test gap/overfire。Human 已委托规划窗口决定回退路径，现 Human-gated 窄重开 Stage 04，
-    先修正并重新冻结 evidence-derived tests，再重绑定 Stage 05、定点修正 Stage 06、重新独立 Stage 07。
+    初始 Stage06 candidate 在旧 Stage04 v2 包上 28/28，但独立 Stage07 仍发现 F1/F2/F3 blocker。
+    Human 委托规划窗口裁决回退路径后，Stage04 已 Human-gated 窄修正并 refreeze 为 artifact v3：
+    35 tests / digest 848b6917...e48c；旧 candidate 在 corrected package 上 29/35，六个红灯精确覆盖 F1/F2/F3。
+    Stage05 已机械重绑定为 v2，不改变 canonical implementation boundary。现复用原 Human Stage06 boundary，
+    由 Codex Desktop / GPT-5.6 Sol 执行交付后 correction round 1 的定点修正；完成后必须由全新独立会话重新 Stage07。
+
   branch_recovery:
     previous_branch: dev/os-v2-global-model-capability-and-availability-routing-001
     quarantined_head_latest_observed: dfe553d35ea61aa31ebac32f7f107a9b402723eb
@@ -21,6 +21,7 @@ run:
     last_known_clean_head_before_recovery: 166dfdb9b350fb84a621de7f410e74ac3da0429b
     recovery_mode: new_branch_from_last_known_clean_head_no_history_rewrite
     quarantined_branch_reuse: prohibited
+
   workflow:
     stage_01_requirement_modeling:
       status: complete
@@ -32,6 +33,7 @@ run:
       serialization_status: repaired_and_valid
       serialization_repair_receipt: 01_需求建模/requirement/A_v3机械序列化修复回执_v1.yml
       semantic_change_by_repair: false
+
     stage_02_information_collection:
       status: complete
       research_status:
@@ -43,83 +45,105 @@ run:
         v1_v2_runs: diagnostic_only
         v3_rerun_required: false
       invalidated_by_stage07: false
+
     stage_03_result_modeling:
       status: complete
       artifact: 03_结果建模/B_结果模型_v1.yml
       invalidated_by_stage07: false
-      note: B13 requirement_satisfaction bookkeeping omission remains nonblocking; B13 semantics themselves remain valid and must be enforced by corrected tests/validator
+      note: B13 bookkeeping omission remains nonblocking; B13 semantics are now explicitly exercised by corrected Stage04 v3 tests
+
     stage_04_test_generation:
-      status: correction_reopened_by_Human_gate
-      historical_artifact: 04_测试生成/04_tests.yml
-      historical_artifact_version: 2
-      historical_freeze_receipt: 04_测试生成/freeze_receipt_v2.yml
-      historical_test_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
-      historical_test_count: 28
-      historical_disposition: superseded_for_next_execution_cycle_after_stage07_proved_gap
+      status: complete_corrected_refreeze
+      artifact: 04_测试生成/04_tests.yml
+      artifact_version: 3
+      freeze_receipt: 04_测试生成/freeze_receipt_v3.yml
+      historical_freeze_receipts: [04_测试生成/freeze_receipt_v1.yml, 04_测试生成/freeze_receipt_v2.yml]
       correction_authorization: 04_测试生成/Stage04_Human窄修正授权_v1.yml
       correction_dispatch: 04_测试生成/Stage04窄修正派单_v3.md
       trigger_review: 07_测试执行/07_blocking_review_v1.yml
-      trigger_adjudication: 07_测试执行/Stage07阻塞接收与回退裁决_v1.yml
-      correction_targets:
-        - source_ref_resolvability_not_just_nonempty
-        - no_cost_routing_test_must_not_false_positive_on_source_identifiers_or_urls
-        - unsupported_surface_model_attribution_must_fail_including_unregistered_entries
-        - mechanism_validator_runtime_negative_probes_must_cover_B13_failure_surface
-      next: awaiting_new_independent_test_designer_refreeze
+      test_count: 35
+      test_kinds: {positive: 16, negative: 9, boundary: 10}
+      frozen_package_sha256: 848b691712166a968c821ad6e53cafaf477b86bf7b1d7773306ad4e6ebf3e48c
+      superseded_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+      selftest_reported_by_correction_designer: good_35_of_35_mutations_36_of_36
+      retained_candidate_corrected_acceptance: 29/35
+      retained_candidate_red_tests: [MR-T10, MR-T29, MR-T30, MR-T31, MR-T32, MR-T34]
+      role_overlap_disclosed: same_session_as_trigger_stage07_reviewer
+      role_overlap_disposition: accepted_for_test_correction_not_final_independent_acceptance
+      final_stage07_must_use_fresh_session: true
+
     stage_05_step_decomposition:
-      status: superseded_pending_stage04_corrected_refreeze
+      status: complete_rebound
+      artifact: 05_步骤拆分/05_steps_v2.yml
+      artifact_version: 2
+      rebind_receipt: 05_步骤拆分/Stage05重绑定回执_v1.yml
       historical_artifact: 05_步骤拆分/05_steps.yml
-      historical_artifact_version: 1
-      required_next_action: rebind_or_narrow_rederive_after_new_stage04_digest
+      semantic_redecomposition: false
+      test_count: 35
+      slice_counts: {S1: 8, S2: 10, S3: 12, S4: 5}
+      final_closure_step: S5_full_package_closure
+      frozen_package_sha256: 848b691712166a968c821ad6e53cafaf477b86bf7b1d7773306ad4e6ebf3e48c
+      implementation_boundary_changed: false
+
     stage_06_execution:
-      status: candidate_fix_required_pending_corrected_tests
+      status: correction_round_1_dispatched
       Human_authorization: 06_执行/Stage06_Human实施边界授权_v1.yml
-      active_task_packet_at_initial_execution: 01_任务输入/任务包_v4.yml
+      Human_boundary_reused_without_expansion: true
+      active_task_packet: 01_任务输入/任务包_v5.yml
+      correction_dispatch: 06_执行/Stage06_Codex定点修正派单_v2.md
       executor:
         provider: OpenAI
         surface: Codex Desktop
         model: GPT-5.6 Sol
-        reasoning_effort: max
+        reasoning_effort: max_if_exposed_else_high
         authority: routing_only
-      source_base: a97d32ddd24cc9a94aaedea8adb045d4cdf6308c
-      implementation_commit: 3e3b608ac2c265d6aa4eb31471e8f1eae05603a4
-      executor_evidence_head: f89a81ba26f2e697fa1423a37185b28728d82ae0
-      initial_executor_claimed_acceptance: 28/28
-      initial_frozen_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
-      candidate_retained_as_correction_baseline: true
-      final_acceptance: invalidated_by_stage07_fix_required
-      next: wait_for_corrected_stage04_package_then_targeted_Codex_fix
+      retained_initial_candidate:
+        source_base: a97d32ddd24cc9a94aaedea8adb045d4cdf6308c
+        implementation_commit: 3e3b608ac2c265d6aa4eb31471e8f1eae05603a4
+        initial_result_head: f89a81ba26f2e697fa1423a37185b28728d82ae0
+        old_package_acceptance: 28/28
+        corrected_package_acceptance: 29/35
+      correction_targets:
+        F1: remove_or_rebind_unsupported_antigravity_Opus48_attribution
+        F2: canonical_reachable_source_resolution_and_restore_primary_source_identity
+        F3: mechanism_validator_runtime_fail_closed_for_corrected_negative_probes
+      required_final_acceptance: 35/35
+      required_frozen_package_sha256: 848b691712166a968c821ad6e53cafaf477b86bf7b1d7773306ad4e6ebf3e48c
+      final_independent_acceptance: pending_fresh_stage07_after_correction
+
     stage_07_test_execution:
-      status: incomplete_fix_required
-      reviewer:
-        surface: Claude Desktop — Cowork mode
-        model: Claude Opus 5
-        reasoning_setting: not_exposed
-        independent_from_stage06_executor: true
-      reviewer_result_head: b9c157093850bb51bd7df5cb054fd02a03278ac0
+      status: incomplete_fix_required_awaiting_corrected_candidate
+      prior_reviewer_result_head: b9c157093850bb51bd7df5cb054fd02a03278ac0
       blocking_review: 07_测试执行/07_blocking_review_v1.yml
-      independent_report: 07_测试执行/独立复核报告_v1.md
       adjudication: 07_测试执行/Stage07阻塞接收与回退裁决_v1.yml
-      independently_reproduced_old_frozen_acceptance: 28/28
-      blockers: [F1_opus48_false_surface_and_source_attribution, F2_source_refs_unresolvable_and_laundered_citation, F3_validator_does_not_fully_surface_B13_failures]
-      next: new_independent_review_after_stage04_refreeze_and_stage06_correction
+      prior_blockers: [F1_opus48_false_surface_and_source_attribution, F2_source_refs_unresolvable_and_laundered_citation, F3_validator_does_not_fully_surface_B13_failures]
+      next_reviewer_requirement:
+        fresh_session: true
+        different_session_from_stage04_correction_designer: true
+        different_session_from_stage06_executor: true
+        different_model_family_from_stage06_executor: true
+        independent_measurement: true
+
   correction_budget:
     policy_ref: 01_os/开发入口与单窗口任务规范_v1.md#11
     current_post_delivery_correction_round: 1
-    remaining_rounds_if_new_blockers_remain_after_this_round: 1
+    remaining_rounds_if_new_blockers_remain_after_corrected_delivery: 1
     third_round_allowed: false
+
   current_scope:
-    repository_writes: stage04_correction_boundary_only_until_corrected_refreeze_is_received
-    stage04_write_boundary:
-      - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/04_测试生成/**
-    canonical_mutation: prohibited_until_corrected_stage04_is_accepted_and_stage06_correction_is_dispatched
+    repository_writes: authorized_stage06_boundary_only
+    canonical_mutation: authorized_for_targeted_stage06_correction_within_existing_Human_boundary
+    stage04_v3_mutation: prohibited
+    A_Stage02_B_mutation: prohibited
     master_publication: prohibited_without_new_Human_gate
     quarantined_branch_reuse: prohibited
+
   availability_rule:
     registered_models_default: available
     unavailable_only_by: explicit_Human_override
     restored_by: explicit_Human_override
     automatic_quota_probe: false
+
   routing_optimization:
     objective: task_model_fit_and_reliable_completion
     token_or_price_optimization: false
