@@ -1,0 +1,92 @@
+schema_version: citystate.task_packet.v1
+task_packet:
+  task_id: os-v2-global-model-capability-and-availability-routing-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T2_semantic
+  exact_base_sha: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+  branch: dev/os-v2-global-model-capability-and-availability-routing-002
+  objective: >-
+    执行已完成 Stage 1-5 的全局模型能力与任务路由机制，实现冻结 B / Stage 04 acceptance contract；
+    在 Human 已授权的 canonical boundary 内依次完成 S1-S4，实现后由 S5 对 28 条冻结测试做全包闭环。
+    路由只优化 task-model fit 与 reliable completion；Human availability override 为账户级可用性权威输入；
+    model routing 永远只有 routing_only authority。
+
+  source_evidence:
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/01_需求建模/requirement/A_需求建模_v3.yml
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/02_信息收集与提炼/Stage02_证据结论_v2.yml
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/03_结果建模/B_结果模型_v1.yml
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/04_测试生成/04_tests.yml
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/04_测试生成/freeze_receipt_v2.yml
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/05_步骤拆分/05_steps.yml
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/06_执行/Stage06_Human实施边界授权_v1.yml
+
+  allowed_changed_paths:
+    - 01_os/03_mechanisms/model_routing/**
+    - 01_os/02_boot/model_routing/**
+    - 01_os/06_execution/boot/model_routing/**
+    - 01_os/05_registry/model_routing_v1.yml
+    - 01_os/开发入口与单窗口任务规范_v1.md
+    - 01_os/03_mechanisms/README.md
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/**
+
+  required_tests:
+    - execute Stage 05 steps in declared dependency order
+    - each step may advance only when its bound frozen test_ids pass
+    - retry budget per step <= 3 and exits remain pass/retry/invalidate_upstream
+    - Stage 04 package command exits 0 and digest remains 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+    - Stage 04 selftest exits 0 with good fixture 28/28 and declared mutations killed
+    - final Stage 06 candidate reaches 28/28 frozen acceptance tests
+    - publisher authority registry remains byte-identical to frozen baseline
+    - git diff --check and changed paths vs allowlist pass
+
+  prohibitions:
+    - modify_master_without_Human_gate
+    - force_push
+    - rebase
+    - squash
+    - amend
+    - history_rewrite
+    - modify_Stage04_frozen_tests_fixtures_mutations_or_validator
+    - modify_01_os_01_workflow_semantics
+    - redesign_context_management
+    - modify_repository_publisher_authority_v1
+    - implement_role_mechanism
+    - implement_task_envelope_or_long_running_mechanism
+    - enable_Claude_Code_CLI
+    - automated_account_or_quota_detection
+    - formal_Antigravity_qualification
+    - read_or_store_credentials_tokens_cookies_or_browser_profile_data
+    - merge_or_reuse_quarantined_branch_history
+    - expand_allowed_changed_paths_without_Human_gate
+
+  required_completion_pointer: 08_结论/completion_pointer_v1.yml
+
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_write_authorized: true
+    master_write_authorized: false
+    destructive_git_authorized: false
+    authorization_ref: 06_执行/Stage06_Human实施边界授权_v1.yml
+    expected_remote_head: fresh_read_required_before_push
+
+  executor_profile:
+    provider: OpenAI
+    surface: Codex Desktop
+    model: GPT-5.6 Sol
+    reasoning_effort: max_if_exposed_else_high
+    mode: standard
+    rollout_token_budget: null
+    routing_basis: >-
+      Stage 04 frozen tests were authored by Claude Opus 5 / Cowork; selecting Codex Desktop / GPT-5.6 Sol for Stage 06
+      separates test authorship from implementation model family. The task is T2 semantic canonical implementation with frozen tests,
+      so use the strongest available Sol reasoning setting exposed by the surface; Human availability override remains authoritative.
+    authority: routing_only
+
+  verification_profile:
+    reproduce_before_change: required
+    independent_reviewer: Claude_new_session_after_stage07_candidate
+    different_model_family: true
+    different_measurement_tool: true
+
+  supersedes: 01_任务输入/任务包_v3.yml
