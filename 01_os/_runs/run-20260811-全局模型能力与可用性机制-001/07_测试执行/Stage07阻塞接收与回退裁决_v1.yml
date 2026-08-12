@@ -1,0 +1,123 @@
+schema_version: citystate.stage07.blocker_adjudication.v1
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+adjudicated_at: '2026-08-11'
+status: accepted_fix_required
+
+physical_binding:
+  reviewed_branch: dev/os-v2-global-model-capability-and-availability-routing-002
+  reviewer_result_head: b9c157093850bb51bd7df5cb054fd02a03278ac0
+  stage06_source_base: a97d32ddd24cc9a94aaedea8adb045d4cdf6308c
+  stage06_implementation_commit: 3e3b608ac2c265d6aa4eb31471e8f1eae05603a4
+  remote_master: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+  quarantined_branch: dev/os-v2-global-model-capability-and-availability-routing-001
+  quarantined_branch_reuse: prohibited
+
+review_input:
+  blocking_review: 07_测试执行/07_blocking_review_v1.yml
+  independent_report: 07_测试执行/独立复核报告_v1.md
+  reviewer: Claude Desktop — Cowork mode / Claude Opus 5 / reasoning_setting:not_exposed
+  verdict: FIX_REQUIRED
+  independently_reproduced_frozen_acceptance: 28/28
+
+Human_delegation:
+  ref: Human_message_2026-08-11_authorized_planner_to_decide_after_stage07_fix_required
+  quoted_intent: 授权给你，你决策
+  authority_effect: >-
+    Human 将本次 blocker 的 workflow 回退选择交由规划/架构窗口裁决；该授权不包含 master
+    publication、force/rebase/squash/amend/history rewrite 或扩大 Stage 06 canonical objective。
+
+confirmed_findings:
+  F1_opus48_false_surface_and_source_attribution:
+    verdict: CONFIRMED_BLOCKING
+    upstream_stage02_invalidated: false
+    upstream_stage03_invalidated: false
+    basis:
+      - Stage 02 C07/C08 只证明 Antigravity 上的 Claude Opus 4.6，不证明 Opus 4.8
+      - B10 把 Opus 4.8 描述为 Anthropic entitlement-conflict discovered/unregistered candidate
+      - candidate catalog 唯一把 Opus 4.8 绑定到 antigravity，缺 source support
+    correction_target: implementation_plus_test_gap
+
+  F2_source_refs_unresolvable_and_laundered_citation:
+    verdict: CONFIRMED_BLOCKING
+    upstream_stage02_invalidated: false
+    upstream_stage03_invalidated: false
+    basis:
+      - Stage 02 source_registry 定义 OAI_*/ANTH_*/GOOGLE_*/GEMINI_PASS 等 source identity
+      - canonical model-routing declared load surface 无 source-resolution entry point
+      - C08_Antigravity_Pro_access 是 claim id，不是 source id
+      - Stage 06 S5 attempt 1 因 MR-T25 对 GOOGLE_AG_PRICING 的 PRICING 子串误伤而替换真实 source identity
+    correction_target: implementation_plus_stage04_test_defect
+
+  F3_validator_does_not_fully_surface_B13_failures:
+    verdict: CONFIRMED_BLOCKING
+    upstream_stage02_invalidated: false
+    upstream_stage03_invalidated: false
+    basis:
+      - B13 明确要求 source/freshness、illegal cost/quota routing fields、registered entry source/parameter、entry/boot/registry pointer breakage 可 fail closed
+      - current validator 未验证 registry entry coverage/path existence、source resolvability、unregistered source refs、catalog_version cross-binding 与完整 pointer surface
+    correction_target: implementation_plus_stage04_test_gap
+
+nonblocking_adjudications:
+  Cowork_Opus5_surface_observation:
+    verdict: FOLLOW_UP_NOT_CURRENT_SCOPE
+    reason: >-
+      该 surface 在本任务过程中已实测存在，但 A v3 当前成功判据冻结的是五个既定 product surfaces；
+      事后把 Cowork 加入当前 catalog 会扩大 Human-confirmed scope。后续 catalog refresh task 再吸收。
+
+  legacy_Gemini31_mechanical_only_rule:
+    verdict: INTENTIONALLY_SUPERSEDED_NOT_BLOCKING
+    legacy_ref: d5aef4bf92a90743c965c48195f7d7480459205b
+    reason: >-
+      旧入口曾把 Gemini 3.1 Pro 限定在机械任务，但当前 Human-confirmed A v3/B11 明确要求把
+      按型号硬编码路由和过时 Gemini 限定移出稳定入口；当前机制改为 task-fit + evidence + Human
+      availability，并且 Human 已关闭 formal Antigravity qualification。因此不把旧型号级限制复制进
+      canonical catalog。若未来项目 qualification 产生正式边界，应写入 project-observation evidence，
+      而不是恢复入口硬编码。
+
+workflow_decision:
+  stage01_requirement_modeling: remains_complete
+  stage02_information_collection: remains_complete
+  stage03_result_modeling: remains_complete
+  stage04_test_generation:
+    action: REOPEN_NARROW_CORRECTION
+    reason: >-
+      MR-T10 只验证 source_refs 非空而非可解析；MR-T25 的逐行词法扫描把 evidence source identifier
+      的 PRICING 子串误判为 cost-routing logic，已实际诱导 evidence laundering。冻结测试因此被证明
+      存在 gap/overfire，按 Stage 04 frozen-test rule 必须 Human-gated 重开并重新冻结，不能在 Stage 06
+      里绕过。
+  stage05_step_decomposition:
+    action: superseded_pending_stage04_refreeze_then_rebind_or_narrow_rederive
+  stage06_execution:
+    action: candidate_retained_as_baseline_but_not_accepted
+    correction_executor_preference: Codex Desktop / GPT-5.6 Sol / max
+  stage07_test_execution:
+    action: incomplete_fix_required
+    next_review: new_independent_session_after_correction
+
+stage04_narrow_correction_objectives:
+  - strengthen source evidence tests so every source_ref used by canonical catalog is resolvable from the mechanism's declared canonical load surface or an explicit canonical pointer reachable from it
+  - distinguish source identity/reference metadata from economic routing semantics; source ids or URLs containing pricing/cost words must not fail solely because of lexical substrings
+  - test the known unsupported antigravity/Claude Opus 4.8 attribution so evidence-unsupported surface/model bindings fail
+  - require the mechanism validator itself to fail closed on representative B13 defects, including broken registry/path coverage, source-resolution failure including unregistered entries, version/pointer drift, and illegal economic routing fields
+  - preserve all previously valid positive/negative/boundary guarantees unless a previous check is specifically superseded by a corrected stronger equivalent
+
+stage04_correction_constraints:
+  evidence_basis: A_plus_Stage02_evidence_not_candidate_convenience
+  B_may_be_read_for_claim_mapping: true
+  no_canonical_mutation: true
+  do_not_fix_implementation: true
+  may_modify_existing_frozen_tests: true
+  must_create_new_artifact_version_and_new_test_package_sha256: true
+  preserve_old_freeze_receipts: true
+  old_digest_status: superseded_but_historical
+  old_digest: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+
+correction_budget:
+  policy_ref: 01_os/开发入口与单窗口任务规范_v1.md#11
+  current_post_delivery_correction_round: 1
+  remaining_rounds_after_this_round_if_new_blockers_remain: 1
+  no_third_round: true
+
+master_publication_authorized: false
+marker: stage07_fix_required_stage04_narrow_correction_authorized
