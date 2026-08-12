@@ -5,14 +5,14 @@ run:
   exact_base_sha: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
   branch: dev/os-v2-global-model-capability-and-availability-routing-002
   owner: core
-  status: stage07_final_fresh_independent_review_dispatched
+  status: workflow_complete_awaiting_Human_master_integration_gate
   purpose: >-
-    用七阶段 workflow 建立低耦合的全局模型能力与任务路由机制。Stage 1-3 保持 complete。
-    初始 Stage06 candidate 在旧 Stage04 v2 包上 28/28，但 Stage07 v1 仍发现 F1/F2/F3 blocker。
-    Stage04 经 Human-gated 窄修正 refreeze 为 artifact v3：35 tests / digest 848b6917...e48c；
-    Stage05 已机械重绑定为 v2。Codex Desktop / GPT-5.6 Sol 已完成 post-delivery correction round 1，
-    implementation commit 150e800e...；执行方自报 corrected package 35/35。规划窗口核验修正 primary diff
-    与 F1/F2/F3 remedy shape 后，仅接受候选进入全新 Stage07，不把 executor 自证升级为最终验收。
+    用七阶段 workflow 建立低耦合的全局模型能力与任务路由机制。Stage 1-3 complete；Stage04 在
+    Stage07 v1 发现 F1/F2/F3 后经 Human-gated narrow correction refreeze 为 artifact v3 / 35 tests；
+    Stage05 机械重绑定为 v2；Codex Desktop / GPT-5.6 Sol 完成 correction round 1；全新 Claude Opus 5
+    Stage07 v2 独立复核自行重算 digest、独立运行 35/35 frozen acceptance 并用 reviewer-authored probes
+    关闭 F1/F2/F3，最终 verdict 为 PASS_WITH_NON_BLOCKING_NOTES。七阶段 workflow 已完成，当前只等待
+    Human 是否授权将正式 task branch 以普通 fast-forward 接入 master；此状态本身不授权 master publication。
 
   branch_recovery:
     previous_branch: dev/os-v2-global-model-capability-and-availability-routing-001
@@ -44,13 +44,13 @@ run:
         formal_qualification: closed_by_Human
         v1_v2_runs: diagnostic_only
         v3_rerun_required: false
-      invalidated_by_stage07_v1: false
+      invalidated_by_stage07: false
 
     stage_03_result_modeling:
       status: complete
       artifact: 03_结果建模/B_结果模型_v1.yml
-      invalidated_by_stage07_v1: false
-      note: B13 bookkeeping omission remains nonblocking; corrected Stage04 v3 explicitly exercises B13 semantics
+      invalidated_by_stage07: false
+      note: B13 bookkeeping omission remains nonblocking; corrected Stage04 v3 and final Stage07 explicitly exercise B13 semantics
 
     stage_04_test_generation:
       status: complete_corrected_refreeze
@@ -60,14 +60,12 @@ run:
       historical_freeze_receipts: [04_测试生成/freeze_receipt_v1.yml, 04_测试生成/freeze_receipt_v2.yml]
       correction_authorization: 04_测试生成/Stage04_Human窄修正授权_v1.yml
       correction_dispatch: 04_测试生成/Stage04窄修正派单_v3.md
-      trigger_review: 07_测试执行/07_blocking_review_v1.yml
       test_count: 35
       test_kinds: {positive: 16, negative: 9, boundary: 10}
       frozen_package_sha256: 848b691712166a968c821ad6e53cafaf477b86bf7b1d7773306ad4e6ebf3e48c
       superseded_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
       role_overlap_disclosed: same_session_as_trigger_stage07_v1_reviewer
       role_overlap_disposition: accepted_for_test_correction_not_final_independent_acceptance
-      final_stage07_must_use_fresh_session: true
 
     stage_05_step_decomposition:
       status: complete_rebound
@@ -83,7 +81,7 @@ run:
       implementation_boundary_changed: false
 
     stage_06_execution:
-      status: correction_round_1_candidate_accepted_for_fresh_stage07
+      status: complete_corrected_candidate
       Human_authorization: 06_执行/Stage06_Human实施边界授权_v1.yml
       Human_boundary_reused_without_expansion: true
       active_task_packet: 01_任务输入/任务包_v5.yml
@@ -102,53 +100,67 @@ run:
       candidate_adjudication: 06_执行/Stage06定点修正候选接收裁决_v2.yml
       executor_claimed_acceptance: 35/35
       frozen_package_sha256: 848b691712166a968c821ad6e53cafaf477b86bf7b1d7773306ad4e6ebf3e48c
-      primary_diff_changed_paths: 9
-      canonical_changed_paths: 7
-      out_of_scope_paths: 0
-      stage04_v3_changed: false
-      A_Stage02_B_changed: false
-      publisher_authority_changed: false
-      master_modified: false
-      remedy_shape_spotcheck:
-        F1: confirmed_candidate_rebound_Opus48_to_claude_code_desktop
-        F2: confirmed_canonical_source_index_and_primary_source_restoration
-        F3: confirmed_validator_consumes_sources_registry_versions_economic_semantics_and_pointers
-      final_independent_acceptance: pending_fresh_stage07
+      final_independent_acceptance: accepted_by_stage07_v2
 
     stage_07_test_execution:
-      status: final_fresh_independent_review_dispatched
-      prior_v1_review:
-        reviewer_result_head: b9c157093850bb51bd7df5cb054fd02a03278ac0
-        blocking_review: 07_测试执行/07_blocking_review_v1.yml
-        adjudication: 07_测试执行/Stage07阻塞接收与回退裁决_v1.yml
-        blockers: [F1_opus48_false_surface_and_source_attribution, F2_source_refs_unresolvable_and_laundered_citation, F3_validator_does_not_fully_surface_B13_failures]
+      status: complete_PASS_WITH_NON_BLOCKING_NOTES
       final_dispatch: 07_测试执行/Stage07_最终独立复核派单_v2.md
-      reviewer_requirement:
+      verification: 07_测试执行/07_verification_v2.yml
+      final_report: 07_测试执行/最终独立复核报告_v2.md
+      final_acceptance_adjudication: 07_测试执行/Stage07最终独立验收接收裁决_v2.yml
+      reviewer:
+        provider: Anthropic
+        surface: Claude Desktop Cowork
+        model: Claude Opus 5
+        reasoning_setting: not_exposed
         fresh_session: true
-        different_session_from_stage06_executor: true
-        different_session_from_stage04_correction_designer_and_prior_stage07_v1_reviewer: true
         different_model_family_from_stage06_executor: true
         independent_measurement: true
-        must_independently_reproduce_35_tests: true
-        must_recheck_F1_F2_F3_against_primary_evidence: true
-      write_boundary:
-        - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/07_测试执行/**
-      canonical_mutation_during_review: prohibited
+      reviewer_result_head: 2f86395ed49e38ef322873e24a0419a6e98167ea
+      verdict: PASS_WITH_NON_BLOCKING_NOTES
+      completion: true
+      upstream_invalidation: false
+      reviewer_recomputed_digest: 848b691712166a968c821ad6e53cafaf477b86bf7b1d7773306ad4e6ebf3e48c
+      frozen_acceptance: 35/35
+      F1_closed: true
+      F2_closed: true
+      F3_closed: true
+      non_blocking_notes: [N1_source_locator_reachability, N2_guards_split_between_canonical_and_frozen_package, N3_historical_authorization_ref_not_repeated, N4_A_criterion_2_modeling_choice]
       pass_marker: stage07_final_independent_verification_complete_ready_for_Human_integration_gate
-      fail_marker: stage07_final_independent_verification_fix_required
 
   correction_budget:
     policy_ref: 01_os/开发入口与单窗口任务规范_v1.md#11
     completed_post_delivery_correction_rounds: 1
-    remaining_rounds_if_new_blockers_remain: 1
-    third_round_allowed: false
+    unused_remaining_rounds_after_PASS: 1
+    correction_loop_closed: true
+
+  follow_up_candidates:
+    - id: source_locator_reachability_strengthening
+      source: Stage07_v2_N1
+      blocking_current_task: false
+      disposition: separate_future_requirement_if_Human_wants
+    - id: dangling_global_ai_handoff_pointer
+      source: Stage07_v2_out_of_scope_observation
+      blocking_current_task: false
+      disposition: separate_governance_cleanup_if_still_applicable
+
+  integration_gate:
+    status: awaiting_explicit_Human_authorization
+    source_branch: dev/os-v2-global-model-capability-and-availability-routing-002
+    expected_master_before_integration: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+    required_topology: ordinary_fast_forward_only
+    merge_commit: prohibited
+    force_push: prohibited
+    rebase: prohibited
+    squash: prohibited
+    amend: prohibited
+    history_rewrite: prohibited
+    master_write_authorized: false
 
   current_scope:
-    repository_writes: stage07_review_evidence_only
-    canonical_mutation: prohibited_during_final_stage07
-    stage04_v3_mutation: prohibited
-    A_Stage02_B_mutation: prohibited
-    master_publication: prohibited_without_new_Human_gate
+    repository_writes: run_evidence_only_until_Human_integration_decision
+    canonical_mutation: prohibited_after_stage07_completion_without_new_task_or_gate
+    master_publication: prohibited_without_explicit_Human_gate
     quarantined_branch_reuse: prohibited
 
   availability_rule:
