@@ -5,14 +5,15 @@ run:
   exact_base_sha: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
   branch: dev/os-v2-global-model-capability-and-availability-routing-002
   owner: core
-  status: stage07_awaiting_independent_verification
+  status: stage04_narrow_correction_authorized_awaiting_independent_test_designer
   purpose: >-
-    用七阶段 workflow 建立低耦合的全局模型能力与任务路由机制。Stage 1-5 已完成；Stage 4 的 28 条 acceptance tests
-    已冻结并完成 A v3 serialization-only predecessor rebind。Human 已授权 Stage 06 implementation boundary；
-    Codex Desktop / GPT-5.6 Sol / max 已完成候选实现，implementation commit 为
-    3e3b608ac2c265d6aa4eb31471e8f1eae05603a4，executor 自报冻结测试 28/28。规划窗口已核 primary diff、
-    scope 与关键语义，接受候选进入 Stage 07，但未把 executor 自测当成最终验收。当前等待新的 Anthropic 会话
-    独立复现 frozen tests 并审核实现是否真正满足 B 与 Stage 02 evidence。
+    用七阶段 workflow 建立低耦合的全局模型能力与任务路由机制。Stage 1-3 保持 complete。
+    Stage 06 Codex candidate 曾在旧 Stage 04 package 上取得 28/28，但新的 Claude Opus 5 独立
+    Stage 07 reviewer 复现 28/28 后仍发现三个 blocking semantic findings：Opus 4.8 surface/source
+    attribution 错误、canonical source refs 不可解析且发生一次为过 MR-T25 而证据洗白、机制 validator
+    未完整兑现 B13。规划窗口独立核验后确认 Stage 02/03 不失效，根因是 implementation defect +
+    Stage 04 test gap/overfire。Human 已委托规划窗口决定回退路径，现 Human-gated 窄重开 Stage 04，
+    先修正并重新冻结 evidence-derived tests，再重绑定 Stage 05、定点修正 Stage 06、重新独立 Stage 07。
   branch_recovery:
     previous_branch: dev/os-v2-global-model-capability-and-availability-routing-001
     quarantined_head_latest_observed: dfe553d35ea61aa31ebac32f7f107a9b402723eb
@@ -30,7 +31,6 @@ run:
       semantic_status: confirmed
       serialization_status: repaired_and_valid
       serialization_repair_receipt: 01_需求建模/requirement/A_v3机械序列化修复回执_v1.yml
-      serialization_repair_class: serialization_only
       semantic_change_by_repair: false
     stage_02_information_collection:
       status: complete
@@ -42,36 +42,39 @@ run:
         formal_qualification: closed_by_Human
         v1_v2_runs: diagnostic_only
         v3_rerun_required: false
+      invalidated_by_stage07: false
     stage_03_result_modeling:
       status: complete
       artifact: 03_结果建模/B_结果模型_v1.yml
-      nonblocking_note: B13_failure_surfacing_not_explicitly_listed_in_requirement_satisfaction_but_A_criteria_all_mapped
+      invalidated_by_stage07: false
+      note: B13 requirement_satisfaction bookkeeping omission remains nonblocking; B13 semantics themselves remain valid and must be enforced by corrected tests/validator
     stage_04_test_generation:
-      status: complete
-      artifact: 04_测试生成/04_tests.yml
-      artifact_version: 2
-      freeze_receipt: 04_测试生成/freeze_receipt_v2.yml
-      previous_freeze_receipt: 04_测试生成/freeze_receipt_v1.yml
-      rebind_receipt: 04_测试生成/Stage04上游重绑定回执_v1.yml
-      acceptance_adjudication: 04_测试生成/Stage04接收裁决_v1.yml
-      frozen_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
-      test_count: 28
-      test_content_changed: false
-      independence_requirement: satisfied
+      status: correction_reopened_by_Human_gate
+      historical_artifact: 04_测试生成/04_tests.yml
+      historical_artifact_version: 2
+      historical_freeze_receipt: 04_测试生成/freeze_receipt_v2.yml
+      historical_test_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+      historical_test_count: 28
+      historical_disposition: superseded_for_next_execution_cycle_after_stage07_proved_gap
+      correction_authorization: 04_测试生成/Stage04_Human窄修正授权_v1.yml
+      correction_dispatch: 04_测试生成/Stage04窄修正派单_v3.md
+      trigger_review: 07_测试执行/07_blocking_review_v1.yml
+      trigger_adjudication: 07_测试执行/Stage07阻塞接收与回退裁决_v1.yml
+      correction_targets:
+        - source_ref_resolvability_not_just_nonempty
+        - no_cost_routing_test_must_not_false_positive_on_source_identifiers_or_urls
+        - unsupported_surface_model_attribution_must_fail_including_unregistered_entries
+        - mechanism_validator_runtime_negative_probes_must_cover_B13_failure_surface
+      next: awaiting_new_independent_test_designer_refreeze
     stage_05_step_decomposition:
-      status: complete
-      artifact: 05_步骤拆分/05_steps.yml
-      artifact_version: 1
-      step_count: 5
-      implementation_slices: 4
-      final_closure_step: S5_full_package_closure
-      retry_budget_each_step: 3
-      exits: [pass, retry, invalidate_upstream]
+      status: superseded_pending_stage04_corrected_refreeze
+      historical_artifact: 05_步骤拆分/05_steps.yml
+      historical_artifact_version: 1
+      required_next_action: rebind_or_narrow_rederive_after_new_stage04_digest
     stage_06_execution:
-      status: candidate_complete_accepted_for_stage07
+      status: candidate_fix_required_pending_corrected_tests
       Human_authorization: 06_执行/Stage06_Human实施边界授权_v1.yml
-      active_task_packet: 01_任务输入/任务包_v4.yml
-      dispatch: 06_执行/Stage06_Codex执行派单_v1.md
+      active_task_packet_at_initial_execution: 01_任务输入/任务包_v4.yml
       executor:
         provider: OpenAI
         surface: Codex Desktop
@@ -81,33 +84,35 @@ run:
       source_base: a97d32ddd24cc9a94aaedea8adb045d4cdf6308c
       implementation_commit: 3e3b608ac2c265d6aa4eb31471e8f1eae05603a4
       executor_evidence_head: f89a81ba26f2e697fa1423a37185b28728d82ae0
-      execution_evidence: 06_执行/Stage06_执行证据_v1.yml
-      candidate_adjudication: 06_执行/Stage06候选接收裁决_v1.yml
-      executor_claimed_acceptance: 28/28
-      frozen_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
-      out_of_scope_paths: 0
-      master_modified: false
-      final_independent_acceptance: pending_stage07
+      initial_executor_claimed_acceptance: 28/28
+      initial_frozen_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+      candidate_retained_as_correction_baseline: true
+      final_acceptance: invalidated_by_stage07_fix_required
+      next: wait_for_corrected_stage04_package_then_targeted_Codex_fix
     stage_07_test_execution:
-      status: awaiting_independent_reviewer
-      dispatch: 07_测试执行/Stage07_独立复核派单_v1.md
-      reviewer_requirement:
-        different_session_from_executor: true
-        different_model_family_from_executor: true
-        preferred_family: Anthropic
-        preferred_model: Claude Opus 5
-        surface: current_repo_capable_Claude_surface
-      write_boundary:
-        - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/07_测试执行/**
-      canonical_mutation_during_review: prohibited
-      mandatory_attack_points:
-        - source_ref_resolvability
-        - Cowork_Opus5_surface_scope
-        - Opus48_antigravity_surface_attribution
-        - validator_semantic_depth
+      status: incomplete_fix_required
+      reviewer:
+        surface: Claude Desktop — Cowork mode
+        model: Claude Opus 5
+        reasoning_setting: not_exposed
+        independent_from_stage06_executor: true
+      reviewer_result_head: b9c157093850bb51bd7df5cb054fd02a03278ac0
+      blocking_review: 07_测试执行/07_blocking_review_v1.yml
+      independent_report: 07_测试执行/独立复核报告_v1.md
+      adjudication: 07_测试执行/Stage07阻塞接收与回退裁决_v1.yml
+      independently_reproduced_old_frozen_acceptance: 28/28
+      blockers: [F1_opus48_false_surface_and_source_attribution, F2_source_refs_unresolvable_and_laundered_citation, F3_validator_does_not_fully_surface_B13_failures]
+      next: new_independent_review_after_stage04_refreeze_and_stage06_correction
+  correction_budget:
+    policy_ref: 01_os/开发入口与单窗口任务规范_v1.md#11
+    current_post_delivery_correction_round: 1
+    remaining_rounds_if_new_blockers_remain_after_this_round: 1
+    third_round_allowed: false
   current_scope:
-    repository_writes: stage07_review_evidence_only
-    canonical_mutation: prohibited_until_review_verdict_and_any_required_fix_gate
+    repository_writes: stage04_correction_boundary_only_until_corrected_refreeze_is_received
+    stage04_write_boundary:
+      - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/04_测试生成/**
+    canonical_mutation: prohibited_until_corrected_stage04_is_accepted_and_stage06_correction_is_dispatched
     master_publication: prohibited_without_new_Human_gate
     quarantined_branch_reuse: prohibited
   availability_rule:
