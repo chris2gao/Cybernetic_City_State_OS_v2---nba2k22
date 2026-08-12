@@ -1,0 +1,93 @@
+schema_version: citystate.stage06.correction_candidate_adjudication.v2
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+stage_id: workflow_stage_06_execution
+status: accepted_for_fresh_stage07_not_final_acceptance
+adjudicated_at: '2026-08-11'
+
+physical_state:
+  branch: dev/os-v2-global-model-capability-and-availability-routing-002
+  correction_dispatch_base: 5fee938ad24660269d76428398866b145bd9d622
+  correction_implementation_commit: 150e800e683d69b31d1336d8a9c0ad6d21c90ff2
+  executor_evidence_head: 17e24eee8bfc58dfeb5d1a54f1d57310a5b21850
+  branch_head_readback_at_adjudication_start: 17e24eee8bfc58dfeb5d1a54f1d57310a5b21850
+  commits_from_dispatch_base_to_evidence_head: 2
+  implementation_commit_count: 1
+  result_evidence_commit_count: 1
+  fast_forward_shape: true
+  master_expected_unchanged: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+  quarantined_branch_reuse: prohibited
+
+primary_diff:
+  total_changed_paths_dispatch_base_to_evidence_head: 9
+  canonical_changed_paths: 7
+  evidence_changed_paths: 2
+  out_of_scope_paths: 0
+  canonical_paths:
+    - 01_os/02_boot/model_routing/启动清单_v1.yml
+    - 01_os/03_mechanisms/model_routing/README.md
+    - 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+    - 01_os/03_mechanisms/model_routing/来源索引_v1.yml
+    - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    - 01_os/05_registry/model_routing_v1.yml
+    - 01_os/06_execution/boot/model_routing/README.md
+  evidence_paths:
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/06_执行/Stage06_定点修正执行证据_v2.yml
+    - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/08_结论/completion_pointer_v2.yml
+  stage04_v3_paths_changed: 0
+  A_Stage02_B_paths_changed: 0
+  publisher_authority_path_changed: false
+  entry_spec_changed_in_correction: false
+
+spot_check:
+  F1_surface_attribution:
+    status: remedy_shape_confirmed
+    observed: >-
+      Claude Opus 4.8 is now an unregistered discovered candidate on claude_code_desktop,
+      not antigravity. Antigravity retains Opus 4.6 as the supported current label.
+  F2_source_resolution:
+    status: remedy_shape_confirmed
+    observed: >-
+      A canonical source index now exists under the mechanism, is intended to be loaded
+      through the mechanism boot surface, and restores provider-first-party identities
+      including GOOGLE_AG_PRICING instead of substituting a Stage02 claim id.
+  F3_failure_surfacing:
+    status: remedy_shape_confirmed
+    observed: >-
+      The mechanism validator now consumes registry entries and coverage, resolves source
+      tokens for registered and unregistered entries, cross-checks mechanism/catalog/source
+      index versions, rejects economic routing semantics, and verifies declared boot/pointer
+      reachability.
+
+executor_evidence:
+  path: 06_执行/Stage06_定点修正执行证据_v2.yml
+  claimed_frozen_artifact_version: 3
+  claimed_frozen_test_count: 35
+  claimed_test_package_sha256: 848b691712166a968c821ad6e53cafaf477b86bf7b1d7773306ad4e6ebf3e48c
+  claimed_acceptance: 35/35
+  claimed_selftest: good_35_of_35_mutations_36_of_36
+  claimed_mechanism_validator_static: exit_0
+  independently_reproduced_by_this_adjudication: false
+
+adjudication:
+  verdict: ACCEPTED_FOR_FRESH_STAGE07
+  final_stage07_acceptance: pending
+  rationale: >-
+    Primary diff is bounded and the three Stage07 blockers have concrete corrective
+    implementation shapes consistent with Stage02/B and the corrected Stage04 v3 contract.
+    Executor-reported 35/35 remains self-evidence only and is not promoted to final acceptance.
+  no_additional_codex_summary_report_required: true
+  next_required_action: fresh_stage07_independent_reproduction_and_semantic_review
+
+fresh_stage07_requirements:
+  fresh_session: true
+  different_session_from_stage06_executor: true
+  different_session_from_stage04_correction_designer_and_prior_stage07_reviewer: true
+  different_model_family_from_stage06_executor: true
+  independent_measurement: true
+  must_reproduce_corrected_35_test_package: true
+  must_recheck_F1_F2_F3_against_primary_evidence: true
+  must_not_treat_this_adjudication_or_executor_35_of_35_as_final_proof: true
+
+master_publication_authorized: false
+marker: stage06_correction_candidate_accepted_for_fresh_stage07
