@@ -5,51 +5,51 @@ run:
   exact_base_sha: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
   branch: dev/os-v2-global-model-capability-and-availability-routing-002
   owner: core
-  status: stage02_qualification_rerun_required_after_security_and_isolation_breach
+  status: stage04_awaiting_independent_test_designer
   purpose: >-
-    用七阶段 workflow 研究并设计全局模型能力/可用性/路由机制。Stage 1 的 A v2 已由 Human 确认；
-    Stage 2 的 provider research 与独立 research 已完成来源清洗。当前仅剩 Antigravity project qualification
-    需要在隔离修正后的最高 reasoning 模式冻结测试上取得可审计证据，之后才能进入 Stage 3。
+    用七阶段 workflow 建立低耦合的全局模型能力与任务路由机制。Stage 1 已由 Human 确认 A v3；
+    Stage 2 provider/独立 research 与 claim-level reconciliation 已完成；Antigravity formal qualification
+    已由 Human 显式关闭，既有非盲测试仅保留 diagnostic evidence。Stage 3 的 B v1 已完成。
+    当前进入 Stage 4，由独立测试设计角色从 A + Stage 2 evidence 生成冻结 acceptance tests；
+    在 Stage 4 完成前不进入 canonical implementation。
   branch_recovery:
     previous_branch: dev/os-v2-global-model-capability-and-availability-routing-001
-    quarantined_head: 6bc86cf24266dc144de6e19b3cb28768668c2b18
-    last_known_clean_head: 166dfdb9b350fb84a621de7f410e74ac3da0429b
+    quarantined_head_latest_observed: dfe553d35ea61aa31ebac32f7f107a9b402723eb
+    contaminated_ancestor: 6bc86cf24266dc144de6e19b3cb28768668c2b18
+    last_known_clean_head_before_recovery: 166dfdb9b350fb84a621de7f410e74ac3da0429b
     recovery_mode: new_branch_from_last_known_clean_head_no_history_rewrite
-    reason: >-
-      qualification 上传把 browser profile/cache 数据与任务外路径提交进原分支；原分支不得进入 master，
-      且任何敏感文件内容都不得被本任务读取。当前分支不继承该污染历史。
+    quarantined_branch_reuse: prohibited
   workflow:
     stage_01_requirement_modeling:
       status: complete
-      artifact: 01_需求建模/requirement/A_需求建模_v2.yml
-      Human_confirmation: 01_需求建模/requirement/人类确认_v2.yml
+      artifact: 01_需求建模/requirement/A_需求建模_v3.yml
+      Human_confirmation: 01_需求建模/requirement/人类确认_v3.yml
     stage_02_information_collection:
-      status: active_qualification_rerun_required
+      status: complete
       research_status:
         provider_first_party_pass: complete
         independent_pass: complete_with_source_cleaning
         reconciliation: complete
       qualification_status:
-        original_execution: invalid_for_positive_qualification_due_protocol_breach
-        highest_reasoning_only: true
-        rerun_required: true
-        reasons:
-          - tested agents obtained evaluator access or evaluator-derived feedback, violating blind qualification protocol
-          - Gemini 3.6 Flash did not preserve primary public workspace artifacts for independent reproduction
-          - Q4 evaluator counted interpreter-generated __pycache__ scratch as model-authored boundary change and must be corrected
+        formal_qualification: closed_by_Human
+        v1_v2_runs: diagnostic_only
+        v3_rerun_required: false
     stage_03_result_modeling:
-      status: blocked_by_valid_qualification_evidence
+      status: complete
+      artifact: 03_结果建模/B_结果模型_v1.yml
     stage_04_test_generation:
-      status: blocked_by_stage_03
+      status: awaiting_independent_test_designer
+      dispatch: 04_测试生成/独立测试生成派单_v2.md
+      independence_requirement: tests_derived_from_A_and_stage02_evidence_not_from_implementation
     stage_05_step_decomposition:
       status: blocked_by_stage_04
     stage_06_execution:
-      status: blocked_by_Human_approved_implementation_boundary
+      status: blocked_by_stage_05_and_Human_approved_implementation_boundary
     stage_07_test_execution:
       status: blocked_by_stage_06
   current_scope:
-    repository_writes: run_evidence_only
-    canonical_mutation: prohibited_until_Human_boundary_gate
+    repository_writes: run_evidence_only_until_Human_implementation_boundary_gate
+    canonical_mutation: prohibited
     quarantined_branch_reuse: prohibited
   availability_rule:
     registered_models_default: available
@@ -67,7 +67,8 @@ run:
       deferred: [Claude Code CLI]
     Google_or_Antigravity:
       surfaces: [Gemini web, Antigravity client]
-      qualified_labels_to_measure_at_highest_mode:
+      Human_observed_labels:
         - Gemini 3.1 Pro
         - Gemini 3.6 Flash
         - Claude Opus 4.6
+      formal_project_qualification: not_claimed
