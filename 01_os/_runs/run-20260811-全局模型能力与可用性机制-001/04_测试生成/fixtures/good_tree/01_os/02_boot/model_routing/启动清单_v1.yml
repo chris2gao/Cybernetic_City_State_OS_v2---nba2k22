@@ -1,0 +1,25 @@
+schema_version: citystate.model_routing.boot_manifest.v1
+mechanism_version: 1
+status: fixture_not_canonical
+failure_policy: fail_closed_on_missing_partial_or_stale
+invocation: explicit_Human_or_authorized_task_executor_only
+background_processes_started: false
+automatic_quota_probe: false
+crawler_watcher_scheduler_daemon: prohibited
+load_order:
+  - path: 01_os/03_mechanisms/model_routing/README.md
+    purpose: 机制入口、职责与失效显现
+  - path: 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+    purpose: 稳定输入输出契约与决策顺序
+  - path: 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    purpose: 带来源与失效条件的活动 model/surface 目录
+  - path: 01_os/03_mechanisms/model_routing/项目观察证据_v1.yml
+    purpose: 分级的项目实测观察，与 vendor 目录分离
+validator: 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+registry: 01_os/05_registry/model_routing_v1.yml
+receipt_required:
+  - boot_manifest_version
+  - mechanism_version
+  - loaded_catalog_version
+  - loaded_paths
+  - validator_exit_code

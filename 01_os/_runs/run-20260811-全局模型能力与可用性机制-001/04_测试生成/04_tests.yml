@@ -1,0 +1,489 @@
+schema_version: citystate.workflow.artifact.v1
+run_id: run-20260811-全局模型能力与可用性机制-001
+stage_id: workflow_stage_04_test_generation
+artifact_kind: frozen_test_package
+artifact_version: 1
+status: complete
+
+input_refs:
+  - stage_id: workflow_stage_01_requirement_modeling
+    path: 01_需求建模/requirement/A_需求建模_v3.yml
+    artifact_version: 3
+    sha256: 53639427fd9ba9228fa406b7cd7afc4a23956ee67ed734c4854fc1a5de5884d0
+  - stage_id: workflow_stage_02_information_collection
+    path: 02_信息收集与提炼/Stage02_证据结论_v2.yml
+    artifact_version: 2
+    sha256: 0206000d2fd0882aa136a679364e43a02fdcbad3f8b3201c1fa77380a2e3f010
+  - stage_id: workflow_stage_03_result_modeling
+    path: 03_结果建模/B_结果模型_v1.yml
+    artifact_version: 1
+    sha256: 263ee6dec1eabe91e1c9cf0b1637e50cea65f753c4f2c39a64e78047b0d16368
+
+supporting_refs:
+  - path: 01_需求建模/requirement/人类确认_v3.yml
+    sha256: 1a1989f077c9288900215923b611b60bbb7a3f1af3ed9bf828e2672769eb2f17
+  - path: 02_信息收集与提炼/证据对齐与冲突消解_v1.yml
+    sha256: 933b0db81ee0a5c0cd4c185f1cc4287e63c163ea5abde8cc9268756a99e6a832
+  - path: 01_任务输入/任务包_v3.yml
+    sha256: c5a931d7c2f8618c5b0342b4eb15d40ec2984f6b993f9324434d144dd1c6938c
+
+deliberation_receipt:
+  mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
+  activation_state: active_dormant
+  profile_id: workflow_stage_04_test_generation
+  route: dormant
+  receipt_status: valid
+  session_id: null
+  task_gate_ref: null
+  Human_authorization_ref: null
+
+credential_selection_record:
+  adjudicator: Stage 04 independent test designer (Claude Opus 5, Cowork surface)
+  date: '2026-08-11'
+  evidence_basis:
+    - 02_信息收集与提炼/证据对齐与冲突消解_v1.yml
+    - 02_信息收集与提炼/Stage02_证据结论_v2.yml
+    - 01_需求建模/requirement/A_需求建模_v3.yml
+  selected_properties:
+    - 机制边界与自描述（独立机制、registry/boot/loader pointer、失效显现）
+    - 路由输入输出契约与 authority 常量
+    - 可用性来源（Human override，而非自动探测）
+    - 目录新鲜度与来源（source/verified_at/invalidation/confidence）
+    - model 与 product surface 的身份分离，以及参数的 surface 归属
+    - vendor 事实与 project 观察的分栏及证据等级
+    - 入口 §7.1 变薄的同时 §8/§9/T3/publisher authority 不被削弱
+    - 决策原语中不出现 cost/token/quota、自动 fallback 链与后台探测
+  why_these: >-
+    这八组属性是 Stage 02 已接受 claim 中"可被结构化观察"的那部分。A 的成功判据里凡是
+    描述运行期行为却无法在静态树上判定的（例如"每次路由输出…"），一律降级为对契约声明的
+    检查，而不是伪造一个运行时断言。criterion 9（至少一轮盲式独立 research）是 Stage 02
+    的过程事实、已由 Human 关闭，本阶段不为它编造实现测试。
+  measurement_choice: >-
+    静态结构与契约检查，全部由 实现/verify_stage04_acceptance.py 以确定性方式判定；
+    唯一的动态检查是 MR-T24，它实际运行机制自带 validator 并要求非零退出码。
+  tolerance: >-
+    零容差：28 条检查全部为二值判定，不设阈值、不设采样。规范化摘要采用与
+    01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py
+    完全相同的 yaml.safe_dump(sort_keys=True, width=4096) + SHA-256。
+
+method_qualification:
+  testability: 每条检查都能在任意树上运行并返回二值结果；good fixture 全绿、27 条 mutation 全部被杀。
+  peer_review: 待 Stage 04 之后的独立审核窗口执行；本包由非 B 作者、非实现方生成。
+  known_error_rate: >-
+    以 mutation kill rate 量化：27/27（100%）。这是本套检查对已声明违规形态的杀伤率，
+    不等于对未预期违规形态的覆盖率。
+  operating_standard: 实现/verify_stage04_acceptance.py 的三个子命令（package / acceptance / selftest）。
+  general_acceptance: 沿用本仓既有 validator 形态（communication_system、context_management、minimum_operational_loop）。
+
+pre_implementation_check:
+  constraints_satisfiable: 是
+  boundary_overreach:
+    - claim: B02 列出 target_paths（含具体文件名）
+      disposition: >-
+        按派单"不要过拟合文件名"，本包只冻结机制目录、三条 repository-convention pointer 路径
+        （boot 清单、registry、execution loader 目录）与三个 schema_version token；
+        机制目录内部的文件名不构成成功条件。
+    - claim: B13 声明失效显现，但 B.requirement_satisfaction 未把 B13 映射到任何 A 成功判据
+      disposition: >-
+        记为 finding，不作为 blocker。本包把 B13 相关检查（MR-T03/T21/T22/T23/T24/T28）
+        绑到 A 成功判据 1（机制作为独立全局机制存在）——一个无法显现失效的机制不满足"存在且可验证"。
+    - claim: A 成功判据 9（盲式独立 research）无对应实现测试
+      disposition: >-
+        不编造。该判据是 Stage 02 过程事实，已由 Stage02_证据结论_v2 记录为 complete，
+        并由 Human 在 人类确认_v3 关闭 Antigravity qualification。本包显式声明未覆盖。
+
+frozen_contract_surface:
+  note: >-
+    这些是 Stage 05/06 必须命中的契约面。文件名不在其中。
+  mechanism_dir: 01_os/03_mechanisms/model_routing
+  boot_manifest: 01_os/02_boot/model_routing/启动清单_v1.yml
+  registry: 01_os/05_registry/model_routing_v1.yml
+  execution_loader_dir: 01_os/06_execution/boot/model_routing
+  schema_version_tokens:
+    contract: citystate.model_routing.contract.v
+    catalog: citystate.model_routing.catalog.v
+    project_observation_ledger: citystate.model_routing.project_observation.v
+  publisher_authority_baseline_sha256: ae9abdf5d729550511de857511a73d36c53f5d52d76e9f57c77b23ad19c29c1a
+
+payload:
+  frozen: true
+  freeze_authorization_ref: 04_测试生成/独立测试生成派单_v2.md@dev/os-v2-global-model-capability-and-availability-routing-002
+  test_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+  tests:
+    - test_id: MR-T01
+      kind: positive
+      title: model routing exists as an independent 03_mechanisms capability
+      subject_result_claim_ids: [B01_module_boundary, B02_minimal_canonical_composition]
+      evidence_claim_ids: [C12_architecture_boundary, C01_surface_is_first_class]
+      success_criterion_index: 1
+      measurement: >-
+        verify_stage04_acceptance.py acceptance <tree>：机制目录存在，含 README，并且能按
+        schema_version token 发现 contract / catalog / project observation ledger 三份文件。
+      pass_condition: 三份文件全部可发现且 README 存在。
+      can_fail: true
+      fails_when: 机制被写进 workflow 或入口而非独立 03_mechanisms 目录，或缺任一份契约文档。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T02
+      kind: negative
+      title: workflow does not duplicate the model catalog
+      subject_result_claim_ids: [B01_module_boundary]
+      evidence_claim_ids: [C12_architecture_boundary]
+      success_criterion_index: 1
+      measurement: >-
+        扫描 01_os/01_workflow/**：不得出现 model_routing 的 schema token，
+        单个文件不得复现 3 个及以上 catalog 中的 model_label。
+      pass_condition: 无越权文件。
+      can_fail: true
+      fails_when: 任一 workflow 文件把模型目录抄了一份。
+      baseline_2026_08_11: pass_vacuously
+
+    - test_id: MR-T03
+      kind: positive
+      title: mechanism declares purpose, loader, disk dependency and failure surfacing
+      subject_result_claim_ids: [B13_failure_surfacing, B02_minimal_canonical_composition]
+      evidence_claim_ids: [C12_architecture_boundary]
+      success_criterion_index: 1
+      measurement: >-
+        registry 每条 entry 的 path/purpose/loader/loader_class/discovery/evidence/
+        cache_dirs/failure_surfacing/deletion_rule 全部非空。
+      pass_condition: 无缺字段的 entry，且机制 README 存在。
+      can_fail: true
+      fails_when: 机制注册但不声明失效如何显现——03_mechanisms/README.md 点名的那类静默失败。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T04
+      kind: positive
+      title: routing input contract carries task/role/risk/shape/capabilities and availability
+      subject_result_claim_ids: [B03_routing_input_contract]
+      evidence_claim_ids: [C02_Human_availability_override, C12_architecture_boundary]
+      success_criterion_index: 2
+      measurement: contract.inputs.required 覆盖五个必填键，且存在 Human availability 输入或 availability_default。
+      pass_condition: 五键齐全且可用性输入存在。
+      can_fail: true
+      fails_when: 实现只按模型名路由，不消费 role/risk/task_shape。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T05
+      kind: positive
+      title: routing output contract carries model, surface, parameters, basis, evidence and limits
+      subject_result_claim_ids: [B04_routing_output_contract]
+      evidence_claim_ids: [C01_surface_is_first_class, C09_surface_parameter_profile_required]
+      success_criterion_index: 2
+      measurement: contract.outputs.required 覆盖九个必填输出键。
+      pass_condition: 九键齐全。
+      can_fail: true
+      fails_when: 输出只给模型名，不给 surface、参数、依据、证据或限制。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T06
+      kind: positive
+      title: route output authority is the constant routing_only
+      subject_result_claim_ids: [B04_routing_output_contract]
+      evidence_claim_ids: [C12_architecture_boundary, C02_Human_availability_override]
+      success_criterion_index: 2
+      measurement: >-
+        outputs.authority_constant 等于 routing_only，且契约中不出现任何形如
+        `*_authorized` 且取值为真的授权字段。
+      pass_condition: 常量正确且无授权授予。
+      can_fail: true
+      fails_when: 路由结果被写成一种权限来源，绕过 Human gate。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T07
+      kind: positive
+      title: registered candidates default available; only Human override excludes or restores
+      subject_result_claim_ids: [B05_availability_rule]
+      evidence_claim_ids: [C02_Human_availability_override, entitlement_vs_account_availability]
+      success_criterion_index: 3
+      measurement: >-
+        availability_rule.registered_default == available；unavailable_only_by 与 restored_by
+        均为 explicit_Human_override；automatic_quota_probe 为 false；决策第一步是应用 Human override。
+      pass_condition: 四项全部成立。
+      can_fail: true
+      fails_when: 实现从 entitlement 表或余额推断可用性，或缺少"恢复"路径。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T08
+      kind: negative
+      title: no cost, token or quota scoring in the routing decision procedure
+      subject_result_claim_ids: [B06_selection_procedure]
+      evidence_claim_ids: [C03_routing_optimizes_fit_not_cost, R05, cost_efficiency_vs_quality_fit]
+      success_criterion_index: 10
+      measurement: >-
+        decision_steps 无 cost/token/quota 步骤；契约声明 prohibited_routing_inputs 且至少含
+        token_cost、price、quota_balance；除该禁止清单外契约任何键或值不得出现这些 token。
+      pass_condition: 无泄漏。
+      can_fail: true
+      fails_when: 有人把"更省"重新写进选择步骤——R05 明确被需求否决的那条。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T09
+      kind: positive
+      title: model and product surface stay separate; identity is (surface, model)
+      subject_result_claim_ids: [B08_catalog_evidence_and_freshness, B10_initial_current_surface_set]
+      evidence_claim_ids: [C01_surface_is_first_class]
+      success_criterion_index: 5
+      measurement: 每条 entry 具备 provider/surface_id/model_label，且 (surface_id, model_label) 不重复。
+      pass_condition: 无缺字段、无重复身份。
+      can_fail: true
+      fails_when: 目录退化成一张模型名清单，同一模型在不同 surface 上的差异被抹掉。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T10
+      kind: positive
+      title: current product facts carry source, verified_at, invalidation and confidence
+      subject_result_claim_ids: [B08_catalog_evidence_and_freshness]
+      evidence_claim_ids: [C04_ChatGPT_Plus_current_control, C05_Codex_Plus_current_candidates, C06_Claude_Code_Pro_is_active_surface, C07_Antigravity_model_labels_verified, C08_Antigravity_Pro_access]
+      success_criterion_index: 4
+      measurement: 每条 registered entry 的 source_refs/verified_at/invalidation_conditions/confidence 非空，verified_at 为 ISO 日期。
+      pass_condition: 全部齐备。
+      can_fail: true
+      fails_when: 高时变产品事实以无来源、无时间的断言形式长期留存。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T11
+      kind: positive
+      title: parameter profiles are surface-scoped and evidence-bound
+      subject_result_claim_ids: [B07_surface_specific_parameters]
+      evidence_claim_ids: [C09_surface_parameter_profile_required, API_parameter_vs_surface_parameter]
+      success_criterion_index: 5
+      measurement: 每条 registered entry 至少一个 parameter profile，且每个 profile 带 profile_id 与 surface_exposure_evidence。
+      pass_condition: 全部满足。
+      can_fail: true
+      fails_when: 参数被写在模型层而不是 surface 层，或无证据支撑。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T12
+      kind: negative
+      title: API-only reasoning enums cannot masquerade as Web/Desktop parameters
+      subject_result_claim_ids: [B07_surface_specific_parameters]
+      evidence_claim_ids: [C09_surface_parameter_profile_required, C04_ChatGPT_Plus_current_control, R01, API_parameter_vs_surface_parameter]
+      success_criterion_index: 6
+      measurement: >-
+        source_class == api_documentation 的 profile 必须带 surface_exposure_evidence；
+        chatgpt_web 的 reasoning_levels 不得含 extra_high/xhigh/pro/max；
+        chatgpt_web 不得注册 Terra/Luna。
+      pass_condition: 三项均无违例。
+      can_fail: true
+      fails_when: 把 API 的 reasoning 枚举直接抄成 Web 档位——R01 被拒绝的正是这种推断。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T13
+      kind: negative
+      title: project observation ledger is separate from the vendor catalog
+      subject_result_claim_ids: [B09_project_evidence_separation]
+      evidence_claim_ids: [vendor_benchmark_vs_project_history, C10_project_qualification_required]
+      success_criterion_index: 8
+      measurement: ledger 存在且有 observations；catalog entry 内不得出现 observations/validity/observed_failure_or_strength 等项目观察字段。
+      pass_condition: 两栏不混。
+      can_fail: true
+      fails_when: 项目印象被写进 vendor 目录，此后无法区分谁说的。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T14
+      kind: boundary
+      title: diagnostic or anecdotal evidence cannot create a hard qualification boundary
+      subject_result_claim_ids: [B09_project_evidence_separation]
+      evidence_claim_ids: [C10_project_qualification_required, C11_qualification_shape, vendor_benchmark_vs_project_history]
+      success_criterion_index: 8
+      measurement: >-
+        每条 observation 的 validity ∈ {formal, diagnostic, anecdotal} 且 confidence 非空；
+        非 formal 的 observation 不得设置 qualified/disqualified/max_task_tier/task_ceiling/hard_gate；
+        任何 antigravity observation 不得声称 formal。
+      pass_condition: 无越级。
+      can_fail: true
+      fails_when: 已被 Stage 02 判为 invalid_for_formal_qualification 的三次试验被提升成任务上限。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T15
+      kind: positive
+      title: catalog expresses the five in-scope product surfaces
+      subject_result_claim_ids: [B10_initial_current_surface_set]
+      evidence_claim_ids: [C04_ChatGPT_Plus_current_control, C05_Codex_Plus_current_candidates, C06_Claude_Code_Pro_is_active_surface, C07_Antigravity_model_labels_verified, C08_Antigravity_Pro_access]
+      success_criterion_index: 6
+      measurement: catalog 的 surface_id 集合覆盖 chatgpt_web、codex_desktop、claude_code_desktop、gemini_web、antigravity。
+      pass_condition: 五个 surface 全在。
+      can_fail: true
+      fails_when: 只登记了当前顺手用的那一两个 surface。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T16
+      kind: boundary
+      title: unknown stays unknown and entitlement is not account availability
+      subject_result_claim_ids: [B08_catalog_evidence_and_freshness, B10_initial_current_surface_set]
+      evidence_claim_ids: [C08_Antigravity_Pro_access, entitlement_vs_account_availability, C07_Antigravity_model_labels_verified]
+      success_criterion_index: 7
+      measurement: >-
+        catalog 声明 entitlement_is_account_availability: false；每条 entry 有 registered 标志；
+        registered entry 的 capabilities 无空值（未知须写成显式 unknown）；未登记 entry 必须带 status。
+      pass_condition: 全部满足。
+      can_fail: true
+      fails_when: 用留空代替 unknown，或把静态 entitlement 当成账户事实。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T17
+      kind: negative
+      title: entry spec no longer embeds a volatile price or model catalog
+      subject_result_claim_ids: [B11_entry_spec_thinning]
+      evidence_claim_ids: [C01_surface_is_first_class, C03_routing_optimizes_fit_not_cost, C12_architecture_boundary]
+      success_criterion_index: 12
+      measurement: 开发入口全文不含价格行（$ + 数字），不含 per-1M token 计价文本。
+      pass_condition: 零命中。
+      can_fail: true
+      fails_when: §7.1 继续内嵌会过期的价格与模型目录。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T18
+      kind: positive
+      title: entry spec keeps the stable routing preflight rule and a mechanism pointer
+      subject_result_claim_ids: [B11_entry_spec_thinning]
+      evidence_claim_ids: [C02_Human_availability_override, C12_architecture_boundary]
+      success_criterion_index: 12
+      measurement: >-
+        开发入口同时含机制目录路径、preflight 规则、executor_profile 绑定、routing_only 与
+        availability override 五项。
+      pass_condition: 五项均在。
+      can_fail: true
+      fails_when: 把 §7.1 删空却没留下 pointer 和稳定规则，路由变成口头约定。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T19
+      kind: positive
+      title: test/evidence, independent review and protected-action controls are not weakened
+      subject_result_claim_ids: [B12_preserve_nonrouting_controls]
+      evidence_claim_ids: [C12_architecture_boundary]
+      success_criterion_index: 11
+      measurement: >-
+        开发入口仍含 §8、§9、§11 段落，T3_high_risk、publication_transport 与
+        repository_publisher_authority_v1.yml 指针共六个锚点。
+      pass_condition: 六锚点齐全。
+      can_fail: true
+      fails_when: 迁出模型内容时顺手削掉了证据、审核或受保护动作条款。
+      baseline_2026_08_11: pass
+
+    - test_id: MR-T20
+      kind: positive
+      title: publisher authority registry is byte-identical to the Stage 04 baseline
+      subject_result_claim_ids: [B12_preserve_nonrouting_controls]
+      evidence_claim_ids: [C12_architecture_boundary]
+      success_criterion_index: 11
+      measurement: 01_os/05_registry/repository_publisher_authority_v1.yml 的 SHA-256 等于冻结基线值。
+      pass_condition: 字节一致。
+      can_fail: true
+      fails_when: Stage 06 顺手改了发布权限——本任务未授权的动作。
+      baseline_2026_08_11: pass
+
+    - test_id: MR-T21
+      kind: positive
+      title: boot, registry and execution-loader pointers all resolve
+      subject_result_claim_ids: [B13_failure_surfacing, B02_minimal_canonical_composition]
+      evidence_claim_ids: [C12_architecture_boundary]
+      success_criterion_index: 1
+      measurement: boot 清单 load_order/validator/registry 每条路径存在；loader 目录存在；registry 每条 path（展开 {} 与 **）存在。
+      pass_condition: 无断裂 pointer。
+      can_fail: true
+      fails_when: registry 落后于实现——05_registry/README.md 记载的那种"被查阅、被相信、且是错的"。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T22
+      kind: positive
+      title: mechanism version agrees across contract, boot manifest and registry
+      subject_result_claim_ids: [B13_failure_surfacing]
+      evidence_claim_ids: [C12_architecture_boundary]
+      success_criterion_index: 1
+      measurement: 三处 mechanism_version 相等且非空。
+      pass_condition: 三处一致。
+      can_fail: true
+      fails_when: 契约升版而 boot/registry 未同步，加载 receipt 记录的版本不再可信。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T23
+      kind: boundary
+      title: duplicate keys in mechanism YAML fail closed
+      subject_result_claim_ids: [B13_failure_surfacing]
+      evidence_claim_ids: [C12_architecture_boundary]
+      success_criterion_index: 1
+      measurement: 机制目录下全部 YAML 以拒绝重复键的 strict loader 加载，无 DuplicateKeyError、无 parse error。
+      pass_condition: 全部严格可解析。
+      can_fail: true
+      fails_when: 重复键被 SafeLoader 静默取后值，目录看起来正常却少了一条 entry。
+      baseline_2026_08_11: pass_vacuously
+
+    - test_id: MR-T24
+      kind: boundary
+      title: the mechanism validator itself fails closed on a missing freshness field
+      subject_result_claim_ids: [B13_failure_surfacing, B08_catalog_evidence_and_freshness]
+      evidence_claim_ids: [C12_architecture_boundary, C04_ChatGPT_Plus_current_control]
+      success_criterion_index: 4
+      measurement: >-
+        复制机制/boot/registry 到临时树，删掉某条 registered entry 的 verified_at，
+        运行 boot 清单声明的 validator（static 模式），要求非零退出码。
+      pass_condition: validator 退出码非零。
+      can_fail: true
+      fails_when: 机制自带 validator 只检查存在性、不检查新鲜度，失效于是永远不显现。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T25
+      kind: negative
+      title: no cost, price or quota fields anywhere in the mechanism
+      subject_result_claim_ids: [B06_selection_procedure, B02_minimal_canonical_composition]
+      evidence_claim_ids: [C03_routing_optimizes_fit_not_cost, R05]
+      success_criterion_index: 10
+      measurement: 逐行扫描机制目录下 yml/md/py，命中价格/额度 token 且该行无否定标记即失败。
+      pass_condition: 零命中。
+      can_fail: true
+      fails_when: 价格表从入口 §7.1 被搬进机制目录，而不是被删除。
+      baseline_2026_08_11: pass_vacuously
+
+    - test_id: MR-T26
+      kind: negative
+      title: no automatic fallback chain; unavailability re-runs task fit
+      subject_result_claim_ids: [B06_selection_procedure, B05_availability_rule]
+      evidence_claim_ids: [C03_routing_optimizes_fit_not_cost, C02_Human_availability_override]
+      success_criterion_index: 10
+      measurement: 契约不得含 fallback_chain / automatic_fallback；on_primary_unavailable 必须是 rerun_task_fit_among_remaining_candidates。
+      pass_condition: 两项均成立。
+      can_fail: true
+      fails_when: 实现用固定降级链代替"在剩余候选中重新做 task-fit"。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T27
+      kind: negative
+      title: no crawler, watcher, scheduler or background probe is started
+      subject_result_claim_ids: [B02_minimal_canonical_composition, B05_availability_rule]
+      evidence_claim_ids: [C02_Human_availability_override, C03_routing_optimizes_fit_not_cost]
+      success_criterion_index: 10
+      measurement: >-
+        boot 清单声明 background_processes_started: false 与 automatic_quota_probe: false，
+        invocation 为显式调用；机制/boot/loader 目录逐行扫描无未否定的 crawler/watcher/daemon/scheduler/poll token。
+      pass_condition: 全部满足。
+      can_fail: true
+      fails_when: 为"自动知道模型是否可用"而引入后台探测——A 边界明确禁止。
+      baseline_2026_08_11: fail
+
+    - test_id: MR-T28
+      kind: boundary
+      title: registry covers every mechanism file and every registered path exists
+      subject_result_claim_ids: [B13_failure_surfacing, B02_minimal_canonical_composition]
+      evidence_claim_ids: [C12_architecture_boundary]
+      success_criterion_index: 1
+      measurement: 机制目录、boot 目录、loader 目录下每个文件都被某条 registry path 覆盖；registry 本身存在。
+      pass_condition: 无未登记文件。
+      can_fail: true
+      fails_when: >-
+        出现 05_registry/README.md 描述过的那类文件：确实被加载，但可达性分析看不见，
+        于是在下一次清理中被正确地删掉。
+      baseline_2026_08_11: fail
+
+not_covered_by_this_package:
+  - criterion_index: 9
+    criterion_head: 至少一轮 blind independent deep research 完成，之后逐 claim reconciliation
+    reason: >-
+      这是 Stage 02 的过程事实而非 Stage 06 可实现的结构性质。Stage02_证据结论_v2 已记录
+      independent_pass: complete_with_source_cleaning 与 reconciliation: complete。
+      为它编造一条静态检查只会产生一条不可能失败的测试。
+  - item: 路由运行期行为（"每次路由都输出…"）
+    reason: >-
+      本任务在 Stage 06 前不产生可执行路由器，运行期断言无法在冻结时点诚实地失败。
+      已降级为对 contract 声明的静态检查（MR-T04 / MR-T05 / MR-T06）。

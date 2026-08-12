@@ -1,0 +1,35 @@
+schema_version: citystate.registry.v1
+registry_id: model_routing_v1
+mechanism_version: 1
+status: fixture_not_canonical
+entries:
+  - path: 01_os/03_mechanisms/model_routing/**
+    purpose: 模型能力与任务路由机制的 canonical 定义、活动目录与项目观察证据
+    loader: 01_os/06_execution/boot/model_routing/README.md
+    loader_class: in_repo_program
+    discovery: referenced from boot manifest
+    evidence: 01_os/02_boot/model_routing/启动清单_v1.yml
+    cache_dirs: []
+    failure_surfacing: next validator run
+    deletion_rule: protected
+  - path: 01_os/02_boot/model_routing/**
+    purpose: 加载顺序、mechanism 版本、失败策略与 receipt 字段
+    loader: OS bootstrap
+    loader_class: host_application
+    discovery: documented convention
+    evidence: 01_os/06_execution/boot/model_routing/README.md
+    cache_dirs: []
+    failure_surfacing: next boot
+    deletion_rule: protected
+  - path: 01_os/06_execution/boot/model_routing/**
+    purpose: 执行入口、加载说明与失败行为
+    loader: OS execution entry
+    loader_class: host_application
+    discovery: referenced from registry and boot manifest
+    evidence: 01_os/06_execution/README.md
+    cache_dirs: []
+    failure_surfacing: next execution
+    deletion_rule: protected
+excluded:
+  - 01_os/_runs/**
+  - role private and scratch

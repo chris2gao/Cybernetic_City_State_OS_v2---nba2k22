@@ -1,0 +1,38 @@
+schema_version: citystate.model_routing.project_observation.v1
+mechanism_version: 1
+status: fixture_not_canonical
+separation_rule: vendor_catalog_and_project_observation_are_separate_documents
+
+observations:
+  - observation_id: OBS-AG-FLASH-001
+    surface_id: antigravity
+    model_label: Gemini 3.6 Flash
+    task_shape: qualification_probe
+    validity: diagnostic
+    confidence: low
+    observed_failure_or_strength: reported all exercised cases green
+    isolation_breach: true
+    source_ref: Antigravity复测v2接收与有效性裁决_v1.yml
+    routing_effect: may_lower_confidence_only
+
+  - observation_id: OBS-AG-PRO-001
+    surface_id: antigravity
+    model_label: Gemini 3.1 Pro
+    task_shape: qualification_probe
+    validity: diagnostic
+    confidence: low
+    observed_failure_or_strength: green after the first protocol was corrected
+    isolation_breach: true
+    source_ref: Antigravity资格执行接收与安全审计_v1.yml
+    routing_effect: may_lower_confidence_only
+
+  - observation_id: OBS-AG-OPUS-001
+    surface_id: antigravity
+    model_label: Claude Opus 4.6 Thinking
+    task_shape: qualification_probe
+    validity: diagnostic
+    confidence: low
+    observed_failure_or_strength: narrow Q4/Q5 failures plus an explicit isolation breach
+    isolation_breach: true
+    source_ref: Antigravity资格执行接收与安全审计_v1.yml
+    routing_effect: may_lower_confidence_only
