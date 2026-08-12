@@ -1,0 +1,107 @@
+schema_version: citystate.stage07.final_acceptance_adjudication.v2
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+stage_id: workflow_stage_07_test_execution
+status: accepted_ready_for_Human_integration_gate
+adjudicated_at: '2026-08-12'
+
+physical_state:
+  branch: dev/os-v2-global-model-capability-and-availability-routing-002
+  review_dispatch_head: 35a2bc333de472d094ad7d62eac5a5134f5f3de1
+  reviewer_result_head: 2f86395ed49e38ef322873e24a0419a6e98167ea
+  reviewer_commit_count: 1
+  reviewer_changed_paths: 6
+  reviewer_out_of_scope_paths: 0
+  reviewer_paths_all_under: 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/07_测试执行/**
+  reviewer_canonical_mutation: false
+  master_head_at_adjudication: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+  task_branch_ahead_of_master: 67
+  task_branch_behind_master: 0
+  fast_forward_integration_topology: true
+  quarantined_branch_reuse: false
+
+review_artifacts:
+  verification: 07_测试执行/07_verification_v2.yml
+  final_report: 07_测试执行/最终独立复核报告_v2.md
+  independent_harness: 07_测试执行/独立测量脚本_v2.py
+  independent_output: 07_测试执行/独立测量输出_v2.json
+  independent_probe_script: 07_测试执行/独立验收探针_v2.ps1
+  independent_probe_output: 07_测试执行/独立验收探针输出_v2.txt
+
+reviewer_independence:
+  reviewer: Claude Opus 5
+  surface: Claude Desktop Cowork
+  reasoning_setting: not_exposed
+  fresh_session: true
+  different_session_from_stage06_executor: true
+  different_session_from_prior_stage07_v1_and_stage04_correction_session: true
+  different_model_family_from_stage06_executor: true
+  independent_measurement: true
+
+verification_summary:
+  verdict: PASS_WITH_NON_BLOCKING_NOTES
+  completion: true
+  upstream_invalidation: false
+  frozen_artifact_version: 3
+  frozen_test_count: 35
+  frozen_test_package_sha256: 848b691712166a968c821ad6e53cafaf477b86bf7b1d7773306ad4e6ebf3e48c
+  reviewer_recomputed_digest_matches: true
+  acceptance: 35/35
+  package_exit_code: 0
+  selftest_exit_code: 0
+  mechanism_validator_exit_code: 0
+  independent_F3_probe_classes_fail_closed: 8/8
+  F1_closed: true
+  F2_closed: true
+  F3_closed: true
+
+non_blocking_notes:
+  N1:
+    title: source_locator_presence_not_reachability
+    disposition: follow_up_candidate_new_requirement_not_current_blocker
+    current_candidate_defect: false
+  N2:
+    title: two_regression_guards_live_in_frozen_package_not_canonical_validator
+    disposition: accepted_current_division_of_labour_follow_up_if_frozen_package_retired
+    current_candidate_defect: false
+  N3:
+    title: historical_2026_08_01_model_routing_authorization_ref_not_repeated_in_canonical
+    disposition: accepted_nonblocking_provenance_note
+    current_candidate_defect: false
+  N4:
+    title: A_criterion_2_satisfied_by_input_contract_plus_routing_basis
+    disposition: accepted_upstream_modeling_choice
+    current_candidate_defect: false
+
+separate_follow_up_observations:
+  - id: dangling_global_rule_ai_handoff_pointer
+    scope: outside_current_task
+    observation: >-
+      Reviewer reports a global rule pointer to .ai/HANDOFF_COMMON_CONVENTIONS.md#4.1 while the
+      current core repository has no .ai directory. This is not part of the model-routing task and
+      is not a blocker for integration; handle only in a separate governance/cleanup task if still applicable.
+  - id: source_locator_reachability_strengthening
+    scope: future_requirement_candidate
+    observation: >-
+      N1 can become a separate requirement to validate path locator existence and URL locator shape/reachability.
+      It is intentionally not retrofitted into this completed task.
+
+adjudication:
+  verdict: ACCEPTED
+  workflow_complete: true
+  ready_for_Human_integration_gate: true
+  master_publication_authorized: false
+  rationale: >-
+    Fresh independent Stage07 review independently reproduced the corrected 35-test package, closed F1/F2/F3
+    with reviewer-authored measurements, found no candidate-caused failures or upstream invalidation, and wrote
+    only review evidence within its boundary. The four notes are explicitly non-blocking and do not contradict
+    A v3, Stage02 evidence, B v1, or the Human-authorized Stage06 implementation boundary.
+
+required_next_action:
+  owner: Human
+  action: explicit_master_fast_forward_authorization_or_rejection
+  source_branch: dev/os-v2-global-model-capability-and-availability-routing-002
+  expected_master_before_integration: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
+  publication_rule: ordinary_fast_forward_only_no_merge_commit_no_force_no_rebase_no_squash_no_amend
+
+marker: stage07_final_acceptance_adjudicated_ready_for_Human_master_integration_gate
