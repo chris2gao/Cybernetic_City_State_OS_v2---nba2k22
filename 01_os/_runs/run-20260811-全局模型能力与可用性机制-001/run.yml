@@ -5,17 +5,19 @@ run:
   exact_base_sha: 1fbab0f3e0a84aebbc04035d720dbfea110bf0f4
   branch: dev/os-v2-global-model-capability-and-availability-routing-002
   owner: core
-  status: stage06_authorized_awaiting_Codex_execution
+  status: stage07_awaiting_independent_verification
   purpose: >-
     用七阶段 workflow 建立低耦合的全局模型能力与任务路由机制。Stage 1-5 已完成；Stage 4 的 28 条 acceptance tests
-    已冻结并在 A v3 serialization-only 修复后完成 predecessor rebind，digest 未变化。Human 已于 2026-08-11 显式授权
-    Stage 06 按 Stage 05 evidence-backed implementation boundary 执行。Stage 06 路由给 Codex Desktop / GPT-5.6 Sol，
-    以与 Claude Opus 5 / Cowork 的 Stage 04 test authorship 分离；不授权 master publication。
+    已冻结并完成 A v3 serialization-only predecessor rebind。Human 已授权 Stage 06 implementation boundary；
+    Codex Desktop / GPT-5.6 Sol / max 已完成候选实现，implementation commit 为
+    3e3b608ac2c265d6aa4eb31471e8f1eae05603a4，executor 自报冻结测试 28/28。规划窗口已核 primary diff、
+    scope 与关键语义，接受候选进入 Stage 07，但未把 executor 自测当成最终验收。当前等待新的 Anthropic 会话
+    独立复现 frozen tests 并审核实现是否真正满足 B 与 Stage 02 evidence。
   branch_recovery:
     previous_branch: dev/os-v2-global-model-capability-and-availability-routing-001
     quarantined_head_latest_observed: dfe553d35ea61aa31ebac32f7f107a9b402723eb
     contaminated_ancestor: 6bc86cf24266dc144de6e19b3cb28768668c2b18
-    last_known_clean_head_before_recovery: 166dfdb9b350fb84a621de7f410e74ac3da0429b
+    last_known_clean_head_before_recovery: 166dfdb9b350fb84b7b6a4b8f14d691fd2b4fc7d
     recovery_mode: new_branch_from_last_known_clean_head_no_history_rewrite
     quarantined_branch_reuse: prohibited
   workflow:
@@ -66,7 +68,7 @@ run:
       retry_budget_each_step: 3
       exits: [pass, retry, invalidate_upstream]
     stage_06_execution:
-      status: authorized_awaiting_Codex_execution
+      status: candidate_complete_accepted_for_stage07
       Human_authorization: 06_执行/Stage06_Human实施边界授权_v1.yml
       active_task_packet: 01_任务输入/任务包_v4.yml
       dispatch: 06_执行/Stage06_Codex执行派单_v1.md
@@ -74,28 +76,38 @@ run:
         provider: OpenAI
         surface: Codex Desktop
         model: GPT-5.6 Sol
-        reasoning_effort: max_if_exposed_else_high
-        mode: standard
+        reasoning_effort: max
         authority: routing_only
-      allowed_changed_paths:
-        - 01_os/03_mechanisms/model_routing/**
-        - 01_os/02_boot/model_routing/**
-        - 01_os/06_execution/boot/model_routing/**
-        - 01_os/05_registry/model_routing_v1.yml
-        - 01_os/开发入口与单窗口任务规范_v1.md
-        - 01_os/03_mechanisms/README.md
-        - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/**
-      protected_exclusions:
-        - 01_os/01_workflow/** semantic restructuring
-        - 01_os/03_mechanisms/context_management/** redesign
-        - 01_os/05_registry/repository_publisher_authority_v1.yml
-        - master publication
-        - quarantined branch reuse
+      source_base: a97d32ddd24cc9a94aaedea8adb045d4cdf6308c
+      implementation_commit: 3e3b608ac2c265d6aa4eb31471e8f1eae05603a4
+      executor_evidence_head: f89a81ba26f2e697fa1423a37185b28728d82ae0
+      execution_evidence: 06_执行/Stage06_执行证据_v1.yml
+      candidate_adjudication: 06_执行/Stage06候选接收裁决_v1.yml
+      executor_claimed_acceptance: 28/28
+      frozen_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+      out_of_scope_paths: 0
+      master_modified: false
+      final_independent_acceptance: pending_stage07
     stage_07_test_execution:
-      status: blocked_by_stage_06_candidate_completion
+      status: awaiting_independent_reviewer
+      dispatch: 07_测试执行/Stage07_独立复核派单_v1.md
+      reviewer_requirement:
+        different_session_from_executor: true
+        different_model_family_from_executor: true
+        preferred_family: Anthropic
+        preferred_model: Claude Opus 5
+        surface: current_repo_capable_Claude_surface
+      write_boundary:
+        - 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/07_测试执行/**
+      canonical_mutation_during_review: prohibited
+      mandatory_attack_points:
+        - source_ref_resolvability
+        - Cowork_Opus5_surface_scope
+        - Opus48_antigravity_surface_attribution
+        - validator_semantic_depth
   current_scope:
-    repository_writes: authorized_stage06_boundary_only
-    canonical_mutation: authorized_within_stage06_boundary
+    repository_writes: stage07_review_evidence_only
+    canonical_mutation: prohibited_until_review_verdict_and_any_required_fix_gate
     master_publication: prohibited_without_new_Human_gate
     quarantined_branch_reuse: prohibited
   availability_rule:
