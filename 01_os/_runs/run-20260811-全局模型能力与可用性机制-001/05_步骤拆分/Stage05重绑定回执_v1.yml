@@ -1,0 +1,46 @@
+schema_version: citystate.stage05.rebind_receipt.v1
+task_id: os-v2-global-model-capability-and-availability-routing-001
+run_id: run-20260811-全局模型能力与可用性机制-001
+status: complete
+rebound_at: '2026-08-11'
+
+trigger:
+  stage07_verdict: FIX_REQUIRED
+  stage07_review_ref: 07_测试执行/07_blocking_review_v1.yml
+  stage04_correction_ref: 04_测试生成/freeze_receipt_v3.yml
+
+old_binding:
+  artifact: 05_步骤拆分/05_steps.yml
+  artifact_version: 1
+  stage04_artifact_version: 2
+  test_count: 28
+  test_package_sha256: 72898d54c86ca52449aa96f1dfaed0d6ca8153b93dbc9ae36089a9e8edb55478
+  disposition: historical_superseded
+
+new_binding:
+  artifact: 05_步骤拆分/05_steps_v2.yml
+  artifact_version: 2
+  stage04_artifact_version: 3
+  test_count: 35
+  test_package_sha256: 848b691712166a968c821ad6e53cafaf477b86bf7b1d7773306ad4e6ebf3e48c
+
+rederive:
+  semantic_redecomposition: false
+  implementation_boundary_changed: false
+  mapping_changes:
+    S1: unchanged_8_tests
+    S2: add_MR-T29_MR-T30_and_strengthened_MR-T10_total_10
+    S3: add_MR-T31_through_MR-T35_total_12
+    S4: unchanged_5_tests
+    S5: full_closure_expanded_28_to_35
+  total_slice_membership: 35
+  duplicate_test_membership_across_S1_to_S4: false
+  uncovered_test_ids: []
+
+Human_gate:
+  existing_stage06_boundary_ref: 06_执行/Stage06_Human实施边界授权_v1.yml
+  new_boundary_gate_required: false
+  rationale: corrected tests require no canonical path outside the already authorized Stage06 boundary
+
+next: targeted_stage06_correction_under_task_packet_v5
+marker: stage05_v2_rebind_complete
