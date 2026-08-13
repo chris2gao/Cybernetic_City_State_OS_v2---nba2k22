@@ -11,6 +11,9 @@ task_packet:
   run_root: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-design-001/
   allowed_changed_paths:
     - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-design-001/**
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/discovery.yml
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-001/**
+  Human_scope_expansion_ref: 01_任务输入/Human通讯空间建立授权_v1.yml
   prohibited_in_this_phase:
     - AGENTS.md mutation
     - canonical mechanism mutation
@@ -19,6 +22,7 @@ task_packet:
     - execution code mutation
     - master mutation
     - T2 frozen branch mutation
+    - communication automatic delivery or automatic task progression
   architecture_questions:
     - how mandatory mechanism triggers are declared and resolved
     - how policy decision is separated from enforcement
