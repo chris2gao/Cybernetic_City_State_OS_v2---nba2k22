@@ -3,7 +3,7 @@ run:
   run_id: run-20260813-mechanism-activation-and-adherence-implementation-001
   task_id: os-v2-mechanism-activation-and-adherence-implementation-001
   phase: implementation_correction
-  status: B2_corrected_candidate_evidence_verified_awaiting_result_publication
+  status: B2_correction_complete_formal_result_published_on_source_branch
   owner: core
   branch: dev/os-v2-mechanism-activation-and-adherence-implementation-001
   branch_base_sha: bf538e5068381becd31e8e1daceade81e657262d
@@ -42,12 +42,14 @@ run:
     task_root: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/
     sender_endpoint_id: foreground-implementation-dispatch-001
     correction_request_message_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00004
+    correction_result_message_id: os-v2-mechanism-activation-and-adherence-implementation-001::codex-implementation-executor-001::00003
     communication_contract_version: 2
   gates:
     architecture: PASS
     prior_candidate_acceptance: FIX_REQUIRED_ACCEPTED
     B2_correction_dispatch: corrected_pointer_00004_received
     corrected_candidate: evidence_verified
+    formal_result: published_on_source_branch
     fresh_independent_acceptance: required_after_new_candidate
     master_publication: prohibited
-  next_action: Publish the corrected candidate and commit-bound result pointer on the source branch for fresh independent acceptance.
+  next_action: Route exact corrected candidate to a fresh independent implementation-acceptance endpoint.

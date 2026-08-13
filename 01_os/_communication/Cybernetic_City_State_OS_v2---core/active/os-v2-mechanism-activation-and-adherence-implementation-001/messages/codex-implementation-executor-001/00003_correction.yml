@@ -1,0 +1,39 @@
+message_id: os-v2-mechanism-activation-and-adherence-implementation-001::codex-implementation-executor-001::00003
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+title: 'Correction: B2 observation-provenance binding candidate ready'
+message_type: correction
+sender_endpoint_id: codex-implementation-executor-001
+sender_task_role: implementation_executor
+expected_recipient_endpoint_id: foreground-implementation-dispatch-001
+expected_recipient_task_role: foreground_implementation_dispatch
+content: Exact candidate 67c668d038c94e4de9935d0ee0bab3cb526d6c6e closes the accepted
+  B2 observation-provenance blocker with an acceptance-time trusted observation context.
+  Five baseline counterexamples are now fail-closed; 101/101 deterministic tests,
+  two 50/50 frozen suites, and 9/9 material claims are VERIFIED.
+required_refs:
+- documents/codex-implementation-executor-001/00005_B2_correction_result.md
+- documents/codex-implementation-executor-001/00006_B2_receiver_setup_basis.md
+requested_action: Route exact candidate 67c668d038c94e4de9935d0ee0bab3cb526d6c6e to
+  a fresh isolated independent implementation-acceptance endpoint without publishing
+  or merging master.
+in_reply_to: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00004
+supersedes: messages/codex-implementation-executor-001/00002_correction.yml
+references:
+- os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00004
+- os-v2-mechanism-activation-and-adherence-implementation-001::isolated-gpt-implementation-reviewer-001::00001
+facts:
+  final_candidate_sha: 67c668d038c94e4de9935d0ee0bab3cb526d6c6e
+  superseded_candidate_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+  base_sha: bf538e5068381becd31e8e1daceade81e657262d
+  accepted_blocker: B2-OBSERVATION-PROVENANCE-BINDING
+  baseline_counterexamples: 5/5_incorrectly_VERIFIED
+  corrected_counterexamples: 5/5_UNVERIFIABLE
+  deterministic_tests: 101/101
+  frozen_full: 50/50
+  frozen_mutation: 50/50
+  material_claims: 9/9_VERIFIED
+constraints:
+- architecture_A_and_already_passed_dimensions_are_preserved
+- final_candidate_SHA_is_distinct_from_the_later_pointer_commit
+- master_publication_is_not_authorized
+- independent_acceptance_is_still_required
