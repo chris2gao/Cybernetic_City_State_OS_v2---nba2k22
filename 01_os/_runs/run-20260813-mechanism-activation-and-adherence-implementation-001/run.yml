@@ -1,0 +1,23 @@
+run:
+  schema_version: citystate.run.v1
+  run_id: run-20260813-mechanism-activation-and-adherence-implementation-001
+  task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+  phase: implementation
+  status: authorized_ready_for_formal_executor_dispatch
+  owner: core
+  branch: dev/os-v2-mechanism-activation-and-adherence-implementation-001
+  branch_base_sha: bf538e5068381becd31e8e1daceade81e657262d
+  master_reference_sha: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  reviewed_architecture_sha: 8ee72d2800a9e00539d3732464e79312e1ade613
+  architecture_review_result_sha: b40f63ca49393546aa415dbbe1f0c38bbf72a001
+  architecture_verdict: PASS
+  Human_authorization_ref: 01_任务输入/Human实现授权_v1.yml
+  Human_operating_instruction_ref: 01_任务输入/Human操作指令_v1.yml
+  authorized_scope_ref: 01_任务输入/拟议实现边界_v1.yml
+  implementation_mode: bounded
+  validation_mode: hybrid
+  gates:
+    executor_dispatch: ready
+    implementation_acceptance: required_after_candidate
+    master_publication: prohibited
+  next_action: establish formal implementation communication context and dispatch Codex executor
