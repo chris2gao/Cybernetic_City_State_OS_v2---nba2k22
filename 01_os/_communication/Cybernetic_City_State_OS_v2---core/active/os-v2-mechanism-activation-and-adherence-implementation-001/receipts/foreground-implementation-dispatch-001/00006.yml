@@ -1,0 +1,29 @@
+schema_version: citystate.formal_action.compliance_receipt.v1
+action_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00006
+constitution_evidence_ref: constitutions/foreground-implementation-dispatch-001/00006.yml
+receipt_role: binding_index_only
+material_claims:
+  - claim_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00006::publication
+    claim_role: communication_publication
+    action_id_or_review_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00006
+    expected_claim_source_ref: constitutions/foreground-implementation-dispatch-001/00006.yml
+    expected_value_or_predicate:
+      task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+      message_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00006
+      carrier: GitHub
+      sender_endpoint_id: foreground-implementation-dispatch-001
+      expected_recipient_endpoint_id: codex-implementation-executor-001
+      materialized_path: messages/foreground-implementation-dispatch-001/00006_correction.yml
+    observed_authoritative_source_class: communication_publisher_observation
+    observed_value:
+      task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+      message_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00006
+      carrier: GitHub
+      sender_endpoint_id: foreground-implementation-dispatch-001
+      expected_recipient_endpoint_id: codex-implementation-executor-001
+      materialized_path: messages/foreground-implementation-dispatch-001/00006_correction.yml
+    exact_observation_ref: communication_publication_readback:messages/foreground-implementation-dispatch-001/00006_correction.yml
+    comparator_id: published_message_identity_and_route_equality
+    relationship_or_equality_check: expected_message_identity_equals_materialized_identity
+    verification_result: VERIFIED
+aggregate_result: VERIFIED
