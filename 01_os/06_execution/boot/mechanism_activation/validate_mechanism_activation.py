@@ -108,6 +108,22 @@ def validate_static_repository(repo_root: Path) -> None:
         raise ActivationError("RECEIPT_TRUTH_BOUNDARY_INVALID")
     if claims.get("aggregate_acceptance") != "every_required_material_claim_must_be_VERIFIED":
         raise ActivationError("MATERIAL_AGGREGATE_RULE_INVALID")
+    trusted_boundary = claims.get("acceptance_time_trusted_observation_boundary")
+    if not isinstance(trusted_boundary, dict) or not all(
+        trusted_boundary.get(field) is True
+        for field in (
+            "context_required",
+            "expected_claim_source_ref_must_be_resolved_and_consumed",
+            "exact_observation_ref_must_be_resolved_and_consumed",
+            "expected_facts_must_come_from_trusted_resolver_context",
+            "observed_facts_must_come_from_trusted_adapter_context",
+            "source_class_and_exact_ref_must_match_consumed_observation",
+            "conditional_principal_and_freshness_refs_must_be_consumed",
+        )
+    ):
+        raise ActivationError("MATERIAL_TRUSTED_OBSERVATION_BOUNDARY_INVALID")
+    if not claims.get("receipt_fields_that_cannot_establish_provenance"):
+        raise ActivationError("MATERIAL_RECEIPT_PROVENANCE_DENYLIST_MISSING")
     if (
         claims.get("claim_id_uniqueness_within_receipt") != "mandatory"
         or claims.get("comparator_must_be_registered_for_claim_role") is not True

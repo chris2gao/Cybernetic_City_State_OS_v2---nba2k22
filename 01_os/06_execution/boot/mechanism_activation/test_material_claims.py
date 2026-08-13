@@ -5,6 +5,7 @@ import unittest
 
 from activation import (
     ActivationError,
+    MaterialObservationContext,
     evaluate_material_claim,
     observe_changed_path_claim,
     observe_git_commit_claim,
@@ -34,17 +35,55 @@ def claim(comparator, expected, observed, **overrides):
     return value
 
 
+def context_for(*claims, binding_overrides=None):
+    context = MaterialObservationContext()
+    binding_overrides = binding_overrides or {}
+    for value in claims:
+        override = binding_overrides.get(value["claim_id"], {})
+        consumed = {value.get("exact_observation_ref", "")}
+        for field in ("subject_principal_observation_ref", "freshness_observation_ref"):
+            if value.get(field):
+                consumed.add(value[field])
+        context.bind(
+            claim_id=value["claim_id"],
+            expected_source_ref=override.get(
+                "expected_source_ref", value.get("expected_claim_source_ref", "missing")
+            ),
+            expected_value=override.get(
+                "expected_value", value.get("expected_value_or_predicate")
+            ),
+            expected_resolver_id="test_expected_source_fixture",
+            observed_source_class=override.get(
+                "observed_source_class", value.get("observed_authoritative_source_class", "missing")
+            ),
+            observed_value=override.get("observed_value", value.get("observed_value")),
+            exact_observation_ref=override.get(
+                "exact_observation_ref", value.get("exact_observation_ref", "missing")
+            ),
+            observation_adapter_id="test_physical_observation_fixture",
+            consumed_observation_refs=override.get("consumed_observation_refs", consumed),
+        )
+    return context
+
+
+def bound_result(value, *, binding_overrides=None):
+    return evaluate_material_claim(
+        value,
+        context_for(value, binding_overrides=binding_overrides),
+    )
+
+
 class MaterialClaimTests(unittest.TestCase):
     def test_real_candidate_and_base_sha_swaps_are_mismatch(self):
         candidate = claim("exact_sha_role_equality", SHA_A, SHA_B)
-        self.assertEqual(evaluate_material_claim(candidate), "MISMATCH")
+        self.assertEqual(bound_result(candidate), "MISMATCH")
         base = claim(
             "exact_base_equality_plus_required_relation",
             {"sha": SHA_B, "required_relation": "ancestor_of_candidate"},
             {"sha": SHA_A, "relation_satisfied": True},
             claim_role="base_SHA",
         )
-        self.assertEqual(evaluate_material_claim(base), "MISMATCH")
+        self.assertEqual(bound_result(base), "MISMATCH")
 
     def test_authentic_stale_moving_ref_is_stale(self):
         value = claim(
@@ -56,7 +95,7 @@ class MaterialClaimTests(unittest.TestCase):
             freshness_requirement_when_applicable="immediately_before_action",
             freshness_observation_ref="git:ls-remote:old-boundary",
         )
-        self.assertEqual(evaluate_material_claim(value), "STALE")
+        self.assertEqual(bound_result(value), "STALE")
         wrong_named_ref = claim(
             "named_ref_fresh_state_relation",
             {"named_ref": "refs/heads/master", "sha": SHA_A},
@@ -64,7 +103,7 @@ class MaterialClaimTests(unittest.TestCase):
             claim_role="moving_head_or_current_ref",
             observed_authoritative_source_class="fresh_remote_Git_ref_readback",
         )
-        self.assertEqual(evaluate_material_claim(wrong_named_ref), "MISMATCH")
+        self.assertEqual(bound_result(wrong_named_ref), "MISMATCH")
 
     def test_integrity_without_semantic_binding_is_mismatch(self):
         value = claim(
@@ -74,7 +113,7 @@ class MaterialClaimTests(unittest.TestCase):
             claim_role="durable_evidence_artifact",
             observed_authoritative_source_class="Git_blob_at_exact_commit",
         )
-        self.assertEqual(evaluate_material_claim(value), "MISMATCH")
+        self.assertEqual(bound_result(value), "MISMATCH")
 
     def test_execution_from_wrong_package_or_candidate_is_mismatch(self):
         expected = {
@@ -91,7 +130,7 @@ class MaterialClaimTests(unittest.TestCase):
             claim_role="execution_or_validation_result",
             observed_authoritative_source_class="trusted_execution_adapter",
         )
-        self.assertEqual(evaluate_material_claim(value), "MISMATCH")
+        self.assertEqual(bound_result(value), "MISMATCH")
 
     def test_partial_duplicate_and_noncanonical_path_sets_fail_closed(self):
         expected = {"allowed_patterns": ["allowed/**"]}
@@ -102,19 +141,19 @@ class MaterialClaimTests(unittest.TestCase):
             claim_role="changed_path_and_diff_scope",
             observed_authoritative_source_class="complete_Git_compare",
         )
-        self.assertEqual(evaluate_material_claim(partial), "UNVERIFIABLE")
+        self.assertEqual(bound_result(partial), "UNVERIFIABLE")
         duplicate = dict(partial, observed_value={"paths": ["allowed/a.txt", "allowed/a.txt"], "complete": True})
-        self.assertEqual(evaluate_material_claim(duplicate), "AMBIGUOUS")
+        self.assertEqual(bound_result(duplicate), "AMBIGUOUS")
         noncanonical = dict(partial, observed_value={"paths": ["allowed\\a.txt"], "complete": True})
-        self.assertEqual(evaluate_material_claim(noncanonical), "AMBIGUOUS")
+        self.assertEqual(bound_result(noncanonical), "AMBIGUOUS")
         hidden_forbidden = dict(partial, observed_value={"paths": ["allowed/a.txt", "forbidden.txt"], "complete": True})
-        self.assertEqual(evaluate_material_claim(hidden_forbidden), "MISMATCH")
+        self.assertEqual(bound_result(hidden_forbidden), "MISMATCH")
         loose_pattern = dict(
             partial,
             expected_value_or_predicate={"allowed_patterns": ["allowed/*"]},
             observed_value={"paths": ["allowed/a.txt"], "complete": True},
         )
-        self.assertEqual(evaluate_material_claim(loose_pattern), "AMBIGUOUS")
+        self.assertEqual(bound_result(loose_pattern), "AMBIGUOUS")
 
     def test_actual_authenticated_actor_must_match_authorized_principal(self):
         value = claim(
@@ -125,9 +164,9 @@ class MaterialClaimTests(unittest.TestCase):
             observed_authoritative_source_class="local_authenticated_principal",
             subject_principal_observation_ref="host:principal-observation",
         )
-        self.assertEqual(evaluate_material_claim(value), "MISMATCH")
+        self.assertEqual(bound_result(value), "MISMATCH")
         endpoint_substitute = dict(value, observed_authoritative_source_class="endpoint_capability_claim")
-        self.assertEqual(evaluate_material_claim(endpoint_substitute), "UNVERIFIABLE")
+        self.assertEqual(bound_result(endpoint_substitute), "UNVERIFIABLE")
 
     def test_observation_cannot_self_assign_role_and_comparator_is_mandatory(self):
         self_assigned = claim(
@@ -137,11 +176,73 @@ class MaterialClaimTests(unittest.TestCase):
         self.assertEqual(evaluate_material_claim(self_assigned), "UNVERIFIABLE")
         no_comparator = claim("exact_sha_role_equality", SHA_A, SHA_A)
         no_comparator.pop("comparator_id")
-        self.assertEqual(evaluate_material_claim(no_comparator), "UNVERIFIABLE")
+        self.assertEqual(bound_result(no_comparator), "UNVERIFIABLE")
         wrong_role = claim(
             "exact_sha_role_equality", SHA_A, SHA_A, claim_role="base_SHA"
         )
-        self.assertEqual(evaluate_material_claim(wrong_role), "UNVERIFIABLE")
+        self.assertEqual(bound_result(wrong_role), "UNVERIFIABLE")
+
+    def test_claim_values_cannot_verify_without_trusted_context(self):
+        value = claim("exact_sha_role_equality", SHA_A, SHA_A)
+        self.assertEqual(evaluate_material_claim(value), "UNVERIFIABLE")
+
+    def test_nonresolving_expected_source_fails_closed(self):
+        value = claim("exact_sha_role_equality", SHA_A, SHA_A)
+        context = context_for(value, binding_overrides={
+            value["claim_id"]: {"expected_source_ref": "different/source.yml#candidate"}
+        })
+        self.assertEqual(evaluate_material_claim(value, context), "UNVERIFIABLE")
+
+    def test_asserted_complete_diff_requires_consumed_git_compare(self):
+        value = claim(
+            "complete_path_set_within_authorized_boundary",
+            {"allowed_patterns": ["allowed/**"]},
+            {"paths": ["allowed/a.txt"], "complete": True},
+            claim_role="changed_path_and_diff_scope",
+            observed_authoritative_source_class="complete_Git_compare",
+            exact_observation_ref="receipt:asserted-complete",
+        )
+        self.assertEqual(evaluate_material_claim(value), "UNVERIFIABLE")
+
+    def test_asserted_principal_requires_consumed_principal_observation(self):
+        value = claim(
+            "authenticated_actor_satisfies_authorized_principal_binding",
+            {"allowed_principals": ["alice"], "action": "push"},
+            {"authenticated_principal": "alice", "action": "push"},
+            claim_role="authority_and_actual_actor",
+            observed_authoritative_source_class="local_authenticated_principal",
+            exact_observation_ref="host:push-principal",
+            subject_principal_observation_ref="host:authenticated-principal",
+        )
+        context = context_for(value, binding_overrides={
+            value["claim_id"]: {"consumed_observation_refs": {"host:push-principal"}}
+        })
+        self.assertEqual(evaluate_material_claim(value, context), "UNVERIFIABLE")
+
+    def test_observation_ref_and_source_class_mismatch_fails_closed(self):
+        value = claim("exact_sha_role_equality", SHA_A, SHA_A)
+        context = context_for(value, binding_overrides={
+            value["claim_id"]: {"observed_source_class": "Git_blob_at_exact_commit"}
+        })
+        self.assertEqual(evaluate_material_claim(value, context), "UNVERIFIABLE")
+
+    def test_claim_observed_value_must_match_trusted_context(self):
+        value = claim("exact_sha_role_equality", SHA_A, SHA_A)
+        context = context_for(value, binding_overrides={
+            value["claim_id"]: {"observed_value": SHA_B}
+        })
+        self.assertEqual(evaluate_material_claim(value, context), "MISMATCH")
+
+    def test_receipt_only_correct_looking_observed_value_fails_closed(self):
+        value = claim(
+            "byte_integrity_and_semantic_role_binding",
+            {"sha256": "abc", "role": "evidence"},
+            {"sha256": "abc", "role": "evidence"},
+            claim_role="durable_evidence_artifact",
+            observed_authoritative_source_class="Git_blob_at_exact_commit",
+            exact_observation_ref="receipt:prose-only",
+        )
+        self.assertEqual(evaluate_material_claim(value), "UNVERIFIABLE")
 
     def test_aggregate_cannot_claim_verified_over_nonverified_subclaim(self):
         first = claim("exact_sha_role_equality", SHA_A, SHA_A)
@@ -152,13 +253,16 @@ class MaterialClaimTests(unittest.TestCase):
             validate_material_receipt({
                 "material_claims": [first, second],
                 "aggregate_result": "VERIFIED",
-            })
+            }, context_for(first, second))
 
     def test_declared_claim_result_is_recomputed(self):
         value = claim("exact_sha_role_equality", SHA_A, SHA_B)
         value["verification_result"] = "VERIFIED"
         with self.assertRaisesRegex(ActivationError, "DECLARED_RESULT_MISMATCH"):
-            validate_material_receipt({"material_claims": [value], "aggregate_result": "VERIFIED"})
+            validate_material_receipt(
+                {"material_claims": [value], "aggregate_result": "VERIFIED"},
+                context_for(value),
+            )
 
     def test_duplicate_claim_ids_cannot_overwrite_blocking_result(self):
         first = claim("exact_sha_role_equality", SHA_A, SHA_B)
@@ -169,7 +273,7 @@ class MaterialClaimTests(unittest.TestCase):
             validate_material_receipt({
                 "material_claims": [first, second],
                 "aggregate_result": "VERIFIED",
-            })
+            }, context_for(first))
 
     def test_actual_git_observers_bind_commit_and_complete_paths(self):
         with TemporaryDirectory() as temp:
@@ -192,8 +296,11 @@ class MaterialClaimTests(unittest.TestCase):
                 action_id_or_review_id="action",
                 expected_source_ref="task.yml#candidate",
                 expected_sha=candidate,
+                observation_context=MaterialObservationContext(),
+                expected_resolver_id="test_task_yaml_readback",
             )
             self.assertEqual(commit_claim["verification_result"], "VERIFIED")
+            path_context = MaterialObservationContext()
             path_claim = observe_changed_path_claim(
                 repo,
                 claim_id="scope",
@@ -202,6 +309,8 @@ class MaterialClaimTests(unittest.TestCase):
                 base_sha=base,
                 candidate_sha=candidate,
                 allowed_patterns=["allowed/**"],
+                observation_context=path_context,
+                expected_resolver_id="test_task_yaml_readback",
             )
             self.assertEqual(path_claim["verification_result"], "VERIFIED")
             self.assertEqual(path_claim["observed_value"]["paths"], ["allowed/a.txt"])
@@ -229,6 +338,8 @@ class MaterialClaimTests(unittest.TestCase):
                 base_sha=base,
                 candidate_sha=candidate,
                 allowed_patterns=["allowed/**"],
+                observation_context=MaterialObservationContext(),
+                expected_resolver_id="test_task_yaml_readback",
             )
             self.assertEqual(path_claim["verification_result"], "MISMATCH")
             self.assertEqual(

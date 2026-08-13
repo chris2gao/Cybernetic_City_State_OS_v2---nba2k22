@@ -50,6 +50,7 @@ for module_root in (ACTIVATION_ROOT, MODEL_ROUTING_ROOT):
         sys.path.insert(0, str(module_root))
 from activation import (  # noqa: E402
     ActivationError,
+    MaterialObservationContext,
     evaluate_material_claim,
     evaluate_pre_action_gate,
     resolve_required_mechanisms,
@@ -291,7 +292,18 @@ def _compliance_receipt(
         "relationship_or_equality_check": "expected_message_identity_equals_materialized_identity",
         "verification_result": "UNVERIFIABLE",
     }
-    claim["verification_result"] = evaluate_material_claim(claim)
+    observation_context = MaterialObservationContext()
+    observation_context.bind(
+        claim_id=claim["claim_id"],
+        expected_source_ref=constitution_ref,
+        expected_value=claim["expected_value_or_predicate"],
+        expected_resolver_id="publisher_constitution_readback",
+        observed_source_class="communication_publisher_observation",
+        observed_value=claim["observed_value"],
+        exact_observation_ref=claim["exact_observation_ref"],
+        observation_adapter_id="publisher_materialized_message_readback",
+    )
+    claim["verification_result"] = evaluate_material_claim(claim, observation_context)
     receipt = {
         "schema_version": "citystate.formal_action.compliance_receipt.v1",
         "action_id": constitution["action_id"],
@@ -301,7 +313,7 @@ def _compliance_receipt(
         "aggregate_result": "VERIFIED" if claim["verification_result"] == "VERIFIED" else "BLOCKED",
     }
     try:
-        validate_material_receipt(receipt)
+        validate_material_receipt(receipt, observation_context)
     except ActivationError as exc:
         raise CommunicationValidationError(f"FORMAL_COMPLIANCE_RECEIPT_INVALID:{exc.code}") from exc
     return receipt

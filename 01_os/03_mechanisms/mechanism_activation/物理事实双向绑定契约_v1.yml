@@ -39,6 +39,23 @@ aggregate_acceptance: every_required_material_claim_must_be_VERIFIED
 receipt_is_physical_truth_source: false
 observation_may_self_assign_semantic_role: false
 expected_and_observed_without_executed_comparator: UNVERIFIABLE
+acceptance_time_trusted_observation_boundary:
+  context_required: true
+  expected_claim_source_ref_must_be_resolved_and_consumed: true
+  exact_observation_ref_must_be_resolved_and_consumed: true
+  expected_facts_must_come_from_trusted_resolver_context: true
+  observed_facts_must_come_from_trusted_adapter_context: true
+  source_class_and_exact_ref_must_match_consumed_observation: true
+  conditional_principal_and_freshness_refs_must_be_consumed: true
+  missing_or_mismatched_context_result: UNVERIFIABLE_or_other_non_PASS
+receipt_fields_that_cannot_establish_provenance:
+  - expected_value_or_predicate
+  - observed_authoritative_source_class
+  - observed_value
+  - exact_observation_ref
+  - completeness_flag
+  - actor_or_principal_value
+  - hash_or_SHA
 claim_id_uniqueness_within_receipt: mandatory
 duplicate_claim_id_result: INVALID_RECEIPT
 comparator_must_be_registered_for_claim_role: true

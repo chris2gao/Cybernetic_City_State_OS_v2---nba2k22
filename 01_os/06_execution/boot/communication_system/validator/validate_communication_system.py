@@ -95,6 +95,7 @@ for _module_root in (ACTIVATION_ROOT, MODEL_ROUTING_ROOT):
         sys.path.insert(0, str(_module_root))
 from activation import (  # noqa: E402
     ActivationError,
+    MaterialObservationContext,
     evaluate_material_claim,
     evaluate_pre_action_gate,
     resolve_required_mechanisms,
@@ -703,7 +704,6 @@ class CommunicationValidator:
                 resolution=replayed_resolution,
                 gate=replayed_gate,
             )
-            validate_material_receipt(receipt)
         except ActivationError as exc:
             raise CommunicationValidationError(f"Human_pointer_activation_evidence_invalid:{exc.code}") from exc
         if constitution.get("action_id") != pointer.get("message_id"):
@@ -717,7 +717,9 @@ class CommunicationValidator:
             if isinstance(claim, dict) and claim.get("claim_role") == "communication_publication"
         ]
         if len(publication_claims) != 1:
-            raise CommunicationValidationError("Human_pointer_publication_claim_cardinality_invalid")
+            raise CommunicationValidationError(
+                "Human_pointer_activation_evidence_invalid:MATERIAL_PUBLICATION_CLAIM_CARDINALITY"
+            )
         publication_claim = publication_claims[0]
         expected_publication = {
             "task_id": activation_context.get("task_id"),
@@ -740,7 +742,35 @@ class CommunicationValidator:
         if publication_claim.get("expected_value_or_predicate") != expected_publication:
             raise CommunicationValidationError("Human_pointer_publication_expected_binding_mismatch")
         if publication_claim.get("observed_value") != observed_publication:
-            raise CommunicationValidationError("Human_pointer_publication_observation_binding_mismatch")
+            raise CommunicationValidationError(
+                "Human_pointer_activation_evidence_invalid:MATERIAL_OBSERVATION_CONTEXT_MISMATCH"
+            )
+        allowed_receipt_observation_refs = {
+            f"publisher-materialization:{pointer['carrier']}:{message_relative}",
+            f"communication_publication_readback:{message_relative}",
+        }
+        receipt_observation_ref = str(publication_claim.get("exact_observation_ref", ""))
+        if receipt_observation_ref not in allowed_receipt_observation_refs:
+            raise CommunicationValidationError("Human_pointer_publication_observation_ref_mismatch")
+        if publication_claim.get("observed_authoritative_source_class") != "communication_publisher_observation":
+            raise CommunicationValidationError("Human_pointer_publication_source_class_mismatch")
+        receipt_context = MaterialObservationContext()
+        receipt_context.bind(
+            claim_id=str(publication_claim.get("claim_id")),
+            expected_source_ref=str(pointer["constitution_evidence_ref"]),
+            expected_value=expected_publication,
+            expected_resolver_id="receiver_constitution_physical_readback",
+            observed_source_class="communication_publisher_observation",
+            observed_value=observed_publication,
+            exact_observation_ref=receipt_observation_ref,
+            observation_adapter_id="receiver_message_physical_readback",
+        )
+        try:
+            validate_material_receipt(receipt, receipt_context)
+        except ActivationError as exc:
+            raise CommunicationValidationError(
+                f"Human_pointer_activation_evidence_invalid:{exc.code}"
+            ) from exc
         receiver_publication_claim = {
             "claim_id": f"{pointer['message_id']}::receiver-publication-readback",
             "claim_role": "communication_publication",
@@ -760,8 +790,21 @@ class CommunicationValidator:
             ),
             "verification_result": "UNVERIFIABLE",
         }
+        receiver_context = MaterialObservationContext()
+        receiver_context.bind(
+            claim_id=receiver_publication_claim["claim_id"],
+            expected_source_ref=str(pointer["constitution_evidence_ref"]),
+            expected_value=expected_publication,
+            expected_resolver_id="receiver_constitution_physical_readback",
+            observed_source_class=receiver_publication_claim[
+                "observed_authoritative_source_class"
+            ],
+            observed_value=observed_publication,
+            exact_observation_ref=receiver_publication_claim["exact_observation_ref"],
+            observation_adapter_id="receiver_exact_pointer_readback",
+        )
         receiver_publication_claim["verification_result"] = evaluate_material_claim(
-            receiver_publication_claim
+            receiver_publication_claim, receiver_context
         )
         if receiver_publication_claim["verification_result"] != "VERIFIED":
             raise CommunicationValidationError("Human_pointer_publication_readback_unverified")

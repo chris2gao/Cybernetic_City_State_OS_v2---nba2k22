@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import re
 import subprocess
+from copy import deepcopy
+from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from typing import Any
 
@@ -79,6 +81,77 @@ COMPARATOR_ROLES = {
     },
     "observed_review_setup_satisfies_required_isolation_profile": {"reviewer_isolation"},
 }
+
+
+@dataclass(frozen=True)
+class TrustedClaimBinding:
+    """Acceptance-time facts obtained outside the receipt being evaluated."""
+
+    claim_id: str
+    expected_source_ref: str
+    expected_value: Any
+    expected_resolver_id: str
+    observed_source_class: str
+    observed_value: Any
+    exact_observation_ref: str
+    observation_adapter_id: str
+    consumed_observation_refs: frozenset[str]
+
+
+class MaterialObservationContext:
+    """Trusted resolver/adapter boundary for material-claim acceptance.
+
+    Receipt data never populates this object. Acceptance callers bind facts only
+    after independently resolving the expected source and consuming the physical
+    observation through a trusted adapter.
+    """
+
+    def __init__(self) -> None:
+        self._bindings: dict[str, TrustedClaimBinding] = {}
+
+    def bind(
+        self,
+        *,
+        claim_id: str,
+        expected_source_ref: str,
+        expected_value: Any,
+        expected_resolver_id: str,
+        observed_source_class: str,
+        observed_value: Any,
+        exact_observation_ref: str,
+        observation_adapter_id: str,
+        consumed_observation_refs: set[str] | frozenset[str] | None = None,
+    ) -> None:
+        if not all(isinstance(value, str) and value for value in (
+            claim_id,
+            expected_source_ref,
+            expected_resolver_id,
+            observed_source_class,
+            exact_observation_ref,
+            observation_adapter_id,
+        )):
+            raise ActivationError("TRUSTED_CLAIM_BINDING_INVALID")
+        if claim_id in self._bindings:
+            raise ActivationError("TRUSTED_CLAIM_BINDING_DUPLICATE", claim_id=claim_id)
+        if expected_source_ref.startswith("receipt:"):
+            raise ActivationError("TRUSTED_EXPECTED_SOURCE_IS_RECEIPT", claim_id=claim_id)
+        refs = frozenset(consumed_observation_refs or {exact_observation_ref})
+        if exact_observation_ref not in refs:
+            raise ActivationError("TRUSTED_OBSERVATION_NOT_CONSUMED", claim_id=claim_id)
+        self._bindings[claim_id] = TrustedClaimBinding(
+            claim_id=claim_id,
+            expected_source_ref=expected_source_ref,
+            expected_value=deepcopy(expected_value),
+            expected_resolver_id=expected_resolver_id,
+            observed_source_class=observed_source_class,
+            observed_value=deepcopy(observed_value),
+            exact_observation_ref=exact_observation_ref,
+            observation_adapter_id=observation_adapter_id,
+            consumed_observation_refs=refs,
+        )
+
+    def binding_for(self, claim_id: str) -> TrustedClaimBinding | None:
+        return self._bindings.get(claim_id)
 
 
 def _activation_predicate_satisfied(predicate: str, context: dict[str, Any]) -> bool:
@@ -486,8 +559,11 @@ def _compare_claim(record: dict[str, Any]) -> str:
     raise ActivationError("COMPARATOR_UNKNOWN", comparator_id=comparator)
 
 
-def evaluate_material_claim(record: dict[str, Any]) -> str:
-    """Recompute one two-sided material claim; never trust its declared verdict."""
+def evaluate_material_claim(
+    record: dict[str, Any],
+    observation_context: MaterialObservationContext | None = None,
+) -> str:
+    """Recompute a claim from externally bound facts, never from receipt data alone."""
     record = _mapping(record, "MATERIAL_CLAIM_INVALID")
     missing = sorted(REQUIRED_CLAIM_FIELDS - set(record))
     if missing:
@@ -507,11 +583,43 @@ def evaluate_material_claim(record: dict[str, Any]) -> str:
         return "UNVERIFIABLE"
     if record.get("freshness_requirement_when_applicable") and not record.get("freshness_observation_ref"):
         return "STALE"
-    return _compare_claim(record)
+    if not isinstance(observation_context, MaterialObservationContext):
+        return "UNVERIFIABLE"
+    claim_id = str(record.get("claim_id", ""))
+    binding = observation_context.binding_for(claim_id)
+    if binding is None:
+        return "UNVERIFIABLE"
+    if binding.expected_source_ref != expected_ref:
+        return "UNVERIFIABLE"
+    if binding.exact_observation_ref != observation_ref:
+        return "UNVERIFIABLE"
+    if binding.observed_source_class != record.get("observed_authoritative_source_class"):
+        return "UNVERIFIABLE"
+    required_consumed_refs = {observation_ref}
+    for conditional_ref_field in (
+        "subject_principal_observation_ref",
+        "freshness_observation_ref",
+    ):
+        conditional_ref = record.get(conditional_ref_field)
+        if conditional_ref:
+            required_consumed_refs.add(str(conditional_ref))
+    if not required_consumed_refs.issubset(binding.consumed_observation_refs):
+        return "UNVERIFIABLE"
+    if record.get("expected_value_or_predicate") != binding.expected_value:
+        return "MISMATCH"
+    if record.get("observed_value") != binding.observed_value:
+        return "MISMATCH"
+    bound_record = dict(record)
+    bound_record["expected_value_or_predicate"] = deepcopy(binding.expected_value)
+    bound_record["observed_value"] = deepcopy(binding.observed_value)
+    return _compare_claim(bound_record)
 
 
-def validate_material_receipt(receipt: dict[str, Any]) -> dict[str, str]:
-    """Recompute all claims and reject any declared/aggregate overclaim."""
+def validate_material_receipt(
+    receipt: dict[str, Any],
+    observation_context: MaterialObservationContext | None = None,
+) -> dict[str, str]:
+    """Recompute all claims against a trusted acceptance-time observation context."""
     receipt = _mapping(receipt, "MATERIAL_RECEIPT_INVALID")
     claims = receipt.get("material_claims")
     if not isinstance(claims, list) or not claims:
@@ -523,7 +631,7 @@ def validate_material_receipt(receipt: dict[str, Any]) -> dict[str, str]:
         claim_id = str(claim["claim_id"])
         if claim_id in results:
             raise ActivationError("MATERIAL_CLAIM_ID_DUPLICATE", claim_id=claim_id)
-        result = evaluate_material_claim(claim)
+        result = evaluate_material_claim(claim, observation_context)
         if result not in VERIFICATION_RESULTS:
             raise ActivationError("MATERIAL_CLAIM_RESULT_INVALID")
         if claim.get("verification_result") != result:
@@ -556,6 +664,8 @@ def observe_git_commit_claim(
     action_id_or_review_id: str,
     expected_source_ref: str,
     expected_sha: str,
+    observation_context: MaterialObservationContext,
+    expected_resolver_id: str,
 ) -> dict[str, Any]:
     """Create a claim from the actual Git object database and execute equality."""
     rc, observed = _git(repo_root, "rev-parse", f"{expected_sha}^{{commit}}")
@@ -573,7 +683,17 @@ def observe_git_commit_claim(
         "relationship_or_equality_check": "observed_commit_SHA_equals_expected_semantic_role_SHA",
         "verification_result": "UNVERIFIABLE",
     }
-    record["verification_result"] = evaluate_material_claim(record)
+    observation_context.bind(
+        claim_id=claim_id,
+        expected_source_ref=expected_source_ref,
+        expected_value=expected_sha,
+        expected_resolver_id=expected_resolver_id,
+        observed_source_class="actual_Git_object_database",
+        observed_value=observed_value,
+        exact_observation_ref=record["exact_observation_ref"],
+        observation_adapter_id="git_rev_parse_commit_adapter",
+    )
+    record["verification_result"] = evaluate_material_claim(record, observation_context)
     return record
 
 
@@ -586,6 +706,8 @@ def observe_changed_path_claim(
     base_sha: str,
     candidate_sha: str,
     allowed_patterns: list[str],
+    observation_context: MaterialObservationContext,
+    expected_resolver_id: str,
 ) -> dict[str, Any]:
     """Observe the complete NUL-safe Git path set for a bound base/candidate pair."""
     proc = subprocess.run(
@@ -613,5 +735,15 @@ def observe_changed_path_claim(
         "relationship_or_equality_check": "complete_canonical_path_set_within_authorized_patterns",
         "verification_result": "UNVERIFIABLE",
     }
-    record["verification_result"] = evaluate_material_claim(record)
+    observation_context.bind(
+        claim_id=claim_id,
+        expected_source_ref=expected_source_ref,
+        expected_value={"allowed_patterns": allowed_patterns},
+        expected_resolver_id=expected_resolver_id,
+        observed_source_class="complete_Git_compare",
+        observed_value=record["observed_value"],
+        exact_observation_ref=record["exact_observation_ref"],
+        observation_adapter_id="complete_git_compare_adapter",
+    )
+    record["verification_result"] = evaluate_material_claim(record, observation_context)
     return record

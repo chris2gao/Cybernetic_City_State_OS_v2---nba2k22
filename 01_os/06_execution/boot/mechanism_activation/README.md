@@ -2,7 +2,10 @@
 
 All functions here are explicit, one-shot operations. `activation.py` classifies a
 structured planned action, resolves mandatory mechanisms, evaluates their pre-action
-gate, and recomputes two-sided material claims. `validate_mechanism_activation.py`
+gate, and recomputes two-sided material claims. Material acceptance requires an
+explicit `MaterialObservationContext` populated by trusted expected-source resolvers
+and physical-observation adapters outside the receipt; receipt fields alone always
+fail closed. `validate_mechanism_activation.py`
 checks canonical wiring and inventory truthfulness.
 
 The resolver and gate never authorize, publish, mutate, deliver, acknowledge, poll,

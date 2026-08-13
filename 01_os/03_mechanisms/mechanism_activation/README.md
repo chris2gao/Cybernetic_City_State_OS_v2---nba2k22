@@ -8,6 +8,11 @@ that action. It separates four facts that must never be collapsed:
 3. the pre-action gate verifies already-existing preconditions but grants no authority;
 4. post-action evidence proves what physically happened through two-sided claims.
 
+Material receipts are binding indexes, not provenance. Acceptance-time verification
+must independently resolve each cited expected source and consume each cited physical
+observation through a trusted context; claim-provided values, labels, completeness,
+actors, hashes, or SHAs cannot populate that context.
+
 Natural-language text can always remain ordinary Human discussion. It becomes an OS
 formal cross-endpoint action only through the constitution path and its evidence. A
 copied prompt, role label, provider name, or plausible-looking pointer cannot create a
