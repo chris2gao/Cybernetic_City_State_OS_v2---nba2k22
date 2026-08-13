@@ -1,0 +1,459 @@
+schema_version: citystate.communication.frozen_stage04_run.v1
+mode: full
+tested_commit: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+frozen_04_tests_git_blob_sha: 360571b6b29a3baecd753dc45611457da9ab6bf2
+frozen_test_package_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+oracle_sha256: 5642d78717d1fd7e1483a4ba733d1ace3b67b21a62676d47940ffecbc409c6fe
+total: 50
+passed: 50
+failed: 0
+results:
+- test_id: GC-T001
+  status: PASS
+  failure_code: VALID_MESSAGE_REQUIRED
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T002
+  status: PASS
+  failure_code: RESULT_OPTIONAL_ACTION
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T003
+  status: PASS
+  failure_code: REQUESTED_ACTION_REQUIRED
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T004
+  status: PASS
+  failure_code: YAML_DUPLICATE_KEY
+  reason: null
+  physical_trace:
+  - route: validate_communication_system.parse_safe_yaml
+- test_id: GC-T005
+  status: PASS
+  failure_code: YAML_MULTI_DOCUMENT
+  reason: null
+  physical_trace:
+  - route: validate_communication_system.parse_safe_yaml
+- test_id: GC-T006
+  status: PASS
+  failure_code: YAML_ALIAS_OR_MERGE
+  reason: null
+  physical_trace:
+  - route: validate_communication_system.parse_safe_yaml
+- test_id: GC-T007
+  status: PASS
+  failure_code: YAML_CUSTOM_TAG
+  reason: null
+  physical_trace:
+  - route: validate_communication_system.parse_safe_yaml
+- test_id: GC-T008
+  status: PASS
+  failure_code: PROHIBITED_DELIVERY_STATE
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T009
+  status: PASS
+  failure_code: PROHIBITED_SUMMARY_FIELD
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T010
+  status: PASS
+  failure_code: MESSAGE_ID_PATH_MISMATCH
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T011
+  status: PASS
+  failure_code: SEQUENCE_REUSE
+  reason: null
+  physical_trace:
+  - route: publisher.publish
+    task_root: <isolated-temp>\task
+- test_id: GC-T012
+  status: PASS
+  failure_code: SEQUENCE_EXHAUSTED
+  reason: null
+  physical_trace:
+  - route: publisher.publish
+    task_root: <isolated-temp>\task
+- test_id: GC-T013
+  status: PASS
+  failure_code: TASK_SCOPED_SEQUENCE
+  reason: null
+  physical_trace:
+  - route: publisher.publish
+    task_root: <isolated-temp>\task
+- test_id: GC-T014
+  status: PASS
+  failure_code: SENDER_ZONE_OWNERSHIP
+  reason: null
+  physical_trace:
+  - route: publisher.publish
+    task_root: <isolated-temp>\task
+- test_id: GC-T015
+  status: PASS
+  failure_code: ENDPOINT_ROLE_MISMATCH
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T016
+  status: PASS
+  failure_code: ROLE_IS_NOT_AUTHORITY
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T017
+  status: PASS
+  failure_code: AUTH_REF_NOT_REQUIRED
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T018
+  status: PASS
+  failure_code: MESSAGE_SELF_AUTHORIZATION
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T019
+  status: PASS
+  failure_code: REQUIRED_REF_MISSING
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T020
+  status: PASS
+  failure_code: REQUIRED_REF_SET_MISMATCH
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T021
+  status: PASS
+  failure_code: UNAUTHORIZED_CONTEXT_EXPANSION
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T022
+  status: PASS
+  failure_code: BOOTSTRAP_READ_SET
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T023
+  status: PASS
+  failure_code: LONG_CONTENT_EXTERNALIZATION
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T024
+  status: PASS
+  failure_code: DOCUMENT_FRONT_MATTER_REQUIRED
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T025
+  status: PASS
+  failure_code: EXISTING_RESOURCE_REFERENCE
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T026
+  status: PASS
+  failure_code: LOCAL_ONLY_GITHUB_BLOCK
+  reason: null
+  physical_trace:
+  - route: publisher.publish
+    task_root: <isolated-temp>\task
+- test_id: GC-T027
+  status: PASS
+  failure_code: FORBIDDEN_DATA
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T028
+  status: PASS
+  failure_code: LOCAL_DEFAULT_ROUTE
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T029
+  status: PASS
+  failure_code: WEB_REPUBLICATION_REQUIRED
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T030
+  status: PASS
+  failure_code: HUMAN_GITHUB_TRIGGER
+  reason: null
+  physical_trace:
+  - route: publisher.publish
+    task_root: <isolated-temp>\task
+- test_id: GC-T031
+  status: PASS
+  failure_code: GIT_CONVERGENCE
+  reason: null
+  physical_trace:
+  - route: convergence.converge
+    repo: <isolated-temp>\local
+    translated_exact_paths:
+    - local.txt
+- test_id: GC-T032
+  status: PASS
+  failure_code: DISJOINT_SENDER_CONVERGENCE
+  reason: null
+  physical_trace:
+  - route: convergence.converge
+    repo: <isolated-temp>\local
+    translated_exact_paths:
+    - dir_B/file.txt
+- test_id: GC-T035
+  status: PASS
+  failure_code: DANGLING_POINTER_PREVENTED
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T036
+  status: PASS
+  failure_code: HUMAN_ROUTE_OVERRIDE
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T037
+  status: PASS
+  failure_code: SENT_SCOPE
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T038
+  status: PASS
+  failure_code: AUTOMATIC_DELIVERY_PROHIBITED
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T042
+  status: PASS
+  failure_code: DISCOVERY_SCOPE
+  reason: null
+  physical_trace:
+  - route: navigation.validate_discovery
+    path: <isolated-temp>\discovery.yml
+- test_id: GC-T046
+  status: PASS
+  failure_code: IMMUTABLE_CORRECTION
+  reason: null
+  physical_trace:
+  - route: publisher.publish
+    task_root: <isolated-temp>\task
+- test_id: GC-T047
+  status: PASS
+  failure_code: CONTENT_IDENTITY_BOUNDARY
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T048
+  status: PASS
+  failure_code: ENDPOINT_CANONICAL_PARITY
+  reason: null
+  physical_trace:
+  - route: publisher.publish
+    task_root: <isolated-temp>\task
+- test_id: GC-T049
+  status: PASS
+  failure_code: PRIVATE_REASONING_PROHIBITED
+  reason: null
+  physical_trace:
+  - route: CommunicationValidator.validate_message
+    task_root: <isolated-temp>\task
+- test_id: GC-T050
+  status: PASS
+  failure_code: CROSS_MODEL_SEMANTIC_RECOVERY
+  reason: null
+  physical_trace:
+  - route: parity.score_cross_model
+- test_id: GC-T033
+  status: PASS
+  failure_code: SAME_PATH_CONFLICT
+  reason: null
+  physical_trace:
+  - route: convergence.observe_same_path_conflict
+    structured_command_trace: true
+    merge_argv:
+    - git
+    - merge
+    - --no-edit
+    - origin/master
+    merge_return_code: 1
+    observed_unresolved_paths:
+    - README.md
+    emitted_conflict_paths:
+    - README.md
+    continuation_commit_created: false
+    push_attempt_count: 0
+    push_attempts: []
+    operation_stopped: true
+    next_owner: task_navigation_owner
+    Human_escalation_required: true
+- test_id: GC-T034
+  status: PASS
+  failure_code: NON_FAST_FORWARD
+  reason: null
+  physical_trace:
+  - route: convergence.observe_non_fast_forward
+    structured_command_trace: true
+    push_attempts:
+    - argv:
+      - git
+      - push
+      - origin
+      - master
+      return_code: 1
+    retry_count: 0
+    remote_head_before: cc032c770322098d6fa3e6f596ef1efa6eeb4c53
+    remote_head_after: cc032c770322098d6fa3e6f596ef1efa6eeb4c53
+    observed_route:
+    - task_navigation_owner
+    - Human
+- test_id: GC-T039
+  status: PASS
+  failure_code: WHOLE_TASK_ARCHIVE
+  reason: null
+  physical_trace:
+  - route: archive.archive_physical_tree
+    archived_task_root: <isolated-temp>\archived_task
+    private_runtime_deleted: []
+    operation_trace:
+    - durable_prerequisite_verified
+    - private_runtime_git_state_verified
+    - public_archive_completed
+    - discovery_updated
+    - private_runtime_deleted
+    durable_prerequisite_observed: true
+    durable_prerequisite_refs:
+    - archive_prerequisites/completion.yml
+    - archive_prerequisites/residuals.yml
+    - archive_prerequisites/runtime_policy.yml
+- test_id: GC-T040
+  status: PASS
+  failure_code: PRIVATE_RUNTIME_LEAK
+  reason: null
+  physical_trace:
+  - route: archive.archive_physical_tree
+    archived_task_root: <isolated-temp>\archived_task
+    private_runtime_deleted:
+    - <isolated-temp>\detached_runtime_0
+    - <isolated-temp>\detached_runtime_1
+    - <isolated-temp>
+    operation_trace:
+    - durable_prerequisite_verified
+    - private_runtime_git_state_verified
+    - public_archive_completed
+    - discovery_updated
+    - private_runtime_deleted
+    durable_prerequisite_observed: true
+    durable_prerequisite_refs:
+    - archive_prerequisites/completion.yml
+    - archive_prerequisites/residuals.yml
+    - archive_prerequisites/runtime_policy.yml
+- test_id: GC-T041
+  status: PASS
+  failure_code: ARCHIVE_DEFAULT_LOAD
+  reason: null
+  physical_trace:
+  - route: navigation.resolve_context_with_trace
+    structured_read_trace: true
+    attempted_paths:
+    - <isolated-temp>\stage06\active\task-001\context.txt
+    successful_read_paths:
+    - <isolated-temp>\stage06\active\task-001\context.txt
+    authority_source: default_load
+    target: active
+    content: active
+    rejected: false
+  - route: navigation.resolve_context_with_trace
+    structured_read_trace: true
+    attempted_paths:
+    - <isolated-temp>\stage06\archive\task-001\context.txt
+    successful_read_paths:
+    - <isolated-temp>\stage06\archive\task-001\context.txt
+    authority_source: exact_archive_pointer
+    target: archive
+    content: archived
+    rejected: false
+  - route: navigation.resolve_context_with_trace
+    structured_read_trace: true
+    attempted_paths:
+    - <isolated-temp>\stage06\archive\task-001\context.txt
+    successful_read_paths:
+    - <isolated-temp>\stage06\archive\task-001\context.txt
+    authority_source: Human_explicit_request
+    target: archive
+    content: archived
+    rejected: false
+  - route: navigation.resolve_context_with_trace
+    structured_read_trace: true
+    attempted_paths:
+    - <isolated-temp>\stage06\archive\task-001
+    successful_read_paths: []
+    authority_source: implicit_default
+    target: archive
+    content: null
+    rejected: true
+- test_id: GC-T043
+  status: PASS
+  failure_code: HUMAN_CURRENT_TRIGGER
+  reason: null
+  physical_trace:
+  - route: navigation.update_Human_current
+    event: ordinary_message
+    write_performed: false
+- test_id: GC-T044
+  status: PASS
+  failure_code: HUMAN_CURRENT_OWNER
+  reason: null
+  physical_trace:
+  - route: navigation.update_Human_current
+    authorized_from_structured_state: false
+    bytes_changed: false
+  - route: navigation.update_Human_current
+    authorized_from_structured_state: false
+    bytes_changed: false
+  - route: navigation.update_Human_current
+    authorized_from_structured_state: true
+    bytes_changed: true
+- test_id: GC-T045
+  status: PASS
+  failure_code: SENDER_INDEX_INTEGRITY
+  reason: null
+  physical_trace:
+  - route: sender_zone.validate_physical_pointer_index
