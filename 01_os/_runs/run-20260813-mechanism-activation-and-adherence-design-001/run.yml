@@ -3,7 +3,7 @@ run:
   run_id: run-20260813-mechanism-activation-and-adherence-design-001
   task_id: os-v2-mechanism-activation-and-adherence-001
   phase: architecture_design
-  status: architecture_v2_candidate_ready_awaiting_Human_isolated_review_setup_attestation
+  status: architecture_v2_fresh_independent_rereview_dispatched
   owner: core
   branch: dev/os-v2-mechanism-activation-and-adherence-design-001
   exact_base_sha: 9492fc940c58784297dc92d8602e5dfaad446d1a
@@ -55,19 +55,22 @@ run:
     task_root: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-001/
     sender_endpoint_id: foreground-architecture-001
     prior_reviewer_endpoint_id: isolated-gpt-design-reviewer-001
-    next_reviewer_endpoint_id: isolated-gpt-design-reviewer-002
+    current_reviewer_endpoint_id: isolated-gpt-design-reviewer-002
     prior_review_request_message_id: os-v2-mechanism-activation-and-adherence-001::foreground-architecture-001::00001
+    rereview_request_message_id: os-v2-mechanism-activation-and-adherence-001::foreground-architecture-001::00002
     Human_authorization_ref: 01_任务输入/Human通讯空间建立授权_v1.yml
+    Human_review_setup_attestation_ref: Human/decisions/00002_review_setup_attestation.yml
     automatic_delivery: false
     automatic_task_progression: false
   gates:
     architecture_design_review_v1: FIX_REQUIRED_ACCEPTED
     architecture_design_v2: candidate_ready
-    fresh_re_review_isolation_attestation: pending_Human
-    fresh_re_review_dispatch: blocked_until_Human_attestation
+    fresh_re_review_isolation_attestation: Human_attested_and_durable
+    fresh_re_review_dispatch: complete
+    architecture_design_review_v2: waiting_fresh_isolated_GPT_result
     implementation: blocked_until_design_review_pass
     master_integration: blocked_until_implementation_and_independent_acceptance
   next_action: >-
-    Human 建立一个全新的 project-only-memory isolated Review Project（不得复用 reviewer-001 所在 Project），
-    并明确确认该 setup。Foreground 随后把 Human setup attestation 写入 task communication root，发布 v2 exact review request，
-    Human 只 relay canonical pointer。Reviewer-002 仅依据 exact GitHub evidence 独立复审 0ad94301...。
+    Human 只转交 foreground 00002 的 canonical GitHub relay pointer 给新建的 isolated Review Project。
+    Reviewer-002 按 manifest → endpoint card → role context → exact message → direct required refs bootstrap，
+    独立复审 exact v2 candidate 0ad94301...，并通过自己的 sender zone 返回 durable result pointer。
