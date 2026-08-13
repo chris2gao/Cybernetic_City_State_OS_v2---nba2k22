@@ -80,7 +80,7 @@ receiver_setup:
   model: GPT-5.6 Sol
   reasoning_or_parameter_profile: chatgpt_plus_sol_high
   session_mode: fresh
-  isolation_level: fresh_project_blind
+  isolation_level: isolated_project
   repository_access_mode: GitHub_only
   repository_or_worktree_requirement: exact_candidate_8fa49cc3_and_evidence_snapshot_a1132bbb
   required_branch_or_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
@@ -91,8 +91,9 @@ receiver_setup:
   availability_assumption_or_observation_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/06_执行/model_routing_independent_acceptance_preflight_v1.yml#selected_route
   limitations:
     - routing_grants_no_authority
+    - executor_private_context
+    - foreground_private_context
     - use_fresh_new_isolated_Review_Project
-    - no_executor_or_foreground_private_chat_context
     - evidence_snapshot_is_a1132bbb0ccbc783b214a8218d32d45edf59e8da
     - no_local_files_may_be_assumed_readable
     - no_master_publication_authority
