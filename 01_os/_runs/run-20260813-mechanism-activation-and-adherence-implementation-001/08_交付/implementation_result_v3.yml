@@ -1,0 +1,41 @@
+schema_version: citystate.mechanism_activation.implementation_result.v3
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+result: B2_observation_provenance_binding_corrected_candidate_complete
+candidate_sha: 67c668d038c94e4de9935d0ee0bab3cb526d6c6e
+superseded_candidate_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+base_sha: bf538e5068381becd31e8e1daceade81e657262d
+source_branch: dev/os-v2-mechanism-activation-and-adherence-implementation-001
+dispatch_pointer_commit: 25d5f660fd5aaaf85cd072cc539fea70f1cb0f4f
+accepted_blocker: B2-OBSERVATION-PROVENANCE-BINDING
+correction:
+  trusted_observation_context_required: true
+  expected_source_resolved_outside_receipt: true
+  physical_observation_consumed_outside_receipt: true
+  conditional_principal_and_freshness_refs_consumed: true
+  receipt_only_provenance: prohibited_and_fail_closed
+verification:
+  counterexamples_before_fix: {VERIFIED_incorrectly: 5, total: 5}
+  counterexamples_after_fix: {UNVERIFIABLE: 5, total: 5}
+  bound_deterministic_tests: {passed: 101, failed: 0}
+  frozen_stage04_full: {passed: 50, failed: 0}
+  frozen_stage04_mutation: {passed: 50, failed: 0}
+  material_claims: {verified: 9, nonverified: 0}
+  exact_old_pointer_long_path_readback: VERIFIED
+  exact_corrected_dispatch_pointer_readback: VERIFIED
+  repository_default_gates: 4/4_PASS
+preserved_dimensions:
+  formal_action_mandatory_mediation_A: PASS
+  communication_v2_regression: PASS
+  model_routing_regression: PASS
+  architecture_A_or_B_semantics_reopened: false
+effectiveness_claim:
+  current_maximum: L3_EXECUTION_GATED
+  L4_target_requires_fresh_independent_acceptance: true
+  operationally_active_claimed: false
+publication:
+  source_branch_only: true
+  master_modified_or_published: false
+  formal_result_status: prepared_awaiting_exact_GitHub_publication
+next_owner: foreground_implementation_dispatch
+next_action: route_exact_corrected_candidate_to_fresh_independent_implementation_acceptance
+authority_effect: none
