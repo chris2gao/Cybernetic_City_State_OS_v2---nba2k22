@@ -1,0 +1,67 @@
+design_review_adjudication:
+  schema_version: citystate.mechanism_activation_design_review_adjudication.v1
+  task_id: os-v2-mechanism-activation-and-adherence-001
+  reviewed_candidate_sha: d01fae74b90f8ca5debeae979ffcc262aa042448
+  reviewer_result_commit: a837b24342fe33c824d595949dfd6408dfbc3e57
+  reviewer_message_id: os-v2-mechanism-activation-and-adherence-001::isolated-gpt-design-reviewer-001::00001
+  reviewer_verdict: FIX_REQUIRED
+  foreground_adjudication: ACCEPT_FIX_REQUIRED
+  implementation_authorized: false
+  master_publication_authorized: false
+  accepted_blockers:
+    B1_formal_action_constitution_and_mandatory_mediation:
+      accepted: true
+      diagnosis: >-
+        v1 定义 resolver/gate pipeline，但没有把“什么构成 formal action”与模型自我命名彻底分离，也没有定义
+        唯一的 non-optional constitution/acceptance boundary。因此 euphemistic relay、self-label downgrade、mixed output、
+        recipient alias 与 resolver omission 仍可能绕过 pipeline 而被误认为 formal handoff。
+      required_closure:
+        - representation_invariant_action_classification
+        - intended_cross_endpoint_side_effect_as_primary_semantics
+        - quoted_hypothetical_vs_actionable_boundary
+        - mixed_action_segmentation
+        - recipient_alias_normalization
+        - fail_closed_ambiguity
+        - unique_formal_action_constitution_path
+        - receiver_and_Human_relay_acceptance_requires_constitution_evidence
+    B2_material_physical_truth_external_binding:
+      accepted: true
+      diagnosis: >-
+        v1 正确禁止 receipt 自报物理事实，但“externally bound where possible”不足以证明 acceptance 所依赖的 SHA、diff、
+        topology、authority、execution result 等事实。缺少逐 claim 的 authoritative source、verifier、exact binding boundary
+        与 fail-closed behavior。
+      required_closure:
+        - authoritative_binding_matrix_for_every_material_physical_claim
+        - immutable_SHA_or_exact_ref_binding
+        - actual_Git_compare_for_diff_scope
+        - observed_transport_and_execution_topology
+        - canonical_authority_plus_Human_activation_binding
+        - content_or_hash_verification_for_result_refs
+        - UNVERIFIABLE_blocks_acceptance
+  preserved_passed_design:
+    - resolver_purity_and_no_authority_grant
+    - decision_vs_enforcement_separation_as_pattern
+    - MUST_HOW_DID_separation
+    - collaboration_role_vs_authority_separation
+    - collaboration_role_vs_dynamic_model_catalog_separation
+    - Human_receiver_setup_direction
+    - GitHub_only_reviewer_locality_rule
+    - no_automatic_delivery_polling_ack_progression_scheduler_daemon_T5
+    - L0_to_L4_effectiveness_model
+    - communication_as_first_bounded_L4_vertical_slice
+    - hybrid_validation_applicability
+    - generic_validation_router_is_successor_not_hard_prerequisite
+  correction_scope:
+    allowed:
+      - bounded architecture v2 closing B1 and B2
+      - new formal-action constitution contract
+      - new material-physical-truth binding matrix
+      - run evidence and communication artifacts for fresh re-review
+    prohibited:
+      - canonical implementation
+      - AGENTS.md mutation
+      - active mechanism mutation
+      - master publication
+      - expansion into generic workflow validation router implementation
+      - reopening passed architecture dimensions without a new blocker
+  next_gate: fresh_isolated_design_re_review_of_new_exact_candidate_sha
