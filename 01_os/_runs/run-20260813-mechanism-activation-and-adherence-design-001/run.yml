@@ -3,19 +3,21 @@ run:
   run_id: run-20260813-mechanism-activation-and-adherence-design-001
   task_id: os-v2-mechanism-activation-and-adherence-001
   phase: architecture_design
-  status: architecture_v2_fresh_independent_rereview_dispatched
+  status: architecture_v3_candidate_ready_awaiting_Human_isolated_review_setup_attestation
   owner: core
   branch: dev/os-v2-mechanism-activation-and-adherence-design-001
   exact_base_sha: 9492fc940c58784297dc92d8602e5dfaad446d1a
   master_at_start: 9492fc940c58784297dc92d8602e5dfaad446d1a
   design_v1_candidate_sha: d01fae74b90f8ca5debeae979ffcc262aa042448
-  design_v1_review_result_commit: a837b24342fe33c824d595949dfd6408dfbc3e57
   design_v1_review_verdict: FIX_REQUIRED
   design_v2_candidate_sha: 0ad94301cfc50c5181d5ac362b845d6bd06a41c6
+  design_v2_review_result_commit: e4f435a7fcec87bdc955be55cf9e895520bcef2c
+  design_v2_review_verdict: FIX_REQUIRED
+  design_v3_candidate_sha: 8ee72d2800a9e00539d3732464e79312e1ade613
   objective: >-
-    建立统一的 mechanism activation/adherence 架构，使 canonical mechanism 不仅被定义和加载，
-    还具有明确 formal-action constitution、trigger、pre-action enforcement gate、externally-bound execution/compliance evidence
-    与负向绕过验证；communication_system 作为第一条 L4 vertical slice，同时固化跨模型协作角色与 Human-visible receiver setup。
+    建立统一 mechanism activation/adherence 架构，使 formal action 必须经过不可绕过的 constitution/mediation，
+    material physical truth 必须经过 expected-claim specification → authoritative observation → explicit comparator 的双向绑定，
+    并以 communication 作为第一条 L4 vertical slice，同时固化协作角色、Human receiver setup 与结果类型适配验证。
   current_scope:
     repository_writes:
       - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-design-001/**
@@ -24,53 +26,42 @@ run:
     canonical_mutation: prohibited_in_design_phase
     master_publication: prohibited
   validation_mode: hybrid
-  validation_note: >-
-    架构语义采用独立设计审核与场景反证；后续可执行 mechanism 实现采用证据派生的冻结测试、
-    negative-conformance 与独立验收。不得把代码测试绿灯当作架构语义已被证明。
-  design_v1_artifacts:
-    architecture: 02_架构设计/Mechanism_Activation_and_Adherence_Architecture_v1.md
-    validation_applicability: 02_架构设计/验证适用性裁决_v1.yml
-    collaboration_routing: 02_架构设计/协作角色与接收者设置_v1.yml
-    mechanism_effectiveness: 02_架构设计/机制生效等级与触发框架_v1.yml
-    external_patterns: 03_外部模式依据/成熟模式对照_v1.md
-  design_v1_review:
-    reviewer_endpoint: isolated-gpt-design-reviewer-001
-    message_id: os-v2-mechanism-activation-and-adherence-001::isolated-gpt-design-reviewer-001::00001
+  design_v2_review:
+    reviewer_endpoint: isolated-gpt-design-reviewer-002
+    message_id: os-v2-mechanism-activation-and-adherence-001::isolated-gpt-design-reviewer-002::00001
     verdict: FIX_REQUIRED
-    accepted_blockers:
-      - B1_formal_action_constitution_and_mandatory_mediation
-      - B2_material_physical_truth_external_binding
-    preserved_passed_dimensions:
-      - collaboration_model_routing_separation
-      - L0_L4_effectiveness_model
-      - validation_modality_hybrid_sound
-      - no_automatic_progression
-  design_v2_artifacts:
-    architecture: 05_FIX_REQUIRED修正/Mechanism_Activation_and_Adherence_Architecture_v2.md
-    formal_action_constitution: 05_FIX_REQUIRED修正/正式动作宪法与强制中介契约_v1.yml
-    physical_truth_binding_matrix: 05_FIX_REQUIRED修正/物理事实外部绑定矩阵_v1.yml
-    review_adjudication: 04_独立设计审核/StageDesignReview_v1接收与修正裁决_v1.yml
+    B1_status: PASS_ARCHITECTURE_LEVEL
+    B2_status: FIX_REQUIRED_EXPECTED_OBSERVED_ROLE_BINDING
+    accepted_residual_blocker: expected_vs_observed_semantic_role_and_authenticated_actor_binding
+  design_v3_artifacts:
+    architecture: 07_FIX_REQUIRED修正/Mechanism_Activation_and_Adherence_Architecture_v3.md
+    two_sided_physical_truth_matrix: 07_FIX_REQUIRED修正/物理事实期望观察双向绑定矩阵_v1.yml
+    rereview_adjudication: 06_独立设计复审/StageDesignReview_v2接收与修正裁决_v1.yml
+    preserved_B1_contract: 05_FIX_REQUIRED修正/正式动作宪法与强制中介契约_v1.yml
+  design_v3_scope_proof:
+    compare_base: e4f435a7fcec87bdc955be55cf9e895520bcef2c
+    compare_head: 8ee72d2800a9e00539d3732464e79312e1ade613
+    files_changed: 3
+    all_under_authorized_run_root: true
+    canonical_mutation: false
   communication:
     carrier: GitHub
     task_root: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-001/
     sender_endpoint_id: foreground-architecture-001
-    prior_reviewer_endpoint_id: isolated-gpt-design-reviewer-001
-    current_reviewer_endpoint_id: isolated-gpt-design-reviewer-002
-    prior_review_request_message_id: os-v2-mechanism-activation-and-adherence-001::foreground-architecture-001::00001
-    rereview_request_message_id: os-v2-mechanism-activation-and-adherence-001::foreground-architecture-001::00002
-    Human_authorization_ref: 01_任务输入/Human通讯空间建立授权_v1.yml
-    Human_review_setup_attestation_ref: Human/decisions/00002_review_setup_attestation.yml
+    prior_reviewers:
+      - isolated-gpt-design-reviewer-001
+      - isolated-gpt-design-reviewer-002
+    next_reviewer_endpoint_id: isolated-gpt-design-reviewer-003
     automatic_delivery: false
     automatic_task_progression: false
   gates:
     architecture_design_review_v1: FIX_REQUIRED_ACCEPTED
-    architecture_design_v2: candidate_ready
-    fresh_re_review_isolation_attestation: Human_attested_and_durable
-    fresh_re_review_dispatch: complete
-    architecture_design_review_v2: waiting_fresh_isolated_GPT_result
+    architecture_design_review_v2: FIX_REQUIRED_ACCEPTED_B1_CLOSED_B2_BOUNDED
+    architecture_design_v3: candidate_ready
+    fresh_v3_re_review_isolation_attestation: pending_Human
+    fresh_v3_re_review_dispatch: blocked_until_Human_attestation
     implementation: blocked_until_design_review_pass
     master_integration: blocked_until_implementation_and_independent_acceptance
   next_action: >-
-    Human 只转交 foreground 00002 的 canonical GitHub relay pointer 给新建的 isolated Review Project。
-    Reviewer-002 按 manifest → endpoint card → role context → exact message → direct required refs bootstrap，
-    独立复审 exact v2 candidate 0ad94301...，并通过自己的 sender zone 返回 durable result pointer。
+    Human 创建与 reviewer-001、reviewer-002 均隔离的全新 project-only-memory Review Project，连接当前 GitHub repository，
+    不导入 foreground/prior-review chats，并返回 task-bound setup attestation。Foreground 随后发布 reviewer-003 的 formal v3 review request pointer。
