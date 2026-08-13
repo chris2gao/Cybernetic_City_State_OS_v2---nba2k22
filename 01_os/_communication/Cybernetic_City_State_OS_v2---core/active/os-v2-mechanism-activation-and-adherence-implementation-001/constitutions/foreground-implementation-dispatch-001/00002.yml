@@ -1,0 +1,89 @@
+schema_version: citystate.formal_action.constitution_evidence.v1
+action_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00002
+action_class: formal_cross_endpoint_task_dispatch
+sender_endpoint_id: foreground-implementation-dispatch-001
+intended_recipient_endpoint_id: isolated-gpt-implementation-reviewer-001
+classification_basis_ref: documents/foreground-implementation-dispatch-001/00002_independent_implementation_acceptance_request.md
+required_mechanisms:
+  - communication_system
+  - model_routing
+resolver_result_ref: constitutions/foreground-implementation-dispatch-001/00002.yml#resolution
+gate_result_ref: constitutions/foreground-implementation-dispatch-001/00002.yml#gate
+mechanism_execution_ref: 01_os/06_execution/boot/communication_system/publisher/publish_message.py
+formal_artifact_ref: messages/foreground-implementation-dispatch-001/00002_request.yml
+activation_context:
+  intended_cross_endpoint_side_effect: true
+  actionable_content_or_formal_state_claim: true
+  communication_context_ref: manifest.yml
+  classification_basis_ref: documents/foreground-implementation-dispatch-001/00002_independent_implementation_acceptance_request.md
+  requires_receiver_selection: true
+  route_requirement: select_independent_reviewer
+  action_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00002
+  formal_message_type: request
+  task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+  sender_endpoint_id: foreground-implementation-dispatch-001
+  intended_recipient_endpoint_id: isolated-gpt-implementation-reviewer-001
+mechanism_preconditions:
+  communication_system:
+    verification_result: VERIFIED
+    evidence_ref: manifest.yml
+    freshness_required: true
+    freshness_result: VERIFIED
+  model_routing:
+    verification_result: VERIFIED_FOR_FORMAL_DISPATCH
+    evidence_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/06_执行/model_routing_independent_acceptance_preflight_v1.yml
+    relay_time_condition: if_named_route_is_unavailable_fail_closed_and_re_route
+resolution:
+  classification: formal_cross_endpoint_action
+  action_class: formal_cross_endpoint_task_dispatch
+  formal: true
+  formal_segment_indexes:
+    - 0
+  mixed_action_segmented: false
+  authority_effect: none
+  action_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00002
+  normalized_recipient_endpoint_id: isolated-gpt-implementation-reviewer-001
+  required_mechanisms:
+    - communication_system
+    - model_routing
+  missing_preconditions: []
+  route_requirements:
+    - select_independent_reviewer
+  action_allowed_to_enter_enforcement: true
+  ordinary_Human_discussion_allowed: false
+gate:
+  gate_result: VERIFIED
+  action_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00002
+  action_class: formal_cross_endpoint_task_dispatch
+  required_mechanisms:
+    - communication_system
+    - model_routing
+  verified_precondition_refs:
+    communication_system: manifest.yml
+    model_routing: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/06_执行/model_routing_independent_acceptance_preflight_v1.yml
+  blocking_failures: []
+  authority_effect: none
+receiver_setup:
+  collaboration_role: independent_review
+  provider: OpenAI
+  product: ChatGPT
+  surface: chatgpt_web
+  model: GPT-5.6 Sol
+  reasoning_or_parameter_profile: chatgpt_plus_sol_high
+  session_mode: fresh
+  isolation_level: fresh_project_blind
+  repository_access_mode: GitHub_only
+  repository_or_worktree_requirement: exact_candidate_8fa49cc3_and_evidence_snapshot_a1132bbb
+  required_branch_or_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+  local_files_required: false
+  github_publication_required_before_start: true
+  communication_carrier: GitHub
+  routing_basis_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/06_执行/model_routing_independent_acceptance_preflight_v1.yml
+  availability_assumption_or_observation_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/06_执行/model_routing_independent_acceptance_preflight_v1.yml#selected_route
+  limitations:
+    - routing_grants_no_authority
+    - use_fresh_new_isolated_Review_Project
+    - no_executor_or_foreground_private_chat_context
+    - evidence_snapshot_is_a1132bbb0ccbc783b214a8218d32d45edf59e8da
+    - no_local_files_may_be_assumed_readable
+    - no_master_publication_authority
