@@ -1,0 +1,49 @@
+schema_version: citystate.model_routing.receiver_setup_contract.v1
+mechanism_version: 1
+status: active_candidate
+authority_effect: none
+
+collaboration_roles:
+  decision_architecture:
+    function: foreground_decision_and_material_architecture
+    independent_review_when_material: true
+  independent_review:
+    function: isolated_acceptance_or_falsification
+    executor_private_context: prohibited
+    durable_GitHub_evidence_preferred: true
+  execution:
+    function: bounded_repository_or_runtime_implementation
+  auxiliary_mechanical:
+    function: deterministic_repetitive_or_bulk_work
+    material_architecture_or_final_acceptance_default: prohibited
+
+role_is_authority: false
+dynamic_model_catalog_owner: model_routing
+always_on_bootstrap_may_copy_dynamic_catalog: false
+
+receiver_setup_required_fields:
+  - collaboration_role
+  - provider
+  - product
+  - surface
+  - model
+  - reasoning_or_parameter_profile
+  - session_mode
+  - isolation_level
+  - repository_access_mode
+  - repository_or_worktree_requirement
+  - required_branch_or_sha
+  - local_files_required
+  - github_publication_required_before_start
+  - communication_carrier
+  - routing_basis_ref
+  - availability_assumption_or_observation_ref
+  - limitations
+
+GitHub_only_receiver:
+  local_material_may_be_assumed_readable: false
+  start_requires_all_material_inputs_at_exact_GitHub_refs: true
+independent_review:
+  fresh_isolated_setup_required_when_material: true
+  product_state_attestation_allowed_only_when_machine_metadata_unexposed: true
+  setup_evidence_grants_authority: false

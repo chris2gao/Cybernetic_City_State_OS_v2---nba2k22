@@ -1,0 +1,86 @@
+schema_version: citystate.material_physical_truth_two_sided_binding.v1
+mechanism_version: 1
+status: active_candidate
+authority_effect: none
+
+governing_rule: >-
+  Every material acceptance claim requires an authoritative expected claim, an
+  authoritative physical observation, and an executed comparator. Authenticity or
+  existence of the observed object alone does not bind it to the required semantic
+  role.
+
+required_claim_fields:
+  - claim_id
+  - claim_role
+  - action_id_or_review_id
+  - expected_claim_source_ref
+  - expected_value_or_predicate
+  - observed_authoritative_source_class
+  - observed_value
+  - exact_observation_ref
+  - comparator_id
+  - relationship_or_equality_check
+  - verification_result
+
+conditional_fields:
+  authority_material:
+    - subject_principal_observation_ref
+  freshness_material:
+    - freshness_requirement_when_applicable
+    - freshness_observation_ref
+
+allowed_verification_results:
+  - VERIFIED
+  - MISMATCH
+  - STALE
+  - UNVERIFIABLE
+  - AMBIGUOUS
+aggregate_acceptance: every_required_material_claim_must_be_VERIFIED
+receipt_is_physical_truth_source: false
+observation_may_self_assign_semantic_role: false
+expected_and_observed_without_executed_comparator: UNVERIFIABLE
+
+comparators:
+  exact_sha_role_equality:
+    roles: [candidate_SHA]
+  exact_base_equality_plus_required_relation:
+    roles: [base_SHA]
+  named_ref_fresh_state_relation:
+    roles: [moving_head_or_current_ref]
+  complete_path_set_within_authorized_boundary:
+    roles: [changed_path_and_diff_scope]
+    requires_complete_observation: true
+    rejects_duplicate_or_noncanonical_paths: true
+  byte_integrity_and_semantic_role_binding:
+    roles: [durable_evidence_artifact]
+  execution_result_bound_to_expected_candidate_inputs_and_entrypoint:
+    roles: [execution_or_validation_result]
+  published_message_identity_and_route_equality:
+    roles: [communication_publication]
+  authenticated_actor_satisfies_authorized_principal_binding:
+    roles: [authority_and_actual_actor]
+    authenticated_principal_observation_required: true
+  observed_review_setup_satisfies_required_isolation_profile:
+    roles: [reviewer_isolation]
+
+accepted_observed_source_classes:
+  - actual_Git_object_database
+  - fresh_remote_Git_ref_readback
+  - complete_Git_compare
+  - Git_blob_at_exact_commit
+  - trusted_execution_adapter
+  - CI
+  - trusted_host_injected_principal
+  - connector_authenticated_principal
+  - local_authenticated_principal
+  - communication_publisher_observation
+  - exact_local_filesystem_observation
+  - product_or_connector_session_metadata
+  - task_bound_Human_attestation_for_unexposed_product_state
+
+prohibited_authority_substitutes:
+  - provider_identity
+  - model_identity
+  - role_label
+  - endpoint_capability_claim
+  - receipt_writer_field_without_authenticated_observation

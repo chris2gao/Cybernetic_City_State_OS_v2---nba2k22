@@ -3,7 +3,7 @@ registry_id: model_routing_v1
 mechanism_version: 1
 entries:
   - path: 01_os/03_mechanisms/model_routing/**
-    purpose: 模型路由 canonical 契约、活动 surface 目录、source-resolution index、独立项目观察账本与结构 validator
+    purpose: 模型路由 canonical 契约、稳定 collaboration roles、receiver setup、活动 surface 目录、source-resolution index、独立项目观察账本与结构 validator
     loader: 01_os/06_execution/boot/model_routing/README.md
     loader_class: in_repo_program
     discovery: referenced from model-routing boot manifest
@@ -21,7 +21,7 @@ entries:
     failure_surfacing: next model-routing boot
     deletion_rule: protected
   - path: 01_os/06_execution/boot/model_routing/**
-    purpose: 模型路由显式 loader、validator invocation 与 fail-closed 行为
+    purpose: 模型路由显式 loader、validator invocation、receiver setup builder 与 fail-closed 行为
     loader: Human or authorized task executor
     loader_class: external_tool_convention
     discovery: referenced from registry and boot documentation

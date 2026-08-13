@@ -1,0 +1,87 @@
+schema_version: citystate.mechanism_effectiveness_inventory.v1
+mechanism_version: 1
+status: implementation_candidate_pending_independent_acceptance
+
+levels:
+  L0_DEFINED: canonical_definition_exists
+  L1_BOOT_VISIBLE: verified_relevant_loader_visibility_exists
+  L2_TRIGGER_BOUND: objective_triggers_and_missing_precondition_behavior_are_machine_resolvable
+  L3_EXECUTION_GATED: matching_formal_action_requires_gate_and_constitution_evidence
+  L4_E2E_ADVERSARIALLY_VERIFIED: positive_E2E_and_bypass_families_independently_verified
+operationally_active_requires: L4_E2E_ADVERSARIALLY_VERIFIED
+
+inventory:
+  - mechanism_id: context_management
+    current_level: L1_BOOT_VISIBLE
+    target_level: L2_TRIGGER_BOUND
+    acceptance_state: successor_not_scheduled
+    definition_ref: 01_os/03_mechanisms/context_management/
+    boot_ref: 01_os/02_boot/context_management/启动清单_v1.yml
+    trigger_ref: null
+    gate_ref: null
+    receipt_ref: 01_os/02_boot/context_management/启动清单_v1.yml
+    positive_test_ref: 01_os/03_mechanisms/context_management/实现/verify_context_structure.py
+    negative_test_ref: null
+    known_bypass: no_generic_formal_action_trigger_binding
+    recommended_successor_action: define_task_relevant_trigger_and_gate_before_claiming_L2
+
+  - mechanism_id: stage_collaborative_deliberation
+    current_level: L1_BOOT_VISIBLE
+    target_level: L2_TRIGGER_BOUND
+    acceptance_state: successor_not_scheduled
+    definition_ref: 01_os/03_mechanisms/stage_collaborative_deliberation/
+    boot_ref: 01_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml
+    trigger_ref: null
+    gate_ref: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py
+    receipt_ref: null
+    positive_test_ref: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/fixtures/instance/positive_cases_v1.yml
+    negative_test_ref: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/fixtures/instance/counterexamples_v1.yml
+    known_bypass: no_common_action_constitution_attachment
+    recommended_successor_action: bind_trigger_only_if_a_future_task_requires_formal_activation
+
+  - mechanism_id: model_routing
+    current_level: L3_EXECUTION_GATED
+    target_level: L4_E2E_ADVERSARIALLY_VERIFIED
+    acceptance_state: candidate_pending_independent_acceptance
+    definition_ref: 01_os/03_mechanisms/model_routing/
+    boot_ref: 01_os/02_boot/model_routing/启动清单_v1.yml
+    trigger_ref: 01_os/03_mechanisms/mechanism_activation/机制触发注册表_v1.yml#mechanisms.model_routing
+    gate_ref: 01_os/06_execution/boot/model_routing/route_receiver.py
+    receipt_ref: 01_os/02_boot/model_routing/启动清单_v1.yml#receipt_required
+    positive_test_ref: 01_os/06_execution/boot/model_routing/test_receiver_setup.py
+    negative_test_ref: 01_os/06_execution/boot/model_routing/test_receiver_setup.py
+    known_bypass: independent_L4_acceptance_not_yet_recorded
+    recommended_successor_action: fresh_independent_acceptance_then_update_effectiveness_claim
+
+  - mechanism_id: mechanism_activation
+    current_level: L3_EXECUTION_GATED
+    target_level: L4_E2E_ADVERSARIALLY_VERIFIED
+    acceptance_state: candidate_pending_independent_acceptance
+    definition_ref: 01_os/03_mechanisms/mechanism_activation/
+    boot_ref: 01_os/02_boot/mechanism_activation/启动清单_v1.yml
+    trigger_ref: 01_os/03_mechanisms/mechanism_activation/机制触发注册表_v1.yml
+    gate_ref: 01_os/06_execution/boot/mechanism_activation/activation.py
+    receipt_ref: 01_os/03_mechanisms/mechanism_activation/物理事实双向绑定契约_v1.yml
+    positive_test_ref: 01_os/06_execution/boot/mechanism_activation/test_formal_action.py
+    negative_test_ref: 01_os/06_execution/boot/mechanism_activation/test_material_claims.py
+    known_bypass: independent_L4_acceptance_not_yet_recorded
+    recommended_successor_action: fresh_independent_acceptance
+
+  - mechanism_id: communication_system
+    current_level: L3_EXECUTION_GATED
+    target_level: L4_E2E_ADVERSARIALLY_VERIFIED
+    acceptance_state: candidate_pending_independent_acceptance
+    definition_ref: 01_os/03_mechanisms/communication_system/
+    boot_ref: 01_os/02_boot/communication_system/启动清单_v1.yml
+    trigger_ref: 01_os/03_mechanisms/mechanism_activation/机制触发注册表_v1.yml#mechanisms.communication_system
+    gate_ref: 01_os/06_execution/boot/communication_system/publisher/publish_message.py
+    receipt_ref: 01_os/03_mechanisms/communication_system/正式动作接入契约_v1.yml
+    positive_test_ref: 01_os/06_execution/boot/communication_system/validator/test_formal_activation.py
+    negative_test_ref: 01_os/06_execution/boot/communication_system/validator/test_formal_activation.py
+    known_bypass: independent_L4_acceptance_not_yet_recorded
+    recommended_successor_action: fresh_independent_acceptance_before_operationally_active_label
+
+inventory_scope:
+  sources: active_registered_mechanisms_only
+  run_history_scan: prohibited_by_default
+  lower_levels_are_not_implementation_failures: true

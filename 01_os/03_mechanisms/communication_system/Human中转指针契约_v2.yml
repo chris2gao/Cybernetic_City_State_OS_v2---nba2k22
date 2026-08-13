@@ -1,0 +1,41 @@
+schema_version: citystate.communication.Human_relay_pointer.v2
+pointer_contract_version: 2
+status: current_for_new_formal_actions
+
+required_fields:
+  - pointer_contract_version
+  - task_id
+  - message_id
+  - carrier
+  - exact_path_or_GitHub_ref
+  - sender_endpoint_id
+  - sender_task_role
+  - expected_recipient_endpoint_id
+  - expected_recipient_task_role
+  - one_line_routing_purpose
+  - constitution_evidence_ref
+  - compliance_receipt_ref
+  - receiver_setup
+
+receiver_setup_contract: 01_os/03_mechanisms/model_routing/协作角色与接收者设置契约_v1.yml
+local_exact_ref: task_root_relative_message_path
+GitHub_exact_ref: <40-character-commit-sha>:<repository-relative-message-path>
+GitHub_validation:
+  - exact_commit_exists
+  - message_blob_exists_at_exact_commit_and_path
+  - constitution_blob_exists_at_same_commit_and_task_root
+  - compliance_receipt_blob_exists_at_same_commit_and_task_root
+  - receiver_bootstrap_recomputes_constitution_and_material_claims
+
+migration:
+  v1_pointer:
+    status: immutable_historical_read_only
+    new_formal_publication: prohibited
+    implicit_upgrade: prohibited
+    reader_requires_explicit_legacy_mode: true
+  v2_pointer:
+    required_for_new_formal_publication: true
+unknown_version: fail_closed
+
+sent_definition: exact_carrier_write_and_required_physical_readback_succeeded
+sent_does_not_mean: [delivered, opened, read, understood, accepted]

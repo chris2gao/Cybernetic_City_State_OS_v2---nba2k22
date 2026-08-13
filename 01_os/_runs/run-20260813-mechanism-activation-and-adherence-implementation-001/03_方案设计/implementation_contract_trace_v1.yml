@@ -1,0 +1,40 @@
+schema_version: citystate.mechanism_activation.implementation_contract_trace.v1
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+governing_architecture_sha: 8ee72d2800a9e00539d3732464e79312e1ade613
+accepted_A_contract: 8ee72d2800a9e00539d3732464e79312e1ade613:01_os/_runs/run-20260813-mechanism-activation-and-adherence-design-001/05_FIX_REQUIRED修正/正式动作宪法与强制中介契约_v1.yml
+accepted_B_contract: 8ee72d2800a9e00539d3732464e79312e1ade613:01_os/_runs/run-20260813-mechanism-activation-and-adherence-design-001/07_FIX_REQUIRED修正/物理事实期望观察双向绑定矩阵_v1.yml
+
+implementation_bindings:
+  generic_activation_layer:
+    canonical:
+      - 01_os/03_mechanisms/mechanism_activation/正式动作宪法_v1.yml
+      - 01_os/03_mechanisms/mechanism_activation/机制触发注册表_v1.yml
+      - 01_os/03_mechanisms/mechanism_activation/物理事实双向绑定契约_v1.yml
+    executable:
+      - 01_os/06_execution/boot/mechanism_activation/activation.py
+      - 01_os/06_execution/boot/mechanism_activation/validate_mechanism_activation.py
+  always_on_formal_action_closure:
+    - AGENTS.md#Formal-Action-Constitution-Always-On
+    - 01_os/02_boot/mechanism_activation/启动清单_v1.yml
+  communication_first_vertical_slice:
+    - 01_os/03_mechanisms/communication_system/正式动作接入契约_v1.yml
+    - 01_os/03_mechanisms/communication_system/Human中转指针契约_v2.yml
+    - 01_os/06_execution/boot/communication_system/publisher/publish_message.py
+    - 01_os/06_execution/boot/communication_system/validator/receiver_bootstrap.py
+  collaboration_and_receiver_setup:
+    - 01_os/03_mechanisms/model_routing/协作角色与接收者设置契约_v1.yml
+    - 01_os/06_execution/boot/model_routing/route_receiver.py
+  effectiveness_inventory:
+    - 01_os/03_mechanisms/mechanism_activation/机制生效等级与盘点_v1.yml
+  hybrid_validation:
+    - 01_os/03_mechanisms/mechanism_activation/验证适用性契约_v1.yml
+    - 07_测试执行/success_criterion_validation_mapping_v1.yml
+
+semantic_preservation:
+  resolver_grants_authority: false
+  gate_grants_authority: false
+  receipt_is_source_of_physical_truth: false
+  formal_action_without_resolver_or_gate_is_valid: false
+  v1_pointer_new_publication_allowed: false
+  automatic_delivery_polling_acknowledgement_scheduling_or_progression: false
+  workflow_mutation: false

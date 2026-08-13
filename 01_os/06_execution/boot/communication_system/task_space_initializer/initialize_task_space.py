@@ -75,7 +75,8 @@ def initialize(root: Path, repository_id: str, task_id: str, task_goal: str,
     task = active / task_id
     for directory in (
         active, archive, task / "endpoints", task / "indexes", task / "messages",
-        task / "documents", task / "Human" / "decisions", task / "final_results",
+        task / "documents", task / "constitutions", task / "receipts",
+        task / "Human" / "decisions", task / "final_results",
         task / "material_failures",
     ):
         if directory.exists() and (not directory.is_dir() or directory.is_symlink()):
@@ -96,7 +97,7 @@ def initialize(root: Path, repository_id: str, task_id: str, task_goal: str,
         "Human_current_ref": "Human/current.yml",
         "privacy_policy_ref": privacy_policy_ref,
         "lifecycle_status": "active",
-        "communication_contract_version": 1,
+        "communication_contract_version": 2,
     }
     if set(manifest) != MANIFEST_FIELDS:
         raise ValueError("manifest_contract_internal_error")

@@ -3,7 +3,7 @@ registry_id: communication_system_v1
 mechanism_version: 1
 entries:
   - path: 01_os/03_mechanisms/communication_system/**
-    purpose: 供应商无关的全局通讯 canonical 契约与人工中转规则
+    purpose: 供应商无关的全局通讯 canonical 契约、formal-action gate 接入、v2 pointer 与人工中转规则
     loader: 01_os/06_execution/boot/communication_system/validator/validate_communication_system.py
     loader_class: in_repo_program
     discovery: referenced from boot manifest
@@ -12,7 +12,7 @@ entries:
     failure_surfacing: next validator run
     deletion_rule: protected
   - path: 01_os/06_execution/boot/communication_system/**
-    purpose: 初始化、校验、人工发布、收敛和归档的显式命令入口
+    purpose: 初始化、formal-action gated 发布、v2 receiver bootstrap、校验、收敛和归档的显式命令入口
     loader: Human or authorized task executor
     loader_class: external_tool_convention
     discovery: referenced from boot manifest and mechanism README

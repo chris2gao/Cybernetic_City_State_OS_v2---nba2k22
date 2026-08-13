@@ -1,0 +1,71 @@
+schema_version: citystate.mechanism_trigger_registry.v1
+mechanism_version: 1
+status: active_candidate
+authority_effect: none
+
+formal_action_classes:
+  - formal_cross_endpoint_task_dispatch
+  - formal_cross_endpoint_response
+  - formal_cross_endpoint_result
+  - formal_cross_endpoint_correction
+  - formal_cross_endpoint_blocked_state
+  - formal_cross_endpoint_decision_handoff
+
+mechanisms:
+  communication_system:
+    mandatory_for_action_classes:
+      - formal_cross_endpoint_task_dispatch
+      - formal_cross_endpoint_response
+      - formal_cross_endpoint_result
+      - formal_cross_endpoint_correction
+      - formal_cross_endpoint_blocked_state
+      - formal_cross_endpoint_decision_handoff
+    activation_predicates:
+      - intended_cross_endpoint_side_effect_is_true
+      - actionable_content_or_formal_state_claim_is_true
+    required_inputs:
+      - task_id
+      - sender_endpoint_id
+      - intended_recipient_endpoint_id
+      - communication_context_ref
+      - classification_basis_ref
+    enforcement_point: communication_formal_publisher_and_receiver_bootstrap
+    missing_precondition_behavior: COMMUNICATION_CONTEXT_INITIALIZATION_REQUIRED
+    receipt_requirement: constitution_and_communication_compliance_receipts
+    negative_conformance_refs:
+      - 01_os/06_execution/boot/mechanism_activation/test_formal_action.py
+      - 01_os/06_execution/boot/communication_system/validator/test_formal_activation.py
+
+  model_routing:
+    mandatory_for_action_classes:
+      - select_execution_receiver
+      - select_independent_reviewer
+    activation_predicates:
+      - formal_action_requires_receiver_selection_is_true
+    required_inputs:
+      - collaboration_role
+      - risk_tier
+      - task_shape
+      - required_capabilities
+      - routing_basis_ref
+      - availability_assumption_or_observation_ref
+    enforcement_point: receiver_setup_validation_before_formal_publication
+    missing_precondition_behavior: RECEIVER_SETUP_REQUIRED
+    receipt_requirement: model_routing_preflight_receipt_and_receiver_setup
+    negative_conformance_refs:
+      - 01_os/06_execution/boot/model_routing/test_receiver_setup.py
+
+resolver_contract:
+  pure: true
+  required_outputs:
+    - action_class
+    - required_mechanisms
+    - missing_preconditions
+    - route_requirements
+    - action_allowed_to_enter_enforcement
+  prohibited_effects:
+    - repository_mutation
+    - mechanism_execution
+    - authority_grant
+    - task_progression
+    - delivery_or_acknowledgement

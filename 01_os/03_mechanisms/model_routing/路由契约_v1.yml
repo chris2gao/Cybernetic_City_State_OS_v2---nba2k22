@@ -7,6 +7,7 @@ inputs:
   required:
     - task_id
     - role
+    - collaboration_role
     - risk_tier
     - task_shape
     - required_capabilities
@@ -42,8 +43,11 @@ outputs:
     - evidence_refs
     - limitations
     - availability_assumption
+    - receiver_setup
     - authority
   authority_constant: routing_only
+
+receiver_setup_contract_ref: 01_os/03_mechanisms/model_routing/协作角色与接收者设置契约_v1.yml
 
 prohibited_routing_inputs: [token_cost, price, quota_balance]
 on_primary_unavailable: rerun_task_fit_among_remaining_candidates

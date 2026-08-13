@@ -1,0 +1,77 @@
+schema_version: citystate.formal_action_constitution.v1
+mechanism_version: 1
+status: active_candidate
+authority_effect: none
+
+formal_action_rule: >-
+  Any action intended to cause a non-Human endpoint to act, or to communicate a
+  task-scoped request, response, result, correction, blocked state, or decision for
+  operational use, is a formal cross-endpoint action. It is valid only when the
+  unique constitution path produces verifiable evidence.
+
+classification_inputs:
+  required_semantics:
+    - intended_cross_endpoint_side_effect
+    - intended_recipient_or_recipient_class
+    - actionable_content_or_formal_state_claim
+  prohibited_primary_inputs:
+    - caller_self_label
+    - lexical_dispatch_words
+    - provider_identity
+    - model_identity
+    - task_role_name_alone
+
+ordinary_Human_discussion:
+  required_conditions:
+    - intended_recipient_is_Human_only
+    - no_cross_endpoint_side_effect_requested_or_claimed
+    - no_formal_OS_state_or_handoff_claimed
+  quoted_or_template_content_alone_is_formal: false
+  Human_conversation_may_continue_when_formal_action_blocked: true
+
+quoted_or_hypothetical_becomes_formal_when_any:
+  - Human_is_asked_to_relay_forward_send_or_activate_an_endpoint
+  - a_non_Human_endpoint_is_instructed_to_act_on_the_embedded_content
+  - sender_claims_the_content_is_the_current_formal_handoff
+
+mixed_action_rule:
+  classify_each_semantic_segment: true
+  every_formal_segment_requires_constitution: true
+  ordinary_discussion_label_cannot_downgrade_formal_segment: true
+
+recipient_normalization_sources:
+  - explicit_endpoint_id
+  - task_role_bound_endpoint_card
+  - Human_selected_receiver_setup
+  - explicit_canonical_or_task_local_alias
+ambiguous_recipient_behavior: FORMAL_ACTION_BLOCKED_UNTIL_RECIPIENT_RESOLVED
+lexical_recipient_guessing: prohibited
+
+unique_constitution_path:
+  - classify_planned_action_semantics
+  - normalize_recipient
+  - segment_mixed_content_when_needed
+  - resolve_required_mechanisms
+  - verify_required_preconditions
+  - execute_pre_action_enforcement_gate
+  - invoke_mechanism_specific_publisher_or_executor
+  - produce_constitution_and_compliance_evidence
+  - verify_material_post_action_claims
+
+constitution_evidence_required_fields:
+  - action_id
+  - action_class
+  - sender_endpoint_id
+  - intended_recipient_endpoint_id
+  - classification_basis_ref
+  - required_mechanisms
+  - resolver_result_ref
+  - gate_result_ref
+  - mechanism_execution_ref
+  - formal_artifact_ref
+  - activation_context
+  - mechanism_preconditions
+
+bypass_result: INVALID_FORMAL_ACTION
+resolver_or_gate_optional: false
+self_authorization: prohibited

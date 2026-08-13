@@ -57,6 +57,12 @@ class EndpointAndRoleTests(unittest.TestCase):
         with self.assertRaisesRegex(CommunicationValidationError, "sender_role_mismatch"):
             self.validator.validate_role_binding(message, cards)
 
+    def test_role_context_ref_must_be_canonical_task_relative_path(self):
+        value = card()
+        value["role_context_entry_ref"] = "roles/../outside.yml"
+        with self.assertRaisesRegex(CommunicationValidationError, "noncanonical"):
+            self.validator.validate_endpoint_card(value)
+
 
 def valid_message():
     return {
@@ -113,6 +119,12 @@ class SafeYamlAndMessageTests(unittest.TestCase):
         message = valid_message()
         message["message_id"] = "task-001::other::00001"
         with self.assertRaisesRegex(CommunicationValidationError, "message_id_identity_mismatch"):
+            self.validator.validate_message(message)
+
+    def test_required_refs_are_canonical_even_without_local_task_root(self):
+        message = valid_message()
+        message["required_refs"] = ["documents/../outside.md"]
+        with self.assertRaisesRegex(CommunicationValidationError, "required_ref_noncanonical"):
             self.validator.validate_message(message)
 
 

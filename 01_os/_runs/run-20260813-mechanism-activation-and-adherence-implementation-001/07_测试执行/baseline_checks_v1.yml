@@ -1,0 +1,30 @@
+checks:
+  - name: communication_static
+    cmd:
+      - python
+      - 01_os/06_execution/boot/communication_system/validator/validate_communication_system.py
+      - static
+      - .
+  - name: communication_tests
+    cmd:
+      - python
+      - -m
+      - unittest
+      - discover
+      - -s
+      - 01_os/06_execution/boot/communication_system
+      - -p
+      - test_*.py
+      - -q
+  - name: model_routing_static
+    cmd:
+      - python
+      - 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+      - static
+      - .
+  - name: repository_default_gates
+    cmd:
+      - python
+      - 01_os/06_execution/task_discipline/quiet_verify/quiet_verify.py
+      - --repo-root
+      - .

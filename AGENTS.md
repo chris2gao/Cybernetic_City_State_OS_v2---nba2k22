@@ -84,6 +84,30 @@ This route remains Human-triggered and Human-relayed. It does not authorize or
 start automatic delivery, acknowledgment, task progression, polling, watchers,
 daemons or schedulers.
 
+## Formal Action Constitution (Always On)
+
+Before emitting or accepting any intended cross-endpoint request, response,
+result, correction, blocked state or decision handoff, load
+`01_os/02_boot/mechanism_activation/启动清单_v1.yml` and use its formal-action
+constitution, resolver and pre-action gate. A role label, provider name, quoted
+template, copied prompt or plausible-looking pointer cannot substitute for this
+path. Missing or stale communication context blocks the formal action while
+ordinary Human discussion may continue.
+
+New formal communication uses the v2 Human relay pointer with constitution
+evidence, compliance receipt and `receiver_setup`. Receivers enter formal task
+context only through the exact pointer and receiver bootstrap; the historical
+nine-field v1 pointer is explicit read-only legacy input and cannot be newly
+published. Human relay remains manual and never implies delivery, reading,
+understanding or acceptance.
+
+The stable collaboration roles are `decision_architecture`,
+`independent_review`, `execution` and `auxiliary_mechanical`. They describe work
+function only and grant no authority. Current provider, product, surface, model
+and parameter facts must come from the model-routing preflight and appear in the
+Human-visible `receiver_setup`; do not copy a volatile model catalog into this
+always-on file.
+
 ## Engineering Design Principles
 
 These are design defaults, not grants of deletion, modification, or publication

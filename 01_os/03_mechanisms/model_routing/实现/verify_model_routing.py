@@ -228,11 +228,13 @@ def validate_contract(doc: dict[str, Any]) -> None:
     inputs = require_mapping(doc.get("inputs"), "contract.inputs")
     outputs = require_mapping(doc.get("outputs"), "contract.outputs")
     required_inputs = {
-        "task_id", "role", "risk_tier", "task_shape", "required_capabilities"
+        "task_id", "role", "collaboration_role", "risk_tier", "task_shape",
+        "required_capabilities"
     }
     required_outputs = {
         "provider", "surface", "model", "parameter_profile", "routing_basis",
-        "evidence_refs", "limitations", "availability_assumption", "authority",
+        "evidence_refs", "limitations", "availability_assumption", "receiver_setup",
+        "authority",
     }
     if not required_inputs.issubset(set(inputs.get("required") or [])):
         raise ValidationError("required_inputs_missing")
@@ -240,6 +242,10 @@ def validate_contract(doc: dict[str, Any]) -> None:
         raise ValidationError("required_outputs_missing")
     if outputs.get("authority_constant") != "routing_only":
         raise ValidationError("routing_authority_invalid")
+    if doc.get("receiver_setup_contract_ref") != (
+        "01_os/03_mechanisms/model_routing/协作角色与接收者设置契约_v1.yml"
+    ):
+        raise ValidationError("receiver_setup_contract_pointer_invalid")
     rule = require_mapping(doc.get("availability_rule"), "availability_rule")
     expected = {
         "registered_default": "available",
@@ -422,6 +428,11 @@ def validate_static(root: Path) -> None:
         raise ValidationError("boot_validator_pointer_invalid")
     if declared_validator.relative_to(root).as_posix() != VALIDATOR_REL:
         raise ValidationError("boot_validator_pointer_invalid")
+    receiver_builder = checked_path(
+        root, str(boot.get("receiver_setup_builder", "")), "boot.receiver_setup_builder"
+    )
+    if not receiver_builder.is_file():
+        raise ValidationError("receiver_setup_builder_pointer_invalid")
     if contract_path != mechanism / "路由契约_v1.yml":
         raise ValidationError("contract_pointer_unexpected")
     if catalog.get("source_index_ref") != source_index_path.relative_to(root).as_posix():
