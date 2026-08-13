@@ -1,0 +1,25 @@
+Human_task_directive:
+  task_id: os-v2-mechanism-activation-and-adherence-001
+  source: current_Human_conversation
+  priority: highest_current_OS_priority
+  directives:
+    - >-
+      优先解决“机制明明被加载但模型实际行为仍可绕过”的系统级问题，不只修 communication_system。
+    - >-
+      把跨模型协作角色固化进 always-on initialization：决策/架构主要由 foreground GPT 与最高级 Claude；
+      独立审核尽可能由隔离 fresh GPT；执行由 Codex/Cowork/GitHub-complete GPT；Gemini/Antigravity 主要做机械辅助。
+    - >-
+      正式派单必须向 Human 显示接收者需要的 product/surface/model/reasoning/repository/isolation 等设置。
+    - >-
+      正式跨模型通讯恢复 durable document + formal message + Human relay exact pointer，Human 不再搬运长正文。
+    - >-
+      不接受“canonical mechanism 已存在”自动等于“机制实际生效”；需要 trigger、gate、receipt 与负向绕过验证。
+    - >-
+      不应简单把 mandatory mechanism 降级成 optional skill；需要区分 MUST 的激活约束、HOW 的执行封装和 DID 的验证证据。
+    - >-
+      在使用七阶段 Stage04/Stage07 前必须先判断验证方法是否适用于 B 的结果类型。
+      对代码/可执行机制，代码与场景测试可有效；对方法论、内容策略、视频选题方法等非可执行产物，
+      不得机械套用代码型测试，应采用与结果类型匹配的独立评估、证据审计、反例、实证或其他验证范式。
+  current_task_specific_validation_decision: >-
+    本任务是混合型结果：架构/治理语义必须靠独立语义审核与场景反证；后续 resolver/preflight/validator/
+    communication enforcement 等可执行实现属于当前 Stage04/Stage07 可有效覆盖的范围，可使用冻结机器测试和负向绕过测试。
