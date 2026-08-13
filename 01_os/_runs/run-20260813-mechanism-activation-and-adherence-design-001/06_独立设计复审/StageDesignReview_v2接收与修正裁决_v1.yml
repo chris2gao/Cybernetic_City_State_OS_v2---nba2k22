@@ -1,0 +1,66 @@
+review_adjudication:
+  schema_version: citystate.architecture_review_adjudication.v1
+  task_id: os-v2-mechanism-activation-and-adherence-001
+  reviewed_candidate_sha: 0ad94301cfc50c5181d5ac362b845d6bd06a41c6
+  reviewer_endpoint_id: isolated-gpt-design-reviewer-002
+  review_result_commit: e4f435a7fcec87bdc955be55cf9e895520bcef2c
+  verdict_received: FIX_REQUIRED
+  foreground_decision: ACCEPT_FIX_REQUIRED_BOUNDED
+  implementation_authorized: false
+  master_publication_authorized: false
+
+  accepted_findings:
+    B1:
+      name: formal_action_constitution_and_mandatory_mediation
+      reviewer_status: PASS_ARCHITECTURE_LEVEL
+      adjudication: CLOSED_AND_FROZEN
+      revision_rule: do_not_reopen_without_new_counterexample
+    B2:
+      name: material_physical_truth_external_binding
+      reviewer_status: FIX_REQUIRED_EXPECTED_OBSERVED_ROLE_BINDING
+      adjudication: VALID_BLOCKER
+      residual_root_cause: >-
+        v2 can establish that an observed SHA, path set, artifact, execution result, authority source, or actor field is real,
+        but it does not uniformly establish the authoritative expected semantic role/value for the current action and then
+        compare observed truth to that expectation. Consequently two real SHAs may be swapped, valid bytes may bind to the
+        wrong candidate/action, and an authorized identity may differ from the authenticated principal actually acting.
+
+  bounded_revision_requirements:
+    - introduce a first-class expected claim specification for every material acceptance fact
+    - bind claim_role to an exact task/review/action source that predates or independently constrains the observation
+    - distinguish expected value/predicate from observed authoritative value
+    - require an explicit equality/relationship comparator and machine-readable result
+    - require freshness predicates for moving/current state where staleness can alter acceptance
+    - require semantic content binding in addition to path/blob/hash integrity for evidence artifacts
+    - bind authority grant to an authenticated observation of the principal actually performing the action
+    - reject swapped candidate/base/head roles even when every SHA is a valid Git object
+    - reject receipt or observation sets that self-assign semantic roles without expected-claim source refs
+
+  preserved_passed_dimensions:
+    - formal_action_constitution_and_mandatory_mediation
+    - resolver_purity_and_no_authority_grant
+    - decision_vs_enforcement_separation
+    - MUST_HOW_DID_separation
+    - L0_L4_effectiveness_model
+    - collaboration_role_vs_authority
+    - collaboration_role_vs_dynamic_model_catalog
+    - Human_receiver_setup_direction
+    - GitHub_only_reviewer_locality
+    - no_automatic_delivery_or_progression
+    - hybrid_validation_applicability
+
+  revision_boundary:
+    allowed:
+      - B2 physical-truth claim specification and expected-vs-observed binding semantics
+      - receipt/observation contract fields necessary to express B2 closure
+      - B2 negative-conformance families
+      - architecture text needed to reference the corrected B2 contract
+    prohibited:
+      - canonical implementation
+      - master publication
+      - reopening B1 without new evidence
+      - redesigning collaboration roles
+      - redesigning validation-modality policy
+      - redesigning L0-L4
+
+  next_state: B2_BOUNDED_ARCHITECTURE_REVISION_REQUIRED
