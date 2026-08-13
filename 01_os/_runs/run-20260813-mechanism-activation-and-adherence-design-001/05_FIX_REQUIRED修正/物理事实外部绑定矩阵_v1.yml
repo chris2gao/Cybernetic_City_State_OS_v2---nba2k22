@@ -1,0 +1,232 @@
+material_physical_truth_binding:
+  schema_version: citystate.material_physical_truth_binding.v1
+  task_id: os-v2-mechanism-activation-and-adherence-001
+  authority_effect: none
+  governing_rule: >-
+    任何影响 acceptance、publication、authority、scope、execution topology 或 reviewer independence 的 material physical claim，
+    都必须绑定到可外部验证的 authoritative source、verifier、exact ref/observation boundary 与 fail-closed result。
+    “externally bound where possible”被废止；material claim 不可验证时必须为 UNVERIFIABLE，并阻断依赖该事实的 PASS。
+
+  claim_classes:
+    material_acceptance_fact:
+      unverified_behavior: UNVERIFIABLE_BLOCKING
+    informational_non_authoritative:
+      unverified_behavior: DECLARED_UNVERIFIED_NON_BLOCKING
+      restriction: must_not_be_used_to_justify_acceptance_or_authority
+
+  observation_model:
+    exact_commit_preferred_over_moving_branch: true
+    moving_ref_claim_requires:
+      - pre_action_observation_when_relevant
+      - post_action_remote_readback_when_action_moves_or_depends_on_ref
+      - exact_observed_SHA
+    observation_set:
+      purpose: tie_related_physical_reads_to_one_acceptance_decision
+      required_fields:
+        - observation_set_id
+        - action_id_or_review_id
+        - candidate_sha_when_applicable
+        - authoritative_observation_refs
+
+  binding_matrix:
+    candidate_base_or_head_SHA:
+      claim_class: material_acceptance_fact
+      authoritative_source:
+        - actual_Git_object_database
+        - remote_Git_ref_readback_when_ref_state_is_claimed
+      verifier:
+        - Git_connector_fetch_commit_or_ref
+        - local_git_rev_parse_plus_remote_readback_when_local_execution_is_material
+      exact_binding:
+        - immutable_commit_SHA
+        - named_ref_and_observed_SHA_when_branch_state_is_material
+      stale_boundary: branch_name_alone_is_insufficient
+      failure: UNVERIFIABLE_BLOCKING
+
+    changed_path_and_diff_scope:
+      claim_class: material_acceptance_fact
+      authoritative_source:
+        - actual_Git_compare_between_bound_base_and_candidate_SHA
+      verifier:
+        - Git_compare_commits_or_equivalent_git_diff_name_status
+      exact_binding:
+        - base_SHA
+        - candidate_SHA
+        - observed_changed_path_set
+      prohibited_substitute:
+        - executor_self_reported_changed_path_count
+        - receipt_declared_scope_without_compare
+      failure: UNVERIFIABLE_BLOCKING
+
+    allowed_write_boundary:
+      claim_class: material_acceptance_fact
+      authoritative_source:
+        - current_task_packet
+        - exact_Human_authorization_when_boundary_expansion_requires_Human
+        - canonical_repository_authority_rules_when_applicable
+      verifier:
+        - boundary_validator_against_actual_changed_path_set
+      exact_binding:
+        - task_id
+        - writer_endpoint_or_executor_when_required
+        - requested_action
+        - authorized_path_patterns
+        - candidate_or_action_ref
+      failure: AUTHORITY_OR_SCOPE_UNVERIFIABLE_BLOCKING
+
+    Human_or_repository_authority:
+      claim_class: material_acceptance_fact
+      authoritative_source:
+        - canonical_repository_publisher_authority_registry
+        - task_scoped_Human_authorization_artifact
+        - current_task_authority_binding
+      verifier:
+        - authority_validator_reading_exact_canonical_and_task_refs
+      exact_binding:
+        - task_id
+        - writer_or_actor
+        - task_role_when_governance_uses_it
+        - requested_action
+        - authorized_target_or_boundary
+      prohibited_source:
+        - provider_identity
+        - model_identity
+        - role_label_alone
+        - endpoint_card_capability_claim_alone
+        - receipt_self_authorization
+      failure: AUTHORITY_UNVERIFIABLE_BLOCKING
+
+    communication_transport_and_publication:
+      claim_class: material_acceptance_fact
+      authoritative_source:
+        - communication_publisher_observed_write
+        - remote_Git_readback_for_GitHub_carrier
+        - local_filesystem_observation_for_local_carrier
+      verifier:
+        - communication_publisher_validator
+        - Git_connector_exact_file_or_ref_readback_for_GitHub
+      exact_binding:
+        - task_id
+        - message_id
+        - carrier
+        - exact_message_path
+        - published_commit_or_remote_ref_when_GitHub
+      prohibited_substitute:
+        - sender_statement_that_message_was_sent
+      failure: TRANSPORT_UNVERIFIABLE_BLOCKING
+
+    execution_topology_and_command_result:
+      claim_class: material_acceptance_fact_when_used_for_acceptance
+      authoritative_source:
+        - trusted_execution_adapter_or_host_tool_observation
+        - CI_job_or_connector_observation_when_execution_occurs_in_CI
+      verifier:
+        - execution_evidence_validator
+      exact_binding:
+        - candidate_SHA_or_worktree_tree_identity
+        - command_or_test_entrypoint
+        - working_directory_or_execution_root
+        - relevant_input_package_hashes
+        - exit_code
+        - output_or_result_ref
+      model_written_narrative_alone: prohibited_as_authoritative_source
+      failure: EXECUTION_TOPOLOGY_UNVERIFIABLE_BLOCKING
+
+    test_or_validation_result:
+      claim_class: material_acceptance_fact
+      authoritative_source:
+        - observed_execution_result_bound_to_the_exact_test_package_and_candidate
+      verifier:
+        - test_runner_or_validation_adapter_plus_result_integrity_check
+      exact_binding:
+        - candidate_SHA
+        - test_package_or_predicate_set_hash
+        - execution_topology_ref
+        - result_artifact_ref
+        - exit_status_or_verdict
+      prohibited_substitute:
+        - executor_claimed_pass_count_without_observed_execution_binding
+      failure: TEST_RESULT_UNVERIFIABLE_BLOCKING
+
+    durable_artifact_existence_and_content:
+      claim_class: material_acceptance_fact_when_referenced_for_acceptance
+      authoritative_source:
+        - Git_blob_at_exact_commit_for_repository_evidence
+        - filesystem_bytes_plus_hash_for_authorized_local_evidence
+      verifier:
+        - exact_file_fetch_and_content_or_hash_validation
+      exact_binding:
+        - path
+        - commit_SHA_or_local_observation_set
+        - blob_SHA_or_content_hash_when_required
+      failure: ARTIFACT_UNVERIFIABLE_BLOCKING
+
+    reviewer_isolation_and_surface:
+      claim_class: material_acceptance_fact_when_independence_is_required
+      authoritative_source_preference:
+        - product_or_connector_session_metadata_when_exposed
+        - Human_setup_attestation_bound_to_review_id_when_product_metadata_is_not_exposed
+      verifier:
+        - review_isolation_validator_or_Human_gate
+      exact_binding:
+        - review_id
+        - isolation_level_required
+        - project_or_session_setup_fact_available_to_Human
+        - evidence_locality
+      endpoint_card_alone_sufficient: false
+      if_machine_verification_unavailable: HUMAN_ATTESTED_OR_UNVERIFIABLE
+      failure: REVIEW_INDEPENDENCE_UNVERIFIABLE_BLOCKING
+
+    provider_model_or_parameter_identity:
+      claim_class: informational_non_authoritative_unless_requirement_makes_it_material
+      authoritative_source_preference:
+        - product_session_metadata_when_exposed
+        - Human_setup_attestation
+      role_or_authority_effect: none
+      failure_if_material_and_unverifiable: UNVERIFIABLE_BLOCKING
+
+    current_master_or_parent_ref:
+      claim_class: material_acceptance_fact_when_used_as_base_or_drift_gate
+      authoritative_source:
+        - remote_Git_ref_readback
+      verifier:
+        - Git_connector_ref_fetch_or_git_ls_remote
+      exact_binding:
+        - ref_name
+        - observed_SHA
+        - observation_set_id
+      failure: REF_STATE_UNVERIFIABLE_BLOCKING
+
+  receipt_contract_revision:
+    rule: >-
+      receipt 是 binding index，不是事实来源本身。每个 material physical claim 必须引用 binding_matrix 对应条目与实际 observation ref；
+      receipt 自己写出一个正确-looking SHA、count、topology、authority 或 PASS 不能使其变成 verified。
+    required_per_material_claim:
+      - claim_type
+      - claimed_value
+      - authoritative_source_class
+      - verifier
+      - exact_observation_ref
+      - observation_set_id
+      - verification_result
+    allowed_verification_results:
+      - VERIFIED
+      - UNVERIFIABLE
+      - MISMATCH
+    acceptance_rule: all_required_material_claims_must_be_VERIFIED
+
+  branch_movement_rule:
+    immutable_candidate_review: >-
+      reviewer must bind to exact candidate SHA; later movement of the branch does not mutate that reviewed object.
+    branch_state_claim: >-
+      if acceptance depends on current branch head, branch head must be freshly observed and recorded separately from candidate SHA.
+
+  negative_conformance_families:
+    - correct_looking_SHA_copied_from_prose_without_Git_observation
+    - branch_moves_after_pre_action_claim_without_post_action_readback
+    - receipt_claims_allowed_diff_but_actual_Git_compare_has_forbidden_path
+    - executor_claimed_test_pass_without_bound_execution_result
+    - endpoint_role_or_provider_used_as_authority_proof
+    - artifact_path_exists_but_content_or_commit_binding_is_wrong
+    - reviewer_claims_isolation_without_product_metadata_or_Human_attestation
+    - material_claim_has_no_authoritative_source_but_receipt_marks_PASS
