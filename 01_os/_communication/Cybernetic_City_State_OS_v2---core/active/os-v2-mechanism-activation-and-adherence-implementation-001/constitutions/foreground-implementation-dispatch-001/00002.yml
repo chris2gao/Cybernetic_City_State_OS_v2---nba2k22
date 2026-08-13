@@ -13,11 +13,21 @@ mechanism_execution_ref: 01_os/06_execution/boot/communication_system/publisher/
 formal_artifact_ref: messages/foreground-implementation-dispatch-001/00002_request.yml
 activation_context:
   intended_cross_endpoint_side_effect: true
-  actionable_content_or_formal_state_claim: true
+  actionable_content: true
+  formal_state_claim: false
   communication_context_ref: manifest.yml
   classification_basis_ref: documents/foreground-implementation-dispatch-001/00002_independent_implementation_acceptance_request.md
   requires_receiver_selection: true
-  route_requirement: select_independent_reviewer
+  collaboration_role: independent_review
+  risk_tier: T2_semantic_acceptance
+  task_shape: fresh_independent_implementation_acceptance
+  required_capabilities:
+    - GitHub_exact_commit_read
+    - durable_review_evidence_write
+    - adversarial_semantic_review
+    - code_and_contract_inspection
+  routing_basis_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/06_执行/model_routing_independent_acceptance_preflight_v1.yml
+  availability_assumption_or_observation_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/06_执行/model_routing_independent_acceptance_preflight_v1.yml#selected_route
   action_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00002
   formal_message_type: request
   task_id: os-v2-mechanism-activation-and-adherence-implementation-001
@@ -30,9 +40,8 @@ mechanism_preconditions:
     freshness_required: true
     freshness_result: VERIFIED
   model_routing:
-    verification_result: VERIFIED_FOR_FORMAL_DISPATCH
+    verification_result: VERIFIED
     evidence_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/06_执行/model_routing_independent_acceptance_preflight_v1.yml
-    relay_time_condition: if_named_route_is_unavailable_fail_closed_and_re_route
 resolution:
   classification: formal_cross_endpoint_action
   action_class: formal_cross_endpoint_task_dispatch
@@ -48,7 +57,7 @@ resolution:
     - model_routing
   missing_preconditions: []
   route_requirements:
-    - select_independent_reviewer
+    - receiver_setup
   action_allowed_to_enter_enforcement: true
   ordinary_Human_discussion_allowed: false
 gate:
