@@ -1,0 +1,128 @@
+schema_version: citystate.mechanism_activation.bound_candidate_checks.v1
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+candidate_sha_expected: c302b426bce27ded020761687293d0d032d8e316
+candidate_sha_observed: c302b426bce27ded020761687293d0d032d8e316
+tracked_worktree_matches_candidate_before: true
+tracked_worktree_matches_candidate_after: true
+execution_root: .
+observations:
+- check_id: activation_static
+  argv:
+  - python
+  - 01_os/06_execution/boot/mechanism_activation/validate_mechanism_activation.py
+  - static
+  - .
+  exit_code: 0
+  tests_run: null
+  result: PASS
+  bounded_output_tail:
+  - validation_passed
+- check_id: activation_tests
+  argv:
+  - python
+  - -m
+  - unittest
+  - discover
+  - -s
+  - 01_os/06_execution/boot/mechanism_activation
+  - -p
+  - test_*.py
+  - -q
+  exit_code: 0
+  tests_run: 22
+  result: PASS
+  bounded_output_tail:
+  - '----------------------------------------------------------------------'
+  - Ran 22 tests in 0.848s
+  - ''
+  - OK
+- check_id: communication_static
+  argv:
+  - python
+  - 01_os/06_execution/boot/communication_system/validator/validate_communication_system.py
+  - static
+  - .
+  exit_code: 0
+  tests_run: null
+  result: PASS
+  bounded_output_tail:
+  - validation_passed
+- check_id: communication_tests
+  argv:
+  - python
+  - -m
+  - unittest
+  - discover
+  - -s
+  - 01_os/06_execution/boot/communication_system
+  - -p
+  - test_*.py
+  - -q
+  exit_code: 0
+  tests_run: 61
+  result: PASS
+  bounded_output_tail:
+  - '----------------------------------------------------------------------'
+  - Ran 61 tests in 13.717s
+  - ''
+  - OK
+- check_id: model_routing_static
+  argv:
+  - python
+  - 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+  - static
+  - .
+  exit_code: 0
+  tests_run: null
+  result: PASS
+  bounded_output_tail:
+  - validation_passed
+- check_id: model_routing_tests
+  argv:
+  - python
+  - -m
+  - unittest
+  - discover
+  - -s
+  - 01_os/06_execution/boot/model_routing
+  - -p
+  - test_*.py
+  - -q
+  exit_code: 0
+  tests_run: 4
+  result: PASS
+  bounded_output_tail:
+  - '----------------------------------------------------------------------'
+  - Ran 4 tests in 0.001s
+  - ''
+  - OK
+- check_id: repository_default_gates
+  argv:
+  - python
+  - 01_os/06_execution/task_discipline/quiet_verify/quiet_verify.py
+  - --repo-root
+  - .
+  exit_code: 0
+  tests_run: null
+  result: PASS
+  bounded_output_tail:
+  - workflow_static exit=0
+  - context_structure exit=0
+  - no_canonical_live_state exit=0
+  - stage_deliberation_v2_static exit=0
+  - checks 4/4 ok
+- check_id: diff_check
+  argv:
+  - git
+  - diff
+  - --check
+  - HEAD
+  - --
+  exit_code: 0
+  tests_run: null
+  result: PASS
+  bounded_output_tail: []
+deterministic_tests_run: 87
+aggregate_result: VERIFIED
+observed_at_utc: '2026-08-13T13:35:01.743673+00:00'
+authority_effect: none

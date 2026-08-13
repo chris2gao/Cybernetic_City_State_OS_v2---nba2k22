@@ -1,0 +1,23 @@
+schema_version: citystate.mechanism_activation.implementation_result.v1
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+result: implementation_candidate_complete
+candidate_sha: c302b426bce27ded020761687293d0d032d8e316
+base_sha: bf538e5068381becd31e8e1daceade81e657262d
+source_branch: dev/os-v2-mechanism-activation-and-adherence-implementation-001
+verification:
+  bound_deterministic_tests: {passed: 87, failed: 0}
+  frozen_stage04_full: {passed: 50, failed: 0}
+  frozen_stage04_mutation: {passed: 50, failed: 0}
+  material_claims: {verified: 7, nonverified: 0}
+  repository_default_gates: 4/4_PASS
+effectiveness_claim:
+  current_maximum: L3_EXECUTION_GATED
+  L4_target_requires_fresh_independent_acceptance: true
+  operationally_active_claimed: false
+publication:
+  source_branch_only: true
+  master_modified_or_published: false
+  formal_result_status: prepared_awaiting_exact_GitHub_publication
+next_owner: foreground_implementation_dispatch
+next_action: route_exact_candidate_to_fresh_independent_implementation_acceptance
+authority_effect: none
