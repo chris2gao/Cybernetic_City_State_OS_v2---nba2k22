@@ -1,0 +1,27 @@
+run:
+  schema_version: citystate.run.v1
+  run_id: run-20260813-mechanism-activation-and-adherence-design-001
+  task_id: os-v2-mechanism-activation-and-adherence-001
+  phase: architecture_design
+  status: architecture_design_in_progress
+  owner: core
+  branch: dev/os-v2-mechanism-activation-and-adherence-design-001
+  exact_base_sha: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  master_at_start: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  objective: >-
+    建立统一的 mechanism activation/adherence 架构，使 canonical mechanism 不仅被定义和加载，
+    还具有明确 trigger、pre-action enforcement gate、execution/compliance receipt 与负向绕过验证；
+    communication_system 作为第一条 L4 vertical slice，同时固化跨模型协作角色与 Human-visible receiver setup。
+  current_scope:
+    repository_writes:
+      - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-design-001/**
+    canonical_mutation: prohibited_in_design_phase
+    master_publication: prohibited
+  validation_mode: hybrid
+  validation_note: >-
+    架构语义采用独立设计审核与场景反证；后续可执行 mechanism 实现采用证据派生的冻结测试、
+    negative-conformance 与独立验收。不得把代码测试绿灯当作架构语义已被证明。
+  gates:
+    architecture_design_review: pending
+    implementation: blocked_until_design_review_pass
+    master_integration: blocked_until_implementation_and_independent_acceptance
