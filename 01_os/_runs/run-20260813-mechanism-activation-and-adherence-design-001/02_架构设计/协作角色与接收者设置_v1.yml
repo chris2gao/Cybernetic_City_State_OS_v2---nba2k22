@@ -1,0 +1,91 @@
+collaboration_role_and_receiver_setup_design:
+  schema_version: citystate.collaboration_routing_design.v1
+  authority_effect: none
+  rule: >-
+    collaboration role 只描述工作职责与默认 product/surface 路由，不授予 repository、publication 或 Human authority。
+  roles:
+    decision_architecture:
+      default_owner: foreground
+      preferred_surfaces:
+        - provider: OpenAI
+          product: ChatGPT
+          surface: Chat
+          model_family: strongest_suitable_GPT
+          current_observed_preference: GPT-5.6_Sol
+          reasoning: highest_suitable_exposed_for_Chat
+        - provider: Anthropic
+          product: Claude
+          surface: Cowork
+          model_family: strongest_suitable_Claude
+          use: independent_architecture_input_or_cross_model_deliberation
+      review_requirement: independent_if_material_architecture
+    independent_review:
+      default_surface:
+        provider: OpenAI
+        product: ChatGPT
+        surface: isolated_review_project
+        model_family: strongest_suitable_GPT
+        current_observed_preference: GPT-5.6_Sol
+        reasoning: High
+      isolation:
+        fresh_session: true
+        isolated_project_for_high_risk_review: true
+        executor_private_context: prohibited
+        durable_GitHub_evidence_preferred: true
+      local_review_trigger:
+        - uncommitted_worktree_material_to_verdict
+        - local_runtime_state_material_to_verdict
+        - filesystem_permission_or_hook_material_to_verdict
+        - evidence_not_publishable_to_GitHub
+    execution:
+      preferred_surfaces:
+        - provider: OpenAI
+          product: Codex
+          surface: Codex_Desktop
+          current_observed_model: GPT-5.6_Sol
+          reasoning: max_if_exposed_else_high
+          repository_access: local_worktree
+        - provider: Anthropic
+          product: Claude
+          surface: Cowork
+          model_family: strongest_suitable_Claude
+          reasoning: highest_available
+        - provider: OpenAI
+          product: ChatGPT
+          surface: fresh_project_window
+          condition: all_required_inputs_GitHub_readable
+      GitHub_only_executor_rule: >-
+        若执行所需 Python、fixture、generated evidence 或其他输入只存在本地，必须先由有本地能力的执行者
+        将其发布到授权 task branch/run boundary，再允许 GitHub-only GPT 接手。
+    auxiliary_mechanical:
+      preferred_surfaces:
+        - provider: Google
+          product: Antigravity
+          model: Gemini_3.6_Flash
+          reasoning: low_or_standard
+          suitable_for: [simple_repetitive_transforms, bulk_mechanical_ops, synchronization, straightforward_checks]
+        - provider: Google
+          product: Antigravity
+          model: Gemini_3.1_Pro
+          reasoning: suitable_available_setting
+          suitable_for: [larger_mechanical_tasks_with_context, branch_sync, structured_bulk_migration]
+      unsuitable_default: [high_risk_architecture_adjudication, formal_independent_acceptance]
+  receiver_setup_required_fields:
+    - collaboration_role
+    - provider
+    - product
+    - surface
+    - model
+    - reasoning_or_parameter_profile
+    - session_mode
+    - isolation_level
+    - repository_access_mode
+    - repository_or_worktree_requirement
+    - required_branch_or_sha
+    - local_files_required
+    - github_publication_required_before_start
+    - communication_carrier
+    - limitations
+  router_rule: >-
+    动态 provider/surface/model/profile 的事实与可用性继续由 model_routing mechanism 持有；always-on bootstrap 只保存稳定角色原则，
+    不复制易变化 catalog。
