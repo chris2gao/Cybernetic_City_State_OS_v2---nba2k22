@@ -1,0 +1,20 @@
+schema_version: citystate.communication.task_role_context.v1
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+endpoint_id: isolated-gpt-implementation-reviewer-002
+task_role: independent_implementation_acceptance_reviewer
+collaboration_role: independent_review
+responsibilities:
+  - independently assess exact corrected candidate 67c668d038c94e4de9935d0ee0bab3cb526d6c6e
+  - attack B2 observation-provenance binding with reviewer-authored counterexamples
+  - regression-check A and already accepted implementation dimensions
+  - distinguish material blockers from non-blocking hardening and unnecessary formalism
+constraints:
+  - role grants no authority
+  - use fresh isolated Review Project
+  - no executor or foreground private chat context
+  - GitHub durable evidence only
+  - no canonical implementation mutation
+  - no master publication or merge
+  - no automatic task progression
+review_target_candidate_sha: 67c668d038c94e4de9935d0ee0bab3cb526d6c6e
+prior_FIX_REQUIRED_evidence_sha: 58078dbf8100dd54f0f0bed1ad0f31eada71b163
