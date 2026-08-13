@@ -1,0 +1,34 @@
+message_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00002
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+title: Fresh independent implementation acceptance of Mechanism Activation and Adherence
+message_type: request
+sender_endpoint_id: foreground-implementation-dispatch-001
+sender_task_role: foreground_implementation_dispatch
+expected_recipient_endpoint_id: isolated-gpt-implementation-reviewer-001
+expected_recipient_task_role: independent_implementation_acceptance_reviewer
+content: >-
+  Independently review exact implementation candidate 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9 using exact evidence snapshot
+  a1132bbb0ccbc783b214a8218d32d45edf59e8da. Reconstruct physical facts, inspect candidate code, create new adversarial attacks,
+  and return PASS or FIX_REQUIRED. Distinguish material blockers from hardening and unnecessary formalism.
+required_refs:
+  - documents/foreground-implementation-dispatch-001/00002_independent_implementation_acceptance_request.md
+requested_action: independently_accept_or_reject_exact_implementation_candidate
+facts:
+  implementation_candidate_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+  candidate_base_sha: bf538e5068381becd31e8e1daceade81e657262d
+  evidence_snapshot_sha: a1132bbb0ccbc783b214a8218d32d45edf59e8da
+  reviewed_architecture_sha: 8ee72d2800a9e00539d3732464e79312e1ade613
+  architecture_pass_result_sha: b40f63ca49393546aa415dbbe1f0c38bbf72a001
+  master_reference_sha: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  foreground_material_blocker_found: false
+  master_publication_authorized: false
+constraints:
+  - use a fresh new isolated Review Project
+  - no foreground or executor private chat context
+  - GitHub durable evidence only; do not assume local files
+  - inspect candidate code and generate reviewer-authored attacks; do not only replay executor suites
+  - preserve materiality discipline; non-material model or provider identity is not authority
+  - reviewer evidence writes only under 09_独立实现验收/isolated-gpt-implementation-reviewer-001 and reviewer-owned communication paths
+  - no canonical implementation mutation
+  - no master publication or merge
+  - no automatic delivery polling acknowledgement scheduling or task progression
