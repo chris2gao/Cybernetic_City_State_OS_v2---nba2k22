@@ -2,7 +2,6 @@
 """Pure formal-action resolution, enforcement, and material-claim comparison."""
 from __future__ import annotations
 
-import fnmatch
 import re
 import subprocess
 from pathlib import Path, PurePosixPath
@@ -65,6 +64,21 @@ CONSTITUTION_FIELDS = {
     "mechanism_preconditions",
 }
 SHA40 = re.compile(r"^[0-9a-f]{40}$")
+COMPARATOR_ROLES = {
+    "exact_sha_role_equality": {"candidate_SHA"},
+    "exact_base_equality_plus_required_relation": {"base_SHA"},
+    "named_ref_fresh_state_relation": {"moving_head_or_current_ref"},
+    "complete_path_set_within_authorized_boundary": {"changed_path_and_diff_scope"},
+    "byte_integrity_and_semantic_role_binding": {"durable_evidence_artifact"},
+    "execution_result_bound_to_expected_candidate_inputs_and_entrypoint": {
+        "execution_or_validation_result"
+    },
+    "published_message_identity_and_route_equality": {"communication_publication"},
+    "authenticated_actor_satisfies_authorized_principal_binding": {
+        "authority_and_actual_actor"
+    },
+    "observed_review_setup_satisfies_required_isolation_profile": {"reviewer_isolation"},
+}
 
 
 def _activation_predicate_satisfied(predicate: str, context: dict[str, Any]) -> bool:
@@ -324,6 +338,21 @@ def validate_constitution_evidence(
         raise ActivationError("CONSTITUTION_EVIDENCE_FIELDS_MISSING", fields=missing)
     if not evidence.get("action_id") or not evidence.get("sender_endpoint_id"):
         raise ActivationError("CONSTITUTION_IDENTITY_MISSING")
+    for field in (
+        "action_class",
+        "intended_recipient_endpoint_id",
+        "classification_basis_ref",
+        "resolver_result_ref",
+        "gate_result_ref",
+        "mechanism_execution_ref",
+        "formal_artifact_ref",
+    ):
+        if not isinstance(evidence.get(field), str) or not evidence[field]:
+            raise ActivationError("CONSTITUTION_BINDING_MISSING", field=field)
+    if not isinstance(evidence.get("activation_context"), dict) or not isinstance(
+        evidence.get("mechanism_preconditions"), dict
+    ):
+        raise ActivationError("CONSTITUTION_REPLAY_INPUTS_INVALID")
     if not isinstance(evidence.get("required_mechanisms"), list) or not evidence["required_mechanisms"]:
         raise ActivationError("CONSTITUTION_REQUIRED_MECHANISMS_INVALID")
     if evidence.get("authority_effect") not in (None, "none"):
@@ -390,7 +419,7 @@ def _compare_claim(record: dict[str, Any]) -> str:
             return "UNVERIFIABLE"
         if observed.get("fresh") is not True:
             return "STALE" if observed.get("fresh") is False else "UNVERIFIABLE"
-        return "VERIFIED" if observed.get("sha") == expected.get("sha") else "MISMATCH"
+        return _subset_equal(expected, observed)
 
     if comparator == "complete_path_set_within_authorized_boundary":
         if not isinstance(expected, dict) or not isinstance(observed, dict):
@@ -405,8 +434,24 @@ def _compare_claim(record: dict[str, Any]) -> str:
             return "AMBIGUOUS"
         if len(canonical) != len(set(canonical)):
             return "AMBIGUOUS"
+        normalized_patterns: list[tuple[str, str]] = []
+        try:
+            for pattern in patterns:
+                if not isinstance(pattern, str):
+                    return "AMBIGUOUS"
+                if pattern.endswith("/**"):
+                    normalized_patterns.append(("prefix", _canonical_path(pattern[:-3]) + "/"))
+                elif any(marker in pattern for marker in "*?["):
+                    return "AMBIGUOUS"
+                else:
+                    normalized_patterns.append(("exact", _canonical_path(pattern)))
+        except ActivationError:
+            return "AMBIGUOUS"
         for path in canonical:
-            if not any(fnmatch.fnmatchcase(path, str(pattern)) for pattern in patterns):
+            if not any(
+                path.startswith(value) if kind == "prefix" else path == value
+                for kind, value in normalized_patterns
+            ):
                 return "MISMATCH"
         return "VERIFIED"
 
@@ -455,6 +500,11 @@ def evaluate_material_claim(record: dict[str, Any]) -> str:
         return "UNVERIFIABLE"
     if record.get("observed_authoritative_source_class") not in ACCEPTED_OBSERVATION_SOURCES:
         return "UNVERIFIABLE"
+    comparator = record.get("comparator_id")
+    if comparator not in COMPARATOR_ROLES:
+        raise ActivationError("COMPARATOR_UNKNOWN", comparator_id=comparator)
+    if record.get("claim_role") not in COMPARATOR_ROLES[comparator]:
+        return "UNVERIFIABLE"
     if record.get("freshness_requirement_when_applicable") and not record.get("freshness_observation_ref"):
         return "STALE"
     return _compare_claim(record)
@@ -470,6 +520,9 @@ def validate_material_receipt(receipt: dict[str, Any]) -> dict[str, str]:
     for claim in claims:
         if not isinstance(claim, dict) or not claim.get("claim_id"):
             raise ActivationError("MATERIAL_CLAIM_ID_MISSING")
+        claim_id = str(claim["claim_id"])
+        if claim_id in results:
+            raise ActivationError("MATERIAL_CLAIM_ID_DUPLICATE", claim_id=claim_id)
         result = evaluate_material_claim(claim)
         if result not in VERIFICATION_RESULTS:
             raise ActivationError("MATERIAL_CLAIM_RESULT_INVALID")
@@ -480,7 +533,7 @@ def validate_material_receipt(receipt: dict[str, Any]) -> dict[str, str]:
                 declared=claim.get("verification_result"),
                 recomputed=result,
             )
-        results[str(claim["claim_id"])] = result
+        results[claim_id] = result
     aggregate = "VERIFIED" if all(value == "VERIFIED" for value in results.values()) else "BLOCKED"
     if receipt.get("aggregate_result") != aggregate:
         raise ActivationError("MATERIAL_RECEIPT_AGGREGATE_MISMATCH", recomputed=aggregate)
@@ -536,7 +589,7 @@ def observe_changed_path_claim(
 ) -> dict[str, Any]:
     """Observe the complete NUL-safe Git path set for a bound base/candidate pair."""
     proc = subprocess.run(
-        ["git", "diff", "--name-only", "--no-renames", "-z", base_sha, candidate_sha],
+        ["git", "diff", "--name-only", "--no-renames", "-z", base_sha, candidate_sha, "--"],
         cwd=repo_root, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False,
     )
     paths = proc.stdout.decode("utf-8", "surrogateescape").split("\0") if proc.returncode == 0 else []

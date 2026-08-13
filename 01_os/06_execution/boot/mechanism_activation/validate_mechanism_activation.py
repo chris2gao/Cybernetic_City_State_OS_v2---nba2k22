@@ -108,6 +108,11 @@ def validate_static_repository(repo_root: Path) -> None:
         raise ActivationError("RECEIPT_TRUTH_BOUNDARY_INVALID")
     if claims.get("aggregate_acceptance") != "every_required_material_claim_must_be_VERIFIED":
         raise ActivationError("MATERIAL_AGGREGATE_RULE_INVALID")
+    if (
+        claims.get("claim_id_uniqueness_within_receipt") != "mandatory"
+        or claims.get("comparator_must_be_registered_for_claim_role") is not True
+    ):
+        raise ActivationError("MATERIAL_CLAIM_IDENTITY_OR_ROLE_RULE_INVALID")
 
     inventory = _load(mechanism / "机制生效等级与盘点_v1.yml")
     entries = inventory.get("inventory")

@@ -336,6 +336,8 @@ def publish(task_root: Path, message_source: Path, *, carrier: str = "local",
         manifest = load_yaml(manifest_path)
         if manifest.get("task_id") != message.get("task_id"):
             raise CommunicationValidationError("publication_task_scope_mismatch")
+        if manifest.get("communication_contract_version") != 2:
+            raise CommunicationValidationError("formal_publication_requires_v2_manifest")
     sender = message.get("sender_endpoint_id")
     index_path = root / "indexes" / f"{sender}.yml"
     entries = load_yaml(index_path) if index_path.exists() else []

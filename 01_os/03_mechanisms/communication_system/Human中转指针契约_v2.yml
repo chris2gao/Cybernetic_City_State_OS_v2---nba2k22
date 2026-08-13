@@ -22,9 +22,13 @@ local_exact_ref: task_root_relative_message_path
 GitHub_exact_ref: <40-character-commit-sha>:<repository-relative-message-path>
 GitHub_validation:
   - exact_commit_exists
+  - v2_manifest_and_endpoint_role_bindings_exist_at_exact_commit
   - message_blob_exists_at_exact_commit_and_path
   - constitution_blob_exists_at_same_commit_and_task_root
   - compliance_receipt_blob_exists_at_same_commit_and_task_root
+  - sender_index_contains_exact_message_binding_at_same_commit
+  - mechanism_execution_ref_is_canonical_and_exists_at_same_commit
+  - correction_supersedes_blob_exists_at_same_commit_when_applicable
   - receiver_bootstrap_recomputes_constitution_and_material_claims
 
 migration:

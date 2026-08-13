@@ -39,6 +39,10 @@ aggregate_acceptance: every_required_material_claim_must_be_VERIFIED
 receipt_is_physical_truth_source: false
 observation_may_self_assign_semantic_role: false
 expected_and_observed_without_executed_comparator: UNVERIFIABLE
+claim_id_uniqueness_within_receipt: mandatory
+duplicate_claim_id_result: INVALID_RECEIPT
+comparator_must_be_registered_for_claim_role: true
+comparator_role_mismatch_result: UNVERIFIABLE
 
 comparators:
   exact_sha_role_equality:
@@ -47,10 +51,13 @@ comparators:
     roles: [base_SHA]
   named_ref_fresh_state_relation:
     roles: [moving_head_or_current_ref]
+    named_ref_identity_is_part_of_expected_observed_equality: true
   complete_path_set_within_authorized_boundary:
     roles: [changed_path_and_diff_scope]
     requires_complete_observation: true
     rejects_duplicate_or_noncanonical_paths: true
+    allowed_pattern_forms: [exact_path, directory_double_star]
+    loose_wildcards: prohibited
   byte_integrity_and_semantic_role_binding:
     roles: [durable_evidence_artifact]
   execution_result_bound_to_expected_candidate_inputs_and_entrypoint:

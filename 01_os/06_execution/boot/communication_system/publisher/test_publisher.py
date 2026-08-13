@@ -126,6 +126,17 @@ class PublisherTests(unittest.TestCase):
                 publish(root, source, carrier="GitHub", github_trigger="web_recipient",
                         privacy_class="local_only", **formal_kwargs(root, carrier="GitHub"))
 
+    def test_new_formal_publication_requires_v2_task_manifest(self):
+        with TemporaryDirectory() as temp:
+            root = Path(temp)
+            source = self._fixture(root)
+            (root / "manifest.yml").write_text(
+                "task_id: task-001\ncommunication_contract_version: 1\n",
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(CommunicationValidationError, "requires_v2_manifest"):
+                publish(root, source, **formal_kwargs(root))
+
     def test_web_receiver_requires_GitHub_carrier(self):
         with TemporaryDirectory() as temp:
             root = Path(temp)
@@ -161,6 +172,28 @@ class PublisherTests(unittest.TestCase):
             with self.assertRaisesRegex(CommunicationValidationError, "forbidden_data_marker"):
                 publish(root, source, **kwargs)
             self.assertFalse((root / "messages").exists())
+
+    def test_correction_requires_and_physically_binds_superseded_message(self):
+        with TemporaryDirectory() as temp:
+            root = Path(temp)
+            source = self._fixture(root)
+            publish(root, source, **formal_kwargs(root))
+            correction = message()
+            correction.update({
+                "message_id": "task-001::sender-01::00002",
+                "message_type": "correction",
+                "content": "Corrected result.",
+            })
+            source.write_text(yaml.safe_dump(correction, sort_keys=False), encoding="utf-8")
+            with self.assertRaisesRegex(CommunicationValidationError, "requires_supersedes"):
+                publish(root, source, **formal_kwargs(root))
+            correction["supersedes"] = "messages/sender-01/00001_result.yml"
+            source.write_text(yaml.safe_dump(correction, sort_keys=False), encoding="utf-8")
+            pointer = publish(root, source, **formal_kwargs(root))
+            self.assertEqual(
+                pointer["exact_path_or_GitHub_ref"],
+                "messages/sender-01/00002_correction.yml",
+            )
 
     def test_invalid_required_document_leaves_no_message_or_index(self):
         with TemporaryDirectory() as temp:

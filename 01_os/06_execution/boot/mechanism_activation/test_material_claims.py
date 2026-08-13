@@ -57,6 +57,14 @@ class MaterialClaimTests(unittest.TestCase):
             freshness_observation_ref="git:ls-remote:old-boundary",
         )
         self.assertEqual(evaluate_material_claim(value), "STALE")
+        wrong_named_ref = claim(
+            "named_ref_fresh_state_relation",
+            {"named_ref": "refs/heads/master", "sha": SHA_A},
+            {"named_ref": "refs/heads/task", "sha": SHA_A, "fresh": True},
+            claim_role="moving_head_or_current_ref",
+            observed_authoritative_source_class="fresh_remote_Git_ref_readback",
+        )
+        self.assertEqual(evaluate_material_claim(wrong_named_ref), "MISMATCH")
 
     def test_integrity_without_semantic_binding_is_mismatch(self):
         value = claim(
@@ -101,6 +109,12 @@ class MaterialClaimTests(unittest.TestCase):
         self.assertEqual(evaluate_material_claim(noncanonical), "AMBIGUOUS")
         hidden_forbidden = dict(partial, observed_value={"paths": ["allowed/a.txt", "forbidden.txt"], "complete": True})
         self.assertEqual(evaluate_material_claim(hidden_forbidden), "MISMATCH")
+        loose_pattern = dict(
+            partial,
+            expected_value_or_predicate={"allowed_patterns": ["allowed/*"]},
+            observed_value={"paths": ["allowed/a.txt"], "complete": True},
+        )
+        self.assertEqual(evaluate_material_claim(loose_pattern), "AMBIGUOUS")
 
     def test_actual_authenticated_actor_must_match_authorized_principal(self):
         value = claim(
@@ -124,6 +138,10 @@ class MaterialClaimTests(unittest.TestCase):
         no_comparator = claim("exact_sha_role_equality", SHA_A, SHA_A)
         no_comparator.pop("comparator_id")
         self.assertEqual(evaluate_material_claim(no_comparator), "UNVERIFIABLE")
+        wrong_role = claim(
+            "exact_sha_role_equality", SHA_A, SHA_A, claim_role="base_SHA"
+        )
+        self.assertEqual(evaluate_material_claim(wrong_role), "UNVERIFIABLE")
 
     def test_aggregate_cannot_claim_verified_over_nonverified_subclaim(self):
         first = claim("exact_sha_role_equality", SHA_A, SHA_A)
@@ -141,6 +159,17 @@ class MaterialClaimTests(unittest.TestCase):
         value["verification_result"] = "VERIFIED"
         with self.assertRaisesRegex(ActivationError, "DECLARED_RESULT_MISMATCH"):
             validate_material_receipt({"material_claims": [value], "aggregate_result": "VERIFIED"})
+
+    def test_duplicate_claim_ids_cannot_overwrite_blocking_result(self):
+        first = claim("exact_sha_role_equality", SHA_A, SHA_B)
+        first["verification_result"] = "MISMATCH"
+        second = claim("exact_sha_role_equality", SHA_A, SHA_A)
+        second["verification_result"] = "VERIFIED"
+        with self.assertRaisesRegex(ActivationError, "ID_DUPLICATE"):
+            validate_material_receipt({
+                "material_claims": [first, second],
+                "aggregate_result": "VERIFIED",
+            })
 
     def test_actual_git_observers_bind_commit_and_complete_paths(self):
         with TemporaryDirectory() as temp:

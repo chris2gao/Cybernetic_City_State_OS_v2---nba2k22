@@ -163,6 +163,7 @@ def load_receiver_from_pointer(
         *message_refs,
         str(pointer["constitution_evidence_ref"]),
         str(pointer["compliance_receipt_ref"]),
+        validated["sender_index_ref"],
         *extra_activation_paths,
     ]
     ordered_paths = list(dict.fromkeys(read_paths))
@@ -174,6 +175,7 @@ def load_receiver_from_pointer(
         "direct_refs": direct_refs,
         "constitution": validated["constitution"],
         "compliance_receipt": validated["compliance_receipt"],
+        "sender_index": validated["sender_index"],
         "receiver_setup": pointer["receiver_setup"],
         "activation_evidence_refs": validated.get("activation_refs") or [],
         "receiver_publication_claim": validated["receiver_publication_claim"],

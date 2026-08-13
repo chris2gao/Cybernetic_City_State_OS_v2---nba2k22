@@ -79,6 +79,7 @@ class GitHubRepublicationTests(unittest.TestCase):
                 "01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml",
                 "01_os/03_mechanisms/model_routing/协作角色与接收者设置契约_v1.yml",
                 "01_os/03_mechanisms/mechanism_activation/机制触发注册表_v1.yml",
+                "01_os/06_execution/boot/communication_system/publisher/publish_message.py",
             ):
                 target = repo / relative
                 target.parent.mkdir(parents=True, exist_ok=True)

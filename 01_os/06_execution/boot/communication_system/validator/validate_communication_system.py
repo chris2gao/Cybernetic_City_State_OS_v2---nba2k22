@@ -66,6 +66,9 @@ POINTER_V2_FIELDS = POINTER_V1_FIELDS | {
 MODEL_CATALOG_REF = "01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml"
 RECEIVER_ROLE_CONTRACT_REF = "01_os/03_mechanisms/model_routing/协作角色与接收者设置契约_v1.yml"
 TRIGGER_REGISTRY_REF = "01_os/03_mechanisms/mechanism_activation/机制触发注册表_v1.yml"
+COMMUNICATION_PUBLISHER_REF = (
+    "01_os/06_execution/boot/communication_system/publisher/publish_message.py"
+)
 
 
 def canonical_task_relative_ref(value: Any, code: str) -> str:
@@ -318,6 +321,15 @@ class CommunicationValidator:
             raise CommunicationValidationError("message_type_invalid")
         if message_type in ACTION_REQUIRED and not message.get("requested_action"):
             raise CommunicationValidationError("requested_action_required")
+        if message_type == "correction":
+            supersedes = message.get("supersedes")
+            if not isinstance(supersedes, str) or not supersedes:
+                raise CommunicationValidationError("correction_requires_supersedes")
+            canonical_task_relative_ref(supersedes, "correction_supersedes_noncanonical")
+            if task_root is not None and not (task_root.resolve() / str(supersedes)).is_file():
+                raise CommunicationValidationError("superseded_message_missing")
+        elif message.get("supersedes") is not None:
+            raise CommunicationValidationError("supersedes_only_valid_for_correction")
         for field in ("task_id", "sender_endpoint_id", "expected_recipient_endpoint_id"):
             if not SAFE_ID.fullmatch(str(message[field])):
                 raise CommunicationValidationError(f"message_identifier_invalid:{field}")
@@ -516,20 +528,127 @@ class CommunicationValidator:
                 raise CommunicationValidationError(
                     f"Human_pointer_exact_receiver_setup_invalid:{exc}"
                 ) from exc
-            for ref in message.get("required_refs") or []:
-                self._git_blob(repository_root, commit, f"{prefix}{ref}")
-
         self.validate_message(
             message,
             message_path=Path(message_relative),
             task_root=root if pointer["carrier"] == "local" else None,
         )
+        if not isinstance(constitution, dict) or not isinstance(receipt, dict):
+            raise CommunicationValidationError("Human_pointer_evidence_mapping_required")
+        sender_card_ref = f"endpoints/{message['sender_endpoint_id']}.yml"
+        recipient_card_ref = f"endpoints/{message['expected_recipient_endpoint_id']}.yml"
+        sender_index_ref = f"indexes/{message['sender_endpoint_id']}.yml"
+        if pointer["carrier"] == "local":
+            manifest = load_yaml(root / "manifest.yml")
+            sender_card = load_yaml(root / sender_card_ref)
+            recipient_card = load_yaml(root / recipient_card_ref)
+            sender_index = load_yaml(root / sender_index_ref)
+            for card in (sender_card, recipient_card):
+                if isinstance(card, dict):
+                    role_ref = canonical_task_relative_ref(
+                        card.get("role_context_entry_ref"),
+                        "Human_pointer_role_context_ref_noncanonical",
+                    )
+                    if not (root / role_ref).is_file():
+                        raise CommunicationValidationError(
+                            f"Human_pointer_role_context_missing:{role_ref}"
+                        )
+        else:
+            assert repository_root is not None and git_commit is not None and git_prefix is not None
+            manifest = parse_safe_yaml(
+                self._git_blob(repository_root, git_commit, f"{git_prefix}manifest.yml")
+            )
+            sender_card = parse_safe_yaml(
+                self._git_blob(repository_root, git_commit, f"{git_prefix}{sender_card_ref}")
+            )
+            recipient_card = parse_safe_yaml(
+                self._git_blob(repository_root, git_commit, f"{git_prefix}{recipient_card_ref}")
+            )
+            sender_index = parse_safe_yaml(
+                self._git_blob(repository_root, git_commit, f"{git_prefix}{sender_index_ref}")
+            )
+            for ref in message.get("required_refs") or []:
+                self._git_blob(repository_root, git_commit, f"{git_prefix}{ref}")
+            if message.get("message_type") == "correction":
+                self._git_blob(
+                    repository_root, git_commit, f"{git_prefix}{message['supersedes']}"
+                )
+            for card in (sender_card, recipient_card):
+                if isinstance(card, dict):
+                    role_ref = canonical_task_relative_ref(
+                        card.get("role_context_entry_ref"),
+                        "Human_pointer_role_context_ref_noncanonical",
+                    )
+                    self._git_blob(repository_root, git_commit, f"{git_prefix}{role_ref}")
+
+        if not isinstance(manifest, dict) or (
+            manifest.get("task_id") != pointer.get("task_id")
+            or manifest.get("communication_contract_version") != 2
+        ):
+            raise CommunicationValidationError("Human_pointer_manifest_binding_invalid")
+        cards = {
+            str(message["sender_endpoint_id"]): sender_card,
+            str(message["expected_recipient_endpoint_id"]): recipient_card,
+        }
+        self.validate_role_binding(message, cards)
+        try:
+            from .sender_zone import validate_sender_index
+        except ImportError:
+            from sender_zone import validate_sender_index
+        validate_sender_index(
+            sender_index,
+            sender_endpoint_id=str(message["sender_endpoint_id"]),
+            task_root=root,
+            require_targets=pointer["carrier"] == "local",
+        )
+        sequence = str(message["message_id"]).rsplit("::", 1)[-1]
+        expected_index_entry = {
+            "sequence": sequence,
+            "message_id": message["message_id"],
+            "title": message["title"],
+            "message_type": message["message_type"],
+            "expected_recipient_endpoint_id": message["expected_recipient_endpoint_id"],
+            "expected_recipient_task_role": message["expected_recipient_task_role"],
+            "exact_message_path": message_relative,
+        }
+        if not isinstance(sender_index, list) or sender_index.count(expected_index_entry) != 1:
+            raise CommunicationValidationError("Human_pointer_sender_index_binding_invalid")
         for field in (
             "task_id", "message_id", "sender_endpoint_id", "sender_task_role",
             "expected_recipient_endpoint_id", "expected_recipient_task_role",
         ):
             if pointer.get(field) != message.get(field):
                 raise CommunicationValidationError(f"Human_pointer_message_binding_mismatch:{field}")
+        if pointer.get("one_line_routing_purpose") != message.get("title"):
+            raise CommunicationValidationError("Human_pointer_routing_purpose_mismatch")
+        expected_constitution_ref = (
+            f"constitutions/{message['sender_endpoint_id']}/{sequence}.yml"
+        )
+        expected_receipt_ref = f"receipts/{message['sender_endpoint_id']}/{sequence}.yml"
+        if pointer["constitution_evidence_ref"] != expected_constitution_ref:
+            raise CommunicationValidationError("Human_pointer_constitution_path_binding_invalid")
+        if pointer["compliance_receipt_ref"] != expected_receipt_ref:
+            raise CommunicationValidationError("Human_pointer_receipt_path_binding_invalid")
+        if constitution.get("schema_version") != "citystate.formal_action.constitution_evidence.v1":
+            raise CommunicationValidationError("Human_pointer_constitution_schema_invalid")
+        if receipt.get("schema_version") != "citystate.formal_action.compliance_receipt.v1":
+            raise CommunicationValidationError("Human_pointer_receipt_schema_invalid")
+        if receipt.get("receipt_role") != "binding_index_only":
+            raise CommunicationValidationError("Human_pointer_receipt_role_invalid")
+        if receipt.get("constitution_evidence_ref") != expected_constitution_ref:
+            raise CommunicationValidationError("Human_pointer_receipt_constitution_binding_invalid")
+        if constitution.get("resolver_result_ref") != f"{expected_constitution_ref}#resolution":
+            raise CommunicationValidationError("Human_pointer_resolver_result_ref_invalid")
+        if constitution.get("gate_result_ref") != f"{expected_constitution_ref}#gate":
+            raise CommunicationValidationError("Human_pointer_gate_result_ref_invalid")
+        if constitution.get("mechanism_execution_ref") != COMMUNICATION_PUBLISHER_REF:
+            raise CommunicationValidationError("Human_pointer_mechanism_execution_ref_invalid")
+        if pointer["carrier"] == "local":
+            if not (REPO_ROOT / COMMUNICATION_PUBLISHER_REF).is_file():
+                raise CommunicationValidationError("Human_pointer_mechanism_execution_missing")
+        else:
+            assert repository_root is not None and git_commit is not None
+            self._git_blob(repository_root, git_commit, COMMUNICATION_PUBLISHER_REF)
         activation_context = constitution.get("activation_context")
         mechanism_preconditions = constitution.get("mechanism_preconditions")
         if not isinstance(activation_context, dict) or not isinstance(mechanism_preconditions, dict):
@@ -673,6 +792,8 @@ class CommunicationValidator:
             "constitution": constitution,
             "compliance_receipt": receipt,
             "message_relative_path": message_relative,
+            "sender_index": sender_index,
+            "sender_index_ref": sender_index_ref,
             "activation_refs": list(dict.fromkeys(str(ref) for ref in activation_refs)),
             "receiver_publication_claim": receiver_publication_claim,
         }
@@ -730,11 +851,28 @@ def validate_static_repository(repo_root: Path) -> None:
     formal = load_yaml(mechanism / "正式动作接入契约_v1.yml")
     if formal.get("direct_publisher_call_without_activation_bundle") != "FORMAL_ACTIVATION_REQUIRED":
         raise CommunicationValidationError("formal_publisher_gate_contract_invalid")
+    required_formal_validity = {
+        "sender_index_exactly_binds_message_identity_and_route",
+        "receiver_replays_resolver_and_gate_from_saved_inputs",
+        "canonical_mechanism_execution_ref_physically_resolves",
+        "correction_physically_binds_existing_superseded_message_when_applicable",
+    }
+    if not required_formal_validity.issubset(
+        set(formal.get("formal_action_validity_requires") or [])
+    ):
+        raise CommunicationValidationError("formal_receiver_closure_contract_incomplete")
     pointer_v2 = load_yaml(mechanism / "Human中转指针契约_v2.yml")
     if pointer_v2.get("pointer_contract_version") != 2:
         raise CommunicationValidationError("pointer_v2_contract_invalid")
     if pointer_v2.get("migration", {}).get("v1_pointer", {}).get("new_formal_publication") != "prohibited":
         raise CommunicationValidationError("pointer_v1_migration_boundary_invalid")
+    required_git_validation = {
+        "sender_index_contains_exact_message_binding_at_same_commit",
+        "mechanism_execution_ref_is_canonical_and_exists_at_same_commit",
+        "correction_supersedes_blob_exists_at_same_commit_when_applicable",
+    }
+    if not required_git_validation.issubset(set(pointer_v2.get("GitHub_validation") or [])):
+        raise CommunicationValidationError("pointer_v2_physical_closure_incomplete")
     for contract in mechanism.glob("*.yml"):
         load_yaml(contract)
     local = load_yaml(

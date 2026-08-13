@@ -1,5 +1,6 @@
 from pathlib import Path
 from tempfile import TemporaryDirectory
+import copy
 import sys
 import unittest
 
@@ -204,6 +205,49 @@ class FormalCommunicationActivationTests(unittest.TestCase):
                 yaml.safe_dump(constitution, sort_keys=False), encoding="utf-8"
             )
             with self.assertRaisesRegex(CommunicationValidationError, "resolution_replay_mismatch"):
+                load_receiver_from_pointer(root, "receiver-01", pointer)
+
+    def test_pointer_requires_exact_sender_owned_evidence_paths_and_index_binding(self):
+        with TemporaryDirectory() as temp:
+            root = Path(temp)
+            source = self.fixture(root)
+            pointer = publish(root, source, **self.activation_kwargs())
+            rebound = dict(pointer)
+            rebound["constitution_evidence_ref"] = pointer["compliance_receipt_ref"]
+            with self.assertRaisesRegex(CommunicationValidationError, "constitution_path_binding"):
+                load_receiver_from_pointer(root, "receiver-01", rebound)
+            misleading = dict(pointer)
+            misleading["one_line_routing_purpose"] = "Different Human-facing route"
+            with self.assertRaisesRegex(CommunicationValidationError, "routing_purpose_mismatch"):
+                load_receiver_from_pointer(root, "receiver-01", misleading)
+            index_path = root / "indexes/sender-01.yml"
+            index_path.write_text("[]\n", encoding="utf-8")
+            with self.assertRaisesRegex(CommunicationValidationError, "sender_index_binding"):
+                load_receiver_from_pointer(root, "receiver-01", pointer)
+
+    def test_pointer_rejects_forged_execution_ref_and_duplicate_material_claim_id(self):
+        with TemporaryDirectory() as temp:
+            root = Path(temp)
+            source = self.fixture(root)
+            pointer = publish(root, source, **self.activation_kwargs())
+            constitution_path = root / pointer["constitution_evidence_ref"]
+            constitution = yaml.safe_load(constitution_path.read_text(encoding="utf-8"))
+            constitution["mechanism_execution_ref"] = "publisher-looking-but-not-canonical.py"
+            constitution_path.write_text(
+                yaml.safe_dump(constitution, sort_keys=False), encoding="utf-8"
+            )
+            with self.assertRaisesRegex(CommunicationValidationError, "execution_ref_invalid"):
+                load_receiver_from_pointer(root, "receiver-01", pointer)
+
+        with TemporaryDirectory() as temp:
+            root = Path(temp)
+            source = self.fixture(root)
+            pointer = publish(root, source, **self.activation_kwargs())
+            receipt_path = root / pointer["compliance_receipt_ref"]
+            receipt = yaml.safe_load(receipt_path.read_text(encoding="utf-8"))
+            receipt["material_claims"].append(copy.deepcopy(receipt["material_claims"][0]))
+            receipt_path.write_text(yaml.safe_dump(receipt, sort_keys=False), encoding="utf-8")
+            with self.assertRaisesRegex(CommunicationValidationError, "activation_evidence_invalid"):
                 load_receiver_from_pointer(root, "receiver-01", pointer)
 
     def test_legacy_nine_field_pointer_is_explicit_historical_only(self):
