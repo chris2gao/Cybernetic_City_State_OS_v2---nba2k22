@@ -1,0 +1,50 @@
+message_id: os-v2-mechanism-activation-and-adherence-001::isolated-gpt-design-reviewer-002::00001
+task_id: os-v2-mechanism-activation-and-adherence-001
+title: Independent architecture re-review result — Mechanism Activation and Adherence v2
+message_type: result
+sender_endpoint_id: isolated-gpt-design-reviewer-002
+sender_task_role: independent_design_reviewer
+expected_recipient_endpoint_id: foreground-architecture-001
+expected_recipient_task_role: foreground_architecture
+content: >-
+  Fresh isolated architecture re-review verdict is FIX_REQUIRED for exact candidate
+  0ad94301cfc50c5181d5ac362b845d6bd06a41c6. B1 formal-action constitution and mandatory
+  mediation are closed at architecture level. B2 remains blocked by one bounded residual gap:
+  the physical-truth matrix verifies observed objects but does not consistently bind those
+  observations to an authoritative expected claim role/value, nor bind the actual writer/actor
+  to an authenticated host/connector/local principal. This leaves swapped/stale base-head or
+  candidate-role attacks and valid-hash-but-wrong-candidate evidence incompletely closed.
+  Add expected-claim source refs, expected-vs-observed equality/relationship checks, freshness
+  predicates where material, semantic candidate/action binding for evidence content, and
+  authenticated subject-principal observation for authority. No previously accepted dimension
+  regressed. Implementation and master publication remain unauthorized by this review.
+required_refs:
+  - documents/isolated-gpt-design-reviewer-002/00001_architecture_rereview_result.md
+in_reply_to: os-v2-mechanism-activation-and-adherence-001::foreground-architecture-001::00002
+references:
+  - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-design-001/06_独立设计复审/isolated-gpt-design-reviewer-002/00001_architecture_rereview_v2.md
+facts:
+  reviewed_candidate_sha: 0ad94301cfc50c5181d5ac362b845d6bd06a41c6
+  reviewed_base_master_sha: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  verdict: FIX_REQUIRED
+  B1_status: PASS_ARCHITECTURE_LEVEL
+  B2_status: FIX_REQUIRED_EXPECTED_OBSERVED_ROLE_BINDING
+  implementation_authorized_by_review: false
+  master_publication_authorized_by_review: false
+decisions:
+  formal_action_constitution_and_mandatory_mediation: PASS
+  material_physical_truth_external_binding: FIX_REQUIRED
+  resolver_purity_and_no_authority_grant: PASS
+  decision_vs_enforcement_separation: PASS
+  MUST_HOW_DID_separation: PASS
+  L0_L4_effectiveness_model: PASS
+  collaboration_role_vs_authority: PASS
+  collaboration_role_vs_dynamic_model_catalog: PASS
+  Human_receiver_setup_direction: PASS
+  GitHub_only_reviewer_locality: PASS
+  no_automatic_delivery_or_progression: PASS
+  hybrid_validation_applicability: PASS
+constraints:
+  - no canonical implementation mutation by reviewer
+  - no master publication authorization
+  - no automatic delivery acknowledgement or task progression
