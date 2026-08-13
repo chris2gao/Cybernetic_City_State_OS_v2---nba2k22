@@ -396,7 +396,7 @@ class CommunicationValidator:
     @staticmethod
     def _git_blob(repository_root: Path, commit: str, relative: str) -> str:
         proc = subprocess.run(
-            ["git", "show", f"{commit}:{relative}"],
+            ["git", "-c", "core.longpaths=true", "show", f"{commit}:{relative}"],
             cwd=repository_root,
             text=True,
             stdout=subprocess.PIPE,

@@ -1,6 +1,8 @@
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 from tempfile import TemporaryDirectory
+import subprocess
 
 import yaml
 
@@ -126,6 +128,16 @@ class SafeYamlAndMessageTests(unittest.TestCase):
         message["required_refs"] = ["documents/../outside.md"]
         with self.assertRaisesRegex(CommunicationValidationError, "required_ref_noncanonical"):
             self.validator.validate_message(message)
+
+    def test_exact_git_blob_reader_enables_windows_longpaths(self):
+        completed = subprocess.CompletedProcess([], 0, stdout="value", stderr="")
+        with patch("subprocess.run", return_value=completed) as invoked:
+            value = self.validator._git_blob(Path("."), "a" * 40, "deep/path.yml")
+        self.assertEqual(value, "value")
+        self.assertEqual(
+            invoked.call_args.args[0][:4],
+            ["git", "-c", "core.longpaths=true", "show"],
+        )
 
 
     def test_self_authorization_is_rejected(self):
