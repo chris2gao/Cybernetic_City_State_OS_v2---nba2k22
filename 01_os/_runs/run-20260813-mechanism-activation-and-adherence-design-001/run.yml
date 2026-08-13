@@ -3,7 +3,7 @@ run:
   run_id: run-20260813-mechanism-activation-and-adherence-design-001
   task_id: os-v2-mechanism-activation-and-adherence-001
   phase: architecture_design
-  status: architecture_design_in_progress
+  status: architecture_design_candidate_ready_communication_context_required_for_review_dispatch
   owner: core
   branch: dev/os-v2-mechanism-activation-and-adherence-design-001
   exact_base_sha: 9492fc940c58784297dc92d8602e5dfaad446d1a
@@ -21,7 +21,17 @@ run:
   validation_note: >-
     架构语义采用独立设计审核与场景反证；后续可执行 mechanism 实现采用证据派生的冻结测试、
     negative-conformance 与独立验收。不得把代码测试绿灯当作架构语义已被证明。
+  design_artifacts:
+    architecture: 02_架构设计/Mechanism_Activation_and_Adherence_Architecture_v1.md
+    validation_applicability: 02_架构设计/验证适用性裁决_v1.yml
+    collaboration_routing: 02_架构设计/协作角色与接收者设置_v1.yml
+    mechanism_effectiveness: 02_架构设计/机制生效等级与触发框架_v1.yml
+    external_patterns: 03_外部模式依据/成熟模式对照_v1.md
   gates:
-    architecture_design_review: pending
+    architecture_design_review: pending_fresh_isolated_GPT
+    formal_review_dispatch: blocked_until_communication_context_established
     implementation: blocked_until_design_review_pass
     master_integration: blocked_until_implementation_and_independent_acceptance
+  next_action: >-
+    建立本 task 的 formal communication context；随后通过 durable document + formal message + Human relay pointer
+    向 isolated Review Project 的 fresh GPT-5.6 Sol High 派发 design review。不得用长聊天正文代替 formal dispatch。
