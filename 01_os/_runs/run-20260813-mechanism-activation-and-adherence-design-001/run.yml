@@ -3,11 +3,12 @@ run:
   run_id: run-20260813-mechanism-activation-and-adherence-design-001
   task_id: os-v2-mechanism-activation-and-adherence-001
   phase: architecture_design
-  status: architecture_design_candidate_ready_communication_context_required_for_review_dispatch
+  status: architecture_design_review_formally_dispatched
   owner: core
   branch: dev/os-v2-mechanism-activation-and-adherence-design-001
   exact_base_sha: 9492fc940c58784297dc92d8602e5dfaad446d1a
   master_at_start: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  design_candidate_sha: d01fae74b90f8ca5debeae979ffcc262aa042448
   objective: >-
     建立统一的 mechanism activation/adherence 架构，使 canonical mechanism 不仅被定义和加载，
     还具有明确 trigger、pre-action enforcement gate、execution/compliance receipt 与负向绕过验证；
@@ -15,6 +16,8 @@ run:
   current_scope:
     repository_writes:
       - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-design-001/**
+      - 01_os/_communication/Cybernetic_City_State_OS_v2---core/discovery.yml
+      - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-001/**
     canonical_mutation: prohibited_in_design_phase
     master_publication: prohibited
   validation_mode: hybrid
@@ -27,11 +30,21 @@ run:
     collaboration_routing: 02_架构设计/协作角色与接收者设置_v1.yml
     mechanism_effectiveness: 02_架构设计/机制生效等级与触发框架_v1.yml
     external_patterns: 03_外部模式依据/成熟模式对照_v1.md
+  communication:
+    carrier: GitHub
+    task_root: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-001/
+    sender_endpoint_id: foreground-architecture-001
+    reviewer_endpoint_id: isolated-gpt-design-reviewer-001
+    review_request_message_id: os-v2-mechanism-activation-and-adherence-001::foreground-architecture-001::00001
+    exact_message_path: messages/foreground-architecture-001/00001_request.yml
+    Human_authorization_ref: 01_任务输入/Human通讯空间建立授权_v1.yml
+    automatic_delivery: false
+    automatic_task_progression: false
   gates:
-    architecture_design_review: pending_fresh_isolated_GPT
-    formal_review_dispatch: blocked_until_communication_context_established
+    architecture_design_review: waiting_fresh_isolated_GPT_result
+    formal_review_dispatch: complete
     implementation: blocked_until_design_review_pass
     master_integration: blocked_until_implementation_and_independent_acceptance
   next_action: >-
-    建立本 task 的 formal communication context；随后通过 durable document + formal message + Human relay pointer
-    向 isolated Review Project 的 fresh GPT-5.6 Sol High 派发 design review。不得用长聊天正文代替 formal dispatch。
+    Human 将正式 GitHub relay pointer 转交给 isolated Review Project 的 fresh GPT-5.6 Sol High。
+    Reviewer 仅依据 durable GitHub evidence 与 exact communication refs 独立审核并返回正式 result pointer。
