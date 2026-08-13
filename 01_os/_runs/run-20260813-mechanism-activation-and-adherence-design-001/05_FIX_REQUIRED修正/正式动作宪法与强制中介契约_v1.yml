@@ -1,0 +1,122 @@
+formal_action_constitution:
+  schema_version: citystate.formal_action_constitution.v1
+  task_id: os-v2-mechanism-activation-and-adherence-001
+  authority_effect: none
+  purpose: >-
+    定义 representation-invariant 的 formal action 成立条件与唯一有效中介边界，避免模型通过自我命名、措辞、
+    recipient alias、mixed output 或完全不调用 resolver 来绕过 mandatory mechanism。
+
+  constitutional_rule: >-
+    任何被 OS 承认为 formal cross-endpoint request/response/result/correction/blocked/decision handoff 的动作，
+    必须由 formal-action constitution path 产生并携带可验证 constitution evidence。未经过该路径的自然语言、
+    copied prompt、quoted template 或 Human 手工转发文本，不因内容看起来像任务就自动成为有效 OS formal action。
+
+  semantic_classification:
+    primary_basis:
+      - intended_cross_endpoint_side_effect
+      - intended_recipient_or_recipient_class
+      - actionable_content_or_formal_state_claim
+    prohibited_primary_basis:
+      - caller_self_label
+      - lexical_presence_of_dispatch_words
+      - provider_identity
+      - model_identity
+      - task_role_name_alone
+    formal_when_any:
+      - >-
+        sender intends Human or system routing to cause a non-Human endpoint to perform, review, decide, correct,
+        continue, stop, or otherwise act on task-scoped instructions.
+      - >-
+        sender intends to communicate a task-scoped result, blocker, correction, decision request, or acceptance state
+        to another endpoint for operational use.
+      - >-
+        sender emits or claims a Human relay pointer or other formal control envelope intended to enter another endpoint's task context.
+    ordinary_Human_discussion_when_all:
+      - intended_recipient_is_Human_only
+      - no_cross_endpoint_side_effect_is_requested_or_claimed
+      - content_is_explanation_analysis_hypothesis_example_or_quote_only
+      - no_formal_OS_state_transition_or_handoff_is_claimed
+
+  quoted_hypothetical_boundary:
+    quoted_or_template_content_alone: ordinary_discussion
+    becomes_formal_if:
+      - Human_is_asked_to_forward_relay_send_or_use_it_to_activate_an_endpoint
+      - an_endpoint_is_instructed_to_act_on_the_embedded_content
+      - sender_claims_the_quoted_content_is_the_current_formal_handoff
+
+  mixed_action_segmentation:
+    rule: >-
+      一个 Human-facing response 可同时含普通讨论与 formal intent。必须按 semantic segment 分类；任何 formal segment
+      必须单独进入 constitution path。普通讨论部分可以留在聊天，但不得夹带一个未中介的 actionable cross-endpoint segment。
+    whole_message_downgrade_by_discussion_label: prohibited
+
+  recipient_normalization:
+    sources:
+      - explicit_endpoint_id
+      - task_role_bound_endpoint_card
+      - Human_selected_receiver_from_receiver_setup
+      - explicit_alias_mapping_when_canonical_or_task_local
+    lexical_guessing_only: prohibited
+    ambiguous_recipient_behavior: FORMAL_ACTION_BLOCKED_UNTIL_RECIPIENT_RESOLVED
+
+  ambiguity_rule:
+    material_cross_endpoint_intent_ambiguous: fail_closed_for_formal_action
+    Human_conversation_may_continue: true
+    formal_acceptance_must_not_be_claimed: true
+
+  unique_constitution_path:
+    required_steps:
+      - classify_planned_action_semantics
+      - normalize_recipient
+      - segment_mixed_content_if_needed
+      - resolve_required_mechanisms
+      - verify_required_preconditions
+      - execute_pre_action_enforcement_gate
+      - invoke_mechanism_specific_publisher_or_executor
+      - produce_constitution_and_compliance_evidence
+    bypassing_any_required_step:
+      formal_action_valid: false
+      Human_chat_text_still_possible: true
+    resolver_invocation_is_optional: false
+
+  constitution_evidence_required_for_validity:
+    required_fields:
+      - action_id
+      - action_class
+      - sender_endpoint_id
+      - intended_recipient_endpoint_id
+      - classification_basis_ref
+      - required_mechanisms
+      - gate_result_ref
+      - mechanism_execution_ref
+      - formal_artifact_ref
+    evidence_missing_behavior: INVALID_FORMAL_ACTION
+
+  communication_acceptance_boundary:
+    sender_rule: >-
+      formal cross-endpoint communication is valid only when durable communication artifacts are published and an exact Human relay pointer
+      is emitted from the validated publication path.
+    Human_relay_rule: >-
+      OS-defined relay consists of the exact pointer/control envelope. Human may manually copy arbitrary chat text, but that action is outside
+      formal OS handoff validity and cannot manufacture constitution evidence.
+    receiver_rule: >-
+      receiver enters formal task context only from an exact valid pointer and receiver bootstrap. Natural-language task text without the pointer
+      cannot be accepted as the formal request/result/correction for the OS task.
+
+  required_negative_conformance_families:
+    - euphemistic_relay_without_dispatch_word
+    - self_label_discussion_with_actionable_non_Human_recipient
+    - quoted_prior_message_analysis_only_false_positive
+    - template_example_false_positive
+    - mixed_discussion_plus_embedded_actionable_instruction
+    - recipient_alias_equivalent_to_endpoint
+    - ambiguous_recipient
+    - missing_communication_context
+    - stale_communication_context
+    - resolver_omission
+    - gate_omission
+    - long_Human_copy_paste_prompt_claimed_as_formal_handoff
+
+  validation_requirement: >-
+    测试必须同时证明 false-negative bypass 被拒绝和 quoted/hypothetical ordinary discussion 不被误拦截；
+    单纯关键词匹配测试不能作为 B1 closure。
