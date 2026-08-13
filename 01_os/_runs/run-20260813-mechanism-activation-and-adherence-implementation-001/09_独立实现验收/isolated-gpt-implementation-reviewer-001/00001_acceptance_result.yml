@@ -1,0 +1,49 @@
+schema_version: citystate.independent_implementation_acceptance.v1
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+reviewer_endpoint_id: isolated-gpt-implementation-reviewer-001
+candidate_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+candidate_base_sha: bf538e5068381becd31e8e1daceade81e657262d
+evidence_snapshot_sha: a1132bbb0ccbc783b214a8218d32d45edf59e8da
+reviewed_architecture_sha: 8ee72d2800a9e00539d3732464e79312e1ade613
+verdict: FIX_REQUIRED
+material_blockers:
+  - blocker_id: B2-OBSERVATION-PROVENANCE-BINDING
+    architecture_dimension: material_physical_truth_two_sided_binding
+    finding: >-
+      The generic material-claim validator checks that source/ref fields are present and that
+      declared source-class strings are allowed, then compares expected and observed values
+      supplied in the claim. It does not independently resolve the expected claim source or
+      independently consume the physical observation named by exact_observation_ref.
+      Consequently a self-consistent claim can be recomputed VERIFIED without establishing
+      that the cited physical observation actually produced the observed value.
+    required_architecture_outcome: >-
+      A receipt is only a binding index and cannot itself establish candidate identity, complete
+      diff scope, execution evidence, artifact binding, authority, or actual actor. A material
+      claim without the required physical observation must be UNVERIFIABLE.
+    reviewer_counterexamples:
+      - non_resolving_expected_source_ref_with_equal_candidate_values_can_recompute_VERIFIED
+      - asserted_complete_path_subset_can_recompute_VERIFIED_without_validator_running_complete_Git_compare
+      - asserted_authenticated_principal_record_can_recompute_VERIFIED_without_validator_consuming_authenticated_observation
+    required_fix: >-
+      Acceptance-time verification must bind each material claim to independently obtained
+      expected-source and observation data, using trusted observation adapters or an external
+      observation context. Receipt-provided source labels, completeness flags, actor values and
+      observation refs must be checked against those externally obtained facts. Add negative
+      tests for self-consistent but unresolved refs and unobserved material facts.
+passed_or_observed_dimensions:
+  formal_action_mandatory_mediation_A: PASS
+  quoted_or_template_false_positive_boundary: PASS
+  resolver_and_gate_fail_closed: PASS
+  missing_or_stale_communication_context_fail_closed: PASS
+  v2_pointer_and_receiver_bootstrap_binding: PASS
+  candidate_base_relation: PASS
+  candidate_diff_scope: PASS
+  candidate_bound_deterministic_tests: 94_of_94
+  frozen_stage04_full: 50_of_50
+  frozen_stage04_mutation: 50_of_50
+  role_or_model_grants_authority: false
+  premature_L4_or_operationally_active_claim: not_found
+  automatic_delivery_polling_ack_scheduling_progression: not_found
+  hybrid_validation_result_type_awareness: PASS
+master_publication_authorized: false
+authority_effect: none
