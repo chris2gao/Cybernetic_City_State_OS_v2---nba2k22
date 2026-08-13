@@ -3,7 +3,7 @@ run:
   run_id: run-20260813-mechanism-activation-and-adherence-design-001
   task_id: os-v2-mechanism-activation-and-adherence-001
   phase: architecture_design
-  status: architecture_v3_candidate_ready_awaiting_Human_isolated_review_setup_attestation
+  status: architecture_v3_fresh_independent_rereview_dispatched
   owner: core
   branch: dev/os-v2-mechanism-activation-and-adherence-design-001
   exact_base_sha: 9492fc940c58784297dc92d8602e5dfaad446d1a
@@ -51,17 +51,21 @@ run:
     prior_reviewers:
       - isolated-gpt-design-reviewer-001
       - isolated-gpt-design-reviewer-002
-    next_reviewer_endpoint_id: isolated-gpt-design-reviewer-003
+    current_reviewer_endpoint_id: isolated-gpt-design-reviewer-003
+    v3_rereview_request_message_id: os-v2-mechanism-activation-and-adherence-001::foreground-architecture-001::00003
+    Human_review_setup_attestation_ref: Human/decisions/00003_review_setup_attestation.yml
     automatic_delivery: false
     automatic_task_progression: false
   gates:
     architecture_design_review_v1: FIX_REQUIRED_ACCEPTED
     architecture_design_review_v2: FIX_REQUIRED_ACCEPTED_B1_CLOSED_B2_BOUNDED
     architecture_design_v3: candidate_ready
-    fresh_v3_re_review_isolation_attestation: pending_Human
-    fresh_v3_re_review_dispatch: blocked_until_Human_attestation
+    fresh_v3_re_review_isolation_attestation: Human_attested_and_durable
+    fresh_v3_re_review_dispatch: complete
+    architecture_design_review_v3: waiting_fresh_isolated_GPT_result
     implementation: blocked_until_design_review_pass
     master_integration: blocked_until_implementation_and_independent_acceptance
   next_action: >-
-    Human 创建与 reviewer-001、reviewer-002 均隔离的全新 project-only-memory Review Project，连接当前 GitHub repository，
-    不导入 foreground/prior-review chats，并返回 task-bound setup attestation。Foreground 随后发布 reviewer-003 的 formal v3 review request pointer。
+    Human 只转交 foreground 00003 canonical GitHub relay pointer 给 reviewer-003 fresh isolated Review Project。
+    Reviewer-003 仅依据 exact GitHub evidence 独立复审 v3 candidate 8ee72d28...，区分 material blocker、non-blocking hardening 与不必要形式主义，
+    并通过 reviewer-003 sender zone 返回 durable result pointer。
