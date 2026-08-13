@@ -25,15 +25,17 @@ selected_route:
   parameter_profile: chatgpt_plus_sol_high
   reasoning_setting: high
   session_mode: fresh
-  isolation_level: fresh_project_blind
+  isolation_level: isolated_project
   repository_access_mode: GitHub_only
   availability_assumption: Human_configurable_at_relay_time
-  routing_basis: fresh_isolated_GitHub_complete_independent_acceptance_with_High_default
+  routing_basis: fresh_new_isolated_Project_GitHub_complete_acceptance_with_High_default
   evidence_refs:
     - 01_os/03_mechanisms/model_routing/协作角色与接收者设置契约_v1.yml
     - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/documents/foreground-implementation-dispatch-001/00002_independent_implementation_acceptance_request.md#receiver-setup-basis
   limitations:
     - routing_grants_no_authority
+    - executor_private_context
+    - foreground_private_context
     - provider_model_product_identity_is_non_material_unless_a_concrete_requirement_makes_it_material
     - if_route_unavailable_at_Human_relay_time_fail_closed_and_re_route
     - no_local_files_may_be_assumed_readable
