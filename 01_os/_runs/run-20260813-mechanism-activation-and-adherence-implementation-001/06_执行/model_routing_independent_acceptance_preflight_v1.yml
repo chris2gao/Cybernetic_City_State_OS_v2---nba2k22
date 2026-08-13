@@ -1,0 +1,41 @@
+schema_version: citystate.model_routing.preflight_receipt.v1
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+observed_at_local: '2026-08-13'
+mechanism_version: 1
+catalog_version: 1
+source_index_version: 1
+loaded_paths:
+  - 01_os/03_mechanisms/model_routing/README.md
+  - 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+  - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+  - 01_os/03_mechanisms/model_routing/协作角色与接收者设置契约_v1.yml
+selected_route:
+  role: independent_review
+  risk_tier: T2_semantic_acceptance
+  task_shape: fresh_independent_implementation_acceptance
+  required_capabilities:
+    - GitHub_exact_commit_read
+    - durable_review_evidence_write
+    - adversarial_semantic_review
+    - code_and_contract_inspection
+  provider: OpenAI
+  product: ChatGPT
+  surface: chatgpt_web
+  model: GPT-5.6 Sol
+  parameter_profile: chatgpt_plus_sol_high
+  reasoning_setting: high
+  session_mode: fresh
+  isolation_level: fresh_project_blind
+  repository_access_mode: GitHub_only
+  availability_assumption: Human_configurable_at_relay_time
+  routing_basis: fresh_isolated_GitHub_complete_independent_acceptance_with_High_default
+  evidence_refs:
+    - 01_os/03_mechanisms/model_routing/协作角色与接收者设置契约_v1.yml
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/documents/foreground-implementation-dispatch-001/00002_independent_implementation_acceptance_request.md#receiver-setup-basis
+  limitations:
+    - routing_grants_no_authority
+    - provider_model_product_identity_is_non_material_unless_a_concrete_requirement_makes_it_material
+    - if_route_unavailable_at_Human_relay_time_fail_closed_and_re_route
+    - no_local_files_may_be_assumed_readable
+  authority: routing_only
+result: VERIFIED_FOR_FORMAL_DISPATCH
