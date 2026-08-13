@@ -3,16 +3,19 @@ run:
   run_id: run-20260813-mechanism-activation-and-adherence-design-001
   task_id: os-v2-mechanism-activation-and-adherence-001
   phase: architecture_design
-  status: architecture_design_review_formally_dispatched
+  status: architecture_v2_candidate_ready_awaiting_Human_isolated_review_setup_attestation
   owner: core
   branch: dev/os-v2-mechanism-activation-and-adherence-design-001
   exact_base_sha: 9492fc940c58784297dc92d8602e5dfaad446d1a
   master_at_start: 9492fc940c58784297dc92d8602e5dfaad446d1a
-  design_candidate_sha: d01fae74b90f8ca5debeae979ffcc262aa042448
+  design_v1_candidate_sha: d01fae74b90f8ca5debeae979ffcc262aa042448
+  design_v1_review_result_commit: a837b24342fe33c824d595949dfd6408dfbc3e57
+  design_v1_review_verdict: FIX_REQUIRED
+  design_v2_candidate_sha: 0ad94301cfc50c5181d5ac362b845d6bd06a41c6
   objective: >-
     建立统一的 mechanism activation/adherence 架构，使 canonical mechanism 不仅被定义和加载，
-    还具有明确 trigger、pre-action enforcement gate、execution/compliance receipt 与负向绕过验证；
-    communication_system 作为第一条 L4 vertical slice，同时固化跨模型协作角色与 Human-visible receiver setup。
+    还具有明确 formal-action constitution、trigger、pre-action enforcement gate、externally-bound execution/compliance evidence
+    与负向绕过验证；communication_system 作为第一条 L4 vertical slice，同时固化跨模型协作角色与 Human-visible receiver setup。
   current_scope:
     repository_writes:
       - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-design-001/**
@@ -24,27 +27,47 @@ run:
   validation_note: >-
     架构语义采用独立设计审核与场景反证；后续可执行 mechanism 实现采用证据派生的冻结测试、
     negative-conformance 与独立验收。不得把代码测试绿灯当作架构语义已被证明。
-  design_artifacts:
+  design_v1_artifacts:
     architecture: 02_架构设计/Mechanism_Activation_and_Adherence_Architecture_v1.md
     validation_applicability: 02_架构设计/验证适用性裁决_v1.yml
     collaboration_routing: 02_架构设计/协作角色与接收者设置_v1.yml
     mechanism_effectiveness: 02_架构设计/机制生效等级与触发框架_v1.yml
     external_patterns: 03_外部模式依据/成熟模式对照_v1.md
+  design_v1_review:
+    reviewer_endpoint: isolated-gpt-design-reviewer-001
+    message_id: os-v2-mechanism-activation-and-adherence-001::isolated-gpt-design-reviewer-001::00001
+    verdict: FIX_REQUIRED
+    accepted_blockers:
+      - B1_formal_action_constitution_and_mandatory_mediation
+      - B2_material_physical_truth_external_binding
+    preserved_passed_dimensions:
+      - collaboration_model_routing_separation
+      - L0_L4_effectiveness_model
+      - validation_modality_hybrid_sound
+      - no_automatic_progression
+  design_v2_artifacts:
+    architecture: 05_FIX_REQUIRED修正/Mechanism_Activation_and_Adherence_Architecture_v2.md
+    formal_action_constitution: 05_FIX_REQUIRED修正/正式动作宪法与强制中介契约_v1.yml
+    physical_truth_binding_matrix: 05_FIX_REQUIRED修正/物理事实外部绑定矩阵_v1.yml
+    review_adjudication: 04_独立设计审核/StageDesignReview_v1接收与修正裁决_v1.yml
   communication:
     carrier: GitHub
     task_root: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-001/
     sender_endpoint_id: foreground-architecture-001
-    reviewer_endpoint_id: isolated-gpt-design-reviewer-001
-    review_request_message_id: os-v2-mechanism-activation-and-adherence-001::foreground-architecture-001::00001
-    exact_message_path: messages/foreground-architecture-001/00001_request.yml
+    prior_reviewer_endpoint_id: isolated-gpt-design-reviewer-001
+    next_reviewer_endpoint_id: isolated-gpt-design-reviewer-002
+    prior_review_request_message_id: os-v2-mechanism-activation-and-adherence-001::foreground-architecture-001::00001
     Human_authorization_ref: 01_任务输入/Human通讯空间建立授权_v1.yml
     automatic_delivery: false
     automatic_task_progression: false
   gates:
-    architecture_design_review: waiting_fresh_isolated_GPT_result
-    formal_review_dispatch: complete
+    architecture_design_review_v1: FIX_REQUIRED_ACCEPTED
+    architecture_design_v2: candidate_ready
+    fresh_re_review_isolation_attestation: pending_Human
+    fresh_re_review_dispatch: blocked_until_Human_attestation
     implementation: blocked_until_design_review_pass
     master_integration: blocked_until_implementation_and_independent_acceptance
   next_action: >-
-    Human 将正式 GitHub relay pointer 转交给 isolated Review Project 的 fresh GPT-5.6 Sol High。
-    Reviewer 仅依据 durable GitHub evidence 与 exact communication refs 独立审核并返回正式 result pointer。
+    Human 建立一个全新的 project-only-memory isolated Review Project（不得复用 reviewer-001 所在 Project），
+    并明确确认该 setup。Foreground 随后把 Human setup attestation 写入 task communication root，发布 v2 exact review request，
+    Human 只 relay canonical pointer。Reviewer-002 仅依据 exact GitHub evidence 独立复审 0ad94301...。
