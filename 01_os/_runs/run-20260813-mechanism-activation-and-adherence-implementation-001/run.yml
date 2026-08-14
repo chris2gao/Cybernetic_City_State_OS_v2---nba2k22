@@ -3,7 +3,7 @@ run:
   run_id: run-20260813-mechanism-activation-and-adherence-implementation-001
   task_id: os-v2-mechanism-activation-and-adherence-implementation-001
   phase: implementation_correction
-  status: second_B2_correction_complete_candidate_evidence_verified
+  status: second_B2_correction_complete_formal_result_published_on_source_branch
   owner: core
   branch: dev/os-v2-mechanism-activation-and-adherence-implementation-001
   branch_base_sha: bf538e5068381becd31e8e1daceade81e657262d
@@ -52,7 +52,7 @@ run:
     task_root: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/
     sender_endpoint_id: foreground-implementation-dispatch-001
     correction_request_message_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00004
-    correction_result_message_id: pending_codex_sequence_00004
+    correction_result_message_id: os-v2-mechanism-activation-and-adherence-implementation-001::codex-implementation-executor-001::00004
     communication_contract_version: 2
   gates:
     architecture: PASS
@@ -62,7 +62,7 @@ run:
     formal_result: published_on_source_branch
     second_B2_correction_dispatch: pointer_00006_received
     second_B2_corrected_candidate: evidence_verified
-    second_B2_formal_result: pending
+    second_B2_formal_result: published_and_receiver_replayed
     fresh_independent_acceptance: required_after_new_candidate
     master_publication: prohibited
-  next_action: Publish second-B2 evidence on the source branch, then relay the exact corrected candidate for fresh independent acceptance.
+  next_action: Route exact second-B2 corrected candidate to a fresh independent implementation-acceptance endpoint.
