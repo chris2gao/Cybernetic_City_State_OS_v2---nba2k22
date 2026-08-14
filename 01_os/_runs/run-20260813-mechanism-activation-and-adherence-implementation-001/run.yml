@@ -3,7 +3,7 @@ run:
   run_id: run-20260813-mechanism-activation-and-adherence-implementation-001
   task_id: os-v2-mechanism-activation-and-adherence-implementation-001
   phase: implementation_correction
-  status: third_B2_correction_complete_candidate_evidence_verified
+  status: third_B2_formal_result_published_and_receiver_replayed
   owner: core
   branch: dev/os-v2-mechanism-activation-and-adherence-implementation-001
   branch_base_sha: bf538e5068381becd31e8e1daceade81e657262d
@@ -55,6 +55,9 @@ run:
     exact_replay_ref: 07_测试执行/third_B2_exact_ref_replay_v1.yml
     bound_candidate_checks_ref: 07_测试执行/bound_candidate_checks_v6.yml
     candidate_material_receipt_ref: 07_测试执行/candidate_material_receipt_v6.yml
+    correction_result_message_id: os-v2-mechanism-activation-and-adherence-implementation-001::codex-implementation-executor-001::00005
+    formal_result_pointer_commit: 005763b2672bff50d4c3d2ce806e6e5f85c90e5f
+    formal_result_readback_ref: 07_测试执行/formal_third_B2_publication_readback_v1.yml
     generic_issuance_and_attachment_removed: true
     execution_kernel_closure_owned_provenance: true
   communication:
@@ -63,6 +66,7 @@ run:
     sender_endpoint_id: foreground-implementation-dispatch-001
     correction_request_message_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00004
     correction_result_message_id: os-v2-mechanism-activation-and-adherence-implementation-001::codex-implementation-executor-001::00004
+    third_B2_correction_result_message_id: os-v2-mechanism-activation-and-adherence-implementation-001::codex-implementation-executor-001::00005
     communication_contract_version: 2
   gates:
     architecture: PASS
@@ -75,7 +79,7 @@ run:
     second_B2_formal_result: published_and_receiver_replayed
     third_B2_correction_dispatch: pointer_00007_received
     third_B2_corrected_candidate: evidence_verified
-    third_B2_formal_result: pending
+    third_B2_formal_result: published_and_receiver_replayed
     fresh_independent_acceptance: required_after_new_candidate
     master_publication: prohibited
-  next_action: Publish third-B2 evidence on the source branch, then relay the exact corrected candidate for fresh independent acceptance.
+  next_action: Route exact candidate 15652d7019c35702444a1944bb5f4b754f4fdad7 to fresh isolated independent implementation acceptance.
