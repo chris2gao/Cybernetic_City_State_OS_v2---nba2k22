@@ -4,18 +4,16 @@ import subprocess
 import unittest
 
 import yaml
+import activation
 
 from activation import (
     ActivationError,
     MaterialObservationContext,
-    _ConsumedObservation,
-    _ResolvedExpectedSource,
     _compare_claim,
-    attach_material_evidence,
     evaluate_material_claim,
     observe_changed_path_claim,
+    observe_git_base_relation_claim,
     observe_git_commit_claim,
-    resolve_expected_yaml,
     validate_material_receipt,
 )
 
@@ -135,37 +133,49 @@ class ProvenanceBoundaryTests(unittest.TestCase):
         )
         self.assertEqual(evaluate_material_claim(value), "STALE")
 
-    def test_resolver_without_observation_adapter_is_nonpass(self):
-        with TemporaryDirectory() as temp:
-            root = Path(temp)
-            (root / "task.yml").write_text("candidate: " + SHA_A + "\n", encoding="utf-8")
-            resolve_expected_yaml(root, claim_id="claim-001", source_ref="task.yml#candidate", value_path=("candidate",))
-            self.assertEqual(
-                evaluate_material_claim(claim("exact_sha_role_equality", SHA_A, SHA_A), MaterialObservationContext()),
-                "UNVERIFIABLE",
+    def test_no_generic_issuance_or_attachment_surface_exists(self):
+        for name in (
+            "_issue_expected", "_issue_observed", "attach_material_evidence",
+            "_ResolvedExpectedSource", "_ConsumedObservation", "resolve_expected_yaml",
+        ):
+            self.assertFalse(hasattr(activation, name), name)
+
+    def test_direct_semantic_equivalent_cannot_register_caller_facts(self):
+        lookalike_expected = {
+            "claim_id": "claim-001", "source_ref": "task.yml#candidate", "value": SHA_A
+        }
+        lookalike_observed = {
+            "claim_id": "claim-001", "source_class": "actual_Git_object_database",
+            "value": SHA_A, "exact_ref": "git:physical-observation",
+        }
+        context = MaterialObservationContext()
+        for candidate in vars(activation).values():
+            self.assertFalse(
+                callable(candidate) and getattr(candidate, "__name__", "") in {
+                    "_issue_expected", "_issue_observed", "attach_material_evidence"
+                }
             )
+        self.assertEqual(lookalike_expected["value"], lookalike_observed["value"])
+        self.assertEqual(
+            evaluate_material_claim(claim("exact_sha_role_equality", SHA_A, SHA_A), context),
+            "UNVERIFIABLE",
+        )
 
     def test_expected_ref_fragment_cannot_select_a_different_fact(self):
         with TemporaryDirectory() as temp:
             root = Path(temp)
             (root / "task.yml").write_text("candidate: " + SHA_A + "\nbase: " + SHA_B + "\n", encoding="utf-8")
             with self.assertRaisesRegex(ActivationError, "SELECTOR_REF_MISMATCH"):
-                resolve_expected_yaml(
+                observe_git_commit_claim(
                     root,
                     claim_id="claim-001",
-                    source_ref="task.yml#candidate",
-                    value_path=("base",),
+                    claim_role="candidate_SHA",
+                    action_id_or_review_id="action",
+                    expected_root=root,
+                    expected_source_ref="task.yml#candidate",
+                    expected_value_path=("base",),
+                    observation_context=MaterialObservationContext(),
                 )
-
-    def test_fabricated_opaque_handles_are_not_issued_execution(self):
-        expected = _ResolvedExpectedSource("claim-001", "task.yml#candidate", SHA_A, {"resolver": "claimed"})
-        observed = _ConsumedObservation(
-            "claim-001", "actual_Git_object_database", SHA_A,
-            "git:physical-observation", frozenset({"git:physical-observation"}),
-            {"adapter": "claimed"},
-        )
-        with self.assertRaisesRegex(ActivationError, "EXPECTED_RESOLVER_EXECUTION_REQUIRED"):
-            attach_material_evidence(MaterialObservationContext(), expected, observed)
 
     def test_fabricated_complete_git_compare_is_nonpass(self):
         value = claim(
@@ -240,25 +250,56 @@ class ControlledGitAdapterTests(unittest.TestCase):
         with TemporaryDirectory() as temp:
             repo = Path(temp)
             base, candidate = self._repo(repo)
-            spec = {"candidate": candidate, "scope": {"allowed_patterns": ["allowed/**"]}}
+            spec = {
+                "candidate": candidate,
+                "base_expectation": {"sha": base, "required_relation": "ancestor_of_candidate"},
+                "scope": {"allowed_patterns": ["allowed/**"]},
+            }
             (repo / "task.yml").write_text(yaml.safe_dump(spec), encoding="utf-8")
             commit_context = MaterialObservationContext()
-            commit_expected = resolve_expected_yaml(repo, claim_id="candidate", source_ref="task.yml#candidate", value_path=("candidate",))
-            commit_claim = observe_git_commit_claim(repo, claim_role="candidate_SHA", action_id_or_review_id="action", expected=commit_expected, observation_context=commit_context)
+            commit_claim = observe_git_commit_claim(
+                repo, claim_id="candidate", claim_role="candidate_SHA",
+                action_id_or_review_id="action", expected_root=repo,
+                expected_source_ref="task.yml#candidate",
+                expected_value_path=("candidate",), observation_context=commit_context,
+            )
             self.assertEqual(commit_claim["verification_result"], "VERIFIED")
             path_context = MaterialObservationContext()
-            path_expected = resolve_expected_yaml(repo, claim_id="scope", source_ref="task.yml#scope", value_path=("scope",))
-            path_claim = observe_changed_path_claim(repo, action_id_or_review_id="action", expected=path_expected, base_sha=base, candidate_sha=candidate, observation_context=path_context)
+            path_claim = observe_changed_path_claim(
+                repo, claim_id="scope", action_id_or_review_id="action",
+                expected_root=repo, expected_source_ref="task.yml#scope",
+                expected_value_path=("scope",), base_sha=base, candidate_sha=candidate,
+                observation_context=path_context,
+            )
             self.assertEqual(path_claim["verification_result"], "VERIFIED")
             self.assertEqual(path_claim["observed_value"]["paths"], ["allowed/a.txt"])
+            base_claim = observe_git_base_relation_claim(
+                repo, claim_id="base", action_id_or_review_id="action",
+                expected_root=repo, expected_source_ref="task.yml#base_expectation",
+                expected_value_path=("base_expectation",), base_sha=base,
+                candidate_sha=candidate, observation_context=MaterialObservationContext(),
+            )
+            self.assertEqual(base_claim["verification_result"], "VERIFIED")
+
+            with self.assertRaisesRegex(ActivationError, "BINDING_DUPLICATE"):
+                observe_git_commit_claim(
+                    repo, claim_id="candidate", claim_role="candidate_SHA",
+                    action_id_or_review_id="action", expected_root=repo,
+                    expected_source_ref="task.yml#candidate",
+                    expected_value_path=("candidate",), observation_context=commit_context,
+                )
 
     def test_complete_compare_does_not_hide_rename_source(self):
         with TemporaryDirectory() as temp:
             repo = Path(temp)
             base, candidate = self._repo(repo, rename=True)
             (repo / "task.yml").write_text("scope:\n  allowed_patterns:\n    - allowed/**\n", encoding="utf-8")
-            expected = resolve_expected_yaml(repo, claim_id="scope", source_ref="task.yml#scope", value_path=("scope",))
-            result = observe_changed_path_claim(repo, action_id_or_review_id="action", expected=expected, base_sha=base, candidate_sha=candidate, observation_context=MaterialObservationContext())
+            result = observe_changed_path_claim(
+                repo, claim_id="scope", action_id_or_review_id="action",
+                expected_root=repo, expected_source_ref="task.yml#scope",
+                expected_value_path=("scope",), base_sha=base, candidate_sha=candidate,
+                observation_context=MaterialObservationContext(),
+            )
             self.assertEqual(result["verification_result"], "MISMATCH")
             self.assertEqual(result["observed_value"]["paths"], ["allowed/a.txt", "forbidden/a.txt"])
 

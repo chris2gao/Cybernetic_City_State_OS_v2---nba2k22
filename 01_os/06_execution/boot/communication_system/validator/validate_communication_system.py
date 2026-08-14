@@ -96,14 +96,10 @@ for _module_root in (ACTIVATION_ROOT, MODEL_ROUTING_ROOT):
 from activation import (  # noqa: E402
     ActivationError,
     MaterialObservationContext,
-    attach_material_evidence,
-    consume_communication_message_git,
-    consume_communication_message_local,
-    evaluate_material_claim,
     evaluate_pre_action_gate,
+    observe_communication_message_git_claim,
+    observe_communication_message_local_claim,
     resolve_required_mechanisms,
-    resolve_communication_expected_git,
-    resolve_communication_expected_local,
     validate_constitution_evidence,
     validate_material_receipt,
 )
@@ -761,111 +757,71 @@ class CommunicationValidator:
             raise CommunicationValidationError("Human_pointer_publication_source_class_mismatch")
         receipt_context = MaterialObservationContext()
         try:
+            receipt_kind = (
+                "publisher_materialization"
+                if receipt_observation_ref.startswith("publisher-materialization:")
+                else "communication_publication_readback"
+            )
             if pointer["carrier"] == "local":
-                receipt_expected_handle = resolve_communication_expected_local(
+                observe_communication_message_local_claim(
                     root,
                     claim_id=str(publication_claim.get("claim_id")),
+                    action_id_or_review_id=str(pointer["message_id"]),
                     constitution_ref=str(pointer["constitution_evidence_ref"]),
-                )
-                receipt_observed_handle = consume_communication_message_local(
-                    root,
-                    claim_id=str(publication_claim.get("claim_id")),
                     message_relative=message_relative,
                     carrier="local",
-                    observation_kind=(
-                        "publisher_materialization"
-                        if receipt_observation_ref.startswith("publisher-materialization:")
-                        else "communication_publication_readback"
-                    ),
+                    observation_kind=receipt_kind,
+                    observation_context=receipt_context,
                 )
             else:
                 assert repository_root is not None and git_commit is not None and git_prefix is not None
-                receipt_expected_handle = resolve_communication_expected_git(
+                observe_communication_message_git_claim(
                     repository_root,
                     claim_id=str(publication_claim.get("claim_id")),
+                    action_id_or_review_id=str(pointer["message_id"]),
                     commit=git_commit,
                     constitution_repo_path=f"{git_prefix}{pointer['constitution_evidence_ref']}",
                     constitution_ref=str(pointer["constitution_evidence_ref"]),
-                )
-                receipt_observed_handle = consume_communication_message_git(
-                    repository_root,
-                    claim_id=str(publication_claim.get("claim_id")),
-                    commit=git_commit,
                     message_repo_path=f"{git_prefix}{message_relative}",
                     message_relative=message_relative,
-                    observation_kind=(
-                        "publisher_materialization"
-                        if receipt_observation_ref.startswith("publisher-materialization:")
-                        else "communication_publication_readback"
-                    ),
+                    observation_kind=receipt_kind,
+                    observation_context=receipt_context,
                 )
-            attach_material_evidence(
-                receipt_context, receipt_expected_handle, receipt_observed_handle
-            )
             validate_material_receipt(receipt, receipt_context)
         except ActivationError as exc:
             raise CommunicationValidationError(
                 f"Human_pointer_activation_evidence_invalid:{exc.code}"
             ) from exc
-        receiver_publication_claim = {
-            "claim_id": f"{pointer['message_id']}::receiver-publication-readback",
-            "claim_role": "communication_publication",
-            "action_id_or_review_id": pointer["message_id"],
-            "expected_claim_source_ref": pointer["constitution_evidence_ref"],
-            "expected_value_or_predicate": expected_publication,
-            "observed_authoritative_source_class": (
-                "Git_blob_at_exact_commit"
-                if pointer["carrier"] == "GitHub"
-                else "exact_local_filesystem_observation"
-            ),
-            "observed_value": observed_publication,
-            "exact_observation_ref": str(pointer["exact_path_or_GitHub_ref"]),
-            "comparator_id": "published_message_identity_and_route_equality",
-            "relationship_or_equality_check": (
-                "expected_message_identity_and_route_equals_receiver_physical_readback"
-            ),
-            "verification_result": "UNVERIFIABLE",
-        }
         receiver_context = MaterialObservationContext()
+        receiver_claim_id = f"{pointer['message_id']}::receiver-publication-readback"
         try:
             if pointer["carrier"] == "local":
-                receiver_expected_handle = resolve_communication_expected_local(
+                receiver_publication_claim = observe_communication_message_local_claim(
                     root,
-                    claim_id=receiver_publication_claim["claim_id"],
+                    claim_id=receiver_claim_id,
+                    action_id_or_review_id=str(pointer["message_id"]),
                     constitution_ref=str(pointer["constitution_evidence_ref"]),
-                )
-                receiver_observed_handle = consume_communication_message_local(
-                    root,
-                    claim_id=receiver_publication_claim["claim_id"],
                     message_relative=message_relative,
                     carrier="local",
                     observation_kind="exact_local_pointer",
-                    exact_pointer_ref=receiver_publication_claim["exact_observation_ref"],
+                    exact_pointer_ref=str(pointer["exact_path_or_GitHub_ref"]),
+                    observation_context=receiver_context,
                 )
             else:
                 assert repository_root is not None and git_commit is not None and git_prefix is not None
-                receiver_expected_handle = resolve_communication_expected_git(
+                receiver_publication_claim = observe_communication_message_git_claim(
                     repository_root,
-                    claim_id=receiver_publication_claim["claim_id"],
+                    claim_id=receiver_claim_id,
+                    action_id_or_review_id=str(pointer["message_id"]),
                     commit=git_commit,
                     constitution_repo_path=f"{git_prefix}{pointer['constitution_evidence_ref']}",
                     constitution_ref=str(pointer["constitution_evidence_ref"]),
-                )
-                receiver_observed_handle = consume_communication_message_git(
-                    repository_root,
-                    claim_id=receiver_publication_claim["claim_id"],
-                    commit=git_commit,
                     message_repo_path=f"{git_prefix}{message_relative}",
                     message_relative=message_relative,
                     observation_kind="exact_git_pointer",
-                    exact_pointer_ref=receiver_publication_claim["exact_observation_ref"],
+                    exact_pointer_ref=str(pointer["exact_path_or_GitHub_ref"]),
+                    observation_context=receiver_context,
                 )
-            attach_material_evidence(
-                receiver_context, receiver_expected_handle, receiver_observed_handle
-            )
-            receiver_publication_claim["verification_result"] = evaluate_material_claim(
-                receiver_publication_claim, receiver_context
-            )
         except ActivationError as exc:
             raise CommunicationValidationError(
                 f"Human_pointer_publication_readback_unverified:{exc.code}"

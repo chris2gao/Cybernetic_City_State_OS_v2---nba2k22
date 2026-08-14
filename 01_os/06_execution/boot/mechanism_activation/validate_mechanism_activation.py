@@ -132,12 +132,22 @@ def validate_static_repository(repo_root: Path) -> None:
     if not all(
         execution_boundary.get(field) is True
         for field in (
-            "resolver_handle_issued_only_after_physical_expected_source_read",
-            "observation_handle_issued_only_after_physical_adapter_consumption",
-            "handles_must_be_execution_issued_and_one_time_consumed",
+            "provenance_storage_is_execution_kernel_closure_owned",
+            "high_level_claim_path_executes_expected_resolver_before_binding",
+            "high_level_claim_path_executes_observation_adapter_before_binding",
+            "physical_execution_and_binding_are_one_inseparable_operation",
+            "duplicate_claim_binding_or_replay_is_rejected",
         )
     ):
         raise ActivationError("MATERIAL_EXECUTION_ISSUANCE_RULE_INVALID")
+    if any(
+        execution_boundary.get(field) is not False
+        for field in (
+            "generic_issuance_or_attachment_primitive_exposed",
+            "caller_constructible_evidence_handle_type_exposed",
+        )
+    ):
+        raise ActivationError("MATERIAL_ISSUANCE_PRIMITIVE_EXPOSURE_INVALID")
     if any(
         execution_boundary.get(field) is not False
         for field in (
@@ -145,6 +155,7 @@ def validate_static_repository(repo_root: Path) -> None:
             "caller_supplied_expected_or_observed_value_is_provenance",
             "caller_supplied_consumed_ref_set_is_provenance",
             "caller_constructed_or_renamed_handle_is_provenance",
+            "direct_invocation_of_generic_issuance_semantic_equivalent_is_provenance",
             "random_or_secret_marker_without_bound_execution_is_provenance",
         )
     ):
@@ -154,6 +165,31 @@ def validate_static_repository(repo_root: Path) -> None:
         or claims.get("comparator_must_be_registered_for_claim_role") is not True
     ):
         raise ActivationError("MATERIAL_CLAIM_IDENTITY_OR_ROLE_RULE_INVALID")
+    activation_source = (
+        root / "01_os/06_execution/boot/mechanism_activation/activation.py"
+    ).read_text(encoding="utf-8")
+    for prohibited_source in (
+        "def _issue_expected(",
+        "def _issue_observed(",
+        "def attach_material_evidence(",
+        "class _ResolvedExpectedSource:",
+        "class _ConsumedObservation:",
+    ):
+        if prohibited_source in activation_source:
+            raise ActivationError(
+                "MATERIAL_GENERIC_ISSUANCE_SURFACE_PRESENT",
+                source_pattern=prohibited_source,
+            )
+    for required_source in (
+        "def _build_execution_owned_material_boundary():",
+        "weakref.WeakKeyDictionary()",
+        "def commit_physical_execution(",
+    ):
+        if required_source not in activation_source:
+            raise ActivationError(
+                "MATERIAL_EXECUTION_OWNED_KERNEL_MISSING",
+                source_pattern=required_source,
+            )
 
     inventory = _load(mechanism / "机制生效等级与盘点_v1.yml")
     entries = inventory.get("inventory")

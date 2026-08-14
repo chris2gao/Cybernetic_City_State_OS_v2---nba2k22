@@ -12,11 +12,13 @@ Material receipts are binding indexes, not provenance. Acceptance-time verificat
 must independently resolve each cited expected source and consume each cited physical
 observation through a trusted context; claim-provided values, labels, completeness,
 actors, hashes, or SHAs cannot populate that context. The trusted context has no
-ordinary-caller fact-binding operation: only one-use handles issued after controlled
-expected-source resolution and physical observation-adapter execution can populate
-it. Renaming a binder, presenting a caller-selected resolver/adapter identifier,
-asserting consumed references, or constructing a lookalike handle cannot mint
-provenance.
+ordinary-caller fact-binding operation. Only the same high-level operation that
+physically resolves the expected source and consumes the authoritative observation
+can populate it. The implementation exposes no generic issuance/attachment primitive or
+caller-constructible evidence-handle type: closure-owned high-level claim paths make
+physical execution and binding one operation. Renaming a binder, directly invoking
+an issuance equivalent, presenting caller-selected identifiers, asserting consumed
+references, or constructing a lookalike object cannot mint provenance.
 
 Natural-language text can always remain ordinary Human discussion. It becomes an OS
 formal cross-endpoint action only through the constitution path and its evidence. A

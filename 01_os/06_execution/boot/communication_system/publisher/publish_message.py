@@ -51,11 +51,8 @@ for module_root in (ACTIVATION_ROOT, MODEL_ROUTING_ROOT):
 from activation import (  # noqa: E402
     ActivationError,
     MaterialObservationContext,
-    attach_material_evidence,
-    consume_communication_message_local,
-    evaluate_material_claim,
     evaluate_pre_action_gate,
-    resolve_communication_expected_local,
+    observe_communication_message_local_claim,
     resolve_required_mechanisms,
     validate_constitution_evidence,
     validate_material_receipt,
@@ -267,47 +264,17 @@ def _compliance_receipt(
     constitution_ref: str,
     carrier: str,
 ) -> dict[str, Any]:
-    materialized = load_yaml(root / message_relative)
-    claim = {
-        "claim_id": f"{constitution['action_id']}::local-materialization",
-        "claim_role": "communication_publication",
-        "action_id_or_review_id": constitution["action_id"],
-        "expected_claim_source_ref": constitution_ref,
-        "expected_value_or_predicate": {
-            "task_id": constitution["activation_context"]["task_id"],
-            "message_id": constitution["action_id"],
-            "carrier": constitution["receiver_setup"]["communication_carrier"],
-            "sender_endpoint_id": constitution["sender_endpoint_id"],
-            "expected_recipient_endpoint_id": constitution["intended_recipient_endpoint_id"],
-            "materialized_path": constitution["formal_artifact_ref"],
-        },
-        "observed_authoritative_source_class": "communication_publisher_observation",
-        "observed_value": {
-            "task_id": materialized.get("task_id"),
-            "message_id": materialized.get("message_id"),
-            "carrier": carrier,
-            "sender_endpoint_id": materialized.get("sender_endpoint_id"),
-            "expected_recipient_endpoint_id": materialized.get("expected_recipient_endpoint_id"),
-            "materialized_path": message_relative,
-        },
-        "exact_observation_ref": f"publisher-materialization:{carrier}:{message_relative}",
-        "comparator_id": "published_message_identity_and_route_equality",
-        "relationship_or_equality_check": "expected_message_identity_equals_materialized_identity",
-        "verification_result": "UNVERIFIABLE",
-    }
     observation_context = MaterialObservationContext()
-    expected_handle = resolve_communication_expected_local(
-        root, claim_id=claim["claim_id"], constitution_ref=constitution_ref
-    )
-    observed_handle = consume_communication_message_local(
+    claim = observe_communication_message_local_claim(
         root,
-        claim_id=claim["claim_id"],
+        claim_id=f"{constitution['action_id']}::local-materialization",
+        action_id_or_review_id=constitution["action_id"],
+        constitution_ref=constitution_ref,
         message_relative=message_relative,
         carrier=carrier,
         observation_kind="publisher_materialization",
+        observation_context=observation_context,
     )
-    attach_material_evidence(observation_context, expected_handle, observed_handle)
-    claim["verification_result"] = evaluate_material_claim(claim, observation_context)
     receipt = {
         "schema_version": "citystate.formal_action.compliance_receipt.v1",
         "action_id": constitution["action_id"],
