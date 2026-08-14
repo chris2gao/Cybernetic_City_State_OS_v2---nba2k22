@@ -2,12 +2,15 @@
 """Pure formal-action resolution, enforcement, and material-claim comparison."""
 from __future__ import annotations
 
+import hashlib
 import re
 import subprocess
 from copy import deepcopy
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from typing import Any
+
+import yaml
 
 
 FORMAL_MESSAGE_ACTIONS = {
@@ -84,17 +87,63 @@ COMPARATOR_ROLES = {
 
 
 @dataclass(frozen=True)
+class _ResolvedExpectedSource:
+    claim_id: str
+    source_ref: str
+    value: Any
+    resolver_execution: dict[str, Any]
+
+
+@dataclass(frozen=True)
+class _ConsumedObservation:
+    claim_id: str
+    source_class: str
+    value: Any
+    exact_ref: str
+    consumed_refs: frozenset[str]
+    adapter_execution: dict[str, Any]
+
+
+_ISSUED_EXPECTED: dict[int, _ResolvedExpectedSource] = {}
+_ISSUED_OBSERVED: dict[int, _ConsumedObservation] = {}
+
+
+def _issue_expected(handle: _ResolvedExpectedSource) -> _ResolvedExpectedSource:
+    """Register a handle only after a controlled resolver has completed."""
+    _ISSUED_EXPECTED[id(handle)] = handle
+    return handle
+
+
+def _issue_observed(handle: _ConsumedObservation) -> _ConsumedObservation:
+    """Register a handle only after a controlled adapter has completed."""
+    _ISSUED_OBSERVED[id(handle)] = handle
+    return handle
+
+
+def _consume_issued_pair(
+    expected: _ResolvedExpectedSource,
+    observed: _ConsumedObservation,
+) -> None:
+    if _ISSUED_EXPECTED.get(id(expected)) is not expected:
+        raise ActivationError("EXPECTED_RESOLVER_EXECUTION_REQUIRED")
+    if _ISSUED_OBSERVED.get(id(observed)) is not observed:
+        raise ActivationError("OBSERVATION_ADAPTER_EXECUTION_REQUIRED")
+    _ISSUED_EXPECTED.pop(id(expected), None)
+    _ISSUED_OBSERVED.pop(id(observed), None)
+
+
+@dataclass(frozen=True)
 class TrustedClaimBinding:
-    """Acceptance-time facts obtained outside the receipt being evaluated."""
+    """Facts minted by controlled resolver and observation-adapter execution."""
 
     claim_id: str
     expected_source_ref: str
     expected_value: Any
-    expected_resolver_id: str
+    expected_resolver_execution: dict[str, Any]
     observed_source_class: str
     observed_value: Any
     exact_observation_ref: str
-    observation_adapter_id: str
+    observation_adapter_execution: dict[str, Any]
     consumed_observation_refs: frozenset[str]
 
 
@@ -109,49 +158,50 @@ class MaterialObservationContext:
     def __init__(self) -> None:
         self._bindings: dict[str, TrustedClaimBinding] = {}
 
-    def bind(
+    def _attach_executed_evidence(
         self,
-        *,
-        claim_id: str,
-        expected_source_ref: str,
-        expected_value: Any,
-        expected_resolver_id: str,
-        observed_source_class: str,
-        observed_value: Any,
-        exact_observation_ref: str,
-        observation_adapter_id: str,
-        consumed_observation_refs: set[str] | frozenset[str] | None = None,
+        expected: _ResolvedExpectedSource,
+        observed: _ConsumedObservation,
     ) -> None:
-        if not all(isinstance(value, str) and value for value in (
-            claim_id,
-            expected_source_ref,
-            expected_resolver_id,
-            observed_source_class,
-            exact_observation_ref,
-            observation_adapter_id,
-        )):
-            raise ActivationError("TRUSTED_CLAIM_BINDING_INVALID")
+        if not isinstance(expected, _ResolvedExpectedSource) or not isinstance(
+            observed, _ConsumedObservation
+        ):
+            raise ActivationError("CONTROLLED_EVIDENCE_HANDLE_REQUIRED")
+        _consume_issued_pair(expected, observed)
+        claim_id = expected.claim_id
+        if observed.claim_id != claim_id:
+            raise ActivationError("CONTROLLED_EVIDENCE_CLAIM_ID_MISMATCH")
         if claim_id in self._bindings:
             raise ActivationError("TRUSTED_CLAIM_BINDING_DUPLICATE", claim_id=claim_id)
-        if expected_source_ref.startswith("receipt:"):
+        if expected.source_ref.startswith("receipt:"):
             raise ActivationError("TRUSTED_EXPECTED_SOURCE_IS_RECEIPT", claim_id=claim_id)
-        refs = frozenset(consumed_observation_refs or {exact_observation_ref})
-        if exact_observation_ref not in refs:
+        if observed.exact_ref not in observed.consumed_refs:
             raise ActivationError("TRUSTED_OBSERVATION_NOT_CONSUMED", claim_id=claim_id)
         self._bindings[claim_id] = TrustedClaimBinding(
             claim_id=claim_id,
-            expected_source_ref=expected_source_ref,
-            expected_value=deepcopy(expected_value),
-            expected_resolver_id=expected_resolver_id,
-            observed_source_class=observed_source_class,
-            observed_value=deepcopy(observed_value),
-            exact_observation_ref=exact_observation_ref,
-            observation_adapter_id=observation_adapter_id,
-            consumed_observation_refs=refs,
+            expected_source_ref=expected.source_ref,
+            expected_value=deepcopy(expected.value),
+            expected_resolver_execution=deepcopy(expected.resolver_execution),
+            observed_source_class=observed.source_class,
+            observed_value=deepcopy(observed.value),
+            exact_observation_ref=observed.exact_ref,
+            observation_adapter_execution=deepcopy(observed.adapter_execution),
+            consumed_observation_refs=observed.consumed_refs,
         )
 
     def binding_for(self, claim_id: str) -> TrustedClaimBinding | None:
         return self._bindings.get(claim_id)
+
+
+def attach_material_evidence(
+    context: MaterialObservationContext,
+    expected: _ResolvedExpectedSource,
+    observed: _ConsumedObservation,
+) -> None:
+    """Attach only opaque handles emitted by controlled execution paths."""
+    if not isinstance(context, MaterialObservationContext):
+        raise ActivationError("MATERIAL_OBSERVATION_CONTEXT_REQUIRED")
+    context._attach_executed_evidence(expected, observed)
 
 
 def _activation_predicate_satisfied(predicate: str, context: dict[str, Any]) -> bool:
@@ -656,43 +706,341 @@ def _git(repo_root: Path, *args: str) -> tuple[int, str]:
     return proc.returncode, proc.stdout.strip()
 
 
-def observe_git_commit_claim(
+def _local_bytes(root: Path, source_ref: str) -> tuple[Path, bytes]:
+    clean = source_ref.split("#", 1)[0]
+    if not clean or "\\" in clean:
+        raise ActivationError("CONTROLLED_SOURCE_REF_INVALID")
+    target = (root.resolve() / PurePosixPath(clean)).resolve()
+    try:
+        target.relative_to(root.resolve())
+    except ValueError as exc:
+        raise ActivationError("CONTROLLED_SOURCE_OUTSIDE_ROOT") from exc
+    if not target.is_file():
+        raise ActivationError("CONTROLLED_SOURCE_MISSING", source_ref=source_ref)
+    return target, target.read_bytes()
+
+
+def _git_blob_bytes(repo_root: Path, commit: str, repo_path: str) -> bytes:
+    if not SHA40.fullmatch(commit) or not repo_path or "\\" in repo_path:
+        raise ActivationError("CONTROLLED_GIT_BLOB_REF_INVALID")
+    proc = subprocess.run(
+        ["git", "-c", "core.longpaths=true", "show", f"{commit}:{repo_path}"],
+        cwd=repo_root,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+    if proc.returncode != 0:
+        raise ActivationError("CONTROLLED_GIT_BLOB_READ_FAILED")
+    return proc.stdout
+
+
+def _yaml_mapping(raw: bytes) -> dict[str, Any]:
+    try:
+        value = yaml.safe_load(raw)
+    except yaml.YAMLError as exc:
+        raise ActivationError("CONTROLLED_YAML_PARSE_FAILED") from exc
+    return _mapping(value, "CONTROLLED_YAML_MAPPING_REQUIRED")
+
+
+def _select_value(value: Any, path: tuple[str, ...]) -> Any:
+    current = value
+    for key in path:
+        if not isinstance(current, dict) or key not in current:
+            raise ActivationError("CONTROLLED_EXPECTED_SELECTOR_MISSING", selector=".".join(path))
+        current = current[key]
+    return deepcopy(current)
+
+
+def resolve_expected_yaml(
+    root: Path,
+    *,
+    claim_id: str,
+    source_ref: str,
+    value_path: tuple[str, ...] = (),
+    projection: dict[str, tuple[str, ...]] | None = None,
+) -> _ResolvedExpectedSource:
+    """Physically read YAML and issue its selected expected value."""
+    target, raw = _local_bytes(root, source_ref)
+    document = _yaml_mapping(raw)
+    if projection is not None:
+        value = {key: _select_value(document, path) for key, path in projection.items()}
+    else:
+        fragment = source_ref.split("#", 1)[1] if "#" in source_ref else ""
+        if fragment and fragment != ".".join(value_path):
+            raise ActivationError("CONTROLLED_EXPECTED_SELECTOR_REF_MISMATCH")
+        value = _select_value(document, value_path)
+    return _issue_expected(_ResolvedExpectedSource(
+        claim_id=claim_id,
+        source_ref=source_ref,
+        value=value,
+        resolver_execution={
+            "resolver": "physical_yaml_expected_source",
+            "path": str(target),
+            "sha256": hashlib.sha256(raw).hexdigest(),
+        },
+    ))
+
+
+_COMMUNICATION_EXPECTED_PROJECTION = {
+    "task_id": ("activation_context", "task_id"),
+    "message_id": ("action_id",),
+    "carrier": ("receiver_setup", "communication_carrier"),
+    "sender_endpoint_id": ("sender_endpoint_id",),
+    "expected_recipient_endpoint_id": ("intended_recipient_endpoint_id",),
+    "materialized_path": ("formal_artifact_ref",),
+}
+
+
+def resolve_communication_expected_local(
+    task_root: Path, *, claim_id: str, constitution_ref: str
+) -> _ResolvedExpectedSource:
+    return resolve_expected_yaml(
+        task_root,
+        claim_id=claim_id,
+        source_ref=constitution_ref,
+        projection=_COMMUNICATION_EXPECTED_PROJECTION,
+    )
+
+
+def resolve_communication_expected_git(
     repo_root: Path,
     *,
     claim_id: str,
+    commit: str,
+    constitution_repo_path: str,
+    constitution_ref: str,
+) -> _ResolvedExpectedSource:
+    raw = _git_blob_bytes(repo_root, commit, constitution_repo_path)
+    document = _yaml_mapping(raw)
+    value = {
+        key: _select_value(document, path)
+        for key, path in _COMMUNICATION_EXPECTED_PROJECTION.items()
+    }
+    return _issue_expected(_ResolvedExpectedSource(
+        claim_id=claim_id,
+        source_ref=constitution_ref,
+        value=value,
+        resolver_execution={
+            "resolver": "exact_git_blob_constitution_expected_source",
+            "commit": commit,
+            "path": constitution_repo_path,
+            "sha256": hashlib.sha256(raw).hexdigest(),
+        },
+    ))
+
+
+def _communication_value(document: dict[str, Any], carrier: str, materialized_path: str) -> dict[str, Any]:
+    return {
+        "task_id": document.get("task_id"),
+        "message_id": document.get("message_id"),
+        "carrier": carrier,
+        "sender_endpoint_id": document.get("sender_endpoint_id"),
+        "expected_recipient_endpoint_id": document.get("expected_recipient_endpoint_id"),
+        "materialized_path": materialized_path,
+    }
+
+
+def consume_communication_message_local(
+    task_root: Path,
+    *,
+    claim_id: str,
+    message_relative: str,
+    carrier: str,
+    observation_kind: str,
+    exact_pointer_ref: str | None = None,
+) -> _ConsumedObservation:
+    target, raw = _local_bytes(task_root, message_relative)
+    document = _yaml_mapping(raw)
+    if observation_kind == "publisher_materialization":
+        source_class = "communication_publisher_observation"
+        exact_ref = f"publisher-materialization:{carrier}:{message_relative}"
+    elif observation_kind == "communication_publication_readback":
+        source_class = "communication_publisher_observation"
+        exact_ref = f"communication_publication_readback:{message_relative}"
+    elif observation_kind == "exact_local_pointer":
+        source_class = "exact_local_filesystem_observation"
+        exact_ref = exact_pointer_ref or message_relative
+        if exact_ref != message_relative:
+            raise ActivationError("LOCAL_POINTER_OBSERVATION_REF_MISMATCH")
+    else:
+        raise ActivationError("COMMUNICATION_OBSERVATION_KIND_INVALID")
+    return _issue_observed(_ConsumedObservation(
+        claim_id=claim_id,
+        source_class=source_class,
+        value=_communication_value(document, carrier, message_relative),
+        exact_ref=exact_ref,
+        consumed_refs=frozenset({exact_ref}),
+        adapter_execution={
+            "adapter": "physical_local_communication_message",
+            "path": str(target),
+            "sha256": hashlib.sha256(raw).hexdigest(),
+        },
+    ))
+
+
+def consume_communication_message_git(
+    repo_root: Path,
+    *,
+    claim_id: str,
+    commit: str,
+    message_repo_path: str,
+    message_relative: str,
+    observation_kind: str,
+    exact_pointer_ref: str | None = None,
+) -> _ConsumedObservation:
+    raw = _git_blob_bytes(repo_root, commit, message_repo_path)
+    document = _yaml_mapping(raw)
+    if observation_kind == "publisher_materialization":
+        source_class = "communication_publisher_observation"
+        exact_ref = f"publisher-materialization:GitHub:{message_relative}"
+    elif observation_kind == "communication_publication_readback":
+        source_class = "communication_publisher_observation"
+        exact_ref = f"communication_publication_readback:{message_relative}"
+    elif observation_kind == "exact_git_pointer":
+        source_class = "Git_blob_at_exact_commit"
+        exact_ref = f"{commit}:{message_repo_path}"
+        if exact_pointer_ref != exact_ref:
+            raise ActivationError("GIT_POINTER_OBSERVATION_REF_MISMATCH")
+    else:
+        raise ActivationError("COMMUNICATION_OBSERVATION_KIND_INVALID")
+    return _issue_observed(_ConsumedObservation(
+        claim_id=claim_id,
+        source_class=source_class,
+        value=_communication_value(document, "GitHub", message_relative),
+        exact_ref=exact_ref,
+        consumed_refs=frozenset({exact_ref}),
+        adapter_execution={
+            "adapter": "exact_git_blob_communication_message",
+            "commit": commit,
+            "path": message_repo_path,
+            "sha256": hashlib.sha256(raw).hexdigest(),
+        },
+    ))
+
+
+def consume_git_base_relation(
+    repo_root: Path,
+    *,
+    claim_id: str,
+    base_sha: str,
+    candidate_sha: str,
+) -> _ConsumedObservation:
+    relation_rc, _ = _git(repo_root, "merge-base", "--is-ancestor", base_sha, candidate_sha)
+    object_rc, observed_base = _git(repo_root, "rev-parse", f"{base_sha}^{{commit}}")
+    exact_ref = f"git:merge-base--is-ancestor:{base_sha}..{candidate_sha}"
+    return _issue_observed(_ConsumedObservation(
+        claim_id=claim_id,
+        source_class="actual_Git_object_database",
+        value={
+            "sha": observed_base if object_rc == 0 else None,
+            "relation_satisfied": relation_rc == 0,
+        },
+        exact_ref=exact_ref,
+        consumed_refs=frozenset({exact_ref}),
+        adapter_execution={
+            "adapter": "git_commit_and_ancestor_relation",
+            "repository": str(repo_root.resolve()),
+            "base_object_returncode": object_rc,
+            "relation_returncode": relation_rc,
+        },
+    ))
+
+
+def consume_trusted_execution_result(
+    root: Path,
+    *,
+    claim_id: str,
+    result_ref: str,
+    projection: dict[str, tuple[str, ...]],
+) -> _ConsumedObservation:
+    """Consume a physical output created by a controlled execution entrypoint."""
+    target, raw = _local_bytes(root, result_ref)
+    document = _yaml_mapping(raw)
+    value = {key: _select_value(document, path) for key, path in projection.items()}
+    exact_ref = result_ref
+    return _issue_observed(_ConsumedObservation(
+        claim_id=claim_id,
+        source_class="trusted_execution_adapter",
+        value=value,
+        exact_ref=exact_ref,
+        consumed_refs=frozenset({exact_ref}),
+        adapter_execution={
+            "adapter": "controlled_execution_result_yaml_readback",
+            "path": str(target),
+            "sha256": hashlib.sha256(raw).hexdigest(),
+        },
+    ))
+
+
+def consume_local_artifact(
+    root: Path,
+    *,
+    claim_id: str,
+    artifact_ref: str,
+    projection: dict[str, tuple[str, ...]],
+) -> _ConsumedObservation:
+    target, raw = _local_bytes(root, artifact_ref)
+    document = _yaml_mapping(raw)
+    value = {key: _select_value(document, path) for key, path in projection.items()}
+    digest = hashlib.sha256(raw).hexdigest()
+    value["sha256"] = digest
+    exact_ref = f"{artifact_ref}#sha256={digest}"
+    return _issue_observed(_ConsumedObservation(
+        claim_id=claim_id,
+        source_class="exact_local_filesystem_observation",
+        value=value,
+        exact_ref=exact_ref,
+        consumed_refs=frozenset({exact_ref}),
+        adapter_execution={
+            "adapter": "local_artifact_yaml_and_sha256_readback",
+            "path": str(target),
+            "sha256": digest,
+        },
+    ))
+
+
+def observe_git_commit_claim(
+    repo_root: Path,
+    *,
     claim_role: str,
     action_id_or_review_id: str,
-    expected_source_ref: str,
-    expected_sha: str,
+    expected: _ResolvedExpectedSource,
     observation_context: MaterialObservationContext,
-    expected_resolver_id: str,
 ) -> dict[str, Any]:
     """Create a claim from the actual Git object database and execute equality."""
+    expected_sha = expected.value
+    if not isinstance(expected_sha, str):
+        raise ActivationError("EXPECTED_GIT_COMMIT_SHA_INVALID")
     rc, observed = _git(repo_root, "rev-parse", f"{expected_sha}^{{commit}}")
     observed_value = observed if rc == 0 else None
+    exact_ref = f"git:rev-parse:{expected_sha}^{{commit}}"
+    observed_handle = _issue_observed(_ConsumedObservation(
+        claim_id=expected.claim_id,
+        source_class="actual_Git_object_database",
+        value=observed_value,
+        exact_ref=exact_ref,
+        consumed_refs=frozenset({exact_ref}),
+        adapter_execution={
+            "adapter": "git_rev_parse_commit",
+            "repository": str(repo_root.resolve()),
+            "returncode": rc,
+        },
+    ))
     record = {
-        "claim_id": claim_id,
+        "claim_id": expected.claim_id,
         "claim_role": claim_role,
         "action_id_or_review_id": action_id_or_review_id,
-        "expected_claim_source_ref": expected_source_ref,
+        "expected_claim_source_ref": expected.source_ref,
         "expected_value_or_predicate": expected_sha,
         "observed_authoritative_source_class": "actual_Git_object_database",
         "observed_value": observed_value,
-        "exact_observation_ref": f"git:rev-parse:{expected_sha}^{{commit}}",
+        "exact_observation_ref": exact_ref,
         "comparator_id": "exact_sha_role_equality",
         "relationship_or_equality_check": "observed_commit_SHA_equals_expected_semantic_role_SHA",
         "verification_result": "UNVERIFIABLE",
     }
-    observation_context.bind(
-        claim_id=claim_id,
-        expected_source_ref=expected_source_ref,
-        expected_value=expected_sha,
-        expected_resolver_id=expected_resolver_id,
-        observed_source_class="actual_Git_object_database",
-        observed_value=observed_value,
-        exact_observation_ref=record["exact_observation_ref"],
-        observation_adapter_id="git_rev_parse_commit_adapter",
-    )
+    attach_material_evidence(observation_context, expected, observed_handle)
     record["verification_result"] = evaluate_material_claim(record, observation_context)
     return record
 
@@ -700,16 +1048,18 @@ def observe_git_commit_claim(
 def observe_changed_path_claim(
     repo_root: Path,
     *,
-    claim_id: str,
     action_id_or_review_id: str,
-    expected_source_ref: str,
+    expected: _ResolvedExpectedSource,
     base_sha: str,
     candidate_sha: str,
-    allowed_patterns: list[str],
     observation_context: MaterialObservationContext,
-    expected_resolver_id: str,
 ) -> dict[str, Any]:
     """Observe the complete NUL-safe Git path set for a bound base/candidate pair."""
+    if not isinstance(expected.value, dict) or not isinstance(
+        expected.value.get("allowed_patterns"), list
+    ):
+        raise ActivationError("EXPECTED_ALLOWED_PATTERNS_INVALID")
+    allowed_patterns = expected.value["allowed_patterns"]
     proc = subprocess.run(
         ["git", "diff", "--name-only", "--no-renames", "-z", base_sha, candidate_sha, "--"],
         cwd=repo_root, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False,
@@ -717,33 +1067,40 @@ def observe_changed_path_claim(
     paths = proc.stdout.decode("utf-8", "surrogateescape").split("\0") if proc.returncode == 0 else []
     if paths and paths[-1] == "":
         paths.pop()
-    record = {
-        "claim_id": claim_id,
-        "claim_role": "changed_path_and_diff_scope",
-        "action_id_or_review_id": action_id_or_review_id,
-        "expected_claim_source_ref": expected_source_ref,
-        "expected_value_or_predicate": {"allowed_patterns": allowed_patterns},
-        "observed_authoritative_source_class": "complete_Git_compare",
-        "observed_value": {
+    exact_ref = f"git:diff--name-only--no-renames-z:{base_sha}..{candidate_sha}"
+    observed_value = {
+        "base_sha": base_sha,
+        "candidate_sha": candidate_sha,
+        "paths": paths,
+        "complete": proc.returncode == 0,
+    }
+    observed_handle = _issue_observed(_ConsumedObservation(
+        claim_id=expected.claim_id,
+        source_class="complete_Git_compare",
+        value=observed_value,
+        exact_ref=exact_ref,
+        consumed_refs=frozenset({exact_ref}),
+        adapter_execution={
+            "adapter": "complete_nul_safe_git_compare",
+            "repository": str(repo_root.resolve()),
             "base_sha": base_sha,
             "candidate_sha": candidate_sha,
-            "paths": paths,
-            "complete": proc.returncode == 0,
+            "returncode": proc.returncode,
         },
-        "exact_observation_ref": f"git:diff--name-only--no-renames-z:{base_sha}..{candidate_sha}",
+    ))
+    record = {
+        "claim_id": expected.claim_id,
+        "claim_role": "changed_path_and_diff_scope",
+        "action_id_or_review_id": action_id_or_review_id,
+        "expected_claim_source_ref": expected.source_ref,
+        "expected_value_or_predicate": deepcopy(expected.value),
+        "observed_authoritative_source_class": "complete_Git_compare",
+        "observed_value": observed_value,
+        "exact_observation_ref": exact_ref,
         "comparator_id": "complete_path_set_within_authorized_boundary",
         "relationship_or_equality_check": "complete_canonical_path_set_within_authorized_patterns",
         "verification_result": "UNVERIFIABLE",
     }
-    observation_context.bind(
-        claim_id=claim_id,
-        expected_source_ref=expected_source_ref,
-        expected_value={"allowed_patterns": allowed_patterns},
-        expected_resolver_id=expected_resolver_id,
-        observed_source_class="complete_Git_compare",
-        observed_value=record["observed_value"],
-        exact_observation_ref=record["exact_observation_ref"],
-        observation_adapter_id="complete_git_compare_adapter",
-    )
+    attach_material_evidence(observation_context, expected, observed_handle)
     record["verification_result"] = evaluate_material_claim(record, observation_context)
     return record

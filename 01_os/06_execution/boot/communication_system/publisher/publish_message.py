@@ -51,8 +51,11 @@ for module_root in (ACTIVATION_ROOT, MODEL_ROUTING_ROOT):
 from activation import (  # noqa: E402
     ActivationError,
     MaterialObservationContext,
+    attach_material_evidence,
+    consume_communication_message_local,
     evaluate_material_claim,
     evaluate_pre_action_gate,
+    resolve_communication_expected_local,
     resolve_required_mechanisms,
     validate_constitution_evidence,
     validate_material_receipt,
@@ -293,16 +296,17 @@ def _compliance_receipt(
         "verification_result": "UNVERIFIABLE",
     }
     observation_context = MaterialObservationContext()
-    observation_context.bind(
-        claim_id=claim["claim_id"],
-        expected_source_ref=constitution_ref,
-        expected_value=claim["expected_value_or_predicate"],
-        expected_resolver_id="publisher_constitution_readback",
-        observed_source_class="communication_publisher_observation",
-        observed_value=claim["observed_value"],
-        exact_observation_ref=claim["exact_observation_ref"],
-        observation_adapter_id="publisher_materialized_message_readback",
+    expected_handle = resolve_communication_expected_local(
+        root, claim_id=claim["claim_id"], constitution_ref=constitution_ref
     )
+    observed_handle = consume_communication_message_local(
+        root,
+        claim_id=claim["claim_id"],
+        message_relative=message_relative,
+        carrier=carrier,
+        observation_kind="publisher_materialization",
+    )
+    attach_material_evidence(observation_context, expected_handle, observed_handle)
     claim["verification_result"] = evaluate_material_claim(claim, observation_context)
     receipt = {
         "schema_version": "citystate.formal_action.compliance_receipt.v1",

@@ -124,6 +124,31 @@ def validate_static_repository(repo_root: Path) -> None:
         raise ActivationError("MATERIAL_TRUSTED_OBSERVATION_BOUNDARY_INVALID")
     if not claims.get("receipt_fields_that_cannot_establish_provenance"):
         raise ActivationError("MATERIAL_RECEIPT_PROVENANCE_DENYLIST_MISSING")
+    execution_boundary = claims.get("controlled_execution_provenance_boundary")
+    if not isinstance(execution_boundary, dict):
+        raise ActivationError("MATERIAL_CONTROLLED_EXECUTION_BOUNDARY_MISSING")
+    if execution_boundary.get("ordinary_caller_may_bind_claim_facts") is not False:
+        raise ActivationError("MATERIAL_CALLER_BINDING_BOUNDARY_INVALID")
+    if not all(
+        execution_boundary.get(field) is True
+        for field in (
+            "resolver_handle_issued_only_after_physical_expected_source_read",
+            "observation_handle_issued_only_after_physical_adapter_consumption",
+            "handles_must_be_execution_issued_and_one_time_consumed",
+        )
+    ):
+        raise ActivationError("MATERIAL_EXECUTION_ISSUANCE_RULE_INVALID")
+    if any(
+        execution_boundary.get(field) is not False
+        for field in (
+            "caller_supplied_resolver_or_adapter_id_is_provenance",
+            "caller_supplied_expected_or_observed_value_is_provenance",
+            "caller_supplied_consumed_ref_set_is_provenance",
+            "caller_constructed_or_renamed_handle_is_provenance",
+            "random_or_secret_marker_without_bound_execution_is_provenance",
+        )
+    ):
+        raise ActivationError("MATERIAL_PROVENANCE_SUBSTITUTE_DENYLIST_INVALID")
     if (
         claims.get("claim_id_uniqueness_within_receipt") != "mandatory"
         or claims.get("comparator_must_be_registered_for_claim_role") is not True

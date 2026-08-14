@@ -48,6 +48,17 @@ acceptance_time_trusted_observation_boundary:
   source_class_and_exact_ref_must_match_consumed_observation: true
   conditional_principal_and_freshness_refs_must_be_consumed: true
   missing_or_mismatched_context_result: UNVERIFIABLE_or_other_non_PASS
+controlled_execution_provenance_boundary:
+  ordinary_caller_may_bind_claim_facts: false
+  resolver_handle_issued_only_after_physical_expected_source_read: true
+  observation_handle_issued_only_after_physical_adapter_consumption: true
+  handles_must_be_execution_issued_and_one_time_consumed: true
+  caller_supplied_resolver_or_adapter_id_is_provenance: false
+  caller_supplied_expected_or_observed_value_is_provenance: false
+  caller_supplied_consumed_ref_set_is_provenance: false
+  caller_constructed_or_renamed_handle_is_provenance: false
+  random_or_secret_marker_without_bound_execution_is_provenance: false
+  missing_resolver_or_adapter_execution_result: UNVERIFIABLE_or_other_non_PASS
 receipt_fields_that_cannot_establish_provenance:
   - expected_value_or_predicate
   - observed_authoritative_source_class

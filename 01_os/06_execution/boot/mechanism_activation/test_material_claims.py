@@ -3,12 +3,19 @@ from tempfile import TemporaryDirectory
 import subprocess
 import unittest
 
+import yaml
+
 from activation import (
     ActivationError,
     MaterialObservationContext,
+    _ConsumedObservation,
+    _ResolvedExpectedSource,
+    _compare_claim,
+    attach_material_evidence,
     evaluate_material_claim,
     observe_changed_path_claim,
     observe_git_commit_claim,
+    resolve_expected_yaml,
     validate_material_receipt,
 )
 
@@ -35,317 +42,225 @@ def claim(comparator, expected, observed, **overrides):
     return value
 
 
-def context_for(*claims, binding_overrides=None):
-    context = MaterialObservationContext()
-    binding_overrides = binding_overrides or {}
-    for value in claims:
-        override = binding_overrides.get(value["claim_id"], {})
-        consumed = {value.get("exact_observation_ref", "")}
-        for field in ("subject_principal_observation_ref", "freshness_observation_ref"):
-            if value.get(field):
-                consumed.add(value[field])
-        context.bind(
-            claim_id=value["claim_id"],
-            expected_source_ref=override.get(
-                "expected_source_ref", value.get("expected_claim_source_ref", "missing")
-            ),
-            expected_value=override.get(
-                "expected_value", value.get("expected_value_or_predicate")
-            ),
-            expected_resolver_id="test_expected_source_fixture",
-            observed_source_class=override.get(
-                "observed_source_class", value.get("observed_authoritative_source_class", "missing")
-            ),
-            observed_value=override.get("observed_value", value.get("observed_value")),
-            exact_observation_ref=override.get(
-                "exact_observation_ref", value.get("exact_observation_ref", "missing")
-            ),
-            observation_adapter_id="test_physical_observation_fixture",
-            consumed_observation_refs=override.get("consumed_observation_refs", consumed),
-        )
-    return context
-
-
-def bound_result(value, *, binding_overrides=None):
-    return evaluate_material_claim(
-        value,
-        context_for(value, binding_overrides=binding_overrides),
-    )
-
-
-class MaterialClaimTests(unittest.TestCase):
-    def test_real_candidate_and_base_sha_swaps_are_mismatch(self):
-        candidate = claim("exact_sha_role_equality", SHA_A, SHA_B)
-        self.assertEqual(bound_result(candidate), "MISMATCH")
+class MaterialClaimComparatorTests(unittest.TestCase):
+    def test_candidate_and_base_sha_swaps_are_mismatch(self):
+        self.assertEqual(_compare_claim(claim("exact_sha_role_equality", SHA_A, SHA_B)), "MISMATCH")
         base = claim(
             "exact_base_equality_plus_required_relation",
             {"sha": SHA_B, "required_relation": "ancestor_of_candidate"},
             {"sha": SHA_A, "relation_satisfied": True},
             claim_role="base_SHA",
         )
-        self.assertEqual(bound_result(base), "MISMATCH")
+        self.assertEqual(_compare_claim(base), "MISMATCH")
 
-    def test_authentic_stale_moving_ref_is_stale(self):
-        value = claim(
+    def test_stale_named_ref_and_wrong_ref_fail(self):
+        stale = claim(
             "named_ref_fresh_state_relation",
-            {"sha": SHA_A},
-            {"sha": SHA_A, "fresh": False},
-            claim_role="moving_head_or_current_ref",
-            observed_authoritative_source_class="fresh_remote_Git_ref_readback",
-            freshness_requirement_when_applicable="immediately_before_action",
-            freshness_observation_ref="git:ls-remote:old-boundary",
-        )
-        self.assertEqual(bound_result(value), "STALE")
-        wrong_named_ref = claim(
-            "named_ref_fresh_state_relation",
-            {"named_ref": "refs/heads/master", "sha": SHA_A},
-            {"named_ref": "refs/heads/task", "sha": SHA_A, "fresh": True},
+            {"sha": SHA_A}, {"sha": SHA_A, "fresh": False},
             claim_role="moving_head_or_current_ref",
             observed_authoritative_source_class="fresh_remote_Git_ref_readback",
         )
-        self.assertEqual(bound_result(wrong_named_ref), "MISMATCH")
+        self.assertEqual(_compare_claim(stale), "STALE")
+        wrong = dict(stale,
+            expected_value_or_predicate={"named_ref": "refs/heads/master", "sha": SHA_A},
+            observed_value={"named_ref": "refs/heads/task", "sha": SHA_A, "fresh": True})
+        self.assertEqual(_compare_claim(wrong), "MISMATCH")
 
-    def test_integrity_without_semantic_binding_is_mismatch(self):
-        value = claim(
+    def test_integrity_execution_and_actor_semantic_mismatches(self):
+        integrity = claim(
             "byte_integrity_and_semantic_role_binding",
-            {"sha256": "abc", "candidate_sha": SHA_A, "action_id": "action-001"},
-            {"sha256": "abc", "candidate_sha": SHA_B, "action_id": "action-001"},
+            {"sha256": "abc", "candidate_sha": SHA_A},
+            {"sha256": "abc", "candidate_sha": SHA_B},
             claim_role="durable_evidence_artifact",
             observed_authoritative_source_class="Git_blob_at_exact_commit",
         )
-        self.assertEqual(bound_result(value), "MISMATCH")
-
-    def test_execution_from_wrong_package_or_candidate_is_mismatch(self):
-        expected = {
-            "candidate_sha": SHA_A,
-            "entrypoint": "tests.py",
-            "execution_root": ".",
-            "test_package_ref": "frozen-v1",
-        }
-        observed = dict(expected, test_package_ref="other-real-package")
-        value = claim(
+        self.assertEqual(_compare_claim(integrity), "MISMATCH")
+        execution = claim(
             "execution_result_bound_to_expected_candidate_inputs_and_entrypoint",
-            expected,
-            observed,
+            {"candidate_sha": SHA_A, "test_package_ref": "frozen-v1"},
+            {"candidate_sha": SHA_A, "test_package_ref": "other"},
             claim_role="execution_or_validation_result",
             observed_authoritative_source_class="trusted_execution_adapter",
         )
-        self.assertEqual(bound_result(value), "MISMATCH")
+        self.assertEqual(_compare_claim(execution), "MISMATCH")
+        actor = claim(
+            "authenticated_actor_satisfies_authorized_principal_binding",
+            {"allowed_principals": ["alice"], "action": "push"},
+            {"authenticated_principal": "mallory", "action": "push"},
+            claim_role="authority_and_actual_actor",
+            observed_authoritative_source_class="local_authenticated_principal",
+            subject_principal_observation_ref="host:principal",
+        )
+        self.assertEqual(_compare_claim(actor), "MISMATCH")
 
-    def test_partial_duplicate_and_noncanonical_path_sets_fail_closed(self):
-        expected = {"allowed_patterns": ["allowed/**"]}
-        partial = claim(
+    def test_path_set_fail_closed_cases(self):
+        base = claim(
             "complete_path_set_within_authorized_boundary",
-            expected,
+            {"allowed_patterns": ["allowed/**"]},
             {"paths": ["allowed/a.txt"], "complete": False},
             claim_role="changed_path_and_diff_scope",
             observed_authoritative_source_class="complete_Git_compare",
         )
-        self.assertEqual(bound_result(partial), "UNVERIFIABLE")
-        duplicate = dict(partial, observed_value={"paths": ["allowed/a.txt", "allowed/a.txt"], "complete": True})
-        self.assertEqual(bound_result(duplicate), "AMBIGUOUS")
-        noncanonical = dict(partial, observed_value={"paths": ["allowed\\a.txt"], "complete": True})
-        self.assertEqual(bound_result(noncanonical), "AMBIGUOUS")
-        hidden_forbidden = dict(partial, observed_value={"paths": ["allowed/a.txt", "forbidden.txt"], "complete": True})
-        self.assertEqual(bound_result(hidden_forbidden), "MISMATCH")
-        loose_pattern = dict(
-            partial,
-            expected_value_or_predicate={"allowed_patterns": ["allowed/*"]},
-            observed_value={"paths": ["allowed/a.txt"], "complete": True},
-        )
-        self.assertEqual(bound_result(loose_pattern), "AMBIGUOUS")
+        self.assertEqual(_compare_claim(base), "UNVERIFIABLE")
+        self.assertEqual(_compare_claim(dict(base, observed_value={"paths": ["allowed/a.txt"] * 2, "complete": True})), "AMBIGUOUS")
+        self.assertEqual(_compare_claim(dict(base, observed_value={"paths": ["allowed\\a.txt"], "complete": True})), "AMBIGUOUS")
+        self.assertEqual(_compare_claim(dict(base, observed_value={"paths": ["allowed/a.txt", "forbidden.txt"], "complete": True})), "MISMATCH")
 
-    def test_actual_authenticated_actor_must_match_authorized_principal(self):
-        value = claim(
-            "authenticated_actor_satisfies_authorized_principal_binding",
-            {"allowed_principals": ["alice"], "task_id": "task-001", "action": "push"},
-            {"authenticated_principal": "mallory", "task_id": "task-001", "action": "push"},
-            claim_role="authority_and_actual_actor",
-            observed_authoritative_source_class="local_authenticated_principal",
-            subject_principal_observation_ref="host:principal-observation",
-        )
-        self.assertEqual(bound_result(value), "MISMATCH")
-        endpoint_substitute = dict(value, observed_authoritative_source_class="endpoint_capability_claim")
-        self.assertEqual(bound_result(endpoint_substitute), "UNVERIFIABLE")
 
-    def test_observation_cannot_self_assign_role_and_comparator_is_mandatory(self):
-        self_assigned = claim(
-            "exact_sha_role_equality", SHA_A, SHA_A,
-            expected_claim_source_ref="receipt:self-assigned-candidate",
-        )
-        self.assertEqual(evaluate_material_claim(self_assigned), "UNVERIFIABLE")
-        no_comparator = claim("exact_sha_role_equality", SHA_A, SHA_A)
-        no_comparator.pop("comparator_id")
-        self.assertEqual(bound_result(no_comparator), "UNVERIFIABLE")
-        wrong_role = claim(
-            "exact_sha_role_equality", SHA_A, SHA_A, claim_role="base_SHA"
-        )
-        self.assertEqual(bound_result(wrong_role), "UNVERIFIABLE")
+class ProvenanceBoundaryTests(unittest.TestCase):
+    def test_public_context_has_no_caller_binding_api(self):
+        self.assertFalse(hasattr(MaterialObservationContext(), "bind"))
 
-    def test_claim_values_cannot_verify_without_trusted_context(self):
+    def test_self_consistent_claim_without_expected_resolver_is_nonpass(self):
         value = claim("exact_sha_role_equality", SHA_A, SHA_A)
+        self.assertEqual(evaluate_material_claim(value, MaterialObservationContext()), "UNVERIFIABLE")
+
+    def test_comparator_role_mismatch_is_nonpass(self):
+        value = claim("exact_sha_role_equality", SHA_A, SHA_A, claim_role="base_SHA")
         self.assertEqual(evaluate_material_claim(value), "UNVERIFIABLE")
 
-    def test_nonresolving_expected_source_fails_closed(self):
-        value = claim("exact_sha_role_equality", SHA_A, SHA_A)
-        context = context_for(value, binding_overrides={
-            value["claim_id"]: {"expected_source_ref": "different/source.yml#candidate"}
-        })
-        self.assertEqual(evaluate_material_claim(value, context), "UNVERIFIABLE")
+    def test_unregistered_observation_source_is_nonpass(self):
+        value = claim(
+            "exact_sha_role_equality", SHA_A, SHA_A,
+            observed_authoritative_source_class="caller_declared_source",
+        )
+        self.assertEqual(evaluate_material_claim(value), "UNVERIFIABLE")
 
-    def test_asserted_complete_diff_requires_consumed_git_compare(self):
+    def test_freshness_requirement_without_observation_ref_is_stale(self):
+        value = claim(
+            "named_ref_fresh_state_relation", {"sha": SHA_A}, {"sha": SHA_A, "fresh": True},
+            claim_role="moving_head_or_current_ref",
+            observed_authoritative_source_class="fresh_remote_Git_ref_readback",
+            freshness_requirement_when_applicable="immediately_before_action",
+        )
+        self.assertEqual(evaluate_material_claim(value), "STALE")
+
+    def test_resolver_without_observation_adapter_is_nonpass(self):
+        with TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / "task.yml").write_text("candidate: " + SHA_A + "\n", encoding="utf-8")
+            resolve_expected_yaml(root, claim_id="claim-001", source_ref="task.yml#candidate", value_path=("candidate",))
+            self.assertEqual(
+                evaluate_material_claim(claim("exact_sha_role_equality", SHA_A, SHA_A), MaterialObservationContext()),
+                "UNVERIFIABLE",
+            )
+
+    def test_expected_ref_fragment_cannot_select_a_different_fact(self):
+        with TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / "task.yml").write_text("candidate: " + SHA_A + "\nbase: " + SHA_B + "\n", encoding="utf-8")
+            with self.assertRaisesRegex(ActivationError, "SELECTOR_REF_MISMATCH"):
+                resolve_expected_yaml(
+                    root,
+                    claim_id="claim-001",
+                    source_ref="task.yml#candidate",
+                    value_path=("base",),
+                )
+
+    def test_fabricated_opaque_handles_are_not_issued_execution(self):
+        expected = _ResolvedExpectedSource("claim-001", "task.yml#candidate", SHA_A, {"resolver": "claimed"})
+        observed = _ConsumedObservation(
+            "claim-001", "actual_Git_object_database", SHA_A,
+            "git:physical-observation", frozenset({"git:physical-observation"}),
+            {"adapter": "claimed"},
+        )
+        with self.assertRaisesRegex(ActivationError, "EXPECTED_RESOLVER_EXECUTION_REQUIRED"):
+            attach_material_evidence(MaterialObservationContext(), expected, observed)
+
+    def test_fabricated_complete_git_compare_is_nonpass(self):
         value = claim(
             "complete_path_set_within_authorized_boundary",
             {"allowed_patterns": ["allowed/**"]},
-            {"paths": ["allowed/a.txt"], "complete": True},
+            {"base_sha": SHA_A, "candidate_sha": SHA_B, "paths": ["allowed/a"], "complete": True},
             claim_role="changed_path_and_diff_scope",
             observed_authoritative_source_class="complete_Git_compare",
-            exact_observation_ref="receipt:asserted-complete",
         )
         self.assertEqual(evaluate_material_claim(value), "UNVERIFIABLE")
 
-    def test_asserted_principal_requires_consumed_principal_observation(self):
+    def test_fabricated_authenticated_principal_is_nonpass(self):
         value = claim(
             "authenticated_actor_satisfies_authorized_principal_binding",
-            {"allowed_principals": ["alice"], "action": "push"},
-            {"authenticated_principal": "alice", "action": "push"},
+            {"allowed_principals": ["alice"]}, {"authenticated_principal": "alice"},
             claim_role="authority_and_actual_actor",
             observed_authoritative_source_class="local_authenticated_principal",
-            exact_observation_ref="host:push-principal",
-            subject_principal_observation_ref="host:authenticated-principal",
-        )
-        context = context_for(value, binding_overrides={
-            value["claim_id"]: {"consumed_observation_refs": {"host:push-principal"}}
-        })
-        self.assertEqual(evaluate_material_claim(value, context), "UNVERIFIABLE")
-
-    def test_observation_ref_and_source_class_mismatch_fails_closed(self):
-        value = claim("exact_sha_role_equality", SHA_A, SHA_A)
-        context = context_for(value, binding_overrides={
-            value["claim_id"]: {"observed_source_class": "Git_blob_at_exact_commit"}
-        })
-        self.assertEqual(evaluate_material_claim(value, context), "UNVERIFIABLE")
-
-    def test_claim_observed_value_must_match_trusted_context(self):
-        value = claim("exact_sha_role_equality", SHA_A, SHA_A)
-        context = context_for(value, binding_overrides={
-            value["claim_id"]: {"observed_value": SHA_B}
-        })
-        self.assertEqual(evaluate_material_claim(value, context), "MISMATCH")
-
-    def test_receipt_only_correct_looking_observed_value_fails_closed(self):
-        value = claim(
-            "byte_integrity_and_semantic_role_binding",
-            {"sha256": "abc", "role": "evidence"},
-            {"sha256": "abc", "role": "evidence"},
-            claim_role="durable_evidence_artifact",
-            observed_authoritative_source_class="Git_blob_at_exact_commit",
-            exact_observation_ref="receipt:prose-only",
+            subject_principal_observation_ref="caller:asserted-principal",
         )
         self.assertEqual(evaluate_material_claim(value), "UNVERIFIABLE")
 
-    def test_aggregate_cannot_claim_verified_over_nonverified_subclaim(self):
-        first = claim("exact_sha_role_equality", SHA_A, SHA_A)
-        first["verification_result"] = "VERIFIED"
-        second = claim("exact_sha_role_equality", SHA_A, SHA_B, claim_id="claim-002")
-        second["verification_result"] = "MISMATCH"
-        with self.assertRaisesRegex(ActivationError, "AGGREGATE_MISMATCH"):
-            validate_material_receipt({
-                "material_claims": [first, second],
-                "aggregate_result": "VERIFIED",
-            }, context_for(first, second))
+    def test_fabricated_conditional_ref_consumption_is_nonpass(self):
+        value = claim(
+            "named_ref_fresh_state_relation", {"sha": SHA_A}, {"sha": SHA_A, "fresh": True},
+            claim_role="moving_head_or_current_ref",
+            observed_authoritative_source_class="fresh_remote_Git_ref_readback",
+            freshness_requirement_when_applicable="immediately_before_action",
+            freshness_observation_ref="caller:asserted-freshness",
+        )
+        self.assertEqual(evaluate_material_claim(value), "UNVERIFIABLE")
 
-    def test_declared_claim_result_is_recomputed(self):
-        value = claim("exact_sha_role_equality", SHA_A, SHA_B)
+    def test_receipt_cannot_declare_verified_without_executed_context(self):
+        value = claim("exact_sha_role_equality", SHA_A, SHA_A)
         value["verification_result"] = "VERIFIED"
         with self.assertRaisesRegex(ActivationError, "DECLARED_RESULT_MISMATCH"):
-            validate_material_receipt(
-                {"material_claims": [value], "aggregate_result": "VERIFIED"},
-                context_for(value),
-            )
+            validate_material_receipt({"material_claims": [value], "aggregate_result": "VERIFIED"})
 
-    def test_duplicate_claim_ids_cannot_overwrite_blocking_result(self):
-        first = claim("exact_sha_role_equality", SHA_A, SHA_B)
-        first["verification_result"] = "MISMATCH"
-        second = claim("exact_sha_role_equality", SHA_A, SHA_A)
-        second["verification_result"] = "VERIFIED"
+    def test_aggregate_cannot_pass_nonverified_claim(self):
+        value = claim("exact_sha_role_equality", SHA_A, SHA_A)
+        value["verification_result"] = "UNVERIFIABLE"
+        with self.assertRaisesRegex(ActivationError, "AGGREGATE_MISMATCH"):
+            validate_material_receipt({"material_claims": [value], "aggregate_result": "VERIFIED"})
+
+    def test_duplicate_claim_ids_fail_before_result_overwrite(self):
+        first = claim("exact_sha_role_equality", SHA_A, SHA_A)
+        second = dict(first)
         with self.assertRaisesRegex(ActivationError, "ID_DUPLICATE"):
-            validate_material_receipt({
-                "material_claims": [first, second],
-                "aggregate_result": "VERIFIED",
-            }, context_for(first))
+            validate_material_receipt({"material_claims": [first, second], "aggregate_result": "BLOCKED"})
 
-    def test_actual_git_observers_bind_commit_and_complete_paths(self):
+
+class ControlledGitAdapterTests(unittest.TestCase):
+    def _repo(self, root: Path, *, rename=False):
+        subprocess.run(["git", "init", "-q"], cwd=root, check=True)
+        subprocess.run(["git", "config", "user.email", "test@example.invalid"], cwd=root, check=True)
+        subprocess.run(["git", "config", "user.name", "test"], cwd=root, check=True)
+        start = root / ("forbidden/a.txt" if rename else "allowed/a.txt")
+        start.parent.mkdir()
+        start.write_text("a\n", encoding="utf-8")
+        subprocess.run(["git", "add", "."], cwd=root, check=True)
+        subprocess.run(["git", "commit", "-qm", "base"], cwd=root, check=True)
+        base = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
+        if rename:
+            (root / "allowed").mkdir()
+            subprocess.run(["git", "mv", "forbidden/a.txt", "allowed/a.txt"], cwd=root, check=True)
+        else:
+            start.write_text("b\n", encoding="utf-8")
+        subprocess.run(["git", "commit", "-qam", "candidate"], cwd=root, check=True)
+        candidate = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
+        return base, candidate
+
+    def test_physical_yaml_resolver_and_git_adapters_verify(self):
         with TemporaryDirectory() as temp:
             repo = Path(temp)
-            subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
-            subprocess.run(["git", "config", "user.email", "test@example.invalid"], cwd=repo, check=True)
-            subprocess.run(["git", "config", "user.name", "test"], cwd=repo, check=True)
-            (repo / "allowed").mkdir()
-            (repo / "allowed/a.txt").write_text("a\n", encoding="utf-8")
-            subprocess.run(["git", "add", "allowed/a.txt"], cwd=repo, check=True)
-            subprocess.run(["git", "commit", "-qm", "base"], cwd=repo, check=True)
-            base = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True).strip()
-            (repo / "allowed/a.txt").write_text("b\n", encoding="utf-8")
-            subprocess.run(["git", "commit", "-qam", "candidate"], cwd=repo, check=True)
-            candidate = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True).strip()
-            commit_claim = observe_git_commit_claim(
-                repo,
-                claim_id="candidate",
-                claim_role="candidate_SHA",
-                action_id_or_review_id="action",
-                expected_source_ref="task.yml#candidate",
-                expected_sha=candidate,
-                observation_context=MaterialObservationContext(),
-                expected_resolver_id="test_task_yaml_readback",
-            )
+            base, candidate = self._repo(repo)
+            spec = {"candidate": candidate, "scope": {"allowed_patterns": ["allowed/**"]}}
+            (repo / "task.yml").write_text(yaml.safe_dump(spec), encoding="utf-8")
+            commit_context = MaterialObservationContext()
+            commit_expected = resolve_expected_yaml(repo, claim_id="candidate", source_ref="task.yml#candidate", value_path=("candidate",))
+            commit_claim = observe_git_commit_claim(repo, claim_role="candidate_SHA", action_id_or_review_id="action", expected=commit_expected, observation_context=commit_context)
             self.assertEqual(commit_claim["verification_result"], "VERIFIED")
             path_context = MaterialObservationContext()
-            path_claim = observe_changed_path_claim(
-                repo,
-                claim_id="scope",
-                action_id_or_review_id="action",
-                expected_source_ref="task.yml#allowed",
-                base_sha=base,
-                candidate_sha=candidate,
-                allowed_patterns=["allowed/**"],
-                observation_context=path_context,
-                expected_resolver_id="test_task_yaml_readback",
-            )
+            path_expected = resolve_expected_yaml(repo, claim_id="scope", source_ref="task.yml#scope", value_path=("scope",))
+            path_claim = observe_changed_path_claim(repo, action_id_or_review_id="action", expected=path_expected, base_sha=base, candidate_sha=candidate, observation_context=path_context)
             self.assertEqual(path_claim["verification_result"], "VERIFIED")
             self.assertEqual(path_claim["observed_value"]["paths"], ["allowed/a.txt"])
 
-    def test_changed_path_observer_does_not_hide_rename_source(self):
+    def test_complete_compare_does_not_hide_rename_source(self):
         with TemporaryDirectory() as temp:
             repo = Path(temp)
-            subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
-            subprocess.run(["git", "config", "user.email", "test@example.invalid"], cwd=repo, check=True)
-            subprocess.run(["git", "config", "user.name", "test"], cwd=repo, check=True)
-            (repo / "forbidden").mkdir()
-            (repo / "forbidden/a.txt").write_text("same\n", encoding="utf-8")
-            subprocess.run(["git", "add", "forbidden/a.txt"], cwd=repo, check=True)
-            subprocess.run(["git", "commit", "-qm", "base"], cwd=repo, check=True)
-            base = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True).strip()
-            (repo / "allowed").mkdir()
-            subprocess.run(["git", "mv", "forbidden/a.txt", "allowed/a.txt"], cwd=repo, check=True)
-            subprocess.run(["git", "commit", "-qm", "candidate"], cwd=repo, check=True)
-            candidate = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True).strip()
-            path_claim = observe_changed_path_claim(
-                repo,
-                claim_id="scope",
-                action_id_or_review_id="action",
-                expected_source_ref="task.yml#allowed",
-                base_sha=base,
-                candidate_sha=candidate,
-                allowed_patterns=["allowed/**"],
-                observation_context=MaterialObservationContext(),
-                expected_resolver_id="test_task_yaml_readback",
-            )
-            self.assertEqual(path_claim["verification_result"], "MISMATCH")
-            self.assertEqual(
-                path_claim["observed_value"]["paths"],
-                ["allowed/a.txt", "forbidden/a.txt"],
-            )
+            base, candidate = self._repo(repo, rename=True)
+            (repo / "task.yml").write_text("scope:\n  allowed_patterns:\n    - allowed/**\n", encoding="utf-8")
+            expected = resolve_expected_yaml(repo, claim_id="scope", source_ref="task.yml#scope", value_path=("scope",))
+            result = observe_changed_path_claim(repo, action_id_or_review_id="action", expected=expected, base_sha=base, candidate_sha=candidate, observation_context=MaterialObservationContext())
+            self.assertEqual(result["verification_result"], "MISMATCH")
+            self.assertEqual(result["observed_value"]["paths"], ["allowed/a.txt", "forbidden/a.txt"])
 
 
 if __name__ == "__main__":
