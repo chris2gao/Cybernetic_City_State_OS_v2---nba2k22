@@ -2,97 +2,63 @@ run:
   schema_version: citystate.run.v1
   run_id: run-20260813-mechanism-activation-and-adherence-implementation-001
   task_id: os-v2-mechanism-activation-and-adherence-implementation-001
-  phase: implementation_acceptance
-  status: PASS_awaiting_explicit_master_publication_authorization
+  phase: master_publication
+  status: COMPLETE_MASTER_PUBLISHED
   owner: core
-  branch: dev/os-v2-mechanism-activation-and-adherence-implementation-001
+  implementation_mode: bounded
+  validation_mode: hybrid
+  source_branch: dev/os-v2-mechanism-activation-and-adherence-implementation-001
   branch_base_sha: bf538e5068381becd31e8e1daceade81e657262d
-  executor_start_sha: fb3eb0ab972721f930ac15616a21e6a8427cfdb4
-  master_reference_sha: 9492fc940c58784297dc92d8602e5dfaad446d1a
   reviewed_architecture_sha: 8ee72d2800a9e00539d3732464e79312e1ade613
   architecture_review_result_sha: b40f63ca49393546aa415dbbe1f0c38bbf72a001
   architecture_verdict: PASS
-  Human_authorization_ref: 01_任务输入/Human实现授权_v1.yml
+  Human_implementation_authorization_ref: 01_任务输入/Human实现授权_v1.yml
   Human_operating_instruction_ref: 01_任务输入/Human操作指令_v1.yml
   authorized_scope_ref: 01_任务输入/拟议实现边界_v1.yml
-  implementation_mode: bounded
-  validation_mode: hybrid
-  superseded_candidate_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
-  prior_candidate_evidence_snapshot_sha: a1132bbb0ccbc783b214a8218d32d45edf59e8da
-  independent_acceptance:
-    evidence_snapshot_sha: 58078dbf8100dd54f0f0bed1ad0f31eada71b163
-    verdict: FIX_REQUIRED
-    accepted_material_blocker: B2-OBSERVATION-PROVENANCE-BINDING
-    other_major_dimensions: PASS_or_no_material_blocker
-    reviewer_v2_publication_closure: incomplete_receipt_and_sender_index_not_published
-    durable_result_evidence_accepted: true
-  correction:
-    adjudication_ref: 10_FIX_REQUIRED修正/独立实现验收接收与B2修正裁决_v1.yml
-    executor_endpoint_id: codex-implementation-executor-001
-    reasoning_default: high
-    max_escalation: blocker_local_only_if_high_cannot_converge
-    architecture_reopen: false
-    scope_expansion: false
-    corrected_candidate_sha: 67c668d038c94e4de9935d0ee0bab3cb526d6c6e
-    counterexamples_before_fix_ref: 10_FIX_REQUIRED修正/B2_counterexamples_before_fix_v1.yml
-    counterexamples_after_fix_ref: 07_测试执行/B2_counterexamples_candidate_v4.yml
-    candidate_material_receipt_ref: 07_测试执行/candidate_material_receipt_v4.yml
-  second_B2_correction:
-    adjudication_ref: 11_独立实现复验/00001_FIX_REQUIRED接收与第二次B2修正裁决_v1.yml
-    correction_request_message_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00006
-    vulnerable_candidate_sha: 67c668d038c94e4de9935d0ee0bab3cb526d6c6e
-    corrected_candidate_sha: 4e03c7a7beda4a02330f81a66a7d41d200132d17
-    exact_replay_ref: 07_测试执行/second_B2_exact_ref_replay_v1.yml
-    bound_candidate_checks_ref: 07_测试执行/bound_candidate_checks_v5.yml
-    candidate_material_receipt_ref: 07_测试执行/candidate_material_receipt_v5.yml
-    ordinary_caller_binding_api_removed: true
-    execution_issued_one_time_handles_required: true
-  third_B2_correction:
-    adjudication_ref: 11_独立实现复验/foreground-implementation-dispatch-001/00002_second_B2_candidate_foreground_rejection_v1.yml
-    correction_request_message_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00007
-    rejected_candidate_sha: 4e03c7a7beda4a02330f81a66a7d41d200132d17
-    corrected_candidate_sha: 15652d7019c35702444a1944bb5f4b754f4fdad7
-    exact_replay_ref: 07_测试执行/third_B2_exact_ref_replay_v1.yml
-    bound_candidate_checks_ref: 07_测试执行/bound_candidate_checks_v6.yml
-    candidate_material_receipt_ref: 07_测试执行/candidate_material_receipt_v6.yml
-    correction_result_message_id: os-v2-mechanism-activation-and-adherence-implementation-001::codex-implementation-executor-001::00005
-    formal_result_pointer_commit: 005763b2672bff50d4c3d2ce806e6e5f85c90e5f
-    formal_result_readback_ref: 07_测试执行/formal_third_B2_publication_readback_v1.yml
-    generic_issuance_and_attachment_removed: true
-    execution_kernel_closure_owned_provenance: true
+  Human_master_publication_authorization_ref: >-
+    ../_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/Human/decisions/00004_master_integration_authorization.yml
+  accepted_candidate:
+    sha: 15652d7019c35702444a1944bb5f4b754f4fdad7
+    evidence_snapshot_sha: c6fb57e35eb7fe8c14d19fe27c9df7a5952d49dd
+    candidate_spec_ref: 05_候选冻结/candidate_spec_v6.yml
+    bound_checks_ref: 07_测试执行/bound_candidate_checks_v6.yml
+    material_receipt_ref: 07_测试执行/candidate_material_receipt_v6.yml
   final_independent_acceptance:
     reviewer_endpoint_id: isolated-gpt-implementation-reviewer-003
     review_request_message_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00008
     review_result_message_id: os-v2-mechanism-activation-and-adherence-implementation-001::isolated-gpt-implementation-reviewer-003::00001
     review_result_pointer_commit: 600777d94e191fada08a38a591c83f18fd88f90b
-    candidate_sha: 15652d7019c35702444a1944bb5f4b754f4fdad7
-    evidence_snapshot_sha: c6fb57e35eb7fe8c14d19fe27c9df7a5952d49dd
     verdict: PASS
     material_blockers: []
     B2_issuance_primitive_forgeability: closed
     foreground_acceptance_adjudication_ref: 11_独立实现复验/foreground-implementation-dispatch-001/00003_reviewer_003_PASS接收与实现验收收口_v1.yml
+  correction_history_refs:
+    - 10_FIX_REQUIRED修正/独立实现验收接收与B2修正裁决_v1.yml
+    - 11_独立实现复验/foreground-implementation-dispatch-001/00001_FIX_REQUIRED接收与第二次B2修正裁决_v1.yml
+    - 11_独立实现复验/foreground-implementation-dispatch-001/00002_second_B2_candidate_foreground_rejection_v1.yml
+    - 07_测试执行/third_B2_exact_ref_replay_v1.yml
+  master_publication:
+    authorization_received: true
+    preflight_ref: 12_master发布/master_publication_preflight_v1.yml
+    publication_result_ref: 12_master发布/master_publication_result_v1.yml
+    pre_publication_master_sha: 9492fc940c58784297dc92d8602e5dfaad446d1a
+    publication_source_head_sha: c57e50cc05356e41f9dd77a80ceea42c9cacf41b
+    publication_pr_number: 3
+    publication_merge_commit_sha: 1f371c91dd91c0a14ab05dc7cbd85e474d221c5b
+    publication_verified: true
+    closure_pr_number: 4
+    closure_merge_commit_sha: 25c535b5407ae6c9992587ae77aa0aa69d77be28
+    canonical_implementation_changes_after_accepted_candidate: none_observed
   communication:
     carrier: GitHub
-    task_root: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/
-    sender_endpoint_id: foreground-implementation-dispatch-001
-    correction_request_message_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00004
-    correction_result_message_id: os-v2-mechanism-activation-and-adherence-implementation-001::codex-implementation-executor-001::00004
-    third_B2_correction_result_message_id: os-v2-mechanism-activation-and-adherence-implementation-001::codex-implementation-executor-001::00005
-    final_independent_acceptance_result_message_id: os-v2-mechanism-activation-and-adherence-implementation-001::isolated-gpt-implementation-reviewer-003::00001
     communication_contract_version: 2
+    task_root: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/
   gates:
     architecture: PASS
-    prior_candidate_acceptance: FIX_REQUIRED_ACCEPTED
-    B2_correction_dispatch: corrected_pointer_00004_received
-    corrected_candidate: evidence_verified
-    formal_result: published_on_source_branch
-    second_B2_correction_dispatch: pointer_00006_received
-    second_B2_corrected_candidate: evidence_verified
-    second_B2_formal_result: published_and_receiver_replayed
-    third_B2_correction_dispatch: pointer_00007_received
-    third_B2_corrected_candidate: evidence_verified
-    third_B2_formal_result: published_and_receiver_replayed
-    fresh_independent_acceptance: PASS
     implementation_acceptance: PASS
-    master_publication: prohibited_without_new_Human_authorization
-  next_action: Await explicit Human decision on master integration/publication; do not progress automatically.
+    B2_observation_provenance_binding: closed
+    Human_master_publication_authorization: VERIFIED
+    master_publication: VERIFIED
+    workflow_or_frozen_T2_scope_expansion: not_observed
+    automatic_task_progression: prohibited
+  next_action: none_task_complete
