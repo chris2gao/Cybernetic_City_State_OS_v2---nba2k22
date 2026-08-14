@@ -1,0 +1,37 @@
+schema_version: citystate.mechanism_activation.formal_result_publication_inputs.v4
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+activation_context:
+  intended_cross_endpoint_side_effect: true
+  formal_state_claim: true
+  communication_context_ref: manifest.yml
+  classification_basis_ref: documents/codex-implementation-executor-001/00007_second_B2_correction_result.md
+  requires_receiver_selection: false
+mechanism_preconditions:
+  communication_system:
+    verification_result: VERIFIED
+    evidence_ref: manifest.yml
+    freshness_required: true
+    freshness_result: VERIFIED
+receiver_setup:
+  collaboration_role: decision_architecture
+  provider: OpenAI
+  product: ChatGPT
+  surface: chatgpt_web
+  model: GPT-5.6 Sol
+  reasoning_or_parameter_profile: chatgpt_plus_sol_high
+  session_mode: current_task_project
+  isolation_level: task_scoped_foreground_project
+  repository_access_mode: GitHub_only
+  repository_or_worktree_requirement: exact_second_B2_corrected_candidate_with_pointer_evidence
+  required_branch_or_sha: 4e03c7a7beda4a02330f81a66a7d41d200132d17
+  local_files_required: false
+  github_publication_required_before_start: true
+  communication_carrier: GitHub
+  routing_basis_ref: documents/codex-implementation-executor-001/00008_second_B2_receiver_setup_basis.md
+  availability_assumption_or_observation_ref: documents/codex-implementation-executor-001/00008_second_B2_receiver_setup_basis.md#availability
+  limitations:
+    - routing_grants_no_authority
+    - this_receiver_is_not_the_independent_acceptance_endpoint
+    - correction_supersedes_message_00003
+    - final_candidate_SHA_is_distinct_from_pointer_commit
+    - no_master_publication_authority

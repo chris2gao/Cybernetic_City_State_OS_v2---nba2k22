@@ -1,0 +1,22 @@
+schema_version: citystate.mechanism_activation.second_B2_provenance_replay.v1
+implementation_path: 01_os/06_execution/boot/mechanism_activation/activation.py
+vulnerable:
+  commit: 67c668d038c94e4de9935d0ee0bab3cb526d6c6e
+  results:
+    expected_resolver_never_executed: VERIFIED
+    observation_adapter_never_executed: VERIFIED
+    fabricated_complete_Git_compare: VERIFIED
+    fabricated_authenticated_principal: VERIFIED
+    fabricated_conditional_ref_consumption: VERIFIED
+corrected:
+  commit: 4e03c7a7beda4a02330f81a66a7d41d200132d17
+  results:
+    expected_resolver_never_executed: UNVERIFIABLE
+    observation_adapter_never_executed: UNVERIFIABLE
+    fabricated_complete_Git_compare: UNVERIFIABLE
+    fabricated_authenticated_principal: UNVERIFIABLE
+    fabricated_conditional_ref_consumption: UNVERIFIABLE
+expected_vulnerable_result_each: VERIFIED
+expected_corrected_result_each: UNVERIFIABLE
+aggregate_result: VERIFIED
+authority_effect: none
