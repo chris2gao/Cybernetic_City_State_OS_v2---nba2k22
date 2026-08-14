@@ -24,7 +24,7 @@ class ConvergenceError(RuntimeError):
 
 def _git(repo: Path, *args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
     result = subprocess.run(
-        ["git", *args], cwd=repo, text=True, stdout=subprocess.PIPE,
+        ["git", "-c", "core.longpaths=true", *args], cwd=repo, text=True, stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
     if check and result.returncode:

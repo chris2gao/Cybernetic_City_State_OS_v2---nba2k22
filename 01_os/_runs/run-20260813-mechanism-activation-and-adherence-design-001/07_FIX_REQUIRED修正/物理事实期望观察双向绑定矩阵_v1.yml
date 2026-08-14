@@ -1,0 +1,245 @@
+material_physical_truth_two_sided_binding:
+  schema_version: citystate.material_physical_truth_two_sided_binding.v1
+  task_id: os-v2-mechanism-activation-and-adherence-001
+  authority_effect: none
+
+  governing_rule: >-
+    任何影响 acceptance、publication、authority、scope、execution topology、reviewer independence 或 current-state gate 的
+    material claim，都必须同时具有“期望侧”和“观察侧”，并通过显式 comparator 证明两者满足要求的 equality/relationship。
+    仅证明 observed object 真实存在、hash 正确或 actor 字段有值，不足以证明它承担当前任务要求的语义角色。
+
+  mandatory_claim_record_fields:
+    - claim_id
+    - claim_role
+    - action_id_or_review_id
+    - expected_claim_source_ref
+    - expected_value_or_predicate
+    - observed_authoritative_source_class
+    - observed_value
+    - exact_observation_ref
+    - comparator_id
+    - relationship_or_equality_check
+    - freshness_requirement_when_applicable
+    - subject_principal_observation_ref_when_authority_material
+    - verification_result
+
+  source_separation:
+    expected_side:
+      rule: >-
+        expected_claim_source_ref 必须来自能约束当前 action/review 的 durable task packet、formal request、Human authorization、
+        canonical authority/policy 或其他先验 claim specification；receipt、executor narrative、observation artifact 本身不得自我产生
+        candidate/base/actor 等语义角色。
+      receipt_may_be_expected_source: false
+      observation_may_self_assign_role: false
+    observed_side:
+      rule: >-
+        observed_value 必须来自 binding matrix 指定的 authoritative physical source，例如 Git object/ref readback、Git compare、
+        authenticated connector/host/local principal、trusted execution adapter、exact blob/content fetch、product metadata 或 Human attestation fallback。
+    comparator_side:
+      rule: >-
+        verifier 必须执行被命名的 comparator，不得只记录 expected 与 observed 两个值。material claim 只有 comparator 返回 VERIFIED 才可支撑 PASS。
+
+  allowed_verification_results:
+    - VERIFIED
+    - MISMATCH
+    - STALE
+    - UNVERIFIABLE
+    - AMBIGUOUS
+  acceptance_rule: all_required_material_claims_must_be_VERIFIED
+
+  claim_role_bindings:
+    candidate_SHA:
+      expected_claim_source:
+        - exact_formal_task_or_review_request
+        - task_packet_when_it_defines_the_candidate
+      observed_source:
+        - actual_Git_object_database
+      comparator:
+        id: exact_sha_role_equality
+        rule: observed_commit_SHA_must_equal_expected_candidate_SHA
+      negative_cases:
+        - valid_real_SHA_but_not_expected_candidate
+        - candidate_and_base_swapped
+      failure: MISMATCH_BLOCKING
+
+    base_SHA:
+      expected_claim_source:
+        - exact_task_packet_or_formal_review_request
+      observed_source:
+        - actual_Git_object_database
+      comparator:
+        id: exact_base_equality_plus_required_relation
+        rule: >-
+          observed base SHA must equal the expected base SHA and, when governance requires it, satisfy the declared ancestry/merge-base predicate
+          relative to the bound candidate/head.
+      negative_cases:
+        - valid_real_SHA_but_wrong_base_role
+        - base_and_candidate_swapped
+        - ancestry_predicate_false
+      failure: MISMATCH_BLOCKING
+
+    moving_head_or_current_ref:
+      expected_claim_source:
+        - task_gate_or_action_specification_naming_the_ref_and_required_state_relation
+      observed_source:
+        - fresh_remote_Git_ref_readback
+      comparator:
+        id: named_ref_fresh_state_relation
+        rule: observed named ref SHA must satisfy the exact expected predicate at the required observation boundary
+      freshness:
+        when_current_state_material: mandatory
+        action_moves_or_depends_on_ref:
+          - pre_action_read_when_relevant
+          - post_action_remote_readback
+      failure_if_old_observation: STALE_BLOCKING
+
+    changed_path_and_diff_scope:
+      expected_claim_source:
+        - task_authorized_write_boundary
+        - Human_boundary_expansion_authorization_when_applicable
+      observed_source:
+        - complete_Git_compare_over_bound_base_and_candidate_or_head
+      normalization:
+        - canonicalize_paths
+        - reject_duplicate_observed_paths
+        - reject_missing_or_partial_compare_inputs
+      comparator:
+        id: complete_path_set_within_authorized_boundary
+        rule: >-
+          complete canonicalized observed changed-path set must contain no path outside the expected authorized patterns;
+          counts or partial path samples cannot substitute for the set.
+      failure: MISMATCH_OR_UNVERIFIABLE_BLOCKING
+
+    durable_evidence_artifact:
+      expected_claim_source:
+        - formal_action_or_review_specification
+        - exact_test_or_validation_package_binding
+      observed_source:
+        - Git_blob_at_exact_commit
+        - authorized_local_bytes_plus_hash_when_local_evidence_is_valid
+      integrity_checks:
+        - exact_path
+        - blob_or_content_hash_when_required
+      semantic_binding_checks:
+        - artifact_internal_candidate_or_tree_identity_equals_expected_candidate_when_material
+        - artifact_internal_action_or_review_id_equals_expected_action_or_review
+        - artifact_internal_test_package_or_predicate_set_equals_expected_package_when_material
+        - artifact_internal_base_or_scope_binding_equals_expected_claim_when_material
+      comparator:
+        id: byte_integrity_and_semantic_role_binding
+        rule: both integrity and all material semantic bindings must verify
+      negative_cases:
+        - correct_hash_but_internal_candidate_is_wrong_real_SHA
+        - correct_path_but_wrong_action_id
+        - result_from_different_test_package
+      failure: MISMATCH_BLOCKING
+
+    execution_or_validation_result:
+      expected_claim_source:
+        - formal_execution_spec_or_frozen_validation_package
+      observed_source:
+        - trusted_execution_adapter_or_CI_or_host_tool_observation
+      comparator:
+        id: execution_result_bound_to_expected_candidate_inputs_and_entrypoint
+        rule: >-
+          observed execution candidate/tree, entrypoint, input package, execution root, exit/result and result artifact binding
+          must match the expected execution specification before the reported result can support acceptance.
+      failure: MISMATCH_OR_UNVERIFIABLE_BLOCKING
+
+    communication_publication:
+      expected_claim_source:
+        - formal_message_and_carrier_requirement
+      observed_source:
+        - communication_publisher_observation
+        - exact_remote_Git_readback_for_GitHub_carrier
+        - exact_local_filesystem_observation_for_local_carrier
+      comparator:
+        id: published_message_identity_and_route_equality
+        rule: observed task/message/carrier/path must equal the formal expected publication identity and route
+      failure: MISMATCH_OR_UNVERIFIABLE_BLOCKING
+
+    authority_and_actual_actor:
+      expected_claim_source:
+        - canonical_authority_registry
+        - task_scoped_Human_authorization_when_required
+        - current_task_authority_binding
+      expected_value_or_predicate: >-
+        the action is authorized for a specific task/action/target and an expected authorized principal or principal class under canonical policy
+      observed_source:
+        - trusted_host_injected_principal
+        - connector_authenticated_principal
+        - local_authenticated_principal
+      subject_principal_observation_ref: mandatory
+      comparator:
+        id: authenticated_actor_satisfies_authorized_principal_binding
+        rule: >-
+          the authenticated principal actually performing the action must satisfy the principal identity/class and task/action/target constraints
+          established by canonical + Human/task authority. Provider name, model role, endpoint card, receipt, or self-declared writer field is insufficient.
+      prohibited_substitutes:
+        - provider_identity
+        - model_identity
+        - role_label
+        - endpoint_capability_claim
+        - receipt_writer_or_actor_field_without_authenticated_observation
+      failure: AUTHORITY_MISMATCH_OR_UNVERIFIABLE_BLOCKING
+
+    reviewer_isolation:
+      expected_claim_source:
+        - formal_review_request_isolation_requirement
+      observed_source_preference:
+        - product_or_connector_session_metadata
+        - Human_setup_attestation_bound_to_exact_review_id_when_product_metadata_not_exposed
+      comparator:
+        id: observed_review_setup_satisfies_required_isolation_profile
+        rule: observed/attested setup must satisfy each material isolation predicate for the exact review id
+      failure: MISMATCH_OR_UNVERIFIABLE_BLOCKING
+
+  freshness_contract:
+    rule: >-
+      freshness is part of the claim predicate whenever a moving ref, current authority state, current branch/worktree state, or time-sensitive
+      product/session fact can change acceptance. An otherwise authentic observation outside the required boundary is STALE, not VERIFIED.
+    receipt_timestamp_alone_proves_freshness: false
+
+  observation_set_revision:
+    required_fields:
+      - observation_set_id
+      - action_id_or_review_id
+      - expected_claim_spec_refs
+      - authoritative_observation_refs
+      - comparator_results
+    rule: >-
+      observation set groups the two-sided claim checks for one action/review. It may not assign candidate/base/head semantics merely by naming them;
+      every role must point back to an expected claim source and comparator result.
+
+  receipt_contract_revision:
+    receipt_role: binding_index_only
+    required_per_material_claim:
+      - claim_id
+      - claim_role
+      - expected_claim_source_ref
+      - expected_value_or_predicate
+      - observed_authoritative_source_class
+      - observed_value
+      - exact_observation_ref
+      - comparator_id
+      - verification_result
+    when_authority_material_also_require:
+      - subject_principal_observation_ref
+    when_freshness_material_also_require:
+      - freshness_requirement_when_applicable
+      - freshness_observation_ref
+    acceptance_rule: every_required_material_claim_must_be_VERIFIED
+
+  negative_conformance_families:
+    - valid_candidate_and_base_SHAs_swapped_between_roles
+    - real_but_stale_branch_head_used_as_current_state
+    - correct_blob_hash_with_wrong_internal_candidate_binding
+    - correct_result_bytes_from_wrong_action_or_test_package
+    - partial_changed_path_set_hides_forbidden_path
+    - duplicate_or_noncanonical_paths_distort_scope_check
+    - authorized_named_writer_but_authenticated_actual_actor_differs
+    - endpoint_or_provider_identity_used_in_place_of_authenticated_principal
+    - observation_set_self_assigns_candidate_role_without_expected_claim_source
+    - expected_and_observed_values_recorded_but_comparator_not_executed
+    - authentic_observation_outside_required_freshness_boundary
+    - material_claim_marked_VERIFIED_despite_MISMATCH_STALE_AMBIGUOUS_or_UNVERIFIABLE_subcheck

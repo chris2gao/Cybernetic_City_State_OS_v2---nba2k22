@@ -1,0 +1,90 @@
+mechanism_effectiveness_and_trigger_design:
+  schema_version: citystate.mechanism_effectiveness_design.v1
+  levels:
+    L0_DEFINED:
+      requirement: canonical_definition_exists
+      operationally_active: false
+    L1_BOOT_VISIBLE:
+      requirement: relevant_boot_or_loader_path_exists_and_is_verified
+      operationally_active: false
+    L2_TRIGGER_BOUND:
+      requirement: mandatory_action_triggers_and_missing_precondition_behavior_are_machine_resolvable
+      operationally_active: false
+    L3_EXECUTION_GATED:
+      requirement: matching_formal_action_cannot_be_accepted_without_required_gate_and_evidence
+      operationally_active: false
+    L4_E2E_ADVERSARIALLY_VERIFIED:
+      requirement: positive_E2E_and_bypass_negative_cases_independently_verified
+      operationally_active: true
+  trigger_registry_entry_required_fields:
+    - mechanism_id
+    - mandatory_for_action_classes
+    - activation_predicates
+    - required_inputs
+    - enforcement_point
+    - missing_precondition_behavior
+    - receipt_requirement
+    - negative_conformance_refs
+  resolver_contract:
+    inputs:
+      - planned_action_class
+      - structured_action_context
+      - relevant_current_state_refs
+    outputs:
+      - required_mechanisms
+      - missing_preconditions
+      - route_requirements
+      - action_allowed_to_enter_enforcement
+    prohibited_effects:
+      - repository_mutation
+      - mechanism_execution
+      - authority_grant
+      - task_progression
+  enforcement_contract:
+    rule: >-
+      mandatory mechanism 缺失、stale、invalid 或 required context 缺失时，formal action fail closed；
+      这不禁止普通 Human 对话，但禁止把绕过路径承认为 formal action。
+  receipt_contract_design:
+    externally_bound_fields:
+      - repository_ref
+      - candidate_sha_when_material
+      - transport
+      - observed_execution_refs
+    self_report_not_sufficient:
+      - mechanism_was_followed
+      - candidate_sha
+      - diff_scope
+      - execution_topology
+      - authority
+  communication_first_vertical_slice:
+    target_level: L4_E2E_ADVERSARIALLY_VERIFIED
+    formal_action_classes:
+      - formal_cross_endpoint_task_dispatch
+      - formal_cross_endpoint_response
+      - formal_cross_endpoint_result
+      - formal_cross_endpoint_correction
+      - formal_cross_endpoint_blocked_state
+    missing_context_behavior: communication_context_initialization_required
+    long_body_transport: durable_document
+    control_envelope: formal_message_with_direct_exact_refs
+    Human_transport: exact_relay_pointer_plus_receiver_setup
+    negative_case: >-
+      formal dispatch + no communication context + long natural-language content for Human copy/paste
+      must not validate as formal handoff.
+  inventory_rule:
+    source: active_registered_mechanisms_only
+    do_not_scan_runs_by_default: true
+    fields:
+      - mechanism_id
+      - current_level
+      - definition_ref
+      - boot_ref
+      - trigger_ref
+      - gate_ref
+      - receipt_ref
+      - positive_test_ref
+      - negative_test_ref
+      - known_bypass
+      - recommended_successor_action
+    scope_control: >-
+      本任务建立 inventory 与 remediation ordering，不把所有低等级 mechanism 在同一 task 中全部修到 L4。

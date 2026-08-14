@@ -1,0 +1,52 @@
+schema_version: citystate.mechanism_activation.success_criterion_validation_mapping.v1
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+profile: hybrid
+criteria:
+  - criterion_id: SC-01
+    requirement: formal_action_classification_is_representation_invariant_and_segments_mixed_content
+    result_type: executable_deterministic_plus_governance_semantics
+    modalities: [unit, negative_conformance, independent_semantic_acceptance]
+    executable_refs: [01_os/06_execution/boot/mechanism_activation/test_formal_action.py]
+  - criterion_id: SC-02
+    requirement: resolver_and_gate_are_mandatory_and_grant_no_authority
+    result_type: declarative_contract_plus_executable_deterministic
+    modalities: [static_contract_validation, unit, integration, independent_semantic_acceptance]
+    executable_refs:
+      - 01_os/06_execution/boot/mechanism_activation/test_formal_action.py
+      - 01_os/06_execution/boot/communication_system/validator/test_formal_activation.py
+  - criterion_id: SC-03
+    requirement: every_material_claim_uses_expected_observed_and_executed_comparator
+    result_type: executable_deterministic_plus_evidence_claim
+    modalities: [unit, property_style_cases, negative_conformance, physical_Git_observation, independent_review]
+    executable_refs: [01_os/06_execution/boot/mechanism_activation/test_material_claims.py]
+  - criterion_id: SC-04
+    requirement: communication_new_formal_publication_is_gated_and_v2_receiver_bootstrap_revalidates_evidence
+    result_type: executable_operational_slice
+    modalities: [integration, negative_conformance, observed_E2E, fresh_independent_acceptance]
+    executable_refs:
+      - 01_os/06_execution/boot/communication_system/validator/test_formal_activation.py
+      - 01_os/06_execution/boot/communication_system/publisher/test_github_republication.py
+  - criterion_id: SC-05
+    requirement: collaboration_role_and_receiver_setup_are_traceable_and_non_authorizing
+    result_type: executable_declarative_contract
+    modalities: [static_validation, unit, negative_conformance, Human_readability_review]
+    executable_refs: [01_os/06_execution/boot/model_routing/test_receiver_setup.py]
+  - criterion_id: SC-06
+    requirement: mechanism_effectiveness_inventory_does_not_overclaim_L4
+    result_type: evidence_claim
+    modalities: [static_validation, physical_ref_check, independent_semantic_acceptance]
+    executable_refs: [01_os/06_execution/boot/mechanism_activation/validate_mechanism_activation.py]
+  - criterion_id: SC-07
+    requirement: no_automatic_delivery_polling_acknowledgement_scheduling_or_progression
+    result_type: executable_security_boundary
+    modalities: [AST_static_guard, negative_conformance, independent_review]
+    executable_refs:
+      - 01_os/06_execution/boot/mechanism_activation/validate_mechanism_activation.py
+      - 01_os/06_execution/boot/communication_system/validator/validate_communication_system.py
+  - criterion_id: SC-08
+    requirement: no_workflow_or_frozen_T2_mutation_and_all_paths_inside_authorized_boundary
+    result_type: physical_repository_claim
+    modalities: [complete_NUL_safe_Git_compare, allowlist_comparator, independent_readback]
+    executable_refs: [01_os/06_execution/boot/mechanism_activation/activation.py#observe_changed_path_claim]
+generic_workflow_validation_router: excluded_successor_task
+code_tests_alone_sufficient_for_full_acceptance: false

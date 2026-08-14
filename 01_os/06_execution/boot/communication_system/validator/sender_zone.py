@@ -45,7 +45,7 @@ def ensure_sender_owned_path(relative_path: str, sender_endpoint_id: str) -> Non
     owned = (
         path == PurePosixPath("indexes") / f"{sender_endpoint_id}.yml"
         or len(path.parts) >= 3
-        and path.parts[0] in {"messages", "documents"}
+        and path.parts[0] in {"messages", "documents", "constitutions", "receipts"}
         and path.parts[1] == sender_endpoint_id
     )
     if not owned:

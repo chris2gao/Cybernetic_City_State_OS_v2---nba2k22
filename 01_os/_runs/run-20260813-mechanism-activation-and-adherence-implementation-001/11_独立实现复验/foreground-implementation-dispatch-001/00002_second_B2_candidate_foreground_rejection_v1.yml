@@ -1,0 +1,37 @@
+schema_version: citystate.foreground_implementation_adjudication.v1
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+adjudicator_endpoint_id: foreground-implementation-dispatch-001
+candidate_sha: 4e03c7a7beda4a02330f81a66a7d41d200132d17
+executor_pointer_snapshot_sha: 07ddafc633bda2d00eeaa7f398ae02593a211c8b
+verdict: FIX_REQUIRED
+material_blocker:
+  blocker_id: B2-ISSUANCE-PRIMITIVE-FORGEABILITY
+  parent_blocker: B2-OBSERVATION-PROVENANCE-BINDING
+  finding: >-
+    The candidate removes the public MaterialObservationContext.bind API, but retains
+    module-level _ResolvedExpectedSource/_ConsumedObservation constructors plus
+    _issue_expected/_issue_observed functions that register arbitrary caller-created
+    objects into the same issuance ledger later trusted by attach_material_evidence.
+    Python underscore naming is not an execution boundary, so an ordinary caller with
+    module access can mint self-consistent provenance without running the physical
+    resolver or observation adapter.
+  evidence_refs:
+    - 4e03c7a7beda4a02330f81a66a7d41d200132d17:01_os/06_execution/boot/mechanism_activation/activation.py
+    - 4e03c7a7beda4a02330f81a66a7d41d200132d17:01_os/06_execution/boot/mechanism_activation/test_material_claims.py
+  regression_gap: >-
+    Existing negative tests reject unissued lookalike handles but do not test a caller
+    directly invoking the module-level issuance primitives on caller-constructed handles.
+required_correction:
+  - remove or seal any generic issuance primitive that accepts arbitrary caller-constructed facts
+  - provenance accepted by the generic verifier must be inseparable from actual controlled resolver/adapter execution
+  - do not rely on underscore naming, caller-supplied trusted flags, caller-supplied IDs, or caller-supplied tokens as proof
+  - add a negative test that directly attempts the current _issue_expected/_issue_observed bypass or its semantic equivalent and requires non-PASS
+  - preserve one-use/replay rejection and valid physical resolver/adapter success paths
+scope:
+  reopen_architecture_A: false
+  reopen_non_B2_dimensions: false
+  master_publication_authorized: false
+  fresh_independent_acceptance_required_after_fix: true
+reasoning_profile: high
+max_escalation: blocker_local_only_if_high_cannot_converge
+authority_effect: none

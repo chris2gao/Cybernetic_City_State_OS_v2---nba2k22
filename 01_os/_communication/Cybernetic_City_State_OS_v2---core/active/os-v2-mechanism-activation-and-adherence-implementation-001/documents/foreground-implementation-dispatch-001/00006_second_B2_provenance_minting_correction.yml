@@ -1,0 +1,41 @@
+document_id: os-v2-mechanism-activation-and-adherence-implementation-001-second-b2-correction-001
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+author_endpoint_id: foreground-implementation-dispatch-001
+author_task_role: foreground_implementation_dispatch
+purpose: bounded_second_B2_provenance_minting_correction
+privacy_class: repository_shareable
+blocker_id: B2-OBSERVATION-PROVENANCE-BINDING
+prior_candidate_sha: 67c668d038c94e4de9935d0ee0bab3cb526d6c6e
+review_dispatch_snapshot_sha: f42b002d7bf8976ce54e7acff8f60cf7dbaa97f3
+foreground_adjudication_ref: bdcb2f81156def8e2d351d1a1d37f149fa3795d7:01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/11_独立实现复验/foreground-implementation-dispatch-001/00001_FIX_REQUIRED接收与第二次B2修正裁决_v1.yml
+required_outcome: >-
+  Remove ordinary-caller provenance minting from generic material acceptance. An
+  acceptance-valid binding or opaque evidence handle must be emitted by controlled
+  expected-source resolver and observation-adapter execution paths that actually
+  resolve and consume the physical facts they attest.
+prohibited_fake_fixes:
+  - rename_public_bind_to_private_without_execution_boundary
+  - caller_supplied_trusted_boolean_or_token
+  - caller_supplied_resolver_or_adapter_id_used_as_proof
+  - caller_supplied_consumed_ref_set_used_as_proof
+  - secret_or_random_marker_that_does_not_bind_real_observation_execution
+mandatory_negative_tests:
+  - self_consistent_claim_and_context_without_expected_resolver_execution_is_non_PASS
+  - self_consistent_claim_and_context_without_observation_adapter_execution_is_non_PASS
+  - fabricated_complete_Git_compare_binding_is_non_PASS
+  - fabricated_authenticated_principal_binding_is_non_PASS
+  - fabricated_conditional_ref_consumption_is_non_PASS
+preserve:
+  - architecture_A_and_existing_B_semantics
+  - already_accepted_non_B2_dimensions
+  - Human_authorized_write_boundary
+  - no_master_publication
+  - no_automatic_progression_or_delivery
+validation:
+  - reproduce_reviewer_attacks_before_change
+  - add_negative_conformance_tests_for_caller_forged_provenance
+  - run_full_canonical_regression
+  - freeze_new_exact_candidate_and_candidate_bound_evidence
+  - fresh_independent_reacceptance_required
+reasoning_profile: high
+max_escalation: blocker_local_only

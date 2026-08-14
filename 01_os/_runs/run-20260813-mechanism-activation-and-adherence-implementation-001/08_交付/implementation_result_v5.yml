@@ -1,0 +1,52 @@
+schema_version: citystate.mechanism_activation.implementation_result.v5
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+result: third_B2_execution_only_provenance_correction_complete
+candidate_sha: 15652d7019c35702444a1944bb5f4b754f4fdad7
+rejected_candidate_sha: 4e03c7a7beda4a02330f81a66a7d41d200132d17
+base_sha: bf538e5068381becd31e8e1daceade81e657262d
+source_branch: dev/os-v2-mechanism-activation-and-adherence-implementation-001
+dispatch_pointer_commit: 76aa5fa535bc1f772554d72d8e72c48bbab88f9d
+accepted_blocker: B2-ISSUANCE-PRIMITIVE-FORGEABILITY
+correction:
+  generic_issuance_or_attachment_surface_removed: true
+  caller_constructible_evidence_handle_types_removed: true
+  provenance_storage_owned_by_execution_kernel_closure: true
+  physical_expected_resolution_and_observation_before_binding: true
+  physical_execution_and_binding_inseparable: true
+  duplicate_binding_or_replay: rejected
+verification:
+  vulnerable_third_B2_attacks: {VERIFIED_incorrectly: 5, total: 5}
+  corrected_third_B2_attacks: {UNVERIFIABLE: 5, total: 5}
+  controlled_physical_path: VERIFIED
+  replay_result: TRUSTED_CLAIM_BINDING_DUPLICATE
+  bound_deterministic_tests: {passed: 102, failed: 0}
+  frozen_stage04_full: {passed: 50, failed: 0}
+  frozen_stage04_mutation: {passed: 50, failed: 0}
+  material_claims: {verified: 9, nonverified: 0}
+  exact_old_pointer_long_path_readback: VERIFIED
+  exact_first_B2_correction_pointer_readback: VERIFIED
+  exact_second_B2_correction_pointer_readback: VERIFIED
+  exact_third_B2_correction_pointer_readback: VERIFIED
+  repository_default_gates: 4/4_PASS
+preserved_dimensions:
+  formal_action_mandatory_mediation_A: PASS
+  accepted_non_B2_dimensions: PASS
+  communication_v2_regression: PASS
+  model_routing_regression: PASS
+  architecture_A_or_B_semantics_reopened: false
+effectiveness_claim:
+  current_maximum: L3_EXECUTION_GATED
+  L4_target_requires_fresh_independent_acceptance: true
+  operationally_active_claimed: false
+publication:
+  source_branch_only: true
+  master_modified_or_published: false
+  formal_result_status: published_and_receiver_replayed
+  message_id: os-v2-mechanism-activation-and-adherence-implementation-001::codex-implementation-executor-001::00005
+  pointer_commit: 005763b2672bff50d4c3d2ce806e6e5f85c90e5f
+  receiver_bootstrap_endpoint_id: foreground-implementation-dispatch-001
+  receiver_publication_claim_result: VERIFIED
+  readback_ref: 07_测试执行/formal_third_B2_publication_readback_v1.yml
+next_owner: foreground_implementation_dispatch
+next_action: route_exact_third_B2_corrected_candidate_to_fresh_independent_implementation_acceptance
+authority_effect: none

@@ -1,0 +1,96 @@
+schema_version: citystate.mechanism_activation.implementation_candidate_spec.v6
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+candidate_role: third_B2_execution_only_provenance_candidate_for_fresh_independent_acceptance
+candidate_sha: 15652d7019c35702444a1944bb5f4b754f4fdad7
+base_sha: bf538e5068381becd31e8e1daceade81e657262d
+required_base_relation: ancestor_of_candidate
+base_expectation:
+  sha: bf538e5068381becd31e8e1daceade81e657262d
+  required_relation: ancestor_of_candidate
+source_branch: dev/os-v2-mechanism-activation-and-adherence-implementation-001
+supersedes: 05_候选冻结/candidate_spec_v5.yml
+rejected_candidate_sha: 4e03c7a7beda4a02330f81a66a7d41d200132d17
+correction_request_ref: >-
+  76aa5fa535bc1f772554d72d8e72c48bbab88f9d:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/messages/foreground-implementation-dispatch-001/00007_correction.yml
+accepted_blocker: B2-ISSUANCE-PRIMITIVE-FORGEABILITY
+correction_outcomes:
+  - caller-constructible expected and observation evidence-handle types are removed
+  - generic issuance and generic attachment primitives are removed
+  - trusted provenance storage is owned by an execution-kernel closure
+  - exported high-level claim paths execute physical expected-source resolution and observation before binding
+  - physical execution and binding are one inseparable operation
+  - ordinary module attribute access cannot register arbitrary caller-constructed facts
+  - duplicate binding and replay remain rejected
+mandatory_negative_results:
+  direct_generic_issuance_without_execution: UNVERIFIABLE
+  constructed_lookalike_handles: UNVERIFIABLE
+  forged_complete_Git_compare: UNVERIFIABLE
+  forged_authenticated_principal: UNVERIFIABLE
+  forged_conditional_consumed_ref: UNVERIFIABLE
+mandatory_positive_and_replay_results:
+  controlled_physical_path: VERIFIED
+  duplicate_binding_or_replay: TRUSTED_CLAIM_BINDING_DUPLICATE
+preserved_dimensions:
+  - formal_action_mandatory_mediation_A
+  - quoted_or_template_false_positive_boundary
+  - resolver_and_gate_fail_closed
+  - communication_context_fail_closed
+  - pointer_v2_and_receiver_replay
+  - model_routing_grants_no_authority
+  - no_automatic_delivery_polling_ack_scheduling_or_progression
+allowed_changed_paths_ref: ../01_任务输入/任务包_v1.yml#allowed_changed_paths
+required_validation:
+  deterministic:
+    entrypoint: 06_执行/run_bound_candidate_checks_v6.py
+    expected_tests: 102
+    exact_old_pointer_long_path_readback: VERIFIED
+    exact_first_B2_correction_pointer_readback: VERIFIED
+    exact_second_B2_correction_pointer_readback: VERIFIED
+    exact_third_B2_correction_pointer_readback: VERIFIED
+    vulnerable_third_B2_attacks_expected: VERIFIED
+    corrected_third_B2_attacks_expected: UNVERIFIABLE
+    expected_observation:
+      schema_version: citystate.mechanism_activation.bound_candidate_checks.v6
+      candidate_sha: 15652d7019c35702444a1944bb5f4b754f4fdad7
+      execution_root: .
+      deterministic_tests_run: 102
+      aggregate_result: VERIFIED
+      old_pointer: VERIFIED
+      first_correction_pointer: VERIFIED
+      second_correction_pointer: VERIFIED
+      third_correction_pointer: VERIFIED
+      corrected_attack_results:
+        direct_generic_issuance_without_execution: UNVERIFIABLE
+        constructed_lookalike_handles: UNVERIFIABLE
+        forged_complete_Git_compare: UNVERIFIABLE
+        forged_authenticated_principal: UNVERIFIABLE
+        forged_conditional_consumed_ref: UNVERIFIABLE
+      controlled_physical_path: VERIFIED
+      replay_result: TRUSTED_CLAIM_BINDING_DUPLICATE
+  frozen_stage04:
+    entrypoint: 01_os/06_execution/boot/communication_system/validator/run_frozen_stage04_tests.py
+    frozen_test_package_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+    modes: [full, mutation-suite]
+    expected_each: {total: 50, passed: 50, failed: 0}
+    expected_outputs:
+      full:
+        schema_version: citystate.communication.frozen_stage04_run.v1
+        mode: full
+        candidate_sha: 15652d7019c35702444a1944bb5f4b754f4fdad7
+        frozen_test_package_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+        total: 50
+        passed: 50
+        failed: 0
+      mutation-suite:
+        schema_version: citystate.communication.frozen_stage04_run.v1
+        mode: mutation-suite
+        candidate_sha: 15652d7019c35702444a1944bb5f4b754f4fdad7
+        frozen_test_package_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+        total: 50
+        passed: 50
+        failed: 0
+acceptance_requirement:
+  independent_reviewer: fresh_independent_implementation_acceptance_endpoint
+  candidate_must_not_be_replaced_by_source_branch_head: true
+  L4_or_operationally_active_claim_before_independent_acceptance: prohibited
+authority_effect: none

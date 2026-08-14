@@ -128,6 +128,46 @@ def _message(message_type: str = "result") -> dict[str, Any]:
     return value
 
 
+def _receiver_setup(carrier: str) -> dict[str, Any]:
+    return {
+        "collaboration_role": "independent_review",
+        "provider": "OpenAI",
+        "product": "Codex Desktop",
+        "surface": "codex_desktop",
+        "model": "GPT-5.6 Sol",
+        "reasoning_or_parameter_profile": "codex_sol_strongest_exposed",
+        "session_mode": "fresh",
+        "isolation_level": "fresh_session",
+        "repository_access_mode": "local_worktree" if carrier == "local" else "GitHub",
+        "repository_or_worktree_requirement": "frozen-fixture",
+        "required_branch_or_sha": "task-001",
+        "local_files_required": False,
+        "github_publication_required_before_start": carrier == "GitHub",
+        "communication_carrier": carrier,
+        "routing_basis_ref": "routing.yml",
+        "availability_assumption_or_observation_ref": "routing.yml#availability",
+        "limitations": ["executor_private_context"],
+    }
+
+
+def _formal_kwargs(carrier: str = "local") -> dict[str, Any]:
+    return {
+        "activation_context": {
+            "intended_cross_endpoint_side_effect": True,
+            "actionable_content": True,
+            "communication_context_ref": "manifest.yml",
+            "classification_basis_ref": "source.yml",
+        },
+        "mechanism_preconditions": {
+            "communication_system": {
+                "verification_result": "VERIFIED",
+                "evidence_ref": "manifest.yml",
+            },
+        },
+        "receiver_setup": _receiver_setup(carrier),
+    }
+
+
 class Stage04ProductionAdapter:
     def __init__(self, mode: str):
         self.mode = mode
@@ -171,7 +211,10 @@ class Stage04ProductionAdapter:
             )
         (root / "roles/execution.md").write_text("execution", encoding="utf-8")
         (root / "roles/review.md").write_text("review", encoding="utf-8")
-        (root / "manifest.yml").write_text("task_id: task-001\n", encoding="utf-8")
+        (root / "manifest.yml").write_text(
+            "task_id: task-001\ncommunication_contract_version: 2\n", encoding="utf-8"
+        )
+        (root / "routing.yml").write_text("availability: registered_default\n", encoding="utf-8")
         return root, cards
 
     def parse_yaml(self, content: str) -> Any:
@@ -289,7 +332,7 @@ class Stage04ProductionAdapter:
                     source = root / "source.yml"
                     source.write_text(yaml.safe_dump(message, sort_keys=False), encoding="utf-8")
                     try:
-                        publish(root, source)
+                        publish(root, source, **_formal_kwargs())
                     except CommunicationValidationError:
                         visible = list((root / "messages").rglob("*.yml")) if (root / "messages").exists() else []
                         index = root / "indexes/sender-01.yml"
@@ -397,6 +440,7 @@ class Stage04ProductionAdapter:
                     github_trigger=trigger,
                     privacy_class=privacy,
                     publication_trace=trace,
+                    **_formal_kwargs(carrier),
                 )
                 CommunicationValidator().validate_publication_trace(trace, [])
             except CommunicationValidationError as exc:

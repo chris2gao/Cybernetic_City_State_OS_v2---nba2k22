@@ -1,0 +1,147 @@
+schema_version: citystate.mechanism_activation.bound_candidate_checks.v4
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+candidate_spec_ref: 05_候选冻结/candidate_spec_v4.yml
+candidate_sha_expected: 67c668d038c94e4de9935d0ee0bab3cb526d6c6e
+candidate_sha_observed: 67c668d038c94e4de9935d0ee0bab3cb526d6c6e
+tracked_worktree_matches_candidate_before: true
+tracked_worktree_matches_candidate_after: true
+execution_root: .
+observations:
+- check_id: activation_static
+  argv:
+  - python
+  - 01_os/06_execution/boot/mechanism_activation/validate_mechanism_activation.py
+  - static
+  - .
+  exit_code: 0
+  tests_run: null
+  result: PASS
+  bounded_output_tail:
+  - validation_passed
+- check_id: activation_tests
+  argv:
+  - python
+  - -m
+  - unittest
+  - discover
+  - -s
+  - 01_os/06_execution/boot/mechanism_activation
+  - -p
+  - test_*.py
+  - -q
+  exit_code: 0
+  tests_run: 30
+  result: PASS
+  bounded_output_tail:
+  - '----------------------------------------------------------------------'
+  - Ran 30 tests in 0.850s
+  - ''
+  - OK
+- check_id: communication_static
+  argv:
+  - python
+  - 01_os/06_execution/boot/communication_system/validator/validate_communication_system.py
+  - static
+  - .
+  exit_code: 0
+  tests_run: null
+  result: PASS
+  bounded_output_tail:
+  - validation_passed
+- check_id: communication_tests
+  argv:
+  - python
+  - -m
+  - unittest
+  - discover
+  - -s
+  - 01_os/06_execution/boot/communication_system
+  - -p
+  - test_*.py
+  - -q
+  exit_code: 0
+  tests_run: 67
+  result: PASS
+  bounded_output_tail:
+  - '----------------------------------------------------------------------'
+  - Ran 67 tests in 16.161s
+  - ''
+  - OK
+- check_id: model_routing_static
+  argv:
+  - python
+  - 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+  - static
+  - .
+  exit_code: 0
+  tests_run: null
+  result: PASS
+  bounded_output_tail:
+  - validation_passed
+- check_id: model_routing_tests
+  argv:
+  - python
+  - -m
+  - unittest
+  - discover
+  - -s
+  - 01_os/06_execution/boot/model_routing
+  - -p
+  - test_*.py
+  - -q
+  exit_code: 0
+  tests_run: 4
+  result: PASS
+  bounded_output_tail:
+  - '----------------------------------------------------------------------'
+  - Ran 4 tests in 0.001s
+  - ''
+  - OK
+- check_id: repository_default_gates
+  argv:
+  - python
+  - 01_os/06_execution/task_discipline/quiet_verify/quiet_verify.py
+  - --repo-root
+  - .
+  exit_code: 0
+  tests_run: null
+  result: PASS
+  bounded_output_tail:
+  - workflow_static exit=0
+  - context_structure exit=0
+  - no_canonical_live_state exit=0
+  - stage_deliberation_v2_static exit=0
+  - checks 4/4 ok
+- check_id: diff_check
+  argv:
+  - git
+  - diff
+  - --check
+  - HEAD
+  - --
+  exit_code: 0
+  tests_run: null
+  result: PASS
+  bounded_output_tail: []
+exact_old_pointer_readback:
+  target_commit: 2e58ec8e03a1d166f157fdba2501cdbfa1a28f1e
+  message_id: os-v2-mechanism-activation-and-adherence-implementation-001::codex-implementation-executor-001::00001
+  publication_claim_result: VERIFIED
+  sender_index_bound: true
+  result: VERIFIED
+exact_corrected_dispatch_pointer_readback:
+  target_commit: 25d5f660fd5aaaf85cd072cc539fea70f1cb0f4f
+  message_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00004
+  publication_claim_result: VERIFIED
+  sender_index_bound: true
+  result: VERIFIED
+B2_counterexamples:
+  non_resolving_expected_source: UNVERIFIABLE
+  asserted_complete_diff_without_git_compare: UNVERIFIABLE
+  asserted_principal_without_authenticated_observation: UNVERIFIABLE
+  observation_ref_source_class_mismatch: UNVERIFIABLE
+  receipt_only_correct_looking_value: UNVERIFIABLE
+deterministic_tests_run: 101
+aggregate_result: VERIFIED
+observed_at_utc: '2026-08-13T16:01:30.222488+00:00'
+authority_effect: none

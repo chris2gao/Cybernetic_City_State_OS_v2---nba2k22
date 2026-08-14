@@ -1,0 +1,50 @@
+schema_version: citystate.communication.formal_action_integration.v1
+activation_integration_version: 1
+status: active_candidate
+authority_effect: none
+
+mandatory_for_message_types:
+  - request
+  - response
+  - result
+  - decision_required
+  - correction
+  - blocked
+
+pre_publication_sequence:
+  - classify_structured_action_semantics
+  - normalize_expected_recipient
+  - resolve_required_mechanisms
+  - validate_receiver_setup
+  - verify_required_preconditions
+  - execute_pre_action_gate
+  - validate_constitution_evidence
+  - validate_message_documents_and_authorization
+
+publication_sequence:
+  - materialize_immutable_constitution_evidence
+  - materialize_immutable_canonical_message
+  - append_sender_owned_index
+  - materialize_immutable_compliance_receipt
+  - emit_v2_Human_relay_pointer
+
+formal_action_validity_requires:
+  - pre_action_gate_VERIFIED
+  - constitution_evidence_valid
+  - message_sender_index_and_evidence_materialized_before_pointer_emission
+  - compliance_receipt_material_claims_recomputed_VERIFIED
+  - exact_v2_pointer_physically_resolves
+  - sender_index_exactly_binds_message_identity_and_route
+  - receiver_replays_resolver_and_gate_from_saved_inputs
+  - canonical_mechanism_execution_ref_physically_resolves
+  - correction_physically_binds_existing_superseded_message_when_applicable
+
+sender_owned_formal_evidence_paths:
+  - constitutions/<sender_endpoint_id>/<zero_padded_seq>.yml
+  - receipts/<sender_endpoint_id>/<zero_padded_seq>.yml
+
+direct_publisher_call_without_activation_bundle: FORMAL_ACTIVATION_REQUIRED
+receiver_natural_language_without_v2_pointer: INVALID_FORMAL_ACTION
+receiver_exact_looking_pointer_without_valid_evidence: INVALID_FORMAL_ACTION
+resolver_or_gate_omission: INVALID_FORMAL_ACTION
+automatic_delivery_polling_acknowledgement_scheduling_or_progression: prohibited

@@ -33,6 +33,10 @@ These are candidates for porting, not decisions. Each needs assessing on its own
 - `context_management/启动清单_v1.yml`：上下文管理加载顺序、版本与失败行为；
 - `context_management/README.md`：入口边界与 receipt 要求。
 - `communication_system/启动清单_v1.yml`：Human 中转通讯契约与纯校验入口；加载时不创建运行实例。
+- `mechanism_activation/启动清单_v1.yml`：formal-action constitution、触发 resolver、
+  pre-action gate 与双向物理事实绑定；formal action 时 always-on，加载不授权、不执行机制。
+- `model_routing/启动清单_v1.yml`：任务时点模型路由与 Human-visible receiver setup；
+  不进行后台账户或配额探测。
 
 启动区只声明“启动时读什么”；机制方法论和生命周期定义位于
 `../03_mechanisms/context_management/`。

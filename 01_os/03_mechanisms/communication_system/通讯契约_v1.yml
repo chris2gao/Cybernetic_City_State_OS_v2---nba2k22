@@ -31,6 +31,8 @@ public_task_layout:
   - indexes/
   - messages/
   - documents/
+  - constitutions/
+  - receipts/
   - Human/current.yml
   - Human/decisions/
   - final_results/
@@ -68,3 +70,8 @@ canonical_paths_must_not_contain:
   - endpoint_runtime_state
   - private_reasoning
   - secrets_or_credentials
+
+formal_action_activation:
+  contract: 01_os/03_mechanisms/communication_system/正式动作接入契约_v1.yml
+  current_pointer_contract: 01_os/03_mechanisms/communication_system/Human中转指针契约_v2.yml
+  legacy_v1_pointer_new_publication: prohibited

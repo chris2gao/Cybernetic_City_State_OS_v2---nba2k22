@@ -1,0 +1,92 @@
+schema_version: citystate.formal_action.constitution_evidence.v1
+action_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00008
+action_class: formal_cross_endpoint_task_dispatch
+sender_endpoint_id: foreground-implementation-dispatch-001
+intended_recipient_endpoint_id: isolated-gpt-implementation-reviewer-003
+classification_basis_ref: documents/foreground-implementation-dispatch-001/00008_third_B2_independent_reacceptance_request.md
+required_mechanisms:
+  - communication_system
+  - model_routing
+resolver_result_ref: constitutions/foreground-implementation-dispatch-001/00008.yml#resolution
+gate_result_ref: constitutions/foreground-implementation-dispatch-001/00008.yml#gate
+mechanism_execution_ref: 01_os/06_execution/boot/communication_system/publisher/publish_message.py
+formal_artifact_ref: messages/foreground-implementation-dispatch-001/00008_request.yml
+activation_context:
+  intended_cross_endpoint_side_effect: true
+  actionable_content: true
+  formal_state_claim: false
+  communication_context_ref: manifest.yml
+  classification_basis_ref: documents/foreground-implementation-dispatch-001/00008_third_B2_independent_reacceptance_request.md
+  requires_receiver_selection: true
+  collaboration_role: independent_review
+  risk_tier: T2_semantic_acceptance
+  task_shape: fresh_third_B2_implementation_reacceptance
+  required_capabilities:
+    - GitHub_exact_commit_read
+    - adversarial_semantic_review
+  routing_basis_ref: documents/foreground-implementation-dispatch-001/00008_reviewer_route.yml
+  availability_assumption_or_observation_ref: documents/foreground-implementation-dispatch-001/00008_reviewer_route.yml#availability
+  action_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00008
+  formal_message_type: request
+  task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+  sender_endpoint_id: foreground-implementation-dispatch-001
+  intended_recipient_endpoint_id: isolated-gpt-implementation-reviewer-003
+mechanism_preconditions:
+  communication_system:
+    verification_result: VERIFIED
+    evidence_ref: manifest.yml
+    freshness_required: true
+    freshness_result: VERIFIED
+  model_routing:
+    verification_result: VERIFIED
+    evidence_ref: documents/foreground-implementation-dispatch-001/00008_reviewer_route.yml
+authority_effect: none
+resolution:
+  classification: formal_cross_endpoint_action
+  action_class: formal_cross_endpoint_task_dispatch
+  formal: true
+  formal_segment_indexes: [0]
+  mixed_action_segmented: false
+  authority_effect: none
+  action_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00008
+  normalized_recipient_endpoint_id: isolated-gpt-implementation-reviewer-003
+  required_mechanisms: [communication_system, model_routing]
+  missing_preconditions: []
+  route_requirements: [receiver_setup]
+  action_allowed_to_enter_enforcement: true
+  ordinary_Human_discussion_allowed: false
+gate:
+  gate_result: VERIFIED
+  action_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00008
+  action_class: formal_cross_endpoint_task_dispatch
+  required_mechanisms: [communication_system, model_routing]
+  verified_precondition_refs:
+    communication_system: manifest.yml
+    model_routing: documents/foreground-implementation-dispatch-001/00008_reviewer_route.yml
+  blocking_failures: []
+  authority_effect: none
+receiver_setup:
+  collaboration_role: independent_review
+  provider: OpenAI
+  product: ChatGPT
+  surface: chatgpt_web
+  model: GPT-5.6 Sol
+  reasoning_or_parameter_profile: chatgpt_plus_sol_high
+  session_mode: fresh
+  isolation_level: isolated_project
+  repository_access_mode: GitHub_only
+  repository_or_worktree_requirement: exact_candidate_15652d70_and_evidence_snapshot_c6fb57e3
+  required_branch_or_sha: 15652d7019c35702444a1944bb5f4b754f4fdad7
+  local_files_required: false
+  github_publication_required_before_start: true
+  communication_carrier: GitHub
+  routing_basis_ref: documents/foreground-implementation-dispatch-001/00008_reviewer_route.yml
+  availability_assumption_or_observation_ref: documents/foreground-implementation-dispatch-001/00008_reviewer_route.yml#availability
+  limitations:
+    - routing_grants_no_authority
+    - executor_private_context
+    - foreground_private_context
+    - prior_reviewer_private_context
+    - no_local_files_may_be_assumed_readable
+    - review_threat_model_bound_to_accepted_architecture
+    - no_master_publication_authority

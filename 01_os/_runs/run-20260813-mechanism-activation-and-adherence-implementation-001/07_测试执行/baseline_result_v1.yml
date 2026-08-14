@@ -1,0 +1,13 @@
+schema_version: citystate.mechanism_activation.baseline_result.v1
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+observed_on_head: fb3eb0ab972721f930ac15616a21e6a8427cfdb4
+worktree_state_note: baseline commands executed before canonical implementation writes
+runner: 01_os/06_execution/task_discipline/quiet_verify/quiet_verify.py
+checks_file: 07_测试执行/baseline_checks_v1.yml
+results:
+  communication_static: {exit_code: 0, result: validation_passed}
+  communication_tests: {exit_code: 0, result: passed}
+  model_routing_static: {exit_code: 0, result: validation_passed}
+  repository_default_gates: {exit_code: 0, result: passed}
+summary: checks_4_of_4_ok
+claim_boundary: proves_only_the_declared_pre_change_commands_on_the_observed_worktree

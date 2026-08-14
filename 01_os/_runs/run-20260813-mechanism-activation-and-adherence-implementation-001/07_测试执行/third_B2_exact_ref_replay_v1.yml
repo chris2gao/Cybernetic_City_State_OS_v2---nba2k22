@@ -1,0 +1,28 @@
+schema_version: citystate.mechanism_activation.third_B2_execution_only_replay.v1
+implementation_path: 01_os/06_execution/boot/mechanism_activation/activation.py
+vulnerable:
+  commit: 4e03c7a7beda4a02330f81a66a7d41d200132d17
+  generic_issuance_surface_present: true
+  attack_results:
+    direct_generic_issuance_without_execution: VERIFIED
+    constructed_lookalike_handles: VERIFIED
+    forged_complete_Git_compare: VERIFIED
+    forged_authenticated_principal: VERIFIED
+    forged_conditional_consumed_ref: VERIFIED
+  controlled_path_and_replay:
+    physical_path_result: NOT_APPLICABLE
+    replay_result: NOT_APPLICABLE
+corrected:
+  commit: 15652d7019c35702444a1944bb5f4b754f4fdad7
+  generic_issuance_surface_present: false
+  attack_results:
+    direct_generic_issuance_without_execution: UNVERIFIABLE
+    constructed_lookalike_handles: UNVERIFIABLE
+    forged_complete_Git_compare: UNVERIFIABLE
+    forged_authenticated_principal: UNVERIFIABLE
+    forged_conditional_consumed_ref: UNVERIFIABLE
+  controlled_path_and_replay:
+    physical_path_result: VERIFIED
+    replay_result: TRUSTED_CLAIM_BINDING_DUPLICATE
+aggregate_result: VERIFIED
+authority_effect: none

@@ -1,0 +1,32 @@
+message_id: os-v2-mechanism-activation-and-adherence-implementation-001::codex-implementation-executor-001::00001
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+title: Mechanism Activation implementation candidate ready for independent acceptance
+message_type: result
+sender_endpoint_id: codex-implementation-executor-001
+sender_task_role: implementation_executor
+expected_recipient_endpoint_id: foreground-implementation-dispatch-001
+expected_recipient_task_role: foreground_implementation_dispatch
+content: The bounded implementation candidate c302b426bce27ded020761687293d0d032d8e316
+  is complete and physically verified. Read the exact result and receiver-setup basis,
+  preserve candidate identity, and route it to fresh independent implementation acceptance.
+  No L4 operationally_active or master-publication claim is made.
+required_refs:
+- documents/codex-implementation-executor-001/00001_implementation_result.md
+- documents/codex-implementation-executor-001/00002_receiver_setup_basis.md
+requested_action: Adjudicate this result and route candidate c302b426bce27ded020761687293d0d032d8e316
+  to a fresh isolated independent implementation-acceptance endpoint without publishing
+  or merging master.
+in_reply_to: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00001
+references:
+- os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00001
+facts:
+  candidate_sha: c302b426bce27ded020761687293d0d032d8e316
+  base_sha: bf538e5068381becd31e8e1daceade81e657262d
+  deterministic_tests: 87/87
+  frozen_full: 50/50
+  frozen_mutation: 50/50
+  material_claims: 7/7_VERIFIED
+constraints:
+- candidate_SHA_is_distinct_from_the_later_pointer_commit
+- master_publication_is_not_authorized
+- independent_acceptance_is_still_required

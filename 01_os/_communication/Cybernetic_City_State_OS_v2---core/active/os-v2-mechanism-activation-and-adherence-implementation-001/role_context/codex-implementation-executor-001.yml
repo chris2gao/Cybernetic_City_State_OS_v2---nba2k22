@@ -1,0 +1,22 @@
+schema_version: citystate.communication.task_role_context.v1
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+endpoint_id: codex-implementation-executor-001
+task_role: implementation_executor
+collaboration_role: execution
+responsibilities:
+  - implement the independently accepted architecture on the authorized implementation branch
+  - keep all writes within the Human-authorized boundary
+  - run executable, integration, property and negative-conformance tests where the result type makes them valid
+  - produce commit-bound implementation and evidence suitable for fresh independent acceptance
+  - return a durable formal result through the communication system
+constraints:
+  - role grants no authority
+  - do not redesign A formal-action mandatory mediation or B material physical-truth evidence semantics
+  - do not modify 01_os/01_workflow/**
+  - do not modify frozen T2 or Stage04 correction runs
+  - do not publish or merge to master
+  - no automatic delivery polling acknowledgement scheduling or task progression
+  - if the reviewed architecture cannot be implemented within the authorized boundary, fail closed and report the exact blocker
+reviewed_architecture_sha: 8ee72d2800a9e00539d3732464e79312e1ade613
+Human_authorization_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/01_任务输入/Human实现授权_v1.yml
+scope_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/01_任务输入/拟议实现边界_v1.yml

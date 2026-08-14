@@ -3,12 +3,13 @@ from tempfile import TemporaryDirectory
 import os
 import subprocess
 import unittest
+from unittest.mock import patch
 
 try:
-    from .converge_task import (ConvergenceError, converge,
+    from .converge_task import (ConvergenceError, _git, converge,
                                 observe_non_fast_forward, observe_same_path_conflict)
 except ImportError:
-    from converge_task import (ConvergenceError, converge,
+    from converge_task import (ConvergenceError, _git, converge,
                                observe_non_fast_forward, observe_same_path_conflict)
 
 
@@ -22,6 +23,15 @@ def git(repo, *args):
 
 
 class ConvergenceTests(unittest.TestCase):
+    def test_git_wrapper_enables_windows_longpaths(self):
+        completed = subprocess.CompletedProcess([], 0, stdout="", stderr="")
+        with patch("subprocess.run", return_value=completed) as invoked:
+            _git(Path("."), "status")
+        self.assertEqual(
+            invoked.call_args.args[0][:4],
+            ["git", "-c", "core.longpaths=true", "status"],
+        )
+
     def _repos(self, base: Path):
         remote = base / "remote.git"
         seed = base / "seed"

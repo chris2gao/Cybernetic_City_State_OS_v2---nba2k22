@@ -1,0 +1,29 @@
+message_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00006
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+title: Second B2 provenance-minting correction
+message_type: correction
+sender_endpoint_id: foreground-implementation-dispatch-001
+sender_task_role: foreground_implementation_dispatch
+expected_recipient_endpoint_id: codex-implementation-executor-001
+expected_recipient_task_role: implementation_executor
+content: >-
+  Correct the remaining B2 provenance-minting bypass using the direct required document; provenance accepted by the generic evaluator must be minted by controlled resolver/adapter execution rather than ordinary caller assertions.
+required_refs:
+  - documents/foreground-implementation-dispatch-001/00006_second_B2_provenance_minting_correction.yml
+  - documents/foreground-implementation-dispatch-001/00006_codex_route.yml
+requested_action: execute_second_bounded_B2_provenance_minting_correction_and_publish_new_candidate
+supersedes: messages/foreground-implementation-dispatch-001/00004_correction.yml
+in_reply_to: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00005
+facts:
+  prior_candidate_sha: 67c668d038c94e4de9935d0ee0bab3cb526d6c6e
+  blocker_id: B2-OBSERVATION-PROVENANCE-BINDING
+  reviewer_002_verdict: FIX_REQUIRED
+  reviewer_002_formal_publication_completed: false
+  reasoning_default: high
+  master_publication_authorized: false
+constraints:
+  - do_not_reopen_architecture_A_or_non_B2_dimensions
+  - do_not_treat_caller_supplied_resolver_adapter_ids_or_consumed_refs_as_proof
+  - fresh_independent_reacceptance_required
+  - no_master_publication
+  - no_automatic_task_progression

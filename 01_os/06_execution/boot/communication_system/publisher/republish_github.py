@@ -18,17 +18,20 @@ from publish_message import (  # noqa: E402
     _endpoint_cards,
     _privacy_check,
     _validate_required_documents,
+    bind_GitHub_pointer,
     publish,
 )
 from validate_communication_system import (  # noqa: E402
     CommunicationValidationError,
     CommunicationValidator,
+    canonical_task_relative_ref,
     load_yaml,
 )
 
 
 def _task_relative_file(root: Path, relative: str) -> Path:
-    target = (root.resolve() / relative).resolve()
+    clean = canonical_task_relative_ref(relative, "GitHub_material_ref_noncanonical")
+    target = (root.resolve() / clean).resolve()
     try:
         target.relative_to(root.resolve())
     except ValueError as exc:
@@ -39,7 +42,10 @@ def _task_relative_file(root: Path, relative: str) -> Path:
 
 
 def _material_refs(local_root: Path, message: dict[str, Any],
-                   cards: dict[str, dict[str, Any]]) -> list[str]:
+                   cards: dict[str, dict[str, Any]],
+                   activation_context: dict[str, Any],
+                   mechanism_preconditions: dict[str, Any],
+                   receiver_setup: dict[str, Any]) -> list[str]:
     refs = ["manifest.yml"]
     for endpoint_id in (
         message["sender_endpoint_id"],
@@ -48,11 +54,20 @@ def _material_refs(local_root: Path, message: dict[str, Any],
         refs.append(f"endpoints/{endpoint_id}.yml")
         refs.append(str(cards[endpoint_id]["role_context_entry_ref"]))
     refs.extend(message.get("required_refs", []))
+    refs.append(str(activation_context.get("classification_basis_ref", "")))
+    for precondition in mechanism_preconditions.values():
+        if isinstance(precondition, dict):
+            refs.append(str(precondition.get("evidence_ref", "")))
+    refs.extend([
+        str(receiver_setup.get("routing_basis_ref", "")),
+        str(receiver_setup.get("availability_assumption_or_observation_ref", "")),
+    ])
     ordered = []
     for ref in refs:
-        if ref not in ordered:
-            _task_relative_file(local_root, ref)
-            ordered.append(ref)
+        clean = ref.split("#", 1)[0]
+        if clean and clean not in ordered:
+            _task_relative_file(local_root, clean)
+            ordered.append(clean)
     return ordered
 
 
@@ -77,6 +92,9 @@ def republish_and_converge(
     github_trigger: str,
     privacy_class: str = "repository_shareable",
     publication_trace: list[str] | None = None,
+    activation_context: dict[str, Any] | None = None,
+    mechanism_preconditions: dict[str, Any] | None = None,
+    receiver_setup: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     if github_trigger not in VALID_GITHUB_TRIGGERS:
         raise CommunicationValidationError("GitHub_publication_requires_explicit_trigger")
@@ -88,6 +106,10 @@ def republish_and_converge(
     except ValueError as exc:
         raise CommunicationValidationError("GitHub_task_root_outside_repository") from exc
     message = load_yaml(message_source)
+    if not isinstance(activation_context, dict) or not isinstance(mechanism_preconditions, dict):
+        raise CommunicationValidationError("FORMAL_ACTIVATION_REQUIRED")
+    if not isinstance(receiver_setup, dict):
+        raise CommunicationValidationError("RECEIVER_SETUP_REQUIRED")
     trace = publication_trace if publication_trace is not None else []
     _privacy_check(message, privacy_class, "GitHub")
     cards = _endpoint_cards(local_root, message)
@@ -103,7 +125,9 @@ def republish_and_converge(
     )
     _validate_required_documents(local_root, message, "GitHub", trace)
     copied_refs = []
-    for relative in _material_refs(local_root, message, cards):
+    for relative in _material_refs(
+        local_root, message, cards, activation_context, mechanism_preconditions, receiver_setup
+    ):
         source = _task_relative_file(local_root, relative)
         target = repo_task / relative
         if _copy_immutable(source, target):
@@ -116,12 +140,18 @@ def republish_and_converge(
         github_trigger=github_trigger,
         privacy_class=privacy_class,
         publication_trace=trace,
+        activation_context=activation_context,
+        mechanism_preconditions=mechanism_preconditions,
+        receiver_setup=receiver_setup,
+        _defer_GitHub_readback=True,
     )
     repository_prefix = repo_task.relative_to(repo_root).as_posix()
     exact_paths = [f"{repository_prefix}/{relative}" for relative in copied_refs]
     exact_paths.extend([
         f"{repository_prefix}/{pointer['exact_path_or_GitHub_ref']}",
         f"{repository_prefix}/indexes/{message['sender_endpoint_id']}.yml",
+        f"{repository_prefix}/{pointer['constitution_evidence_ref']}",
+        f"{repository_prefix}/{pointer['compliance_receipt_ref']}",
     ])
     convergence = converge(
         repo_root,
@@ -130,8 +160,14 @@ def republish_and_converge(
         allowed_task_root,
         f"publish {message['message_id']} for Human relay",
     )
+    bound_pointer = bind_GitHub_pointer(
+        pointer,
+        repository_root=repo_root,
+        repository_task_root=repo_task,
+        remote_commit_sha=convergence["remote_head"],
+    )
     return {
-        "pointer": pointer,
+        "pointer": bound_pointer,
         "publication_trace": trace,
         "convergence": convergence,
         "exact_published_paths": exact_paths,

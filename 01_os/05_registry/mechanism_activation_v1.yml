@@ -1,0 +1,44 @@
+schema_version: citystate.registry.v1
+registry_id: mechanism_activation_v1
+mechanism_version: 1
+entries:
+  - path: 01_os/03_mechanisms/mechanism_activation/**
+    purpose: formal-action constitution, mechanism triggers, effectiveness levels, physical-claim binding and validation applicability
+    loader: 01_os/06_execution/boot/mechanism_activation/validate_mechanism_activation.py
+    loader_class: in_repo_program
+    discovery: referenced from mechanism-activation boot manifest and AGENTS.md
+    evidence: 01_os/02_boot/mechanism_activation/启动清单_v1.yml
+    cache_dirs: []
+    failure_surfacing: next formal action or explicit validator run
+    deletion_rule: protected
+  - path: 01_os/02_boot/mechanism_activation/**
+    purpose: always-on formal-action constitution load order and failure policy
+    loader: repository working-window bootstrap and formal-action executor
+    loader_class: host_application
+    discovery: AGENTS.md formal-action bootstrap rule
+    evidence: 01_os/02_boot/mechanism_activation/启动清单_v1.yml
+    cache_dirs: []
+    failure_surfacing: next repository bootstrap or formal action
+    deletion_rule: protected
+  - path: 01_os/06_execution/boot/mechanism_activation/**
+    purpose: pure resolver, pre-action gate, material comparator, receipt validator and adversarial tests
+    loader: Human or authorized task executor
+    loader_class: in_repo_program
+    discovery: referenced from boot manifest and mechanism README
+    evidence: 01_os/02_boot/mechanism_activation/启动清单_v1.yml
+    cache_dirs: []
+    failure_surfacing: next formal action or test run
+    deletion_rule: protected
+  - path: 01_os/05_registry/mechanism_activation_v1.yml
+    purpose: registry coverage for the mechanism activation canonical and executable surfaces
+    loader: 01_os/06_execution/boot/mechanism_activation/validate_mechanism_activation.py
+    loader_class: in_repo_program
+    discovery: referenced from boot manifest
+    evidence: 01_os/02_boot/mechanism_activation/启动清单_v1.yml
+    cache_dirs: []
+    failure_surfacing: next static validator run
+    deletion_rule: protected
+excluded:
+  - 01_os/_runs/**
+  - 01_os/_communication/**
+  - private_runtime_or_secrets

@@ -1,0 +1,24 @@
+schema_version: citystate.mechanism_activation.boot_manifest.v1
+mechanism_version: 1
+failure_policy: fail_closed_on_missing_partial_stale_or_invalid
+load_order:
+  - 01_os/03_mechanisms/mechanism_activation/README.md
+  - 01_os/03_mechanisms/mechanism_activation/正式动作宪法_v1.yml
+  - 01_os/03_mechanisms/mechanism_activation/机制触发注册表_v1.yml
+  - 01_os/03_mechanisms/mechanism_activation/物理事实双向绑定契约_v1.yml
+  - 01_os/03_mechanisms/mechanism_activation/机制生效等级与盘点_v1.yml
+  - 01_os/03_mechanisms/mechanism_activation/验证适用性契约_v1.yml
+  - 01_os/05_registry/mechanism_activation_v1.yml
+  - 01_os/06_execution/boot/mechanism_activation/activation.py
+  - 01_os/06_execution/boot/mechanism_activation/validate_mechanism_activation.py
+invocation: always_on_formal_action_constitution_plus_explicit_validation
+background_processes_started: false
+automatic_delivery_polling_acknowledgement_scheduling_or_progression: false
+authority_effect: none
+receipt_fields:
+  - mechanism_version
+  - actual_read_paths
+  - validator_exit_code
+  - action_class_when_invoked
+  - resolver_result_ref_when_formal
+  - gate_result_ref_when_formal

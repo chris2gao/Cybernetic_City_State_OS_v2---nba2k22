@@ -4,6 +4,8 @@ owned_paths:
   - indexes/<sender_endpoint_id>.yml
   - messages/<sender_endpoint_id>/
   - documents/<sender_endpoint_id>/
+  - constitutions/<sender_endpoint_id>/
+  - receipts/<sender_endpoint_id>/
 cross_sender_write: prohibited
 sequence:
   minimum: 1
@@ -28,4 +30,3 @@ sender_index:
     - long_summary
     - delivery_state
   every_entry_target_must_exist: true
-

@@ -1,0 +1,30 @@
+design_review_acceptance:
+  schema_version: citystate.design_review_acceptance.v1
+  task_id: os-v2-mechanism-activation-and-adherence-001
+  reviewed_candidate_sha: 8ee72d2800a9e00539d3732464e79312e1ade613
+  review_result_commit: b40f63ca49393546aa415dbbe1f0c38bbf72a001
+  reviewer_endpoint_id: isolated-gpt-design-reviewer-003
+  verdict: PASS
+  accepted_by_foreground: true
+  accepted_dimensions:
+    A_formal_action_mandatory_mediation: PASS
+    B_material_physical_truth_two_sided_binding: PASS
+    hybrid_validation: PASS
+    collaboration_and_model_routing_separation: PASS
+    L0_L4_effectiveness_model: PASS
+    no_automatic_delivery_or_progression: PASS
+  material_implementation_blockers: []
+  non_blocking_hardening:
+    - freeze_machine_readable_comparator_schemas_and_negative_fixtures
+    - prefer_commit_or_blob_pinned_expected_refs_when_immutability_is_material
+    - define_source_specific_authenticated_principal_normalization_when_needed
+    - define_acceptable_observation_provenance_forms
+    - add_receiver_negative_fixtures_for_pointer_like_bypass
+  materiality_rule: >-
+    Non-blocking hardening must not be promoted into new implementation blockers unless implementation evidence reveals a material failure.
+    Non-material provider/model/product identity details do not become blocking proof obligations merely because fields exist.
+  implementation_decision:
+    may_open_new_bounded_implementation_task: true
+    canonical_mutation_by_design_task: false
+    master_publication_authorized: false
+  next_task_id: os-v2-mechanism-activation-and-adherence-implementation-001

@@ -24,10 +24,19 @@ required_refs:
   default_all_sender_index_read: prohibited
   missing_ref: fail_closed
 bootstrap_load_order:
+  - exact_v2_pointer
   - manifest
   - own_endpoint_card
   - own_role_context_entry
   - exact_message
   - direct_required_refs_in_declared_order
   - authorization_ref_when_present_and_not_already_loaded
-
+  - constitution_evidence_ref
+  - compliance_receipt_ref
+  - sender_index_exact_entry
+formal_receiver_bootstrap:
+  v2_pointer_required: true
+  constitution_and_receipt_revalidation_required: true
+  resolver_and_gate_replay_required: true
+  sender_index_binding_required: true
+  pasted_natural_language_substitution: prohibited

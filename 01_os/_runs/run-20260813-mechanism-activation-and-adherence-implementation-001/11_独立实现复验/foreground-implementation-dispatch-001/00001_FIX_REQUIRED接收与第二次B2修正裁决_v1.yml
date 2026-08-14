@@ -1,0 +1,47 @@
+schema_version: citystate.foreground_implementation_adjudication.v1
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+foreground_endpoint_id: foreground-implementation-dispatch-001
+reviewer_endpoint_id: isolated-gpt-implementation-reviewer-002
+review_target_candidate_sha: 67c668d038c94e4de9935d0ee0bab3cb526d6c6e
+executor_evidence_snapshot_sha: c703c5e6a442619e410b06ce82bed13f8e3583df
+review_dispatch_snapshot_sha: f42b002d7bf8976ce54e7acff8f60cf7dbaa97f3
+reviewer_publication_status: blocked_by_platform_safety_layer
+reviewer_result_transport: Human_relayed_foreground_chat
+reviewer_formal_pointer_available: false
+reviewer_verdict_received: FIX_REQUIRED
+accepted_material_blocker:
+  blocker_id: B2-OBSERVATION-PROVENANCE-BINDING
+  status: accepted_by_foreground
+  root_cause: >-
+    The first B2 correction moved verification inputs from receipt-only data into
+    MaterialObservationContext, but ordinary callers can still mint bindings by
+    freely supplying resolver and adapter identifiers, source classes, refs,
+    values, and consumed-observation-ref strings. Provenance therefore remains a
+    caller assertion rather than a fact established by controlled resolver/adapter execution.
+  required_outcome: >-
+    Ordinary callers must not be able to construct an acceptance-valid provenance binding
+    from arbitrary values. Accepted bindings or opaque evidence handles must be minted only
+    by controlled resolver/adapter execution paths that actually resolve expected sources
+    and consume the authoritative observations they attest.
+  mandatory_negative_cases:
+    - claim_and_context_self_consistent_but_expected_resolver_never_executed
+    - claim_and_context_self_consistent_but_observation_adapter_never_executed
+    - caller_fabricates_complete_Git_compare_binding
+    - caller_fabricates_authenticated_principal_binding
+    - caller_self_declares_conditional_ref_consumed_without_observation
+preserved_dimensions:
+  - architecture_A_formal_action_mediation
+  - existing_v2_pointer_receiver_replay
+  - candidate_and_scope_binding
+  - no_authority_from_routing_or_identity
+  - no_premature_L4_claim
+  - hybrid_validation_boundary
+implementation_decision:
+  action: bounded_second_B2_correction
+  architecture_reopen: false
+  scope_expansion: false
+  default_reasoning: high
+  max_escalation: blocker_local_only
+  fresh_independent_reacceptance_required_after_fix: true
+  master_publication_authorized: false
+authority_effect: none

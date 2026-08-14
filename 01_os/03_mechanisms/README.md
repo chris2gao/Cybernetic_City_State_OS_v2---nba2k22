@@ -39,9 +39,12 @@ assessed one at a time, not copied wholesale.
 - `context_management/`：全局上下文管理、文件隔离、产物生命周期、发布边界与结构验证。
 - `model_routing/`：模型、产品 surface 与参数档案的证据化 task-fit 路由；输出仅具
   `routing_only` authority。
+- `mechanism_activation/`：formal-action constitution、机制触发、pre-action gate、
+  L0–L4 生效盘点与 material claim 期望—观察—comparator 双向绑定。
 
 工作流只引用该机制，不在 `01_workflow/` 内保留第二份实例。
 # 全局通讯机制
 
 `communication_system/` 定义每任务公开通讯空间、端点与消息契约、精确引用、人工发布、
-Git 收敛、导航和整体归档。canonical 机制目录只保存定义，不保存 live message/session state。
+Git 收敛、导航和整体归档。新 formal action 使用 v2 pointer、constitution evidence、
+compliance receipt 和 receiver setup；canonical 机制目录只保存定义，不保存 live state。

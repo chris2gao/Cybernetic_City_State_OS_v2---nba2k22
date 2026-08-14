@@ -1,0 +1,54 @@
+validation_applicability_decision:
+  schema_version: citystate.validation_applicability_decision.v1
+  task_id: os-v2-mechanism-activation-and-adherence-001
+  decision: HYBRID_VALIDATION_APPLICABLE
+  basis:
+    workflow_stage04_conceptual_rule: >-
+      被测主体来自 B，通过判据来自证据；Stage04 概念上不限定测试必须是代码。
+    current_operational_bias: >-
+      当前最小运行契约使用 frozen_test_package/tests，Stage07 使用“跑测试/PASS”措辞，
+      容易在实践中把所有结果硬塞进代码式测试，因此必须先判定结果类型和验证范式。
+  current_task_result_types:
+    architecture_and_governance_semantics:
+      modality:
+        - fresh_independent_semantic_design_review
+        - adversarial_scenario_analysis
+        - requirement_traceability_review
+      code_test_alone_sufficient: false
+    executable_mechanism_components:
+      examples:
+        - action_classifier
+        - trigger_resolver
+        - pre_action_gate
+        - compliance_receipt_validator
+        - communication_formal_dispatch_enforcement
+        - model_routing_receiver_setup_validation
+      modality:
+        - frozen_executable_tests
+        - property_tests
+        - negative_conformance_tests
+        - integration_tests
+      current_stage04_stage07_applicable: true
+    operational_effectiveness_claims:
+      modality:
+        - observed_end_to_end_evidence
+        - bypass_attempts
+        - independent_review
+      code_test_alone_sufficient: false
+  decision_rules:
+    - >-
+      验证方法必须能够因为与需求实质相关的失败原因而失败；只验证文档结构、schema 或语法不能证明方法论/策略有效。
+    - >-
+      非可执行方法论、内容策略、视频选题方法等不得默认使用代码型 Stage04 测试作为主要有效性证明。
+    - >-
+      对 methodology_or_strategy，应优先使用证据派生判据、独立评审、反例/边界案例、案例应用、比较基准、
+      必要时真实 pilot/结果反馈；具体验证方法由需求中的成功判据决定。
+    - >-
+      本任务不在设计阶段扩张为“通用 workflow validation router”实现；该缺口记录为独立后续候选，
+      除非 fresh design review 证明它是 mechanism activation 安全落地的前置条件。
+  future_candidate:
+    id: workflow-validation-modality-routing
+    status: RECORDED_NOT_STARTED
+    problem: >-
+      在 Stage03→Stage04 之间显式声明 result/validation profile，并按成功判据把每条 requirement 路由到适配的验证范式，
+      避免 frozen_test_package 语义被误读为“一切都要代码测试”。

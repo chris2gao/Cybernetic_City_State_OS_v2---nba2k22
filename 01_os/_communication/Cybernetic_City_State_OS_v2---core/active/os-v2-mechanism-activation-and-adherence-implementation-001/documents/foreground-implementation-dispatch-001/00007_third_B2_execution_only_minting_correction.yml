@@ -1,0 +1,58 @@
+document_id: os-v2-mechanism-activation-and-adherence-implementation-001-third-b2-execution-only-minting-correction-001
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+author_endpoint_id: foreground-implementation-dispatch-001
+author_task_role: foreground_implementation_dispatch
+purpose: third_bounded_B2_execution_only_provenance_minting_correction
+privacy_class: repository_shareable
+
+blocker_id: B2-ISSUANCE-PRIMITIVE-FORGEABILITY
+parent_blocker: B2-OBSERVATION-PROVENANCE-BINDING
+rejected_candidate_sha: 4e03c7a7beda4a02330f81a66a7d41d200132d17
+safe_reentry_branch_head_at_adjudication: 986a28315e2c50011f9c8406182fc18b214f62d6
+
+problem: >-
+  Candidate 4e03c7a7 correctly removed MaterialObservationContext.bind and added one-use
+  issuance ledgers, but the same module still exposes caller-constructible evidence
+  dataclasses and generic module-level _issue_expected/_issue_observed functions.
+  An ordinary Python caller can therefore construct self-consistent fake handles,
+  invoke the issuance primitives directly, and then attach them without the physical
+  expected-source resolver or observation adapter ever executing. Underscore naming is
+  not a provenance boundary.
+
+required_semantics:
+  - acceptance-valid provenance production must be inseparable from actual controlled expected-source resolver execution and authoritative observation-adapter execution
+  - ordinary acceptance callers, including callers with normal module attribute access, must not be able to register arbitrary caller-constructed facts into the trusted issuance state
+  - do not use underscore naming, public/private naming conventions, caller-supplied trusted flags, caller-supplied resolver or adapter IDs, or caller-supplied tokens as proof of execution
+  - remove or capability-seal generic issuance primitives that accept caller-constructed evidence objects
+  - preserve one-use consumption and replay rejection
+  - valid controlled physical resolver and observation adapter paths must still verify
+
+mandatory_negative_conformance:
+  - direct semantic equivalent of constructing fake expected and observed handles then invoking any generic issuance primitive must be non-PASS
+  - constructed lookalike handles without physical execution must be non-PASS
+  - forged complete Git compare must be non-PASS
+  - forged authenticated principal observation must be non-PASS
+  - forged conditional consumed-ref declaration must be non-PASS
+  - replay of a genuinely issued one-use handle must be non-PASS
+
+implementation_guidance_nonbinding: >-
+  Prefer an execution-owned minting boundary in which controlled resolver/adapter paths
+  perform the physical operation and mint/consume provenance internally. A high-level
+  verifier that invokes registered physical adapters itself is preferable to exposing a
+  generic caller-callable issuance function. If an opaque capability design is used, the
+  capability must not be constructible or registerable by an ordinary caller through
+  module attributes alone.
+
+regression_requirements:
+  - preserve architecture A and all already accepted non-B2 dimensions
+  - rerun deterministic mechanism-activation, communication, model-routing, repository gates, frozen Stage04 full and mutation suites
+  - freeze a new exact candidate SHA and candidate-bound evidence
+  - return a complete pointer-contract-v2 result to foreground
+  - fresh independent implementation acceptance remains mandatory after foreground adjudication
+
+prohibited:
+  - master publication or merge
+  - workflow or frozen T2 mutation
+  - architecture A redesign
+  - scope expansion beyond the Human-authorized implementation boundary
+  - automatic task progression, polling, delivery, or acknowledgement

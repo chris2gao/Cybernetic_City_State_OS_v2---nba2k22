@@ -1,0 +1,20 @@
+schema_version: citystate.human_implementation_authorization.v1
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+authorized_at_local: '2026-08-13T04:26:00-08:00'
+source: current_Human_conversation
+authorization:
+  decision: authorized
+  implementation_mode: bounded
+  authorized_scope_ref: 01_任务输入/拟议实现边界_v1.yml
+  master_publication_authorized: false
+  canonical_changes_within_authorized_scope: true
+  implementation_executor_dispatch_authorized: true
+  independent_acceptance_after_implementation_required: true
+constraints:
+  - do_not_expand_beyond_拟议实现边界_v1_without_new_Human_authorization
+  - do_not_modify_01_os/01_workflow/**
+  - do_not_modify_frozen_T2_or_Stage04_correction_runs
+  - do_not_change_reviewed_A_or_B_architecture_semantics_without_new_architecture_adjudication
+  - do_not_publish_or_merge_to_master
+  - do_not_introduce_automatic_delivery_polling_acknowledgement_scheduling_or_task_progression
+  - provider_model_role_or_surface_identity_grants_no_authority

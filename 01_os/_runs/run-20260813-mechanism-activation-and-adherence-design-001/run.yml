@@ -1,0 +1,71 @@
+run:
+  schema_version: citystate.run.v1
+  run_id: run-20260813-mechanism-activation-and-adherence-design-001
+  task_id: os-v2-mechanism-activation-and-adherence-001
+  phase: architecture_design
+  status: architecture_v3_fresh_independent_rereview_dispatched
+  owner: core
+  branch: dev/os-v2-mechanism-activation-and-adherence-design-001
+  exact_base_sha: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  master_at_start: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  design_v1_candidate_sha: d01fae74b90f8ca5debeae979ffcc262aa042448
+  design_v1_review_verdict: FIX_REQUIRED
+  design_v2_candidate_sha: 0ad94301cfc50c5181d5ac362b845d6bd06a41c6
+  design_v2_review_result_commit: e4f435a7fcec87bdc955be55cf9e895520bcef2c
+  design_v2_review_verdict: FIX_REQUIRED
+  design_v3_candidate_sha: 8ee72d2800a9e00539d3732464e79312e1ade613
+  objective: >-
+    建立统一 mechanism activation/adherence 架构，使 formal action 必须经过不可绕过的 constitution/mediation，
+    material physical truth 必须经过 expected-claim specification → authoritative observation → explicit comparator 的双向绑定，
+    并以 communication 作为第一条 L4 vertical slice，同时固化协作角色、Human receiver setup 与结果类型适配验证。
+  current_scope:
+    repository_writes:
+      - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-design-001/**
+      - 01_os/_communication/Cybernetic_City_State_OS_v2---core/discovery.yml
+      - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-001/**
+    canonical_mutation: prohibited_in_design_phase
+    master_publication: prohibited
+  validation_mode: hybrid
+  design_v2_review:
+    reviewer_endpoint: isolated-gpt-design-reviewer-002
+    message_id: os-v2-mechanism-activation-and-adherence-001::isolated-gpt-design-reviewer-002::00001
+    verdict: FIX_REQUIRED
+    B1_status: PASS_ARCHITECTURE_LEVEL
+    B2_status: FIX_REQUIRED_EXPECTED_OBSERVED_ROLE_BINDING
+    accepted_residual_blocker: expected_vs_observed_semantic_role_and_authenticated_actor_binding
+  design_v3_artifacts:
+    architecture: 07_FIX_REQUIRED修正/Mechanism_Activation_and_Adherence_Architecture_v3.md
+    two_sided_physical_truth_matrix: 07_FIX_REQUIRED修正/物理事实期望观察双向绑定矩阵_v1.yml
+    rereview_adjudication: 06_独立设计复审/StageDesignReview_v2接收与修正裁决_v1.yml
+    preserved_B1_contract: 05_FIX_REQUIRED修正/正式动作宪法与强制中介契约_v1.yml
+  design_v3_scope_proof:
+    compare_base: e4f435a7fcec87bdc955be55cf9e895520bcef2c
+    compare_head: 8ee72d2800a9e00539d3732464e79312e1ade613
+    files_changed: 3
+    all_under_authorized_run_root: true
+    canonical_mutation: false
+  communication:
+    carrier: GitHub
+    task_root: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-001/
+    sender_endpoint_id: foreground-architecture-001
+    prior_reviewers:
+      - isolated-gpt-design-reviewer-001
+      - isolated-gpt-design-reviewer-002
+    current_reviewer_endpoint_id: isolated-gpt-design-reviewer-003
+    v3_rereview_request_message_id: os-v2-mechanism-activation-and-adherence-001::foreground-architecture-001::00003
+    Human_review_setup_attestation_ref: Human/decisions/00003_review_setup_attestation.yml
+    automatic_delivery: false
+    automatic_task_progression: false
+  gates:
+    architecture_design_review_v1: FIX_REQUIRED_ACCEPTED
+    architecture_design_review_v2: FIX_REQUIRED_ACCEPTED_B1_CLOSED_B2_BOUNDED
+    architecture_design_v3: candidate_ready
+    fresh_v3_re_review_isolation_attestation: Human_attested_and_durable
+    fresh_v3_re_review_dispatch: complete
+    architecture_design_review_v3: waiting_fresh_isolated_GPT_result
+    implementation: blocked_until_design_review_pass
+    master_integration: blocked_until_implementation_and_independent_acceptance
+  next_action: >-
+    Human 只转交 foreground 00003 canonical GitHub relay pointer 给 reviewer-003 fresh isolated Review Project。
+    Reviewer-003 仅依据 exact GitHub evidence 独立复审 v3 candidate 8ee72d28...，区分 material blocker、non-blocking hardening 与不必要形式主义，
+    并通过 reviewer-003 sender zone 返回 durable result pointer。

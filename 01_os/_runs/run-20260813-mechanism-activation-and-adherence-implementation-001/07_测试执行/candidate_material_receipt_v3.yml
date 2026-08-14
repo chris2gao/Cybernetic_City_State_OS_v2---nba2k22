@@ -1,0 +1,317 @@
+schema_version: citystate.mechanism_activation.candidate_material_receipt.v3
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+candidate_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+supersedes_candidate_receipt_ref: 07_测试执行/candidate_material_receipt_v1.yml
+observation_set:
+  observation_set_id: os-v2-mechanism-activation-and-adherence-implementation-001::candidate-v3::8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+  action_id_or_review_id: os-v2-mechanism-activation-and-adherence-implementation-001
+  expected_claim_spec_refs:
+  - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/05_候选冻结/candidate_spec_v3.yml
+  - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/01_任务输入/任务包_v1.yml#allowed_changed_paths
+  authoritative_observation_refs:
+  - git:rev-parse:8fa49cc3a7eb082d4ffcee984652b77080d1b9f9^{commit}
+  - git:rev-parse-and-merge-base:bf538e5068381becd31e8e1daceade81e657262d..8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+  - git:diff--name-only--no-renames-z:bf538e5068381becd31e8e1daceade81e657262d..8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+  - 07_测试执行/bound_candidate_checks_v3.yml
+  - 07_测试执行/bound_candidate_checks_v3.yml#sha256=2ce3f7f32f00a0bf7e8a67fb0e5e6678002cc2a938e51064e18b97cc17b4c590
+  - 07_测试执行/frozen_stage04_full_candidate_v3.yml
+  - 07_测试执行/frozen_stage04_full_candidate_v3.yml#sha256=f571bf6dabf1beeccd05722b597b1c6e3acbef5101927f85c9c7d93b29c27606
+  - 07_测试执行/frozen_stage04_mutation_candidate_v3.yml
+  - 07_测试执行/frozen_stage04_mutation_candidate_v3.yml#sha256=d1b90912305df4a6dbbf11d6ef404bd713f7e0d5eea4270575bec6945d55a9a9
+  comparator_results:
+    implementation-candidate-v3::candidate: VERIFIED
+    implementation-candidate-v3::base: VERIFIED
+    implementation-candidate-v3::scope: VERIFIED
+    implementation-candidate-v3::deterministic-execution: VERIFIED
+    implementation-candidate-v3::deterministic-artifact: VERIFIED
+    implementation-candidate-v3::frozen-stage04::full: VERIFIED
+    implementation-candidate-v3::artifact::full: VERIFIED
+    implementation-candidate-v3::frozen-stage04::mutation-suite: VERIFIED
+    implementation-candidate-v3::artifact::mutation-suite: VERIFIED
+material_claims:
+- claim_id: implementation-candidate-v3::candidate
+  claim_role: candidate_SHA
+  action_id_or_review_id: os-v2-mechanism-activation-and-adherence-implementation-001
+  expected_claim_source_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/05_候选冻结/candidate_spec_v3.yml
+  expected_value_or_predicate: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+  observed_authoritative_source_class: actual_Git_object_database
+  observed_value: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+  exact_observation_ref: git:rev-parse:8fa49cc3a7eb082d4ffcee984652b77080d1b9f9^{commit}
+  comparator_id: exact_sha_role_equality
+  relationship_or_equality_check: observed_commit_SHA_equals_expected_semantic_role_SHA
+  verification_result: VERIFIED
+- claim_id: implementation-candidate-v3::base
+  claim_role: base_SHA
+  action_id_or_review_id: os-v2-mechanism-activation-and-adherence-implementation-001
+  expected_claim_source_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/05_候选冻结/candidate_spec_v3.yml
+  expected_value_or_predicate:
+    sha: bf538e5068381becd31e8e1daceade81e657262d
+    required_relation: ancestor_of_candidate
+  observed_authoritative_source_class: actual_Git_object_database
+  observed_value:
+    sha: bf538e5068381becd31e8e1daceade81e657262d
+    relation_satisfied: true
+  exact_observation_ref: git:rev-parse-and-merge-base:bf538e5068381becd31e8e1daceade81e657262d..8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+  comparator_id: exact_base_equality_plus_required_relation
+  relationship_or_equality_check: base_equals_spec_and_is_ancestor_of_candidate
+  verification_result: VERIFIED
+- claim_id: implementation-candidate-v3::scope
+  claim_role: changed_path_and_diff_scope
+  action_id_or_review_id: os-v2-mechanism-activation-and-adherence-implementation-001
+  expected_claim_source_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/01_任务输入/任务包_v1.yml#allowed_changed_paths
+  expected_value_or_predicate:
+    allowed_patterns:
+    - AGENTS.md
+    - 01_os/02_boot/README.md
+    - 01_os/02_boot/协作伙伴.md
+    - 01_os/02_boot/mechanism_activation/**
+    - 01_os/03_mechanisms/README.md
+    - 01_os/03_mechanisms/mechanism_activation/**
+    - 01_os/05_registry/README.md
+    - 01_os/05_registry/mechanism_activation_v1.yml
+    - 01_os/06_execution/boot/README.md
+    - 01_os/06_execution/boot/mechanism_activation/**
+    - 01_os/02_boot/communication_system/**
+    - 01_os/03_mechanisms/communication_system/**
+    - 01_os/05_registry/communication_system_v1.yml
+    - 01_os/06_execution/boot/communication_system/**
+    - 01_os/02_boot/model_routing/**
+    - 01_os/03_mechanisms/model_routing/**
+    - 01_os/05_registry/model_routing_v1.yml
+    - 01_os/06_execution/boot/model_routing/**
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/**
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/discovery.yml
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/**
+  observed_authoritative_source_class: complete_Git_compare
+  observed_value:
+    base_sha: bf538e5068381becd31e8e1daceade81e657262d
+    candidate_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+    paths:
+    - 01_os/02_boot/README.md
+    - 01_os/02_boot/communication_system/启动清单_v1.yml
+    - 01_os/02_boot/mechanism_activation/启动清单_v1.yml
+    - 01_os/02_boot/model_routing/启动清单_v1.yml
+    - 01_os/02_boot/协作伙伴.md
+    - 01_os/03_mechanisms/README.md
+    - 01_os/03_mechanisms/communication_system/Human中转指针契约_v2.yml
+    - 01_os/03_mechanisms/communication_system/README.md
+    - 01_os/03_mechanisms/communication_system/发送方区与序号契约_v1.yml
+    - 01_os/03_mechanisms/communication_system/文档与引用契约_v1.yml
+    - 01_os/03_mechanisms/communication_system/正式动作接入契约_v1.yml
+    - 01_os/03_mechanisms/communication_system/载体与发布契约_v1.yml
+    - 01_os/03_mechanisms/communication_system/通讯契约_v1.yml
+    - 01_os/03_mechanisms/mechanism_activation/README.md
+    - 01_os/03_mechanisms/mechanism_activation/机制生效等级与盘点_v1.yml
+    - 01_os/03_mechanisms/mechanism_activation/机制触发注册表_v1.yml
+    - 01_os/03_mechanisms/mechanism_activation/正式动作宪法_v1.yml
+    - 01_os/03_mechanisms/mechanism_activation/物理事实双向绑定契约_v1.yml
+    - 01_os/03_mechanisms/mechanism_activation/验证适用性契约_v1.yml
+    - 01_os/03_mechanisms/model_routing/协作角色与接收者设置契约_v1.yml
+    - 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+    - 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+    - 01_os/05_registry/README.md
+    - 01_os/05_registry/communication_system_v1.yml
+    - 01_os/05_registry/mechanism_activation_v1.yml
+    - 01_os/05_registry/model_routing_v1.yml
+    - 01_os/06_execution/boot/communication_system/README.md
+    - 01_os/06_execution/boot/communication_system/convergence/converge_task.py
+    - 01_os/06_execution/boot/communication_system/convergence/test_convergence.py
+    - 01_os/06_execution/boot/communication_system/publisher/publish_message.py
+    - 01_os/06_execution/boot/communication_system/publisher/republish_github.py
+    - 01_os/06_execution/boot/communication_system/publisher/test_github_republication.py
+    - 01_os/06_execution/boot/communication_system/publisher/test_publisher.py
+    - 01_os/06_execution/boot/communication_system/task_space_initializer/initialize_task_space.py
+    - 01_os/06_execution/boot/communication_system/validator/receiver_bootstrap.py
+    - 01_os/06_execution/boot/communication_system/validator/sender_zone.py
+    - 01_os/06_execution/boot/communication_system/validator/stage04_production_adapter.py
+    - 01_os/06_execution/boot/communication_system/validator/test_formal_activation.py
+    - 01_os/06_execution/boot/communication_system/validator/test_receiver_bootstrap.py
+    - 01_os/06_execution/boot/communication_system/validator/test_validator.py
+    - 01_os/06_execution/boot/communication_system/validator/validate_communication_system.py
+    - 01_os/06_execution/boot/mechanism_activation/README.md
+    - 01_os/06_execution/boot/mechanism_activation/__init__.py
+    - 01_os/06_execution/boot/mechanism_activation/activation.py
+    - 01_os/06_execution/boot/mechanism_activation/test_formal_action.py
+    - 01_os/06_execution/boot/mechanism_activation/test_material_claims.py
+    - 01_os/06_execution/boot/mechanism_activation/validate_mechanism_activation.py
+    - 01_os/06_execution/boot/model_routing/README.md
+    - 01_os/06_execution/boot/model_routing/route_receiver.py
+    - 01_os/06_execution/boot/model_routing/test_receiver_setup.py
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/Human/current.yml
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/constitutions/codex-implementation-executor-001/00001.yml
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/documents/codex-implementation-executor-001/00001_implementation_result.md
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/documents/codex-implementation-executor-001/00002_receiver_setup_basis.md
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/documents/foreground-implementation-dispatch-001/00001_implementation_request.md
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/endpoints/codex-implementation-executor-001.yml
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/endpoints/foreground-implementation-dispatch-001.yml
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/indexes/codex-implementation-executor-001.yml
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/indexes/foreground-implementation-dispatch-001.yml
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/manifest.yml
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/messages/codex-implementation-executor-001/00001_result.yml
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/messages/foreground-implementation-dispatch-001/00001_request.yml
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/receipts/codex-implementation-executor-001/00001.yml
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/role_context/codex-implementation-executor-001.yml
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/role_context/foreground-implementation-dispatch-001.yml
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/discovery.yml
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/01_任务输入/Human实现授权_v1.yml
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/01_任务输入/Human操作指令_v1.yml
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/01_任务输入/任务包_v1.yml
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/01_任务输入/拟议实现边界_v1.yml
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/03_方案设计/implementation_contract_trace_v1.yml
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/05_候选冻结/candidate_spec_v1.yml
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/06_执行/build_candidate_material_receipt.py
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/06_执行/formal_result_message_source_v1.yml
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/06_执行/formal_result_publication_inputs_v1.yml
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/06_执行/model_routing_preflight_receipt_v1.yml
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/06_执行/run_bound_candidate_checks.py
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/07_测试执行/baseline_checks_v1.yml
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/07_测试执行/baseline_result_v1.yml
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/07_测试执行/bound_candidate_checks_v1.yml
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/07_测试执行/candidate_material_receipt_v1.yml
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/07_测试执行/frozen_stage04_full_candidate_v1.yml
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/07_测试执行/frozen_stage04_mutation_candidate_v1.yml
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/07_测试执行/success_criterion_validation_mapping_v1.yml
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/07_测试执行/worktree_candidate_precommit_verification_v1.yml
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/08_交付/implementation_result_v1.yml
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/run.yml
+    - AGENTS.md
+    complete: true
+  exact_observation_ref: git:diff--name-only--no-renames-z:bf538e5068381becd31e8e1daceade81e657262d..8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+  comparator_id: complete_path_set_within_authorized_boundary
+  relationship_or_equality_check: complete_canonical_path_set_within_authorized_patterns
+  verification_result: VERIFIED
+- claim_id: implementation-candidate-v3::deterministic-execution
+  claim_role: execution_or_validation_result
+  action_id_or_review_id: os-v2-mechanism-activation-and-adherence-implementation-001
+  expected_claim_source_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/05_候选冻结/candidate_spec_v3.yml
+  expected_value_or_predicate:
+    candidate_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+    entrypoint: 06_执行/run_bound_candidate_checks_v3.py
+    execution_root: .
+    deterministic_tests_run: 94
+    aggregate_result: VERIFIED
+    long_path_pointer_readback: VERIFIED
+  observed_authoritative_source_class: trusted_execution_adapter
+  observed_value:
+    candidate_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+    entrypoint: 06_执行/run_bound_candidate_checks_v3.py
+    execution_root: .
+    deterministic_tests_run: 94
+    aggregate_result: VERIFIED
+    long_path_pointer_readback: VERIFIED
+  exact_observation_ref: 07_测试执行/bound_candidate_checks_v3.yml
+  comparator_id: execution_result_bound_to_expected_candidate_inputs_and_entrypoint
+  relationship_or_equality_check: bound_deterministic_and_pointer_readback_equal_spec
+  verification_result: VERIFIED
+- claim_id: implementation-candidate-v3::deterministic-artifact
+  claim_role: durable_evidence_artifact
+  action_id_or_review_id: os-v2-mechanism-activation-and-adherence-implementation-001
+  expected_claim_source_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/05_候选冻结/candidate_spec_v3.yml
+  expected_value_or_predicate:
+    candidate_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+    schema_version: citystate.mechanism_activation.bound_candidate_checks.v3
+    aggregate_result: VERIFIED
+  observed_authoritative_source_class: exact_local_filesystem_observation
+  observed_value:
+    candidate_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+    schema_version: citystate.mechanism_activation.bound_candidate_checks.v3
+    aggregate_result: VERIFIED
+    sha256: 2ce3f7f32f00a0bf7e8a67fb0e5e6678002cc2a938e51064e18b97cc17b4c590
+  exact_observation_ref: 07_测试执行/bound_candidate_checks_v3.yml#sha256=2ce3f7f32f00a0bf7e8a67fb0e5e6678002cc2a938e51064e18b97cc17b4c590
+  comparator_id: byte_integrity_and_semantic_role_binding
+  relationship_or_equality_check: artifact_semantics_bind_final_candidate
+  verification_result: VERIFIED
+- claim_id: implementation-candidate-v3::frozen-stage04::full
+  claim_role: execution_or_validation_result
+  action_id_or_review_id: os-v2-mechanism-activation-and-adherence-implementation-001
+  expected_claim_source_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/05_候选冻结/candidate_spec_v3.yml
+  expected_value_or_predicate:
+    candidate_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+    entrypoint: 01_os/06_execution/boot/communication_system/validator/run_frozen_stage04_tests.py
+    execution_root: .
+    test_package_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+    mode: full
+    total: 50
+    passed: 50
+    failed: 0
+  observed_authoritative_source_class: trusted_execution_adapter
+  observed_value:
+    candidate_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+    entrypoint: 01_os/06_execution/boot/communication_system/validator/run_frozen_stage04_tests.py
+    execution_root: .
+    test_package_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+    mode: full
+    total: 50
+    passed: 50
+    failed: 0
+  exact_observation_ref: 07_测试执行/frozen_stage04_full_candidate_v3.yml
+  comparator_id: execution_result_bound_to_expected_candidate_inputs_and_entrypoint
+  relationship_or_equality_check: frozen_execution_matches_candidate_and_package_spec
+  verification_result: VERIFIED
+- claim_id: implementation-candidate-v3::artifact::full
+  claim_role: durable_evidence_artifact
+  action_id_or_review_id: os-v2-mechanism-activation-and-adherence-implementation-001
+  expected_claim_source_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/05_候选冻结/candidate_spec_v3.yml
+  expected_value_or_predicate:
+    candidate_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+    mode: full
+    test_package_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+  observed_authoritative_source_class: exact_local_filesystem_observation
+  observed_value:
+    candidate_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+    mode: full
+    test_package_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+    sha256: f571bf6dabf1beeccd05722b597b1c6e3acbef5101927f85c9c7d93b29c27606
+  exact_observation_ref: 07_测试执行/frozen_stage04_full_candidate_v3.yml#sha256=f571bf6dabf1beeccd05722b597b1c6e3acbef5101927f85c9c7d93b29c27606
+  comparator_id: byte_integrity_and_semantic_role_binding
+  relationship_or_equality_check: artifact_internal_bindings_match_candidate_spec
+  verification_result: VERIFIED
+- claim_id: implementation-candidate-v3::frozen-stage04::mutation-suite
+  claim_role: execution_or_validation_result
+  action_id_or_review_id: os-v2-mechanism-activation-and-adherence-implementation-001
+  expected_claim_source_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/05_候选冻结/candidate_spec_v3.yml
+  expected_value_or_predicate:
+    candidate_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+    entrypoint: 01_os/06_execution/boot/communication_system/validator/run_frozen_stage04_tests.py
+    execution_root: .
+    test_package_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+    mode: mutation-suite
+    total: 50
+    passed: 50
+    failed: 0
+  observed_authoritative_source_class: trusted_execution_adapter
+  observed_value:
+    candidate_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+    entrypoint: 01_os/06_execution/boot/communication_system/validator/run_frozen_stage04_tests.py
+    execution_root: .
+    test_package_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+    mode: mutation-suite
+    total: 50
+    passed: 50
+    failed: 0
+  exact_observation_ref: 07_测试执行/frozen_stage04_mutation_candidate_v3.yml
+  comparator_id: execution_result_bound_to_expected_candidate_inputs_and_entrypoint
+  relationship_or_equality_check: frozen_execution_matches_candidate_and_package_spec
+  verification_result: VERIFIED
+- claim_id: implementation-candidate-v3::artifact::mutation-suite
+  claim_role: durable_evidence_artifact
+  action_id_or_review_id: os-v2-mechanism-activation-and-adherence-implementation-001
+  expected_claim_source_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/05_候选冻结/candidate_spec_v3.yml
+  expected_value_or_predicate:
+    candidate_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+    mode: mutation-suite
+    test_package_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+  observed_authoritative_source_class: exact_local_filesystem_observation
+  observed_value:
+    candidate_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+    mode: mutation-suite
+    test_package_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+    sha256: d1b90912305df4a6dbbf11d6ef404bd713f7e0d5eea4270575bec6945d55a9a9
+  exact_observation_ref: 07_测试执行/frozen_stage04_mutation_candidate_v3.yml#sha256=d1b90912305df4a6dbbf11d6ef404bd713f7e0d5eea4270575bec6945d55a9a9
+  comparator_id: byte_integrity_and_semantic_role_binding
+  relationship_or_equality_check: artifact_internal_bindings_match_candidate_spec
+  verification_result: VERIFIED
+aggregate_result: VERIFIED
+generated_at_utc: '2026-08-13T14:11:05.925804+00:00'
+receipt_role: binding_index_only
+authority_effect: none

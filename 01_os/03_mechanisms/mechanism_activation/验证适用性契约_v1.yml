@@ -1,0 +1,19 @@
+schema_version: citystate.mechanism_activation.validation_applicability.v1
+mechanism_version: 1
+profile: hybrid
+success_criterion_modalities:
+  architecture_and_governance_semantics:
+    - fresh_independent_semantic_review
+    - adversarial_scenarios
+    - requirement_traceability
+  executable_components:
+    - unit_tests
+    - property_tests
+    - integration_tests
+    - negative_conformance_tests
+  operational_effectiveness:
+    - observed_end_to_end_evidence
+    - bypass_attempts
+    - fresh_independent_acceptance
+code_test_alone_proves_non_code_methodology: false
+generic_workflow_validation_modality_router_in_scope: false

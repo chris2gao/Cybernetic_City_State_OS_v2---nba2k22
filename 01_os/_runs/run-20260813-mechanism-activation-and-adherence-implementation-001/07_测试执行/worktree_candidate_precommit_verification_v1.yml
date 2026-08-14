@@ -1,0 +1,51 @@
+schema_version: citystate.mechanism_activation.worktree_precommit_verification.v1
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+observed_at: '2026-08-13T05:28:55-08:00'
+evidence_role: precommit_regression_only
+acceptance_effect: none
+worktree_parent_sha: fb3eb0ab972721f930ac15616a21e6a8427cfdb4
+remote_task_branch_head_before_candidate: fb3eb0ab972721f930ac15616a21e6a8427cfdb4
+remote_master_head_observed: 9492fc940c58784297dc92d8602e5dfaad446d1a
+commands:
+  - id: activation_static
+    argv: [python, 01_os/06_execution/boot/mechanism_activation/validate_mechanism_activation.py, static, .]
+    exit_code: 0
+    result: validation_passed
+  - id: activation_tests
+    argv: [python, -m, unittest, discover, -s, 01_os/06_execution/boot/mechanism_activation, -p, 'test_*.py', -v]
+    exit_code: 0
+    observed: {tests_run: 22, failures: 0, errors: 0}
+  - id: communication_static
+    argv: [python, 01_os/06_execution/boot/communication_system/validator/validate_communication_system.py, static, .]
+    exit_code: 0
+    result: validation_passed
+  - id: communication_tests
+    argv: [python, -m, unittest, discover, -s, 01_os/06_execution/boot/communication_system, -p, 'test_*.py', -v]
+    exit_code: 0
+    observed: {tests_run: 61, failures: 0, errors: 0}
+  - id: model_routing_static
+    argv: [python, 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py, static, .]
+    exit_code: 0
+    result: validation_passed
+  - id: model_routing_tests
+    argv: [python, -m, unittest, discover, -s, 01_os/06_execution/boot/model_routing, -p, 'test_*.py', -v]
+    exit_code: 0
+    observed: {tests_run: 4, failures: 0, errors: 0}
+  - id: repository_default_gates
+    argv: [python, 01_os/06_execution/task_discipline/quiet_verify/quiet_verify.py, --repo-root, .]
+    exit_code: 0
+    observed: {checks_passed: 4, checks_total: 4}
+  - id: diff_check
+    argv: [git, diff, --check]
+    exit_code: 0
+    observed: no_output
+aggregate:
+  result: PASS
+  deterministic_tests_passed: 87
+  deterministic_tests_failed: 0
+limitations:
+  - This observation precedes the immutable candidate commit and does not substitute for commit-bound frozen execution evidence.
+  - Independent semantic acceptance remains a successor action; no L4 operationally_active claim is made.
+workspace_exclusions:
+  policy: pre_existing_untracked_paths_outside_task_allowlist_were_not_staged_or_modified
+  count: 22

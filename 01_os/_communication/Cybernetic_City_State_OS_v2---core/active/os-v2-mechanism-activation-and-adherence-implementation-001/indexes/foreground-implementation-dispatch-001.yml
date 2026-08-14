@@ -1,0 +1,56 @@
+- sequence: '00001'
+  message_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00001
+  title: Bounded implementation of Mechanism Activation and Adherence
+  message_type: request
+  expected_recipient_endpoint_id: codex-implementation-executor-001
+  expected_recipient_task_role: implementation_executor
+  exact_message_path: messages/foreground-implementation-dispatch-001/00001_request.yml
+- sequence: '00002'
+  message_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00002
+  title: Fresh independent implementation acceptance of Mechanism Activation and Adherence
+  message_type: request
+  expected_recipient_endpoint_id: isolated-gpt-implementation-reviewer-001
+  expected_recipient_task_role: independent_implementation_acceptance_reviewer
+  exact_message_path: messages/foreground-implementation-dispatch-001/00002_request.yml
+- sequence: '00003'
+  message_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00003
+  title: Bounded B2 observation-provenance binding correction
+  message_type: request
+  expected_recipient_endpoint_id: codex-implementation-executor-001
+  expected_recipient_task_role: implementation_executor
+  exact_message_path: messages/foreground-implementation-dispatch-001/00003_request.yml
+- sequence: '00004'
+  message_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00004
+  title: Corrected B2 observation-provenance relay
+  message_type: correction
+  expected_recipient_endpoint_id: codex-implementation-executor-001
+  expected_recipient_task_role: implementation_executor
+  exact_message_path: messages/foreground-implementation-dispatch-001/00004_correction.yml
+- sequence: '00005'
+  message_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00005
+  title: Fresh independent B2 implementation re-acceptance
+  message_type: request
+  expected_recipient_endpoint_id: isolated-gpt-implementation-reviewer-002
+  expected_recipient_task_role: independent_implementation_acceptance_reviewer
+  exact_message_path: messages/foreground-implementation-dispatch-001/00005_request.yml
+- sequence: '00006'
+  message_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00006
+  title: Second B2 provenance-minting correction
+  message_type: correction
+  expected_recipient_endpoint_id: codex-implementation-executor-001
+  expected_recipient_task_role: implementation_executor
+  exact_message_path: messages/foreground-implementation-dispatch-001/00006_correction.yml
+- sequence: '00007'
+  message_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00007
+  title: Third B2 execution-only provenance-minting correction
+  message_type: correction
+  expected_recipient_endpoint_id: codex-implementation-executor-001
+  expected_recipient_task_role: implementation_executor
+  exact_message_path: messages/foreground-implementation-dispatch-001/00007_correction.yml
+- sequence: '00008'
+  message_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00008
+  title: Fresh independent third-B2 implementation re-acceptance
+  message_type: request
+  expected_recipient_endpoint_id: isolated-gpt-implementation-reviewer-003
+  expected_recipient_task_role: independent_implementation_acceptance_reviewer
+  exact_message_path: messages/foreground-implementation-dispatch-001/00008_request.yml

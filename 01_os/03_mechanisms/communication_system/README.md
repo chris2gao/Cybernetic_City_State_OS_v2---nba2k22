@@ -11,5 +11,8 @@ Human 明确要求或整任务收敛时，才由获授权执行者把 `repositor
 当前任务分支的 `01_os/_communication/<repository_id>/`。本 Stage06 不在该逻辑载体中
 创建任何 live state。
 
-当前契约版本为 `citystate.communication.contract.v1`。启动入口、验证器和人工发布工具
-位于 `01_os/06_execution/boot/communication_system/`。
+结构主契约仍为 `citystate.communication.contract.v1`；新 formal action 接入使用
+`正式动作接入契约_v1.yml` 与 `Human中转指针契约_v2.yml`。新发布必须经过
+mechanism-activation resolver/gate，产生 sender-owned constitution evidence 与 compliance
+receipt，并输出带 receiver setup 的 v2 pointer。九字段 v1 pointer 仅供显式历史读取。
+启动入口、验证器和人工发布工具位于 `01_os/06_execution/boot/communication_system/`。

@@ -55,7 +55,10 @@ Body.
             }
             path = root / "messages/sender-01/00001_result.yml"
             path.write_text(yaml.safe_dump(message, sort_keys=False), encoding="utf-8")
-            result = load_receiver_context(root, "receiver-01", "messages/sender-01/00001_result.yml")
+            result = load_receiver_context(
+                root, "receiver-01", "messages/sender-01/00001_result.yml",
+                allow_legacy_v1=True,
+            )
             self.assertEqual(result["read_paths"], [
                 "manifest.yml", "endpoints/receiver-01.yml", "roles/review.md",
                 "messages/sender-01/00001_result.yml", "documents/sender-01/doc.md",
@@ -72,7 +75,7 @@ Body.
             "required_refs": ["../outside.md"],
         }
         with TemporaryDirectory() as temp:
-            with self.assertRaisesRegex(CommunicationValidationError, "outside_task_root"):
+            with self.assertRaisesRegex(CommunicationValidationError, "noncanonical"):
                 validator.validate_message(message, task_root=Path(temp))
 
     def test_endpoint_card_is_bound_to_selected_receiver(self):
@@ -102,7 +105,10 @@ Body.
             path = root / "messages/sender-01/00001_result.yml"
             path.write_text(yaml.safe_dump(message, sort_keys=False), encoding="utf-8")
             with self.assertRaisesRegex(CommunicationValidationError, "bootstrap_recipient_endpoint_mismatch"):
-                load_receiver_context(root, "receiver-01", "messages/sender-01/00001_result.yml")
+                load_receiver_context(
+                    root, "receiver-01", "messages/sender-01/00001_result.yml",
+                    allow_legacy_v1=True,
+                )
 
 
 if __name__ == "__main__":

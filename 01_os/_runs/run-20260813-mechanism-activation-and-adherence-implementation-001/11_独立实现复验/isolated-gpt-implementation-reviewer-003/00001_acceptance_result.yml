@@ -1,0 +1,68 @@
+schema_version: citystate.independent_implementation_reacceptance.v1
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+reviewer_endpoint_id: isolated-gpt-implementation-reviewer-003
+reviewer_task_role: independent_implementation_acceptance_reviewer
+candidate_sha: 15652d7019c35702444a1944bb5f4b754f4fdad7
+candidate_base_sha: bf538e5068381becd31e8e1daceade81e657262d
+evidence_snapshot_sha: c6fb57e35eb7fe8c14d19fe27c9df7a5952d49dd
+dispatch_snapshot_sha: beae3b3d7a50f3fe27c5d9e72dabe812f88b583b
+reviewed_architecture_sha: 8ee72d2800a9e00539d3732464e79312e1ade613
+architecture_acceptance_sha: b40f63ca49393546aa415dbbe1f0c38bbf72a001
+verdict: PASS
+material_blockers: []
+review_scope:
+  threat_model: ordinary_acceptance_API_and_module_attribute_surface
+  excluded_as_unnecessary_formalism:
+    - arbitrary_same_process_reflection
+    - closure_cell_extraction
+    - monkey_patching
+    - interpreter_compromise
+    - general_security_sandbox
+B2_reacceptance:
+  blocker_id: B2-ISSUANCE-PRIMITIVE-FORGEABILITY
+  parent_blocker: B2-OBSERVATION-PROVENANCE-BINDING
+  rejected_candidate_sha: 4e03c7a7beda4a02330f81a66a7d41d200132d17
+  generic_issuance_or_attachment_surface_on_ordinary_module_boundary: not_found
+  caller_constructible_evidence_handle_attachment_path: not_found
+  standalone_trusted_binding_construction_changes_context: false
+  direct_generic_issuance_without_execution: UNVERIFIABLE
+  constructed_lookalike_handles: UNVERIFIABLE
+  forged_complete_Git_compare: UNVERIFIABLE
+  forged_authenticated_principal: UNVERIFIABLE
+  forged_conditional_consumed_ref: UNVERIFIABLE
+  controlled_physical_path: VERIFIED
+  duplicate_binding_or_replay: TRUSTED_CLAIM_BINDING_DUPLICATE
+  assessment: PASS
+implementation_observations:
+  execution_kernel_provenance_storage_closure_owned: true
+  private_generic_commit_and_finish_functions_exported: false
+  material_observation_context_exposes_binding_mutator: false
+  public_trusted_binding_dataclass_is_attachable_via_ordinary_API: false
+  high_level_observers_resolve_expected_source_and_observe_physical_source_before_binding: true
+  receipt_without_bound_observation_context_can_verify: false
+preserved_dimensions:
+  formal_action_mandatory_mediation_A: PASS
+  communication_pointer_v2_and_receiver_replay: PASS
+  model_routing_grants_authority: false
+  candidate_base_relation: PASS
+  Human_authorized_changed_path_scope: PASS
+  deterministic_tests: 102_of_102
+  frozen_stage04_full: 50_of_50
+  frozen_stage04_mutation: 50_of_50
+  material_claims: 9_of_9_VERIFIED
+  premature_L4_or_operationally_active_claim: not_found
+  hybrid_validation_boundary: PASS
+  automatic_delivery_polling_acknowledgement_or_task_progression: not_found
+  master_modified_or_published_by_reviewer: false
+evidence_refs:
+  - c6fb57e35eb7fe8c14d19fe27c9df7a5952d49dd:01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/05_候选冻结/candidate_spec_v6.yml
+  - c6fb57e35eb7fe8c14d19fe27c9df7a5952d49dd:01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/07_测试执行/bound_candidate_checks_v6.yml
+  - c6fb57e35eb7fe8c14d19fe27c9df7a5952d49dd:01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/07_测试执行/candidate_material_receipt_v6.yml
+  - c6fb57e35eb7fe8c14d19fe27c9df7a5952d49dd:01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/07_测试执行/third_B2_exact_ref_replay_v1.yml
+  - 15652d7019c35702444a1944bb5f4b754f4fdad7:01_os/06_execution/boot/mechanism_activation/activation.py
+  - 15652d7019c35702444a1944bb5f4b754f4fdad7:01_os/06_execution/boot/mechanism_activation/test_material_claims.py
+non_blocking_hardening: []
+unnecessary_formalism:
+  - hardening_against_arbitrary_same_process_reflection_is_outside_the_accepted_review_threat_model
+master_publication_authorized: false
+authority_effect: none

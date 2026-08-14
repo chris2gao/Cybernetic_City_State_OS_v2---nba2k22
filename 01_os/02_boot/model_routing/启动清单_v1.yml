@@ -8,6 +8,8 @@ load_order:
     purpose: mechanism boundary and Human-facing navigation
   - path: 01_os/03_mechanisms/model_routing/路由契约_v1.yml
     purpose: stable routing input output and authority contract
+  - path: 01_os/03_mechanisms/model_routing/协作角色与接收者设置契约_v1.yml
+    purpose: stable collaboration roles and Human-visible receiver setup field contract
   - path: 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
     purpose: current evidence-backed model and product-surface facts
   - path: 01_os/03_mechanisms/model_routing/项目观察证据_v1.yml
@@ -15,6 +17,7 @@ load_order:
   - path: 01_os/03_mechanisms/model_routing/来源索引_v1.yml
     purpose: canonical resolution of catalog evidence tokens to auditable source identities
 validator: 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py
+receiver_setup_builder: 01_os/06_execution/boot/model_routing/route_receiver.py
 registry: 01_os/05_registry/model_routing_v1.yml
 invocation: explicit_Human_or_authorized_task_executor_only
 background_processes_started: false
@@ -26,3 +29,4 @@ receipt_required:
   - loaded_paths
   - validator_exit_code
   - selected_route_executor_profile_ref
+  - receiver_setup

@@ -1,0 +1,98 @@
+schema_version: citystate.formal_action.constitution_evidence.v1
+action_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00003
+action_class: formal_cross_endpoint_task_dispatch
+sender_endpoint_id: foreground-implementation-dispatch-001
+intended_recipient_endpoint_id: codex-implementation-executor-001
+classification_basis_ref: documents/foreground-implementation-dispatch-001/00003_B2_observation_provenance_correction_request.md
+required_mechanisms:
+  - communication_system
+  - model_routing
+resolver_result_ref: constitutions/foreground-implementation-dispatch-001/00003.yml#resolution
+gate_result_ref: constitutions/foreground-implementation-dispatch-001/00003.yml#gate
+mechanism_execution_ref: 01_os/06_execution/boot/communication_system/publisher/publish_message.py
+formal_artifact_ref: messages/foreground-implementation-dispatch-001/00003_request.yml
+activation_context:
+  intended_cross_endpoint_side_effect: true
+  actionable_content: true
+  formal_state_claim: false
+  communication_context_ref: manifest.yml
+  classification_basis_ref: documents/foreground-implementation-dispatch-001/00003_B2_observation_provenance_correction_request.md
+  requires_receiver_selection: true
+  collaboration_role: execution
+  risk_tier: T2_semantic_correction
+  task_shape: bounded_B2_observation_provenance_binding_correction
+  required_capabilities:
+    - local_repository_read_write
+    - Python_execution
+    - Git_local_publication
+    - trusted_observation_adapter_implementation
+    - negative_conformance_testing
+  routing_basis_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/01_任务输入/任务包_v1.yml#executor_profile
+  availability_assumption_or_observation_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/01_任务输入/任务包_v1.yml#executor_profile
+  action_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00003
+  formal_message_type: request
+  task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+  sender_endpoint_id: foreground-implementation-dispatch-001
+  intended_recipient_endpoint_id: codex-implementation-executor-001
+mechanism_preconditions:
+  communication_system:
+    verification_result: VERIFIED
+    evidence_ref: manifest.yml
+    freshness_required: true
+    freshness_result: VERIFIED
+  model_routing:
+    verification_result: VERIFIED
+    evidence_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/01_任务输入/任务包_v1.yml
+resolution:
+  classification: formal_cross_endpoint_action
+  action_class: formal_cross_endpoint_task_dispatch
+  formal: true
+  formal_segment_indexes:
+    - 0
+  mixed_action_segmented: false
+  authority_effect: none
+  action_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00003
+  normalized_recipient_endpoint_id: codex-implementation-executor-001
+  required_mechanisms:
+    - communication_system
+    - model_routing
+  missing_preconditions: []
+  route_requirements:
+    - receiver_setup
+  action_allowed_to_enter_enforcement: true
+  ordinary_Human_discussion_allowed: false
+gate:
+  gate_result: VERIFIED
+  action_id: os-v2-mechanism-activation-and-adherence-implementation-001::foreground-implementation-dispatch-001::00003
+  action_class: formal_cross_endpoint_task_dispatch
+  required_mechanisms:
+    - communication_system
+    - model_routing
+  verified_precondition_refs:
+    communication_system: manifest.yml
+    model_routing: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/01_任务输入/任务包_v1.yml
+  blocking_failures: []
+  authority_effect: none
+receiver_setup:
+  collaboration_role: execution
+  provider: OpenAI
+  product: Codex Desktop
+  surface: codex_desktop
+  model: GPT-5.6 Sol
+  reasoning_or_parameter_profile: codex_sol_strongest_exposed
+  session_mode: explicit_reentry
+  isolation_level: task_scoped_local_worktree
+  repository_access_mode: local_worktree
+  repository_or_worktree_requirement: existing_task_worktree_at_review_FIX_REQUIRED_head_58078dbf
+  required_branch_or_sha: 58078dbf8100dd54f0f0bed1ad0f31eada71b163
+  local_files_required: true
+  github_publication_required_before_start: true
+  communication_carrier: GitHub
+  routing_basis_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/01_任务输入/任务包_v1.yml#executor_profile
+  availability_assumption_or_observation_ref: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/01_任务输入/任务包_v1.yml#executor_profile
+  limitations:
+    - routing_grants_no_authority
+    - reasoning_high_default
+    - max_escalation_blocker_local_only
+    - no_master_publication_authority
+    - preserve_A_and_already_passed_dimensions

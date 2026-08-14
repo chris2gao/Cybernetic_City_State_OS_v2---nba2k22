@@ -1,0 +1,15 @@
+Human_authorization:
+  schema_version: citystate.Human_authorization.v1
+  task_id: os-v2-mechanism-activation-and-adherence-001
+  source: current_Human_conversation
+  Human_instruction: "好的，请建立。"
+  authorized_action: establish_formal_communication_context_for_design_review
+  granted: true
+  scope:
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/discovery.yml
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-001/**
+  purpose: >-
+    建立当前任务的 GitHub carrier communication context，并向隔离 Review Project 的 fresh GPT
+    发布正式 architecture design review request。该授权不允许 canonical mutation、master publication、
+    自动 delivery、自动 acknowledgement 或自动 task progression。
+  authority_effect_outside_scope: none

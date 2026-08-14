@@ -1,0 +1,44 @@
+schema_version: citystate.mechanism_activation.implementation_candidate_spec.v4
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+candidate_role: B2_observation_provenance_binding_corrected_candidate_for_fresh_independent_acceptance
+candidate_sha: 67c668d038c94e4de9935d0ee0bab3cb526d6c6e
+base_sha: bf538e5068381becd31e8e1daceade81e657262d
+required_base_relation: ancestor_of_candidate
+source_branch: dev/os-v2-mechanism-activation-and-adherence-implementation-001
+supersedes: 05_候选冻结/candidate_spec_v3.yml
+correction_request_ref: >-
+  25d5f660fd5aaaf85cd072cc539fea70f1cb0f4f:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/messages/foreground-implementation-dispatch-001/00004_correction.yml
+accepted_blocker: B2-OBSERVATION-PROVENANCE-BINDING
+correction_outcomes:
+  - material acceptance requires an explicit trusted observation context external to the receipt
+  - expected source identity and value are bound to a trusted resolver result
+  - exact observation ref source class and value are bound to a trusted adapter result
+  - principal and freshness conditional refs must be consumed by that adapter context
+  - receipt-only values labels completeness actors hashes and SHAs fail closed
+  - publisher and receiver independently bind communication materialization facts
+preserved_dimensions:
+  - formal_action_mandatory_mediation_A
+  - quoted_or_template_false_positive_boundary
+  - resolver_and_gate_fail_closed
+  - communication_context_fail_closed
+  - pointer_v2_and_receiver_replay
+  - model_routing_grants_no_authority
+  - no_automatic_delivery_polling_ack_scheduling_or_progression
+allowed_changed_paths_ref: ../01_任务输入/任务包_v1.yml#allowed_changed_paths
+required_validation:
+  deterministic:
+    entrypoint: 06_执行/run_bound_candidate_checks_v4.py
+    expected_tests: 101
+    exact_old_pointer_long_path_readback: VERIFIED
+    exact_corrected_dispatch_pointer_readback: VERIFIED
+    B2_counterexamples_expected: UNVERIFIABLE
+  frozen_stage04:
+    entrypoint: 01_os/06_execution/boot/communication_system/validator/run_frozen_stage04_tests.py
+    frozen_test_package_sha256: 2bd1fb7237cbb95527b9cae75542c7e81a1412be393307b8b96b7c96a7c7a70b
+    modes: [full, mutation-suite]
+    expected_each: {total: 50, passed: 50, failed: 0}
+acceptance_requirement:
+  independent_reviewer: fresh_independent_implementation_acceptance_endpoint
+  candidate_must_not_be_replaced_by_source_branch_head: true
+  L4_or_operationally_active_claim_before_independent_acceptance: prohibited
+authority_effect: none

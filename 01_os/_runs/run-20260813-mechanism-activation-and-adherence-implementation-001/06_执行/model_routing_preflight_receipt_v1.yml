@@ -1,0 +1,40 @@
+schema_version: citystate.model_routing.preflight_receipt.v1
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+observed_at_local: '2026-08-13'
+mechanism_version: 1
+catalog_version: 1
+source_index_version: 1
+loaded_paths:
+  - 01_os/03_mechanisms/model_routing/README.md
+  - 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+  - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+  - 01_os/03_mechanisms/model_routing/项目观察证据_v1.yml
+  - 01_os/03_mechanisms/model_routing/来源索引_v1.yml
+validator:
+  command: python 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py static .
+  exit_code: 0
+  result: validation_passed
+selected_route:
+  role: execution
+  risk_tier: T2_semantic
+  task_shape: canonical_mechanism_implementation_and_negative_conformance
+  required_capabilities:
+    - local_repository_read_write
+    - Python_execution
+    - Git_local_publication
+    - semantic_contract_implementation
+  provider: OpenAI
+  surface: codex_desktop
+  model: GPT-5.6 Sol
+  parameter_profile: codex_sol_strongest_exposed
+  reasoning_setting: high
+  mode: standard
+  availability_assumption: registered_default_available
+  routing_basis: strongest_registered_local_coding_task_fit_for_T2_implementation
+  evidence_refs:
+    - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml#entries[provider=OpenAI,surface_id=codex_desktop,model_label=GPT-5.6_Sol]
+    - 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+  limitations:
+    - runtime_product_identity_is_not_authority
+    - final_acceptance_requires_fresh_independent_reviewer
+  authority: routing_only

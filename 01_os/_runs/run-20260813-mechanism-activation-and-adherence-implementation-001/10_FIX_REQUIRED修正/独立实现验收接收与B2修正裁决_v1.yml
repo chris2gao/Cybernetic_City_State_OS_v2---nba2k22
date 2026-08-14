@@ -1,0 +1,57 @@
+schema_version: citystate.implementation_acceptance_adjudication.v1
+task_id: os-v2-mechanism-activation-and-adherence-implementation-001
+review_evidence_snapshot_sha: 58078dbf8100dd54f0f0bed1ad0f31eada71b163
+reviewed_candidate_sha: 8fa49cc3a7eb082d4ffcee984652b77080d1b9f9
+review_verdict: FIX_REQUIRED
+foreground_adjudication: ACCEPT_FIX_REQUIRED
+accepted_material_blocker:
+  blocker_id: B2-OBSERVATION-PROVENANCE-BINDING
+  finding: >-
+    Generic material-claim acceptance currently validates claim structure, allowed source-class labels,
+    non-empty refs, and claim-provided expected/observed values, but does not itself resolve the
+    expected claim source and consume the physical observation named by exact_observation_ref.
+  architecture_effect: no_architecture_reopen_required
+  implementation_effect: bounded_B2_correction_required
+required_correction_outcome:
+  - material acceptance must obtain expected facts from the referenced authoritative expected source or a trusted supplied expected context
+  - material acceptance must obtain observed facts from a trusted observation adapter or externally supplied observation context
+  - receipt-provided source labels refs completeness flags actor values and observed values cannot independently establish VERIFIED
+  - unresolved expected source or absent/unconsumed physical observation must return UNVERIFIABLE
+  - add negative tests for non-resolving expected refs self-consistent but unobserved Git/scope facts and unconsumed authenticated-principal claims
+  - preserve existing explicit comparators and fail-closed aggregate semantics
+preserved_pass_dimensions:
+  - formal_action_mandatory_mediation_A
+  - quoted_or_template_false_positive_boundary
+  - resolver_and_gate_fail_closed
+  - communication_context_fail_closed
+  - pointer_v2_and_receiver_replay
+  - candidate_base_and_diff_scope
+  - model_routing_grants_no_authority
+  - no_premature_L4_or_operationally_active_claim
+  - no_automatic_delivery_polling_ack_scheduling_or_progression
+  - hybrid_validation_result_type_awareness
+correction_scope:
+  use_existing_Human_authorized_boundary: true
+  preferred_paths:
+    - 01_os/03_mechanisms/mechanism_activation/**
+    - 01_os/06_execution/boot/mechanism_activation/**
+    - 01_os/06_execution/boot/communication_system/validator/**
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-implementation-001/**
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-implementation-001/**
+  architecture_A_or_B_semantics_change: prohibited
+  workflow_mutation: prohibited
+  frozen_T2_mutation: prohibited
+  master_publication: prohibited
+execution_policy:
+  executor_endpoint_id: codex-implementation-executor-001
+  model: GPT-5.6 Sol
+  reasoning_default: high
+  max_escalation: blocker_local_only_if_high_cannot_converge
+  whole_task_max: prohibited_by_default
+validation_policy:
+  reproduce_reviewer_counterexamples_before_fix: required
+  existing_pass_dimensions_regression_check: required
+  fresh_independent_acceptance_after_new_candidate: required
+review_publication_note: >-
+  Reviewer durable acceptance evidence and result message are valid evidence at 58078dbf..., but reviewer pointer-contract-v2 publication closure is incomplete because reviewer receipt/index were not published. This does not convert the incomplete pointer into a valid v2 relay artifact.
+authority_effect: none

@@ -1,0 +1,45 @@
+task_packet:
+  schema_version: citystate.task_packet.v1
+  task_id: os-v2-mechanism-activation-and-adherence-001
+  task_kind: OS_global_architecture_design
+  objective: >-
+    设计一个统一、可执行验证的 mechanism activation/adherence 层，解决 mechanism definition/boot awareness
+    与真实模型行为之间的缺口；使跨模型协作角色、路由设置、formal communication trigger、pre-action gate、
+    compliance receipt 和 mechanism effectiveness inventory 形成可独立审核的架构。
+  exact_base_sha: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  branch: dev/os-v2-mechanism-activation-and-adherence-design-001
+  run_root: 01_os/_runs/run-20260813-mechanism-activation-and-adherence-design-001/
+  allowed_changed_paths:
+    - 01_os/_runs/run-20260813-mechanism-activation-and-adherence-design-001/**
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/discovery.yml
+    - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-mechanism-activation-and-adherence-001/**
+  Human_scope_expansion_ref: 01_任务输入/Human通讯空间建立授权_v1.yml
+  prohibited_in_this_phase:
+    - AGENTS.md mutation
+    - canonical mechanism mutation
+    - workflow canonical mutation
+    - registry mutation
+    - execution code mutation
+    - master mutation
+    - T2 frozen branch mutation
+    - communication automatic delivery or automatic task progression
+  architecture_questions:
+    - how mandatory mechanism triggers are declared and resolved
+    - how policy decision is separated from enforcement
+    - how bypass attempts fail closed
+    - how execution creates verifiable compliance receipts
+    - how communication formal dispatch becomes trigger-bound rather than context-optional
+    - how model collaboration roles and Human receiver setup are initialized and routed
+    - how mechanism effectiveness is measured from DEFINED through operationally verified
+    - how validation modality is selected based on result/output type rather than assuming code tests
+  deliverables:
+    - architecture_v1
+    - validation_applicability_decision_v1
+    - collaboration_role_and_receiver_setup_design_v1
+    - mechanism_effectiveness_and_trigger_design_v1
+    - external_pattern_comparison_v1
+    - independent_design_review_dispatch_after_design_freeze
+  completion_condition_for_this_phase: >-
+    Architecture design package is complete, internally traceable to Human directives and repo constraints, and frozen for a fresh isolated GPT design review.
+  implementation_authorized: false
+  master_publication_authorized: false

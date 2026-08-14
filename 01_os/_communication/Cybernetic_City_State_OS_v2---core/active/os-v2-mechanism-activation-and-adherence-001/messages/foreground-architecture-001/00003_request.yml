@@ -1,0 +1,30 @@
+message_id: os-v2-mechanism-activation-and-adherence-001::foreground-architecture-001::00003
+task_id: os-v2-mechanism-activation-and-adherence-001
+title: Fresh independent re-review of Mechanism Activation and Adherence architecture v3
+message_type: request
+sender_endpoint_id: foreground-architecture-001
+sender_task_role: foreground_architecture
+expected_recipient_endpoint_id: isolated-gpt-design-reviewer-003
+expected_recipient_task_role: independent_design_reviewer
+content: >-
+  Perform a fresh isolated architecture re-review of exact v3 candidate 8ee72d2800a9e00539d3732464e79312e1ade613.
+  Independently evaluate A formal-action mandatory mediation and B material physical-truth evidence, with special attention
+  to the v3 expected-claim/observation/comparator correction. Distinguish material implementation blockers from non-blocking
+  hardening and unnecessary formalism. Do not implement canonical changes. Publish a durable verdict only in authorized paths.
+required_refs:
+  - documents/foreground-architecture-001/00003_design_rereview_request.md
+  - Human/decisions/00003_review_setup_attestation.yml
+requested_action: independently_rereview_architecture_v3_and_publish_verdict
+facts:
+  design_v3_candidate_sha: 8ee72d2800a9e00539d3732464e79312e1ade613
+  design_base_master_sha: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  prior_v2_review_verdict: FIX_REQUIRED
+  implementation_authorized: false
+  master_publication_authorized: false
+constraints:
+  - use the fresh isolated Review Project described by the Human setup attestation
+  - no foreground executor or prior-review private chat context
+  - durable GitHub evidence only unless an exact missing-evidence blocker is reported
+  - apply materiality discipline and separate blocker from hardening
+  - no canonical implementation mutation
+  - no automatic delivery or task progression

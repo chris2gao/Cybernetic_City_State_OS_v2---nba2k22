@@ -18,3 +18,7 @@ surface 暴露证据，均停止路由。不得退回入口中的旧型号表，
 
 本 loader 只在 Human 或获授权任务执行者显式调用时运行；不启动后台进程，不授予任何权限。
 路由输出始终只有 `routing_only` authority。
+
+`route_receiver.py` 把已选且有目录证据的 route 转换成严格字段集的 Human-visible
+`receiver_setup`。它验证 collaboration role、surface/model/profile 和 GitHub-only/local
+材料边界；输出仍只有 `routing_only` 效果，不授予任何权限。

@@ -66,5 +66,8 @@ that is neither present nor correctly ignored.
   那一类文件。所有权在 `CORE_MANIFEST.yml` 另行声明：那份答"谁有权编写"，
   本 registry 答"谁加载、怎么被发现、失败何时显形"，两者不可互相替代。
 - `communication_system_v1.yml`：全局通讯契约、boot、显式执行工具与 Stage06 证据入口。
+- `model_routing_v1.yml`：证据化动态路由、稳定 collaboration-role 输入与 receiver setup builder。
+- `mechanism_activation_v1.yml`：always-on formal-action constitution、trigger/gate、双向物理事实
+  validator 和机制生效盘点。
 
 `01_os/_runs/`、`_runtime/`、角色 private/scratch 不注册。
