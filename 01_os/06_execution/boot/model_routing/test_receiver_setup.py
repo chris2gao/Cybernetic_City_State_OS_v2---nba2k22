@@ -48,13 +48,14 @@ def selection(**overrides):
 
 
 def cowork_selection(**overrides):
-    return selection(
+    value = selection(
         provider="Anthropic",
         surface="claude_desktop_cowork",
         model="Claude Opus 5",
         reasoning_or_parameter_profile="claude_desktop_cowork_opus5_task_time",
-        **overrides,
     )
+    value.update(overrides)
+    return value
 
 
 class ReceiverSetupTests(unittest.TestCase):
