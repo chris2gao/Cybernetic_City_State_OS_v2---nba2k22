@@ -1,6 +1,6 @@
 schema_version: citystate.model_routing.catalog.v1
 mechanism_version: 1
-catalog_version: 1
+catalog_version: 2
 status: active
 entitlement_is_account_availability: false
 source_index_ref: 01_os/03_mechanisms/model_routing/来源索引_v1.yml
@@ -119,6 +119,44 @@ entries:
     invalidation_conditions: [Anthropic plan or model update, Human task-time model observation differs]
     confidence: high
 
+  - provider: Anthropic
+    surface_id: claude_desktop_cowork
+    model_label: Claude Opus 5
+    registered: true
+    capabilities:
+      context: unknown
+      reasoning_controls: account_and_surface_current_selection
+      agent_and_tools: supported
+      coding: supported
+      research: supported
+      multimodal_vision: unknown
+      speed_latency: unknown
+    parameter_profiles:
+      - profile_id: claude_desktop_cowork_opus5_task_time
+        reasoning_levels: [surface_current]
+        source_class: provider_documentation_plus_Human_task_time_observation
+        surface_exposure_evidence:
+          - ANTH_COWORK_GET_STARTED
+          - ANTH_COWORK_SURFACES
+          - ANTH_COWORK_COMPUTER_USE
+          - HUMAN_COWORK_OPUS5_20260815
+    source_refs:
+      - ANTH_COWORK_GET_STARTED
+      - ANTH_COWORK_SURFACES
+      - ANTH_COWORK_COMPUTER_USE
+      - HUMAN_COWORK_OPUS5_20260815
+    evidence_binding:
+      surface_and_product_identity: provider_first_party_documentation
+      local_agentic_capability: provider_first_party_documentation
+      exact_model_label: Human_task_time_observation
+      exact_model_label_provider_documentation_claimed: false
+    verified_at: '2026-08-15'
+    invalidation_conditions:
+      - Anthropic Cowork surface or Claude Desktop product update
+      - Human task-time surface observation differs
+      - Human task-time model observation differs
+    confidence: medium
+
   - provider: Google
     surface_id: gemini_web
     model_label: Gemini Pro current product label
@@ -226,7 +264,7 @@ entries:
         surface_exposure_evidence: [GOOGLE_AG_MODELS, GOOGLE_AG_PRICING]
     source_refs: [GOOGLE_AG_MODELS, GOOGLE_AG_PRICING]
     verified_at: '2026-08-11'
-    invalidation_conditions: [Google Antigravity model catalog or plan update]
+    invalidation_conditions: [Google Antigravity model catalog update]
     confidence: high
 
   - provider: Anthropic
