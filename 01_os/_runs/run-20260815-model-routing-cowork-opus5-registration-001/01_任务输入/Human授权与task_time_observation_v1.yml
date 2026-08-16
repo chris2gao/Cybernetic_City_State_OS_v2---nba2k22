@@ -1,0 +1,27 @@
+schema_version: citystate.human_authorization_and_observation.v1
+task_id: os-v2-model-routing-cowork-opus5-registration-001
+run_id: run-20260815-model-routing-cowork-opus5-registration-001
+authorized_at: '2026-08-15'
+authorization:
+  authorized: true
+  scope:
+    - register Claude Desktop Cowork as a model-routing surface
+    - register the Human-observed exact model label Claude Opus 5 for that surface
+    - add deterministic fail-closed validation
+    - complete fresh independent validation
+  explicitly_not_authorized:
+    - master publication
+    - T2 Stage05 progression
+    - successor Stage04 business implementation
+    - workflow changes
+observation:
+  observer_class: Human_task_time_observation
+  observed_surface: Claude Desktop Cowork
+  observed_model_label: Claude Opus 5
+  observation_context: current available execution window after Claude Code Sonnet 5 route failed closed
+  machine_metadata_exposed: false
+  evidence_scope: exact active UI product/surface/model label only
+  does_not_claim_provider_documentation: true
+external_evidence_scope:
+  Cowork_surface_and_Claude_Desktop_availability: provider_first_party_documentation
+  exact_Claude_Opus_5_UI_label: Human_task_time_observation
