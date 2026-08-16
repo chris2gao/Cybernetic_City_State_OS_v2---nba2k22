@@ -1,12 +1,21 @@
 schema_version: citystate.model_routing.source_index.v1
 mechanism_version: 1
-source_index_version: 1
+source_index_version: 2
 status: active
 resolution_contract:
   token_scope: catalog_source_refs_and_surface_exposure_evidence
   required_record_fields: [kind]
   required_locator_any_of: [url, ref, path]
   registered_current_fact_requires_external_source: true
+  field_binding_rules:
+    surface_and_product_identity:
+      provider_first_party_source_required: true
+    exact_active_UI_model_label:
+      Human_task_time_observation_allowed: true
+      requires_externally_bound_surface: true
+      observation_must_be_explicitly_scoped_to_UI_identity_only: true
+      invalidates_when_task_time_model_observation_differs: true
+    Human_task_time_observation_grants_authority: false
 sources:
   OAI_CHATGPT_56:
     kind: provider_first_party
@@ -38,6 +47,42 @@ sources:
     title: Models, usage, and limits in Claude Code
     url: https://support.claude.com/en/articles/14552983-models-usage-and-limits-in-claude-code
     verified_at: '2026-08-11'
+  ANTH_COWORK_GET_STARTED:
+    kind: provider_first_party
+    title: Get started with Claude Cowork
+    url: https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork
+    verified_at: '2026-08-15'
+    supports:
+      - Cowork is an Anthropic Claude surface
+      - Cowork is available in Claude Desktop
+      - Cowork can use local files through Claude Desktop
+  ANTH_COWORK_SURFACES:
+    kind: provider_first_party
+    title: Use Claude Cowork on web, desktop, and mobile
+    url: https://support.claude.com/en/articles/15520349-use-claude-cowork-on-web-desktop-and-mobile
+    verified_at: '2026-08-15'
+    supports:
+      - desktop Cowork surface exists in Claude Desktop
+      - desktop is the full Cowork experience with local file access
+  ANTH_COWORK_COMPUTER_USE:
+    kind: provider_first_party
+    title: Let Claude use your computer in Cowork
+    url: https://support.claude.com/en/articles/14128542-let-claude-use-your-computer-in-cowork
+    verified_at: '2026-08-15'
+    supports:
+      - Cowork in Claude Desktop can open files and run development tools
+  HUMAN_COWORK_OPUS5_20260815:
+    kind: Human_task_time_observation
+    title: Human task-time observation of Claude Desktop Cowork / Claude Opus 5
+    path: 01_os/_runs/run-20260815-model-routing-cowork-opus5-registration-001/01_任务输入/Human授权与task_time_observation_v1.yml
+    verified_at: '2026-08-15'
+    supports:
+      - exact active UI surface observed as Claude Desktop Cowork
+      - exact active UI model label observed as Claude Opus 5
+    limitations:
+      - does_not_claim_provider_documentation_for_exact_model_label
+      - invalid_if_task_time_UI_model_or_surface_differs
+      - grants_no_authority
   GEMINI_PASS:
     kind: independent_web_research
     ref: Human_upload_sha256:a55c2a8125fa86cab1c2974a29a7d02c89a762b6d2a44fc431aeed3baa50bc60

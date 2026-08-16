@@ -34,6 +34,7 @@ SURFACE_PRODUCTS = {
     "chatgpt_web": "ChatGPT",
     "codex_desktop": "Codex Desktop",
     "claude_code_desktop": "Claude Code Desktop",
+    "claude_desktop_cowork": "Claude Desktop",
     "gemini_web": "Gemini",
     "antigravity": "Antigravity",
 }
