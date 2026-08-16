@@ -1,0 +1,29 @@
+schema_version: citystate.run.v1
+run_id: run-20260815-model-routing-cowork-opus5-registration-001
+task_id: os-v2-model-routing-cowork-opus5-registration-001
+created_at: '2026-08-15'
+owner: core
+base:
+  branch: master
+  exact_sha: ec36e0f6e1ae18112097a661e831b4f82983b899
+work_branch: dev/os-v2-model-routing-cowork-opus5-registration-001
+purpose: >-
+  Narrowly register Claude Desktop Cowork with the Human-observed exact model label Claude Opus 5 in model-routing, preserving fail-closed receiver validation and separating provider-documented surface facts from Human task-time model-label observation.
+authorized_refs:
+  - 01_任务输入/Human授权与task_time_observation_v1.yml
+allowed_canonical_paths:
+  - 01_os/03_mechanisms/model_routing/来源索引_v1.yml
+  - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+  - 01_os/06_execution/boot/model_routing/route_receiver.py
+  - 01_os/06_execution/boot/model_routing/test_receiver_setup.py
+allowed_evidence_paths:
+  - 01_os/_runs/run-20260815-model-routing-cowork-opus5-registration-001/**
+prohibited:
+  - master publication without new Human authorization
+  - T2 Stage05 progression
+  - successor Stage04 implementation
+  - workflow changes
+validation:
+  deterministic_required: true
+  fresh_independent_review_required: true
+status: IMPLEMENTATION_AUTHORIZED
