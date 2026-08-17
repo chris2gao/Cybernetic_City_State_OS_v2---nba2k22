@@ -4,19 +4,31 @@ run_id: run-20260817-stage-human-alignment-enforcement-root-cause-001
 decision_id: foreground_Human_stage_briefing_and_deliberation_v1
 status: Human_decided_for_task_implementation
 Human_decision_summary: >-
-  mandatory Human stage alignment is a foreground-decision-model to Human briefing and
-  discussion loop. Its purpose is to prevent the system from doing work that diverges from
-  the Human's intent while the Human does not understand what is being done, how it will be
-  implemented, or why the approach is feasible. The Human participates in the decision and
-  review of the stage model so effort is not wasted on the wrong problem or implementation.
+  mandatory Human stage alignment is the Human-visible operating form of the existing
+  stage_collaborative_deliberation inquiry-and-discussion mechanism. The mechanism itself
+  must model and determine what work the current stage is doing, how the foreground
+  understands the Human intent, how the work will be implemented, what feasibility support
+  justifies that implementation, what risks and alternatives exist, and what remains open
+  for Human discussion. The stage brief is the structured Human-visible projection of that
+  current model; it is not a separate shell outside the inquiry-and-discussion mechanism.
+  The purpose is to prevent the system from doing work that diverges from Human intent while
+  the Human does not understand what is being done, how it will be implemented, or why the
+  approach is feasible. Human participation in the decision and review of the stage model
+  is required so work is not wasted on the wrong problem or implementation.
 canonical_definition:
   owner: foreground_decision_model
   Human_counterparty: current_Human
   applies_to: every_workflow_stage
+  mechanism_relationship:
+    stage_brief_is_output_of_existing_inquiry_and_deliberation_model: true
+    stage_brief_is_separate_mechanism_or_outer_shell: false
+    inquiry_and_deliberation_are_used_to_build_and_update_the_stage_model: true
+    stage_brief_projects_current_model_to_Human_for_discussion_and_disposition: true
+    Human_feedback_updates_the_same_stage_model: true
   downstream_executor_participates_in_alignment_dialogue: false
   independent_reviewer_participates_in_alignment_dialogue: false
   other_downstream_models_participate_in_alignment_dialogue: false
-  stage_entry_brief_must_explain:
+  stage_model_must_determine:
     - what_the_stage_is_trying_to_accomplish
     - how_the_foreground_understands_the_Human_intent
     - why_the_stage_is_needed_now
@@ -31,11 +43,13 @@ canonical_definition:
     - ordinary_local_reversible_choices_remaining_model_owned
     - downstream_impact
   stage_entry_process:
-    - foreground_presents_stage_brief
-    - foreground_and_Human_use_existing_inquiry_and_deliberation_mechanism_as_needed
+    - foreground_builds_or_updates_stage_model_using_existing_inquiry_and_deliberation
+    - foreground_presents_current_stage_model_as_structured_stage_brief
+    - foreground_and_Human_discuss_open_load_bearing_items
     - Human_may_confirm_modify_choose_alternative_defer_nonblocking_or_stop
+    - Human_feedback_updates_the_same_stage_model
     - explicit_Human_disposition_required_before_substantive_stage_progression
-  stage_completion_brief_must_explain:
+  stage_completion_model_must_determine:
     - intended_result_vs_actual_result
     - material_delta_from_discussed_plan
     - evidence_and_validation_result
@@ -45,16 +59,18 @@ canonical_definition:
     - exact_output_artifact_version
     - next_stage_baseline_and_impact
   stage_completion_process:
-    - foreground_presents_completion_brief
+    - foreground_updates_the_stage_model_with_actual_results_and_evidence
+    - foreground_presents_completion_state_as_structured_completion_brief
     - Human_may_accept_modify_require_more_discussion_defer_or_stop
     - explicit_Human_disposition_must_bind_exact_output_version_before_progression
 machine_enforcement_scope:
-  - required_stage_entry_brief_exists_and_is_complete
+  - required_stage_model_dimensions_are_represented_or_explicitly_disposed
+  - required_stage_entry_brief_projects_the_current_stage_model
   - brief_binds_current_exact_input_and_baseline
   - explicit_Human_disposition_is_recorded
   - silence_or_inferred_consent_is_rejected
   - material_input_change_invalidates_stale_alignment
-  - required_stage_completion_brief_exists_and_is_complete
+  - required_stage_completion_brief_projects_the_current_completion_model
   - completion_disposition_binds_exact_output_version
   - material_output_change_invalidates_stale_confirmation
   - progression_is_blocked_when_required_alignment_is_missing_or_stale
@@ -64,11 +80,14 @@ not_claimed_or_required:
   - proof_of_Human_subjective_comprehension_or_mental_state
   - new_external_Human_attestation_system
   - executor_or_reviewer_participation_in_the_Human_alignment_dialogue
+  - a_second_briefing_mechanism_parallel_to_stage_collaborative_deliberation
 interpretation_of_CR_002: >-
   The valid concern is that a repository receipt must not create Human authority merely by
   self-asserting actor_class or principal_binding. The correction is to bind durable records
-  to the foreground-current-Human interaction and its explicit disposition; this task does
-  not introduce a new cryptographic or external attestation architecture.
+  to the foreground-current-Human interaction and its explicit disposition while keeping
+  inquiry, discussion, stage modeling and Human briefing inside the existing
+  stage_collaborative_deliberation mechanism. This task does not introduce a new
+  cryptographic or external attestation architecture.
 related_blockers:
   CR_005_residual: compose the complete base stage-receipt validation with alignment and stage/profile binding for every seven-stage-loop child
   RR2_001: use an append-only successor completion pointer bound to the exact final semantic candidate and its exact evidence
