@@ -1,0 +1,83 @@
+schema_version: citystate.architecture_decision.v1
+task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+run_id: run-20260817-stage-human-alignment-enforcement-root-cause-001
+decision_id: foreground_Human_stage_briefing_and_deliberation_v1
+status: Human_decided_for_task_implementation
+Human_decision_summary: >-
+  mandatory Human stage alignment is a foreground-decision-model to Human briefing and
+  discussion loop. Its purpose is to prevent the system from doing work that diverges from
+  the Human's intent while the Human does not understand what is being done, how it will be
+  implemented, or why the approach is feasible. The Human participates in the decision and
+  review of the stage model so effort is not wasted on the wrong problem or implementation.
+canonical_definition:
+  owner: foreground_decision_model
+  Human_counterparty: current_Human
+  applies_to: every_workflow_stage
+  downstream_executor_participates_in_alignment_dialogue: false
+  independent_reviewer_participates_in_alignment_dialogue: false
+  other_downstream_models_participate_in_alignment_dialogue: false
+  stage_entry_brief_must_explain:
+    - what_the_stage_is_trying_to_accomplish
+    - how_the_foreground_understands_the_Human_intent
+    - why_the_stage_is_needed_now
+    - exact_inputs_and_baseline
+    - proposed_method_or_implementation_approach
+    - feasibility_support_evidence_or_reasoning
+    - models_tools_data_and_execution_environment_where_relevant
+    - expected_outputs_and_downstream_role
+    - verification_or_acceptance_method
+    - material_assumptions_uncertainties_risks_tradeoffs_and_alternatives
+    - decisions_open_to_Human_discussion
+    - ordinary_local_reversible_choices_remaining_model_owned
+    - downstream_impact
+  stage_entry_process:
+    - foreground_presents_stage_brief
+    - foreground_and_Human_use_existing_inquiry_and_deliberation_mechanism_as_needed
+    - Human_may_confirm_modify_choose_alternative_defer_nonblocking_or_stop
+    - explicit_Human_disposition_required_before_substantive_stage_progression
+  stage_completion_brief_must_explain:
+    - intended_result_vs_actual_result
+    - material_delta_from_discussed_plan
+    - evidence_and_validation_result
+    - assumptions_confirmed_or_rejected
+    - Human_feedback_applied
+    - remaining_risks_unknowns_and_deferred_items
+    - exact_output_artifact_version
+    - next_stage_baseline_and_impact
+  stage_completion_process:
+    - foreground_presents_completion_brief
+    - Human_may_accept_modify_require_more_discussion_defer_or_stop
+    - explicit_Human_disposition_must_bind_exact_output_version_before_progression
+machine_enforcement_scope:
+  - required_stage_entry_brief_exists_and_is_complete
+  - brief_binds_current_exact_input_and_baseline
+  - explicit_Human_disposition_is_recorded
+  - silence_or_inferred_consent_is_rejected
+  - material_input_change_invalidates_stale_alignment
+  - required_stage_completion_brief_exists_and_is_complete
+  - completion_disposition_binds_exact_output_version
+  - material_output_change_invalidates_stale_confirmation
+  - progression_is_blocked_when_required_alignment_is_missing_or_stale
+  - ordinary_local_reversible_choices_do_not_require_individual_Human_microapproval
+not_claimed_or_required:
+  - cryptographic_proof_of_natural_person_identity
+  - proof_of_Human_subjective_comprehension_or_mental_state
+  - new_external_Human_attestation_system
+  - executor_or_reviewer_participation_in_the_Human_alignment_dialogue
+interpretation_of_CR_002: >-
+  The valid concern is that a repository receipt must not create Human authority merely by
+  self-asserting actor_class or principal_binding. The correction is to bind durable records
+  to the foreground-current-Human interaction and its explicit disposition; this task does
+  not introduce a new cryptographic or external attestation architecture.
+related_blockers:
+  CR_005_residual: compose the complete base stage-receipt validation with alignment and stage/profile binding for every seven-stage-loop child
+  RR2_001: use an append-only successor completion pointer bound to the exact final semantic candidate and its exact evidence
+supersedes_for_this_task:
+  - 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/03_方案设计/推荐架构与实现验收契约_v1.yml#recommendation.name=trusted_external_Human_attestation_boundary
+supersession_note: >-
+  The prior recommendation over-scoped CR-002 into a new external identity-attestation
+  architecture. It is retained as historical reasoning but is not an implementation basis.
+implementation_gate:
+  status: pending_Human_stage_implementation_brief_alignment
+  executor_dispatch_allowed_now: false
+master_publication_authorized: false
