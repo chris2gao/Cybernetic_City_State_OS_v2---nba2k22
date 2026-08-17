@@ -1,0 +1,40 @@
+schema_version: citystate.stage_collaborative_deliberation.session_state.v1
+task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
+mechanism_version: 1
+profile_id: workflow_stage_01_requirement_modeling
+profile_version: 1
+activation_mode: full
+activation_reason: structural_authority_and_trust_boundary_gap
+start_gate:
+  exact_task_and_stage_identity_known: true
+  current_requirement_inputs_and_Human_goal_available: true
+  profile_and_mechanism_versions_resolve: true
+  authority_to_start_is_current: true
+rounds:
+  - round: 1
+    substantive: true
+    changed_or_confirmed: [objective, success_obligations, frozen_predecessor_boundary, three_blocking_findings]
+  - round: 2
+    substantive: true
+    changed_or_confirmed: [trust_origin_gap, repository_authority_binding_rules, external_pattern_evidence, known_unknowns]
+  - round: 3
+    substantive: true
+    changed_or_confirmed: [architecture_options, provider_roles, attestation_boundary, validator_composition, successor_completion_evidence]
+  - round: 4
+    substantive: true
+    changed_or_confirmed: [counterexamples, fail_closed_rules, provider_availability_risk, non_goals, future_acceptance_contract]
+  - round: 5
+    substantive: false
+    status: pending_Human_architecture_decision
+current_model:
+  preferred_architecture: trusted_external_Human_attestation_boundary
+  CR_005_resolution: complete_child_stage_receipt_validator
+  RR2_001_resolution: append_only_candidate_bound_successor_completion_evidence
+remaining_Human_decision:
+  question: >-
+    Approve or reject the provider-neutral trusted external Human attestation boundary as
+    the canonical CR-002 architecture, with implementation prohibited until at least one
+    physically available provider satisfies the minimum trust contract.
+completion_status: blocked_waiting_Human_architecture_decision
+implementation_authorized: false
