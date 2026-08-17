@@ -1,0 +1,25 @@
+schema_version: citystate.root_cause_analysis.v1
+task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+source_master: e5bf669d39179c172fc10fbb3b73557e8b05bf1e
+frozen_review_carrier: eaf6748bd4a2fa789f28f985541ea724a31e4ade
+status: ready_for_architecture_choice
+root_causes:
+  CR-002:
+    defect: receipt labels plus repository-file existence are treated as Human provenance
+    root: trust origin and evidence shape are conflated; the gated model controls both
+    required_change: completion proof must come from an independently controlled attestation provider and bind the exact stage/candidate payload
+    reject_as_non_solutions: [more_Human_labels, repo_file_without_external_proof, candidate_self_defined_trust_anchor, provider_name_as_identity]
+  CR-005-residual:
+    defect: seven-stage loop calls only the alignment subset validator for each child
+    root: specialized scenario validation bypasses the complete base stage-receipt contract
+    required_change: one complete child-stage validator must compose base receipt plus alignment plus stage/profile binding
+    required_negative_control: aligned_child_missing_one_ordinary_required_receipt_field_must_fail
+  RR2-001:
+    defect: completion_pointer_v1 remained bound to superseded e9ac1acf, 40 cases and 16 paths
+    root: completion evidence is treated as a stable filename instead of an immutable candidate-versioned claim
+    required_change: material candidate changes create append-only successor completion evidence bound to exact candidate, tests, path ledger and review readiness
+cross_cutting_root_cause: >-
+  These are dependency-integrity failures: a local shape was checked without binding the
+  claim to an independently authoritative source or to the complete immutable dependency
+  object/version required by the claim.
+current_gate: implementation_prohibited_pending_Human_architecture_decision
