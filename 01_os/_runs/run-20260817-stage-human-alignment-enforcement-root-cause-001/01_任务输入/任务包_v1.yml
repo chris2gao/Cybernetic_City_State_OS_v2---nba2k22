@@ -1,0 +1,88 @@
+schema_version: citystate.task_packet.v1
+task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+run_id: run-20260817-stage-human-alignment-enforcement-root-cause-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T2_semantic
+exact_base_sha: e5bf669d39179c172fc10fbb3b73557e8b05bf1e
+branch: dev/os-v2-stage-human-alignment-enforcement-root-cause-001
+phase: root_cause_architecture_only
+objective: >-
+  Produce a Human-decidable root-cause architecture that preserves the mandatory Human
+  stage-alignment objective while closing exactly three blockers from the frozen predecessor:
+  CR-002 self-assertable Human provenance, the CR-005 residual where seven-stage loop
+  children are not validated as complete stage receipts, and RR2-001 stale completion
+  evidence binding. Do not implement canonical mechanism changes in this phase.
+architecture_constraints:
+  - predecessor_task_is_frozen_no_third_correction_round
+  - start_from_current_master_not_from_predecessor_branch
+  - accepted_predecessor_semantics_are_source_evidence_not_branch_authority
+  - Human_provenance_must_not_be_satisfiable_by_ordinary_model_repo_write_access_alone
+  - trusted_Human_boundary_must_be_explicit_machine_verifiable_and_fail_closed
+  - seven_stage_loop_children_must_be_full_valid_stage_receipts_not_alignment_subsets
+  - successor_completion_evidence_must_bind_exact_semantic_candidate_and_exact_test_and_path_ledger
+  - preserve_no_microapproval_for_ordinary_local_reversible_choices
+  - preserve_full_and_incremental_escalation_for_load_bearing_or_material_divergence
+  - no_runtime_or_scheduler_activation
+  - no_master_publication
+blocking_scope:
+  CR-002:
+    statement: Human provenance is self-assertable by a model with repository write access.
+    required_outcome: define a trusted provenance boundary and verification contract that a normal repo-writing model cannot self-satisfy.
+  CR-005-residual:
+    statement: seven-stage operational-loop children are checked only as alignment subsets, not as complete stage receipts.
+    required_outcome: define the validator composition and negative-control contract for complete child receipt validation.
+  RR2-001:
+    statement: required completion pointer remained bound to a superseded semantic candidate and stale evidence counts.
+    required_outcome: define immutable successor completion-evidence/version-binding rules for corrected candidates.
+source_evidence:
+  - eaf6748bd4a2fa789f28f985541ea724a31e4ade:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-stage-human-alignment-deliberation-001/messages/gpt56-stage-alignment-independent-reviewer-002/00001_result.yml
+  - eaf6748bd4a2fa789f28f985541ea724a31e4ade:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-stage-human-alignment-deliberation-001/documents/gpt56-stage-alignment-independent-reviewer-002/00001_independent_re_review_result.md
+  - eaf6748bd4a2fa789f28f985541ea724a31e4ade:01_os/_runs/run-20260817-stage-human-alignment-deliberation-001/03_方案设计/架构决定_Human阶段对齐层_v1.yml
+  - eaf6748bd4a2fa789f28f985541ea724a31e4ade:01_os/_runs/run-20260817-stage-human-alignment-deliberation-001/01_任务输入/任务包_v1.yml
+  - 3f41b1342e487b23dcd5dd6af0c40999ebfe13bf:01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py
+  - 3f41b1342e487b23dcd5dd6af0c40999ebfe13bf:01_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml
+  - e5bf669d39179c172fc10fbb3b73557e8b05bf1e:AGENTS.md
+  - 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/01_任务输入/Human授权_v1.yml
+allowed_changed_paths:
+  - 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/**
+  - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-stage-human-alignment-enforcement-root-cause-001/**
+required_outputs:
+  - root_cause_analysis_for_CR_002_CR_005_RR2_001
+  - candidate_architecture_options_with_trust_boundaries_and_tradeoffs
+  - preferred_architecture_recommendation
+  - machine_verifiable_acceptance_contract_for_future_implementation
+  - Human_decision_record_before_any_canonical_semantic_implementation
+required_evidence:
+  - current_master_fresh_read
+  - predecessor_round_2_primary_review_evidence
+  - current_master_triggered_mechanism_contracts
+  - mature_pattern_research_for_Human_provenance_and_attestation
+  - explicit_known_unknown_inference_separation
+  - formal_stage_collaborative_deliberation_receipt_if_triggered_by_current_master_contract
+stop_conditions:
+  - any_need_to_modify_canonical_mechanism_or_workflow_files_in_this_architecture_phase
+  - any_solution_that_depends_only_on_repo_content_writable_by_the_same_model_being_gated
+  - any_need_for_secret_credential_or_unapproved_external_runtime_access
+  - Human_architecture_decision_required_before_implementation
+  - current_master_or_task_branch_physical_state_conflicts_with_this_packet
+prohibitions:
+  - reopen_or_patch_frozen_predecessor_task
+  - third_silent_correction_round
+  - modify_master
+  - force_push
+  - rebase
+  - squash
+  - amend_published_history
+  - weaken_Human_alignment_to_visibility_without_trusted_Human_disposition
+  - represent_executor_or_model_self_report_as_independent_Human_provenance
+publisher:
+  principal_binding: connected_GitHub_API_connector
+  publication_transport: github_api_connector
+  source_write_authorized: true
+  master_write_authorized: false
+  destructive_git_authorized: false
+  authorization_ref: 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/01_任务输入/Human授权_v1.yml
+verification_profile:
+  architecture_review_required_before_implementation: true
+  preferred_independent_reviewer: fresh_isolated_GPT_review_project_or_other_independent_model_family
+  master_gate: Human_only_after_accepted_future_implementation

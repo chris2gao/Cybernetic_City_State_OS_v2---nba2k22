@@ -1,0 +1,33 @@
+schema_version: citystate.human_authorization.v1
+task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+run_id: run-20260817-stage-human-alignment-enforcement-root-cause-001
+created_at: '2026-08-17'
+authority_effect: root_cause_task_creation_architecture_research_and_source_branch_evidence_authorized
+Human_authorization_summary: >-
+  Human explicitly authorized creation and start of a new root-cause task after the
+  frozen predecessor exhausted its two post-delivery correction rounds. Preserve the
+  mandatory Human stage-alignment objective without downgrade. The only blocking scope
+  is CR-002 Human provenance, the CR-005 seven-stage full-receipt-validation residual,
+  and RR2-001 stale completion-evidence binding.
+authorized:
+  create_root_cause_task_from_current_master: true
+  perform_architecture_and_root_cause_analysis: true
+  study_mature_patterns_and_current_repository_mechanisms: true
+  create_durable_task_run_and_design_evidence: true
+  publish_source_task_branch_evidence: true
+  use_formal_cross_model_communication_when_triggered: true
+  preserve_frozen_predecessor_as_immutable_source_evidence: true
+not_authorized:
+  third_correction_round_on_frozen_predecessor_task: true
+  modify_frozen_predecessor_candidate_or_evidence_in_place: true
+  implement_new_canonical_provenance_semantics_before_Human_architecture_decision: true
+  weaken_or_downgrade_mandatory_Human_stage_alignment: true
+  treat_model_self_asserted_Human_labels_as_trusted_provenance: true
+  canonical_or_master_publication: true
+  force_push_rebase_squash_amend_or_history_rewrite: true
+  activate_runtime_scheduler_or_external_coordinator: true
+sequencing_decision: >-
+  Root-cause architecture first. Once the trust boundary and replacement enforcement
+  contract are Human-decided, create or authorize a separate bounded implementation
+  task. The frozen predecessor remains unmodified and is never reopened as a silent
+  third correction round.
