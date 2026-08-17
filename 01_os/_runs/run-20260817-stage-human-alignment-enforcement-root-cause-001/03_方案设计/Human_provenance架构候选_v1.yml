@@ -1,0 +1,28 @@
+schema_version: citystate.architecture_options.v1
+task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+options:
+  A_repo_only_structured_ref:
+    status: rejected
+    reason: same repo-writing model can mint labels and referenced artifact; does not close CR-002
+  B_GitHub_hosted_manual_approval:
+    status: viable_provider_not_universal_architecture
+    mechanism: protected environment or equivalent host-managed required reviewer event
+    strengths: [host_authenticated_event, explicit_approve_or_reject, self_review_can_be_blocked]
+    limits: [plan_and_feature_availability, deployment_centric, principal_separation_may_collapse_for_single_user_connector]
+  C_external_Human_signed_attestation:
+    status: viable_general_provider
+    mechanism: Human-controlled signing/authenticator surface outside ordinary model repo-write authority signs exact approval payload
+    strengths: [cryptographic_binding, provider_independent_repo_verification, works_without_trusting_receipt_labels]
+    costs: [trust_anchor_enrollment, Human_signing_surface, verifier_implementation]
+  D_trusted_host_injected_attestation:
+    status: preferred_provider_when_physically_available
+    mechanism: trusted host emits an authenticated approval receipt bound to exact payload
+    strengths: [best_Human_UX, no_repo_secret, clean_principal_boundary]
+    limits: [host_capability_must_exist_and_be_machine_verifiable, current_repo_cannot_assume_it]
+recommended_architecture:
+  name: external_Human_attestation_boundary_with_provider_interface
+  rule: >-
+    C and D are provider implementations of one canonical attestation contract. B may
+    implement the same contract where its principal separation is actually proven.
+    Repository-only records are audit evidence, never completion-authorizing by themselves.
+  fail_closed_if_no_eligible_provider: true
