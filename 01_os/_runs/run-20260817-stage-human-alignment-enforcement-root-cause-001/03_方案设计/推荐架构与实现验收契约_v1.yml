@@ -1,0 +1,61 @@
+schema_version: citystate.architecture_recommendation.v1
+task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+status: recommended_pending_Human_decision
+recommendation:
+  name: trusted_external_Human_attestation_boundary
+  invariant: >-
+    A completion-authorizing Human disposition must be proven by an attestation provider
+    outside ordinary model repository-write authority. Repository receipt fields may bind
+    and reference that proof but may not create Human identity by assertion.
+  eligible_provider_minimum_contract:
+    - principal_is_authenticated_against_a_preestablished_trust_anchor
+    - approval_action_is_not_forgeable_by_ordinary_repo_write_alone
+    - proof_binds_task_stage_profile_and_exact_candidate_or_artifact_digest
+    - proof_binds_disposition_and_required_exit_coverage
+    - proof_has_freshness_or_replay_binding
+    - verifier_uses_trust_state_frozen_from_accepted_master_or_trusted_host_not_candidate_self_replacement
+    - missing_stale_replayed_wrong_principal_wrong_digest_or_untrusted_provider_fails_closed
+  provider_examples:
+    preferred_if_available: trusted_host_injected_attestation
+    general_fallback: external_Human_signed_attestation
+    conditional: GitHub_hosted_manual_approval_only_if_principal_separation_and_feature_availability_are_proven
+  non_authorizing_records:
+    - bare_Human_relay_record
+    - bare_Human_authored_repository_artifact_claim
+    - receipt_supplied_actor_class_or_principal_binding_without_external_verification
+
+future_CR_002_acceptance:
+  required_payload_fields: [task_id, stage_id, profile_version, exact_input_version, exact_output_ref, exact_output_digest, disposition, covered_exit_items_digest, challenge_or_nonce, issued_at]
+  required_negative_controls:
+    - model_mints_Human_labels_and_repo_artifact
+    - candidate_replaces_its_own_trust_anchor
+    - wrong_output_digest_or_version
+    - replayed_or_stale_attestation
+    - wrong_principal
+    - untrusted_provider
+    - proof_missing_required_exit_coverage_binding
+
+future_CR_005_acceptance:
+  complete_child_validator_contract: base_stage_receipt_plus_alignment_plus_stage_profile_binding
+  seven_stage_rule: every_child_must_pass_complete_child_validator
+  required_negative_controls:
+    - aligned_child_missing_ordinary_required_receipt_field
+    - child_with_nonzero_validator_exit
+    - child_profile_stage_mismatch
+
+future_RR2_001_acceptance:
+  completion_evidence: append_only_successor_version
+  must_bind: [source_base, semantic_candidate_sha, exact_changed_paths, exact_test_commands_and_exits, fixture_inventory_and_results, deviations, independent_review_readiness]
+  material_candidate_change: old_pointer_remains_history_and_new_successor_is_required
+  dispatch_rule: reviewer_and_Human_gate_must_reference_the_current_exact_successor_pointer
+
+architecture_boundary:
+  machine_can_prove: [required_information_was_disclosed, an_authenticated_principal_issued_a_bound_disposition, exact_version_and_coverage_binding]
+  machine_cannot_prove: subjective_Human_comprehension
+  semantic_interpretation: >-
+    The OS guarantee is a machine-verifiable opportunity to understand plus an authenticated
+    exact disposition; it must not claim to prove a Human mental state.
+
+implementation_gate:
+  allowed_now: false
+  next_required_action: explicit_Human_architecture_decision
