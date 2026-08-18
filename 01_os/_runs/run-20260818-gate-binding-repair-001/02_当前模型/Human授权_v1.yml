@@ -1,0 +1,22 @@
+schema_version: citystate.Human_disposition_record.v1
+task_id: os-v2-gate-binding-repair-001
+stage_id: current_task
+decision_id: D-GATE-BINDING-REPAIR-001-START
+decision_type: substantive_execution_authorization
+exact_model_version: gate-binding-repair-current-model-v1
+Human_disposition: authorized
+authorized_scope: >-
+  Update only the stale stage profile blob binding and model-routing
+  catalog_version binding, then run their existing validators and publish only
+  the source task branch; do not modify master.
+actor_class: current_Human
+explicit: true
+provenance: foreground_current_Human_interaction
+Human_nonce_plaintext_stored: false
+nonce_commitment:
+  scheme: citystate-human-authority-v1
+  algorithm: sha256
+  digest: eaa969d3019cc1b092050a70f5972c61b491b3b68eb465c8627fd3f20ec68637
+stale: true
+invalidated: true
+consumed_by: D-GATE-BINDING-REPAIR-001-START

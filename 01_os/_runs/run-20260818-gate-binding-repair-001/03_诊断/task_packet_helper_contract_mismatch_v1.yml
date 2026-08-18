@@ -1,0 +1,13 @@
+schema_version: citystate.run_finding.v1
+finding_id: F-GATE-REPAIR-PACKET-HELPER-001
+status: observed_nonblocking_for_this_repair
+observed_on_master: 30f205eb7e0b975b97386fee103d180f3d03018e
+facts:
+  documentation_template: 01_os/开发入口与单窗口任务规范_v1.md section 7 shows a task_packet wrapper
+  preflight_helper: 01_os/06_execution/task_discipline/preflight/preflight_task_context.py reads packet fields at YAML top level
+  path_ledger_helper: 01_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py reads allowed_changed_paths at YAML top level
+impact: >-
+  A packet following the displayed wrapper shape is rejected or misread by the current helpers.
+current_task_disposition: >-
+  Use the helper-compatible flat mapping for this run only; do not modify helper or documentation semantics in this gate-binding repair.
+follow_up: permanent task-packet/helper contract alignment should be handled separately.

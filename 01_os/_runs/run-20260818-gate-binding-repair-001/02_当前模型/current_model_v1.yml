@@ -1,0 +1,59 @@
+schema_version: citystate.current_model.v1
+task_id: os-v2-gate-binding-repair-001
+stage_id: current_task
+current_model:
+  problem_or_objective: >-
+    Two boot manifests contain stale bindings and therefore fail closed before
+    the already-confirmed A/B/C program-design work can proceed.
+  Human_intent_understanding: >-
+    Repair only those two stale bindings, preserve mechanism semantics, run the
+    existing validators, publish only the source branch, and do not touch master.
+  current_baseline_and_inputs:
+    remote_master: 30f205eb7e0b975b97386fee103d180f3d03018e
+    stage_profile_actual_blob: 53bebb598609c02bfdc525a4a172dbf3162a7486
+    stage_boot_stale_blob: f5ad4f994e7a1e278598e313e227530243a1d816
+    model_catalog_version: 2
+    model_boot_stale_catalog_version: 1
+  constraints_and_dependencies:
+    - no validator semantic changes
+    - no master modification
+    - source branch only
+  proposed_method_or_solution:
+    - replace only the stage boot profile_contract blob_sha with the current Git blob
+    - replace only model-routing boot catalog_version 1 with 2
+    - rerun the unchanged guards and static validators
+  feasibility_support:
+    - both target values are directly measurable from the current physical tree
+    - both observed failures match those stale bindings exactly
+    - no implementation choice or mechanism redesign is required
+  assumptions_risks_alternatives_unknowns:
+    - independent review is still required before any master integration
+    - model-routing preflight itself is unavailable until this exact repair lands
+  open_load_bearing_items: []
+  expected_output: >-
+    Both existing static validators return zero with no changes outside the two
+    boot manifests and this task run evidence.
+  verification_or_acceptance_method:
+    - stage canonical-live-state guard exit 0
+    - stage static validator exit 0
+    - model-routing static validator exit 0
+    - changed-path ledger inside task allowlist
+    - git diff --check exit 0
+  actual_result: not_executed_yet
+  material_deviation: none_observed_pre_execution
+  residual_risk: source candidate still requires independent review and Human master gate
+  current_exact_model_version: gate-binding-repair-current-model-v1
+  Human_confirmation:
+    explicit: true
+    actor_class: current_Human
+    scope: current_task
+    bound_model_version: gate-binding-repair-current-model-v1
+    exact_model_version: gate-binding-repair-current-model-v1
+    decision_id: D-GATE-BINDING-REPAIR-001-START
+    decision_type: substantive_execution_authorization
+    durable_disposition_ref: 01_os/_runs/run-20260818-gate-binding-repair-001/02_当前模型/Human授权_v1.yml
+    durable_disposition_blob_sha: 12032b40ad7d08ae4be78fbae3f08547a9430ed5
+    nonce_commitment:
+      scheme: citystate-human-authority-v1
+      algorithm: sha256
+      digest: eaa969d3019cc1b092050a70f5972c61b491b3b68eb465c8627fd3f20ec68637

@@ -1,0 +1,15 @@
+schema_version: citystate.validation_attempt_history.v1
+attempts:
+  - attempt: validation_outer_log_decode
+    status: tooling_failure_before_full_summary
+    signature: parent logger assumed UTF-8 for child stderr while Windows child stderr used locale encoding
+    remedy: force child Python stdio to UTF-8 and preserve raw bytes outside repository
+  - attempt: path_ledger_with_nested_packet
+    status: failed
+    exit_code: 3
+    signature: allowed_changed_paths_missing_or_empty
+    cause: current helpers read task packet fields at YAML top level while the initial packet followed the documented task_packet wrapper example
+    remedy: flatten this run packet to the helper-compatible machine shape; helper/documentation mismatch recorded separately
+  - attempt: path_ledger_after_packet_flatten
+    status: passed
+    exit_code: 0

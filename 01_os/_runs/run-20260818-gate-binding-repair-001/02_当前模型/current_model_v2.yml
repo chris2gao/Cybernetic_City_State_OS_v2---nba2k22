@@ -1,0 +1,65 @@
+schema_version: citystate.current_model.v1
+task_id: os-v2-gate-binding-repair-001
+stage_id: current_task
+current_model:
+  problem_or_objective: >-
+    Existing validators reveal a mechanically determined stale-binding closure
+    spanning stage profile exact refs and model-routing version bindings.
+  Human_intent_understanding: >-
+    Repair the complete measured closure, preserve validator and mechanism semantics,
+    publish only the source branch, and leave master untouched.
+  current_baseline_and_inputs:
+    remote_master: 30f205eb7e0b975b97386fee103d180f3d03018e
+    stage_profile_actual_blob: 53bebb598609c02bfdc525a4a172dbf3162a7486
+    stage_profile_stale_blob: f5ad4f994e7a1e278598e313e227530243a1d816
+    stage_workflow_ref_mismatch_count: 7
+    model_catalog_version: 2
+    model_source_index_version: 2
+    model_boot_stale_catalog_version: 1
+    model_boot_stale_source_index_version: 1
+  constraints_and_dependencies:
+    - no validator semantic changes
+    - no mechanism semantic redesign
+    - no master modification
+    - source branch only
+    - exact closure is 9 canonical files / 10 deterministic field replacements
+  proposed_method_or_solution:
+    - update stage boot profile_contract blob_sha to the current Git blob
+    - update all seven workflow stage profile_contract_ref blob_sha values to the same current Git blob
+    - update model-routing boot catalog_version and source_index_version to their current canonical versions
+    - rerun the unchanged guards and validators
+  feasibility_support:
+    - the current validators and exact-ref recomputation measured every target value
+    - the seven workflow mismatches all share the same stale profile blob and same current target blob
+    - model-routing mismatches are direct version equality checks with no implementation choice
+  assumptions_risks_alternatives_unknowns:
+    - independent review remains required before any master integration
+    - model-routing preflight remains unavailable until this exact repair passes
+  open_load_bearing_items: []
+  expected_output: >-
+    Stage guard, stage static validator, and model-routing static validator all return zero;
+    changed paths remain inside the expanded task allowlist and validator semantics are unchanged.
+  verification_or_acceptance_method:
+    - stage canonical-live-state guard exit 0
+    - stage static validator exit 0
+    - model-routing static validator exit 0
+    - Unicode-safe changed-path ledger inside task allowlist
+    - git diff --check exit 0
+  actual_result: local_candidate_validated_all_required_gates_zero
+  material_deviation: v1 scope expanded after validators exposed the full deterministic stale-binding closure
+  residual_risk: source candidate still requires independent review and Human master gate; task-packet/helper schema mismatch remains a separate nonblocking finding
+  current_exact_model_version: gate-binding-repair-current-model-v2
+  Human_confirmation:
+    explicit: true
+    actor_class: current_Human
+    scope: current_task
+    bound_model_version: gate-binding-repair-current-model-v2
+    exact_model_version: gate-binding-repair-current-model-v2
+    decision_id: D-GATE-BINDING-REPAIR-001-EXPANDED-START
+    decision_type: substantive_execution_authorization
+    durable_disposition_ref: 01_os/_runs/run-20260818-gate-binding-repair-001/02_当前模型/Human授权_v2.yml
+    durable_disposition_blob_sha: 95a5fe572291c0f8de6b36c39d9ff9bed002be50
+    nonce_commitment:
+      scheme: citystate-human-authority-v1
+      algorithm: sha256
+      digest: 62bdf4ae21a962533500fe9f908e5ac2a6967047431081e0591f7277029edabf

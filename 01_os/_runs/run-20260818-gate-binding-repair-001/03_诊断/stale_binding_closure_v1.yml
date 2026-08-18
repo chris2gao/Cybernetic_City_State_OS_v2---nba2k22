@@ -1,0 +1,30 @@
+schema_version: citystate.gate_binding_repair.diagnostic.v1
+task_id: os-v2-gate-binding-repair-001
+base_sha: 30f205eb7e0b975b97386fee103d180f3d03018e
+status: blocked_scope_expansion_required
+observed_after_authorized_two_binding_repair:
+  stage_runtime_guard_exit: 0
+  stage_static_exit: 13
+  model_routing_static_exit: 2
+stage_exact_ref_closure:
+  profile_contract_actual_blob: 53bebb598609c02bfdc525a4a172dbf3162a7486
+  additional_mismatch_count: 7
+  mismatch_field: profile_contract_ref.blob_sha
+  stale_blob: f5ad4f994e7a1e278598e313e227530243a1d816
+  required_blob: 53bebb598609c02bfdc525a4a172dbf3162a7486
+  affected_workflow_stages:
+    - 01_需求建模
+    - 02_信息收集与提炼
+    - 03_结果建模
+    - 04_测试生成
+    - 05_步骤拆分
+    - 06_执行
+    - 07_测试执行
+model_routing_version_closure:
+  catalog_version: {boot: 2, actual: 2}
+  source_index_version: {boot: 1, actual: 2}
+conclusion: >-
+  Full deterministic closure requires nine canonical files and ten field replacements:
+  the two boot manifests plus seven workflow profile-reference files. This exceeds
+  the Human-authorized exact-two-binding objective and therefore requires a new
+  material-scope confirmation before further canonical mutation.

@@ -1,0 +1,22 @@
+schema_version: citystate.Human_disposition_record.v1
+task_id: os-v2-gate-binding-repair-001
+stage_id: current_task
+decision_id: D-GATE-BINDING-REPAIR-001-EXPANDED-START
+decision_type: substantive_execution_authorization
+exact_model_version: gate-binding-repair-current-model-v2
+Human_disposition: authorized
+authorized_scope: >-
+  Repair the complete mechanically derived stale-binding closure: 9 canonical
+  files / 10 deterministic field replacements; do not change validator semantics;
+  run the existing validators; publish only the source task branch; do not modify master.
+actor_class: current_Human
+explicit: true
+provenance: foreground_current_Human_interaction
+Human_nonce_plaintext_stored: false
+nonce_commitment:
+  scheme: citystate-human-authority-v1
+  algorithm: sha256
+  digest: 62bdf4ae21a962533500fe9f908e5ac2a6967047431081e0591f7277029edabf
+stale: false
+invalidated: false
+consumed_by: D-GATE-BINDING-REPAIR-001-EXPANDED-START

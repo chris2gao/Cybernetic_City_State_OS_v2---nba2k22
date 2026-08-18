@@ -1,0 +1,31 @@
+schema_version: citystate.os_run.v1
+run:
+  run_id: run-20260818-gate-binding-repair-001
+  task_id: os-v2-gate-binding-repair-001
+  exact_base_sha: 30f205eb7e0b975b97386fee103d180f3d03018e
+  branch: dev/os-v2-gate-binding-repair-001
+  owner: core
+  status: local_candidate_validated_pending_commit
+  purpose: >-
+    Deterministically repair the full stale-binding closure measured by the
+    unchanged current validators: 9 canonical files / 10 field replacements.
+  current_model_version: gate-binding-repair-current-model-v2
+  human_authorization_ref: 02_当前模型/Human授权_v2.yml
+  prior_authorization_ref: 02_当前模型/Human授权_v1.yml
+  prior_authorization_state: invalidated_by_material_scope_expansion
+  task_packet: 01_任务输入/任务包_v1.yml
+  diagnostic_ref: 03_诊断/stale_binding_closure_v1.yml
+  prechange_evidence:
+    stage_runtime_guard_exit: 0
+    stage_static_exit: 13
+    stage_workflow_profile_ref_mismatch_count: 7
+    profile_contract_actual_blob: 53bebb598609c02bfdc525a4a172dbf3162a7486
+    model_routing_static_exit: 2
+    catalog_actual_version: 2
+    source_index_actual_version: 2
+    model_routing_boot_declared_catalog_version: 1
+    model_routing_boot_declared_source_index_version: 1
+  publication:
+    source_branch_allowed: true
+    master_allowed: false
+    force_push: false
