@@ -1,0 +1,16 @@
+schema_version: citystate.run.v1
+run_id: run-20260817-communication-git-blob-utf8-decoding-fix-001
+task_id: os-v2-communication-git-blob-utf8-decoding-fix-001
+created_at: '2026-08-17'
+owner: core
+base:
+  branch: master
+  exact_sha: e5bf669d39179c172fc10fbb3b73557e8b05bf1e
+work_branch: dev/os-v2-communication-git-blob-utf8-decoding-fix-001
+purpose: >-
+  Remove locale/ACP dependence from communication Git blob validation by decoding repository
+  text blobs explicitly according to the UTF-8 communication contract and adding regression coverage.
+authorized_refs:
+  - 01_任务输入/Human授权_A+B_v1.yml
+  - 01_任务输入/任务包_v1.yml
+status: IMPLEMENTATION_AUTHORIZED_NO_MASTER_PUBLICATION
