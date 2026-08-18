@@ -1,0 +1,26 @@
+schema_version: citystate.human_authorization.v1
+task_id: os-v2-communication-git-blob-utf8-decoding-fix-001
+run_id: run-20260817-communication-git-blob-utf8-decoding-fix-001
+authorized_at: '2026-08-17'
+source_class: Human_current_conversation
+Human_decision: confirm_A_plus_B_and_continue_primary_task
+authorized:
+  A_pointer_recovery:
+    scope: >-
+      Recover the already-published stage-alignment formal dispatch pointer without new remote mutation,
+      using a disposable pre-publication replay under PYTHONUTF8=1, byte-for-byte comparison against
+      the published ada4210427f83ed5e34a906691d5c91b4add62a2 artifacts, then canonical bind and v2 validation.
+    remote_publication_authorized: false
+  B_permanent_fix:
+    scope: >-
+      Create and implement os-v2-communication-git-blob-utf8-decoding-fix-001 so Git blob validation
+      explicitly decodes repository UTF-8 bytes and fails closed on invalid UTF-8, with regression tests.
+    source_branch_publication_authorized: true
+    master_publication_authorized: false
+  primary_stage_alignment_task:
+    continue_after_valid_pointer: true
+not_authorized:
+  - master publication
+  - force push, rebase, squash, amend or history rewrite
+  - changing communication protocol, pointer schema, authority semantics or publisher sequencing
+  - changing stage-alignment semantics from this side task
