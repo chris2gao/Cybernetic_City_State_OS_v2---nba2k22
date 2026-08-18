@@ -37,7 +37,15 @@ anchors:
       scope: current_stage
       bound_model_version: model-v1
       stale: false
-      ref: Human/current.yml#00001
+      decision_id: D-AUTH-00001
+      decision_type: substantive_execution_authorization
+      exact_model_version: model-v1
+      durable_disposition_ref: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/fixtures/human_dispositions/auth_00001.yml
+      durable_disposition_blob_sha: e58d7baccbcf186449f1c19544c1ed8f32cd1bf5
+      nonce_commitment:
+        scheme: citystate-human-authority-v1
+        algorithm: sha256
+        digest: 197fd8b54fdfaf052e594023941596cc095e6c8d4b95e6a55b29b0b7d68bd0f9
   receipt: &receipt
     receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
     mechanism_version: 1
@@ -61,7 +69,14 @@ anchors:
     created_at: '2026-08-04T19:40:00-07:00'
   child_receipt: &child_receipt
     <<: *receipt
-    alignment_binding: {bound_model_version: model-v1, Human_confirmation_ref: Human/current.yml#00001}
+    alignment_binding:
+      bound_model_version: model-v1
+      Human_confirmation_durable_ref: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/fixtures/human_dispositions/auth_00001.yml
+      Human_confirmation_durable_blob_sha: e58d7baccbcf186449f1c19544c1ed8f32cd1bf5
+      nonce_commitment:
+        scheme: citystate-human-authority-v1
+        algorithm: sha256
+        digest: 197fd8b54fdfaf052e594023941596cc095e6c8d4b95e6a55b29b0b7d68bd0f9
     profile_binding:
       profile_id_and_version: workflow_stage_06_execution@1
       mechanism_ref: 01_os/03_mechanisms/stage_collaborative_deliberation/README.md
@@ -244,7 +259,14 @@ cases:
       exact_candidate_version: fixture-v1
       created_by_actor_ref: model:test
       created_at: '2026-08-04T19:40:00-07:00'
-      alignment_binding: {bound_model_version: model-v1, Human_confirmation_ref: Human/current.yml#00001}
+      alignment_binding:
+        bound_model_version: model-v1
+        Human_confirmation_durable_ref: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/fixtures/human_dispositions/auth_00001.yml
+        Human_confirmation_durable_blob_sha: e58d7baccbcf186449f1c19544c1ed8f32cd1bf5
+        nonce_commitment:
+          scheme: citystate-human-authority-v1
+          algorithm: sha256
+          digest: 197fd8b54fdfaf052e594023941596cc095e6c8d4b95e6a55b29b0b7d68bd0f9
       profile_binding:
         profile_id_and_version: workflow_stage_06_execution@1
         mechanism_ref: 01_os/03_mechanisms/stage_collaborative_deliberation/README.md
@@ -275,9 +297,17 @@ cases:
     current_model: *model
     receipt:
       <<: *child_receipt
-      alignment_binding: {bound_model_version: model-v0, Human_confirmation_ref: Human/current.yml#00001}
+      alignment_binding:
+        bound_model_version: model-v0
+        Human_confirmation_durable_ref: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/fixtures/human_dispositions/auth_00001.yml
+        Human_confirmation_durable_blob_sha: e58d7baccbcf186449f1c19544c1ed8f32cd1bf5
+        nonce_commitment:
+          scheme: citystate-human-authority-v1
+          algorithm: sha256
+          digest: 197fd8b54fdfaf052e594023941596cc095e6c8d4b95e6a55b29b0b7d68bd0f9
 
 - case_id: CR005-ALIGNMENT-CONFIRMATION-REF-MISMATCH
+  note: binding points at a different durable disposition than the confirmation
   expected_exit: 17
   data:
     activation_mode: full
@@ -285,7 +315,14 @@ cases:
     current_model: *model
     receipt:
       <<: *child_receipt
-      alignment_binding: {bound_model_version: model-v1, Human_confirmation_ref: Human/current.yml#09999}
+      alignment_binding:
+        bound_model_version: model-v1
+        Human_confirmation_durable_ref: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/fixtures/human_dispositions/completion_00001.yml
+        Human_confirmation_durable_blob_sha: e58d7baccbcf186449f1c19544c1ed8f32cd1bf5
+        nonce_commitment:
+          scheme: citystate-human-authority-v1
+          algorithm: sha256
+          digest: 197fd8b54fdfaf052e594023941596cc095e6c8d4b95e6a55b29b0b7d68bd0f9
 
 - case_id: CR005-PROFILE-BINDING-MISMATCH
   expected_exit: 16

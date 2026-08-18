@@ -33,7 +33,15 @@ cases:
         scope: current_stage
         bound_model_version: model-v1
         stale: false
-        ref: Human/current.yml#00001
+        decision_id: D-AUTH-00001
+        decision_type: substantive_execution_authorization
+        exact_model_version: model-v1
+        durable_disposition_ref: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/fixtures/human_dispositions/auth_00001.yml
+        durable_disposition_blob_sha: e58d7baccbcf186449f1c19544c1ed8f32cd1bf5
+        nonce_commitment:
+          scheme: citystate-human-authority-v1
+          algorithm: sha256
+          digest: 197fd8b54fdfaf052e594023941596cc095e6c8d4b95e6a55b29b0b7d68bd0f9
       # exactly the ten required_model_fields of workflow_stage_06_execution@1
       stage_specific_model_elements: &stage06
         exact_task_id_branch_and_40_character_base: {disposition: represented_with_supported_value, value: 'A-impl@31296e1c1dd573310e26327b50ec2f70e176bc2a'}
@@ -101,9 +109,21 @@ cases:
         revisit_trigger: first_production_incident
       Human_alignment: {bound_model_version: model-v2, stale: false}
       Human_confirmation:
-        <<: *confirmation
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
         bound_model_version: model-v2
-        ref: Human/current.yml#00003
+        stale: false
+        decision_id: D-AUTH-MODEL-V2
+        decision_type: substantive_execution_authorization
+        exact_model_version: model-v2
+        durable_disposition_ref: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/fixtures/human_dispositions/auth_model_v2.yml
+        durable_disposition_blob_sha: 82fcf404759d2e229708515552b4344d0010cca0
+        nonce_commitment:
+          scheme: citystate-human-authority-v1
+          algorithm: sha256
+          digest: d24bd88252788e9b0d414fc33f0a8d358653d4b9639fd01c7c6ea84077043603
     inquiry_items:
     - {id: retention_window, re_asks_resolved_input: false}
     receipt:
@@ -121,9 +141,21 @@ cases:
       current_exact_output_version: out-v3
       Human_alignment: {bound_model_version: model-v3, stale: false}
       Human_confirmation:
-        <<: *confirmation
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
         bound_model_version: model-v3
-        ref: Human/current.yml#00004
+        stale: false
+        decision_id: D-AUTH-MODEL-V3
+        decision_type: substantive_execution_authorization
+        exact_model_version: model-v3
+        durable_disposition_ref: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/fixtures/human_dispositions/auth_model_v3.yml
+        durable_disposition_blob_sha: da472a994a81e0af974d8469b1f2c6523fee14de
+        nonce_commitment:
+          scheme: citystate-human-authority-v1
+          algorithm: sha256
+          digest: edeb613a6f964f925712154eda8db582381c533d07dbedce5c9a6d44d9742433
       completion:
         progression_requested: true
         actual_result: helper renamed, all call sites updated

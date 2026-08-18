@@ -1,0 +1,20 @@
+schema_version: citystate.Human_disposition_record.v1
+synthetic_test_record: true
+synthetic_note: >-
+  Fixture record. The nonce behind this commitment is a clearly marked synthetic test
+  value, not a Human secret, and this record authorizes nothing outside the suite.
+task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+stage_id: workflow_stage_03_result_modeling@1
+decision_id: D-AUTH-00001
+decision_type: substantive_execution_authorization
+exact_model_version: model-v1
+Human_disposition: confirmed
+authorized_scope: bounded implementation of the confirmed model
+actor_class: current_Human
+explicit: true
+provenance: foreground_current_Human_interaction
+Human_nonce_plaintext_stored: false
+nonce_commitment:
+  scheme: citystate-human-authority-v1
+  algorithm: sha256
+  digest: 25e3fd12ac00be6c66cf87dcc86108f431c07019cb05b58fc0f23bdac680e3d1

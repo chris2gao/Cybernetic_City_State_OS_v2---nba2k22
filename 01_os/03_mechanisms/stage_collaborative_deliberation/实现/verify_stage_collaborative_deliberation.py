@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Deterministic validator for the staged stage-collaborative-deliberation mechanism."""
 from __future__ import annotations
-import argparse, json, sys
+import argparse, hashlib, hmac, json, sys
 from pathlib import Path
 from typing import Any
 
@@ -400,6 +400,197 @@ def validate_deferred_unknown(element: dict[str, Any]) -> int:
     return 0
 
 
+# ---------------------------------------------------------------------------
+# Human authority: durable disposition + one-time Human-generated nonce
+#
+# actor_class: current_Human written into a repository object is a claim the
+# object makes about itself. It cannot be the thing that grants authority, or
+# any model able to write the object can manufacture Human authority. Authority
+# comes from a foreground/current-Human interaction that produced an explicit
+# disposition, recorded durably, bound to one exact decision, and committed to
+# with a nonce the Human generated independently.
+#
+# Only the commitment is stored. The plaintext nonce never enters Git, a run
+# artifact, a communication document, a fixture, a log or a command line.
+# ---------------------------------------------------------------------------
+HUMAN_AUTHORITY_SCHEME = "citystate-human-authority-v1"
+HUMAN_AUTHORITY_ALGORITHM = "sha256"
+COMMITMENT_BOUND_FIELDS = (
+    "task_id",
+    "stage_id",
+    "decision_id",
+    "decision_type",
+    "exact_model_version",
+    "Human_disposition",
+    "authorized_scope",
+)
+# authority follows the decision, not the activity: one nonce per authority
+# event, and an authorization nonce never doubles as a completion nonce.
+AUTHORIZATION_DECISION_TYPE = "substantive_execution_authorization"
+COMPLETION_DECISION_TYPE = "completion_acceptance"
+DECISION_TYPES = {AUTHORIZATION_DECISION_TYPE, COMPLETION_DECISION_TYPE}
+AFFIRMATIVE_DISPOSITIONS = {"confirmed", "accepted", "authorized"}
+
+
+def canonical_commitment_payload(bound: dict[str, Any], human_nonce: str) -> bytes:
+    """Deterministic serialization for the commitment.
+
+    Canonical JSON - UTF-8, sorted keys, fixed separators - rather than string
+    concatenation, so no field boundary is ambiguous and no value can be shifted
+    between fields to produce the same bytes.
+    """
+    payload = {"domain": HUMAN_AUTHORITY_SCHEME, "Human_nonce": human_nonce}
+    for field in COMMITMENT_BOUND_FIELDS:
+        payload[field] = bound.get(field)
+    return json.dumps(
+        payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False
+    ).encode("utf-8")
+
+
+def compute_commitment(bound: dict[str, Any], human_nonce: str) -> str:
+    return hashlib.sha256(canonical_commitment_payload(bound, human_nonce)).hexdigest()
+
+
+def validate_commitment_structure(commitment: Any) -> int:
+    if not isinstance(commitment, dict):
+        return 15
+    if commitment.get("scheme") != HUMAN_AUTHORITY_SCHEME:
+        return 15
+    if commitment.get("algorithm") != HUMAN_AUTHORITY_ALGORITHM:
+        return 15
+    digest = commitment.get("digest")
+    if not isinstance(digest, str) or len(digest) != 64:
+        return 15
+    try:
+        int(digest, 16)
+    except ValueError:
+        return 15
+    # the plaintext must never be persisted alongside its own commitment
+    for forbidden in ("Human_nonce", "nonce", "plaintext", "code"):
+        if forbidden in commitment:
+            return 14
+    return 0
+
+
+def resolve_durable_disposition(
+    confirmation: dict[str, Any], repo_root: Path | None
+) -> tuple[int, dict[str, Any] | None]:
+    """Actually read the durable Human disposition record.
+
+    A reference that is absent, does not resolve, or whose blob does not match
+    the recorded sha is not evidence of anything.
+    """
+    ref = confirmation.get("durable_disposition_ref")
+    expected_blob = confirmation.get("durable_disposition_blob_sha")
+    if not ref or not isinstance(ref, str):
+        return 15, None
+    if not expected_blob or not isinstance(expected_blob, str):
+        return 15, None
+    root = repo_root or repo_root_from_here()
+    target = root / ref
+    if not target.is_file():
+        return 13, None
+    payload = target.read_bytes()
+    actual = hashlib.sha1(b"blob %d\0" % len(payload) + payload).hexdigest()
+    if actual != expected_blob:
+        return 13, None
+    try:
+        record = load_doc(target)
+    except Exception:
+        return 11, None
+    if not isinstance(record, dict):
+        return 11, None
+    return 0, record
+
+
+def validate_durable_disposition_record(
+    record: dict[str, Any], confirmation: dict[str, Any], model: dict[str, Any]
+) -> int:
+    """The record must bind this exact decision, and still be live."""
+    if record.get("provenance") != "foreground_current_Human_interaction":
+        return 15
+    if record.get("actor_class") != "current_Human":
+        return 15
+    if record.get("explicit") is not True:
+        return 14
+    disposition = record.get("Human_disposition")
+    if disposition not in AFFIRMATIVE_DISPOSITIONS:
+        return 15
+    if record.get("stale") is True or record.get("invalidated") is True:
+        return 12
+    if record.get("consumed_by") not in (None, record.get("decision_id")):
+        # this nonce already carried a different authority event
+        return 12
+
+    decision_type = record.get("decision_type")
+    if decision_type not in DECISION_TYPES:
+        return 15
+    if confirmation.get("decision_id") != record.get("decision_id"):
+        return 15
+    if confirmation.get("decision_type") not in (None, decision_type):
+        return 15
+    if record.get("exact_model_version") != model.get("current_exact_model_version"):
+        return 12
+    if confirmation.get("exact_model_version") != record.get("exact_model_version"):
+        return 12
+    if not record.get("authorized_scope"):
+        return 15
+
+    code = validate_commitment_structure(record.get("nonce_commitment"))
+    if code:
+        return code
+    stated = confirmation.get("nonce_commitment")
+    code = validate_commitment_structure(stated)
+    if code:
+        return code
+    if stated.get("digest") != record["nonce_commitment"].get("digest"):
+        return 13
+    return 0
+
+
+def validate_human_authority(
+    model: dict[str, Any],
+    data: dict[str, Any],
+    repo_root: Path | None = None,
+) -> int:
+    """Full chain: interaction -> disposition -> nonce -> record -> binding."""
+    confirmation = model.get("Human_confirmation")
+    if not isinstance(confirmation, dict):
+        return 15
+    code, record = resolve_durable_disposition(confirmation, repo_root)
+    if code:
+        return code
+    assert record is not None
+
+    task_id = data.get("task_id")
+    stage_id = data.get("stage_id")
+    receipt = data.get("receipt")
+    if stage_id is None and isinstance(receipt, dict):
+        stage_id = receipt.get("profile_id_and_version")
+    if task_id is not None and record.get("task_id") != task_id:
+        return 15
+    if stage_id is not None and record.get("stage_id") != stage_id:
+        return 15
+    return validate_durable_disposition_record(record, confirmation, model)
+
+
+def verify_human_challenge(
+    record: dict[str, Any], human_nonce: str
+) -> tuple[bool, str, str]:
+    """Recompute the commitment from the record's bound fields and a nonce the
+    current Human supplies in the current interaction.
+
+    The nonce must come from the Human now. A plaintext code taken from executor
+    output, the repository, a run artifact, a communication document or another
+    model's report proves nothing here: any of those sources could have produced
+    the record in the first place.
+    """
+    bound = {field: record.get(field) for field in COMMITMENT_BOUND_FIELDS}
+    recomputed = compute_commitment(bound, human_nonce)
+    stored = (record.get("nonce_commitment") or {}).get("digest", "")
+    return hmac.compare_digest(recomputed, stored), recomputed, stored
+
+
 def validate_mandatory_Human_confirmation(model: dict[str, Any]) -> int:
     """Every task and every workflow stage must project the current model to the
     current Human and obtain an explicit confirmation bound to the exact current
@@ -432,10 +623,18 @@ def validate_mandatory_Human_confirmation(model: dict[str, Any]) -> int:
     bound = confirmation.get("bound_model_version")
     if not bound or bound != model.get("current_exact_model_version"):
         return 12
-    return 0
+    # An inline actor_class is a self-assertion. Authority requires a durable
+    # disposition reference and a nonce commitment, both checked for real below.
+    if not confirmation.get("durable_disposition_ref"):
+        return 15
+    if not confirmation.get("durable_disposition_blob_sha"):
+        return 15
+    if not confirmation.get("decision_id"):
+        return 15
+    return validate_commitment_structure(confirmation.get("nonce_commitment"))
 
 
-def validate_model_readiness(data: dict[str, Any]) -> int:
+def validate_model_readiness(data: dict[str, Any], repo_root: Path | None = None) -> int:
     """Readiness of the single Current Model, in every activation mode.
 
     dormant means "the model is already adequate and no new load-bearing gap
@@ -452,6 +651,11 @@ def validate_model_readiness(data: dict[str, Any]) -> int:
     if code:
         return code
     code = validate_mandatory_Human_confirmation(model)
+    if code:
+        return code
+    # resolve and validate the durable disposition itself; a self-asserted
+    # actor_class never reaches this far on its own
+    code = validate_human_authority(model, data, repo_root)
     if code:
         return code
 
@@ -565,8 +769,25 @@ def validate_stage_child_composition(
     if binding.get("bound_model_version") != model.get("current_exact_model_version"):
         return 12
     confirmation = model.get("Human_confirmation") or {}
-    if binding.get("Human_confirmation_ref") != confirmation.get("ref"):
+    # Both sides must exist before they are compared. Comparing two absent
+    # references succeeds as None == None, which let a child with no Human
+    # confirmation at all satisfy the alignment overlay.
+    binding_ref = binding.get("Human_confirmation_durable_ref")
+    binding_blob = binding.get("Human_confirmation_durable_blob_sha")
+    confirmation_ref = confirmation.get("durable_disposition_ref")
+    confirmation_blob = confirmation.get("durable_disposition_blob_sha")
+    if not binding_ref or not binding_blob:
         return 17
+    if not confirmation_ref or not confirmation_blob:
+        return 17
+    if binding_ref != confirmation_ref or binding_blob != confirmation_blob:
+        return 17
+    binding_digest = (binding.get("nonce_commitment") or {}).get("digest")
+    confirmation_digest = (confirmation.get("nonce_commitment") or {}).get("digest")
+    if not binding_digest or not confirmation_digest:
+        return 17
+    if binding_digest != confirmation_digest:
+        return 13
 
     # overlay 2: the stage/profile binding must resolve to the same exact profile
     profile_binding = receipt.get("profile_binding")
@@ -616,7 +837,7 @@ def validate_instance(data: dict[str, Any], repo_root: Path | None = None) -> in
     # minimum substantive rounds (full=5, incremental=2) were removed: how many
     # rounds occurred never proved that the model was adequate, and requiring
     # them manufactured discussion where no load-bearing gap existed.
-    code = validate_model_readiness(data)
+    code = validate_model_readiness(data, repo_root)
     if code:
         return code
     receipt = data.get("receipt")
