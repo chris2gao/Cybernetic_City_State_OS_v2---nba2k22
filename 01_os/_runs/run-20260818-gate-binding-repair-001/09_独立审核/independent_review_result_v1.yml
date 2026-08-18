@@ -1,0 +1,67 @@
+schema_version: citystate.independent_review_result.v1
+task_id: os-v2-gate-binding-repair-001
+review_target_sha: b54826e43029077b8d6c5fa9242b2b02997f2e89
+review_verdict: ready_for_human_integration
+provenance:
+  carrier: Human_relayed_reviewer_report
+  reviewer_report_archive: 20260818_gate绑定修复独立审核.md (external brief vault; not GitHub evidence)
+  foreground_reproduction_scope: physical_prerequisites_and_git_graph_only
+  reviewer_execution_mode_reported: local_clone_plus_isolated_worktree
+  receiver_setup_deviation:
+    expected: GitHub_only
+    actual: local_clone_plus_isolated_worktree
+    reviewer_assessed_blocking: false
+reviewer_independent_measurements:
+  canonical_binding_scan:
+    base_total: 55
+    base_match: 47
+    base_mismatch: 8
+    candidate_total: 55
+    candidate_match: 55
+    candidate_mismatch: 0
+  stale_origin: current_master_commit_changed_stage_profile_contract_blob
+  declared_version_reality:
+    source_index_version: 2
+    catalog_version: 2
+    mechanism_files_changed_by_candidate: 0
+  independently_rerun_gates:
+    stage_runtime_guard_exit: 0
+    stage_static_validator_exit: 0
+    model_routing_static_validator_exit: 0
+    changed_path_scope_exit: 0
+    git_diff_check_exit: 0
+  boundary:
+    out_of_scope_paths: 0
+    binary_artifacts: 0
+non_blocking_findings:
+  - id: REVIEW-NB-001
+    topic: commit_identity_provenance
+    finding: >-
+      Candidate commit identity is Fixture <fixture@example.invalid>; content correctness
+      was independently reproduced, but commit principal provenance is not attributable.
+  - id: REVIEW-NB-002
+    topic: closure_wording_scope
+    finding: >-
+      Complete closure is supported only for the closure measured by the current validators;
+      broader canonical scanning found five pre-existing stale bindings outside this packet objective.
+  - id: REVIEW-NB-003
+    topic: canonical_refs_to_run_history
+    finding: >-
+      Five pre-existing canonical bindings target historical 01_os/_runs artifacts; reviewer
+      recommends an architecture decision rather than opportunistic SHA refreshes.
+foreground_physical_readback:
+  observed_remote_master: 30f205eb7e0b975b97386fee103d180f3d03018e
+  observed_source_branch_head: 38ccb6f5db50fa5177fd7360605db261ce1ed6e3
+  candidate_parent: 30f205eb7e0b975b97386fee103d180f3d03018e
+  metadata_receipt_parent: b54826e43029077b8d6c5fa9242b2b02997f2e89
+  metadata_receipt_changed_paths:
+    - 01_os/_runs/run-20260818-gate-binding-repair-001/07_测试执行/postcommit_candidate_verification_v1.yml
+    - 01_os/_runs/run-20260818-gate-binding-repair-001/08_结论/completion_pointer_v1.yml
+    - 01_os/_runs/run-20260818-gate-binding-repair-001/08_结论/reviewer_receiver_setup_v1.yml
+    - 01_os/_runs/run-20260818-gate-binding-repair-001/run.yml
+  foreground_did_not_claim_to_reproduce:
+    - reviewer_full_repository_binding_scan
+    - reviewer_isolation_compliance
+integration_recommendation:
+  semantic_candidate: b54826e43029077b8d6c5fa9242b2b02997f2e89
+  status: proceed_to_current_Human_master_gate

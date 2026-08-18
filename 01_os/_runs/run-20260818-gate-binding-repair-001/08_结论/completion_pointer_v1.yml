@@ -1,7 +1,7 @@
 schema_version: citystate.completion_pointer.v1
 completion_pointer:
   packet_id: os-v2-gate-binding-repair-001
-  status: ready_for_independent_review
+  status: ready_for_human_integration
   source_branch: dev/os-v2-gate-binding-repair-001
   source_base: 30f205eb7e0b975b97386fee103d180f3d03018e
   source_head: b54826e43029077b8d6c5fa9242b2b02997f2e89
@@ -64,4 +64,10 @@ completion_pointer:
     force_push: false
     remote_master_after_candidate_publication: 30f205eb7e0b975b97386fee103d180f3d03018e
     observation_scope: candidate_source_publication_before_metadata_receipt_commit
-  next_owner: foreground_independent_review
+  independent_review:
+    verdict: ready_for_human_integration
+    review_target_sha: b54826e43029077b8d6c5fa9242b2b02997f2e89
+    result_ref: 09_独立审核/independent_review_result_v1.yml
+    blocking_findings: 0
+    non_blocking_findings: 3
+  next_owner: Human
