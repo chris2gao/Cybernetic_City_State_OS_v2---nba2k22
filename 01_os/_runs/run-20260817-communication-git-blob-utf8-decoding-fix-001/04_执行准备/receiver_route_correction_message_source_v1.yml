@@ -1,0 +1,23 @@
+message_id: os-v2-communication-git-blob-utf8-decoding-fix-001::gpt56-communication-utf8-foreground-001::00002
+task_id: os-v2-communication-git-blob-utf8-decoding-fix-001
+title: Correct UTF-8 executor route to current Cowork
+message_type: correction
+sender_endpoint_id: gpt56-communication-utf8-foreground-001
+sender_task_role: communication_utf8_foreground_dispatch
+expected_recipient_endpoint_id: claude-cowork-communication-utf8-executor-001
+expected_recipient_task_role: communication_utf8_executor
+content: >-
+  Correct only the receiver route of the existing UTF-8 implementation dispatch. The Human clarified that CC means the currently used Claude Desktop Cowork / Claude Opus 5 surface. After canonical receiver bootstrap, execute the unchanged implementation defined by the original task packet and 00001 execution dispatch.
+required_refs:
+  - documents/gpt56-communication-utf8-foreground-001/00002_receiver_route_correction.md
+  - documents/gpt56-communication-utf8-foreground-001/00001_execution_dispatch.md
+  - Human/decisions/00002_receiver_route_correction.yml
+requested_action: bootstrap_corrected_receiver_then_execute_existing_UTF8_fix
+in_reply_to: os-v2-communication-git-blob-utf8-decoding-fix-001::gpt56-communication-utf8-foreground-001::00001
+supersedes: os-v2-communication-git-blob-utf8-decoding-fix-001::gpt56-communication-utf8-foreground-001::00001
+authorization_ref: Human/decisions/00002_receiver_route_correction.yml
+constraints:
+  - supersedes_receiver_route_only
+  - implementation_semantics_unchanged
+  - no_master_publication
+  - no_protocol_schema_authority_or_stage_alignment_semantic_change
