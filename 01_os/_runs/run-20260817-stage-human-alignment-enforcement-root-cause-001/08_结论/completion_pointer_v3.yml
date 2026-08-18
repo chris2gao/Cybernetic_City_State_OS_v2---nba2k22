@@ -1,0 +1,78 @@
+schema_version: citystate.completion_pointer.v1
+pointer_id: completion_pointer_00003
+task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+run_id: run-20260817-stage-human-alignment-enforcement-root-cause-001
+
+append_only: true
+rewrites_prior_pointer_in_place: false
+supersedes: completion_pointer_00002
+supersedes_record_ref: 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/08_结论/completion_pointer_v2.yml
+supersession_reason: >-
+  Post-merge fix-forward closing HUMAN_CONFIRMATION_PROVENANCE_BYPASS. Candidate 8d953a82
+  was merged to master and the blocker was found afterwards. That sequence is retained as
+  physical history: master is not reset, nothing is reverted to erase it, and the earlier
+  CHANGES_REQUIRED verdict is not rewritten as PASS.
+
+status: ready_for_independent_review
+source_branch: dev/os-v2-stage-human-alignment-enforcement-root-cause-001-nonce-001
+source_base: 8d953a823275b3b98b8530ceef6682eeb84f0020
+bound_exact_final_semantic_candidate: 64434d2b369d6e668dd03722c283cb5d86ce026a
+
+pointer_lineage_retained:
+- pointer: completion_pointer_00001
+  ref: 08_结论/completion_pointer_v1.yml
+  bound_candidate: d429962efc0ed46679d2dfac7ef73af80c21e24b
+- pointer: completion_pointer_00002
+  ref: 08_结论/completion_pointer_v2.yml
+  bound_candidate: 8a001f017daf7a0b8001a1de9fbcac160a6249e2
+
+review_history_retained:
+- verdict: CHANGES_REQUIRED
+  findings: [F2, F1]
+  outcome: closed in 8a001f01
+- event: reviewer merged 8d953a82 to master, then found HUMAN_CONFIRMATION_PROVENANCE_BYPASS
+  outcome: fix-forward in this candidate, no history rewrite
+
+bound_exact_evidence:
+  provenance_adversarial_gates: {gates: 25, failed: 0, control_exit: 0}
+  F2_F1_causal_gates: {gates: 14, failed: 0}
+  earlier_causal_gates: {gates: 29, failed: 0}
+  fixture_suites: {cases: 86, passed: 86, failed: 0, suites: 6}
+  preserved_regressions: {suite: instance/counterexamples_v1.yml, cases: 15, passed: 15}
+  static_repo: {exit: 0}
+  static_snapshot: {exit: 0}
+  no_canonical_live_state: {exit: 0}
+  material_event: {case: ME-PASS, exit: 0}
+  review_execution: {case: RE-PASS, exit: 0}
+  challenge_verifier_correct_code: {exit: 0, result: verified}
+  challenge_verifier_wrong_code: {exit: 1, result: mismatch}
+  plaintext_nonce_in_repository: none_found
+  diff_check: {exit: 0}
+  worktree_clean: true
+
+Human_authority_scheme:
+  scheme: citystate-human-authority-v1
+  algorithm: sha256
+  authorization_and_completion_codes_separate: true
+  single_use_exact_bound: true
+  plaintext_persisted_anywhere: false
+  fixture_nonces: synthetic_and_marked
+
+validation:
+  diff_scope: passed
+  out_of_scope_paths: 0
+  binary_artifact_count: 0
+  hook_guard: passed
+  transport: local_git
+
+repository:
+  master_modified: false
+  master_at_completion: 8d953a823275b3b98b8530ceef6682eeb84f0020
+  force_push: false
+  history_rewritten: false
+  rebase_squash_amend_reset_revert: none
+
+evidence_source_class: foreground_executor_evidence
+independent_ci_evidence: absent_no_ci_in_repository
+next_owner: foreground_independent_review
+master_publication_authorized: false
