@@ -1,0 +1,25 @@
+endpoint_id: claude-code-communication-utf8-executor-001
+task_role: communication_utf8_executor
+collaboration_role: execution
+provider: Anthropic
+product: Claude Code Desktop
+surface: claude_code_desktop
+model: Sonnet 5
+parameter_profile: claude_code_account_current
+session_mode: fresh_session
+availability_assumption:
+  rule: registered_candidates_are_available_unless_Human_or_task_time_observation_marks_unavailable
+  source_ref: 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+  stop_if_task_time_surface_or_model_differs: true
+repository_requirement:
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  branch: dev/os-v2-communication-git-blob-utf8-decoding-fix-001
+  worktree: fresh_clean_isolated_required
+  local_shell: required
+  python: required
+constraints:
+  - one_task_only
+  - no_master_publication
+  - no_force_rebase_squash_amend_reset_clean
+  - no_protocol_schema_authority_or_stage_alignment_semantic_change
+  - stop_on_boundary_or_contract_conflict
