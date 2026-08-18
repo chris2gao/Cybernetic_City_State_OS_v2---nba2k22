@@ -1,0 +1,32 @@
+endpoint_id: claude-cowork-communication-utf8-executor-001
+task_role: communication_utf8_executor
+collaboration_role: execution
+provider: Anthropic
+product: Claude Desktop
+surface: claude_desktop_cowork
+model: Claude Opus 5
+parameter_profile: claude_desktop_cowork_opus5_task_time
+session_mode: reentry_same_task_session
+availability_assumption:
+  rule: Human task-time observation binds the current Cowork surface/model identity; repository model-routing catalog binds the registered route.
+  source_refs:
+    - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    - Human/decisions/00002_receiver_route_correction.yml
+  stop_if_task_time_surface_or_model_differs: true
+repository_requirement:
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  branch: dev/os-v2-communication-git-blob-utf8-decoding-fix-001
+  worktree: reuse_current_clean_task_clone_after_fresh_fetch_or_fresh_clean_isolated_worktree
+  local_shell: required
+  python: required
+reentry_requirements:
+  - fresh_read_remote_master
+  - fresh_read_task_branch
+  - verify_current_worktree_clean
+  - canonical_receiver_bootstrap_from_corrected_v2_pointer
+constraints:
+  - one_task_only
+  - no_master_publication
+  - no_force_rebase_squash_amend_reset_clean
+  - no_protocol_schema_authority_or_stage_alignment_semantic_change
+  - stop_on_boundary_or_contract_conflict

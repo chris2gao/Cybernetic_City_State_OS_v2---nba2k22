@@ -1,0 +1,48 @@
+schema_version: citystate.task_packet.v1
+task_id: os-v2-communication-git-blob-utf8-decoding-fix-001
+run_id: run-20260817-communication-git-blob-utf8-decoding-fix-001
+risk_tier: T2_semantic
+objective: >-
+  Make communication Git blob validation independent of Windows ANSI code page and process locale by
+  treating git-show output as bytes and decoding repository communication artifacts explicitly as UTF-8.
+problem_statement: >-
+  validate_communication_system.py::_git_blob currently uses subprocess text mode without an explicit
+  encoding. On Windows CP936/GBK this can fail while reading valid UTF-8 repository blobs containing
+  Chinese text, causing post-publication pointer binding to fail after convergence has already pushed.
+implementation_contract:
+  - capture git-show stdout/stderr as bytes rather than locale-decoded text
+  - decode stdout explicitly as UTF-8 with strict error handling
+  - on invalid UTF-8, raise a communication-specific fail-closed error rather than yaml_input_must_be_text
+  - preserve existing missing-blob behavior and pointer semantics
+  - do not alter communication protocol, v2 pointer field contract, authority semantics, resolver/gate logic or publisher sequencing
+  - prefer the smallest deterministic change; no locale configuration workaround in canonical code
+allowed_changed_paths:
+  - 01_os/06_execution/boot/communication_system/validator/validate_communication_system.py
+  - 01_os/06_execution/boot/communication_system/validator/test_formal_activation.py
+  - 01_os/06_execution/boot/communication_system/publisher/test_github_republication.py
+  - 01_os/_runs/run-20260817-communication-git-blob-utf8-decoding-fix-001/**
+forecast_changed_paths:
+  - 01_os/06_execution/boot/communication_system/validator/validate_communication_system.py
+  - 01_os/06_execution/boot/communication_system/publisher/test_github_republication.py
+required_validation:
+  - regression: a real or controlled Git blob containing non-ASCII UTF-8 text round-trips through _git_blob independent of locale
+  - negative: invalid UTF-8 bytes fail closed with a specific encoding error
+  - regression: GitHub republication/pointer-binding test exercises a non-ASCII UTF-8 manifest or required artifact
+  - existing formal activation and GitHub republication tests remain green
+  - git diff --check
+  - exact changed-path allowlist check
+  - capture Windows environment evidence where available: Python version, sys.flags.utf8_mode, locale encoding, preferred encoding and Windows ACP
+completion_requirements:
+  - exact candidate SHA
+  - exact changed paths
+  - commands and exit codes bound to candidate
+  - executor result clearly distinguished from independent review
+  - no claim of master readiness until fresh independent review passes
+prohibited:
+  - master publication
+  - unrelated communication-system refactor
+  - changing stage_collaborative_deliberation
+  - changing Windows/system locale or requiring PYTHONUTF8 as the permanent solution
+  - force push, reset, rebase, squash, amend or history rewrite
+independent_review_required: true
+status: Human_authorized_for_implementation

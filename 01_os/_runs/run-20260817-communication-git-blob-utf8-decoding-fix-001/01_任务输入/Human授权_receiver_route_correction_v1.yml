@@ -1,0 +1,33 @@
+schema_version: citystate.human_authorization.v1
+task_id: os-v2-communication-git-blob-utf8-decoding-fix-001
+run_id: run-20260817-communication-git-blob-utf8-decoding-fix-001
+authorized_at: '2026-08-17'
+Human_disposition: correct_receiver_route_and_publish_append_only_correction
+authorization:
+  route_correction:
+    authorized: true
+    old_message_id: os-v2-communication-git-blob-utf8-decoding-fix-001::gpt56-communication-utf8-foreground-001::00001
+    old_receiver_endpoint_id: claude-code-communication-utf8-executor-001
+    old_receiver_route: Claude Code Desktop / Sonnet 5
+    correction_reason: Human clarified that CC for current local execution means the currently used Claude Desktop Cowork surface, not Claude Code Desktop.
+    preserve_old_message_constitution_receipt_and_pointer: true
+    new_receiver_endpoint_id: claude-cowork-communication-utf8-executor-001
+    new_receiver_route:
+      provider: Anthropic
+      product: Claude Desktop
+      surface: claude_desktop_cowork
+      model: Claude Opus 5
+      reasoning_or_parameter_profile: claude_desktop_cowork_opus5_task_time
+  implementation_semantics:
+    unchanged: true
+    authoritative_task_packet: 01_os/_runs/run-20260817-communication-git-blob-utf8-decoding-fix-001/01_任务输入/任务包_v1.yml
+    authoritative_execution_dispatch: documents/gpt56-communication-utf8-foreground-001/00001_execution_dispatch.md
+  same_task_session_reentry:
+    authorized: true
+    condition: canonical correction pointer must validate and receiver bootstrap must fresh-read current repository/task state before implementation mutation
+explicitly_not_authorized:
+  - rewrite_or_delete_message_00001_or_its_constitution_receipt_index_or_pointer
+  - change_UTF8_fix_semantics_or_scope
+  - master_publication
+  - bypass_canonical_correction_publication_or_receiver_bootstrap
+  - manual_edit_of_pointer_receiver_setup

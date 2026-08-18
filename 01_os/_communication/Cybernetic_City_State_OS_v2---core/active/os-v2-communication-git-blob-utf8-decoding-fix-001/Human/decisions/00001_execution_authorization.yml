@@ -1,0 +1,14 @@
+task_id: os-v2-communication-git-blob-utf8-decoding-fix-001
+writer_endpoint_id: gpt56-communication-utf8-foreground-001
+authorized_action: implement_validate_and_publish_source_branch_candidate
+granted: true
+Human_decision: confirmed_A_plus_B
+scope:
+  - explicit UTF-8 decoding at communication Git blob validation boundary
+  - locale-independent regression coverage
+  - invalid UTF-8 fail-closed coverage
+  - source task branch publication only
+not_authorized:
+  - master publication
+  - communication protocol/schema/authority changes
+  - stage-alignment semantic changes

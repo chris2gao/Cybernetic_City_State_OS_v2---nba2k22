@@ -1,0 +1,33 @@
+schema_version: citystate.communication_pointer_recovery.v1
+recovery_id: stage_alignment_dispatch_pointer_recovery_001
+Human_authorization_ref: ../01_任务输入/Human授权_A+B_v1.yml
+purpose: >-
+  Recover the canonical v2 pointer for the already-published stage-alignment dispatch after the
+  Windows locale-dependent _git_blob decoder failed post-convergence. No new remote mutation is authorized.
+source_task:
+  task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+  branch: dev/os-v2-stage-human-alignment-enforcement-root-cause-001
+  pre_publication_commit: 85e3a9e94e27ecd41aa5b43c1700783b277b7370
+  published_commit: ada4210427f83ed5e34a906691d5c91b4add62a2
+  published_message: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-stage-human-alignment-enforcement-root-cause-001/messages/gpt56-stage-alignment-enforcement-foreground-001/00001_request.yml
+local_workspace:
+  preferred_root: E:\_pubwork
+  reuse_authorized: true
+steps:
+  - fresh-read remote master and require e5bf669d39179c172fc10fbb3b73557e8b05bf1e
+  - fresh-read source task branch and require ada4210427f83ed5e34a906691d5c91b4add62a2
+  - keep the existing clean published clone at ada4210427f83ed5e34a906691d5c91b4add62a2 unchanged
+  - create a disposable sibling worktree or clone at exact pre-publication commit 85e3a9e94e27ecd41aa5b43c1700783b277b7370
+  - in the disposable process only set PYTHONUTF8=1; do not modify OS locale, global Python configuration or repository files
+  - replay the same canonical publisher inputs from v3 with _defer_GitHub_readback=True against the disposable pre-publication snapshot, with no push/convergence call
+  - require the replay-generated constitution, message, sender index and compliance receipt to be byte-for-byte identical to the four artifacts at remote published commit ada4210427f83ed5e34a906691d5c91b4add62a2
+  - take the provisional pointer returned by canonical publish() and call canonical bind_GitHub_pointer with remote_commit_sha ada4210427f83ed5e34a906691d5c91b4add62a2 under PYTHONUTF8=1
+  - call canonical validate_pointer_v2 against the published commit and require success
+  - return only the resulting validated v2 pointer and exact comparison/validation status; do not push or create remote artifacts
+prohibited:
+  - rerunning republish_and_converge against the already-published task root
+  - rewriting or deleting immutable communication artifacts
+  - hand-constructing a pointer
+  - changing Windows locale or system UTF-8 settings
+  - any remote write
+failure_behavior: STOP_with_exact_failure_and_no_remote_mutation

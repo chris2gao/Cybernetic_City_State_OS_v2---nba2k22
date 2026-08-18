@@ -1,0 +1,36 @@
+schema_version: citystate.human_authorization.v1
+task_id: os-v2-communication-git-blob-utf8-decoding-fix-001
+run_id: run-20260817-communication-git-blob-utf8-decoding-fix-001
+authorized_at: '2026-08-17'
+Human_disposition: confirm_B_pointer_recovery_before_A_incremental_realign
+authorization:
+  B_pointer_recovery:
+    authorized: true
+    pre_publication_commit: d2e3638be7dd4fbad74eeba540d2b8a6a41f1bc4
+    published_commit: 33a73c59ac8d09122d7662a4812f60133d38df73
+    remote_mutation_authorized: false
+    recovery_method: canonical_local_replay_byte_compare_bind_and_validate
+  B_implementation_after_pointer_recovery:
+    authorized_under_existing_task_packet: true
+    execution_surface_policy: local_tasks_use_Claude_Code
+  A_stage_alignment_task:
+    disposition: keep_frozen_until_B_completed_and_integrated_then_incremental_Human_realign
+    existing_valid_dispatch_pointer_preserved: true
+routing_observation_for_current_work:
+  Codex:
+    available_before_date: false
+    earliest_expected_available_date: '2026-08-19'
+    do_not_route_current_local_execution_to_Codex: true
+  local_repository_or_terminal_required:
+    preferred_executor: Claude Code Desktop
+    short_name: CC
+  GitHub_only_no_local_state_required:
+    eligible_executor: fresh_independent_GPT_model
+    repository_access: GitHub_read
+  authority_note: task_time_routing_input_only_not_global_catalog_registration
+explicitly_not_authorized:
+  - master publication of B without independent review and fresh Human gate
+  - any remote write during B pointer recovery
+  - rewriting the already-published B communication message, receipt, constitution or sender index
+  - starting A implementation before B completion and incremental Human realignment
+  - changing global model-routing catalog solely from this task-time observation

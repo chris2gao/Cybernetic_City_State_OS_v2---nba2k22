@@ -1,0 +1,23 @@
+collaboration_role: execution
+provider: Anthropic
+product: Claude Code Desktop
+surface: claude_code_desktop
+model: Sonnet 5
+reasoning_or_parameter_profile: claude_code_account_current
+session_mode: fresh_session
+isolation_level: task_only
+repository_access_mode: local_git
+repository_or_worktree_requirement: fresh_clean_isolated_clone_or_worktree
+required_branch_or_sha: dev/os-v2-communication-git-blob-utf8-decoding-fix-001
+local_files_required: true
+github_publication_required_before_start: true
+communication_carrier: GitHub
+routing_basis_ref: documents/gpt56-communication-utf8-foreground-001/00001_execution_dispatch.md
+availability_assumption_or_observation_ref: role_context/claude-code-communication-utf8-executor-001.yml
+limitations:
+  - execution_only_no_architecture_reinterpretation
+  - one_task_only
+  - no_master_or_protected_publication
+  - no_force_rebase_squash_amend_reset_clean
+  - stop_if_task_time_surface_or_model_differs
+  - no_protocol_schema_authority_or_stage_alignment_semantic_change

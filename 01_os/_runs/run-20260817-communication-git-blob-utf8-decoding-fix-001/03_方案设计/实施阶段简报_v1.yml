@@ -1,0 +1,33 @@
+schema_version: citystate.stage_brief.v1
+task_id: os-v2-communication-git-blob-utf8-decoding-fix-001
+run_id: run-20260817-communication-git-blob-utf8-decoding-fix-001
+stage: implementation
+Human_disposition: confirmed_A_plus_B
+understanding: >-
+  The defect is not that Windows must be configured differently. The canonical validator implicitly
+  delegates decoding of repository UTF-8 bytes to the process locale by using subprocess text mode
+  without encoding. Windows CP936/GBK exposed that defect.
+proposed_method: >-
+  Change _git_blob to capture bytes, decode stdout explicitly as strict UTF-8, map invalid UTF-8 to a
+  specific CommunicationValidationError, and add regression coverage including non-ASCII UTF-8 content.
+feasibility_support:
+  - repository communication contracts already require UTF-8 text artifacts
+  - current _git_blob is a narrow helper with a single decoding boundary
+  - the failure occurred after successful publication/convergence, isolating the defect to readback validation
+  - existing tests already exercise pointer binding and GitHub republication but use ASCII-only fixtures
+verification: >-
+  Reproduce the old condition through controlled bytes/non-ASCII fixtures, prove the patched helper is locale-independent,
+  run existing communication suites, changed-path validation and git diff --check.
+risks:
+  - accidentally widening behavior beyond text decoding
+  - masking truly invalid UTF-8 instead of failing closed
+  - mixing this side task into the stage-alignment semantic diff
+boundaries:
+  Human_decided:
+    - permanent canonical fix is explicit UTF-8 handling, not Windows locale reconfiguration
+    - side task remains separate from stage-alignment task
+  executor_owned_local_choices:
+    - exact unit-test helper structure and fixture construction inside the authorized paths
+  stop_if:
+    - a protocol/schema/authority change appears necessary
+    - required changes leave the allowed path boundary

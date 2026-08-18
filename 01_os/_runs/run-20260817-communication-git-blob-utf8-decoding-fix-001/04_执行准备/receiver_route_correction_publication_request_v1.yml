@@ -1,0 +1,49 @@
+schema_version: citystate.formal_dispatch_publication_request.v1
+task_id: os-v2-communication-git-blob-utf8-decoding-fix-001
+run_id: run-20260817-communication-git-blob-utf8-decoding-fix-001
+requested_by_endpoint_id: gpt56-communication-utf8-foreground-001
+requested_by_role: communication_utf8_foreground_dispatch
+purpose: mechanically_publish_append_only_receiver_route_correction
+publisher_role: auxiliary_mechanical
+fresh_gates:
+  expected_master_sha: e5bf669d39179c172fc10fbb3b73557e8b05bf1e
+  task_branch: dev/os-v2-communication-git-blob-utf8-decoding-fix-001
+  request_carrier_binding: >-
+    Read this request only from the exact Human-relayed GitHub commit. At publisher start, fresh-read the task branch and require its head to equal that exact request-carrier commit.
+  mismatch: STOP_without_mutation
+communication_context:
+  task_root: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-communication-git-blob-utf8-decoding-fix-001
+  required_existing_files:
+    - manifest.yml
+    - Human/current.yml
+    - Human/decisions/00001_execution_authorization.yml
+    - Human/decisions/00002_receiver_route_correction.yml
+    - endpoints/gpt56-communication-utf8-foreground-001.yml
+    - endpoints/claude-cowork-communication-utf8-executor-001.yml
+    - role_context/gpt56-communication-utf8-foreground-001.yml
+    - role_context/claude-cowork-communication-utf8-executor-001.yml
+    - documents/gpt56-communication-utf8-foreground-001/00001_execution_dispatch.md
+    - documents/gpt56-communication-utf8-foreground-001/00002_receiver_route_correction.md
+formal_inputs:
+  message_source_ref: 01_os/_runs/run-20260817-communication-git-blob-utf8-decoding-fix-001/04_执行准备/receiver_route_correction_message_source_v1.yml
+  activation_context_ref: 01_os/_runs/run-20260817-communication-git-blob-utf8-decoding-fix-001/04_执行准备/receiver_route_correction_activation_context_v1.yml
+  mechanism_preconditions_ref: 01_os/_runs/run-20260817-communication-git-blob-utf8-decoding-fix-001/04_执行准备/receiver_route_correction_mechanism_preconditions_v1.yml
+  receiver_setup_ref: 01_os/_runs/run-20260817-communication-git-blob-utf8-decoding-fix-001/04_执行准备/receiver_route_correction_receiver_setup_v1.yml
+publisher_process_workaround:
+  shell: PowerShell
+  exact_same_process_guard:
+    - "$env:PYTHONUTF8 = '1'"
+    - "python -c \"import os,sys; assert os.environ.get('PYTHONUTF8') == '1'; assert sys.flags.utf8_mode == 1\""
+  prohibit_cmd_c_wrapper: true
+  scope: canonical correction publication/readback only
+  reason: current master still contains the known locale-dependent _git_blob readback defect
+publication_requirements:
+  - fresh_read_remote_master_and_task_branch_before_first_write
+  - validate corrected receiver setup against current model-routing catalog
+  - run canonical formal resolver and pre-action gate
+  - publish exactly the append-only 00002 correction; do not modify 00001 artifacts
+  - run canonical GitHub convergence/readback under the guarded UTF-8 process
+  - do_not_handwrite_constitution_receipt_pointer_or_validator_success
+  - do_not_modify_UTF8_implementation_semantics_or_master
+  - validate bound v2 pointer after publication
+return_contract: return_only_validated_00002_correction_v2_pointer_then_STOP
