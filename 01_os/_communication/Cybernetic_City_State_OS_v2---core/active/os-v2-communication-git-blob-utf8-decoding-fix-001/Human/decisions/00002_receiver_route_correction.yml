@@ -1,0 +1,23 @@
+task_id: os-v2-communication-git-blob-utf8-decoding-fix-001
+writer_endpoint_id: gpt56-communication-utf8-foreground-001
+writer_task_role: communication_utf8_foreground_dispatch
+decision_type: receiver_route_correction
+granted: true
+Human_basis: >-
+  Human clarified that the local execution shorthand CC refers to the currently used Claude Desktop Cowork / Claude Opus 5 surface. The prior Claude Code Desktop / Sonnet 5 receiver route was a foreground routing interpretation error.
+superseded_route_only:
+  message_id: os-v2-communication-git-blob-utf8-decoding-fix-001::gpt56-communication-utf8-foreground-001::00001
+  endpoint_id: claude-code-communication-utf8-executor-001
+  preserve_as_immutable_history: true
+corrected_receiver:
+  endpoint_id: claude-cowork-communication-utf8-executor-001
+  task_role: communication_utf8_executor
+  provider: Anthropic
+  product: Claude Desktop
+  surface: claude_desktop_cowork
+  model: Claude Opus 5
+  reasoning_or_parameter_profile: claude_desktop_cowork_opus5_task_time
+implementation_scope_unchanged: true
+same_task_session_reentry_allowed_after_validated_correction_pointer: true
+master_publication: false
+source_Human_authorization_ref: 01_os/_runs/run-20260817-communication-git-blob-utf8-decoding-fix-001/01_任务输入/Human授权_receiver_route_correction_v1.yml
