@@ -1,0 +1,65 @@
+schema_version: citystate.completion_pointer.v1
+pointer_id: completion_pointer_00004
+task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+run_id: run-20260817-stage-human-alignment-enforcement-root-cause-001
+
+append_only: true
+rewrites_prior_pointer_in_place: false
+supersedes: completion_pointer_00003
+supersedes_record_ref: 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/08_结论/completion_pointer_v3.yml
+supersession_reason: >-
+  Blocking defect SYNTHETIC_HUMAN_AUTHORITY_ESCAPE closed before independent review. The
+  synthetic fixture records were valid Human authority on the production path; they are now
+  rejected outright. Candidate 64434d2b is superseded, and pointer 00003 is retained.
+
+status: ready_for_independent_review
+source_branch: dev/os-v2-stage-human-alignment-enforcement-root-cause-001-nonce-001
+source_base: 8d953a823275b3b98b8530ceef6682eeb84f0020
+bound_exact_final_semantic_candidate: 7d666bfa26c6bb9d9b3de357250fd4c463c183c6
+
+pointer_lineage_retained:
+- {pointer: completion_pointer_00001, ref: 08_结论/completion_pointer_v1.yml, bound_candidate: d429962efc0ed46679d2dfac7ef73af80c21e24b}
+- {pointer: completion_pointer_00002, ref: 08_结论/completion_pointer_v2.yml, bound_candidate: 8a001f017daf7a0b8001a1de9fbcac160a6249e2}
+- {pointer: completion_pointer_00003, ref: 08_结论/completion_pointer_v3.yml, bound_candidate: 64434d2b369d6e668dd03722c283cb5d86ce026a}
+
+synthetic_authority_closure:
+  marker: synthetic_test_record
+  production_path_accepts_synthetic: false
+  checked_before_all_other_record_fields: true
+  control_is_the_record_marker_not_path_naming_or_comments: true
+  exemption_channel: keyword_only_synthetic_authority_context_default_false
+  exemption_source: test_harness_that_built_the_fixture
+  exemption_derivable_from_instance_data: false
+  exemption_exposed_by_cli: false
+  instance_self_declared_test_mode_or_allow_synthetic_effective: false
+  non_synthetic_control_record_present: true
+  consumed_by_state_machine_extended: false
+
+bound_exact_evidence:
+  synthetic_escape_gates: {gates: 8, failed: 0}
+  provenance_adversarial_gates: {gates: 25, failed: 0}
+  F2_F1_causal_gates: {gates: 14, failed: 0}
+  earlier_causal_gates: {gates: 29, failed: 0}
+  fixture_suites: {cases: 86, passed: 86, failed: 0, suites: 6}
+  preserved_regressions: {suite: instance/counterexamples_v1.yml, cases: 15, passed: 15}
+  production_cli_on_synthetic_fixture: {mode: instance, exit: 15, meaning: refused}
+  static_repo: {exit: 0}
+  static_snapshot: {exit: 0}
+  no_canonical_live_state: {exit: 0}
+  material_event: {case: ME-PASS, exit: 0}
+  review_execution: {case: RE-PASS, exit: 0}
+  diff_check: {exit: 0}
+  worktree_clean: true
+
+validation: {diff_scope: passed, out_of_scope_paths: 0, binary_artifact_count: 0, hook_guard: passed, transport: local_git}
+repository:
+  master_modified: false
+  master_at_completion: 8d953a823275b3b98b8530ceef6682eeb84f0020
+  force_push: false
+  history_rewritten: false
+  rebase_squash_amend_reset_revert: none
+
+evidence_source_class: foreground_executor_evidence
+independent_ci_evidence: absent_no_ci_in_repository
+next_owner: foreground_independent_review
+master_publication_authorized: false
