@@ -1,0 +1,21 @@
+task_packet:
+  task_id: os-v2-human-auth-code-minlength-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T3_high_risk
+  exact_base_sha: 9a47bc88f592e2a8dd3aaaf6a5616f3797f225b9
+  branch: dev/os-v2-human-auth-code-minlength-repair-001
+  objective: >-
+    Change the Human Authorization/Completion Code rule to allow any characters
+    with a minimum length of two characters, and enforce that minimum at the
+    challenge-verifier input boundary while preserving single-use binding and
+    plaintext non-persistence.
+  source_evidence:
+    - current Human instruction of 2026-08-18 in the Main Project
+    - original candidate dbd64a6ca3a8411cf2f1859293c54135b49065ef
+  allowed_changed_paths:
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml
+    - 01_os/06_execution/boot/stage_collaborative_deliberation/human_challenge_verify.py
+    - 01_os/_runs/run-20260818-human-auth-code-minlength-001/
+  required_tests: []
+  prohibitions: [force_push, rebase, squash, history_rewrite]
+  required_completion_pointer: exact diff and remote readback; no test suite by Human decision

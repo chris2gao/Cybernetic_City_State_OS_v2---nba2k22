@@ -1,0 +1,20 @@
+schema_version: citystate.run.v1
+run_id: run-20260818-human-auth-code-minlength-001
+task_id: os-v2-human-auth-code-minlength-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+base_sha: 9a47bc88f592e2a8dd3aaaf6a5616f3797f225b9
+branch: dev/os-v2-human-auth-code-minlength-repair-001
+status: candidate_pending_validation
+purpose: >-
+  Apply the Human's direct policy decision that Human Authorization/Completion
+  Codes may contain any characters and must contain at least two characters.
+original_candidate_sha: dbd64a6ca3a8411cf2f1859293c54135b49065ef
+publication_incident:
+  accidental_master_commit: 9a47bc88f592e2a8dd3aaaf6a5616f3797f225b9
+  effect: added an empty run.yml only; no mechanism or code changed
+  remediation: append-only repair from the new master; no force or history rewrite
+outputs:
+  - 01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml
+  - 01_os/06_execution/boot/stage_collaborative_deliberation/human_challenge_verify.py
+verification: exact_diff_and_remote_readback_only_no_test_suite
+lifecycle: retain_as_shared_os_governance_change_evidence

@@ -83,6 +83,9 @@ def main() -> int:
     if not nonce:
         print(json.dumps({"result": "no_code_supplied"}))
         return 2
+    if len(nonce) < 2:
+        print(json.dumps({"result": "code_too_short", "minimum_length_characters": 2}))
+        return 2
 
     ok, _recomputed, stored = v.verify_human_challenge(record, nonce)
     del nonce  # the plaintext leaves memory scope here and is never stored

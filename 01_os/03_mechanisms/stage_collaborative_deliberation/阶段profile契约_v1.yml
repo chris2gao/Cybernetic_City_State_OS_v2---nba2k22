@@ -230,10 +230,14 @@ Human_authority_contract:
   code_requirements:
     generated_by: Human_independently
     fresh_per_authority_event: true
-    minimum_random_strength_bits: 128
+    minimum_length_characters: 2
+    allowed_characters: any
     model_may_suggest_a_code_for_the_Human_to_echo: false
     reuse_permitted: false
-    suggested_encoding: random Base32, hexadecimal, or a password-manager token
+    suggested_format: any Human-chosen string containing at least 2 characters
+    assurance_note: >-
+      This is a lightweight Human confirmation code requirement, not a
+      cryptographic-strength or high-entropy secret requirement.
   plaintext_handling:
     stored_in_git: false
     stored_in_run_or_communication_artifact: false
@@ -334,13 +338,13 @@ Human_authority_contract:
     - proof_of_Human_subjective_comprehension
     - protection_against_a_malicious_model_that_has_already_seen_the_plaintext_nonce
     - external_identity_attestation
+    - brute_force_resistance_or_high_entropy_secret
     honest_limit: >-
-      The foreground that first received the plaintext nonce necessarily knows it. Security
-      therefore rests on the Human generating a fresh nonce independently, exact single-decision
-      binding, no plaintext persistence, downstream models not receiving plaintext by default,
-      a new nonce per authority event, and independent Human challenge when provenance is
-      questioned. This is not a mathematical guarantee that a machine can never forge a
-      decision.
+      The foreground that first received the plaintext code necessarily knows it. Codes may be
+      as short as two characters, so the stored commitment is not brute-force resistant and must
+      not be treated as cryptographic proof of Human origin. Authority ultimately rests on the
+      current Human interaction, exact single-decision binding, no plaintext persistence, replay
+      controls, and independent Human challenge when provenance is questioned.
 mandatory_Human_confirmation_contract:
   rule: >-
     Every task and every workflow stage must project the current model - what will be done,
