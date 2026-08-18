@@ -1,0 +1,29 @@
+schema_version: citystate.model_routing.receiver_setup_receipt.v1
+routing_receipt:
+  mechanism_version: 1
+  catalog_version: 2
+  source_index_version: 2
+  validator_exit_code: 0
+  selected_route_executor_profile_ref: claude_desktop_cowork_opus5_task_time
+  authority: routing_only
+receiver_setup:
+  collaboration_role: independent_review
+  provider: Anthropic
+  product: Claude Desktop
+  surface: claude_desktop_cowork
+  model: Claude Opus 5
+  reasoning_or_parameter_profile: claude_desktop_cowork_opus5_task_time
+  session_mode: fresh
+  isolation_level: fresh_session
+  repository_access_mode: GitHub_only
+  repository_or_worktree_requirement: reconstruct only from durable GitHub evidence at the exact candidate SHA
+  required_branch_or_sha: b54826e43029077b8d6c5fa9242b2b02997f2e89
+  local_files_required: false
+  github_publication_required_before_start: true
+  communication_carrier: GitHub
+  routing_basis_ref: 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml + 01_os/03_mechanisms/model_routing/协作角色与接收者设置契约_v1.yml
+  availability_assumption_or_observation_ref: HUMAN_COWORK_OPUS5_20260815
+  limitations:
+    - executor_private_context
+    - no_unpublished_local_material
+    - review_exact_candidate_sha_not_metadata_receipt_commit
