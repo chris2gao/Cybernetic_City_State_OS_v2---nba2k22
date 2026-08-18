@@ -106,15 +106,102 @@ model_space_contract:
   - unknown_with_blocking_or_deferred_disposition_and_revisit_trigger
   all_fields_present_alone: must_not_pass
   unknown_adequacy: fail_closed
+common_task_stage_model:
+  purpose: >-
+    The single Current Model that the foreground and the Human build and maintain together.
+    It applies to the whole task and to every workflow stage. Inquiry, discussion and brief
+    are methods for building and correcting this one model, not parallel mechanisms or a
+    second state machine.
+  applies_to:
+  - whole_task
+  - every_workflow_stage
+  composition_rule: common_task_stage_model + profile.required_model_fields = effective_current_stage_model
+  copied_into_each_profile: false
+  copy_prohibition_reason: profiles stay reference-not-copy; common fields are composed at validation time
+  fields:
+  - problem_or_objective
+  - Human_intent_understanding
+  - current_baseline_and_inputs
+  - constraints_and_dependencies
+  - proposed_method_or_solution
+  - feasibility_support
+  - assumptions_risks_alternatives_unknowns
+  - open_load_bearing_Human_decisions
+  - expected_output
+  - verification_or_acceptance_method
+  - actual_result
+  - material_deviation
+  - residual_risk
+  - current_exact_model_version
+readiness_contract:
+  principle: understand -> propose method -> support feasibility -> align load-bearing items with Human -> implement -> verify
+  round_counting_is_not_readiness: true
+  fixed_minimum_substantive_rounds: removed_in_mechanism_version_2
+  removal_reason: >-
+    how many conversational rounds occurred never proved the model was adequate. Whether
+    *additional* deliberation continues is decided only by whether a load-bearing gap still
+    exists. This removal does not weaken the mandatory confirmation below.
+  substantive_execution_allowed_iff:
+  - current_stage_model_complete
+  - proposed_method_present
+  - feasibility_support_present
+  - verification_present
+  - explicit_current_Human_confirmation_of_exact_model_version
+  all_five_required_together: true
+  readiness_must_not_require:
+  - Human_confirmation_for_ordinary_local_reversible_choice
+  - additional_inquiry_rounds_when_no_load_bearing_gap_exists
+  - reconfirmation_of_previously_resolved_Human_input_within_the_same_model_version
+  - any_fixed_number_of_substantive_rounds
+  - long_forms_or_exhaustive_internal_field_display
+  brief_is_projection_not_state_machine: true
+  brief_length_adapts_to_model_complexity: true
+mandatory_Human_confirmation_contract:
+  rule: >-
+    Every task and every workflow stage must project the current model - what will be done,
+    how, what supports its feasibility, the expected result, the verification method, and the
+    load-bearing risks and choices - to the current Human, discuss it, and obtain explicit
+    Human confirmation before any substantive execution.
+  applies_even_when_no_load_bearing_gap_exists: true
+  minimal_form_when_no_gap: single concise proposal followed by one explicit Human confirmation
+  must_not_produce:
+  - fixed_round_counts
+  - long_forms
+  - per_choice_microapproval
+  confirmation_must_bind: current_exact_model_version
+  cannot_substitute_for_current_stage_confirmation:
+  - Human_silence_or_non_response
+  - inferred_or_implied_consent
+  - previous_stage_confirmation
+  - confirmation_of_an_older_model_version
+  - executor_confirmation
+  - independent_reviewer_confirmation
+  - any_non_Human_actor_confirmation
+inquiry_contract:
+  mandatory_projection_and_confirmation: always
+  additional_inquiry_and_multi_round_deliberation_trigger: open_load_bearing_gap_only
+  must_not_trigger_additional_rounds_on:
+  - ordinary_local_reversible_choice
+  - previously_resolved_Human_input_within_the_same_model_version
+  - absence_of_conversation_volume
+  Human_feedback_updates_the_same_model: true
+  new_load_bearing_divergence_enters_inquiry_and_deliberation: true
 activation_contract:
   default: dormant
   modes:
   - dormant
   - full
   - incremental
-  minimum_substantive_rounds:
-    full: 5
-    incremental: 2
+  dormant_meaning: >-
+    the Current Model is already adequate and no new load-bearing gap exists, therefore no
+    *additional* inquiry or multi-round deliberation is required
+  dormant_does_not_mean:
+  - no_task_or_stage_model_is_built
+  - no_projection_to_the_Human_is_required
+  - no_explicit_Human_confirmation_is_required
+  dormant_still_requires: concise_projection_plus_one_explicit_current_Human_confirmation
+  current_model_required_in_every_mode: true
+  mandatory_Human_confirmation_required_in_every_mode: true
   formalistic_round_counts: false
   Human_authorization_required_when_profile_gate_requires_activation: true
 reference_not_copy:

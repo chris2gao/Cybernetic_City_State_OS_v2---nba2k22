@@ -1,11 +1,35 @@
 fixture_kind: instance_positive_suite
 cases:
-- case_id: POS-DORMANT
+- case_id: POS-DORMANT-CONFIRMED
+  note: >-
+    simple task, no load-bearing gap, therefore no additional inquiry rounds - but the
+    concise projection and one explicit current-Human confirmation are still mandatory
   expected_exit: 0
   data:
     activation_mode: dormant
-    dormant_reason: simple_lookup
-    rounds: []
+    dormant_reason: current_model_adequate_no_new_load_bearing_gap
+    additional_inquiry_required: false
+    current_model: &model
+      problem_or_objective: rename one local helper for clarity
+      Human_intent_understanding: keep behaviour identical, improve readability
+      current_baseline_and_inputs: master@exact
+      proposed_method: in-place rename with call-site update
+      feasibility_support: single call site, covered by existing regression test
+      expected_output: one renamed helper
+      verification_method: existing suite must stay green
+      current_exact_model_version: model-v1
+      current_exact_output_version: out-v1
+      open_load_bearing_items: []
+      ordinary_local_choices:
+      - {choice: helper_name_spelling, requires_Human_confirmation: false}
+      Human_confirmation: &confirmation
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
+        bound_model_version: model-v1
+        stale: false
+        ref: Human/current.yml#00001
     receipt: &receipt
       receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
       mechanism_version: 1
@@ -17,7 +41,7 @@ cases:
       loaded_paths: []
       missing_partial_or_stale_paths: []
       trigger_evaluation_result_ref: trigger-1
-      activation_mode_or_dormant_reason: simple_lookup
+      activation_mode_or_dormant_reason: current_model_adequate_no_new_load_bearing_gap
       main_mechanism_ref: [MM-01]
       detail_granularity_evaluation_result: ordinary_local_choice
       open_detail_divergence_event_refs: []
@@ -27,19 +51,59 @@ cases:
       exact_candidate_version: fixture-v1
       created_by_actor_ref: model:test
       created_at: '2026-08-04T19:40:00-07:00'
-- case_id: POS-FULL
+
+- case_id: POS-GAP-RESOLVED-BY-HUMAN
+  note: load-bearing gap -> inquiry -> Human feedback -> same model updated -> executable; no round count involved
   expected_exit: 0
   data:
     activation_mode: full
-    rounds: [{substantive: true}, {substantive: true}, {substantive: true}, {substantive: true}, {substantive: true}]
+    current_model:
+      <<: *model
+      current_exact_model_version: model-v2
+      open_load_bearing_items:
+      - id: retention_window
+        load_bearing: true
+        disposition: resolved
+        Human_basis: {kind: explicit_statement, ref: Human/current.yml#00002, stale: false}
+      - id: log_verbosity
+        load_bearing: false
+        disposition: deferred_non_blocking
+        revisit_trigger: first_production_incident
+      Human_alignment: {bound_model_version: model-v2, stale: false}
+      Human_confirmation:
+        <<: *confirmation
+        bound_model_version: model-v2
+        ref: Human/current.yml#00003
+    inquiry_items:
+    - {id: retention_window, re_asks_resolved_input: false}
     receipt:
       <<: *receipt
       activation_mode_or_dormant_reason: full
-- case_id: POS-INCREMENTAL
+
+- case_id: POS-COMPLETION-WRITEBACK
+  note: actual result + verification written back into the same model lineage, then progression allowed
   expected_exit: 0
   data:
     activation_mode: incremental
-    rounds: [{substantive: true}, {substantive: true}]
+    current_model:
+      <<: *model
+      current_exact_model_version: model-v3
+      current_exact_output_version: out-v3
+      Human_alignment: {bound_model_version: model-v3, stale: false}
+      Human_confirmation:
+        <<: *confirmation
+        bound_model_version: model-v3
+        ref: Human/current.yml#00004
+      completion:
+        progression_requested: true
+        actual_result: helper renamed, all call sites updated
+        verification_result: suite green, exit 0
+        material_deviation: none
+        residual_risk: none_material
+        bound_output_version: out-v3
+    completion_pointer:
+      append_only: true
+      bound_candidate_version: out-v3
     receipt:
       <<: *receipt
       activation_mode_or_dormant_reason: incremental

@@ -193,6 +193,177 @@ def validate_static_repo(repo_root: Path) -> int:
         return 15
     return 0
 
+READINESS_REQUIRED_MODEL_FIELDS = (
+    "problem_or_objective",
+    "proposed_method",
+    "feasibility_support",
+    "verification_method",
+)
+RESOLVED_DISPOSITIONS = {"resolved", "deferred_non_blocking"}
+# Nothing in this set is a Human decision, however it is labelled.
+NON_DISPOSITION_BASIS_KINDS = {"silence", "no_response", "inferred", "implied", "assumed"}
+# Only the current Human confirms. No model-side actor substitutes for that.
+NON_HUMAN_ACTOR_CLASSES = {"executor", "reviewer", "independent_reviewer", "model", "agent"}
+# The common model fields that must be complete before substantive execution.
+STAGE_MODEL_COMPLETENESS_FIELDS = (
+    "problem_or_objective",
+    "Human_intent_understanding",
+    "current_baseline_and_inputs",
+    "proposed_method",
+    "feasibility_support",
+    "expected_output",
+    "verification_method",
+    "current_exact_model_version",
+)
+
+
+def validate_mandatory_Human_confirmation(model: dict[str, Any]) -> int:
+    """Every task and every workflow stage must project the current model to the
+    current Human and obtain an explicit confirmation bound to the exact current
+    model version before any substantive execution.
+
+    This is mandatory even when no load-bearing gap exists - in that case the
+    required form is one concise proposal and one explicit confirmation, not a
+    fixed number of rounds, a long form, or per-choice micro-approval.
+
+    None of the following ever substitutes for the current stage's confirmation:
+    Human silence or non-response, inferred consent, a previous stage's
+    confirmation, a confirmation bound to an older model version, or a
+    confirmation produced by an executor, reviewer or any other non-Human actor.
+    """
+    confirmation = model.get("Human_confirmation")
+    if not isinstance(confirmation, dict):
+        return 15
+    if confirmation.get("explicit") is not True:
+        return 14
+    if confirmation.get("kind") in NON_DISPOSITION_BASIS_KINDS:
+        return 14
+    if confirmation.get("actor_class") in NON_HUMAN_ACTOR_CLASSES:
+        return 15
+    if confirmation.get("actor_class") != "current_Human":
+        return 15
+    if confirmation.get("scope") not in {None, "current_stage", "current_task"}:
+        return 12
+    if confirmation.get("stale") is True:
+        return 12
+    bound = confirmation.get("bound_model_version")
+    if not bound or bound != model.get("current_exact_model_version"):
+        return 12
+    return 0
+
+
+def validate_model_readiness(data: dict[str, Any]) -> int:
+    """Readiness of the single Current Model, in every activation mode.
+
+    dormant means "the model is already adequate and no new load-bearing gap
+    exists", never "no model was built" - so the model is required here too.
+    """
+    model = data.get("current_model")
+    if not isinstance(model, dict):
+        return 16
+    # current_stage_model_complete AND proposed_method AND feasibility_support
+    # AND verification AND explicit current-Human confirmation of the exact model
+    # version -> substantive execution allowed. All five are required together.
+    for field in STAGE_MODEL_COMPLETENESS_FIELDS:
+        if not model.get(field):
+            return 16
+    code = validate_mandatory_Human_confirmation(model)
+    if code:
+        return code
+
+    open_items = model.get("open_load_bearing_items") or []
+    for item in open_items:
+        if not isinstance(item, dict):
+            return 11
+        disposition = item.get("disposition")
+        if disposition not in RESOLVED_DISPOSITIONS:
+            # an unresolved blocking load-bearing question is not readiness
+            return 16
+        if disposition != "resolved":
+            continue
+        basis = item.get("Human_basis")
+        if item.get("load_bearing") and not basis:
+            return 15
+        if isinstance(basis, dict):
+            # silence, non-response or inferred consent never becomes a decision
+            if basis.get("kind") in NON_DISPOSITION_BASIS_KINDS:
+                return 14
+            if basis.get("stale") is True:
+                return 12
+
+    # ordinary local reversible choices stay model-owned; demanding Human sign-off
+    # on them is the micro-approval escalation the mechanism forbids
+    for choice in model.get("ordinary_local_choices") or []:
+        if isinstance(choice, dict) and choice.get("requires_Human_confirmation") is True:
+            return 14
+
+    # never re-ask something the Human already resolved
+    for inquiry in data.get("inquiry_items") or []:
+        if isinstance(inquiry, dict) and inquiry.get("re_asks_resolved_input") is True:
+            return 14
+
+    # Absence of a load-bearing gap must not force *additional* inquiry rounds.
+    # It never waives the mandatory projection and confirmation checked above.
+    if not open_items and data.get("additional_inquiry_required") is True:
+        return 16
+    # round counts must not be reintroduced as a readiness basis by any caller
+    if data.get("readiness_basis") == "substantive_round_count":
+        return 16
+
+    alignment = model.get("Human_alignment")
+    if isinstance(alignment, dict):
+        if alignment.get("stale") is True:
+            return 12
+        bound = alignment.get("bound_model_version")
+        if bound and bound != model.get("current_exact_model_version"):
+            return 12
+
+    completion = model.get("completion")
+    if isinstance(completion, dict):
+        bound_output = completion.get("bound_output_version")
+        if bound_output and bound_output != model.get("current_exact_output_version"):
+            return 12
+        if completion.get("progression_requested") is True:
+            if completion.get("actual_result") is None:
+                return 14
+            if not completion.get("verification_result"):
+                return 14
+    return 0
+
+
+def validate_stage_child_composition(data: dict[str, Any], receipt: dict[str, Any]) -> int:
+    """CR-005: a seven-stage-loop child must compose the complete base stage
+    receipt validation and then overlay alignment and stage/profile binding.
+    Running only the overlay, or a receipt subset, is not acceptance."""
+    if data.get("seven_stage_child") is not True:
+        return 0
+    if receipt.get("base_receipt_validation") != "complete":
+        return 17
+    if any(k not in receipt for k in REQUIRED_RECEIPT_FIELDS):
+        return 17
+    for binding in ("alignment_binding", "profile_binding"):
+        if not receipt.get(binding):
+            return 17
+    return 0
+
+
+def validate_completion_pointer(data: dict[str, Any]) -> int:
+    """RR2-001: after a material candidate change the completion pointer must be
+    append-only and bind the exact final semantic candidate, not a superseded one."""
+    pointer = data.get("completion_pointer")
+    if not isinstance(pointer, dict):
+        return 0
+    if pointer.get("append_only") is not True:
+        return 14
+    model = data.get("current_model") or {}
+    expected = model.get("current_exact_output_version")
+    if expected and pointer.get("bound_candidate_version") != expected:
+        return 12
+    if pointer.get("supersedes") and not pointer.get("supersedes_record_ref"):
+        return 14
+    return 0
+
+
 def validate_instance(data: dict[str, Any]) -> int:
     code = direct_error_code(data)
     if code:
@@ -202,12 +373,13 @@ def validate_instance(data: dict[str, Any]) -> int:
         return 11
     if mode == "dormant" and not data.get("dormant_reason"):
         return 16
-    rounds = data.get("rounds", [])
-    substantive = sum(1 for r in rounds if r.get("substantive") is True)
-    if mode == "full" and substantive < 5:
-        return 16
-    if mode == "incremental" and substantive < 2:
-        return 16
+    # Readiness, not round counts, decides whether the stage may progress. Fixed
+    # minimum substantive rounds (full=5, incremental=2) were removed: how many
+    # rounds occurred never proved that the model was adequate, and requiring
+    # them manufactured discussion where no load-bearing gap existed.
+    code = validate_model_readiness(data)
+    if code:
+        return code
     receipt = data.get("receipt")
     if not isinstance(receipt, dict):
         return 17
@@ -215,7 +387,10 @@ def validate_instance(data: dict[str, Any]) -> int:
         return 17
     if receipt.get("validator_mode_and_exit_code", {}).get("exit_code") != 0:
         return 17
-    return 0
+    code = validate_stage_child_composition(data, receipt)
+    if code:
+        return code
+    return validate_completion_pointer(data)
 
 def validate_material_event(data: dict[str, Any]) -> int:
     code = direct_error_code(data)

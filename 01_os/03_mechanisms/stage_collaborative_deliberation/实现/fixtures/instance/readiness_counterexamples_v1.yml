@@ -1,0 +1,251 @@
+fixture_kind: instance_readiness_counterexample_suite
+note: >-
+  Readiness negatives for the mandatory-projection-and-confirmation contract. Each case is a
+  model that is otherwise well formed and fails on exactly one condition, so the exit code
+  identifies the violated condition rather than incidental schema noise.
+anchors:
+  model: &model
+    problem_or_objective: rename one local helper for clarity
+    Human_intent_understanding: keep behaviour identical
+    current_baseline_and_inputs: master@exact
+    proposed_method: in-place rename with call-site update
+    feasibility_support: single call site, covered by existing regression test
+    expected_output: one renamed helper
+    verification_method: existing suite must stay green
+    current_exact_model_version: model-v1
+    current_exact_output_version: out-v1
+    open_load_bearing_items: []
+    Human_confirmation: &confirmation
+      explicit: true
+      kind: explicit_statement
+      actor_class: current_Human
+      scope: current_stage
+      bound_model_version: model-v1
+      stale: false
+  receipt: &receipt
+    receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+    mechanism_version: 1
+    active_contract_version: 1
+    boot_manifest_version: 1
+    registry_version: 1
+    loader_version: 1
+    profile_id_and_version: workflow_stage_06_execution@1
+    loaded_paths: []
+    missing_partial_or_stale_paths: []
+    trigger_evaluation_result_ref: trigger-1
+    activation_mode_or_dormant_reason: full
+    main_mechanism_ref: [MM-01]
+    detail_granularity_evaluation_result: ordinary_local_choice
+    open_detail_divergence_event_refs: []
+    deferred_detail_record_refs: []
+    gate_results: {start: pass, completion: pass}
+    validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+    exact_candidate_version: fixture-v1
+    created_by_actor_ref: model:test
+    created_at: '2026-08-04T19:40:00-07:00'
+cases:
+- case_id: RDY-NO-MODEL
+  note: dormant must not mean "no model was built"
+  expected_exit: 16
+  data: {activation_mode: dormant, dormant_reason: simple, receipt: *receipt}
+
+- case_id: RDY-MISSING-METHOD
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model: {<<: *model, proposed_method: null}
+    receipt: *receipt
+
+- case_id: RDY-MISSING-FEASIBILITY
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model: {<<: *model, feasibility_support: null}
+    receipt: *receipt
+
+- case_id: RDY-MISSING-VERIFICATION
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model: {<<: *model, verification_method: null}
+    receipt: *receipt
+
+- case_id: RDY-UNRESOLVED-LOAD-BEARING
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model:
+      <<: *model
+      open_load_bearing_items:
+      - {id: retention_window, load_bearing: true, disposition: open_blocking}
+    receipt: *receipt
+
+- case_id: RDY-NO-HUMAN-CONFIRMATION
+  note: mandatory even with zero load-bearing gaps
+  expected_exit: 15
+  data:
+    activation_mode: dormant
+    dormant_reason: current_model_adequate_no_new_load_bearing_gap
+    current_model: {<<: *model, Human_confirmation: null}
+    receipt: *receipt
+
+- case_id: RDY-SILENCE-AS-CONFIRMATION
+  note: Human silence is not a decision
+  expected_exit: 14
+  data:
+    activation_mode: full
+    current_model:
+      <<: *model
+      Human_confirmation: {<<: *confirmation, kind: silence}
+    receipt: *receipt
+
+- case_id: RDY-INFERRED-CONSENT
+  expected_exit: 14
+  data:
+    activation_mode: full
+    current_model:
+      <<: *model
+      Human_confirmation: {<<: *confirmation, explicit: false, kind: inferred}
+    receipt: *receipt
+
+- case_id: RDY-PREVIOUS-STAGE-CONFIRMATION
+  note: a previous stage's confirmation does not carry into this stage
+  expected_exit: 12
+  data:
+    activation_mode: full
+    current_model:
+      <<: *model
+      Human_confirmation: {<<: *confirmation, scope: previous_stage}
+    receipt: *receipt
+
+- case_id: RDY-OLD-MODEL-VERSION-CONFIRMATION
+  note: confirmation bound to a superseded model version is stale
+  expected_exit: 12
+  data:
+    activation_mode: full
+    current_model:
+      <<: *model
+      current_exact_model_version: model-v2
+      Human_confirmation: {<<: *confirmation, bound_model_version: model-v1}
+    receipt: *receipt
+
+- case_id: RDY-EXECUTOR-CONFIRMATION
+  note: executor cannot confirm on the Human's behalf
+  expected_exit: 15
+  data:
+    activation_mode: full
+    current_model:
+      <<: *model
+      Human_confirmation: {<<: *confirmation, actor_class: executor}
+    receipt: *receipt
+
+- case_id: RDY-REVIEWER-CONFIRMATION
+  expected_exit: 15
+  data:
+    activation_mode: full
+    current_model:
+      <<: *model
+      Human_confirmation: {<<: *confirmation, actor_class: independent_reviewer}
+    receipt: *receipt
+
+- case_id: RDY-STALE-ALIGNMENT-AFTER-MATERIAL-CHANGE
+  expected_exit: 12
+  data:
+    activation_mode: full
+    current_model:
+      <<: *model
+      Human_alignment: {bound_model_version: model-v0, stale: true}
+    receipt: *receipt
+
+- case_id: RDY-MICROAPPROVAL-ESCALATION
+  note: ordinary local reversible choice must not demand Human confirmation
+  expected_exit: 14
+  data:
+    activation_mode: full
+    current_model:
+      <<: *model
+      ordinary_local_choices:
+      - {choice: helper_name_spelling, requires_Human_confirmation: true}
+    receipt: *receipt
+
+- case_id: RDY-REPEAT-RESOLVED-QUESTION
+  expected_exit: 14
+  data:
+    activation_mode: full
+    current_model: *model
+    inquiry_items:
+    - {id: retention_window, re_asks_resolved_input: true}
+    receipt: *receipt
+
+- case_id: RDY-ROUND-COUNT-AS-READINESS
+  note: fixed-round behaviour must not influence readiness
+  expected_exit: 16
+  data:
+    activation_mode: full
+    readiness_basis: substantive_round_count
+    current_model: *model
+    receipt: *receipt
+
+- case_id: RDY-FORCED-INQUIRY-WITHOUT-GAP
+  expected_exit: 16
+  data:
+    activation_mode: full
+    additional_inquiry_required: true
+    current_model: *model
+    receipt: *receipt
+
+- case_id: RDY-COMPLETION-WITHOUT-VERIFICATION
+  expected_exit: 14
+  data:
+    activation_mode: incremental
+    current_model:
+      <<: *model
+      completion: {progression_requested: true, actual_result: done, verification_result: null}
+    receipt: *receipt
+
+- case_id: CR005-CHILD-MISSING-BASE-RECEIPT
+  note: seven-stage child must compose the complete base receipt validation, not only the overlay
+  expected_exit: 17
+  data:
+    activation_mode: full
+    seven_stage_child: true
+    current_model: *model
+    receipt: {<<: *receipt, alignment_binding: a-1, profile_binding: p-1}
+
+- case_id: CR005-CHILD-MISSING-BINDINGS
+  expected_exit: 17
+  data:
+    activation_mode: full
+    seven_stage_child: true
+    current_model: *model
+    receipt: {<<: *receipt, base_receipt_validation: complete}
+
+- case_id: CR005-CHILD-COMPLETE
+  note: positive control for the composed child validation
+  expected_exit: 0
+  data:
+    activation_mode: full
+    seven_stage_child: true
+    current_model: *model
+    receipt:
+      <<: *receipt
+      base_receipt_validation: complete
+      alignment_binding: a-1
+      profile_binding: p-1
+
+- case_id: RR2-001-STALE-COMPLETION-POINTER
+  note: pointer must bind the exact final semantic candidate, not a superseded one
+  expected_exit: 12
+  data:
+    activation_mode: incremental
+    current_model: *model
+    completion_pointer: {append_only: true, bound_candidate_version: out-v0}
+    receipt: *receipt
+
+- case_id: RR2-001-NON-APPEND-ONLY-POINTER
+  expected_exit: 14
+  data:
+    activation_mode: incremental
+    current_model: *model
+    completion_pointer: {append_only: false, bound_candidate_version: out-v1}
+    receipt: *receipt
