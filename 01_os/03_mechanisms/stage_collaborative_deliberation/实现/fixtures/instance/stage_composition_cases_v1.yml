@@ -1,0 +1,1074 @@
+fixture_kind: instance_stage_composition_suite
+note: >-
+  effective_current_stage_model = common_task_stage_model + the exact profile's
+  required_model_fields. Cases are generated from the real profile set, so they cannot
+  drift from 阶段profiles_v1.yml.
+cases:
+- case_id: COMP-workflow_stage_01_requirement_modeling
+  note: positive composition for workflow_stage_01_requirement_modeling
+  expected_exit: 0
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method for this stage
+      feasibility_support: prior art plus existing regression coverage
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate with expected exit code
+      current_exact_model_version: model-v1
+      current_exact_output_version: out-v1
+      open_load_bearing_items: []
+      Human_confirmation:
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
+        bound_model_version: model-v1
+        stale: false
+        ref: Human/current.yml#00001
+      stage_specific_model_elements:
+        Human_goal: {disposition: represented_with_supported_value, value: v}
+        success_obligations: {disposition: represented_with_supported_value, value: v}
+        scope_and_non_goals: {disposition: represented_with_supported_value, value: v}
+        stakeholders_and_actors: {disposition: represented_with_supported_value, value: v}
+        terms_and_semantic_grounding: {disposition: represented_with_supported_value, value: v}
+        constraints_and_dependencies: {disposition: represented_with_supported_value, value: v}
+        assumptions_and_uncertainties: {disposition: represented_with_supported_value, value: v}
+        risks_and_failure_modes: {disposition: represented_with_supported_value, value: v}
+        authority_and_confirmation_requirements: {disposition: represented_with_supported_value, value: v}
+        schema_adequacy_and_domain_schema_need: {disposition: represented_with_supported_value, value: v}
+        implementation_granularity_boundary: {disposition: represented_with_supported_value, value: v}
+    receipt:
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      loader_version: 1
+      profile_id_and_version: workflow_stage_01_requirement_modeling@1
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: full
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'
+- case_id: COMP-workflow_stage_02_information_collection
+  note: positive composition for workflow_stage_02_information_collection
+  expected_exit: 0
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method for this stage
+      feasibility_support: prior art plus existing regression coverage
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate with expected exit code
+      current_exact_model_version: model-v1
+      current_exact_output_version: out-v1
+      open_load_bearing_items: []
+      Human_confirmation:
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
+        bound_model_version: model-v1
+        stale: false
+        ref: Human/current.yml#00001
+      stage_specific_model_elements:
+        research_questions: {disposition: represented_with_supported_value, value: v}
+        claim_inventory: {disposition: represented_with_supported_value, value: v}
+        source_plan_and_source_independence: {disposition: represented_with_supported_value, value: v}
+        stable_source_ids_and_exact_locations: {disposition: represented_with_supported_value, value: v}
+        access_limitations: {disposition: represented_with_supported_value, value: v}
+        fact_policy_inference_classification: {disposition: represented_with_supported_value, value: v}
+        supporting_and_conflicting_evidence: {disposition: represented_with_supported_value, value: v}
+        evidence_gap_and_stop_condition: {disposition: represented_with_supported_value, value: v}
+        external_action_models_and_authorizations: {disposition: represented_with_supported_value, value: v}
+        schema_adequacy_for_domain_evidence: {disposition: represented_with_supported_value, value: v}
+    receipt:
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      loader_version: 1
+      profile_id_and_version: workflow_stage_02_information_collection@1
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: full
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'
+- case_id: COMP-workflow_stage_03_result_modeling
+  note: positive composition for workflow_stage_03_result_modeling
+  expected_exit: 0
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method for this stage
+      feasibility_support: prior art plus existing regression coverage
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate with expected exit code
+      current_exact_model_version: model-v1
+      current_exact_output_version: out-v1
+      open_load_bearing_items: []
+      Human_confirmation:
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
+        bound_model_version: model-v1
+        stale: false
+        ref: Human/current.yml#00001
+      stage_specific_model_elements:
+        required_result_names: {disposition: represented_with_supported_value, value: v}
+        result_object_catalog: {disposition: represented_with_supported_value, value: v}
+        common_object_fields: {disposition: represented_with_supported_value, value: v}
+        state_dimensions: {disposition: represented_with_supported_value, value: v}
+        transitions_and_rejected_transitions: {disposition: represented_with_supported_value, value: v}
+        invariants_and_failure_resolution: {disposition: represented_with_supported_value, value: v}
+        authority_state_separation: {disposition: represented_with_supported_value, value: v}
+        material_event_and_reconfirmation_results: {disposition: represented_with_supported_value, value: v}
+        granularity_results: {disposition: represented_with_supported_value, value: v}
+        counterexamples_and_failure_visibility: {disposition: represented_with_supported_value, value: v}
+        schema_adequacy: {disposition: represented_with_supported_value, value: v}
+    receipt:
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      loader_version: 1
+      profile_id_and_version: workflow_stage_03_result_modeling@1
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: full
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'
+- case_id: COMP-workflow_stage_04_test_generation
+  note: positive composition for workflow_stage_04_test_generation
+  expected_exit: 0
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method for this stage
+      feasibility_support: prior art plus existing regression coverage
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate with expected exit code
+      current_exact_model_version: model-v1
+      current_exact_output_version: out-v1
+      open_load_bearing_items: []
+      Human_confirmation:
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
+        bound_model_version: model-v1
+        stale: false
+        ref: Human/current.yml#00001
+      stage_specific_model_elements:
+        test_subjects_and_source_assertion_refs: {disposition: represented_with_supported_value, value: v}
+        case_contract_inputs_actions_and_preconditions: {disposition: represented_with_supported_value, value: v}
+        expected_exit_and_failure_codes: {disposition: represented_with_supported_value, value: v}
+        expected_artifacts_or_state: {disposition: represented_with_supported_value, value: v}
+        prohibited_side_effects: {disposition: represented_with_supported_value, value: v}
+        fixtures_and_exact_versions: {disposition: represented_with_supported_value, value: v}
+        acceptance_and_blocking_crosswalks: {disposition: represented_with_supported_value, value: v}
+        rollback_and_cleanup_checks: {disposition: represented_with_supported_value, value: v}
+        evidence_outputs: {disposition: represented_with_supported_value, value: v}
+        schema_adequacy_tests: {disposition: represented_with_supported_value, value: v}
+    receipt:
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      loader_version: 1
+      profile_id_and_version: workflow_stage_04_test_generation@1
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: full
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'
+- case_id: COMP-workflow_stage_05_step_decomposition
+  note: positive composition for workflow_stage_05_step_decomposition
+  expected_exit: 0
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method for this stage
+      feasibility_support: prior art plus existing regression coverage
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate with expected exit code
+      current_exact_model_version: model-v1
+      current_exact_output_version: out-v1
+      open_load_bearing_items: []
+      Human_confirmation:
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
+        bound_model_version: model-v1
+        stale: false
+        ref: Human/current.yml#00001
+      stage_specific_model_elements:
+        package_ids_and_objectives: {disposition: represented_with_supported_value, value: v}
+        dependency_order: {disposition: represented_with_supported_value, value: v}
+        exact_base_and_branch_rules: {disposition: represented_with_supported_value, value: v}
+        closed_allowlists_and_path_owners: {disposition: represented_with_supported_value, value: v}
+        required_inputs_and_outputs: {disposition: represented_with_supported_value, value: v}
+        acceptance_assertions: {disposition: represented_with_supported_value, value: v}
+        blocking_failures: {disposition: represented_with_supported_value, value: v}
+        tests_and_expected_results: {disposition: represented_with_supported_value, value: v}
+        rollback_targets: {disposition: represented_with_supported_value, value: v}
+        review_handoffs: {disposition: represented_with_supported_value, value: v}
+        Human_authority_and_prohibitions: {disposition: represented_with_supported_value, value: v}
+    receipt:
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      loader_version: 1
+      profile_id_and_version: workflow_stage_05_step_decomposition@1
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: full
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'
+- case_id: COMP-workflow_stage_06_execution
+  note: positive composition for workflow_stage_06_execution
+  expected_exit: 0
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method for this stage
+      feasibility_support: prior art plus existing regression coverage
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate with expected exit code
+      current_exact_model_version: model-v1
+      current_exact_output_version: out-v1
+      open_load_bearing_items: []
+      Human_confirmation:
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
+        bound_model_version: model-v1
+        stale: false
+        ref: Human/current.yml#00001
+      stage_specific_model_elements:
+        exact_task_id_branch_and_40_character_base: {disposition: represented_with_supported_value, value: v}
+        Human_execution_authorization: {disposition: represented_with_supported_value, value: v}
+        closed_allowlist_and_prohibitions: {disposition: represented_with_supported_value, value: v}
+        active_contract_and_test_refs: {disposition: represented_with_supported_value, value: v}
+        implementation_changes: {disposition: represented_with_supported_value, value: v}
+        test_results_and_failure_evidence: {disposition: represented_with_supported_value, value: v}
+        deviations_and_granularity_evaluations: {disposition: represented_with_supported_value, value: v}
+        open_detail_divergence_events: {disposition: represented_with_supported_value, value: v}
+        rollback_target: {disposition: represented_with_supported_value, value: v}
+        package_completion_pointer_candidate: {disposition: represented_with_supported_value, value: v}
+    receipt:
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      loader_version: 1
+      profile_id_and_version: workflow_stage_06_execution@1
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: full
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'
+- case_id: COMP-workflow_stage_07_test_execution
+  note: positive composition for workflow_stage_07_test_execution
+  expected_exit: 0
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method for this stage
+      feasibility_support: prior art plus existing regression coverage
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate with expected exit code
+      current_exact_model_version: model-v1
+      current_exact_output_version: out-v1
+      open_load_bearing_items: []
+      Human_confirmation:
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
+        bound_model_version: model-v1
+        stale: false
+        ref: Human/current.yml#00001
+      stage_specific_model_elements:
+        exact_review_base_and_head: {disposition: represented_with_supported_value, value: v}
+        independent_reviewer_identity_and_metadata: {disposition: represented_with_supported_value, value: v}
+        test_plan_and_fixture_versions: {disposition: represented_with_supported_value, value: v}
+        test_commands_inputs_exits_and_outputs: {disposition: represented_with_supported_value, value: v}
+        failure_injection_results: {disposition: represented_with_supported_value, value: v}
+        changed_path_and_artifact_manifests: {disposition: represented_with_supported_value, value: v}
+        rollback_verification: {disposition: represented_with_supported_value, value: v}
+        finding_records_and_dispositions: {disposition: represented_with_supported_value, value: v}
+        integration_candidate_state: {disposition: represented_with_supported_value, value: v}
+        Human_activation_and_master_gates: {disposition: represented_with_supported_value, value: v}
+    receipt:
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      loader_version: 1
+      profile_id_and_version: workflow_stage_07_test_execution@1
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: full
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'
+- case_id: COMP-MISSING-workflow_stage_01_requirement_modeling
+  note: stage-specific required field 'Human_goal' absent
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method for this stage
+      feasibility_support: prior art plus existing regression coverage
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate with expected exit code
+      current_exact_model_version: model-v1
+      current_exact_output_version: out-v1
+      open_load_bearing_items: []
+      Human_confirmation:
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
+        bound_model_version: model-v1
+        stale: false
+        ref: Human/current.yml#00001
+      stage_specific_model_elements:
+        success_obligations: {disposition: represented_with_supported_value, value: v}
+        scope_and_non_goals: {disposition: represented_with_supported_value, value: v}
+        stakeholders_and_actors: {disposition: represented_with_supported_value, value: v}
+        terms_and_semantic_grounding: {disposition: represented_with_supported_value, value: v}
+        constraints_and_dependencies: {disposition: represented_with_supported_value, value: v}
+        assumptions_and_uncertainties: {disposition: represented_with_supported_value, value: v}
+        risks_and_failure_modes: {disposition: represented_with_supported_value, value: v}
+        authority_and_confirmation_requirements: {disposition: represented_with_supported_value, value: v}
+        schema_adequacy_and_domain_schema_need: {disposition: represented_with_supported_value, value: v}
+        implementation_granularity_boundary: {disposition: represented_with_supported_value, value: v}
+    receipt:
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      loader_version: 1
+      profile_id_and_version: workflow_stage_01_requirement_modeling@1
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: full
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'
+- case_id: COMP-MISSING-workflow_stage_02_information_collection
+  note: stage-specific required field 'research_questions' absent
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method for this stage
+      feasibility_support: prior art plus existing regression coverage
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate with expected exit code
+      current_exact_model_version: model-v1
+      current_exact_output_version: out-v1
+      open_load_bearing_items: []
+      Human_confirmation:
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
+        bound_model_version: model-v1
+        stale: false
+        ref: Human/current.yml#00001
+      stage_specific_model_elements:
+        claim_inventory: {disposition: represented_with_supported_value, value: v}
+        source_plan_and_source_independence: {disposition: represented_with_supported_value, value: v}
+        stable_source_ids_and_exact_locations: {disposition: represented_with_supported_value, value: v}
+        access_limitations: {disposition: represented_with_supported_value, value: v}
+        fact_policy_inference_classification: {disposition: represented_with_supported_value, value: v}
+        supporting_and_conflicting_evidence: {disposition: represented_with_supported_value, value: v}
+        evidence_gap_and_stop_condition: {disposition: represented_with_supported_value, value: v}
+        external_action_models_and_authorizations: {disposition: represented_with_supported_value, value: v}
+        schema_adequacy_for_domain_evidence: {disposition: represented_with_supported_value, value: v}
+    receipt:
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      loader_version: 1
+      profile_id_and_version: workflow_stage_02_information_collection@1
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: full
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'
+- case_id: COMP-MISSING-workflow_stage_03_result_modeling
+  note: stage-specific required field 'required_result_names' absent
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method for this stage
+      feasibility_support: prior art plus existing regression coverage
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate with expected exit code
+      current_exact_model_version: model-v1
+      current_exact_output_version: out-v1
+      open_load_bearing_items: []
+      Human_confirmation:
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
+        bound_model_version: model-v1
+        stale: false
+        ref: Human/current.yml#00001
+      stage_specific_model_elements:
+        result_object_catalog: {disposition: represented_with_supported_value, value: v}
+        common_object_fields: {disposition: represented_with_supported_value, value: v}
+        state_dimensions: {disposition: represented_with_supported_value, value: v}
+        transitions_and_rejected_transitions: {disposition: represented_with_supported_value, value: v}
+        invariants_and_failure_resolution: {disposition: represented_with_supported_value, value: v}
+        authority_state_separation: {disposition: represented_with_supported_value, value: v}
+        material_event_and_reconfirmation_results: {disposition: represented_with_supported_value, value: v}
+        granularity_results: {disposition: represented_with_supported_value, value: v}
+        counterexamples_and_failure_visibility: {disposition: represented_with_supported_value, value: v}
+        schema_adequacy: {disposition: represented_with_supported_value, value: v}
+    receipt:
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      loader_version: 1
+      profile_id_and_version: workflow_stage_03_result_modeling@1
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: full
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'
+- case_id: COMP-MISSING-workflow_stage_04_test_generation
+  note: stage-specific required field 'test_subjects_and_source_assertion_refs' absent
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method for this stage
+      feasibility_support: prior art plus existing regression coverage
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate with expected exit code
+      current_exact_model_version: model-v1
+      current_exact_output_version: out-v1
+      open_load_bearing_items: []
+      Human_confirmation:
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
+        bound_model_version: model-v1
+        stale: false
+        ref: Human/current.yml#00001
+      stage_specific_model_elements:
+        case_contract_inputs_actions_and_preconditions: {disposition: represented_with_supported_value, value: v}
+        expected_exit_and_failure_codes: {disposition: represented_with_supported_value, value: v}
+        expected_artifacts_or_state: {disposition: represented_with_supported_value, value: v}
+        prohibited_side_effects: {disposition: represented_with_supported_value, value: v}
+        fixtures_and_exact_versions: {disposition: represented_with_supported_value, value: v}
+        acceptance_and_blocking_crosswalks: {disposition: represented_with_supported_value, value: v}
+        rollback_and_cleanup_checks: {disposition: represented_with_supported_value, value: v}
+        evidence_outputs: {disposition: represented_with_supported_value, value: v}
+        schema_adequacy_tests: {disposition: represented_with_supported_value, value: v}
+    receipt:
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      loader_version: 1
+      profile_id_and_version: workflow_stage_04_test_generation@1
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: full
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'
+- case_id: COMP-MISSING-workflow_stage_05_step_decomposition
+  note: stage-specific required field 'package_ids_and_objectives' absent
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method for this stage
+      feasibility_support: prior art plus existing regression coverage
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate with expected exit code
+      current_exact_model_version: model-v1
+      current_exact_output_version: out-v1
+      open_load_bearing_items: []
+      Human_confirmation:
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
+        bound_model_version: model-v1
+        stale: false
+        ref: Human/current.yml#00001
+      stage_specific_model_elements:
+        dependency_order: {disposition: represented_with_supported_value, value: v}
+        exact_base_and_branch_rules: {disposition: represented_with_supported_value, value: v}
+        closed_allowlists_and_path_owners: {disposition: represented_with_supported_value, value: v}
+        required_inputs_and_outputs: {disposition: represented_with_supported_value, value: v}
+        acceptance_assertions: {disposition: represented_with_supported_value, value: v}
+        blocking_failures: {disposition: represented_with_supported_value, value: v}
+        tests_and_expected_results: {disposition: represented_with_supported_value, value: v}
+        rollback_targets: {disposition: represented_with_supported_value, value: v}
+        review_handoffs: {disposition: represented_with_supported_value, value: v}
+        Human_authority_and_prohibitions: {disposition: represented_with_supported_value, value: v}
+    receipt:
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      loader_version: 1
+      profile_id_and_version: workflow_stage_05_step_decomposition@1
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: full
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'
+- case_id: COMP-MISSING-workflow_stage_06_execution
+  note: stage-specific required field 'exact_task_id_branch_and_40_character_base' absent
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method for this stage
+      feasibility_support: prior art plus existing regression coverage
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate with expected exit code
+      current_exact_model_version: model-v1
+      current_exact_output_version: out-v1
+      open_load_bearing_items: []
+      Human_confirmation:
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
+        bound_model_version: model-v1
+        stale: false
+        ref: Human/current.yml#00001
+      stage_specific_model_elements:
+        Human_execution_authorization: {disposition: represented_with_supported_value, value: v}
+        closed_allowlist_and_prohibitions: {disposition: represented_with_supported_value, value: v}
+        active_contract_and_test_refs: {disposition: represented_with_supported_value, value: v}
+        implementation_changes: {disposition: represented_with_supported_value, value: v}
+        test_results_and_failure_evidence: {disposition: represented_with_supported_value, value: v}
+        deviations_and_granularity_evaluations: {disposition: represented_with_supported_value, value: v}
+        open_detail_divergence_events: {disposition: represented_with_supported_value, value: v}
+        rollback_target: {disposition: represented_with_supported_value, value: v}
+        package_completion_pointer_candidate: {disposition: represented_with_supported_value, value: v}
+    receipt:
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      loader_version: 1
+      profile_id_and_version: workflow_stage_06_execution@1
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: full
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'
+- case_id: COMP-MISSING-workflow_stage_07_test_execution
+  note: stage-specific required field 'exact_review_base_and_head' absent
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method for this stage
+      feasibility_support: prior art plus existing regression coverage
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate with expected exit code
+      current_exact_model_version: model-v1
+      current_exact_output_version: out-v1
+      open_load_bearing_items: []
+      Human_confirmation:
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
+        bound_model_version: model-v1
+        stale: false
+        ref: Human/current.yml#00001
+      stage_specific_model_elements:
+        independent_reviewer_identity_and_metadata: {disposition: represented_with_supported_value, value: v}
+        test_plan_and_fixture_versions: {disposition: represented_with_supported_value, value: v}
+        test_commands_inputs_exits_and_outputs: {disposition: represented_with_supported_value, value: v}
+        failure_injection_results: {disposition: represented_with_supported_value, value: v}
+        changed_path_and_artifact_manifests: {disposition: represented_with_supported_value, value: v}
+        rollback_verification: {disposition: represented_with_supported_value, value: v}
+        finding_records_and_dispositions: {disposition: represented_with_supported_value, value: v}
+        integration_candidate_state: {disposition: represented_with_supported_value, value: v}
+        Human_activation_and_master_gates: {disposition: represented_with_supported_value, value: v}
+    receipt:
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      loader_version: 1
+      profile_id_and_version: workflow_stage_07_test_execution@1
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: full
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'
+- case_id: COMP-WRONG-PROFILE-FIELDS
+  note: stage 02 fields supplied while the receipt binds stage 01
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method for this stage
+      feasibility_support: prior art plus existing regression coverage
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate with expected exit code
+      current_exact_model_version: model-v1
+      current_exact_output_version: out-v1
+      open_load_bearing_items: []
+      Human_confirmation:
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
+        bound_model_version: model-v1
+        stale: false
+        ref: Human/current.yml#00001
+      stage_specific_model_elements:
+        research_questions: {disposition: represented_with_supported_value, value: v}
+        claim_inventory: {disposition: represented_with_supported_value, value: v}
+        source_plan_and_source_independence: {disposition: represented_with_supported_value, value: v}
+        stable_source_ids_and_exact_locations: {disposition: represented_with_supported_value, value: v}
+        access_limitations: {disposition: represented_with_supported_value, value: v}
+        fact_policy_inference_classification: {disposition: represented_with_supported_value, value: v}
+        supporting_and_conflicting_evidence: {disposition: represented_with_supported_value, value: v}
+        evidence_gap_and_stop_condition: {disposition: represented_with_supported_value, value: v}
+        external_action_models_and_authorizations: {disposition: represented_with_supported_value, value: v}
+        schema_adequacy_for_domain_evidence: {disposition: represented_with_supported_value, value: v}
+    receipt:
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      loader_version: 1
+      profile_id_and_version: workflow_stage_01_requirement_modeling@1
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: full
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'
+- case_id: COMP-UNRESOLVABLE-PROFILE
+  note: receipt names a profile that does not exist
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method for this stage
+      feasibility_support: prior art plus existing regression coverage
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate with expected exit code
+      current_exact_model_version: model-v1
+      current_exact_output_version: out-v1
+      open_load_bearing_items: []
+      Human_confirmation:
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
+        bound_model_version: model-v1
+        stale: false
+        ref: Human/current.yml#00001
+      stage_specific_model_elements:
+        Human_goal: {disposition: represented_with_supported_value, value: v}
+        success_obligations: {disposition: represented_with_supported_value, value: v}
+        scope_and_non_goals: {disposition: represented_with_supported_value, value: v}
+        stakeholders_and_actors: {disposition: represented_with_supported_value, value: v}
+        terms_and_semantic_grounding: {disposition: represented_with_supported_value, value: v}
+        constraints_and_dependencies: {disposition: represented_with_supported_value, value: v}
+        assumptions_and_uncertainties: {disposition: represented_with_supported_value, value: v}
+        risks_and_failure_modes: {disposition: represented_with_supported_value, value: v}
+        authority_and_confirmation_requirements: {disposition: represented_with_supported_value, value: v}
+        schema_adequacy_and_domain_schema_need: {disposition: represented_with_supported_value, value: v}
+        implementation_granularity_boundary: {disposition: represented_with_supported_value, value: v}
+    receipt:
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      loader_version: 1
+      profile_id_and_version: workflow_stage_09_nonexistent@1
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: full
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'
+- case_id: COMP-PROFILE-VERSION-MISMATCH
+  note: correct stage id, wrong profile version
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method for this stage
+      feasibility_support: prior art plus existing regression coverage
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate with expected exit code
+      current_exact_model_version: model-v1
+      current_exact_output_version: out-v1
+      open_load_bearing_items: []
+      Human_confirmation:
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
+        bound_model_version: model-v1
+        stale: false
+        ref: Human/current.yml#00001
+      stage_specific_model_elements:
+        Human_goal: {disposition: represented_with_supported_value, value: v}
+        success_obligations: {disposition: represented_with_supported_value, value: v}
+        scope_and_non_goals: {disposition: represented_with_supported_value, value: v}
+        stakeholders_and_actors: {disposition: represented_with_supported_value, value: v}
+        terms_and_semantic_grounding: {disposition: represented_with_supported_value, value: v}
+        constraints_and_dependencies: {disposition: represented_with_supported_value, value: v}
+        assumptions_and_uncertainties: {disposition: represented_with_supported_value, value: v}
+        risks_and_failure_modes: {disposition: represented_with_supported_value, value: v}
+        authority_and_confirmation_requirements: {disposition: represented_with_supported_value, value: v}
+        schema_adequacy_and_domain_schema_need: {disposition: represented_with_supported_value, value: v}
+        implementation_granularity_boundary: {disposition: represented_with_supported_value, value: v}
+    receipt:
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      loader_version: 1
+      profile_id_and_version: workflow_stage_01_requirement_modeling@99
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: full
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'
+- case_id: COMP-DECLARED-PROFILE-MISMATCH
+  note: instance declares one profile, receipt binds another
+  expected_exit: 16
+  data:
+    activation_mode: full
+    stage_profile_id_and_version: workflow_stage_02_information_collection@1
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method for this stage
+      feasibility_support: prior art plus existing regression coverage
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate with expected exit code
+      current_exact_model_version: model-v1
+      current_exact_output_version: out-v1
+      open_load_bearing_items: []
+      Human_confirmation:
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
+        bound_model_version: model-v1
+        stale: false
+        ref: Human/current.yml#00001
+      stage_specific_model_elements:
+        Human_goal: {disposition: represented_with_supported_value, value: v}
+        success_obligations: {disposition: represented_with_supported_value, value: v}
+        scope_and_non_goals: {disposition: represented_with_supported_value, value: v}
+        stakeholders_and_actors: {disposition: represented_with_supported_value, value: v}
+        terms_and_semantic_grounding: {disposition: represented_with_supported_value, value: v}
+        constraints_and_dependencies: {disposition: represented_with_supported_value, value: v}
+        assumptions_and_uncertainties: {disposition: represented_with_supported_value, value: v}
+        risks_and_failure_modes: {disposition: represented_with_supported_value, value: v}
+        authority_and_confirmation_requirements: {disposition: represented_with_supported_value, value: v}
+        schema_adequacy_and_domain_schema_need: {disposition: represented_with_supported_value, value: v}
+        implementation_granularity_boundary: {disposition: represented_with_supported_value, value: v}
+    receipt:
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      loader_version: 1
+      profile_id_and_version: workflow_stage_01_requirement_modeling@1
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: full
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'
+- case_id: COMP-BLOCKING-UNKNOWN-STAGE-FIELD
+  note: stage-specific field disposed unknown-and-blocking is not readiness
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method for this stage
+      feasibility_support: prior art plus existing regression coverage
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate with expected exit code
+      current_exact_model_version: model-v1
+      current_exact_output_version: out-v1
+      open_load_bearing_items: []
+      Human_confirmation:
+        explicit: true
+        kind: explicit_statement
+        actor_class: current_Human
+        scope: current_stage
+        bound_model_version: model-v1
+        stale: false
+        ref: Human/current.yml#00001
+      stage_specific_model_elements:
+        Human_goal: {disposition: unknown_with_blocking_or_deferred_disposition_and_revisit_trigger, blocking: true}
+        success_obligations: {disposition: represented_with_supported_value, value: v}
+        scope_and_non_goals: {disposition: represented_with_supported_value, value: v}
+        stakeholders_and_actors: {disposition: represented_with_supported_value, value: v}
+        terms_and_semantic_grounding: {disposition: represented_with_supported_value, value: v}
+        constraints_and_dependencies: {disposition: represented_with_supported_value, value: v}
+        assumptions_and_uncertainties: {disposition: represented_with_supported_value, value: v}
+        risks_and_failure_modes: {disposition: represented_with_supported_value, value: v}
+        authority_and_confirmation_requirements: {disposition: represented_with_supported_value, value: v}
+        schema_adequacy_and_domain_schema_need: {disposition: represented_with_supported_value, value: v}
+        implementation_granularity_boundary: {disposition: represented_with_supported_value, value: v}
+    receipt:
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      loader_version: 1
+      profile_id_and_version: workflow_stage_01_requirement_modeling@1
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: full
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'

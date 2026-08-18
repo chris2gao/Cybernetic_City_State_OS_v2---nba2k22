@@ -118,6 +118,13 @@ common_task_stage_model:
   composition_rule: common_task_stage_model + profile.required_model_fields = effective_current_stage_model
   copied_into_each_profile: false
   copy_prohibition_reason: profiles stay reference-not-copy; common fields are composed at validation time
+  composition_is_enforced_at_validation_time: true
+  stage_specific_fields_carrier: current_model.stage_specific_model_elements
+  stage_specific_element_dispositions:
+  - represented_with_supported_value
+  - explicitly_irrelevant_with_reason_and_scope
+  - unknown_with_blocking_or_deferred_disposition_and_revisit_trigger
+  synonyms_or_compatibility_aliases: prohibited
   fields:
   - problem_or_objective
   - Human_intent_understanding
@@ -126,28 +133,41 @@ common_task_stage_model:
   - proposed_method_or_solution
   - feasibility_support
   - assumptions_risks_alternatives_unknowns
-  - open_load_bearing_Human_decisions
+  - open_load_bearing_items
   - expected_output
   - verification_or_acceptance_method
   - actual_result
   - material_deviation
   - residual_risk
   - current_exact_model_version
+  required_before_substantive_execution:
+  - problem_or_objective
+  - Human_intent_understanding
+  - current_baseline_and_inputs
+  - proposed_method_or_solution
+  - feasibility_support
+  - expected_output
+  - verification_or_acceptance_method
+  - current_exact_model_version
 readiness_contract:
   principle: understand -> propose method -> support feasibility -> align load-bearing items with Human -> implement -> verify
   round_counting_is_not_readiness: true
-  fixed_minimum_substantive_rounds: removed_in_mechanism_version_2
+  fixed_minimum_substantive_rounds: removed
+  removal_scope: >-
+    the full=5 and incremental=2 minimums are deleted outright. No migration surface
+    depended on them, so mechanism_version stays 1 and no version bump is implied.
   removal_reason: >-
     how many conversational rounds occurred never proved the model was adequate. Whether
     *additional* deliberation continues is decided only by whether a load-bearing gap still
     exists. This removal does not weaken the mandatory confirmation below.
   substantive_execution_allowed_iff:
   - current_stage_model_complete
-  - proposed_method_present
+  - proposed_method_or_solution_present
   - feasibility_support_present
-  - verification_present
+  - verification_or_acceptance_method_present
   - explicit_current_Human_confirmation_of_exact_model_version
   all_five_required_together: true
+  current_stage_model_complete_means: common_required_fields_plus_this_profile_required_model_fields
   readiness_must_not_require:
   - Human_confirmation_for_ordinary_local_reversible_choice
   - additional_inquiry_rounds_when_no_load_bearing_gap_exists

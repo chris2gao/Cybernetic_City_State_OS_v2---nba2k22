@@ -193,28 +193,113 @@ def validate_static_repo(repo_root: Path) -> int:
         return 15
     return 0
 
-READINESS_REQUIRED_MODEL_FIELDS = (
-    "problem_or_objective",
-    "proposed_method",
-    "feasibility_support",
-    "verification_method",
-)
+PROFILE_SET_PATH = "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml"
 RESOLVED_DISPOSITIONS = {"resolved", "deferred_non_blocking"}
+# Allowed dispositions for a model element, from the profile contract's
+# model_space_contract. Field occupancy alone never proves adequacy.
+REPRESENTED = "represented_with_supported_value"
+EXPLICITLY_IRRELEVANT = "explicitly_irrelevant_with_reason_and_scope"
+UNKNOWN_DISPOSED = "unknown_with_blocking_or_deferred_disposition_and_revisit_trigger"
+ALLOWED_ELEMENT_DISPOSITIONS = {REPRESENTED, EXPLICITLY_IRRELEVANT, UNKNOWN_DISPOSED}
 # Nothing in this set is a Human decision, however it is labelled.
 NON_DISPOSITION_BASIS_KINDS = {"silence", "no_response", "inferred", "implied", "assumed"}
 # Only the current Human confirms. No model-side actor substitutes for that.
 NON_HUMAN_ACTOR_CLASSES = {"executor", "reviewer", "independent_reviewer", "model", "agent"}
-# The common model fields that must be complete before substantive execution.
+# Canonical common-model field names. These are the only spellings used by the
+# profile contract, the result projection, the validator and every fixture. No
+# synonym or compatibility alias exists.
 STAGE_MODEL_COMPLETENESS_FIELDS = (
     "problem_or_objective",
     "Human_intent_understanding",
     "current_baseline_and_inputs",
-    "proposed_method",
+    "proposed_method_or_solution",
     "feasibility_support",
     "expected_output",
-    "verification_method",
+    "verification_or_acceptance_method",
     "current_exact_model_version",
 )
+
+
+def repo_root_from_here() -> Path:
+    # 01_os/03_mechanisms/stage_collaborative_deliberation/实现/<this file>
+    return Path(__file__).resolve().parents[4]
+
+
+def load_profile_set(repo_root: Path | None = None) -> dict[str, Any]:
+    root = repo_root or repo_root_from_here()
+    doc = load_doc(root / PROFILE_SET_PATH)
+    if not isinstance(doc, dict):
+        raise ValueError("profile set must be a mapping")
+    return doc
+
+
+def resolve_profile(profile_id_and_version: Any, repo_root: Path | None = None) -> dict[str, Any] | None:
+    """Resolve the exact profile named by a receipt's profile_id_and_version.
+
+    Returns None when the reference is malformed or does not resolve, which the
+    caller must treat as a failure - a stage cannot be validated against a
+    profile that was never identified.
+    """
+    if not isinstance(profile_id_and_version, str) or "@" not in profile_id_and_version:
+        return None
+    profile_id, _, raw_version = profile_id_and_version.partition("@")
+    try:
+        version = int(raw_version)
+    except ValueError:
+        return None
+    for profile in load_profile_set(repo_root).get("profiles", []):
+        if not isinstance(profile, dict):
+            continue
+        if profile.get("profile_id") == profile_id and profile.get("profile_version") == version:
+            return profile
+    return None
+
+
+def validate_effective_stage_model(
+    data: dict[str, Any], model: dict[str, Any], repo_root: Path | None = None
+) -> int:
+    """effective_current_stage_model = common_task_stage_model + this profile's
+    required_model_fields.
+
+    The common fields are validated once, centrally; the stage-specific fields
+    come from the exact profile resolved for this stage, so the common set is
+    never copied into the seven profiles. Validating only the common fields
+    would let any stage pass another stage's obligations.
+    """
+    receipt = data.get("receipt")
+    reference = receipt.get("profile_id_and_version") if isinstance(receipt, dict) else None
+    try:
+        profile = resolve_profile(reference, repo_root)
+    except Exception:
+        return 11
+    if profile is None:
+        # unidentified or mismatched profile: the stage obligations are unknown
+        return 16
+    declared = data.get("stage_profile_id_and_version")
+    if declared is not None and declared != reference:
+        # the instance claims one profile while the receipt binds another
+        return 16
+
+    elements = model.get("stage_specific_model_elements")
+    if not isinstance(elements, dict):
+        return 16
+    for field in profile.get("required_model_fields", []):
+        element = elements.get(field)
+        if not isinstance(element, dict):
+            return 16
+        disposition = element.get("disposition")
+        if disposition not in ALLOWED_ELEMENT_DISPOSITIONS:
+            return 16
+        if disposition == REPRESENTED and element.get("value") in (None, "", [], {}):
+            return 16
+        if disposition == EXPLICITLY_IRRELEVANT and not element.get("reason_and_scope"):
+            return 16
+        if disposition == UNKNOWN_DISPOSED:
+            if element.get("blocking") is True:
+                return 16
+            if not element.get("revisit_trigger"):
+                return 16
+    return 0
 
 
 def validate_mandatory_Human_confirmation(model: dict[str, Any]) -> int:
@@ -261,9 +346,10 @@ def validate_model_readiness(data: dict[str, Any]) -> int:
     model = data.get("current_model")
     if not isinstance(model, dict):
         return 16
-    # current_stage_model_complete AND proposed_method AND feasibility_support
-    # AND verification AND explicit current-Human confirmation of the exact model
-    # version -> substantive execution allowed. All five are required together.
+    # current_stage_model_complete AND proposed_method_or_solution AND
+    # feasibility_support AND verification_or_acceptance_method AND explicit
+    # current-Human confirmation of the exact model version -> substantive
+    # execution allowed. All five are required together.
     for field in STAGE_MODEL_COMPLETENESS_FIELDS:
         if not model.get(field):
             return 16
@@ -331,19 +417,74 @@ def validate_model_readiness(data: dict[str, Any]) -> int:
     return 0
 
 
-def validate_stage_child_composition(data: dict[str, Any], receipt: dict[str, Any]) -> int:
-    """CR-005: a seven-stage-loop child must compose the complete base stage
-    receipt validation and then overlay alignment and stage/profile binding.
-    Running only the overlay, or a receipt subset, is not acceptance."""
-    if data.get("seven_stage_child") is not True:
-        return 0
-    if receipt.get("base_receipt_validation") != "complete":
+def validate_base_stage_receipt(receipt: Any) -> int:
+    """The complete base stage-receipt validation, as an actually callable unit.
+
+    This is the real base validation that a seven-stage-loop child must compose
+    with. It is deliberately a function rather than a flag so that no caller can
+    assert its result without running it.
+    """
+    if not isinstance(receipt, dict):
         return 17
     if any(k not in receipt for k in REQUIRED_RECEIPT_FIELDS):
         return 17
-    for binding in ("alignment_binding", "profile_binding"):
-        if not receipt.get(binding):
-            return 17
+    exit_code = receipt.get("validator_mode_and_exit_code")
+    if not isinstance(exit_code, dict) or exit_code.get("exit_code") != 0:
+        return 17
+    gates = receipt.get("gate_results")
+    if not isinstance(gates, dict) or set(gates) != {"start", "completion"}:
+        return 17
+    if any(gates.get(gate) != "pass" for gate in ("start", "completion")):
+        return 17
+    if receipt.get("missing_partial_or_stale_paths"):
+        return 12
+    if not receipt.get("exact_candidate_version"):
+        return 17
+    return 0
+
+
+def validate_stage_child_composition(
+    data: dict[str, Any], receipt: dict[str, Any], repo_root: Path | None = None
+) -> int:
+    """CR-005: a seven-stage-loop child runs the complete base stage-receipt
+    validation, takes its real exit code, and only when that is 0 overlays the
+    Human alignment validation and the stage/profile binding validation.
+
+    A self-reported field such as base_receipt_validation: complete is not
+    evidence that the base validation ran, so no such field is consulted.
+    """
+    if data.get("seven_stage_child") is not True:
+        return 0
+    base_code = validate_base_stage_receipt(receipt)
+    if base_code:
+        return base_code
+
+    # overlay 1: Human alignment must be bound to the exact current model version
+    model = data.get("current_model") or {}
+    binding = receipt.get("alignment_binding")
+    if not isinstance(binding, dict):
+        return 17
+    if binding.get("bound_model_version") != model.get("current_exact_model_version"):
+        return 12
+    confirmation = model.get("Human_confirmation") or {}
+    if binding.get("Human_confirmation_ref") != confirmation.get("ref"):
+        return 17
+
+    # overlay 2: the stage/profile binding must resolve to the same exact profile
+    profile_binding = receipt.get("profile_binding")
+    if not isinstance(profile_binding, dict):
+        return 17
+    reference = receipt.get("profile_id_and_version")
+    if profile_binding.get("profile_id_and_version") != reference:
+        return 16
+    try:
+        profile = resolve_profile(reference, repo_root)
+    except Exception:
+        return 11
+    if profile is None:
+        return 16
+    if profile_binding.get("mechanism_ref") != profile.get("mechanism_ref"):
+        return 13
     return 0
 
 
@@ -364,7 +505,7 @@ def validate_completion_pointer(data: dict[str, Any]) -> int:
     return 0
 
 
-def validate_instance(data: dict[str, Any]) -> int:
+def validate_instance(data: dict[str, Any], repo_root: Path | None = None) -> int:
     code = direct_error_code(data)
     if code:
         return code
@@ -387,7 +528,11 @@ def validate_instance(data: dict[str, Any]) -> int:
         return 17
     if receipt.get("validator_mode_and_exit_code", {}).get("exit_code") != 0:
         return 17
-    code = validate_stage_child_composition(data, receipt)
+    # effective_current_stage_model = common fields + this exact profile's fields
+    code = validate_effective_stage_model(data, data["current_model"], repo_root)
+    if code:
+        return code
+    code = validate_stage_child_composition(data, receipt, repo_root)
     if code:
         return code
     return validate_completion_pointer(data)

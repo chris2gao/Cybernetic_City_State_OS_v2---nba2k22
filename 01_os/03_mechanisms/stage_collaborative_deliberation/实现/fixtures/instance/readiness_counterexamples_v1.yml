@@ -1,20 +1,32 @@
 fixture_kind: instance_readiness_counterexample_suite
 note: >-
-  Readiness negatives for the mandatory-projection-and-confirmation contract. Each case is a
-  model that is otherwise well formed and fails on exactly one condition, so the exit code
-  identifies the violated condition rather than incidental schema noise.
+  Readiness negatives for the mandatory-projection-and-confirmation contract and for the two
+  bounded defects CR-005 and RR2-001. Each case is otherwise well formed and fails on exactly
+  one condition, so the exit code identifies the violated condition rather than schema noise.
 anchors:
+  stage06: &stage06
+    exact_task_id_branch_and_40_character_base: {disposition: represented_with_supported_value, value: 'A-impl@31296e1c'}
+    Human_execution_authorization: {disposition: represented_with_supported_value, value: Human授权_v1}
+    closed_allowlist_and_prohibitions: {disposition: represented_with_supported_value, value: allowlist@v1}
+    active_contract_and_test_refs: {disposition: represented_with_supported_value, value: contract@v1}
+    implementation_changes: {disposition: represented_with_supported_value, value: bounded change}
+    test_results_and_failure_evidence: {disposition: represented_with_supported_value, value: suite green exit 0}
+    deviations_and_granularity_evaluations: {disposition: represented_with_supported_value, value: none}
+    open_detail_divergence_events: {disposition: represented_with_supported_value, value: none}
+    rollback_target: {disposition: represented_with_supported_value, value: master@exact}
+    package_completion_pointer_candidate: {disposition: represented_with_supported_value, value: pending}
   model: &model
-    problem_or_objective: rename one local helper for clarity
-    Human_intent_understanding: keep behaviour identical
+    problem_or_objective: bounded stage objective
+    Human_intent_understanding: foreground restatement of Human intent
     current_baseline_and_inputs: master@exact
-    proposed_method: in-place rename with call-site update
-    feasibility_support: single call site, covered by existing regression test
-    expected_output: one renamed helper
-    verification_method: existing suite must stay green
+    proposed_method_or_solution: stated method for this stage
+    feasibility_support: prior art plus existing regression coverage
+    expected_output: one exact artifact version
+    verification_or_acceptance_method: named gate with expected exit code
     current_exact_model_version: model-v1
     current_exact_output_version: out-v1
     open_load_bearing_items: []
+    stage_specific_model_elements: *stage06
     Human_confirmation: &confirmation
       explicit: true
       kind: explicit_statement
@@ -22,6 +34,7 @@ anchors:
       scope: current_stage
       bound_model_version: model-v1
       stale: false
+      ref: Human/current.yml#00001
   receipt: &receipt
     receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
     mechanism_version: 1
@@ -43,6 +56,12 @@ anchors:
     exact_candidate_version: fixture-v1
     created_by_actor_ref: model:test
     created_at: '2026-08-04T19:40:00-07:00'
+  child_receipt: &child_receipt
+    <<: *receipt
+    alignment_binding: {bound_model_version: model-v1, Human_confirmation_ref: Human/current.yml#00001}
+    profile_binding:
+      profile_id_and_version: workflow_stage_06_execution@1
+      mechanism_ref: 01_os/03_mechanisms/stage_collaborative_deliberation/README.md
 cases:
 - case_id: RDY-NO-MODEL
   note: dormant must not mean "no model was built"
@@ -53,7 +72,7 @@ cases:
   expected_exit: 16
   data:
     activation_mode: full
-    current_model: {<<: *model, proposed_method: null}
+    current_model: {<<: *model, proposed_method_or_solution: null}
     receipt: *receipt
 
 - case_id: RDY-MISSING-FEASIBILITY
@@ -67,7 +86,7 @@ cases:
   expected_exit: 16
   data:
     activation_mode: full
-    current_model: {<<: *model, verification_method: null}
+    current_model: {<<: *model, verification_or_acceptance_method: null}
     receipt: *receipt
 
 - case_id: RDY-UNRESOLVED-LOAD-BEARING
@@ -90,36 +109,27 @@ cases:
     receipt: *receipt
 
 - case_id: RDY-SILENCE-AS-CONFIRMATION
-  note: Human silence is not a decision
   expected_exit: 14
   data:
     activation_mode: full
-    current_model:
-      <<: *model
-      Human_confirmation: {<<: *confirmation, kind: silence}
+    current_model: {<<: *model, Human_confirmation: {<<: *confirmation, kind: silence}}
     receipt: *receipt
 
 - case_id: RDY-INFERRED-CONSENT
   expected_exit: 14
   data:
     activation_mode: full
-    current_model:
-      <<: *model
-      Human_confirmation: {<<: *confirmation, explicit: false, kind: inferred}
+    current_model: {<<: *model, Human_confirmation: {<<: *confirmation, explicit: false, kind: inferred}}
     receipt: *receipt
 
 - case_id: RDY-PREVIOUS-STAGE-CONFIRMATION
-  note: a previous stage's confirmation does not carry into this stage
   expected_exit: 12
   data:
     activation_mode: full
-    current_model:
-      <<: *model
-      Human_confirmation: {<<: *confirmation, scope: previous_stage}
+    current_model: {<<: *model, Human_confirmation: {<<: *confirmation, scope: previous_stage}}
     receipt: *receipt
 
 - case_id: RDY-OLD-MODEL-VERSION-CONFIRMATION
-  note: confirmation bound to a superseded model version is stale
   expected_exit: 12
   data:
     activation_mode: full
@@ -130,42 +140,33 @@ cases:
     receipt: *receipt
 
 - case_id: RDY-EXECUTOR-CONFIRMATION
-  note: executor cannot confirm on the Human's behalf
   expected_exit: 15
   data:
     activation_mode: full
-    current_model:
-      <<: *model
-      Human_confirmation: {<<: *confirmation, actor_class: executor}
+    current_model: {<<: *model, Human_confirmation: {<<: *confirmation, actor_class: executor}}
     receipt: *receipt
 
 - case_id: RDY-REVIEWER-CONFIRMATION
   expected_exit: 15
   data:
     activation_mode: full
-    current_model:
-      <<: *model
-      Human_confirmation: {<<: *confirmation, actor_class: independent_reviewer}
+    current_model: {<<: *model, Human_confirmation: {<<: *confirmation, actor_class: independent_reviewer}}
     receipt: *receipt
 
 - case_id: RDY-STALE-ALIGNMENT-AFTER-MATERIAL-CHANGE
   expected_exit: 12
   data:
     activation_mode: full
-    current_model:
-      <<: *model
-      Human_alignment: {bound_model_version: model-v0, stale: true}
+    current_model: {<<: *model, Human_alignment: {bound_model_version: model-v0, stale: true}}
     receipt: *receipt
 
 - case_id: RDY-MICROAPPROVAL-ESCALATION
-  note: ordinary local reversible choice must not demand Human confirmation
   expected_exit: 14
   data:
     activation_mode: full
     current_model:
       <<: *model
-      ordinary_local_choices:
-      - {choice: helper_name_spelling, requires_Human_confirmation: true}
+      ordinary_local_choices: [{choice: helper_name_spelling, requires_Human_confirmation: true}]
     receipt: *receipt
 
 - case_id: RDY-REPEAT-RESOLVED-QUESTION
@@ -173,12 +174,10 @@ cases:
   data:
     activation_mode: full
     current_model: *model
-    inquiry_items:
-    - {id: retention_window, re_asks_resolved_input: true}
+    inquiry_items: [{id: retention_window, re_asks_resolved_input: true}]
     receipt: *receipt
 
 - case_id: RDY-ROUND-COUNT-AS-READINESS
-  note: fixed-round behaviour must not influence readiness
   expected_exit: 16
   data:
     activation_mode: full
@@ -203,38 +202,127 @@ cases:
       completion: {progression_requested: true, actual_result: done, verification_result: null}
     receipt: *receipt
 
-- case_id: CR005-CHILD-MISSING-BASE-RECEIPT
-  note: seven-stage child must compose the complete base receipt validation, not only the overlay
-  expected_exit: 17
-  data:
-    activation_mode: full
-    seven_stage_child: true
-    current_model: *model
-    receipt: {<<: *receipt, alignment_binding: a-1, profile_binding: p-1}
-
-- case_id: CR005-CHILD-MISSING-BINDINGS
-  expected_exit: 17
-  data:
-    activation_mode: full
-    seven_stage_child: true
-    current_model: *model
-    receipt: {<<: *receipt, base_receipt_validation: complete}
-
 - case_id: CR005-CHILD-COMPLETE
-  note: positive control for the composed child validation
+  note: positive control - real base validation exits 0, then both overlays bind
   expected_exit: 0
   data:
     activation_mode: full
     seven_stage_child: true
     current_model: *model
+    receipt: *child_receipt
+
+- case_id: CR005-MISSING-ORDINARY-BASE-FIELD
+  note: >-
+    loader_version - an ordinary base receipt field, unrelated to alignment - is genuinely
+    absent. Spelled out in full rather than merged, because a YAML merge cannot delete a key
+    and a null value would still count as present.
+  expected_exit: 17
+  data:
+    activation_mode: full
+    seven_stage_child: true
+    current_model: *model
     receipt:
-      <<: *receipt
+      receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
+      mechanism_version: 1
+      active_contract_version: 1
+      boot_manifest_version: 1
+      registry_version: 1
+      profile_id_and_version: workflow_stage_06_execution@1
+      loaded_paths: []
+      missing_partial_or_stale_paths: []
+      trigger_evaluation_result_ref: trigger-1
+      activation_mode_or_dormant_reason: full
+      main_mechanism_ref: [MM-01]
+      detail_granularity_evaluation_result: ordinary_local_choice
+      open_detail_divergence_event_refs: []
+      deferred_detail_record_refs: []
+      gate_results: {start: pass, completion: pass}
+      validator_mode_and_exit_code: {mode: instance, exit_code: 0}
+      exact_candidate_version: fixture-v1
+      created_by_actor_ref: model:test
+      created_at: '2026-08-04T19:40:00-07:00'
+      alignment_binding: {bound_model_version: model-v1, Human_confirmation_ref: Human/current.yml#00001}
+      profile_binding:
+        profile_id_and_version: workflow_stage_06_execution@1
+        mechanism_ref: 01_os/03_mechanisms/stage_collaborative_deliberation/README.md
+
+- case_id: CR005-BASE-VALIDATOR-NONZERO
+  note: base receipt reports a failing gate, so the composed base validation returns nonzero
+  expected_exit: 17
+  data:
+    activation_mode: full
+    seven_stage_child: true
+    current_model: *model
+    receipt: {<<: *child_receipt, gate_results: {start: pass, completion: fail}}
+
+- case_id: CR005-BASE-STALE-PATHS
+  expected_exit: 12
+  data:
+    activation_mode: full
+    seven_stage_child: true
+    current_model: *model
+    receipt: {<<: *child_receipt, missing_partial_or_stale_paths: [01_os/some/stale.yml]}
+
+- case_id: CR005-ALIGNMENT-BINDING-INVALID
+  note: alignment overlay bound to a superseded model version
+  expected_exit: 12
+  data:
+    activation_mode: full
+    seven_stage_child: true
+    current_model: *model
+    receipt:
+      <<: *child_receipt
+      alignment_binding: {bound_model_version: model-v0, Human_confirmation_ref: Human/current.yml#00001}
+
+- case_id: CR005-ALIGNMENT-CONFIRMATION-REF-MISMATCH
+  expected_exit: 17
+  data:
+    activation_mode: full
+    seven_stage_child: true
+    current_model: *model
+    receipt:
+      <<: *child_receipt
+      alignment_binding: {bound_model_version: model-v1, Human_confirmation_ref: Human/current.yml#09999}
+
+- case_id: CR005-PROFILE-BINDING-MISMATCH
+  expected_exit: 16
+  data:
+    activation_mode: full
+    seven_stage_child: true
+    current_model: *model
+    receipt:
+      <<: *child_receipt
+      profile_binding:
+        profile_id_and_version: workflow_stage_01_requirement_modeling@1
+        mechanism_ref: 01_os/03_mechanisms/stage_collaborative_deliberation/README.md
+
+- case_id: CR005-PROFILE-BINDING-WRONG-MECHANISM-REF
+  expected_exit: 13
+  data:
+    activation_mode: full
+    seven_stage_child: true
+    current_model: *model
+    receipt:
+      <<: *child_receipt
+      profile_binding:
+        profile_id_and_version: workflow_stage_06_execution@1
+        mechanism_ref: 01_os/03_mechanisms/some_other/README.md
+
+- case_id: CR005-SELF-REPORTED-FLAG-IS-NOT-EVIDENCE
+  note: >-
+    the old self-report base_receipt_validation=complete is present but the receipt is
+    actually incomplete; the flag must not rescue it
+  expected_exit: 17
+  data:
+    activation_mode: full
+    seven_stage_child: true
+    current_model: *model
+    receipt:
+      <<: *child_receipt
       base_receipt_validation: complete
-      alignment_binding: a-1
-      profile_binding: p-1
+      gate_results: {start: pass, completion: fail}
 
 - case_id: RR2-001-STALE-COMPLETION-POINTER
-  note: pointer must bind the exact final semantic candidate, not a superseded one
   expected_exit: 12
   data:
     activation_mode: incremental
@@ -248,4 +336,13 @@ cases:
     activation_mode: incremental
     current_model: *model
     completion_pointer: {append_only: false, bound_candidate_version: out-v1}
+    receipt: *receipt
+
+- case_id: RR2-001-SUPERSEDES-WITHOUT-RECORD
+  note: superseding a prior pointer must reference the retained prior record
+  expected_exit: 14
+  data:
+    activation_mode: incremental
+    current_model: *model
+    completion_pointer: {append_only: true, bound_candidate_version: out-v1, supersedes: pointer-00001}
     receipt: *receipt

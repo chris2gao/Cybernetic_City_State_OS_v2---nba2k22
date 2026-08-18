@@ -1,0 +1,57 @@
+schema_version: citystate.run_successor_record.v1
+record_id: implementation_successor_001
+task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+run_id: run-20260817-stage-human-alignment-enforcement-root-cause-001
+relationship_to_prior_records: append_only_successor
+rewrites_prior_architecture_documents: false
+purpose: >-
+  Converge this run's durable state onto physical fact. The prior records described an
+  architecture that had been decided but not implemented; implementation has now happened.
+  Nothing earlier is rewritten - this record supersedes only the status fields it names.
+
+physical_state:
+  implementation_has_occurred: true
+  prior_state_was: decision_recorded_implementation_not_started
+  prior_records_changed_canonical_paths: 0
+  actual_current_master_baseline: 31296e1c1dd573310e26327b50ec2f70e176bc2a
+  merge_base_of_historical_A_branch: e5bf669d39179c172fc10fbb3b73557e8b05bf1e
+  historical_A_head_preserved: ada4210427f83ed5e34a906691d5c91b4add62a2
+  master_incorporated_by: non_fast_forward_merge_commit
+  history_rewritten: false
+  rebase_squash_amend_reset_force: none
+
+implementation_line:
+  branch: dev/os-v2-stage-human-alignment-enforcement-root-cause-001-impl-001
+  merge_commit: f5b746a13b41749ebd79a9ea458c85e283774802
+  prior_candidate: f26be00f30b836803a0f01eb78633877aac8d3d5
+  prior_candidate_status: superseded_by_pre_review_defect_closure
+  final_candidate_ref: 08_结论/completion_pointer_v1.yml
+
+Human_confirmed_architecture:
+  rule: >-
+    Every task and every workflow stage must, before any substantive execution, present to
+    the current Human what will be done, how it will be done, what supports its feasibility,
+    the expected result, the verification method, and the load-bearing risks and choices,
+    and obtain an explicit confirmation bound to the exact current model version.
+  additional_inquiry_and_multi_round_deliberation: only_when_a_load_bearing_gap_exists
+  fixed_round_count: removed
+  fixed_round_count_prior_value: {full: 5, incremental: 2}
+  ordinary_local_reversible_choices_require_microapproval: false
+  cannot_substitute_for_current_stage_confirmation:
+  - Human_silence_or_non_response
+  - inferred_or_implied_consent
+  - previous_stage_confirmation
+  - confirmation_bound_to_an_older_model_version
+  - executor_confirmation
+  - independent_reviewer_confirmation
+  dormant_means: model_adequate_and_no_new_load_bearing_gap_so_no_additional_inquiry
+  dormant_does_not_waive_projection_or_confirmation: true
+
+bounded_defects_closed:
+  CR_005: seven_stage_child_composes_the_real_base_stage_receipt_validation_before_overlays
+  RR2_001: append_only_completion_pointer_bound_to_the_exact_final_semantic_candidate
+
+supersedes_status_fields_only:
+- 01_任务输入/任务包_v2_implementation.yml#implementation_gate.status
+- 03_方案设计/Human架构决定_前台阶段简报与讨论闭环_v1.yml#implementation_gate
+master_publication_authorized: false

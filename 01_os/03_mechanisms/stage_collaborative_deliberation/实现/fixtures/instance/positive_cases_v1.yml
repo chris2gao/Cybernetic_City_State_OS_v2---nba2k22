@@ -13,10 +13,10 @@ cases:
       problem_or_objective: rename one local helper for clarity
       Human_intent_understanding: keep behaviour identical, improve readability
       current_baseline_and_inputs: master@exact
-      proposed_method: in-place rename with call-site update
+      proposed_method_or_solution: in-place rename with call-site update
       feasibility_support: single call site, covered by existing regression test
       expected_output: one renamed helper
-      verification_method: existing suite must stay green
+      verification_or_acceptance_method: existing suite must stay green
       current_exact_model_version: model-v1
       current_exact_output_version: out-v1
       open_load_bearing_items: []
@@ -30,6 +30,18 @@ cases:
         bound_model_version: model-v1
         stale: false
         ref: Human/current.yml#00001
+      # exactly the ten required_model_fields of workflow_stage_06_execution@1
+      stage_specific_model_elements: &stage06
+        exact_task_id_branch_and_40_character_base: {disposition: represented_with_supported_value, value: 'A-impl@31296e1c1dd573310e26327b50ec2f70e176bc2a'}
+        Human_execution_authorization: {disposition: represented_with_supported_value, value: Human授权_v1}
+        closed_allowlist_and_prohibitions: {disposition: represented_with_supported_value, value: allowlist@v1}
+        active_contract_and_test_refs: {disposition: represented_with_supported_value, value: contract@v1}
+        implementation_changes: {disposition: represented_with_supported_value, value: one renamed helper}
+        test_results_and_failure_evidence: {disposition: represented_with_supported_value, value: suite green exit 0}
+        deviations_and_granularity_evaluations: {disposition: represented_with_supported_value, value: none}
+        open_detail_divergence_events: {disposition: explicitly_irrelevant_with_reason_and_scope, reason_and_scope: no divergence in this bounded rename}
+        rollback_target: {disposition: represented_with_supported_value, value: master@exact}
+        package_completion_pointer_candidate: {disposition: unknown_with_blocking_or_deferred_disposition_and_revisit_trigger, blocking: false, revisit_trigger: final_semantic_candidate_fixed}
     receipt: &receipt
       receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
       mechanism_version: 1
