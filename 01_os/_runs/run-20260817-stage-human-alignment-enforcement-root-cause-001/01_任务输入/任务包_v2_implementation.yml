@@ -1,0 +1,125 @@
+schema_version: citystate.task_packet.v2
+task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+run_id: run-20260817-stage-human-alignment-enforcement-root-cause-001
+packet_version: 2
+supersedes_for_current_phase: 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/01_任务输入/任务包_v1.yml
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T2_semantic
+exact_base_sha: e5bf669d39179c172fc10fbb3b73557e8b05bf1e
+implementation_start_sha: 8fac6194479e730acdce4144587ca93aba4ea73f
+branch: dev/os-v2-stage-human-alignment-enforcement-root-cause-001
+phase: implementation
+Human_implementation_disposition_ref: 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/01_任务输入/Human确认实施_v1.yml
+architecture_ref: 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/03_方案设计/Human架构决定_前台阶段简报与讨论闭环_v1.yml
+objective: >-
+  Modify the existing stage_collaborative_deliberation mechanism itself so its stage modeling,
+  inquiry, deliberation, result projection and progression contract require foreground and Human
+  to jointly establish an adequate current stage model before substantive work. The model must
+  determine foreground understanding of Human intent, stage objective, proposed implementation,
+  feasibility support, relevant models/tools/data/environment, outputs, verification, risks,
+  alternatives, Human decision boundary, model-owned local choices and downstream impact. A stage
+  brief is the Human-visible projection of this same model; Human feedback updates the same model.
+  Explicit Human disposition on the exact model/version is required before downstream execution,
+  review or next-stage progression. Close CR-005 residual and RR2-001 as supporting defects.
+semantic_invariants:
+  - one_existing_stage_collaborative_deliberation_mechanism_no_parallel_briefing_mechanism
+  - foreground_current_Human_is_alignment_dialogue
+  - executor_reviewer_and_other_downstream_models_do_not_participate_in_alignment_dialogue
+  - stage_brief_projects_current_stage_model
+  - Human_feedback_updates_same_stage_model
+  - silence_or_inferred_consent_never_authorizes_progression
+  - material_input_or_model_change_invalidates_stale_alignment
+  - completion_disposition_binds_exact_output_version
+  - material_output_change_invalidates_stale_completion_confirmation
+  - ordinary_local_reversible_choices_remain_model_owned_without_microapproval
+  - load_bearing_or_second_order_divergence_preserves_existing_full_or_incremental_deliberation
+  - no_cryptographic_Human_identity_or_external_attestation_subsystem
+required_implementation:
+  - extend_stage_model_contract_with_required_Human_visible_dimensions
+  - ensure_inquiry_gap_detection_can_surface_missing_or_unsupported_method_feasibility_risk_boundary_dimensions
+  - ensure_full_and_incremental_deliberation_update_those_same_model_dimensions
+  - define_stage_entry_and_completion_brief_as_projection_of_current_model_not_separate_state_machine
+  - bind_explicit_Human_disposition_to_exact_stage_model_or_output_version_for_progression
+  - fail_closed_on_missing_incomplete_or_stale_alignment
+  - compose_seven_stage_loop_child_validation_as_complete_base_receipt_plus_alignment_plus_stage_profile_binding
+  - publish_append_only_successor_completion_pointer_for_material_candidate_change
+required_negative_controls:
+  - missing_stage_entry_model_or_brief
+  - missing_proposed_method
+  - missing_feasibility_support
+  - Human_silence_or_inferred_consent
+  - stale_alignment_after_material_input_or_model_change
+  - stale_completion_confirmation_after_output_change
+  - dormant_route_without_required_Human_alignment
+  - ordinary_local_reversible_choice_does_not_trigger_microapproval
+  - load_bearing_divergence_still_escalates_full_or_incremental
+  - aligned_seven_stage_child_missing_ordinary_base_receipt_field
+  - seven_stage_child_with_nonzero_base_validator_exit
+  - seven_stage_child_stage_profile_mismatch
+  - stale_completion_pointer_bound_to_superseded_candidate
+  - executor_or_reviewer_record_attempted_as_foreground_Human_alignment
+allowed_changed_paths:
+  - 01_os/03_mechanisms/stage_collaborative_deliberation/**
+  - 01_os/02_boot/stage_collaborative_deliberation/**
+  - 01_os/06_execution/boot/stage_collaborative_deliberation/**
+  - 01_os/01_workflow/01_需求建模/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/01_workflow/02_信息收集与提炼/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/01_workflow/03_结果建模/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/01_workflow/04_测试生成/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/01_workflow/05_步骤拆分/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/01_workflow/06_执行/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/01_workflow/07_测试执行/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/05_registry/stage_collaborative_deliberation_v1.yml
+  - 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/**
+  - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-stage-human-alignment-enforcement-root-cause-001/**
+required_acceptance:
+  - baseline_and_candidate_static_validation
+  - all_relevant_existing_fixtures_preserved_or_explicitly_replaced_with_reason
+  - all_new_negative_controls_have_declared_and_actual_fail_closed_results
+  - positive_end_to_end_foreground_brief_Human_disposition_stage_work_completion_brief_exact_version_progression_case
+  - exact_changed_path_allowlist_check
+  - git_diff_check
+  - exact_ref_graph_recomputed_from_published_candidate_blobs
+  - no_canonical_live_state
+  - successor_completion_pointer_binds_exact_final_semantic_candidate_and_exact_evidence
+  - independent_review_after_foreground_Human_completion_brief
+stop_conditions:
+  - need_to_change_semantic_goal_or_Human_confirmed_stage_model
+  - need_to_write_outside_allowed_changed_paths
+  - new_second_order_design_branch_not_deterministically_implied_by_confirmed_architecture
+  - secret_credential_or_unapproved_external_runtime_access
+  - protected_or_master_publication
+  - evidence_cannot_support_claims
+prohibitions:
+  - reopen_or_patch_frozen_predecessor_task
+  - treat_this_as_third_correction_round_of_predecessor
+  - create_parallel_briefing_or_Human_attestation_mechanism
+  - let_executor_or_reviewer_redefine_Human_alignment_semantics
+  - infer_Human_consent_from_silence
+  - force_push_rebase_squash_amend_or_history_rewrite
+  - master_publication
+executor_profile:
+  collaboration_role: execution
+  provider: OpenAI
+  product: Codex Desktop
+  surface: codex_desktop
+  model: GPT-5.6 Sol
+  reasoning_or_parameter_profile: codex_sol_strongest_exposed
+  session_mode: fresh_task_session
+  isolation_level: isolated_worktree
+  repository_access_mode: local_repository
+  repository_or_worktree_requirement: fresh_clean_isolated_worktree_or_clone_bound_to_exact_task_branch_head
+  required_branch_or_sha: dev/os-v2-stage-human-alignment-enforcement-root-cause-001
+  local_files_required: false
+  github_publication_required_before_start: true
+  communication_carrier: GitHub
+  limitations:
+    - execution_only_no_architecture_reinterpretation
+    - no_Human_alignment_dialogue_role
+    - no_independent_acceptance_claim
+    - no_master_or_canonical_publication
+verification_profile:
+  independent_review_required: true
+  reviewer_must_not_use_executor_private_context: true
+  Human_completion_brief_required_before_review_dispatch: true
+  master_gate: Human_only_after_independent_acceptance

@@ -1,0 +1,61 @@
+schema_version: citystate.stage_implementation_brief.v1
+task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+run_id: run-20260817-stage-human-alignment-enforcement-root-cause-001
+stage: implementation
+status: Human_confirmed
+Human_disposition: confirm_implementation
+current_master_sha: e5bf669d39179c172fc10fbb3b73557e8b05bf1e
+implementation_start_sha: 8fac6194479e730acdce4144587ca93aba4ea73f
+objective: >-
+  Implement the confirmed change inside the existing stage_collaborative_deliberation mechanism:
+  stage modeling, inquiry and deliberation must determine what the stage is doing, how foreground
+  understands Human intent, proposed implementation, feasibility support, evidence, tools/models/data,
+  outputs, verification, risks, alternatives, Human decision boundary, model-owned local choices and
+  downstream impact. The stage brief is the structured Human-visible projection of that same model.
+method:
+  - extend_existing_stage_model_and_profile_contracts_not_create_parallel_mechanism
+  - wire_missing_or_unsupported_dimensions_into_existing_gap_inquiry_and_deliberation_semantics
+  - make_stage_entry_and_completion_briefs_projection_contracts_of_current_model
+  - enforce_explicit_Human_disposition_and_exact_version_progression_rules
+  - close_CR_005_by_full_child_receipt_validator_composition
+  - close_RR2_001_by_append_only_successor_completion_pointer
+feasibility_support:
+  - current_mechanism_already_has_schema_adequacy_gap_inquiry_full_incremental_deliberation_and_version_reconfirmation
+  - predecessor_independent_review_accepted_D5_union_and_verified_exact_ref_graph_after_correction
+  - predecessor_demonstrated_silence_stale_version_noncompleting_disposition_and_no_microapproval_rules_are_implementable
+  - remaining_CR_005_and_RR2_001_are_bounded_validator_and_evidence_versioning_repairs
+  - removing_external_attestation_subsystem_reduces_scope_and_dependency_risk
+models_tools_environment:
+  foreground: ChatGPT_web_GPT_5_6_Sol_high
+  executor: Codex_Desktop_GPT_5_6_Sol_codex_sol_strongest_exposed
+  repository: local_clean_isolated_worktree_for_execution_GitHub_durable_evidence_for_handoffs
+expected_outputs:
+  - corrected_stage_collaborative_deliberation_candidate
+  - machine_contracts_and_fixtures_for_stage_model_brief_and_progression
+  - CR_005_and_RR2_001_closure_evidence
+  - exact_candidate_acceptance_evidence_and_successor_completion_pointer
+verification:
+  - negative_controls_for_missing_method_feasibility_silence_stale_alignment_invalid_children_and_stale_pointer
+  - positive_end_to_end_stage_model_brief_Human_disposition_completion_progression
+  - legacy_regression_suite
+  - exact_ref_graph_blob_reconstruction
+  - diff_scope_and_no_canonical_live_state
+material_risks:
+  - formalistic_nonempty_brief_fields_without_real_model_support
+  - accidental_microapproval_expansion
+  - duplication_between_brief_projection_and_underlying_stage_model
+  - stale_exact_refs_or_completion_evidence_after_candidate_change
+mitigations:
+  - model_dimensions_require_supported_or_explicitly_disposed_values_not_merely_nonempty_strings
+  - ordinary_local_reversible_choice_invariant_remains_explicit
+  - brief_fields_reference_or_project_underlying_model_dimensions
+  - repin_and_successor_pointer_are_recomputed_from_final_published_candidate
+Human_open_decisions: []
+model_owned_local_choices:
+  - exact_internal_helper_function_names
+  - fixture_file_partitioning_within_existing_fixture_family
+  - deterministic_ref_recomputation_implementation_details
+  - formatting_and_comment_wording_without_semantic_effect
+downstream_impact: >-
+  After implementation, foreground must present a completion brief to Human before any independent
+  review dispatch. Only Human-confirmed exact implementation result may become the independent-review baseline.
