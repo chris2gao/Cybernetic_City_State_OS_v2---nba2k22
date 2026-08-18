@@ -1,0 +1,24 @@
+schema_version: citystate.Human_disposition_record.v1
+task_id: os-v2-gate-binding-repair-001
+stage_id: master_integration
+decision_id: D-GATE-BINDING-REPAIR-001-INTEGRATE
+decision_type: completion_acceptance
+exact_model_version: gate-binding-repair-integration-model-v1
+Human_disposition: accepted
+authorized_scope: 'Accept semantic candidate b54826e43029077b8d6c5fa9242b2b02997f2e89
+  and authorize one gate-repair integration transaction: append only Human-gate/task-run
+  metadata under 01_os/_runs/run-20260818-gate-binding-repair-001/**, then ordinary
+  fast-forward master from 30f205eb7e0b975b97386fee103d180f3d03018e to that final
+  task-branch head; no further canonical change, force, rebase, squash, amend, or
+  history rewrite.'
+actor_class: current_Human
+explicit: true
+provenance: foreground_current_Human_interaction
+Human_nonce_plaintext_stored: false
+nonce_commitment:
+  scheme: citystate-human-authority-v1
+  algorithm: sha256
+  digest: 9e86806f9a6cd3b40d738b244c86ae210068adc167963e78b80699b90c2ae519
+stale: false
+invalidated: false
+consumed_by: D-GATE-BINDING-REPAIR-001-INTEGRATE

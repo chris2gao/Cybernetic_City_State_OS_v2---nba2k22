@@ -3,49 +3,51 @@ repository: chris2gao/Cybernetic_City_State_OS_v2---core
 risk_tier: T0_mechanical
 exact_base_sha: 30f205eb7e0b975b97386fee103d180f3d03018e
 branch: dev/os-v2-gate-binding-repair-001
-objective: >-
-  Repair the complete mechanically derived stale-binding closure measured by
-  the current unchanged validators: stage profile exact refs plus model-routing
-  catalog/source-index boot version bindings. Do not change validator semantics.
+objective: 'Repair the complete mechanically derived stale-binding closure measured
+  by the current unchanged validators: stage profile exact refs plus model-routing
+  catalog/source-index boot version bindings. Do not change validator semantics.'
 source_evidence:
-  - 01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml
-  - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
-  - 01_os/03_mechanisms/model_routing/来源索引_v1.yml
-  - 01_os/_runs/run-20260818-gate-binding-repair-001/03_诊断/stale_binding_closure_v1.yml
-  - 01_os/_runs/run-20260818-gate-binding-repair-001/02_当前模型/Human授权_v2.yml
+- 01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml
+- 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+- 01_os/03_mechanisms/model_routing/来源索引_v1.yml
+- 01_os/_runs/run-20260818-gate-binding-repair-001/03_诊断/stale_binding_closure_v1.yml
+- 01_os/_runs/run-20260818-gate-binding-repair-001/02_当前模型/Human授权_v2.yml
 allowed_changed_paths:
-  - 01_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml
-  - 01_os/02_boot/model_routing/启动清单_v1.yml
-  - 01_os/01_workflow/01_需求建模/实现/阶段协同推演profile引用_v1.yml
-  - 01_os/01_workflow/02_信息收集与提炼/实现/阶段协同推演profile引用_v1.yml
-  - 01_os/01_workflow/03_结果建模/实现/阶段协同推演profile引用_v1.yml
-  - 01_os/01_workflow/04_测试生成/实现/阶段协同推演profile引用_v1.yml
-  - 01_os/01_workflow/05_步骤拆分/实现/阶段协同推演profile引用_v1.yml
-  - 01_os/01_workflow/06_执行/实现/阶段协同推演profile引用_v1.yml
-  - 01_os/01_workflow/07_测试执行/实现/阶段协同推演profile引用_v1.yml
-  - 01_os/_runs/run-20260818-gate-binding-repair-001/**
+- 01_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml
+- 01_os/02_boot/model_routing/启动清单_v1.yml
+- 01_os/01_workflow/01_需求建模/实现/阶段协同推演profile引用_v1.yml
+- 01_os/01_workflow/02_信息收集与提炼/实现/阶段协同推演profile引用_v1.yml
+- 01_os/01_workflow/03_结果建模/实现/阶段协同推演profile引用_v1.yml
+- 01_os/01_workflow/04_测试生成/实现/阶段协同推演profile引用_v1.yml
+- 01_os/01_workflow/05_步骤拆分/实现/阶段协同推演profile引用_v1.yml
+- 01_os/01_workflow/06_执行/实现/阶段协同推演profile引用_v1.yml
+- 01_os/01_workflow/07_测试执行/实现/阶段协同推演profile引用_v1.yml
+- 01_os/_runs/run-20260818-gate-binding-repair-001/**
 required_tests:
-  - python 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_no_canonical_live_state.py <repo-root>
-  - python 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py static <repo-root>
-  - python 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py static <repo-root>
-  - python 01_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py --base <base> --head HEAD --packet <packet>
-  - git diff --check
+- python 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_no_canonical_live_state.py
+  <repo-root>
+- python 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py
+  static <repo-root>
+- python 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py static <repo-root>
+- python 01_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py --base
+  <base> --head HEAD --packet <packet>
+- git diff --check
 prohibitions:
-  - modify_master_without_human_gate
-  - force_push
-  - rebase
-  - squash
-  - amend
-  - change_validator_semantics
-  - change_mechanism_semantics
+- modify_master_without_human_gate
+- force_push
+- rebase
+- squash
+- amend
+- change_validator_semantics
+- change_mechanism_semantics
 required_completion_pointer: 01_os/_runs/run-20260818-gate-binding-repair-001/08_结论/completion_pointer_v1.yml
 publisher:
   principal_binding: local_authenticated
   publication_transport: local_git
   source_write_authorized: true
-  master_write_authorized: false
+  master_write_authorized: true
   destructive_git_authorized: false
-  authorization_ref: 01_os/_runs/run-20260818-gate-binding-repair-001/02_当前模型/Human授权_v2.yml
+  authorization_ref: 01_os/_runs/run-20260818-gate-binding-repair-001/02_当前模型/Human集成授权_v1.yml
   expected_remote_head: 30f205eb7e0b975b97386fee103d180f3d03018e
 executor_profile:
   provider: OpenAI
@@ -54,13 +56,14 @@ executor_profile:
   reasoning_effort: system_managed_not_exposed
   mode: standard
   rollout_token_budget: null
-  routing_basis: >-
-    Human-directed mechanical bootstrap repair. The current model-routing
-    validator is itself fail-closed on stale boot version bindings that this
-    task repairs, so no authority is inferred from that unavailable preflight.
+  routing_basis: Human-directed mechanical bootstrap repair. The current model-routing
+    validator is itself fail-closed on stale boot version bindings that this task
+    repairs, so no authority is inferred from that unavailable preflight.
   authority: routing_only
 verification_profile:
   reproduce_before_change: required
   independent_reviewer: Claude
   different_model_family: true
   different_measurement_tool: true
+integration_current_model_ref: 01_os/_runs/run-20260818-gate-binding-repair-001/02_当前模型/current_model_integration_v1.yml
+integration_review_ref: 01_os/_runs/run-20260818-gate-binding-repair-001/09_独立审核/independent_review_result_v1.yml

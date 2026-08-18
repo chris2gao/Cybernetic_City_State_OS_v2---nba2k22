@@ -5,12 +5,11 @@ run:
   exact_base_sha: 30f205eb7e0b975b97386fee103d180f3d03018e
   branch: dev/os-v2-gate-binding-repair-001
   owner: core
-  status: ready_for_human_integration
-  purpose: >-
-    Deterministically repair the full stale-binding closure measured by the
-    unchanged current validators: 9 canonical files / 10 field replacements.
-  current_model_version: gate-binding-repair-current-model-v2
-  human_authorization_ref: 02_当前模型/Human授权_v2.yml
+  status: human_integration_authorized_pending_master_publication
+  purpose: 'Deterministically repair the full stale-binding closure measured by the
+    unchanged current validators: 9 canonical files / 10 field replacements.'
+  current_model_version: gate-binding-repair-integration-model-v1
+  human_authorization_ref: 02_当前模型/Human集成授权_v1.yml
   prior_authorization_ref: 02_当前模型/Human授权_v1.yml
   prior_authorization_state: invalidated_by_material_scope_expansion
   task_packet: 01_任务输入/任务包_v1.yml
@@ -27,8 +26,10 @@ run:
     model_routing_boot_declared_source_index_version: 1
   publication:
     source_branch_allowed: true
-    master_allowed: false
+    master_allowed: true
     force_push: false
   candidate_sha: b54826e43029077b8d6c5fa9242b2b02997f2e89
   completion_pointer: 08_结论/completion_pointer_v1.yml
   independent_review_ref: 09_独立审核/independent_review_result_v1.yml
+  integration_current_model_ref: 02_当前模型/current_model_integration_v1.yml
+  integration_decision_id: D-GATE-BINDING-REPAIR-001-INTEGRATE

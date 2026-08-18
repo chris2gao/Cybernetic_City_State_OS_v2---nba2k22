@@ -1,0 +1,68 @@
+schema_version: citystate.current_model.v1
+task_id: os-v2-gate-binding-repair-001
+stage_id: master_integration
+current_model:
+  problem_or_objective: Integrate the independently reviewed mechanical gate-binding
+    repair into master without changing the reviewed semantic candidate.
+  Human_intent_understanding: The Human accepts the reviewed repair, authorizes task-local
+    integration decisions, authorizes this gate-repair transaction to enter master,
+    and wants subsequent tasks to continue from the updated master.
+  current_baseline_and_inputs:
+    remote_master: 30f205eb7e0b975b97386fee103d180f3d03018e
+    semantic_candidate: b54826e43029077b8d6c5fa9242b2b02997f2e89
+    source_branch_head_before_Human_gate: eef09d97074d8782265cd015b232ef509bd489af
+    independent_review_verdict: ready_for_human_integration
+  constraints_and_dependencies:
+  - ordinary fast-forward master publication only
+  - no force/rebase/squash/amend/history rewrite
+  - no further canonical change after the reviewed semantic candidate
+  - only task-run metadata may be added before publication
+  proposed_method_or_solution:
+  - record this Human gate under the existing task run
+  - commit and publish the metadata-only gate record to the source branch
+  - re-run unchanged gates on the final source head
+  - fresh-read remote master and require it to remain the reviewed base
+  - verify the final source head is a strict fast-forward descendant of master
+  - push the final source head to master without force and read back the remote head
+  - synchronize the local clean master worktree to the read-back remote head
+  feasibility_support:
+  - remote master is still the reviewed base SHA
+  - the reviewed semantic candidate is the direct child of that master
+  - all later source-branch commits are task-run metadata only
+  - the independent review reports zero blocking findings and independently reproduced
+    the four claimed gates
+  assumptions_risks_alternatives_unknowns:
+  - three reviewer findings remain non-blocking and are preserved in the review receipt
+  - the reviewer used a local isolated worktree rather than the requested GitHub-only
+    route; this deviation is disclosed
+  - the Fixture commit identity finding is not repaired inside this task
+  open_load_bearing_items: []
+  expected_output: Remote master becomes the final gate-repair source head by ordinary
+    fast-forward, with no canonical change beyond semantic candidate b54826e43029077b8d6c5fa9242b2b02997f2e89.
+  verification_or_acceptance_method:
+  - stage canonical-live-state guard exit 0
+  - stage static validator exit 0
+  - model-routing static validator exit 0
+  - changed-path ledger inside task allowlist
+  - git diff --check exit 0
+  - final head descends from current master and contains semantic candidate
+  - remote master read-back exactly equals the pushed final source head
+  actual_result: not_executed_yet
+  material_deviation: none_at_integration_gate
+  residual_risk: Non-blocking review findings are retained for follow-up; no blocking
+    finding remains for this repair.
+  current_exact_model_version: gate-binding-repair-integration-model-v1
+  Human_confirmation:
+    explicit: true
+    actor_class: current_Human
+    scope: current_task
+    bound_model_version: gate-binding-repair-integration-model-v1
+    exact_model_version: gate-binding-repair-integration-model-v1
+    decision_id: D-GATE-BINDING-REPAIR-001-INTEGRATE
+    decision_type: completion_acceptance
+    durable_disposition_ref: 01_os/_runs/run-20260818-gate-binding-repair-001/02_当前模型/Human集成授权_v1.yml
+    durable_disposition_blob_sha: 4023903e4587a54f07136fed798a557b15e105c5
+    nonce_commitment:
+      scheme: citystate-human-authority-v1
+      algorithm: sha256
+      digest: 9e86806f9a6cd3b40d738b244c86ae210068adc167963e78b80699b90c2ae519
