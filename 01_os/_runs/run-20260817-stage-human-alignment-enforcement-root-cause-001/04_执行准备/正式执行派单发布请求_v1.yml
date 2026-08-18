@@ -1,0 +1,79 @@
+schema_version: citystate.formal_dispatch_publication_request.v1
+task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+run_id: run-20260817-stage-human-alignment-enforcement-root-cause-001
+requested_by_endpoint_id: gpt56-stage-alignment-enforcement-foreground-001
+requested_by_role: stage_alignment_enforcement_foreground_dispatch
+purpose: mechanically_publish_canonical_execution_dispatch_only
+publisher_role: auxiliary_mechanical
+publisher_preferred_surface:
+  provider: Anthropic
+  product: Claude Desktop
+  surface: claude_desktop_cowork
+  model: Claude Opus 5
+  reasoning_or_parameter_profile: claude_desktop_cowork_opus5_task_time
+  session_mode: fresh_task_session
+  local_repository_required: true
+fresh_gates:
+  expected_master_sha: e5bf669d39179c172fc10fbb3b73557e8b05bf1e
+  expected_task_branch: dev/os-v2-stage-human-alignment-enforcement-root-cause-001
+  expected_task_branch_head: 555d98f0888c0e33c82764e80c3e6ddbf0956290
+  mismatch: STOP_without_mutation
+formal_sender:
+  endpoint_id: gpt56-stage-alignment-enforcement-foreground-001
+  task_role: stage_alignment_enforcement_foreground_dispatch
+formal_recipient:
+  endpoint_id: codex-stage-alignment-enforcement-executor-001
+  task_role: stage_alignment_enforcement_executor
+communication_task_root: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-stage-human-alignment-enforcement-root-cause-001
+required_routing_basis_inputs:
+  - 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/01_任务输入/Human确认实施_v1.yml
+  - 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/01_任务输入/任务包_v2_implementation.yml
+  - 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/03_方案设计/Human架构决定_前台阶段简报与讨论闭环_v1.yml
+  - 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/03_方案设计/实施阶段简报_v1.yml
+formal_request_content_requirements:
+  - executor_must_implement_confirmed_stage_model_without_architecture_reinterpretation
+  - modify_existing_stage_collaborative_deliberation_not_create_parallel_briefing_mechanism
+  - brief_is_projection_of_same_stage_model_built_by_inquiry_and_deliberation
+  - foreground_current_Human_only_participate_in_alignment_dialogue
+  - executor_and_reviewer_do_not_participate_in_Human_alignment_dialogue
+  - close_CR_005_complete_child_receipt_validation
+  - close_RR2_001_append_only_successor_completion_pointer
+  - run_required_negative_controls_and_positive_end_to_end_case_from_packet_v2
+  - recompute_exact_ref_graph_from_final_published_candidate_blobs
+  - no_independent_acceptance_claim
+  - return_formal_result_to_foreground
+receiver_setup:
+  collaboration_role: execution
+  provider: OpenAI
+  product: Codex Desktop
+  surface: codex_desktop
+  model: GPT-5.6 Sol
+  reasoning_or_parameter_profile: codex_sol_strongest_exposed
+  session_mode: fresh_task_session
+  isolation_level: isolated_worktree
+  repository_access_mode: local_repository
+  repository_or_worktree_requirement: fresh_clean_isolated_worktree_or_clone_bound_to_task_branch_and_semantic_base
+  required_branch_or_sha: dev/os-v2-stage-human-alignment-enforcement-root-cause-001
+  local_files_required: false
+  github_publication_required_before_start: true
+  communication_carrier: GitHub
+  routing_basis_ref: documents/gpt56-stage-alignment-enforcement-foreground-001/00001_execution_dispatch.md
+  availability_assumption_or_observation_ref: role_context/codex-stage-alignment-enforcement-executor-001.yml
+  limitations:
+    - execution_only_no_architecture_reinterpretation
+    - no_Human_alignment_dialogue_role
+    - semantic_implementation_base_is_555d98f0888c0e33c82764e80c3e6ddbf0956290
+    - preserve_dispatch_and_communication_history
+    - no_independent_acceptance_claim
+    - no_master_or_protected_publication
+publication_requirements:
+  - establish_fresh_communication_context_if_absent
+  - run_formal_action_constitution_resolver_and_gate
+  - run_model_routing_receiver_setup_validator
+  - use_canonical_communication_publisher_and_GitHub_convergence_wrapper
+  - do_not_handwrite_fake_receipts
+  - only_communication_task_root_and_publisher_required_artifacts_may_change
+  - no_semantic_mechanism_or_run_evidence_changes
+  - no_force_rebase_squash_amend_reset_clean
+  - validate_v2_pointer_and_read_back_remote_heads
+return_contract: return_only_formal_execution_dispatch_v2_pointer_then_STOP
