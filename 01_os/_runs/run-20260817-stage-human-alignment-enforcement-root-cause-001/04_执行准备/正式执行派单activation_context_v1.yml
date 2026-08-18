@@ -1,0 +1,22 @@
+action_id: os-v2-stage-human-alignment-enforcement-root-cause-001::gpt56-stage-alignment-enforcement-foreground-001::00001
+formal_message_type: request
+task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+sender_endpoint_id: gpt56-stage-alignment-enforcement-foreground-001
+intended_recipient_endpoint_id: codex-stage-alignment-enforcement-executor-001
+intended_cross_endpoint_side_effect: true
+Human_relay_requested: true
+non_Human_endpoint_action_requested: true
+actionable_content: true
+requires_receiver_selection: true
+communication_context_ref: manifest.yml
+classification_basis_ref: Human/current.yml
+collaboration_role: execution
+risk_tier: T2_semantic
+task_shape: local_repository_semantic_mechanism_implementation_with_validator_fixtures_and_evidence_versioning
+required_capabilities:
+  - local_repository_read_write
+  - local_shell
+  - git
+  - python_test_execution
+routing_basis_ref: documents/gpt56-stage-alignment-enforcement-foreground-001/00001_execution_dispatch.md
+availability_assumption_or_observation_ref: role_context/codex-stage-alignment-enforcement-executor-001.yml

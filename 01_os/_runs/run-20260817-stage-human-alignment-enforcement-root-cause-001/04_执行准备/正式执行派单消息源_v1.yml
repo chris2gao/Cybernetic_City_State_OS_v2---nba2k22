@@ -1,0 +1,28 @@
+message_id: os-v2-stage-human-alignment-enforcement-root-cause-001::gpt56-stage-alignment-enforcement-foreground-001::00001
+task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+title: Implement Human-confirmed stage modeling in existing deliberation mechanism
+message_type: request
+sender_endpoint_id: gpt56-stage-alignment-enforcement-foreground-001
+sender_task_role: stage_alignment_enforcement_foreground_dispatch
+expected_recipient_endpoint_id: codex-stage-alignment-enforcement-executor-001
+expected_recipient_task_role: stage_alignment_enforcement_executor
+content: >-
+  Execute the Human-confirmed implementation of the existing stage_collaborative_deliberation
+  mechanism. Bootstrap from this formal v2 pointer and the direct dispatch document. Build the
+  Human-visible brief from the same stage model produced and updated by inquiry/deliberation;
+  do not create a parallel briefing or Human-attestation subsystem. Close CR-005 residual and
+  RR2-001, run the packet-v2 positive/negative acceptance set, stay inside the closed allowlist,
+  and return one formal result or precise blocked state. Do not modify master or claim independent acceptance.
+required_refs:
+  - documents/gpt56-stage-alignment-enforcement-foreground-001/00001_execution_dispatch.md
+  - Human/decisions/00001_implementation_authorization.yml
+requested_action: implement_validate_and_publish_source_branch_candidate
+authorization_ref: Human/decisions/00001_implementation_authorization.yml
+constraints:
+  - exact_Human_confirmed_stage_model_is_authoritative
+  - execution_only_no_architecture_reinterpretation
+  - fresh_clean_isolated_local_repository_required
+  - GitHub_authentication_not_preclaimed_by_recipient_endpoint_card
+  - no_master_publication
+  - no_destructive_git
+  - exact_positive_negative_and_version_binding_evidence_required

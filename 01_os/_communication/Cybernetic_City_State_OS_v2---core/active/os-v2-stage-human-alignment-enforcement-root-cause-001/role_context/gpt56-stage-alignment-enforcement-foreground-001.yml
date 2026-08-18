@@ -1,0 +1,22 @@
+endpoint_id: gpt56-stage-alignment-enforcement-foreground-001
+task_role: stage_alignment_enforcement_foreground_dispatch
+collaboration_role: decision_architecture
+provider: OpenAI
+product: ChatGPT
+surface: chatgpt_web
+model: GPT-5.6 Sol
+parameter_profile: chatgpt_plus_sol_high
+session_mode: re_entry_same_task_session
+availability_observation:
+  GitHub_connector_read: physically_available_in_current_foreground_session
+  GitHub_connector_write: physically_available_in_current_foreground_session
+  local_repository_runtime: unavailable
+responsibility:
+  - own_and_explain_the_Human_confirmed_stage_model
+  - classify_formal_dispatch_semantics
+  - author_exact_execution_instructions_and_routing_basis
+  - adjudicate_executor_result_before_any_independent_review_dispatch
+constraints:
+  - no_master_publication_without_new_Human_gate
+  - no_executor_private_context_as_independent_review_evidence
+  - do_not_reinterpret_the_Human_confirmed_architecture_during_dispatch

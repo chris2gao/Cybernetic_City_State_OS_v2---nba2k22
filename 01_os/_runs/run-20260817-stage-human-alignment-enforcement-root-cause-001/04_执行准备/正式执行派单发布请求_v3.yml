@@ -1,0 +1,78 @@
+schema_version: citystate.formal_dispatch_publication_request.v3
+task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+run_id: run-20260817-stage-human-alignment-enforcement-root-cause-001
+supersedes:
+  - 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/04_执行准备/正式执行派单发布请求_v1.yml
+  - 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/04_执行准备/正式执行派单发布请求_v2.yml
+supersession_reason: >-
+  v1 had a self-invalidating branch-head binding. v2 correctly separated semantic base from
+  request carrier but omitted foreground-owned canonical publication inputs. v3 supplies the
+  exact communication context, dispatch body, activation bundle, receiver evidence and endpoint cards.
+requested_by_endpoint_id: gpt56-stage-alignment-enforcement-foreground-001
+requested_by_role: stage_alignment_enforcement_foreground_dispatch
+purpose: mechanically_publish_canonical_execution_dispatch_only
+publisher_role: auxiliary_mechanical
+fresh_gates:
+  expected_master_sha: e5bf669d39179c172fc10fbb3b73557e8b05bf1e
+  task_branch: dev/os-v2-stage-human-alignment-enforcement-root-cause-001
+  semantic_implementation_base_sha: 555d98f0888c0e33c82764e80c3e6ddbf0956290
+  request_carrier_binding: >-
+    Read this v3 request only from the exact Human-relayed GitHub commit. At publisher start,
+    fresh-read the task branch and require its head to equal that exact request-carrier commit.
+    The request-carrier commit is communication/preparation evidence, not the semantic implementation base.
+  mismatch: STOP_without_mutation
+communication_context:
+  status: foreground_materialized_before_publication
+  task_root: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-stage-human-alignment-enforcement-root-cause-001
+  required_existing_files:
+    - manifest.yml
+    - Human/current.yml
+    - Human/decisions/00001_implementation_authorization.yml
+    - endpoints/gpt56-stage-alignment-enforcement-foreground-001.yml
+    - endpoints/codex-stage-alignment-enforcement-executor-001.yml
+    - role_context/gpt56-stage-alignment-enforcement-foreground-001.yml
+    - role_context/codex-stage-alignment-enforcement-executor-001.yml
+    - documents/gpt56-stage-alignment-enforcement-foreground-001/00001_execution_dispatch.md
+  do_not_reinitialize_or_rewrite_matching_context: true
+formal_inputs:
+  message_source_ref: 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/04_执行准备/正式执行派单消息源_v1.yml
+  activation_context_ref: 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/04_执行准备/正式执行派单activation_context_v1.yml
+  mechanism_preconditions_ref: 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/04_执行准备/正式执行派单mechanism_preconditions_v1.yml
+  receiver_setup_ref: 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/04_执行准备/正式执行派单receiver_setup_v1.yml
+  model_routing_preflight_basis_ref: 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/04_执行准备/model_routing_preflight_basis_v1.yml
+formal_sender:
+  endpoint_id: gpt56-stage-alignment-enforcement-foreground-001
+  task_role: stage_alignment_enforcement_foreground_dispatch
+formal_recipient:
+  endpoint_id: codex-stage-alignment-enforcement-executor-001
+  task_role: stage_alignment_enforcement_executor
+model_routing_handling:
+  exact_receiver_setup_is_foreground_owned: true
+  preflight_basis_is_not_a_receipt: true
+  publisher_must_run_canonical_receiver_setup_validation: true
+  publisher_must_not_synthesize_or_upgrade_endpoint_capabilities: true
+  codex_endpoint_direct_GitHub_read_write_is_intentionally_false_until_separately_observed: true
+  required_execution_capabilities:
+    - local_repository_read_write
+    - local_shell
+    - git
+    - python_test_execution
+mechanism_precondition_handling:
+  communication_system_evidence_ref: manifest.yml
+  model_routing_evidence_ref: role_context/codex-stage-alignment-enforcement-executor-001.yml
+  mechanism_preconditions_are_gate_inputs_not_compliance_receipts: true
+  constitution_and_compliance_receipt_must_be_generated_only_by_canonical_publisher: true
+publication_requirements:
+  - fresh_read_remote_master_and_task_branch_before_first_write
+  - verify_exact_v3_carrier_and_all_formal_inputs_exist
+  - validate_task_root_manifest_endpoint_cards_role_bindings_and_required_document_front_matter
+  - run_formal_action_resolver_and_pre_action_gate_from_exact_activation_bundle
+  - run_canonical_model_routing_receiver_setup_validator_against_current_master_catalog_and_role_contract
+  - use_canonical_GitHub_convergence_wrapper_for_publication
+  - use_Human_explicit_request_as_the_GitHub_publication_trigger
+  - do_not_handwrite_constitution_receipt_pointer_or_validator_success
+  - do_not_modify_semantic_mechanism_run_design_evidence_or_master
+  - only_canonical_publisher_outputs_inside_the_communication_task_root_may_be_created_or_updated
+  - no_force_rebase_squash_amend_reset_clean_or_history_rewrite
+  - validate_bound_v2_pointer_and_remote_readback_after_publication
+return_contract: return_only_formal_execution_dispatch_v2_pointer_then_STOP
