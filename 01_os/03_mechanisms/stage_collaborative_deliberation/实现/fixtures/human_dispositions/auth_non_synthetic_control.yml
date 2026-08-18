@@ -1,0 +1,21 @@
+schema_version: citystate.Human_disposition_record.v1
+synthetic_test_record: false
+record_note: >-
+  Shape-only control for the negative suite: a record without the synthetic marker,
+  bound to a decision identity that corresponds to no real task. It exists to show
+  the production path accepts a non-synthetic record, not to authorize anything.
+task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+stage_id: workflow_stage_06_execution@1
+decision_id: D-AUTH-NONSYNTHETIC-CONTROL
+decision_type: substantive_execution_authorization
+exact_model_version: model-v1
+Human_disposition: confirmed
+authorized_scope: bounded implementation of the confirmed model
+actor_class: current_Human
+explicit: true
+provenance: foreground_current_Human_interaction
+Human_nonce_plaintext_stored: false
+nonce_commitment:
+  scheme: citystate-human-authority-v1
+  algorithm: sha256
+  digest: 9c349b4d38a92064b7603d0991e8e5c9ad6b679cecc1d60bddf6a4467c4efb6a

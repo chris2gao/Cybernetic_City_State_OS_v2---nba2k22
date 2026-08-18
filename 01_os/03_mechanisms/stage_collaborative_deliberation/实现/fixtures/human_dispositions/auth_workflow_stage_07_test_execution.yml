@@ -1,8 +1,9 @@
 schema_version: citystate.Human_disposition_record.v1
 synthetic_test_record: true
 synthetic_note: >-
-  Fixture record. The nonce behind this commitment is a clearly marked synthetic test
-  value, not a Human secret, and this record authorizes nothing outside the suite.
+  Fixture record. The production authority path rejects synthetic_test_record: true
+  outright, so this record can never grant Human progression authority. The nonce
+  behind its commitment is a marked synthetic value, not a Human secret.
 task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
 stage_id: workflow_stage_07_test_execution@1
 decision_id: D-AUTH-00001

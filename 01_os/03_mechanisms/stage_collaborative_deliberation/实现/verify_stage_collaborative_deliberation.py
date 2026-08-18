@@ -503,10 +503,32 @@ def resolve_durable_disposition(
     return 0, record
 
 
+SYNTHETIC_MARKER = "synthetic_test_record"
+
+
 def validate_durable_disposition_record(
-    record: dict[str, Any], confirmation: dict[str, Any], model: dict[str, Any]
+    record: dict[str, Any],
+    confirmation: dict[str, Any],
+    model: dict[str, Any],
+    *,
+    synthetic_authority_context: bool = False,
 ) -> int:
-    """The record must bind this exact decision, and still be live."""
+    """The record must bind this exact decision, and still be live.
+
+    A record marked synthetic_test_record: true is never Human authority on the
+    production path. The marker is checked first, before any other field, so a
+    synthetic record that is otherwise perfectly formed - right task, stage,
+    decision, model version, blob and commitment - still cannot authorize
+    progression. Path naming and comments are not the control; the semantic
+    marker in the record is.
+
+    synthetic_authority_context is keyword-only and defaults to false. It is
+    supplied by a test harness that constructed the fixture, never read from the
+    instance under validation, so no production input - test_mode,
+    allow_synthetic or anything else it writes about itself - can reach it.
+    """
+    if record.get(SYNTHETIC_MARKER) is True and not synthetic_authority_context:
+        return 15
     if record.get("provenance") != "foreground_current_Human_interaction":
         return 15
     if record.get("actor_class") != "current_Human":
@@ -552,8 +574,15 @@ def validate_human_authority(
     model: dict[str, Any],
     data: dict[str, Any],
     repo_root: Path | None = None,
+    *,
+    synthetic_authority_context: bool = False,
 ) -> int:
-    """Full chain: interaction -> disposition -> nonce -> record -> binding."""
+    """Full chain: interaction -> disposition -> nonce -> record -> binding.
+
+    synthetic_authority_context comes from the caller, never from `data`. The
+    instance being validated cannot enable it by writing test_mode or
+    allow_synthetic about itself.
+    """
     confirmation = model.get("Human_confirmation")
     if not isinstance(confirmation, dict):
         return 15
@@ -571,7 +600,10 @@ def validate_human_authority(
         return 15
     if stage_id is not None and record.get("stage_id") != stage_id:
         return 15
-    return validate_durable_disposition_record(record, confirmation, model)
+    return validate_durable_disposition_record(
+        record, confirmation, model,
+        synthetic_authority_context=synthetic_authority_context,
+    )
 
 
 def verify_human_challenge(
@@ -634,7 +666,12 @@ def validate_mandatory_Human_confirmation(model: dict[str, Any]) -> int:
     return validate_commitment_structure(confirmation.get("nonce_commitment"))
 
 
-def validate_model_readiness(data: dict[str, Any], repo_root: Path | None = None) -> int:
+def validate_model_readiness(
+    data: dict[str, Any],
+    repo_root: Path | None = None,
+    *,
+    synthetic_authority_context: bool = False,
+) -> int:
     """Readiness of the single Current Model, in every activation mode.
 
     dormant means "the model is already adequate and no new load-bearing gap
@@ -655,7 +692,10 @@ def validate_model_readiness(data: dict[str, Any], repo_root: Path | None = None
         return code
     # resolve and validate the durable disposition itself; a self-asserted
     # actor_class never reaches this far on its own
-    code = validate_human_authority(model, data, repo_root)
+    code = validate_human_authority(
+        model, data, repo_root,
+        synthetic_authority_context=synthetic_authority_context,
+    )
     if code:
         return code
 
@@ -824,7 +864,18 @@ def validate_completion_pointer(data: dict[str, Any]) -> int:
     return 0
 
 
-def validate_instance(data: dict[str, Any], repo_root: Path | None = None) -> int:
+def validate_instance(
+    data: dict[str, Any],
+    repo_root: Path | None = None,
+    *,
+    synthetic_authority_context: bool = False,
+) -> int:
+    """Production entry point.
+
+    synthetic_authority_context is keyword-only, defaults to false, and is never
+    derived from `data`. The CLI never passes it, so nothing reachable from a
+    command line or from the instance under validation can turn it on.
+    """
     code = direct_error_code(data)
     if code:
         return code
@@ -837,7 +888,10 @@ def validate_instance(data: dict[str, Any], repo_root: Path | None = None) -> in
     # minimum substantive rounds (full=5, incremental=2) were removed: how many
     # rounds occurred never proved that the model was adequate, and requiring
     # them manufactured discussion where no load-bearing gap existed.
-    code = validate_model_readiness(data, repo_root)
+    code = validate_model_readiness(
+        data, repo_root,
+        synthetic_authority_context=synthetic_authority_context,
+    )
     if code:
         return code
     receipt = data.get("receipt")
