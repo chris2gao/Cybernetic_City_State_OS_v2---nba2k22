@@ -1,0 +1,71 @@
+schema_version: citystate.completion_pointer.v1
+pointer_id: completion_pointer_00002
+task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+run_id: run-20260817-stage-human-alignment-enforcement-root-cause-001
+
+append_only: true
+rewrites_prior_pointer_in_place: false
+supersedes: completion_pointer_00001
+supersedes_record_ref: 01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/08_结论/completion_pointer_v1.yml
+supersession_reason: >-
+  Independent review returned CHANGES_REQUIRED on findings F2 and F1. Closing them produced
+  a new semantic candidate, which makes pointer 00001 stale by construction. 00001 is
+  retained unmodified as the historical pointer for candidate d429962e.
+
+status: ready_for_independent_re_review
+source_branch: dev/os-v2-stage-human-alignment-enforcement-root-cause-001-impl-001
+source_base: 31296e1c1dd573310e26327b50ec2f70e176bc2a
+historical_A_head_preserved: ada4210427f83ed5e34a906691d5c91b4add62a2
+merge_commit: f5b746a13b41749ebd79a9ea458c85e283774802
+
+bound_exact_final_semantic_candidate: 8a001f017daf7a0b8001a1de9fbcac160a6249e2
+prior_candidates_retained:
+- sha: f26be00f30b836803a0f01eb78633877aac8d3d5
+  status: superseded_by_pre_review_defect_closure
+- sha: 772ab167a5700f0f5048803a6261b30abbaef49a
+  status: superseded_intermediate_failed_static_repo_exit_13
+- sha: d429962efc0ed46679d2dfac7ef73af80c21e24b
+  status: superseded_by_review_findings_F2_and_F1
+  pointer_ref: 08_结论/completion_pointer_v1.yml
+- sha: 1a2cc6a678526ee98e01f79e238a3c9b89075bb9
+  status: prior_review_candidate_carrying_pointer_00001
+
+bound_exact_evidence:
+  static_repo: {command: 'python <validator_v2> static <repo-root>', exit: 0}
+  static_snapshot: {command: 'python <validator_v2> static fixtures/static/positive_snapshot.yml', exit: 0}
+  no_canonical_live_state: {command: 'python verify_no_canonical_live_state.py <repo-root>', exit: 0}
+  material_event: {case: ME-PASS, exit: 0}
+  review_execution: {case: RE-PASS, exit: 0}
+  fixture_suites: {cases: 86, passed: 86, failed: 0, suites: 6}
+  preserved_regressions: {suite: instance/counterexamples_v1.yml, cases: 15, passed: 15}
+  causal_gates_F2_F1: {gates: 14, failed: 0, control_exit: 0}
+  causal_matrix_F1: {checks: 77, profiles: 7, failures: 0, source: each profile's own required_model_fields}
+  causal_gates_prior: {gates: 29, failed: 0, control_exit: 0}
+  diff_check: {command: 'git diff --check', exit: 0}
+  worktree_clean: true
+
+findings_closed:
+  F2: common Current Model readiness, eleven keys, three presence classes
+  F1: required stage unknown blocks by default; only a fully justified nonblocking deferral progresses
+findings_unchanged_by_design:
+  CR_005: semantics untouched, covered as regression
+  RR2_001: semantics untouched, covered as regression
+
+validation:
+  diff_scope: passed
+  out_of_scope_paths: 0
+  binary_artifact_count: 0
+  hook_guard: passed
+  transport: local_git
+
+repository:
+  master_modified: false
+  master_at_completion: 31296e1c1dd573310e26327b50ec2f70e176bc2a
+  force_push: false
+  history_rewritten: false
+  rebase_squash_amend_reset: none
+
+evidence_source_class: foreground_executor_evidence
+independent_ci_evidence: absent_no_ci_in_repository
+next_owner: foreground_independent_review
+master_publication_authorized: false
