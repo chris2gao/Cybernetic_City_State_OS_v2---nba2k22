@@ -1,0 +1,52 @@
+schema_version: citystate.capability_probe.v1
+probe_id: chatgpt-windows-app-control-20260818
+observed_at: '2026-08-18'
+observation_class: physically_observed_current_session
+installed_callable_plugin:
+  display_name: Remote Desktop Commander
+  installed: true
+  plugin_specific_permission: Allow all actions
+  global_permission: Allow low-risk actions
+plugin_directory_search:
+  query: Computer Use
+  distinct_callable_computer_use_plugin_found: false
+windows_device:
+  device_name: DESKTOP-FPNE2NQ
+  device_id: d1d29f35-3dc7-43a4-b615-70f9b12ea375
+powershell_probe:
+  launch: pwsh.exe -NoLogo -NoProfile
+  interactive_session: passed
+  version: 7.6.4
+  executable: C:/Program Files/PowerShell/7/pwsh.exe
+  read_only_commands_executed:
+    - $PSVersionTable.PSVersion.ToString()
+    - (Get-Process -Id $PID).Path
+    - (Get-Location).Path
+gui_app_probe:
+  app: notepad.exe
+  launch: passed
+  process_name: notepad
+  main_window_title: Untitled - Notepad
+  content_mutation: none
+  cleanup: test process closed after observation
+capability_conclusion:
+  proven:
+    - remote Windows process/app launch
+    - persistent interactive PowerShell 7 session
+    - read-only command execution
+    - GUI application process with a real window can be launched
+  not_proven:
+    - visual screen perception of arbitrary Windows applications
+    - mouse click / keyboard typing through a visual GUI-control tool
+    - arbitrary application semantic automation without terminal/process adapters
+  architectural_effect: >-
+    Task B shall separate Local Host process/app-control capability from general visual GUI computer-use.
+    The former is proven; the latter remains a dedicated POC item and cannot be claimed from this probe.
+Human_followup:
+  computer_use_disabled_after_probe: true
+  further_probe_authorized: false
+  disposition: stop_further_computer_use_testing
+  note: >-
+    Human instructed that Computer Use was turned off after the already completed
+    harmless probe. This artifact records only the prior observation and must not
+    be used as authority to run additional Computer Use tests.

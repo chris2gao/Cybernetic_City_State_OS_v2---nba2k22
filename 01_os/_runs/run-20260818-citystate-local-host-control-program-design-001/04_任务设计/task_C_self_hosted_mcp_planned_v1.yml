@@ -1,0 +1,122 @@
+schema_version: citystate.planned_task_design.v1
+activation_state: planned_not_yet_executable
+task_id: os-v2-self-hosted-citystate-mcp-001
+planned_branch: dev/os-v2-self-hosted-citystate-mcp-001
+program_ref: ../03_方案设计/program_architecture_v1.yml
+major_stages_exactly:
+  - C1_self_host_feasibility_gate
+  - C2_production_citystate_remote_mcp
+
+global_start_condition:
+  - program_design_integrated_to_master
+  - fresh_remote_master_sha_resolved_at_activation
+  - fresh task/stage Current Model and Human authority
+  - no use of prior chat as proof of current product entitlement or VPS state
+
+planned_repository_paths:
+  - 01_os/03_mechanisms/citystate_remote_mcp/**
+  - 01_os/02_boot/citystate_remote_mcp/**
+  - 01_os/06_execution/boot/citystate_remote_mcp/**
+  - 01_os/04_skills_and_tools/citystate_mcp/**
+  - 01_os/05_registry/citystate_remote_mcp_v1.yml
+  - 01_os/05_registry/skills_and_tools_v1.yml
+  - 01_os/_runs/<activated-run-id>/**
+
+stage_C1:
+  objective: >-
+    Resolve the product entitlement uncertainty first. Determine whether the
+    Human's actual ChatGPT surface can create/connect a custom MCP and invoke a
+    non-readOnly action. If unsupported, stop before VPS mutation.
+  first_gate:
+    evidence_source: actual current ChatGPT product surface plus current official OpenAI documentation
+    PASS_condition: custom MCP/app path is available and permits an action/write probe
+    BLOCK_condition: custom MCP cannot be connected or action/write is product-blocked
+  on_BLOCK:
+    result: SELF_HOST_TRANSPORT_OR_PRODUCT_ACTION_BLOCKED
+    VPS_mutation: prohibited
+    production_build: prohibited
+  on_product_PASS:
+    next_steps:
+      - obtain fresh Human authority for any VPS/network mutation not already bound
+      - take read-only VPS preservation snapshot
+      - run tiny MCP server with citystate_ping and harmless in-memory citystate_action_probe
+      - expose only by a separate development ingress, never existing argosbx tunnel
+    PASS_result: SELF_HOST_ACTION_PASS
+
+stage_C2:
+  start_requires:
+    - C1 result SELF_HOST_ACTION_PASS
+    - Task B Local Host Control Baseline complete
+    - DNS or stable hostname route ready
+    - fresh Human authorization for runtime/network/service persistence changes
+  production_hostname: mcp.gkadastra.eu.org
+  development_hostname: mcp-dev.gkadastra.eu.org
+  implementation_stack:
+    MCP_server_and_client: official Python MCP SDK v2 stable line
+    protocol_target: MCP 2026-07-28 Streamable HTTP with backwards compatibility only where SDK provides it
+    external_ingress: separate Cloudflare Named Tunnel
+    VPS_origin: 127.0.0.1:18080
+    reverse_bridge: 127.0.0.1:18181
+    Windows_transport: mature outbound reverse SSH or equivalently reviewed transport
+    local_adapter: Task B CityState Local Host Control contract
+  auth_policy:
+    - comply with actual ChatGPT custom MCP authentication requirements observed at C2
+    - use mature standards-compliant OAuth implementation where OAuth is required
+    - do not hand-roll cryptography
+    - no credential or secret is read without explicit task authority
+
+VPS_preservation_boundary:
+  protected:
+    - /root/agsbx/**
+    - existing xr.service sb.service argo.service
+    - existing Xray Sing-box cloudflared nginx configuration and processes
+    - existing iptables ip6tables nftables and persistence
+    - existing proxy VPN cron startup and listeners
+  required_before_mutation:
+    - ss listener snapshot
+    - relevant systemd state
+    - iptables-save and ip6tables-save
+    - nft ruleset
+    - relevant process and cron snapshot
+  required_after_mutation:
+    - compare against baseline
+    - zero unintended changes to protected services ports routing and firewall
+  forbidden_without_separate_authority:
+    - reboot
+    - network restart
+    - firewall flush
+    - argosbx reset/delete
+    - existing cloudflared replacement
+    - occupation or rerouting of existing public ports
+
+C2_acceptance:
+  - production hostname resolves and reaches only the CityState MCP Edge route
+  - CityState origin remains loopback-only on VPS
+  - ChatGPT to MCP Edge to Windows Local Agent end-to-end tool call succeeds
+  - fresh-window filesystem PowerShell Python Git and long-process acceptance succeeds through CityState MCP
+  - existing argosbx/VPN/proxy behavior has zero unintended delta
+  - auth and audit behavior are independently reviewed
+  - vendor Remote Desktop Commander relay is not retired until end-to-end acceptance passes
+
+preferred_receiver_setup_at_activation:
+  collaboration_role: execution
+  provider: OpenAI
+  product: ChatGPT
+  surface: chatgpt_web
+  model: GPT-5.6 Sol
+  reasoning_or_parameter_profile: chatgpt_plus_sol_high
+  session_mode: fresh
+  isolation_level: fresh_execution_project
+  repository_access_mode: local_runtime_plus_GitHub_readback
+  repository_or_worktree_requirement: dedicated clean task worktree from fresh remote master
+  required_branch_or_sha: resolve_fresh_at_activation
+  local_files_required: true
+  github_publication_required_before_start: true
+  communication_carrier: GitHub
+  routing_basis_ref: 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+  availability_assumption_or_observation_ref: product_surface_and_local_VPS_capabilities_must_be_reverified_at_activation
+  limitations:
+    - current Plus custom-MCP action entitlement is unresolved
+    - local/VPS capability grants no authority
+    - no secrets or credentials without explicit scope
+    - route must be revalidated at each stage boundary

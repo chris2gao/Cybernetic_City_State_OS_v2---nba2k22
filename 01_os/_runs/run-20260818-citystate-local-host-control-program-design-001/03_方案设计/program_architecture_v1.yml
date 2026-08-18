@@ -1,0 +1,133 @@
+schema_version: citystate.program_architecture.v1
+program_id: citystate-local-host-control-and-selfhost-mcp
+program_model_version: program-current-model-v1
+base_sha: 536995889b0b33cd050a520e31fdafd32151153c
+Human_confirmation_ref: 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/02_当前模型/Human授权_v1.yml
+status: designed_pending_independent_review
+
+program_shape:
+  major_tasks_exactly:
+    - A_chatgpt_plugin_capability_catalog
+    - B_citystate_local_host_control_baseline
+    - C_self_hosted_citystate_mcp
+  no_micro_phase_expansion: true
+  implementation_started_by_this_task: false
+
+ordering:
+  task_A: independent_after_program_design_integration
+  task_B: independent_after_program_design_integration
+  task_C_stage_1: may_start_after_program_design_integration
+  task_C_stage_2_requires:
+    - C1_product_and_action_feasibility_PASS
+    - task_B_baseline_complete
+    - DNS_or_tunnel_hostname_ready
+    - fresh_Human_authorization_for_runtime_and_network_mutation
+
+production_network_plan:
+  root_domain: gkadastra.eu.org
+  production_mcp_hostname: mcp.gkadastra.eu.org
+  development_mcp_hostname: mcp-dev.gkadastra.eu.org
+  root_domain_reserved_not_bound_to_mcp: true
+  DNS_current_state: propagation_pending_or_not_reverified_in_this_task
+  production_hostname_activation: only_after_C1_PASS_and_C2_authorization
+
+production_topology:
+  - ChatGPT remote MCP client
+  - HTTPS Streamable HTTP at mcp.gkadastra.eu.org
+  - separate CityState Cloudflare Named Tunnel
+  - VPS loopback 127.0.0.1:18080 CityState MCP Edge
+  - VPS loopback 127.0.0.1:18181 reverse channel endpoint
+  - Windows outbound reverse SSH or equivalent mature transport
+  - Windows CityState Local Agent
+  - Desktop Commander / PowerShell / Python / Git / future adapters
+
+architectural_boundary:
+  Desktop_Commander_role: local_adapter_not_remote_control_plane
+  CityState_MCP_Edge_role: stable_external_contract_auth_audit_filtering_and_backend_health
+  Windows_Local_Agent_role: local_execution_adapter_aggregation
+  general_GUI_computer_use: not_proven_and_not_required_for_baseline
+
+VPS_preservation_boundary:
+  default_no_touch:
+    - /root/agsbx/**
+    - xr.service
+    - sb.service
+    - argo.service
+    - existing xray and sing-box configuration
+    - existing cloudflared process/configuration
+    - existing nginx configuration
+    - iptables/ip6tables/nftables
+    - iptables-persistent/netfilter-persistent
+    - existing proxy/VPN cron and startup state
+    - existing listeners including 80/443 and all physically observed proxy ports
+  prohibited_without_separate_Human_authority:
+    - firewall flush or replacement
+    - network restart or reboot
+    - argosbx reset/delete/reinstall
+    - replacing existing cloudflared
+    - occupying or rerouting existing public listeners
+  CityState_default_ports:
+    mcp_edge: 127.0.0.1:18080
+    reverse_bridge: 127.0.0.1:18181
+  before_any_C2_mutation: read_only_snapshot_and_diff_required
+
+Task_B_permanent_execution_contract:
+  git_path_machine_logic: Git_-z_to_raw_bytes_to_strict_UTF8_to_filesystem_Path
+  terminal_text_is_not_path_fact: true
+  unicode_regression_required: true
+  PowerShell_console_codepage_is_not_a_correctness_control: true
+  pytest_disposable_runs_default: -p no:cacheprovider
+  ACL_preflight_before_worktree_remove: true
+  abnormal_ACL_behavior: fail_before_delete_and_return_to_Human
+  packet_helper_contract_mismatch: fix_as_shared_infrastructure_not_one_off_workaround
+  fresh_window_acceptance:
+    - filesystem_read_write_edit
+    - PowerShell_7
+    - Python
+    - Git
+    - process_and_session
+    - non_ASCII_path_roundtrip
+    - ordinary_user_cleanup
+
+Task_C_feasibility_rule:
+  entitlement_gate_first: true
+  rationale: >-
+    OpenAI official Help Center currently documents full custom MCP including
+    write/modify for Business, Enterprise and Edu, while Pro is read/fetch only;
+    Plus is not documented as full MCP. Vendor plugin write capability therefore
+    does not prove user-created custom MCP write capability.
+  C1_action_probe_if_product_surface_allows_custom_MCP: harmless_in_memory_mutation_only
+  C1_PASS_label: SELF_HOST_ACTION_PASS
+  C1_blocked_label: SELF_HOST_TRANSPORT_OR_PRODUCT_ACTION_BLOCKED
+  C2_must_not_start_on_blocked_C1: true
+
+current_external_evidence_2026_08_18:
+  OpenAI_custom_MCP:
+    source: OpenAI Help Center developer mode and MCP apps
+    locator: help.openai.com/articles/12584461
+    observed_claim: full_MCP_write_modify_Business_Enterprise_Edu;_Pro_read_fetch;_Plus_not_listed
+  MCP_Python_SDK:
+    source: official modelcontextprotocol/python-sdk main README and whats-new
+    locator: github.com/modelcontextprotocol/python-sdk
+    observed_claim: v2_is_stable_line_and_supports_2026_07_28_plus_earlier_revisions
+  MCP_protocol:
+    source: official Model Context Protocol 2026-07-28 release materials
+    locator: modelcontextprotocol.io_and_blog.modelcontextprotocol.io
+    observed_claim: modern_HTTP_path_is_sessionless/stateless_and_legacy_HTTP+SSE_is_deprecated
+  Cloudflare_Tunnel:
+    source: Cloudflare One published applications and tunnel documentation
+    locator: developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/
+    observed_claim: public_hostname_can_proxy_to_http://localhost_service_via_outbound_only_cloudflared
+
+Computer_Use_observation:
+  evidence_ref: ../06_能力探测/computer_use_probe_v1.yml
+  proven: [PowerShell_7_process_launch, interactive_terminal_session, Notepad_window_process_launch]
+  not_proven: [visual_GUI_understanding, arbitrary_mouse_click_control, arbitrary_keyboard_GUI_control]
+  Human_followup: Computer_Use_disabled_and_no_further_probe
+
+final_program_acceptance:
+  - A_B_C remain three major tasks
+  - C remains exactly two major stages
+  - production hostname remains mcp.gkadastra.eu.org
+  - no VPS mutation occurs in program-design task
+  - every implementation task receives a fresh exact master base at activation time

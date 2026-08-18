@@ -1,0 +1,29 @@
+schema_version: citystate.os_run.v1
+run:
+  run_id: run-20260818-citystate-local-host-control-program-design-001
+  task_id: os-v2-citystate-local-host-control-program-design-001
+  exact_base_sha: 536995889b0b33cd050a520e31fdafd32151153c
+  branch: dev/os-v2-citystate-local-host-control-program-design-001
+  owner: core
+  status: local_candidate_validated_pending_commit
+  purpose: Durably define the Human-confirmed A/B/C CityState implementation program
+    without starting implementation.
+  current_model_version: citystate-local-host-control-program-current-model-v1
+  human_authorization_ref: 02_当前模型/Human授权_v1.yml
+  task_packet: 01_任务输入/任务包_v1.yml
+  program_topology:
+    Task_A: ChatGPT Plugin Capability Catalog
+    Task_B: CityState Local Host Control Baseline
+    Task_C: Self-hosted CityState MCP (C1 feasibility gate -> C2 production)
+  publication:
+    source_branch_allowed: true
+    master_allowed: false
+    force_push: false
+  program_architecture_ref: 03_方案设计/program_architecture_v1.yml
+  planned_task_designs:
+  - 04_任务设计/task_A_plugin_catalog_planned_v1.yml
+  - 04_任务设计/task_B_local_host_control_planned_v1.yml
+  - 04_任务设计/task_C_self_hosted_mcp_planned_v1.yml
+  external_evidence_ref: 05_调研/current_external_evidence_v1.yml
+  capability_probe_ref: 06_能力探测/computer_use_probe_v1.yml
+  validation_ref: 07_测试执行/validation_summary_v1.yml

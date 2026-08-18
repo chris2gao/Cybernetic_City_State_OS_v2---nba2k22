@@ -1,0 +1,49 @@
+schema_version: citystate.current_external_evidence.v1
+observed_on: 2026-08-18
+scope: program_design_only
+
+OpenAI_custom_MCP:
+  source_class: official_OpenAI_Help_Center
+  locator: help.openai.com/articles/12584461
+  observed:
+    - full MCP write/modify is documented for Business, Enterprise and Edu
+    - Pro can use custom MCP read/fetch in developer mode
+    - Plus is not documented as having full custom MCP write/modify
+  architectural_effect: C1 product entitlement gate must precede VPS build
+  invalidation: OpenAI plan or developer-mode capability update
+
+MCP_Python_SDK:
+  source_class: official_modelcontextprotocol_GitHub
+  locator: github.com/modelcontextprotocol/python-sdk
+  observed:
+    - v2 is the current stable release line
+    - v2 supports MCP 2026-07-28 and earlier revisions
+    - modern 2026-07-28 HTTP operation is sessionless/stateless
+  architectural_effect: target official Python SDK v2 for new implementation
+  invalidation: SDK major release or protocol revision update
+
+MCP_protocol_2026_07_28:
+  source_class: official_Model_Context_Protocol
+  locator: modelcontextprotocol.io and blog.modelcontextprotocol.io/posts/2026-07-28/
+  observed:
+    - initialize/session handshake removed on the modern revision
+    - Mcp-Session-Id removed for the modern HTTP path
+    - legacy HTTP+SSE is deprecated
+    - authorization continues to harden around OAuth/OIDC issuer and resource binding
+  architectural_effect: prefer ordinary stateless Streamable HTTP infrastructure
+  invalidation: newer MCP specification revision
+
+Cloudflare_Tunnel:
+  source_class: official_Cloudflare_One_documentation
+  locator: developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/
+  observed:
+    - cloudflared establishes outbound-only connections to Cloudflare
+    - a published hostname can proxy HTTPS ingress to an HTTP localhost service
+    - example origin form is http://localhost:8000
+  architectural_effect: production ingress need not occupy a new VPS public listener
+  invalidation: Cloudflare Tunnel routing/product change
+
+evidence_discipline:
+  - these are dated observations, not standing product truth
+  - Task C must reverify OpenAI entitlement and current SDK/spec at activation
+  - physical VPS state must be read from VPS, never inferred from these documents

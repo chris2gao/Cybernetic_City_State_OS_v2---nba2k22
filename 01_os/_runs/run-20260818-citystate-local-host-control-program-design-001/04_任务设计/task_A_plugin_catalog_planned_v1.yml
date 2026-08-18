@@ -1,0 +1,66 @@
+schema_version: citystate.planned_task_design.v1
+activation_state: planned_not_yet_executable
+task_id: os-v2-chatgpt-plugin-capability-catalog-001
+planned_branch: dev/os-v2-chatgpt-plugin-capability-catalog-001
+program_ref: ../03_方案设计/program_architecture_v1.yml
+start_condition:
+  - program_design_integrated_to_master
+  - fresh_remote_master_sha_resolved_at_activation
+  - fresh_task_packet_and_Human_stage_authority_materialized
+
+objective: >-
+  Create a durable ChatGPT Plugin capability catalog under skills_and_tools that
+  preserves stable taxonomy, selection rules and dated high-value snapshots while
+  requiring fresh Plugin Directory lookup for volatile availability.
+
+planned_allowed_paths:
+  - 01_os/04_skills_and_tools/chatgpt_plugins/**
+  - 01_os/04_skills_and_tools/README.md
+  - 01_os/05_registry/skills_and_tools_v1.yml
+  - 01_os/_runs/<activated-run-id>/**
+
+required_external_capability:
+  - ChatGPT Plugin Directory / Plugin_Management current search
+  - GitHub repository read/write or equivalent authorized publication transport
+
+deliverables:
+  - 01_os/04_skills_and_tools/chatgpt_plugins/README.md
+  - stable category index and selection/load strategy
+  - dated snapshots only where current enumeration adds durable value
+  - Developer Tools snapshot at execution date
+  - registry synchronization in skills_and_tools_v1.yml
+
+non_goals:
+  - freeze the entire volatile Plugin Directory as permanent truth
+  - install or connect plugins
+  - grant authority by catalog registration
+  - modify unrelated skills/tools
+
+acceptance:
+  - fresh Plugin_Management search evidence is dated and attributable
+  - category files distinguish stable guidance from volatile snapshot facts
+  - every new canonical file is registered in the same change
+  - no plugin availability claim is promoted from chat memory
+  - changed-path ledger and git diff --check pass
+  - independent review returns ready_for_human_integration
+
+preferred_receiver_setup_at_activation:
+  collaboration_role: execution
+  provider: OpenAI
+  product: ChatGPT
+  surface: chatgpt_web
+  model: GPT-5.6 Sol
+  reasoning_or_parameter_profile: chatgpt_plus_sol_high
+  session_mode: fresh
+  isolation_level: fresh_execution_project
+  repository_access_mode: GitHub_only
+  repository_or_worktree_requirement: own task branch created from fresh remote master
+  required_branch_or_sha: resolve_fresh_at_activation
+  local_files_required: false
+  github_publication_required_before_start: true
+  communication_carrier: GitHub
+  routing_basis_ref: 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+  availability_assumption_or_observation_ref: all_registered_candidates_available_unless_Human_overrides
+  limitations:
+    - current Plugin_Management surface required for volatile directory facts
+    - route is planned and must be revalidated at activation

@@ -1,0 +1,74 @@
+schema_version: citystate.planned_task_design.v1
+activation_state: planned_not_yet_executable
+task_id: os-v2-citystate-local-host-control-baseline-001
+planned_branch: dev/os-v2-citystate-local-host-control-baseline-001
+program_ref: ../03_方案设计/program_architecture_v1.yml
+start_condition:
+  - program_design_integrated_to_master
+  - fresh_remote_master_sha_resolved_at_activation
+  - local_device_online_and_bound
+  - fresh_task_packet_and_Human_stage_authority_materialized
+
+objective: >-
+  Productize the already observed Windows local-host capability as a CityState
+  Local Host Control contract and permanently close Unicode path, native-output,
+  task-packet/helper, pytest-cache and worktree-cleanup failure modes.
+
+planned_allowed_paths:
+  - 01_os/03_mechanisms/local_host_control/**
+  - 01_os/02_boot/local_host_control/**
+  - 01_os/06_execution/boot/local_host_control/**
+  - 01_os/04_skills_and_tools/desktop_commander/**
+  - 01_os/06_execution/task_discipline/**
+  - 01_os/05_registry/local_host_control_v1.yml
+  - 01_os/05_registry/task_discipline_v1.yml
+  - 01_os/05_registry/skills_and_tools_v1.yml
+  - 01_os/开发入口与单窗口任务规范_v1.md
+  - 01_os/_runs/<activated-run-id>/**
+
+required_physical_evidence:
+  - intended device identity and online state
+  - exact repo path branch HEAD remotes worktree state
+  - PowerShell 7, Python, Git and process/session behavior
+  - non-ASCII Git path raw-byte roundtrip
+  - ordinary-user worktree cleanup and ACL preflight behavior
+
+permanent_contract_requirements:
+  - Git path-sensitive machine logic uses -z raw bytes strict UTF-8
+  - process stdout display is not a Unicode path authority source
+  - evidence requiring exact Unicode uses file/readback or byte-safe structured output
+  - disposable pytest defaults to -p no:cacheprovider unless cache is required
+  - ACL anomalies fail before worktree deletion and are returned to Human
+  - packet/helper schema mismatch is fixed at shared contract level
+  - Computer Use GUI automation is outside baseline unless separately reauthorized
+
+acceptance:
+  - fresh-window Files PowerShell Python Git Process acceptance passes
+  - Chinese and mixed Unicode paths survive exact roundtrip and allowlist comparison
+  - hostile Git quotePath settings do not alter path ledger correctness
+  - no unreadable pytest cache is created by baseline tests
+  - worktree cleanup is ordinary-user reproducible or fails before mutation
+  - current task-discipline validators and git diff --check pass
+  - independent review returns ready_for_human_integration
+
+preferred_receiver_setup_at_activation:
+  collaboration_role: execution
+  provider: OpenAI
+  product: ChatGPT
+  surface: chatgpt_web
+  model: GPT-5.6 Sol
+  reasoning_or_parameter_profile: chatgpt_plus_sol_high
+  session_mode: fresh
+  isolation_level: fresh_execution_project
+  repository_access_mode: local_git_with_GitHub_readback
+  repository_or_worktree_requirement: dedicated clean task worktree from fresh remote master
+  required_branch_or_sha: resolve_fresh_at_activation
+  local_files_required: true
+  github_publication_required_before_start: true
+  communication_carrier: GitHub
+  routing_basis_ref: 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+  availability_assumption_or_observation_ref: local_device_must_be_observed_online_at_activation
+  limitations:
+    - local MCP capability grants no authority
+    - no secrets credentials admin elevation or ACL ownership takeover
+    - no further Computer Use testing under this program authorization
