@@ -1,0 +1,25 @@
+collaboration_role: execution
+provider: Anthropic
+product: Claude Desktop
+surface: claude_desktop_cowork
+model: Claude Opus 5
+reasoning_or_parameter_profile: claude_desktop_cowork_opus5_task_time
+session_mode: reentry_same_task_session
+isolation_level: task_only
+repository_access_mode: local_git
+repository_or_worktree_requirement: reuse_current_clean_task_clone_after_fresh_remote_ref_read_or_fresh_clean_isolated_worktree
+required_branch_or_sha: dev/os-v2-communication-git-blob-utf8-decoding-fix-001
+local_files_required: true
+github_publication_required_before_start: true
+communication_carrier: GitHub
+routing_basis_ref: documents/gpt56-communication-utf8-foreground-001/00002_receiver_route_correction.md
+availability_assumption_or_observation_ref: role_context/claude-cowork-communication-utf8-executor-001.yml
+limitations:
+  - execution_only_no_architecture_reinterpretation
+  - one_task_only
+  - no_master_or_protected_publication
+  - no_force_rebase_squash_amend_reset_clean
+  - no_protocol_schema_authority_or_stage_alignment_semantic_change
+  - supersedes_receiver_route_only_of_message_00001
+  - technical_dispatch_semantics_remain_bound_to_00001_execution_dispatch_and_task_packet
+  - same_task_session_reentry_requires_fresh_canonical_bootstrap
