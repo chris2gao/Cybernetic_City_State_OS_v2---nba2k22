@@ -25,10 +25,12 @@ ENV = {
 
 
 def git(repo: Path, *args: str) -> str:
+    # Bytes + strict UTF-8, never text=True: subprocess would decode with the
+    # host locale (CP936 on this workstation) and fail on non-ASCII output.
     return subprocess.run(
         ["git", *args], cwd=repo, env=ENV, check=True,
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
-    ).stdout.strip()
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+    ).stdout.decode("utf-8").strip()
 
 
 def card(endpoint_id: str, role: str, environment: str) -> dict:

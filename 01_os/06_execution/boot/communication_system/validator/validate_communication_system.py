@@ -409,17 +409,33 @@ class CommunicationValidator:
 
     @staticmethod
     def _git_blob(repository_root: Path, commit: str, relative: str) -> str:
+        # Read the blob as bytes and decode it as strict UTF-8 here. Never let
+        # subprocess decode: with text=True it uses the process locale encoding,
+        # which on a CP936/GBK Windows host fails inside subprocess's reader
+        # thread. That failure does not propagate — returncode stays 0 and
+        # stdout becomes None — so a valid UTF-8 blob silently reached
+        # parse_safe_yaml as None and surfaced as yaml_input_must_be_text.
+        # Repository blobs are UTF-8 by contract, independent of PYTHONUTF8,
+        # the host locale or the console code page.
         proc = subprocess.run(
             ["git", "-c", "core.longpaths=true", "show", f"{commit}:{relative}"],
             cwd=repository_root,
-            text=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             check=False,
         )
         if proc.returncode:
             raise CommunicationValidationError(f"Human_pointer_GitHub_blob_missing:{relative}")
-        return proc.stdout
+        if not isinstance(proc.stdout, bytes):
+            raise CommunicationValidationError(
+                f"Human_pointer_GitHub_blob_not_bytes:{relative}"
+            )
+        try:
+            return proc.stdout.decode("utf-8")
+        except UnicodeDecodeError as exc:
+            raise CommunicationValidationError(
+                f"Human_pointer_GitHub_blob_not_utf8:{relative}:{exc}"
+            ) from exc
 
     def validate_pointer_v2(
         self,

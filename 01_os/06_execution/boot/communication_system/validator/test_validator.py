@@ -130,7 +130,7 @@ class SafeYamlAndMessageTests(unittest.TestCase):
             self.validator.validate_message(message)
 
     def test_exact_git_blob_reader_enables_windows_longpaths(self):
-        completed = subprocess.CompletedProcess([], 0, stdout="value", stderr="")
+        completed = subprocess.CompletedProcess([], 0, stdout=b"value", stderr=b"")
         with patch("subprocess.run", return_value=completed) as invoked:
             value = self.validator._git_blob(Path("."), "a" * 40, "deep/path.yml")
         self.assertEqual(value, "value")
@@ -139,6 +139,69 @@ class SafeYamlAndMessageTests(unittest.TestCase):
             ["git", "-c", "core.longpaths=true", "show"],
         )
 
+    def test_exact_git_blob_reader_never_lets_subprocess_decode(self):
+        # text=True would make subprocess decode with the host locale encoding.
+        completed = subprocess.CompletedProcess([], 0, stdout=b"value", stderr=b"")
+        with patch("subprocess.run", return_value=completed) as invoked:
+            self.validator._git_blob(Path("."), "a" * 40, "deep/path.yml")
+        kwargs = invoked.call_args.kwargs
+        self.assertNotIn("encoding", kwargs)
+        self.assertFalse(kwargs.get("text", False))
+        self.assertFalse(kwargs.get("universal_newlines", False))
+
+    def test_exact_git_blob_reader_decodes_non_ascii_utf8(self):
+        payload = "任务: 中文 UTF-8 载荷\nvalue: 城邦\n"
+        completed = subprocess.CompletedProcess(
+            [], 0, stdout=payload.encode("utf-8"), stderr=b""
+        )
+        with patch("subprocess.run", return_value=completed):
+            value = self.validator._git_blob(Path("."), "a" * 40, "任务/契约.yml")
+        self.assertEqual(value, payload)
+        self.assertEqual(parse_safe_yaml(value)["value"], "城邦")
+
+    def test_exact_git_blob_reader_rejects_invalid_utf8(self):
+        # 0x80 is the byte that made GBK decoding fail inside subprocess.
+        completed = subprocess.CompletedProcess([], 0, stdout=b"a: \x80\xff", stderr=b"")
+        with patch("subprocess.run", return_value=completed):
+            with self.assertRaisesRegex(
+                CommunicationValidationError, "Human_pointer_GitHub_blob_not_utf8"
+            ):
+                self.validator._git_blob(Path("."), "a" * 40, "deep/path.yml")
+
+    def test_exact_git_blob_reader_reports_missing_blob_before_decoding(self):
+        completed = subprocess.CompletedProcess([], 128, stdout=b"", stderr=b"fatal")
+        with patch("subprocess.run", return_value=completed):
+            with self.assertRaisesRegex(
+                CommunicationValidationError, "Human_pointer_GitHub_blob_missing"
+            ):
+                self.validator._git_blob(Path("."), "a" * 40, "deep/path.yml")
+
+    def test_exact_git_blob_reader_reads_real_non_ascii_repository_blob(self):
+        # Real git, real UTF-8 blob with a non-ASCII path. This is the case that
+        # returned None under text=True on a CP936 host.
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for args in (
+                ["git", "init", "-q"],
+                ["git", "config", "user.email", "t@example.invalid"],
+                ["git", "config", "user.name", "t"],
+            ):
+                subprocess.run(args, cwd=root, check=True,
+                               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            relative = "任务/中文契约.yml"
+            blob = "task_id: 城邦-001\nnote: 非 ASCII UTF-8\n"
+            target = root / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(blob, encoding="utf-8")
+            subprocess.run(["git", "add", "-A"], cwd=root, check=True,
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            subprocess.run(["git", "commit", "-qm", "utf8"], cwd=root, check=True,
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=root, check=True,
+                                  stdout=subprocess.PIPE).stdout.decode("utf-8").strip()
+            value = self.validator._git_blob(root, head, relative)
+        self.assertEqual(value, blob)
+        self.assertEqual(parse_safe_yaml(value)["task_id"], "城邦-001")
 
     def test_self_authorization_is_rejected(self):
         cards = {"sender-01": card(), "receiver-01": card("receiver-01", "review")}
