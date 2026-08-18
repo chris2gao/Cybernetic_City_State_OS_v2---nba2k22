@@ -1,0 +1,44 @@
+schema_version: citystate.completion_pointer.v1
+completion_pointer:
+  packet_id: os-v2-citystate-local-host-control-program-design-001
+  status: blocked
+  source_branch: dev/os-v2-citystate-local-host-control-program-design-001
+  source_base: 536995889b0b33cd050a520e31fdafd32151153c
+  source_head: 3248912d182c3f185378af9e003f4ac21b9e0b6a
+  semantic_candidate_sha: 3248912d182c3f185378af9e003f4ac21b9e0b6a
+  validation:
+    current_model_readiness_exit_code: 0
+    stage_runtime_guard_exit_code: 0
+    stage_static_exit_code: 0
+    model_routing_static_exit_code: 0
+    changed_path_ledger_exit_code: 0
+    git_diff_check_exit_code: 0
+    candidate_caused_failures: 0
+    diff_scope: passed
+    hook_guard: passed
+  repository:
+    semantic_candidate_changed_paths: 11
+    semantic_candidate_canonical_implementation_changes: 0
+    out_of_scope_paths: 0
+    binary_artifact_count: 0
+    worktree_clean_at_candidate: true
+  publication:
+    transport: local_git
+    expected_remote_head: 3248912d182c3f185378af9e003f4ac21b9e0b6a
+    resulting_remote_head: 3248912d182c3f185378af9e003f4ac21b9e0b6a
+    source_branch_push_performed: true
+    master_modified: false
+    force_push: false
+    remote_master_after_candidate_publication: 536995889b0b33cd050a520e31fdafd32151153c
+  independent_review:
+    receiver_setup_ref: reviewer_receiver_setup_v1.yml
+    formal_dispatch_status: blocked_by_durable_allowed_path_boundary
+    boundary_defect_ref: formal_dispatch_boundary_defect_v1.yml
+    formal_message_published: false
+    v2_Human_relay_pointer_emitted: false
+  program_outputs:
+    architecture_ref: ../03_方案设计/program_architecture_v1.yml
+    task_A_design_ref: ../04_任务设计/task_A_plugin_catalog_planned_v1.yml
+    task_B_design_ref: ../04_任务设计/task_B_local_host_control_planned_v1.yml
+    task_C_design_ref: ../04_任务设计/task_C_self_hosted_mcp_planned_v1.yml
+  next_owner: Human
