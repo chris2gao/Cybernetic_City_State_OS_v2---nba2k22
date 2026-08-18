@@ -25,6 +25,9 @@ anchors:
     verification_or_acceptance_method: named gate with expected exit code
     current_exact_model_version: model-v1
     current_exact_output_version: out-v1
+    # explicit empty dispositions: considered and found empty, not omitted
+    constraints_and_dependencies: none_material
+    assumptions_risks_alternatives_unknowns: none_material
     open_load_bearing_items: []
     stage_specific_model_elements: *stage06
     Human_confirmation: &confirmation
@@ -345,4 +348,220 @@ cases:
     activation_mode: incremental
     current_model: *model
     completion_pointer: {append_only: true, bound_candidate_version: out-v1, supersedes: pointer-00001}
+    receipt: *receipt
+
+# F2 - common Current Model readiness. A missing key fails; an explicit empty
+# disposition passes, because "checked and found empty" is a real answer.
+- case_id: F2-MISSING-CONSTRAINTS-KEY
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method
+      feasibility_support: prior art
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate
+      current_exact_model_version: model-v1
+      assumptions_risks_alternatives_unknowns: none_material
+      open_load_bearing_items: []
+      stage_specific_model_elements: *stage06
+      Human_confirmation: *confirmation
+    receipt: *receipt
+
+- case_id: F2-MISSING-ASSUMPTIONS-KEY
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method
+      feasibility_support: prior art
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate
+      current_exact_model_version: model-v1
+      constraints_and_dependencies: none_material
+      open_load_bearing_items: []
+      stage_specific_model_elements: *stage06
+      Human_confirmation: *confirmation
+    receipt: *receipt
+
+- case_id: F2-MISSING-OPEN-ITEMS-KEY
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model:
+      problem_or_objective: bounded stage objective
+      Human_intent_understanding: foreground restatement of Human intent
+      current_baseline_and_inputs: master@exact
+      proposed_method_or_solution: stated method
+      feasibility_support: prior art
+      expected_output: one exact artifact version
+      verification_or_acceptance_method: named gate
+      current_exact_model_version: model-v1
+      constraints_and_dependencies: none_material
+      assumptions_risks_alternatives_unknowns: none_material
+      stage_specific_model_elements: *stage06
+      Human_confirmation: *confirmation
+    receipt: *receipt
+
+- case_id: F2-NULL-CONSTRAINTS-IS-NOT-A-DISPOSITION
+  note: present but null is neither a value nor a disposition
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model: {<<: *model, constraints_and_dependencies: null}
+    receipt: *receipt
+
+- case_id: F2-EXPLICIT-EMPTY-DISPOSITIONS-PASS
+  note: none_material and [] are accepted answers, not omissions
+  expected_exit: 0
+  data:
+    activation_mode: full
+    current_model: *model
+    receipt: *receipt
+
+# F1 - a required stage field disposed unknown blocks by default; only a fully
+# justified non-blocking deferral progresses.
+- case_id: F1-RAW-UNKNOWN
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model:
+      <<: *model
+      stage_specific_model_elements:
+        <<: *stage06
+        rollback_target: {disposition: unknown_with_blocking_or_deferred_disposition_and_revisit_trigger}
+    receipt: *receipt
+
+- case_id: F1-ASSERTED-NONBLOCKING-ONLY
+  note: blocking:false plus a revisit trigger is a claim, not a justification
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model:
+      <<: *model
+      stage_specific_model_elements:
+        <<: *stage06
+        rollback_target:
+          disposition: unknown_with_blocking_or_deferred_disposition_and_revisit_trigger
+          blocking: false
+          revisit_trigger: later
+    receipt: *receipt
+
+- case_id: F1-MISSING-DOWNSTREAM-IMPACT-ASSESSMENT
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model:
+      <<: *model
+      stage_specific_model_elements:
+        <<: *stage06
+        rollback_target:
+          disposition: unknown_with_blocking_or_deferred_disposition_and_revisit_trigger
+          blocking: false
+          deferral: deferred_nonblocking
+          reason_and_scope: rollback target pending release cut
+          revisit_trigger: release cut published
+    receipt: *receipt
+
+- case_id: F1-LOAD-BEARING-DEFERRAL-WITHOUT-HUMAN-BASIS
+  expected_exit: 15
+  data:
+    activation_mode: full
+    current_model:
+      <<: *model
+      stage_specific_model_elements:
+        <<: *stage06
+        rollback_target: &deferred_lb
+          disposition: unknown_with_blocking_or_deferred_disposition_and_revisit_trigger
+          blocking: false
+          deferral: deferred_nonblocking
+          reason_and_scope: rollback target pending release cut
+          revisit_trigger: release cut published
+          load_bearing: true
+          downstream_impact_assessment:
+            stage_objective_blocked: false
+            decision_blocked: false
+            verification_blocked: false
+            authority_blocked: false
+            downstream_acceptance_blocked: false
+    receipt: *receipt
+
+- case_id: F1-DEFERRAL-HUMAN-BASIS-IS-SILENCE
+  expected_exit: 14
+  data:
+    activation_mode: full
+    current_model:
+      <<: *model
+      stage_specific_model_elements:
+        <<: *stage06
+        rollback_target:
+          <<: *deferred_lb
+          Human_basis: {kind: silence, actor_class: current_Human}
+    receipt: *receipt
+
+- case_id: F1-DEFERRAL-HUMAN-BASIS-STALE
+  expected_exit: 12
+  data:
+    activation_mode: full
+    current_model:
+      <<: *model
+      stage_specific_model_elements:
+        <<: *stage06
+        rollback_target:
+          <<: *deferred_lb
+          Human_basis: {kind: explicit_statement, actor_class: current_Human, stale: true}
+    receipt: *receipt
+
+- case_id: F1-BLOCKING-UNKNOWN-STILL-BLOCKS
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model:
+      <<: *model
+      stage_specific_model_elements:
+        <<: *stage06
+        rollback_target: {<<: *deferred_lb, blocking: true}
+    receipt: *receipt
+
+- case_id: F1-ASSESSMENT-ASSERTS-A-BLOCKED-DIMENSION
+  expected_exit: 16
+  data:
+    activation_mode: full
+    current_model:
+      <<: *model
+      stage_specific_model_elements:
+        <<: *stage06
+        rollback_target:
+          <<: *deferred_lb
+          Human_basis: {kind: explicit_statement, actor_class: current_Human, stale: false}
+          downstream_impact_assessment:
+            stage_objective_blocked: false
+            decision_blocked: false
+            verification_blocked: true
+            authority_blocked: false
+            downstream_acceptance_blocked: false
+    receipt: *receipt
+
+- case_id: F1-FULLY-JUSTIFIED-NONBLOCKING-DEFERRAL
+  note: the capability is retained - a genuinely justified deferral progresses
+  expected_exit: 0
+  data:
+    activation_mode: full
+    current_model:
+      <<: *model
+      stage_specific_model_elements:
+        <<: *stage06
+        rollback_target:
+          <<: *deferred_lb
+          Human_basis:
+            kind: explicit_statement
+            actor_class: current_Human
+            stale: false
+            ref: Human/current.yml#00001
     receipt: *receipt

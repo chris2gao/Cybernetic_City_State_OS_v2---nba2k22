@@ -141,14 +141,45 @@ common_task_stage_model:
   - residual_risk
   - current_exact_model_version
   required_before_substantive_execution:
-  - problem_or_objective
-  - Human_intent_understanding
-  - current_baseline_and_inputs
-  - proposed_method_or_solution
-  - feasibility_support
-  - expected_output
-  - verification_or_acceptance_method
-  - current_exact_model_version
+    note: >-
+      All eleven keys must be present. "Checked and there is nothing" is a real answer and
+      must be expressible; "never considered" must not pass. A missing key fails; a present
+      but null value fails, because it is neither a value nor a disposition.
+    substantive_value_required:
+    - problem_or_objective
+    - Human_intent_understanding
+    - current_baseline_and_inputs
+    - proposed_method_or_solution
+    - feasibility_support
+    - expected_output
+    - verification_or_acceptance_method
+    - current_exact_model_version
+    key_required_none_material_accepted:
+    - constraints_and_dependencies
+    - assumptions_risks_alternatives_unknowns
+    key_required_empty_list_accepted:
+    - open_load_bearing_items
+    plus: explicit_current_Human_confirmation_bound_to_exact_current_model_version
+    Human_facing_brief_length_unaffected: true
+  stage_specific_unknown_deferral_contract:
+    default_for_required_field_disposed_unknown: block
+    capability_retained: unknown_with_blocking_or_deferred_disposition_and_revisit_trigger
+    self_declared_nonblocking_is_insufficient: true
+    progression_requires_all_of:
+    - deferral == deferred_nonblocking
+    - blocking == false
+    - reason_and_scope present
+    - revisit_trigger present
+    - downstream_impact_assessment present
+    - downstream_impact_assessment explicitly clears stage objective, decision, verification, authority and downstream acceptance
+    load_bearing_or_Human_decision_boundary_additionally_requires:
+    - current_Human_basis
+    - basis is not silence, inference or stale
+    semantics:
+      raw_unknown: fail
+      incomplete_or_asserted_nonblocking_deferral: fail
+      fully_justified_nonblocking_deferred_unknown: pass
+      blocking_unknown: fail
 readiness_contract:
   principle: understand -> propose method -> support feasibility -> align load-bearing items with Human -> implement -> verify
   round_counting_is_not_readiness: true

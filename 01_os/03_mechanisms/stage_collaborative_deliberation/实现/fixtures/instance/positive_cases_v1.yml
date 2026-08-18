@@ -19,6 +19,10 @@ cases:
       verification_or_acceptance_method: existing suite must stay green
       current_exact_model_version: model-v1
       current_exact_output_version: out-v1
+      # a simple task still states these explicitly: considered, found empty.
+      # This costs three lines in the model and nothing in the Human-facing brief.
+      constraints_and_dependencies: none_material
+      assumptions_risks_alternatives_unknowns: none_material
       open_load_bearing_items: []
       ordinary_local_choices:
       - {choice: helper_name_spelling, requires_Human_confirmation: false}
@@ -41,7 +45,21 @@ cases:
         deviations_and_granularity_evaluations: {disposition: represented_with_supported_value, value: none}
         open_detail_divergence_events: {disposition: explicitly_irrelevant_with_reason_and_scope, reason_and_scope: no divergence in this bounded rename}
         rollback_target: {disposition: represented_with_supported_value, value: master@exact}
-        package_completion_pointer_candidate: {disposition: unknown_with_blocking_or_deferred_disposition_and_revisit_trigger, blocking: false, revisit_trigger: final_semantic_candidate_fixed}
+        # a genuinely justified non-blocking deferral: the pointer cannot exist
+        # until the final semantic candidate is fixed, and nothing downstream is
+        # blocked by that ordering
+        package_completion_pointer_candidate:
+          disposition: unknown_with_blocking_or_deferred_disposition_and_revisit_trigger
+          blocking: false
+          deferral: deferred_nonblocking
+          reason_and_scope: the completion pointer binds the final semantic candidate and cannot be written before it exists
+          revisit_trigger: final_semantic_candidate_fixed
+          downstream_impact_assessment:
+            stage_objective_blocked: false
+            decision_blocked: false
+            verification_blocked: false
+            authority_blocked: false
+            downstream_acceptance_blocked: false
     receipt: &receipt
       receipt_schema_version: stage_collaborative_deliberation.stage_receipt.v1
       mechanism_version: 1

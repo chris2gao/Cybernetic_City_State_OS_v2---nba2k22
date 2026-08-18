@@ -208,7 +208,16 @@ NON_HUMAN_ACTOR_CLASSES = {"executor", "reviewer", "independent_reviewer", "mode
 # Canonical common-model field names. These are the only spellings used by the
 # profile contract, the result projection, the validator and every fixture. No
 # synonym or compatibility alias exists.
-STAGE_MODEL_COMPLETENESS_FIELDS = (
+#
+# Three classes, because "checked and there is nothing" is a real answer that
+# must be expressible, while "never considered" must not pass:
+#   substantive - the key must be present and carry a non-empty value
+#   nullable    - the key must be present; none_material is an accepted answer
+#   listed      - the key must be present and be a list; [] means "checked, none"
+# A single `if not model.get(field)` cannot tell a missing key from a valid
+# empty disposition, which is why the classes are separate.
+NONE_MATERIAL = "none_material"
+SUBSTANTIVE_COMMON_FIELDS = (
     "problem_or_objective",
     "Human_intent_understanding",
     "current_baseline_and_inputs",
@@ -218,6 +227,41 @@ STAGE_MODEL_COMPLETENESS_FIELDS = (
     "verification_or_acceptance_method",
     "current_exact_model_version",
 )
+NULLABLE_COMMON_FIELDS = (
+    "constraints_and_dependencies",
+    "assumptions_risks_alternatives_unknowns",
+)
+LISTED_COMMON_FIELDS = ("open_load_bearing_items",)
+STAGE_MODEL_COMPLETENESS_FIELDS = (
+    SUBSTANTIVE_COMMON_FIELDS + NULLABLE_COMMON_FIELDS + LISTED_COMMON_FIELDS
+)
+
+
+def validate_common_model_completeness(model: dict[str, Any]) -> int:
+    """Presence and disposition of every common Current Model field.
+
+    Missing key fails. An explicit empty disposition - none_material, or [] for
+    open_load_bearing_items - passes, because it records that the dimension was
+    considered and found empty. A present-but-null value fails: it is neither a
+    value nor a disposition.
+    """
+    for field in SUBSTANTIVE_COMMON_FIELDS:
+        if field not in model:
+            return 16
+        if not model.get(field):
+            return 16
+    for field in NULLABLE_COMMON_FIELDS:
+        if field not in model:
+            return 16
+        value = model.get(field)
+        if value is None or value == "":
+            return 16
+    for field in LISTED_COMMON_FIELDS:
+        if field not in model:
+            return 16
+        if not isinstance(model.get(field), list):
+            return 11
+    return 0
 
 
 def repo_root_from_here() -> Path:
@@ -295,10 +339,64 @@ def validate_effective_stage_model(
         if disposition == EXPLICITLY_IRRELEVANT and not element.get("reason_and_scope"):
             return 16
         if disposition == UNKNOWN_DISPOSED:
-            if element.get("blocking") is True:
-                return 16
-            if not element.get("revisit_trigger"):
-                return 16
+            code = validate_deferred_unknown(element)
+            if code:
+                return code
+    return 0
+
+
+# Every dimension a deferral has to clear before it counts as non-blocking.
+DOWNSTREAM_IMPACT_DIMENSIONS = (
+    "stage_objective_blocked",
+    "decision_blocked",
+    "verification_blocked",
+    "authority_blocked",
+    "downstream_acceptance_blocked",
+)
+
+
+def validate_deferred_unknown(element: dict[str, Any]) -> int:
+    """A required stage field disposed as unknown blocks by default.
+
+    UNKNOWN_DISPOSED stays a real capability - some things genuinely are not
+    known yet - but the model does not get to declare its own unknown harmless.
+    Progression is allowed only for a deferral that is explicitly
+    deferred_nonblocking, states its reason and scope, carries a revisit
+    trigger, and clears every downstream impact dimension explicitly. Writing
+    blocking: false with a revisit_trigger is not a justification.
+
+    An unknown that is itself load-bearing, or that sits on a Human decision
+    boundary, additionally needs a current Human basis - and silence, inference
+    or a stale basis is not one.
+    """
+    if element.get("blocking") is not False:
+        # blocking unknown, or unstated: default is to block
+        return 16
+    if element.get("deferral") != "deferred_nonblocking":
+        return 16
+    if not element.get("reason_and_scope"):
+        return 16
+    if not element.get("revisit_trigger"):
+        return 16
+
+    assessment = element.get("downstream_impact_assessment")
+    if not isinstance(assessment, dict):
+        return 16
+    for dimension in DOWNSTREAM_IMPACT_DIMENSIONS:
+        if assessment.get(dimension) is not False:
+            # unstated or asserted-blocked both block
+            return 16
+
+    if element.get("load_bearing") is True or element.get("Human_decision_boundary") is True:
+        basis = element.get("Human_basis")
+        if not isinstance(basis, dict):
+            return 15
+        if basis.get("kind") in NON_DISPOSITION_BASIS_KINDS:
+            return 14
+        if basis.get("stale") is True:
+            return 12
+        if basis.get("actor_class") != "current_Human":
+            return 15
     return 0
 
 
@@ -350,9 +448,9 @@ def validate_model_readiness(data: dict[str, Any]) -> int:
     # feasibility_support AND verification_or_acceptance_method AND explicit
     # current-Human confirmation of the exact model version -> substantive
     # execution allowed. All five are required together.
-    for field in STAGE_MODEL_COMPLETENESS_FIELDS:
-        if not model.get(field):
-            return 16
+    code = validate_common_model_completeness(model)
+    if code:
+        return code
     code = validate_mandatory_Human_confirmation(model)
     if code:
         return code
