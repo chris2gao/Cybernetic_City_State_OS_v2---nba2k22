@@ -1,0 +1,55 @@
+schema_version: citystate.communication_pointer_recovery.v1
+recovery_id: communication_utf8_dispatch_pointer_recovery_001
+task_id: os-v2-communication-git-blob-utf8-decoding-fix-001
+Human_authorization_ref: 01_os/_runs/run-20260817-communication-git-blob-utf8-decoding-fix-001/01_任务输入/Human授权_B_pointer_recovery_v1.yml
+purpose: >-
+  Recover and validate the canonical v2 pointer for the already-published Claude Code execution dispatch
+  at 33a73c59 without republishing the immutable message and without any remote mutation.
+source_task:
+  branch: dev/os-v2-communication-git-blob-utf8-decoding-fix-001
+  pre_publication_commit: d2e3638be7dd4fbad74eeba540d2b8a6a41f1bc4
+  published_commit: 33a73c59ac8d09122d7662a4812f60133d38df73
+  task_root: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-communication-git-blob-utf8-decoding-fix-001
+  message_ref: messages/gpt56-communication-utf8-foreground-001/00001_request.yml
+  constitution_ref: constitutions/gpt56-communication-utf8-foreground-001/00001.yml
+  index_ref: indexes/gpt56-communication-utf8-foreground-001.yml
+  receipt_ref: receipts/gpt56-communication-utf8-foreground-001/00001.yml
+local_execution:
+  executor_surface: Claude Code Desktop
+  preferred_workspace_root: E:\_pubwork
+  reuse_existing_clean_clone: true
+  shell: PowerShell
+utf8_process_guard:
+  required_before_replay: true
+  exact_PowerShell_setup:
+    - "$env:PYTHONUTF8 = '1'"
+    - "python -c \"import os,sys,locale; assert os.environ.get('PYTHONUTF8') == '1'; assert sys.flags.utf8_mode == 1; print(locale.getpreferredencoding(False))\""
+  required_observations:
+    PYTHONUTF8: '1'
+    sys_flags_utf8_mode: 1
+  failure: STOP_without_mutation
+steps:
+  - fresh-read remote master and record the observed 40-character SHA; do not rely on chat history
+  - fresh-read source task branch and require its published communication commit 33a73c59ac8d09122d7662a4812f60133d38df73 to remain an ancestor/current published state for the immutable artifacts
+  - verify the existing published clone/worktree is clean before reuse
+  - create or use a disposable sibling worktree/clone at exact pre-publication commit d2e3638be7dd4fbad74eeba540d2b8a6a41f1bc4
+  - execute the utf8_process_guard in the same PowerShell process context that will launch Python recovery
+  - replay the exact canonical publisher inputs from 正式执行派单发布请求_v1.yml using canonical publish() with GitHub carrier and deferred GitHub readback only; do not call converge(), republish_and_converge(), git push, or any remote-write path
+  - require replay-produced constitution, message, sender index and compliance receipt to be byte-for-byte identical to the four immutable artifacts at published commit 33a73c59ac8d09122d7662a4812f60133d38df73
+  - take only the provisional pointer returned by canonical publish(); do not construct or edit pointer fields manually
+  - call canonical bind_GitHub_pointer with remote_commit_sha 33a73c59ac8d09122d7662a4812f60133d38df73 under the guarded UTF-8 process
+  - call canonical validate_pointer_v2 against the published Git commit and require success
+  - report the resulting validated v2 pointer plus byte-comparison and validation status
+prohibited:
+  - any remote write, push, convergence or publication
+  - rerunning republish_and_converge against the already-published task root
+  - rewriting, deleting or amending immutable communication artifacts
+  - hand-constructing or manually editing a v2 pointer
+  - changing Windows system locale, global Python settings or repository configuration as a workaround
+  - beginning the canonical UTF-8 code fix before the recovered execution-dispatch pointer has been validated and Human-relayed
+success_contract:
+  byte_comparison: VERIFIED
+  validate_pointer_v2: VERIFIED
+  remote_mutation_count: 0
+  return: validated_formal_v2_pointer_then_STOP
+failure_behavior: STOP_with_exact_failure_and_no_remote_mutation
