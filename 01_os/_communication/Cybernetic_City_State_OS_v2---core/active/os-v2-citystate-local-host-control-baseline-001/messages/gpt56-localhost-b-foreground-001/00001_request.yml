@@ -1,0 +1,26 @@
+message_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00001
+task_id: os-v2-citystate-local-host-control-baseline-001
+title: Execute Remote Desktop Commander POC-A for Task B local host control baseline
+message_type: request
+sender_endpoint_id: gpt56-localhost-b-foreground-001
+sender_task_role: localhost_control_baseline_foreground
+expected_recipient_endpoint_id: gpt56-localhost-b-poc-a-executor-001
+expected_recipient_task_role: localhost_control_poc_a_execution
+content: Reconstruct this Task B POC-A from the exact GitHub pointer, verify the current-Human
+  same-task authority challenge in your fresh interaction, then execute only the bounded
+  harmless Remote Desktop Commander probes in the required document. Publish one durable
+  capability result back to the foreground and stop.
+required_refs:
+- documents/gpt56-localhost-b-foreground-001/00001_poc_a_execution.md
+- Human/task_authority_v2.yml
+- Human/delegations/00001_poc_a_execution.yml
+requested_action: execute_remote_desktop_commander_poc_a_and_publish_capability_result
+authorization_ref: Human/delegations/00001_poc_a_execution.yml
+recipient_delegation_ref: Human/delegations/00001_poc_a_execution.yml
+constraints:
+- current_Human_task_code_challenge_required_before_local_execution
+- no_secrets_credentials_admin_escalation_or_system_security_changes
+- no_VPS_DNS_firewall_VPN_nginx_xray_cloudflared_actions
+- no_paid_service_or_API_credit_activation
+- no_destructive_Git_or_unrelated_file_deletion
+- no_redelegation

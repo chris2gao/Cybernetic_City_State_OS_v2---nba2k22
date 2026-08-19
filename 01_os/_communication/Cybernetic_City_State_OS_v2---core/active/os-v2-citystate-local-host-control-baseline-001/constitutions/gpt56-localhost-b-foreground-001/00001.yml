@@ -1,0 +1,100 @@
+schema_version: citystate.formal_action.constitution_evidence.v1
+action_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00001
+action_class: formal_cross_endpoint_task_dispatch
+sender_endpoint_id: gpt56-localhost-b-foreground-001
+intended_recipient_endpoint_id: gpt56-localhost-b-poc-a-executor-001
+classification_basis_ref: Human/current.yml
+required_mechanisms:
+- communication_system
+- model_routing
+resolver_result_ref: constitutions/gpt56-localhost-b-foreground-001/00001.yml#resolution
+gate_result_ref: constitutions/gpt56-localhost-b-foreground-001/00001.yml#gate
+mechanism_execution_ref: 01_os/06_execution/boot/communication_system/publisher/publish_message.py
+formal_artifact_ref: messages/gpt56-localhost-b-foreground-001/00001_request.yml
+activation_context:
+  intended_cross_endpoint_side_effect: true
+  Human_relay_requested: true
+  non_Human_endpoint_action_requested: true
+  actionable_content: true
+  requires_receiver_selection: true
+  communication_context_ref: manifest.yml
+  classification_basis_ref: Human/current.yml
+  collaboration_role: execution
+  risk_tier: T2_semantic
+  task_shape: fresh_chatgpt_web_remote_desktop_commander_harmless_poc_a
+  required_capabilities:
+  - GitHub_repository_read
+  - GitHub_repository_write
+  - Remote_Desktop_Commander
+  - Windows_local_runtime
+  routing_basis_ref: documents/gpt56-localhost-b-foreground-001/00001_poc_a_execution.md
+  availability_assumption_or_observation_ref: role_context/gpt56-localhost-b-poc-a-executor-001.yml
+  action_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00001
+  formal_message_type: request
+  task_id: os-v2-citystate-local-host-control-baseline-001
+  sender_endpoint_id: gpt56-localhost-b-foreground-001
+  intended_recipient_endpoint_id: gpt56-localhost-b-poc-a-executor-001
+mechanism_preconditions:
+  communication_system:
+    verification_result: VERIFIED
+    evidence_ref: manifest.yml
+  model_routing:
+    verification_result: VERIFIED
+    evidence_ref: role_context/gpt56-localhost-b-poc-a-executor-001.yml
+authority_effect: none
+resolution:
+  classification: formal_cross_endpoint_action
+  action_class: formal_cross_endpoint_task_dispatch
+  formal: true
+  formal_segment_indexes:
+  - 0
+  mixed_action_segmented: false
+  authority_effect: none
+  action_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00001
+  normalized_recipient_endpoint_id: gpt56-localhost-b-poc-a-executor-001
+  required_mechanisms:
+  - communication_system
+  - model_routing
+  missing_preconditions: []
+  route_requirements:
+  - receiver_setup
+  action_allowed_to_enter_enforcement: true
+  ordinary_Human_discussion_allowed: false
+gate:
+  gate_result: VERIFIED
+  action_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00001
+  action_class: formal_cross_endpoint_task_dispatch
+  required_mechanisms:
+  - communication_system
+  - model_routing
+  verified_precondition_refs:
+    communication_system: manifest.yml
+    model_routing: role_context/gpt56-localhost-b-poc-a-executor-001.yml
+  blocking_failures: []
+  authority_effect: none
+receiver_setup:
+  collaboration_role: execution
+  provider: OpenAI
+  product: ChatGPT
+  surface: chatgpt_web
+  model: GPT-5.6 Sol
+  reasoning_or_parameter_profile: chatgpt_plus_sol_high
+  session_mode: fresh
+  isolation_level: isolated_task_window
+  repository_access_mode: GitHub_plus_authorized_Remote_Desktop_Commander
+  repository_or_worktree_requirement: Fresh-read remote master, then reconstruct this
+    task only from the exact formal GitHub pointer and task branch; do not rely on
+    prior chat or unpublished local repository state.
+  required_branch_or_sha: dev/os-v2-citystate-local-host-control-baseline-001
+  local_files_required: true
+  github_publication_required_before_start: true
+  communication_carrier: GitHub
+  routing_basis_ref: documents/gpt56-localhost-b-foreground-001/00001_poc_a_execution.md
+  availability_assumption_or_observation_ref: role_context/gpt56-localhost-b-poc-a-executor-001.yml
+  limitations:
+  - ChatGPT_Plus_write_action_entitlement_is_an_empirical_POC_outcome_not_an_assumption
+  - current_Human_same_task_code_challenge_required_before_substantive_local_execution
+  - no_secrets_credentials_admin_escalation_or_system_security_changes
+  - no_VPS_DNS_firewall_VPN_nginx_xray_cloudflared_actions
+  - no_paid_service_or_API_credit_activation
+  - no_redelegation
