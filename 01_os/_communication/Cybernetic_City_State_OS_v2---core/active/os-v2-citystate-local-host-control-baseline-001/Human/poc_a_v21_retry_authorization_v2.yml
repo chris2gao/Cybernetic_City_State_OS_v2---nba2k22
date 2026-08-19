@@ -1,0 +1,48 @@
+schema_version: citystate.Human_task_authority_event.v2
+task_id: os-v2-citystate-local-host-control-baseline-001
+task_authority_id: TA-os-v2-citystate-local-host-control-baseline-001-v1
+initial_authority_holder_endpoint_id: gpt56-localhost-b-foreground-001
+initial_authority_holder_task_role: localhost_control_baseline_foreground
+task_authority_scope:
+- remote_desktop_commander_poc
+- windows_filesystem_read_write_edit
+- windows_powershell_7
+- windows_python
+- windows_git
+- windows_process_and_session
+- windows_non_ascii_path_roundtrip
+- ordinary_user_cleanup
+- token_efficiency_measurement_and_profile
+- fresh_window_acceptance
+- durable_task_evidence
+- formal_dispatch_and_review
+stage_id: current_task
+decision_id: D-LOCALHOST-BASELINE-002-V21-POC-A-RETRY
+decision_type: material_architecture_or_solution_choice
+exact_model_version: chatgpt-local-host-control-mcp-current-model-v3
+Human_disposition: authorized
+authorized_scope:
+- remote_desktop_commander_poc
+- windows_filesystem_read_write_edit
+- windows_powershell_7
+- windows_process_and_session
+- windows_git
+- ordinary_user_cleanup
+- durable_task_evidence
+- formal_dispatch_and_review
+actor_class: current_Human
+explicit: true
+provenance: foreground_current_Human_interaction
+stale: false
+invalidated: false
+task_authority_revoked: false
+event_revoked: false
+task_nonce_commitment:
+  scheme: citystate-human-task-authority-v2
+  algorithm: sha256
+  digest: d6ce39e2f767aa228b90ad550a602d905cc788eb1fc478843aa4336b0a0af5d9
+nonce_commitment:
+  scheme: citystate-human-task-authority-v2
+  algorithm: sha256
+  digest: c7f92d3a495211abf6bce9ca1a5ebe07153ec6c3a8bca25f16294ba58d7003db
+plaintext_Human_code_persisted: false
