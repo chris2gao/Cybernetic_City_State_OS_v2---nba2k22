@@ -1,0 +1,47 @@
+message_id: os-v2-citystate-local-host-control-program-design-001::claude-cowork-citystate-program-reviewer-001::00001
+task_id: os-v2-citystate-local-host-control-program-design-001
+title: Independent review result for CityState A/B/C program design
+message_type: result
+sender_endpoint_id: claude-cowork-citystate-program-reviewer-001
+sender_task_role: program_design_independent_review
+expected_recipient_endpoint_id: gpt56-citystate-program-foreground-001
+expected_recipient_task_role: program_design_foreground_dispatch
+in_reply_to: os-v2-citystate-local-host-control-program-design-001::gpt56-citystate-program-foreground-001::00001
+authorization_ref: Human/decisions/00001_review_dispatch_authorization.yml
+content: Verdict ready_for_human_integration for semantic candidate 3248912d182c3f185378af9e003f4ac21b9e0b6a.
+  The candidate requires no changes. All five primary questions pass. Topology is
+  exactly A/B/C with Task C exactly two stages, verified in four independent places.
+  Task A separates stable guidance from volatile directory facts and enforces that
+  split at acceptance. Task B converts proven local-host capability into a durable
+  contract covering raw-byte Unicode path handling, ACL preflight before worktree
+  removal, disposable pytest cache behaviour, and separation from unproven visual
+  GUI control. Task C places the product entitlement gate before any VPS construction,
+  preserves the argosbx and network boundary with before and after snapshot comparison,
+  and keeps ingress, edge and local-agent responsibilities separate. Scope was recomputed
+  from the repository rather than accepted from the completion pointer, the candidate
+  parent equals current remote master, and all eleven changed paths are run-evidence
+  paths with zero canonical and zero registry changes. One item requires a Human decision
+  before any subsequent round, reported as finding 1, the full text is in the required
+  document.
+facts:
+- candidate_parent_equals_current_remote_master_536995889b0b33cd050a520e31fdafd32151153c
+- changed_paths_11_insertions_691_deletions_0_binary_0
+- all_changed_paths_under_run_evidence_directory
+- canonical_implementation_changes_0_confirmed_by_path_inspection
+- major_tasks_3_and_task_C_major_stages_2
+decisions:
+- verdict_ready_for_human_integration
+- candidate_requires_no_changes
+- non_blocking_findings_not_to_be_fixed_under_current_authorization
+constraints:
+- GitHub_only_reconstruction_at_exact_candidate_sha
+- external_evidence_not_independently_verified_and_remains_executor_observation
+- no_implementation_no_master_publication_performed_by_this_review
+unknowns:
+- whether_the_planned_chatgpt_web_receiver_surface_can_reach_the_local_host_required_by_task_B
+risks:
+- Human_authorization_v1_is_invalidated_at_branch_head_so_no_live_authority_covers_a_change_round
+- durable_authority_ref_cited_by_the_review_dispatch_does_not_resolve_at_the_reviewed_commit
+required_refs:
+- documents/claude-cowork-citystate-program-reviewer-001/00001_independent_review_result.md
+- Human/decisions/00001_review_dispatch_authorization.yml
