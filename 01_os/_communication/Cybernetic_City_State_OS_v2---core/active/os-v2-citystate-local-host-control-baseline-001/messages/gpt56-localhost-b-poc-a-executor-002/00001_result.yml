@@ -1,0 +1,87 @@
+message_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-poc-a-executor-002::00001
+task_id: os-v2-citystate-local-host-control-baseline-001
+title: Task B POC-A passed under Human Task Authority v2.1
+message_type: result
+sender_endpoint_id: gpt56-localhost-b-poc-a-executor-002
+sender_task_role: localhost_control_poc_a_execution
+expected_recipient_endpoint_id: gpt56-localhost-b-foreground-001
+expected_recipient_task_role: localhost_control_baseline_foreground
+content: Bounded Remote Desktop Commander POC-A completed under verified Human Task
+  Authority v2.1 delegated-start semantics. All required capability-matrix rows are
+  PASS. Device discovery/ping, non-recursive Desktop list, exact test-file write/readback,
+  PowerShell 7, bounded node metadata, optional read-only Git, and exact artifact
+  cleanup were physically observed. No Task C, master publication, secret access,
+  privilege escalation, or system/security change occurred.
+required_refs:
+- documents/gpt56-localhost-b-poc-a-executor-002/00001_poc_a_result_evidence.md
+- Human/task_authority_v2.yml
+- Human/delegations/00002_poc_a_retry_execution.yml
+- Human/poc_a_v21_retry_authorization_v2.yml
+- messages/gpt56-localhost-b-foreground-001/00002_request.yml
+in_reply_to: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00002
+authorization_ref: Human/delegations/00002_poc_a_retry_execution.yml
+facts:
+  overall_verdict: PASS
+  fresh_master_sha: 570d400824a5937873d40cc58ee70905e811185f
+  execution_branch_head_before_publication: 7f0bd05c93908764367d1342bb3e9c2e6a5ff852
+  capability_matrix:
+    delegated_start_authority:
+      status: PASS
+      evidence_class: durable_repository_claim+executor_machine_verification
+      failure_layer: none
+    remote_tool_discovery:
+      status: PASS
+      evidence_class: physically_observed
+      failure_layer: none
+    intended_device_online:
+      status: PASS
+      evidence_class: physically_observed
+      failure_layer: none
+    filesystem_list:
+      status: PASS
+      evidence_class: physically_observed
+      failure_layer: none
+    filesystem_write:
+      status: PASS
+      evidence_class: physically_observed
+      failure_layer: none
+    filesystem_readback:
+      status: PASS
+      evidence_class: physically_observed
+      failure_layer: none
+    powershell_execution:
+      status: PASS
+      evidence_class: physically_observed
+      failure_layer: none
+    powershell_7:
+      status: PASS
+      evidence_class: physically_observed
+      failure_layer: none
+    process_metadata:
+      status: PASS
+      evidence_class: physically_observed
+      failure_layer: none
+    git_read_only:
+      status: PASS
+      evidence_class: physically_observed
+      failure_layer: none
+    exact_test_artifact_cleanup:
+      status: PASS
+      evidence_class: physically_observed
+      failure_layer: none
+  important_physically_observed_facts:
+    device_name: DESKTOP-FPNE2NQ
+    device_online: true
+    desktop_commander_app_version: 0.2.47
+    test_file_exact_readback: CITYSTATE_MCP_OK
+    powershell_7_edition: Core
+    powershell_7_version: 7.6.4
+    powershell_probe_output: CITYSTATE_TERMINAL_OK
+    running_node_process_count: 3
+    exact_test_artifact_final_state: absent
+    windows_core_git_status: '## master...origin/master'
+  blocking_findings: []
+constraints:
+- POC-A only; no subsequent Task B acceptance stage started
+- master publication prohibited and not performed
+- no secrets credentials administrator escalation or system security changes
