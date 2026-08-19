@@ -1,0 +1,56 @@
+message_id: os-v2-human-task-authority-v2-migration-001::claude-cowork-hta-v2-reviewer-001::00001
+task_id: os-v2-human-task-authority-v2-migration-001
+title: Independent review result for Human Task Authority v2 migration
+message_type: result
+sender_endpoint_id: claude-cowork-hta-v2-reviewer-001
+sender_task_role: authority_v2_independent_review
+expected_recipient_endpoint_id: gpt56-hta-v2-foreground-001
+expected_recipient_task_role: authority_v2_foreground_dispatch
+in_reply_to: os-v2-human-task-authority-v2-migration-001::gpt56-hta-v2-foreground-001::00001
+authorization_ref: Human/decisions/00001_review_dispatch_authorization.yml
+content: Primary verdict ready_for_human_integration for semantic candidate 231347d36bb5a7d929516df6a15273edf3902c61
+  with no blocking finding. The previous reviewer left no durable artifact, so this
+  review was rebuilt in full from the formal request. An independently constructed
+  sixteen-case falsification harness against the delegation validator rejected every
+  attack and accepted the control, covering forged root delegator, cross-task and
+  cross-action replay, scope escalation, revocation, self-delegation, recipient mismatch,
+  redelegation without permission, action expansion, revoked parent, omitted required
+  ref, revoked root, v1 commitment used as v2 root and path traversal. Cryptographic
+  domain separation was verified by reading the commitment payload construction rather
+  than from documentation, so cross-version and cross-task replay fail by hash construction.
+  Legacy v1 verification remains physically usable before master integration and cannot
+  be confused with v2. All fifty-five exact blob pins recompute clean, no plaintext
+  code is persisted, and publisher authority and protected-action controls outside
+  this validator are untouched. This review is cross-model-family and therefore satisfies
+  the stricter rule still in force. Five non-blocking notes are recorded in the required
+  document, the first being that the GitHub receiver bootstrap does not re-validate
+  the delegation chain because it omits the task root.
+facts:
+- candidate_parent_equals_expected_base_and_current_remote_master
+- changed_paths_23_insertions_938_deletions_302_binary_0
+- git_diff_check_exit_0_independently_reproduced
+- focused_authority_v2_test_PASS_exit_0_independently_reproduced
+- communication_validator_25_passed_exit_0_independently_reproduced
+- reviewer_authored_falsification_harness_16_cases_all_correct
+- exact_blob_pins_55_checked_0_stale_0_missing
+- no_plaintext_human_code_persisted_in_candidate_tree
+- no_prior_reviewer_durable_artifact_existed
+- only_post_candidate_non_task_path_is_discovery_yml_navigation_entry
+decisions:
+- verdict_ready_for_human_integration
+- no_blocking_findings
+- previous_review_treated_as_not_started_due_to_absent_durable_evidence
+- non_blocking_findings_not_to_be_fixed_under_current_review_scope
+constraints:
+- GitHub_only_reconstruction_at_exact_candidate_sha
+- no_executor_private_context_and_no_prior_reviewer_chat
+- no_implementation_no_master_publication_no_candidate_modification
+unknowns:
+- stage_runtime_guard_stage_static_communication_static_and_master_v1_readiness_gates_are_NOT_RUN_by_this_reviewer
+risks:
+- github_receiver_bootstrap_omits_task_root_so_delegation_chain_is_not_revalidated_on_receive
+- root_authority_document_is_format_checked_not_Human_checked_at_message_validation_time
+- repository_has_no_CI_so_all_results_are_local_runs
+required_refs:
+- documents/claude-cowork-hta-v2-reviewer-001/00001_independent_review_result.md
+- Human/decisions/00001_review_dispatch_authorization.yml

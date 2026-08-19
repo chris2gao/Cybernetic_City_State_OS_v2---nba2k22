@@ -1,0 +1,96 @@
+schema_version: citystate.formal_action.constitution_evidence.v1
+action_id: os-v2-human-task-authority-v2-migration-001::claude-cowork-hta-v2-reviewer-001::00001
+action_class: formal_cross_endpoint_result
+sender_endpoint_id: claude-cowork-hta-v2-reviewer-001
+intended_recipient_endpoint_id: gpt56-hta-v2-foreground-001
+classification_basis_ref: Human/decisions/00001_review_dispatch_authorization.yml
+required_mechanisms:
+- communication_system
+- model_routing
+resolver_result_ref: constitutions/claude-cowork-hta-v2-reviewer-001/00001.yml#resolution
+gate_result_ref: constitutions/claude-cowork-hta-v2-reviewer-001/00001.yml#gate
+mechanism_execution_ref: 01_os/06_execution/boot/communication_system/publisher/publish_message.py
+formal_artifact_ref: messages/claude-cowork-hta-v2-reviewer-001/00001_result.yml
+activation_context:
+  action_id: os-v2-human-task-authority-v2-migration-001::claude-cowork-hta-v2-reviewer-001::00001
+  formal_message_type: result
+  task_id: os-v2-human-task-authority-v2-migration-001
+  sender_endpoint_id: claude-cowork-hta-v2-reviewer-001
+  intended_recipient_endpoint_id: gpt56-hta-v2-foreground-001
+  intended_cross_endpoint_side_effect: true
+  Human_relay_requested: true
+  non_Human_endpoint_action_requested: true
+  actionable_content: true
+  requires_receiver_selection: true
+  communication_context_ref: manifest.yml
+  classification_basis_ref: Human/decisions/00001_review_dispatch_authorization.yml
+  collaboration_role: independent_review
+  risk_tier: T2_semantic
+  task_shape: github_only_independent_falsification_review_result_for_human_task_authority_v2_candidate
+  required_capabilities:
+  - github_read
+  - github_write
+  routing_basis_ref: documents/claude-cowork-hta-v2-reviewer-001/00001_independent_review_result.md
+  availability_assumption_or_observation_ref: role_context/gpt56-hta-v2-foreground-001.yml
+mechanism_preconditions:
+  communication_system:
+    verification_result: VERIFIED
+    evidence_ref: manifest.yml
+  model_routing:
+    verification_result: VERIFIED
+    evidence_ref: role_context/gpt56-hta-v2-foreground-001.yml
+authority_effect: none
+resolution:
+  classification: formal_cross_endpoint_action
+  action_class: formal_cross_endpoint_result
+  formal: true
+  formal_segment_indexes:
+  - 0
+  mixed_action_segmented: false
+  authority_effect: none
+  action_id: os-v2-human-task-authority-v2-migration-001::claude-cowork-hta-v2-reviewer-001::00001
+  normalized_recipient_endpoint_id: gpt56-hta-v2-foreground-001
+  required_mechanisms:
+  - communication_system
+  - model_routing
+  missing_preconditions: []
+  route_requirements:
+  - receiver_setup
+  action_allowed_to_enter_enforcement: true
+  ordinary_Human_discussion_allowed: false
+gate:
+  gate_result: VERIFIED
+  action_id: os-v2-human-task-authority-v2-migration-001::claude-cowork-hta-v2-reviewer-001::00001
+  action_class: formal_cross_endpoint_result
+  required_mechanisms:
+  - communication_system
+  - model_routing
+  verified_precondition_refs:
+    communication_system: manifest.yml
+    model_routing: role_context/gpt56-hta-v2-foreground-001.yml
+  blocking_failures: []
+  authority_effect: none
+receiver_setup:
+  collaboration_role: decision_architecture
+  provider: OpenAI
+  product: ChatGPT
+  surface: chatgpt_web
+  model: GPT-5.6 Sol
+  reasoning_or_parameter_profile: chatgpt_plus_sol_high
+  session_mode: reentry_same_task_session
+  isolation_level: task_only
+  repository_access_mode: GitHub_only
+  repository_or_worktree_requirement: read the result and its required document from
+    durable GitHub evidence at the exact published commit
+  required_branch_or_sha: dev/os-v2-human-task-authority-v2-migration-001
+  local_files_required: false
+  github_publication_required_before_start: true
+  communication_carrier: GitHub
+  routing_basis_ref: documents/claude-cowork-hta-v2-reviewer-001/00001_independent_review_result.md
+  availability_assumption_or_observation_ref: role_context/gpt56-hta-v2-foreground-001.yml
+  limitations:
+  - review_result_is_advisory_and_grants_no_authority
+  - verdict_is_ready_for_human_integration_with_no_blocking_finding
+  - five_non_blocking_notes_are_not_authorized_to_be_fixed_under_current_review_scope
+  - stage_runtime_stage_static_communication_static_and_master_v1_readiness_gates_were_NOT_RUN_by_the_reviewer
+  - master_integration_remains_a_separate_Human_gated_action
