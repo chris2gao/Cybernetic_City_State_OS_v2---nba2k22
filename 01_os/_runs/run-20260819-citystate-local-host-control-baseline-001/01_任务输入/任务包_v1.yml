@@ -1,0 +1,63 @@
+task_id: os-v2-citystate-local-host-control-baseline-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T2_semantic
+exact_base_sha: 759bff35284525c5b9c486f2f097e5e1cdf5f2d6
+branch: dev/os-v2-citystate-local-host-control-baseline-001
+objective: Establish the CityState Local Host Control Baseline defined as Program Task B, beginning with a harmless end-to-end Remote Desktop Commander POC from a fresh ChatGPT Web execution window and finishing only after the permanent Task B fresh-window acceptance contract is satisfied.
+program_parent_ref: 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/03_方案设计/program_architecture_v1.yml
+source_evidence:
+- current Human-confirmed chatgpt-local-host-control-mcp-current-model-v2
+- 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/Human/task_authority_v2.yml
+- 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/03_方案设计/program_architecture_v1.yml
+- 01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml
+- 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+allowed_changed_paths:
+- 01_os/_runs/run-20260819-citystate-local-host-control-baseline-001/**
+- 01_os/_communication/Cybernetic_City_State_OS_v2---core/discovery.yml
+- 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/**
+required_tests:
+- Human Task Authority v2 challenge verification in each delegated recipient current interaction before substantive execution
+- Remote Desktop Commander tool discovery and device reachability
+- harmless filesystem list/create/readback and exact-test-artifact cleanup
+- PowerShell 7 version plus benign output probe
+- bounded process/session metadata probe
+- Python availability and harmless execution before final Task B acceptance
+- read-only Git probe before final Task B acceptance
+- non-ASCII path roundtrip before final Task B acceptance
+- fresh-window acceptance across the permanent Task B execution contract
+- communication result publication and validator replay
+- changed-path ledger and git diff --check for repository evidence changes
+prohibitions:
+- implement_Task_C_self_hosted_MCP
+- modify_VPS_DNS_firewall_VPN_nginx_xray_cloudflared
+- access_secrets_credentials_private_keys_browser_tokens_Windows_Credential_Store_or_env_secrets
+- administrator_escalation
+- pay_or_activate_API_credits_or_paid_third_party_services
+- destructive_or_system_high_risk_actions_without_separate_Human_authority
+- modify_master_without_separate_completion_gate
+- force_push
+- rebase
+- squash
+- amend
+- rewrite_history
+required_completion_pointer: 01_os/_runs/run-20260819-citystate-local-host-control-baseline-001/08_结论/completion_pointer_v1.yml
+publisher:
+  principal_binding: connector_authenticated_or_local_authenticated
+  publication_transport: github_api_connector_or_local_git
+  source_write_authorized: true
+  master_write_authorized: false
+  destructive_git_authorized: false
+  authorization_ref: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/Human/task_authority_v2.yml
+  expected_remote_head: 759bff35284525c5b9c486f2f097e5e1cdf5f2d6
+executor_profile:
+  foreground_provider: OpenAI
+  foreground_surface: ChatGPT Web
+  foreground_model: GPT-5.6 Sol
+  foreground_parameter_profile: chatgpt_plus_sol_high
+  execution_default: fresh_GPT_task_window
+  execution_collaboration_role: execution
+  authority: routing_only
+verification_profile:
+  execution_result_requires_primary_runtime_evidence: true
+  independent_review_when_material_architecture_or_final_acceptance: fresh_isolated_reviewer
+  same_model_family_allowed_when_explicitly_selected_and_disclosed: true

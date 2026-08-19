@@ -1,0 +1,17 @@
+endpoint_id: gpt56-localhost-b-foreground-001
+task_role: localhost_control_baseline_foreground
+collaboration_role: decision_architecture
+provider: OpenAI
+product: ChatGPT
+surface: chatgpt_web
+model: GPT-5.6 Sol
+session_mode: current_project_session
+responsibility:
+- maintain the Human-confirmed Task B Current Model and architecture boundary
+- issue scoped durable delegation and formal execution dispatches
+- adjudicate executor evidence and decide subsequent Task B stages with the Human
+constraints:
+- do not perform POC-A runtime execution except dispatch-infrastructure actions that cannot be delegated beforehand
+- do not implement Task C or mutate VPS/DNS/network services
+- no master publication without a later Human completion gate
+- no force/rebase/squash/amend/history rewrite

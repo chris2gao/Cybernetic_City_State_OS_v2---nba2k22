@@ -1,0 +1,79 @@
+schema_version: citystate.current_model.v1
+task_id: os-v2-citystate-local-host-control-baseline-001
+stage_id: current_task
+current_model:
+  problem_or_objective: Establish Task B CityState Local Host Control Baseline, beginning with an end-to-end Remote Desktop Commander POC from a fresh ChatGPT Web execution window to the Human-authorized Windows host.
+  Human_intent_understanding: The foreground owns decisions, architecture, dispatch and adjudication. Substantive execution is delegated to fresh GPT task windows, one task per window. The baseline should preserve broad useful local capability while secrets and destructive/system-high-risk actions remain fail closed or separately Human-gated.
+  current_baseline_and_inputs:
+    remote_master: 759bff35284525c5b9c486f2f097e5e1cdf5f2d6
+    program_architecture_ref: 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/03_方案设计/program_architecture_v1.yml
+    program_task: B_citystate_local_host_control_baseline
+    Human_supplied_runtime_evidence:
+      windows_version: Windows 10
+      node_version: v24.19.0
+      npm_version: 11.17.0
+      remote_device_name: DESKTOP-FPNE2NQ
+      remote_device_state: Desktop Commander Remote authentication completed and device reported online
+    foreground_physical_observation:
+      remote_desktop_commander_device_online: true
+      device_id: d1d29f35-3dc7-43a4-b615-70f9b12ea375
+      desktop_commander_app_version: 0.2.47
+  constraints_and_dependencies:
+  - Task B is independent from Task C self-hosted MCP; do not mutate VPS, DNS, firewall, VPN, nginx, xray or cloudflared in this task.
+  - secrets, credentials, private keys, browser credential/token stores, Windows Credential Store, .env secrets, API keys and auth tokens are fail closed.
+  - no administrator escalation or system-security changes.
+  - no payment, OpenAI API credits or paid third-party service activation.
+  - destructive Git/history operations and destructive/system-high-risk actions require separate explicit Human authority.
+  - the delegated executor must verify the same-task Human challenge in its current interaction before substantive local execution.
+  proposed_method_or_solution:
+  - publish one scoped formal dispatch to a fresh GPT-5.6 Sol ChatGPT Web execution window with GitHub and Remote Desktop Commander access
+  - require fresh repository bootstrap and durable delegation reconstruction from the exact GitHub pointer
+  - require current-Human task-code challenge verification without persisting plaintext
+  - run a harmless POC: tool discovery, directory listing, exact test-file create/readback, benign PowerShell output/version check, process metadata, and optional read-only Git probe when a harmless repository path is already known
+  - clean up only the exact test artifact created by the POC
+  - publish a durable capability matrix and evidence result to the task communication root
+  feasibility_support:
+  - the Human already completed Desktop Commander Remote device authorization and reported the device online
+  - this foreground independently observed the authorized Remote Desktop Commander device online through the connected tool surface
+  - current master program architecture already defines Task B and its permanent baseline acceptance contract
+  - the POC deliberately resolves the remaining ChatGPT Plus action/write entitlement uncertainty before any self-hosted network construction
+  assumptions_risks_alternatives_unknowns:
+  - ChatGPT Plus may discover the Remote Desktop Commander app but still restrict write/action calls
+  - a fresh GPT window may not expose the same connected tools until the Human selects/connects the app
+  - PowerShell 7 availability must be measured rather than assumed
+  - vendor Remote MCP is a baseline transport, not yet accepted as the long-term trusted control plane
+  open_load_bearing_items: []
+  expected_output: A durable POC-A capability matrix for tool discovery, filesystem read/write/readback, PowerShell, process/session and optional Git, with exact failures attributed to the product, app, transport or local runtime layer.
+  verification_or_acceptance_method:
+  - current-Human challenge VERIFIED for the exact v2 authority record
+  - no secret or unrelated file is read
+  - harmless test file is created and read back exactly
+  - PowerShell returns a version and CITYSTATE_TERMINAL_OK
+  - process probe returns bounded metadata only
+  - any Git probe is read-only and bounded
+  - exact POC test artifact is cleaned up only if it was created by this task
+  - executor publishes a formal result with PASS/PARTIAL/BLOCKED per capability and raw claim classes distinguished from inference
+  actual_result: Human_authorized_ready_for_formal_execution_dispatch
+  material_deviation: The task is narrowed to Program Task B only because the current master program architecture requires A, B and C to remain separate major tasks; no Human-authorized capability was expanded.
+  residual_risk: No production local-host baseline is accepted until POC-A evidence and later full Task B fresh-window acceptance cover the permanent execution contract including Python, Git, Unicode path roundtrip and ordinary-user cleanup.
+  current_exact_model_version: chatgpt-local-host-control-mcp-current-model-v2
+  Human_confirmation:
+    explicit: true
+    actor_class: current_Human
+    scope: current_task
+    bound_model_version: chatgpt-local-host-control-mcp-current-model-v2
+    exact_model_version: chatgpt-local-host-control-mcp-current-model-v2
+    decision_id: D-LOCALHOST-BASELINE-001-EXECUTION
+    decision_type: substantive_execution_authorization
+    authority_protocol: citystate-human-task-authority-v2
+    task_authority_id: TA-os-v2-citystate-local-host-control-baseline-001-v1
+    durable_disposition_ref: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/Human/task_authority_v2.yml
+    durable_disposition_blob_sha: fcde1daf11e4a00e39463e325197797e0c48eff1
+    task_nonce_commitment:
+      scheme: citystate-human-task-authority-v2
+      algorithm: sha256
+      digest: d6ce39e2f767aa228b90ad550a602d905cc788eb1fc478843aa4336b0a0af5d9
+    nonce_commitment:
+      scheme: citystate-human-task-authority-v2
+      algorithm: sha256
+      digest: fe652be62acca43614d67a8229e309ea293a23d9150904dce488fd2abb10df9c

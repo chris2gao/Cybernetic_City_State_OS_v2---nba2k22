@@ -1,0 +1,25 @@
+endpoint_id: gpt56-localhost-b-poc-a-executor-001
+task_role: localhost_control_poc_a_execution
+collaboration_role: execution
+provider: OpenAI
+product: ChatGPT
+surface: chatgpt_web
+model: GPT-5.6 Sol
+session_mode: fresh_task_window
+responsibility:
+- reconstruct the exact Task B POC-A dispatch from durable GitHub evidence
+- obtain and verify the current Human task-code challenge before substantive local execution
+- use Remote Desktop Commander only for the bounded harmless POC-A capability probes
+- publish one durable capability result and stop
+availability_observations_and_assumptions:
+- Remote Desktop Commander device DESKTOP-FPNE2NQ was physically observed online by the foreground before dispatch
+- ChatGPT Plus write/action entitlement remains unverified and is a POC outcome, not an assumed fact
+- Remote Desktop Commander local_file_read/local_file_write on this endpoint are required capabilities to be empirically confirmed; denial must be reported, not bypassed
+constraints:
+- no secret, credential, private-key, browser-token, Windows Credential Store or .env access
+- no administrator escalation or system/security configuration change
+- no VPS, DNS, firewall, VPN, nginx, xray or cloudflared action
+- no payment or API-credit activation
+- no destructive Git or unrelated file deletion
+- cleanup is limited to the exact harmless test artifact created by this POC
+- no redelegation

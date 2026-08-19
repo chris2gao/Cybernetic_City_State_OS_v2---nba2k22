@@ -1,0 +1,24 @@
+schema_version: citystate.completion_pointer.v1
+completion_pointer:
+  packet_id: os-v2-citystate-local-host-control-baseline-001
+  status: poc_a_execution_dispatch_preparing
+  source_branch: dev/os-v2-citystate-local-host-control-baseline-001
+  source_base: 759bff35284525c5b9c486f2f097e5e1cdf5f2d6
+  program_task: B_citystate_local_host_control_baseline
+  current_exact_model_version: chatgpt-local-host-control-mcp-current-model-v2
+  Human_task_authority:
+    protocol: citystate-human-task-authority-v2
+    task_authority_id: TA-os-v2-citystate-local-host-control-baseline-001-v1
+    authority_ref: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/Human/task_authority_v2.yml
+    plaintext_code_persisted: false
+  poc_a:
+    executor_endpoint_id: gpt56-localhost-b-poc-a-executor-001
+    delegation_ref: Human/delegations/00001_poc_a_execution.yml
+    formal_request_status: preparing
+    result_status: pending
+  repository:
+    master_modified: false
+    force_push: false
+    history_rewrite: false
+  next_owner: gpt56-localhost-b-foreground-001
+  next_action: publish_formal_POC_A_execution_request
