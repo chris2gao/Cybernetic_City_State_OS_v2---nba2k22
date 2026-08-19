@@ -3,10 +3,11 @@ repository: chris2gao/Cybernetic_City_State_OS_v2---core
 risk_tier: T2_semantic
 exact_base_sha: 536995889b0b33cd050a520e31fdafd32151153c
 branch: dev/os-v2-citystate-local-host-control-program-design-001
-objective: 'Produce the durable Program Current Model implementation design for three major tasks: A ChatGPT
-  Plugin Capability Catalog, B CityState Local Host Control Baseline, and C Self-hosted CityState MCP
-  with feasibility gate then production; include domain planning for gkadastra.eu.org and the observed
-  Windows app-launch capability probe.'
+objective: 'Produce the durable Program Current Model implementation design for three
+  major tasks: A ChatGPT Plugin Capability Catalog, B CityState Local Host Control
+  Baseline, and C Self-hosted CityState MCP with feasibility gate then production;
+  include domain planning for gkadastra.eu.org and the observed Windows app-launch
+  capability probe.'
 source_evidence:
 - Human-confirmed Program Current Model v1 in current interaction
 - 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/02_当前模型/Human授权_v1.yml
@@ -15,6 +16,8 @@ source_evidence:
 - 01_os/03_mechanisms/model_routing/协作角色与接收者设置契约_v1.yml
 allowed_changed_paths:
 - 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/**
+- 01_os/_communication/Cybernetic_City_State_OS_v2---core/discovery.yml
+- 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-program-design-001/**
 required_tests:
 - stage canonical-live-state guard exit 0
 - stage static validator exit 0
@@ -37,7 +40,7 @@ publisher:
   source_write_authorized: true
   master_write_authorized: false
   destructive_git_authorized: false
-  authorization_ref: 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/02_当前模型/Human授权_v1.yml
+  authorization_ref: 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/02_当前模型/Human授权_v2.yml
   expected_remote_head: 536995889b0b33cd050a520e31fdafd32151153c
 executor_profile:
   provider: OpenAI
@@ -46,8 +49,8 @@ executor_profile:
   reasoning_effort: High
   mode: decision_architecture
   parameter_profile: chatgpt_plus_sol_high
-  routing_basis: strongest registered reliable fit for foreground architecture with web/plugin/GitHub
-    context
+  routing_basis: strongest registered reliable fit for foreground architecture with
+    web/plugin/GitHub context
   authority: routing_only
 verification_profile:
   independent_reviewer: Claude Opus 5
@@ -55,3 +58,4 @@ verification_profile:
   different_model_family: true
   fresh_isolated_session: true
   review_exact_candidate_sha: true
+scope_expansion: formal_review_communication_only

@@ -1,0 +1,78 @@
+schema_version: citystate.current_model.v1
+task_id: os-v2-citystate-local-host-control-program-design-001
+stage_id: current_task
+current_model:
+  problem_or_objective: Turn the Human-confirmed three-task CityState plan into durable
+    implementation architecture and dispatch-ready task packets without starting implementation.
+  Human_intent_understanding: Keep the plan coarse-grained; pre-plan gkadastra.eu.org
+    so production can use it when DNS is active; preserve the existing VPS relay;
+    permanently absorb recurring local I/O defects into Task B.
+  current_baseline_and_inputs:
+    remote_master: 536995889b0b33cd050a520e31fdafd32151153c
+    program_branch: dev/os-v2-citystate-local-host-control-program-design-001
+    stage_and_routing_gates: 0/0/0 before design write
+    domain: gkadastra.eu.org
+    remote_desktop_commander_installed: true
+    computer_use_probe: PowerShell 7.6.4 interactive + Notepad GUI process launch
+      observed
+  constraints_and_dependencies:
+  - exactly three major tasks A/B/C
+  - 'Task C has exactly two major stages: feasibility gate then production'
+  - do not touch VPS/DNS in this task
+  - production preserves argosbx and existing proxy/network state
+  - formal communication writes are limited to the exact discovery.yml plus this task
+    communication prefix
+  proposed_method_or_solution:
+  - 'Task A: durable dynamic plugin capability catalog with dated snapshots and fresh-query
+    policy'
+  - 'Task B: formal Local Host Control contract using current RDC baseline plus Unicode/ACL/worktree
+    hygiene and GUI capability separation'
+  - 'Task C1: product entitlement gate first, then harmless custom MCP action probe
+    only if allowed'
+  - 'Task C2: production mcp.gkadastra.eu.org via independent ingress, CityState MCP
+    Edge and Windows local agent, preserving argosbx'
+  - Publish the independent-review request only through communication v2 using the
+    exact authorized discovery file and task communication prefix.
+  feasibility_support:
+  - RDC local Files/PowerShell/Python/Git/process control has already been physically
+    observed
+  - current probe launched pwsh.exe 7.6.4 interactively and launched a Notepad GUI
+    process with a window title
+  - model-routing and stage-collaboration validators are currently healthy after gate
+    repair
+  - domain is registered; DNS activation is an external readiness dependency, not
+    a design blocker
+  assumptions_risks_alternatives_unknowns:
+  - custom self-hosted MCP write/action entitlement on this account remains a product-level
+    unknown and is a hard C1 gate
+  - general visual GUI computer-use (screen perception/click/type) is not proven by
+    the current RDC process/app-launch probe
+  - OAuth/identity provider selection is deferred until C1 passes and current ChatGPT
+    integration requirements are re-read
+  open_load_bearing_items: []
+  expected_output: Durable overall architecture, domain plan, A/B/C task packets,
+    receiver setups, and review/dispatch-ready pointers.
+  verification_or_acceptance_method:
+  - all durable files remain inside this run prefix
+  - program design preserves the Human-confirmed three-task/two-stage topology
+  - independent fresh review before master integration
+  actual_result: program_design_candidate_published_pending_formal_independent_review_dispatch
+  material_deviation: v1 packet omitted the canonical GitHub communication carrier;
+    Human authorized the exact minimal scope expansion
+  residual_risk: program design still requires independent review and Human master
+    gate before Task A execution
+  current_exact_model_version: citystate-local-host-control-program-current-model-v2
+  Human_confirmation:
+    explicit: true
+    actor_class: current_Human
+    scope: current_task
+    bound_model_version: citystate-local-host-control-program-current-model-v2
+    exact_model_version: citystate-local-host-control-program-current-model-v2
+    decision_id: D-CITYSTATE-PROGRAM-DESIGN-001-FORMAL-REVIEW-SCOPE
+    decision_type: substantive_execution_authorization
+    durable_disposition_ref: 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/02_当前模型/Human授权_v2.yml
+    durable_disposition_blob_sha: 73b32ceb9d2e471a20562123c0ff0b2e8a05b0a9
+    nonce_commitment:
+      scheme: citystate-human-authority-v1
+      algorithm: sha256
+      digest: 13a4cbf278cee84a8af94d66a659bcaddd72b4b9089b968956a29e163eae8c51
