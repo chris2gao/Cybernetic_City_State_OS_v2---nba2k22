@@ -1,0 +1,34 @@
+schema_version: citystate.completion_pointer.v1
+pointer_id: completion_pointer_00002
+task_id: os-v2-citystate-local-host-control-baseline-001
+run_id: run-20260819-citystate-local-host-control-baseline-001
+append_only: true
+rewrites_prior_pointer_in_place: false
+supersedes: completion_pointer_00001
+supersedes_record_ref: 01_os/_runs/run-20260819-citystate-local-host-control-baseline-001/08_结论/completion_pointer_v1.yml
+status: poc_a_execution_dispatched
+source_branch: dev/os-v2-citystate-local-host-control-baseline-001
+source_base: 759bff35284525c5b9c486f2f097e5e1cdf5f2d6
+setup_commit: 805fa60cbaeff760fa8e1b88f9e0654bdc53c3a0
+formal_dispatch:
+  publication_commit: ca7e85942f1d9907430590af35d6852f0bfef1ec
+  message_ref: ca7e85942f1d9907430590af35d6852f0bfef1ec:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/messages/gpt56-localhost-b-foreground-001/00001_request.yml
+  constitution_ref: ca7e85942f1d9907430590af35d6852f0bfef1ec:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/constitutions/gpt56-localhost-b-foreground-001/00001.yml
+  compliance_receipt_ref: ca7e85942f1d9907430590af35d6852f0bfef1ec:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/receipts/gpt56-localhost-b-foreground-001/00001.yml
+  gate_result: VERIFIED
+  aggregate_receipt: VERIFIED
+Human_task_authority:
+  protocol: citystate-human-task-authority-v2
+  task_authority_id: TA-os-v2-citystate-local-host-control-baseline-001-v1
+  authority_ref: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/Human/task_authority_v2.yml
+  plaintext_code_persisted: false
+poc_a:
+  executor_endpoint_id: gpt56-localhost-b-poc-a-executor-001
+  delegation_ref: Human/delegations/00001_poc_a_execution.yml
+  result_status: pending
+repository:
+  master_modified: false
+  force_push: false
+  history_rewrite: false
+next_owner: gpt56-localhost-b-poc-a-executor-001
+next_action: Human_relays_exact_pointer_then_recipient_verifies_current_Human_task_code_challenge_and_executes_POC_A
