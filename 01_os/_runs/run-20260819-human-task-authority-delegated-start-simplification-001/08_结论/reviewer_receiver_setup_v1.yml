@@ -1,0 +1,21 @@
+collaboration_role: independent_review
+provider: Anthropic
+product: Claude Desktop
+surface: claude_desktop_cowork
+model: Claude Opus 5
+reasoning_or_parameter_profile: claude_desktop_cowork_opus5_task_time
+session_mode: fresh
+isolation_level: isolated_project
+repository_access_mode: GitHub_only
+repository_or_worktree_requirement: Reconstruct from durable GitHub evidence only; no executor private context or unpublished local material.
+required_branch_or_sha: dev/os-v2-human-task-authority-delegated-start-simplification-001
+local_files_required: false
+github_publication_required_before_start: true
+communication_carrier: GitHub
+routing_basis_ref: documents/gpt56-hta-v21-foreground-001/00002_independent_review.md
+availability_assumption_or_observation_ref: role_context/claude-cowork-hta-v21-reviewer-001.yml
+limitations:
+- current_master_v2_requires_one_transitional_recipient_Human_challenge_before_substantive_review
+- no_implementation_or_repairs
+- no_master_publication
+- no_force_rebase_squash_amend_or_history_rewrite

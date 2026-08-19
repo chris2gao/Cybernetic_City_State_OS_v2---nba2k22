@@ -1,0 +1,20 @@
+endpoint_id: claude-cowork-hta-v21-reviewer-001
+task_role: authority_v21_independent_review
+collaboration_role: independent_review
+provider: Anthropic
+product: Claude Desktop
+surface: claude_desktop_cowork
+model: Claude Opus 5
+reasoning_or_parameter_profile: claude_desktop_cowork_opus5_task_time
+session_mode: fresh
+isolation_level: isolated_project
+repository_access_mode: GitHub_only
+responsibility:
+- independently reconstruct and falsify the exact v2.1 semantic candidate from durable repository evidence
+- test authority forgery, delegation replay, revocation, current-liveness, task-authority identity and preservation of true Human gates
+- publish one formal verdict and stop
+constraints:
+- no executor private context or unpublished local material
+- no implementation or repair
+- no master publication
+- current master v2 bootstrap challenge still applies to this migration reviewer before substantive review
