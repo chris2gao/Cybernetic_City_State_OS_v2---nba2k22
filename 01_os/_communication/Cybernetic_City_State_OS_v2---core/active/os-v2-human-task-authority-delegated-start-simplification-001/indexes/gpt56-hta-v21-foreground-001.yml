@@ -5,3 +5,10 @@
   expected_recipient_endpoint_id: gpt56-hta-v21-executor-001
   expected_recipient_task_role: authority_v21_implementation
   exact_message_path: messages/gpt56-hta-v21-foreground-001/00001_request.yml
+- sequence: '00002'
+  message_id: os-v2-human-task-authority-delegated-start-simplification-001::gpt56-hta-v21-foreground-001::00002
+  title: Independently review Human Task Authority v2.1 semantic candidate
+  message_type: request
+  expected_recipient_endpoint_id: claude-cowork-hta-v21-reviewer-001
+  expected_recipient_task_role: authority_v21_independent_review
+  exact_message_path: messages/gpt56-hta-v21-foreground-001/00002_request.yml
