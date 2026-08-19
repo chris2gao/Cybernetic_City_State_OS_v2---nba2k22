@@ -1,40 +1,38 @@
 schema_version: citystate.dispatch_boundary_defect.v1
 task_id: os-v2-citystate-local-host-control-program-design-001
 semantic_candidate_sha: 3248912d182c3f185378af9e003f4ac21b9e0b6a
-status: blocked_before_formal_action_publication
-
+status: resolved_by_Human_authorized_exact_scope_expansion
 observed_contract:
   communication_GitHub_logical_root: 01_os/_communication/<repository_id>/
   repository_partition: Cybernetic_City_State_OS_v2---core
   required_task_prefix: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-program-design-001/**
   pointer_contract: v2
   formal_action_requires_constitution_and_compliance_receipt: true
-
 current_authorized_boundary:
-  - 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/**
+- 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/**
 Human_scope_ref: ../02_当前模型/Human授权_v1.yml
 Human_scope_statement: dispatch/review materials inside this run only
-
-conflict: >-
-  The Human-confirmed program includes review/dispatch materials, but the durable
-  task boundary does not permit the canonical GitHub communication carrier path.
-  Publishing a formal cross-endpoint review request would therefore exceed the
+conflict: The Human-confirmed program includes review/dispatch materials, but the
+  durable task boundary does not permit the canonical GitHub communication carrier
+  path. Publishing a formal cross-endpoint review request would therefore exceed the
   current packet even though the semantic candidate itself is complete.
-
 mechanical_remedy_if_Human_authorizes:
-  - add only the exact communication task prefix to allowed_changed_paths
-  - record a new material-scope Human disposition with a new code
-  - initialize the v2 communication task context
-  - materialize sender and independent-review endpoint cards
-  - run mechanism-activation resolver and pre-action gate
-  - publish request + sender index + constitution evidence + compliance receipt
-  - converge once to the current source branch and read back exact GitHub commit
-  - emit only the resulting v2 Human relay pointer
-
+- add only the exact communication task prefix to allowed_changed_paths
+- record a new material-scope Human disposition with a new code
+- initialize the v2 communication task context
+- materialize sender and independent-review endpoint cards
+- run mechanism-activation resolver and pre-action gate
+- publish request + sender index + constitution evidence + compliance receipt
+- converge once to the current source branch and read back exact GitHub commit
+- emit only the resulting v2 Human relay pointer
 not_done:
   formal_message_published: false
   communication_pointer_emitted: false
   master_modified: false
   A_B_C_implementation_started: false
-next_owner: Human
-required_decision: authorize_or_decline_exact_formal_communication_prefix_scope_expansion
+next_owner: independent_reviewer
+required_decision: none_boundary_resolved
+resolution:
+  Human_authorization_ref: ../02_当前模型/Human授权_v2.yml
+  formal_pointer_commit: 2b6b8d43b06b296d397ff7d47e990c56128063ea
+  master_modified: false

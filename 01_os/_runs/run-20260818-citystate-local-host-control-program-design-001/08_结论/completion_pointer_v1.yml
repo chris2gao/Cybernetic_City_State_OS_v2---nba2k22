@@ -1,10 +1,10 @@
 schema_version: citystate.completion_pointer.v1
 completion_pointer:
   packet_id: os-v2-citystate-local-host-control-program-design-001
-  status: blocked
+  status: independent_review_dispatched
   source_branch: dev/os-v2-citystate-local-host-control-program-design-001
   source_base: 536995889b0b33cd050a520e31fdafd32151153c
-  source_head: 3248912d182c3f185378af9e003f4ac21b9e0b6a
+  source_head: 2b6b8d43b06b296d397ff7d47e990c56128063ea
   semantic_candidate_sha: 3248912d182c3f185378af9e003f4ac21b9e0b6a
   validation:
     current_model_readiness_exit_code: 0
@@ -32,13 +32,15 @@ completion_pointer:
     remote_master_after_candidate_publication: 536995889b0b33cd050a520e31fdafd32151153c
   independent_review:
     receiver_setup_ref: reviewer_receiver_setup_v1.yml
-    formal_dispatch_status: blocked_by_durable_allowed_path_boundary
+    formal_dispatch_status: published_v2_GitHub_pointer
     boundary_defect_ref: formal_dispatch_boundary_defect_v1.yml
-    formal_message_published: false
-    v2_Human_relay_pointer_emitted: false
+    formal_message_published: true
+    v2_Human_relay_pointer_emitted: true
+    formal_pointer_commit: 2b6b8d43b06b296d397ff7d47e990c56128063ea
+    formal_message_ref: 2b6b8d43b06b296d397ff7d47e990c56128063ea:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-program-design-001/messages/gpt56-citystate-program-foreground-001/00001_request.yml
   program_outputs:
     architecture_ref: ../03_方案设计/program_architecture_v1.yml
     task_A_design_ref: ../04_任务设计/task_A_plugin_catalog_planned_v1.yml
     task_B_design_ref: ../04_任务设计/task_B_local_host_control_planned_v1.yml
     task_C_design_ref: ../04_任务设计/task_C_self_hosted_mcp_planned_v1.yml
-  next_owner: Human
+  next_owner: Human_relay_to_independent_reviewer
