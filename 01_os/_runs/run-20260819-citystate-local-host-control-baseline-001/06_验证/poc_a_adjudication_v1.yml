@@ -1,0 +1,25 @@
+task_id: os-v2-citystate-local-host-control-baseline-001
+evidence_type: foreground_adjudication
+stage: poc_a
+status: accepted_as_bounded_runtime_evidence
+adjudicated_by_endpoint_id: gpt56-localhost-b-foreground-001
+basis:
+- formal_result: f462e669517da7949d090901b48f9e95dfe25ac0:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/messages/gpt56-localhost-b-poc-a-executor-002/00001_result.yml
+- compliance_receipt: f462e669517da7949d090901b48f9e95dfe25ac0:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/receipts/gpt56-localhost-b-poc-a-executor-002/00001.yml
+accepted_claims:
+- Remote Desktop Commander tool/device discovery passed in the executor window.
+- Harmless Windows filesystem list/write/readback/cleanup passed.
+- PowerShell 7 execution passed at observed version 7.6.4.
+- Bounded node process metadata and read-only core Git probes passed.
+- Human Task Authority v2.1 delegated start passed without recipient Human code input.
+evidence_classification:
+  windows_runtime_claims: executor_physically_observed_not_foreground_independently_reproduced
+  publication_identity: physically_read_back_from_GitHub
+  compliance_receipt: physically_read_back_from_GitHub
+not_accepted_by_this_adjudication:
+- final_Task_B_completion
+- Python_final_acceptance
+- non_ASCII_path_roundtrip_final_acceptance
+- permanent_fresh_window_acceptance_contract
+- Task_C_start
+next_action: dispatch_fresh_final_baseline_acceptance_executor
