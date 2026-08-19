@@ -1,0 +1,16 @@
+endpoint_id: gpt56-citystate-program-foreground-001
+task_role: program_design_foreground_dispatch
+collaboration_role: decision_architecture
+provider: OpenAI
+product: ChatGPT
+surface: chatgpt_web
+model: GPT-5.6 Sol
+session_mode: current_project_session
+responsibility:
+- preserve Human-confirmed A/B/C topology
+- dispatch exact semantic candidate for independent review
+- adjudicate review before any master request
+constraints:
+- no master publication in this action
+- no A/B/C implementation
+- no VPS DNS or runtime mutation

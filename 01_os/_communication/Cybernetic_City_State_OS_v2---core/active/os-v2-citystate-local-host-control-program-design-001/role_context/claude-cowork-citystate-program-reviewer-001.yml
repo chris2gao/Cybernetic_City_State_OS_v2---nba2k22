@@ -1,0 +1,18 @@
+endpoint_id: claude-cowork-citystate-program-reviewer-001
+task_role: program_design_independent_review
+collaboration_role: independent_review
+provider: Anthropic
+product: Claude Desktop
+surface: claude_desktop_cowork
+model: Claude Opus 5
+session_mode: fresh
+availability_basis: HUMAN_COWORK_OPUS5_20260815
+responsibility:
+- reconstruct from durable GitHub evidence only
+- review exact semantic candidate SHA independently
+- return accept reject or blocking findings with primary evidence
+constraints:
+- no executor private context
+- no unpublished local material
+- do not review metadata commits as semantic candidate
+- no implementation or master publication
