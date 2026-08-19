@@ -48,12 +48,13 @@ prohibitions:
 required_completion_pointer: 01_os/_runs/run-20260819-human-task-authority-delegated-start-simplification-001/08_结论/completion_pointer_v1.yml
 executor_profile:
   provider: OpenAI
-  product: Codex Desktop
-  surface: codex_desktop
+  product: ChatGPT
+  surface: chatgpt_web_with_Remote_Desktop_Commander
   model: GPT-5.6 Sol
-  reasoning_or_parameter_profile: codex_sol_strongest_exposed
-  collaboration_role: execution
-  fresh_session: true
+  reasoning_or_parameter_profile: chatgpt_plus_sol_high
+  collaboration_role: decision_architecture_with_Human_direct_execution_override
+  fresh_session: false
+  Human_override_ref: ../../_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-human-task-authority-delegated-start-simplification-001/Human/supersessions/00001_task_authority.yml
 verification_profile:
   independent_reviewer: Claude Opus 5
   surface: Claude Desktop / Cowork

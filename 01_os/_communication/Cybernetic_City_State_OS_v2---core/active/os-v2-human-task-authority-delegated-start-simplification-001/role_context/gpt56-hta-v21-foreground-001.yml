@@ -1,6 +1,6 @@
 endpoint_id: gpt56-hta-v21-foreground-001
 task_role: authority_v21_foreground_dispatch
-collaboration_role: decision_architecture
+collaboration_role: decision_architecture_with_Human_direct_execution_override
 provider: OpenAI
 product: ChatGPT
 surface: chatgpt_web
@@ -9,9 +9,10 @@ reasoning_or_parameter_profile: chatgpt_plus_sol_high
 session_mode: current_project_session
 responsibility:
 - preserve the Human-confirmed one-task-one-code v2.1 semantics
-- establish durable task authority and scoped implementation delegation
-- adjudicate implementation and independent review before any master request
+- execute the semantic candidate directly because the Human explicitly reassigned this task from Codex to this foreground
+- run local causal tests through the authorized Remote Desktop Commander worktree
+- adjudicate independent review before any master request
 constraints:
-- do not implement the semantic candidate in the foreground
+- direct execution authority is task-specific and does not change the default foreground/backend role topology
 - no master publication before independent review and Human completion gate
 - no force rebase squash amend or history rewrite

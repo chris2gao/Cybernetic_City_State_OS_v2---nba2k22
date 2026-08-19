@@ -41,9 +41,9 @@ current_model:
   - initial task authority and true Human decision/protected/completion gates still require valid Human authority commitments and cannot be self-asserted by a model
   - tracked diff contains no plaintext Human code
   - exact candidate receives fresh independent falsification review before any completion/master request
-  actual_result: Human_confirmed_ready_for_implementation_dispatch
-  material_deviation: none
-  residual_risk: Until this candidate is independently reviewed and integrated into master, current v2 remains authoritative and this migration executor itself must still perform the old recipient-current-interaction challenge once.
+  actual_result: Human_direct_foreground_execution_authorized_after_task_authority_supersession
+  material_deviation: Execution routing changed from the previously dispatched Codex endpoint to this current foreground by explicit Human override; v2.1 architecture and scope are unchanged.
+  residual_risk: Until this candidate is independently reviewed and integrated into master, current v2 remains authoritative; this direct foreground execution is authorized by the current Human under the superseding task authority.
   current_exact_model_version: human-task-authority-v2.1-current-model-v1
   Human_confirmation:
     explicit: true
@@ -51,17 +51,17 @@ current_model:
     scope: current_task
     bound_model_version: human-task-authority-v2.1-current-model-v1
     exact_model_version: human-task-authority-v2.1-current-model-v1
-    decision_id: D-HTA-V21-001-EXECUTION
+    decision_id: D-HTA-V21-002-FOREGROUND-EXECUTION
     decision_type: substantive_execution_authorization
     authority_protocol: citystate-human-task-authority-v2
-    task_authority_id: TA-os-v2-human-task-authority-delegated-start-simplification-001-v1
+    task_authority_id: TA-os-v2-human-task-authority-delegated-start-simplification-001-v2
     durable_disposition_ref: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-human-task-authority-delegated-start-simplification-001/Human/task_authority_v2.yml
-    durable_disposition_blob_sha: 83e11a55a1de84c1d31ebe2f7f2dc038f92fa37b
+    durable_disposition_blob_sha: 5301ed20f557e498b7248988f9ea88ce92aa27dc
     task_nonce_commitment:
       scheme: citystate-human-task-authority-v2
       algorithm: sha256
-      digest: 1efeac544243c8e2f198ad65e81eacbe53f65c1016bbed02475aaa0e1a3609e8
+      digest: a68d0b37b692ad033f82bbb70de172a4a8417ed0eacdfeded127d09e20671e72
     nonce_commitment:
       scheme: citystate-human-task-authority-v2
       algorithm: sha256
-      digest: 7462a829d74255047bbd24ea884b61c4adaba71d442c9328269feb8e3b79b7d3
+      digest: 6ddeb5b4745a53dde9c02901c86455bca4ba21a969ccdbb7398a540dbee9cf66
