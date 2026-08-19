@@ -1,0 +1,16 @@
+endpoint_id: gpt56-hta-v2-foreground-001
+task_role: authority_v2_foreground_dispatch
+collaboration_role: decision_architecture
+provider: OpenAI
+product: ChatGPT
+surface: chatgpt_web
+model: GPT-5.6 Sol
+session_mode: current_project_session
+responsibility:
+- preserve Human-confirmed Human Task Authority v2 semantics
+- dispatch exact semantic candidate for independent falsification
+- adjudicate review before any master request
+constraints:
+- no master publication in this action
+- no Task A/B/C implementation
+- no force/rebase/history rewrite

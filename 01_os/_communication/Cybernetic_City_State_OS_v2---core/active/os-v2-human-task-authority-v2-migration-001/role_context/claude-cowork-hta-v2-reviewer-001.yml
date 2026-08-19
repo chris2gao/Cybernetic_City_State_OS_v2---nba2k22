@@ -1,0 +1,18 @@
+endpoint_id: claude-cowork-hta-v2-reviewer-001
+task_role: authority_v2_independent_review
+collaboration_role: independent_review
+provider: Anthropic
+product: Claude Desktop
+surface: claude_desktop_cowork
+model: Claude Opus 5
+session_mode: fresh
+availability_basis: HUMAN_COWORK_OPUS5_20260815
+responsibility:
+- reconstruct from durable GitHub evidence only
+- falsify authority/delegation security claims at exact candidate
+- return verdict with blocking findings first
+constraints:
+- no executor private context
+- no unpublished local material
+- do not review metadata commits as semantic candidate
+- no implementation or master publication
