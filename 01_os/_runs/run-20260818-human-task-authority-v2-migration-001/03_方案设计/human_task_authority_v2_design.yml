@@ -1,0 +1,42 @@
+schema_version: citystate.human_task_authority.design.v2
+status: Human_confirmed_for_implementation
+authority_scheme: citystate-human-task-authority-v2
+root_principles:
+  - Human_is_root_authority
+  - one_Human_Task_Authority_Code_per_task
+  - code_reuse_allowed_only_inside_same_task_authority
+  - every_material_Human_decision_still_requires_explicit_current_Human_disposition
+  - same_task_code_may_bind_multiple_distinct_decision_events
+  - model_role_provider_or_code_possession_alone_grants_no_action_authority
+  - dispatcher_may_delegate_only_within_Human_task_scope
+  - Human_may_directly_override_revoke_or_supersede_dispatcher_delegation
+  - plaintext_code_never_persists_in_repository_or_communication_artifacts
+  - Human_challenge_obtains_code_from_current_Human_even_if_delegated_models_also_know_it
+authority_objects:
+  Human_task_authority_event_v2:
+    stable_identity: [task_id, task_authority_id]
+    task_commitment_binds: [task_id, task_authority_id, initial_authority_holder_endpoint_id, initial_authority_holder_task_role, Human_disposition, task_authority_scope]
+    event_commitment_binds: [task_id, task_authority_id, stage_id, decision_id, decision_type, exact_model_version, Human_disposition, authorized_scope]
+  dispatcher_delegation_v2:
+    binds: [task_id, delegation_id, delegator_endpoint_id, delegator_task_role, recipient_endpoint_id, recipient_task_role, authorized_actions, delegated_scope, parent_delegation_ref, allow_redelegation, Human_task_authority_ref]
+    self_delegation: prohibited
+    root_delegator_must_equal_Human_bound_initial_holder: true
+    redelegation_requires_live_parent_and_explicit_parent_allow_redelegation: true
+    child_actions_must_be_subset_of_parent_actions: true
+    child_scope_must_be_subset_of_parent_and_Human_task_scope: true
+    revocation: fail_closed
+    delegated_endpoint_start_gate: [live_delegation_chain_VERIFIED, same_task_Human_code_challenge_VERIFIED_in_recipient_current_interaction]
+    code_release: dispatcher_delegation_authorizes_Human_ephemeral_relay_to_recipient
+communication:
+  sender_authority: direct_Human_or_live_delegation
+  request_to_new_recipient: recipient_delegation_ref_required_when_granting_action_authority
+  code_in_message_or_required_document: prohibited
+review_independence:
+  same_model_family: permitted_when_explicitly_selected_and_disclosed
+  required_independence: [fresh_session_or_project, distinct_endpoint, no_executor_private_context, durable_primary_evidence_reconstruction]
+  model_family_diversity: reported_dimension_not_absolute_gate
+legacy:
+  v1_records: historical_challenge_and_read_compatibility_only
+  new_v1_production_issuance_after_migration: prohibited
+protected_boundaries:
+  preserved: [force_push_action_bound, history_rewrite_controls, runtime_scheduler_activation_gate, secrets_fail_closed, core_history_rewrite_prohibition]

@@ -1,0 +1,20 @@
+schema_version: citystate.Human_disposition_record.v1
+task_id: os-v2-human-task-authority-v2-migration-001
+stage_id: current_task
+decision_id: D-HUMAN-TASK-AUTHORITY-V2-MIGRATION-001-EXECUTION
+decision_type: substantive_execution_authorization
+exact_model_version: human-task-authority-v2-migration-current-model-v1
+Human_disposition: authorized
+authorized_scope: >-
+  Authorize Human Task Authority v2 mechanism migration on a task branch: replace per-event one-time Human codes with one task-wide Human Task Authority Code plus durable scoped delegation; permit fresh isolated same-model-family independent review when explicitly selected; update the stage authority contract/validators/challenge verifier, communication authority/delegation contract/validator/tests, review discipline, exact boot/workflow/registry bindings, run evidence, and this task's formal communication carrier. Ordinary non-force source-branch publication is allowed. Do not modify master before independent review and a current v1 completion/master Human gate; do not force, rebase, squash, amend, rewrite history, activate runtime/scheduler, access secrets, or implement Task A/B/C.
+actor_class: current_Human
+explicit: true
+provenance: foreground_current_Human_interaction
+Human_nonce_plaintext_stored: false
+nonce_commitment:
+  scheme: citystate-human-authority-v1
+  algorithm: sha256
+  digest: f7dd703be9a716fb9585142b0b3a1e5c04c41dda737e76897982d4b8e1f07ddc
+stale: false
+invalidated: false
+consumed_by: D-HUMAN-TASK-AUTHORITY-V2-MIGRATION-001-EXECUTION

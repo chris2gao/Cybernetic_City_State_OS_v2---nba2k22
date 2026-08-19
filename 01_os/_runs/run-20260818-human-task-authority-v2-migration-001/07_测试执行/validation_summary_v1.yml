@@ -1,0 +1,65 @@
+schema_version: citystate.human_task_authority_v2.validation_summary.v1
+task_id: os-v2-human-task-authority-v2-migration-001
+base_sha: 857c667547c93e9b9c3c26ed1316db38919a25a3
+candidate_state: precommit_worktree_validated
+authority_evidence:
+  migration_authority_protocol: citystate-human-authority-v1
+  durable_disposition_ref: 01_os/_runs/run-20260818-human-task-authority-v2-migration-001/02_当前模型/Human授权_v1.yml
+  master_v1_current_model_readiness_exit: 0
+  legacy_Human_challenge_cli_result: verified
+  plaintext_Human_code_persisted: false
+semantic_closure:
+  Human_root_authority: enforced_by_contract
+  one_task_code_reused_inside_same_task: covered
+  cross_task_code_reuse: rejected
+  initial_dispatcher_bound_in_task_commitment: covered
+  code_possession_without_delegation: unauthorized
+  forged_root_delegator: rejected
+  redelegation_requires_live_parent_and_explicit_permission: covered
+  redelegation_actions_and_scope_must_narrow: covered
+  delegated_recipient_start_requires_same_task_code_challenge: canonicalized
+  same_model_family_fresh_isolated_review: permitted_and_disclosed
+  legacy_v1_challenge_verification: preserved
+tests:
+  focused_human_task_authority_v2:
+    command_ref: 01_os/_runs/run-20260818-human-task-authority-v2-migration-001/07_测试执行/test_human_task_authority_v2.py
+    exit_code: 0
+    result: PASS
+  communication_unit:
+    command_ref: 01_os/06_execution/boot/communication_system/validator/test_validator.py
+    exit_code: 0
+    result: 25_passed
+    pytest_cacheprovider: disabled
+  stage_canonical_live_state_guard:
+    exit_code: 0
+  stage_static_validator:
+    exit_code: 0
+  communication_static_validator:
+    exit_code: 0
+  git_diff_check:
+    exit_code: 0
+scope_and_artifact_evidence:
+  pre_evidence_metadata_changed_path_count: 22
+  outside_allowlist_count: 0
+  active_old_rule_match_count: 0
+  personal_absolute_path_match_count: 0
+  binary_artifact_count: 0
+candidate_caused_failures: 0
+construction_findings_resolved:
+  - finding: initial delegation validator did not prove the delegator was the Human-bound initial dispatcher
+    resolution: task commitment now binds initial dispatcher endpoint and role; root delegation must match it; re-delegation recursively binds a live parent and narrows authority
+  - finding: delegated authority alone did not prove the recipient received the Human task code
+    resolution: delegated recipient start gate now requires both a live delegation chain and same-task Human code challenge VERIFIED in the recipient current interaction
+known_limits:
+  - same-model-family review remains less diverse than cross-family review and must disclose that limitation
+  - a malicious model that already knows the plaintext task code is outside the cryptographic identity claim; code possession alone still grants no repository action authority
+  - v1 production issuance remains governed by the pre-migration mechanism until this candidate is independently reviewed and integrated to master
+independent_review: pending
+master_modified: false
+force_rebase_squash_amend_history_rewrite: none
+final_precommit_changed_path_count: 23
+final_precommit_outside_allowlist_count: 0
+publication_provenance_limit:
+  observed_local_git_identity: Fixture <fixture@example.invalid>
+  pre_existing_configuration: true
+  changed_by_this_task: false

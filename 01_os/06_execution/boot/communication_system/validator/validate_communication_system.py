@@ -37,7 +37,7 @@ MESSAGE_REQUIRED = {
 }
 MESSAGE_OPTIONAL = {
     "requested_action", "in_reply_to", "supersedes", "references",
-    "authorization_ref", "facts", "decisions", "assumptions", "unknowns",
+    "authorization_ref", "recipient_delegation_ref", "facts", "decisions", "assumptions", "unknowns",
     "constraints", "risks",
 }
 MESSAGE_TYPES = {"request", "response", "result", "decision_required", "correction", "blocked"}
@@ -264,6 +264,163 @@ class CommunicationValidator:
         if index_index <= message_index:
             raise CommunicationValidationError("publication_index_order_invalid")
 
+    def _load_authority_mapping(self, task_root: Path, relative: str) -> dict[str, Any]:
+        ref = canonical_task_relative_ref(relative, "authorization_ref_noncanonical")
+        target = (task_root.resolve() / ref).resolve()
+        try:
+            target.relative_to(task_root.resolve())
+        except ValueError as exc:
+            raise CommunicationValidationError("authorization_ref_outside_task_root") from exc
+        if not target.is_file():
+            raise CommunicationValidationError("authorization_ref_unreadable")
+        value = load_yaml(target)
+        if not isinstance(value, dict):
+            raise CommunicationValidationError("authorization_ref_not_mapping")
+        return value
+
+    def _validate_Human_task_authority_v2(self, root: dict[str, Any], *, task_id: str) -> set[str]:
+        commitment = root.get("task_nonce_commitment") or {}
+        scope = root.get("task_authority_scope")
+        holder = root.get("initial_authority_holder_endpoint_id")
+        holder_role = root.get("initial_authority_holder_task_role")
+        if (
+            root.get("task_id") != task_id
+            or not root.get("task_authority_id")
+            or root.get("Human_disposition") not in {"authorized", "confirmed", "accepted"}
+            or root.get("task_authority_revoked") is True
+            or not isinstance(holder, str) or not SAFE_ID.fullmatch(holder)
+            or not isinstance(holder_role, str) or not holder_role
+            or not isinstance(scope, list) or not scope
+            or any(not isinstance(item, str) or not item for item in scope)
+            or len(scope) != len(set(scope))
+            or not isinstance(commitment, dict)
+            or commitment.get("scheme") != "citystate-human-task-authority-v2"
+            or commitment.get("algorithm") != "sha256"
+            or not re.fullmatch(r"[0-9a-f]{64}", str(commitment.get("digest", "")))
+        ):
+            raise CommunicationValidationError("Human_task_authority_v2_invalid")
+        return set(scope)
+
+    def _validate_delegation_chain(
+        self, physical: dict[str, Any], *, task_root: Path, task_id: str,
+        required_refs: list[str], expected_recipient_endpoint_id: str,
+        expected_recipient_task_role: str, requested_action: str,
+    ) -> None:
+        root_ref = physical.get("Human_task_authority_ref")
+        if not isinstance(root_ref, str) or root_ref not in required_refs:
+            raise CommunicationValidationError("Human_task_authority_ref_required")
+        root = self._load_authority_mapping(task_root, root_ref)
+        root_scope = self._validate_Human_task_authority_v2(root, task_id=task_id)
+        root_holder = root["initial_authority_holder_endpoint_id"]
+        root_holder_role = root["initial_authority_holder_task_role"]
+
+        child: dict[str, Any] | None = None
+        current = physical
+        seen_parent_refs: set[str] = set()
+        for _depth in range(32):
+            if current.get("schema_version") != "citystate.communication.task_authority_delegation.v2":
+                raise CommunicationValidationError("authorization_v2_schema_invalid")
+            if current.get("task_id") != task_id or current.get("granted") is not True or current.get("revoked") is True:
+                raise CommunicationValidationError("authorization_v2_not_live")
+            if current.get("Human_task_authority_ref") != root_ref:
+                raise CommunicationValidationError("delegation_root_authority_mismatch")
+            delegator = current.get("delegator_endpoint_id")
+            delegator_role = current.get("delegator_task_role")
+            recipient = current.get("recipient_endpoint_id")
+            recipient_role = current.get("recipient_task_role")
+            if not all(isinstance(value, str) and value for value in (delegator, delegator_role, recipient, recipient_role)):
+                raise CommunicationValidationError("delegation_identity_invalid")
+            if delegator == recipient:
+                raise CommunicationValidationError("self_delegation_prohibited")
+            actions = current.get("authorized_actions")
+            scope = current.get("delegated_scope")
+            if (
+                not isinstance(actions, list) or not actions
+                or any(not isinstance(item, str) or not item for item in actions)
+                or len(actions) != len(set(actions))
+                or not isinstance(scope, list) or not scope
+                or any(not isinstance(item, str) or not item for item in scope)
+                or len(scope) != len(set(scope))
+            ):
+                raise CommunicationValidationError("delegation_action_or_scope_invalid")
+            if not set(scope).issubset(root_scope):
+                raise CommunicationValidationError("delegation_exceeds_Human_task_scope")
+            if child is not None:
+                if child.get("delegator_endpoint_id") != recipient or child.get("delegator_task_role") != recipient_role:
+                    raise CommunicationValidationError("delegation_parent_recipient_mismatch")
+                if current.get("allow_redelegation") is not True:
+                    raise CommunicationValidationError("redelegation_not_granted")
+                if not set(child["authorized_actions"]).issubset(set(actions)):
+                    raise CommunicationValidationError("redelegation_action_expansion")
+                if not set(child["delegated_scope"]).issubset(set(scope)):
+                    raise CommunicationValidationError("redelegation_scope_expansion")
+
+            parent_ref = current.get("parent_delegation_ref")
+            if parent_ref is None:
+                if delegator != root_holder or delegator_role != root_holder_role:
+                    raise CommunicationValidationError("root_delegator_not_Human_bound_holder")
+                break
+            if not isinstance(parent_ref, str) or parent_ref not in required_refs:
+                raise CommunicationValidationError("parent_delegation_ref_required")
+            if parent_ref in seen_parent_refs:
+                raise CommunicationValidationError("delegation_cycle_detected")
+            seen_parent_refs.add(parent_ref)
+            child = current
+            current = self._load_authority_mapping(task_root, parent_ref)
+        else:
+            raise CommunicationValidationError("delegation_chain_too_deep")
+
+        if physical.get("recipient_endpoint_id") != expected_recipient_endpoint_id or physical.get("recipient_task_role") != expected_recipient_task_role:
+            raise CommunicationValidationError("authorization_v2_recipient_mismatch")
+        if requested_action not in physical.get("authorized_actions", []):
+            raise CommunicationValidationError("authorization_v2_action_not_delegated")
+
+    def _validate_v2_authorization_document(
+        self, physical: dict[str, Any], *, task_root: Path, task_id: str,
+        writer_endpoint_id: str, writer_task_role: str, requested_action: str,
+        required_refs: list[str],
+    ) -> None:
+        schema = physical.get("schema_version")
+        if schema == "citystate.communication.task_authority_delegation.v2":
+            self._validate_delegation_chain(
+                physical, task_root=task_root, task_id=task_id,
+                required_refs=required_refs,
+                expected_recipient_endpoint_id=writer_endpoint_id,
+                expected_recipient_task_role=writer_task_role,
+                requested_action=requested_action,
+            )
+            return
+        if schema != "citystate.communication.direct_human_authorization.v2":
+            raise CommunicationValidationError("authorization_v2_schema_invalid")
+        if physical.get("task_id") != task_id or physical.get("granted") is not True or physical.get("revoked") is True:
+            raise CommunicationValidationError("authorization_v2_not_live")
+        actions = physical.get("authorized_actions")
+        if not isinstance(actions, list) or requested_action not in actions:
+            raise CommunicationValidationError("authorization_v2_action_not_delegated")
+        if physical.get("writer_endpoint_id") != writer_endpoint_id or physical.get("writer_task_role") != writer_task_role:
+            raise CommunicationValidationError("authorization_v2_writer_mismatch")
+        root_ref = physical.get("Human_task_authority_ref")
+        if not isinstance(root_ref, str) or root_ref not in required_refs:
+            raise CommunicationValidationError("Human_task_authority_ref_required")
+        root = self._load_authority_mapping(task_root, root_ref)
+        self._validate_Human_task_authority_v2(root, task_id=task_id)
+
+    def validate_recipient_delegation(self, message: dict[str, Any], *, task_root: Path) -> None:
+        ref = message.get("recipient_delegation_ref")
+        if ref is None:
+            return
+        refs = message.get("required_refs") or []
+        if ref not in refs:
+            raise CommunicationValidationError("recipient_delegation_ref_not_in_required_refs")
+        physical = self._load_authority_mapping(task_root, str(ref))
+        self._validate_delegation_chain(
+            physical, task_root=task_root, task_id=str(message.get("task_id")),
+            required_refs=refs,
+            expected_recipient_endpoint_id=str(message.get("expected_recipient_endpoint_id")),
+            expected_recipient_task_role=str(message.get("expected_recipient_task_role")),
+            requested_action=str(message.get("requested_action") or ""),
+        )
+
     def validate_protected_action_authority(
         self,
         message: dict[str, Any],
@@ -272,10 +429,10 @@ class CommunicationValidator:
         current_task_authority: dict[str, Any],
         Human_authorization: dict[str, Any] | None,
     ) -> None:
-        task_id = message.get("task_id")
-        sender = message.get("sender_endpoint_id")
-        role = message.get("sender_task_role")
-        action = message.get("requested_action")
+        task_id = str(message.get("task_id"))
+        sender = str(message.get("sender_endpoint_id"))
+        role = str(message.get("sender_task_role"))
+        action = str(message.get("requested_action"))
         if not isinstance(current_task_authority, dict) or (
             current_task_authority.get("task_id") != task_id
             or current_task_authority.get("writer_endpoint_id") != sender
@@ -284,19 +441,24 @@ class CommunicationValidator:
         ):
             raise CommunicationValidationError("current_task_authority_binding_invalid")
         authorization_ref = message.get("authorization_ref")
-        if not authorization_ref or authorization_ref not in message.get("required_refs", []):
+        refs = message.get("required_refs", [])
+        if not authorization_ref or authorization_ref not in refs:
             raise CommunicationValidationError("protected_action_human_authorization_required")
-        target = (task_root.resolve() / str(authorization_ref)).resolve()
-        try:
-            target.relative_to(task_root.resolve())
-        except ValueError as exc:
-            raise CommunicationValidationError("authorization_ref_outside_task_root") from exc
-        if not target.is_file():
-            raise CommunicationValidationError("authorization_ref_unreadable")
-        physical = load_yaml(target)
+        physical = self._load_authority_mapping(task_root, str(authorization_ref))
         if Human_authorization is not None and Human_authorization != physical:
             raise CommunicationValidationError("Human_authorization_physical_state_mismatch")
-        if not isinstance(physical, dict) or (
+        if physical.get("schema_version") in {
+            "citystate.communication.direct_human_authorization.v2",
+            "citystate.communication.task_authority_delegation.v2",
+        }:
+            self._validate_v2_authorization_document(
+                physical, task_root=task_root, task_id=task_id,
+                writer_endpoint_id=sender, writer_task_role=role,
+                requested_action=action, required_refs=refs,
+            )
+            return
+        # Historical v1 direct Human authorization remains readable for legacy messages.
+        if (
             physical.get("task_id") != task_id
             or physical.get("writer_endpoint_id") != sender
             or physical.get("authorized_action") != action
@@ -351,11 +513,14 @@ class CommunicationValidator:
             canonical_task_relative_ref(ref, "required_ref_noncanonical")
         if message.get("authorization_ref") and message["authorization_ref"] not in refs:
             raise CommunicationValidationError("authorization_ref_not_in_required_refs")
+        if message.get("recipient_delegation_ref") and message["recipient_delegation_ref"] not in refs:
+            raise CommunicationValidationError("recipient_delegation_ref_not_in_required_refs")
         if message_path is not None:
             expected_name = f"{sequence}_{message_type}.yml"
             if message_path.name != expected_name or message_path.parent.name != message["sender_endpoint_id"]:
                 raise CommunicationValidationError("message_path_identity_mismatch")
         if task_root is not None:
+            self.validate_recipient_delegation(message, task_root=task_root)
             root = task_root.resolve()
             for ref in refs:
                 target = (root / ref).resolve()

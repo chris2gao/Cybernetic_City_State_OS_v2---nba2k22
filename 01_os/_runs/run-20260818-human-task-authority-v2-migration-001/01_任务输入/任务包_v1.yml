@@ -1,0 +1,74 @@
+task_id: os-v2-human-task-authority-v2-migration-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T2_semantic
+exact_base_sha: 857c667547c93e9b9c3c26ed1316db38919a25a3
+branch: dev/os-v2-human-task-authority-v2-migration-001
+objective: >-
+  Migrate Human authority from per-event one-time codes to a task-wide Human Task Authority Code with scoped durable delegation, while preserving Human root authority, explicit Human decisions, challenge verification, protected-action controls, and independent review; permit explicitly selected fresh isolated same-model-family review.
+source_evidence:
+  - current Human-confirmed Human Task Authority v2 Current Model v1
+  - AGENT_WORKING_DISCIPLINE.md
+  - 01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml
+  - 01_os/03_mechanisms/communication_system/角色与权限边界_v1.yml
+allowed_changed_paths:
+  - AGENT_WORKING_DISCIPLINE.md
+  - 01_os/03_mechanisms/stage_collaborative_deliberation/**
+  - 01_os/02_boot/stage_collaborative_deliberation/**
+  - 01_os/06_execution/boot/stage_collaborative_deliberation/**
+  - 01_os/05_registry/stage_collaborative_deliberation_v1.yml
+  - 01_os/01_workflow/01_需求建模/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/01_workflow/02_信息收集与提炼/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/01_workflow/03_结果建模/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/01_workflow/04_测试生成/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/01_workflow/05_步骤拆分/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/01_workflow/06_执行/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/01_workflow/07_测试执行/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/03_mechanisms/communication_system/**
+  - 01_os/02_boot/communication_system/**
+  - 01_os/06_execution/boot/communication_system/**
+  - 01_os/05_registry/communication_system_v1.yml
+  - 01_os/_runs/run-20260818-human-task-authority-v2-migration-001/**
+  - 01_os/_communication/Cybernetic_City_State_OS_v2---core/discovery.yml
+  - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-human-task-authority-v2-migration-001/**
+required_tests:
+  - current stage-collaborative canonical-live-state guard
+  - current stage-collaborative static validator
+  - authority v2 positive/negative/replay/cross-task/delegation tests
+  - Human challenge verifier tests
+  - communication validator positive/negative delegation tests
+  - communication system validator
+  - changed-path ledger
+  - git diff --check
+  - independent review from durable GitHub primary evidence
+prohibitions:
+  - modify_master_before_independent_review_and_current_v1_completion_master_gate
+  - force_push
+  - rebase
+  - squash
+  - amend
+  - rewrite_history
+  - activate_runtime_or_scheduler
+  - access_secrets_or_credentials
+  - implement_Task_A_B_or_C
+required_completion_pointer: 01_os/_runs/run-20260818-human-task-authority-v2-migration-001/08_结论/completion_pointer_v1.yml
+publisher:
+  principal_binding: local_authenticated
+  publication_transport: local_git
+  source_write_authorized: true
+  master_write_authorized: false
+  destructive_git_authorized: false
+  authorization_ref: 01_os/_runs/run-20260818-human-task-authority-v2-migration-001/02_当前模型/Human授权_v1.yml
+  expected_remote_head: absent
+executor_profile:
+  provider: OpenAI
+  surface: ChatGPT Web
+  model: GPT-5.6 Sol
+  reasoning_effort: High
+  mode: decision_architecture_and_high_risk_execution
+  routing_basis: foreground owns the load-bearing Human-authority architecture and validator semantics
+  authority: routing_only
+verification_profile:
+  reproduce_before_change: required
+  independent_reviewer: fresh_isolated_reviewer_selected_after_candidate
+  different_model_family: preferred_under_current_v1_until_migration_is_integrated
+  different_measurement_tool: true

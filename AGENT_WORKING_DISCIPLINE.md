@@ -268,14 +268,18 @@ passes disagree — that disagreement is the signal worth having.
 
 ### The two routing rules that are not negotiable
 
-1. **The reviewer never reviews its own family's output.** A report goes to a
-   different model family, or to the foreground, or to a fresh review context with
-   the conclusions stripped. Isolating contexts prevents context leakage; it does
-   nothing about a shared model's blind spots, which is why this rule exists
-   separately.
+1. **Independent review requires relationship isolation, not a provider-name ritual.**
+   The reviewer must be a distinct endpoint in a fresh isolated session/project, must
+   not receive the executor's private context, and must reconstruct from durable
+   primary evidence. Different model-family review remains preferred for load-bearing
+   work because it adds diversity, but same-family review is allowed when the Human or
+   authorized dispatcher explicitly selects it and the review discloses that shared
+   family as a limitation. This lets the system measure same-family review quality
+   instead of assuming either equivalence or invalidity.
 2. **The author does not design the verification of their own work.** Where it
-   matters, separate the two parties, or hand the reviewer the raw material with
-   the conclusions removed.
+   matters, separate the two endpoints/contexts or hand the reviewer the raw material
+   with the conclusions removed. A fresh reviewer using the same model family is still
+   not the author when endpoint, session and private context are genuinely isolated.
 
 ### The flow
 

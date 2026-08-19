@@ -1,0 +1,66 @@
+schema_version: citystate.current_model.v1
+task_id: os-v2-human-task-authority-v2-migration-001
+stage_id: current_task
+current_model:
+  problem_or_objective: Replace per-event one-time Human codes with a task-wide Human Task Authority Code plus scoped delegation, and allow explicitly selected fresh isolated same-model-family review.
+  Human_intent_understanding: Human is root authority. Human initially grants task authority to the foreground/dispatcher; within the Human-authorized task scope the dispatcher decides whether and how to delegate authority to executor, reviewer, or other endpoints. Human can directly authorize, revoke, or override routing/delegation decisions. Possessing the code alone must not permit undelegated action, because the system must remain able to detect model self-authorization or forgery.
+  current_baseline_and_inputs:
+    remote_master: 857c667547c93e9b9c3c26ed1316db38919a25a3
+    current_authority_scheme: citystate-human-authority-v1
+    current_behavior: per-event fresh code, exact decision binding, no reuse
+    current_review_rule: same-model-family review prohibited by root working discipline
+    communication_behavior: Human authorization directly bound to writer endpoint and requested action
+  constraints_and_dependencies:
+    - migration itself obeys v1 until integrated to master
+    - Human code plaintext remains outside Git/run/communication/log/command-line persistence
+    - task-wide code is never valid across task_id boundaries
+    - model/provider/role never creates authority by itself
+    - delegated authority requires both valid task authority and a durable scoped delegation or direct Human override
+    - force/history rewrite/runtime/secret boundaries remain separately protected
+  proposed_method_or_solution:
+    - evolve the existing stage Human-authority contract and validators to a v2 task-authority model rather than create a parallel authority system
+    - root task authority binds task_id, authority_id, initial scope, Human disposition and task code commitment
+    - each material Human decision records an event commitment using the same task code and unique decision/event identity; code reuse is allowed only within that task authority
+    - dispatcher delegation records bind delegator, recipient endpoint/role, actions and scope; recipient authority requires task authority plus matching live delegation
+    - current Human may directly authorize, revoke, supersede or override delegation at any time
+    - Human challenge verification still obtains the code from the current Human, not from a model relay
+    - independent review measures session/context isolation separately from model-family diversity; same-family review is allowed when explicitly selected and disclosed
+    - preserve v1 historical verification while switching new production issuance to v2
+  feasibility_support:
+    - current stage validator centralizes commitment computation, replay checks and durable disposition validation
+    - current communication validator already checks writer/action/Human authorization bindings and can be extended to resolve a delegation chain
+    - current boot manifests and workflow refs bind exact blobs, so deterministic closure can update every triggered binding in one task
+  assumptions_risks_alternatives_unknowns:
+    - same task code shared to multiple delegated models increases exposure; scoped delegation and task-id binding are required to contain replay/self-authorization
+    - same-family review may share blind spots; independence evidence must report model-family sameness rather than claim equivalent diversity
+    - v1 historical records need read/verify continuity, but new v1 issuance should stop after migration
+  open_load_bearing_items: []
+  expected_output: A machine-enforced Human Task Authority v2 path with task-wide code reuse inside one task, durable scoped delegation, direct Human override/revocation, challenge verification, same-family review option, updated tests/bindings, and no plaintext code persistence.
+  verification_or_acceptance_method:
+    - positive task-wide reuse across distinct in-task events
+    - negative cross-task reuse and undelegated-recipient tests
+    - delegation scope/action mismatch and revoked-delegation tests
+    - direct Human override/revocation tests
+    - Human challenge match/mismatch tests
+    - same-family review policy tests or static assertions
+    - stage and communication static validators
+    - exact boot/workflow blob binding verification
+    - independent review before any master integration
+  actual_result: authorized_not_started
+  material_deviation: none
+  residual_risk: v2 is not active until independently reviewed and integrated to master; this migration still requires a separate current-v1 Human completion/master gate.
+  current_exact_model_version: human-task-authority-v2-migration-current-model-v1
+  Human_confirmation:
+    explicit: true
+    actor_class: current_Human
+    scope: current_task
+    bound_model_version: human-task-authority-v2-migration-current-model-v1
+    exact_model_version: human-task-authority-v2-migration-current-model-v1
+    decision_id: D-HUMAN-TASK-AUTHORITY-V2-MIGRATION-001-EXECUTION
+    decision_type: substantive_execution_authorization
+    durable_disposition_ref: 01_os/_runs/run-20260818-human-task-authority-v2-migration-001/02_当前模型/Human授权_v1.yml
+    durable_disposition_blob_sha: 9a100b25fd9ffc9837b4e3b5770db516eed59d21
+    nonce_commitment:
+      scheme: citystate-human-authority-v1
+      algorithm: sha256
+      digest: f7dd703be9a716fb9585142b0b3a1e5c04c41dda737e76897982d4b8e1f07ddc

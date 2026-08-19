@@ -401,60 +401,73 @@ def validate_deferred_unknown(element: dict[str, Any]) -> int:
 
 
 # ---------------------------------------------------------------------------
-# Human authority: durable disposition + one-time Human-generated nonce
-#
-# actor_class: current_Human written into a repository object is a claim the
-# object makes about itself. It cannot be the thing that grants authority, or
-# any model able to write the object can manufacture Human authority. Authority
-# comes from a foreground/current-Human interaction that produced an explicit
-# disposition, recorded durably, bound to one exact decision, and committed to
-# with a nonce the Human generated independently.
-#
-# Only the commitment is stored. The plaintext nonce never enters Git, a run
-# artifact, a communication document, a fixture, a log or a command line.
+# Human Task Authority v2
 # ---------------------------------------------------------------------------
-HUMAN_AUTHORITY_SCHEME = "citystate-human-authority-v1"
+HUMAN_AUTHORITY_SCHEME = "citystate-human-task-authority-v2"
+LEGACY_HUMAN_AUTHORITY_SCHEME = "citystate-human-authority-v1"
 HUMAN_AUTHORITY_ALGORITHM = "sha256"
-COMMITMENT_BOUND_FIELDS = (
-    "task_id",
-    "stage_id",
-    "decision_id",
-    "decision_type",
-    "exact_model_version",
-    "Human_disposition",
-    "authorized_scope",
+TASK_AUTHORITY_BOUND_FIELDS = (
+    "task_id", "task_authority_id", "initial_authority_holder_endpoint_id",
+    "initial_authority_holder_task_role", "Human_disposition", "task_authority_scope",
 )
-# authority follows the decision, not the activity: one nonce per authority
-# event, and an authorization nonce never doubles as a completion nonce.
+EVENT_COMMITMENT_BOUND_FIELDS = (
+    "task_id", "task_authority_id", "stage_id", "decision_id", "decision_type",
+    "exact_model_version", "Human_disposition", "authorized_scope",
+)
+LEGACY_COMMITMENT_BOUND_FIELDS = (
+    "task_id", "stage_id", "decision_id", "decision_type", "exact_model_version",
+    "Human_disposition", "authorized_scope",
+)
+COMMITMENT_BOUND_FIELDS = EVENT_COMMITMENT_BOUND_FIELDS
 AUTHORIZATION_DECISION_TYPE = "substantive_execution_authorization"
 COMPLETION_DECISION_TYPE = "completion_acceptance"
-DECISION_TYPES = {AUTHORIZATION_DECISION_TYPE, COMPLETION_DECISION_TYPE}
+DECISION_TYPES = {
+    AUTHORIZATION_DECISION_TYPE,
+    COMPLETION_DECISION_TYPE,
+    "material_architecture_or_solution_choice",
+    "material_scope_change",
+    "Human_risk_acceptance",
+    "protected_or_irreversible_action_authorization",
+    "delegation_override_or_revocation",
+    "review_routing_override",
+}
+LEGACY_DECISION_TYPES = {AUTHORIZATION_DECISION_TYPE, COMPLETION_DECISION_TYPE}
 AFFIRMATIVE_DISPOSITIONS = {"confirmed", "accepted", "authorized"}
 
 
-def canonical_commitment_payload(bound: dict[str, Any], human_nonce: str) -> bytes:
-    """Deterministic serialization for the commitment.
-
-    Canonical JSON - UTF-8, sorted keys, fixed separators - rather than string
-    concatenation, so no field boundary is ambiguous and no value can be shifted
-    between fields to produce the same bytes.
-    """
-    payload = {"domain": HUMAN_AUTHORITY_SCHEME, "Human_nonce": human_nonce}
-    for field in COMMITMENT_BOUND_FIELDS:
+def _canonical_payload(scheme: str, fields: tuple[str, ...], bound: dict[str, Any], human_nonce: str) -> bytes:
+    payload = {"domain": scheme, "Human_nonce": human_nonce}
+    for field in fields:
         payload[field] = bound.get(field)
-    return json.dumps(
-        payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False
-    ).encode("utf-8")
+    return json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+
+
+def canonical_commitment_payload(bound: dict[str, Any], human_nonce: str) -> bytes:
+    """Canonical v2 decision-event commitment payload."""
+    return _canonical_payload(HUMAN_AUTHORITY_SCHEME, EVENT_COMMITMENT_BOUND_FIELDS, bound, human_nonce)
 
 
 def compute_commitment(bound: dict[str, Any], human_nonce: str) -> str:
     return hashlib.sha256(canonical_commitment_payload(bound, human_nonce)).hexdigest()
 
 
-def validate_commitment_structure(commitment: Any) -> int:
+def compute_task_commitment(bound: dict[str, Any], human_nonce: str) -> str:
+    return hashlib.sha256(_canonical_payload(
+        HUMAN_AUTHORITY_SCHEME, TASK_AUTHORITY_BOUND_FIELDS, bound, human_nonce
+    )).hexdigest()
+
+
+def compute_legacy_commitment(bound: dict[str, Any], human_nonce: str) -> str:
+    return hashlib.sha256(_canonical_payload(
+        LEGACY_HUMAN_AUTHORITY_SCHEME, LEGACY_COMMITMENT_BOUND_FIELDS, bound, human_nonce
+    )).hexdigest()
+
+
+def validate_commitment_structure(commitment: Any, *, allowed_schemes: set[str] | None = None) -> int:
     if not isinstance(commitment, dict):
         return 15
-    if commitment.get("scheme") != HUMAN_AUTHORITY_SCHEME:
+    schemes = allowed_schemes or {HUMAN_AUTHORITY_SCHEME, LEGACY_HUMAN_AUTHORITY_SCHEME}
+    if commitment.get("scheme") not in schemes:
         return 15
     if commitment.get("algorithm") != HUMAN_AUTHORITY_ALGORITHM:
         return 15
@@ -465,26 +478,40 @@ def validate_commitment_structure(commitment: Any) -> int:
         int(digest, 16)
     except ValueError:
         return 15
-    # the plaintext must never be persisted alongside its own commitment
     for forbidden in ("Human_nonce", "nonce", "plaintext", "code"):
         if forbidden in commitment:
             return 14
     return 0
 
 
+def authority_record_scheme(record: dict[str, Any]) -> str:
+    return str((record.get("nonce_commitment") or {}).get("scheme") or "")
+
+
+def validate_authority_record_commitments(record: dict[str, Any]) -> int:
+    scheme = authority_record_scheme(record)
+    if scheme == HUMAN_AUTHORITY_SCHEME:
+        code = validate_commitment_structure(
+            record.get("task_nonce_commitment"), allowed_schemes={HUMAN_AUTHORITY_SCHEME}
+        )
+        if code:
+            return code
+        return validate_commitment_structure(
+            record.get("nonce_commitment"), allowed_schemes={HUMAN_AUTHORITY_SCHEME}
+        )
+    if scheme == LEGACY_HUMAN_AUTHORITY_SCHEME:
+        return validate_commitment_structure(
+            record.get("nonce_commitment"), allowed_schemes={LEGACY_HUMAN_AUTHORITY_SCHEME}
+        )
+    return 15
+
+
 def resolve_durable_disposition(
     confirmation: dict[str, Any], repo_root: Path | None
 ) -> tuple[int, dict[str, Any] | None]:
-    """Actually read the durable Human disposition record.
-
-    A reference that is absent, does not resolve, or whose blob does not match
-    the recorded sha is not evidence of anything.
-    """
     ref = confirmation.get("durable_disposition_ref")
     expected_blob = confirmation.get("durable_disposition_blob_sha")
-    if not ref or not isinstance(ref, str):
-        return 15, None
-    if not expected_blob or not isinstance(expected_blob, str):
+    if not ref or not isinstance(ref, str) or not expected_blob or not isinstance(expected_blob, str):
         return 15, None
     root = repo_root or repo_root_from_here()
     target = root / ref
@@ -506,44 +533,73 @@ def resolve_durable_disposition(
 SYNTHETIC_MARKER = "synthetic_test_record"
 
 
-def validate_durable_disposition_record(
-    record: dict[str, Any],
-    confirmation: dict[str, Any],
-    model: dict[str, Any],
-    *,
-    synthetic_authority_context: bool = False,
-) -> int:
-    """The record must bind this exact decision, and still be live.
-
-    A record marked synthetic_test_record: true is never Human authority on the
-    production path. The marker is checked first, before any other field, so a
-    synthetic record that is otherwise perfectly formed - right task, stage,
-    decision, model version, blob and commitment - still cannot authorize
-    progression. Path naming and comments are not the control; the semantic
-    marker in the record is.
-
-    synthetic_authority_context is keyword-only and defaults to false. It is
-    supplied by a test harness that constructed the fixture, never read from the
-    instance under validation, so no production input - test_mode,
-    allow_synthetic or anything else it writes about itself - can reach it.
-    """
-    if record.get(SYNTHETIC_MARKER) is True and not synthetic_authority_context:
-        return 15
+def _validate_common_Human_record(record: dict[str, Any]) -> int:
     if record.get("provenance") != "foreground_current_Human_interaction":
         return 15
     if record.get("actor_class") != "current_Human":
         return 15
     if record.get("explicit") is not True:
         return 14
-    disposition = record.get("Human_disposition")
-    if disposition not in AFFIRMATIVE_DISPOSITIONS:
+    if record.get("Human_disposition") not in AFFIRMATIVE_DISPOSITIONS:
         return 15
     if record.get("stale") is True or record.get("invalidated") is True:
         return 12
-    if record.get("consumed_by") not in (None, record.get("decision_id")):
-        # this nonce already carried a different authority event
-        return 12
+    return 0
 
+
+def _validate_legacy_record(record: dict[str, Any], confirmation: dict[str, Any], model: dict[str, Any]) -> int:
+    code = _validate_common_Human_record(record)
+    if code:
+        return code
+    if record.get("consumed_by") not in (None, record.get("decision_id")):
+        return 12
+    decision_type = record.get("decision_type")
+    if decision_type not in LEGACY_DECISION_TYPES:
+        return 15
+    if confirmation.get("decision_id") != record.get("decision_id"):
+        return 15
+    if confirmation.get("decision_type") not in (None, decision_type):
+        return 15
+    if record.get("exact_model_version") != model.get("current_exact_model_version"):
+        return 12
+    if confirmation.get("exact_model_version") != record.get("exact_model_version"):
+        return 12
+    if not record.get("authorized_scope"):
+        return 15
+    code = validate_commitment_structure(
+        record.get("nonce_commitment"), allowed_schemes={LEGACY_HUMAN_AUTHORITY_SCHEME}
+    )
+    if code:
+        return code
+    stated = confirmation.get("nonce_commitment")
+    code = validate_commitment_structure(stated, allowed_schemes={LEGACY_HUMAN_AUTHORITY_SCHEME})
+    if code:
+        return code
+    return 0 if stated.get("digest") == record["nonce_commitment"].get("digest") else 13
+
+
+def _validate_v2_record(record: dict[str, Any], confirmation: dict[str, Any], model: dict[str, Any]) -> int:
+    code = _validate_common_Human_record(record)
+    if code:
+        return code
+    if record.get("task_authority_revoked") is True or record.get("event_revoked") is True:
+        return 12
+    task_authority_id = record.get("task_authority_id")
+    if not isinstance(task_authority_id, str) or not task_authority_id:
+        return 15
+    if confirmation.get("task_authority_id") != task_authority_id:
+        return 15
+    holder = record.get("initial_authority_holder_endpoint_id")
+    holder_role = record.get("initial_authority_holder_task_role")
+    if not isinstance(holder, str) or not holder or not isinstance(holder_role, str) or not holder_role:
+        return 15
+    task_scope = record.get("task_authority_scope")
+    if (
+        not isinstance(task_scope, list) or not task_scope
+        or any(not isinstance(item, str) or not item for item in task_scope)
+        or len(task_scope) != len(set(task_scope))
+    ):
+        return 15
     decision_type = record.get("decision_type")
     if decision_type not in DECISION_TYPES:
         return 15
@@ -557,32 +613,43 @@ def validate_durable_disposition_record(
         return 12
     if not record.get("authorized_scope"):
         return 15
-
-    code = validate_commitment_structure(record.get("nonce_commitment"))
+    code = validate_authority_record_commitments(record)
     if code:
         return code
-    stated = confirmation.get("nonce_commitment")
-    code = validate_commitment_structure(stated)
-    if code:
-        return code
-    if stated.get("digest") != record["nonce_commitment"].get("digest"):
+    stated_task = confirmation.get("task_nonce_commitment")
+    stated_event = confirmation.get("nonce_commitment")
+    if validate_commitment_structure(stated_task, allowed_schemes={HUMAN_AUTHORITY_SCHEME}):
+        return 15
+    if validate_commitment_structure(stated_event, allowed_schemes={HUMAN_AUTHORITY_SCHEME}):
+        return 15
+    if stated_task.get("digest") != record["task_nonce_commitment"].get("digest"):
+        return 13
+    if stated_event.get("digest") != record["nonce_commitment"].get("digest"):
         return 13
     return 0
 
 
-def validate_human_authority(
-    model: dict[str, Any],
-    data: dict[str, Any],
-    repo_root: Path | None = None,
-    *,
+def validate_durable_disposition_record(
+    record: dict[str, Any], confirmation: dict[str, Any], model: dict[str, Any], *,
     synthetic_authority_context: bool = False,
 ) -> int:
-    """Full chain: interaction -> disposition -> nonce -> record -> binding.
+    if record.get(SYNTHETIC_MARKER) is True and not synthetic_authority_context:
+        return 15
+    scheme = authority_record_scheme(record)
+    if scheme == LEGACY_HUMAN_AUTHORITY_SCHEME:
+        if not synthetic_authority_context:
+            # v1 is historical/challenge-only after v2 activation.
+            return 15
+        return _validate_legacy_record(record, confirmation, model)
+    if scheme != HUMAN_AUTHORITY_SCHEME:
+        return 15
+    return _validate_v2_record(record, confirmation, model)
 
-    synthetic_authority_context comes from the caller, never from `data`. The
-    instance being validated cannot enable it by writing test_mode or
-    allow_synthetic about itself.
-    """
+
+def validate_human_authority(
+    model: dict[str, Any], data: dict[str, Any], repo_root: Path | None = None, *,
+    synthetic_authority_context: bool = False,
+) -> int:
     confirmation = model.get("Human_confirmation")
     if not isinstance(confirmation, dict):
         return 15
@@ -590,7 +657,6 @@ def validate_human_authority(
     if code:
         return code
     assert record is not None
-
     task_id = data.get("task_id")
     stage_id = data.get("stage_id")
     receipt = data.get("receipt")
@@ -598,45 +664,34 @@ def validate_human_authority(
         stage_id = receipt.get("profile_id_and_version")
     if task_id is not None and record.get("task_id") != task_id:
         return 15
+    # v2 task authority spans workflow stages; the event remains exact-stage bound when stage_id is present.
     if stage_id is not None and record.get("stage_id") != stage_id:
         return 15
     return validate_durable_disposition_record(
-        record, confirmation, model,
-        synthetic_authority_context=synthetic_authority_context,
+        record, confirmation, model, synthetic_authority_context=synthetic_authority_context
     )
 
 
-def verify_human_challenge(
-    record: dict[str, Any], human_nonce: str
-) -> tuple[bool, str, str]:
-    """Recompute the commitment from the record's bound fields and a nonce the
-    current Human supplies in the current interaction.
-
-    The nonce must come from the Human now. A plaintext code taken from executor
-    output, the repository, a run artifact, a communication document or another
-    model's report proves nothing here: any of those sources could have produced
-    the record in the first place.
-    """
-    bound = {field: record.get(field) for field in COMMITMENT_BOUND_FIELDS}
-    recomputed = compute_commitment(bound, human_nonce)
-    stored = (record.get("nonce_commitment") or {}).get("digest", "")
-    return hmac.compare_digest(recomputed, stored), recomputed, stored
+def verify_human_challenge(record: dict[str, Any], human_nonce: str) -> tuple[bool, str, str]:
+    scheme = authority_record_scheme(record)
+    if scheme == HUMAN_AUTHORITY_SCHEME:
+        task_bound = {field: record.get(field) for field in TASK_AUTHORITY_BOUND_FIELDS}
+        event_bound = {field: record.get(field) for field in EVENT_COMMITMENT_BOUND_FIELDS}
+        task_recomputed = compute_task_commitment(task_bound, human_nonce)
+        event_recomputed = compute_commitment(event_bound, human_nonce)
+        task_stored = (record.get("task_nonce_commitment") or {}).get("digest", "")
+        event_stored = (record.get("nonce_commitment") or {}).get("digest", "")
+        ok = hmac.compare_digest(task_recomputed, task_stored) and hmac.compare_digest(event_recomputed, event_stored)
+        return ok, event_recomputed, event_stored
+    if scheme == LEGACY_HUMAN_AUTHORITY_SCHEME:
+        bound = {field: record.get(field) for field in LEGACY_COMMITMENT_BOUND_FIELDS}
+        recomputed = compute_legacy_commitment(bound, human_nonce)
+        stored = (record.get("nonce_commitment") or {}).get("digest", "")
+        return hmac.compare_digest(recomputed, stored), recomputed, stored
+    return False, "", ""
 
 
 def validate_mandatory_Human_confirmation(model: dict[str, Any]) -> int:
-    """Every task and every workflow stage must project the current model to the
-    current Human and obtain an explicit confirmation bound to the exact current
-    model version before any substantive execution.
-
-    This is mandatory even when no load-bearing gap exists - in that case the
-    required form is one concise proposal and one explicit confirmation, not a
-    fixed number of rounds, a long form, or per-choice micro-approval.
-
-    None of the following ever substitutes for the current stage's confirmation:
-    Human silence or non-response, inferred consent, a previous stage's
-    confirmation, a confirmation bound to an older model version, or a
-    confirmation produced by an executor, reviewer or any other non-Human actor.
-    """
     confirmation = model.get("Human_confirmation")
     if not isinstance(confirmation, dict):
         return 15
@@ -655,15 +710,23 @@ def validate_mandatory_Human_confirmation(model: dict[str, Any]) -> int:
     bound = confirmation.get("bound_model_version")
     if not bound or bound != model.get("current_exact_model_version"):
         return 12
-    # An inline actor_class is a self-assertion. Authority requires a durable
-    # disposition reference and a nonce commitment, both checked for real below.
-    if not confirmation.get("durable_disposition_ref"):
-        return 15
-    if not confirmation.get("durable_disposition_blob_sha"):
+    if not confirmation.get("durable_disposition_ref") or not confirmation.get("durable_disposition_blob_sha"):
         return 15
     if not confirmation.get("decision_id"):
         return 15
-    return validate_commitment_structure(confirmation.get("nonce_commitment"))
+    stated = confirmation.get("nonce_commitment")
+    code = validate_commitment_structure(stated)
+    if code:
+        return code
+    if stated.get("scheme") == HUMAN_AUTHORITY_SCHEME:
+        if confirmation.get("authority_protocol") != HUMAN_AUTHORITY_SCHEME:
+            return 15
+        if not confirmation.get("task_authority_id"):
+            return 15
+        return validate_commitment_structure(
+            confirmation.get("task_nonce_commitment"), allowed_schemes={HUMAN_AUTHORITY_SCHEME}
+        )
+    return 0
 
 
 def validate_model_readiness(

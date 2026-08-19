@@ -208,143 +208,102 @@ readiness_contract:
   brief_is_projection_not_state_machine: true
   brief_length_adapts_to_model_complexity: true
 Human_authority_contract:
-  scheme: citystate-human-authority-v1
+  scheme: citystate-human-task-authority-v2
   algorithm: sha256
-  problem: >-
-    A repository object that writes actor_class: current_Human and explicit: true is making a
-    claim about itself. If that claim alone grants progression authority, any model able to
-    write the object can manufacture Human authority.
-  required_chain:
-  - foreground_current_Human_interaction
-  - Human_explicit_disposition
-  - Human_independently_generated_one_time_code
-  - durable_Human_disposition_record
-  - exact_task_stage_decision_model_binding
-  - nonce_commitment
-  - validator_resolves_and_validates
-  - progression
-  model_may_generate_the_code: false
-  Human_facing_names:
-    authorization: Human Authorization Code
-    completion: Human Completion Code
+  root_authority: current_Human
+  purpose: >-
+    Bind one Human-generated task authority code to one task, then let the Human-authorized
+    foreground/dispatcher issue durable scoped delegations to execution, review or other endpoints.
+    Code possession, model identity, provider, role or self-authored records never grant authority alone.
+  migration:
+    legacy_scheme: citystate-human-authority-v1
+    legacy_records: historical_read_and_Human_challenge_only
+    new_legacy_production_issuance: prohibited_after_v2_master_integration
   code_requirements:
     generated_by: Human_independently
-    fresh_per_authority_event: true
+    fresh_per_task_authority: true
     minimum_length_characters: 2
     allowed_characters: any
+    reuse_within_same_task_authority: true
+    reuse_across_task_id: prohibited
+    model_may_generate_the_code: false
     model_may_suggest_a_code_for_the_Human_to_echo: false
-    reuse_permitted: false
-    suggested_format: any Human-chosen string containing at least 2 characters
-    assurance_note: >-
-      This is a lightweight Human confirmation code requirement, not a
-      cryptographic-strength or high-entropy secret requirement.
   plaintext_handling:
     stored_in_git: false
     stored_in_run_or_communication_artifact: false
     stored_in_fixture_output_log_or_command_history: false
     passed_as_shell_command_line_argument: false
-    helper_input_channel: stdin_or_ephemeral_input_never_echoed
-    repository_stores: commitment_only
-  commitment:
-    serialization: canonical JSON, UTF-8, sorted keys, separators without whitespace
-    reason_for_canonical_json: string concatenation leaves field boundaries ambiguous
-    bound_fields:
-    - domain
-    - task_id
-    - stage_id
-    - decision_id
-    - decision_type
-    - exact_model_version
-    - Human_disposition
-    - authorized_scope
-    - Human_nonce
-    persisted_fields:
-    - scheme
-    - algorithm
-    - digest
-    - exact_bound_fields
-    - durable_Human_disposition_ref
-    - exact_blob_ref
-    - consumed_or_invalidated_state
-  two_separate_codes:
-    substantive_execution_authorization:
-      produced_after: Human reviewed and confirmed the exact Current Model
-      permits_only: substantive_execution_start
-      cannot: prove the Human accepted the final result
-    completion_acceptance:
-      produced_after: Human read the completion brief following execution and verification
-      permits: [accept_result, next_stage_progression, separately_authorized_protected_action]
-      cannot: retroactively serve as the authorization to start
-  one_time_and_replay:
-    single_use: true
-    exact_bound: true
-    never_valid_for:
-    - another_task
-    - another_stage
-    - another_decision_id
-    - another_decision_type
-    - another_exact_model_version
-    - a_materially_changed_plan
-    - another_output_candidate
-    - another_protected_action
-    material_model_change: old authorization invalidated, return to Human, new disposition, new code
-    material_output_change: old completion code invalidated, new completion review, new code
-    task_wide_universal_code: prohibited
+    delegated_model_may_receive_plaintext_ephemerally: true
+    repository_stores: commitments_and_delegation_chain_only
+  task_commitment:
+    serialization: canonical_JSON_UTF8_sorted_keys_fixed_separators
+    bound_fields: [task_id, task_authority_id, initial_authority_holder_endpoint_id, initial_authority_holder_task_role, Human_disposition, task_authority_scope, Human_nonce]
+  decision_event_commitment:
+    serialization: canonical_JSON_UTF8_sorted_keys_fixed_separators
+    same_Human_nonce_as_task_authority: true
+    bound_fields: [task_id, task_authority_id, stage_id, decision_id, decision_type, exact_model_version, Human_disposition, authorized_scope, Human_nonce]
+    unique_decision_event_required: true
+  task_authority_lifecycle:
+    starts_after: Human_reviews_and_confirms_initial_Current_Model
+    remains_valid_until: [Human_revocation, task_closed, task_authority_superseded]
+    model_version_change_does_not_rotate_code: true
+    material_change_requires_new_Human_decision_event: true
+    completion_uses_same_task_code_with_new_completion_event: true
+    protected_action_uses_same_task_code_with_explicit_protected_action_event: true
+  delegation_contract:
+    initial_holder: Human_selected_foreground_or_dispatcher
+    initial_holder_is_bound_in_task_commitment: true
+    dispatcher_may_delegate: true
+    delegation_must_be_durable: true
+    delegation_must_bind: [task_id, task_authority_id, delegator_endpoint_id, delegator_task_role, recipient_endpoint_id, recipient_task_role, authorized_actions, delegated_scope, parent_delegation_ref, allow_redelegation]
+    task_authority_scope_is_machine_enforced_string_set: true
+    delegated_scope_must_be_subset_of_Human_task_scope: true
+    code_possession_without_live_delegation: unauthorized
+    self_delegation_to_expand_scope: prohibited
+    recipient_may_redelegate_only_if_explicitly_granted: true
+    delegated_endpoint_start_requires: [live_delegation_chain_VERIFIED, same_task_Human_code_challenge_VERIFIED_in_recipient_current_interaction, task_action_scope_match]
+    dispatcher_delegation_authorizes_Human_relay_of_same_task_code_to_recipient: true
+    code_plaintext_in_durable_message: prohibited
+    revocation_fails_closed: true
+  Human_override:
+    priority: highest_for_task_authority_routing_and_delegation
+    may_directly_authorize_any_model_or_endpoint: true
+    may_override_dispatcher_recipient_selection: true
+    may_revoke_or_supersede_any_delegation: true
+    may_expand_or_shrink_task_scope_via_explicit_Human_decision_event: true
+    does_not_implicitly_disable_repository_structural_invariants_or_secret_boundaries: true
+  review_independence:
+    same_model_family_absolute_prohibition: false
+    same_model_family_review_allowed_when_explicitly_selected_and_disclosed: true
+    required_independence_dimensions: [fresh_isolated_session_or_project, distinct_endpoint, no_executor_private_context, durable_primary_evidence_reconstruction]
+    model_family_diversity: evidence_dimension_not_authority_gate
   challenge_verification:
-    purpose: a downstream fresh model that finds the authority provenance insufficient
-    procedure:
-    - read the durable decision record
-    - take its bound fields and stored commitment
-    - ask the current Human for that decision's code
-    - recompute the commitment from the bound fields and the supplied code
-    - equal means verified, otherwise Human authority verification fails
-    plaintext_sources_that_are_never_proof:
-    - executor_output
-    - repository
-    - run_artifact
-    - communication_document
-    - prior_model_report
-    - another_model_relaying_it
-    durable_record_after_verification: [result, commitment_checked, exact_decision_and_ref, verifier_identity_and_context]
+    code_source_for_authority_challenge: current_Human_current_interaction
+    delegated_model_echo_of_code_is_not_Human_origin_proof: true
+    verify_task_and_decision_event_commitments: true
     plaintext_recorded: false
-  requires_a_Human_nonce:
-  - task_substantive_execution_authorization
-  - each_workflow_stage_substantive_execution_authorization
-  - material_architecture_or_solution_choice
-  - material_scope_change
-  - Human_risk_acceptance
-  - protected_or_irreversible_action_authorization
-  - completion_acceptance_or_next_stage_progression
-  - master_publication_when_the_Human_gate_requires_it
-  does_not_require_a_Human_nonce:
-  - helper_naming
-  - fixture_organization
-  - ordinary_local_reversible_implementation_choices
-  - ordinary_commands
-  - retrying_a_local_implementation_defect_inside_confirmed_scope
-  - search_or_query_details
-  - other_model_owned_non_bearing_choices
-  must_not_become_a_microapproval_system: true
+  requires_explicit_current_Human_decision_event:
+    - initial_task_substantive_execution_authorization
+    - each_material_architecture_or_solution_choice
+    - material_scope_change
+    - Human_risk_acceptance
+    - protected_or_irreversible_action_authorization
+    - completion_acceptance_or_next_stage_progression
+    - master_publication_when_the_Human_gate_requires_it
+    - Human_direct_delegation_override_or_revocation
+  does_not_require_new_code_inside_same_task:
+    - workflow_stage_progression_after_explicit_Human_decision_event
+    - material_change_after_explicit_Human_decision_event
+    - completion_event
+    - protected_action_event
+    - dispatcher_delegation_within_existing_Human_scope
   security_claims:
-    provides:
-    - anti_self_assertion_Human_authority_control
-    - exact_decision_and_version_binding
-    - replay_detection_and_control
-    - cross_model_Human_challenge_verification
-    - durable_auditability
-    - detection_of_machine_generated_fake_Human_decisions
-    does_not_claim:
-    - cryptographic_proof_of_natural_person_identity
-    - proof_of_Human_subjective_comprehension
-    - protection_against_a_malicious_model_that_has_already_seen_the_plaintext_nonce
-    - external_identity_attestation
-    - brute_force_resistance_or_high_entropy_secret
+    provides: [anti_self_assertion_control, task_boundary_binding, durable_delegation_audit, scoped_recipient_authority, cross_model_Human_challenge]
+    does_not_claim: [cryptographic_natural_person_identity, brute_force_resistance, protection_against_a_malicious_model_that_knows_the_plaintext_task_code]
     honest_limit: >-
-      The foreground that first received the plaintext code necessarily knows it. Codes may be
-      as short as two characters, so the stored commitment is not brute-force resistant and must
-      not be treated as cryptographic proof of Human origin. Authority ultimately rests on the
-      current Human interaction, exact single-decision binding, no plaintext persistence, replay
-      controls, and independent Human challenge when provenance is questioned.
+      Once a model knows the plaintext task code it can compute valid-looking commitments. Therefore code possession
+      is never sufficient: production action authority additionally requires a durable live delegation or direct Human
+      authorization, exact task/action/scope matching, and current-Human challenge when provenance is disputed.
 mandatory_Human_confirmation_contract:
   rule: >-
     Every task and every workflow stage must project the current model - what will be done,

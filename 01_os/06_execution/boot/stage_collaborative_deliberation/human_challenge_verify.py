@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Human authority challenge verifier.
+"""Human task-authority challenge verifier (v2 with legacy v1 read support).
 
 For a downstream fresh model that finds the authority provenance of a decision
 insufficient. It reads the durable decision record, asks the *current* Human for
-the Human Authorization Code or Human Completion Code for that exact decision,
+the Human Task Authority Code for the task, or the legacy v1 Authorization/Completion Code for a historical decision,
 recomputes the commitment from the record's bound fields plus the supplied code,
 and compares.
 
@@ -52,7 +52,7 @@ def load_validator():
 def read_nonce() -> str:
     """stdin only. getpass keeps it off the terminal when interactive."""
     if sys.stdin.isatty():
-        return getpass.getpass("Human Authorization/Completion Code (not echoed): ").strip()
+        return getpass.getpass("Human Task Authority / legacy authority code (not echoed): ").strip()
     return sys.stdin.readline().strip()
 
 
@@ -75,7 +75,7 @@ def main() -> int:
     if not isinstance(record, dict):
         print(json.dumps({"result": "record_not_a_mapping"}))
         return 2
-    if v.validate_commitment_structure(record.get("nonce_commitment")):
+    if v.validate_authority_record_commitments(record):
         print(json.dumps({"result": "commitment_structure_invalid"}))
         return 2
 
@@ -95,7 +95,7 @@ def main() -> int:
     # oracle for offline search against the stored commitment.
     print(json.dumps({
         "result": "verified" if ok else "mismatch",
-        "scheme": v.HUMAN_AUTHORITY_SCHEME,
+        "scheme": v.authority_record_scheme(record),
         "algorithm": v.HUMAN_AUTHORITY_ALGORITHM,
         "commitment_checked": stored,
         "decision_id": record.get("decision_id"),
