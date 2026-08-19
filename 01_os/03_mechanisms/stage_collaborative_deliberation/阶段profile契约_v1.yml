@@ -210,6 +210,7 @@ readiness_contract:
 Human_authority_contract:
   scheme: citystate-human-task-authority-v2
   algorithm: sha256
+  delegated_start_semantics_version: '2.1'
   root_authority: current_Human
   purpose: >-
     Bind one Human-generated task authority code to one task, then let the Human-authorized
@@ -233,7 +234,7 @@ Human_authority_contract:
     stored_in_run_or_communication_artifact: false
     stored_in_fixture_output_log_or_command_history: false
     passed_as_shell_command_line_argument: false
-    delegated_model_may_receive_plaintext_ephemerally: true
+    delegated_model_may_receive_plaintext_ephemerally: false
     repository_stores: commitments_and_delegation_chain_only
   task_commitment:
     serialization: canonical_JSON_UTF8_sorted_keys_fixed_separators
@@ -261,8 +262,8 @@ Human_authority_contract:
     code_possession_without_live_delegation: unauthorized
     self_delegation_to_expand_scope: prohibited
     recipient_may_redelegate_only_if_explicitly_granted: true
-    delegated_endpoint_start_requires: [live_delegation_chain_VERIFIED, same_task_Human_code_challenge_VERIFIED_in_recipient_current_interaction, task_action_scope_match]
-    dispatcher_delegation_authorizes_Human_relay_of_same_task_code_to_recipient: true
+    delegated_endpoint_start_requires: [live_delegation_chain_VERIFIED, exact_task_authority_identity_match, exact_recipient_action_scope_match]
+    ordinary_delegation_authorizes_plaintext_task_code_relay: false
     code_plaintext_in_durable_message: prohibited
     revocation_fails_closed: true
   Human_override:
@@ -281,6 +282,8 @@ Human_authority_contract:
     code_source_for_authority_challenge: current_Human_current_interaction
     delegated_model_echo_of_code_is_not_Human_origin_proof: true
     verify_task_and_decision_event_commitments: true
+    ordinary_delegated_endpoint_start_requires_challenge: false
+    explicit_Human_authority_event_or_provenance_check_only: true
     plaintext_recorded: false
   requires_explicit_current_Human_decision_event:
     - initial_task_substantive_execution_authorization
@@ -298,12 +301,13 @@ Human_authority_contract:
     - protected_action_event
     - dispatcher_delegation_within_existing_Human_scope
   security_claims:
-    provides: [anti_self_assertion_control, task_boundary_binding, durable_delegation_audit, scoped_recipient_authority, cross_model_Human_challenge]
+    provides: [anti_self_assertion_control, task_boundary_binding, durable_delegation_audit, scoped_recipient_authority, delegated_start_without_secret_distribution]
     does_not_claim: [cryptographic_natural_person_identity, brute_force_resistance, protection_against_a_malicious_model_that_knows_the_plaintext_task_code]
     honest_limit: >-
       Once a model knows the plaintext task code it can compute valid-looking commitments. Therefore code possession
-      is never sufficient: production action authority additionally requires a durable live delegation or direct Human
-      authorization, exact task/action/scope matching, and current-Human challenge when provenance is disputed.
+      is never sufficient and ordinary delegated endpoints do not receive or require the code. Production delegated-start
+      authority requires a live Human-rooted delegation plus exact task/recipient/action/scope matching. Human challenge
+      remains available only for explicit Human authority events or provenance checks where the Human is actually acting.
 mandatory_Human_confirmation_contract:
   rule: >-
     Every task and every workflow stage must project the current model - what will be done,

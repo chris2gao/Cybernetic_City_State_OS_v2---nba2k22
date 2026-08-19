@@ -281,7 +281,7 @@ class SafeYamlAndMessageTests(unittest.TestCase):
         auth_ref = "delegations/d1.yml" if delegated else "Human/direct.yml"
         auth = {
             "schema_version": "citystate.communication.task_authority_delegation.v2" if delegated else "citystate.communication.direct_human_authorization.v2",
-            "task_id": "task-001", "authorized_actions": ["do-work"],
+            "task_id": "task-001", "task_authority_id": "TA-001", "authorized_actions": ["do-work"],
             "Human_task_authority_ref": human_ref, "granted": True, "revoked": revoked,
         }
         if delegated:
@@ -343,8 +343,8 @@ class SafeYamlAndMessageTests(unittest.TestCase):
         with TemporaryDirectory() as temp:
             root=Path(temp); human_ref, _, _=self._write_v2_authority(root)
             parent_ref="delegations/parent.yml"; child_ref="delegations/child.yml"
-            parent={"schema_version":"citystate.communication.task_authority_delegation.v2","task_id":"task-001","delegation_id":"DEL-P","delegator_endpoint_id":"dispatcher-01","delegator_task_role":"decision_architecture","recipient_endpoint_id":"mid-01","recipient_task_role":"delegator","authorized_actions":["do-work","review-work"],"delegated_scope":["task"],"allow_redelegation":True,"Human_task_authority_ref":human_ref,"granted":True,"revoked":False}
-            child={"schema_version":"citystate.communication.task_authority_delegation.v2","task_id":"task-001","delegation_id":"DEL-C","delegator_endpoint_id":"mid-01","delegator_task_role":"delegator","recipient_endpoint_id":"sender-01","recipient_task_role":"backend_execution_and_handoff","authorized_actions":["do-work"],"delegated_scope":["task"],"allow_redelegation":False,"parent_delegation_ref":parent_ref,"Human_task_authority_ref":human_ref,"granted":True,"revoked":False}
+            parent={"schema_version":"citystate.communication.task_authority_delegation.v2","task_id":"task-001","task_authority_id":"TA-001","delegation_id":"DEL-P","delegator_endpoint_id":"dispatcher-01","delegator_task_role":"decision_architecture","recipient_endpoint_id":"mid-01","recipient_task_role":"delegator","authorized_actions":["do-work","review-work"],"delegated_scope":["task"],"allow_redelegation":True,"Human_task_authority_ref":human_ref,"granted":True,"revoked":False}
+            child={"schema_version":"citystate.communication.task_authority_delegation.v2","task_id":"task-001","task_authority_id":"TA-001","delegation_id":"DEL-C","delegator_endpoint_id":"mid-01","delegator_task_role":"delegator","recipient_endpoint_id":"sender-01","recipient_task_role":"backend_execution_and_handoff","authorized_actions":["do-work"],"delegated_scope":["task"],"allow_redelegation":False,"parent_delegation_ref":parent_ref,"Human_task_authority_ref":human_ref,"granted":True,"revoked":False}
             for ref,doc in ((parent_ref,parent),(child_ref,child)):
                 p=root/ref; p.parent.mkdir(parents=True,exist_ok=True); p.write_text(yaml.safe_dump(doc),encoding="utf-8")
             refs=[child_ref,parent_ref,human_ref]; message["authorization_ref"]=child_ref; message["required_refs"]=refs
@@ -355,6 +355,66 @@ class SafeYamlAndMessageTests(unittest.TestCase):
             parent["allow_redelegation"]=True; parent["authorized_actions"]=["review-work"]; (root/parent_ref).write_text(yaml.safe_dump(parent),encoding="utf-8")
             with self.assertRaisesRegex(CommunicationValidationError,"redelegation_action_expansion"):
                 self.validator.validate_protected_action_authority(message, task_root=root, current_task_authority=current, Human_authorization=child)
+
+    def test_v21_loader_based_delegated_start_passes_without_Human_code(self):
+        message = valid_message(); message["requested_action"] = "do-work"
+        with TemporaryDirectory() as temp:
+            root = Path(temp)
+            human_ref, auth_ref, _ = self._write_v2_authority(
+                root, writer="receiver-01", role="review", delegated=True
+            )
+            message["expected_recipient_endpoint_id"] = "receiver-01"
+            message["expected_recipient_task_role"] = "review"
+            message["recipient_delegation_ref"] = auth_ref
+            message["required_refs"] = [auth_ref, human_ref]
+            def loader(ref):
+                path = root / ref
+                if not path.is_file():
+                    raise CommunicationValidationError("authorization_ref_unreadable")
+                return yaml.safe_load(path.read_text(encoding="utf-8"))
+            self.validator.validate_recipient_delegation_with_loader(
+                message, authority_loader=loader
+            )
+            delegation = loader(auth_ref); delegation["revoked"] = True
+            (root / auth_ref).write_text(yaml.safe_dump(delegation), encoding="utf-8")
+            with self.assertRaisesRegex(CommunicationValidationError, "authorization_v2_not_live"):
+                self.validator.validate_recipient_delegation_with_loader(
+                    message, authority_loader=loader
+                )
+
+    def test_v21_loader_based_delegated_start_rejects_forgery_and_widening(self):
+        message = valid_message(); message["requested_action"] = "do-work"
+        with TemporaryDirectory() as temp:
+            root = Path(temp)
+            human_ref, auth_ref, baseline = self._write_v2_authority(
+                root, writer="receiver-01", role="review", delegated=True
+            )
+            message["expected_recipient_endpoint_id"] = "receiver-01"
+            message["expected_recipient_task_role"] = "review"
+            message["recipient_delegation_ref"] = auth_ref
+            message["required_refs"] = [auth_ref, human_ref]
+            def loader(ref):
+                path = root / ref
+                if not path.is_file():
+                    raise CommunicationValidationError("authorization_ref_unreadable")
+                return yaml.safe_load(path.read_text(encoding="utf-8"))
+            cases = [
+                ("wrong_task", {"task_id":"other-task"}, "authorization_v2_not_live"),
+                ("wrong_authority", {"task_authority_id":"TA-OTHER"}, "delegation_task_authority_mismatch"),
+                ("wrong_recipient", {"recipient_endpoint_id":"other"}, "authorization_v2_recipient_mismatch"),
+                ("wrong_action", {"authorized_actions":["other"]}, "authorization_v2_action_not_delegated"),
+                ("scope_widening", {"delegated_scope":["outside"]}, "delegation_exceeds_Human_task_scope"),
+                ("forged_root", {"delegator_endpoint_id":"forged"}, "root_delegator_not_Human_bound_holder"),
+            ]
+            for name, delta, error in cases:
+                with self.subTest(name=name):
+                    doc = dict(baseline); doc.update(delta)
+                    (root / auth_ref).write_text(yaml.safe_dump(doc), encoding="utf-8")
+                    with self.assertRaisesRegex(CommunicationValidationError, error):
+                        self.validator.validate_recipient_delegation_with_loader(
+                            message, authority_loader=loader
+                        )
+
 
 if __name__ == "__main__":
     unittest.main()

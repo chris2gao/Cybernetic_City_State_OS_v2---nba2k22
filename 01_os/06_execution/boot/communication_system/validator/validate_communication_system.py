@@ -8,7 +8,7 @@ import re
 import subprocess
 import sys
 from pathlib import Path, PurePosixPath
-from typing import Any
+from typing import Any, Callable
 
 import yaml
 from yaml.events import AliasEvent
@@ -302,15 +302,22 @@ class CommunicationValidator:
         return set(scope)
 
     def _validate_delegation_chain(
-        self, physical: dict[str, Any], *, task_root: Path, task_id: str,
+        self, physical: dict[str, Any], *, task_id: str,
         required_refs: list[str], expected_recipient_endpoint_id: str,
         expected_recipient_task_role: str, requested_action: str,
+        task_root: Path | None = None,
+        authority_loader: Callable[[str], dict[str, Any]] | None = None,
     ) -> None:
+        if authority_loader is None:
+            if task_root is None:
+                raise CommunicationValidationError("delegation_authority_loader_required")
+            authority_loader = lambda relative: self._load_authority_mapping(task_root, relative)
         root_ref = physical.get("Human_task_authority_ref")
         if not isinstance(root_ref, str) or root_ref not in required_refs:
             raise CommunicationValidationError("Human_task_authority_ref_required")
-        root = self._load_authority_mapping(task_root, root_ref)
+        root = authority_loader(root_ref)
         root_scope = self._validate_Human_task_authority_v2(root, task_id=task_id)
+        root_authority_id = root["task_authority_id"]
         root_holder = root["initial_authority_holder_endpoint_id"]
         root_holder_role = root["initial_authority_holder_task_role"]
 
@@ -322,6 +329,8 @@ class CommunicationValidator:
                 raise CommunicationValidationError("authorization_v2_schema_invalid")
             if current.get("task_id") != task_id or current.get("granted") is not True or current.get("revoked") is True:
                 raise CommunicationValidationError("authorization_v2_not_live")
+            if current.get("task_authority_id") != root_authority_id:
+                raise CommunicationValidationError("delegation_task_authority_mismatch")
             if current.get("Human_task_authority_ref") != root_ref:
                 raise CommunicationValidationError("delegation_root_authority_mismatch")
             delegator = current.get("delegator_endpoint_id")
@@ -366,7 +375,7 @@ class CommunicationValidator:
                 raise CommunicationValidationError("delegation_cycle_detected")
             seen_parent_refs.add(parent_ref)
             child = current
-            current = self._load_authority_mapping(task_root, parent_ref)
+            current = authority_loader(parent_ref)
         else:
             raise CommunicationValidationError("delegation_chain_too_deep")
 
@@ -419,6 +428,30 @@ class CommunicationValidator:
             expected_recipient_endpoint_id=str(message.get("expected_recipient_endpoint_id")),
             expected_recipient_task_role=str(message.get("expected_recipient_task_role")),
             requested_action=str(message.get("requested_action") or ""),
+        )
+
+    def validate_recipient_delegation_with_loader(
+        self,
+        message: dict[str, Any],
+        *,
+        authority_loader: Callable[[str], dict[str, Any]],
+    ) -> None:
+        """Validate delegated-start authority from an immutable/external ref loader."""
+        ref = message.get("recipient_delegation_ref")
+        if ref is None:
+            return
+        refs = message.get("required_refs") or []
+        if ref not in refs:
+            raise CommunicationValidationError("recipient_delegation_ref_not_in_required_refs")
+        physical = authority_loader(str(ref))
+        self._validate_delegation_chain(
+            physical,
+            task_id=str(message.get("task_id")),
+            required_refs=refs,
+            expected_recipient_endpoint_id=str(message.get("expected_recipient_endpoint_id")),
+            expected_recipient_task_role=str(message.get("expected_recipient_task_role")),
+            requested_action=str(message.get("requested_action") or ""),
+            authority_loader=authority_loader,
         )
 
     def validate_protected_action_authority(
@@ -1098,6 +1131,8 @@ def validate_static_repository(repo_root: Path) -> None:
     required_formal_validity = {
         "sender_index_exactly_binds_message_identity_and_route",
         "receiver_replays_resolver_and_gate_from_saved_inputs",
+        "recipient_delegation_revalidated_from_carrier_state_when_present",
+        "GitHub_recipient_delegation_current_liveness_revalidated_when_present",
         "canonical_mechanism_execution_ref_physically_resolves",
         "correction_physically_binds_existing_superseded_message_when_applicable",
     }
@@ -1114,6 +1149,8 @@ def validate_static_repository(repo_root: Path) -> None:
         "sender_index_contains_exact_message_binding_at_same_commit",
         "mechanism_execution_ref_is_canonical_and_exists_at_same_commit",
         "correction_supersedes_blob_exists_at_same_commit_when_applicable",
+        "recipient_delegation_chain_revalidated_from_exact_commit_when_present",
+        "recipient_delegation_current_liveness_revalidated_from_physical_task_root_when_present",
     }
     if not required_git_validation.issubset(set(pointer_v2.get("GitHub_validation") or [])):
         raise CommunicationValidationError("pointer_v2_physical_closure_incomplete")

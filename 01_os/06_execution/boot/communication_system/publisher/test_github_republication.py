@@ -12,7 +12,12 @@ MODULE_ROOT = Path(__file__).resolve().parent
 SOURCE_REPO = MODULE_ROOT.parents[4]
 if str(MODULE_ROOT) not in sys.path:
     sys.path.insert(0, str(MODULE_ROOT))
+VALIDATOR_ROOT = MODULE_ROOT.parent / "validator"
+if str(VALIDATOR_ROOT) not in sys.path:
+    sys.path.insert(0, str(VALIDATOR_ROOT))
 from republish_github import republish_and_converge  # noqa: E402
+from receiver_bootstrap import load_receiver_from_pointer  # noqa: E402
+from validate_communication_system import CommunicationValidationError  # noqa: E402
 
 
 ENV = {
@@ -90,7 +95,7 @@ class GitHubRepublicationTests(unittest.TestCase):
             git(repo, "branch", "-M", "task")
             git(repo, "commit", "-m", "seed")
             git(repo, "push", "origin", "task")
-            for directory in ("endpoints", "roles", "documents/sender-01"):
+            for directory in ("endpoints", "roles", "documents/sender-01", "Human", "delegations"):
                 (local / directory).mkdir(parents=True, exist_ok=True)
             (local / "manifest.yml").write_text(
                 "task_id: task-001\ncommunication_contract_version: 2\n", encoding="utf-8"
@@ -104,6 +109,28 @@ class GitHubRepublicationTests(unittest.TestCase):
             )
             (local / "roles/execution.md").write_text("Execution", encoding="utf-8")
             (local / "roles/review.md").write_text("Review", encoding="utf-8")
+            human_ref = "Human/task_authority.yml"
+            delegation_ref = "delegations/receiver.yml"
+            human = {
+                "schema_version": "citystate.Human_task_authority_event.v2",
+                "task_id": "task-001", "task_authority_id": "TA-001",
+                "initial_authority_holder_endpoint_id": "sender-01",
+                "initial_authority_holder_task_role": "execution",
+                "task_authority_scope": ["review"], "Human_disposition": "authorized",
+                "task_authority_revoked": False,
+                "task_nonce_commitment": {"scheme":"citystate-human-task-authority-v2","algorithm":"sha256","digest":"a"*64},
+            }
+            delegation = {
+                "schema_version": "citystate.communication.task_authority_delegation.v2",
+                "task_id": "task-001", "task_authority_id": "TA-001",
+                "delegator_endpoint_id": "sender-01", "delegator_task_role": "execution",
+                "recipient_endpoint_id": "receiver-01", "recipient_task_role": "review",
+                "authorized_actions": ["review exact candidate"], "delegated_scope": ["review"],
+                "parent_delegation_ref": None, "allow_redelegation": False,
+                "Human_task_authority_ref": human_ref, "granted": True, "revoked": False,
+            }
+            (local / human_ref).write_text(yaml.safe_dump(human), encoding="utf-8")
+            (local / delegation_ref).write_text(yaml.safe_dump(delegation), encoding="utf-8")
             document_ref = "documents/sender-01/evidence.md"
             (local / document_ref).write_text(
                 """---
@@ -120,11 +147,13 @@ Evidence.
             )
             message = {
                 "message_id": "task-001::sender-01::00001", "task_id": "task-001",
-                "title": "Review", "message_type": "result",
+                "title": "Review", "message_type": "request",
                 "sender_endpoint_id": "sender-01", "sender_task_role": "execution",
                 "expected_recipient_endpoint_id": "receiver-01",
                 "expected_recipient_task_role": "review", "content": "See evidence.",
-                "required_refs": [document_ref],
+                "required_refs": [document_ref, delegation_ref, human_ref],
+                "requested_action": "review exact candidate",
+                "recipient_delegation_ref": delegation_ref,
             }
             source = local / "source.yml"
             source.write_text(yaml.safe_dump(message, sort_keys=False), encoding="utf-8")
@@ -156,7 +185,7 @@ Evidence.
             git(base, "clone", "--branch", "task", str(remote), str(readback))
             published = readback / task_prefix
             self.assertTrue((published / document_ref).is_file())
-            self.assertTrue((published / "messages/sender-01/00001_result.yml").is_file())
+            self.assertTrue((published / "messages/sender-01/00001_request.yml").is_file())
             self.assertTrue((published / "indexes/sender-01.yml").is_file())
             self.assertTrue((published / "constitutions/sender-01/00001.yml").is_file())
             self.assertTrue((published / "receipts/sender-01/00001.yml").is_file())
@@ -168,6 +197,18 @@ Evidence.
             self.assertEqual(result["convergence"]["push_attempt_count"], 1)
             self.assertRegex(result["pointer"]["exact_path_or_GitHub_ref"], r"^[0-9a-f]{40}:")
             self.assertEqual(result["pointer"]["pointer_contract_version"], 2)
+            receiver = load_receiver_from_pointer(
+                published, "receiver-01", result["pointer"], repository_root=readback
+            )
+            self.assertEqual(receiver["message"]["recipient_delegation_ref"], delegation_ref)
+            live_path = published / delegation_ref
+            live = yaml.safe_load(live_path.read_text(encoding="utf-8"))
+            live["revoked"] = True
+            live_path.write_text(yaml.safe_dump(live), encoding="utf-8")
+            with self.assertRaisesRegex(CommunicationValidationError, "authorization_v2_not_live"):
+                load_receiver_from_pointer(
+                    published, "receiver-01", result["pointer"], repository_root=readback
+                )
             self.assertEqual(git(repo, "rev-parse", "HEAD"), git(repo, "rev-parse", "origin/task"))
 
 

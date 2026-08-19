@@ -1,0 +1,44 @@
+task_id: os-v2-human-task-authority-delegated-start-simplification-001
+implementation_checkpoint: semantic_candidate_precommit
+physically_verified:
+  communication_system_full_pytest:
+    command_scope: 01_os/06_execution/boot/communication_system
+    result: PASS
+    summary: 80 passed, 6 subtests passed
+    exit_code: 0
+  communication_static:
+    result: PASS
+    exit_code: 0
+  Human_task_authority_v2_focused_regression:
+    exact_test_ref: 01_os/_runs/run-20260818-human-task-authority-v2-migration-001/07_测试执行/test_human_task_authority_v2.py
+    result: PASS
+    exit_code: 0
+  git_diff_check:
+    result: PASS
+    exit_code: 0
+  changed_path_allowlist:
+    result: PASS
+  stage_profile_exact_blob_pin:
+    result: PASS
+    blob_sha: 0a49b85a4518dc123b3c01e3a46f5454d9a55cc1
+  legacy_stage_static:
+    candidate_result: FAIL_EXIT_15
+    pristine_master_result: FAIL_EXIT_15
+    disposition: pre_existing_baseline_failure_not_candidate_regression
+    cause_observed: validator expects staged_inert while current master boot and registry report active_dormant
+  GitHub_pointer_live_revocation:
+    result: PASS
+    proposition: exact dispatch commit remains immutable while current physical task-root revocation blocks receiver startup
+    covered_by: 01_os/06_execution/boot/communication_system/publisher/test_github_republication.py
+security_properties:
+- ordinary delegated start has no Human task code input
+- receiver revalidates recipient delegation from the actual carrier state
+- GitHub receiver validates original delegation from the pointer exact commit and current liveness from physical task-root state
+- delegation task_authority_id must exactly equal the Human root task_authority_id
+- wrong task, wrong authority, wrong recipient, wrong action, scope widening, forged root and revocation fail closed
+- initial Human task/event commitment focused regression remains PASS
+- plaintext Human task code was not persisted in tracked task or candidate artifacts
+not_run: []
+residual_risks:
+- independent falsification review is still required before Human completion or master integration
+- pre_existing stage static activation-state assertion remains outside this task

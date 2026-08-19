@@ -41,9 +41,9 @@ current_model:
   - initial task authority and true Human decision/protected/completion gates still require valid Human authority commitments and cannot be self-asserted by a model
   - tracked diff contains no plaintext Human code
   - exact candidate receives fresh independent falsification review before any completion/master request
-  actual_result: Human_direct_foreground_execution_authorized_after_task_authority_supersession
-  material_deviation: Execution routing changed from the previously dispatched Codex endpoint to this current foreground by explicit Human override; v2.1 architecture and scope are unchanged.
-  residual_risk: Until this candidate is independently reviewed and integrated into master, current v2 remains authoritative; this direct foreground execution is authorized by the current Human under the superseding task authority.
+  actual_result: v2.1_semantic_implementation_verified_locally_and_ready_for_exact_candidate_commit_then_independent_review
+  material_deviation: Execution routing changed from the previously dispatched Codex endpoint to this current foreground by explicit Human override. During implementation, the previously non-blocking GitHub receiver delegation-revalidation gap and missing delegation task_authority_id enforcement became load-bearing under v2.1 and were closed within the Human-confirmed authority/delegation scope.
+  residual_risk: Current master remains v2 until Human completion and integration. Independent falsification review is still required. The stage static validator has a pre-existing activation-state assertion failure reproduced unchanged on pristine master and is not repaired in this task.
   current_exact_model_version: human-task-authority-v2.1-current-model-v1
   Human_confirmation:
     explicit: true

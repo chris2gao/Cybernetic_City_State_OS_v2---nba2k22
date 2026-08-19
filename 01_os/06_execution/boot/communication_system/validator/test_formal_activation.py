@@ -123,6 +123,48 @@ class FormalCommunicationActivationTests(unittest.TestCase):
                 result["receiver_publication_claim"]["verification_result"], "VERIFIED"
             )
 
+
+    def test_v21_receiver_bootstrap_revalidates_recipient_delegation_without_code(self):
+        with TemporaryDirectory() as temp:
+            root = Path(temp)
+            source = self.fixture(root)
+            human_ref = "Human/task_authority.yml"
+            delegation_ref = "delegations/receiver.yml"
+            (root / "Human").mkdir(parents=True, exist_ok=True)
+            (root / "delegations").mkdir(parents=True, exist_ok=True)
+            human = {
+                "schema_version": "citystate.Human_task_authority_event.v2",
+                "task_id": "task-001", "task_authority_id": "TA-001",
+                "initial_authority_holder_endpoint_id": "sender-01",
+                "initial_authority_holder_task_role": "execution",
+                "task_authority_scope": ["review"], "Human_disposition": "authorized",
+                "task_authority_revoked": False,
+                "task_nonce_commitment": {"scheme":"citystate-human-task-authority-v2","algorithm":"sha256","digest":"a"*64},
+            }
+            delegation = {
+                "schema_version": "citystate.communication.task_authority_delegation.v2",
+                "task_id": "task-001", "task_authority_id": "TA-001", "granted": True, "revoked": False,
+                "Human_task_authority_ref": human_ref,
+                "delegator_endpoint_id": "sender-01", "delegator_task_role": "execution",
+                "recipient_endpoint_id": "receiver-01", "recipient_task_role": "review",
+                "authorized_actions": ["review exact candidate"], "delegated_scope": ["review"],
+                "parent_delegation_ref": None, "allow_redelegation": False,
+            }
+            (root / human_ref).write_text(yaml.safe_dump(human), encoding="utf-8")
+            (root / delegation_ref).write_text(yaml.safe_dump(delegation), encoding="utf-8")
+            message = yaml.safe_load(source.read_text(encoding="utf-8"))
+            message["recipient_delegation_ref"] = delegation_ref
+            message["required_refs"] = [delegation_ref, human_ref]
+            source.write_text(yaml.safe_dump(message, sort_keys=False), encoding="utf-8")
+            pointer = publish(root, source, **self.activation_kwargs())
+            result = load_receiver_from_pointer(root, "receiver-01", pointer)
+            self.assertEqual(result["message"]["recipient_delegation_ref"], delegation_ref)
+            delegation["revoked"] = True
+            (root / delegation_ref).write_text(yaml.safe_dump(delegation), encoding="utf-8")
+            with self.assertRaisesRegex(CommunicationValidationError, "authorization_v2_not_live"):
+                load_receiver_from_pointer(root, "receiver-01", pointer)
+
+
     def test_direct_publisher_without_resolver_gate_bundle_creates_nothing(self):
         with TemporaryDirectory() as temp:
             root = Path(temp)
