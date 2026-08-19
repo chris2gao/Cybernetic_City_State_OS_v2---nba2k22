@@ -1,0 +1,67 @@
+schema_version: citystate.current_model.v1
+task_id: os-v2-human-task-authority-delegated-start-simplification-001
+stage_id: current_task
+current_model:
+  problem_or_objective: Simplify Human Task Authority delegated endpoint startup so the Human establishes one task code once, while ordinary delegated executors and reviewers start from verified durable delegation instead of repeatedly asking the Human for the same code.
+  Human_intent_understanding: The Human wants one task to have one Human Task Authority Code. Foreground/dispatcher may issue scoped execution and review delegations inside that Human-authorized task. Those downstream endpoints should not receive or require the plaintext task code merely to start. Human authority must remain required for genuine Human decision events.
+  current_baseline_and_inputs:
+    remote_master: 759bff35284525c5b9c486f2f097e5e1cdf5f2d6
+    current_scheme: citystate-human-task-authority-v2
+    current_problematic_rule: delegated_endpoint_start_requires includes same_task_Human_code_challenge_VERIFIED_in_recipient_current_interaction
+    current_delegation_controls: live root authority plus durable delegation chain plus exact recipient action and delegated-scope checks
+    motivating_incident: Task B executor correctly failed closed after its recipient-side challenge path produced a mismatch even though the durable task commitments were later independently shown to match the Human code
+  constraints_and_dependencies:
+  - preserve one fresh Human-generated code per task authority and prohibit cross-task reuse
+  - never persist plaintext task code in Git run communication logs command lines or fixtures
+  - initial task authority remains Human-created and Human-confirmed
+  - material architecture/scope/risk decisions remain explicit Human decision events
+  - protected or irreversible actions completion acceptance Human override/revocation and master gates remain explicit Human events where currently required
+  - delegation remains durable recipient-bound action-bound scope-narrowing revocable and non-self-authorizing
+  - do not redesign unrelated governance mechanisms
+  proposed_method_or_solution:
+  - change canonical delegation start semantics from live-delegation + recipient Human-code challenge + action/scope match to live-delegation + exact task/recipient/action/scope match
+  - remove any statement that ordinary delegation authorizes or requires relay of the plaintext task code to the recipient
+  - retain Human task and decision-event commitments as the proof/audit structure for Human-origin authority events
+  - retain the Human challenge verifier for explicit Human authority/provenance checks where actually required, but remove it from ordinary delegated endpoint startup
+  - inspect the actual enforcement path and change only code/tests/docs whose behavior depends on recipient challenge; do not invent a compatibility layer
+  - add causal negative tests showing forged revoked widened cross-task wrong-recipient and unauthorized-redelegation chains still fail closed without a recipient code challenge
+  feasibility_support:
+  - the current communication validator already validates Human task authority structure and delegation-chain root holder recipient action scope parent revocation and redelegation constraints independently of plaintext code
+  - the task code is not a capability intended for downstream models; keeping it out of downstream endpoints reduces secret distribution and removes a brittle manual ceremony
+  - Human-confirmed dispatcher authority is already bound into the task commitment, so scoped downstream delegation is the intended authority carrier once the task root exists
+  assumptions_risks_alternatives_unknowns:
+  - removing recipient challenge means a valid Human-authorized dispatcher can route work within the Human task scope without a second Human touch; this is intentional and is bounded by durable delegation/action/scope controls
+  - a compromised authorized dispatcher could issue delegations within its Human-granted scope; recipient challenge previously added friction but did not create a durable machine-verifiable authorization boundary because the same task code could be relayed
+  - exact implementation surfaces beyond the canonical contract and communication validator must be measured by the executor before editing
+  open_load_bearing_items: []
+  expected_output: A minimal semantic candidate implementing one-task-one-code delegated-start semantics, with downstream plaintext-code relay removed, true Human gates preserved, focused regression evidence, and no unrelated governance changes.
+  verification_or_acceptance_method:
+  - ordinary delegated executor/reviewer start passes with a live valid delegation and exact action/scope match without recipient Human code input
+  - the same start fails for missing revoked forged cross-task widened wrong-recipient or unauthorized-redelegation chains
+  - initial task authority and true Human decision/protected/completion gates still require valid Human authority commitments and cannot be self-asserted by a model
+  - tracked diff contains no plaintext Human code
+  - independent review was originally required; the current Human explicitly waived it after reviewing the implementation status and authorized direct non-force master integration
+  actual_result: Human_accepted_v21_semantic_candidate_04c0f4c3200c5008f686a7d74a389325623224b4_waived_independent_review_and_authorized_master_integration
+  material_deviation: Execution routing changed from the previously dispatched Codex endpoint to this current foreground by explicit Human override. During implementation, the previously non-blocking GitHub receiver delegation-revalidation gap and missing delegation task_authority_id enforcement became load-bearing under v2.1 and were closed within the Human-confirmed authority/delegation scope. After implementation, the current Human explicitly waived independent review, revoked the reviewer delegation, accepted the candidate, and authorized direct non-force master integration.
+  residual_risk: Until remote master readback completes, v2.1 is not yet canonical. The Human explicitly accepted the risk of integrating without independent review. The stage static validator has a pre-existing activation-state assertion failure reproduced unchanged on pristine master and is not repaired in this task.
+  current_exact_model_version: human-task-authority-v2.1-current-model-v1
+  Human_confirmation:
+    explicit: true
+    actor_class: current_Human
+    scope: current_task
+    bound_model_version: human-task-authority-v2.1-current-model-v1
+    exact_model_version: human-task-authority-v2.1-current-model-v1
+    decision_id: D-HTA-V21-002-FOREGROUND-EXECUTION
+    decision_type: substantive_execution_authorization
+    authority_protocol: citystate-human-task-authority-v2
+    task_authority_id: TA-os-v2-human-task-authority-delegated-start-simplification-001-v2
+    durable_disposition_ref: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-human-task-authority-delegated-start-simplification-001/Human/task_authority_v2.yml
+    durable_disposition_blob_sha: d1ebe7839b2eab908965332e3b319c3ccdbfed0d
+    task_nonce_commitment:
+      scheme: citystate-human-task-authority-v2
+      algorithm: sha256
+      digest: a68d0b37b692ad033f82bbb70de172a4a8417ed0eacdfeded127d09e20671e72
+    nonce_commitment:
+      scheme: citystate-human-task-authority-v2
+      algorithm: sha256
+      digest: 6ddeb5b4745a53dde9c02901c86455bca4ba21a969ccdbb7398a540dbee9cf66

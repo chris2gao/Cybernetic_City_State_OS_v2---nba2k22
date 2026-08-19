@@ -36,6 +36,8 @@ formal_action_validity_requires:
   - exact_v2_pointer_physically_resolves
   - sender_index_exactly_binds_message_identity_and_route
   - receiver_replays_resolver_and_gate_from_saved_inputs
+  - recipient_delegation_revalidated_from_carrier_state_when_present
+  - GitHub_recipient_delegation_current_liveness_revalidated_when_present
   - canonical_mechanism_execution_ref_physically_resolves
   - correction_physically_binds_existing_superseded_message_when_applicable
 

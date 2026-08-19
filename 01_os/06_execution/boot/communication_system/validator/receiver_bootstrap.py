@@ -137,6 +137,14 @@ def load_receiver_from_pointer(
     message_relative = validated["message_relative_path"]
     message = validated["message"]
     validator.validate_message(message, message_path=Path(message_relative), cards=cards)
+    validator.validate_recipient_delegation_with_loader(
+        message, authority_loader=read_yaml
+    )
+    # GitHub exact-commit evidence proves what was authorized at dispatch time.
+    # Delegation liveness is mutable, so a GitHub receiver must also fail closed
+    # against the current physical task-root state (revocation/supersession).
+    if commit is not None:
+        validator.validate_recipient_delegation(message, task_root=root)
     if message.get("expected_recipient_endpoint_id") != receiver_card.get("endpoint_id"):
         raise CommunicationValidationError("bootstrap_recipient_endpoint_mismatch")
     if message.get("expected_recipient_task_role") != receiver_card.get("task_role"):
