@@ -1,0 +1,67 @@
+message_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-poc-a-executor-001::00001
+task_id: os-v2-citystate-local-host-control-baseline-001
+title: POC-A blocked by Human Task Authority challenge
+message_type: result
+sender_endpoint_id: gpt56-localhost-b-poc-a-executor-001
+sender_task_role: localhost_control_poc_a_execution
+expected_recipient_endpoint_id: gpt56-localhost-b-foreground-001
+expected_recipient_task_role: localhost_control_baseline_foreground
+content: >-
+  POC-A did not begin. The current-Human same-task challenge was attempted in this
+  fresh interaction and canonical Human Task Authority v2 verification produced a
+  commitment mismatch. Per the fail-closed dispatch, no Remote Desktop Commander
+  POC probes were executed and no local-host test artifact was created. Result
+  status: blocked_authority_challenge.
+required_refs:
+- Human/task_authority_v2.yml
+- Human/delegations/00001_poc_a_execution.yml
+- documents/gpt56-localhost-b-foreground-001/00001_poc_a_execution.md
+in_reply_to: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00001
+authorization_ref: Human/delegations/00001_poc_a_execution.yml
+facts:
+  result_status: blocked_authority_challenge
+  challenge_verification:
+    status: BLOCKED
+    verification_method: canonical_v2_commitment_construction_non_persisting
+    observed_result: commitment_mismatch
+    Human_evidence_class: current_Human_supplied_in_current_interaction
+    durable_evidence_class: repository_commitments_only
+    plaintext_code_persisted: false
+  capability_matrix:
+    task_authority_challenge:
+      status: BLOCKED
+      evidence_class: deterministic_verification_result
+    remote_tool_discovery:
+      status: NOT_RUN
+      evidence_class: not_run
+    intended_device_online:
+      status: NOT_RUN
+      evidence_class: not_run
+    filesystem_list:
+      status: NOT_RUN
+      evidence_class: not_run
+    filesystem_write:
+      status: NOT_RUN
+      evidence_class: not_run
+    filesystem_readback:
+      status: NOT_RUN
+      evidence_class: not_run
+    powershell_execution:
+      status: NOT_RUN
+      evidence_class: not_run
+    powershell_7:
+      status: NOT_RUN
+      evidence_class: not_run
+    process_metadata:
+      status: NOT_RUN
+      evidence_class: not_run
+    git_read_only:
+      status: NOT_RUN
+      evidence_class: not_run
+    exact_test_artifact_cleanup:
+      status: NOT_RUN
+      evidence_class: not_run
+unknowns:
+- Remote Desktop Commander POC-A runtime capability remains unmeasured because authority challenge blocked execution.
+constraints:
+- No local-host action was executed after challenge failure.
