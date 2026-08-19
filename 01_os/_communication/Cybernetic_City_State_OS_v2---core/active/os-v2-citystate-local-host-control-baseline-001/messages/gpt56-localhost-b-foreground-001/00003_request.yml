@@ -1,0 +1,29 @@
+message_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00003
+task_id: os-v2-citystate-local-host-control-baseline-001
+title: Execute Task B final fresh-window baseline acceptance
+message_type: request
+sender_endpoint_id: gpt56-localhost-b-foreground-001
+sender_task_role: localhost_control_baseline_foreground
+expected_recipient_endpoint_id: gpt56-localhost-b-final-acceptance-executor-003
+expected_recipient_task_role: localhost_control_final_acceptance_execution
+content: Execute the permanent Task B fresh-window baseline acceptance after POC-A PASS. Use GitHub plus the disposable Linux/Python workspace for repository-heavy work and Remote Desktop Commander only for required Windows physical probes. Validate Human Task Authority v2.1 live scoped delegation without Human task code input, publish one formal result, then stop.
+required_refs:
+- documents/gpt56-localhost-b-foreground-001/00003_final_baseline_acceptance.md
+- Human/task_authority_v2.yml
+- Human/delegations/00003_final_baseline_acceptance.yml
+- messages/gpt56-localhost-b-poc-a-executor-002/00001_result.yml
+requested_action: execute_task_b_final_baseline_acceptance_and_publish_result
+authorization_ref: Human/delegations/00003_final_baseline_acceptance.yml
+recipient_delegation_ref: Human/delegations/00003_final_baseline_acceptance.yml
+in_reply_to: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-poc-a-executor-002::00001
+constraints:
+- v21_delegated_start_only_no_recipient_Human_code_challenge
+- GitHub_and_disposable_Linux_for_repository_heavy_work_RDC_only_for_Windows_physical_probes
+- no_dependency_on_E_drive_pubwork
+- no_secrets_credentials_admin_escalation_or_system_security_changes
+- no_VPS_DNS_firewall_VPN_nginx_xray_cloudflared_actions
+- no_paid_service_or_API_credit_activation
+- no_destructive_Git_or_unrelated_file_deletion
+- no_redelegation
+- no_master_publication
+- stop_after_final_acceptance_result_publication
