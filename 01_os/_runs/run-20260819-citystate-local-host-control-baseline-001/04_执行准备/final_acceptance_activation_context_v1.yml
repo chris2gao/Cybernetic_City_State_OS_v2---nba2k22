@@ -1,0 +1,22 @@
+intended_cross_endpoint_side_effect: true
+Human_relay_requested: true
+non_Human_endpoint_action_requested: true
+actionable_content: true
+requires_receiver_selection: true
+communication_context_ref: manifest.yml
+classification_basis_ref: Human/current.yml
+collaboration_role: execution
+risk_tier: T2_semantic
+task_shape: fresh_chatgpt_web_task_b_final_baseline_acceptance_under_human_task_authority_v21
+required_capabilities:
+- GitHub_repository_read
+- GitHub_repository_write
+- Remote_Desktop_Commander
+- Windows_local_runtime
+routing_basis_ref: documents/gpt56-localhost-b-foreground-001/00003_final_baseline_acceptance.md
+availability_assumption_or_observation_ref: role_context/gpt56-localhost-b-final-acceptance-executor-003.yml
+action_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00003
+formal_message_type: request
+task_id: os-v2-citystate-local-host-control-baseline-001
+sender_endpoint_id: gpt56-localhost-b-foreground-001
+intended_recipient_endpoint_id: gpt56-localhost-b-final-acceptance-executor-003
