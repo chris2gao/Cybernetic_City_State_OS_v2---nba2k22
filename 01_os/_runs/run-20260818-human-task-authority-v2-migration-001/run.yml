@@ -3,7 +3,7 @@ task_id: os-v2-human-task-authority-v2-migration-001
 run_id: run-20260818-human-task-authority-v2-migration-001
 base_sha: 857c667547c93e9b9c3c26ed1316db38919a25a3
 branch: dev/os-v2-human-task-authority-v2-migration-001
-status: candidate_ready_for_independent_review
+status: human_completion_accepted_ready_for_master_integration
 ownership: core-owned
 purpose: Human Task Authority v2 semantic migration and validator/communication closure.
 outputs:
@@ -12,6 +12,7 @@ outputs:
   - validation evidence
   - independent-review dispatch/result
   - completion pointer
-validation_state: formal_independent_review_dispatched_pointer_verified
+  - current-v1 Human completion acceptance record
+validation_state: independent_review_ready_for_human_integration_and_current_v1_completion_gate_satisfied
 master_modified: false
 plaintext_Human_code_persisted: false
