@@ -1,0 +1,68 @@
+schema_version: citystate.current_model.v1
+task_id: os-v2-citystate-local-host-control-program-design-001
+stage_id: current_task
+current_model:
+  problem_or_objective: Accept the independently reviewed CityState A/B/C program-design semantic candidate unchanged, finalize only task metadata, and publish the complete durable decision chain to master by ordinary fast-forward.
+  Human_intent_understanding: The Human accepts semantic candidate 3248912d182c3f185378af9e003f4ac21b9e0b6a without a change round and authorizes metadata-only completion plus ordinary fast-forward master integration; A/B/C implementation remains a later task.
+  current_baseline_and_inputs:
+    remote_master: 536995889b0b33cd050a520e31fdafd32151153c
+    source_branch: dev/os-v2-citystate-local-host-control-program-design-001
+    source_head_at_completion_gate: a0a2148fdcbef519d2615f5c1bf37c531468817b
+    semantic_candidate: 3248912d182c3f185378af9e003f4ac21b9e0b6a
+    independent_review_result_commit: a0a2148fdcbef519d2615f5c1bf37c531468817b
+    independent_review_verdict: ready_for_human_integration
+    local_device_state: offline_at_completion_gate
+    publication_transport: github_api_connector
+  constraints_and_dependencies:
+  - preserve semantic candidate unchanged
+  - finalization writes only current run metadata inside the existing authorized task boundary
+  - master integration must be ordinary non-force fast-forward only
+  - do not implement Task A, B, or C in this completion task
+  - do not modify VPS, DNS, runtime, scheduler, credentials, or protected network state
+  - no force push, rebase, squash, amend, or history rewrite
+  - local master synchronization is deferred until the authorized device is online
+  proposed_method_or_solution:
+  - create one metadata-only completion commit containing Human completion disposition, Current Model v3, task packet transport/authority update, run state, and completion pointer
+  - verify the metadata commit changes only the five current-run paths and remains descended from reviewer result commit a0a2148f
+  - require the formal source branch still equal a0a2148f before moving it with force=false to the metadata commit
+  - fresh-read remote master immediately before the protected action, require it still equal 53699588 and be an ancestor of the final task-branch head, then update master with force=false
+  - read back both remote refs and the final commit changed paths
+  feasibility_support:
+  - independent reviewer published a formal result with verdict ready_for_human_integration and candidate_requires_no_changes
+  - reviewer-result compliance receipt is VERIFIED
+  - GitHub compare shows semantic candidate is one commit ahead of current master with behind_by 0 and only run-evidence paths
+  - GitHub compare shows the current task branch is ahead of master with behind_by 0
+  - repository publisher authority recognizes github_api_connector and permits fast_forward_master under current Human instruction
+  - GitHub connector exposes non-force update_ref for source and master refs
+  assumptions_risks_alternatives_unknowns:
+  - the local Windows device is offline, so local worktree and hook state cannot be used as evidence in this publication path; the canonical github_api_connector replacement gate applies instead
+  - reviewer findings 2-5 remain non-blocking follow-up constraints and are not fixed in this candidate
+  - Task B activation must explicitly bind a receiver surface that can reach an observed-online Local Host Control channel
+  - external OpenAI/MCP/Cloudflare evidence remains dated executor observation until freshly reverified at the relevant task activation
+  open_load_bearing_items: []
+  expected_output: The final task-branch head contains the accepted semantic candidate, complete formal independent-review evidence, and metadata-only Human completion provenance; remote master is then the same exact head by ordinary fast-forward.
+  verification_or_acceptance_method:
+  - compare a0a2148f to the completion commit and require exactly five changed paths, all under the current run prefix
+  - compare current source branch to a0a2148f immediately before source ref update and require identical
+  - move source branch with force=false and read back exact head
+  - fresh-read remote master immediately before master update and require exact 536995889b0b33cd050a520e31fdafd32151153c
+  - compare master to final source head and require ahead-only fast-forward relation with behind_by 0
+  - move master with force=false and independently read back both remote refs
+  actual_result: independent_review_passed_and_Human_completion_accepted; metadata_finalization_and_master_fast_forward_pending_execution
+  material_deviation: Completion publication transport changed from planned local_git to recognized github_api_connector because the authorized local device is offline; no task scope or semantic candidate changed.
+  residual_risk: Local master/worktree synchronization remains pending until the authorized device is online; all later local-host work must fresh-bind local state before use.
+  current_exact_model_version: citystate-local-host-control-program-completion-model-v3
+  Human_confirmation:
+    explicit: true
+    actor_class: current_Human
+    scope: current_task
+    bound_model_version: citystate-local-host-control-program-completion-model-v3
+    exact_model_version: citystate-local-host-control-program-completion-model-v3
+    decision_id: D-CITYSTATE-PROGRAM-DESIGN-001-COMPLETION
+    decision_type: completion_acceptance
+    durable_disposition_ref: 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/02_当前模型/Human授权_v3.yml
+    durable_disposition_blob_sha: 55d1312e8caaa4ff1ad43cd583557d3533c9e0bd
+    nonce_commitment:
+      scheme: citystate-human-authority-v1
+      algorithm: sha256
+      digest: d1e945f7dc3db140f85ac0006eb3811d0161f55a8f36f73d58445dc61f3c505d

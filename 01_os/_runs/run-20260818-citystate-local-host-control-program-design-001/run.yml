@@ -5,11 +5,10 @@ run:
   exact_base_sha: 536995889b0b33cd050a520e31fdafd32151153c
   branch: dev/os-v2-citystate-local-host-control-program-design-001
   owner: core
-  status: formal_independent_review_dispatched
-  purpose: Durably define the Human-confirmed A/B/C CityState implementation program
-    without starting implementation.
-  current_model_version: citystate-local-host-control-program-current-model-v2
-  human_authorization_ref: 02_当前模型/Human授权_v2.yml
+  status: Human_completion_accepted_ready_for_master_fast_forward
+  purpose: Durably define the Human-confirmed A/B/C CityState implementation program without starting implementation.
+  current_model_version: citystate-local-host-control-program-completion-model-v3
+  human_authorization_ref: 02_当前模型/Human授权_v3.yml
   task_packet: 01_任务输入/任务包_v1.yml
   program_topology:
     Task_A: ChatGPT Plugin Capability Catalog
@@ -17,8 +16,11 @@ run:
     Task_C: Self-hosted CityState MCP (C1 feasibility gate -> C2 production)
   publication:
     source_branch_allowed: true
-    master_allowed: false
+    master_allowed: true
+    transport: github_api_connector
     force_push: false
+    master_fast_forward_only: true
+    local_sync_status: deferred_device_offline
   program_architecture_ref: 03_方案设计/program_architecture_v1.yml
   planned_task_designs:
   - 04_任务设计/task_A_plugin_catalog_planned_v1.yml
@@ -31,4 +33,14 @@ run:
   reviewer_receiver_setup_ref: 08_结论/reviewer_receiver_setup_v1.yml
   formal_dispatch_boundary_defect_ref: 08_结论/formal_dispatch_boundary_defect_v1.yml
   completion_pointer: 08_结论/completion_pointer_v1.yml
-  formal_review_pointer_commit: 2b6b8d43b06b296d397ff7d47e990c56128063ea
+  formal_review_request_pointer_commit: 2b6b8d43b06b296d397ff7d47e990c56128063ea
+  formal_review_result_commit: a0a2148fdcbef519d2615f5c1bf37c531468817b
+  independent_review_verdict: ready_for_human_integration
+  completion_decision_id: D-CITYSTATE-PROGRAM-DESIGN-001-COMPLETION
+  completion_result: semantic_candidate_accepted_unchanged
+  reviewer_findings_disposition:
+    finding_1: resolved_by_current_Human_completion_decision_without_change_round
+    finding_2: deferred_communication_infrastructure_finding
+    finding_3: bind_explicit_local_channel_at_Task_B_activation
+    finding_4: preserve_external_evidence_as_executor_observation_until_fresh_reverification
+    finding_5: no_action_activation_time_DNS_verification

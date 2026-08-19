@@ -3,17 +3,15 @@ repository: chris2gao/Cybernetic_City_State_OS_v2---core
 risk_tier: T2_semantic
 exact_base_sha: 536995889b0b33cd050a520e31fdafd32151153c
 branch: dev/os-v2-citystate-local-host-control-program-design-001
-objective: 'Produce the durable Program Current Model implementation design for three
-  major tasks: A ChatGPT Plugin Capability Catalog, B CityState Local Host Control
-  Baseline, and C Self-hosted CityState MCP with feasibility gate then production;
-  include domain planning for gkadastra.eu.org and the observed Windows app-launch
-  capability probe.'
+objective: 'Produce the durable Program Current Model implementation design for three major tasks: A ChatGPT Plugin Capability Catalog, B CityState Local Host Control Baseline, and C Self-hosted CityState MCP with feasibility gate then production; include domain planning for gkadastra.eu.org and the observed Windows app-launch capability probe.'
 source_evidence:
 - Human-confirmed Program Current Model v1 in current interaction
 - 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/02_当前模型/Human授权_v1.yml
 - 01_os/03_mechanisms/model_routing/路由契约_v1.yml
 - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
 - 01_os/03_mechanisms/model_routing/协作角色与接收者设置契约_v1.yml
+- formal independent-review result at a0a2148fdcbef519d2615f5c1bf37c531468817b
+- Human-confirmed Program Completion Current Model v3 and completion disposition
 allowed_changed_paths:
 - 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/**
 - 01_os/_communication/Cybernetic_City_State_OS_v2---core/discovery.yml
@@ -22,25 +20,27 @@ required_tests:
 - stage canonical-live-state guard exit 0
 - stage static validator exit 0
 - model-routing static validator exit 0
-- changed-path ledger inside current run prefix
+- changed-path ledger inside current authorized boundary
 - git diff --check exit 0
+- independent fresh review of exact semantic candidate before master integration
+- github_api_connector replacement gate for final source/master publication
 prohibitions:
 - implement_Task_A_B_or_C
-- modify_master
 - modify_DNS_or_VPS
 - activate_runtime_or_scheduler
 - force_push
 - rebase
 - squash
 - amend
+- history_rewrite
 required_completion_pointer: 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/08_结论/completion_pointer_v1.yml
 publisher:
-  principal_binding: local_authenticated
-  publication_transport: local_git
+  principal_binding: connector_authenticated
+  publication_transport: github_api_connector
   source_write_authorized: true
-  master_write_authorized: false
+  master_write_authorized: true
   destructive_git_authorized: false
-  authorization_ref: 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/02_当前模型/Human授权_v2.yml
+  authorization_ref: 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/02_当前模型/Human授权_v3.yml
   expected_remote_head: 536995889b0b33cd050a520e31fdafd32151153c
 executor_profile:
   provider: OpenAI
@@ -49,8 +49,7 @@ executor_profile:
   reasoning_effort: High
   mode: decision_architecture
   parameter_profile: chatgpt_plus_sol_high
-  routing_basis: strongest registered reliable fit for foreground architecture with
-    web/plugin/GitHub context
+  routing_basis: strongest registered reliable fit for foreground architecture with web/plugin/GitHub context
   authority: routing_only
 verification_profile:
   independent_reviewer: Claude Opus 5
@@ -58,4 +57,9 @@ verification_profile:
   different_model_family: true
   fresh_isolated_session: true
   review_exact_candidate_sha: true
-scope_expansion: formal_review_communication_only
+scope_expansion: formal_review_communication_only_then_Human_completion_and_master_fast_forward
+completion_acceptance:
+  semantic_candidate: 3248912d182c3f185378af9e003f4ac21b9e0b6a
+  reviewer_result_commit: a0a2148fdcbef519d2615f5c1bf37c531468817b
+  disposition_ref: 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/02_当前模型/Human授权_v3.yml
+  semantic_changes_after_review: prohibited
