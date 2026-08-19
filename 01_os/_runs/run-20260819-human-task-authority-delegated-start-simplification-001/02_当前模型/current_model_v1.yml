@@ -40,10 +40,10 @@ current_model:
   - the same start fails for missing revoked forged cross-task widened wrong-recipient or unauthorized-redelegation chains
   - initial task authority and true Human decision/protected/completion gates still require valid Human authority commitments and cannot be self-asserted by a model
   - tracked diff contains no plaintext Human code
-  - exact candidate receives fresh independent falsification review before any completion/master request
-  actual_result: v2.1_semantic_implementation_verified_locally_and_ready_for_exact_candidate_commit_then_independent_review
-  material_deviation: Execution routing changed from the previously dispatched Codex endpoint to this current foreground by explicit Human override. During implementation, the previously non-blocking GitHub receiver delegation-revalidation gap and missing delegation task_authority_id enforcement became load-bearing under v2.1 and were closed within the Human-confirmed authority/delegation scope.
-  residual_risk: Current master remains v2 until Human completion and integration. Independent falsification review is still required. The stage static validator has a pre-existing activation-state assertion failure reproduced unchanged on pristine master and is not repaired in this task.
+  - independent review was originally required; the current Human explicitly waived it after reviewing the implementation status and authorized direct non-force master integration
+  actual_result: Human_accepted_v21_semantic_candidate_04c0f4c3200c5008f686a7d74a389325623224b4_waived_independent_review_and_authorized_master_integration
+  material_deviation: Execution routing changed from the previously dispatched Codex endpoint to this current foreground by explicit Human override. During implementation, the previously non-blocking GitHub receiver delegation-revalidation gap and missing delegation task_authority_id enforcement became load-bearing under v2.1 and were closed within the Human-confirmed authority/delegation scope. After implementation, the current Human explicitly waived independent review, revoked the reviewer delegation, accepted the candidate, and authorized direct non-force master integration.
+  residual_risk: Until remote master readback completes, v2.1 is not yet canonical. The Human explicitly accepted the risk of integrating without independent review. The stage static validator has a pre-existing activation-state assertion failure reproduced unchanged on pristine master and is not repaired in this task.
   current_exact_model_version: human-task-authority-v2.1-current-model-v1
   Human_confirmation:
     explicit: true
