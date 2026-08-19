@@ -1,0 +1,50 @@
+schema_version: citystate.Human_task_authority_event.v2
+task_id: os-v2-human-task-authority-delegated-start-simplification-001
+task_authority_id: TA-os-v2-human-task-authority-delegated-start-simplification-001-v1
+initial_authority_holder_endpoint_id: gpt56-hta-v21-foreground-001
+initial_authority_holder_task_role: authority_v21_foreground_dispatch
+task_authority_scope:
+- modify_delegated_endpoint_start_semantics
+- stage_collaborative_deliberation_contract
+- authority_validator_and_tests
+- communication_validator_and_tests
+- receiver_bootstrap_and_tests_if_triggered
+- boot_exact_ref_updates_if_required
+- registry_sync_if_required
+- durable_task_evidence
+- formal_dispatch_and_review
+- independent_review
+- completion_and_master_integration
+stage_id: current_task
+decision_id: D-HTA-V21-001-EXECUTION
+decision_type: substantive_execution_authorization
+exact_model_version: human-task-authority-v2.1-current-model-v1
+Human_disposition: authorized
+authorized_scope:
+- modify_delegated_endpoint_start_semantics
+- stage_collaborative_deliberation_contract
+- authority_validator_and_tests
+- communication_validator_and_tests
+- receiver_bootstrap_and_tests_if_triggered
+- boot_exact_ref_updates_if_required
+- registry_sync_if_required
+- durable_task_evidence
+- formal_dispatch_and_review
+- independent_review
+- completion_and_master_integration
+actor_class: current_Human
+explicit: true
+provenance: foreground_current_Human_interaction
+stale: false
+invalidated: false
+task_authority_revoked: false
+event_revoked: false
+task_nonce_commitment:
+  scheme: citystate-human-task-authority-v2
+  algorithm: sha256
+  digest: 1efeac544243c8e2f198ad65e81eacbe53f65c1016bbed02475aaa0e1a3609e8
+nonce_commitment:
+  scheme: citystate-human-task-authority-v2
+  algorithm: sha256
+  digest: 7462a829d74255047bbd24ea884b61c4adaba71d442c9328269feb8e3b79b7d3
+plaintext_Human_code_persisted: false

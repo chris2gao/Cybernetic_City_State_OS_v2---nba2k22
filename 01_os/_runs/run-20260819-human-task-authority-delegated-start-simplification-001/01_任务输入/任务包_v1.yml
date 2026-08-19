@@ -1,0 +1,65 @@
+task_id: os-v2-human-task-authority-delegated-start-simplification-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T2_semantic
+exact_base_sha: 759bff35284525c5b9c486f2f097e5e1cdf5f2d6
+branch: dev/os-v2-human-task-authority-delegated-start-simplification-001
+objective: >-
+  Change Human Task Authority v2 delegated endpoint start semantics so one Human-generated
+  code is established once per task authority and ordinary downstream executor/reviewer starts
+  do not require repeated Human code challenge when a live durable scoped delegation and exact
+  task/action/scope match are verified. Preserve all true Human decision gates and plaintext-code secrecy.
+source_evidence:
+- Human-confirmed Human Task Authority v2.1 in current foreground interaction
+- current master Human_authority_contract in 01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml
+- Task B blocked-authority-challenge evidence at commit 1245d9592d5fe1843b831bc4cee4b395b2e0207e
+allowed_changed_paths:
+- 01_os/03_mechanisms/stage_collaborative_deliberation/**
+- 01_os/03_mechanisms/communication_system/**
+- 01_os/06_execution/boot/stage_collaborative_deliberation/**
+- 01_os/06_execution/boot/communication_system/**
+- 01_os/02_boot/stage_collaborative_deliberation/**
+- 01_os/05_registry/**
+- 01_os/_runs/run-20260819-human-task-authority-delegated-start-simplification-001/**
+- 01_os/_communication/Cybernetic_City_State_OS_v2---core/discovery.yml
+- 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-human-task-authority-delegated-start-simplification-001/**
+required_tests:
+- focused v2.1 authority tests proving delegated start requires live chain plus exact action/scope but not recipient Human code
+- negative tests for forged revoked widened cross-task and recipient-mismatched delegations
+- tests proving initial task authority and explicit Human decision/protected/completion events still require valid Human commitment semantics
+- communication validator regression tests
+- stage collaborative deliberation validator/regression tests
+- plaintext Human task code absent from tracked diff and test output
+- exact boot/registry refs updated when changed canonical blobs require them
+- git diff --check
+- independent fresh review of exact semantic candidate before Human completion/master integration
+prohibitions:
+- persist or echo plaintext Human task code
+- weaken initial Human task authority establishment
+- weaken material architecture scope risk protected action completion override or master Human gates
+- allow cross-task code reuse
+- allow delegation scope/action widening or self-authorized delegation
+- modify Task B local-host files or VPS DNS VPN network runtime state
+- modify master before independent review and Human completion gate
+- force push
+- rebase
+- squash
+- amend
+- history rewrite
+required_completion_pointer: 01_os/_runs/run-20260819-human-task-authority-delegated-start-simplification-001/08_结论/completion_pointer_v1.yml
+executor_profile:
+  provider: OpenAI
+  product: Codex Desktop
+  surface: codex_desktop
+  model: GPT-5.6 Sol
+  reasoning_or_parameter_profile: codex_sol_strongest_exposed
+  collaboration_role: execution
+  fresh_session: true
+verification_profile:
+  independent_reviewer: Claude Opus 5
+  surface: Claude Desktop / Cowork
+  fresh_isolated_session: true
+  review_exact_candidate_sha: true
+publisher:
+  source_branch_write_authorized: true
+  master_write_authorized: false
+  destructive_git_authorized: false
