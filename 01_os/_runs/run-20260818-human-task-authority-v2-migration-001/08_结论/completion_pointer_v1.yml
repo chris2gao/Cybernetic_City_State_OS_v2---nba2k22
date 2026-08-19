@@ -1,0 +1,55 @@
+schema_version: citystate.completion_pointer.v1
+completion_pointer:
+  packet_id: os-v2-human-task-authority-v2-migration-001
+  status: ready_for_independent_review
+  source_branch: dev/os-v2-human-task-authority-v2-migration-001
+  source_base: 857c667547c93e9b9c3c26ed1316db38919a25a3
+  source_head_at_review_dispatch: 08a7975bfd5bf254bccba40a8c4371411b1a8bc6
+  semantic_candidate_sha: 231347d36bb5a7d929516df6a15273edf3902c61
+  semantic_candidate_disposition: pending_independent_review
+  validation:
+    master_v1_current_model_readiness_exit_code: 0
+    stage_runtime_guard_exit_code: 0
+    stage_static_exit_code: 0
+    communication_static_exit_code: 0
+    focused_authority_v2_tests: PASS
+    communication_unit_tests: 25_passed
+    git_diff_check_exit_code: 0
+    candidate_caused_failures: 0
+    semantic_candidate_changed_paths: 23
+    out_of_scope_paths: 0
+    binary_artifact_count: 0
+    worktree_clean_at_candidate: true
+  publication:
+    transport: local_git
+    principal_binding: local_authenticated
+    semantic_candidate_commit: 231347d36bb5a7d929516df6a15273edf3902c61
+    review_preparation_metadata_commit: c803e2a60e61b749b7b170b2ba9f43f7ab8fd03a
+    formal_review_request_commit: 08a7975bfd5bf254bccba40a8c4371411b1a8bc6
+    source_branch_remote_readback: 08a7975bfd5bf254bccba40a8c4371411b1a8bc6
+    master_remote_readback: 857c667547c93e9b9c3c26ed1316db38919a25a3
+    master_modified: false
+    force_push: false
+    history_rewrite: false
+  independent_review:
+    receiver_setup_ref: reviewer_receiver_setup_v1.yml
+    request_pointer_commit: 08a7975bfd5bf254bccba40a8c4371411b1a8bc6
+    request_message_ref: 08a7975bfd5bf254bccba40a8c4371411b1a8bc6:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-human-task-authority-v2-migration-001/messages/gpt56-hta-v2-foreground-001/00001_request.yml
+    constitution_ref: 08a7975bfd5bf254bccba40a8c4371411b1a8bc6:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-human-task-authority-v2-migration-001/constitutions/gpt56-hta-v2-foreground-001/00001.yml
+    compliance_receipt_ref: 08a7975bfd5bf254bccba40a8c4371411b1a8bc6:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-human-task-authority-v2-migration-001/receipts/gpt56-hta-v2-foreground-001/00001.yml
+    master_validator_pointer_replay: VERIFIED
+    result_status: pending
+    first_publisher_attempt:
+      result: rejected_before_material_copy
+      failure: local_default_route_violation
+      rejected_trigger: web_recipient
+      changed_hypothesis: Human_explicit_request_is_correct_GitHub_trigger_for_Human_authorized_local_desktop_reviewer
+    successful_publisher_attempt:
+      trigger: Human_explicit_request
+      convergence: converged
+      push_attempt_count: 1
+  Human_completion:
+    status: pending_independent_review_and_current_v1_completion_gate
+    current_v1_rule_applies_until_v2_master_integration: true
+    execution_code_may_not_be_reused_for_completion_under_current_v1: true
+  next_owner: claude-cowork-hta-v2-reviewer-001
