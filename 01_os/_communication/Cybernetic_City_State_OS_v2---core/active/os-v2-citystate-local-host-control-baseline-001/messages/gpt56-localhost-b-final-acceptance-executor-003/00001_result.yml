@@ -1,0 +1,155 @@
+message_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-final-acceptance-executor-003::00001
+task_id: os-v2-citystate-local-host-control-baseline-001
+title: Task B final baseline acceptance BLOCKED at receiver bootstrap
+message_type: result
+sender_endpoint_id: gpt56-localhost-b-final-acceptance-executor-003
+sender_task_role: localhost_control_final_acceptance_execution
+expected_recipient_endpoint_id: gpt56-localhost-b-foreground-001
+expected_recipient_task_role: localhost_control_baseline_foreground
+content: Task B final fresh-window baseline acceptance is BLOCKED before Windows execution.
+  Canonical Human relay pointer v2 requires receiver_setup as a pointer field; the
+  relayed pointer omitted it, so receiver bootstrap fails closed with Human_pointer_v2_field_set_invalid.
+  No Remote Desktop Commander call or Windows probe was executed. Human task authority/delegation
+  itself was fresh-read as live, exact-scope, non-redelegable, and not revoked. Task
+  C was not started.
+required_refs:
+- Human/task_authority_v2.yml
+- Human/delegations/00003_final_baseline_acceptance.yml
+- messages/gpt56-localhost-b-foreground-001/00003_request.yml
+- documents/gpt56-localhost-b-foreground-001/00003_final_baseline_acceptance.md
+in_reply_to: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00003
+authorization_ref: Human/delegations/00003_final_baseline_acceptance.yml
+facts:
+  overall_verdict: BLOCKED
+  blocker:
+    failure_code: Human_pointer_v2_field_set_invalid
+    failure_layer: repository/publication
+    missing_pointer_field: receiver_setup
+    canonical_contract_ref: 01_os/03_mechanisms/communication_system/Human中转指针契约_v2.yml
+    canonical_receiver_ref: 01_os/06_execution/boot/communication_system/validator/receiver_bootstrap.py
+  delegated_authority:
+    task_authority_id: TA-os-v2-citystate-local-host-control-baseline-001-v1
+    Human_task_authority_live: true
+    delegation_granted: true
+    delegation_revoked: false
+    exact_recipient_match: true
+    requested_action_match: true
+    delegated_scope_match: true
+    allow_redelegation: false
+  fresh_master_before_publication: 570d400824a5937873d40cc58ee70905e811185f
+  task_branch_head_before_publication: 9ac09bf2c0cb187e92cb22a5bd97df8b298df5ef
+  windows_runtime:
+    Remote_Desktop_Commander_calls: 0
+    physically_observed_windows_facts: []
+    windows_probe_executed: false
+    windows_artifacts_created: false
+  acceptance_matrix:
+    delegated_start_authority:
+      status: BLOCKED
+      failure_layer: repository/publication
+      evidence_class:
+      - durable_repository_claim
+      - Human_supplied_evidence
+      - executor_self_report
+      detail: Human task authority and delegation are live and exactly scoped, but
+        canonical v2 receiver bootstrap rejects the relayed pointer because mandatory
+        receiver_setup is absent.
+    remote_tool_discovery:
+      status: NOT_RUN
+      failure_layer: repository/publication
+      evidence_class:
+      - executor_self_report
+      detail: Not run because canonical receiver bootstrap failed before Windows actions.
+    intended_device_online:
+      status: NOT_RUN
+      failure_layer: repository/publication
+      evidence_class:
+      - executor_self_report
+      detail: Not run because canonical receiver bootstrap failed before Windows actions.
+    filesystem_read:
+      status: NOT_RUN
+      failure_layer: repository/publication
+      evidence_class:
+      - executor_self_report
+      detail: Not run because canonical receiver bootstrap failed before Windows actions.
+    filesystem_write:
+      status: NOT_RUN
+      failure_layer: repository/publication
+      evidence_class:
+      - executor_self_report
+      detail: Not run because canonical receiver bootstrap failed before Windows actions.
+    filesystem_edit:
+      status: NOT_RUN
+      failure_layer: repository/publication
+      evidence_class:
+      - executor_self_report
+      detail: Not run because canonical receiver bootstrap failed before Windows actions.
+    powershell_7:
+      status: NOT_RUN
+      failure_layer: repository/publication
+      evidence_class:
+      - executor_self_report
+      detail: Not run because canonical receiver bootstrap failed before Windows actions.
+    python_execution:
+      status: NOT_RUN
+      failure_layer: repository/publication
+      evidence_class:
+      - executor_self_report
+      detail: Not run because canonical receiver bootstrap failed before Windows actions.
+    git_read_only:
+      status: NOT_RUN
+      failure_layer: repository/publication
+      evidence_class:
+      - executor_self_report
+      detail: Not run because canonical receiver bootstrap failed before Windows actions.
+    git_z_raw_bytes_utf8_path_logic:
+      status: NOT_RUN
+      failure_layer: repository/publication
+      evidence_class:
+      - executor_self_report
+      detail: Not run because canonical receiver bootstrap failed before Windows actions.
+    process_and_session:
+      status: NOT_RUN
+      failure_layer: repository/publication
+      evidence_class:
+      - executor_self_report
+      detail: Not run because canonical receiver bootstrap failed before Windows actions.
+    non_ascii_path_roundtrip:
+      status: NOT_RUN
+      failure_layer: repository/publication
+      evidence_class:
+      - executor_self_report
+      detail: Not run because canonical receiver bootstrap failed before Windows actions.
+    ordinary_user_cleanup:
+      status: NOT_RUN
+      failure_layer: repository/publication
+      evidence_class:
+      - executor_self_report
+      detail: Not run because canonical receiver bootstrap failed before Windows actions.
+    fresh_window_permanent_contract:
+      status: BLOCKED
+      failure_layer: repository/publication
+      evidence_class:
+      - durable_repository_claim
+      - executor_self_report
+      detail: Start gate failed before any Windows acceptance probe.
+    hybrid_execution_topology:
+      status: PARTIAL
+      failure_layer: repository/publication
+      evidence_class:
+      - executor_self_report
+      detail: GitHub/disposable Python side executed; Remote Desktop Commander side
+        intentionally not invoked after start-gate failure.
+  hybrid_execution_surface:
+    GitHub_repository_work: executed
+    disposable_Linux_Python: used_for_result_preparation_and_validation
+    Remote_Desktop_Commander: not_invoked_due_to_start_gate_failure
+    RDC_tool_call_count: 0
+    RDC_timeout_or_safety_retry: not_applicable
+  Task_C_started: false
+constraints:
+- no_Windows_action_performed_after_start_gate_failure
+- no_Task_C
+- no_master_publication
+- no_force_rebase_squash_amend_or_history_rewrite
+- no_secrets_credentials_or_admin_escalation
