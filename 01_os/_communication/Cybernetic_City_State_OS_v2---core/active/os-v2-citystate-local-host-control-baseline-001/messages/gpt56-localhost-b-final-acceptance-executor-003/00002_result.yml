@@ -1,0 +1,161 @@
+message_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-final-acceptance-executor-003::00002
+task_id: os-v2-citystate-local-host-control-baseline-001
+title: Task B final baseline acceptance BLOCKED by RDC device transport
+message_type: result
+sender_endpoint_id: gpt56-localhost-b-final-acceptance-executor-003
+sender_task_role: localhost_control_final_acceptance_execution
+expected_recipient_endpoint_id: gpt56-localhost-b-foreground-001
+expected_recipient_task_role: localhost_control_baseline_foreground
+content: Task B final fresh-window baseline acceptance is BLOCKED at the Windows physical execution layer after the corrected v2 receiver bootstrap VERIFIED. Remote Desktop Commander discovered DESKTOP-FPNE2NQ and App 0.2.47, but the device session was unstable: ping timed out and two ordinary-user PowerShell process starts failed with 'No devices available'. No Windows runtime command reached execution, no acceptance artifact was created, prior POC-A was not substituted for this fresh-window matrix, and Task C was not started.
+required_refs:
+- Human/task_authority_v2.yml
+- Human/delegations/00003_final_baseline_acceptance.yml
+- messages/gpt56-localhost-b-foreground-001/00003_request.yml
+- documents/gpt56-localhost-b-foreground-001/00003_final_baseline_acceptance.md
+- messages/gpt56-localhost-b-poc-a-executor-002/00001_result.yml
+in_reply_to: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00003
+authorization_ref: Human/delegations/00003_final_baseline_acceptance.yml
+facts:
+  overall_verdict: BLOCKED
+  blocker:
+    failure_code: RDC_device_transport_unavailable
+    failure_layer: remote transport
+    device_name: DESKTOP-FPNE2NQ
+    desktop_commander_app_version: 0.2.47
+    observed_sequence:
+    - device_directory_online
+    - ping_timeout
+    - device_directory_offline
+    - device_directory_online
+    - remote_process_start_no_devices
+    - device_directory_online
+    - remote_process_start_no_devices
+  delegated_authority:
+    task_authority_id: TA-os-v2-citystate-local-host-control-baseline-001-v1
+    canonical_receiver_bootstrap: VERIFIED
+    Human_task_authority_live: true
+    delegation_granted: true
+    delegation_revoked: false
+    exact_recipient_match: true
+    requested_action_match: true
+    delegated_scope_match: true
+    allow_redelegation: false
+  fresh_master_before_publication: 570d400824a5937873d40cc58ee70905e811185f
+  task_branch_head_before_publication: 53c991f759e6d85dd184baee02b7f19f52b255e5
+  windows_runtime:
+    Remote_Desktop_Commander_calls: 14
+    device_control_plane_observed: true
+    windows_process_session_started: false
+    windows_runtime_commands_executed: false
+    acceptance_artifacts_created: false
+    exact_test_root_collision_preflight_completed: false
+    physically_observed_windows_runtime_facts: []
+  acceptance_matrix:
+    delegated_start_authority:
+      status: PASS
+      failure_layer: none
+      evidence_class:
+      - durable_repository_claim
+      - executor_machine_verification
+      detail: Canonical v2 pointer bootstrap replay VERIFIED; live Human task authority and 00003 delegation were re-read from current Task B branch and matched exact task, recipient, action and scope with no redelegation.
+    remote_tool_discovery:
+      status: PASS
+      failure_layer: none
+      evidence_class:
+      - physically_observed
+      detail: Remote Desktop Commander tool surface was available; device discovery returned DESKTOP-FPNE2NQ and App version 0.2.47.
+    intended_device_online:
+      status: BLOCKED
+      failure_layer: remote transport
+      evidence_class:
+      - physically_observed
+      detail: Device directory status oscillated between online and offline; ping timed out and two remote PowerShell process starts failed with 'No devices available'. Stable executable connectivity was not established.
+    filesystem_read:
+      status: NOT_RUN
+      failure_layer: remote transport
+      evidence_class:
+      - executor_self_report
+      detail: Not run because no Windows process session could be established after bootstrap VERIFIED; no substitute from prior POC-A was used.
+    filesystem_write:
+      status: NOT_RUN
+      failure_layer: remote transport
+      evidence_class:
+      - executor_self_report
+      detail: Not run because no Windows process session could be established after bootstrap VERIFIED; no substitute from prior POC-A was used.
+    filesystem_edit:
+      status: NOT_RUN
+      failure_layer: remote transport
+      evidence_class:
+      - executor_self_report
+      detail: Not run because no Windows process session could be established after bootstrap VERIFIED; no substitute from prior POC-A was used.
+    powershell_7:
+      status: NOT_RUN
+      failure_layer: remote transport
+      evidence_class:
+      - executor_self_report
+      detail: Not run because no Windows process session could be established after bootstrap VERIFIED; no substitute from prior POC-A was used.
+    python_execution:
+      status: NOT_RUN
+      failure_layer: remote transport
+      evidence_class:
+      - executor_self_report
+      detail: Not run because no Windows process session could be established after bootstrap VERIFIED; no substitute from prior POC-A was used.
+    git_read_only:
+      status: NOT_RUN
+      failure_layer: remote transport
+      evidence_class:
+      - executor_self_report
+      detail: Not run because no Windows process session could be established after bootstrap VERIFIED; no substitute from prior POC-A was used.
+    git_z_raw_bytes_utf8_path_logic:
+      status: NOT_RUN
+      failure_layer: remote transport
+      evidence_class:
+      - executor_self_report
+      detail: Not run because no Windows process session could be established after bootstrap VERIFIED; no substitute from prior POC-A was used.
+    process_and_session:
+      status: NOT_RUN
+      failure_layer: remote transport
+      evidence_class:
+      - executor_self_report
+      detail: Not run because no Windows process session could be established after bootstrap VERIFIED; no substitute from prior POC-A was used.
+    non_ascii_path_roundtrip:
+      status: NOT_RUN
+      failure_layer: remote transport
+      evidence_class:
+      - executor_self_report
+      detail: Not run because no Windows process session could be established after bootstrap VERIFIED; no substitute from prior POC-A was used.
+    ordinary_user_cleanup:
+      status: NOT_RUN
+      failure_layer: remote transport
+      evidence_class:
+      - executor_self_report
+      detail: Not run because no Windows process session could be established after bootstrap VERIFIED; no substitute from prior POC-A was used.
+    fresh_window_permanent_contract:
+      status: BLOCKED
+      failure_layer: remote transport
+      evidence_class:
+      - durable_repository_claim
+      - physically_observed
+      - executor_self_report
+      detail: Fresh window completed repository/start gates but could not execute the required Windows permanent acceptance matrix because the RDC device session was unavailable at command execution.
+    hybrid_execution_topology:
+      status: PARTIAL
+      failure_layer: remote transport
+      evidence_class:
+      - executor_self_report
+      - physically_observed
+      detail: GitHub/disposable Python repository side executed; RDC control-plane discovery executed, but Windows runtime adapter could not start a process.
+  hybrid_execution_surface:
+    GitHub_repository_work: executed
+    disposable_Linux_Python: used_for_pointer_bootstrap_replay_result_preparation_and_validation
+    Remote_Desktop_Commander: used_for_device_discovery_connectivity_and_process_start_attempts_only
+    RDC_tool_call_count: 14
+    RDC_timeout_or_safety_retry: ping timeout plus bounded device-status rechecks; process start remained unavailable; final capability verdict BLOCKED
+  Task_C_started: false
+constraints:
+- no_Windows_runtime_mutation_was_reached
+- no_acceptance_test_artifact_created_or_deleted
+- no_Task_C
+- no_master_publication
+- no_force_rebase_squash_amend_or_history_rewrite
+- no_secrets_credentials_admin_escalation_or_system_security_changes
