@@ -1,0 +1,65 @@
+task_id: os-v2-citystate-local-host-control-baseline-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T2_semantic
+exact_base_sha: 570d400824a5937873d40cc58ee70905e811185f
+branch: dev/os-v2-citystate-local-host-control-baseline-001
+supersedes: 01_任务输入/任务包_v1.yml
+objective: Complete Program Task B CityState Local Host Control Baseline after the historical Remote Desktop Commander POC by using GitHub plus disposable Linux for repository-heavy work and fresh Codex Desktop on Windows for the permanent physical acceptance and independent reproduction.
+program_parent_ref: 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/03_方案设计/program_architecture_v1.yml
+source_evidence:
+- 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/Human/task_authority_v2.yml
+- 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/Human/codex_windows_final_acceptance_authorization_v2.yml
+- 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/03_方案设计/program_architecture_v1.yml
+- messages/gpt56-localhost-b-final-acceptance-executor-003/00001_result.yml
+- messages/gpt56-localhost-b-final-acceptance-executor-003/00002_result.yml
+allowed_changed_paths:
+- 01_os/_runs/run-20260819-citystate-local-host-control-baseline-001/**
+- 01_os/_communication/Cybernetic_City_State_OS_v2---core/discovery.yml
+- 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/**
+required_tests:
+- Human Task Authority v2.1 delegated-start verification against authority v2 and exact Codex recipient/action/scope
+- Windows filesystem read/write/edit physical reproduction
+- PowerShell 7 version and benign output probe
+- Windows Python availability and harmless execution
+- read-only Git status/log plus Git -z raw-bytes strict-UTF8 path reconstruction
+- non-ASCII filesystem path roundtrip
+- bounded process/session metadata
+- ordinary-user cleanup only for exact artifacts created by this acceptance
+- formal result publication and remote readback
+- git diff --check and bounded changed-path ledger for durable repository evidence
+prohibitions:
+- use_Remote_Desktop_Commander_as_required_execution_dependency
+- implement_Task_C_self_hosted_MCP
+- modify_VPS_DNS_firewall_VPN_nginx_xray_cloudflared
+- access_secrets_credentials_private_keys_browser_tokens_Windows_Credential_Store_or_env_secrets
+- administrator_escalation
+- pay_or_activate_API_credits_or_paid_third_party_services
+- destructive_or_system_high_risk_actions_without_separate_Human_authority
+- modify_master_without_separate_completion_gate
+- force_push
+- rebase
+- squash
+- amend
+- rewrite_history
+required_completion_pointer: 01_os/_runs/run-20260819-citystate-local-host-control-baseline-001/08_结论/completion_pointer_v2.yml
+publisher:
+  principal_binding: connector_authenticated_or_local_authenticated
+  publication_transport: github_api_connector_or_local_git
+  source_write_authorized: true
+  master_write_authorized: false
+  destructive_git_authorized: false
+  authorization_ref: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/Human/task_authority_v2.yml
+executor_profile:
+  foreground_provider: OpenAI
+  repository_execution_default: GitHub_plus_disposable_Linux
+  windows_acceptance_provider: OpenAI
+  windows_acceptance_surface: Codex Desktop
+  windows_acceptance_model: GPT-5.6 Sol
+  windows_acceptance_parameter_profile: codex_sol_strongest_exposed
+  windows_acceptance_session: fresh_isolated
+  local_anchor: E:\newStand\study\Cybernetic_City_State_OS_v2 - core
+verification_profile:
+  execution_result_requires_primary_runtime_evidence: true
+  Windows_final_acceptance_requires_local_physical_reproduction: true
+  independent_review_relationship_isolation_required: true
+  Task_C_starts_only_after_Task_B_completion: true
