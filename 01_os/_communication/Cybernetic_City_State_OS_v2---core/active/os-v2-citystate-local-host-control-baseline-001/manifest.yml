@@ -1,11 +1,12 @@
 repository_id: Cybernetic_City_State_OS_v2---core
 task_id: os-v2-citystate-local-host-control-baseline-001
-task_goal: Execute and verify Program Task B CityState Local Host Control Baseline, beginning with a scoped Remote Desktop Commander POC.
+task_goal: Complete Program Task B CityState Local Host Control Baseline using GitHub as durable source and fresh Codex Desktop on Windows for permanent physical acceptance after the historical RDC route became unavailable.
 task_role_context_refs:
 - role_context/gpt56-localhost-b-foreground-001.yml
 - role_context/gpt56-localhost-b-poc-a-executor-001.yml
 - role_context/gpt56-localhost-b-poc-a-executor-002.yml
 - role_context/gpt56-localhost-b-final-acceptance-executor-003.yml
+- role_context/codex-localhost-b-final-acceptance-reviewer-004.yml
 communication_root: 01_os/_communication/Cybernetic_City_State_OS_v2---core/
 active_task_root: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/
 current_carrier_state: GitHub_current
@@ -16,7 +17,8 @@ endpoint_card_refs:
 - endpoints/gpt56-localhost-b-poc-a-executor-001.yml
 - endpoints/gpt56-localhost-b-poc-a-executor-002.yml
 - endpoints/gpt56-localhost-b-final-acceptance-executor-003.yml
+- endpoints/codex-localhost-b-final-acceptance-reviewer-004.yml
 Human_current_ref: Human/current.yml
 privacy_policy_ref: 01_os/03_mechanisms/communication_system/载体与发布契约_v1.yml
-lifecycle_status: final_baseline_acceptance_dispatched
+lifecycle_status: codex_windows_final_acceptance_ready_for_dispatch
 communication_contract_version: 2
