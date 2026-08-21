@@ -1,0 +1,26 @@
+schema_version: citystate.communication.task_authority_delegation.v2
+task_id: os-v2-citystate-local-host-control-baseline-001
+task_authority_id: TA-os-v2-citystate-local-host-control-baseline-001-v2
+granted: true
+revoked: false
+Human_task_authority_ref: Human/task_authority_v2.yml
+delegator_endpoint_id: gpt56-localhost-b-foreground-001
+delegator_task_role: localhost_control_baseline_foreground
+recipient_endpoint_id: codex-localhost-b-final-acceptance-reviewer-004
+recipient_task_role: localhost_control_final_acceptance_review
+authorized_actions:
+- independently_reproduce_and_adjudicate_task_b_final_windows_acceptance
+delegated_scope:
+- codex_windows_physical_reproduction_and_review
+- windows_filesystem_read_write_edit
+- windows_powershell_7
+- windows_python
+- windows_git
+- windows_process_and_session
+- windows_non_ascii_path_roundtrip
+- ordinary_user_cleanup
+- fresh_window_acceptance
+- durable_task_evidence
+- formal_dispatch_and_review
+parent_delegation_ref: null
+allow_redelegation: false
