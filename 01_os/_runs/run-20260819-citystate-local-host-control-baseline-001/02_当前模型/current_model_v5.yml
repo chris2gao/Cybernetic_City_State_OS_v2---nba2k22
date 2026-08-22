@@ -1,0 +1,85 @@
+schema_version: citystate.current_model.v1
+task_id: os-v2-citystate-local-host-control-baseline-001
+stage_id: current_task
+current_model:
+  problem_or_objective: Complete Task B CityState Local Host Control Baseline after Remote Desktop Commander became unavailable and the Codex audit found that the existing Windows core anchor cannot currently create new files inside .git. Preserve GitHub as durable repository truth while using fresh Codex Desktop for Windows physical reproduction without requiring local Git metadata mutation.
+  Human_intent_understanding: The Human wants repository-heavy work to stay GitHub plus disposable Linux, with durable outputs in GitHub, while Codex on Windows independently checks the physical Windows implementation and acceptance. The single Windows core anchor remains the local data anchor, but Task B acceptance must not depend on fetch, checkout, branch switching, commit, push, or any other new .git write when those operations are not required to prove the permanent Windows capability matrix.
+  current_baseline_and_inputs:
+    remote_master: 570d400824a5937873d40cc58ee70905e811185f
+    program_architecture_ref: 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/03_方案设计/program_architecture_v1.yml
+    program_task: B_citystate_local_host_control_baseline
+    POC_A_result: PASS
+    final_acceptance_attempts:
+    - receiver_bootstrap_blocked_due_incomplete_Human_relay_pointer
+    - corrected_receiver_bootstrap_VERIFIED_then_RDC_device_transport_unavailable
+    - Codex_blocked_audit_reported_missing_full_v2_pointer_and_local_dot_git_new_file_creation_failure
+    replacement_execution_topology:
+      repository_truth_and_task_inputs: GitHub_exact_refs
+      repository_heavy_work: GitHub_plus_disposable_Linux
+      Windows_physical_acceptance: fresh_Codex_Desktop_local_execution
+      Windows_repository_anchor: E:\newStand\study\Cybernetic_City_State_OS_v2 - core
+      Windows_anchor_mode: read_only_Git_and_path_physical_evidence
+      formal_result_publication: GitHub_API_or_connector_transport_without_local_git_metadata_mutation
+  constraints_and_dependencies:
+  - Task B remains independent from Task C; do not mutate VPS, DNS, firewall, VPN, nginx, xray or cloudflared.
+  - secrets, credentials, private keys, browser credential/token stores, Windows Credential Store, .env secrets, API keys and auth tokens remain fail closed.
+  - no administrator escalation or system-security changes.
+  - no payment, API credits or paid third-party service activation.
+  - destructive Git/history operations and destructive/system-high-risk actions require separate explicit Human authority.
+  - ordinary delegated startup follows Human Task Authority v2.1 using live authority plus exact task-authority/recipient/action/scope; no recipient Human code challenge.
+  - Remote Desktop Commander is not required for final acceptance.
+  - local core-anchor .git mutation is not a precondition for physical acceptance; the reported .git write anomaly remains a separate local-host finding unless a tested acceptance proposition itself requires such mutation.
+  proposed_method_or_solution:
+  - relay a complete canonical v2 Human pointer directly to a fresh isolated Codex Desktop session
+  - reconstruct Task B task truth from the exact GitHub pointer and current Task B branch through GitHub-capable reads; do not require the local anchor to fetch or switch branches
+  - verify the existing Windows core anchor identity, remotes, HEAD and cleanliness read-only; if unrelated worktree changes exist, fail closed
+  - use read-only local Git commands, including NUL-delimited machine output, to prove Git/path behavior against files already physically present in the anchor
+  - independently reproduce filesystem read/write/edit, PowerShell 7, Python, process/session, non-ASCII path roundtrip and cleanup using only exact disposable artifacts outside repository metadata
+  - publish the formal review/result through an available GitHub API or connector transport; do not use local git push while .git metadata creation is unavailable
+  - if no authenticated GitHub API/connector publication transport is available in Codex, return the complete structured review payload to the Human without claiming publication so the foreground can materialize it with provenance preserved
+  feasibility_support:
+  - Program Architecture defines the permanent Task B contract independently of RDC as a product and does not require branch switching to prove Windows filesystem, PowerShell, Python, Git path decoding, process/session, Unicode or cleanup capabilities
+  - git ls-files -z or equivalent read-only NUL-delimited Git commands can produce machine path evidence from the existing clean anchor without writing .git
+  - filesystem and Unicode mutation probes can use the exact disposable Desktop test root rather than repository metadata
+  - GitHub API/connector publication is a canonical publication transport under the repository development entry and does not require local hooks or local .git writes
+  assumptions_risks_alternatives_unknowns:
+  - the Codex blocked audit is Human-relayed executor evidence until independently reproduced; it is sufficient to invalidate the previous dispatch precondition but not to classify the root cause of the .git anomaly
+  - the local anchor must still exist, identify as the intended repository and be clean enough for read-only physical evidence
+  - if read-only local Git itself fails, or the anchor identity cannot be established, Task B remains BLOCKED
+  - if Codex has no GitHub API/connector publication transport, physical acceptance may complete while formal publication remains pending foreground materialization
+  open_load_bearing_items: []
+  expected_output: A durable Task B final acceptance review from fresh Codex Desktop that reconstructs task truth from GitHub, physically reproduces the complete permanent Windows matrix without local Git metadata mutation, records the .git write anomaly separately, and stops before Task C or master publication.
+  verification_or_acceptance_method:
+  - v2.1 delegated-start authority VERIFIED against Task B authority v2 and the corrected exact Codex delegation/request
+  - complete v2 Human relay pointer is validated by canonical receiver bootstrap
+  - local core anchor identity, remotes, HEAD and cleanliness are physically checked read-only
+  - all permanent Windows matrix rows are physically reproduced in the Codex session
+  - Git path correctness is proven via NUL-delimited raw bytes to strict UTF-8 to filesystem Path, not terminal rendering, without requiring local metadata writes
+  - non-ASCII path creation/edit/readback/cleanup passes without codepage workaround
+  - no secrets or unrelated files are read
+  - only exact task-created disposable artifacts are removed
+  - formal result is published through GitHub API/connector when available, or returned as an exact structured payload with publication explicitly pending
+  - master remains unchanged and Task C is not started
+  actual_result: Human_authorized_ready_for_corrected_Codex_Windows_final_acceptance_without_local_git_mutation
+  material_deviation: The previous Codex dispatch unnecessarily coupled Windows physical acceptance to fetch/branch switching and writable local .git metadata. The permanent Task B capability and safety contract is unchanged. GitHub exact refs now carry task/repository truth; the Windows anchor supplies read-only Git/path and local-runtime evidence only.
+  residual_risk: Task B is not complete until fresh Codex Windows physical reproduction covers the full permanent matrix and the foreground adjudicates the resulting evidence. The local .git write anomaly remains a separate finding unless later work explicitly targets it.
+  current_exact_model_version: chatgpt-local-host-control-mcp-current-model-v5
+  Human_confirmation:
+    explicit: true
+    actor_class: current_Human
+    scope: current_task
+    bound_model_version: chatgpt-local-host-control-mcp-current-model-v5
+    exact_model_version: chatgpt-local-host-control-mcp-current-model-v5
+    decision_id: D-LOCALHOST-BASELINE-005-GITHUB-TRUTH-WINDOWS-READONLY-ANCHOR
+    decision_type: material_architecture_or_solution_choice
+    authority_protocol: citystate-human-task-authority-v2
+    task_authority_id: TA-os-v2-citystate-local-host-control-baseline-001-v2
+    durable_disposition_ref: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/Human/codex_windows_git_readonly_anchor_authorization_v2.yml
+    task_nonce_commitment:
+      scheme: citystate-human-task-authority-v2
+      algorithm: sha256
+      digest: f5159476594d5073dba78a12fc5a71b112fb8ebb9aeed6a803d4a79bbd9f419a
+    nonce_commitment:
+      scheme: citystate-human-task-authority-v2
+      algorithm: sha256
+      digest: 65e19d8f853b9676b23089532aafd99da063330133bfda6314e0e3f48614ccc8
