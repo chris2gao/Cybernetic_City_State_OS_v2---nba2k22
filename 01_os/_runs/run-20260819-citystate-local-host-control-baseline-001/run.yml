@@ -3,16 +3,17 @@ task_id: os-v2-citystate-local-host-control-baseline-001
 run_id: run-20260819-citystate-local-host-control-baseline-001
 base_sha: 570d400824a5937873d40cc58ee70905e811185f
 branch: dev/os-v2-citystate-local-host-control-baseline-001
-status: codex_windows_final_acceptance_dispatched
+status: codex_windows_git_readonly_final_acceptance_dispatched
 task_packet_ref: 01_任务输入/任务包_v2.yml
-current_model_ref: 02_当前模型/current_model_v4.yml
+current_model_ref: 02_当前模型/current_model_v5.yml
 ownership: core-owned
 purpose: Program Task B local-host-control baseline execution, verification and acceptance evidence.
 outputs:
 - versioned Task B packets and Human Task Authority roots/supersession evidence
 - scoped execution/review delegations and formal communication
 - historical Remote Desktop Commander POC capability evidence and transport-blocked final-acceptance attempts
-- final Codex Desktop Windows physical acceptance evidence
-validation_state: authority_v2_and_Codex_routing_event_durable;_current_model_v4_bound;_formal_request_00004_materialized_with_constitution_receipt_and_sender_index;_awaiting_Codex_result
+- historical Codex blocked audit that invalidated local fetch/.git-write as a required acceptance precondition
+- final Codex Desktop Windows physical acceptance evidence using GitHub truth plus read-only local Git/path evidence
+validation_state: authority_v2_reverified_against_current_Human_code_without_plaintext_persistence;_current_model_v5_and_material_decision_durable;_00004_delegation_revoked;_00005_corrected_delegation_and_formal_request_materialized;_GitHub_API_readback_pending_final_pointer_readback
 master_modified: false
 plaintext_Human_code_persisted: false
