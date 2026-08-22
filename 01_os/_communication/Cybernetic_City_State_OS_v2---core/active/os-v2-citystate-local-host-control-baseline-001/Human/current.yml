@@ -1,20 +1,16 @@
 task_id: os-v2-citystate-local-host-control-baseline-001
 title: CityState Local Host Control Baseline Task B
-current_stage_or_checkpoint: codex_windows_git_readonly_final_acceptance_dispatched
+current_stage_or_checkpoint: final_acceptance_PASS_adjudicated_pending_Human_completion_and_master_gate
 important_refs:
 - manifest.yml
 - Human/task_authority_v2.yml
 - Human/supersessions/00001_task_authority.yml
-- Human/codex_windows_final_acceptance_authorization_v2.yml
 - Human/codex_windows_git_readonly_anchor_authorization_v2.yml
-- Human/delegations/00003_final_baseline_acceptance.yml
-- Human/delegations/00004_codex_windows_final_acceptance.yml
 - Human/delegations/00005_codex_windows_git_readonly_acceptance.yml
-- messages/gpt56-localhost-b-poc-a-executor-002/00001_result.yml
-- messages/gpt56-localhost-b-final-acceptance-executor-003/00001_result.yml
-- messages/gpt56-localhost-b-final-acceptance-executor-003/00002_result.yml
-- messages/gpt56-localhost-b-foreground-001/00004_request.yml
 - messages/gpt56-localhost-b-foreground-001/00005_request.yml
-- documents/gpt56-localhost-b-foreground-001/00005_codex_windows_git_readonly_acceptance.md
-pending_Human_decision: null
-last_material_update: Human-authorized Current Model v5 removes unnecessary local .git mutation from Task B acceptance. GitHub exact refs carry task truth; the single Windows core anchor is read-only Git/path evidence. Formal request 00005 supersedes the blocked 00004 route and awaits fresh Codex result.
+- messages/codex-localhost-b-final-acceptance-reviewer-004/00001_result.yml
+- documents/codex-localhost-b-final-acceptance-reviewer-004/00001_task_b_windows_final_acceptance_review.md
+- 01_os/_runs/run-20260819-citystate-local-host-control-baseline-001/06_验证/final_acceptance_foreground_adjudication_v1.yml
+- 01_os/_runs/run-20260819-citystate-local-host-control-baseline-001/08_结论/completion_pointer_v3.yml
+pending_Human_decision: approve_or_decline_Task_B_completion_and_fast_forward_master_integration
+last_material_update: Codex fresh Windows final acceptance 00001 published PASS with all required rows PASS; foreground adjudication accepts the permanent Task B contract as satisfied and records baseline_complete_candidate=true. Task B is not yet durably completed or integrated to master; Task C remains not started pending the Human completion/master gate.
