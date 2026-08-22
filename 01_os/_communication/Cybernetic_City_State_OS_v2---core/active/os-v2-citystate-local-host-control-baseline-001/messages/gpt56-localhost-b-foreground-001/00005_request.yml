@@ -1,0 +1,33 @@
+message_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00005
+task_id: os-v2-citystate-local-host-control-baseline-001
+title: Reproduce Task B Windows acceptance with GitHub truth and read-only local Git
+message_type: request
+sender_endpoint_id: gpt56-localhost-b-foreground-001
+sender_task_role: localhost_control_baseline_foreground
+expected_recipient_endpoint_id: codex-localhost-b-final-acceptance-reviewer-004
+expected_recipient_task_role: localhost_control_final_acceptance_review
+content: Reconstruct Task B from the exact GitHub pointer, validate Human Task Authority v2.1 authority v2 and the corrected scoped delegation, then independently reproduce and adjudicate the permanent Windows acceptance matrix in fresh Codex Desktop. Use the existing core anchor for read-only Git/path evidence only; do not fetch, switch branches, or require local .git metadata mutation. Publish through GitHub API/connector when available, or return an exact structured payload with publication pending.
+required_refs:
+- documents/gpt56-localhost-b-foreground-001/00005_codex_windows_git_readonly_acceptance.md
+- Human/task_authority_v2.yml
+- Human/delegations/00005_codex_windows_git_readonly_acceptance.yml
+- Human/codex_windows_git_readonly_anchor_authorization_v2.yml
+- messages/gpt56-localhost-b-final-acceptance-executor-003/00002_result.yml
+requested_action: independently_reproduce_and_adjudicate_task_b_final_windows_acceptance_without_local_git_mutation
+authorization_ref: Human/delegations/00005_codex_windows_git_readonly_acceptance.yml
+recipient_delegation_ref: Human/delegations/00005_codex_windows_git_readonly_acceptance.yml
+in_reply_to: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00004
+constraints:
+- authority_v21_delegated_start_only_no_Human_code_challenge
+- fresh_isolated_Codex_Desktop_Windows_reproduction
+- GitHub_exact_refs_are_task_truth
+- local_core_anchor_read_only_Git_evidence_only
+- no_fetch_checkout_switch_commit_push_or_other_local_git_metadata_mutation
+- no_dependency_on_Remote_Desktop_Commander
+- no_dependency_on_E_drive_pubwork
+- no_secrets_credentials_admin_escalation_or_system_security_changes
+- no_VPS_DNS_firewall_VPN_nginx_xray_cloudflared_actions
+- no_destructive_Git_or_history_rewrite
+- no_redelegation
+- no_master_publication
+- do_not_start_Task_C
