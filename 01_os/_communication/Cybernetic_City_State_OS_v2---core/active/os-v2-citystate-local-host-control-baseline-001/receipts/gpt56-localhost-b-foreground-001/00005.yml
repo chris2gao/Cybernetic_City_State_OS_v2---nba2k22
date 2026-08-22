@@ -1,0 +1,29 @@
+schema_version: citystate.formal_action.compliance_receipt.v1
+action_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00005
+constitution_evidence_ref: constitutions/gpt56-localhost-b-foreground-001/00005.yml
+receipt_role: binding_index_only
+material_claims:
+- claim_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00005::local-materialization
+  claim_role: communication_publication
+  action_id_or_review_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00005
+  expected_claim_source_ref: constitutions/gpt56-localhost-b-foreground-001/00005.yml
+  expected_value_or_predicate:
+    task_id: os-v2-citystate-local-host-control-baseline-001
+    message_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00005
+    carrier: GitHub
+    sender_endpoint_id: gpt56-localhost-b-foreground-001
+    expected_recipient_endpoint_id: codex-localhost-b-final-acceptance-reviewer-004
+    materialized_path: messages/gpt56-localhost-b-foreground-001/00005_request.yml
+  observed_authoritative_source_class: github_api_connector_readback
+  observed_value:
+    task_id: os-v2-citystate-local-host-control-baseline-001
+    message_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00005
+    carrier: GitHub
+    sender_endpoint_id: gpt56-localhost-b-foreground-001
+    expected_recipient_endpoint_id: codex-localhost-b-final-acceptance-reviewer-004
+    materialized_path: messages/gpt56-localhost-b-foreground-001/00005_request.yml
+  exact_observation_ref: GitHub_API_readback:messages/gpt56-localhost-b-foreground-001/00005_request.yml
+  comparator_id: published_message_identity_and_route_equality
+  relationship_or_equality_check: expected_message_identity_equals_physical_message_identity
+  verification_result: VERIFIED
+aggregate_result: VERIFIED
