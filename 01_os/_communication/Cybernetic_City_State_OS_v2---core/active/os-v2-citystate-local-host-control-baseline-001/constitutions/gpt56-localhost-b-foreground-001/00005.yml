@@ -1,0 +1,100 @@
+schema_version: citystate.formal_action.constitution_evidence.v1
+action_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00005
+action_class: formal_cross_endpoint_task_dispatch
+sender_endpoint_id: gpt56-localhost-b-foreground-001
+intended_recipient_endpoint_id: codex-localhost-b-final-acceptance-reviewer-004
+classification_basis_ref: Human/current.yml
+required_mechanisms:
+- communication_system
+- model_routing
+resolver_result_ref: constitutions/gpt56-localhost-b-foreground-001/00005.yml#resolution
+gate_result_ref: constitutions/gpt56-localhost-b-foreground-001/00005.yml#gate
+mechanism_execution_ref: 01_os/06_execution/boot/communication_system/publisher/publish_message.py
+formal_artifact_ref: messages/gpt56-localhost-b-foreground-001/00005_request.yml
+activation_context:
+  intended_cross_endpoint_side_effect: true
+  Human_relay_requested: true
+  non_Human_endpoint_action_requested: true
+  actionable_content: true
+  requires_receiver_selection: true
+  communication_context_ref: manifest.yml
+  classification_basis_ref: Human/current.yml
+  collaboration_role: independent_review
+  risk_tier: T2_semantic
+  task_shape: fresh_isolated_codex_desktop_task_b_windows_acceptance_GitHub_truth_readonly_local_git
+  required_capabilities:
+  - GitHub_repository_read
+  - GitHub_repository_write_or_result_payload_return
+  - independent_primary_evidence_reconstruction
+  - Windows_local_runtime
+  - Git_local_repository_read_only
+  routing_basis_ref: documents/gpt56-localhost-b-foreground-001/00005_codex_windows_git_readonly_acceptance.md
+  availability_assumption_or_observation_ref: role_context/codex-localhost-b-final-acceptance-reviewer-004.yml
+  action_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00005
+  formal_message_type: request
+  task_id: os-v2-citystate-local-host-control-baseline-001
+  sender_endpoint_id: gpt56-localhost-b-foreground-001
+  intended_recipient_endpoint_id: codex-localhost-b-final-acceptance-reviewer-004
+mechanism_preconditions:
+  communication_system:
+    verification_result: VERIFIED
+    evidence_ref: manifest.yml
+  model_routing:
+    verification_result: VERIFIED
+    evidence_ref: role_context/codex-localhost-b-final-acceptance-reviewer-004.yml
+authority_effect: none
+resolution:
+  classification: formal_cross_endpoint_action
+  action_class: formal_cross_endpoint_task_dispatch
+  formal: true
+  formal_segment_indexes:
+  - 0
+  mixed_action_segmented: false
+  authority_effect: none
+  action_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00005
+  normalized_recipient_endpoint_id: codex-localhost-b-final-acceptance-reviewer-004
+  required_mechanisms:
+  - communication_system
+  - model_routing
+  missing_preconditions: []
+  route_requirements:
+  - receiver_setup
+  action_allowed_to_enter_enforcement: true
+  ordinary_Human_discussion_allowed: false
+gate:
+  gate_result: VERIFIED
+  action_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00005
+  action_class: formal_cross_endpoint_task_dispatch
+  required_mechanisms:
+  - communication_system
+  - model_routing
+  verified_precondition_refs:
+    communication_system: manifest.yml
+    model_routing: role_context/codex-localhost-b-final-acceptance-reviewer-004.yml
+  blocking_failures: []
+  authority_effect: none
+receiver_setup:
+  collaboration_role: independent_review
+  provider: OpenAI
+  product: Codex Desktop
+  surface: codex_desktop
+  model: GPT-5.6 Sol
+  reasoning_or_parameter_profile: codex_sol_strongest_exposed
+  session_mode: fresh
+  isolation_level: fresh_session
+  repository_access_mode: GitHub_plus_local_Windows
+  repository_or_worktree_requirement: Reconstruct task truth from exact GitHub refs. Use only E:\newStand\study\Cybernetic_City_State_OS_v2 - core for read-only local Git/path evidence; do not fetch, switch, commit, push, or create local Git metadata.
+  required_branch_or_sha: dev/os-v2-citystate-local-host-control-baseline-001
+  local_files_required: true
+  github_publication_required_before_start: true
+  communication_carrier: GitHub
+  routing_basis_ref: documents/gpt56-localhost-b-foreground-001/00005_codex_windows_git_readonly_acceptance.md
+  availability_assumption_or_observation_ref: role_context/codex-localhost-b-final-acceptance-reviewer-004.yml
+  limitations:
+  - executor_private_context
+  - local_Windows_physical_reproduction_required
+  - local_Git_metadata_mutation_prohibited_for_this_acceptance
+  - no_RDC_dependency
+  - no_master_publication
+  - do_not_start_Task_C
+  - no_force_rebase_squash_amend_or_history_rewrite
