@@ -1,0 +1,86 @@
+schema_version: citystate.task_b_final_acceptance_adjudication.v1
+task_id: os-v2-citystate-local-host-control-baseline-001
+run_id: run-20260819-citystate-local-host-control-baseline-001
+foreground_endpoint_id: gpt56-localhost-b-foreground-001
+foreground_task_role: localhost_control_baseline_foreground
+adjudicated_result_message_id: os-v2-citystate-local-host-control-baseline-001::codex-localhost-b-final-acceptance-reviewer-004::00001
+adjudicated_result_commit: ed5cad42656637c7cd78f2d4ff4d098e86dd5fbd
+adjudicated_result_ref: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/messages/codex-localhost-b-final-acceptance-reviewer-004/00001_result.yml
+review_record_ref: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/documents/codex-localhost-b-final-acceptance-reviewer-004/00001_task_b_windows_final_acceptance_review.md
+constitution_ref: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/constitutions/codex-localhost-b-final-acceptance-reviewer-004/00001.yml
+receipt_ref: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/receipts/codex-localhost-b-final-acceptance-reviewer-004/00001.yml
+current_task_authority_ref: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/Human/task_authority_v2.yml
+current_delegation_ref: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/Human/delegations/00005_codex_windows_git_readonly_acceptance.yml
+program_architecture_ref: 01_os/_runs/run-20260818-citystate-local-host-control-program-design-001/03_方案设计/program_architecture_v1.yml
+task_packet_ref: 01_os/_runs/run-20260819-citystate-local-host-control-baseline-001/01_任务输入/任务包_v2.yml
+current_model_ref: 01_os/_runs/run-20260819-citystate-local-host-control-baseline-001/02_当前模型/current_model_v5.yml
+foreground_physical_GitHub_observations:
+  remote_master: 570d400824a5937873d40cc58ee70905e811185f
+  result_commit_is_current_Task_B_branch_head_at_adjudication_start: true
+  Task_B_branch_fast_forward_from_master: true
+  Task_B_branch_ahead_of_master_commits_at_adjudication_start: 61
+  Task_B_branch_behind_master_commits_at_adjudication_start: 0
+  result_message_blob_read: true
+  review_record_blob_read: true
+  constitution_blob_read: true
+  compliance_receipt_blob_read: true
+  task_authority_blob_read: true
+  delegation_blob_read: true
+formal_publication_adjudication:
+  result_message_identity_and_route: PASS
+  constitution_gate: VERIFIED
+  compliance_receipt_aggregate: VERIFIED
+  current_task_authority_live: true
+  current_task_authority_revoked: false
+  delegation_granted: true
+  delegation_revoked: false
+  delegation_exact_recipient_action_scope: PASS
+  allow_redelegation: false
+required_acceptance_matrix:
+  delegated_start_authority: PASS
+  repository_anchor_identity_and_cleanliness: PASS
+  filesystem_read: PASS
+  filesystem_write: PASS
+  filesystem_edit: PASS
+  powershell_7: PASS
+  python_execution: PASS
+  git_read_only: PASS
+  git_z_raw_bytes_utf8_path_logic: PASS
+  process_and_session: PASS
+  non_ascii_path_roundtrip: PASS
+  ordinary_user_cleanup: PASS
+  fresh_window_permanent_contract: PASS
+  codex_windows_physical_reproduction: PASS
+Windows_primary_evidence_classification:
+  class: independent_reviewer_physically_observed_and_durably_recorded
+  foreground_independently_reran_Windows_probes: false
+  accepted_as_independent_primary_runtime_evidence: true
+  basis:
+  - fresh isolated Codex Desktop reviewer
+  - exact Task B v2 delegated-start gate
+  - all permanent matrix rows reproduced in reviewer session
+  - detailed durable measurements and evidence-class separation
+  - no prior GPT/RDC result substituted for fresh physical rows
+separate_findings:
+  local_dot_git_new_file_creation:
+    status: historical_separate_finding_not_reproduced
+    acceptance_effect: non_blocking
+    reason: permanent Task B acceptance uses read-only Git/path evidence and does not require local Git metadata mutation
+  python_terminal_unicode_rendering:
+    status: presentation_mojibake_only
+    acceptance_effect: non_blocking
+    reason: terminal rendering was not used as path evidence; strict machine-path checks passed
+safety_and_scope:
+  master_modified_by_acceptance: false
+  Task_C_started: false
+  local_git_metadata_mutated_by_acceptance: false
+  prohibited_network_or_system_actions_reported: false
+adjudication:
+  final_acceptance: PASS
+  permanent_Task_B_contract_satisfied: true
+  baseline_complete_candidate: true
+  Task_B_completed_durably: false
+  master_integration_authorized_by_this_adjudication: false
+  Task_C_start_authorized_by_this_adjudication: false
+  pending_gate: Human_Task_B_completion_and_master_integration_decision
+next_action: establish_current_Human_completion_disposition_then_if_authorized_create_completion_event_and_fast_forward_master_after_fresh_publication_gate
