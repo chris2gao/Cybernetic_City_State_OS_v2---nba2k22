@@ -1,0 +1,125 @@
+message_id: os-v2-citystate-local-host-control-baseline-001::codex-localhost-b-final-acceptance-reviewer-004::00001
+task_id: os-v2-citystate-local-host-control-baseline-001
+title: Task B Windows final acceptance PASS via GitHub truth and read-only local Git
+message_type: result
+sender_endpoint_id: codex-localhost-b-final-acceptance-reviewer-004
+sender_task_role: localhost_control_final_acceptance_review
+expected_recipient_endpoint_id: gpt56-localhost-b-foreground-001
+expected_recipient_task_role: localhost_control_baseline_foreground
+content: Independent fresh-window reproduction passed every required Task B Windows
+  acceptance row under the read-only local Git boundary. The prior local .git new-file
+  creation anomaly remains a separate historical finding, not a reproduced fact or
+  blocker. Remote master was not modified and Task C was not started.
+required_refs:
+- documents/codex-localhost-b-final-acceptance-reviewer-004/00001_task_b_windows_final_acceptance_review.md
+- documents/gpt56-localhost-b-foreground-001/00005_codex_windows_git_readonly_acceptance.md
+- Human/task_authority_v2.yml
+- Human/delegations/00005_codex_windows_git_readonly_acceptance.yml
+- Human/codex_windows_git_readonly_anchor_authorization_v2.yml
+- messages/gpt56-localhost-b-foreground-001/00005_request.yml
+in_reply_to: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00005
+authorization_ref: Human/delegations/00005_codex_windows_git_readonly_acceptance.yml
+references:
+- documents/gpt56-localhost-b-foreground-001/00005_codex_windows_git_readonly_acceptance.md
+- messages/gpt56-localhost-b-final-acceptance-executor-003/00002_result.yml
+facts:
+  overall_verdict: PASS
+  fresh_window_reproduction: true
+  Task_C_started: false
+  remote_master_modified: false
+  local_git_metadata_mutated: false
+  authority:
+    task_authority_id: TA-os-v2-citystate-local-host-control-baseline-001-v2
+    live: true
+    revoked: false
+    delegation_ref: Human/delegations/00005_codex_windows_git_readonly_acceptance.yml
+    delegation_granted: true
+    delegation_revoked: false
+    exact_recipient_role_action_scope_match: true
+    parent_delegation_ref: null
+    allow_redelegation: false
+    Human_task_code_requested_or_persisted: false
+  superseded_dispatch_00004:
+    delegation_ref: Human/delegations/00004_codex_windows_final_acceptance.yml
+    revoked: true
+    accepted_or_executed: false
+    replacement_delegation_ref: Human/delegations/00005_codex_windows_git_readonly_acceptance.yml
+  observed_windows:
+    os: Microsoft Windows 10.0.19045
+    pwsh_path: C:\Program Files\PowerShell\7\pwsh.exe
+    powershell_edition: Core
+    powershell_version: 7.6.4
+    python_executable: C:\Users\gk\AppData\Local\Python\pythoncore-3.14-64\python.exe
+    python_version: 3.14.6
+    bounded_node_process_count: 3
+    acceptance_target_absent_after_cleanup: true
+  read_only_git:
+    anchor: E:\newStand\study\Cybernetic_City_State_OS_v2 - core
+    origin: git@github.com:chris2gao/Cybernetic_City_State_OS_v2---core.git
+    local_head: 570d400824a5937873d40cc58ee70905e811185f
+    worktree_clean: true
+    tracked_path_count: 1451
+    raw_path_byte_count: 160982
+    strict_utf8_decode: true
+    split_delimiter: NUL_only
+    bounded_sample_count: 16
+    bounded_samples_all_exist: true
+    bounded_samples_all_roundtrip: true
+    non_ascii_tracked_path_count: 1118
+    non_ascii_sample_included: true
+  acceptance_matrix:
+    delegated_start_authority: PASS
+    repository_anchor_identity_and_cleanliness: PASS
+    filesystem_read: PASS
+    filesystem_write: PASS
+    filesystem_edit: PASS
+    powershell_7: PASS
+    python_execution: PASS
+    git_read_only: PASS
+    git_z_raw_bytes_utf8_path_logic: PASS
+    process_and_session: PASS
+    non_ascii_path_roundtrip: PASS
+    ordinary_user_cleanup: PASS
+    fresh_window_permanent_contract: PASS
+    codex_windows_physical_reproduction: PASS
+  evidence_classification:
+    physically_observed:
+    - Windows filesystem create_read_edit_cleanup
+    - PowerShell_7_and_Python_execution
+    - read_only_Git_raw_NUL_UTF8_path_logic
+    - bounded_node_process_metadata
+    - non_ASCII_path_resolution_and_listing
+    durable_repository_claim:
+    - exact_formal_request_00005_and_activation_evidence
+    - Task_Authority_v2_and_live_delegation_00005
+    - endpoint_cards_and_anchor_authorization
+    - superseded_delegation_00004_is_revoked
+    Human_supplied_evidence:
+    - authorized_anchor_and_disposable_paths
+    - prior_dot_git_new_file_creation_anomaly_as_separate_finding
+    reviewer_self_report:
+    - no_prohibited_actions_or_Task_C_work
+    - no_local_Git_metadata_mutation
+    inference:
+    - overall_PASS_from_all_required_rows_PASS
+    unknown_or_not_run:
+    - local_dot_git_new_file_creation_was_intentionally_not_retested
+  separate_findings:
+    local_dot_git_new_file_creation:
+      status: historical_separate_finding_not_reproduced
+      acceptance_effect: non_blocking
+      repair_bypass_or_elevation_attempted: false
+      reason: acceptance_rows_require_read_only_Git_only
+    python_terminal_unicode_rendering:
+      status: rendered_mojibake_not_machine_path_failure
+      acceptance_effect: non_blocking
+      authoritative_path_checks_passed: true
+constraints:
+- Task_B_only
+- no_local_Git_metadata_mutation
+- no_master_publication
+- no_redelegation
+- no_force_rebase_squash_amend_or_history_rewrite
+- no_secrets_credentials_admin_escalation_or_system_security_changes
+- no_process_or_service_modification
+- do_not_start_Task_C
