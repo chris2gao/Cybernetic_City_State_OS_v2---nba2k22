@@ -1,0 +1,19 @@
+schema_version: citystate.communication.task_authority_delegation.v2
+task_id: os-v2-citystate-local-host-control-baseline-001
+task_authority_id: TA-os-v2-citystate-local-host-control-baseline-001-v2
+granted: true
+revoked: false
+Human_task_authority_ref: Human/task_authority_v2.yml
+delegator_endpoint_id: gpt56-localhost-b-foreground-001
+delegator_task_role: localhost_control_baseline_foreground
+recipient_endpoint_id: codex-localhost-b-completion-cleanup-executor-005
+recipient_task_role: localhost_control_completion_cleanup_execution
+authorized_actions:
+- synchronize_canonical_windows_anchor_and_cleanup_merged_task_b_local_state
+delegated_scope:
+- windows_git
+- ordinary_user_cleanup
+- durable_task_evidence
+- formal_dispatch_and_review
+parent_delegation_ref: null
+allow_redelegation: false

@@ -33,3 +33,10 @@
   expected_recipient_endpoint_id: codex-localhost-b-final-acceptance-reviewer-004
   expected_recipient_task_role: localhost_control_final_acceptance_review
   exact_message_path: messages/gpt56-localhost-b-foreground-001/00005_request.yml
+- sequence: '00006'
+  message_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00006
+  title: Synchronize Task B Windows anchor and safely clean merged Task B local state
+  message_type: request
+  expected_recipient_endpoint_id: codex-localhost-b-completion-cleanup-executor-005
+  expected_recipient_task_role: localhost_control_completion_cleanup_execution
+  exact_message_path: messages/gpt56-localhost-b-foreground-001/00006_request.yml

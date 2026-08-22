@@ -1,0 +1,103 @@
+schema_version: citystate.formal_action.constitution_evidence.v1
+action_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00006
+action_class: formal_cross_endpoint_task_dispatch
+sender_endpoint_id: gpt56-localhost-b-foreground-001
+intended_recipient_endpoint_id: codex-localhost-b-completion-cleanup-executor-005
+classification_basis_ref: Human/current.yml
+required_mechanisms:
+- communication_system
+- model_routing
+resolver_result_ref: constitutions/gpt56-localhost-b-foreground-001/00006.yml#resolution
+gate_result_ref: constitutions/gpt56-localhost-b-foreground-001/00006.yml#gate
+mechanism_execution_ref: 01_os/06_execution/boot/communication_system/publisher/publish_message.py
+formal_artifact_ref: messages/gpt56-localhost-b-foreground-001/00006_request.yml
+activation_context:
+  intended_cross_endpoint_side_effect: true
+  Human_relay_requested: true
+  non_Human_endpoint_action_requested: true
+  actionable_content: true
+  requires_receiver_selection: true
+  communication_context_ref: manifest.yml
+  classification_basis_ref: Human/current.yml
+  collaboration_role: auxiliary_mechanical
+  risk_tier: T2_semantic
+  task_shape: task_b_post_integration_windows_anchor_sync_and_safe_merged_local_cleanup
+  required_capabilities:
+  - GitHub_repository_read
+  - GitHub_repository_write_or_result_payload_return
+  - Windows_local_runtime
+  - Git_local_repository_write_non_destructive
+  - filesystem_ACL_read_only_preflight
+  routing_basis_ref: documents/gpt56-localhost-b-foreground-001/00006_local_completion_cleanup.md
+  availability_assumption_or_observation_ref: role_context/codex-localhost-b-completion-cleanup-executor-005.yml
+  action_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00006
+  formal_message_type: request
+  task_id: os-v2-citystate-local-host-control-baseline-001
+  sender_endpoint_id: gpt56-localhost-b-foreground-001
+  intended_recipient_endpoint_id: codex-localhost-b-completion-cleanup-executor-005
+mechanism_preconditions:
+  communication_system:
+    verification_result: VERIFIED
+    evidence_ref: manifest.yml
+  model_routing:
+    verification_result: VERIFIED
+    evidence_ref: role_context/codex-localhost-b-completion-cleanup-executor-005.yml
+authority_effect: none
+resolution:
+  classification: formal_cross_endpoint_action
+  action_class: formal_cross_endpoint_task_dispatch
+  formal: true
+  formal_segment_indexes:
+  - 0
+  mixed_action_segmented: false
+  authority_effect: none
+  action_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00006
+  normalized_recipient_endpoint_id: codex-localhost-b-completion-cleanup-executor-005
+  required_mechanisms:
+  - communication_system
+  - model_routing
+  missing_preconditions: []
+  route_requirements:
+  - receiver_setup
+  action_allowed_to_enter_enforcement: true
+  ordinary_Human_discussion_allowed: false
+gate:
+  gate_result: VERIFIED
+  action_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00006
+  action_class: formal_cross_endpoint_task_dispatch
+  required_mechanisms:
+  - communication_system
+  - model_routing
+  verified_precondition_refs:
+    communication_system: manifest.yml
+    model_routing: role_context/codex-localhost-b-completion-cleanup-executor-005.yml
+  blocking_failures: []
+  authority_effect: none
+receiver_setup:
+  collaboration_role: auxiliary_mechanical
+  provider: OpenAI
+  product: Codex Desktop
+  surface: codex_desktop
+  model: GPT-5.6 Terra
+  reasoning_or_parameter_profile: codex_terra_task_fit
+  session_mode: fresh
+  isolation_level: fresh_session
+  repository_access_mode: GitHub_plus_local_Windows
+  repository_or_worktree_requirement: Use only E:\newStand\study\Cybernetic_City_State_OS_v2 - core as the canonical repository anchor. Synchronize local master by ordinary non-destructive Git only. Inspect and remove only the exact merged Task B worktree/branch when safe; preserve the E:\_pubwork parent and all unrelated/Task C material.
+  required_branch_or_sha: master
+  local_files_required: true
+  github_publication_required_before_start: true
+  communication_carrier: GitHub
+  routing_basis_ref: documents/gpt56-localhost-b-foreground-001/00006_local_completion_cleanup.md
+  availability_assumption_or_observation_ref: role_context/codex-localhost-b-completion-cleanup-executor-005.yml
+  limitations:
+  - auxiliary_mechanical_only
+  - no_acceptance_retest
+  - no_RDC_dependency
+  - ACL_preflight_before_Task_B_worktree_removal
+  - stop_on_abnormal_ACL_or_unrelated_local_changes
+  - preserve_E_drive_pubwork_parent_and_unrelated_or_Task_C_material
+  - no_force_rebase_squash_amend_or_history_rewrite
+  - no_secrets_credentials_admin_escalation_or_system_security_changes
+  - no_master_publication
+  - do_not_start_Task_C

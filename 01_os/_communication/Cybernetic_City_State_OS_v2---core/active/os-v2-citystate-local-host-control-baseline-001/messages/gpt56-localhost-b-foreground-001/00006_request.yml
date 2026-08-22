@@ -1,0 +1,35 @@
+message_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00006
+task_id: os-v2-citystate-local-host-control-baseline-001
+title: Synchronize Task B Windows anchor and safely clean merged Task B local state
+message_type: request
+sender_endpoint_id: gpt56-localhost-b-foreground-001
+sender_task_role: localhost_control_baseline_foreground
+expected_recipient_endpoint_id: codex-localhost-b-completion-cleanup-executor-005
+expected_recipient_task_role: localhost_control_completion_cleanup_execution
+content: Perform only the post-integration Task B Windows local synchronization and safe merged local-state cleanup defined in the durable document. Do not rerun acceptance. Publish one formal result to the Task B branch if an authenticated GitHub transport is available.
+required_refs:
+- documents/gpt56-localhost-b-foreground-001/00006_local_completion_cleanup.md
+- Human/task_authority_v2.yml
+- Human/delegations/00006_completion_cleanup.yml
+- Human/completion_acceptance_v2.yml
+- messages/codex-localhost-b-final-acceptance-reviewer-004/00001_result.yml
+requested_action: synchronize_canonical_windows_anchor_and_cleanup_merged_task_b_local_state
+authorization_ref: Human/delegations/00006_completion_cleanup.yml
+recipient_delegation_ref: Human/delegations/00006_completion_cleanup.yml
+in_reply_to: os-v2-citystate-local-host-control-baseline-001::codex-localhost-b-final-acceptance-reviewer-004::00001
+constraints:
+- authority_v21_delegated_start_only_no_Human_code_challenge
+- Task_B_completion_cleanup_only
+- canonical_Windows_anchor_only
+- ordinary_non_destructive_Git_only
+- ACL_preflight_before_exact_Task_B_worktree_removal
+- no_force_worktree_remove_or_branch_delete
+- preserve_E_drive_pubwork_parent_and_unrelated_or_Task_C_material
+- no_acceptance_retest
+- no_RDC_dependency
+- no_secrets_credentials_admin_escalation_or_system_security_changes
+- no_VPS_DNS_firewall_VPN_nginx_xray_cloudflared_actions
+- no_force_rebase_squash_amend_or_history_rewrite
+- no_master_publication
+- no_redelegation
+- do_not_start_Task_C
