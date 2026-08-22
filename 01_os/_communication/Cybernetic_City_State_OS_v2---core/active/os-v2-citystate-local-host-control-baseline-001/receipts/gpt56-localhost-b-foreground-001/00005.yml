@@ -14,7 +14,7 @@ material_claims:
     sender_endpoint_id: gpt56-localhost-b-foreground-001
     expected_recipient_endpoint_id: codex-localhost-b-final-acceptance-reviewer-004
     materialized_path: messages/gpt56-localhost-b-foreground-001/00005_request.yml
-  observed_authoritative_source_class: github_api_connector_readback
+  observed_authoritative_source_class: communication_publisher_observation
   observed_value:
     task_id: os-v2-citystate-local-host-control-baseline-001
     message_id: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00005
@@ -22,7 +22,7 @@ material_claims:
     sender_endpoint_id: gpt56-localhost-b-foreground-001
     expected_recipient_endpoint_id: codex-localhost-b-final-acceptance-reviewer-004
     materialized_path: messages/gpt56-localhost-b-foreground-001/00005_request.yml
-  exact_observation_ref: GitHub_API_readback:messages/gpt56-localhost-b-foreground-001/00005_request.yml
+  exact_observation_ref: publisher-materialization:GitHub:messages/gpt56-localhost-b-foreground-001/00005_request.yml
   comparator_id: published_message_identity_and_route_equality
   relationship_or_equality_check: expected_message_identity_equals_physical_message_identity
   verification_result: VERIFIED
