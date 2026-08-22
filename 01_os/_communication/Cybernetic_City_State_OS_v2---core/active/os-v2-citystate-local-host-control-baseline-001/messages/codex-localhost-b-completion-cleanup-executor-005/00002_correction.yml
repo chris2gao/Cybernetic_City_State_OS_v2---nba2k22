@@ -1,0 +1,51 @@
+message_id: os-v2-citystate-local-host-control-baseline-001::codex-localhost-b-completion-cleanup-executor-005::00002
+task_id: os-v2-citystate-local-host-control-baseline-001
+title: 'Correction: Task B completion cleanup remains BLOCKED after second fetch failure'
+message_type: correction
+sender_endpoint_id: codex-localhost-b-completion-cleanup-executor-005
+sender_task_role: localhost_control_completion_cleanup_execution
+expected_recipient_endpoint_id: gpt56-localhost-b-foreground-001
+expected_recipient_task_role: localhost_control_baseline_foreground
+content: 'Correction to the first cleanup result: after a new read-only observation
+  showed .git/objects/pack present, one new ordinary git fetch origin master attempt
+  reproduced the same temporary pack-file error. The local Git synchronization blocker
+  remains; no fast-forward, worktree removal, branch deletion, ACL change, master
+  publication, acceptance retest, or Task C occurred.'
+required_refs:
+- documents/codex-localhost-b-completion-cleanup-executor-005/00002_local_completion_cleanup_correction.md
+- documents/gpt56-localhost-b-foreground-001/00006_local_completion_cleanup.md
+- Human/task_authority_v2.yml
+- Human/delegations/00006_completion_cleanup.yml
+- Human/completion_acceptance_v2.yml
+- messages/codex-localhost-b-final-acceptance-reviewer-004/00001_result.yml
+- messages/codex-localhost-b-completion-cleanup-executor-005/00001_result.yml
+authorization_ref: Human/delegations/00006_completion_cleanup.yml
+supersedes: messages/codex-localhost-b-completion-cleanup-executor-005/00001_result.yml
+in_reply_to: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-completion-cleanup-executor-005::00001
+facts:
+  overall_verdict: BLOCKED_LOCAL_GIT_METADATA_WRITE
+  correction_scope: second_fetch_attempt_after_new_pack_directory_observation
+  first_fetch_attempt_exit_code: 1
+  second_fetch_attempt_exit_code: 1
+  second_attempt_same_error_signature: true
+  local_anchor_head: 570d400824a5937873d40cc58ee70905e811185f
+  fresh_remote_master: 0d75fff4919e1fd71b96c50ff5f453db4b0e7cfc
+  fresh_task_branch_before_correction: 08267cd50e13f394a33dd44b88710ecf6a4167e2
+  worktree_clean: true
+  exact_task_b_worktree_registered: false
+  exact_task_b_directory_preserved: true
+  pubwork_parent_preserved: true
+  fast_forward_attempted: false
+  worktree_remove_attempted: false
+  local_task_branch_delete_attempted: false
+  ACL_changed: false
+  master_publication_performed: false
+  acceptance_retest: false
+  Task_C_started: false
+  no_third_fetch_attempt: true
+constraints:
+- no_force_worktree_remove_or_branch_delete
+- preserve_E_drive_pubwork_parent_and_unrelated_or_Task_C_material
+- no_acceptance_retest
+- no_master_publication
+- do_not_start_Task_C
