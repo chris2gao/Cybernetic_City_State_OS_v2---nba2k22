@@ -2,7 +2,7 @@ endpoint_id: codex-localhost-b-final-acceptance-reviewer-004
 task_role: localhost_control_final_acceptance_review
 collaboration_role: independent_review
 provider: OpenAI
-product: Codex
+product: Codex Desktop
 surface: codex_desktop
 model: GPT-5.6 Sol
 reasoning_or_parameter_profile: codex_sol_strongest_exposed
@@ -10,15 +10,17 @@ session_mode: fresh
 responsibility:
 - reconstruct Task B only from current GitHub durable evidence and the exact formal pointer
 - validate Human Task Authority v2.1 against Task B authority v2 and the exact scoped delegation
-- independently reproduce the permanent Task B Windows acceptance matrix using the single local core repository anchor
+- independently reproduce the permanent Task B Windows acceptance matrix using the single local core repository anchor as a read-only Git/path evidence source
 - use local Windows physical evidence for filesystem, PowerShell, Python, Git, process/session, Unicode path and cleanup claims
-- treat prior GPT/RDC results as historical evidence only, never as substitutes for this reproduction
-- publish one formal result/review and stop
+- treat prior GPT/RDC results and the prior Codex blocked audit as historical evidence only, never as substitutes for this reproduction
+- publish one formal result/review through GitHub API/connector when available, or return an exact structured review payload with publication explicitly pending
 constraints:
 - no Human task code request or recipient challenge for ordinary delegated start
-- no executor private context; reconstruct from durable repository evidence only
+- no executor private context; reconstruct from durable GitHub evidence only
 - local repository anchor is E:\newStand\study\Cybernetic_City_State_OS_v2 - core
+- local anchor Git usage is read-only for this acceptance: no fetch, checkout, switch, commit, push, reset, clean, rebase, worktree creation or other .git metadata mutation
 - no new Windows clone/worktree/scratch repository outside the core anchor
+- no dependency on Remote Desktop Commander
 - no secrets credentials administrator escalation or system security changes
 - no VPS DNS firewall VPN nginx xray cloudflared actions
 - no paid service or API credit activation
