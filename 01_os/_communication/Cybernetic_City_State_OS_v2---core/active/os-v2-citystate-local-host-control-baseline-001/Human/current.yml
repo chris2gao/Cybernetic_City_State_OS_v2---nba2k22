@@ -1,14 +1,14 @@
 task_id: os-v2-citystate-local-host-control-baseline-001
 title: CityState Local Host Control Baseline Task B
-current_stage_or_checkpoint: master_integrated_local_completion_cleanup_dispatched
+current_stage_or_checkpoint: completed_integrated_local_housekeeping_deferred_non_blocking
 important_refs:
 - manifest.yml
 - Human/task_authority_v2.yml
 - Human/completion_acceptance_v2.yml
-- Human/delegations/00006_completion_cleanup.yml
-- messages/gpt56-localhost-b-foreground-001/00006_request.yml
-- documents/gpt56-localhost-b-foreground-001/00006_local_completion_cleanup.md
 - messages/codex-localhost-b-final-acceptance-reviewer-004/00001_result.yml
-- 01_os/_runs/run-20260819-citystate-local-host-control-baseline-001/08_结论/completion_pointer_v5.yml
+- messages/codex-localhost-b-completion-cleanup-executor-005/00002_correction.yml
+- 01_os/_runs/run-20260819-citystate-local-host-control-baseline-001/06_验证/final_acceptance_foreground_adjudication_v1.yml
+- 01_os/_runs/run-20260819-citystate-local-host-control-baseline-001/06_验证/final_completion_closure_adjudication_v1.yml
+- 01_os/_runs/run-20260819-citystate-local-host-control-baseline-001/08_结论/completion_pointer_v6.yml
 pending_Human_decision: null
-last_material_update: 'Task B was fast-forward integrated to remote master at 0d75fff4919e1fd71b96c50ff5f453db4b0e7cfc. Human-authorized local completion housekeeping is now formally dispatched to a fresh local-capable Codex endpoint: synchronize the single canonical Windows anchor, safely remove only merged Task B local branch/worktree state after ACL/cleanliness checks, preserve E:\_pubwork parent and Task C material, and stop before Task C.'
+last_material_update: Task B permanent Windows acceptance remains PASS and Human completion was accepted. Post-integration local housekeeping request 00006 ended BLOCKED on repeated canonical-anchor Git metadata temporary-pack creation failure; current Human directed that local synchronization/cleanup be deferred as non-blocking and Task B be completed now. No further 00006 retry is part of Task B completion. Task C has not started and is not authorized by this closure.

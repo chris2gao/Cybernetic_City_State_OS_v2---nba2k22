@@ -1,0 +1,63 @@
+schema_version: citystate.task_b_final_completion_closure.v1
+task_id: os-v2-citystate-local-host-control-baseline-001
+run_id: run-20260819-citystate-local-host-control-baseline-001
+foreground_endpoint_id: gpt56-localhost-b-foreground-001
+foreground_task_role: localhost_control_baseline_foreground
+closure_basis:
+  final_acceptance_adjudication_ref: 01_os/_runs/run-20260819-citystate-local-host-control-baseline-001/06_验证/final_acceptance_foreground_adjudication_v1.yml
+  Human_completion_event_ref: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/Human/completion_acceptance_v2.yml
+  cleanup_correction_ref: 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-citystate-local-host-control-baseline-001/messages/codex-localhost-b-completion-cleanup-executor-005/00002_correction.yml
+  cleanup_correction_commit: 3cdd8930808e1bc3e6d3d4debd57343bfc52a75c
+  current_Human_disposition: defer_local_sync_and_cleanup_if_current_local_Git_blocker_persists_and_complete_Task_B_now
+  authority_effect_of_current_disposition: none_no_new_authority_grant
+physically_observed_GitHub_state_before_closure:
+  remote_master: 0d75fff4919e1fd71b96c50ff5f453db4b0e7cfc
+  Task_B_branch: 3cdd8930808e1bc3e6d3d4debd57343bfc52a75c
+  Task_B_branch_ahead_of_master: 4
+  Task_B_branch_behind_master: 0
+Task_B_acceptance:
+  final_acceptance: PASS
+  permanent_contract_satisfied: true
+  all_required_permanent_matrix_rows_PASS: true
+  Human_completion_accepted: true
+  initial_master_integration_readback: PASS
+local_completion_housekeeping:
+  formal_request: os-v2-citystate-local-host-control-baseline-001::gpt56-localhost-b-foreground-001::00006
+  final_execution_state: BLOCKED_LOCAL_GIT_METADATA_WRITE
+  failure_layer: canonical_Windows_anchor_local_Git_metadata_write
+  repeated_same_error_after_new_physical_precondition: true
+  local_anchor_head_observed_by_executor: 570d400824a5937873d40cc58ee70905e811185f
+  remote_master_observed_by_executor: 0d75fff4919e1fd71b96c50ff5f453db4b0e7cfc
+  fast_forward_performed: false
+  worktree_removal_performed: false
+  local_Task_B_branch_deletion_performed: false
+  ACL_changed: false
+  exact_Task_B_worktree_registered: false
+  E_pubwork_parent_preserved: true
+  acceptance_effect: non_blocking
+  completion_effect: deferred_non_blocking
+  Human_current_stop: true
+  further_retry_for_Task_B_completion: prohibited
+  future_reentry_condition: new_explicit_work_after_external_local_Git_write_condition_changes
+  delegation_00006_physical_revoked_field_at_closure: false
+  delegation_note: no_new_revocation_authority_event_is_asserted_by_this_closure
+adjudication:
+  Task_B_status: COMPLETED
+  Task_B_durable_completion: true
+  local_sync_required_for_Task_B_completion: false
+  local_cleanup_required_for_Task_B_completion: false
+  local_Git_metadata_blocker_carried_as_separate_followup_finding: true
+  Task_C_prerequisite_Task_B_complete: true
+  Task_C_started: false
+  Task_C_start_authorized_by_this_closure: false
+publication:
+  final_closure_paths_within_Task_B_packet_allowlist: true
+  existing_Human_completion_authority_covers_non_force_task_branch_to_master_publication: true
+  required_mode: non_force_fast_forward_only
+  remote_readback_required: true
+  force_push: false
+  history_rewrite: false
+residuals:
+- canonical Windows anchor remains stale at the executor-observed local HEAD until separate future local repair/synchronization work succeeds
+- E:\_pubwork and E:\_pubwork\localhost-b-001 remain preserved; no manual deletion was performed
+- delegation 00006 remains physically unrevoked in its durable file; current Human has stopped this execution path and no further Task B retry is authorized by this closure

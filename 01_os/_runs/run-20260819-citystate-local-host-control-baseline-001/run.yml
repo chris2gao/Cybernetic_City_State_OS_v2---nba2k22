@@ -3,7 +3,7 @@ task_id: os-v2-citystate-local-host-control-baseline-001
 run_id: run-20260819-citystate-local-host-control-baseline-001
 base_sha: 570d400824a5937873d40cc58ee70905e811185f
 branch: dev/os-v2-citystate-local-host-control-baseline-001
-status: master_integrated_local_completion_cleanup_dispatched
+status: completed_integrated_local_housekeeping_deferred_non_blocking
 task_packet_ref: 01_任务输入/任务包_v2.yml
 current_model_ref: 02_当前模型/current_model_v5.yml
 ownership: core-owned
@@ -15,9 +15,9 @@ outputs:
 - historical Codex blocked audit that invalidated local fetch/.git-write as a required acceptance precondition
 - final Codex Desktop Windows physical acceptance evidence using GitHub truth plus read-only local Git/path evidence
 - foreground final-acceptance adjudication and append-only completion pointers
-- Human completion/master-integration authority event
-- remote master fast-forward integration readback
-- formal post-integration Windows local synchronization and safe cleanup dispatch
-validation_state: Task_B_acceptance_PASS;_Human_completion_event_verified;_remote_master_fast_forwarded_non_force_to_0d75fff4919e1fd71b96c50ff5f453db4b0e7cfc;_remote_readback_PASS;_local_completion_cleanup_00006_dispatched_pending_result
+- Human completion/master-integration authority event and remote master fast-forward readback
+- post-integration local housekeeping BLOCKED result and correction preserving the local Git metadata blocker as a separate finding
+- final completion closure adjudication recording local synchronization/cleanup as deferred non-blocking by current Human
+validation_state: Task_B_final_acceptance_PASS;_all_permanent_rows_PASS;_Human_completion_accepted;_remote_master_initial_integration_readback_PASS;_00006_BLOCKED_local_Git_metadata_write_with_second_same_signature;_local_housekeeping_deferred_non_blocking;_Task_B_COMPLETED;_Task_C_not_started
 master_modified: true
 plaintext_Human_code_persisted: false
