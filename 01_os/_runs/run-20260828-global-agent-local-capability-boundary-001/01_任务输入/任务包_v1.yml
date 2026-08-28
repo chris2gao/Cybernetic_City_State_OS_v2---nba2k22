@@ -1,0 +1,35 @@
+task_id: os-v2-global-agent-local-capability-boundary-001
+trigger: current_Human_instruction
+objective: >-
+  Make the repository-wide startup discipline state a concise work boundary:
+  foreground/decision models spend effort on high-value reasoning, planning,
+  adjudication and evidence review; repetitive local interaction is delegated to
+  capable Desktop executors when available; direct local access by a foreground
+  model is used when local facts materially improve understanding, decision quality
+  or independent verification.
+work_performed_or_requested: >-
+  Add one concise repository-wide startup rule to AGENT_WORKING_DISCIPLINE.md.
+implementation_or_review_method: >-
+  Minimal documentation-only change on a branch from the fresh remote master,
+  followed by exact diff/readback and non-force fast-forward publication to master.
+supportability_rationale: >-
+  AGENT_WORKING_DISCIPLINE.md is an always-loaded cross-model working-discipline
+  document and already defines role boundaries, so this rule belongs there without
+  introducing a new mechanism or duplicating startup rules elsewhere.
+feasibility_rationale: >-
+  The change is documentation-only, has one canonical target file, requires no
+  runtime migration, and can be verified exactly by branch diff and remote readback.
+allowed_changed_paths:
+  - AGENT_WORKING_DISCIPLINE.md
+  - 01_os/_runs/run-20260828-global-agent-local-capability-boundary-001/
+red_lines:
+  - do_not_change_authority_semantics
+  - do_not_require_foreground_to_avoid_local_access_when_local_facts_are_material
+  - do_not_force_intellectual_execution_to_any_single_model_or_vendor
+  - do_not_turn_local_access_into_default_mechanical_execution
+acceptance:
+  - rule_is_loaded_by_repository_startup
+  - repetitive_mechanical_local_work_prefers_Desktop_execution_models_when_available
+  - foreground_local_access_is_reserved_for_material_information_gain_or_verification
+  - intellectual_execution_may_be_done_by_foreground_or_delegated_based_on_task_fit
+  - wording_is_short_and_vendor_neutral
