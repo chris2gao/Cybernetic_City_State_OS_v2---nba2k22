@@ -1,0 +1,23 @@
+model_id: GLOBAL-HUMAN-AUTH-SIMPLIFICATION-CM-v1
+problem_statement: >-
+  The repository currently mixes task execution authority, formal communication
+  delegation, acceptance gates, and irreversible-action confirmation. This causes
+  executors to discover stale or independent Human gates during execution even when
+  the Human has already clearly asked for the task to proceed.
+principles:
+  default_execution: >-
+    A current Human task request plus a durable task scope is sufficient to execute
+    ordinary reversible work inside that scope. No separate Human authorization
+    artifact, nonce, code, or delegation chain is required.
+  evidence_not_authority: >-
+    Findings, tests, reviews, receipts and task state may block a technical claim, but
+    historical evidence cannot invent a new Human permission gate unless the current
+    canonical policy explicitly classifies the action as Human-confirmation-required.
+  explicit_confirmation: >-
+    Human confirmation is exceptional and action-bound. When required and not already
+    covered, ask directly; a clear current Human answer is sufficient and execution
+    continues without an authorization code ritual.
+  big_task_closure: >-
+    Before dispatching a large task, enumerate all known action-bound Human confirmation
+    needs across the target obligation graph and obtain them once. The executor must not
+    stop later for a known gate already covered by that preauthorization.
