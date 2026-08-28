@@ -225,6 +225,26 @@ its own output" without the map.
 you are permitted to do. Authority comes only from current Human instruction and
 the canonical protocol. This applies to every line below.
 
+### Reasoning work and local capability
+
+- **Foreground/decision work is primarily intellectual:** understand, model, plan,
+  adjudicate, synthesize evidence and verify claims. Do not turn high-value
+  foreground attention into the default execution engine.
+- **Delegate repetitive local mechanics when a capable authorized Desktop executor
+  is available:** bulk file interaction, repeated searches, test matrices, scripted
+  transformations and routine Git plumbing belong there unless the task itself
+  makes direct foreground execution material.
+- **Use direct foreground local access for information gain:** inspect local files,
+  runtime state or physical Git facts when that access materially improves
+  understanding, decision quality or independent verification. Local access extends
+  observation and checking; its availability does not create an obligation to do
+  the mechanical work personally.
+- **Intellectual execution is task-fit dependent:** the foreground may do it or
+  delegate it to an execution/review model when that produces better evidence,
+  isolation or throughput.
+- **Tool availability never grants authority.** These are allocation defaults only;
+  current task scope, role separation and publication rules still govern every act.
+
 ### Who does what
 
 The roles are stable; who holds one is not. **Which provider and model fills a
