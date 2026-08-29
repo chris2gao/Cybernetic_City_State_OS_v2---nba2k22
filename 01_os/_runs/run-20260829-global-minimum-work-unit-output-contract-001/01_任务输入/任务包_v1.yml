@@ -1,0 +1,51 @@
+task_id: os-v2-global-minimum-work-unit-output-contract-001
+objective: >-
+  Promote the observed T2 minimum-work-unit output experiment into one thin global
+  mechanism that makes material decision/architecture dispatch, execution completion,
+  and independent-review completion state what was done, how, why it is supportable,
+  and why it is feasible; require reviewers to attack executor rationales against
+  primary evidence without creating a permission gate or chain-of-thought requirement.
+work_branch: dev/os-v2-global-minimum-work-unit-output-contract-001
+big_task: false
+exact_base_sha: 1559346ca2eab776cad110c7d96475f34a33f9b2
+source_evidence:
+  - a71db910e9f0e17963e73aa8e6bd5d05f5aa7574:01_os/_runs/run-20260828-t2-stage04-structural-provenance-upstream-001/04_机制试验/minimum_work_unit_output_contract_v1.yml
+  - 01_os/_runs/run-20260828-t2-completion-001/07_测试执行/p2_2_execution_evidence_v1.yml
+  - 01_os/_runs/run-20260828-global-human-authorization-simplification-001/03_方案设计/authorization_flow_design_v1.yml
+allowed_changed_paths:
+  - 01_os/README.md
+  - 01_os/03_mechanisms/README.md
+  - 01_os/03_mechanisms/minimum_work_unit_output/**
+  - 01_os/02_boot/minimum_work_unit_output/**
+  - 01_os/05_registry/minimum_work_unit_output_v1.yml
+  - 01_os/06_execution/boot/minimum_work_unit_output/**
+  - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/**
+protected_actions_not_authorized:
+  - merge_to_master
+  - force_push
+  - rewrite_published_history
+  - delete_master_or_repository
+  - change_repository_visibility_or_credentials
+  - activate_runtime_scheduler_or_coordinator
+  - access_secrets_credentials_or_key_material
+success_criteria:
+  - decision_architecture_output_supports_four_core_fields_constraints_and_stop_conditions
+  - execution_output_supports_four_core_fields_result_verification_and_unproved_limits
+  - independent_review_output_supports_four_core_fields_verdict_primary_evidence_findings_and_executor_rationale_assessment
+  - reviewer_must_assess_executor_supportability_and_feasibility_rationales_against_primary_evidence
+  - legacy_artifacts_without_declared_MWU_remain_readable
+  - ordinary_tasks_gain_no_new_Human_authorization_requirement
+  - private_chain_of_thought_is_not_requested_or_required
+  - bare_tests_passed_best_practice_or_feasible_are_not_sufficient_rationales
+  - mechanism_boot_registry_and_validator_are_self_consistent
+non_goals:
+  - create_a_second_workflow
+  - modify_communication_envelope_schema
+  - modify_context_management_or_model_routing_ownership
+  - create_new_authority_or_delegation_system
+  - require_MWU_for_each_tool_call_micro_operation_or_private_reasoning_step
+  - reopen_T2_or_S02
+  - merge_to_master
+review_method: >-
+  Foreground architecture review and targeted machine validation on the task branch.
+  Independent review is intentionally left for the Human's later cross-model check.

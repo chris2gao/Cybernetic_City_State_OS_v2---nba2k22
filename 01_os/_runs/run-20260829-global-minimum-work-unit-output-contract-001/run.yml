@@ -1,0 +1,19 @@
+run_id: run-20260829-global-minimum-work-unit-output-contract-001
+task_id: os-v2-global-minimum-work-unit-output-contract-001
+status: candidate_pending_validation
+exact_base_sha: 1559346ca2eab776cad110c7d96475f34a33f9b2
+branch: dev/os-v2-global-minimum-work-unit-output-contract-001
+ownership: core
+purpose: >-
+  Promote the T2 minimum-work-unit output trial into a thin global canonical mechanism.
+outputs:
+  task_packet: 01_任务输入/任务包_v1.yml
+  integration_design: 03_方案设计/minimum_canonical_integration_design_v1.yml
+  canonical_contract: ../../03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml
+  validator: ../../06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py
+validation:
+  status: not_run
+  evidence: null
+lifecycle:
+  master_integration: not_authorized
+  independent_review: deferred_to_Human_selected_reviewer
