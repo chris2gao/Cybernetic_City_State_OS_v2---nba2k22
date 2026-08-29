@@ -137,11 +137,11 @@ guards:
 
   - path: "01_os/05_registry/repository_publisher_authority_v1.yml"
     purpose: >-
-      Who may publish to this repository, what an activated publisher may do
-      without asking again, which acts stay action-bound under the widest grant,
-      and that core history is never rewritten regardless of grant. It is the
-      authority half of the pair: this registry says what loads a guard, that file
-      says who may publish at all.
+      Defines ordinary task/source publication as in-scope execution without a
+      separate Human authorization ceremony; lists the small confirmation-bound
+      protected-action set; defines direct Human confirmation and big-task
+      preconfirmation closure; preserves transport gates and the absolute core-history
+      rewrite prohibition.
     loader: >-
       any executor before a write that leaves its own worktree, on every
       publication transport
@@ -152,14 +152,15 @@ guards:
       01_os/开发入口与单窗口任务规范_v1.md section 1.1, .githooks/README.md and this
       registry.
     evidence: >-
-      migrated from .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml on 2026-08-10 by
-      01_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001 with authority semantics
-      preserved and the old-communication-plane commentary rewritten. The
-      migration run records the old path, the old blob sha and every consumer
-      updated in the same change.
+      Original migration evidence remains in
+      01_os/_runs/run-20260810-旧OS退役前迁移与最终白名单-001. The 2026-08-28
+      authorization-flow simplification is evidenced by
+      01_os/_runs/run-20260828-global-human-authorization-simplification-001 and
+      changes the active semantics from default authorization gates to default task
+      scope plus direct Human confirmation for the protected-action set.
     cache_dirs: []
     failure_surfacing: >-
       not at push time. A publisher that never reads it can still push, so the
-      failure shows up as an unauthorized or unevidenced publication after the
+      failure shows up as an out-of-scope, unconfirmed-protected, or unevidenced publication after the
       fact - which is why the file is discovered from five places rather than one.
     deletion_rule: protected

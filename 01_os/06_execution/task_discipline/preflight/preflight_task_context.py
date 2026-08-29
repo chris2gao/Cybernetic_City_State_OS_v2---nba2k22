@@ -3,7 +3,7 @@
 Emits, in a single call, everything an executor must read before its first write:
 physical remote master and work-branch SHAs, local head and ancestry, the hook
 guard, worktree cleanliness, the task packet's allowlist and prohibitions, and
-the state of any declared authorization gate.
+the state of any explicitly declared optional boolean gate.
 
 It exists because that material was previously gathered over a dozen separate
 tool round trips, each re-sending the whole conversation. It reads state; it
@@ -85,7 +85,7 @@ def raw_scalar(text: str, dotted: str) -> str | None:
 
 
 def read_gate(gate_path: Path, dotted: str) -> dict:
-    """Read an authorization gate.
+    """Read an explicitly declared boolean gate (legacy/readiness compatibility).
 
     Review finding F3: YAML 1.1 resolves `yes` and `on` to True, so a gate could
     be opened by a token that does not read as the required `true`. The gate now
@@ -132,6 +132,8 @@ def collect(repo_root: Path, packet: dict, use_remote: bool) -> dict:
         "allowlist": packet.get("allowed_changed_paths") or [],
         "prohibitions": packet.get("explicit_prohibitions") or [],
         "required_tests": packet.get("required_tests") or [],
+        "big_task": packet.get("big_task") is True,
+        "big_task_confirmation_closure": packet.get("big_task_confirmation_closure"),
     }
     dirty = git(repo_root, "status", "--porcelain", "-z", "--untracked-files=all")[1]
     report["dirty_path_count"] = len([p for p in dirty.split("\0") if p])
@@ -185,6 +187,31 @@ def hard_failures(report: dict, require_clean: bool,
     if report["branch_declared"] and report["branch_actual"] != report["branch_declared"]:
         failures.append(f"branch_mismatch:{report['branch_actual']}")
 
+    if report.get("big_task"):
+        closure = report.get("big_task_confirmation_closure")
+        if not isinstance(closure, dict) or closure.get("enabled") is not True:
+            failures.append("big_task_confirmation_closure_missing")
+        else:
+            known = closure.get("known_confirmation_required_actions")
+            covered = closure.get("preconfirmed_actions")
+            uncovered = closure.get("uncovered_actions")
+            if not all(isinstance(value, list) for value in (known, covered, uncovered)):
+                failures.append("big_task_confirmation_closure_invalid")
+            elif any(
+                not isinstance(item, str) or not item
+                for value in (known, covered, uncovered)
+                for item in value
+            ):
+                failures.append("big_task_confirmation_closure_invalid")
+            else:
+                known_set, covered_set, uncovered_set = set(known), set(covered), set(uncovered)
+                if len(known) != len(known_set) or len(covered) != len(covered_set) or len(uncovered) != len(uncovered_set):
+                    failures.append("big_task_confirmation_closure_invalid")
+                elif covered_set - known_set or uncovered_set != known_set - covered_set:
+                    failures.append("big_task_confirmation_closure_inconsistent")
+                elif uncovered_set:
+                    failures.append("big_task_confirmation_closure_incomplete:" + ",".join(sorted(uncovered_set)))
+
     verification = report.get("master_verification")
     if verification == "moved":
         failures.append(f"remote_master_moved:{report['remote_master']}")
@@ -215,6 +242,7 @@ def render(report: dict, gate: dict | None, failures: list[str]) -> str:
         f"allowlist       {len(report['allowlist'])} patterns",
         f"prohibitions    {len(report['prohibitions'])}",
         f"required_tests  {len(report['required_tests'])}",
+        f"big_task        {'yes' if report.get('big_task') else 'no'}",
     ]
     if gate is not None:
         state = "OPEN" if gate["open"] else ("present_but_closed" if gate["present"] else "ABSENT")
@@ -241,7 +269,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--accept-unverified-master", action="store_true",
                         help="proceed even though master was not verified; the summary "
                              "line will say so rather than reporting a bare ok")
-    parser.add_argument("--gate", help="authorization gate yaml to inspect")
+    parser.add_argument("--gate", help="optional declared gate yaml to inspect; ordinary tasks normally omit this")
     parser.add_argument("--gate-key", default="authorization.enter_stage_06_execution")
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args(argv)

@@ -1,6 +1,6 @@
 # task_discipline — 任务纪律工具
 
-三个只读或只报告的执行辅助工具。它们**不授权任何动作**，只把每次任务都要重复付出的
+三个只读或只报告的执行辅助工具。它们**不扩大 task scope，也不产生 Human confirmation**，只把每次任务都要重复付出的
 三类成本收敛成一次调用。
 
 | 工具 | 入口 | 一句话 |
@@ -35,9 +35,9 @@
 python 01_os/06_execution/task_discipline/preflight/preflight_task_context.py \
     --packet 01_os/_runs/<run-id>/01_任务输入/任务包_v1.yml
 
-# 有授权门时一并核
-    --gate 01_os/_runs/<run-id>/06_执行/Human授权_进入阶段六_v1.yml \
-    --gate-key authorization.enter_stage_06_execution
+# 只有任务显式声明了 legacy/readiness boolean gate 时才核；新普通任务默认不传 --gate
+    --gate 01_os/_runs/<run-id>/06_执行/<declared-gate>.yml \
+    --gate-key <declared.boolean.path>
 
 # 验证
 python 01_os/06_execution/task_discipline/quiet_verify/quiet_verify.py

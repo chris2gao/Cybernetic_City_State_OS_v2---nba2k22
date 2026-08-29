@@ -4,7 +4,7 @@ area: 01_os/06_execution/task_discipline
 status: active
 purpose: >-
   登记任务纪律工具：开工前上下文预检、统一安静验证入口、物理变更路径账本。
-  三者只读取与报告，不授权任何动作，也不修改仓库内容。
+  三者只读取与报告，不扩大 task scope、不产生 Human confirmation，也不修改仓库内容。
 origin_run: 01_os/_runs/run-20260809-任务纪律工具-001/
 entries:
 - path: 01_os/06_execution/task_discipline/README.md
@@ -17,7 +17,7 @@ entries:
   failure_surfacing: 工具行为与文档不符时在下一次任务收尾暴露
   deletion_rule: human_decision_required
 - path: 01_os/06_execution/task_discipline/preflight/preflight_task_context.py
-  purpose: 一次性输出真实 HEAD、祖先关系、hook 守卫、工作区状态、allowlist、禁止项与授权门状态
+  purpose: 一次性输出真实 HEAD、祖先关系、hook 守卫、工作区状态、allowlist、禁止项与可选声明 gate 状态
   loader: 执行者在首次写入前手动调用
   loader_class: in_repo_program
   discovery: 01_os/开发入口与单窗口任务规范_v1.md 第 1.2 节
@@ -44,7 +44,7 @@ entries:
   failure_surfacing: 退出码 1 表示有变更路径越出 allowlist
   deletion_rule: human_decision_required
 invariants:
-  tools_never_authorize: true
+  tools_never_expand_task_scope_or_create_Human_confirmation: true
   tool_code_itself_writes_no_repository_content: true
   user_supplied_checks_run_with_caller_privileges: true
   user_supplied_checks_may_write: >-

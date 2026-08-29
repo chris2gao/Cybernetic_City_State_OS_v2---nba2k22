@@ -1,135 +1,107 @@
 schema_version: citystate.authority.v1
 mechanism_version: 1
+policy_revision: 2026-08-28-default-task-scope-with-direct-human-confirmation
 
-# Who may publish to this repository, and what a publication has to prove.
+# Repository publication policy. This file separates three things that used to be
+# conflated: task scope, publication transport, and Human confirmation for a small
+# protected-action set.
 #
-# Written because a real block carried the wrong diagnosis. An executor reported
-# that it could not publish because it could not run
-# `git config --get core.hooksPath`. Both halves were true and neither was a
-# permission problem. The repository had defined exactly one publication
-# transport - a local clone with a shell - so an executor holding only a GitHub
-# API connector fell outside the only gate that existed. The gate did not refuse
-# it. The gate had nothing to say about it, and "undefined" was being read as
-# "forbidden" by one executor while the same executor published a proposal branch
-# through that same undefined transport. An undefined transport produces exactly
-# that: inconsistent self-adjudication, not safety.
+# Ordinary reversible work inside a current task scope is executable by default.
+# It does not require a separate Human authorization artifact, task code, nonce,
+# or delegation chain. The current Human task input plus the durable task packet
+# (when material mutation exists) defines ordinary scope.
 #
-# Three files answer three different questions and none substitutes for another:
-#   CORE_MANIFEST.yml                                        who may author a path
-#   01_os/05_registry/repository_guards_v1.yml                what external tool loads a guard
-#   01_os/05_registry/repository_publisher_authority_v1.yml   what an executor may
-#                                                             publish, and what
-#                                                             evidence the
-#                                                             publication carries
-#
-# Loaded by: any executor before a write that leaves its own worktree.
-# Discovered from: AGENTS.md, AGENT_WORKING_DISCIPLINE.md section 6, and
-#   01_os/开发入口与单窗口任务规范_v1.md sections 1.1 and 6.
-# Core-owned. A domain that could edit its own copy could widen its own grant.
-#
-# Migration note, 2026-08-10: this file was moved here from
-# .ai/REPOSITORY_PUBLISHER_AUTHORITY.yml by task
-# os-v2-pre-deletion-migration-final-whitelist-001, because the old path is on
-# the surface being retired while the authority itself is live. Authority
-# semantics are unchanged: root authority, identity binding, the grant, the
-# capability set, the action-bound destructive set, the core-history prohibition
-# and the recognized transports are carried across as they stood. Commentary that
-# resolved into the old communication plane was rewritten, not preserved, and no
-# compatibility pointer is left at the old path.
+# Loaded by any executor before a write that leaves its own worktree. Transport
+# gates remain mandatory because they prove physical publication facts; they are
+# not Human authorization gates.
 
 root_authority: Human
 
-# The single rule that keeps everything below safe.
-#
-# A provider name is text the caller writes about itself. It authenticates
-# nothing: anything able to emit `provider: ChatGPT` would inherit every
-# capability in this file. So authority binds to the Human instruction and to the
-# host or connector principal that carried it - never to the name, and never to a
-# role label, load profile, receipt or model-generated human_gate field.
+ordinary_task_execution:
+  separate_Human_authorization_required: false
+  task_code_required: false
+  nonce_required: false
+  task_authority_chain_required: false
+  ordinary_cross_model_delegation_required: false
+  basis:
+    - current_Human_task_input
+    - durable_task_scope_when_material_mutation_occurs
+    - repository_path_and_transport_guards
 identity:
-  self_declared_provider_name_is_authority: false
+  self_declared_provider_name_expands_scope: false
   accepted_bindings:
     - trusted_host_injected
     - connector_authenticated
     - local_authenticated
-  on_missing_or_unverifiable_binding: fail_closed
+  on_missing_or_unverifiable_binding: fail_closed_for_publication_transport
 
-# The Human grant of record. Durable until superseded by a change to this file in
-# master. A chat message asserting a wider grant does not widen it; it is a
-# request to amend this file.
-grant:
-  granted_by: Human
-  granted_on: 2026-08-01
-  authorization_ref: >-
-    Human instruction of 2026-08-01 granting top-tier repository write authority
-    to the decision-making executors while keeping destructive Git action-bound.
-    The request document that prompted it sits on the legacy surface scheduled for
-    retirement; the grant does not depend on it. This file is the durable record,
-    and amending the grant means amending this file in master.
-  grants_to: occupants_of_existing_stable_roles
-  # What "role" means is answered by the active OS, not by this file and not by
-  # the retired communication plane: the role table in AGENT_WORKING_DISCIPLINE.md
-  # says what each role produces, and section 7 of
-  # 01_os/开发入口与单窗口任务规范_v1.md binds who occupies it for a given task
-  # through the packet's `publisher` and `executor_profile` blocks. Whether an
-  # occupant may write is a capability question answered here; it was deliberately
-  # not turned into a new identity, because inventing one would make a two-file
-  # unblock wait on a schema migration.
-  role_definition_source:
-    - AGENT_WORKING_DISCIPLINE.md
-    - 01_os/开发入口与单窗口任务规范_v1.md section 7
-  activated_by:
-    - current_explicit_Human_instruction
-    - authenticated_Human_approved_durable_delegation
-  role_alone_authorizes: false
-
-# What an activated publisher may do without asking again.
+# Ordinary capabilities are usable inside the current task scope without asking
+# the Human again. A provider/model/role label never expands that scope.
 capabilities:
   read_repository: true
   create_branch: true
   update_task_branch: true
-  create_update_delete_files_in_authorized_scope: true
+  create_update_delete_files_in_task_scope: true
   commit: true
   push_source_branch: true
   open_update_pull_request: true
-  fast_forward_master: true
-  merge_when_strategy_is_Human_approved: true
   remote_readback_and_audit: true
-  # Moved out of the destructive set on 2026-08-02. Deleting a merged branch
-  # loses no information: its commits stay reachable from master. It is not in
-  # the same class as rewriting history, and pairing them meant every cleanup
-  # reached for `--no-verify`, which unlocks both. Record name and sha before
-  # deleting an unmerged branch - those commits do become collectable.
   delete_remote_branch: true
 
-# Not "insufficient permission". These are unrecoverable, so each one needs a
-# current Human authorization bound to that specific action - being trusted does
-# not make an unrecoverable act recoverable.
-destructive_or_irreversible:
-  force_push: action_bound_Human_authorization_required
-  rewrite_published_history: action_bound_Human_authorization_required
-  delete_master_or_repository: action_bound_Human_authorization_required
-  change_repository_visibility_or_credentials: action_bound_Human_authorization_required
-  activate_runtime_scheduler_or_coordinator: action_bound_Human_authorization_required
+# Shared-state and irreversible actions are confirmation-bound, not authority-code
+# bound. If already covered by the current Human instruction or a big-task
+# preconfirmation, do not ask again. Otherwise ask directly at the action boundary.
+confirmation_bound_actions:
+  publish_or_merge_to_master: Human_confirmation_required_unless_preconfirmed
+  force_push: Human_confirmation_required_unless_preconfirmed
+  rewrite_published_history: Human_confirmation_required_unless_preconfirmed
+  delete_master_or_repository: Human_confirmation_required_unless_preconfirmed
+  change_repository_visibility_or_credentials: Human_confirmation_required_unless_preconfirmed
+  activate_runtime_scheduler_or_coordinator: Human_confirmation_required_unless_preconfirmed
+  access_secrets_credentials_or_key_material: Human_confirmation_required_and_security_rules_apply
 
-# One prohibition that no grant lifts, because its cost is structural rather than
-# a matter of trust. Every domain repository shares an ancestor with core; one
-# rewrite breaks mergeability for all of them simultaneously and nothing repairs
-# it afterwards. The blast radius does not shrink when the author is competent.
-core_history_rewrite: prohibited_regardless_of_grant
+Human_confirmation_contract:
+  sufficient_sources:
+    - clear_current_Human_instruction_covering_exact_action
+    - durable_simple_confirmation_record_derived_from_clear_Human_instruction
+  authorization_code_required: false
+  nonce_required: false
+  Human_task_authority_v2_required: false
+  delegation_chain_required: false
+  when_confirmation_missing: ask_Human_directly_then_continue_after_clear_answer
+  replay_rule: >-
+    Persist a compact confirmation record only when a later window or endpoint must
+    replay the fact. The record is evidence of the Human answer, not a new authority
+    hierarchy.
 
-# Publication transports. The matrix itself, with the per-transport gates, lives
-# in 01_os/开发入口与单窗口任务规范_v1.md section 1.1; this list exists so that an
-# unknown transport fails closed even for a reader that never reaches that file.
+big_task_confirmation_closure:
+  required_before_dispatch: true
+  dispatcher_must_enumerate_known_confirmation_bound_actions: true
+  covered_actions_must_not_be_reasked_during_execution: true
+  unexpected_new_confirmation_bound_action: ask_immediately_then_continue_after_clear_answer
+  unexpected_semantic_choice: Human_decision_required_not_authorization
+  historical_finding_cannot_create_permission_gate: true
+
+legacy_compatibility:
+  Human_task_authority_v2: readable_when_historical_message_references_it
+  task_authority_delegation_v2: readable_when_historical_message_references_it
+  new_ordinary_task_must_create_legacy_authority_artifacts: false
+  plaintext_task_code: neither_required_nor_stored
+
+# One prohibition remains absolute because its cost is structural rather than a
+# question of trust or confirmation. Every domain repository shares an ancestor
+# with core; rewriting core history breaks mergeability for the whole family.
+core_history_rewrite: prohibited_regardless_of_confirmation
+
 recognized_transports:
   - local_git
   - github_api_connector
   - github_cli
 unknown_transport: blocked
 
-# Never stored here: tokens, credentials, key material, or any claim of identity
-# that the repository itself would have to take on faith.
 never_stored:
   - credentials_or_tokens
   - key_files
-  - self_declared_model_identity_as_proof
+  - plaintext_authorization_codes
+  - task_nonces_for_ordinary_execution
+  - self_declared_model_identity_as_scope_or_confirmation

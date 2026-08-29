@@ -75,6 +75,14 @@ Read `task_id`, sender and expected-recipient endpoint IDs and task roles from t
 current task manifest and endpoint cards, and read the next sequence from the
 sender index. Never hardcode or infer any endpoint, role, task ID or sequence.
 
+An ordinary formal handoff does **not** require a Human task-authority artifact,
+a task code, a nonce or a recipient delegation chain. `authorization_ref` and
+`recipient_delegation_ref` are compatibility/protected-action fields, not default
+start gates. The task packet and exact message scope are the ordinary execution
+boundary. Historical v2 authority/delegation artifacts remain readable when an old
+message already references them; do not create them merely to dispatch new ordinary
+work.
+
 If the communication context is absent or any required field is unavailable, do
 not fabricate a formal message. Ordinary Human-facing output remains valid. Ask
 for the missing exact communication pointer only when the Human asks to establish
@@ -103,15 +111,16 @@ understanding or acceptance.
 
 The stable collaboration roles are `decision_architecture`,
 `independent_review`, `execution` and `auxiliary_mechanical`. They describe work
-function only and grant no authority. Current provider, product, surface, model
-and parameter facts must come from the model-routing preflight and appear in the
-Human-visible `receiver_setup`; do not copy a volatile model catalog into this
+function only and do not expand task scope. Current provider, product, surface,
+model and parameter facts must come from the model-routing preflight and appear in
+the Human-visible `receiver_setup`; do not copy a volatile model catalog into this
 always-on file.
 
 ## Engineering Design Principles
 
-These are design defaults, not grants of deletion, modification, or publication
-authority. Apply them only within the current task's authorized scope.
+These are design defaults, not permission to exceed the current task scope or a
+substitute for confirmation-bound protected actions. Apply them only within the
+current task scope.
 
 1. Do not preserve backward compatibility by default. When an artifact or behavior
    is obsolete, require an independent review of its removal; after that review
@@ -137,7 +146,7 @@ authority. Apply them only within the current task's authorized scope.
 
 ## Safety Rules
 
-- Do not run destructive git commands such as `git reset --hard` or `git checkout --` without explicit approval.
+- Do not run destructive git commands such as `git reset --hard` or `git checkout --` unless the current Human instruction or a recorded big-task preconfirmation explicitly covers that action; otherwise ask directly first.
 - Avoid adding unverified implementation claims to documentation.
 - A tool being available is not the same as the task allowing it. Check the two
   separately, use the narrowest permission that does the job, and fail closed on
@@ -152,8 +161,12 @@ authority. Apply them only within the current task's authorized scope.
   core-owned file is wrong in every domain that merges it.
 - Before committing, run `git status -sb`.
 - Commit related changes together with a concise message.
-- Push the current branch after successful commit when the user asks for publication.
-- Keep `master` and feature/work branches distinct unless the user asks to merge.
+- Ordinary task/source branch publication is part of in-scope execution and does not
+  require a second Human authorization. Push after successful validation when the
+  task calls for a shared completion pointer or remote handoff.
+- Keep `master` and feature/work branches distinct. Merge/publish to `master` only
+  when that exact integration is already covered by the current Human instruction or
+  a big-task preconfirmation; otherwise ask directly immediately before the action.
 - A local clone with a shell is not a shared premise. Some executors that load
   this file reach the repository only through the GitHub API or a connector: they
   can create branches, write files and update refs, but cannot read or set
@@ -165,9 +178,11 @@ authority. Apply them only within the current task's authorized scope.
   hook: bind an expected 40-character head, write with a non-force
   compare-and-swap, keep the diff inside the allowed paths, and read the
   resulting remote head back rather than assuming it. Report the value you read.
-- Publication authority itself, and which acts remain action-bound even under the
-  widest Human grant, are in `01_os/05_registry/repository_publisher_authority_v1.yml`. A provider
-  name authorizes nothing there — it is text the caller writes about itself.
+- Ordinary publication scope and the small confirmation-bound action set are in
+  `01_os/05_registry/repository_publisher_authority_v1.yml`. A provider name expands
+  neither task scope nor confirmation coverage. Clear current Human confirmation is
+  sufficient when a protected action is actually confirmation-bound; no authorization
+  code or nonce is required.
 
 ## Test And Review Expectations
 
