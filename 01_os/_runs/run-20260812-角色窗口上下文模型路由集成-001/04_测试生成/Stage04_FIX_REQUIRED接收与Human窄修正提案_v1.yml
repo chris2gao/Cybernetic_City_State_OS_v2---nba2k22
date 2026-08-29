@@ -1,0 +1,126 @@
+schema_version: citystate.stage04.fix_required_adjudication.v1
+task_id: os-v2-role-window-context-model-routing-integration-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+stage: workflow_stage_04_test_generation
+status: awaiting_explicit_Human_narrow_correction_authorization
+created_at: '2026-08-12'
+
+physical_binding:
+  branch: dev/os-v2-role-window-context-model-routing-integration-001
+  reviewed_package_commit: ef76b7812bd2b091ebbf7644d3396cad69bcd753
+  independent_review_commit: 3aa32088e60ac80ad1afbad9a530231c03e937db
+  master_basis: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  independent_review_primary_diff_scope: one_file_under_stage04_independent_acceptance_review
+
+foreground_adjudication:
+  independent_review_verdict: FIX_REQUIRED
+  accepted: true
+  stage05_entry: blocked
+  stage01_invalidated: false
+  stage02_invalidated: false
+  stage03_invalidated: false
+  stage04_action: narrow_reopen_after_Human_gate
+  frozen_package_may_be_edited_now: false
+  reason: >-
+    The independent review identifies defects in the frozen acceptance definition itself: one
+    Human-confirmed A11 requirement is omitted, several checks overconstrain naming or optional
+    design choices, several lexical/structural checks reject conforming representations, and the
+    validator-probe staging topology can reject a valid cross-mechanism composition. These are
+    Stage04 test-definition defects, not Stage02/03 evidence/result invalidation.
+
+accepted_blockers:
+  - id: ST04-IR-001
+    disposition: must_fix
+    correction: >-
+      Add an ownership-aware A11 negative check that rejects a second mutable model catalog in
+      workflow or the stable entry while allowing thin pointers/invocation of model_routing.
+  - id: ST04-IR-002
+    disposition: must_fix
+    correction: >-
+      Fresh-versus-reentry remains mandatory. Do not require the exact token forked_successor.
+      A successor/fork mode may be represented when implemented, but tests must judge its semantics
+      only if present unless a later Human-confirmed requirement makes it mandatory.
+  - id: ST04-IR-003
+    disposition: must_fix
+    correction: >-
+      Remove exact role_contract.v/window_contract.v/handoff_contract.v token naming as the sole
+      discovery mechanism. Discover semantic contract roles through a naming-neutral declared
+      artifact-kind/boot/registry binding or equivalent semantic declaration, and include a
+      conforming alternate-schema-name probe.
+  - id: ST04-IR-004
+    disposition: must_fix
+    correction: >-
+      Make prohibition/autonomy/quota/retention scans polarity- and structure-aware; scope provider
+      independence to normative role bindings rather than provenance text; accept equivalent YAML
+      list/mapping forms where A does not constrain representation. Add conforming false-positive
+      probes including *_prohibited: true and *_disabled: true shapes.
+  - id: ST04-IR-005
+    disposition: must_fix
+    correction: >-
+      Run RW-T37..RW-T42 mechanism-validator probes against the full candidate tree or a complete
+      boot-declared dependency closure, so valid dependencies on context_management/model_routing/
+      communication_system do not make the unmutated baseline fail. Preserve zero-before/nonzero-after
+      fail-closed semantics.
+  - id: ST04-IR-006
+    disposition: must_fix
+    correction: >-
+      Apply the same source-of-truth/per-role-attribute discrimination to Markdown role-table
+      detection as to YAML; add a role-like model/stage applicability table that must remain conforming.
+
+retained_tests_or_findings:
+  RW_T06:
+    verdict: valid
+    correction_required: false
+    future_implementation_boundary_must_include: 01_os/02_boot/context_management/启动清单_v1.yml
+  runtime_behavior_degradation_to_contract_checks:
+    verdict: valid
+    correction_required: false
+  RW_T30_scope_limited_to_T2_mechanism_indexing:
+    verdict: valid_nonblocking
+    correction_required: false
+  historical_commit_BOM:
+    verdict: nonblocking_no_history_rewrite
+    correction_required: false
+
+correction_constraints:
+  Human_gate_required_before_frozen_test_edit: true
+  allowed_after_gate:
+    - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/04_tests.yml
+    - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/实现/**
+    - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/fixtures/**
+    - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/测试设计说明_v*.md
+    - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/freeze_receipt_v2.yml
+  preserve_immutable_history:
+    - 04_测试生成/freeze_receipt_v1.yml
+    - 04_测试生成/独立接收审核/Stage04冻结测试包独立接收裁决_v1.yml
+  prohibited:
+    - canonical_mutation
+    - modify_A
+    - modify_Stage02
+    - modify_B
+    - master_publication
+    - force_push
+    - rebase
+    - squash
+    - amend
+    - history_rewrite
+  new_package_requirements:
+    - artifact_version_must_increment
+    - new_normalized_digest_required
+    - package_and_selftest_must_pass
+    - current_repository_must_remain_preimplementation_red_except_preservation_checks
+    - conforming_fixture_must_not_depend_on_B_names
+    - all_six_independent_review_blockers_must_have_regression_or_counterexample_coverage
+    - RW_T06_semantics_retained
+    - fresh_independent_acceptance_review_required_before_stage05
+
+upstream_invalidation:
+  stage01: false
+  stage02: false
+  stage03: false
+  rationale: accepted evidence and B remain feasible; the defects are in how Stage04 froze observability and representation.
+
+next_gate:
+  owner: Human
+  required_authorization: explicit_narrow_Stage04_frozen_package_correction
+  no_test_edit_before_gate: true

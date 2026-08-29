@@ -1,0 +1,40 @@
+schema_version: citystate.registry.v1
+registry_id: window_role_binding_v1
+mechanism_version: 1
+entries:
+  - path: 01_os/03_mechanisms/window_role_binding/**
+    purpose: canonical role contract, formal window contract, handoff contract and composition validator
+    loader: 01_os/06_execution/boot/window_role_binding/README.md
+    loader_class: in_repo_program
+    discovery: referenced from the window-role-binding boot manifest
+    evidence: 01_os/02_boot/window_role_binding/boot_v1.yml
+    cache_dirs: []
+    failure_surfacing: next explicit window preflight or validator run
+    deletion_rule: protected
+  - path: 01_os/02_boot/window_role_binding/**
+    purpose: load order, version, failure policy and receipt fields for the composition mechanism
+    loader: OS bootstrap when a formal task opens a working window
+    loader_class: host_application
+    discovery: canonical pointer from the development entry specification
+    evidence: 01_os/02_boot/window_role_binding/boot_v1.yml
+    cache_dirs: []
+    failure_surfacing: next window boot
+    deletion_rule: protected
+  - path: 01_os/06_execution/boot/window_role_binding/**
+    purpose: explicit loader, validator invocation and fail-closed behaviour
+    loader: Human or authorized task executor
+    loader_class: external_tool_convention
+    discovery: referenced from registry and boot documentation
+    evidence: 01_os/06_execution/boot/window_role_binding/README.md
+    cache_dirs: []
+    failure_surfacing: next explicit window preflight
+    deletion_rule: protected
+  - path: 01_os/05_registry/window_role_binding_v1.yml
+    purpose: registration and failure-surfacing declaration for the composition mechanism
+    loader: 01_os/06_execution/boot/window_role_binding/README.md
+    loader_class: in_repo_program
+    discovery: referenced from the window-role-binding boot manifest
+    evidence: 01_os/02_boot/window_role_binding/boot_v1.yml
+    cache_dirs: []
+    failure_surfacing: next validator run
+    deletion_rule: protected

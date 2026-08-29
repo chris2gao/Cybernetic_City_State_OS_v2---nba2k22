@@ -1,0 +1,223 @@
+schema_version: citystate.stage04.independent_acceptance_review.v1
+task_id: os-v2-role-window-context-model-routing-integration-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+reviewed_stage: workflow_stage_04_test_generation
+review_date: '2026-08-12'
+
+verdict: FIX_REQUIRED
+completion_marker: stage04_t2_independent_review_fix_required
+stage05_entry_authorized_by_this_review: false
+
+reviewer:
+  provider: OpenAI
+  surface: Codex Desktop
+  requested_route: GPT-5.6 Sol
+  exact_runtime_model_and_reasoning_setting: not_observable_from_review_session
+  different_model_family_from_test_designer: true
+  test_designer: Claude Opus 5 / Cowork
+  test_designer_private_context_received: false
+  host_session_freshness_proof: not_observable
+  independence_basis: >-
+    This review reconstructed the result from the frozen primary files and executable
+    package. The freeze receipt was read only as an input claim and was not used as proof.
+
+physical_binding:
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  branch: dev/os-v2-role-window-context-model-routing-integration-001
+  remote_master_fresh_read: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  remote_branch_head_at_review_start: 0df1f6c281e6f8f2f4cb80f0d59443b517f5d1ad
+  primary_diff_base: c354ddfec7607408766a52a7fccbdf6084f1bbb8
+  primary_diff_candidate: ef76b7812bd2b091ebbf7644d3396cad69bcd753
+  primary_diff_commit_count: 1
+  candidate_is_current_branch_ancestor: true
+  master_basis_is_current_branch_ancestor: true
+  primary_diff_changed_path_count: 14
+  primary_diff_scope_verdict: passed_all_paths_under_current_run_stage04
+  primary_diff_excluded_later_foreground_commits: true
+  commit_subject_utf8_bom: historical_non_blocking_no_rewrite
+
+independent_reproduction:
+  package_validation:
+    status: passed
+    exit_code: 0
+    observed_test_count: 42
+    observed_digest: d4fd85889a73e8dd313065e355290992cbf166fa6034420efe9f9c68974996e1
+  normalized_digest_recomputation:
+    status: passed
+    value: d4fd85889a73e8dd313065e355290992cbf166fa6034420efe9f9c68974996e1
+    method: package command recomputed normalized payload with the frozen canonical normalization
+  current_repository_acceptance:
+    status: passed_expected_red
+    command_exit_code_with_expect_red: 0
+    green: 3
+    total: 42
+    green_ids: [RW-T31, RW-T32, RW-T33]
+  full_repository_selftest_attempts:
+    status: timed_out_before_result
+    attempts:
+      - timeout_seconds: 120
+        exit_code: 124
+      - timeout_seconds: 300
+        exit_code: 124
+    interpretation: >-
+      The harness copies the full repository history for every mutation. These timeouts are
+      performance observations, not substituted pass evidence.
+  active_os_surface_selftest:
+    status: passed
+    exit_code: 0
+    source_tree: >-
+      The same reviewed commit's root discipline plus complete active workflow, boot,
+      mechanism, registry, execution and _dev surfaces, together with the exact run-001
+      through run-009 context-validator dependencies; unrelated historical _runs traffic
+      was excluded only to remove repeated copy cost.
+    good_tree_green: 42
+    good_tree_total: 42
+    mutations_killed: 42
+    mutations_total: 42
+    empty_tree_boundary: passed
+    mechanism_without_boot_or_registry_boundary: passed
+    context_management_validator_direct_check: passed
+  primary_diff_check:
+    status: passed
+    exit_code: 0
+
+required_semantic_verdicts:
+  test_derived_from_A_and_stage02_evidence: failed
+  B_overfit: present
+  mechanism_directory_name_frozen: false
+  canonical_filename_names_frozen: false
+  schema_document_kind_names_frozen: true
+  RW_T06: RW-T06_valid
+  RW_T06_reason: >-
+    A01 requires one canonical role source, while the current context boot actively loads
+    _dev/决定_谁执行_v0.2.md for a role purpose. Once the new canonical role contract exists,
+    retaining that active pointer creates a second role source. Removing or redirecting the
+    role-purpose pointer is ownership cleanup and does not redesign context-management stale,
+    layout or lifecycle semantics.
+  mutation_selftest_adequacy: insufficient_for_acceptance_despite_42_of_42_killed
+  mechanism_validator_probes_are_real_process_checks: true
+  runtime_behavior_claims_honestly_degraded_to_contract_checks: true
+  frozen_digest: d4fd85889a73e8dd313065e355290992cbf166fa6034420efe9f9c68974996e1
+
+blocking_findings:
+  - id: ST04-IR-001
+    severity: blocking
+    title: RW-T31 omits A11 model-catalog thinness on a false physical premise
+    evidence:
+      - 01_需求建模/requirement/A_需求建模_v1.yml#A11
+      - 04_测试生成/测试设计说明_v1.md#有意不覆盖的部分
+      - 01_os/开发入口与单窗口任务规范_v1.md#7.1
+      - 04_测试生成/实现/verify_stage04_acceptance.py#t31
+    finding: >-
+      A11 explicitly prohibits a second mutable model catalog in workflow or the stable entry.
+      The design note excludes that check because it says entry section 7.1 still contains the
+      old model tier table. On the frozen candidate's actual base, section 7.1 is already the thin
+      model-routing preflight and explicitly says the entry does not copy the catalog. RW-T31
+      therefore leaves an A11 violation able to pass for a premise contradicted by the reviewed tree.
+    required_fix: Add an ownership-aware negative test that rejects a second mutable model catalog in workflow or entry without rejecting pointers to model_routing.
+
+  - id: ST04-IR-002
+    severity: blocking
+    title: RW-T08 turns a permissive Stage02 option and B preference into a mandatory exact mode
+    evidence:
+      - 01_需求建模/requirement/A_需求建模_v1.yml#A02
+      - 02_信息收集与提炼/evidence/证据索引_v1.yml#E-003
+      - 03_结果建模/B_结果模型_v1.yml#B05
+      - 04_测试生成/实现/verify_stage04_acceptance.py#ENTRY_MODES
+      - 04_测试生成/fixtures/mutations_v1.yml#M08
+    finding: >-
+      A02 requires fresh-versus-reentry classification but does not require a third mode named
+      forked_successor. E-003 says lifecycle may model a forked successor; it does not make that
+      representation mandatory. The harness requires the exact token forked_successor and M08
+      kills a mere rename to forked_child. This is a literal/B-shaped requirement, not an A-level
+      semantic defect.
+    required_fix: Either remove the mandatory third mode or bind it to a new Human-confirmed requirement; if retained, test successor semantics rather than the exact token.
+
+  - id: ST04-IR-003
+    severity: blocking
+    title: Exact schema-version tokens freeze naming despite the naming-neutral claim
+    evidence:
+      - 04_测试生成/实现/verify_stage04_acceptance.py#TOKEN_ROLE
+      - 04_测试生成/实现/verify_stage04_acceptance.py#Tree.mech
+      - 04_测试生成/测试设计说明_v1.md#测试从哪里推导
+    finding: >-
+      Directory and filename choices are genuinely variable, but discovery only recognizes a
+      mechanism when schema_version contains the exact English substrings role_contract.v,
+      window_contract.v and handoff_contract.v prefixed by the directory name. A semantically
+      equivalent contract using another registered schema naming convention is invisible to all
+      42 checks. The package therefore freezes document-kind naming even though A does not.
+    required_fix: Discover contract roles through boot/registry-declared artifact kinds or another naming-neutral semantic binding, and add a conforming alternate-schema probe.
+
+  - id: ST04-IR-004
+    severity: blocking
+    title: Highlighted lexical checks reject compliant negative declarations
+    evidence:
+      - 04_测试生成/实现/verify_stage04_acceptance.py#key_positions
+      - 04_测试生成/实现/verify_stage04_acceptance.py#t19
+      - 04_测试生成/实现/verify_stage04_acceptance.py#t25
+      - 04_测试生成/实现/verify_stage04_acceptance.py#t34
+      - 04_测试生成/实现/verify_stage04_acceptance.py#t35
+      - 04_测试生成/实现/verify_stage04_acceptance.py#t36
+    finding: >-
+      RW-T34..T36 treat every truthy key whose name contains an autonomy, quota or retention token
+      as enabled. Compliant forms such as automatic_task_progression_prohibited:true,
+      quota_probe_prohibited:true or retention_policy_disabled:true are false positives.
+      RW-T25 only recognizes a list-of-field-names representation under a prohibited key and rejects
+      an equivalent mapping representation. RW-T19 scans every scalar in the role document, so a
+      provenance/evidence citation naming a provider is rejected even when no role pins that provider.
+      The mutations cover enabled fixture keys, not these conforming counterexamples.
+    required_fix: Make the scans polarity- and structure-aware, scope provider checks to normative role bindings, and add conforming false-positive probes for alternate YAML shapes.
+
+  - id: ST04-IR-005
+    severity: blocking
+    title: RW-T37 through RW-T42 overconstrain validator dependency topology
+    evidence:
+      - 01_需求建模/requirement/A_需求建模_v1.yml#A10
+      - 04_测试生成/实现/verify_stage04_acceptance.py#stage_mechanism_surface
+      - 04_测试生成/实现/verify_stage04_acceptance.py#probe_mech_validator
+    finding: >-
+      The six probes do execute the mechanism's declared validator and correctly require baseline
+      zero followed by non-zero after an injected defect. However, they stage only the new mechanism,
+      its boot/loader and registry. A valid composition validator that resolves or calls the existing
+      context_management/model_routing contracts or validators can fail the unmutated isolated
+      baseline because those declared dependencies are absent. A10 permits and encourages those
+      references, so the probe topology rejects a valid implementation choice.
+    required_fix: Run the validator against a full candidate tree, or stage its complete boot-declared dependency closure before injecting each defect.
+
+  - id: ST04-IR-006
+    severity: blocking
+    title: RW-T05 documented dual-condition protection is incomplete for Markdown
+    evidence:
+      - 04_测试生成/测试设计说明_v1.md#词法扫描的假阳性边界
+      - 04_测试生成/实现/verify_stage04_acceptance.py#markdown_role_table
+      - 04_测试生成/实现/verify_stage04_acceptance.py#yaml_role_table
+    finding: >-
+      YAML role-table detection requires role concepts plus per-role attributes, but Markdown
+      detection only counts role concepts in a table's first column. The design note claims the
+      dual condition generally. A boot-loaded model-routing applicability table with three role-like
+      rows can therefore be mistaken for a second canonical role source.
+    required_fix: Apply the same per-role-attribute/source-of-truth discrimination to Markdown and add a model-catalog or stage-profile counterexample.
+
+non_blocking_findings:
+  - id: ST04-IR-N01
+    statement: The primary diff is clean and isolated; the candidate commit subject BOM is historical only and must not be amended or rewritten.
+  - id: ST04-IR-N02
+    statement: RW-T06 is valid and Stage05/06 planning must include 01_os/02_boot/context_management/启动清单_v1.yml in the authorized implementation boundary.
+  - id: ST04-IR-N03
+    statement: Runtime-only behavior is honestly marked as unavailable before Stage06 and downgraded to declaration/contract checks; no runtime proof is claimed.
+  - id: ST04-IR-N04
+    statement: The 42/42 mutation result proves the declared mutations are detectable, not that the test package is semantically complete; this limitation is correctly stated by the designer.
+  - id: ST04-IR-N05
+    statement: RW-T30 appropriately limits itself to discovery of the T2 mechanism and does not import unrelated pre-existing index drift into this task.
+
+stage05_boundary_implication:
+  status: blocked_pending_revised_stage04_package_and_fresh_independent_acceptance
+  required_future_implementation_path_if_RW_T06_retained: 01_os/02_boot/context_management/启动清单_v1.yml
+  canonical_write_authorized_by_this_review: false
+  master_write_authorized_by_this_review: false
+
+next_owner:
+  role: Stage04_test_designer_or_foreground_for_Human_gated_test_correction
+  required_action: >-
+    Revise the frozen package under the repository's Human-gated correction rule, then obtain a
+    new independent acceptance review before Stage05.

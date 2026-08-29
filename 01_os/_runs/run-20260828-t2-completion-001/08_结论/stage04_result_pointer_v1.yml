@@ -1,0 +1,72 @@
+schema_version: citystate.stage04.result_pointer.v1
+pointer_id: T2-COMPLETION-STAGE04-RESULT-001
+task_id: os-v2-t2-completion-001
+run_id: run-20260828-t2-completion-001
+produced_by_endpoint_id: claude-cowork-t2-completion-executor-001
+produced_by_task_role: parent_t2_completion_implementation_executor
+collaboration_role: execution
+status: refrozen_ready_for_fresh_relationship_isolated_parent_stage04_review
+
+work_performed_or_requested: >-
+  Bind the parent Stage04 candidate to exact Git refs and hand it to the reserved
+  independent review as one addressable object.
+
+implementation_or_review_method: >-
+  Every ref below was read from Git in the session that produced it. The freeze receipt
+  was validated by the package's own validator against externally supplied SHAs, and the
+  suites were run with their own unmodified runners with exit codes observed.
+
+stage04_candidate_binding:
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  branch: dev/os-v2-t2-completion-001
+  lineage_base: 3002d6177779abf81e6d476bfc434ee5d6dbe3c8
+  correction003_candidate: 9c50a4fe56b12c1add15967a5515785e8e6fb760
+  p2_2_implementation: a1d376c0fb857759080e5bbe733ef4df9f1f7415
+  frozen_candidate: 4ce3e09e8c75881165f7705ab3a0398a4d3acf9c
+  accepted_structural_provenance_source: 7cf9195715dcc7aa34bd09a8bc0f8320415f3930
+  master_at_publication: c149ae626d63d3818c110d5a29972c32d083f350
+  master_modified: false
+
+artifacts:
+  freeze_receipt: 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/freeze_receipt_v4.yml
+  refreeze_report: 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/03_validation/refreeze_report_v1.yml
+  decision_provenance: 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/01_semantic_binding/decision_provenance_v4.yml
+  requirement_trace: 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/01_semantic_binding/requirement_trace_v4.yml
+  test_inventory: 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/02_acceptance/04_tests_v4.yml
+  correction003_candidate_record: 01_os/_runs/run-20260828-t2-completion-001/08_结论/correction003_replacement_candidate_v1.yml
+  p2_2_execution_evidence: 01_os/_runs/run-20260828-t2-completion-001/07_测试执行/p2_2_execution_evidence_v1.yml
+
+authority_chain:
+  human_task_authority: TA-os-v2-t2-completion-001-v1
+  human_decision: D-T2-COMPLETION-002-HUMAN-CORR003-ACCEPT-AND-BIG-TASK
+  execution_delegation: Human/delegations/00003_claude_big_completion.yml
+  entered_via_pointer: ca5a3cb5dcd290b98f063c02984e761a30baf02d
+  adjudications_applied:
+  - FG-T2-COMPLETION-BLK-001-R1
+  - FG-T2-COMPLETION-BLK-002-R2
+  - FG-T2-COMPLETION-BLK-003-R3
+
+measured_state:
+  vendored_baseline_suite: {result: 65/65, exit_code: 0}
+  v4_suite: {result: 57/57, exit_code: 0}
+  freeze_receipt_validation: valid
+  changed_paths_in_freeze_scope: 27
+  artifact_hash_entries: 83
+  worktree_clean_at_publication: true
+  freeze_scope_note: >-
+    The receipt is bound to frozen_candidate 4ce3e09e, whose tree it hashes in full. The
+    commit that carries the receipt is later and touches nothing under the artifact root,
+    so the full_candidate_tree claim holds at HEAD. An earlier receipt bound to a1d376c0
+    was rejected on readback because the refreeze report had since been added to the
+    tree; that finding is recorded in the refreeze report rather than quietly corrected.
+
+what_this_pointer_does_not_claim:
+- parent Stage04 PASS. Not claimed, and the executor is forbidden to claim it.
+- independent acceptance of anything. No reviewer artifact exists for this task.
+- that the three foreground adjudications were correct. They were applied faithfully;
+  a green suite cannot detect a wrong ruling.
+- that the four blocks_freeze findings are resolved. They are disclosed, not closed.
+
+next_owner: fresh_relationship_isolated_parent_stage04_independent_review
+reserved_reviewer_capacity: Codex large task, per Human/current.yml
+stage05_entry: blocked_until_that_review_passes

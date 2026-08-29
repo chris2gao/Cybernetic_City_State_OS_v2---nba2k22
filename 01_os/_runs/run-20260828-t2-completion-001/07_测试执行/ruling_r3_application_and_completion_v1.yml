@@ -1,0 +1,102 @@
+schema_version: citystate.run_evidence.v1
+run_id: run-20260828-t2-completion-001
+task_id: os-v2-t2-completion-001
+produced_by_endpoint_id: claude-cowork-t2-completion-executor-001
+collaboration_role: execution
+round: 4
+applies_ruling: FG-T2-COMPLETION-BLK-003-R3
+ruling_ref: >-
+  baf0a393bfabe192142dac0e4c48f655f050992c:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-t2-completion-001/documents/gpt56-t2-completion-foreground-001/00004_r3_s23_permissions_structural_ruling.yml
+entered_from_head: c01789c91608702564335a82e686bc2673b6d264
+
+work_performed_or_requested: >-
+  Apply the R3 adjudication - role_contract_v1 gains structural coverage for the
+  nested permissions region - and re-run the inherited v3 and v4 suites to establish
+  whether the last coverage hole closes without exposing a new signature.
+
+implementation_or_review_method: >-
+  Added exactly the two adjudicated container rules and nothing else. Left the fixed
+  seven/fourteen result-vector assertions untouched, since R3 states they are doing
+  the work of exposing the hole. Ran both runners unmodified, captured process exit
+  codes, and then ran the whole thing a second time and hashed the v4 output to
+  distinguish a stable pass from a one-off.
+
+supportability_rationale: >-
+  The edit is the ruling's own two selectors placed at the schema position the parser
+  reads. The pass claim rests on two independent runs whose v4 output is byte-identical
+  by SHA-256, on observed process exit codes, and on an empty failing set - not on a
+  single green summary line.
+
+feasibility_rationale: >-
+  R3's closure was representable as two rules in the existing binding schema, so no
+  parser, adapter, vocabulary, fixture or test change was needed, and the inherited
+  suites could decide the question directly.
+
+change_applied:
+  file: 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/02_acceptance/实现/semantic_acceptance/structural_binding_v1.yml
+  profile: role_contract_v1
+  added:
+  - selector: [roles, "*", permissions]
+    child_keys: instance_identity
+  - selector: [roles, "*", permissions, "*"]
+    child_keys: declaration_name
+  scoped_exactly_to: permissions
+  generic_nested_authority_inference_added: false
+  unrelated_profiles_widened: false
+  arity_assertions_changed: false
+  source_files_modified: 0
+  adapters_or_vocabulary_modified: 0
+  fixtures_or_tests_modified: 0
+  upstream_branch_modified: false
+
+regressions_after_R3:
+  run_1:
+    vendored_baseline_tests: {result: 65/65 passed, process_exit_code: 0}
+    v4_tests: {result: 29/29 passed, process_exit_code: 0}
+  run_2_repeat:
+    vendored_baseline_tests: {result: 65/65 passed, process_exit_code: 0}
+    v4_tests: {result: 29/29 passed, process_exit_code: 0}
+  repeatability:
+    v4_output_sha256_run_1: 650D6A847A4540E6688759262C487497F026A0BCDDBD03C35EBEAA925D2DB1CE
+    v4_output_sha256_run_2: 650D6A847A4540E6688759262C487497F026A0BCDDBD03C35EBEAA925D2DB1CE
+    identical: true
+  worktree_residue_lines: 1
+  residue_explanation: the single intended modification to structural_binding_v1.yml
+
+failing_set_transition:
+  before_R3: 2
+  after_R3: 0
+  fixed_by_R3:
+  - test_v4_reviewer_replay.test_A_control_really_ran_seven_predicates
+  - test_v4_reviewer_replay.test_B_v4_returns_fourteen_predicates_for_every_case
+  newly_failing: 0
+  new_primary_signature: none
+
+full_v4_trajectory:
+  parent_baseline_3002d617: 29/29
+  after_capability_transfer: 15/29
+  after_R1: 22/29
+  after_R2: 27/29
+  after_R3: 29/29
+  note: >-
+    The suite returns to the parent baseline figure, but not to the parent baseline
+    state: it is now 29/29 with evaluator-owned structural provenance in place, which
+    the parent checkpoint did not have at all.
+
+what_this_does_and_does_not_prove:
+- The four rounds of binding additions close every coverage hole the inherited suites
+  can see, reproducibly, with observed exit code 0 on both suites.
+- The v3 suite stayed at 65/65 through all four rounds, so no round regressed the
+  accepted baseline.
+- It does not prove the 29 v4 tests pass for the intended reason rather than
+  incidentally; only that they pass and that the output is stable.
+- It does not prove anything about Stage04 gates outside these two suites.
+- These are executor measurements. They are construction evidence. They are NOT
+  independent acceptance, and correction-003 PASS is not claimed by this file.
+
+residual_risk_or_unproved_limits:
+- Repeatability was measured across two runs in one session on one machine; it is not
+  a cross-environment reproducibility claim.
+- The suites were run on Windows only. No Linux measurement was taken this round.
+- Each ruling was applied as written; the executor did not independently re-derive the
+  four adjudications and does not vouch for them beyond faithful application.

@@ -1,0 +1,1324 @@
+{
+  "corpus": "successor_v4_metamorphic_and_adversarial",
+  "fixture_root": "02_acceptance/fixtures/baseline_v4",
+  "evaluator": "semantic_acceptance_v4.evaluate_v4.evaluate_full",
+  "invariants": {
+    "total": 17,
+    "holding": 17,
+    "property_families": [
+      "container-shape invariance",
+      "mention-vs-declaration distinction",
+      "negative-vs-positive polarity correctness",
+      "ordering invariance",
+      "region-scope correctness",
+      "representation-neutrality",
+      "synonym-not-spelling"
+    ],
+    "cases": [
+      {
+        "name": "V4MT01",
+        "property_id": "container-shape invariance",
+        "description": "minimum effective context inside a transparent wrapper",
+        "expectation": "invariant",
+        "holds": true,
+        "moved": {},
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        }
+      },
+      {
+        "name": "V4MT02",
+        "property_id": "container-shape invariance",
+        "description": "lifecycle inside a transparent wrapper",
+        "expectation": "invariant",
+        "holds": true,
+        "moved": {},
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        }
+      },
+      {
+        "name": "V4MT03",
+        "property_id": "container-shape invariance",
+        "description": "lifecycle states as an in-contract list-of-records",
+        "expectation": "invariant",
+        "holds": true,
+        "moved": {},
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        }
+      },
+      {
+        "name": "V4MT04",
+        "property_id": "ordering invariance",
+        "description": "lifecycle states and invalidation conditions reversed",
+        "expectation": "invariant",
+        "holds": true,
+        "moved": {},
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        }
+      },
+      {
+        "name": "V4MT05",
+        "property_id": "container-shape invariance",
+        "description": "derivation inputs as a list of single-key mappings",
+        "expectation": "invariant",
+        "holds": true,
+        "moved": {},
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        }
+      },
+      {
+        "name": "V4MT06",
+        "property_id": "container-shape invariance",
+        "description": "load set entries as records rather than scalars",
+        "expectation": "invariant",
+        "holds": true,
+        "moved": {},
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        }
+      },
+      {
+        "name": "V4MT07",
+        "property_id": "container-shape invariance",
+        "description": "route receipt required fields as a mapping",
+        "expectation": "invariant",
+        "holds": true,
+        "moved": {},
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        }
+      },
+      {
+        "name": "V4MT08",
+        "property_id": "container-shape invariance",
+        "description": "failure states as records",
+        "expectation": "invariant",
+        "holds": true,
+        "moved": {},
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        }
+      },
+      {
+        "name": "V4MT09",
+        "property_id": "mention-vs-declaration distinction",
+        "description": "inert descriptive metadata beside every v4 region",
+        "expectation": "invariant",
+        "holds": true,
+        "moved": {},
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        }
+      },
+      {
+        "name": "V4MT10",
+        "property_id": "negative-vs-positive polarity correctness",
+        "description": "equivalent closed-negative spellings of the same prohibition",
+        "expectation": "invariant",
+        "holds": true,
+        "moved": {},
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        }
+      },
+      {
+        "name": "V4MT11",
+        "property_id": "container-shape invariance",
+        "description": "invalidation conditions as an in-contract list of records",
+        "expectation": "invariant",
+        "holds": true,
+        "moved": {},
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        }
+      },
+      {
+        "name": "V4MT12",
+        "property_id": "container-shape invariance",
+        "description": "invalidation conditions as a list of single-entry mappings",
+        "expectation": "invariant",
+        "holds": true,
+        "moved": {},
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        }
+      },
+      {
+        "name": "V4MT13",
+        "property_id": "representation-neutrality",
+        "description": "invalidation conditions as bare names resolved by an explicit definitions block",
+        "expectation": "invariant",
+        "holds": true,
+        "moved": {},
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        }
+      },
+      {
+        "name": "V4MT14",
+        "property_id": "synonym-not-spelling",
+        "description": "condition slot positions and observation role spelled by synonym",
+        "expectation": "invariant",
+        "holds": true,
+        "moved": {},
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        }
+      },
+      {
+        "name": "V4MT15",
+        "property_id": "container-shape invariance",
+        "description": "derivation inputs as a list of pairs",
+        "expectation": "invariant",
+        "holds": true,
+        "moved": {},
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        }
+      },
+      {
+        "name": "V4MT16",
+        "property_id": "container-shape invariance",
+        "description": "derivation inputs as a bare list of field names",
+        "expectation": "invariant",
+        "holds": true,
+        "moved": {},
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        }
+      },
+      {
+        "name": "V4MT17",
+        "property_id": "region-scope correctness",
+        "description": "an A-required derivation input declared as a structured record rather than a scalar",
+        "expectation": "invariant",
+        "holds": true,
+        "moved": {},
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        }
+      }
+    ]
+  },
+  "differences": {
+    "total": 25,
+    "holding": 25,
+    "attack_classes": [
+      "absence_is_not_a_pass",
+      "determinism_required",
+      "double_negation",
+      "exactness_required",
+      "ownership_separation",
+      "poisoned_vocabulary",
+      "polarity_inversion"
+    ],
+    "predicates_probed": [
+      "P06",
+      "P21",
+      "P22",
+      "P23",
+      "P24",
+      "P25",
+      "P26",
+      "P27"
+    ],
+    "cases": [
+      {
+        "name": "V4PV01",
+        "attack_class": "poisoned_vocabulary",
+        "description": "unfamiliar stale-effect token in a normative position",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P23"
+        ],
+        "deciding_results": {
+          "P23": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "fail",
+          "P22": "pass",
+          "P23": "fail",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P21(fail): continuation condition is not a typed determinism fact: lifecycle.invalidation_conditions.context_dependency_fingerprint_changed (unresolved: consequence), lifecycle.invalidation_conditions.task_branch_or_head_changed (unresolved: consequence), lifecycle.invalidation_conditions.authorization_ref_changed (unresolved: consequence)",
+          "P23(fail): trigger effect is neither a fresh read nor a stale status: lifecycle.invalidation_conditions.context_dependency_fingerprint_changed -> UNKNOWN, lifecycle.invalidation_conditions.task_branch_or_head_changed -> UNKNOWN, lifecycle.invalidation_conditions.authorization_ref_changed -> UNKNOWN"
+        ]
+      },
+      {
+        "name": "V4PV02",
+        "attack_class": "poisoned_vocabulary",
+        "description": "unfamiliar route-receipt authority constant",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P24"
+        ],
+        "deciding_results": {
+          "P24": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "fail",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P24(fail): receipt model_route_binding authority is not routing_only"
+        ]
+      },
+      {
+        "name": "V4PV05",
+        "attack_class": "poisoned_vocabulary",
+        "description": "unfamiliar on-failure behaviour",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P27"
+        ],
+        "deciding_results": {
+          "P27": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "fail"
+        },
+        "nonpass": [
+          "P27(fail): failure case does not fail visibly: failure_states.unknown_role_reference (invalid_role), failure_states.missing_or_duplicate_window_id (missing_window_identity), failure_states.task_branch_or_head_mismatch (binding_mismatch)"
+        ]
+      },
+      {
+        "name": "V4PL01",
+        "attack_class": "polarity_inversion",
+        "description": "default preload of all runs permitted instead of prohibited",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P22"
+        ],
+        "deciding_results": {
+          "P22": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "fail",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P22(fail): default preload is enabled: minimum_effective_context.default_preload_of_all_runs@self"
+        ]
+      },
+      {
+        "name": "V4PL02",
+        "attack_class": "polarity_inversion",
+        "description": "historical run preload allowed",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P22"
+        ],
+        "deciding_results": {
+          "P22": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "fail",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P22(fail): default preload is enabled: minimum_effective_context.historical_run_preload@self"
+        ]
+      },
+      {
+        "name": "V4PL03",
+        "attack_class": "polarity_inversion",
+        "description": "same-window review permitted",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P25"
+        ],
+        "deciding_results": {
+          "P25": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "fail",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P25(fail): self-review is described but never rejected; a note is not a machine-checkable gate"
+        ]
+      },
+      {
+        "name": "V4PL04",
+        "attack_class": "polarity_inversion",
+        "description": "mixed deny/permit preload policy with a positive permission",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P22"
+        ],
+        "deciding_results": {
+          "P22": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "fail",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "fail",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "fail",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P05(fail): authority granted: minimum_effective_context.preload_policy.permitted@[0], minimum_effective_context.preload_policy.permitted[0]@self",
+          "P22(fail): default preload is enabled: minimum_effective_context.preload_policy@permitted[0]",
+          "P26(fail): composition copies upstream mutable semantics: minimum_effective_context.preload_policy copies context_management (2 entries)"
+        ]
+      },
+      {
+        "name": "V4PL05",
+        "attack_class": "polarity_inversion",
+        "description": "background progression enabled",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P06"
+        ],
+        "deciding_results": {
+          "P06": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "fail",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P06(fail): autonomous behaviour enabled: lifecycle.background_progression@self"
+        ]
+      },
+      {
+        "name": "V4DN01",
+        "attack_class": "double_negation",
+        "description": "preload declared not_prohibited",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P22"
+        ],
+        "deciding_results": {
+          "P22": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "fail",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P22(fail): default preload is enabled: minimum_effective_context.default_preload_of_all_runs@self"
+        ]
+      },
+      {
+        "name": "V4DN02",
+        "attack_class": "double_negation",
+        "description": "same-window review declared not_prohibited",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P25"
+        ],
+        "deciding_results": {
+          "P25": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "fail",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P25(fail): self-review is described but never rejected; a note is not a machine-checkable gate"
+        ]
+      },
+      {
+        "name": "V4DN03",
+        "attack_class": "double_negation",
+        "description": "background progression declared not_disabled",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P06"
+        ],
+        "deciding_results": {
+          "P06": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "fail",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P06(fail): autonomous behaviour enabled: lifecycle.background_progression@self"
+        ]
+      },
+      {
+        "name": "V4AB01",
+        "attack_class": "absence_is_not_a_pass",
+        "description": "an A-required lifecycle state removed",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P21"
+        ],
+        "deciding_results": {
+          "P21": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "fail",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P21(fail): lifecycle does not declare A-required state role(s): ['stale_or_invalidated']"
+        ]
+      },
+      {
+        "name": "V4AB02",
+        "attack_class": "absence_is_not_a_pass",
+        "description": "invalidation conditions emptied",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P21"
+        ],
+        "deciding_results": {
+          "P21": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "fail",
+          "P22": "pass",
+          "P23": "fail",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P21(fail): no condition governs when a window can no longer continue on cached context",
+          "P23(fail): no change trigger is declared; absence is not an invalidation rule"
+        ]
+      },
+      {
+        "name": "V4AB04",
+        "attack_class": "exactness_required",
+        "description": "unbounded subtree entry added to the load set",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P22"
+        ],
+        "deciding_results": {
+          "P22": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "fail",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P22(fail): load set entry is not exact: minimum_effective_context.load_set.entries[5]"
+        ]
+      },
+      {
+        "name": "V4AB05",
+        "attack_class": "absence_is_not_a_pass",
+        "description": "an A-required derivation input removed",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P22"
+        ],
+        "deciding_results": {
+          "P22": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "fail",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P22(fail): context derivation does not declare A-required input(s): ['role']"
+        ]
+      },
+      {
+        "name": "V4AB06",
+        "attack_class": "absence_is_not_a_pass",
+        "description": "the whole context contract document deleted",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P22"
+        ],
+        "deciding_results": {
+          "P22": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "fail",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P22(fail): no minimum-effective-context derivation contract is declared"
+        ]
+      },
+      {
+        "name": "V4AB07",
+        "attack_class": "absence_is_not_a_pass",
+        "description": "every field carrying two A-required receipt concepts removed",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P24"
+        ],
+        "deciding_results": {
+          "P24": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "fail",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P24(fail): receipt model_route_binding does not carry A-required concept(s): ['availability_assumption', 'limitations']"
+        ]
+      },
+      {
+        "name": "V4AB08",
+        "attack_class": "absence_is_not_a_pass",
+        "description": "the independence region removed",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P25"
+        ],
+        "deciding_results": {
+          "P25": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "fail",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P25(fail): no declaration states what happens when obvious self-review is detected"
+        ]
+      },
+      {
+        "name": "V4AB09",
+        "attack_class": "absence_is_not_a_pass",
+        "description": "failure states emptied",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P27"
+        ],
+        "deciding_results": {
+          "P27": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "fail"
+        },
+        "nonpass": [
+          "P27(fail): the validation design declares no failure case"
+        ]
+      },
+      {
+        "name": "V4AB10",
+        "attack_class": "ownership_separation",
+        "description": "owner's derivation rules restated locally instead of referenced",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P26"
+        ],
+        "deciding_results": {
+          "P26": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "pass",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "fail",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P26(fail): composition copies upstream mutable semantics: minimum_effective_context.derivation_rules copies context_management (5 entries)"
+        ]
+      },
+      {
+        "name": "V4AB11",
+        "attack_class": "determinism_required",
+        "description": "A-named triggers kept, their conditions written as prose",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P21"
+        ],
+        "deciding_results": {
+          "P21": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "fail",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P21(fail): continuation condition is not a typed determinism fact: lifecycle.invalidation_conditions.context_dependency_fingerprint_changed (unresolved: subject, observation), lifecycle.invalidation_conditions.task_branch_or_head_changed (unresolved: subject, observation), lifecycle.invalidation_conditions.authorization_ref_changed (unresolved: subject, observation)"
+        ]
+      },
+      {
+        "name": "V4AB12",
+        "attack_class": "determinism_required",
+        "description": "a condition declaring a comparison with no subject",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P21"
+        ],
+        "deciding_results": {
+          "P21": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "fail",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P21(fail): continuation condition is not a typed determinism fact: lifecycle.invalidation_conditions.authorization_ref_changed (unresolved: subject)"
+        ]
+      },
+      {
+        "name": "V4AB13",
+        "attack_class": "determinism_required",
+        "description": "a condition whose observation is an unrecognised word",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P21"
+        ],
+        "deciding_results": {
+          "P21": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "fail",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P21(fail): continuation condition is not a typed determinism fact: lifecycle.invalidation_conditions.authorization_ref_changed (unresolved: observation)"
+        ]
+      },
+      {
+        "name": "V4AB14",
+        "attack_class": "determinism_required",
+        "description": "a cadence declared where a comparison belongs",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P21"
+        ],
+        "deciding_results": {
+          "P21": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "fail",
+          "P22": "pass",
+          "P23": "pass",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P21(fail): continuation condition is not a typed determinism fact: lifecycle.invalidation_conditions.approximately_every_few_hours (unresolved: observation)"
+        ]
+      },
+      {
+        "name": "V4AB15",
+        "attack_class": "determinism_required",
+        "description": "the declared stale consequence is to continue from cache",
+        "expectation": "difference",
+        "deciding_predicates": [
+          "P21"
+        ],
+        "deciding_results": {
+          "P21": "fail"
+        },
+        "overall": "fail",
+        "holds": true,
+        "vector": {
+          "P01": "pass",
+          "P02": "pass",
+          "P03": "pass",
+          "P04": "pass",
+          "P05": "pass",
+          "P06": "pass",
+          "P07": "pass",
+          "P21": "fail",
+          "P22": "pass",
+          "P23": "fail",
+          "P24": "pass",
+          "P25": "pass",
+          "P26": "pass",
+          "P27": "pass"
+        },
+        "nonpass": [
+          "P21(fail): continuation condition is not a typed determinism fact: lifecycle.invalidation_conditions.context_dependency_fingerprint_changed (unresolved: consequence), lifecycle.invalidation_conditions.task_branch_or_head_changed (unresolved: consequence), lifecycle.invalidation_conditions.authorization_ref_changed (unresolved: consequence)",
+          "P23(fail): trigger effect is neither a fresh read nor a stale status: lifecycle.invalidation_conditions.context_dependency_fingerprint_changed -> continue_cached, lifecycle.invalidation_conditions.task_branch_or_head_changed -> continue_cached, lifecycle.invalidation_conditions.authorization_ref_changed -> continue_cached"
+        ]
+      }
+    ]
+  },
+  "open_holes": {
+    "total": 2,
+    "false_pass": 0,
+    "declared_but_unread": 2,
+    "cases": [
+      {
+        "name": "V4OB01",
+        "finding_id": "V4-OBS-01",
+        "kind": "declared_but_unread",
+        "description": "exactness.entry_form replaced by an unfamiliar token",
+        "predicate": "P22",
+        "expected_by_requirement": "A04",
+        "observed_status": "pass",
+        "overall": "pass",
+        "still_open": true,
+        "why_it_matters": "Not a false pass against A04: A04 requires the load set to BE exact, and after this transformation every entry still is. The observation is that `exactness.entry_form` and `unbounded_subtree_entry` read as decision-bearing declarations but are never consumed - the judgement is made per entry from the path itself. Recorded so a reader does not assume those fields are enforced."
+      },
+      {
+        "name": "V4OB02",
+        "finding_id": "V4-OBS-02",
+        "kind": "declared_but_unread",
+        "description": "route receipt missing_or_stale_or_inconsistent set to best_effort",
+        "predicate": "P24",
+        "expected_by_requirement": "A07 and A12",
+        "observed_status": "pass",
+        "overall": "pass",
+        "still_open": true,
+        "why_it_matters": "Not a false pass against A07, which requires the receipt to CARRY the A-stated concepts with routing_only authority and says nothing about stale-receipt behaviour. A12 - visible failure rather than silent fallback - is arguably engaged, and 'best_effort' matches nothing in SILENT_FALLBACK_TOKENS. Whether A12 reaches this field is a semantic question, so it is reported rather than decided here."
+      }
+    ],
+    "meaning": "transformations that SHOULD be caught and are not. This package is not sound while a false_pass entry remains open; the suite being green means the description is accurate, not that the holes are closed."
+  },
+  "open_invariance_holes": {
+    "total": 0,
+    "root_cause_class": "RC-01",
+    "cases": [],
+    "meaning": "representation changes with no change of meaning that move a predicate. All are false FAILs, so nothing nonconforming is admitted by them, but a predicate that only works on the fixture's spelling is syntactic, not semantic."
+  },
+  "total": 42,
+  "holding": 42,
+  "suite_green_does_not_mean_package_sound": "Two false-pass holes (V4-FND-02, V4-FND-03) and four invariance holes (V4-FND-02, V4-FND-04) are open. The suite is green because it describes them accurately, not because they are closed."
+}

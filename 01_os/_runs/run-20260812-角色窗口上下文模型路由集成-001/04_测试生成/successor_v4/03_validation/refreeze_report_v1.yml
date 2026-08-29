@@ -1,0 +1,131 @@
+schema_version: citystate.stage04.refreeze_report.v1
+task_id: os-v2-t2-completion-001
+run_id: run-20260828-t2-completion-001
+supersedes_freeze: 04_测试生成/freeze_receipt_v3.yml
+this_freeze: 04_测试生成/freeze_receipt_v4.yml
+produced_by_endpoint_id: claude-cowork-t2-completion-executor-001
+collaboration_role: execution
+authority_effect: none
+
+work_performed_or_requested: >-
+  Refreeze the parent Stage04 candidate after the correction-003 replacement and the
+  P2-2 chain, and state exactly what changed since freeze v3 and what remains open.
+
+implementation_or_review_method: >-
+  The receipt was built by the package's own build_receipt over the candidate's whole
+  tree and then validated by its own validate_receipt against externally supplied base
+  and candidate SHAs. Nothing the receipt says about itself was taken as establishing
+  anything.
+
+exact_binding:
+  base_sha: 3002d6177779abf81e6d476bfc434ee5d6dbe3c8
+  candidate_sha: c733726f02fe61989d167370e30ae8b5df00a478
+  p2_2_implementation_sha: a1d376c0fb857759080e5bbe733ef4df9f1f7415
+  accepted_structural_provenance_source: 7cf9195715dcc7aa34bd09a8bc0f8320415f3930
+  correction003_accepted_candidate: 9c50a4fe56b12c1add15967a5515785e8e6fb760
+  topology: full_candidate_tree
+  changed_path_count: 27
+  artifact_hash_entries: 83
+  receipt_validation: valid
+  receipt_validation_failures: []
+
+a_second_finding_the_topology_check_caught:
+  what: >-
+    The receipt was first written against candidate a1d376c0, then this report was added
+    to the tree in the following commit. The post-publication readback rejected the
+    committed receipt: `unhashed=['03_validation/refreeze_report_v1.yml']`. The receipt
+    claimed the whole tree while the tree had grown by one file underneath it.
+  why_it_matters: >-
+    Both suites passed and the worktree was clean at every point. Nothing except the
+    receipt's own topology check could see that the freeze no longer covered what it
+    said it covered. This is the second time in one round that the check found something
+    no other gate could.
+  action: >-
+    The receipt was regenerated against candidate c733726f, the commit that contains
+    this report, and now covers 83 artifact entries over 27 changed paths. The receipt
+    file itself lives outside the artifact root, so the commit carrying the regenerated
+    receipt does not change the artifact tree and the topology claim stays true.
+  recorded_because: >-
+    the sequencing error was the executor's, and a freeze whose defect was found by
+    readback rather than by construction is worth the reviewer knowing about.
+
+what_changed_since_freeze_v3:
+- >-
+  The accepted structural-provenance capability was transferred onto the parent
+  checkpoint: five files, each verified by git hash-object against its source blob.
+  Four remain byte-identical to that source; structural_binding_v1.yml has since been
+  extended by three foreground rulings and no longer is.
+- >-
+  Three foreground adjudications were applied to the evaluator-owned binding:
+  FG-T2-COMPLETION-BLK-001-R1, -002-R2 and -003-R3. Every one of them was returned to
+  the foreground as a question rather than chosen by the executor.
+- >-
+  P2-2 items 1 to 5 were built: adapter applicability negatives, receipt tamper battery,
+  the combined decision-provenance audit, the requirement trace and the test inventory.
+- >-
+  The decision provenance ledger was corrected from 76 rules to 128. The v4 half's 52
+  rules - the ones deciding P21 to P27 - had never been in it.
+
+measured_gates:
+  vendored_baseline_suite: {result: 65/65 passed, exit_code: 0}
+  v4_suite: {result: 57/57 passed, exit_code: 0}
+  v4_suite_before_this_task: 29/29
+  decision_provenance: {rule_count: 128, untraced: 0}
+  requirement_trace: {criteria: 14, with_deciding_predicate: 14, untested: 0}
+  test_inventory: {modules: 15, tests: 122}
+
+a_finding_the_topology_check_caught:
+  what: >-
+    The first freeze attempt failed with `full_candidate_tree hash scope does not equal
+    the artifact tree`, naming 34 .pyc files under four __pycache__ directories.
+  why_it_matters: >-
+    `git status --porcelain -uall` reported a clean worktree throughout, because those
+    files are ignored. Git-clean and tree-clean are not the same property, and only the
+    topology check could see the difference. A freeze receipt written without that check
+    would have declared a tree it did not cover.
+  action: the untracked bytecode caches were removed; none was tracked; the receipt was regenerated and validates.
+
+still_open_and_carried_into_review:
+  freeze_blocking_findings_not_independently_accepted:
+  - V4-FND-01
+  - V4-FND-02
+  - V4-FND-03
+  - V4-FND-04
+  note: >-
+    All four carry blocks_freeze true. Per V4-FND-01's own text, that flag stays true
+    until a reviewer who did not write the fix has read the primary evidence, and fresh
+    independent acceptance AFTER freeze remains mandatory. They are disclosed here and
+    named for the reviewer to re-attack, which is what freeze_receipt_v3 did with its own
+    open items. Freezing is not accepting.
+  observations_awaiting_foreground_ruling: [V4-OBS-01, V4-OBS-02, V4-OBS-03]
+  interaction_the_reviewer_should_see_first: >-
+    V4-FND-01 is freeze-blocking specifically because the package's central safety claim
+    is that the vendored engine is untouched and that claim rests on byte-identity alone.
+    This task modified structural_binding_v1.yml inside that vendored package under
+    foreground ruling. The byte-identity half of that claim now has a documented,
+    adjudicated exception, and the reviewer should have it up front.
+  independence_waiver: >-
+    The narrow independent correction-003 review was waived by current Human decision
+    D-T2-COMPLETION-002. No reviewer artifact exists. The foreground that issued rulings
+    R1 to R3 also performed the review the acceptance rests on, so author and verifier of
+    those rulings are the same endpoint. Disclosed per entry spec section 9.
+
+external_closure:
+  complete: false
+  reason: >-
+    The receipt's own bytes cannot be observed in Git before the commit that contains
+    them, so this validation supplied base and candidate SHAs but no ObservedExecution.
+    A post-publication verification against the committed blob is recorded separately.
+  checked_bindings: [base_sha, candidate_sha]
+
+next_gate:
+  required: fresh_relationship_isolated_parent_Stage04_acceptance
+  reviewer_must_reattack:
+  - the four blocks_freeze findings, none of which has been independently read
+  - the three foreground adjudications, which the executor applied but did not judge
+  - the vendored-engine byte-identity claim and its adjudicated exception
+  - whether the new P2-2 tests prove what their names say
+  stage05_entry: blocked_until_that_review_passes
+  executor_self_acceptance: prohibited_and_not_claimed
+
+completion_marker: stage04_t2_v4_refrozen_awaiting_fresh_relationship_isolated_acceptance

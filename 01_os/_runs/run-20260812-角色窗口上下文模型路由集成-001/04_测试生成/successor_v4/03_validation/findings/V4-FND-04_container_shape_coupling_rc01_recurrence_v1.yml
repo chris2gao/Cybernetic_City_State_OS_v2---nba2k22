@@ -1,0 +1,208 @@
+schema_version: citystate.stage04.successor_finding.v1
+finding_id: V4-FND-04
+task_id: os-v2-stage04-successor-acceptance-refreeze-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+raised_by: claude-cowork-stage04-successor-tail-executor-002
+raised_at: '2026-08-15'
+reconciled_by: claude-cowork-stage04-successor-tail-executor-003
+reconciled_at: '2026-08-16'
+document_status: ruled_partially_retracted_and_implemented_pending_independent_acceptance
+authority_effect: none
+blocks_freeze: true
+class: representation_coupling
+root_cause_class: RC-01
+
+title: >-
+  One of three filed manifestations was a real representation-coupling defect in
+  the v4 adapters. The other two were this project's own test error: they used a
+  container form that is outside the accepted equivalence contract.
+
+# ---------------------------------------------------------------------------
+# Reconciliation, 2026-08-16
+# ---------------------------------------------------------------------------
+
+reconciliation:
+  why_this_file_changed: >-
+    The 08affd commit message retracted manifestations a and c, but this finding
+    file and the corpus hole table still carried all three as open. Code,
+    findings and hole tables disagreed about what was open. Dispatch 00009
+    required that disagreement resolved before new semantic code. Resolved here
+    and in `corpus_v4.OPEN_INVARIANCE_HOLES`, which is now empty.
+  severity_correction: >-
+    The filed severity argument said RC-01 had reappeared in the successor's own
+    new adapters across four containers. Measurement does not support that
+    breadth. One container was genuinely affected, for a reason specific to what
+    that container IS rather than to shape-blind traversal, and two of the three
+    demonstrations were invalid. The remaining defect is real and was worth
+    finding; the claim that the adapter layer had wholesale reintroduced RC-01
+    is withdrawn.
+  what_survives_verbatim: >-
+    The direction of every manifestation (false FAIL, the safe direction) and the
+    principle that a predicate which only works when the candidate uses the
+    fixture's spelling is syntactic wearing a semantic label.
+
+the_equivalence_contract_this_turns_on:
+  primitive: semantic_acceptance.core.normalize_keyed_collection
+  id_field_tokens: [mode_id, entry_mode, role_id, id, name, key, kind, mode, role, label]
+  admitted_equivalent_forms:
+    - "{a: {...}, b: {...}}                 mapping of mappings"
+    - "[{id: a, ...}, {id: b, ...}]         list of records declaring identity"
+    - "[[a, {...}], [b, {...}]]             list of pairs"
+    - "[{a: {...}}, {b: {...}}]             list of single-entry mappings"
+    - "[a, b]                               list of bare identifiers"
+  measured_2026_08_16: >-
+    All three in-contract forms of `lifecycle.states` - [{id: X}], [{X: {}}] and
+    [[X, {}]] - produce byte-identical v4 facts and move no predicate, on the
+    adapter as it stood at 08affd. The equivalence the finding demanded already
+    held for the forms the contract actually covers.
+
+manifestations:
+  - id: V4-FND-04-a
+    case_id: V4MT03
+    predicate: P21
+    requirement: A03
+    status: RETRACTED_executor_test_error
+    filed_transformation: >-
+      lifecycle.states from a list of scalars to a list of single-key records
+      keyed "state"
+    why_retracted: >-
+      `state` is not in COLLECTION_ID_FIELD_TOKENS, so `[{state: X}, {state: Y}]`
+      is not a list of identity-declaring records. It is a list of single-entry
+      mappings whose key is literally "state", and every entry therefore keys the
+      same collection slot: the collection collapses to one entry named "state",
+      which maps to no lifecycle role. declared_state_count 5 -> 1, unmapped
+      0 -> 1, exactly as observed. The ACCEPTED engine does the same thing with
+      its own containers in that form, so the behaviour is the contract, not a
+      v4 deviation from it.
+    ruling_basis: >-
+      F04-A_REFINED: "before claiming an equivalence case prove that the form is
+      within the accepted equivalence contract" and "if a tested form is not in
+      that contract, reclassify the test, not the candidate."
+    disposition: >-
+      the corpus case now runs the in-contract [{id: X}] form as an ordinary
+      invariant (INVARIANTS V4MT03) and moves no predicate
+
+  - id: V4-FND-04-b
+    case_id: V4MT05
+    predicate: P22
+    requirement: A04
+    status: REAL_DEFECT_CLOSED
+    filed_transformation: >-
+      minimum_effective_context.derivation_inputs from one mapping to a list of
+      single-key mappings
+    filed_observation:
+      before: {input_roles: [approved_refs, role, stage_step, task]}
+      after: {input_roles: [approved_refs, stage_step, task]}
+      predicate: {P22: "pass -> fail"}
+    the_asymmetry_the_finding_asked_to_have_explained: >-
+      Three of four keys survived the list form and `role` did not, so the
+      traversal was not simply shape-blind. The finding said whoever fixed this
+      should explain that rather than replace the traversal and assume the
+      asymmetry went with it. The explanation:
+
+      `derivation_inputs` is a FIELD-to-VALUE record, not a keyed collection of
+      ENTITIES. `normalize_keyed_collection` is correct for the latter and lets a
+      record declare its own identity through COLLECTION_ID_FIELD_TOKENS. That
+      list contains `role_id` - the very field name A R04 asks for. So
+      `{role_id: required}` was read as an entity whose identity is "required",
+      the field name was consumed as an identity carrier rather than kept as a
+      field, and the `role` derivation-input role vanished. `task_id`,
+      `workflow_stage_id`, `workflow_step_id` and `approved_reference_set` are
+      not id-field tokens, so they fell to the single-entry branch and kept their
+      names. That is the whole asymmetry, and it is a property of the field
+      names, not of the container.
+    second_root_cause_same_manifestation:
+      name: over-broad load-entry region scoping
+      mechanism: >-
+        LOAD_SET_REGION_TOKENS contains the bare token `set`. A conforming
+        contract may declare the A-required input `approved_reference_set` as a
+        structured record rather than the bare scalar `required` - more detail,
+        identical meaning. The load-set sub-region locator then found that record
+        first, claimed it as the derived load set, and emitted a REQUIREMENT leaf
+        as a load ENTRY.
+      measured_before_fix:
+        transformation: "derivation_inputs.approved_reference_set -> {required: true, source: task_packet}"
+        emitted_load_entry: minimum_effective_context.derivation_inputs.approved_reference_set.source
+        exact: false
+        predicate: {P22: "pass -> fail"}
+      note: >-
+        Reproduced independently on 2026-08-16 by this execution instance rather
+        than inherited from the checkpoint's commit message. The message asserted
+        it; nothing in the corpus demonstrated it until now.
+    implementation:
+      - >-
+        `_normalize_field_mapping` in adapters_v4.py reduces the four admitted
+        field-mapping shapes to the same field names, WITHOUT the entity-identity
+        rule that does not apply to a field mapping. Container-shape
+        normalization is not abandoned; the shape being normalized is corrected.
+      - >-
+        `_subregion` gained a `not_under` barrier so a sub-region locator cannot
+        descend THROUGH a sibling declared region. The load-set locator now
+        refuses to enter `derivation_inputs`. Narrowing the token list was
+        rejected: any token shared between two locators reproduces the collision,
+        so the fix is structural rather than lexical.
+    now_measured:
+      - "derivation inputs as single-entry mappings: input_roles = [approved_refs, role, stage_step, task], no predicate moves"
+      - "derivation inputs as pairs: no predicate moves"
+      - "derivation inputs as a bare list of field names: no predicate moves"
+      - "structured approved_reference_set: 5 load entries, none non-exact, no predicate moves"
+    corpus_position: INVARIANTS V4MT05, V4MT15, V4MT16, V4MT17
+
+  - id: V4-FND-04-c
+    case_id: V4MT08
+    predicate: P27
+    requirement: A12
+    status: RETRACTED_executor_test_error
+    filed_transformation: >-
+      failure_states from a list of scalars to a list of single-key records
+      keyed "case"
+    why_retracted: >-
+      Same reason as -04-a. `case` is not in COLLECTION_ID_FIELD_TOKENS, so
+      `[{case: X}]` is a single-entry mapping keyed "case" and the collection
+      collapses. Measured on the in-contract [{id: X}] form: 7 failure-case facts
+      before and after, no predicate moves.
+    disposition: corpus case now runs the in-contract form as INVARIANTS V4MT08
+
+ruling:
+  option: F04-A_REFINED
+  ruled_by: foreground-stage04-successor-dispatch-001
+  ruled_at: '2026-08-15'
+  ruling_ref: documents/foreground-stage04-successor-dispatch-001/00008_F02_F03_F04_blocker_rulings.yml
+  implemented: true
+  vendored_bytes_changed: 0
+  vendored_suite_after: 65/65 passed, exit 0, separate interpreter
+
+measured_evidence:
+  measured_at: '2026-08-16'
+  measured_by: claude-cowork-stage04-successor-tail-executor-003
+  runtime: CPython 3.14.6, PyYAML 6.0.3
+  base_tree: 02_acceptance/fixtures/baseline_v4
+  baseline_control: 14 of 14 pass before any transformation
+  method: >-
+    each transformation applied to a fresh copy of the conforming fixture; the
+    produced v4 fact lists and the full fourteen-predicate vector read directly,
+    so the fact-level effect is observed rather than inferred from the verdict
+  independence: >-
+    fresh execution session, not independent acceptance; same collaboration role
+    and same model family as the executor that wrote the code being measured
+
+what_this_does_not_claim:
+  - the other v4 adapters were not each probed with every in-contract form
+  - no claim that the two retracted forms are the only out-of-contract forms a candidate might use
+  - implementation-green is not acceptance
+
+related_observation_raised_during_this_reconciliation:
+  id: V4-OBS-03
+  summary: >-
+    The IN-contract `[{name: {}}]` form of `failure_states` moves accepted P02
+    and v4 P24. Measured in an isolated interpreter with semantic_acceptance_v4
+    never imported, the ACCEPTED engine alone also moves P02. It therefore sits
+    in the vendored accepted package, outside this task's write boundary, and is
+    reported rather than fixed.
+  file: 03_validation/findings/V4-OBS-03_in_contract_single_entry_form_moves_accepted_predicates_v1.yml
+
+next_owner:
+  role: foreground_stage04_successor_dispatch
+  required_action: >-
+    read back the partial retraction and the closure evidence; the finding stays
+    open until a fresh independent acceptance reviews it

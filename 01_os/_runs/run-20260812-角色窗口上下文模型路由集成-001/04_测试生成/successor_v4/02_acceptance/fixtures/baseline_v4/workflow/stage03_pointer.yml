@@ -1,0 +1,14 @@
+schema_version: workflow.stage_pointer.v1
+stage: 03_结果建模
+purpose: >-
+  A thin workflow pointer. It invokes the composition mechanism and references
+  the model catalog by path and by field name. It owns no role semantics and
+  restates no catalog identifier, which is exactly what A11 asks for.
+role_source_ref: mechanism/roles_v1.yml
+model_catalog_ref: model_routing/catalog_v1.yml
+model_catalog_fields_referenced:
+  - model_label
+  - product_surface
+  - parameter_profile
+route_receipt_ref: mechanism/windows_v1.yml
+example_identifier_mentioned_singly: GPT-5.6 Terra

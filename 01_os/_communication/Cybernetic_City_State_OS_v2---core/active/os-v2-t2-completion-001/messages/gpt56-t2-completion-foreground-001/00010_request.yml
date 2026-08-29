@@ -1,0 +1,74 @@
+message_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00010
+task_id: os-v2-t2-completion-001
+title: Fresh parent Stage04 acceptance review of frozen successor 628dd60e
+message_type: request
+sender_endpoint_id: gpt56-t2-completion-foreground-001
+sender_task_role: foreground_t2_completion_coordinator
+expected_recipient_endpoint_id: codex-t2-parent-stage04-reviewer-002
+expected_recipient_task_role: parent_stage04_independent_acceptance_reviewer
+content: Perform a fresh relationship-isolated parent Stage04 acceptance review of
+  exact frozen successor 628dd60e3505516254bf37956bcde5fb93c2723a at exact publication
+  head 8be63c167b16882cf0136d668c86e5e6796be30c. Reconstruct the acceptance contract
+  from primary repository evidence, rerun inherited suites and persisted IR regressions,
+  reattack the four defect families with independent variants, inspect V4-FND-01 through
+  V4-FND-04 and V4-OBS-01, audit the successor freeze / provenance / result-pointer
+  chain, and publish exactly PASS, FIX_REQUIRED or BLOCKED. Do not modify the candidate
+  or implementation branch.
+required_refs:
+- Human/task_authority_v2.yml
+- Human/delegations/00006_codex_parent_stage04_successor_review.yml
+- role_context/gpt56-t2-completion-foreground-001.yml
+- role_context/codex-t2-parent-stage04-reviewer-002.yml
+requested_action: independently_review_parent_stage04_exact_successor_candidate_628dd60e3505516254bf37956bcde5fb93c2723a
+authorization_ref: Human/delegations/00006_codex_parent_stage04_successor_review.yml
+recipient_delegation_ref: Human/delegations/00006_codex_parent_stage04_successor_review.yml
+facts:
+  work_performed_or_requested: Independently accept or reject the exact successor
+    after the prior parent review found four material false-green defects and Claude
+    constructed a forward correction.
+  implementation_or_review_method: Use a fresh Codex session detached at exact publication
+    head, prove exact candidate topology first, independently rerun v3/v4 and persisted
+    IR tests, then design new adversarial probes against the defect families and inspect
+    primary finding evidence.
+  supportability_rationale: Foreground GitHub preflight verified the exact successor/refreeze/result
+    topology and found no freeze-mechanics blocker. Executor greenness remains only
+    construction evidence; the previous green candidate was independently rejected,
+    so fresh review is load-bearing.
+  feasibility_rationale: All required primary evidence is present at immutable Git
+    refs and the reviewer has a fresh isolated read-only execution lane with local
+    files and GitHub access.
+  frozen_successor_candidate: 628dd60e3505516254bf37956bcde5fb93c2723a
+  publication_head: 8be63c167b16882cf0136d668c86e5e6796be30c
+  previous_frozen_candidate: 4ce3e09e8c75881165f7705ab3a0398a4d3acf9c
+  previous_independent_FIX_REQUIRED: 5f4520dd123ba634b1082f3ac7dbb6284a79849c
+  foreground_preflight_ref: documents/gpt56-t2-completion-foreground-001/00007_successor_628dd60e_preflight_and_review_routing.md
+  result_pointer_ref: ../../../../_runs/run-20260828-t2-completion-001/08_结论/stage04_result_pointer_v2.yml
+constraints:
+- prove exact 628dd60e candidate and 8be63c16 publication head before any test conclusion
+- do not inherit reviewer-001 private reasoning or verdict; its durable artifacts
+  are evidence only
+- reattack IR-001 through IR-004 at family level, not only the persisted exact witnesses
+- source-audit all document-wide v4 semantic claim selectors for structural provenance
+  gating
+- independently adjudicate R6 context_contract_v1 and window context_binding structural
+  rules
+- independently read V4-FND-01 through V4-FND-04 and V4-OBS-01 from primary evidence
+- audit 130-rule decision provenance, requirement trace, inventory, freeze receipt,
+  refreeze and result pointer
+- no candidate, implementation-branch or master edits
+- no fixing findings inside review
+- no treating executor greenness, repeatability, persisted regressions or foreground
+  preflight as PASS
+- verdict must be exactly PASS, FIX_REQUIRED or BLOCKED and exact-ref bound
+- no Stage05, canonical implementation, master write, force, rebase, squash, amend
+  or history rewrite
+- no redelegation or automatic progression
+risks:
+- IR-001 may still have an unconverted seventh semantic claim path reached by a different
+  traversal pattern
+- A12 policy may still false-pass through absent, unknown, conflicting, inverted or
+  alternate non-fail-closed forms
+- a structurally convenient binding profile may overclaim ownership even if the baseline
+  stays green
+- V4-FND-01 through V4-FND-04 were carried forward without prior independent reading
+  and remain acceptance-critical

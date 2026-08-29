@@ -1,0 +1,400 @@
+schema_version: citystate.stage04.independent_acceptance_review.v3
+task_id: os-v2-role-window-context-model-routing-integration-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+reviewed_stage: workflow_stage_04_test_generation
+reviewed_artifact_version: 3
+review_date: '2026-08-12'
+
+verdict: FIX_REQUIRED
+completion_marker: stage04_t2_v3_independent_review_fix_required
+pass_completion_marker_emitted: false
+pass_completion_marker_reserved: stage04_t2_v3_independently_accepted_for_stage05
+stage05_entry_authorized_by_this_review: false
+
+reviewer:
+  provider_family: OpenAI
+  surface: Codex Desktop
+  exact_runtime_model: not_observable_from_review_session
+  exact_reasoning_setting: not_observable_from_review_session
+  different_model_family_from_correction_author: true
+  correction_author: Claude Opus 5 / Cowork
+  correction_author_private_context_received: false
+  host_session_freshness_proof: not_observable
+  review_context: fresh_independent_session
+  independence_basis: >-
+    The reviewer reconstructed the package from the exact primary diff, A,
+    Human confirmation, Stage02 evidence and conclusion, B, both earlier
+    independent review packages, both Human correction authorizations, the
+    round-2 proposal and dispatch, and the executable frozen package. The
+    freeze receipt, foreground check, mutation score, conforming score and
+    executor conclusions were treated as claims rather than proof.
+
+physical_binding:
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  transport: local_git
+  worktree: E:/newStand/study/_wt_t2_stage04
+  branch: dev/os-v2-role-window-context-model-routing-integration-001
+  remote_master_fresh_read_at_review_start: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  remote_branch_head_fresh_read_at_review_start: 526a3007beb23e71903b488ab156f25841affc92
+  local_head_after_fast_forward: 526a3007beb23e71903b488ab156f25841affc92
+  corrected_package_primary_diff:
+    base: 236e7c52c06804d58324c1113e007cb4608088f7
+    candidate: afad6fdd79e51aaae89e5517b29561d763049a8d
+    commit_count: 1
+    candidate_parent: 236e7c52c06804d58324c1113e007cb4608088f7
+    changed_path_count: 6
+    changed_paths:
+      - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/04_tests.yml
+      - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/fixtures/mutations_v3.yml
+      - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/fixtures/overlay/01_os/03_mechanisms/window_role_binding/impl/check_binding.py
+      - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/freeze_receipt_v3.yml
+      - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/实现/verify_stage04_acceptance.py
+      - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/测试设计说明_v3.md
+    scope_verdict: passed_all_paths_inside_Human_authorized_round2_boundary
+    frozen_primary_files_changed_after_candidate: []
+  separate_retry_budget_commit:
+    commit: 236e7c52c06804d58324c1113e007cb4608088f7
+    included_in_stage04_primary_diff: false
+    used_to_expand_or_narrow_stage04_verdict: false
+
+required_inputs_read:
+  - 01_需求建模/requirement/A_需求建模_v1.yml
+  - 01_需求建模/requirement/人类确认_v1.yml
+  - 02_信息收集与提炼/evidence/00_挖掘目标与领域_v1.yml
+  - 02_信息收集与提炼/evidence/01_内部证据_v1.yml
+  - 02_信息收集与提炼/evidence/02_外部检索_v1.md
+  - 02_信息收集与提炼/evidence/信源使用记录_v1.yml
+  - 02_信息收集与提炼/evidence/证据索引_v1.yml
+  - 02_信息收集与提炼/evidence/可行性判断_v1.yml
+  - 02_信息收集与提炼/evidence/边界记录_v1.yml
+  - 02_信息收集与提炼/Stage02_证据结论_v1.yml
+  - 03_结果建模/B_结果模型_v1.yml
+  - 04_测试生成/独立接收审核/Stage04冻结测试包独立接收裁决_v1.yml
+  - 04_测试生成/独立接收审核/v2/Stage04_v2独立接收裁决_v1.yml
+  - 04_测试生成/独立接收审核/v2/independent_variant_probes.py
+  - 04_测试生成/独立接收审核/v2/independent_variant_probe_results_v1.json
+  - 04_测试生成/Stage04_Human窄修正授权_v1.yml
+  - 04_测试生成/Stage04_Human窄修正授权_v2.yml
+  - 04_测试生成/Stage04_v2_FIX_REQUIRED接收与Human窄修正提案_v1.yml
+  - 04_测试生成/Stage04_第二轮窄修正派单_v3.md
+  - 04_测试生成/04_tests.yml
+  - 04_测试生成/freeze_receipt_v3.yml
+  - 04_测试生成/测试设计说明_v3.md
+  - 04_测试生成/实现/verify_stage04_acceptance.py
+  - 04_测试生成/fixtures/mutations_v3.yml
+  - 04_测试生成/fixtures/overlay/**
+
+independent_reproduction:
+  package_command:
+    exit_code: 0
+    observed: 43_tests_digest_matched
+    limitation: >-
+      The package command validates 04_tests.yml and its declared input and
+      supporting hashes but never parses freeze_receipt_v3.yml. Its green exit
+      therefore does not prove the active freeze receipt is consumable.
+  normalized_digest:
+    claimed: 3567d3409c181efd970bdeeab1952c9a2c37419b8f8401d63097653ea5781e9f
+    recomputed: 3567d3409c181efd970bdeeab1952c9a2c37419b8f8401d63097653ea5781e9f
+    matches: true
+  input_and_supporting_ref_hashes:
+    checked: 15
+    mismatches: 0
+  listed_artifact_hashes:
+    checked: 9
+    mismatches: 0
+  current_repository_baseline:
+    exit_code_without_expect_red: 1
+    green: 4
+    total: 43
+    green_ids: [RW-T31, RW-T32, RW-T33, RW-T43]
+    interpretation: expected_preimplementation_red
+  author_selftest_independently_rerun:
+    exit_code: 0
+    elapsed_seconds: 549.2
+    candidate_green: 43/43
+    declared_mutations_killed: 47/47
+    declared_conforming_variants_green: 14/14
+    proof_scope: declared_samples_only_not_semantic_completeness
+  independent_adversarial_probe:
+    script: 04_测试生成/独立接收审核/v3/independent_v3_probes.py
+    result: 04_测试生成/独立接收审核/v3/independent_v3_probe_results_v1.json
+    script_sha256: 5f257607a0b0a369b815795e98b4188a22110233f740ced2a13e9d08b7638e0f
+    result_sha256: 555984c78b5da5765790c9c31e3890412aaf9a959e27b4739151cdaa4d9310ab
+    base_candidate_green: 43/43
+    independent_variant_count: 15
+    semantically_problematic_results: 14
+    conforming_variants_rejected: 6
+    nonconforming_variants_accepted: 8
+  full_candidate_tree_validator_probe:
+    status: passed
+    independent_variant: I14_full_tree_sentinel_dependency
+    unmutated_tree_files: 1051
+    baseline_validator_exit: 0
+    injected_defect_exits_nonzero: [RW-T37, RW-T38, RW-T39, RW-T40, RW-T41, RW-T42]
+    hidden_dependency_crawler_symbols_present: false
+  freeze_receipt_strict_yaml_parse:
+    status: failed
+    first_error_line: 79
+    first_error: >-
+      An unquoted plain scalar contains the YAML-significant sequence ': ' in
+      `*_disabled: true`. Later, changed_paths also mixes sequence items with
+      mapping keys at the same indentation.
+  primary_diff_check:
+    command: git diff --check 236e7c52c06804d58324c1113e007cb4608088f7..afad6fdd79e51aaae89e5517b29561d763049a8d
+    exit_code: 0
+
+prior_blocker_readjudication:
+  ST04-IR-001:
+    status: remains_blocking
+    current_finding_refs: [ST04-V3-IR-007]
+  ST04-IR-002:
+    status: exact_third_mode_token_issue_closed_but_representation_family_remains_blocking
+    current_finding_refs: [ST04-V3-IR-003, ST04-V3-IR-004]
+  ST04-IR-003:
+    status: closed
+    judgment: >-
+      Content-first discovery no longer depends on exact directory, filename or
+      schema-version document-kind tokens. No new blocking naming defect was
+      found in this review.
+  ST04-IR-004:
+    status: remains_blocking
+    current_finding_refs: [ST04-V3-IR-002, ST04-V3-IR-005, ST04-V3-IR-008, ST04-V3-IR-009, ST04-V3-IR-010]
+  ST04-IR-005:
+    status: closed
+    judgment: >-
+      Source inspection and I14 prove that RW-T37 through RW-T42 use one full
+      candidate-tree copy, run the declared mechanism validator with baseline
+      zero and injected-defect nonzero, and retain no history dependency crawler.
+  ST04-IR-006:
+    status: remains_blocking
+    current_finding_refs: [ST04-V3-IR-006]
+  ST04-V2-IR-001:
+    status: remains_blocking
+    current_finding_refs: [ST04-V3-IR-002]
+  ST04-V2-IR-002:
+    status: remains_blocking
+    current_finding_refs: [ST04-V3-IR-003]
+  ST04-V2-IR-003:
+    status: remains_blocking
+    current_finding_refs: [ST04-V3-IR-005]
+  ST04-V2-IR-004:
+    status: remains_blocking
+    current_finding_refs: [ST04-V3-IR-006]
+  ST04-V2-IR-005:
+    status: remains_blocking
+    current_finding_refs: [ST04-V3-IR-007]
+  ST04-V2-IR-006:
+    status: closed
+    current_finding_refs: []
+
+blocking_findings:
+  - id: ST04-V3-IR-001
+    severity: blocking
+    title: The active v3 freeze receipt is invalid YAML and its path ledger is incomplete
+    evidence:
+      - 04_测试生成/freeze_receipt_v3.yml#L79
+      - 04_测试生成/freeze_receipt_v3.yml#changed_paths
+      - independent_v3_probe_results_v1.json#package_audit
+    observed: >-
+      Strict YAML parsing stops at line 79. The later changed_paths node also
+      combines a sequence with count/all_inside keys. Independently measured
+      primary diff scope is six paths, while the receipt lists and claims five,
+      omitting the receipt itself. The green package command never loads this
+      receipt. In addition, 04_tests.yml still calls the RW-T37..T42 environment
+      a boot-declared dependency closure even though the executable package uses
+      the full candidate tree.
+    impact: >-
+      The active freeze artifact is not machine-consumable and its durable scope
+      and probe-topology statements disagree with physical evidence.
+    required_fix: >-
+      Produce a valid strict-YAML receipt, record the exact six-path primary
+      diff without a self-hash recursion, make package validation load it, and
+      align every frozen topology statement with the full-candidate-tree method.
+
+  - id: ST04-V3-IR-002
+    severity: blocking
+    title: Prohibition normalization still rejects equivalent prefix and record forms
+    evidence:
+      - independent_v3_probe_results_v1.json#I01_negative_prefix_handoff_prohibitions
+      - independent_v3_probe_results_v1.json#I02_list_record_handoff_prohibitions
+      - independent_v3_probe_results_v1.json#I04_prohibited_provider_list
+    observed: >-
+      Negative-prefix handoff declarations and list-of-record declarations are
+      rejected by RW-T25. A prohibited_provider list is rejected by RW-T19 as
+      if it selected those providers. The fixture validator exits zero for all
+      three semantically conforming candidates.
+    required_fix: >-
+      Normalize positive and negative polarity across prefix, suffix, mapping,
+      list and record forms before judging the semantic field. Do not equate a
+      negative provider constraint with a normative provider selection.
+
+  - id: ST04-V3-IR-003
+    severity: blocking
+    title: Entry-mode normalization remains limited to two author-enumerated containers
+    evidence:
+      - independent_v3_probe_results_v1.json#I03_list_pair_entry_modes
+    observed: >-
+      A list of two-item mode pairs preserves fresh/reentry separation, exact
+      predecessor semantics and passes the mechanism validator, yet RW-T08 and
+      RW-T09 both reject it.
+    required_fix: >-
+      Judge the A-required fresh/reentry semantics through a representation-
+      neutral normalized view rather than a closed list of mapping and
+      list-of-record containers.
+
+  - id: ST04-V3-IR-004
+    severity: blocking
+    title: RW-T07 freezes run_id even though A R02 does not require it
+    evidence:
+      - 01_需求建模/requirement/A_需求建模_v1.yml#R02_window_identity
+      - independent_v3_probe_results_v1.json#I15_no_run_id_binding
+    observed: >-
+      Removing run_id while retaining task_id, role, stage/step and exact
+      repository entry facts leaves the mechanism validator green but makes
+      RW-T07 red. run_id is a B/fixture choice, not an A or Stage02 mandate.
+    required_fix: >-
+      Require the task, role, stage/step and repository-entry facts stated by A;
+      treat run_id as an optional project binding unless Human confirms it as a
+      requirement.
+
+  - id: ST04-V3-IR-005
+    severity: blocking
+    title: Provider-pin detection has both polarity and subtree blind spots
+    evidence:
+      - independent_v3_probe_results_v1.json#I04_prohibited_provider_list
+      - independent_v3_probe_results_v1.json#I05_resource_neighbor_provider_pin
+      - independent_v3_probe_results_v1.json#I06_unlisted_provider_pin
+    observed: >-
+      A negative provider list is falsely rejected. A real OpenAI pin nested
+      under resource_constraints stays 43/43 because the substring 'source'
+      triggers provenance exclusion. A real Mistral pin also stays 43/43 because
+      the provider token list is hard-coded and incomplete.
+    required_fix: >-
+      Apply provenance exclusion only to exact provenance/evidence path segments,
+      normalize polarity, and reject a positive normative provider selector by
+      structure rather than by an enumerated vendor vocabulary.
+
+  - id: ST04-V3-IR-006
+    severity: blocking
+    title: Role-source detection confuses references with ownership and misses generic IDs
+    evidence:
+      - independent_v3_probe_results_v1.json#I07_role_reference_matrix
+      - independent_v3_probe_results_v1.json#I08_generic_id_second_role_source
+    observed: >-
+      A role-keyed matrix containing only stage scope plus model-route, handoff
+      and authority pointers is rejected by RW-T05/RW-T31. Conversely, a real
+      second role source with generic record IDs and role concepts in label
+      fields remains 43/43 green.
+    required_fix: >-
+      Distinguish pointer/reference metadata from owned role semantics, and
+      inspect semantic role labels as well as mapping keys when identifying a
+      second source of truth.
+
+  - id: ST04-V3-IR-007
+    severity: blocking
+    title: RW-T43 still misses obvious structured YAML and Markdown catalogs
+    evidence:
+      - independent_v3_probe_results_v1.json#I09_yaml_mapping_model_catalog
+      - independent_v3_probe_results_v1.json#I10_markdown_heading_model_catalog
+    observed: >-
+      A YAML mapping whose keys are three live catalog model labels and a
+      Markdown document with those labels as repeated headings both remain
+      43/43 green. Definition-list coverage does not cover these equally
+      structured representations.
+    required_fix: >-
+      Inspect structured YAML keys and values recursively and recognize common
+      Markdown entry structures beyond tables and definition lists, while
+      preserving the pointer/receipt allowlist.
+
+  - id: ST04-V3-IR-008
+    severity: blocking
+    title: Autonomy checks miss enabled non-boolean behavior values
+    evidence:
+      - independent_v3_probe_results_v1.json#I11_non_boolean_autonomy_enablement
+    observed: >-
+      automatic_task_progression set to after_handoff_publication and scheduler
+      set to run_on_window_entry remain 43/43 green because enabled_positions()
+      recognizes only a small boolean-like string set.
+    required_fix: >-
+      Treat any non-negative configured action/schedule value under an autonomy
+      key as enabled, or validate against an explicit safe negative schema.
+
+  - id: ST04-V3-IR-009
+    severity: blocking
+    title: RW-T25 allows the handoff to carry mutable delivery state
+    evidence:
+      - independent_v3_probe_results_v1.json#I12_carried_delivery_state
+    observed: >-
+      Adding handoff_record.delivery_state while retaining a separate
+      prohibited_fields declaration remains 43/43 green. The test checks carried
+      private reasoning but not carried delivery/read/acceptance fields named in
+      its own contract.
+    required_fix: >-
+      Reject carried delivery, read and acceptance state independently of whether
+      a prohibition declaration also exists.
+
+  - id: ST04-V3-IR-010
+    severity: blocking
+    title: Authority checks miss explicit grants expressed as ordinary strings
+    evidence:
+      - independent_v3_probe_results_v1.json#I13_string_authority_grant
+    observed: >-
+      master_write_authorized set to 'granted' in a role remains 43/43 green.
+      RW-T04 and RW-T18 only recognize a narrow boolean-like truth vocabulary.
+    required_fix: >-
+      Fail closed on any non-negative authority-grant value or validate authority
+      fields against a closed safe schema; do not infer safety from an unknown
+      string value.
+
+foreground_note_adjudication:
+  id: V3-FG-N01
+  verdict: nonblocking_stale_provenance_text
+  judgment: >-
+    The harness top-level docstring still says artifact_version 2 and correction
+    round 1. The executable CLI, imported check registry and package payload are
+    not selected from this docstring, so the stale text alone does not create a
+    machine ambiguity. It should be corrected only in a newly authorized package;
+    it is not the package-integrity blocker. The invalid receipt and contradictory
+    frozen topology/path metadata under ST04-V3-IR-001 are blocking independently.
+
+retained_verdicts:
+  RW_T06: valid_and_retained
+  future_stage05_stage06_boundary_must_include:
+    - 01_os/02_boot/context_management/启动清单_v1.yml
+  naming_neutral_discovery: accepted_for_the_original_ST04_IR_003_family
+  validator_full_candidate_tree_topology: accepted
+  publisher_authority_preservation: passed
+  existing_validator_preservation: passed
+  primary_diff_scope: passed
+  primary_diff_whitespace: passed
+  upstream_A_Stage02_B_invalidated: false
+
+test_derivation_verdict:
+  derived_only_from_A_and_stage02: false
+  reason: >-
+    RW-T07 still freezes run_id from B/fixture representation, while multiple
+    checks reject A-equivalent structures and accept direct A01/A06/A09/A11/A13/
+    A14 violations. A green package can therefore be both overconstrained and
+    semantically weak.
+
+stage05_boundary_implication:
+  status: blocked
+  canonical_write_authorized_by_this_review: false
+  master_write_authorized_by_this_review: false
+  pass_marker_must_not_be_emitted: true
+
+correction_budget_implication:
+  completed_Human_gated_correction_rounds: 2
+  third_in_place_correction_permitted: false
+  governing_rule: 01_os/开发入口与单窗口任务规范_v1.md#11
+  required_next_action: >-
+    Freeze the branch and review evidence, split a root-cause task, and escalate
+    to Human/overall architecture to decide whether to continue, replace,
+    downgrade or terminate. Do not silently open correction round 3 in this task.
+
+next_owner:
+  role: foreground_and_Human
+  required_action: >-
+    Accept this FIX_REQUIRED verdict, keep Stage05 blocked, preserve the v3
+    frozen package and all three independent review histories, and adjudicate a
+    separate root-cause task under the exhausted correction budget.

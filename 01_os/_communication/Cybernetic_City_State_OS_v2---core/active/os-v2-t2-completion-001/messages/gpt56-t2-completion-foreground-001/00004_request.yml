@@ -1,0 +1,55 @@
+message_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00004
+task_id: os-v2-t2-completion-001
+title: Continue correction-003 construction under R3 S23 permissions ruling
+message_type: request
+sender_endpoint_id: gpt56-t2-completion-foreground-001
+sender_task_role: foreground_t2_completion_coordinator
+expected_recipient_endpoint_id: claude-cowork-t2-completion-executor-001
+expected_recipient_task_role: parent_t2_completion_implementation_executor
+content: 'Continue correction-003 construction on dev/os-v2-t2-completion-001 from
+  exact remote head c01789c91608702564335a82e686bc2673b6d264. Apply foreground R3
+  exactly in role_contract_v1: selector [roles, ''*'', permissions] has child_keys=instance_identity,
+  and selector [roles, ''*'', permissions, ''*''] has child_keys=declaration_name.
+  Preserve the fixed seven/fourteen result-vector assertions; do not normalize away
+  P00, change fixtures/tests, or add generic nested-authority inference. Re-run the
+  inherited v3 and v4 suites unmodified with actual exit codes and failing-set transition.
+  If they become fully green with no new signature, publish one exact correction-003
+  replacement candidate and a formal result for fresh independent review. If another
+  load-bearing authority or claimability choice, or any new primary failure signature,
+  appears, stop and return to foreground. Do not begin P2-2 before fresh independent
+  correction-003 PASS and foreground exact-candidate verification.'
+required_refs:
+- Human/task_authority_v2.yml
+- Human/delegations/00001_claude_execution.yml
+- role_context/gpt56-t2-completion-foreground-001.yml
+- role_context/claude-cowork-t2-completion-executor-001.yml
+requested_action: construct_correction003_replacement_candidate_from_parent_checkpoint_using_accepted_structural_provenance
+authorization_ref: Human/delegations/00001_claude_execution.yml
+recipient_delegation_ref: Human/delegations/00001_claude_execution.yml
+facts:
+  work_performed_or_requested: Continue correction-003 construction after foreground
+    adjudicated the S23 permissions structural-coverage blocker.
+  implementation_or_review_method: Add exactly the two adjudicated permission-region
+    structural rules, preserve fixed arity guards, then rerun inherited v3/v4 regressions
+    unmodified.
+  supportability_rationale: Historical S23 and accepted V-AUTH-01 explicitly make
+    the nested permissions representation in-contract; P00 in a bound profile therefore
+    denotes missing structural coverage.
+  feasibility_rationale: The closure is two existing-schema binding rules with no
+    parser, adapter, vocabulary, fixture or test change.
+  current_completion_branch_head: c01789c91608702564335a82e686bc2673b6d264
+  foreground_ruling_ref: documents/gpt56-t2-completion-foreground-001/00004_r3_s23_permissions_structural_ruling.yml
+  executor_pre_ruling_measurement: v3 65/65 exit 0; v4 27/29 exit 1; S23 semantic
+    verdict correct with one extra P00
+constraints:
+- preserve fixed seven/fourteen result-vector assertions
+- no generic nested-authority inference or unrelated profile widening
+- do not modify accepted upstream branch 7cf9195715dcc7aa34bd09a8bc0f8320415f3930
+- preserve accepted Stage01-03 without rerun or rewrite
+- do not begin P2-2 before fresh independent correction-003 PASS
+- no Stage05, canonical, master, force, rebase, squash, amend or history rewrite
+risks:
+- A deeper latent failure may appear after S23 closes; treat it as new evidence, not
+  permission to broaden semantics.
+- Executor suite success is construction evidence only and does not replace fresh
+  independent correction-003 acceptance.

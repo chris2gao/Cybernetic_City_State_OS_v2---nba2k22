@@ -1,0 +1,69 @@
+message_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00006
+task_id: os-v2-t2-completion-001
+title: 'Opus 5 big task: complete parent T2 P2-2 freeze and Stage04 candidate chain'
+message_type: request
+sender_endpoint_id: gpt56-t2-completion-foreground-001
+sender_task_role: foreground_t2_completion_coordinator
+expected_recipient_endpoint_id: claude-cowork-t2-completion-executor-001
+expected_recipient_task_role: parent_t2_completion_implementation_executor
+content: Start the reserved Opus 5 parent-T2 completion big task on dev/os-v2-t2-completion-001
+  only from exact remote head 9c50a4fe56b12c1add15967a5515785e8e6fb760. The current
+  Human accepts correction-003 candidate 9c50a4fe for progression based on foreground
+  review; the narrow correction-003 Codex review is waived for this task. Read task
+  packet v2, current model v2 and the task-local MWU contract, then complete in one
+  implementation task the remaining P2-2 provenance audit, receipt binding, exact
+  freeze receipt, refreeze report, exact result pointer, Stage04 candidate binding
+  and durable T2 completion execution evidence. Reuse accepted Stage01-03 and existing
+  P2-1/P2-1R work; do not rerun or rewrite completed stages. For deterministic mechanical
+  failures and dependency closure inside the authorized paths, continue to convergence
+  rather than returning for micro-approval. Run the relevant Stage04/P2-2/freeze validators
+  and tests with actual exit codes, bind every receipt/result to exact Git refs, and
+  publish one exact final implementation candidate plus formal execution result. Stop
+  and return only for a new load-bearing authority/claimability/acceptance semantic
+  choice, scope escape, invalidation of accepted Stage01-03, or a protected action
+  outside authority. Do not self-accept parent Stage04; the final relationship-isolated
+  review is reserved for the later Codex big task.
+required_refs:
+- Human/task_authority_v2.yml
+- Human/delegations/00003_claude_big_completion.yml
+- role_context/gpt56-t2-completion-foreground-001.yml
+- role_context/claude-cowork-t2-completion-executor-001.yml
+requested_action: complete_P2_2_freeze_and_stage04_candidate_from_Human_accepted_correction003_9c50a4fe56b12c1add15967a5515785e8e6fb760
+authorization_ref: Human/delegations/00003_claude_big_completion.yml
+recipient_delegation_ref: Human/delegations/00003_claude_big_completion.yml
+facts:
+  work_performed_or_requested: Complete the full remaining parent-T2 P2-2/freeze/result-pointer
+    implementation chain as one Opus 5 large task.
+  implementation_or_review_method: Re-enter at exact 9c50a4fe, reuse accepted Stage01-03
+    and P2-1/P2-1R evidence, execute existing P2-2/freeze machinery to deterministic
+    convergence, and publish one exact Stage04 candidate/result package.
+  supportability_rationale: Current Human decision accepts exact correction-003 candidate
+    9c50a4fe for progression after foreground verified ancestry, accepted-source blobs
+    and final structural binding; root authority already covers every P2-2/freeze/result-pointer
+    scope item.
+  feasibility_rationale: The remaining obligations are already named at parent checkpoint
+    3002d617 and operate inside existing Stage04 evidence, receipt, freeze and result-pointer
+    machinery and the current task allowlist.
+  exact_entry_candidate: 9c50a4fe56b12c1add15967a5515785e8e6fb760
+  current_model_ref: 01_os/_runs/run-20260828-t2-completion-001/02_当前模型/current_model_v2.yml
+  task_packet_ref: 01_os/_runs/run-20260828-t2-completion-001/01_任务输入/任务包_v2.yml
+  Human_decision_evidence_ref: 01_os/_runs/run-20260828-t2-completion-001/03_前景复核/Human_corr003_acceptance_and_big_task_authorization_v1.yml
+  MWU_contract_ref: 01_os/_runs/run-20260828-t2-completion-001/04_机制试验/minimum_work_unit_output_contract_v1.yml
+constraints:
+- preserve accepted Stage01-03 without rerun or rewrite
+- begin only from exact remote implementation head 9c50a4fe56b12c1add15967a5515785e8e6fb760
+- preserve accepted structural-provenance invariants and do not invent new claimability
+  semantics
+- complete deterministic mechanical closure inside allowed paths without Human micro-grants
+- publish exact provenance-audit, receipt-binding, freeze, refreeze and result-pointer
+  evidence
+- do not claim final parent Stage04 PASS or perform self-acceptance
+- no Stage05, canonical implementation, master write, force, rebase, squash, amend
+  or history rewrite
+risks:
+- P2-2 may reveal stale or weak provenance/receipt bindings hidden by earlier aggregate-green
+  evidence; fix deterministic evidence defects but return semantic choices.
+- Freeze and refreeze artifacts must bind the exact candidate and result pointer;
+  a passing test without exact-ref consistency is insufficient.
+- The large task must not drift into final independent acceptance merely because implementation
+  and tests are green.

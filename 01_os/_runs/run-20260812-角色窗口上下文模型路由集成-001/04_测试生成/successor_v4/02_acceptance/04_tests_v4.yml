@@ -1,0 +1,213 @@
+schema_version: citystate.stage04.test_inventory.v4
+task_id: os-v2-t2-completion-001
+generated_by: 03_validation/v4_tests/test_v4_trace_and_inventory.build_inventory()
+generation_is_machine_derived_not_authored: true
+scope: every test_*.py under 03_validation/v4_tests and 03_validation/vendored_baseline_tests
+runners_are_separate_processes: vendored_baseline_tests must run in an interpreter that never imported semantic_acceptance_v4 (V4-FND-01), so the two suites are two commands and this inventory does not imply one run
+module_count: 16
+test_count_total: 140
+modules:
+- module: v4_tests/test_v4_adapter_applicability.py
+  purpose: Adapter applicability negative tests.  P2-2 work item 1.
+  test_count: 8
+  tests:
+  - test_no_adapter_produces_a_fact_for_a_document_it_does_not_claim
+  - test_no_adapter_writes_evidence_for_a_document_it_does_not_claim
+  - test_the_gate_is_what_produces_the_inertness
+  - test_the_gate_rejects_each_non_applicable_variant
+  - test_the_non_declaring_surface_really_is_not_declared
+  - test_the_source_document_is_fact_bearing_when_applicable
+  - test_the_source_document_passes_the_gate
+  - test_this_list_covers_every_adapter_the_pipeline_calls
+- module: v4_tests/test_v4_decision_provenance.py
+  purpose: Combined accepted-plus-v4 decision provenance audit.  P2-2 work item 2.
+  test_count: 7
+  tests:
+  - test_every_v4_predicate_rule_family_is_present
+  - test_no_applied_rule_defers_its_authority_to_a_human_decision_never_made
+  - test_no_decision_rule_is_untraced
+  - test_no_vendor_name_reaches_the_ledger
+  - test_rule_ids_are_unique
+  - test_the_committed_ledger_is_current
+  - test_the_ledger_covers_both_packages
+- module: v4_tests/test_v4_independent_findings.py
+  purpose: Direct regressions for the four independent parent-Stage04 findings.
+  test_count: 18
+  tests:
+  - test_ir001_representation_change_moves_no_verdict
+  - test_ir002_absent_route_policy_is_non_pass
+  - test_ir002_best_effort_route_policy_is_non_pass
+  - test_ir002_inverted_route_policy_is_non_pass
+  - test_ir003_inverted_consequence_is_non_pass
+  - test_ir003_inverted_lifecycle_state_is_non_pass
+  - test_ir003_inverted_observation_is_non_pass
+  - test_ir003_parity_is_applied_at_the_role_resolvers_not_at_three_strings
+  - test_ir004_subject_binding_is_resolution_not_a_word_list
+  - test_ir004_subjective_subject_is_non_pass
+  - test_sr001_an_unambiguous_policy_still_passes
+  - test_sr001_contradictory_route_policy_is_non_pass_in_either_order
+  - test_sr001_two_recognised_but_disagreeing_roles_are_non_pass
+  - test_sr002_a_real_ordered_path_still_passes
+  - test_sr002_a_reversed_real_path_is_non_pass
+  - test_sr002_path_resolution_walks_rather_than_collects
+  - test_sr002_spliced_subject_paths_are_non_pass
+  - test_the_unmutated_baseline_passes_every_predicate
+- module: v4_tests/test_v4_metamorphic.py
+  purpose: Metamorphic, poisoned-vocabulary, polarity and double-negation tests for v4.
+  test_count: 12
+  tests:
+  - test_all_difference_cases_fail_on_their_deciding_predicate
+  - test_all_invariance_properties_hold
+  - test_baseline_v4_is_conforming_before_any_transformation
+  - test_difference_cases_do_not_rely_on_unsupported
+  - test_every_attack_class_is_represented
+  - test_every_v4_predicate_is_probed_by_at_least_one_difference_case
+  - test_false_pass_holes_are_distinguished_from_observations
+  - test_invariance_holes_are_each_backed_by_a_finding_file
+  - test_known_open_holes_are_still_open
+  - test_no_invariant_transformation_silently_removes_a_predicate
+  - test_open_holes_are_each_backed_by_a_finding_file
+  - test_recorded_invariance_holes_are_still_open
+- module: v4_tests/test_v4_receipt_binding.py
+  purpose: Receipt external binding and tamper tests over the v4 candidate.  P2-2 item 3.
+  test_count: 7
+  tests:
+  - test_an_honest_receipt_over_the_real_v4_artifacts_validates
+  - test_each_tamper_is_caught_by_its_own_check
+  - test_every_tamper_is_rejected
+  - test_every_tamper_names_a_failure
+  - test_receipt_bytes_are_bound_to_an_external_digest
+  - test_the_declared_topology_is_an_authorized_one
+  - test_the_self_entry_is_present_and_unhashed
+- module: v4_tests/test_v4_reviewer_replay.py
+  purpose: Replay the independent reviewer's 63-case probe corpus against the v4 method.
+  test_count: 11
+  tests:
+  - test_A_accepted_engine_reproduces_reviewer_46_of_46
+  - test_A_control_really_ran_seven_predicates
+  - test_B_v4_engine_meets_all_46_reviewer_expectations
+  - test_B_v4_returns_fourteen_predicates_for_every_case
+  - test_C_accepted_baseline_passes_all_seven_accepted_predicates
+  - test_C_only_accounted_predicates_separate_the_two_fixture_roots
+  - test_FND01_accepted_seven_are_unaffected_by_the_guard
+  - test_FND01_augmented_factset_still_judges_normally
+  - test_FND01_unaugmented_factset_is_unsupported_not_fail
+  - test_receipt_attacks_all_seventeen_classified_correctly
+  - test_v4_import_does_not_change_receipt_validation
+- module: v4_tests/test_v4_trace_and_inventory.py
+  purpose: Requirement trace and test inventory.  P2-2 work items 4 and 5.
+  test_count: 6
+  tests:
+  - test_every_a_criterion_has_a_deciding_predicate
+  - test_every_deciding_predicate_is_exercised_by_some_test_module
+  - test_no_criterion_is_decided_by_two_predicates
+  - test_the_committed_inventory_is_current
+  - test_the_committed_trace_is_current
+  - test_the_inventory_counts_agree_with_itself
+- module: v4_tests/test_v4_v3_variants.py
+  purpose: Replay the fifteen independent v3 adversarial variants against the v4 method.
+  test_count: 6
+  tests:
+  - test_accepted_baseline_variant_run_differs_only_by_accounted_predicates
+  - test_fifteen_variants_classified_correctly_under_v4
+  - test_i14_sentinel_is_seen_by_the_v4_fact_builder
+  - test_no_variant_is_decided_by_an_extension_predicate_it_was_not_probing
+  - test_no_variant_produces_an_unsupported_result
+  - test_nonconforming_variants_still_fail_on_their_deciding_predicate
+- module: vendored_baseline_tests/test_core.py
+  purpose: Unit tests for the normalization primitives.
+  test_count: 11
+  tests:
+  - test_declaration_forms_reduce_to_the_same_field
+  - test_enablement_closed_negative_set
+  - test_keyed_collection_shapes_are_equivalent
+  - test_markdown_block_forms
+  - test_markdown_ignores_fenced_code
+  - test_must_alone_is_not_a_negation
+  - test_negation_is_prefix_and_suffix_symmetric
+  - test_prohibited_false_is_positive
+  - test_provenance_is_whole_token
+  - test_record_form_never_yields_the_qualifier_name
+  - test_tokens_never_yield_a_substring
+- module: vendored_baseline_tests/test_facts_and_predicates.py
+  purpose: The baseline surface must be accepted, and each predicate must have teeth."""
+  test_count: 9
+  tests:
+  - test_baseline_extracts_the_expected_fact_kinds
+  - test_baseline_is_accepted
+  - test_baseline_provider_bindings_cover_the_non_selector_kinds
+  - test_boolean_authority_grant_fails_like_the_string_one
+  - test_duplicate_keys_are_rejected
+  - test_latest_session_as_identity_fails
+  - test_predicates_are_not_vacuous
+  - test_reentry_without_exact_predecessor_fails
+  - test_unparseable_document_is_visible_not_silent
+- module: vendored_baseline_tests/test_metamorphic.py
+  purpose: Metamorphic and property tests.
+  test_count: 2
+  tests:
+  - test_all_metamorphic_properties_hold
+  - test_every_required_property_family_is_covered
+- module: vendored_baseline_tests/test_provenance.py
+  purpose: 'C-09: every decision-bearing rule has an authority, and none is invented.'
+  test_count: 8
+  tests:
+  - test_an_untraced_rule_is_reported_and_not_applied
+  - test_b_only_facts_cannot_reach_a_decision
+  - test_every_declared_rule_carries_an_authority_and_an_interpretation
+  - test_every_predicate_carries_an_a_trace
+  - test_every_threshold_records_what_it_rejected
+  - test_no_rule_is_untraced
+  - test_the_deleted_threshold_is_gone_and_its_replacement_is_traced
+  - test_the_ledger_can_be_emitted_and_is_self_consistent
+- module: vendored_baseline_tests/test_receipt.py
+  purpose: Freeze-receipt contract tests.
+  test_count: 5
+  tests:
+  - test_artifact_hash_mismatch_is_detected
+  - test_ledger_disagreeing_with_the_diff_is_rejected
+  - test_ledger_includes_itself_without_self_hash
+  - test_receipt_is_strict_yaml_and_is_actually_loaded
+  - test_unparseable_receipt_is_rejected_not_ignored
+- module: vendored_baseline_tests/test_receipt_external_binding.py
+  purpose: 'C-10 and C-07: the receipt is checked against facts it does not own.'
+  test_count: 15
+  tests:
+  - test_a_well_formed_receipt_is_valid_in_both_call_shapes
+  - test_an_execution_observation_must_say_where_it_was_read_from
+  - test_an_externally_observed_diff_overrides_what_the_receipt_declares
+  - test_external_git_blob_hashes_override_worktree_bytes_and_are_checked
+  - test_external_receipt_byte_anchor_is_checked_and_not_self_declared
+  - test_r11_declared_count_is_validated
+  - test_r12_noncanonical_paths_are_rejected_in_every_spelling
+  - test_r13_artifact_hash_path_cannot_escape_the_artifact_root
+  - test_r14_candidate_sha_is_bound_syntactically_and_externally
+  - test_r15_hash_coverage_cannot_be_empty_or_partial
+  - test_r16_duplicate_artifact_entries_are_rejected
+  - test_r17_topology_is_compared_not_reported
+  - test_receipt_serialization_is_canonical_lf_bytes
+  - test_the_self_hash_sentinel_is_confined_to_the_receipt_entry
+  - test_unprovenanced_execution_values_are_rejected
+- module: vendored_baseline_tests/test_representation_boundary.py
+  purpose: 'C-08: the semantic boundary is end to end, and that is machine-checkable.'
+  test_count: 12
+  tests:
+  - test_an_unclaimed_document_contributes_nothing_rather_than_being_guessed
+  - test_an_unparseable_document_is_visible_not_inert
+  - test_decision_facts_declare_no_rendering_field
+  - test_every_adapter_declares_applicability_and_an_a_trace
+  - test_long_prose_never_downgrades_an_active_decision_position
+  - test_no_vocabulary_entry_is_a_routing_identifier
+  - test_predicates_reference_no_rendering_field
+  - test_rendering_evidence_still_exists_it_is_only_unreachable_from_a_predicate
+  - test_the_subject_name_is_never_consulted
+  - test_transparent_containers_have_no_arbitrary_depth_escape
+  - test_unknown_active_slot_inside_claimed_selector_is_visible
+  - test_word_count_prose_heuristic_is_absent_from_decision_modules
+- module: vendored_baseline_tests/test_v3_adversarial_regression.py
+  purpose: All fifteen independent v3 adversarial variants must be classified correctly.
+  test_count: 3
+  tests:
+  - test_all_fifteen_variants_classified_correctly
+  - test_i14_sentinel_is_actually_seen
+  - test_no_dependency_crawler_symbols_present

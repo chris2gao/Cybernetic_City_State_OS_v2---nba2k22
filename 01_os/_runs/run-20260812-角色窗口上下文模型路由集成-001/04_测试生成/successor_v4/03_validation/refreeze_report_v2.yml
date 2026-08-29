@@ -1,0 +1,139 @@
+schema_version: citystate.stage04.refreeze_report.v1
+artifact_version: 2
+task_id: os-v2-t2-completion-001
+run_id: run-20260828-t2-completion-001
+supersedes: 03_validation/refreeze_report_v1.yml
+supersedes_frozen_candidate: 4ce3e09e8c75881165f7705ab3a0398a4d3acf9c
+produced_by_endpoint_id: claude-cowork-t2-stage04-correction-executor-001
+produced_by_task_role: parent_stage04_fix_required_correction_executor
+collaboration_role: execution
+authority_effect: none
+
+why_this_refreeze_exists: >-
+  The previous frozen candidate 4ce3e09e was independently reviewed at
+  5f4520dd123ba634b1082f3ac7dbb6284a79849c and returned FIX_REQUIRED with four
+  reproducible counterexamples. That candidate and that review are historical
+  evidence and are untouched: nothing here relabels them, and no history was
+  rewritten. This is a forward successor.
+
+what_the_review_proved_about_the_previous_round: >-
+  The inherited suites were 65/65 and 57/57 with observed exit code 0, the exact-Git
+  receipt and provenance closure passed, and all four material defects were still
+  there. Executor greenness was necessary and not sufficient, exactly as the previous
+  result pointer said it might not be. That is the finding worth carrying forward.
+
+work_performed_or_requested: >-
+  Close all four independently established findings, persist a direct regression for
+  each, apply the foreground R6 structural ruling, regenerate the derived evidence and
+  refreeze one successor candidate.
+
+implementation_or_review_method: >-
+  Each finding was reproduced first against the unmutated tree, then corrected at the
+  mechanism rather than at the reported string, then re-measured. The four cases are
+  now persisted test functions rather than a transcript, because a finding that exists
+  only in a transcript cannot be re-run by the next round.
+
+findings_closed:
+- id: T2-PARENT-IR-001
+  was: >-
+    `failure_states` rewritten to the admitted `[{X: {}}]` form moved P24 pass -> fail,
+    because a RouteReceiptFact was sourced from a failure-case instance identity.
+  correction: >-
+    v4 claim sites now come from bound_nodes / bound_leaves filtered to
+    structurally_claimable, which is what that traversal's own contract requires and
+    what the accepted adapters already did. The whole family was converted - preload
+    positions, freshness binding, route/window binding, family requirements, mechanism
+    separation and fallback positions - not only the reported witness.
+  now: the same mutation moves no predicate at all, asserted over the whole vector
+- id: T2-PARENT-IR-002
+  was: >-
+    `missing_or_stale_or_inconsistent: best_effort` left all fourteen predicates passing;
+    the candidate declared the policy and nothing read it.
+  correction: >-
+    the policy is a typed fact on RouteReceiptFact and is decision-bearing for A12 in
+    P27. It resolves through the accepted freshness-effect roles, so parity applies.
+  now: best_effort, absent and not_fail_closed are each non-pass; no spelling is blacklisted
+- id: T2-PARENT-IR-003
+  was: >-
+    `not_stale`, `not_changed` and `not_fail_closed` each normalized to the positive
+    role, so an inverted declaration passed.
+  correction: >-
+    _role_of and _effect_role resolve through _vocabulary_assertion; an INVERTED
+    assertion returns unmapped and never the positive role. _observation_role and
+    _consequence_role delegate to _effect_role, so these two functions are every v4
+    polarity decision site.
+  now: each inverted declaration is non-pass, and the resolvers are asserted directly
+- id: T2-PARENT-IR-004
+  was: >-
+    any non-empty subject slot counted as resolved, so
+    `whatever_the_operator_feels_has_drifted_enough` was deterministic.
+  correction: >-
+    a subject must name a position the candidate itself declares, verified structurally
+    against the document. Subject slots are excluded from the set they would otherwise
+    vouch for themselves with. No subject vocabulary exists; the question asked is only
+    whether the named position is there.
+  fixture_consequence: >-
+    baseline_v4's four subjects were semantic labels that resolved to nothing, so they
+    now name real declared positions. Foreground adjudication 00005 anticipated exactly
+    this and authorised it.
+  now: the subjective subject is non-pass and a real declared position passes
+
+foreground_r6_ruling_applied:
+  ref: documents/gpt56-t2-completion-foreground-001/00006_r6_context_contract_structural_binding_ruling.md
+  registered: {mechanism/context_contract_v1.yml: context_contract_v1}
+  profile: root declaration_name; profile-scoped transparent_contract; declaration_name at
+    minimum_effective_context, derivation_inputs, load_set and exactness
+  instance_identity_granted: none
+
+one_addition_beyond_the_ruling_and_why_it_is_not_a_new_choice:
+  what: window_contract_v1 gained a container rule for [context_binding] as declaration_name
+  why_it_was_needed: >-
+    with claim sites correctly gated, `context_binding.dependency_fingerprints` fell to
+    `unknown` and P23 lost the binding leaf it reads.
+  why_it_is_derived: >-
+    `context_binding` is a contract-owned field block with fixed slots and no
+    author-chosen entries - the same shape as `model_route_binding`, which the same
+    profile already rules declaration_name. The rule is by direct analogy with the
+    entry immediately below it, not a new structural judgement. Reported here rather
+    than absorbed silently.
+
+measured_gates:
+  vendored_baseline_suite: {result: 65/65 passed, exit_code: 0, unchanged_every_round: true}
+  v4_suite: {result: 68/68 passed, exit_code: 0, before_this_round: 57/57}
+  repeatability:
+    method: two independent processes over the same tree
+    identical_output_sha256: true
+  decision_provenance: {rule_count: 130, untraced: 0, was: 128}
+  requirement_trace: {criteria: 14, with_deciding_predicate: 14, untested: 0}
+  test_inventory: {modules: 16, tests: 133}
+  worktree_pycache: 0
+
+still_open_and_carried_into_the_next_review:
+  parent_findings_not_independently_accepted: [V4-FND-01, V4-FND-02, V4-FND-03, V4-FND-04]
+  observations: [V4-OBS-01]
+  note: >-
+    V4-OBS-02 and V4-OBS-03 were promoted to material findings by the independent review
+    and are closed here as IR-002 and IR-001. The four V4-FND findings remain disclosed
+    rather than closed; freezing is not accepting.
+  independence_status: >-
+    The narrow correction-003 review was waived by Human decision D-T2-COMPLETION-002 and
+    that waiver still stands. The parent Stage04 review, however, was genuinely performed
+    by a relationship-isolated reviewer and returned FIX_REQUIRED - the gap the previous
+    round disclosed has since been closed by an actual reviewer artifact.
+  vendored_engine_byte_identity: >-
+    structural_binding_v1.yml inside the vendored package has now been extended by four
+    foreground rulings and is no longer byte-identical to its accepted source. The other
+    four transferred files still are. V4-FND-01's safety claim rests partly on that
+    byte-identity, so the exception stays visible here.
+
+next_gate:
+  required: fresh_relationship_isolated_parent_Stage04_acceptance_of_the_successor
+  reviewer_should_reattack:
+  - the four counterexamples, now as persisted tests rather than as claims
+  - whether the IR-001 family conversion missed a claim site
+  - whether the R6 profile and the [context_binding] analogy are the right structural calls
+  - the four V4-FND findings, still never independently read
+  stage05_entry: blocked_until_that_review_passes
+  executor_self_acceptance: prohibited_and_not_claimed
+
+completion_marker: stage04_t2_v4_successor_refrozen_awaiting_fresh_independent_acceptance

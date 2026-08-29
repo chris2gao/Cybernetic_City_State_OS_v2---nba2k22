@@ -1,0 +1,75 @@
+schema_version: citystate.stage04.result_pointer.v1
+pointer_id: T2-COMPLETION-STAGE04-RESULT-002
+supersedes: stage04_result_pointer_v1.yml
+task_id: os-v2-t2-completion-001
+run_id: run-20260828-t2-completion-001
+produced_by_endpoint_id: claude-cowork-t2-stage04-correction-executor-001
+produced_by_task_role: parent_stage04_fix_required_correction_executor
+collaboration_role: execution
+status: successor_refrozen_ready_for_fresh_relationship_isolated_parent_stage04_review
+
+work_performed_or_requested: >-
+  Correct the four independently established parent Stage04 findings, persist a
+  regression for each, apply the foreground R6 structural ruling, regenerate the derived
+  evidence, and bind one successor candidate to exact Git refs.
+
+implementation_or_review_method: >-
+  Every finding was reproduced against the unmutated tree before it was corrected, fixed
+  at the mechanism rather than at the reported string, then re-measured. Every ref below
+  was read from Git in the session that produced it.
+
+stage04_candidate_binding:
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  branch: dev/os-v2-t2-completion-001
+  lineage_base: 3002d6177779abf81e6d476bfc434ee5d6dbe3c8
+  correction003_candidate: 9c50a4fe56b12c1add15967a5515785e8e6fb760
+  previous_frozen_candidate: 4ce3e09e8c75881165f7705ab3a0398a4d3acf9c
+  previous_independent_verdict: FIX_REQUIRED at 5f4520dd123ba634b1082f3ac7dbb6284a79849c
+  successor_implementation: d7bc2320246defd2c93b97d69a442e36748f54ca
+  frozen_successor_candidate: 628dd60e3505516254bf37956bcde5fb93c2723a
+  master_at_publication: c149ae626d63d3818c110d5a29972c32d083f350
+  master_modified: false
+  previous_candidate_or_review_mutated: false
+  history_rewritten: false
+
+artifacts:
+  freeze_receipt: 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/freeze_receipt_v4.yml
+  refreeze_report: 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/03_validation/refreeze_report_v2.yml
+  independent_findings_regressions: 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/03_validation/v4_tests/test_v4_independent_findings.py
+  decision_provenance: 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/01_semantic_binding/decision_provenance_v4.yml
+  requirement_trace: 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/01_semantic_binding/requirement_trace_v4.yml
+  test_inventory: 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/02_acceptance/04_tests_v4.yml
+  r6_execution_evidence: 01_os/_runs/run-20260828-t2-completion-001/07_测试执行/r6_fix_required_correction_evidence_v1.yml
+
+authority_chain:
+  human_task_authority: TA-os-v2-t2-completion-001-v1
+  execution_delegation: Human/delegations/00005_claude_parent_stage04_fix_required_correction.yml
+  entered_via_pointers: [9d1100c8cfabec50b88491bd2afa0411abaa74bd, 1021b76e05e8515034387adfb24f1c346128bda7]
+  adjudications_applied:
+  - FG-T2-COMPLETION-BLK-001-R1
+  - FG-T2-COMPLETION-BLK-002-R2
+  - FG-T2-COMPLETION-BLK-003-R3
+  - foreground 00005 parent Stage04 FIX_REQUIRED adjudication
+  - foreground 00006 R6 context-contract structural binding ruling
+
+measured_state:
+  vendored_baseline_suite: {result: 65/65, exit_code: 0}
+  v4_suite: {result: 68/68, exit_code: 0, before_this_round: 57/57}
+  repeatability: two independent processes, byte-identical output
+  four_independent_counterexamples: all non-pass for the stated reason, persisted as tests
+  freeze_receipt_validation: valid, zero failures
+  changed_paths_in_freeze_scope: 34
+  artifact_hash_entries: 85
+  worktree_clean_at_publication: true
+
+what_this_pointer_does_not_claim:
+- parent Stage04 PASS. Not claimed, and the executor is forbidden to claim it.
+- that the four corrections are the right corrections. They close the reported
+  counterexamples; whether they close the defect families is a review judgement.
+- that the IR-001 family conversion reached every claim site. Six were converted and
+  named; a reviewer should look for a seventh.
+- that V4-FND-01 through -04 are resolved. They remain disclosed and never independently read.
+- that a green suite is acceptance. The previous round was green and was rejected.
+
+next_owner: fresh_relationship_isolated_parent_stage04_independent_review
+stage05_entry: blocked_until_that_review_passes

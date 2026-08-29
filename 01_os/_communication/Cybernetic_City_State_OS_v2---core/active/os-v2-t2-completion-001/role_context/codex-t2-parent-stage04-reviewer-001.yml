@@ -1,0 +1,61 @@
+endpoint_id: codex-t2-parent-stage04-reviewer-001
+task_role: parent_stage04_independent_acceptance_reviewer
+collaboration_role: independent_review
+provider: OpenAI
+product: Codex Desktop
+surface: codex_desktop
+model: GPT-5.6 Sol
+reasoning_or_parameter_profile: codex_sol_strongest_exposed
+session_mode: fresh_isolated
+isolation_level: fresh_session
+repository_access_mode: GitHub_plus_task_scoped_local_worktree
+required_branch_or_sha: 4f6bd40518ff7dc652d1e5819f9a10781cc2e425
+local_files_required: true
+github_publication_required_before_start: true
+communication_carrier: GitHub
+repository_or_worktree_requirement: >-
+  Enter only from the exact formal review pointer. Use a fresh Codex session and a
+  clean task-scoped worktree detached at publication head
+  4f6bd40518ff7dc652d1e5819f9a10781cc2e425. Treat frozen candidate
+  4ce3e09e8c75881165f7705ab3a0398a4d3acf9c as the exact Stage04 candidate under
+  review and parent baseline 3002d6177779abf81e6d476bfc434ee5d6dbe3c8 as the
+  lineage base. Do not modify or publish the implementation branch or master.
+responsibility:
+- independently reconstruct the parent Stage04 acceptance contract from primary repository evidence
+- inspect the complete 3002d617-to-4ce3e09e candidate lineage and the 4ce3e09e-to-4f6bd405 publication-only delta
+- independently reproduce inherited v3 and final v4 suites and record actual process exit codes
+- attack correction-003 structural provenance and all foreground R1-R3 integration rulings for false-green or cross-adapter leakage
+- audit all six P2-2 obligations, including applicability negatives, merged provenance ledger, receipt tamper binding, requirement trace, inventory, freeze and refreeze
+- verify the 128-rule decision provenance ledger is complete, current, unique, authority-bound and free of untraced v4 rules
+- independently validate freeze_receipt_v4 topology, changed-path scope, artifact hashes, external digest binding and the 4ce3e09e candidate binding
+- verify the refreeze report honestly records the pycache discovery and the earlier a1d376c0 ordering error
+- inspect V4-FND-01 through V4-FND-04 and V4-OBS-01 through V4-OBS-03 from their primary evidence and decide their effect on parent Stage04 acceptance
+- explicitly account for the correction-003 independent-review waiver and role-overlap disclosure without treating either as an independent PASS
+- assess whether the result pointer supports parent Stage04 PASS, FIX_REQUIRED or BLOCKED for this exact frozen candidate
+- publish one durable independent result bound to exact candidate and publication head
+constraints:
+- executor_private_context
+- no Claude private reasoning or undocumented executor context
+- no foreground private reasoning dependency; use only durable rulings and primary repository evidence
+- no implementation or candidate-branch edits
+- no fixing findings inside the review
+- no treating executor test greenness, repeatability, Human override or foreground adjudication as independent acceptance
+- no Stage05, canonical or master write
+- no force, rebase, squash, amend or history rewrite
+- no redelegation
+- no automatic progression
+review_output_contract:
+  required_verdicts: [PASS, FIX_REQUIRED, BLOCKED]
+  work_performed_or_requested: required
+  implementation_or_review_method: required
+  supportability_rationale: required
+  feasibility_rationale: required
+  primary_evidence: required
+  findings_and_residuals: required
+  executor_rationale_assessment: required
+  exact_candidate_binding: required
+stop_conditions:
+- exact publication head or frozen candidate cannot be physically verified
+- required primary evidence is unreadable or internally contradictory
+- independent reproduction exposes a new material failure signature
+- a conclusion would require changing the candidate rather than reviewing it

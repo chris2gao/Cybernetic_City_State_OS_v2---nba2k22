@@ -1,0 +1,99 @@
+schema_version: citystate.run_evidence.v1
+run_id: run-20260828-t2-completion-001
+task_id: os-v2-t2-completion-001
+produced_by_endpoint_id: claude-cowork-t2-completion-executor-001
+collaboration_role: execution
+round: 2
+applies_ruling: FG-T2-COMPLETION-BLK-001-R1
+ruling_ref: >-
+  6543f7054909fd6271010af543b72d58532db2dc:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-t2-completion-001/documents/gpt56-t2-completion-foreground-001/00002_invalidation_conditions_structural_role_ruling.yml
+entered_from_head: 2a8282981810219d2d3050e2e4559bf67a3c371f
+
+work_performed_or_requested: >-
+  Apply the foreground structural-role ruling to the completion-branch evaluator-owned
+  structural_binding_v1.yml, re-run the inherited v3 and v4 suites with process exit
+  codes observed, and separate any newly exposed failure signature from the closed gap.
+
+implementation_or_review_method: >-
+  Added exactly the two adjudicated container rules to window_contract_v1, mirroring the
+  already-accepted two-level entry_modes / entry_modes.* shape. No source file, adapter,
+  predicate, fixture or test was modified. Re-ran both runners unmodified, then computed
+  the set difference between the pre-ruling and post-ruling failing-test sets instead of
+  comparing totals, so that a newly exposed failure could not hide inside a smaller count.
+
+supportability_rationale: >-
+  The edit is confined to the one file the ruling names, and its content is the ruling's
+  two selectors verbatim. The regression claims are set differences over the runners' own
+  per-test output, not over aggregate counts.
+
+feasibility_rationale: >-
+  The gap was bounded to one evaluator-owned binding position, so applying the ruling
+  needed no architecture change, no upstream branch modification and no Stage01-03 rerun.
+
+change_applied:
+  file: 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/02_acceptance/实现/semantic_acceptance/structural_binding_v1.yml
+  profile: window_contract_v1
+  added_container_rules:
+  - selector: [lifecycle, invalidation_conditions]
+    child_keys: instance_identity
+  - selector: [lifecycle, invalidation_conditions, "*"]
+    child_keys: declaration_name
+  upstream_branch_modified: false
+  source_files_modified: 0
+  tests_or_fixtures_modified: 0
+
+regressions_after_ruling:
+  vendored_baseline_tests:
+    result: 65/65 passed
+    process_exit_code: 0
+  v4_tests:
+    result: 22/29 passed
+    process_exit_code: 1
+  exit_codes_observed: true
+  worktree_residue_lines_after_run: 1
+  residue_explanation: the single intended modification to structural_binding_v1.yml
+
+failing_set_transition:
+  method: set difference over per-test failure records, not over counts
+  pre_ruling_failures: 14
+  post_ruling_failures: 7
+  fixed_by_the_ruling: 8
+  fixed_list:
+  - test_v4_reviewer_replay.test_C_only_accounted_predicates_separate_the_two_fixture_roots
+  - test_v4_reviewer_replay.test_FND01_augmented_factset_still_judges_normally
+  - test_v4_v3_variants.test_accepted_baseline_variant_run_differs_only_by_accounted_predicates
+  - test_v4_v3_variants.test_fifteen_variants_classified_correctly_under_v4
+  - test_v4_v3_variants.test_i14_sentinel_is_seen_by_the_v4_fact_builder
+  - test_v4_v3_variants.test_no_variant_is_decided_by_an_extension_predicate_it_was_not_probing
+  - test_v4_v3_variants.test_no_variant_produces_an_unsupported_result
+  - test_v4_metamorphic.test_baseline_v4_is_conforming_before_any_transformation
+  still_failing: 6
+  still_failing_list:
+  - test_v4_reviewer_replay.test_A_accepted_engine_reproduces_reviewer_46_of_46
+  - test_v4_reviewer_replay.test_A_control_really_ran_seven_predicates
+  - test_v4_reviewer_replay.test_B_v4_engine_meets_all_46_reviewer_expectations
+  - test_v4_reviewer_replay.test_B_v4_returns_fourteen_predicates_for_every_case
+  - test_v4_reviewer_replay.test_C_accepted_baseline_passes_all_seven_accepted_predicates
+  - test_v4_metamorphic.test_no_invariant_transformation_silently_removes_a_predicate
+  newly_failing: 1
+  newly_failing_list:
+  - test_v4_metamorphic.test_all_invariance_properties_hold
+
+newly_failing_analysis:
+  test: test_v4_metamorphic.test_all_invariance_properties_hold
+  status_at_parent_baseline_3002d617: ok
+  status_at_pre_ruling_transfer_head: ok
+  status_now: fail
+  reading: >-
+    This is the second latent failure the foreground predicted, and it is a real one, not
+    a regression caused by the ruling. Before the ruling the invariance comparison compared
+    two runs that were both uniformly unsupported at the disputed position, so the property
+    held degenerately. Once the baseline binds, the comparison becomes meaningful and two
+    transformations are measured to break it. The set therefore did not merely contract:
+    reporting 14 -> 7 without naming this test would have concealed a genuine new finding.
+
+residual_risk_or_unproved_limits:
+- The set difference proves which named tests changed state; it does not prove that the
+  8 now-passing tests pass for the intended reason rather than incidentally.
+- Only the two parent suites were run. No claim is made about any other Stage04 gate.
+- Executor measurement only. Not independent acceptance.

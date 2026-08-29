@@ -1,0 +1,35 @@
+schema_version: citystate.t2.integration_disposition.v1
+task_id: os-v2-t2-completion-001
+stage_id: workflow_stage_04_test_generation
+source_implementation_head: b30241a0f9006fb72b9ab1a27f44e2311d4a7221
+source_control_head: 04daacddfdba61bc3f6e1ba0e308721c202b7319
+master_base: c149ae626d63d3818c110d5a29972c32d083f350
+disposition: approved_for_master_integration_with_known_nonblocking_residual
+human_decision:
+  decision: approve_merge_if_residual_is_not_critical
+  foreground_application: residual_reviewed_and_classified_nonblocking
+foreground_adjudication:
+  S02_transparent_nested_window_wrapper:
+    classification: nonblocking_false_negative_representation_compatibility_residual
+    expected_contract: historical_independent_probe_marks_S02_PASS
+    observed_effect: one_admitted_transparent_wrapper_is_over_rejected_by_P21_subject_resolution
+    safety_direction: false_negative_not_false_positive
+    deferred: true
+  SR_001:
+    state: accepted_closed_at_mechanism_level
+    basis: complete_declaration_role_resolution_with_conflict_and_order_controls
+  SR_002:
+    state: accepted_closed_at_resolver_level
+    basis: exact_ordered_bound_path_resolution_with_splice_reverse_and_real_path_controls
+verification:
+  v3_executor: 65_of_65_exit_0
+  v4_executor: 74_of_75
+  known_v4_failure: S02_transparent_nested_window_wrapper
+  fresh_final_independent_PASS: false
+claims:
+  parent_Stage04_independent_PASS: false
+  Human_integration_acceptance: true
+  master_integration_allowed: true
+  known_residual_disclosed: true
+  Stage05_automatic_progression: false
+  canonical_runtime_activation: false

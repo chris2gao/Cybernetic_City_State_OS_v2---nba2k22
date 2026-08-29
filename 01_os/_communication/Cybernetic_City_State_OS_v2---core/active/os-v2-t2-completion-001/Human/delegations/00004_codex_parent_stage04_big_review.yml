@@ -1,0 +1,23 @@
+schema_version: citystate.communication.task_authority_delegation.v2
+task_id: os-v2-t2-completion-001
+task_authority_id: TA-os-v2-t2-completion-001-v1
+granted: true
+revoked: false
+Human_task_authority_ref: Human/task_authority_v2.yml
+delegation_id: DEL-os-v2-t2-completion-001-codex-parent-stage04-big-review-001
+delegator_endpoint_id: gpt56-t2-completion-foreground-001
+delegator_task_role: foreground_t2_completion_coordinator
+recipient_endpoint_id: codex-t2-parent-stage04-reviewer-001
+recipient_task_role: parent_stage04_independent_acceptance_reviewer
+authorized_actions:
+- independently_review_parent_stage04_exact_frozen_candidate_4ce3e09e8c75881165f7705ab3a0398a4d3acf9c
+- run_read_only_parent_stage04_regressions_and_adversarial_probes
+- audit_freeze_receipt_refreeze_result_pointer_and_provenance_chain
+- publish_independent_parent_stage04_review_result_without_modifying_candidate_or_master
+delegated_scope:
+- fresh_relationship_isolated_parent_Stage04_acceptance
+- formal_dispatch_and_review
+- durable_T2_completion_evidence
+- task_scoped_local_git_environment_recovery
+parent_delegation_ref: null
+allow_redelegation: false

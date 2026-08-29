@@ -1,0 +1,77 @@
+- sequence: '00001'
+  message_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00001
+  title: 'Execute parent T2 completion: construct correction-003 replacement'
+  message_type: request
+  expected_recipient_endpoint_id: claude-cowork-t2-completion-executor-001
+  expected_recipient_task_role: parent_t2_completion_implementation_executor
+  exact_message_path: messages/gpt56-t2-completion-foreground-001/00001_request.yml
+- sequence: '00002'
+  message_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00002
+  title: Continue correction-003 construction under foreground structural-role ruling
+  message_type: request
+  expected_recipient_endpoint_id: claude-cowork-t2-completion-executor-001
+  expected_recipient_task_role: parent_t2_completion_implementation_executor
+  exact_message_path: messages/gpt56-t2-completion-foreground-001/00002_request.yml
+- sequence: '00003'
+  message_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00003
+  title: Continue correction-003 construction under R2 claimability ruling
+  message_type: request
+  expected_recipient_endpoint_id: claude-cowork-t2-completion-executor-001
+  expected_recipient_task_role: parent_t2_completion_implementation_executor
+  exact_message_path: messages/gpt56-t2-completion-foreground-001/00003_request.yml
+- sequence: '00004'
+  message_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00004
+  title: Continue correction-003 construction under R3 S23 permissions ruling
+  message_type: request
+  expected_recipient_endpoint_id: claude-cowork-t2-completion-executor-001
+  expected_recipient_task_role: parent_t2_completion_implementation_executor
+  exact_message_path: messages/gpt56-t2-completion-foreground-001/00004_request.yml
+- sequence: '00005'
+  message_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00005
+  title: Fresh independent review of exact correction-003 candidate 9c50a4fe
+  message_type: request
+  expected_recipient_endpoint_id: codex-t2-correction003-reviewer-001
+  expected_recipient_task_role: correction003_independent_acceptance_reviewer
+  exact_message_path: messages/gpt56-t2-completion-foreground-001/00005_request.yml
+- sequence: '00006'
+  message_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00006
+  title: 'Opus 5 big task: complete parent T2 P2-2 freeze and Stage04 candidate chain'
+  message_type: request
+  expected_recipient_endpoint_id: claude-cowork-t2-completion-executor-001
+  expected_recipient_task_role: parent_t2_completion_implementation_executor
+  exact_message_path: messages/gpt56-t2-completion-foreground-001/00006_request.yml
+- sequence: '00007'
+  message_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00007
+  title: 'Codex big review: final parent Stage04 acceptance of frozen T2 candidate'
+  message_type: request
+  expected_recipient_endpoint_id: codex-t2-parent-stage04-reviewer-001
+  expected_recipient_task_role: parent_stage04_independent_acceptance_reviewer
+  exact_message_path: messages/gpt56-t2-completion-foreground-001/00007_request.yml
+- sequence: 00008
+  message_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00008
+  title: Correct four parent Stage04 findings and publish successor candidate
+  message_type: request
+  expected_recipient_endpoint_id: claude-cowork-t2-stage04-correction-executor-001
+  expected_recipient_task_role: parent_stage04_fix_required_correction_executor
+  exact_message_path: messages/gpt56-t2-completion-foreground-001/00008_request.yml
+- sequence: 00009
+  message_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00009
+  title: Continue R6 correction after context-contract structural ruling
+  message_type: request
+  expected_recipient_endpoint_id: claude-cowork-t2-stage04-correction-executor-001
+  expected_recipient_task_role: parent_stage04_fix_required_correction_executor
+  exact_message_path: messages/gpt56-t2-completion-foreground-001/00009_request.yml
+- sequence: '00010'
+  message_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00010
+  title: Fresh parent Stage04 acceptance review of frozen successor 628dd60e
+  message_type: request
+  expected_recipient_endpoint_id: codex-t2-parent-stage04-reviewer-002
+  expected_recipient_task_role: parent_stage04_independent_acceptance_reviewer
+  exact_message_path: messages/gpt56-t2-completion-foreground-001/00010_request.yml
+- sequence: '00011'
+  message_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00011
+  title: Final Stage04 correction round for SR-001 and SR-002
+  message_type: request
+  expected_recipient_endpoint_id: claude-cowork-t2-stage04-final-correction-executor-001
+  expected_recipient_task_role: parent_stage04_final_correction_executor
+  exact_message_path: messages/gpt56-t2-completion-foreground-001/00011_request.yml

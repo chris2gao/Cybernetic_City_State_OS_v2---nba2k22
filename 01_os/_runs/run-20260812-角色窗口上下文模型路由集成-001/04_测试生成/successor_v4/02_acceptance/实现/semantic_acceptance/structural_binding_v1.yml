@@ -1,0 +1,307 @@
+schema_version: prototype.structural_binding.v1
+mechanism_version: 1
+
+purpose: >-
+  Evaluator-owned structural binding. It declares STRUCTURAL SLOT ROLE only:
+  whether the direct child keys of a container are author-chosen instance
+  identities of an open keyed collection, or declaration names owned by a
+  semantic contract. It never says what a position MEANS. Business semantics
+  remain entirely in adapters.py.
+
+authority_note: >-
+  This file lives inside the evaluator package, not inside any payload corpus.
+  Its path is computed from the evaluator's own module location, so no document
+  under evaluation can shadow it, extend it, or mint a profile for itself. A
+  payload containing text shaped like this file declares nothing.
+
+identity_note: >-
+  document_profiles is keyed by the opaque discovery identity of a document.
+  The key is compared for equality and never segmented, tokenized or otherwise
+  interpreted. Surface membership stays in surface_declaration.yml.
+
+selector_note: >-
+  A selector is ROOT-ANCHORED, matched against a path whose declared
+  transparent containers have already been removed. It is not a tail match.
+  Codex B1_UNDECLARED_ANCESTOR_TAIL_PROMOTION: a tail match meant a selector
+  naming this document's runtime_controls block also named any container
+  anywhere called runtime_controls, so an author could host that name inside a
+  container the evaluator models nowhere and collect claimability from it. An
+  undeclared ancestor now costs exactly what it supplies, which is nothing.
+
+transparency_note: >-
+  A container is transparent only when a profile says so under
+  transparent_containers, and that is the only way to reach a declared block
+  through intervening containers. Silence about a container is not a
+  declaration that it carries nothing. There is no depth term in this file and
+  none in the resolver: wrapper invariance comes from removing declared
+  wrappers, not from tolerating a number of them.
+
+# Every position of a document with no entry here is `unknown`, and `unknown`
+# is unclaimable. A new corpus is invisible to the adapters until its structure
+# is declared, which is the fail-closed direction.
+default_position_role: unknown
+
+# The transparent containers this corpus uses. Written once and referenced by
+# every profile, because transparency is a property of the container the
+# evaluator vouched for, not of the document it happens to appear in.
+_transparent: &transparent
+  - selector: [binding_document]
+  - selector: [contract_body]
+  - selector: [specification]
+  - selector: [outer]
+  - selector: [middle]
+  - selector: [inner]
+  - selector: [opaque_layer_0]
+  - selector: [opaque_layer_1]
+  - selector: [opaque_layer_2]
+  - selector: [opaque_layer_3]
+  - selector: [opaque_layer_4]
+  - selector: [opaque_layer_5]
+  - selector: [opaque_layer_6]
+  - selector: [opaque_layer_7]
+
+# Profile-scoped positive transparency, adjudicated by foreground ruling
+# FG-T2-COMPLETION-BLK-002-R2 (Q1). The shared anchor above is deliberately NOT
+# widened: an envelope that one profile's accepted corpus declares transparent
+# must not become transparent for every other profile, because that is how an
+# undeclared ancestor would start supplying claimability again. Root anchoring is
+# unchanged and tail matching stays removed; these lists only add named wrappers
+# that the accepted reviewer and metamorphic corpora already declare transparent.
+#
+# YAML cannot merge sequences, so each scoped list restates the shared base. If
+# the base above changes, these two must change with it.
+_transparent_contract: &transparent_contract
+  - selector: [binding_document]
+  - selector: [contract_body]
+  - selector: [specification]
+  - selector: [outer]
+  - selector: [middle]
+  - selector: [inner]
+  - selector: [opaque_layer_0]
+  - selector: [opaque_layer_1]
+  - selector: [opaque_layer_2]
+  - selector: [opaque_layer_3]
+  - selector: [opaque_layer_4]
+  - selector: [opaque_layer_5]
+  - selector: [opaque_layer_6]
+  - selector: [opaque_layer_7]
+  - selector: [contract]
+
+_transparent_window: &transparent_window
+  - selector: [binding_document]
+  - selector: [contract_body]
+  - selector: [specification]
+  - selector: [outer]
+  - selector: [middle]
+  - selector: [inner]
+  - selector: [opaque_layer_0]
+  - selector: [opaque_layer_1]
+  - selector: [opaque_layer_2]
+  - selector: [opaque_layer_3]
+  - selector: [opaque_layer_4]
+  - selector: [opaque_layer_5]
+  - selector: [opaque_layer_6]
+  - selector: [opaque_layer_7]
+  - selector: [contract]
+  - selector: [window_contract]
+
+_role_containers: &role_containers
+  - selector: [roles]
+    child_keys: instance_identity
+    note: >-
+      role identifiers are author-chosen. The collection itself is a
+      declaration position, so the role adapter may claim it and enumerate
+      the entries; no other adapter may treat an entry key as its own
+      declaration position.
+  - selector: [roles, "*"]
+    child_keys: declaration_name
+  - selector: [roles, "*", evidence_refs]
+    child_keys: declaration_name
+
+document_profiles:
+  boot/boot_v1.yml: boot_manifest_v1
+  mechanism/context_contract_v1.yml: context_contract_v1
+  mechanism/handoff_v1.yml: handoff_contract_v1
+  mechanism/roles_v1.yml: role_contract_v1
+  mechanism/windows_v1.yml: window_contract_v1
+  model_routing/catalog_v1.yml: model_catalog_v1
+  registry/registry_v1.yml: registry_v1
+  workflow/stage03_pointer.yml: workflow_pointer_v1
+  # Documents the accepted adversarial corpora introduce. They are registered
+  # so the ownership scans can still SEE them: an unregistered second role
+  # source would be refused correctly and would then be undetectable, which
+  # trades one failure mode for another.
+  mechanism/full_surface_probe_sentinel.yml: role_source_v1
+  model_routing/contract_v1.yml: workflow_pointer_v1
+  communication_system/message_v1.yml: workflow_pointer_v1
+  workflow/role_reference_matrix.yml: role_source_v1
+  workflow/second_role_source.yml: role_source_v1
+  # Exact historical reviewer identity from independent-review case S14, which
+  # creates a real second role source with generic IDs and unseen labels and
+  # expects it to be DETECTED. Registering this one known identity restores that
+  # test without adding a default profile: a genuinely unregistered document is
+  # still unknown and visibly unsupported. Adjudicated by foreground
+  # FG-T2-COMPLETION-BLK-002-R2 (Q3).
+  workflow/new_role_source.yml: role_source_v1
+  workflow/stage_owned_roles.yml: role_source_v1
+  workflow/stage_role_applicability.yml: role_source_v1
+  workflow/second_model_catalog.yml: model_catalog_v1
+  workflow/stage_two_entry_catalog.yml: model_catalog_v1
+  workflow/stage_unseen_catalog.yml: model_catalog_v1
+  workflow/stage_variant_catalog.yml: model_catalog_v1
+  workflow/stage_single_mention.yml: model_catalog_v1
+
+profiles:
+
+  boot_manifest_v1:
+    root_child_keys: declaration_name
+    containers: []
+    transparent_containers: *transparent
+
+  handoff_contract_v1:
+    root_child_keys: declaration_name
+    transparent_containers: *transparent_contract
+    containers:
+      - selector: [handoff_record]
+        child_keys: declaration_name
+        note: fields of the handoff record are contract-owned names
+      - selector: [progression]
+        child_keys: declaration_name
+        note: automation switches are contract-owned names
+
+  role_contract_v1:
+    root_child_keys: declaration_name
+    transparent_containers: *transparent_contract
+    containers:
+      - selector: [roles]
+        child_keys: instance_identity
+      - selector: [roles, "*"]
+        child_keys: declaration_name
+      - selector: [roles, "*", evidence_refs]
+        child_keys: declaration_name
+      - selector: [roles, "*", permissions]
+        child_keys: instance_identity
+        note: >-
+          `permissions` is a contract-owned authority field on the role record, but
+          its direct keys are the names of individual authorised acts inside an open
+          permission collection, so they are entry identities and not globally
+          claimable declaration names. V-AUTH-01 already treats a permission set as an
+          authority-conferring position, so this is missing structural coverage rather
+          than an out-of-contract shape. Adjudicated by foreground
+          FG-T2-COMPLETION-BLK-003-R3; scoped exactly to `permissions`, with no
+          generic nested-authority inference.
+      - selector: [roles, "*", permissions, "*"]
+        child_keys: declaration_name
+        note: >-
+          Fields inside one permission record (for example `state`) are typed
+          contract slots. Same two-level shape as the other named keyed collections.
+      - selector: [role_label_effect]
+        child_keys: declaration_name
+
+  # A04's minimum-effective-context derivation contract. Registered by foreground
+  # ruling FG R6 after IR-001 gating showed the document was unbound and P22 lost
+  # every fact. It is a fixed contract schema, not an open keyed collection, so no
+  # position in it is instance_identity: the slot names ARE the contract. Load-set
+  # entries are values consumed inside an already-claimed load-set region and need
+  # no global declaration claimability of their own.
+  #
+  # Transparency is profile-scoped on purpose. Foreground measured that the shared
+  # anchor leaves V4MT01 broken while `*transparent_contract` restores it; granting
+  # `contract` transparency globally instead would widen every other profile.
+  context_contract_v1:
+    root_child_keys: declaration_name
+    transparent_containers: *transparent_contract
+    containers:
+      - selector: [minimum_effective_context]
+        child_keys: declaration_name
+      - selector: [minimum_effective_context, derivation_inputs]
+        child_keys: declaration_name
+      - selector: [minimum_effective_context, load_set]
+        child_keys: declaration_name
+      - selector: [minimum_effective_context, exactness]
+        child_keys: declaration_name
+
+  role_source_v1:
+    root_child_keys: declaration_name
+    transparent_containers: *transparent
+    containers: *role_containers
+
+  window_contract_v1:
+    root_child_keys: declaration_name
+    transparent_containers: *transparent_window
+    containers:
+      - selector: [failure_states]
+        child_keys: instance_identity
+        note: >-
+          The collection correction-003 measured. Its keys are author-chosen
+          failure-case identifiers, and several of them collide lexically with
+          the vocabularies of unrelated global scans. Classifying it explicitly
+          says what it IS, rather than leaving it to fall through to `unknown`.
+      - selector: [entry_modes]
+        child_keys: instance_identity
+        note: entry-mode identifiers are author-chosen
+      - selector: [entry_modes, "*"]
+        child_keys: declaration_name
+      - selector: [lifecycle]
+        child_keys: declaration_name
+      - selector: [lifecycle, invalidation_conditions]
+        child_keys: instance_identity
+        note: >-
+          Under ruling F03-D the parent v4 corpus writes this as a keyed collection
+          of author-chosen condition names, where the decision-bearing structure is
+          the typed record beneath each name rather than the name itself. The direct
+          child keys are therefore entry identities, exactly as in `failure_states`
+          and `entry_modes`, and are not globally claimable declaration fields.
+          Adjudicated by foreground FG-T2-COMPLETION-BLK-001-R1.
+      - selector: [lifecycle, invalidation_conditions, "*"]
+        child_keys: declaration_name
+        note: >-
+          The fields inside each condition record (`subject`, `observation`) are
+          contract-owned typed slots. Same two-level shape already accepted for
+          `entry_modes` / `entry_modes.*`.
+      - selector: [lifecycle, condition_definitions]
+        child_keys: instance_identity
+        note: >-
+          The evaluator-bound sibling definition region. A bare condition name in
+          `invalidation_conditions` carries no semantics of its own and may resolve
+          only by exact identity to a structured record here. Adjudicated by
+          foreground FG-T2-COMPLETION-BLK-002-R2 (Q2); no definition region is
+          inferred generically.
+      - selector: [lifecycle, condition_definitions, "*"]
+        child_keys: declaration_name
+      - selector: [window_identity]
+        child_keys: declaration_name
+      - selector: [window_identity, latest_session_pointer]
+        child_keys: declaration_name
+      - selector: [context_binding]
+        child_keys: declaration_name
+        note: >-
+          A contract-owned field block, exactly the shape `model_route_binding`
+          already has in this same profile: fixed slots, no author-chosen entries.
+          Added when IR-001 gating showed that `context_binding.dependency_fingerprints`
+          fell to `unknown` and P23 lost its binding leaf. Derived by direct analogy
+          with the rule immediately below rather than as a new structural choice.
+      - selector: [model_route_binding]
+        child_keys: declaration_name
+      - selector: [model_route_binding, route_receipt]
+        child_keys: declaration_name
+
+  model_catalog_v1:
+    root_child_keys: declaration_name
+    transparent_containers: *transparent
+    containers:
+      - selector: [entries]
+        child_keys: declaration_name
+        note: >-
+          catalog entry records bind contract-owned identifier fields; the
+          author-chosen part is the field VALUE, which this layer never reads.
+
+  registry_v1:
+    root_child_keys: declaration_name
+    containers: []
+    transparent_containers: *transparent
+
+  workflow_pointer_v1:
+    root_child_keys: declaration_name
+    containers: []
+    transparent_containers: *transparent

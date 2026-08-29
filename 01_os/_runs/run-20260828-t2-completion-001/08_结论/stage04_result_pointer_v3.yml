@@ -1,0 +1,35 @@
+schema_version: citystate.stage04.integration_result_pointer.v1
+task_id: os-v2-t2-completion-001
+stage_id: workflow_stage_04_test_generation
+status: integrated_by_Human_acceptance_with_known_nonblocking_residual
+source_branch: dev/os-v2-t2-completion-001
+source_head: b30241a0f9006fb72b9ab1a27f44e2311d4a7221
+source_base: 3002d6177779abf81e6d476bfc434ee5d6dbe3c8
+previous_frozen_candidate: 628dd60e3505516254bf37956bcde5fb93c2723a
+previous_independent_review_result: 04e7a7ba492e8e6037b150809e12cdb0e941d682
+final_correction_round: 2_of_2
+validation:
+  vendored_v3: 65_of_65_exit_0
+  successor_v4: 74_of_75
+  known_failure: S02_transparent_nested_window_wrapper
+  SR_001: closed_by_family_regressions_and_foreground_source_review
+  SR_002: closed_by_family_regressions_and_foreground_source_review
+  final_fresh_independent_PASS: false
+residual:
+  id: S02_transparent_nested_window_wrapper
+  classification: nonblocking_false_negative_representation_compatibility_residual
+  effect: admitted_transparent_window_wrapper_is_over_rejected
+  unsafe_false_positive_created: false
+  deferred: true
+freeze:
+  final_b302_freeze_receipt_generated: false
+  reason: executor_correctly_stopped_at_74_of_75_before_Human_residual_disposition
+integration:
+  disposition_ref: 08_结论/human_integration_acceptance_with_nonblocking_S02_v1.yml
+  Human_approved_master_integration: true
+claims:
+  parent_Stage04_independent_PASS: false
+  Human_accepted_for_integration: true
+  Stage05_authorized: false
+  automatic_progression: false
+next_owner: Human

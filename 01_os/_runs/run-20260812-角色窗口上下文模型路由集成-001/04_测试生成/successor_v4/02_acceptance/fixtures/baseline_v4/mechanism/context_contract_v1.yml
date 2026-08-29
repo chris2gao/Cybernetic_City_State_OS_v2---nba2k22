@@ -1,0 +1,38 @@
+schema_version: window_role_binding.context_contract.v1
+mechanism_version: 1
+authority_effect: none
+
+# A04 / R04_minimum_effective_context.
+#
+# The independently accepted methodology package implemented no A04 predicate,
+# so its baseline fixture never had to declare a derivation contract. successor_v4
+# covers A04, so the conforming candidate declares one. Nothing else in this
+# fixture differs from the accepted baseline; every other file is byte-identical
+# and the ledger records that.
+#
+# Ownership stays upstream: the derivation RULES live in context_management, and
+# this document references that contract rather than restating it (A10 / R10).
+
+minimum_effective_context:
+  owner_mechanism: context_management
+  owner_contract_ref: mechanism/../context_management/layout_v1.yml
+  derivation_inputs:
+    task_id: required
+    role_id: required
+    workflow_stage_id: required
+    workflow_step_id: required
+    approved_reference_set: required
+  load_set:
+    entries:
+      - mechanism/roles_v1.yml
+      - mechanism/windows_v1.yml
+      - mechanism/handoff_v1.yml
+      - boot/boot_v1.yml
+      - registry/registry_v1.yml
+  exactness:
+    entry_form: exact_path_with_pinned_version_or_blob_digest
+    unbounded_subtree_entry: prohibited
+  default_preload_of_all_runs: prohibited
+  historical_run_preload: prohibited
+  unrelated_role_history: excluded
+  old_chat_transcript: excluded

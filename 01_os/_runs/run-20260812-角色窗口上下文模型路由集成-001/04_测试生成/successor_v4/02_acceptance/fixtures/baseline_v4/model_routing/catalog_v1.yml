@@ -1,0 +1,18 @@
+schema_version: model_routing.catalog.v1
+catalog_version: 1
+owner_mechanism: model_routing
+note: >-
+  This document is the live catalog and is the ONE place these identifiers are
+  owned. It is the reference set against which a second mutable catalog elsewhere
+  is detected. Its own surface is catalog_owner, so it is never judged as a
+  duplicate of itself.
+entries:
+  - model_label: GPT-5.6 Sol
+    product_surface: Codex Desktop
+    parameter_profile: sol_high
+  - model_label: GPT-5.6 Terra
+    product_surface: Codex Desktop
+    parameter_profile: terra_medium
+  - model_label: GPT-5.6 Luna
+    product_surface: Codex Desktop
+    parameter_profile: luna_low

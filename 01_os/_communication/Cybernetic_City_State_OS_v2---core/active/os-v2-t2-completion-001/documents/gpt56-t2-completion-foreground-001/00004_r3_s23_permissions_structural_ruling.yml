@@ -1,0 +1,101 @@
+schema_version: citystate.foreground_adjudication.v1
+task_id: os-v2-t2-completion-001
+adjudication_id: FG-T2-COMPLETION-BLK-003-R3
+adjudicator_endpoint_id: gpt56-t2-completion-foreground-001
+adjudicator_task_role: foreground_t2_completion_coordinator
+triggering_finding_ref: c01789c91608702564335a82e686bc2673b6d264:01_os/_runs/run-20260828-t2-completion-001/08_结论/blocked_r3_s23_nested_permissions_arity_v1.yml
+implementation_branch_head_observed: c01789c91608702564335a82e686bc2673b6d264
+accepted_structural_provenance_source_sha: 7cf9195715dcc7aa34bd09a8bc0f8320415f3930
+parent_checkpoint_sha: 3002d6177779abf81e6d476bfc434ee5d6dbe3c8
+current_model_version: T2-COMPLETION-CM-v1
+
+work_performed_or_requested: >-
+  Adjudicate the last correction-003 construction blocker after R2: whether S23's
+  nested permissions representation is outside the structural contract and should
+  be tolerated as an extra P00, or whether role_contract_v1 is missing structural
+  coverage for an already accepted authority representation.
+
+implementation_or_review_method: >-
+  Read the historical independent reviewer mutation and expectation for S23, the
+  accepted V-AUTH-01 authority vocabulary and authority adapter claim boundary, the
+  structural-refusal contract that creates P00, and the fixed result-vector guards.
+  Decide from those executable contracts rather than from which edit makes 27/29
+  become green.
+
+primary_evidence:
+- 19c39ed37f14c97cfa132ffafabcb9afa33dd7f0:01_os/_runs/run-20260812-stage04-semantic-acceptance-root-cause-001/08_独立审核/independent_probe_suite.py
+- c01789c91608702564335a82e686bc2673b6d264:01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/02_acceptance/实现/semantic_acceptance/vocabulary.py
+- c01789c91608702564335a82e686bc2673b6d264:01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/02_acceptance/实现/semantic_acceptance/adapters.py
+- c01789c91608702564335a82e686bc2673b6d264:01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/02_acceptance/实现/semantic_acceptance/predicates.py
+- c01789c91608702564335a82e686bc2673b6d264:01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/02_acceptance/实现/semantic_acceptance/structural_binding_v1.yml
+- c01789c91608702564335a82e686bc2673b6d264:01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/03_validation/v4_tests/test_v4_reviewer_replay.py
+
+adjudication:
+  S23_representation_status: inside_accepted_authority_contract
+  fixed_result_vector_arity_expectation: preserve
+  role_contract_v1_additions:
+  - selector: [roles, "*", permissions]
+    child_keys: instance_identity
+  - selector: [roles, "*", permissions, "*"]
+    child_keys: declaration_name
+  fixture_or_test_change_required_by_ruling: false
+  adapter_or_vocabulary_change_required_by_ruling: false
+  model_change_required: false
+
+rationale:
+- >-
+  The historical independent reviewer defines S23 as `permissions ->
+  master_write_authorized -> state: granted`, expects FAIL on P05, and the current
+  executor already measures expected FAIL / actual FAIL / correct=true. S23 is not
+  an accidental shape introduced by the completion work.
+- >-
+  V-AUTH-01 explicitly defines a permission set, capability set, or authorised act
+  as an authority-conferring position and names S23's
+  `permissions.master_write_authorized.state=granted` as a case the accepted rule
+  closes. Therefore treating the nested permissions form as outside the accepted
+  contract would contradict the accepted executable vocabulary.
+- >-
+  `permissions` is a contract-owned authority field at the already claimable role
+  record level, but its direct action keys are identities inside an open permission
+  collection. `master_write_authorized` is therefore instance_identity, not a
+  globally claimable declaration name. Fields inside that action record, such as
+  `state`, are typed contract slots and are declaration_name. This is the same
+  structural two-level pattern already used for other named keyed collections.
+- >-
+  `adapt_structural_refusals` states that unknown or conflicting positions inside a
+  bound profile are visible P00 coverage holes, while instance_identity is not a
+  refusal because the evaluator has positively described the position. The S23 P00
+  is therefore evidence of incomplete role_contract_v1 coverage, not an optional
+  companion result to normalize away.
+- >-
+  The fixed seven/fourteen-predicate guards are doing useful work here: they expose
+  the unexpected P00. Reclassifying those guards would make a known binding hole
+  look acceptable while leaving correction-003 structurally incomplete.
+- >-
+  This ruling is intentionally exact to `permissions`. It does not create a generic
+  nested-authority-container rule, infer structure from runtime key spelling, or
+  widen unrelated `capabilities`/`privileges` regions beyond what current primary
+  evidence requires.
+
+supportability_rationale: >-
+  The ruling follows the historical S23 mutation, the accepted rule that explicitly
+  names that mutation, and the structural-refusal contract's own definition of P00
+  inside a bound profile. The child roles follow collection identity versus typed
+  record-slot semantics rather than lexical key recognition.
+
+feasibility_rationale: >-
+  Closure is a bounded two-rule addition in the existing evaluator-owned binding.
+  No parser, adapter, vocabulary, fixture or test change is required; the inherited
+  v3/v4 regressions can directly establish whether this exact coverage hole closes
+  without introducing a new signature.
+
+executor_instruction_boundary:
+- Add exactly the two role_contract_v1 container rules above on the completion branch.
+- Do not weaken or change the fixed result-vector arity assertions under this ruling.
+- Do not add generic nested authority inference or broaden unrelated container profiles.
+- Re-run the inherited v3 and v4 suites unmodified and capture actual exit codes and failing-set transition.
+- If the inherited suites become fully green with no new signature, publish one exact correction-003 replacement candidate and formal result for fresh independent review.
+- If another load-bearing authority/claimability choice or new primary failure signature appears, stop and return to foreground.
+- Do not begin P2-2 before fresh independent correction-003 PASS and foreground verification of the exact candidate binding.
+
+verdict: RULING_ISSUED_CONTINUE_CORRECTION003_CONSTRUCTION

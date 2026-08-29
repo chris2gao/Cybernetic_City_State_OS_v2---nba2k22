@@ -1,0 +1,75 @@
+message_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00005
+task_id: os-v2-t2-completion-001
+title: Fresh independent review of exact correction-003 candidate 9c50a4fe
+message_type: request
+sender_endpoint_id: gpt56-t2-completion-foreground-001
+sender_task_role: foreground_t2_completion_coordinator
+expected_recipient_endpoint_id: codex-t2-correction003-reviewer-001
+expected_recipient_task_role: correction003_independent_acceptance_reviewer
+content: Freshly and independently review exact correction-003 candidate 9c50a4fe56b12c1add15967a5515785e8e6fb760.
+  Treat parent checkpoint 3002d6177779abf81e6d476bfc434ee5d6dbe3c8, accepted structural-provenance
+  source 7cf9195715dcc7aa34bd09a8bc0f8320415f3930, and the durable foreground R1/R2/R3
+  rulings as primary inputs; treat Claude's green result as untrusted construction
+  evidence, not an acceptance conclusion. First reconstruct the acceptance contract
+  from exact durable refs, then inspect the complete base-to-candidate diff. Independently
+  run the inherited v3 and v4 suites with observed exit codes and run external adversarial
+  probes outside the candidate tree. Do not modify the candidate. Return exactly one
+  PASS, FIX_REQUIRED, or BLOCKED verdict for this SHA and publish a formal result
+  to foreground.
+required_refs:
+- Human/task_authority_v2.yml
+- Human/delegations/00002_codex_corr003_review.yml
+- role_context/gpt56-t2-completion-foreground-001.yml
+- role_context/codex-t2-correction003-reviewer-001.yml
+requested_action: independently_review_exact_candidate_9c50a4fe56b12c1add15967a5515785e8e6fb760
+authorization_ref: Human/delegations/00002_codex_corr003_review.yml
+recipient_delegation_ref: Human/delegations/00002_codex_corr003_review.yml
+facts:
+  work_performed_or_requested: Independently accept or reject the exact correction-003
+    replacement candidate without candidate edits.
+  implementation_or_review_method: Reconstruct the acceptance contract independently,
+    inspect the exact full diff, reproduce the inherited suites, and run external
+    counterexample probes against structural provenance.
+  supportability_rationale: The exact candidate is immutable; foreground verified
+    its ancestry and accepted-source blob identities, while executor greenness remains
+    explicitly non-acceptance evidence.
+  feasibility_rationale: The reviewer has read access to exact Git state plus a local
+    worktree for independent tests and is delegated to publish review evidence without
+    editing the candidate.
+  exact_candidate: 9c50a4fe56b12c1add15967a5515785e8e6fb760
+  parent_checkpoint: 3002d6177779abf81e6d476bfc434ee5d6dbe3c8
+  accepted_structural_provenance_source: 7cf9195715dcc7aa34bd09a8bc0f8320415f3930
+  foreground_preflight_ref: ../../../../_runs/run-20260828-t2-completion-001/03_前景复核/foreground_corr003_candidate_9c50_pre_review_v1.yml
+  adversarial_review_requirements:
+  - reproduce v3 vendored and v4 suites independently with actual exit codes
+  - recheck B1 undeclared-ancestor closure and B2 unbound role/window closure
+  - recheck original five foreign metadata witnesses, five keyed forms, and genuine
+    A13/A14 empty values
+  - attack exact positive wrapper transparency and prove undeclared wrappers do not
+    gain transparency
+  - attack lifecycle.invalidation_conditions and condition_definitions identity/field
+    boundaries
+  - prove bare condition-name spelling cannot mint semantics outside exact sibling
+    definition resolution
+  - prove exact workflow/new_role_source.yml registration does not create default
+    or path-based profile inference
+  - attack roles.*.permissions identity/field boundaries and preserve fixed result-vector
+    arity
+  - inject unrelated foreign ownership-vocabulary metadata into newly declaration-name-bound
+    record regions and check for cross-adapter leakage
+  - recheck missing/conflicting/unregistered bindings fail closed visibly and payload
+    cannot self-select a profile
+  - static-audit that tail matching, depth/arity/body/prose ownership heuristics,
+    and generic nested-authority inference remain absent
+constraints:
+- derive verdict from primary evidence rather than executor conclusion
+- candidate and implementation branch are read-only
+- no P2-2 or parent Stage04 PASS under this review
+- no Stage05, canonical, master, force, rebase, squash, amend or history rewrite
+risks:
+- A green inherited suite can still miss cross-adapter claimability leaks introduced
+  by a broad declaration_name region.
+- Exact document or wrapper registrations can accidentally become generic path/name
+  inference if implementation coupling exists outside the binding file.
+- A PASS is limited to correction-003 acceptance for the exact candidate and cannot
+  be used as parent Stage04 acceptance.

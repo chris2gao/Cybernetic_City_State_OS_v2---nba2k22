@@ -1,0 +1,1958 @@
+schema_version: citystate.stage04.decision_provenance.v4
+task_id: os-v2-t2-completion-001
+generated_by: semantic_acceptance.provenance.as_ledger() with BOTH semantic_acceptance and semantic_acceptance_v4 fully imported
+generation_is_machine_derived_not_authored: true
+coverage: the accepted seven-predicate constants and the v4 seven-predicate constants, in one ledger
+rule_count: 130
+untraced_rule_count: 0
+untraced_rule_ids: []
+rules:
+- rule_id: V-AUTH-01
+  kind: vocabulary
+  authority: A13/R13_no_authority_escalation
+  interpretation: 'Keys that CONFER authority: a permission set, a capability set, or an act declared authorised. Distinguished from keys that merely speak ABOUT authority (authority_effect, authority_boundary, authority_limit), which are descriptive scope statements and grant nothing. Closes S23 (permissions.master_write_authorized.state=granted) and S24 (capabilities.publish_master=true); removes the S14/i08 false positive where `authority_limit` was read as a grant.'
+  accepted_alternatives: []
+  rejected_alternatives:
+  - 'treating every key containing ''authority'' as a grant position: it made `authority_effect: none` and `authority_boundary` grant candidates and produced the S14/S18/S20 false positives'
+  value:
+  - authorisation
+  - authorised
+  - authorization
+  - authorized
+  - capabilities
+  - capability
+  - grant
+  - granted
+  - granting
+  - grants
+  - permission
+  - permissions
+  - permit
+  - permits
+  - permitted
+  - privilege
+  - privileges
+- rule_id: V-AUTH-02
+  kind: vocabulary
+  authority: 'A07/R07_route_receipt (authority: routing_only, stated verbatim)'
+  interpretation: 'Values at a grant position that do NOT confer authority. A07 states the routing receipt''s authority constant verbatim as `routing_only`, so it is an A-declared non-grant value rather than one this prototype invented. Everything outside this closed set is a grant: ST04-V3-IR-010 was caused by a closed POSITIVE set, under which ''granted'' fell through to safe.'
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - informational
+  - none
+  - routing_only
+  - unchanged
+- rule_id: V-AUTO-01
+  kind: vocabulary
+  authority: A14/R14_Human_triggered_progression
+  interpretation: 'Machinery whose mere configuration is autonomous progression. R14 names scheduler, watcher, daemon and polling directly. ''automation'' is included because a key opening an automation-control region is naming the same machinery (S41: automation_controls.cadence.trigger).'
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - automation
+  - cron
+  - daemon
+  - daemons
+  - poller
+  - polling
+  - scheduler
+  - schedulers
+  - watcher
+  - watchers
+- rule_id: V-AUTO-02
+  kind: vocabulary
+  authority: A14/R14_Human_triggered_progression
+  interpretation: Qualifiers that make a named behaviour autonomous.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - auto
+  - automated
+  - automatic
+  - autonomous
+  - background
+- rule_id: V-AUTO-03
+  kind: vocabulary
+  authority: A14/R14_Human_triggered_progression
+  interpretation: The behaviours R14 requires to stay Human-triggered. Only meaningful beside a qualifier (V-AUTO-02); `progression` alone names a policy block, not an enabled behaviour.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - acknowledgement
+  - acknowledgment
+  - advance
+  - deliver
+  - delivery
+  - dispatch
+  - escalation
+  - process
+  - processes
+  - progress
+  - progression
+  - retry
+  - spawn
+- rule_id: V-CAT-01
+  kind: threshold
+  authority: A11/R11_workflow_and_entry_thinness
+  interpretation: 'A catalog is a COLLECTION of entries; two is the smallest collection. This is definitional, not a tolerance: it does not say ''a small duplicate is allowed'', it says a single scalar mention is not a collection. A11 grants no size exception, which is why the previous value of 3 was an A11 weakening (S43).'
+  accepted_alternatives: []
+  rejected_alternatives:
+  - 'CATALOG_RESTATEMENT_THRESHOLD=3, the untraced constant named in the independent review as the proof of AB-02: it let a two-entry authoritative mutable catalog pass'
+  - '1: a single identifier appearing as a scalar value is a mention, and the baseline''s `example_identifier_mentioned_singly` is exactly that'
+  value: 2
+- rule_id: V-CAT-02
+  kind: vocabulary
+  authority: A11/R11_workflow_and_entry_thinness; R10_existing_mechanism_separation
+  interpretation: Fields by which an entry binds a routing identifier. Read from the live catalog's own declared field names plus the generic `model`, so a second catalog is detected by SHAPE even when every identifier in it is unseen (S42). No identifier VALUE is enumerated anywhere.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - model
+  - model_id
+  - model_label
+  - parameter_profile
+  - product_surface
+- rule_id: V-DISC-01
+  kind: ambiguity
+  authority: C-08; A01/R01; A02/R02; A09/R09
+  interpretation: Transparent container depth is not semantic, so discovery has no depth cutoff. Traversal stops only on an actual object-cycle; a finite deeper wrapper can never hide a declaration.
+  accepted_alternatives: []
+  rejected_alternatives:
+  - top-level-only lookup
+  - a fixed maximum depth, which merely moves the representation escape to depth+1
+  value: unbounded_finite_tree_with_ancestor_cycle_guard
+- rule_id: V-DISC-02
+  kind: mapping
+  authority: A11/R11_workflow_and_entry_thinness; the tree's own surface declaration
+  interpretation: 'Surfaces on which a positive declaration is normative. Surface MEMBERSHIP is a declared discovery input, not an inference: A11 is itself stated in terms of a surface (''workflow stages and the stable development entry''), and the tree declares its own prefixes. What a document MEANS is still decided only by an adapter.'
+  accepted_alternatives: []
+  rejected_alternatives:
+  - 'deriving the surface from the file name or directory: ST04-IR-003'
+  - 'scanning every discovered document regardless of surface: it would let one artifact''s prohibitions satisfy A09 on another''s behalf'
+  value:
+  - mechanism
+  - boot
+  - registry
+  - workflow_or_entry
+- rule_id: V-DISC-03
+  kind: mapping
+  authority: C-08; the candidate fixture's declared discovery contract
+  interpretation: The unique root-relative document that declares surface membership. Discovery fails if it is absent instead of inferring from directories.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value: surface_declaration.yml
+- rule_id: V-DISC-04
+  kind: mapping
+  authority: A01/R01_role_contract; R10_existing_mechanism_separation
+  interpretation: The sole role-semantics owner belongs to the existing mechanism surface. Other declared surfaces may carry pointer-only references.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value: mechanism
+- rule_id: V-EN-01
+  kind: vocabulary
+  authority: C-03; A13/R13_no_authority_escalation; A14/R14_Human_triggered_progression
+  interpretation: The closed NEGATIVE set for an enablement position. Values outside this set remain on the unsafe side; no closed positive vocabulary can silently treat an unfamiliar grant or trigger as disabled.
+  accepted_alternatives: []
+  rejected_alternatives:
+  - 'a closed positive set: unfamiliar values such as granted or a named trigger fell through to safe in the v3 harness'
+  value:
+  - '0'
+  - absent
+  - banned
+  - blocked
+  - denied
+  - disable
+  - disabled
+  - discovery_only
+  - 'false'
+  - forbidden
+  - never
+  - nil
+  - 'no'
+  - none
+  - not_applicable
+  - not_observable
+  - not_started
+  - 'null'
+  - 'off'
+  - prohibited
+- rule_id: V-EN-02
+  kind: default
+  authority: C-03; A13/R13_no_authority_escalation; A14/R14_Human_triggered_progression
+  interpretation: False, null, zero, an empty scalar and an empty collection are explicit disabled values. A non-empty value outside V-EN-01 is unsafe.
+  accepted_alternatives: []
+  rejected_alternatives:
+  - absence of a recognized positive word means disabled
+  value: false_null_zero_and_empty_are_disabled; every_other_nonempty_value_is_unsafe
+- rule_id: V-EN-03
+  kind: mapping
+  authority: C-03; A13/R13_no_authority_escalation; A14/R14_Human_triggered_progression
+  interpretation: Typed outcomes of closed-negative enablement classification.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - enabled
+  - disabled
+  - unknown
+- rule_id: V-FACT-01
+  kind: mapping
+  authority: A01/R01_role_contract
+  interpretation: Typed outcomes of the role-ownership adapter.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - owns_semantics
+  - references_only
+- rule_id: V-FACT-02
+  kind: mapping
+  authority: A06/R06_role_to_model_requirements; R08_independence_constraints
+  interpretation: Typed outcomes for a provider/model occurrence's decision role.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - normative_selector
+  - negative_constraint
+  - mention
+  - provenance
+  - pointer
+- rule_id: V-FACT-03
+  kind: mapping
+  authority: A02/R02_window_identity
+  interpretation: Typed outcomes for latest-session use in formal window identity.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - absent
+  - prohibited_as_identity
+  - allowed_as_identity
+- rule_id: V-FACT-04
+  kind: mapping
+  authority: A09/R09_structured_handoff
+  interpretation: Typed outcomes for fields physically carried by a handoff payload.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - pointer
+  - mutable_delivery_state
+  - private_reasoning
+  - other
+- rule_id: V-FACT-05
+  kind: mapping
+  authority: A13/R13_no_authority_escalation
+  interpretation: Typed outcomes for a field that mentions or confers authority.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - reference
+  - description
+  - decision_input
+  - grant
+- rule_id: V-FACT-06
+  kind: mapping
+  authority: A11/R11_workflow_and_entry_thinness
+  interpretation: Independent typed detectors for a second mutable routing catalog.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - restatement
+  - independent_declaration
+- rule_id: V-FACT-07
+  kind: default
+  authority: A02/R02_window_identity
+  interpretation: No predecessor-match declaration was present in the adapted entry mode.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value: absent
+- rule_id: V-FACT-08
+  kind: mapping
+  authority: C-08 end_to_end_semantic_boundary
+  interpretation: The exhaustive externally visible outcomes of an A-level predicate.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - pass
+  - fail
+  - unsupported_or_ambiguous_representation
+- rule_id: V-HAND-01
+  kind: vocabulary
+  authority: A09/R09_structured_handoff
+  interpretation: Mutable runtime state R09 forbids a handoff payload from carrying. A REFERENCE to such state is permitted; a VALUE of it is not.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - acceptance
+  - accepted
+  - delivered
+  - delivery
+  - opened
+  - read
+  - receipt
+  - understood
+- rule_id: V-HAND-02
+  kind: vocabulary
+  authority: A09/R09_structured_handoff
+  interpretation: Private reasoning R09 forbids a handoff payload from carrying.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - cot
+  - deliberation
+  - reasoning
+  - thought
+  - thoughts
+- rule_id: V-HAND-03
+  kind: vocabulary
+  authority: A09/R09_structured_handoff
+  interpretation: The scope a handoff actually CARRIES, as opposed to a sibling block that declares policy about it.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - body
+  - content
+  - envelope
+  - payload
+  - record
+- rule_id: V-HAND-04
+  kind: mapping
+  authority: A09/R09_structured_handoff
+  interpretation: The declared handoff-record position. It gates prohibition and payload extraction so one document cannot satisfy another's handoff.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - handoff
+  - record
+- rule_id: V-PARSE-01
+  kind: mapping
+  authority: C-08 end_to_end_semantic_boundary
+  interpretation: File suffixes routed to the strict YAML parser. This chooses a parser, not an acceptance outcome; unsupported suffixes remain visible as other.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - .yaml
+  - .yml
+- rule_id: V-PARSE-02
+  kind: mapping
+  authority: C-08 end_to_end_semantic_boundary
+  interpretation: File suffixes routed to the structural Markdown parser. Meaning is still attached only by a registered adapter.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - .markdown
+  - .md
+- rule_id: V-PARSE-03
+  kind: mapping
+  authority: C-08 end_to_end_semantic_boundary
+  interpretation: Whole-token segmentation for declaration-position keys. Subject values are never segmented or compared with a completeness vocabulary.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value: '[^0-9a-z一-鿿]+'
+- rule_id: V-PARSE-04
+  kind: mapping
+  authority: C-08; A09/R09_structured_handoff
+  interpretation: A scalar is path-shaped only when it is a relative-looking token ending in one of the declared durable artifact formats. This separates a state pointer from carried mutable state; the key name alone is insufficient.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value: '[\w一-鿿\-./]+\.(ya?ml|md|py|json|txt)$'
+- rule_id: V-PARSE-05
+  kind: mapping
+  authority: C-08 end_to_end_semantic_boundary; A11/R11_workflow_and_entry_thinness
+  interpretation: Structural Markdown blocks admitted by the parser. No serialized line directly decides acceptance; parsed blocks are still offered to an adapter. Key-value labels have no arbitrary authored length ceiling.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+    atx: ^\s{0,3}#{1,6}\s+(.+?)\s*#*\s*$
+    bullet: ^\s*[-*+]\s+(.+?)\s*$
+    definition_marker: ^\s*[:：](\s+.*)?$
+    key_value: ^\s*([^:：#|][^:：]*)[:：]\s*(.*)$
+    ordered: ^\s*\d+[.)]\s+(.+?)\s*$
+    setext: ^\s{0,3}(=+|-+)\s*$
+    table_row: ^\s*\|(.+)\|\s*$
+    table_sep: ^\s*\|[\s:\-|]+\|\s*$
+- rule_id: V-POL-01
+  kind: vocabulary
+  authority: A09/R09_structured_handoff; A14/R14_Human_triggered_progression
+  interpretation: Tokens by which a key name declares a prohibition. A truthy value on such a key asserts the prohibition rather than enabling the behaviour.
+  accepted_alternatives: []
+  rejected_alternatives:
+  - 'including the modal ''must'' as a negation marker: ''must'' alone negates nothing and, under parity counting (V-POL-02), ''must_not'' would have counted twice and inverted to positive'
+  value:
+  - absent
+  - ban
+  - banned
+  - block
+  - blocked
+  - denied
+  - deny
+  - disable
+  - disabled
+  - disallow
+  - disallowed
+  - exclude
+  - excluded
+  - forbid
+  - forbidden
+  - forbids
+  - never
+  - 'no'
+  - none
+  - not
+  - prohibit
+  - prohibited
+  - prohibition
+  - prohibits
+  - without
+- rule_id: V-POL-02
+  kind: polarity
+  authority: A13/R13_no_authority_escalation; A14/R14_Human_triggered_progression
+  interpretation: Polarity is the parity of negation markers in a key name, not their presence. One marker negates; two markers are a double negative and are therefore POSITIVE. Closes S25 (master_write_not_forbidden) and S39 (scheduler_not_prohibited), which the presence rule read as prohibitions.
+  accepted_alternatives: []
+  rejected_alternatives:
+  - 'presence-of-any-marker => negative: accepted both independent double-negative counterexamples'
+  value: parity
+- rule_id: V-POL-03
+  kind: mapping
+  authority: A09/R09_structured_handoff; A13/R13_no_authority_escalation
+  interpretation: Typed outcomes after applying traced negation-parity rules.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - positive
+  - negative
+  - unknown
+- rule_id: V-POS-01
+  kind: vocabulary
+  authority: A13/R13_no_authority_escalation; A14/R14_Human_triggered_progression
+  interpretation: A key naming commentary about a subject rather than a declaration of it. Such a position yields evidence, never a decision fact. Closes S18/S20 (authority_note, authority_description read as grants) and S37 (scheduler_note read as an enabled scheduler).
+  accepted_alternatives: []
+  rejected_alternatives:
+  - 'word-count prose heuristic alone (is_prose, >=9 words): a one-word value such as ''unchanged'' is still commentary, and length is a rendering property, not a semantic one'
+  value:
+  - comment
+  - comments
+  - describes
+  - description
+  - example
+  - examples
+  - explanation
+  - narrative
+  - note
+  - notes
+  - purpose
+  - rationale
+  - reason
+  - reasons
+  - summary
+- rule_id: V-POS-02
+  kind: vocabulary
+  authority: A09/R09_structured_handoff; A01/R01_role_contract
+  interpretation: 'A key naming a reference to a subject rather than the subject itself. Fails closed: a pointer-named key whose value is not a path is treated as carried state, so a field cannot be laundered by renaming it *_ref.'
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - link
+  - path
+  - paths
+  - pointer
+  - ref
+  - reference
+  - references
+  - refs
+  - uri
+  - url
+- rule_id: V-POS-03
+  kind: vocabulary
+  authority: A06/R06_role_to_model_requirements
+  interpretation: 'A key naming the origin of an observation. A provider named inside provenance is a record of what happened, not a selection of what must happen. Whole-token matching only: ST04-V3-IR-005 silenced an entire subtree because ''source'' occurs inside ''resource''.'
+  accepted_alternatives: []
+  rejected_alternatives:
+  - substring matching on the raw segment
+  - 'including note/reason/example here: they are descriptive positions (V-POS-01), a different kind, and conflating them hid S18/S20'
+  value:
+  - basis
+  - citation
+  - citations
+  - derivation
+  - evidence
+  - history
+  - observed
+  - of_record
+  - provenance
+  - source
+  - sources
+- rule_id: V-POS-04
+  kind: vocabulary
+  authority: A09/R09_structured_handoff; A07/R07_route_receipt
+  interpretation: 'A key declaring the SHAPE of a record. `required_fields: [provider, model]` names the fields a receipt must carry; it selects nothing.'
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - allowed
+  - field
+  - fields
+  - keys
+  - optional
+  - properties
+  - required
+  - schema
+- rule_id: V-POS-05
+  kind: mapping
+  authority: C-08; A01/R01_role_contract; A02/R02_window_identity
+  interpretation: Field names by which a list record explicitly declares its keyed collection identity. They normalize container shape only; the value is read verbatim and never compared with a subject vocabulary.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - mode_id
+  - entry_mode
+  - role_id
+  - id
+  - name
+  - key
+  - kind
+  - mode
+  - role
+  - label
+- rule_id: V-POS-06
+  kind: mapping
+  authority: A09/R09_structured_handoff
+  interpretation: Fields by which a structured prohibition record names the field it governs. The named value, not the qualifier key, becomes the fact.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - field
+  - name
+  - id
+  - key
+  - target
+  - attribute
+- rule_id: V-PROV-01
+  kind: vocabulary
+  authority: A06/R06_role_to_model_requirements; R08_independence_constraints
+  interpretation: Keys that open a provider/model SELECTION region. The region is the decision position; whatever occupies its value slot is the subject, read verbatim. No vendor name is ever consulted, so an unlisted provider is detected exactly like a listed one.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - engine
+  - engines
+  - executor
+  - executors
+  - families
+  - family
+  - model
+  - models
+  - provider
+  - providers
+  - surface
+  - surfaces
+  - vendor
+  - vendors
+- rule_id: V-PROV-02
+  kind: vocabulary
+  authority: A06/R06_role_to_model_requirements
+  interpretation: Sub-keys inside a selection region that hold the selected subject. Closes S09 (provider_selection.chosen) and S13 (provider_policy.allow.chosen), which the previous extractor could not see because it only looked at the innermost key and at truth markers.
+  accepted_alternatives: []
+  rejected_alternatives:
+  - 'expanding every leaf under a selection region: baseline `different_model_family: {expressed_as: ..., delivered_to: ...}` would become two normative selectors. Selection must sit in a selection slot'
+  value:
+  - assigned
+  - bound
+  - choice
+  - chosen
+  - default
+  - pinned
+  - preferred
+  - primary
+  - selected
+  - selection
+  - use
+  - uses
+  - value
+- rule_id: V-PROV-03
+  kind: polarity
+  authority: A06/R06_role_to_model_requirements; R08_independence_constraints
+  interpretation: 'A sub-region that grants rather than forbids. A mixed allow/deny policy is decided by its POSITIVE branch: forbidding one provider does not neutralise pinning another (S13).'
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - allow
+  - allowed
+  - include
+  - included
+  - permit
+  - permitted
+- rule_id: V-PROV-04
+  kind: vocabulary
+  authority: A06/R06_role_to_model_requirements
+  interpretation: Qualifiers that make a provider/model region an explicit selection container. Once claimed, an unrecognized value slot is unsupported rather than silently ignored.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - choice
+  - pin
+  - policy
+  - preference
+  - selection
+  - selector
+- rule_id: V-PROV-05
+  kind: vocabulary
+  authority: A08/R08_independence_constraints
+  interpretation: Qualifiers that turn a model-family mention into an independence constraint rather than a provider selection.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - different
+  - distinct
+  - independence
+  - independent
+  - separate
+- rule_id: V-PROV-06
+  kind: vocabulary
+  authority: A06/R06_role_to_model_requirements
+  interpretation: Path positions that bind a provider selector to an opaque role identity.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - role
+  - roles
+- rule_id: V-REC-01
+  kind: mapping
+  authority: C-10 externally_bound_receipt_closure
+  interpretation: The sole sentinel allowed for the receipt's own changed-path entry. Final bytes must be anchored by an externally supplied SHA-256.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value: self_hash_excluded
+- rule_id: V-REC-02
+  kind: mapping
+  authority: C-10; R11-R17
+  interpretation: Required fields of the strict freeze-receipt contract.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - schema_version
+  - receipt_version
+  - task_id
+  - run_id
+  - base_sha
+  - candidate_sha
+  - changed_paths
+  - artifact_hashes
+  - artifact_hash_scope
+  - topology
+- rule_id: V-REC-03
+  kind: mapping
+  authority: C-10; R14
+  interpretation: Canonical lowercase forty-hex Git object identifier syntax.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value: ^[0-9a-f]{40}$
+- rule_id: V-REC-04
+  kind: mapping
+  authority: C-10 externally_bound_receipt_closure
+  interpretation: Canonical lowercase SHA-256 syntax for an external byte anchor.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value: ^[0-9a-f]{64}$
+- rule_id: V-REC-05
+  kind: mapping
+  authority: C-10; R12
+  interpretation: Segments that make a ledger path non-canonical. An empty, current-directory or parent-directory segment requires resolution and is rejected.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - ''
+  - .
+  - ..
+- rule_id: V-REC-06
+  kind: mapping
+  authority: C-10; R12
+  interpretation: Windows drive-prefixed paths are absolute, not repository-relative ledger paths.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value: '^[A-Za-z]:'
+- rule_id: V-REC-07
+  kind: mapping
+  authority: C-10; R12
+  interpretation: Ledger paths use Git's forward-slash repository spelling; backslash is rejected.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value: \
+- rule_id: V-REC-08
+  kind: mapping
+  authority: C-10; C-11
+  interpretation: External facts required before complete receipt closure may be claimed.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - artifact_hashes
+  - base_sha
+  - candidate_sha
+  - diff_paths
+  - hash_scope
+  - receipt_sha256
+  - topology
+- rule_id: V-ROLE-01
+  kind: vocabulary
+  authority: A01/R01_role_contract
+  interpretation: 'The normative content A01 says a role contract owns: what the role is responsible for and what independence it must keep. A document binding either of these to a role entry OWNS role semantics; one binding only scopes and pointers REFERENCES them. A field that is a pointer takes precedence: `handoff_ref` names where the rule lives, it is not the rule.'
+  accepted_alternatives: []
+  rejected_alternatives:
+  - 'including ''context'': a context scope is applicability metadata, not normative role content. Including it made S16 (role_applicability with context_scope) a false second role source'
+  - 'including ''authority'', ''handoff'', ''produces'', ''constraint'', ''effects'': each occurs outside any role table — `route_receipt.authority_constant` in the baseline window contract is the clearest case — so including them made a routing block look like a role definition'
+  - 'including ''requirement'': too generic; it appears in pointer records'
+  value:
+  - duties
+  - duty
+  - independence
+  - obligation
+  - obligations
+  - responsibilities
+  - responsibility
+- rule_id: V-ROLE-02
+  kind: vocabulary
+  authority: A01/R01_role_contract
+  interpretation: 'Where an entry may carry its own role identity when the collection key is a generic identifier. Identity is read verbatim: the label''s WORDS are never checked against a concept list.'
+  accepted_alternatives: []
+  rejected_alternatives:
+  - 'ROLE_CONCEPT_TOKENS: requiring a role''s NAME to appear in a closed concept vocabulary. It produced both directions of error at once — S14 (real second role source named assembler/examiner) passed because the names were unlisted, and S17 (quality metrics named review_latency /research_depth) failed because unrelated names were listed. This is the vendor-completeness antipattern applied to roles and it is deleted, not extended.'
+  value:
+  - id
+  - label
+  - name
+  - role
+  - role_id
+  - title
+- rule_id: V-ROLE-03
+  kind: threshold
+  authority: A01/R01_role_contract
+  interpretation: One role entry carrying normative role content is already a second source of role semantics under A01's 'exactly one document owns'. The constant is 1 because A01 states no size exception.
+  accepted_alternatives: []
+  rejected_alternatives:
+  - '2 or 3, on the intuition that a ''table'' needs several rows: A01 grants no size exception, and this is the same defect class as CATALOG_RESTATEMENT_THRESHOLD=3'
+  value: 1
+- rule_id: V-TOPO-01
+  kind: vocabulary
+  authority: A07/R07_route_receipt; C-04 as reproduced by the independent review
+  interpretation: Topologies a freeze receipt may declare. full_candidate_tree obliges the hash scope to equal every file physically under the artifact root; full_declared_surface obliges it to equal a non-empty declared scope. Anything else is unauthorized and fails closed (R17).
+  accepted_alternatives: []
+  rejected_alternatives:
+  - 'accepting any string and reporting it: that is what R17 exploited'
+  - 'an open enum with a warning: a warning does not fail a gate'
+  value:
+  - full_candidate_tree
+  - full_declared_surface
+- rule_id: V-TOPO-02
+  kind: mapping
+  authority: A07/R07_route_receipt; C-04
+  interpretation: Topology whose hash scope must equal every observed artifact-tree file.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value: full_candidate_tree
+- rule_id: V-TOPO-03
+  kind: mapping
+  authority: A07/R07_route_receipt; C-04
+  interpretation: Topology whose non-empty declared scope is the explicit validation boundary.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value: full_declared_surface
+- rule_id: V-WIN-01
+  kind: mapping
+  authority: A02/R02_window_identity
+  interpretation: 'The identity facts A R02 requires a window to bind. `run` is absent on purpose: R02 does not require it. ST04-V3-IR-004 was caused by promoting run_id from a B choice into an A requirement.'
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - task
+  - role
+  - stage
+  - step
+  - branch
+  - head
+- rule_id: V-WIN-02
+  kind: mapping
+  authority: B_ONLY (recorded as evidence; mechanically excluded from decisions)
+  interpretation: Facts a B design may choose to bind and which acceptance must ignore. `decision_facts.WindowIdentityFact` carries these in a separate field that no predicate reads, so the promotion cannot recur by editing.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - run
+- rule_id: V-WIN-03
+  kind: mapping
+  authority: A02/R02_window_identity
+  interpretation: Spellings of the same identity fact. A synonym map is a normalisation of the SUBJECT NAME A02 itself uses, not an inference about meaning.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+    branch:
+    - branch
+    - task_branch
+    - work_branch
+    head:
+    - commit
+    - entry_head
+    - entry_repository_head
+    - head
+    - repository_head
+    lifecycle:
+    - lifecycle
+    - lifecycle_state
+    - state
+    role:
+    - role
+    - role_id
+    run:
+    - run
+    - run_id
+    stage:
+    - stage
+    - stage_id
+    - workflow_stage
+    - workflow_stage_id
+    step:
+    - step
+    - step_id
+    - workflow_step
+    - workflow_step_id
+    task:
+    - task
+    - task_id
+    window:
+    - window
+    - window_id
+- rule_id: V-WIN-04
+  kind: vocabulary
+  authority: A02/R02_window_identity
+  interpretation: Entry-mode identities R02 requires to be distinguishable (fresh side).
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - create
+  - first
+  - fresh
+  - initial
+  - new
+- rule_id: V-WIN-05
+  kind: vocabulary
+  authority: A02/R02_window_identity
+  interpretation: Entry-mode identities R02 requires to be distinguishable (reentry side).
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - continuation
+  - reenter
+  - reentry
+  - rejoin
+  - resume
+  - resumed
+- rule_id: V-WIN-06
+  kind: mapping
+  authority: A02/R02_window_identity
+  interpretation: The required window head of a window-identity region.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - window
+- rule_id: V-WIN-07
+  kind: mapping
+  authority: A02/R02_window_identity
+  interpretation: The alternative identity heads of a window-identity region.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - id
+  - identity
+- rule_id: V-WIN-08
+  kind: mapping
+  authority: A02/R02_window_identity
+  interpretation: Fields that explicitly enumerate facts bound into a window identity.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - bound
+  - facts
+  - fields
+  - required
+- rule_id: V-WIN-09
+  kind: mapping
+  authority: A02/R02_window_identity
+  interpretation: The latest-session pointer position that A02 forbids as formal identity.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - latest
+- rule_id: V-WIN-10
+  kind: mapping
+  authority: A02/R02_window_identity
+  interpretation: The only positive textual status that establishes a latest-session pointer is prohibited as formal identity. Every other enabled status at that position fails closed as allowed_or_ambiguous.
+  accepted_alternatives: []
+  rejected_alternatives:
+  - substring searches for prohibit/allow inside arbitrary prose
+  value: prohibited_as_formal_identity
+- rule_id: V-WIN-11
+  kind: mapping
+  authority: A02/R02_window_identity
+  interpretation: Fields that bind a re-entry mode to its exact predecessor.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - predecessor
+- rule_id: V-WIN-12
+  kind: mapping
+  authority: A02/R02_window_identity
+  interpretation: R02 requires an explicitly identified predecessor; exact is the declared match relation.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value: exact
+- rule_id: V-WIN-13
+  kind: mapping
+  authority: A02/R02_window_identity
+  interpretation: The required entry head of an entry-mode collection.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - entry
+- rule_id: V-WIN-14
+  kind: mapping
+  authority: A02/R02_window_identity
+  interpretation: The alternative mode heads of an entry-mode collection.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - mode
+  - modes
+- rule_id: V-WIN-15
+  kind: mapping
+  authority: A02/R02_window_identity
+  interpretation: Qualifier asserting that an identity or predecessor fact is mandatory.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - required
+- rule_id: V-WIN-16
+  kind: mapping
+  authority: A02/R02_window_identity
+  interpretation: Qualifier declaring the predecessor matching relation.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - match
+- rule_id: V4-CTX-01
+  kind: vocabulary
+  authority: A04/R04_minimum_effective_context
+  interpretation: Token set identifying a minimum-effective-context derivation contract region.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - context
+  - contexts
+  - effective
+  - load
+  - load_set
+  - loadset
+  - minimum
+- rule_id: V4-CTX-02
+  kind: mapping
+  authority: A04/R04_minimum_effective_context
+  interpretation: 'A R04 states the derivation inputs verbatim: task + role + workflow stage/step + explicitly approved references. Synonyms map onto those four roles; spelling is not decision-bearing.'
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+    approved_refs:
+    - allowlist
+    - allowlisted
+    - approval
+    - approved
+    - authorised
+    - authorized
+    - explicit
+    - permitted
+    - sanctioned
+    role:
+    - role
+    - role_id
+    - roleid
+    stage_step:
+    - stage
+    - stage_id
+    - stagestep
+    - step
+    - step_id
+    - workflow_stage
+    - workflow_stage_id
+    - workflow_step
+    - workflow_step_id
+    task:
+    - task
+    - task_id
+    - taskid
+- rule_id: V4-CTX-03
+  kind: mapping
+  authority: A04/R04_minimum_effective_context
+  interpretation: The four derivation-input roles A R04 states verbatim.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - task
+  - role
+  - stage_step
+  - approved_refs
+- rule_id: V4-CTX-04
+  kind: vocabulary
+  authority: A04/R04_minimum_effective_context
+  interpretation: Tokens naming the historical-run region A R04 forbids default-preloading. Also matches the entry-spec prohibition on default-preloading 01_os/_runs/**.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - archive
+  - archives
+  - historical
+  - history
+  - past
+  - previous
+  - run
+  - runs
+- rule_id: V4-CTX-05
+  kind: vocabulary
+  authority: A04/R04_minimum_effective_context
+  interpretation: Tokens naming the preload behaviour whose enablement A R04 constrains.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - auto_load
+  - autoload
+  - eager
+  - prefetch
+  - preload
+  - preloading
+- rule_id: V4-CTX-06
+  kind: vocabulary
+  authority: A04/R04_minimum_effective_context
+  interpretation: A R04 requires exact paths/versions or hashes where material. These markers make a load entry unbounded rather than exact. `**` and a trailing `/` both name a whole subtree; a bare `*` names an unenumerated set.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - '**'
+  - '*'
+- rule_id: V4-CTX-07
+  kind: vocabulary
+  authority: A04/R04_minimum_effective_context
+  interpretation: 'Tokens by which a load entry supplies the version or hash A R04 asks for where material. Presence is sufficient, not necessary: a concrete non-wildcard path is already exact.'
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - blob
+  - commit
+  - digest
+  - hash
+  - rev
+  - revision
+  - sha
+  - sha256
+  - version
+- rule_id: V4-CTX-08
+  kind: vocabulary
+  authority: A04/R04_minimum_effective_context
+  interpretation: A R04 requires the derived load set to EXCLUDE unrelated role history and old chats. These tokens name that excluded material when it appears as a load entry.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - chat
+  - chats
+  - conversation
+  - conversations
+  - transcript
+  - transcripts
+- rule_id: V4-CTX-09
+  kind: mapping
+  authority: A04/R04_minimum_effective_context
+  interpretation: Structural position holding the declared derivation inputs of a context contract.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - basis
+  - derivation
+  - derive
+  - derived
+  - from
+  - input
+  - inputs
+  - keys
+  - sources
+- rule_id: V4-CTX-10
+  kind: mapping
+  authority: A04/R04_minimum_effective_context
+  interpretation: Structural position holding the derived load set of a context contract.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - artifacts
+  - entries
+  - files
+  - load
+  - load_set
+  - loadset
+  - members
+  - set
+- rule_id: V4-FAIL-01
+  kind: vocabulary
+  authority: A12/R12_failure_surfacing
+  interpretation: Token set identifying the failure-surfacing / validation-design region.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - cases
+  - checks
+  - failure
+  - failures
+  - surfacing
+  - validation
+  - validations
+- rule_id: V4-FAIL-02
+  kind: mapping
+  authority: A12/R12_failure_surfacing
+  interpretation: 'A R12 enumerates the minimum failure cases verbatim: unknown/invalid role, missing window identity, role/window/task mismatch, stale or broken context refs, missing/invalid model-routing receipt, self-review independence violation where required, and broken boot/registry/contract pointers.'
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+    binding_mismatch:
+    - conflict
+    - inconsistency
+    - inconsistent
+    - mismatch
+    - mismatched
+    broken_context_ref:
+    - context
+    - contexts
+    broken_pointer:
+    - boot
+    - contract
+    - contracts
+    - pointer
+    - pointers
+    - registry
+    independence_violation:
+    - independence
+    - reviewer
+    - self_review
+    - selfreview
+    invalid_role:
+    - role
+    - roles
+    invalid_route_receipt:
+    - receipt
+    - receipts
+    - route
+    - routing
+    missing_window_identity:
+    - identities
+    - identity
+    - window
+    - windowid
+- rule_id: V4-FAIL-03
+  kind: mapping
+  authority: A12/R12_failure_surfacing
+  interpretation: The seven failure-case roles A R12 states verbatim as a minimum.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - invalid_role
+  - missing_window_identity
+  - binding_mismatch
+  - broken_context_ref
+  - invalid_route_receipt
+  - independence_violation
+  - broken_pointer
+- rule_id: V4-FAIL-04
+  kind: vocabulary
+  authority: A12/R12_failure_surfacing
+  interpretation: 'A R12 requires broken bindings to FAIL VISIBLY. These tokens name a visible failure effect. Closed NEGATIVE-style set: an effect that matches none of these is not accepted as visible failure, so an unrecognised effect fails the predicate rather than satisfying it.'
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - abort
+  - block
+  - blocked
+  - error
+  - errors
+  - exit_nonzero
+  - fail
+  - failed
+  - failure
+  - halt
+  - invalid
+  - non_zero
+  - nonzero
+  - raise
+  - reject
+  - rejected
+  - stop
+- rule_id: V4-FAIL-05
+  kind: vocabulary
+  authority: A12/R12_failure_surfacing
+  interpretation: 'A R12 ends with an explicit prohibition: no silent fallback to full history or an arbitrary model. These tokens locate a fallback position whose enablement is then judged with the accepted engine''s fail-closed enablement rule.'
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - default_to
+  - defaultto
+  - degrade
+  - fallback
+  - fallbacks
+  - silent
+  - silently
+- rule_id: V4-FRESH-01
+  kind: vocabulary
+  authority: A05/R05_context_freshness_and_reentry
+  interpretation: 'Token set identifying the freshness / invalidation region of a contract. The bare token `fresh` is deliberately absent: it also occurs in `entry_modes.fresh` and in `fresh_reads_required`, and including it claimed an entry mode as a freshness region and then reported it as having no fingerprint. A02''s entry modes and A05''s freshness rules are different obligations and must not share a locator.'
+  accepted_alternatives:
+  - freshness, invalidation, staleness and fingerprint regions
+  rejected_alternatives:
+  - the bare token `fresh`, which A02 already uses for entry modes
+  value:
+  - fingerprint
+  - fingerprints
+  - freshness
+  - invalidate
+  - invalidation
+  - stale
+  - staleness
+- rule_id: V4-FRESH-02
+  kind: vocabulary
+  authority: A05/R05_context_freshness_and_reentry
+  interpretation: A R05 requires context dependency fingerprints bound to the window.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - checksum
+  - digest
+  - fingerprint
+  - fingerprints
+  - hash
+  - sha
+  - sha256
+- rule_id: V4-FRESH-03
+  kind: mapping
+  authority: A05/R05_context_freshness_and_reentry
+  interpretation: 'A R05 names four triggers verbatim: a changed dependency, a changed task branch/head, a changed authorization, and an explicit re-entry boundary.'
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+    authorization_change:
+    - approval
+    - authorisation
+    - authority
+    - authorization
+    - gate
+    - grant
+    - grants
+    - permission
+    - permissions
+    dependency_change:
+    - dep
+    - dependencies
+    - dependency
+    - deps
+    - fingerprint
+    - fingerprints
+    explicit_reentry:
+    - continuation
+    - re_entry
+    - reenter
+    - reentry
+    - rejoin
+    - resume
+    - resumed
+    head_change:
+    - base
+    - branch
+    - commit
+    - head
+    - revision
+    - sha
+- rule_id: V4-FRESH-04
+  kind: mapping
+  authority: A05/R05_context_freshness_and_reentry
+  interpretation: The four trigger roles A R05 states verbatim.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - dependency_change
+  - head_change
+  - authorization_change
+  - explicit_reentry
+- rule_id: V4-FRESH-05
+  kind: mapping
+  authority: A05/R05_context_freshness_and_reentry
+  interpretation: 'A R05 permits exactly two compliant effects — trigger the required fresh reads, or raise stale status — and names the non-compliant one: silently continuing from cached conversational state. Anything that maps to neither compliant role is UNKNOWN and fails closed; ST04-V3-IR-008 is the incident that makes the unknown case fail rather than pass.'
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+    continue_cached:
+    - cache
+    - cached
+    - carry
+    - carry_forward
+    - carryforward
+    - continue
+    - keep
+    - none
+    - noop
+    - resume
+    - retain
+    - reuse
+    - unchanged
+    fresh_read:
+    - fresh
+    - re_read
+    - read
+    - recheck
+    - recompute
+    - refetch
+    - reload
+    - reread
+    - revalidate
+    - reverify
+    stale_status:
+    - block
+    - blocked
+    - closed
+    - error
+    - expire
+    - expired
+    - fail
+    - failclosed
+    - failed
+    - halt
+    - invalid
+    - invalidate
+    - invalidated
+    - reject
+    - rejected
+    - stale
+    - stop
+- rule_id: V4-FRESH-06
+  kind: mapping
+  authority: A05/R05_context_freshness_and_reentry
+  interpretation: The two effect roles A R05 permits. Every other effect, including unknown, fails.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - fresh_read
+  - stale_status
+- rule_id: V4-FRESH-07
+  kind: mapping
+  authority: A05/R05_context_freshness_and_reentry
+  interpretation: Structural position holding the declared freshness triggers and their effects.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - condition
+  - conditions
+  - invalidation
+  - 'on'
+  - rules
+  - trigger
+  - triggers
+  - when
+- rule_id: V4-FRESH-08
+  kind: mapping
+  authority: A05/R05_context_freshness_and_reentry; A12/R12_failure_surfacing
+  interpretation: Structural position holding the effect of a trigger or failure case, when the effect is written as a record field rather than as the value itself. Both A R05 and A R12 attach an effect to a named condition, so the locator is shared.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - action
+  - actions
+  - effect
+  - effects
+  - outcome
+  - outcomes
+  - result
+  - results
+  - status
+  - then
+- rule_id: V4-FRESH-09
+  kind: mapping
+  authority: A05/R05_context_freshness_and_reentry; A12/R12_failure_surfacing
+  interpretation: 'Structural position holding an effect that applies to every entry of a sibling collection. `conditions: [a, b]` with a sibling `stale_effect: fail_closed`, and `conditions: {a: {effect: fail_closed}, b: {effect: fail_closed}}`, are the same declaration written two ways. NG-01 requires them to produce the same facts, so a collection entry with no effect of its own inherits the region''s declared effect. Inheritance never overrides an entry''s own effect; it only fills an absence.'
+  accepted_alternatives:
+  - per-entry effect
+  - region-level effect inherited by entries that declare none
+  rejected_alternatives:
+  - treating a region-level effect as absent, which makes a compliant list form fail
+  value:
+  - action
+  - actions
+  - disposition
+  - effect
+  - effects
+  - on_failure
+  - on_stale
+  - onfailure
+  - onstale
+  - outcome
+  - outcomes
+  - result
+  - results
+  - then
+- rule_id: V4-FRESH-10
+  kind: mapping
+  authority: A05/R05_context_freshness_and_reentry; A12/R12_failure_surfacing
+  interpretation: 'Tokens a region-level effect key may carry ALONGSIDE the effect token and still be that region''s default effect. `stale_effect` qualifies; `authority_effect` does not, because `authority` names a different obligation entirely.
+
+
+    This exists because a bare token match on `effect` picked up `authority_effect: none` and handed it to every failure case as their declared outcome, turning seven compliant cases into seven silent ones. A locator that matches a neighbouring field is the ST04-V3-IR-005 defect — provenance exclusion firing on any key containing the letters `source` — in a different key.'
+  accepted_alternatives:
+  - exact canonical match on an effect position
+  - effect token plus one of these qualifiers and nothing else
+  rejected_alternatives:
+  - any key whose tokens merely include an effect token
+  value:
+  - all
+  - condition
+  - conditions
+  - default
+  - failure
+  - invalidation
+  - stale
+  - trigger
+- rule_id: V4-IND-01
+  kind: vocabulary
+  authority: A08/R08_independence_constraints
+  interpretation: Token set identifying the review-independence region of a contract.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - independence
+  - independent
+  - review
+  - reviewer
+  - self_review
+  - selfreview
+- rule_id: V4-IND-02
+  kind: vocabulary
+  authority: A08/R08_independence_constraints
+  interpretation: A R08 requires that implementation and final review windows are distinct sessions. These tokens name the distinctness requirement.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - different
+  - distinct
+  - independent
+  - not_same
+  - notsame
+  - separate
+- rule_id: V4-IND-03
+  kind: vocabulary
+  authority: A08/R08_independence_constraints
+  interpretation: 'A R08 requires independence to be machine-checkable enough to REJECT obvious self-review. A declaration that merely notes the requirement is not a rejection, so the effect must name a blocking outcome. Closed NEGATIVE-style set: an unrecognised effect is not accepted as a rejection.'
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - block
+  - blocked
+  - denied
+  - deny
+  - error
+  - fail
+  - failed
+  - failure
+  - forbid
+  - forbidden
+  - invalid
+  - nonzero
+  - prohibit
+  - prohibited
+  - refuse
+  - refused
+  - reject
+  - rejected
+  - rejection
+  - stop
+- rule_id: V4-IND-04
+  kind: vocabulary
+  authority: A08/R08_independence_constraints
+  interpretation: A R08 requires a model-family requirement to be passed as a ROUTING CONSTRAINT rather than hard-coded into role architecture. These tokens locate the family position structurally; no vendor or family name is enumerated anywhere.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - families
+  - family
+  - model_family
+  - modelfamily
+  - provider_family
+- rule_id: V4-IND-05
+  kind: vocabulary
+  authority: A08/R08_independence_constraints
+  interpretation: Structural positions that express a family REQUIREMENT rather than a family CHOICE. A family value sitting in a selection slot is the hard-coding A R08 forbids; a family value sitting in a constraint/requirement position is what A R08 asks for.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - constraint
+  - constraints
+  - obligation
+  - obligations
+  - policy
+  - require
+  - required
+  - requirement
+  - requirements
+  - rule
+  - rules
+- rule_id: V4-IND-06
+  kind: mapping
+  authority: A08/R08_independence_constraints
+  interpretation: Structural position declaring what happens when obvious self-review is detected.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - sameSession
+  - same_author
+  - same_session
+  - sameauthor
+  - self
+  - self_review
+  - selfreview
+- rule_id: V4-IND-07
+  kind: mapping
+  authority: A08/R08_independence_constraints
+  interpretation: Structural position naming the session/window whose distinctness A R08 requires.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - context
+  - contexts
+  - session
+  - sessions
+  - window
+  - windows
+- rule_id: V4-IND-08
+  kind: mapping
+  authority: A08/R08_independence_constraints
+  interpretation: 'A R08 requires that the implementation window and the final review window are distinct. Both halves of that sentence must be present for the requirement to be declared: a distinctness marker, and a session/window subject it applies to. Either half may sit in the key or in the value — `review_windows: distinct_required` and `distinct_review_windows: true` are the same declaration.'
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - final
+  - implementation
+  - review
+  - reviewer
+- rule_id: V4-IND-09
+  kind: mapping
+  authority: A08/R08_independence_constraints
+  interpretation: A self-review position is one naming a review that is not separated from its author. Detected as the co-occurrence of a review token with a sameness token, so `self_review`, `same_window_review` and `same_author_review` are all found without enumerating every spelling.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+    review:
+    - acceptance
+    - audit
+    - review
+    - reviewed
+    - reviewer
+    sameness:
+    - identical
+    - own
+    - same
+    - sameauthor
+    - samesession
+    - samewindow
+    - self
+- rule_id: V4-LIFE-01
+  kind: mapping
+  authority: A03/R03_window_lifecycle
+  interpretation: A R03 requires at least create/enter, active, handoff-ready, closed and stale-or-invalidated states. The state SET is A-required; the exact spellings are not (requirement_traceability_v1.yml b_only_inventory). This maps declared state identifiers onto the five A-required roles by token, so a package may spell them however it likes.
+  accepted_alternatives:
+  - match the five roles by token synonym
+  rejected_alternatives:
+  - require the exact lifecycle state spellings used by B05
+  - require exactly five states and reject any additional project state
+  value:
+    active:
+    - active
+    - inprogress
+    - live
+    - progress
+    - running
+    - working
+    closed:
+    - close
+    - closed
+    - complete
+    - completed
+    - done
+    - ended
+    - finished
+    - terminated
+    create_or_enter:
+    - create
+    - created
+    - creation
+    - enter
+    - entered
+    - entry
+    - init
+    - initialise
+    - initialised
+    - initialize
+    - initialized
+    - open
+    - opened
+    - start
+    - started
+    handoff_ready:
+    - deliverable
+    - handoff
+    - handoffready
+    - handover
+    - ready
+    stale_or_invalidated:
+    - expire
+    - expired
+    - invalid
+    - invalidated
+    - invalidation
+    - obsolete
+    - stale
+    - superseded
+    - void
+    - voided
+- rule_id: V4-LIFE-02
+  kind: mapping
+  authority: A03/R03_window_lifecycle
+  interpretation: The five lifecycle roles A R03 states verbatim, in the order A states them.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - create_or_enter
+  - active
+  - handoff_ready
+  - closed
+  - stale_or_invalidated
+- rule_id: V4-LIFE-03
+  kind: vocabulary
+  authority: A03/R03_window_lifecycle
+  interpretation: Token set that identifies the region of a document declaring a window lifecycle. Deliberately narrow. An earlier draft also matched the bare token `states`, which claimed `failure_states` as a lifecycle and reported a lifecycle covering one role. A region locator that over-claims produces confident wrong facts, so the states collection is reached as a SUB-region of a lifecycle node instead.
+  accepted_alternatives:
+  - match the lifecycle node, then descend to its states collection
+  rejected_alternatives:
+  - match any key containing the token `states`
+  value:
+  - life_cycle
+  - lifecycle
+  - lifecycles
+  - lifespan
+- rule_id: V4-LIFE-04
+  kind: mapping
+  authority: A03/R03_window_lifecycle
+  interpretation: 'Structural positions in which a declared condition names the subject it observes. A position, not a vocabulary: what the subject IS is read verbatim and never compared with a keyword list, because comparing it would rebuild rejected option F03-A.'
+  accepted_alternatives:
+  - name the observed subject in any of these positions
+  rejected_alternatives:
+  - infer the subject by matching a closed list of blessed subject words
+  value:
+  - binding
+  - bindings
+  - fact
+  - facts
+  - field
+  - observable
+  - observed
+  - observes
+  - of
+  - 'on'
+  - over
+  - subject
+  - subjects
+  - target
+- rule_id: V4-LIFE-05
+  kind: mapping
+  authority: A03/R03_window_lifecycle
+  interpretation: Structural position holding the state collection inside a lifecycle region.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - phase
+  - phases
+  - state
+  - states
+  - status
+  - statuses
+- rule_id: V4-LIFE-06
+  kind: mapping
+  authority: A03/R03_window_lifecycle
+  interpretation: Structural positions in which a declared condition names the change or comparison it tests. Separate from the subject slot so that a condition missing only the comparison reports which slot is missing rather than failing as a whole.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - change
+  - changes
+  - comparator
+  - comparison
+  - observation
+  - observations
+  - op
+  - operator
+  - predicate
+  - test
+  - tests
+  - transition
+- rule_id: V4-LIFE-07
+  kind: mapping
+  authority: A03/R03_window_lifecycle
+  interpretation: 'Synonym map onto the normalized observation roles a machine can evaluate. This is a synonym map, not a completeness mechanism: an unrecognised observation does not fall through to deterministic, it produces UNSUPPORTED. That inversion is the whole of F03-D, and it is what distinguishes this rule from rejected option F03-A, where an unrecognised subject fell through to a pass.'
+  accepted_alternatives:
+  - any spelling that maps onto one of these three observation roles
+  rejected_alternatives:
+  - treat an unrecognised observation as deterministic
+  - treat presence of a subject keyword as proof of a machine-observable comparison
+  value:
+    absent_or_invalid:
+    - absent
+    - broken
+    - empty
+    - expired
+    - expires
+    - invalid
+    - invalidated
+    - missing
+    - revoked
+    - unavailable
+    - unset
+    changed:
+    - change
+    - changed
+    - changes
+    - changing
+    - differ
+    - difference
+    - different
+    - differs
+    - diverged
+    - diverges
+    - inconsistency
+    - inconsistent
+    - mismatch
+    - mismatched
+    - moved
+    - ne
+    - neq
+    - notequal
+    - unequal
+    - updated
+    crossed:
+    - boundaries
+    - boundary
+    - cross
+    - crossed
+    - crosses
+    - entered
+    - enters
+    - exceeded
+    - exceeds
+    - re_entry
+    - reached
+    - reaches
+    - reenter
+    - reentry
+    - transition
+    - transitioned
+- rule_id: V4-LIFE-08
+  kind: mapping
+  authority: A03/R03_window_lifecycle
+  interpretation: 'Structural positions holding the explicit structured definitions that a bare-string condition may resolve to. A bare string is admitted only through this resolution: without it the string carries no subject and no comparison, and reading them out of the string''s own spelling is exactly the lexical matching F03-A was rejected for.'
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - contract
+  - contracts
+  - defined
+  - defines
+  - definition
+  - definitions
+  - meanings
+  - spec
+  - specification
+  - specifications
+  - specs
+- rule_id: V4-RCT-01
+  kind: vocabulary
+  authority: A07/R07_model_route_binding
+  interpretation: Token set identifying a model-routing receipt / executor-profile binding region.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - executor
+  - profile
+  - receipt
+  - receipts
+  - route
+  - routing
+- rule_id: V4-RCT-02
+  kind: mapping
+  authority: A07/R07_model_route_binding
+  interpretation: 'A R07 states the receipt CONCEPTS verbatim: mechanism/catalog version or equivalent immutable evidence, selected surface/model/profile, availability assumption, limitations, and authority=routing_only. requirement_traceability_v1.yml rules the concepts A-required and the exact field names B_ONLY, so these are concept roles.'
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+    authority:
+    - authorities
+    - authority
+    availability_assumption:
+    - assumption
+    - assumptions
+    - availability
+    - available
+    - observation
+    - observed
+    immutable_evidence:
+    - catalog
+    - commit
+    - digest
+    - evidence
+    - hash
+    - immutable
+    - mechanism
+    - ref
+    - sha
+    - sha256
+    - version
+    limitations:
+    - constraint
+    - constraints
+    - limit
+    - limitation
+    - limitations
+    - limits
+    selected_route:
+    - model
+    - parameter
+    - product
+    - profile
+    - route
+    - selected
+    - selection
+    - surface
+- rule_id: V4-RCT-03
+  kind: mapping
+  authority: A07/R07_model_route_binding
+  interpretation: The five receipt concept roles A R07 states verbatim.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - immutable_evidence
+  - selected_route
+  - availability_assumption
+  - limitations
+  - authority
+- rule_id: V4-RCT-04
+  kind: vocabulary
+  authority: 'A07/R07_route_receipt (authority: routing_only, stated verbatim in A R07)'
+  interpretation: A R07 states the authority value verbatim. This is the one place in the v4 extension where an exact value is required rather than a role, because A states the literal. Comparison is canonical so that case and separator variants match; any other value, including an unrecognised one, is not routing_only and fails closed.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value: routing_only
+- rule_id: V4-RCT-05
+  kind: vocabulary
+  authority: A07/R07_model_route_binding
+  interpretation: A R07 scopes the obligation to windows that USE a model route. These tokens identify the window-binding position that makes a receipt window-bound rather than free-floating.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - session
+  - sessions
+  - window
+  - windows
+- rule_id: V4-RCT-06
+  kind: mapping
+  authority: A07/R07_model_route_binding
+  interpretation: 'Structural position in which a receipt enumerates its own required field names as VALUES rather than as keys. `route_receipt: {authority: routing_only}` and `route_receipt: {required_fields: [authority]}` both declare that the receipt carries an authority concept. Reading only the key form made a conforming list-form receipt report one concept out of five, which is the ST04-V3-IR-003 defect in a new place.'
+  accepted_alternatives:
+  - map concept roles from key names and from enumerated field names
+  rejected_alternatives:
+  - map concept roles from key names only
+  value:
+  - fields
+  - keys
+  - mandatory
+  - must
+  - required
+  - schema
+- rule_id: V4-RCT-07
+  kind: vocabulary
+  authority: A12/R12_failure_surfacing
+  interpretation: 'Structural positions inside an already-claimed route-receipt region at which the contract declares what happens when the receipt is missing, stale or inconsistent. A position vocabulary, not a value one: WHICH policy is declared is decided by the accepted freshness-effect roles under parity, never by matching the policy''s spelling. T2-PARENT-IR-002: A R12 requires a missing or invalid routing receipt to fail visibly with no arbitrary-model fallback, and the candidate already declared the policy; nothing read it, so `best_effort` left all fourteen predicates passing.'
+  accepted_alternatives:
+  - declare the policy in any of these positions
+  rejected_alternatives:
+  - blacklist the literal value best_effort
+  - treat an undeclared policy as compliant
+  value:
+  - absent
+  - broken
+  - inconsistent
+  - invalid
+  - missing
+  - stale
+  - unavailable
+  - unresolvable
+- rule_id: V4-RCT-08
+  kind: mapping
+  authority: A12/R12_failure_surfacing
+  interpretation: The one accepted freshness-effect role that constitutes visible failure. A R12's requirement is that the broken binding SURFACES, so a policy resolving to `stale_status` passes and every other resolution - `continue_cached`, `fresh_read` as a silent recovery, unknown, inverted, or absent - is non-pass. Reusing the accepted role map is what keeps this from becoming a second vocabulary that drifts.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value: stale_status
+- rule_id: V4-SEP-01
+  kind: vocabulary
+  authority: A10/R10_existing_mechanism_separation
+  interpretation: 'A R10 names exactly what a composition may not copy from an upstream canonical mechanism: its mutable rules, its catalog and its evidence ledger. These tokens locate such a copied region.'
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - catalog
+  - catalogs
+  - catalogue
+  - evidence_ledger
+  - ledger
+  - ledgers
+  - policies
+  - policy
+  - registry_entries
+  - rule
+  - rules
+  - threshold
+  - thresholds
+- rule_id: V4-SEP-02
+  kind: mapping
+  authority: A10/R10_existing_mechanism_separation
+  interpretation: 'A R10 names the two upstream mechanisms whose semantics stay theirs: context management and model routing. These are mechanism roles inside this repository, not vendor names.'
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+    context_management:
+    - context
+    - context_management
+    - contextmanagement
+    model_routing:
+    - model_routing
+    - modelrouting
+    - routing
+- rule_id: V4-SEP-03
+  kind: mapping
+  authority: A10/R10_existing_mechanism_separation; A11/R11_workflow_and_entry_thinness
+  interpretation: The surfaces on which a T2 composition artifact may live. A R10 permits a composition contract on the mechanism surface; A R11 keeps workflow and entry thin. Both are checked for copied upstream semantics.
+  accepted_alternatives: []
+  rejected_alternatives: []
+  value:
+  - mechanism
+  - boot
+  - workflow_or_entry
+- rule_id: V4-SEP-04
+  kind: threshold
+  authority: A10/R10_existing_mechanism_separation
+  interpretation: 'A collection is two or more entries. This is the definition of a collection, not a tolerance: it mirrors CATALOG_MIN_ENTRIES in the accepted engine, which replaced the untraced CATALOG_RESTATEMENT_THRESHOLD = 3 that AB-02 named. A single referenced value is a reference; two or more owned entries is a copied table.'
+  accepted_alternatives:
+  - 2, the arity at which a set of entries exists
+  rejected_alternatives:
+  - 3, an authored tolerance with no requirement behind it
+  value: 2

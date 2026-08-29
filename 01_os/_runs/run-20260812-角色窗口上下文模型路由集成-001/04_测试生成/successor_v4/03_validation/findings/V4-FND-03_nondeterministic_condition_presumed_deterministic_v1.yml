@@ -1,0 +1,195 @@
+schema_version: citystate.stage04.successor_finding.v1
+finding_id: V4-FND-03
+task_id: os-v2-stage04-successor-acceptance-refreeze-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+raised_by: claude-cowork-stage04-successor-tail-executor-002
+raised_at: '2026-08-15'
+implemented_by: claude-cowork-stage04-successor-tail-executor-003
+implemented_at: '2026-08-16'
+document_status: ruled_and_implemented_pending_independent_acceptance
+authority_effect: none
+blocks_freeze: true
+class: false_pass
+
+title: >-
+  P21 treated any invalidation condition it did not recognise as vague as
+  deterministic, so arbitrary prose passed the determinism check.
+
+requirement_violated:
+  id: A03
+  statement: >-
+    Window lifecycle and stale/invalidation behavior are explicit and do not
+    create background scheduling or autonomous progression.
+  predicate_own_claim: >-
+    P21's title is "the window lifecycle declares the A-required states with
+    deterministic stale conditions", and it implemented a nondeterminism check.
+    The finding was not that the check was missing; it is that the check did not
+    hold for the values it was written to exclude.
+
+severity_argument: >-
+  False PASS. A window lifecycle whose invalidation conditions are prose is
+  exactly the state A03 forbids being implicit, and it is what "the window is
+  stale when it feels stale" produces in practice: a rule no two executors
+  evaluate the same way.
+
+filed_mechanism:
+  vocabulary: semantic_acceptance_v4.vocabulary_v4.NONDETERMINISTIC_CONDITION_TOKENS
+  shape: closed NEGATIVE vocabulary
+  defect: >-
+    A condition was recorded deterministic unless its text matched a known
+    vagueness token (maybe, usually, typically, discretion, tbd, ad_hoc ...).
+    Anything unfamiliar was therefore presumed deterministic. This is the mirror
+    image of ST04-V3-IR-008 and ST04-V3-IR-010, where a closed POSITIVE
+    vocabulary presumed the unknown case safe. The same reasoning error, pointed
+    the other way.
+
+ruling:
+  option: F03-D_TYPED_DETERMINISM_FACT
+  ruled_by: foreground-stage04-successor-dispatch-001
+  ruled_at: '2026-08-15'
+  ruling_ref: documents/foreground-stage04-successor-dispatch-001/00008_F02_F03_F04_blocker_rulings.yml
+  decision: >-
+    Determinism is a typed semantic fact, not absence of known vague words and
+    not presence of a blessed keyword. A condition may be rendered in any
+    admitted representation, but the adapter may mark deterministic=true only
+    when it can normalize physical candidate content into all required semantic
+    slots: a machine-observable subject/binding, an explicit observable
+    change/comparison condition, and the required stale/fresh-read/fail-closed
+    effect or equivalent lifecycle consequence. Bare prose, unknown spellings,
+    missing slots or ambiguous polarity must produce UNSUPPORTED/non-pass rather
+    than deterministic.
+  rejected_options_and_why_the_implementation_is_not_them:
+    F03-A: >-
+      Rejected: a closed positive keyword list is still lexical matching. The
+      implementation never compares the SUBJECT with any vocabulary. The subject
+      is read verbatim out of a declared slot position, and what makes it count
+      is that the author named it in a subject position - a structural fact, not
+      a word the adapter recognised.
+    F03-B: >-
+      Rejected: requiring one structured-record representation would make shape
+      normative. Four admitted representations are asserted invariant by
+      INVARIANTS V4MT11-V4MT14: list-of-records, list-of-single-entry-mappings,
+      bare names resolved through an explicit definitions block, and synonym
+      spellings of both slot positions and the observation role.
+    F03-C: >-
+      Rejected: extending the negative list leaves the family open. The negative
+      list was DELETED rather than extended. `NONDETERMINISTIC_CONDITION_TOKENS`
+      no longer exists.
+  implemented: true
+
+implementation:
+  vocabulary_v4:
+    deleted: NONDETERMINISTIC_CONDITION_TOKENS
+    added:
+      - V4-LIFE-04 CONDITION_SUBJECT_SLOT_TOKENS - structural positions naming the observed subject
+      - V4-LIFE-06 CONDITION_OBSERVATION_SLOT_TOKENS - structural positions naming the comparison
+      - V4-LIFE-07 CONDITION_OBSERVATION_ROLES - synonym map onto changed / crossed / absent_or_invalid
+      - V4-LIFE-08 CONDITION_DEFINITION_REGION_TOKENS - where a bare string may resolve to a definition
+    slot_3_reuses: >-
+      V4-FRESH-05 FRESHNESS_EFFECT_ROLES and V4-FRESH-06
+      COMPLIANT_FRESHNESS_EFFECTS. A R03's stale consequence and A R05's
+      freshness effects are the same typed outcome, so one role map decides both
+      rather than a second vocabulary that would drift from it.
+  adapters_v4:
+    adapt_lifecycle_conditions: >-
+      resolves the three slots and emits deterministic=true only when all three
+      resolve; the unresolved slot names travel with the fact
+  facts_v4:
+    LifecycleConditionFact: >-
+      `marker` removed; `subject_resolved`, `observation_role`,
+      `consequence_role` and `unresolved_slots` added. `unresolved_slots` is
+      empty exactly when `deterministic` is true, so the fact cannot claim
+      determinism and report a hole at the same time.
+  predicates_v4:
+    P21: >-
+      reports which slot was unresolved instead of naming the vagueness word it
+      happened to match
+  vendored_bytes_changed: 0
+
+consequence_for_the_conforming_fixtures:
+  baseline_v4:
+    change: >-
+      `lifecycle.invalidation_conditions` rewritten from four bare strings to
+      four structured records naming subject and observation. `stale_effect:
+      fail_closed` still supplies slot 3 once for the region.
+    why_this_was_necessary_and_not_a_convenience: >-
+      Under F03-D a bare string is admitted only by resolving to an explicit
+      structured definition. baseline_v4 had none, so its conditions carried no
+      subject and no comparison. Reading them out of the strings' own spellings
+      is exactly rejected option F03-A. The conforming candidate therefore has to
+      declare what A03 requires rather than have the adapter guess it.
+    authorised_by: >-
+      Human ruling of 2026-08-16 in this session, after the consequence was
+      reported rather than absorbed silently. The path is inside the
+      `successor_v4/**` write boundary.
+  baseline_accepted:
+    change: none - byte-identical to the accepted package and not touched
+    effect: >-
+      it now fails P21 as well as P22. Both are criteria the accepted
+      seven-predicate package never covered, and both are recorded in
+      `test_v4_reviewer_replay.UNSATISFIED_BY_ACCEPTED_BASELINE` and
+      `test_v4_v3_variants.FIXTURE_ROOT_ACCOUNTED_DIFFERENCES` with the reason.
+      Before F03-D its bare-string conditions were scored deterministic because
+      they matched no vagueness word - which is this very finding's false pass,
+      observed on the accepted fixture.
+
+measured_evidence:
+  filed_measurement:
+    measured_at: '2026-08-15'
+    case_id: V4AB03
+    transformation: >-
+      lifecycle.invalidation_conditions replaced with
+      ["when the window feels stale", "approximately every few hours"]
+    observed_facts:
+      - {key_path: "lifecycle.invalidation_conditions.when the window feels stale", deterministic: true, marker: ""}
+      - {key_path: "lifecycle.invalidation_conditions.approximately every few hours", deterministic: true, marker: ""}
+    observed_predicates: {P21: pass, P23: fail}
+    reproduced_2026_08_16_before_any_change: true
+  the_variant_the_finding_said_was_owed:
+    what_was_owed: >-
+      The filed measurement failed overall on P23, not P21, because replacing the
+      conditions also removed the A-named change triggers. The finding recorded
+      that a candidate keeping the A-named triggers and expressing only their
+      CONDITIONS as prose was not constructed, and was owed to whoever closed it.
+    now_constructed: DIFFERENCES V4AB11
+    measured: >-
+      four A-named triggers survive verbatim as keys, each mapped to the prose
+      "when it feels like it has drifted far enough". P23 does not complain.
+      P21 alone fails, with unresolved slots [subject, observation] on all four.
+      That is the debt discharged.
+  closure_measurement:
+    measured_at: '2026-08-16'
+    runtime: CPython 3.14.6, PyYAML 6.0.3
+    baseline_v4_after_change: 14/14 pass, all four conditions deterministic with all slots resolved
+    negative_cases_all_measured:
+      - "prose conditions -> P21 fail, unresolved [subject, observation]"
+      - "A-named triggers kept, conditions prose -> P21 fail (P23 unaffected)"
+      - "cadence declared as the observation -> P21 fail, unresolved [observation]"
+      - "subject slot absent -> P21 fail, unresolved [subject]"
+      - "unrecognised observation word -> P21 fail, unresolved [observation]"
+      - "consequence declared continue_from_cache -> P21 fail, unresolved [consequence]"
+    invariance_cases_all_measured:
+      - "list of identity-declaring records -> no predicate moves"
+      - "list of single-entry mappings -> no predicate moves"
+      - "bare names plus an explicit condition_definitions block -> no predicate moves"
+      - "slot positions and observation role spelled by synonym -> no predicate moves"
+    suites: v4 29/29 exit 0; vendored baseline 65/65 exit 0 in a separate interpreter
+    independence: >-
+      fresh execution session, not independent acceptance; same collaboration
+      role and same model family as the executor that raised the finding
+
+what_this_does_not_claim:
+  - no estimate is offered of how many real documents the old behaviour would have admitted
+  - the accepted engine's own negative vocabularies were not audited for the same shape
+  - >-
+    the three observation roles are a synonym map, not a completeness claim. An
+    unrecognised observation is UNSUPPORTED, so an admitted-but-unlisted spelling
+    fails closed rather than passing - which is the safe direction and still a
+    real cost to a candidate using an unusual spelling
+  - implementation-green is not acceptance
+
+next_owner:
+  role: foreground_stage04_successor_dispatch
+  required_action: >-
+    read back the closure evidence and the fixture consequence; the finding stays
+    open until a fresh independent acceptance reviews it

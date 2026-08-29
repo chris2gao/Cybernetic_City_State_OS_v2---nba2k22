@@ -1,0 +1,43 @@
+schema_version: citystate.run.v1
+run_id: run-20260828-t2-completion-001
+task_id: os-v2-t2-completion-001
+parent_task_id: os-v2-role-window-context-model-routing-integration-001
+stage_id: workflow_stage_04_test_generation
+status: integrated_by_Human_acceptance_with_known_nonblocking_residual
+control_branch: dev/os-v2-t2-resume-control-001
+implementation_branch: dev/os-v2-t2-completion-001
+parent_checkpoint: 3002d6177779abf81e6d476bfc434ee5d6dbe3c8
+accepted_structural_provenance_source: 7cf9195715dcc7aa34bd09a8bc0f8320415f3930
+final_source_head: b30241a0f9006fb72b9ab1a27f44e2311d4a7221
+correction_rounds_used: 2
+outputs:
+- 07_测试执行/transfer_and_regression_evidence_v1.yml
+- 07_测试执行/ruling_r1_application_and_regression_v1.yml
+- 07_测试执行/ruling_r2_application_and_regression_v1.yml
+- 07_测试执行/ruling_r3_application_and_completion_v1.yml
+- 07_测试执行/p2_2_execution_evidence_v1.yml
+- 07_测试执行/r6_fix_required_correction_evidence_v1.yml
+- 08_结论/correction003_replacement_candidate_v1.yml
+- 08_结论/stage04_result_pointer_v1.yml
+- 08_结论/stage04_result_pointer_v2.yml
+- 08_结论/human_integration_acceptance_with_nonblocking_S02_v1.yml
+- 08_结论/stage04_result_pointer_v3.yml
+review_history:
+  first_parent_review: FIX_REQUIRED_at_5f4520dd123ba634b1082f3ac7dbb6284a79849c
+  second_parent_review: FIX_REQUIRED_at_04e7a7ba492e8e6037b150809e12cdb0e941d682
+final_executor_measurement:
+  v3: 65_of_65_exit_0
+  v4: 74_of_75
+  known_residual: S02_transparent_nested_window_wrapper
+integration_disposition:
+  Human_acceptance: true
+  known_residual_class: nonblocking_false_negative_representation_compatibility
+  parent_Stage04_independent_PASS: false
+  Stage05_authorized: false
+notes:
+- Stage01_02_03_are_reused_not_rerun
+- SR_001_and_SR_002_are_closed_at_mechanism_or_resolver_level
+- S02_is_disclosed_and_deferred_not_relabelled_as_green
+- final_b302_head_has_no_new_freeze_receipt_because_executor_stopped_before_Human_disposition
+- integration_is_Human_acceptance_not_fresh_independent_PASS
+- automatic_progression_remains_false

@@ -1,0 +1,143 @@
+schema_version: citystate.run_evidence.v1
+run_id: run-20260828-t2-completion-001
+task_id: os-v2-t2-completion-001
+produced_by_endpoint_id: claude-cowork-t2-completion-executor-001
+collaboration_role: execution
+measurement_environment:
+  os: Windows
+  shell: pwsh 7 (-NoProfile), UTF-8 console encoding pinned
+  python: C:\Users\gk\AppData\Local\Python\pythoncore-3.14-64\python.exe (3.14)
+  worktree: task-scoped worktree of dev/os-v2-t2-completion-001
+  worktree_base_head: 3002d6177779abf81e6d476bfc434ee5d6dbe3c8
+  worktree_clean_before_work: true
+  bytecode_writing_disabled: true
+
+work_performed_or_requested: >-
+  Transfer the independently accepted structural-provenance capability from exact
+  source 7cf9195715dcc7aa34bd09a8bc0f8320415f3930 onto the parent-based completion
+  branch, then measure the parent Stage04 regressions before and after the transfer.
+
+implementation_or_review_method: >-
+  Measured the parent regression baseline first. Compared the two lineages by blob
+  identity rather than by narrative, which showed the accepted capability is a
+  5-file superset of the parent's own semantic_acceptance package and that the
+  remaining 9 files are byte-identical. Wrote the 5 source blobs into the parent
+  package with byte-exact copies and verified each written file with git hash-object
+  against its source blob SHA. Re-ran both suites unchanged and compared to baseline.
+
+supportability_rationale: >-
+  Every number below comes from a run performed in this session in the task-scoped
+  worktree, not from a dispatch document or an earlier report. The transfer claim
+  rests on blob-SHA equality, which is stronger than a diff review. The regression
+  claims rest on running the parent's own unmodified runners.
+
+feasibility_rationale: >-
+  The capability is location-independent: structural_binding.evaluator_binding_path()
+  resolves the binding file as Path(__file__).resolve().parent / BINDING_FILE_NAME,
+  so the package works identically under the parent's successor_v4 layout. The v4
+  package layers on the v3 package by import, so the transferred binding reaches v4
+  through the existing import graph with no v4 source edit.
+
+lineage_comparison:
+  method: git ls-tree blob-SHA map, parent package vs upstream package
+  parent_package_files: 12
+  upstream_package_files: 14
+  byte_identical: 9
+  modified: [adapters.py, core.py, facts.py]
+  added: [structural_binding.py, structural_binding_v1.yml]
+  git_tree_diff: 5 files changed, 1178 insertions(+), 22 deletions(-)
+  correction: >-
+    An earlier per-file probe in this session used `git rev-parse <rev>:<path>` and
+    reported 11 of 12 files as differing. That measurement was wrong. The ls-tree
+    blob map and git's own tree diff agree with each other and supersede it. Recorded
+    because the discarded reading, not only the accepted one, is part of the evidence.
+
+transfer_receipt:
+  source_ref: 7cf9195715dcc7aa34bd09a8bc0f8320415f3930
+  source_dir: 01_os/_runs/run-20260812-stage04-semantic-acceptance-root-cause-001/05_原型/semantic_acceptance
+  target_dir: 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/02_acceptance/实现/semantic_acceptance
+  verification: git hash-object of each written file equals the source blob SHA
+  verification_result: all_five_match
+  files:
+  - name: adapters.py
+    blob: 142ee5491593d3c547c4078d8d233f243e839a5a
+    bytes: 55179
+  - name: core.py
+    blob: 3fe5ab4141bb0c5236b4e1cadce6934e9d7e5b99
+    bytes: 38862
+  - name: facts.py
+    blob: 3e38b99e722e1ae084d266079e9fa0afee25151d
+    bytes: 6364
+  - name: structural_binding.py
+    blob: 67172bc7a8702a66cb86e3d45f21c06b2062a2f5
+    bytes: 20376
+  - name: structural_binding_v1.yml
+    blob: 0048291b650b68b25658f012ce46993d3e4eb959
+    bytes: 7374
+
+changed_paths_measured:
+  count: 5
+  all_inside_allowed_boundary: true
+  boundary_entry_used: 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/**
+  out_of_scope_paths: 0
+
+regressions:
+  runner_note: >-
+    Both suites were run with their own unmodified runners from their own directories.
+    The runners print their own N/M summary; that summary is the reported figure.
+  baseline_at_3002d617:
+    vendored_baseline_tests: 65/65 passed
+    v4_tests: 29/29 passed
+    process_exit_codes: not_captured
+    exit_code_note: >-
+      The baseline invocation piped through Tee-Object, so $LASTEXITCODE reflected the
+      pipeline, not the interpreter. The pass/fail counts are the runners' own output
+      and are reported; the exit codes are honestly recorded as not captured.
+  candidate_after_transfer:
+    vendored_baseline_tests: 65/65 passed
+    v4_tests: 15/29 passed
+    candidate_caused_failures: 14
+    unchanged_suites: [vendored_baseline_tests]
+    process_exit_codes: not_observed
+
+candidate_caused_failure_set:
+  count: 14
+  tests:
+  - test_v4_reviewer_replay.test_A_accepted_engine_reproduces_reviewer_46_of_46
+  - test_v4_reviewer_replay.test_A_control_really_ran_seven_predicates
+  - test_v4_reviewer_replay.test_B_v4_engine_meets_all_46_reviewer_expectations
+  - test_v4_reviewer_replay.test_B_v4_returns_fourteen_predicates_for_every_case
+  - test_v4_reviewer_replay.test_C_accepted_baseline_passes_all_seven_accepted_predicates
+  - test_v4_reviewer_replay.test_C_only_accounted_predicates_separate_the_two_fixture_roots
+  - test_v4_reviewer_replay.test_FND01_augmented_factset_still_judges_normally
+  - test_v4_v3_variants.test_accepted_baseline_variant_run_differs_only_by_accounted_predicates
+  - test_v4_v3_variants.test_fifteen_variants_classified_correctly_under_v4
+  - test_v4_v3_variants.test_i14_sentinel_is_seen_by_the_v4_fact_builder
+  - test_v4_v3_variants.test_no_variant_is_decided_by_an_extension_predicate_it_was_not_probing
+  - test_v4_v3_variants.test_no_variant_produces_an_unsupported_result
+  - test_v4_metamorphic.test_baseline_v4_is_conforming_before_any_transformation
+  - test_v4_metamorphic.test_no_invariant_transformation_silently_removes_a_predicate
+  shared_signature: >-
+    P00(unsupported_or_ambiguous_representation): mechanism/windows_v1.yml: no
+    authoritative structural binding resolves this position, so it fails closed as
+    unknown (window_contract_v1:no_rule_for_container)
+
+what_these_results_do_and_do_not_prove:
+- The transfer is faithful: five blob SHAs match their sources exactly.
+- The transferred capability does not regress the v3 baseline: 65/65 before and after.
+- The 14 v4 failures are a single root cause, not fourteen defects.
+- The failures are the fail-closed invariant working, not a crash: every one is a
+  visible `unknown` at an unbound position, which is the behaviour correction-003
+  required.
+- Nothing here proves the correction-003 replacement is complete. It is not.
+- These are executor measurements. They are not independent acceptance.
+
+residual_risk_or_unproved_limits:
+- Process exit codes were not observed for either run. The baseline invocation lost them
+  to a pipeline; the candidate invocation assigned them to variables, but the shell call
+  was cut off by a tool read timeout before those variables were printed, so they were
+  never read. Both comparisons therefore rest on the runners' own printed N/M summaries.
+  Recorded as not_observed rather than reported as captured.
+- Only the two parent suites were run. No claim is made about any other Stage04 gate.
+- The v4 corpus was exercised only through the parent's own fixtures; no new fixture
+  was authored, so no statement is made about corpora outside that set.

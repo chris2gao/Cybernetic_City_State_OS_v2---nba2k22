@@ -1,0 +1,553 @@
+{
+  "corpus": "independent_v3_adversarial_variants_replayed_against_successor_v4",
+  "source_corpus": "semantic_acceptance.corpus.V3_VARIANTS (vendored, byte-identical)",
+  "source_probe_script": "04_测试生成/独立接收审核/v3/independent_v3_probes.py",
+  "evaluator": "semantic_acceptance_v4.evaluate_v4.evaluate_full",
+  "fixture_root": "02_acceptance/fixtures/baseline_v4",
+  "total": 15,
+  "correct": 15,
+  "conforming_total": 7,
+  "nonconforming_total": 8,
+  "decided_by_extension_predicate": [],
+  "variants": [
+    {
+      "name": "I01_negative_prefix_handoff_prohibitions",
+      "description": "negative-prefix prohibition fields must stay accepted",
+      "expectation": "conforming",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P04"
+      ],
+      "deciding_results": {
+        "P04": "pass"
+      },
+      "root_cause_classes": [
+        "polarity_normalization_failure"
+      ],
+      "v3_harness_result": "wrongly rejected (RW-T25 red; declared=[])",
+      "vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "name": "I02_list_record_handoff_prohibitions",
+      "description": "list-of-record prohibition declarations must stay accepted",
+      "expectation": "conforming",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P04"
+      ],
+      "deciding_results": {
+        "P04": "pass"
+      },
+      "root_cause_classes": [
+        "polarity_normalization_failure"
+      ],
+      "v3_harness_result": "wrongly rejected (RW-T25 red; declared=['prohibited'])",
+      "vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "name": "I03_list_pair_entry_modes",
+      "description": "list-of-pairs preserves fresh/reentry and predecessor semantics",
+      "expectation": "conforming",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P02"
+      ],
+      "deciding_results": {
+        "P02": "pass"
+      },
+      "root_cause_classes": [
+        "representation_overfitting"
+      ],
+      "v3_harness_result": "wrongly rejected (RW-T08, RW-T09 red)",
+      "vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "name": "I04_prohibited_provider_list",
+      "description": "a negative provider declaration is not a provider pin",
+      "expectation": "conforming",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P03"
+      ],
+      "deciding_results": {
+        "P03": "pass"
+      },
+      "root_cause_classes": [
+        "polarity_normalization_failure"
+      ],
+      "v3_harness_result": "wrongly rejected (RW-T19 red)",
+      "vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "name": "I05_resource_neighbor_provider_pin",
+      "description": "resource_constraints contains a normative provider pin",
+      "expectation": "nonconforming",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P03"
+      ],
+      "deciding_results": {
+        "P03": "fail"
+      },
+      "root_cause_classes": [
+        "normative_selector_vs_provenance_confusion",
+        "semantic_vs_lexical_confusion"
+      ],
+      "v3_harness_result": "wrongly accepted (43/43 green; 'source' matched inside 'resource')",
+      "vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "fail",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        "P03(fail): provider pinned by a normative selector: roles.independent_review.resource_constraints.preferred_provider.openai='openai'"
+      ]
+    },
+    {
+      "name": "I06_unlisted_provider_pin",
+      "description": "provider independence forbids unlisted vendors too",
+      "expectation": "nonconforming",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P03"
+      ],
+      "deciding_results": {
+        "P03": "fail"
+      },
+      "root_cause_classes": [
+        "normative_selector_vs_provenance_confusion"
+      ],
+      "v3_harness_result": "wrongly accepted (43/43 green; vendor absent from PROVIDER_TOKENS)",
+      "vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "fail",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        "P03(fail): provider pinned by a normative selector: roles.independent_review.preferred_provider.mistral='mistral'"
+      ]
+    },
+    {
+      "name": "I07_role_reference_matrix",
+      "description": "pointer-only role matrix owns no role semantics",
+      "expectation": "conforming",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P01"
+      ],
+      "deciding_results": {
+        "P01": "pass"
+      },
+      "root_cause_classes": [
+        "reference_vs_ownership_confusion"
+      ],
+      "v3_harness_result": "wrongly rejected (RW-T05, RW-T31 red)",
+      "vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "name": "I08_generic_id_second_role_source",
+      "description": "generic IDs with role labels still form a second role source",
+      "expectation": "nonconforming",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P01"
+      ],
+      "deciding_results": {
+        "P01": "fail"
+      },
+      "root_cause_classes": [
+        "reference_vs_ownership_confusion"
+      ],
+      "v3_harness_result": "wrongly accepted (43/43 green; role names lived in a label field)",
+      "vector": {
+        "P01": "fail",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        "P01(fail): 2 documents own role semantics: ['mechanism/roles_v1.yml', 'workflow/second_role_source.yml']"
+      ]
+    },
+    {
+      "name": "I09_yaml_mapping_model_catalog",
+      "description": "YAML mapping keys restate the live model catalog",
+      "expectation": "nonconforming",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P07"
+      ],
+      "deciding_results": {
+        "P07": "fail"
+      },
+      "root_cause_classes": [
+        "semantic_vs_lexical_confusion"
+      ],
+      "v3_harness_result": "wrongly accepted (43/43 green; key contained a space)",
+      "vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "fail",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        "P07(fail): second mutable catalog: workflow/second_model_catalog.yml (restatement, 3 entries)"
+      ]
+    },
+    {
+      "name": "I10_markdown_heading_model_catalog",
+      "description": "repeated Markdown headings restate the live model catalog",
+      "expectation": "nonconforming",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P07"
+      ],
+      "deciding_results": {
+        "P07": "fail"
+      },
+      "root_cause_classes": [
+        "semantic_vs_lexical_confusion"
+      ],
+      "v3_harness_result": "wrongly accepted (43/43 green; headings were not a recognised entry form)",
+      "vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "fail",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        "P07(fail): second mutable catalog: workflow/second_model_catalog_headings.md (restatement, 3 entries)"
+      ]
+    },
+    {
+      "name": "I11_non_boolean_autonomy_enablement",
+      "description": "descriptive enabled values still activate automation",
+      "expectation": "nonconforming",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P06"
+      ],
+      "deciding_results": {
+        "P06": "fail"
+      },
+      "root_cause_classes": [
+        "automation_declaration_semantics_failure"
+      ],
+      "v3_harness_result": "wrongly accepted (43/43 green; closed positive truth vocabulary)",
+      "vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "fail",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        "P06(fail): autonomous behaviour enabled: automatic_task_progression@self, scheduler@self"
+      ]
+    },
+    {
+      "name": "I12_carried_delivery_state",
+      "description": "a handoff cannot carry mutable delivery state",
+      "expectation": "nonconforming",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P04"
+      ],
+      "deciding_results": {
+        "P04": "fail"
+      },
+      "root_cause_classes": [
+        "state_reference_vs_state_carry_confusion"
+      ],
+      "v3_harness_result": "wrongly accepted (43/43 green; declaration accepted as proof of absence)",
+      "vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "fail",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        "P04(fail): the handoff payload carries prohibited state: handoff_record.delivery_state (mutable_delivery_state)"
+      ]
+    },
+    {
+      "name": "I13_string_authority_grant",
+      "description": "authority granted as a string is still an escalation",
+      "expectation": "nonconforming",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P05"
+      ],
+      "deciding_results": {
+        "P05": "fail"
+      },
+      "root_cause_classes": [
+        "authority_mention_vs_authority_grant_confusion"
+      ],
+      "v3_harness_result": "wrongly accepted (43/43 green; 'granted' outside the positive vocabulary)",
+      "vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "fail",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        "P05(fail): authority granted: roles.backend_execution.master_write_authorized@self"
+      ]
+    },
+    {
+      "name": "I14_full_surface_sentinel",
+      "description": "an unreferenced document on the declared surface must still be seen",
+      "expectation": "conforming",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "deciding_results": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass"
+      },
+      "root_cause_classes": [
+        "evidence_topology_issue"
+      ],
+      "v3_harness_result": "correctly classified (the one sample of fifteen that was)",
+      "vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "name": "I15_no_run_id_binding",
+      "description": "A R02 requires task/role/stage/repository facts but does not mandate run_id",
+      "expectation": "conforming",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P02"
+      ],
+      "deciding_results": {
+        "P02": "pass"
+      },
+      "root_cause_classes": [
+        "requirement_vs_B_choice_confusion"
+      ],
+      "v3_harness_result": "wrongly rejected (RW-T07 red)",
+      "vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    }
+  ]
+}

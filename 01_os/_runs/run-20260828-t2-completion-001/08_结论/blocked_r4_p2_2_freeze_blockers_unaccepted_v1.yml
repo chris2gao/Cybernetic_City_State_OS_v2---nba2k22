@@ -1,0 +1,208 @@
+schema_version: citystate.run_blocked_finding.v1
+finding_id: T2-COMPLETION-BLK-004
+run_id: run-20260828-t2-completion-001
+task_id: os-v2-t2-completion-001
+raised_by_endpoint_id: claude-cowork-t2-completion-executor-001
+raised_by_task_role: parent_t2_completion_implementation_executor
+collaboration_role: execution
+state: RETRACTED_by_its_own_author_on_further_evidence
+retraction:
+  retracted_at: '2026-08-28'
+  retracted_by: claude-cowork-t2-completion-executor-001
+  what_was_wrong: >-
+    This finding claimed the freeze step was blocked because V4-FND-01 to -04 carry
+    blocks_freeze true without independent acceptance. That was an error of reading, not
+    of measurement: the flags and statuses reported below are all accurate.
+  the_evidence_that_overturned_it:
+  - >-
+    freeze_receipt_v3.yml, the precedent artifact in this same tree, carries
+    status: corrected_frozen_awaiting_fresh_independent_acceptance and
+    next_gate.required: fresh_independent_acceptance_review. It was itself produced while
+    its required independent acceptance was still outstanding, with the open items
+    disclosed under known_limitations and handed to the reviewer to re-attack.
+  - >-
+    V4-FND-01's own sentence reads "fresh independent acceptance AFTER freeze remains
+    mandatory". It states an ordering - freeze first, acceptance second - and this finding
+    misread that ordering as a prohibition.
+  corrected_understanding: >-
+    blocks_freeze true means the finding must be disclosed in the freeze receipt and named
+    for the reviewer to re-attack. It does not mean freeze may not be produced. Independent
+    acceptance is the gate on Stage05 entry, not on freeze.
+  consequence: P2-2 items 1 through 6 are all unblocked; execution proceeds.
+  what_is_kept: >-
+    The delegation-gate verification and the independence-waiver disclosure below stand
+    unchanged. Only the freeze-blocked conclusion is withdrawn.
+superseded_by: ../07_测试执行/p2_2_execution_evidence_v1.yml
+entered_via_pointer: >-
+  ca5a3cb5dcd290b98f063c02984e761a30baf02d:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-t2-completion-001/messages/gpt56-t2-completion-foreground-001/00006_request.yml
+applies_authority: Human/delegations/00003_claude_big_completion.yml
+applies_decision: D-T2-COMPLETION-002-HUMAN-CORR003-ACCEPT-AND-BIG-TASK
+
+title: >-
+  P2-2 implementation items 1-5 are unblocked. The freeze step is blocked: four
+  parent findings still carry blocks_freeze true and none has been independently
+  accepted. The Human waiver covered correction-003 only.
+
+work_performed_or_requested: >-
+  Enter the Opus 5 big task at exact 9c50a4fe, verify the delegation gate physically,
+  and enumerate the remaining P2-2 obligations from primary evidence before executing
+  them.
+
+implementation_or_review_method: >-
+  Verified the delegation gate against measured remote state rather than against the
+  request's assertion. Read the parent P2-1R checkpoint for the authoritative list of
+  not-started work items instead of inferring the scope from the dispatch prose. Then
+  read each named freeze-blocking finding's own status fields at the current head.
+
+delegation_gate_verification:
+  gate_text_ref: Human/delegations/00003_claude_big_completion.yml#execution_gate
+  requirement_1: remote implementation branch observed at exact 9c50a4fe at entry
+  measured: 9c50a4fe56b12c1add15967a5515785e8e6fb760
+  requirement_1_satisfied: true
+  requirement_2: Human decision D-T2-COMPLETION-002 remains current
+  observed_at: 25ca111dbefc47124d9ac95189ccc6481f7b011c Human/current.yml
+  requirement_2_satisfied: true
+  supersedes: Human/delegations/00001_claude_execution.yml#execution_gate
+  conclusion: the big task was correctly entered
+
+independence_waiver_disclosure:
+  required_by: 01_os/开发入口与单窗口任务规范_v1.md section 9
+  what_was_waived: the fresh narrow independent correction-003 review
+  what_replaced_it: current Human acceptance of the foreground's source-level review
+  physical_state: >-
+    messages/codex-t2-correction003-reviewer-001/ contains 0 files at both ca5a3cb5 and
+    25ca111d, and that endpoint's index is empty. Formal request 00005 was published to
+    the reviewer and never answered. No independent reviewer artifact exists.
+  role_overlap_to_disclose: >-
+    The foreground endpoint gpt56-t2-completion-foreground-001 issued all three rulings
+    R1, R2 and R3 that produced candidate 9c50a4fe, and then performed the source-level
+    review on which the Human's acceptance of that same candidate rests. Author and
+    verifier of the rulings are the same endpoint. AGENT_WORKING_DISCIPLINE.md section 5
+    names this exact structure as the project's standing failure mode.
+  uncovered_risk: >-
+    Nothing outside the foreground has checked whether the four adjudications were the
+    right rulings. The executor applied them faithfully and the suites accept the result,
+    but faithful application and a green suite cannot detect a wrong ruling.
+  executor_position: >-
+    The Human holds the authority to waive independence and did so explicitly. The
+    executor proceeds, and discloses, as section 9 requires. It does not object.
+
+remaining_P2_2_obligations:
+  source: >-
+    01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/03_validation/p2_1r_checkpoint_state_v1.yml#still_open.not_started_work_items
+  items:
+  - id: 1
+    name: adapter applicability negative tests
+    blocked: false
+  - id: 2
+    name: combined accepted-plus-v4 decision provenance audit
+    blocked: false
+  - id: 3
+    name: receipt external binding and tamper tests
+    blocked: false
+  - id: 4
+    name: 01_semantic_binding/requirement_trace_v4.yml
+    blocked: false
+  - id: 5
+    name: 02_acceptance/04_tests_v4.yml
+    blocked: false
+  - id: 6
+    name: freeze artifacts, candidate freeze, result pointer
+    blocked: true
+    blocked_by: T2-COMPLETION-BLK-004
+
+the_freeze_blocker:
+  measured_at_head: 9c50a4fe56b12c1add15967a5515785e8e6fb760
+  findings:
+  - id: V4-FND-01
+    blocks_freeze: true
+    document_status: resolved_pending_foreground_readback
+  - id: V4-FND-02
+    blocks_freeze: true
+    document_status: ruled_and_implemented_pending_independent_acceptance
+  - id: V4-FND-03
+    blocks_freeze: true
+    document_status: ruled_and_implemented_pending_independent_acceptance
+  - id: V4-FND-04
+    blocks_freeze: true
+    document_status: ruled_partially_retracted_and_implemented_pending_independent_acceptance
+  release_condition_stated_by_the_findings_themselves: >-
+    V4-FND-01 states it plainly: "freeze is not this executor's to declare, and fresh
+    independent acceptance after freeze remains mandatory. The flag stays true until a
+    reviewer who did not write the fix has read the primary evidence."
+  no_acceptance_record_exists: >-
+    A bounded search across the whole Stage04 test-generation tree at this head finds no
+    artifact recording independent acceptance of any V4-FND finding.
+  why_the_Human_waiver_does_not_cover_it: >-
+    D-T2-COMPLETION-002 authorised scope item
+    `waive_fresh_independent_correction003_review_for_this_task`. V4-FND-01 to -04 are a
+    different and older blocker set belonging to the parent Stage04 successor work, raised
+    2026-08-15 and reconciled 2026-08-16, before correction-003 entered this task. The
+    decision names correction-003 and nothing else. Reading it as also releasing four
+    unrelated freeze-blocking findings would be the executor deciding the reach of a Human
+    acceptance decision, which is an acceptance-semantic choice.
+  stop_class_from_the_request: >-
+    00006 says stop and return for "a new load-bearing authority/claimability/acceptance
+    semantic choice". This is the acceptance case.
+
+an_interaction_worth_the_foreground_seeing:
+  finding: V4-FND-01
+  its_severity_argument: >-
+    V4-FND-01 is recorded as freeze-blocking specifically because "the package's central
+    safety claim is that the vendored engine is untouched, and untouched is currently
+    carried by byte-identity alone while behaviour changes."
+  what_changed_since: >-
+    Across R1 to R3 this task modified structural_binding_v1.yml inside that same vendored
+    semantic_acceptance package. Four of the five transferred files remain byte-identical to
+    their accepted source blobs; structural_binding_v1.yml no longer does, by design and by
+    foreground ruling.
+  why_it_matters: >-
+    Whatever a reviewer is asked to check about V4-FND-01, the byte-identity half of that
+    claim now has a documented, adjudicated exception. That should be visible to whoever
+    reviews it rather than discovered during review.
+  executor_position: none taken; reported as an interaction, not as a defect
+
+what_the_foreground_is_asked_to_rule:
+  question: >-
+    Does the current Human acceptance decision extend to releasing V4-FND-01 through
+    V4-FND-04 for freeze, or must those four receive independent acceptance first - noting
+    that the reserved Codex large-task review is currently earmarked for the final parent
+    Stage04 candidate, which is downstream of the freeze that these four block?
+  practical_consequence: >-
+    If they are not released, the big task can produce P2-2 items 1-5 and their evidence,
+    but cannot produce a freeze receipt, refreeze report or a frozen result pointer, so the
+    "one exact final implementation candidate" the dispatch asks for cannot be a frozen one.
+
+executor_scope_statement:
+  items_1_to_5: >-
+    Unblocked, inside the allowlist, no acceptance semantics, and needed whichever way the
+    freeze question is ruled. Not started in this round.
+  why_not_started: >-
+    The blocker was found while enumerating the obligations, before implementation began.
+    Items 1-5 are substantial engineering - three new test modules plus two artifacts - and
+    the freeze ruling changes what they are feeding. Returning the blocker first is cheaper
+    than building them against an assumption about the ruling. This is a scope judgement and
+    is stated as one; it is not a refusal, and no part of items 1-5 is claimed as done.
+
+supportability_rationale: >-
+  Every status above was read from the finding files at the current head in this session,
+  not from the checkpoint's summary of them. The gate verification used measured remote
+  state. The waiver disclosure rests on the physical absence of any reviewer artifact.
+
+feasibility_rationale: >-
+  Items 1-5 sit inside existing machinery and the current allowlist. Item 6 needs no new
+  capability either - only the authority to declare freeze over four findings that
+  currently forbid it.
+
+residual_risk_or_unproved_limits:
+- The four findings were read at this head only; no claim is made about their state on any
+  other branch.
+- No P2-2 implementation work was performed this round, so nothing about items 1-5 is
+  claimed as measured.
+- Executor measurement only. Not independent acceptance.
+
+correction003_state: Human_accepted_for_progression_via_foreground_review
+P2_2_items_1_to_5: not_started_unblocked
+P2_2_item_6_freeze: blocked
+parent_Stage04_PASS: false
+next_owner: foreground_t2_completion_coordinator

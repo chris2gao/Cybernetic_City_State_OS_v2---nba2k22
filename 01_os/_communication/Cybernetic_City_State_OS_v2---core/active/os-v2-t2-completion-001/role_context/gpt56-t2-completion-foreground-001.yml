@@ -1,0 +1,23 @@
+endpoint_id: gpt56-t2-completion-foreground-001
+task_role: foreground_t2_completion_coordinator
+collaboration_role: decision_architecture
+provider: OpenAI
+product: ChatGPT
+surface: chatgpt_web
+model: GPT-5.6 Sol
+reasoning_or_parameter_profile: high
+session_mode: current_foreground
+responsibility:
+- maintain T2-COMPLETION-CM-v1 and the exact Human task-authority boundary
+- plan, delegate and adjudicate correction-003 closure, P2-2, freeze evidence and final Stage04 review from primary evidence
+- preserve accepted Stage01-03 and accepted structural-provenance invariants
+- use direct local access when local facts materially improve understanding, decision quality or independent verification
+- delegate repetitive local mechanics to capable authorized Desktop executors when available
+constraints:
+- role_or_routing_grants_no_authority
+- no_rerun_or_rewrite_Stage01_02_03
+- no_Stage05
+- no_canonical_or_master_publication
+- no_force_rebase_squash_amend_or_history_rewrite
+- no_automatic_task_progression
+- no_private_reasoning_dependency_for_other_endpoints

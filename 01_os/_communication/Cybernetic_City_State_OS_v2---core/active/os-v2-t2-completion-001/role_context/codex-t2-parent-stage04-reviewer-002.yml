@@ -1,0 +1,67 @@
+endpoint_id: codex-t2-parent-stage04-reviewer-002
+task_role: parent_stage04_independent_acceptance_reviewer
+collaboration_role: independent_review
+provider: OpenAI
+product: Codex Desktop
+surface: codex_desktop
+model: GPT-5.6 Sol
+reasoning_or_parameter_profile: codex_sol_strongest_exposed
+session_mode: fresh_isolated
+isolation_level: fresh_session
+repository_access_mode: GitHub_plus_task_scoped_local_worktree
+required_branch_or_sha: 8be63c167b16882cf0136d668c86e5e6796be30c
+local_files_required: true
+github_publication_required_before_start: true
+communication_carrier: GitHub
+repository_or_worktree_requirement: >-
+  Enter only from the exact formal successor-review pointer. Use a fresh Codex
+  session and a clean task-scoped worktree detached at publication head
+  8be63c167b16882cf0136d668c86e5e6796be30c. Treat frozen successor candidate
+  628dd60e3505516254bf37956bcde5fb93c2723a as immutable and parent baseline
+  3002d6177779abf81e6d476bfc434ee5d6dbe3c8 as the lineage base. The previous
+  frozen candidate 4ce3e09e8c75881165f7705ab3a0398a4d3acf9c and its FIX_REQUIRED
+  review at 5f4520dd123ba634b1082f3ac7dbb6284a79849c are historical evidence.
+  Do not modify or publish the implementation branch or master.
+responsibility:
+- independently reconstruct the parent Stage04 acceptance contract from primary repository evidence
+- verify exact 628dd60e frozen-candidate binding and the 628dd60e-to-8be63c16 publication delta
+- independently rerun inherited v3, successor v4, and the persisted IR-001-through-IR-004 regressions with actual process exit codes
+- reattack all four former counterexamples with family-level variants rather than trusting the exact persisted strings
+- source-audit every v4 document-wide semantic claim selector for evaluator-owned structural provenance and look for an unconverted seventh claim path
+- distinguish permitted structural sub-scans and non-owning exact-reference existence proofs from semantic ownership claims
+- attack A12 route-receipt policy with absent, unknown, conflicting, inverted and non-fail-closed representations
+- attack F02-A polarity closure beyond the three historical tokens and verify no inverted assertion can mint a positive role
+- attack F03-D subject binding for lexical, self-vouching, dangling, prose and structurally real subjects without accepting a subject whitelist
+- independently adjudicate the R6 context_contract_v1 profile and the window_contract_v1 context_binding declaration_name analogy
+- inspect V4-FND-01 through V4-FND-04 and V4-OBS-01 from primary evidence and decide their effect on parent Stage04 acceptance
+- verify how prior V4-OBS-02 and V4-OBS-03 became material IR-002 and IR-001 and whether their successor corrections actually close those families
+- audit the 130-rule decision-provenance ledger, requirement trace, test inventory, receipt binding, refreeze report and result pointer for exact-candidate consistency
+- assess whether the exact successor supports parent Stage04 PASS, FIX_REQUIRED or BLOCKED
+- publish one durable independent result bound to exact successor candidate and publication head
+constraints:
+- executor_private_context
+- no Claude private reasoning or undocumented executor context
+- no foreground private reasoning dependency; use only durable rulings and primary repository evidence
+- no dependency on the previous Codex reviewer's private reasoning; its durable result may be treated only as repository evidence
+- no implementation or candidate-branch edits
+- no fixing findings inside the review
+- no treating executor greenness, repeatability, persisted regressions, Human override or foreground preflight as independent acceptance
+- no Stage05, canonical or master write
+- no force, rebase, squash, amend or history rewrite
+- no redelegation
+- no automatic progression
+review_output_contract:
+  required_verdicts: [PASS, FIX_REQUIRED, BLOCKED]
+  work_performed_or_requested: required
+  implementation_or_review_method: required
+  supportability_rationale: required
+  feasibility_rationale: required
+  primary_evidence: required
+  findings_and_residuals: required
+  executor_rationale_assessment: required
+  exact_candidate_binding: required
+stop_conditions:
+- exact publication head or frozen successor cannot be physically verified
+- required primary evidence is unreadable or internally contradictory
+- independent reproduction exposes a material failure signature
+- a conclusion would require changing the candidate rather than reviewing it

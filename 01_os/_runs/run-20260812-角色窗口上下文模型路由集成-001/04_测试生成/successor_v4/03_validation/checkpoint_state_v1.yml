@@ -1,0 +1,252 @@
+schema_version: citystate.stage04.successor_checkpoint.v1
+task_id: os-v2-stage04-successor-acceptance-refreeze-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+created_at: '2026-08-16'
+
+document_status: in_progress_checkpoint
+authority_effect: none
+terminal_state: IN_PROGRESS_CHECKPOINT_NOT_FROZEN
+
+# Explicitly NOT claimed by this document.
+not_claimed:
+  frozen_candidate: false
+  ready_for_fresh_independent_acceptance: false
+  parent_stage04_pass: false
+  stage05_entry: false
+  final_result_pointer_published: false
+  adversarial_replay_complete: false
+  freeze_receipt_produced: false
+
+dispatch:
+  responding_to: os-v2-stage04-successor-acceptance-refreeze-001::foreground-stage04-successor-dispatch-001::00004
+  pointer_commit: 7e035221500b01738423b3570648757351011303
+  requested_action: checkpoint_current_successor_v4_milestone_and_pause
+
+physical_binding:
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  transport: local_git
+  hook_guard: passed            # git config --get core.hooksPath == .githooks, read in this session
+  worktree: E:/newStand/study/_wt_stage04_successor_v4
+  branch: dev/os-v2-stage04-successor-acceptance-refreeze-001
+  checkpoint_base_sha: c56860291acab7958d7da4900dbd7cf3f389e623
+  remote_master_fresh_read: e5bf669d39179c172fc10fbb3b73557e8b05bf1e
+  master_modified: false
+  parent_T2_branch_modified: false
+  # The commit SHA that contains this file cannot appear inside it. Same rule the
+  # freeze receipt will follow (semantic_acceptance_architecture_v2.md section 4):
+  # a receipt may not contain the hash of the commit whose tree includes it. The
+  # checkpoint SHA is read back from the remote after push and returned to the
+  # foreground in the reply.
+  checkpoint_sha: read_back_from_remote_after_push_not_recorded_here
+
+executor:
+  provider: Anthropic
+  product: Claude Desktop
+  surface: claude_desktop_cowork
+  model: Claude Opus 5
+  profile: claude_desktop_cowork_opus5_task_time
+  pre_start_check: product_surface_model_matched_00003_route
+  authority: routing_only
+
+# ---------------------------------------------------------------------------
+# What exists at this checkpoint
+# ---------------------------------------------------------------------------
+
+vendored_methodology:
+  source_commit: 19c39ed37f14c97cfa132ffafabcb9afa33dd7f0
+  independent_review_closure: 2fb7c6699fa8f6436d5d87053b841316074a7b6d
+  file_count: 31
+  byte_identical_count: 31
+  byte_identity_proof: destination_git_blob_sha1_compared_to_source_blob_sha1_per_file
+  ledger: 01_semantic_binding/vendored_methodology_ledger_v1.yml
+  deviations:
+    - path: 03_validation/vendored_baseline_tests/_bootstrap.py
+      kind: path_shim_replacement
+      logic_changed: false
+      reason: successor_v4 separates engine, fixtures and tests into three required-output directories
+
+authored_by_this_run:
+  - 02_acceptance/实现/semantic_acceptance_v4/__init__.py
+  - 02_acceptance/实现/semantic_acceptance_v4/vocabulary_v4.py
+  - 02_acceptance/实现/semantic_acceptance_v4/facts_v4.py
+  - 02_acceptance/实现/semantic_acceptance_v4/adapters_v4.py
+  - 02_acceptance/实现/semantic_acceptance_v4/predicates_v4.py
+  - 02_acceptance/实现/semantic_acceptance_v4/evaluate_v4.py
+  - 02_acceptance/fixtures/baseline_v4/mechanism/context_contract_v1.yml
+  - 01_semantic_binding/vendored_methodology_ledger_v1.yml
+  - 01_semantic_binding/decision_provenance_v4.yml
+  - 03_validation/checkpoint_state_v1.yml
+
+coverage_extension:
+  reason: >-
+    The accepted methodology implements seven A-level predicates and states in its own
+    coverage note that a full replacement package would extend the same fact model to the
+    remaining criteria. Extending is a semantic choice, not a derivation, so it was put to
+    the Human and authorized before any extension predicate was written.
+  human_scope_ruling: extend_to_all_fourteen_A_success_criteria
+  ruling_recorded_at: '2026-08-16'
+  ruling_channel: current_explicit_Human_instruction_in_executor_session
+  accepted_predicates: [P01, P02, P03, P04, P05, P06, P07]
+  accepted_criteria: [A01, A02, A06, A09, A11, A13, A14]
+  added_predicates: [P21, P22, P23, P24, P25, P26, P27]
+  added_criteria: [A03, A04, A05, A07, A08, A10, A12]
+  id_gap_reason: >-
+    P00 and P09 are reserved inside semantic_acceptance.predicates.evaluate_all for the
+    unsupported-representation and untraced-rule reports. Numbering the extension from P08
+    would have silently overwritten one of them, so it starts at P21.
+  engine_bytes_changed: 0
+  extension_mechanism: shared_REGISTRY_registration_plus_FactSet_attribute_augmentation
+
+# ---------------------------------------------------------------------------
+# Evidence measured in this session. Nothing here is copied from a prior report.
+# ---------------------------------------------------------------------------
+
+measured_evidence:
+  vendored_baseline_suite:
+    command: python run_all.py --json
+    cwd: 03_validation/vendored_baseline_tests
+    total: 65
+    passed: 65
+    failed: 0
+    proves: the accepted engine behaves identically from the successor_v4 layout
+    does_not_prove: anything about the v4 extension predicates
+
+  decision_provenance_ledger:
+    generated_by: semantic_acceptance.provenance.as_ledger()
+    rule_count_accepted_engine_only: 76
+    untraced_rule_count: 0
+    note: >-
+      76/0 is the accepted engine's registry measured in a process that imports only the
+      accepted modules. The v4 extension adds further rules to the same registry when it is
+      imported; that combined ledger is regenerated at freeze time and is not asserted here.
+
+  full_evaluation:
+    entry_point: semantic_acceptance_v4.evaluate_v4.evaluate_full
+    predicates_returned: 14
+    fixtures:
+      - root: 02_acceptance/fixtures/baseline
+        overall: fail
+        passing: 13
+        failing: [P22]
+        interpretation: >-
+          Expected. This fixture is the accepted package's own baseline, unmodified. It
+          declares no minimum-effective-context derivation contract because the accepted
+          package had no A04 predicate to satisfy. Absence is not a pass, so P22 fails.
+      - root: 02_acceptance/fixtures/baseline_v4
+        overall: pass
+        passing: 14
+        failing: []
+        interpretation: >-
+          The accepted baseline plus one added A04 contract document. Every other file is
+          byte-identical to the accepted baseline.
+
+  boundary:
+    method: git status --porcelain -z --untracked-files=all
+    entries_inside_write_boundary: 33
+    entries_outside_write_boundary: 0
+    tracked_file_modifications_outside_boundary: 0
+
+# ---------------------------------------------------------------------------
+# Defects this run introduced and closed. Recorded because a reviewer should not
+# have to rediscover that the extension was wrong nine times before it was right.
+# ---------------------------------------------------------------------------
+
+defects_found_and_closed_in_construction:
+  discovery_method: running the extension against the accepted baseline, unmodified
+  convergence: failure set contracted 5 -> 3 -> 0 across three rounds, each with new evidence
+  defects:
+    - id: V4-DEF-01
+      symptom: "bare token 'states' claimed 'failure_states' as a window lifecycle"
+      fix: LIFECYCLE_REGION_TOKENS narrowed; states reached as a sub-region
+    - id: V4-DEF-02
+      symptom: "bare token 'fresh' claimed 'entry_modes.fresh' as a freshness region"
+      fix: token removed from FRESHNESS_REGION_TOKENS; A02 and A05 no longer share a locator
+    - id: V4-DEF-03
+      symptom: "synonym 'ref' belonged to both head_change and authorization_change; A's authorization trigger reported uncovered"
+      fix: "'ref' removed from head_change"
+    - id: V4-DEF-04
+      symptom: "region-level effect lookup matched 'authority_effect: none'"
+      fix: V4-FRESH-10 qualifier set; effect token must be qualified only by effect qualifiers
+    - id: V4-DEF-05
+      symptom: "region-level effect lookup matched a document's top-level 'status: active'"
+      fix: "'status' removed from the region-level set, retained at entry level"
+    - id: V4-DEF-06
+      symptom: receipt concepts read from keys only; a list-form receipt reported 1 of 5 concepts
+      fix: V4-RCT-06; concept roles also mapped from enumerated field names
+    - id: V4-DEF-07
+      symptom: walk_nodes yields containers only, so a scalar fingerprint leaf was never seen
+      fix: fingerprint binding computed at document level over leaves
+    - id: V4-DEF-08
+      symptom: receipt window-binding judged from its own key path; the window contract's own receipt reported unbound
+      fix: document-level window declaration counts as the binding
+    - id: V4-DEF-09
+      symptom: family requirement judged per leaf; `delivered_to` reported as a hard-coded family
+      fix: judged per family position, not per descendant leaf
+
+# ---------------------------------------------------------------------------
+# Correction to this executor's own earlier report
+# ---------------------------------------------------------------------------
+
+corrections_to_earlier_executor_claims:
+  - id: V4-COR-01
+    earlier_claim: >-
+      The write_prefix field in dispatch messages 00002 and 00003 is mojibake and points at
+      a path that does not exist.
+    status: withdrawn_incorrect
+    evidence: >-
+      git cat-file blob on both message blobs returns
+      \xe8\xa7\x92\xe8\x89\xb2 ... for the run directory segment, which is well-formed UTF-8
+      for 角色窗口上下文模型路由集成-001/04_测试生成/. The same bytes fail to decode as GBK.
+      The blobs were always correct.
+    actual_cause: >-
+      This executor piped git stdout through PowerShell without setting
+      [Console]::OutputEncoding, so git's UTF-8 output was decoded using the host ANSI code
+      page and re-encoded. The corruption was produced by the reading pipeline, not present
+      in the repository.
+    work_affected: none
+    reason_work_unaffected: >-
+      The path actually used was derived from the successor_v4_only write boundary, which is
+      the same path the field always held. No file was written to a wrong location.
+    rule_reinforced: >-
+      AGENT_WORKING_DISCIPLINE.md#3 — verify against the real bytes before reporting a
+      contradiction. A rendering artifact reported as a dispatch defect is a false finding,
+      and a false finding costs a reader the same as a missed one.
+
+  - id: V4-COR-02
+    earlier_claim: none
+    status: self_reported_construction_defect
+    what_happened: >-
+      The first draft of this checkpoint file was itself invalid strict YAML. A plain scalar
+      began with a backtick, and three others embedded the sequence ": " inside a plain
+      scalar. Both are the exact failure mode of ST04-V3-IR-001, the blocking finding that
+      the v3 freeze receipt was not machine-consumable.
+    caught_by: >-
+      The pre-commit gate in this run strict-parses every YAML file it is about to stage and
+      refuses to stage on failure. It refused, so the defect never entered a commit.
+    significance: >-
+      Worth recording rather than quietly fixing. The finding that ended v3 was not an
+      unusual mistake; it is what happens whenever a receipt is authored as prose and never
+      parsed. The gate, not the author's care, is what prevented the repeat.
+
+# ---------------------------------------------------------------------------
+# What remains before a freeze may be attempted
+# ---------------------------------------------------------------------------
+
+remaining_before_freeze:
+  - replay the 15 independent v3 adversarial variants against the v4 method
+  - replay the 29 root-cause counterexamples
+  - metamorphic representation-equivalence tests over the v4 predicates
+  - poisoned vocabulary, double negation and polarity inversion tests for v4 rules
+  - adapter applicability negative tests for the v4 adapters
+  - decision provenance audit over the combined accepted-plus-v4 registry
+  - receipt external binding and tamper tests
+  - strict YAML and git diff --check
+  - freeze_receipt_v4.yml with external Git binding and a complete NUL-safe changed-path set
+  - refreeze_report_v1.yml and completion_report_v1.yml
+  - formal communication-v2 result pointer
+
+next_owner:
+  role: foreground_stage04_successor_dispatch
+  required_action: >-
+    Decide whether the adversarial and freeze tail proceeds in this executor session or a
+    new one. This checkpoint authorizes nothing and freezes nothing.

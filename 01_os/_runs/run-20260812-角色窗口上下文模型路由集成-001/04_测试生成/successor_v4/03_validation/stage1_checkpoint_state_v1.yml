@@ -1,0 +1,275 @@
+schema_version: citystate.stage04.successor_checkpoint.v1
+task_id: os-v2-stage04-successor-acceptance-refreeze-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+created_at: '2026-08-15'
+
+document_status: in_progress_checkpoint
+authority_effect: none
+terminal_state: IN_PROGRESS_CHECKPOINT_NOT_FROZEN
+supersedes_nothing: 03_validation/checkpoint_state_v1.yml remains the record of the prior checkpoint
+
+not_claimed:
+  frozen_candidate: false
+  ready_for_fresh_independent_acceptance: false
+  parent_stage04_pass: false
+  stage05_entry: false
+  final_result_pointer_published: false
+  phase2_started: false
+  freeze_receipt_produced: false
+  adversarial_tail_complete: false
+
+dispatch:
+  responding_to: os-v2-stage04-successor-acceptance-refreeze-001::foreground-stage04-successor-dispatch-001::00006
+  pointer_commit: 4e5a241b0c1167bf826b5a0270d98d49e1ba27b6
+  requested_action: checkpoint_stage1_V4_FND_01_resolution_and_pause
+
+physical_binding:
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  transport: local_git
+  hook_guard: passed
+  hook_guard_evidence: git config --get core.hooksPath returned .githooks, read in this session
+  worktree: E:/newStand/study/_wt_stage04_v4_tail
+  worktree_provenance: >-
+    Created this session. The prior executor's worktree at
+    E:/newStand/study/_wt_stage04_successor_v4 was clean and exactly at the
+    checkpoint; it was removed and a fresh one added, because a branch cannot be
+    checked out in two worktrees and receiver_setup required a fresh one.
+  branch: dev/os-v2-stage04-successor-acceptance-refreeze-001
+  checkpoint_parent_sha: 0db9572906899b4b8c6d3ccfca3e69cc73e56bc0
+  parent_T2_branch_modified: false
+  master_modified: false
+  checkpoint_sha: read_back_from_remote_after_push_not_recorded_here
+  checkpoint_sha_rule: >-
+    The commit SHA that contains this file cannot appear inside it. Same rule the
+    freeze receipt will follow. It is read back from the remote after push and
+    returned to the foreground in the reply.
+
+executor:
+  provider: Anthropic
+  product: Claude Desktop
+  surface: claude_desktop_cowork
+  model: Claude Opus 5
+  profile: claude_desktop_cowork_opus5_task_time
+  session_mode: explicit_reentry
+  endpoint_id: claude-cowork-stage04-successor-tail-executor-002
+  pre_start_check: product_surface_model_matched_00005_route
+  authority: routing_only
+
+# ---------------------------------------------------------------------------
+# The material finding this checkpoint exists to preserve
+# ---------------------------------------------------------------------------
+
+V4_FND_01:
+  finding_ref: 03_validation/findings/V4-FND-01_shared_registry_false_fail_v1.yml
+  class: shared_registry_false_fail
+  summary: >-
+    Importing semantic_acceptance_v4 registers P21..P27 into the shared REGISTRY,
+    so semantic_acceptance.evaluate.evaluate_tree calls them too - against a
+    FactSet that build_fact_set never augmented. The v4 predicates read absent
+    fact lists as empty, applied "absence is never a pass", and returned FAIL on
+    a fully conforming tree.
+  measured_before_fix:
+    tree: 02_acceptance/fixtures/baseline_v4
+    evaluate_full: {predicates: 14, overall: pass, failing: []}
+    evaluate_tree: {predicates: 14, overall: fail, failing: [P21, P22, P23, P24, P25, P27]}
+  resolution:
+    option: R-A
+    ruled_by: Human
+    ruled_at: '2026-08-15'
+    change: >-
+      predicates_v4.v4_predicate wraps the accepted predicate decorator and
+      returns UNSUPPORTED when the FactSet lacks the v4 fact attributes.
+    why_it_is_fail_closed: >-
+      UNSUPPORTED is already the accepted contract's third outcome (V-FACT-08),
+      and evaluate.overall already treats it as not-pass. No new status was
+      introduced and no vendored file was edited.
+    vendored_engine_bytes_changed: 0
+    vendored_engine_evidence: git diff HEAD -- '*/semantic_acceptance/*' is empty
+  measured_after_fix:
+    tree: 02_acceptance/fixtures/baseline_v4
+    evaluate_tree: {predicates: 14, overall: unsupported_or_ambiguous_representation}
+    accepted_seven_under_evaluate_tree: all pass
+    evaluate_full: {predicates: 14, overall: pass, failing: []}
+  guard_tests:
+    - test_v4_reviewer_replay.test_FND01_unaugmented_factset_is_unsupported_not_fail
+    - test_v4_reviewer_replay.test_FND01_accepted_seven_are_unaffected_by_the_guard
+    - test_v4_reviewer_replay.test_FND01_augmented_factset_still_judges_normally
+  discovery_context: >-
+    Found because the replay's accepted-engine control could not be built
+    in-process. The control was a defective test and was repaired by moving it to
+    a subprocess; the reason it failed was a property of the package, so the
+    property was reported rather than the test quietly fixed.
+
+# ---------------------------------------------------------------------------
+# Evidence measured in this session. Nothing copied from a prior report.
+# ---------------------------------------------------------------------------
+
+measured_evidence:
+  runtime: CPython 3.14.6, PyYAML 6.0.3, Windows PowerShell
+  vendored_baseline_suite:
+    command: python run_all.py --json
+    cwd: 03_validation/vendored_baseline_tests
+    interpreter: separate process, semantic_acceptance_v4 never imported
+    total: 65
+    passed: 65
+    failed: 0
+    proves: the vendored accepted engine behaves identically from this layout
+    does_not_prove: anything about the v4 extension predicates
+
+  v4_suite:
+    command: python run_all_v4.py --emit ../results --json
+    cwd: 03_validation/v4_tests
+    total: 17
+    passed: 17
+    failed: 0
+
+  reviewer_probe_replay:
+    corpus_source_sha: 19c39ed37f14c97cfa132ffafabcb9afa33dd7f0
+    corpus_source_path: 08_独立审核/independent_probe_suite.py
+    corpus_load_method: >-
+      read from the Git blob and executed in a temp directory; the working-tree
+      copy of the reviewer's directory was never touched or edited
+    measurement_A:
+      engine: accepted only
+      isolation: separate interpreter, asserted by predicate-id set
+      predicate_ids_observed: [P01, P02, P03, P04, P05, P06, P07]
+      fixture_root: 02_acceptance/fixtures/baseline
+      semantic_cases: 46
+      expected_classifications_met: 46
+      proves: the vendored engine reproduces the reviewer's own measurement
+    measurement_B:
+      engine: semantic_acceptance_v4.evaluate_v4.evaluate_full
+      fixture_root: 02_acceptance/fixtures/baseline_v4
+      semantic_cases: 46
+      expected_classifications_met: 46
+      predicates_per_case: 14
+    receipt_attacks:
+      total: 17
+      expected_classifications_met: 17
+    combined: 63 of 63
+    combined_comparison: >-
+      Equals the closure figure recorded in root-cause-001/09_FIX_REQUIRED修正/
+      29反例关闭矩阵_v1.yml. That document's own source of truth is the suite, and
+      the suite is what was executed here.
+
+  v3_variant_replay:
+    corpus: semantic_acceptance.corpus.V3_VARIANTS, vendored and byte-identical
+    engine: evaluate_full
+    fixture_root: 02_acceptance/fixtures/baseline_v4
+    total: 15
+    classified_as_expected: 15
+    nonconforming_still_failing_on_own_deciding_predicate: true
+    decided_by_an_extension_predicate: 0
+    why_that_last_line_matters: >-
+      Fourteen predicates give a nonconforming variant seven more ways to fail.
+      A corpus that goes green while every case is decided by an unrelated new
+      predicate has stopped testing what it was built to test. Asserted
+      separately rather than inferred from the overall verdict.
+
+  fixture_identity:
+    method: per-file Git blob SHA1 comparison
+    successor_baseline_vs_accepted_prototype_baseline: 9 of 9 identical
+    baseline_v4_vs_baseline: identical plus exactly one added file
+    added_file: mechanism/context_contract_v1.yml
+    why_baseline_v4_is_the_replay_base: >-
+      The accepted baseline declares no A04 minimum-effective-context contract,
+      because the accepted package had no A04 predicate. P22 therefore fails on
+      it before any mutation. A control test asserts that P22 is the only
+      predicate separating the two roots, so the base-tree choice is measured
+      rather than assumed.
+
+  boundary:
+    method: git status --porcelain -z --untracked-files=all
+    entries_total: 11
+    entries_outside_write_boundary: 0
+    historical_review_evidence_modified: 0
+    parent_run_yml_modified: false
+    canonical_paths_modified: false
+
+  static_gates:
+    strict_yaml_single_document: passed
+    python_compile: passed
+    git_diff_check: passed
+    crlf_in_changed_set: 0
+
+defects_this_session_found_and_closed:
+  - id: S1-DEF-01
+    symptom: >-
+      _bootstrap_v4.ls_tree returned an empty list with exit code 0 for every
+      historical revision.
+    cause: >-
+      git ls-tree defaults its pathspec to the current directory prefix. Run from
+      inside successor_v4/ - a path absent from those revisions - it succeeded and
+      matched nothing.
+    fix: --full-tree, with the reason recorded in the function docstring.
+    significance: >-
+      An empty result from a zero exit code is the worst available failure shape:
+      a caller checking only the return code reads "nothing matched" as
+      "nothing exists".
+  - id: S1-DEF-02
+    symptom: >-
+      predicates_v4.py was rewritten with CRLF line endings while every other file
+      in the tree is LF.
+    cause: the editing tool used by this executor, not the repository configuration
+    fix: normalised to LF; a CRLF check is now part of the checkpoint gate
+    significance: >-
+      The repository declares `* text=auto eol=lf`, so Git would have normalised it
+      on commit and the diff would have looked clean. But the freeze receipt binds
+      candidate bytes, and a CRLF working copy hashes to a value no Git blob
+      equals - which is exactly what the任务包 invariant
+      receipt_candidate_bytes_are_bound_from_physical_Git_blobs exists to prevent.
+
+# ---------------------------------------------------------------------------
+# Contradiction between the dispatch record and measurement
+# ---------------------------------------------------------------------------
+
+reported_contradictions:
+  - id: S1-CON-01
+    what: >-
+      00_governance/任务包_v1.yml#required_successor_outputs lists
+      01_semantic_binding/requirement_trace_v4.yml and
+      02_acceptance/04_tests_v4.yml. Neither exists at checkpoint parent
+      0db9572906899b4b8c6d3ccfca3e69cc73e56bc0, and neither appears in
+      03_validation/checkpoint_state_v1.yml#remaining_before_freeze.
+    measured: absent from the checkpoint tree; verified by git ls-tree
+    effect: >-
+      They remain required outputs and are still outstanding. Recorded so the
+      remaining-work list is not treated as complete merely because the earlier
+      checkpoint's list was.
+    action_taken: reported, not created; creating them is phase2 work
+  - id: S1-CON-02
+    what: >-
+      00_governance/任务包_v1.yml#executor_profile still names
+      OpenAI / Codex Desktop / GPT-5.6 Sol.
+    measured: >-
+      actual executor is Anthropic / Claude Desktop Cowork / Claude Opus 5, per
+      the 00003 and 00005 formal reroutes
+    effect: >-
+      executor_profile is routing_only and authorises nothing, so this does not
+      block. The packet field is stale relative to the communication record.
+    action_taken: >-
+      reported, not edited. The authoritative reroute lives in the communication
+      root; silently rewriting a governance field to match would destroy the
+      record that a reroute happened.
+
+# ---------------------------------------------------------------------------
+# What remains before a freeze may be attempted
+# ---------------------------------------------------------------------------
+
+remaining_before_freeze:
+  - metamorphic representation-equivalence tests over the v4 predicates
+  - poisoned vocabulary, double negation and polarity inversion tests for v4 rules
+  - adapter applicability negative tests for the v4 adapters
+  - decision provenance audit over the combined accepted-plus-v4 registry
+  - receipt external binding and tamper tests for the v4 package
+  - 01_semantic_binding/requirement_trace_v4.yml
+  - 02_acceptance/04_tests_v4.yml
+  - freeze_receipt_v4.yml with external Git binding and a complete NUL-safe changed-path set
+  - 04_freeze/refreeze_report_v1.yml and completion/completion_report_v1.yml
+  - formal communication-v2 result pointer
+
+next_owner:
+  role: foreground_stage04_successor_dispatch
+  required_action: >-
+    Read back the checkpoint SHA returned with this reply and decide whether
+    phase2 proceeds. This checkpoint authorises nothing and freezes nothing.

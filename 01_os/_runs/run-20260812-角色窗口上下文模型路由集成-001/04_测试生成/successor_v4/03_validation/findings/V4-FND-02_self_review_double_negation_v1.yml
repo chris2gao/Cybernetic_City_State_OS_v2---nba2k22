@@ -1,0 +1,166 @@
+schema_version: citystate.stage04.successor_finding.v1
+finding_id: V4-FND-02
+task_id: os-v2-stage04-successor-acceptance-refreeze-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+raised_by: claude-cowork-stage04-successor-tail-executor-002
+raised_at: '2026-08-15'
+reconciled_by: claude-cowork-stage04-successor-tail-executor-003
+reconciled_at: '2026-08-16'
+document_status: ruled_and_implemented_pending_independent_acceptance
+authority_effect: none
+blocks_freeze: true
+class: negation_blind_token_matching
+
+title: >-
+  The v4 vocabularies were matched without reading NEGATION, so "not_X" was
+  scored as "X". Depending on which list the token belongs to this produced a
+  false PASS or a false FAIL.
+
+# ---------------------------------------------------------------------------
+# Reconciliation, 2026-08-16
+# ---------------------------------------------------------------------------
+
+reconciliation:
+  why_this_file_changed: >-
+    The implementation landed at checkpoint 08affd and this file still described
+    the pre-implementation state, including a mechanism claim the implementation
+    measured to be wrong. Dispatch 00009 required the durable finding to be
+    brought to measured truth before any new semantic code was written. This is
+    that reconciliation; it records implementation state and claims nothing about
+    independent acceptance.
+  corrected_mechanism_claim:
+    filed_as: >-
+      "the v4 vocabularies are matched by SUBSTRING without reading negation"
+    measured_as: >-
+      The matchers were already WHOLE-TOKEN. `_seg_tokens` calls the accepted
+      `tokens()`, so ST04-V3-IR-005's "source inside resource" could not happen
+      here and never was the defect. What the matchers did not read was NEGATION.
+      `tokens("not_prohibited")` is ['not', 'prohibited'], the intersection with
+      a rejection vocabulary is non-empty, and a document PERMITTING self-review
+      was scored as rejecting it.
+    why_the_distinction_matters: >-
+      A substring defect and a negation-blindness defect call for different
+      fixes. Leaving "substring" in the record would have sent the next reader
+      to audit tokenization, which was never wrong, and away from polarity,
+      which was. Both manifestations and both directions still hold exactly as
+      filed; only the named mechanism was wrong.
+  what_is_now_claimed: implementation_green_at_08affd
+  what_is_not_claimed:
+    - independent acceptance
+    - that every v4 token-list matcher was proved correct rather than audited
+    - that the accepted engine's own vocabularies were audited for the same shape
+
+ruling:
+  option: F02-A_WITH_CONSTRAINTS
+  ruled_by: foreground-stage04-successor-dispatch-001
+  ruled_at: '2026-08-15'
+  ruling_ref: documents/foreground-stage04-successor-dispatch-001/00008_F02_F03_F04_blocker_rulings.yml
+  decision: >-
+    Route every v4 token-vocabulary polarity decision through the accepted
+    engine's whole-token and negation-parity semantics. Do not patch only the two
+    observed fields. A v4 helper may compose accepted tokens / negation_count /
+    is_negated / path_is_negated / extract_declarations without editing vendored
+    bytes.
+  implemented: true
+  implemented_at: 08affd036a4033960b69aff2def4a0932d8193b9
+  implementation: >-
+    Two helpers in `adapters_v4.py` apply the accepted V-POL-02 parity rule -
+    which the engine already applies to KEY names - to VALUES by composition:
+    `_vocabulary_assertion` returns asserted / inverted / absent, and
+    `_enablement_with_parity` runs `classify_enablement` on the base term and
+    inverts once per odd parity. Zero vendored bytes changed.
+  the_correction_that_was_caught_by_regression: >-
+    Parity counts MODIFYING negations only. Most rejection vocabularies OVERLAP
+    the negation-token set - "prohibited" is both the term being matched and a
+    negation marker - so counting every negation token read the plain word
+    "prohibited" as a negation of itself and broke the conforming baseline.
+    Excluding the matched terms is what makes "prohibited" asserted,
+    "not_prohibited" inverted, and "never_not_prohibited" asserted again. This
+    was found by the baseline regression, not by review, and is recorded because
+    a fix that passes only its own new cases is the failure mode this project
+    keeps paying for.
+
+manifestations:
+  - id: V4-FND-02-a
+    direction: false_pass
+    requirement:
+      id: A08
+      statement: >-
+        Required reviewer/session/model-family independence is represented as
+        explicit constraints and obvious self-review can fail closed.
+    case_id: V4DN02
+    transformation: independence.same_window_review "prohibited" -> "not_prohibited"
+    vocabulary: SELF_REVIEW_REJECTION_TOKENS, which contains "prohibited"
+    filed_observation:
+      fact: {key_path: independence, self_review_effect_declared: true, self_review_rejected: true}
+      predicate: {P25: pass}
+      overall: pass
+    expected: P25 fail
+    status: closed_by_F02-A
+    now_measured: {P25: fail}
+    corpus_position: >-
+      moved out of OPEN_HOLES and into DIFFERENCES as V4DN02, so the case now
+      asserts that the hole is CLOSED and goes red if it reopens
+
+  - id: V4-FND-02-b
+    direction: false_fail
+    requirement:
+      id: A04
+      statement: >-
+        A deterministic minimum-context contract derives the window load set from
+        task, role, stage/step and approved refs without default historical preload.
+    case_id: V4MT10
+    transformation: minimum_effective_context.historical_run_preload "prohibited" -> "not_permitted"
+    filed_observation:
+      fact: {key_path: "minimum_effective_context.historical_run_preload", enablement: enabled}
+      predicate: {P22: fail}
+    expected: P22 pass, because a prohibition spelled differently is the same prohibition
+    status: closed_by_F02-A
+    now_measured: {P22: pass}
+    corpus_position: >-
+      moved out of OPEN_INVARIANCE_HOLES and into INVARIANTS as V4MT10
+
+measured_evidence:
+  filed_measurement:
+    measured_at: '2026-08-15'
+    runtime: CPython 3.14.6
+    base_tree: 02_acceptance/fixtures/baseline_v4
+  closure_measurement:
+    measured_at: '2026-08-16'
+    measured_by: claude-cowork-stage04-successor-tail-executor-003
+    runtime: CPython 3.14.6, PyYAML 6.0.3
+    tree: 08affd036a4033960b69aff2def4a0932d8193b9, reproduced before any change
+    v4_suite: 29/29 passed, exit 0
+    vendored_baseline_suite: 65/65 passed, exit 0, separate interpreter
+    nine_required_regressions_all_measured:
+      - self_review prohibited -> P25 pass
+      - self_review not_prohibited -> P25 fail
+      - self_review permitted -> P25 fail
+      - self_review never_not_prohibited -> P25 pass
+      - preload prohibited -> P22 pass
+      - preload not_permitted -> P22 pass
+      - preload permitted -> P22 fail
+      - preload not_prohibited -> P22 fail
+      - preload boolean False -> P22 pass
+    independence_of_this_measurement: >-
+      Reproduced by a different execution instance than the one that wrote the
+      implementation, from the Git checkpoint alone. That is a fresh execution
+      session and NOT independent acceptance: same collaboration role, same
+      model family. AGENT_WORKING_DISCIPLINE.md#5 requires that distinction to
+      be stated rather than left for a reader to infer.
+
+what_this_does_not_claim:
+  - the number of vocabularies affected was not enumerated; two were demonstrated
+  - the accepted engine's own vocabularies were not audited for the same matcher
+  - no claim that any real candidate document has used either spelling
+  - implementation-green is not acceptance; a fresh independent review is still owed
+
+audit_owed_regardless_of_which_option:
+  - every token-list match over a vocabulary in vocabulary_v4 and adapters_v4
+  - whether the same matcher shape exists in the accepted engine
+
+next_owner:
+  role: foreground_stage04_successor_dispatch
+  required_action: >-
+    read back the closure evidence; the finding stays open until a fresh
+    independent acceptance reviews it, which this file does not and cannot grant

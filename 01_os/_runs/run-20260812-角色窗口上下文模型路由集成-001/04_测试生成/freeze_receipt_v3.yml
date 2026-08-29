@@ -1,0 +1,328 @@
+schema_version: citystate.stage04.freeze_receipt.v1
+task_id: os-v2-role-window-context-model-routing-integration-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+stage: 04_测试生成
+artifact_version: 3
+frozen_at: '2026-08-12'
+status: corrected_frozen_awaiting_fresh_independent_acceptance
+correction_round: 2
+
+supersedes:
+  path: 04_测试生成/freeze_receipt_v2.yml
+  sha256: 5e8cbda40bf6b8a82735eb2955d10e9664db0cab2d3945c878e5fd6a26341866
+  effect: superseded_for_active_stage04_acceptance
+  also_retained:
+    path: 04_测试生成/freeze_receipt_v1.yml
+    sha256: c17c76895c89c4aaf72e97890c5ea95b2e44e536f77dba42fd33f2bedda40154
+  disposition: >-
+    Both earlier receipts are retained byte-identical. Each records a package
+    that reported a perfect internal score and was then overturned by an
+    independent review; deleting either would erase that fact.
+
+freeze_authorization:
+  authorization_ref: 04_测试生成/Stage04_Human窄修正授权_v2.yml
+  authorization_sha256: a2db83e16384670bace4500618cbe58c0ce2eb2245f1628ca0a08a9c2ce8e15f
+  dispatch_ref: 04_测试生成/Stage04_第二轮窄修正派单_v3.md
+  dispatch_sha256: 94907da8b3bbc549d9254e4d3606e18a74be1341ac0ecb4503aed09c2c8f6671
+  proposal_ref: 04_测试生成/Stage04_v2_FIX_REQUIRED接收与Human窄修正提案_v1.yml
+  proposal_sha256: 6461ecbd2c4555d6a78b4802cb5b8dcc4b4be9e5573bcd4c0e0a04a70c1f48cd
+  adjudication_ref: 04_测试生成/独立接收审核/v2/Stage04_v2独立接收裁决_v1.yml
+  adjudication_sha256: da894d6283512125099ac66a8c46faa2323e051ad25bd3bad7f04864566966e8
+  reviewer_probe_results_ref: 04_测试生成/独立接收审核/v2/independent_variant_probe_results_v1.json
+  reviewer_probe_results_sha256: efef015570d4ea6dbbc579e11e1d2c8f087bfd7840f92d907880bbbdf5be1249
+  canonical_write: false
+  master_write: false
+  destructive_git: false
+
+executor_identity:
+  role: stage_04_test_designer_correction
+  provider: Anthropic
+  exact_model: Claude Opus 5
+  ui_surface: Claude desktop app, Cowork mode
+  reasoning_setting: not_exposed
+  entry_mode: explicit_reentry
+  entry_mode_basis: >-
+    Same window as artifact_version 1 and 2. Re-entry performed by re-reading the
+    remote branch head, master, the round-2 authorization, the v2 adjudication and
+    the reviewer probe evidence from the repository rather than from conversational
+    continuity. Host session identity is not machine observable; this is a disclosed
+    assertion, not a technical proof.
+  author_is_not_final_acceptor: true
+
+source_binding:
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  task_branch: dev/os-v2-role-window-context-model-routing-integration-001
+  source_head_before_correction: 3a9c806c457dbd866d3ca8ecf3a75c7a5b10748a
+  remote_master_at_freeze: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  local_worktree_fast_forwarded_from: b2a80618b906f4f23d5e2fafbd13a662fcb140f6
+  worktree: separate sibling git worktree per the workspace adjudication
+  other_worktree_untouched: true
+
+separate_authorization_on_this_branch:
+  present: true
+  commit: 236e7c52c06804d58324c1113e007cb4608088f7
+  subject: 'feat(os): fix step retry budget at 1, no retry after failure'
+  authorization_source: Human instruction in the same chat session, not this freeze authorization
+  relation_to_this_package: none
+  statement: >-
+    Stage04_Human窄修正授权_v2.yml declares canonical_write false, and this
+    correction wrote no canonical file. A separate Human instruction in the same
+    session authorized a canonical change to the seven-stage step retry budget
+    (1-3 becomes fixed 1, failure exits through invalidate_upstream instead of
+    re-running). It is deliberately a distinct commit on the same branch so that
+    the two diffs can be reviewed independently. A reviewer of this package
+    should read only the Stage04 commit; the canonical commit belongs to its own
+    Human authorization and its own verification, recorded in its commit message.
+
+closes_blockers:
+  - id: ST04-V2-IR-001
+    finding: RW-T25 rejected the requested `*_disabled: true` prohibition shape
+    how: >-
+      declared_prohibitions() now strips the whole negation-suffix family
+      (prohibited/forbidden/disallowed/disabled/banned/excluded/blocked/denied)
+      through a shared strip_ban_suffix(), and the carried-private-reasoning check
+      no longer counts a key that is itself the prohibition declaration. The
+      candidate validator accepts list, mapping and suffix forms natively, so the
+      conforming variant needs no validator patch.
+    conforming_regression: C10
+    violating_regression: M46
+  - id: ST04-V2-IR-002
+    finding: RW-T08/RW-T09 froze entry_modes as a mapping of mappings
+    how: >-
+      _modes_from_list() normalises a list of mode records carrying any of
+      mode_id/entry_mode/mode/id/name/kind into the same shape a mapping gives.
+      Only fresh-versus-reentry separability and exact-predecessor semantics are
+      judged. The candidate validator normalises identically.
+    conforming_regression: C11
+    violating_regression: M08, M09
+  - id: ST04-V2-IR-003
+    finding: RW-T19 missed a normative provider pin expressed as a mapping key
+    how: >-
+      The scan is now subtree-based. Once a path segment selects a
+      provider/model/family/surface/vendor/engine/executor/route, every key name
+      and scalar below it belongs to that selection, so
+      `preferred_provider: {openai: true}` is caught exactly as the scalar form is.
+      Provenance exclusion is applied per path segment and only to provenance
+      subtrees.
+    conforming_regression: C05
+    violating_regression: M44
+  - id: ST04-V2-IR-004
+    finding: a YAML role/stage/context applicability matrix was read as a second role source
+    how: >-
+      ROLE_SOURCE_CONCEPTS is separated from the wider ROLE_ATTR_CONCEPTS and used
+      for source-of-truth detection in both YAML and Markdown. Bare `scope` and
+      bare `context` are removed: `stage_scope` plus `context_hint` says where a
+      role applies, not what it is. Three or more entries must each declare two
+      genuine ownership properties.
+    conforming_regression: C12
+    violating_regression: M47, M05, M31
+  - id: ST04-V2-IR-005
+    finding: RW-T43 missed a second mutable catalog in Markdown definition-list form
+    how: >-
+      structured_entry_lines() recognises definition-list terms (a term line whose
+      next non-empty line begins with `:`), in addition to table rows, list items
+      and `key:` lines. The pointer/receipt allowlist is unchanged, and live model
+      identifiers are still read from the tree under test.
+    conforming_regression: C13
+    violating_regression: M45
+  - id: ST04-V2-IR-006
+    finding: the validator dependency closure was history-heavy and not closed
+    how: >-
+      The crawler is deleted, not improved. stage_dependency_closure(),
+      probe_mech_validator() and REPO_PATH_RX are removed from the harness (103
+      lines) and the six probes call probe_full_tree(), which runs the mechanism's
+      declared validator against the full candidate tree. One writable copy is made
+      per tree under test and shared by all six probes; the mechanism surface is
+      snapshotted before each injection and restored after, so the probes remain
+      independent without copying the tree six times.
+    conforming_regression: C14
+    violating_regression: M37..M42
+    measured: >-
+      Deleting the crawler also made the run faster, not slower: the full selftest
+      dropped from 844.7 s at artifact_version 2 to 470.8 s here, on a larger
+      sample set.
+
+retained_unchanged:
+  RW_T06: valid_and_retained
+  future_implementation_boundary_must_include: 01_os/02_boot/context_management/启动清单_v1.yml
+  RW_T30_scope: limited_to_T2_mechanism_indexing
+  schema_naming_neutrality: retained
+  publisher_authority_preservation: RW-T33 unchanged
+  existing_validator_preservation: RW-T32 unchanged
+  runtime_behavior: still degraded to honest contract checks, no runtime proof claimed
+  instance_storage_path: still not frozen
+  test_count: >-
+    43, unchanged. Round 2 corrected judgement logic inside existing checks and
+    added no new behaviour surface. The count was not preserved for continuity;
+    it simply did not need to change.
+
+frozen_payload:
+  normalized_digest: 3567d3409c181efd970bdeeab1952c9a2c37419b8f8401d63097653ea5781e9f
+  superseded_digests:
+    artifact_version_1: d4fd85889a73e8dd313065e355290992cbf166fa6034420efe9f9c68974996e1
+    artifact_version_2: 993658e84f7481d1c96fe48d074a3ef401831d05f5da44c38c28295874df3848
+  digest_scope: payload without test_package_sha256
+  normalization: >-
+    yaml.safe_dump(allow_unicode=True, sort_keys=True, width=4096) then SHA-256,
+    identical to
+    01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py
+
+changed_paths:
+  - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/04_tests.yml
+  - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/实现/verify_stage04_acceptance.py
+  - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/fixtures/mutations_v3.yml
+  - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/fixtures/overlay/01_os/03_mechanisms/window_role_binding/impl/check_binding.py
+  - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/测试设计说明_v3.md
+  count: 5
+  all_inside_authorized_boundary: true
+
+artifact_hashes:
+  - path: 04_tests.yml
+    sha256: 21e75204536c488a61793c6b0ea069bb7e91c420ebb687132c1f159deb4187a3
+  - path: 实现/verify_stage04_acceptance.py
+    sha256: 7692610ebb677edc91d40e6131c67cab04e6d0b400cdd398d68e18ac9f855943
+  - path: fixtures/mutations_v3.yml
+    sha256: 07aba6835539d7b78af80bd6ddd4b34d0f4bca1302bfee375f733e4d8da5ddd9
+  - path: fixtures/overlay/01_os/03_mechanisms/window_role_binding/impl/check_binding.py
+    sha256: 0322a4f2846373b89c9e73c85cb4b761070ee97c1233960f3a48ea0b4e8efa55
+  - path: 测试设计说明_v3.md
+    sha256: 02ecd12293f359dc66f6278e14c95f9309f5b885f9c9090d62251fcf7d082cbf
+  - path: fixtures/mutations_v2.yml
+    sha256: 7e2178824eb8787ec3932c8a6289d01aadbfe7c5698bd1d00a005681744eba9d
+    disposition: retained_as_history
+  - path: fixtures/mutations_v1.yml
+    sha256: fbeb0f0cb1becd4375fc8f5ed16ee3904b86f89c4fb85b02e1dc2f66f3294956
+    disposition: retained_as_history
+  - path: 测试设计说明_v2.md
+    sha256: 491e70965972797625289a3832e70b34371153123ed53d2dddd1c7abd771da60
+    disposition: retained_as_history
+  - path: 测试设计说明_v1.md
+    sha256: a891b424c0a753aef921b74d13101713f6afe2737d0b160f2bf7dd9f4b1b4ab7
+    disposition: retained_as_history
+
+byte_unchanged_verified:
+  - 04_测试生成/freeze_receipt_v1.yml
+  - 04_测试生成/freeze_receipt_v2.yml
+  - 04_测试生成/独立接收审核/Stage04冻结测试包独立接收裁决_v1.yml
+  - 04_测试生成/独立接收审核/v2/Stage04_v2独立接收裁决_v1.yml
+  - 04_测试生成/独立接收审核/v2/independent_variant_probes.py
+  - 04_测试生成/独立接收审核/v2/independent_variant_probe_results_v1.json
+  - 04_测试生成/独立接收审核/v2/validate_review_artifacts.py
+  - 04_测试生成/Stage04_Human窄修正授权_v1.yml
+  - 04_测试生成/Stage04_Human窄修正授权_v2.yml
+  - 04_测试生成/Stage04_v2_FIX_REQUIRED接收与Human窄修正提案_v1.yml
+  - 04_测试生成/Stage04_第二轮窄修正派单_v3.md
+  - 04_测试生成/fixtures/mutations_v1.yml
+  - 04_测试生成/fixtures/mutations_v2.yml
+  - 04_测试生成/测试设计说明_v1.md
+  - 04_测试生成/测试设计说明_v2.md
+  - A / Stage02 / B / run.yml
+  method: git status showed exactly five changed paths, none of them in this list
+
+counts:
+  total: 43
+  positive: 17
+  negative: 17
+  boundary: 9
+
+results:
+  environment:
+    os: Windows
+    python: 3.14.6
+    pyyaml: 6.0.3
+  package_validation:
+    command: verify_stage04_acceptance.py package <run_root>
+    exit_code: 0
+    detail: >-
+      43 tests, digest matches, every input_ref and supporting_ref sha verified on
+      disk, artifact_version >= 2 enforced, and all twelve accepted blockers
+      (ST04-IR-001..006 and ST04-V2-IR-001..006) bound to the package.
+  selftest:
+    command: verify_stage04_acceptance.py selftest <repo_root>
+    exit_code: 0
+    elapsed_seconds: 470.8
+    positive:
+      tree: current repository tree plus fixtures/overlay/** plus fixtures/overlay_edits_v1.yml
+      green: 43
+      total: 43
+    negative:
+      mutations: 47
+      killed: 47
+      kill_rate: '100%'
+      new_this_round: [M44, M45, M46, M47]
+    conforming:
+      variants: 14
+      green: 14
+      new_this_round: [C10, C11, C12, C13, C14]
+    boundary:
+      - probe: empty_tree
+        expected_green: [RW-T05, RW-T31]
+        result: ok
+      - probe: mechanism_without_boot_or_registry
+        expected_red: [RW-T28, RW-T29, RW-T34, RW-T37, RW-T38, RW-T39, RW-T40, RW-T41, RW-T42]
+        result: ok
+  validator_probe_environment:
+    method: full_candidate_tree
+    dependency_crawler: deleted
+    removed_symbols: [stage_dependency_closure, probe_mech_validator, REPO_PATH_RX]
+    removed_lines: 103
+    semantics: zero_before_nonzero_after_preserved
+  current_repository_baseline:
+    command: verify_stage04_acceptance.py acceptance <repo_root>
+    exit_code: 1
+    green: 4
+    red: 39
+    total: 43
+    green_ids: [RW-T31, RW-T32, RW-T33, RW-T43]
+    interpretation: >-
+      Red as expected: the T2 canonical mechanism does not exist yet. The four
+      green checks are preservation checks that are already true and must stay
+      true after implementation.
+  git_diff_check:
+    scope: correction primary diff
+    exit_code: 0
+
+reviewer_findings_imported_as_regressions:
+  V10_disabled_suffix_prohibitions: conforming, mapped to C10
+  V11_list_shaped_entry_modes: conforming, mapped to C11
+  V12_structured_provider_pin: violating, mapped to M44
+  V13_yaml_role_applicability_matrix: conforming, mapped to C12
+  V15_markdown_definition_list_catalog: violating, mapped to M45
+  note: >-
+    The reviewer's semantic findings are imported; its exact fixture strings are
+    not copied. C13 and C14 and M46 and M47 are additional boundaries created by
+    the corrections themselves, so that accepting a representation does not
+    silently mean accepting its absence.
+
+known_limitations:
+  - statement: >-
+      47/47 kills and 14/14 conforming passes are not a completeness claim.
+      artifact_version 1 reported 42/42 and was overturned on six findings;
+      artifact_version 2 reported 43/43 plus 9/9 and was overturned on six more.
+  - statement: >-
+      Four of the six v2 findings were false positives, which no mutation can
+      expose, and two were false negatives, which no conforming variant can
+      expose. Both sample classes have now been extended, but the extension came
+      from an external reviewer both times. This author has not yet demonstrated
+      the ability to find its own representation blind spots.
+  - statement: >-
+      New representation boundaries may still exist. The corrections above were
+      each derived from a shape someone else thought of first.
+  - statement: >-
+      The `retry` exit remains declared in the seven-stage step contract while the
+      separately authorized canonical change makes it unreachable by budget. That
+      residue belongs to the other commit and is reported there, not fixed here.
+
+next_gate:
+  required: fresh_independent_acceptance_review
+  reviewer_must_be: a new session, preferably a different model family
+  reviewer_must_reattack:
+    - all twelve blockers across both correction rounds
+    - test derivation from A and Stage02 rather than B
+    - the false-positive surface of every lexical and structural scan
+    - the false-negative surface of every prohibition and catalog check
+    - mutation and conforming-variant adequacy, including shapes not yet imagined
+    - the full-candidate-tree probe environment
+  stage05_entry: blocked_until_that_review_passes
+
+completion_marker: stage04_t2_v3_corrected_frozen_tests_ready_for_fresh_independent_acceptance

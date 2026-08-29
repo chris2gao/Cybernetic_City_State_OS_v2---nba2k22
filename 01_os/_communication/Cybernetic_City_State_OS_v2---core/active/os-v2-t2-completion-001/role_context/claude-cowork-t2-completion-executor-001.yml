@@ -1,0 +1,42 @@
+endpoint_id: claude-cowork-t2-completion-executor-001
+task_role: parent_t2_completion_implementation_executor
+collaboration_role: execution
+provider: Anthropic
+product: Claude Desktop
+surface: claude_desktop_cowork
+model: Claude Opus 5
+reasoning_or_parameter_profile: claude_desktop_cowork_opus5_task_time
+session_mode: continue_existing_restored_implementation_window
+isolation_level: continuity_with_existing_003_and_candidate_context
+repository_access_mode: task_scoped_local_worktree
+repository_or_worktree_requirement: >-
+  Reuse the healthy existing local repository only after fresh reentry checks. Fetch
+  ordinary remote refs and use a clean task-scoped worktree for
+  dev/os-v2-t2-completion-001. The big task may start only if the observed remote branch
+  head is exact 9c50a4fe56b12c1add15967a5515785e8e6fb760. Preserve parent lineage from
+  3002d6177779abf81e6d476bfc434ee5d6dbe3c8 and treat
+  7cf9195715dcc7aa34bd09a8bc0f8320415f3930 as accepted read-only provenance source.
+  Do not bulk-merge divergent upstream history, rebase, reset over changes, rewrite
+  history or modify master.
+required_branch_or_sha: dev/os-v2-t2-completion-001
+local_files_required: true
+github_publication_required_before_start: true
+communication_carrier: GitHub
+responsibility:
+- treat exact correction003 candidate 9c50a4fe56b12c1add15967a5515785e8e6fb760 as Human-accepted for progression under T2-COMPLETION-CM-v2
+- preserve accepted Stage01-03 and all accepted structural-provenance invariants
+- execute the full remaining P2-2 provenance-audit, receipt-binding, freeze/refreeze and result-pointer chain as one large implementation task
+- use existing parent P2-1/P2-1R and Stage04 machinery rather than reopening completed stages
+- perform implementation, deterministic dependency closure, tests, evidence construction and task-branch publication inside delegated scope
+- return one exact Git-bound Stage04 candidate/result package with T2-COMPLETION-MWU-TRIAL-001 fields
+- stop before self-accepting parent Stage04; final relationship-isolated review belongs to a later reviewer
+constraints:
+- no_rerun_or_rewrite_Stage01_02_03
+- exact_9c50a4fe_remote_head_required_at_big_task_entry
+- no_bulk_merge_requirement_for_accepted_upstream_history
+- no_new_authority_claimability_or_acceptance_semantics_without_foreground_return
+- correction003_narrow_independent_review_waived_by_current_Human_decision
+- no_self_review_or_final_parent_Stage04_self_acceptance
+- no_Stage05_canonical_or_master_write
+- no_force_push_rebase_squash_amend_or_history_rewrite
+- no_redelegation

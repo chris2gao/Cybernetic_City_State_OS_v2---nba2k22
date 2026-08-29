@@ -1,0 +1,48 @@
+endpoint_id: codex-t2-correction003-reviewer-001
+task_role: correction003_independent_acceptance_reviewer
+collaboration_role: independent_review
+provider: OpenAI
+product: Codex Desktop
+surface: codex_desktop
+model: GPT-5.6 Sol
+reasoning_or_parameter_profile: codex_sol_strongest_exposed
+session_mode: fresh_isolated
+isolation_level: fresh_session
+repository_access_mode: GitHub_plus_task_scoped_local_worktree
+repository_or_worktree_requirement: >-
+  Enter only from the exact formal review pointer. Inspect exact candidate
+  9c50a4fe56b12c1add15967a5515785e8e6fb760 as read-only implementation state, with
+  parent base 3002d6177779abf81e6d476bfc434ee5d6dbe3c8 and accepted structural-provenance
+  source 7cf9195715dcc7aa34bd09a8bc0f8320415f3930. If local Git is used, use a clean
+  task-scoped worktree detached at the exact candidate or otherwise prove the exact
+  SHA before tests. Do not modify or publish the candidate branch. Formal review
+  evidence/results may be published only through the authorized task control
+  communication plane on dev/os-v2-t2-resume-control-001.
+required_branch_or_sha: 9c50a4fe56b12c1add15967a5515785e8e6fb760
+local_files_required: true
+github_publication_required_before_start: true
+communication_carrier: GitHub
+responsibility:
+- independently reconstruct correction-003 objective and accepted structural-provenance invariants from exact durable refs
+- derive the adversarial acceptance contract independently of Claude's green conclusion
+- inspect the full parent-base-to-candidate diff and distinguish transferred accepted capability from foreground-adjudicated integration binding
+- independently reproduce the inherited v3 and v4 suites and capture actual exit codes
+- attack root anchoring, positive profile-scoped transparency, document identity binding, missing/conflicting fail-closed visibility, and payload self-minting
+- attack R1 lifecycle invalidation keyed-entry identity and record-field claimability
+- attack R2 exact wrappers, condition_definitions sibling resolution, and exact S14 document registration without default/path inference
+- attack R3 permissions keyed-entry identity and record-field claimability, including foreign metadata placed inside newly declaration-name-bound records to detect unrelated ownership leakage
+- recheck the original five foreign metadata witnesses, five-form equivalence, genuine A13/A14 empty values, B1 undeclared-ancestor and B2 unbound role/window closures
+- publish PASS, FIX_REQUIRED, or BLOCKED with primary evidence and residual limits for the exact candidate only
+constraints:
+- executor_private_context
+- no Claude private reasoning or undocumented executor context
+- no foreground private reasoning dependency; use only durable rulings and primary repository evidence
+- no implementation or candidate-branch edits
+- no fixing findings inside the review
+- no treating executor test greenness or repeatability as independent acceptance
+- no successor P2_2 work
+- no parent Stage04 PASS adjudication
+- no Stage05, canonical or master write
+- no force, rebase, squash, amend or history rewrite
+- no redelegation
+- no automatic progression

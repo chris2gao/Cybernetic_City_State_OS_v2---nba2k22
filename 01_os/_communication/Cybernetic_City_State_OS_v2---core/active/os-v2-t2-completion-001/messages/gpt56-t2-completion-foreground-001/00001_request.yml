@@ -1,0 +1,57 @@
+message_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00001
+task_id: os-v2-t2-completion-001
+title: 'Execute parent T2 completion: construct correction-003 replacement'
+message_type: request
+sender_endpoint_id: gpt56-t2-completion-foreground-001
+sender_task_role: foreground_t2_completion_coordinator
+expected_recipient_endpoint_id: claude-cowork-t2-completion-executor-001
+expected_recipient_task_role: parent_t2_completion_implementation_executor
+content: Execute the parent T2 Stage04 completion lane under T2-COMPLETION-CM-v1.
+  Now construct the correction-003 replacement on dev/os-v2-t2-completion-001 from
+  exact parent checkpoint 3002d6177779abf81e6d476bfc434ee5d6dbe3c8, using exact 7cf9195715dcc7aa34bd09a8bc0f8320415f3930
+  only as the independently accepted structural-provenance source, not as a bulk-merge
+  instruction. Preserve accepted Stage01-03 and all structural-provenance invariants.
+  Run the focused and inherited Stage04 regressions, create durable evidence, publish
+  one exact candidate on the completion branch, and return a formal exact result.
+  Stop before P2-2 until a fresh independent correction-003 PASS is durably published
+  and foreground verifies its exact candidate binding. The same root Human authority
+  and execution delegation already cover the later P2-2/freeze phase after that evidence
+  gate; no new Human micro-grant is required.
+required_refs:
+- Human/task_authority_v2.yml
+- Human/delegations/00001_claude_execution.yml
+- role_context/gpt56-t2-completion-foreground-001.yml
+- role_context/claude-cowork-t2-completion-executor-001.yml
+requested_action: construct_correction003_replacement_candidate_from_parent_checkpoint_using_accepted_structural_provenance
+authorization_ref: Human/delegations/00001_claude_execution.yml
+recipient_delegation_ref: Human/delegations/00001_claude_execution.yml
+facts:
+  work_performed_or_requested: Construct one exact correction-003 replacement candidate
+    as the first executable phase of the single parent-T2 completion task.
+  implementation_or_review_method: Start from parent checkpoint 3002d617; selectively
+    transfer only the accepted structural-provenance capability/evidence from 7cf91957;
+    preserve load-bearing invariants; do not bulk-merge divergent upstream history.
+  supportability_rationale: 3002d617 records the open correction/P2-2/freeze obligations,
+    while 7cf91957 has fresh isolated independent PASS for the structural-provenance
+    prerequisite.
+  feasibility_rationale: The work stays inside existing Stage04 prototype/corpus/freeze
+    machinery and the authorized implementation paths; no new architecture, Stage01-03
+    rerun, canonical write, master write or destructive Git action is required.
+constraints:
+- preserve accepted Stage01-03 without rerun or rewrite
+- preserve evaluator-owned structural provenance before adapter claim and visible
+  fail-closed unknown/missing/conflicting behavior
+- preserve five-form keyed-collection equivalence, genuine A13/A14 disabled semantics,
+  and depth-free transparent wrapper/nested/sibling behavior
+- do not introduce subject/failure-name/depth/arity/homogeneity/empty-body/prose-shape
+  ownership heuristics
+- do not self-review or self-accept the correction-003 candidate
+- stop before P2-2 until fresh independent correction-003 PASS plus foreground exact-binding
+  verification
+- no Stage05, canonical implementation, master write, force push, rebase, squash,
+  amend, history rewrite or redelegation
+risks:
+- parent and accepted upstream histories are divergent, so bulk merge can import unrelated
+  history
+- false-green Stage04 evidence is load-bearing; executor test counts alone are not
+  acceptance

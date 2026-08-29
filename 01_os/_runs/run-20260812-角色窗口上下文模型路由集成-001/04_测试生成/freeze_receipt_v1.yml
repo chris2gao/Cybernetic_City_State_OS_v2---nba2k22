@@ -1,0 +1,176 @@
+schema_version: citystate.stage04.freeze_receipt.v1
+task_id: os-v2-role-window-context-model-routing-integration-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+stage: 04_测试生成
+artifact_version: 1
+frozen_at: '2026-08-12'
+status: frozen_ready_for_stage05
+
+freeze_authorization:
+  authorization_ref: 04_测试生成/Stage04_独立测试生成派单_v1.md
+  authorization_sha256: 047a9cb41bd8d5e5f0d402805629b04ecbe0339b95da880ce52d97635fff3c5c
+  workspace_adjudication_ref: 04_测试生成/Stage04_workspace冲突裁决_v1.yml
+  workspace_adjudication_sha256: c3969b8c515334b65256d2519a8b8baaca36a63b1c4b25cf381ab7109e911b17
+  Human_gate_for_later_edits_required: true
+  note: >-
+    After this freeze the tests are not modified without a later Human-gated
+    correction. Changing a test inside the execution loop is not a repair; it is
+    a redefinition of what success means.
+
+executor_identity:
+  role: stage_04_independent_test_designer
+  provider: Anthropic
+  exact_model: Claude Opus 5
+  ui_surface: Claude desktop app, Cowork mode
+  reasoning_setting: not_exposed
+  session_independence:
+    separate_session_from_B_author: true
+    machine_observable: false
+    representation: disclosed_assertion
+    note: >-
+      Host session identity is not observable from inside this window. The
+      separation from the Stage 03 author is asserted, not technically proven.
+      This is the same disposition the package itself freezes in RW-T23.
+
+source_binding:
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  task_branch: dev/os-v2-role-window-context-model-routing-integration-001
+  source_base_head: c354ddfec7607408766a52a7fccbdf6084f1bbb8
+  remote_master_at_freeze: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  master_is_ancestor_of_task_branch: true
+  worktree: separate sibling git worktree, created per the workspace adjudication
+  existing_worktree_untouched: true
+
+upstream_refs:
+  - path: 01_需求建模/requirement/A_需求建模_v1.yml
+    sha256: 09c71ad815841bd67fc5aa771e8a3c5b1e0eba1950a6e9cdd1ef45034279cfbb
+  - path: 01_需求建模/requirement/人类确认_v1.yml
+    sha256: a22453ef0b310f0620799b530bcf5bdcec0638cd15c94f0d4bbd0a0922ee734a
+  - path: 02_信息收集与提炼/Stage02_证据结论_v1.yml
+    sha256: cb0a8cb56bc2a8bcd9cd4261dc9454bf21bd73dc16c7650970d27655d2cfb3d5
+  - path: 02_信息收集与提炼/evidence/证据索引_v1.yml
+    sha256: eed563f23d78d88ed770849cd1b28dbf0424fbd568ccefae809626dd11f3a734
+  - path: 03_结果建模/B_结果模型_v1.yml
+    sha256: 47c1dc0fca495d805c3b02f316dce134d6b46c5c407c212e4339e1bef5cb9ddc
+    use: candidate result surface only; not a source of pass conditions
+
+frozen_payload:
+  normalized_digest: d4fd85889a73e8dd313065e355290992cbf166fa6034420efe9f9c68974996e1
+  digest_scope: payload without test_package_sha256
+  normalization: >-
+    yaml.safe_dump(allow_unicode=True, sort_keys=True, width=4096) then SHA-256,
+    identical to
+    01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py
+
+harness_and_fixture_hashes:
+  - path: 04_tests.yml
+    sha256: 132293b69869b754ec82209908a08fb96b5460b3612ea9f7c451006946de33e2
+  - path: 实现/verify_stage04_acceptance.py
+    sha256: 4d24266cebffb72447f6b32a65894fe5cb2391496e79083466f2ab3df6485e44
+  - path: 测试设计说明_v1.md
+    sha256: a891b424c0a753aef921b74d13101713f6afe2737d0b160f2bf7dd9f4b1b4ab7
+  - path: fixtures/mutations_v1.yml
+    sha256: fbeb0f0cb1becd4375fc8f5ed16ee3904b86f89c4fb85b02e1dc2f66f3294956
+  - path: fixtures/overlay_edits_v1.yml
+    sha256: 959012279f48a584a594334f18878d8f5eb78ec16dc64e961acdc14982cc8117
+  - path: fixtures/overlay/01_os/02_boot/window_role_binding/boot_v1.yml
+    sha256: c8993cb2c3fa18a8b469906e1ab25144f1bb2c25738fecfa24ac335748983319
+  - path: fixtures/overlay/01_os/03_mechanisms/window_role_binding/README.md
+    sha256: 9a1c3e326d085c474f820cabd0c5c7a3ec4f1afe51b41375e1e4782b148a4596
+  - path: fixtures/overlay/01_os/03_mechanisms/window_role_binding/roles_v1.yml
+    sha256: 30a0d38468563779dcfa81bc06c179cf091e3034f382632ea1e6167fcd527862
+  - path: fixtures/overlay/01_os/03_mechanisms/window_role_binding/windows_v1.yml
+    sha256: 72666ef5c552ea1339e7ce7dc232e4424de014aedfa9ccca712b0967f2d409a5
+  - path: fixtures/overlay/01_os/03_mechanisms/window_role_binding/handoff_v1.yml
+    sha256: c187f29f3659107dc0c5460a95e173555d778b6c41abba982ae0cfead5771e59
+  - path: fixtures/overlay/01_os/03_mechanisms/window_role_binding/impl/check_binding.py
+    sha256: fe77da022c4a16423d2f545d3df7af5bda305ff74a379cb57517732236278f87
+  - path: fixtures/overlay/01_os/05_registry/window_role_binding_v1.yml
+    sha256: 5d3c1aa37b48b0915cc26ba82d6857fc493917b3fc1bfd36cb3f7758df0afab0
+  - path: fixtures/overlay/01_os/06_execution/boot/window_role_binding/README.md
+    sha256: 1813a2984bf32ef9e22dac693145cbf1ba66c5ed4d59bae2b50c812ccb72e2d4
+
+counts:
+  total: 42
+  positive: 17
+  negative: 16
+  boundary: 9
+
+results:
+  environment:
+    os: Windows
+    python: 3.14.6
+    pyyaml: 6.0.3
+    git: available in the worktree
+  package_validation:
+    command: verify_stage04_acceptance.py package <run_root>
+    exit_code: 0
+    detail: 42 tests, digest matches, every input_ref and supporting_ref sha verified on disk
+  selftest:
+    command: verify_stage04_acceptance.py selftest <repo_root>
+    exit_code: 0
+    elapsed_seconds: 290.8
+    positive:
+      tree: current repository tree plus fixtures/overlay/** plus fixtures/overlay_edits_v1.yml
+      green: 42
+      total: 42
+    negative:
+      mutations: 42
+      killed: 42
+      kill_rate: '100%'
+      collateral_reds_total: 33
+      collateral_policy: recorded, not counted as failure
+    boundary:
+      - probe: empty_tree
+        expected_green: [RW-T05, RW-T31]
+        result: ok
+        rationale: pure prohibitions are vacuously true on an empty tree; their non-vacuity is proven by their own mutations
+      - probe: mechanism_without_boot_or_registry
+        expected_red: [RW-T28, RW-T29, RW-T34, RW-T37, RW-T38, RW-T39, RW-T40, RW-T41, RW-T42]
+        result: ok
+  current_repository_baseline:
+    command: verify_stage04_acceptance.py acceptance <repo_root>
+    exit_code: 1
+    green: 3
+    red: 39
+    total: 42
+    green_ids: [RW-T31, RW-T32, RW-T33]
+    interpretation: >-
+      Red as expected: the T2 canonical mechanism does not exist yet. The three
+      green checks are the preservation checks — workflow/entry are already thin
+      on roles, the three existing mechanism validators exit 0, and publisher
+      authority is unchanged. They are green before implementation and must stay
+      green after it.
+
+independence_statement:
+  tests_derived_from: [A_需求建模_v1.yml, Stage02 evidence package]
+  B_used_for: candidate result surface identification only
+  B_naming_frozen: false
+  proof_of_non_overfit: >-
+    The conforming overlay uses mechanism name `window_role_binding` and files
+    roles_v1.yml / windows_v1.yml / handoff_v1.yml, all different from B's
+    `role_window_integration` and its Chinese filenames, and reaches 42/42.
+  author_did_not_design_own_verification: >-
+    This package was written by a session that did not author B. It has not yet
+    been independently reviewed; Stage 05 entry still requires a separate review
+    session, preferably a different model family.
+
+findings_carried_forward:
+  - id: F1
+    statement: mechanism and boot index READMEs are already behind the filesystem
+    blocking: false
+  - id: F2
+    statement: B13 does not define composition-validator call semantics; not frozen
+    blocking: false
+  - id: F3
+    statement: no contradiction found between B and accepted Stage 02 evidence
+    blocking: false
+  - id: F4
+    statement: >-
+      RW-T06 requires editing 01_os/02_boot/context_management/启动清单_v1.yml,
+      which is outside the T2 mechanism directory. Stage 05/06 must carry it in
+      allowed_changed_paths.
+    blocking: false
+
+completion_marker: stage04_t2_frozen_tests_ready_for_stage05
+next: workflow_stage_05_step_decomposition_after_independent_review
