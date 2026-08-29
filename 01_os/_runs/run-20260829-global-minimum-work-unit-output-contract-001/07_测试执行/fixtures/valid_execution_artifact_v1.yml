@@ -1,0 +1,18 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Positive control fixture proving the corrected validator still accepts a concise,
+    task-specific execution MWU through the artifact CLI.
+  implementation_or_review_method: >-
+    Run the artifact mode of the MWU validator with --require-mwu against this file.
+  supportability_rationale: >-
+    Every required core and execution field is present as task-specific text, so the
+    structural floor has something concrete to check rather than a generic phrase.
+  feasibility_rationale: >-
+    The fixture is plain YAML inside this run directory and needs no protected action
+    or external dependency beyond the PyYAML already used by the validator.
+  exact_result_or_candidate_ref: 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/07_测试执行/fixtures/valid_execution_artifact_v1.yml
+  verification_evidence:
+    - artifact mode exit code 0 recorded in correction_execution_evidence_v1.yml
+  residual_risk_or_unproved_limits:
+    - A positive control proves acceptance only for this exact shape.

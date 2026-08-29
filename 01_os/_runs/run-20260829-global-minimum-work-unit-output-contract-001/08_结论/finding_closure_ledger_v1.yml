@@ -1,0 +1,135 @@
+schema_version: citystate.minimum_work_unit_output.finding_closure_ledger.v1
+task_id: os-v2-global-minimum-work-unit-output-contract-001
+correction_id: MWU-CORRECTION-R1
+correction_round: 1
+candidate_sha: 04e243dac34dd9e2183acebd3fd9f71919804d01
+prior_candidate_sha: c8f38c67595747f851785218c511ae461c233167
+review_source: 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/08_结论/independent_review_codex_v1.yml
+closure_claim_class: executor_measurement_not_independent_acceptance
+
+finding_closure:
+  MWU-IR-001:
+    status: CLOSED
+    implementation: >-
+      _text_floor_errors applies one deterministic floor to supportability_rationale and
+      feasibility_rationale: the value must be text (booleans, numbers, lists and mappings
+      are rejected by type), must be non-empty, must not reduce to one of an enumerated
+      closed set of generic-only forms after a fixed filler-token removal, and must carry
+      at least MIN_CONTENT_TOKENS content tokens. No heuristic language judgement is used.
+      The contract gained machine_enforcement_boundary and rationale_machine_floor, which
+      state the constants and say in the artifact itself what the checks do not prove.
+    evidence: >-
+      selftest cases adversarial_generic_supportability_synonym ("All tests passed"),
+      adversarial_generic_feasibility_sentence ("This work is feasible"),
+      adversarial_non_text_rationales (true / 1), adversarial_list_rationale,
+      adversarial_mapping_rationale and adversarial_single_content_token_rationale all
+      observed_valid=false; negative_bare_tests_passed and negative_bare_feasible still
+      rejected; positive_architecture, positive_execution, positive_independent_review and
+      positive_concise_task_specific_rationale still accepted. selftest exit 0, 38 cases,
+      zero mismatches.
+  MWU-IR-002:
+    status: CLOSED
+    implementation: >-
+      _validate_independent_review bounds verdict to the closed enum PASS / FIX_REQUIRED /
+      REJECT, applies the same text floor to supportability_assessment and
+      feasibility_assessment, requires primary_evidence_refs to be a non-empty list of
+      non-empty strings, and requires every ref to be present in the same unit's
+      primary_evidence_examined. The contract gained independent_review_machine_floor,
+      which states that this proves structural binding only and not reviewer correctness.
+    evidence: >-
+      adversarial_unbounded_verdict ("BANANA") and adversarial_lowercase_verdict rejected
+      with verdict_must_be_one_of; positive_fix_required_verdict and positive_reject_verdict
+      still accepted; adversarial_disjoint_evidence_only (examined=[evidence:A],
+      refs=[evidence:B]) rejected with assessment_evidence_ref_not_examined;
+      adversarial_partially_disjoint_refs rejected on the single foreign ref;
+      adversarial_one_word_supportability_assessment ("supported") and
+      adversarial_one_word_feasibility_assessment ("feasible") rejected;
+      adversarial_refs_not_list and adversarial_non_text_assessment rejected.
+  MWU-IR-003:
+    status: CLOSED
+    implementation: >-
+      validate_static now binds, rather than merely reads: each role's required_additions
+      must equal the validator constant list exactly; the independent-review
+      executor_rationale_assessment_required_fields must equal ASSESSMENT_FIELDS exactly;
+      the boot load_order path sequence must equal BOOT_LOAD_ORDER in order; the registry
+      entry path-set must equal REGISTRY_ENTRY_PATHS; and the contract-declared verdict
+      enum, minimum content-token count, generic-only form list and filler-token list must
+      equal the implementation constants. A new `drift` mode copies only the seven paths
+      static consumes into an isolated temporary root, applies one shadow mutation at a
+      time and requires the matching static error.
+    evidence: >-
+      drift exit 0 over one clean control plus eight mutations. The reviewer's four
+      mutations are included by name and now fail: execution required_additions reduced
+      gives contract_role_additions_drift:execution; assessment fields erased gives
+      contract_assessment_fields_drift; boot load_order=[] gives boot_load_order_drift;
+      registry entries=[] gives registry_entry_path_set_drift. Four further mutations
+      (verdict enum widened, token floor zeroed, generic forms erased, load_order
+      reordered) also fail, which shows order and constant drift are caught, not just
+      erasure. The control run proves the unmutated shadow root still passes, so the
+      failures are attributable to the mutations.
+  MWU-IR-004:
+    status: CLOSED
+    implementation: >-
+      Formal artifacts are parsed by _UniqueKeyLoader, a SafeLoader whose mapping
+      constructor raises MWUParseError on a repeated key at any mapping level. The CLI
+      catches MWUParseError and prints a single JSON validation_failed line with exit
+      code 1; a Python traceback is never the failure UX. The contract records this under
+      formal_artifact_parsing with last-key-wins explicitly prohibited.
+    evidence: >-
+      duplicate_key_supportability_rationale_v1.yml exits 1 with
+      duplicate_mapping_key:supportability_rationale; duplicate_key_nested_assessment_v1.yml
+      exits 1 with duplicate_mapping_key:supportability_assessment, proving nested mapping
+      levels are covered; a selftest case confirms the loader still parses ordinary
+      documents so the fix does not over-reject. Both fixtures are tracked in this run.
+
+summary:
+  closed: 4
+  open: 0
+  all_four_closed: true
+  candidate_caused_regressions: 0
+  out_of_scope_paths_this_round: 0
+
+limits_of_this_ledger:
+  - >-
+    Every entry is an executor measurement. It is not independent acceptance and does not
+    substitute for the fresh isolated review the dispatch requires.
+  - >-
+    CLOSED means the finding's reproduced failure shape now fails. It does not mean the
+    surrounding property is fully proved: the rationale and assessment checks remain a
+    structural floor and semantic sufficiency stays with independent review.
+  - >-
+    A consequence outside the four findings: the tightened MWU-IR-002 containment rule
+    makes the previous round's independent_review_codex_v1.yml non-conforming under
+    --require-mwu, because its MWU-block primary_evidence_examined uses coarser prose than
+    its assessment refs. That artifact was left unmodified. Whether the rule should also
+    consult a document-level primary_evidence_examined is a semantic choice this
+    correction did not make.
+
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Record, finding by finding, whether each of MWU-IR-001 through MWU-IR-004 is closed
+    by correction round 1, with the implementation that closes it and the executed
+    evidence that shows the previously reproduced failure shape now fails.
+  implementation_or_review_method: >-
+    For each finding, took the exact failure the independent review reproduced, named the
+    permanent in-repository case that now covers it, ran the case, and recorded the
+    observed rejecting error code rather than a summary verdict. Closure is asserted only
+    where a case was executed in this window.
+  supportability_rationale: >-
+    Each CLOSED entry cites named cases whose observed results are in the same run's
+    regression artifact, and the drift control case shows the unmutated shadow root still
+    passes, so the four static failures are attributable to the mutations rather than to a
+    broken shadow root.
+  feasibility_rationale: >-
+    The ledger only reports results already produced by the validator modes and the
+    artifact CLI in this window, so it needs no additional execution surface, no protected
+    action and no access beyond the task branch worktree.
+  exact_result_or_candidate_ref: 04e243dac34dd9e2183acebd3fd9f71919804d01
+  verification_evidence:
+    - 08_结论/adversarial_regression_after_correction_v1.yml
+    - 07_测试执行/correction_round_1_execution_evidence_v1.yml
+  residual_risk_or_unproved_limits:
+    - CLOSED means the reproduced failure shape now fails, not that the wider property is proved.
+    - Executor measurement only; independent acceptance has not occurred.
+    - The tightened containment rule leaves the prior round's review artifact non-conforming.

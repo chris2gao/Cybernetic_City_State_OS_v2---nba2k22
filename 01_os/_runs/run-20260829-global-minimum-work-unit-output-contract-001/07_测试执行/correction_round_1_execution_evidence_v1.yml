@@ -1,0 +1,170 @@
+schema_version: citystate.minimum_work_unit_output.correction_execution_evidence.v1
+task_id: os-v2-global-minimum-work-unit-output-contract-001
+correction_id: MWU-CORRECTION-R1
+execution_date: 2026-08-29
+executor_role: execution
+transport: local_git
+
+preflight:
+  dispatch_expected_branch_head: ecdfa236ce875204a95bb01ea5c054a0495f9418
+  observed_branch_head_fresh_ls_remote: ecdfa236ce875204a95bb01ea5c054a0495f9418
+  dispatch_expected_master: 1559346ca2eab776cad110c7d96475f34a33f9b2
+  observed_master_fresh_ls_remote: 1559346ca2eab776cad110c7d96475f34a33f9b2
+  drift_detected: false
+  worktree_clean_before_edit: true
+  hook_guard_command: git config --get core.hooksPath
+  hook_guard_observed: .githooks
+  hook_guard: passed
+  execution_surface: >-
+    Detached worktree at the exact dispatched branch head. The task branch ref was
+    already checked out by another local worktree, so this window used a detached
+    checkout of the same commit and publishes with an explicit refspec. No other
+    worktree was modified.
+  environment:
+    os: Windows
+    shell: pwsh 7
+    python: 3.14.6
+    yaml: PyYAML
+
+canonical_correction_commit: 04e243dac34dd9e2183acebd3fd9f71919804d01
+canonical_correction_parent: ecdfa236ce875204a95bb01ea5c054a0495f9418
+prior_candidate_preserved_unmodified: c8f38c67595747f851785218c511ae461c233167
+history_rewrite_performed: false
+force_push_performed: false
+master_modified: false
+
+changed_paths_this_round:
+  canonical_commit:
+    - 01_os/03_mechanisms/minimum_work_unit_output/README.md
+    - 01_os/03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml
+    - 01_os/06_execution/boot/minimum_work_unit_output/README.md
+    - 01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py
+  evidence_commit:
+    - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/**
+  out_of_scope_paths: 0
+  note: >-
+    The cumulative branch diff 1559346c..HEAD additionally lists 01_os/README.md and
+    01_os/03_mechanisms/README.md. Those navigation edits belong to the earlier
+    candidate c8f38c67 and were already inside that round's reviewed diff scope.
+    Correction round 1 did not touch them.
+
+commands:
+  - command: python 01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py selftest
+    tree: 04e243dac34dd9e2183acebd3fd9f71919804d01
+    exit_code: 0
+    result: validation_passed mode=selftest cases=38
+  - command: python 01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py static --root .
+    tree: 04e243dac34dd9e2183acebd3fd9f71919804d01
+    exit_code: 0
+    result: validation_passed mode=static selftests=38
+  - command: python 01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py drift --root .
+    tree: 04e243dac34dd9e2183acebd3fd9f71919804d01
+    exit_code: 0
+    result: validation_passed mode=drift cases=9
+  - command: validator artifact 07_测试执行/fixtures/duplicate_key_supportability_rationale_v1.yml --require-mwu
+    exit_code: 1
+    result: 'validation_failed errors=["duplicate_mapping_key:supportability_rationale"]'
+    traceback_emitted: false
+  - command: validator artifact 07_测试执行/fixtures/duplicate_key_nested_assessment_v1.yml --require-mwu
+    exit_code: 1
+    result: 'validation_failed errors=["duplicate_mapping_key:supportability_assessment"]'
+    traceback_emitted: false
+  - command: validator artifact 07_测试执行/fixtures/valid_execution_artifact_v1.yml --require-mwu
+    exit_code: 0
+    result: validation_passed mode=artifact
+  - command: validator artifact 07_测试执行/targeted_validation_v1.yml --require-mwu
+    exit_code: 0
+    result: validation_passed mode=artifact
+  - command: validator artifact 08_结论/correction_round_1_dispatch_v1.yml --require-mwu
+    exit_code: 0
+    result: validation_passed mode=artifact
+  - command: validator artifact 08_结论/foreground_adjudication_after_codex_review_v1.yml --require-mwu
+    exit_code: 0
+    result: validation_passed mode=artifact
+  - command: validator artifact 08_结论/independent_review_codex_v1.yml --require-mwu
+    exit_code: 1
+    result: 'validation_failed 4x assessment_evidence_ref_not_examined'
+    classification: expected_consequence_of_the_tightened_MWU-IR-002_rule
+    disposition: >-
+      Reported, not repaired. That artifact is the durable independent-review record
+      of the previous round and must not be edited by the executor it reviewed. Its
+      document-level primary_evidence_examined does list those exact refs; only its
+      MWU-block primary_evidence_examined uses coarser prose entries. See residual_limits.
+  - command: git diff --check 1559346ca2eab776cad110c7d96475f34a33f9b2..04e243dac34dd9e2183acebd3fd9f71919804d01
+    exit_code: 0
+    result: no whitespace errors
+
+repository_regression:
+  method: >-
+    Two isolated detached worktrees of the same clone: baseline at the exact dispatch
+    master and candidate at the correction commit. Same quiet_verify command on both.
+  baseline_tree: 1559346ca2eab776cad110c7d96475f34a33f9b2
+  baseline_exit_code: 1
+  baseline_result:
+    workflow_static: 22
+    context_structure: 0
+    no_canonical_live_state: 0
+    stage_deliberation_v2_static: 13
+  candidate_tree: 04e243dac34dd9e2183acebd3fd9f71919804d01
+  candidate_exit_code: 1
+  candidate_result:
+    workflow_static: 22
+    context_structure: 0
+    no_canonical_live_state: 0
+    stage_deliberation_v2_static: 13
+  candidate_caused_regressions: 0
+  note: >-
+    Identical on both trees. The two nonzero checks are pre-existing master baseline
+    state, so the repository is not globally green and this evidence does not claim it is.
+
+residual_limits:
+  - >-
+    The rationale and assessment checks are a structural floor only. They cannot show
+    that a justification is true, sufficient or task-appropriate.
+  - >-
+    Evidence-ref containment proves the refs were drawn from the declared examined set.
+    It does not prove the reviewer actually attacked the rationale or reasoned correctly.
+  - >-
+    The tightened containment rule makes the previous round's independent_review_codex_v1.yml
+    non-conforming under --require-mwu. It was deliberately left unmodified. Whether the
+    rule should also accept a document-level primary_evidence_examined is a semantic choice
+    that this correction did not make and that a reviewer or the foreground should settle.
+  - Windows-only execution; no Linux run was performed in this window.
+  - All results above are executor measurements and are not independent acceptance.
+
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Execute correction round 1 of the Global MWU output contract, closing MWU-IR-001
+    through MWU-IR-004 in the mechanism contract, its READMEs and the validator, and
+    record the exact commands, exit codes and regression comparison.
+  implementation_or_review_method: >-
+    Converted each blocking finding into a deterministic structural check, mirrored the
+    check constants into the canonical contract, bound the two representations to each
+    other in static validation, and added a drift mode that applies shadow mutations to
+    an isolated copy of the consumed paths to prove the bindings actually fire. Ran the
+    full case matrix plus the artifact CLI, and compared quiet_verify on the exact
+    baseline and candidate trees.
+  supportability_rationale: >-
+    Every one of the nine reproduced false accepts now has a named case in the built-in
+    matrix with an observed rejecting error code, the duplicate-key fixtures return exit
+    code 1 with a clean duplicate-key error, and the four static mutations the reviewer
+    used are re-run automatically by the drift mode. The contract text was changed in the
+    same commit so the validator never claims more than the structural floor it enforces.
+  feasibility_rationale: >-
+    The change stayed inside the MWU mechanism, boot, registry and validator surface plus
+    this run directory, needed only the PyYAML dependency already in use, and required no
+    protected master action; the branch was published with an ordinary non-force push.
+  exact_result_or_candidate_ref: 04e243dac34dd9e2183acebd3fd9f71919804d01
+  verification_evidence:
+    - selftest exit 0 with 38 cases and zero mismatches
+    - static exit 0 with the new contract-to-implementation bindings active
+    - drift exit 0 over one clean control plus eight shadow mutations
+    - duplicate-key top-level and nested fixtures both exit 1 without a traceback
+    - quiet_verify identical on baseline 1559346c and candidate 04e243da
+    - git diff --check exit 0
+  residual_risk_or_unproved_limits:
+    - Structural floor proves structure, never semantic sufficiency.
+    - Prior-round review artifact no longer validates under the tightened rule; left unmodified.
+    - No Linux execution and no globally green repository verification.
+    - Executor self-measurement; a fresh isolated independent review has not yet run.

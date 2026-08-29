@@ -1,0 +1,101 @@
+schema_version: citystate.minimum_work_unit_output.completion_pointer.v2
+completion_pointer:
+  packet_id: os-v2-global-minimum-work-unit-output-contract-001
+  correction_id: MWU-CORRECTION-R1
+  correction_round: 1
+  status: ready_for_independent_review
+  status_basis: >-
+    All four blocking findings are recorded CLOSED in finding_closure_ledger_v1.yml with
+    named executed cases. Status is a request for review, not a claim of acceptance.
+  source_branch: dev/os-v2-global-minimum-work-unit-output-contract-001
+  source_base: 1559346ca2eab776cad110c7d96475f34a33f9b2
+  dispatch_branch_head: ecdfa236ce875204a95bb01ea5c054a0495f9418
+  canonical_candidate_sha: 04e243dac34dd9e2183acebd3fd9f71919804d01
+  prior_candidate_sha: c8f38c67595747f851785218c511ae461c233167
+  prior_candidate_disposition: preserved_unmodified_as_the_first_review_object
+  evidence_commit: >-
+    The commit that carries this file. It is the branch head published by this window and
+    is verified by the remote readback recorded in the execution evidence and reported to
+    the Human. This file cannot contain its own commit SHA; the exact canonical candidate
+    SHA above is the value a reviewer needs to reconstruct the correction.
+  validation:
+    tests: >-
+      selftest 38 cases exit 0; static exit 0; drift 9 cases exit 0; artifact CLI 7 runs
+      with the expected exit codes
+    candidate_caused_failures: 0
+    diff_scope: passed
+    hook_guard: passed
+  repository:
+    changed_paths_canonical_commit:
+      - 01_os/03_mechanisms/minimum_work_unit_output/README.md
+      - 01_os/03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml
+      - 01_os/06_execution/boot/minimum_work_unit_output/README.md
+      - 01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py
+    changed_paths_evidence_commit:
+      - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/**
+    out_of_scope_paths: 0
+    binary_artifact_count: 0
+    worktree_clean: true
+  publication:
+    transport: local_git
+    replacement_gate: not_applicable
+    push_performed: true
+    master_modified: false
+    force_push: false
+    rebase_amend_squash: false
+    fast_forward_from_dispatch_head: true
+  supersedes: 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/08_结论/completion_pointer_v1.yml
+  required_next_step: fresh_relationship_isolated_independent_review
+  next_owner: foreground_independent_review
+  executor_self_review_performed: false
+  second_correction_round_started: false
+  evidence_refs:
+    - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/07_测试执行/correction_round_1_execution_evidence_v1.yml
+    - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/08_结论/adversarial_regression_after_correction_v1.yml
+    - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/08_结论/finding_closure_ledger_v1.yml
+    - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/07_测试执行/fixtures/duplicate_key_supportability_rationale_v1.yml
+    - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/07_测试执行/fixtures/duplicate_key_nested_assessment_v1.yml
+    - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/07_测试执行/fixtures/valid_execution_artifact_v1.yml
+  residual_risk:
+    - Structural floor only; semantic sufficiency remains independent-review judgement.
+    - >-
+      Evidence-ref containment proves binding to the declared examined set, not that the
+      reviewer attacked the rationale or reasoned correctly.
+    - >-
+      The tightened containment rule makes the previous round's independent_review_codex_v1.yml
+      non-conforming under --require-mwu; it was left unmodified and the question of whether a
+      document-level primary_evidence_examined should also count is left to the reviewer.
+    - Repository quiet verification is not globally green on base or candidate; delta is zero.
+    - Windows-only execution in this window; no Linux measurement.
+
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Publish the correction round 1 completion pointer for the Global MWU output contract,
+    binding the new canonical candidate to the finding closure ledger and the executed
+    regression evidence, and hand the result to a fresh independent review.
+  implementation_or_review_method: >-
+    Recorded only values produced by executed commands in this window: the fresh-read
+    branch and master SHAs, the commit SHA returned by the canonical correction commit,
+    the exit codes and case counts printed by each validator mode, the artifact CLI
+    results, and the baseline-versus-candidate quiet_verify comparison run on two isolated
+    detached worktrees of the same clone.
+  supportability_rationale: >-
+    The ready_for_independent_review status rests on four ledger entries whose closure
+    each names executed cases with observed rejecting error codes, on a zero-delta
+    regression comparison against the exact dispatch master, and on the prior candidate
+    remaining unmodified so the review chain stays reconstructible.
+  feasibility_rationale: >-
+    Publication needed only an ordinary non-force push of a task branch already authorized
+    by this task, on a transport whose registered hook guard was observed enabled, with no
+    master write and no destructive Git action.
+  exact_result_or_candidate_ref: 04e243dac34dd9e2183acebd3fd9f71919804d01
+  verification_evidence:
+    - 07_测试执行/correction_round_1_execution_evidence_v1.yml
+    - 08_结论/adversarial_regression_after_correction_v1.yml
+    - 08_结论/finding_closure_ledger_v1.yml
+  residual_risk_or_unproved_limits:
+    - No independent review of this correction has been performed.
+    - Machine checks are a structural floor and prove nothing about semantic truth.
+    - Prior-round review artifact no longer validates under the tightened rule.
+    - No Linux execution; repository verification is not globally green on either tree.
