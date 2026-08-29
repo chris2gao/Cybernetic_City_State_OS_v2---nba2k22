@@ -26,6 +26,30 @@ This mechanism grants no authority, changes no task scope, and introduces no Hum
 authorization/delegation chain. It does not modify the communication envelope,
 context selection, model routing, or workflow progression.
 
+## What the machine checks, and what they do not prove
+
+The validator enforces a deterministic **structural anti-vacuity floor**, nothing
+wider. It checks that a rationale is non-empty text rather than a boolean, number,
+list or mapping; that it is not one of a closed, enumerated set of generic-only
+forms; that it carries a minimum count of content tokens; that an independent
+review's `verdict` is inside a closed enum; and that every
+`primary_evidence_refs` entry in a review's assessment is drawn from the
+`primary_evidence_examined` set that same review declares.
+
+A passing validation therefore proves those structural properties and **only**
+those. It does not prove that a rationale is true, sufficient, or appropriate to
+the task, and set containment does not prove that the reviewer actually attacked
+the executor rationale or reasoned correctly about it. No heuristic natural-language
+judgement is attempted, by design. Semantic sufficiency stays where the contract
+puts it: with independent review. The exact constants are in
+`最小工作单元输出契约_v1.yml` under `machine_enforcement_boundary`,
+`rationale_machine_floor` and `independent_review_machine_floor`, and the static
+validator binds those declarations to the implementation constants so that either
+side drifting is a validation failure rather than a silent divergence.
+
+Formal MWU artifacts are parsed with a unique-key loader: a duplicate mapping key
+at any level is rejected instead of resolved by last-key-wins.
+
 ## Load and validation
 
 - Boot: `01_os/02_boot/minimum_work_unit_output/启动清单_v1.yml`

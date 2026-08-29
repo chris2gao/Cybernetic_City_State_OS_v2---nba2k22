@@ -93,3 +93,135 @@ private_reasoning:
     - private_chain_of_thought
     - private_reasoning
     - scratchpad
+machine_enforcement_boundary: >-
+  The validator enforces a deterministic structural anti-vacuity floor only:
+  required text type, non-emptiness, a closed set of generic-only forms, a minimum
+  content-token count, a closed independent-review verdict enum, and set containment
+  between an independent review's assessment evidence refs and the primary evidence
+  that same review declares it examined. Passing these checks proves those structural
+  properties and nothing wider. It does not prove that a rationale is true, sufficient
+  or task-appropriate, and it does not prove that a reviewer actually attacked the
+  executor rationale against that evidence. Full semantic sufficiency remains
+  load-bearing independent-review judgement, not a machine result.
+rationale_machine_floor:
+  applies_to:
+    - supportability_rationale
+    - feasibility_rationale
+  required_value_type: text
+  reject_non_text_values: true
+  minimum_content_tokens: 3
+  proves:
+    - value_is_nonempty_text
+    - value_is_not_a_listed_generic_only_form
+    - value_carries_at_least_the_minimum_content_token_count
+  does_not_prove:
+    - rationale_is_true
+    - rationale_is_semantically_sufficient
+    - rationale_is_task_appropriate
+  filler_tokens_removed_before_floor:
+    - "a"
+    - "all"
+    - "also"
+    - "an"
+    - "and"
+    - "are"
+    - "as"
+    - "at"
+    - "be"
+    - "been"
+    - "being"
+    - "by"
+    - "can"
+    - "completely"
+    - "could"
+    - "did"
+    - "do"
+    - "does"
+    - "for"
+    - "from"
+    - "fully"
+    - "had"
+    - "has"
+    - "have"
+    - "i"
+    - "in"
+    - "is"
+    - "it"
+    - "its"
+    - "just"
+    - "my"
+    - "of"
+    - "on"
+    - "or"
+    - "our"
+    - "quite"
+    - "should"
+    - "so"
+    - "successfully"
+    - "that"
+    - "the"
+    - "these"
+    - "this"
+    - "those"
+    - "to"
+    - "us"
+    - "very"
+    - "was"
+    - "we"
+    - "were"
+    - "will"
+    - "with"
+    - "work"
+    - "would"
+  generic_only_rejected_forms:
+    - "best practice"
+    - "best practices"
+    - "correct"
+    - "done"
+    - "feasibility"
+    - "feasible"
+    - "fine"
+    - "good"
+    - "lgtm"
+    - "looks good"
+    - "n a"
+    - "na"
+    - "no issues"
+    - "none"
+    - "nothing"
+    - "ok"
+    - "okay"
+    - "pass"
+    - "passed"
+    - "supportable"
+    - "supported"
+    - "test passed"
+    - "tests pass"
+    - "tests passed"
+    - "true"
+    - "valid"
+    - "verified"
+    - "works"
+    - "yes"
+independent_review_machine_floor:
+  verdict_allowed_values:
+    - PASS
+    - FIX_REQUIRED
+    - REJECT
+  assessment_text_floor_applies_to:
+    - supportability_assessment
+    - feasibility_assessment
+  primary_evidence_refs_must_be_nonempty_list: true
+  primary_evidence_refs_must_be_subset_of_primary_evidence_examined: true
+  proves:
+    - verdict_is_within_the_closed_enum
+    - assessment_texts_clear_the_same_structural_floor_as_rationales
+    - every_assessment_evidence_ref_is_drawn_from_the_declared_examined_evidence
+  does_not_prove:
+    - reviewer_reasoning_is_correct
+    - assessment_is_semantically_adequate
+    - the_examined_evidence_was_actually_sufficient
+formal_artifact_parsing:
+  loader: unique_key_safe_loader
+  duplicate_mapping_key_at_any_level: rejected
+  last_key_wins_parsing: prohibited_for_formal_MWU_artifacts
