@@ -1,0 +1,111 @@
+schema_version: citystate.task_orchestration.big_task.v1
+mechanism_version: 1
+authority_effect: none
+
+# 默认大任务与长时执行契约。
+#
+# 它回答一个问题：一个连贯的目标被拆成十几个小窗口时，代价落在哪里。实测落在两处。
+# 其一是状态：50 个 run 组写出 24 种互不相同的自由文本状态词，因为每个小任务各自
+# 即兴写一个，没有谁需要和别人对齐。其二是重复入场：每个新窗口都要重付一次
+# repository re-entry 的 61,534 字节 bootstrap。碎片化不是风格问题，它有账单。
+#
+# 本文件不授予任何权限。它只规定「什么时候不该停」和「什么时候必须停」。
+# 停止条件的正本是 01_os/开发入口与单窗口任务规范_v1.md 第 11 节；本文件不新增
+# 停止条件，只把「不构成停止条件的那一类」显式化，因为过去被误当成需要 Human 逐次
+# 批准的，恰恰是这一类。
+#
+# Loaded by: 01_os/06_execution/task_orchestration/big_task/closure_preflight.py
+# Registered in: 01_os/05_registry/task_orchestration_v1.yml
+
+default_orchestration:
+  planning_and_execution_default: long_horizon_big_task
+  fragmentation_requires_reason: true
+  # 不用数量阈值定义「大」。AGENT_WORKING_DISCIPLINE.md 第 4 节的教训是派单不要
+  # 钉死执行者能测的数字；第 2 节的教训是收敛由 failure set 收缩证明，不由固定轮数
+  # 上限证明。所以边界由停止条件是否成立决定，不由文件数、轮数或时长决定。
+  size_threshold: not_defined_by_count_or_duration
+  boundary_is_defined_by: stop_condition_truth_value
+
+# 任务内部的确定性推进。这些**不产生新的 Human 门**。
+# 与开发入口第 2 节「边界内继续施工的两个条件」是同一判据：路径仍在授权边界内，
+# 且内容由本 objective 已固定的规则从声明的 source 确定性算出。
+internal_continuation:
+  actions:
+    - deterministic_in_scope_construction
+    - required_validation_and_test_execution
+    - deterministic_repair_of_a_failure_this_task_caused
+    - evidence_and_receipt_update
+    - private_runtime_cleanup
+    - task_branch_commit
+    - task_branch_push
+    - completion_pointer_closure
+  repeated_human_prompt_for_the_above: prohibited
+
+# 真正的停止。任一成立即停止写入并回传，不自行解释成可继续。
+# 这是开发入口第 11 节六类的编排视角投影，不是新集合。
+genuine_stop:
+  conditions:
+    - new_load_bearing_semantic_choice
+    - scope_escape_beyond_allowed_changed_paths
+    - protected_action_not_already_covered_by_current_authority
+    - safety_privacy_secret_or_credential_boundary
+    - destructive_git_or_history_rewrite
+    - runtime_or_scheduler_activation
+    - human_relay_required_to_reach_another_independent_model
+    - evidence_cannot_support_the_claim
+  authority_ref: 01_os/开发入口与单窗口任务规范_v1.md#11
+
+# 一个被反复搞错的分界，写死在这里。
+not_a_stop_condition:
+  ordinary_task_branch_publication: true
+  reason: >-
+    Publication to a task branch is section 6 normal execution flow when the
+    packet authorizes source write, publisher authority allows the action, the
+    transport gate passes, master is not written, and nothing destructive is
+    involved. Treating it as a Human gate would make every implementation task
+    that ends in a pushed completion pointer look protected.
+  publisher_authority_ref: 01_os/05_registry/repository_publisher_authority_v1.yml
+
+# 大任务在派单时就要闭合的东西。缺任何一项，任务不该被当作大任务发出去。
+closure_preflight:
+  required_fields:
+    - objective
+    - allowed_changed_paths
+    - known_protected_actions
+    - evidence_gates
+    - stop_conditions
+    - final_reviewer_boundary
+    - terminal_lifecycle_state
+    - completion_pointer_shape
+  known_protected_actions_empty_is_valid: true
+  # terminal_lifecycle_state declares the value this task will write at the end.
+  # It must be one of the declared enum values, open or closing. A task that
+  # correctly ends as a review-ready candidate ends on an open state; demanding
+  # a closing value here would force every implementation task to either lie or
+  # self-accept.
+  terminal_lifecycle_state_must_be_in_enum: true
+  terminal_lifecycle_state_must_be_closing: false
+  # 大不等于危险。任务规模本身不产生授权需求。
+  authorization_artifact_required_merely_because_task_is_large: false
+  uncovered_protected_action_at_preflight: blocked
+
+# 大任务结束时必须留下的可消费状态。这是它与归档机制的接点：
+# 编排保证状态被产生，工作集契约保证状态能被消费。
+terminal_state_contract:
+  must_write_state_field: lifecycle
+  must_use_enum_from: 01_os/开发入口与单窗口任务规范_v1.md#5
+  freeform_state_string: prohibited
+  state_file_for_os_run: run.yml
+  consumed_by: 01_os/03_mechanisms/context_management/工作集与归档契约_v1.yml
+
+human_boundary:
+  human_relay_is_manual: true
+  background_auto_delivery: false
+  auto_acknowledgement: false
+  automatic_cross_model_progression: false
+  relay_is_a_transport_boundary_not_a_per_step_gate: true
+
+review_boundary:
+  executor_is_own_independent_reviewer: prohibited
+  author_designs_own_verification: prohibited
+  authority_ref: AGENT_WORKING_DISCIPLINE.md

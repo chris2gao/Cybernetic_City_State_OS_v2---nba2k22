@@ -38,6 +38,28 @@ entries:
     cache_dirs: []
     failure_surfacing: next validator run
     deletion_rule: human_decision_required
+  - path: 01_os/03_mechanisms/context_management/{工作集与归档契约_v1.yml,工作集与归档_v1.md}
+    purpose: >-
+      累计面（_runs、_communication、_dev、领域 _runs）的生命周期分类、默认可见性、
+      归档资格与引用安全 canonical 契约；治理可见性而非体积
+    loader: 01_os/06_execution/boot/context_management/working_set/validate_working_set.py
+    loader_class: in_repo_program
+    discovery: referenced from mechanism README and this registry
+    evidence: 01_os/_runs/run-20260828-t3-archive-and-big-task-workflow-001/02_测量/测量结论_v1.md
+    cache_dirs: []
+    failure_surfacing: next validate_working_set run
+    deletion_rule: protected
+  - path: 01_os/06_execution/boot/context_management/working_set/**
+    purpose: >-
+      默认可见工作集计算与排除量报告、生命周期读取、引用安全扫描、通用归档搬移与
+      契约漂移守卫
+    loader: Human or authorized task executor
+    loader_class: external_tool_convention
+    discovery: referenced from the working-set contract and mechanism README
+    evidence: 01_os/06_execution/boot/context_management/working_set/test_working_set.py
+    cache_dirs: []
+    failure_surfacing: next explicit command or pytest run
+    deletion_rule: protected
   - path: 01_os/03_mechanisms/context_management/实现/{README.md,文件布局契约_v1.yml,verify_context_structure.py}
     purpose: 机器布局契约与确定性结构验证
     loader: Python and execution loader

@@ -1,0 +1,172 @@
+schema_version: context_management.working_set_and_archive.v1
+mechanism_version: 1
+
+# 累计面的工作集与归档契约。
+#
+# 它回答一个问题：当仓库里 90% 的可枚举路径是历史证据时，一个新窗口凭什么只看到
+# 它该看的那部分，而又不会因此看不见历史里真实存在的东西。
+#
+# 三个量必须分开，混同会得出相反结论（实测见
+# 01_os/_runs/run-20260828-t3-archive-and-big-task-workflow-001/02_测量/测量结论_v1.md）：
+#   repository_bytes    树里有多少内容
+#   listing_bytes       一次完整路径枚举返回多少
+#   default_load_bytes  启动 bootstrap 无条件读多少
+# 在 d9a18b57 上三者是 12,676,439 / 209,761 / 61,534。default_load 不含任何累计面，
+# 所以「仓库变大所以加载变贵」不成立，物理搬移对默认加载的收益是 0。成本在枚举与
+# 检索：累计面占枚举字节 90.52%，占八个常用检索词命中的 69.3%–94.0%。
+#
+# 本契约因此治理**可见性**，不治理体积。
+#
+# Loaded by: 01_os/06_execution/boot/context_management/working_set/validate_working_set.py
+# Registered in: 01_os/05_registry/context_management_v1.yml
+
+accumulating_surfaces:
+  - id: os_development_run
+    root: 01_os/_runs/
+    group_shape: 01_os/_runs/<run-id>/
+    state_file: run.yml
+    state_field: lifecycle
+    archive_root: 01_os/_runs/_archive/
+    ownership: core
+    archiver: 01_os/06_execution/boot/context_management/working_set/archive_group.py
+
+  - id: domain_runtime_run
+    root: 01_os/07_content/_runs/
+    group_shape: 01_os/07_content/_runs/<run-id>/
+    state_file: run.yml
+    state_field: lifecycle
+    archive_root: 01_os/07_content/_runs/_archive/
+    ownership: domain
+    archiver: 01_os/06_execution/boot/context_management/working_set/archive_group.py
+
+  - id: development_design
+    root: 01_os/_dev/
+    group_shape: 01_os/_dev/<document-or-directory>
+    state_file: null
+    state_field: null
+    supersede_marker: supersedes
+    archive_root: 01_os/_dev/_archive/
+    ownership: core
+    archiver: 01_os/06_execution/boot/context_management/working_set/archive_group.py
+
+  - id: communication_task
+    root: 01_os/_communication/<repository-id>/active/
+    group_shape: 01_os/_communication/<repository-id>/active/<task-id>/
+    state_file: Human/current.yml
+    state_field: current_stage_or_checkpoint
+    archive_root: 01_os/_communication/<repository-id>/archive/
+    ownership: core
+    archiver: 01_os/06_execution/boot/communication_system/archive/archive_task.py
+    delegated_contract: 01_os/03_mechanisms/communication_system/导航与归档契约_v1.yml
+    note: >-
+      This surface keeps its existing task-local archiver and contract. This file
+      generalizes that shape to the other surfaces; it does not replace it and
+      does not re-specify communication archive preconditions.
+
+# 生命周期状态。枚举来自 01_os/开发入口与单窗口任务规范_v1.md 第 5 节，
+# 本契约只增加「哪些是终态」这一层分类，不新增状态词。
+lifecycle_states:
+  open:
+    - research_only
+    - candidate_pending_validation
+    - candidate_ready_for_independent_review
+  terminal:
+    - verified_on_demand
+    - integrated_and_verified_on_demand
+    - deferred
+    - excluded
+  unknown_or_freeform: not_archivable
+  freeform_state_is_evidence_of_state: false
+
+# 归档资格。四条全部成立才可归档；任何一条不可判即 fail closed。
+# 只有终态是不够的：实测 50 个 run 里 24 种互不相同的自由文本状态，说明状态词本身
+# 可以被随手写出来，所以必须再要求一份物理可读的收尾记录。
+archive_eligibility:
+  all_required:
+    - state_is_terminal
+    - closure_record_physically_readable
+    - reference_safety_verified
+    - no_private_runtime_inside_group
+  closure_record:
+    accepted_any_of:
+      - completion_pointer
+      - human_acceptance_record
+      - explicit_exclusion_or_deferral_record
+    must_be_inside_group: true
+    caller_boolean_only: prohibited
+  on_any_unverifiable: blocked
+
+# 引用安全。归档改变路径，所以必须先证明没有活引用指向被移动的路径。
+reference_safety:
+  scan_scope: tracked_tree_excluding_the_candidate_group_itself
+  live_reference_definition: >-
+    Any tracked file outside the candidate group whose bytes contain the
+    candidate group's repository-relative path prefix.
+  unresolved_live_reference: blocked
+  rebinding_without_proof: prohibited
+  scan_must_report_exact_referencing_paths: true
+
+# 默认可见性。这是本契约的主要作用面。
+default_visibility:
+  default_visible_roots:
+    - 01_os/01_workflow/
+    - 01_os/02_boot/
+    - 01_os/03_mechanisms/
+    - 01_os/04_skills_and_tools/
+    - 01_os/05_registry/
+    - 01_os/06_execution/
+    - 01_os/07_content/
+    - <repository-root-files>
+  default_hidden_roots:
+    - 01_os/_runs/
+    - 01_os/_communication/
+    - 01_os/_dev/
+    - 01_os/07_content/_runs/
+  open_groups_stay_visible: true
+  hidden_material_access:
+    - task_triggered_exact_path
+    - exact_archive_or_run_pointer
+    - Human_explicit_request
+
+  # 这一条是本契约拒绝「全局静默排除」的原因，也是它与 .gitignore/.ignore 的分界。
+  # 静默排除把噪声换成假阴性：调用者拿到空结果却不知道自己被过滤了。本仓已经为
+  # 假阴性付过学费（AGENT_WORKING_DISCIPLINE.md 第 3 节）。
+  global_silent_exclusion: prohibited
+  widening_switch_required: true
+  tool_must_report_excluded_counts: true
+  filtered_result_may_claim_exhaustive: false
+
+# 归档不是删除。
+archive_semantics:
+  secure_erasure_claim: false
+  deletion: false
+  git_history_remains_reachable: true
+  preserved_categories_when_present:
+    - 01_任务输入
+    - 03_方案设计
+    - 06_执行
+    - 07_测试执行
+    - 08_结论
+    - run.yml
+  private_runtime:
+    must_be_untracked: true
+    must_be_ignored: true
+    tracked_private_runtime_deletion: prohibited
+
+operation:
+  idempotent: true
+  already_archived_is_success_not_error: true
+  partial_failure_rolls_back_move: true
+  index_update_is_part_of_the_move: true
+
+index:
+  path: 01_os/_runs/_index/工作集索引_v1.yml
+  owner: working_set_tooling
+  fields:
+    - generated_from_sha
+    - visible_groups
+    - hidden_groups
+    - archived_groups
+    - unknown_state_groups
+  index_is_not_authority: true
+  authority_is_physical_tree: true

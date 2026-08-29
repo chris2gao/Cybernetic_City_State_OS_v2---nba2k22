@@ -1,0 +1,35 @@
+schema_version: citystate.run.v1
+run_id: run-20260828-t3-archive-and-big-task-workflow-001
+task_id: os-v2-t3-archive-and-big-task-workflow-001
+ownership: core_owned
+purpose: >-
+  Close original T3 items 3 and 4 in one coherent execution task: cumulative
+  artifact / active-working-set archive governance across the accumulating
+  surfaces (_runs, _communication, _dev and analogous), and a default
+  big-task long-horizon workflow principle that stops only at genuine
+  boundaries.
+base:
+  exact_base_sha: d9a18b57749a0608a06ab546fd179b63e696e7f1
+  base_ref_at_dispatch: refs/heads/master
+  base_read_method: git ls-remote origin refs/heads/master
+branch:
+  local: dev/os-v2-t3-archive-and-big-task-workflow-local
+  remote_target: dev/os-v2-t3-archive-and-big-task-workflow-001
+  worktree: E:\newStand\study\_wt_t3_archive_big_task_001
+dispatch:
+  control_branch: dev/os-v2-t3-archive-and-big-task-workflow-control-001
+  control_head_read: 771869cb98a1e95f9f2943192b04a84d1a55153e
+  execution_brief_blob: >-
+    771869cb98a1e95f9f2943192b04a84d1a55153e:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-t3-archive-and-big-task-workflow-001/documents/gpt56-t3-archive-big-task-foreground-001/00001_T3_big_task_execution_brief.yml
+  human_decision_blob: >-
+    771869cb98a1e95f9f2943192b04a84d1a55153e:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-t3-archive-and-big-task-workflow-001/Human/decisions/00001_t3_big_task_start.yml
+outputs:
+  - 01_任务输入/
+  - 02_测量/
+  - 03_方案设计/
+  - 06_执行/
+  - 07_测试执行/
+  - 08_结论/
+validation:
+  status: not_run
+lifecycle: candidate_pending_validation

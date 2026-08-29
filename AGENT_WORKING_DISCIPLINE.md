@@ -213,6 +213,42 @@ Two rules follow from that, and they are what make a stored note checkable later
   explicit session identifier, and only after re-checking repository, task, current
   head and authorization. "The latest session" is not an identifier.
 
+## 8. One big task, and a state a machine can read
+
+Two rules, because they are one failure seen at two ends.
+
+**Default to one long-horizon task.** Deterministic in-scope construction,
+validation, repair of a failure this task caused, evidence updates, cleanup,
+task-branch commit and push, and completion closure are internal work. Coming
+back to the Human for those is the defect, not the caution. Stop for the things
+that genuinely need someone else: a new semantic choice, scope escape, an
+uncovered protected action, safety or secrets, destructive Git, runtime
+activation, relay to another independent model, or evidence that cannot carry the
+claim. Size is not one of them — an empty protected-action set is a valid answer,
+and a task branch push is section 6 normal flow, not a gate.
+
+**End on the declared enum.** Section 5 of
+`01_os/开发入口与单窗口任务规范_v1.md` lists the seven legal run lifecycle values.
+Write one of them into `run.yml`'s `lifecycle` field. A free-text status is
+prohibited.
+
+*Measured 2026-08-28 on `d9a18b57`:* the 50 run groups under `01_os/_runs`
+carried **24 mutually distinct** free-text status strings — mostly under a
+`status:` key rather than `lifecycle:` — and **not one** was machine-classifiable
+as finished. The communication archiver had existed for weeks and `archive/` was
+still empty, because nothing could answer "is this one done?". Fragmented tasks
+each invent their own status word; nobody has to agree with anyone. The bill
+arrives later, as a repository that cannot tell live work from history.
+
+That bill is also why enumeration is expensive here. On the same commit the three
+accumulating surfaces were **90.52%** of all listing bytes and **69–94%** of the
+hits on ordinary routing terms, while the fixed startup load was 61,534 bytes and
+touched none of them. So the cost is not size, and moving files does not fix it:
+use
+`01_os/06_execution/boot/context_management/working_set/visible_set.py --list`,
+which reports what it hid. Never add a global silent exclusion — it converts
+noise into false negatives, and section 3 already records what those cost.
+
 ## Roles and the flow between them
 
 Read this whole section even though only one part describes you. Every incident

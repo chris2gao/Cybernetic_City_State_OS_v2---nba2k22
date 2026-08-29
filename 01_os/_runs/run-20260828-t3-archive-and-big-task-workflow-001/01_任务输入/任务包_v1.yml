@@ -1,0 +1,178 @@
+schema_version: citystate.task_packet.v1
+
+# Field placement note (DF-03, see dispatch_findings below): the section 7
+# template in 01_os/开发入口与单窗口任务规范_v1.md shows these fields nested under
+# a `task_packet:` key, but both tools that actually consume a packet —
+# 01_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py and
+# .../preflight/preflight_task_context.py — read `allowed_changed_paths` from the
+# top level, as do the existing packets in this repository. This file follows the
+# tools and the existing packets, and reports the inconsistency rather than
+# silently changing either.
+
+task_id: os-v2-t3-archive-and-big-task-workflow-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T2_semantic
+risk_tier_basis: >-
+  The brief fixes the objective and the boundary but not the answer to "what
+  counts as archived", who owns a lifecycle state, or which contract carries the
+  big-task principle. Those are semantic choices, so the tier cannot be T0/T1.
+  It is not T3: no master write, no destructive Git, no history rewrite, no
+  runtime activation, no secrets, no learner data. Ordinary task-branch
+  publication does not raise the tier (开发入口 section 7).
+exact_base_sha: d9a18b57749a0608a06ab546fd179b63e696e7f1
+branch: dev/os-v2-t3-archive-and-big-task-workflow-001
+objective: >-
+  Implement, not merely propose, (A) cumulative-artifact archive and active
+  working-set governance covering 01_os/_runs, 01_os/_communication,
+  01_os/_dev and analogous accumulating surfaces, and (B) a default big-task
+  long-horizon workflow principle under which deterministic in-scope
+  continuation is internal completion work rather than a new Human gate, while
+  genuine boundaries still stop the task.
+
+source_evidence:
+  - AGENTS.md
+  - AGENT_WORKING_DISCIPLINE.md
+  - 01_os/开发入口与单窗口任务规范_v1.md
+  - 01_os/03_mechanisms/communication_system/导航与归档契约_v1.yml
+  - 01_os/06_execution/boot/communication_system/archive/archive_task.py
+  - 01_os/03_mechanisms/context_management/文件隔离与产物生命周期_v1.md
+  - 01_os/03_mechanisms/context_management/实现/文件布局契约_v1.yml
+  - 01_os/06_execution/task_discipline/README.md
+  - 01_os/05_registry/task_discipline_v1.yml
+  - 01_os/05_registry/context_management_v1.yml
+  - 6a229b92a3317b765cfd2570254db4099dc412ed
+
+allowed_changed_paths:
+  - 01_os/_runs/run-20260828-t3-archive-and-big-task-workflow-001/**
+  - 01_os/03_mechanisms/context_management/**
+  - 01_os/03_mechanisms/communication_system/导航与归档契约_v1.yml
+  - 01_os/03_mechanisms/communication_system/README.md
+  - 01_os/03_mechanisms/task_orchestration/**
+  - 01_os/03_mechanisms/README.md
+  - 01_os/05_registry/context_management_v1.yml
+  - 01_os/05_registry/communication_system_v1.yml
+  - 01_os/05_registry/task_discipline_v1.yml
+  - 01_os/05_registry/task_orchestration_v1.yml
+  - 01_os/05_registry/README.md
+  - 01_os/06_execution/boot/context_management/**
+  - 01_os/06_execution/boot/communication_system/archive/**
+  - 01_os/06_execution/task_discipline/**
+  - 01_os/06_execution/task_orchestration/**
+  - 01_os/06_execution/README.md
+  - AGENTS.md
+  - AGENT_WORKING_DISCIPLINE.md
+  - 01_os/开发入口与单窗口任务规范_v1.md
+
+required_tests:
+  - python 01_os/06_execution/boot/context_management/working_set/validate_working_set.py
+  - python -m pytest 01_os/06_execution/boot/context_management/working_set -q
+  - python -m pytest 01_os/06_execution/task_orchestration -q
+  - python 01_os/06_execution/boot/communication_system/validator/validate_communication_system.py static <repo>
+  - python 01_os/06_execution/boot/mechanism_activation/validate_mechanism_activation.py static <repo>
+  - python 01_os/03_mechanisms/context_management/实现/verify_context_structure.py
+  - python -m pytest 01_os/06_execution/task_discipline -q
+  - python -m pytest 01_os/06_execution/boot/communication_system -q
+  - git diff --check
+  - python 01_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py --base <base> --packet <this file>
+
+prohibitions:
+  - modify_master_without_human_gate
+  - force_push
+  - rebase
+  - squash
+  - amend
+  - history_rewrite
+  - runtime_or_scheduler_activation
+  - bulk_history_move_without_reference_safety_proof
+  - secure_erasure_or_hidden_deletion_claim
+  - rework_T1_model_routing_or_T2_role_context
+  - alter_seven_stage_domain_semantics
+  - self_declared_independent_acceptance
+
+# The lifecycle value this task will actually write when it finishes. It is an
+# open state on purpose: the task delivers a review-ready candidate, and the run
+# stays in the working set until an independent reviewer closes it.
+terminal_lifecycle_state: candidate_ready_for_independent_review
+
+required_completion_pointer: >-
+  01_os/开发入口与单窗口任务规范_v1.md section 10 completion_pointer shape, with
+  actual candidate SHA, actual changed paths, actual test exit codes, actual
+  remote head read back, and next_owner = foreground_independent_review.
+
+publisher:
+  principal_binding: local_authenticated
+  publication_transport: local_git
+  source_write_authorized: true
+  master_write_authorized: false
+  destructive_git_authorized: false
+  authorization_ref: >-
+    6a229b92a3317b765cfd2570254db4099dc412ed:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-t3-archive-and-big-task-workflow-001/Human/decisions/00001_t3_big_task_start.yml
+    plus the current Human instruction of 2026-08-28 authorizing one Claude big
+    task for original items 3 and 4 on a branch from current master.
+  expected_remote_head: d9a18b57749a0608a06ab546fd179b63e696e7f1
+
+executor_profile:
+  provider: Anthropic
+  product: Claude Desktop
+  surface: claude_desktop_cowork
+  model: Claude Opus 5
+  reasoning_effort: high
+  mode: standard
+  rollout_token_budget: null
+  routing_basis: >-
+    Assigned by the T3 execution brief and the endpoint card
+    claude-cowork-t3-archive-big-task-executor-001. Long-horizon single-task
+    construction over canonical contracts and Python tooling with local
+    authenticated Git; no parallel sub-agent fan-out required.
+  authority: routing_only
+
+verification_profile:
+  reproduce_before_change: required
+  independent_reviewer: fresh_relationship_isolated_window_selected_by_foreground
+  different_model_family: true
+  different_measurement_tool: true
+  executor_self_acceptance: prohibited
+
+dispatch_findings:
+  - id: DF-01
+    severity: nonblocking
+    finding: >-
+      The execution brief's required_source_refs and allowed_changed_paths
+      contain mojibake: every CJK path segment was written as ASCII '?' (for
+      example 01_os/????????????_v1.md). The producing window lost the UTF-8
+      path text.
+    resolution: >-
+      Character counts map one-to-one onto exactly one existing tracked path
+      each, so the reconstruction is a derivation, not a semantic choice:
+      12 -> 开发入口与单窗口任务规范, 7 -> 导航与归档契约,
+      11 -> 文件隔离与产物生命周期, 2+6 -> 实现/文件布局契约. This packet records
+      the reconstructed paths and reports the defect rather than silently
+      following the damaged text.
+  - id: DF-02
+    severity: nonblocking
+    finding: >-
+      Current Human chat instruction stated that the latest master already
+      carries the authority change enabling this task. Fresh
+      git ls-remote origin refs/heads/master returned
+      d9a18b57749a0608a06ab546fd179b63e696e7f1, identical to the previously
+      observed head, and the T3 dispatch existed only on the unpublished control
+      branch (771869cb, later 6a229b92).
+    resolution: >-
+      Physical Git state wins. Authority for this window is taken from the
+      physically readable Human decision blob plus the current direct Human
+      instruction (direct_current_Human_authorization in
+      01_os/03_mechanisms/communication_system/角色与权限边界_v1.yml), not from
+      an assumed master state. The v2 relay pointer was subsequently validated by
+      the canonical receiver bootstrap at 6a229b92, exit 0.
+  - id: DF-03
+    severity: nonblocking
+    finding: >-
+      Section 7 of 01_os/开发入口与单窗口任务规范_v1.md shows packet fields nested
+      under a `task_packet:` key, but changed_path_ledger.py and
+      preflight_task_context.py both read `allowed_changed_paths` from the top
+      level, and every existing packet in the repository is flat. A nested packet
+      is rejected with "allowed_changed_paths missing or empty", exit 3.
+    resolution: >-
+      This packet follows the tools and the existing packets. Reconciling the
+      template with the tools is a semantic choice about what a valid packet is,
+      so it is reported as a finding for a later task rather than decided here.

@@ -69,5 +69,11 @@ that is neither present nor correctly ignored.
 - `model_routing_v1.yml`：证据化动态路由、稳定 collaboration-role 输入与 receiver setup builder。
 - `mechanism_activation_v1.yml`：always-on formal-action constitution、trigger/gate、双向物理事实
   validator 和机制生效盘点。
+- `task_orchestration_v1.yml`：默认大任务与长时执行契约、闭合前检查与停止分类工具。
+  它显式登记了一条**缺项**：本机制当前没有 `01_os/02_boot/` 启动清单，因为该路径不在
+  产生它的任务的 allowed paths 内。按本 README 的规矩，缺项写进 registry，不留白。
+
+累计面的工作集与归档契约、`working_set/` 工具登记在 `context_management_v1.yml`，
+不另开 registry：可见性与生命周期是上下文管理的既有职责。
 
 `01_os/_runs/`、`_runtime/`、角色 private/scratch 不注册。

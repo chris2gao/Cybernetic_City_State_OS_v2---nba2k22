@@ -53,6 +53,12 @@ nicety — this is the area whose failures would otherwise be silent by construc
 - `task_discipline/README.md`：预检、安静验证与变更路径账本三件报告工具。
   它们不加载、不写入、不授权；registry 见 `05_registry/task_discipline_v1.yml`，
   调用约定见 `01_os/开发入口与单窗口任务规范_v1.md` 第 1.2 节。
+- `boot/context_management/working_set/`：默认可见工作集计算、生命周期读取、
+  引用安全扫描与通用归档搬移。`visible_set.py --list` 每次都报出隐藏了多少，
+  过滤过的结果不许自称穷举；`archive_group.py` 没有 force 开关。
+  契约见 `03_mechanisms/context_management/工作集与归档契约_v1.yml`。
+- `task_orchestration/big_task/closure_preflight.py`：判定任务包能否作为一个大任务
+  派出，并把一次拟停止分类为内部推进、真停止或未识别（按停止处理）。只报告，不授权。
 
 加载 receipt 必须记录机制版本和实际读取项；缺项、旧版本或 stale 均失败退出。七阶段 runner
 只实现确定性控制面，不生成需求、证据、B、测试、步骤或实现语义。

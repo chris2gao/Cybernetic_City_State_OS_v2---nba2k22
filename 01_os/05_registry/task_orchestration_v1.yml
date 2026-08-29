@@ -1,0 +1,32 @@
+schema_version: citystate.registry.v1
+registry_id: task_orchestration_v1
+mechanism_version: 1
+entries:
+  - path: 01_os/03_mechanisms/task_orchestration/{README.md,大任务与长时执行契约_v1.yml}
+    purpose: >-
+      默认大任务与长时执行的 canonical 契约：内部 continuation 集合、真停止集合、
+      闭合前检查必填项、终态生命周期声明要求。授予任何权限均不由本机制产生。
+    loader: 01_os/06_execution/task_orchestration/big_task/closure_preflight.py
+    loader_class: in_repo_program
+    discovery: referenced from AGENTS.md and 01_os/开发入口与单窗口任务规范_v1.md
+    evidence: 01_os/06_execution/task_orchestration/big_task/test_closure_preflight.py
+    cache_dirs: []
+    failure_surfacing: next closure_preflight run
+    deletion_rule: protected
+  - path: 01_os/06_execution/task_orchestration/big_task/**
+    purpose: >-
+      任务包大任务闭合校验与一次拟停止的分类（内部推进 / 真停止 / 未识别按停止处理），
+      并对契约与代码之间的集合漂移设守卫
+    loader: Human or authorized task executor
+    loader_class: external_tool_convention
+    discovery: referenced from the task_orchestration mechanism README
+    evidence: 01_os/06_execution/task_orchestration/big_task/test_closure_preflight.py
+    cache_dirs: []
+    failure_surfacing: next explicit command or pytest run
+    deletion_rule: protected
+excluded:
+  # 本机制目前没有 01_os/02_boot/ 启动清单：该路径不在产生本机制的任务的
+  # allowed_changed_paths 内，执行者不自行扩边界。是否需要 boot manifest 是一条
+  # 待处理 finding，见
+  # 01_os/_runs/run-20260828-t3-archive-and-big-task-workflow-001/08_结论/。
+  - 01_os/02_boot/task_orchestration/**

@@ -1,0 +1,386 @@
+{
+  "run_groups": 50,
+  "run_groups_with_run_yml": 32,
+  "run_groups_with_conclusion_dir": 27,
+  "lifecycle_values": {
+    "<none>": 18,
+    "status:validated_ready_to_commit": 1,
+    "status:validation_passed_ready_for_commit": 1,
+    "status:baseline_fix_completed_on_work_branch": 1,
+    "status:registry_fix_completed_on_work_branch": 1,
+    "status:verified_on_demand": 3,
+    "status:candidate_ready_for_independent_review": 2,
+    "status:complete_awaiting_Human_fast_forward_authorization": 3,
+    "durable_evidence: true": 1,
+    "ready_for_independent_final_review": 1,
+    "retain: true": 3,
+    "status:workflow_complete_awaiting_Human_master_integration_gate": 1,
+    "durable_repair_evidence": 1,
+    "candidate_ready_for_independent_review": 1,
+    "status:architecture_v3_fresh_independent_rereview_dispatched": 1,
+    "status:COMPLETE_MASTER_PUBLISHED": 1,
+    "status:IMPLEMENTATION_AUTHORIZED": 1,
+    "status:IMPLEMENTATION_AUTHORIZED_NO_MASTER_PUBLICATION": 1,
+    "status:architecture_root_cause_active": 1,
+    "status:Human_completion_accepted_ready_for_master_fast_forward": 1,
+    "status:human_integration_authorized_pending_master_publication": 1,
+    "retain_as_shared_os_governance_change_evidence": 1,
+    "status:human_completion_accepted_ready_for_master_integration": 2,
+    "status:completed_integrated_local_housekeeping_deferred_non_blocking": 1,
+    "status:integrated_by_Human_acceptance_with_known_nonblocking_residual": 1
+  },
+  "communication_active_groups": 9,
+  "communication_archive_groups": 0,
+  "per_group": {
+    "run-001-追问机制实现调研": {
+      "files": 5,
+      "bytes_of_paths": 328,
+      "run_yml": false,
+      "lifecycle": null,
+      "has_conclusion_dir": false
+    },
+    "run-002-schema自测": {
+      "files": 2,
+      "bytes_of_paths": 101,
+      "run_yml": false,
+      "lifecycle": null,
+      "has_conclusion_dir": false
+    },
+    "run-003-结果建模调研": {
+      "files": 2,
+      "bytes_of_paths": 116,
+      "run_yml": false,
+      "lifecycle": null,
+      "has_conclusion_dir": false
+    },
+    "run-004-测试生成调研": {
+      "files": 2,
+      "bytes_of_paths": 125,
+      "run_yml": false,
+      "lifecycle": null,
+      "has_conclusion_dir": false
+    },
+    "run-005-确定性工具调研": {
+      "files": 6,
+      "bytes_of_paths": 491,
+      "run_yml": false,
+      "lifecycle": null,
+      "has_conclusion_dir": false
+    },
+    "run-006-上下文管理需求建模测试": {
+      "files": 1,
+      "bytes_of_paths": 70,
+      "run_yml": false,
+      "lifecycle": null,
+      "has_conclusion_dir": false
+    },
+    "run-007-上下文管理信息收集测试": {
+      "files": 16,
+      "bytes_of_paths": 1616,
+      "run_yml": false,
+      "lifecycle": null,
+      "has_conclusion_dir": false
+    },
+    "run-008-上下文管理结构迁移": {
+      "files": 4,
+      "bytes_of_paths": 294,
+      "run_yml": true,
+      "lifecycle": "status:validated_ready_to_commit",
+      "has_conclusion_dir": false
+    },
+    "run-009-上下文管理结构复核修订": {
+      "files": 3,
+      "bytes_of_paths": 228,
+      "run_yml": true,
+      "lifecycle": "status:validation_passed_ready_for_commit",
+      "has_conclusion_dir": false
+    },
+    "run-010-上下文管理开发总结": {
+      "files": 3,
+      "bytes_of_paths": 210,
+      "run_yml": true,
+      "lifecycle": "status:baseline_fix_completed_on_work_branch",
+      "has_conclusion_dir": false
+    },
+    "run-011-确定性工具接入收益风险评估": {
+      "files": 3,
+      "bytes_of_paths": 246,
+      "run_yml": true,
+      "lifecycle": "status:registry_fix_completed_on_work_branch",
+      "has_conclusion_dir": false
+    },
+    "run-012-check-jsonschema安装接入验证": {
+      "files": 37,
+      "bytes_of_paths": 3739,
+      "run_yml": true,
+      "lifecycle": "status:verified_on_demand",
+      "has_conclusion_dir": true
+    },
+    "run-013-mutmut安装接入验证": {
+      "files": 26,
+      "bytes_of_paths": 2217,
+      "run_yml": true,
+      "lifecycle": "status:verified_on_demand",
+      "has_conclusion_dir": true
+    },
+    "run-014-cosmic-ray安装对照验证": {
+      "files": 253,
+      "bytes_of_paths": 28783,
+      "run_yml": true,
+      "lifecycle": "status:verified_on_demand",
+      "has_conclusion_dir": true
+    },
+    "run-016-引用图事实盘点枚举": {
+      "files": 4,
+      "bytes_of_paths": 290,
+      "run_yml": true,
+      "lifecycle": "status:candidate_ready_for_independent_review",
+      "has_conclusion_dir": false
+    },
+    "run-017-引用图事实盘点分类": {
+      "files": 5,
+      "bytes_of_paths": 386,
+      "run_yml": true,
+      "lifecycle": "status:candidate_ready_for_independent_review",
+      "has_conclusion_dir": false
+    },
+    "run-20260803-阶段协同推演闭环信息收集-001": {
+      "files": 3,
+      "bytes_of_paths": 376,
+      "run_yml": false,
+      "lifecycle": null,
+      "has_conclusion_dir": false
+    },
+    "run-20260803-阶段协同推演闭环需求建模-001": {
+      "files": 2,
+      "bytes_of_paths": 218,
+      "run_yml": false,
+      "lifecycle": null,
+      "has_conclusion_dir": false
+    },
+    "run-20260804-阶段协同推演闭环master接入-001": {
+      "files": 11,
+      "bytes_of_paths": 1346,
+      "run_yml": true,
+      "lifecycle": "status:complete_awaiting_Human_fast_forward_authorization",
+      "has_conclusion_dir": true
+    },
+    "run-20260804-阶段协同推演闭环实现执行-001": {
+      "files": 4,
+      "bytes_of_paths": 456,
+      "run_yml": false,
+      "lifecycle": null,
+      "has_conclusion_dir": false
+    },
+    "run-20260804-阶段协同推演闭环实现方案建模-001": {
+      "files": 4,
+      "bytes_of_paths": 501,
+      "run_yml": false,
+      "lifecycle": null,
+      "has_conclusion_dir": true
+    },
+    "run-20260804-阶段协同推演闭环步骤拆分-001": {
+      "files": 3,
+      "bytes_of_paths": 327,
+      "run_yml": false,
+      "lifecycle": null,
+      "has_conclusion_dir": true
+    },
+    "run-20260804-阶段协同推演闭环测试与审核建模-001": {
+      "files": 9,
+      "bytes_of_paths": 1256,
+      "run_yml": false,
+      "lifecycle": null,
+      "has_conclusion_dir": true
+    },
+    "run-20260804-阶段协同推演闭环激活-001": {
+      "files": 8,
+      "bytes_of_paths": 869,
+      "run_yml": true,
+      "lifecycle": "status:complete_awaiting_Human_fast_forward_authorization",
+      "has_conclusion_dir": true
+    },
+    "run-20260804-阶段协同推演闭环激活准备-001": {
+      "files": 1,
+      "bytes_of_paths": 99,
+      "run_yml": false,
+      "lifecycle": null,
+      "has_conclusion_dir": true
+    },
+    "run-20260804-阶段协同推演闭环结果建模-001": {
+      "files": 4,
+      "bytes_of_paths": 473,
+      "run_yml": false,
+      "lifecycle": null,
+      "has_conclusion_dir": false
+    },
+    "run-20260805-七阶段最小运行闭环-001": {
+      "files": 6,
+      "bytes_of_paths": 630,
+      "run_yml": true,
+      "lifecycle": "status:complete_awaiting_Human_fast_forward_authorization",
+      "has_conclusion_dir": true
+    },
+    "run-20260805-全局通讯机制-001": {
+      "files": 138,
+      "bytes_of_paths": 14149,
+      "run_yml": true,
+      "lifecycle": "durable_evidence: true",
+      "has_conclusion_dir": false
+    },
+    "run-20260809-任务纪律工具-001": {
+      "files": 5,
+      "bytes_of_paths": 455,
+      "run_yml": false,
+      "lifecycle": null,
+      "has_conclusion_dir": true
+    },
+    "run-20260810-01OS命名空间与默认加载切换-001": {
+      "files": 22,
+      "bytes_of_paths": 2413,
+      "run_yml": true,
+      "lifecycle": "ready_for_independent_final_review",
+      "has_conclusion_dir": true
+    },
+    "run-20260810-旧OS物理删除-001": {
+      "files": 12,
+      "bytes_of_paths": 994,
+      "run_yml": true,
+      "lifecycle": "retain: true",
+      "has_conclusion_dir": true
+    },
+    "run-20260810-旧OS退役前迁移与最终白名单-001": {
+      "files": 20,
+      "bytes_of_paths": 2286,
+      "run_yml": true,
+      "lifecycle": "retain: true",
+      "has_conclusion_dir": true
+    },
+    "run-20260810-根级保留文件重写与依赖盘点-001": {
+      "files": 13,
+      "bytes_of_paths": 1369,
+      "run_yml": true,
+      "lifecycle": "retain: true",
+      "has_conclusion_dir": true
+    },
+    "run-20260811-全局模型能力与可用性机制-001": {
+      "files": 80,
+      "bytes_of_paths": 9511,
+      "run_yml": true,
+      "lifecycle": "status:workflow_complete_awaiting_Human_master_integration_gate",
+      "has_conclusion_dir": true
+    },
+    "run-20260811-命名空间切换后stale-blob绑定修复-001": {
+      "files": 5,
+      "bytes_of_paths": 521,
+      "run_yml": true,
+      "lifecycle": "durable_repair_evidence",
+      "has_conclusion_dir": true
+    },
+    "run-20260811-执行简化与有界闭包规范升级-001": {
+      "files": 9,
+      "bytes_of_paths": 940,
+      "run_yml": true,
+      "lifecycle": "candidate_ready_for_independent_review",
+      "has_conclusion_dir": true
+    },
+    "run-20260812-角色窗口上下文模型路由集成-001": {
+      "files": 128,
+      "bytes_of_paths": 18624,
+      "run_yml": false,
+      "lifecycle": null,
+      "has_conclusion_dir": false
+    },
+    "run-20260813-mechanism-activation-and-adherence-design-001": {
+      "files": 24,
+      "bytes_of_paths": 3199,
+      "run_yml": true,
+      "lifecycle": "status:architecture_v3_fresh_independent_rereview_dispatched",
+      "has_conclusion_dir": true
+    },
+    "run-20260813-mechanism-activation-and-adherence-implementation-001": {
+      "files": 82,
+      "bytes_of_paths": 10826,
+      "run_yml": true,
+      "lifecycle": "status:COMPLETE_MASTER_PUBLISHED",
+      "has_conclusion_dir": true
+    },
+    "run-20260815-model-routing-cowork-opus5-registration-001": {
+      "files": 2,
+      "bytes_of_paths": 205,
+      "run_yml": true,
+      "lifecycle": "status:IMPLEMENTATION_AUTHORIZED",
+      "has_conclusion_dir": false
+    },
+    "run-20260817-communication-git-blob-utf8-decoding-fix-001": {
+      "files": 18,
+      "bytes_of_paths": 2211,
+      "run_yml": true,
+      "lifecycle": "status:IMPLEMENTATION_AUTHORIZED_NO_MASTER_PUBLICATION",
+      "has_conclusion_dir": false
+    },
+    "run-20260817-stage-human-alignment-enforcement-root-cause-001": {
+      "files": 29,
+      "bytes_of_paths": 3477,
+      "run_yml": true,
+      "lifecycle": "status:architecture_root_cause_active",
+      "has_conclusion_dir": true
+    },
+    "run-20260818-citystate-local-host-control-program-design-001": {
+      "files": 19,
+      "bytes_of_paths": 2141,
+      "run_yml": true,
+      "lifecycle": "status:Human_completion_accepted_ready_for_master_fast_forward",
+      "has_conclusion_dir": true
+    },
+    "run-20260818-gate-binding-repair-001": {
+      "files": 28,
+      "bytes_of_paths": 2495,
+      "run_yml": true,
+      "lifecycle": "status:human_integration_authorized_pending_master_publication",
+      "has_conclusion_dir": true
+    },
+    "run-20260818-human-auth-code-minlength-001": {
+      "files": 2,
+      "bytes_of_paths": 150,
+      "run_yml": true,
+      "lifecycle": "retain_as_shared_os_governance_change_evidence",
+      "has_conclusion_dir": false
+    },
+    "run-20260818-human-task-authority-v2-migration-001": {
+      "files": 12,
+      "bytes_of_paths": 1194,
+      "run_yml": true,
+      "lifecycle": "status:human_completion_accepted_ready_for_master_integration",
+      "has_conclusion_dir": true
+    },
+    "run-20260819-citystate-local-host-control-baseline-001": {
+      "files": 21,
+      "bytes_of_paths": 2278,
+      "run_yml": true,
+      "lifecycle": "status:completed_integrated_local_housekeeping_deferred_non_blocking",
+      "has_conclusion_dir": true
+    },
+    "run-20260819-human-task-authority-delegated-start-simplification-001": {
+      "files": 12,
+      "bytes_of_paths": 1412,
+      "run_yml": true,
+      "lifecycle": "status:human_completion_accepted_ready_for_master_integration",
+      "has_conclusion_dir": true
+    },
+    "run-20260828-global-agent-local-capability-boundary-001": {
+      "files": 1,
+      "bytes_of_paths": 101,
+      "run_yml": false,
+      "lifecycle": null,
+      "has_conclusion_dir": false
+    },
+    "run-20260828-t2-completion-001": {
+      "files": 17,
+      "bytes_of_paths": 1621,
+      "run_yml": true,
+      "lifecycle": "status:integrated_by_Human_acceptance_with_known_nonblocking_residual",
+      "has_conclusion_dir": true
+    }
+  }
+}

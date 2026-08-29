@@ -32,7 +32,14 @@ task-triggered steps loads by default.
 8. Then read only the canonical files and registry entries the task actually
    triggers.
 9. Never default-preload `01_os/_runs/**`; read only a run explicitly required by
-   the current task or its verification.
+   the current task or its verification. The same applies to `01_os/_communication/**`
+   and `01_os/_dev/**`. When you need to enumerate or search the repository, use
+   `01_os/06_execution/boot/context_management/working_set/visible_set.py --list`
+   rather than a bare `git ls-files` or an unscoped `rg`: on `d9a18b57` those
+   three surfaces were 90.52% of all listing bytes and 69–94% of the hits on
+   ordinary routing terms. The tool always reports what it hid, and
+   `--include-hidden` widens when history is genuinely the subject. A filtered
+   listing is never exhaustive and must not be presented as one.
 
 `01_os/**` is the permanent active OS namespace. The retained global surface outside it is this file,
 `AGENT_WORKING_DISCIPLINE.md`, `CLAUDE.md`, `GEMINI.md`, `README.md`,
@@ -107,6 +114,39 @@ function only and grant no authority. Current provider, product, surface, model
 and parameter facts must come from the model-routing preflight and appear in the
 Human-visible `receiver_setup`; do not copy a volatile model catalog into this
 always-on file.
+
+## Default Task Orchestration
+
+Plan and execute coherent work as **one long-horizon task**, not a chain of small
+ones. Deterministic in-scope construction, validation, repair of a failure this
+task caused, evidence updates, private-runtime cleanup, task-branch commit and
+push, and completion-pointer closure are internal completion work. Do not come
+back to the Human for any of them.
+
+Stop — genuinely, without improvising around it — for a new load-bearing semantic
+choice, scope escape beyond `allowed_changed_paths`, a protected action the
+current authority does not already cover, a safety/privacy/secret boundary,
+destructive Git or history rewrite, runtime or scheduler activation, Human relay
+to another independent model, or evidence that cannot support the claim.
+
+Two consequences that have been got wrong before:
+
+- **An ordinary task-branch publication is not a stop condition.** Treating it as
+  one makes every implementation task that ends in a pushed completion pointer
+  look protected.
+- **Large does not mean dangerous.** Task size creates no authorization
+  requirement; an empty `known_protected_actions` set is a valid preflight result.
+
+When a task finishes, write the run's `lifecycle` field using the enum in
+`01_os/开发入口与单窗口任务规范_v1.md` section 5. A free-text status string is
+prohibited, because it is what makes finished work indistinguishable from live
+work: on `d9a18b57` the 50 run groups carried 24 mutually distinct free-text
+status strings and **zero** were machine-classifiable, which is why nothing had
+ever been archived.
+
+Contract: `01_os/03_mechanisms/task_orchestration/大任务与长时执行契约_v1.yml`.
+Checker: `01_os/06_execution/task_orchestration/big_task/closure_preflight.py`.
+Neither grants authority.
 
 ## Engineering Design Principles
 

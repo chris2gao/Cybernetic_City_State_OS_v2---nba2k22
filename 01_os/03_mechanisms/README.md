@@ -41,8 +41,14 @@ assessed one at a time, not copied wholesale.
   `routing_only` authority。
 - `mechanism_activation/`：formal-action constitution、机制触发、pre-action gate、
   L0–L4 生效盘点与 material claim 期望—观察—comparator 双向绑定。
+- `task_orchestration/`：默认大任务与长时执行；内部 continuation 与真停止的边界、
+  闭合前检查、终态生命周期声明。`authority_effect: none`。
 
 工作流只引用该机制，不在 `01_workflow/` 内保留第二份实例。
+
+累计面的可见性与归档不是独立机制：它属于 `context_management/`，见
+`context_management/工作集与归档契约_v1.yml`。放在那里是因为"哪些内容属于哪个
+生命周期类"本来就是上下文管理的职责，新建第二个机制会把同一职责劈成两半。
 # 全局通讯机制
 
 `communication_system/` 定义每任务公开通讯空间、端点与消息契约、精确引用、人工发布、
