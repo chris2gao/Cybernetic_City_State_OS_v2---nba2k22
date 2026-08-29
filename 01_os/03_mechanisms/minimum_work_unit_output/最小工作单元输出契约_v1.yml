@@ -95,14 +95,34 @@ private_reasoning:
     - scratchpad
 machine_enforcement_boundary: >-
   The validator enforces a deterministic structural anti-vacuity floor only:
-  required text type, non-emptiness, a closed set of generic-only forms, a minimum
-  content-token count, a closed independent-review verdict enum, and set containment
+  required text type for all four core narrative fields, non-emptiness, a closed set
+  of generic-only forms, a minimum content-token count counted in a Unicode-aware and
+  language-neutral way, a closed independent-review verdict enum, and set containment
   between an independent review's assessment evidence refs and the primary evidence
   that same review declares it examined. Passing these checks proves those structural
   properties and nothing wider. It does not prove that a rationale is true, sufficient
   or task-appropriate, and it does not prove that a reviewer actually attacked the
   executor rationale against that evidence. Full semantic sufficiency remains
   load-bearing independent-review judgement, not a machine result.
+core_narrative_text_floor:
+  applies_to:
+    - work_performed_or_requested
+    - implementation_or_review_method
+  required_value_type: text
+  reject_non_text_values: true
+  reject_empty_or_whitespace_only: true
+  note: >-
+    These two fields state the concrete work unit and the decisive method, so a
+    boolean, number, list or mapping cannot express either one. This floor is type
+    and emptiness only; the generic-only form set and the content-token count stay
+    on the two rationale fields, where a justification is being made rather than a
+    statement of what was done.
+  proves:
+    - value_is_nonempty_text
+  does_not_prove:
+    - statement_is_true
+    - statement_is_semantically_sufficient
+    - statement_is_task_appropriate
 rationale_machine_floor:
   applies_to:
     - supportability_rationale
@@ -110,6 +130,40 @@ rationale_machine_floor:
   required_value_type: text
   reject_non_text_values: true
   minimum_content_tokens: 3
+  text_normalization:
+    unicode_aware: true
+    ascii_only_normalization: prohibited
+    language_understanding_heuristics: prohibited
+    kept_character_class: unicode_word_characters_excluding_underscore
+    note: >-
+      Normalization keeps the letters and digits of every script instead of ASCII
+      a-z0-9. For ASCII input the result is identical to the previous rule; for any
+      other script the text is no longer erased before the floor is applied.
+  content_token_rule:
+    space_delimited_run: one_content_token
+    unspaced_script_character: one_content_token
+    language_identification: prohibited
+    note: >-
+      A script written without a word separator cannot be measured by a whitespace
+      token count, so each of its characters is one content unit. Membership is
+      decided only by the declared codepoint ranges below, never by identifying a
+      language. Scripts outside this list keep whitespace-delimited tokens.
+    unspaced_script_ranges:
+      - "0E00-0E7F"
+      - "0E80-0EFF"
+      - "0F00-0FFF"
+      - "1000-109F"
+      - "1780-17FF"
+      - "2E80-2FDF"
+      - "3040-30FF"
+      - "31F0-31FF"
+      - "3400-4DBF"
+      - "4E00-9FFF"
+      - "F900-FAFF"
+      - "FF66-FF9D"
+      - "20000-2A6DF"
+      - "2A700-2EBEF"
+      - "2F800-2FA1F"
   proves:
     - value_is_nonempty_text
     - value_is_not_a_listed_generic_only_form

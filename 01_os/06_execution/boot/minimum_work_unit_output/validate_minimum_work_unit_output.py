@@ -4,10 +4,17 @@
 Machine enforcement boundary
 ----------------------------
 This validator implements a deterministic *structural* anti-vacuity floor only:
-required text type, non-emptiness, a closed set of generic-only forms, a minimum
-content-token count, a closed verdict enum, and set containment between an
-independent review's assessment evidence refs and the primary evidence that same
-review declares it examined.
+required text type for all four core narrative fields, non-emptiness, a closed set
+of generic-only forms, a minimum content-token count, a closed verdict enum, and
+set containment between an independent review's assessment evidence refs and the
+primary evidence that same review declares it examined.
+
+Text handling is Unicode-aware and language-neutral. Normalization keeps every
+Unicode word character rather than ASCII ``a-z0-9``, and the content-unit count
+treats one character of a script written without word separators as one unit,
+because a whitespace token count cannot measure content in such a script. No
+language identification, translation or natural-language judgement is performed,
+and the generic-only rejection set stays an explicitly enumerated closed list.
 
 Passing these checks proves those structural properties and nothing wider. It does
 not prove that a rationale is true, sufficient or task-appropriate, and it does not
@@ -46,8 +53,34 @@ ASSESSMENT_FIELDS = (
 PRIVATE_KEYS = {"chain_of_thought", "private_chain_of_thought", "private_reasoning", "scratchpad"}
 
 RATIONALE_TEXT_FIELDS = ("supportability_rationale", "feasibility_rationale")
+CORE_NARRATIVE_TEXT_FIELDS = ("work_performed_or_requested", "implementation_or_review_method")
 ASSESSMENT_TEXT_FIELDS = ("supportability_assessment", "feasibility_assessment")
 VERDICT_VALUES = ("PASS", "FIX_REQUIRED", "REJECT")
+
+# Scripts that are written without a word separator. A whitespace token count is
+# structurally unable to measure content in these, so one character counts as one
+# content unit. This is a declared codepoint-range property, not language
+# detection: no text is classified by language, only by the block its characters
+# occupy. Every other script keeps the whitespace-delimited token, which leaves
+# ASCII behaviour identical to the pre-correction implementation.
+UNSPACED_SCRIPT_RANGES = (
+    (0x0E00, 0x0E7F),    # Thai
+    (0x0E80, 0x0EFF),    # Lao
+    (0x0F00, 0x0FFF),    # Tibetan
+    (0x1000, 0x109F),    # Myanmar
+    (0x1780, 0x17FF),    # Khmer
+    (0x2E80, 0x2FDF),    # CJK radicals supplement, Kangxi radicals
+    (0x3040, 0x30FF),    # Hiragana, Katakana
+    (0x31F0, 0x31FF),    # Katakana phonetic extensions
+    (0x3400, 0x4DBF),    # CJK unified ideographs extension A
+    (0x4E00, 0x9FFF),    # CJK unified ideographs
+    (0xF900, 0xFAFF),    # CJK compatibility ideographs
+    (0xFF66, 0xFF9D),    # Halfwidth katakana
+    (0x20000, 0x2A6DF),  # CJK unified ideographs extension B
+    (0x2A700, 0x2EBEF),  # CJK unified ideographs extensions C-I
+    (0x2F800, 0x2FA1F),  # CJK compatibility ideographs supplement
+)
+UNSPACED_SCRIPT_RANGE_LABELS = tuple(f"{start:04X}-{end:04X}" for start, end in UNSPACED_SCRIPT_RANGES)
 
 MIN_CONTENT_TOKENS = 3
 FILLER_TOKENS = frozenset({
@@ -153,11 +186,66 @@ def _present(value: Any) -> bool:
 
 
 def _normalized_phrase(value: str) -> str:
-    return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9]+", " ", value.lower())).strip()
+    """Lowercase and reduce to Unicode word characters separated by single spaces.
+
+    `[\\W_]` is the exact complement of `[a-z0-9]` for ASCII input, so every
+    pre-correction English result is unchanged byte for byte, while letters and
+    digits of every other script survive instead of being erased. The previous
+    `[^a-z0-9]+` deleted a whole non-ASCII rationale and the floor then reported
+    it as missing (finding MWU-R1-FG-IR-001).
+    """
+    return re.sub(r"\s+", " ", re.sub(r"[\W_]+", " ", value.lower(), flags=re.UNICODE)).strip()
+
+
+def _is_unspaced_script_char(char: str) -> bool:
+    codepoint = ord(char)
+    return any(start <= codepoint <= end for start, end in UNSPACED_SCRIPT_RANGES)
+
+
+def _split_content_units(token: str) -> list[str]:
+    """Split one normalized token into deterministic content units.
+
+    Each character of a script written without word separators is one unit; any
+    run of other characters stays a single unit. Purely ASCII tokens therefore
+    come back unchanged, so the English content-token floor is unaffected.
+    """
+    units: list[str] = []
+    buffer: list[str] = []
+    for char in token:
+        if _is_unspaced_script_char(char):
+            if buffer:
+                units.append("".join(buffer))
+                buffer = []
+            units.append(char)
+        else:
+            buffer.append(char)
+    if buffer:
+        units.append("".join(buffer))
+    return units
 
 
 def _content_tokens(value: str) -> list[str]:
-    return [t for t in _normalized_phrase(value).split() if t and t not in FILLER_TOKENS]
+    units: list[str] = []
+    for token in _normalized_phrase(value).split():
+        units.extend(_split_content_units(token))
+    return [t for t in units if t and t not in FILLER_TOKENS]
+
+
+def _core_text_floor_errors(field: str, value: Any) -> list[str]:
+    """Type and emptiness floor for the two non-rationale core narrative fields.
+
+    These fields state the concrete work unit and the decisive method, so a
+    boolean, number, list or mapping cannot express them. `_present` accepted all
+    of those (finding MWU-R1-FG-IR-002). The generic-only and content-token
+    checks stay on the two rationale fields only, as dispatched.
+    """
+    if value is None:
+        return [f"missing_or_empty:{field}"]
+    if not isinstance(value, str):
+        return [f"core_field_must_be_text:{field}"]
+    if not value.strip():
+        return [f"missing_or_empty:{field}"]
+    return []
 
 
 def _text_floor_errors(field: str, value: Any) -> list[str]:
@@ -257,6 +345,8 @@ def validate_document(document: Any, require_mwu: bool = False) -> list[str]:
     for field in CORE_FIELDS:
         if field in RATIONALE_TEXT_FIELDS:
             errors.extend(_text_floor_errors(field, unit.get(field)))
+        elif field in CORE_NARRATIVE_TEXT_FIELDS:
+            errors.extend(_core_text_floor_errors(field, unit.get(field)))
         elif not _present(unit.get(field)):
             errors.append(f"missing_or_empty:{field}")
 
@@ -276,6 +366,18 @@ _CORE = {
     "supportability_rationale": "The requirement is explicit in the canonical contract and is checked by the validator.",
     "feasibility_rationale": "The artifact is YAML in the current task boundary and can be checked without protected actions.",
 }
+
+# Multilingual regression material. These are ordinary repository-language values,
+# not language detection inputs: the floor never asks which language they are.
+CN_WORK = "关闭多语言误拒与核心字段非文本误通过这两个结构性缺陷。"
+CN_METHOD = "以 Unicode 感知的规范化与无分词脚本逐字符计数替换原有 ASCII 归一化。"
+CN_SUPPORTABILITY = "该修正由当前契约文本与验证器代码路径直接支撑，并有确定性回归覆盖。"
+CN_FEASIBILITY = "改动集中在既有校验器与契约文件内部，可在当前依赖下确定性复算。"
+CN_SUPPORT_ASSESSMENT = "该结论由复现的校验器退出码与契约绑定支撑，而不是风格偏好。"
+CN_FEASIBLE_ASSESSMENT = "修正范围局限于既有机制文件，在当前执行环境可以完整复算。"
+MIXED_SUPPORTABILITY = "MWU validator 现已支持 Unicode 文本 with mixed scripts and digits 2026."
+MIXED_FEASIBILITY = "校验器 runs on the existing PyYAML dependency，无需新增依赖。"
+CN_BELOW_FLOOR = "可行"
 
 
 def _architecture_unit(**overrides: Any) -> dict:
@@ -422,6 +524,70 @@ def _document_cases() -> list[tuple[str, dict, bool, str | None]]:
         ("adversarial_partially_disjoint_refs",
          _review_unit(assessment_overrides={"primary_evidence_refs": ["contract", "evidence:Z"]}), False,
          "assessment_evidence_ref_not_examined:evidence:Z"),
+
+        # MWU-R1-FG-IR-001 multilingual false-reject closure.
+        ("positive_chinese_supportability_rationale",
+         _execution_unit(supportability_rationale=CN_SUPPORTABILITY), True, None),
+        ("positive_chinese_feasibility_rationale",
+         _execution_unit(feasibility_rationale=CN_FEASIBILITY), True, None),
+        ("positive_chinese_core_narrative_fields",
+         _execution_unit(work_performed_or_requested=CN_WORK,
+                         implementation_or_review_method=CN_METHOD), True, None),
+        ("positive_chinese_full_unit",
+         _execution_unit(work_performed_or_requested=CN_WORK,
+                         implementation_or_review_method=CN_METHOD,
+                         supportability_rationale=CN_SUPPORTABILITY,
+                         feasibility_rationale=CN_FEASIBILITY), True, None),
+        ("positive_chinese_independent_review_assessments",
+         _review_unit(assessment_overrides={"supportability_assessment": CN_SUPPORT_ASSESSMENT,
+                                            "feasibility_assessment": CN_FEASIBLE_ASSESSMENT}), True, None),
+        ("positive_mixed_unicode_text",
+         _execution_unit(supportability_rationale=MIXED_SUPPORTABILITY,
+                         feasibility_rationale=MIXED_FEASIBILITY), True, None),
+        ("negative_below_floor_unspaced_rationale",
+         _execution_unit(supportability_rationale=CN_BELOW_FLOOR), False,
+         "rationale_below_content_floor:supportability_rationale"),
+        ("negative_below_floor_unspaced_assessment",
+         _review_unit(assessment_overrides={"feasibility_assessment": CN_BELOW_FLOOR}), False,
+         "rationale_below_content_floor:feasibility_assessment"),
+        ("negative_generic_only_survives_unicode_normalization",
+         _execution_unit(supportability_rationale="Tests passed!"), False,
+         "vague_rationale_alone:supportability_rationale"),
+        ("negative_punctuation_only_rationale",
+         _execution_unit(feasibility_rationale="。。。"), False,
+         "missing_or_empty:feasibility_rationale"),
+
+        # MWU-R1-FG-IR-002 non-text core-field false-pass closure.
+        ("negative_boolean_work_performed_or_requested",
+         _execution_unit(work_performed_or_requested=True), False,
+         "core_field_must_be_text:work_performed_or_requested"),
+        ("negative_numeric_work_performed_or_requested",
+         _execution_unit(work_performed_or_requested=1), False,
+         "core_field_must_be_text:work_performed_or_requested"),
+        ("negative_list_work_performed_or_requested",
+         _execution_unit(work_performed_or_requested=["did", "the", "work"]), False,
+         "core_field_must_be_text:work_performed_or_requested"),
+        ("negative_mapping_work_performed_or_requested",
+         _execution_unit(work_performed_or_requested={"what": "work"}), False,
+         "core_field_must_be_text:work_performed_or_requested"),
+        ("negative_boolean_implementation_or_review_method",
+         _execution_unit(implementation_or_review_method=False), False,
+         "core_field_must_be_text:implementation_or_review_method"),
+        ("negative_numeric_implementation_or_review_method",
+         _execution_unit(implementation_or_review_method=3.14), False,
+         "core_field_must_be_text:implementation_or_review_method"),
+        ("negative_list_implementation_or_review_method",
+         _execution_unit(implementation_or_review_method=["read", "then", "run"]), False,
+         "core_field_must_be_text:implementation_or_review_method"),
+        ("negative_mapping_implementation_or_review_method",
+         _execution_unit(implementation_or_review_method={"how": "manually"}), False,
+         "core_field_must_be_text:implementation_or_review_method"),
+        ("negative_whitespace_only_work_performed_or_requested",
+         _execution_unit(work_performed_or_requested="   "), False,
+         "missing_or_empty:work_performed_or_requested"),
+        ("negative_whitespace_only_implementation_or_review_method",
+         _execution_unit(implementation_or_review_method="\t\n"), False,
+         "missing_or_empty:implementation_or_review_method"),
     ]
 
 
@@ -531,6 +697,32 @@ def validate_static(root: Path) -> list[str]:
             errors.append("contract_generic_only_forms_drift")
         if rationale_floor.get("filler_tokens_removed_before_floor") != sorted(FILLER_TOKENS):
             errors.append("contract_filler_tokens_drift")
+        normalization = rationale_floor.get("text_normalization")
+        if not isinstance(normalization, dict):
+            errors.append("contract_text_normalization_missing")
+        else:
+            if normalization.get("unicode_aware") is not True:
+                errors.append("contract_unicode_normalization_drift")
+            if normalization.get("ascii_only_normalization") != "prohibited":
+                errors.append("contract_unicode_normalization_drift")
+            if normalization.get("language_understanding_heuristics") != "prohibited":
+                errors.append("contract_language_heuristic_prohibition_drift")
+        token_rule = rationale_floor.get("content_token_rule")
+        if not isinstance(token_rule, dict):
+            errors.append("contract_content_token_rule_missing")
+        elif token_rule.get("unspaced_script_ranges") != list(UNSPACED_SCRIPT_RANGE_LABELS):
+            errors.append("contract_unspaced_script_ranges_drift")
+
+    core_text_floor = contract.get("core_narrative_text_floor")
+    if not isinstance(core_text_floor, dict):
+        errors.append("contract_core_narrative_text_floor_missing")
+    else:
+        if core_text_floor.get("applies_to") != list(CORE_NARRATIVE_TEXT_FIELDS):
+            errors.append("contract_core_narrative_text_fields_drift")
+        if core_text_floor.get("required_value_type") != "text":
+            errors.append("contract_core_narrative_required_type_drift")
+        if core_text_floor.get("reject_non_text_values") is not True:
+            errors.append("contract_core_narrative_reject_non_text_drift")
 
     if boot.get("validator") != "01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py":
         errors.append("boot_validator_pointer_drift")
@@ -599,6 +791,22 @@ def _mutate_load_order_reordered(contract: dict, boot: dict, registry: dict) -> 
     boot["load_order"] = list(reversed(boot["load_order"]))
 
 
+def _mutate_core_narrative_fields(contract: dict, boot: dict, registry: dict) -> None:
+    contract["core_narrative_text_floor"]["applies_to"] = []
+
+
+def _mutate_core_narrative_reject_non_text(contract: dict, boot: dict, registry: dict) -> None:
+    contract["core_narrative_text_floor"]["reject_non_text_values"] = False
+
+
+def _mutate_unicode_normalization(contract: dict, boot: dict, registry: dict) -> None:
+    contract["rationale_machine_floor"]["text_normalization"]["unicode_aware"] = False
+
+
+def _mutate_unspaced_script_ranges(contract: dict, boot: dict, registry: dict) -> None:
+    contract["rationale_machine_floor"]["content_token_rule"]["unspaced_script_ranges"] = []
+
+
 STATIC_DRIFT_MUTATIONS = (
     ("adversarial_static_role_additions_drift", _mutate_execution_role_additions, "contract_role_additions_drift:execution"),
     ("adversarial_static_assessment_fields_drift", _mutate_assessment_fields, "contract_assessment_fields_drift"),
@@ -608,6 +816,10 @@ STATIC_DRIFT_MUTATIONS = (
     ("adversarial_static_content_token_floor_drift", _mutate_content_token_floor, "contract_minimum_content_tokens_drift"),
     ("adversarial_static_generic_forms_erased", _mutate_generic_forms, "contract_generic_only_forms_drift"),
     ("adversarial_static_boot_load_order_reordered", _mutate_load_order_reordered, "boot_load_order_drift"),
+    ("adversarial_static_core_narrative_fields_erased", _mutate_core_narrative_fields, "contract_core_narrative_text_fields_drift"),
+    ("adversarial_static_core_narrative_non_text_allowed", _mutate_core_narrative_reject_non_text, "contract_core_narrative_reject_non_text_drift"),
+    ("adversarial_static_unicode_normalization_disabled", _mutate_unicode_normalization, "contract_unicode_normalization_drift"),
+    ("adversarial_static_unspaced_script_ranges_erased", _mutate_unspaced_script_ranges, "contract_unspaced_script_ranges_drift"),
 )
 
 
