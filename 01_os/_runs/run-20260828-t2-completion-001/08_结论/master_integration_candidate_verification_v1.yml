@@ -1,0 +1,42 @@
+schema_version: citystate.t2.master_integration_verification.v1
+task_id: os-v2-t2-completion-001
+stage_id: workflow_stage_04_test_generation
+integration_candidate_parent: c1c23c41cfb25f41347a210d0ff5e907cd1900d1
+master_base: c149ae626d63d3818c110d5a29972c32d083f350
+source_implementation_head: b30241a0f9006fb72b9ab1a27f44e2311d4a7221
+source_control_head: 04daacddfdba61bc3f6e1ba0e308721c202b7319
+local_replay_worktree: E:/newStand/study/_wt_t2_master_integration_001
+path_audit:
+  changed_entries: 224
+  statuses: additions_only
+  out_of_scope_paths: 0
+  allowed_prefixes:
+  - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/
+  - 01_os/_runs/run-20260828-t2-completion-001/
+  - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-t2-completion-001/
+replay:
+  vendored_v3:
+    result: 65_of_65_passed
+    exit_code: 0
+  successor_v4:
+    result: 74_of_75_passed
+    exit_code: 1
+    failure_count: 1
+    sole_failure:
+      case: S02_transparent_nested_window_wrapper
+      predicate: P21
+      detail: continuation condition is not a typed determinism fact; unresolved subject for task_branch_or_head_changed
+comparison_to_executor_measurement:
+  new_failure_signature: false
+  changed_failure_count: false
+  same_known_residual: true
+adjudication:
+  residual_class: nonblocking_false_negative_representation_compatibility
+  unsafe_false_positive: false
+  Human_merge_approval_applies: true
+  ready_for_non_force_master_fast_forward: true
+claims:
+  fresh_final_independent_PASS: false
+  Human_integration_acceptance: true
+  Stage05_authorized: false
+  automatic_progression: false
