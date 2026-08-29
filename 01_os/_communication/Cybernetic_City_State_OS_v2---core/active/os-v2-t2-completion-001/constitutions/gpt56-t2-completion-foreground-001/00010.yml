@@ -1,0 +1,105 @@
+schema_version: citystate.formal_action.constitution_evidence.v1
+action_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00010
+action_class: formal_cross_endpoint_task_dispatch
+sender_endpoint_id: gpt56-t2-completion-foreground-001
+intended_recipient_endpoint_id: codex-t2-parent-stage04-reviewer-002
+classification_basis_ref: Human/current.yml
+required_mechanisms:
+- communication_system
+- model_routing
+resolver_result_ref: constitutions/gpt56-t2-completion-foreground-001/00010.yml#resolution
+gate_result_ref: constitutions/gpt56-t2-completion-foreground-001/00010.yml#gate
+mechanism_execution_ref: 01_os/06_execution/boot/communication_system/publisher/publish_message.py
+formal_artifact_ref: messages/gpt56-t2-completion-foreground-001/00010_request.yml
+activation_context:
+  intended_cross_endpoint_side_effect: true
+  actionable_content: true
+  requires_receiver_selection: true
+  communication_context_ref: manifest.yml
+  classification_basis_ref: Human/current.yml
+  collaboration_role: independent_review
+  risk_tier: T2_semantic
+  task_shape: parent_Stage04_successor_fresh_relationship_isolated_review
+  required_capabilities:
+  - local_file_read
+  - local_file_write
+  - GitHub_read
+  - GitHub_write
+  routing_basis_ref: role_context/codex-t2-parent-stage04-reviewer-002.yml
+  availability_assumption_or_observation_ref: role_context/codex-t2-parent-stage04-reviewer-002.yml
+  action_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00010
+  formal_message_type: request
+  task_id: os-v2-t2-completion-001
+  sender_endpoint_id: gpt56-t2-completion-foreground-001
+  intended_recipient_endpoint_id: codex-t2-parent-stage04-reviewer-002
+mechanism_preconditions:
+  communication_system:
+    verification_result: VERIFIED
+    evidence_ref: manifest.yml
+  model_routing:
+    verification_result: VERIFIED
+    evidence_ref: role_context/codex-t2-parent-stage04-reviewer-002.yml
+authority_effect: none
+resolution:
+  classification: formal_cross_endpoint_action
+  action_class: formal_cross_endpoint_task_dispatch
+  formal: true
+  formal_segment_indexes:
+  - 0
+  mixed_action_segmented: false
+  authority_effect: none
+  action_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00010
+  normalized_recipient_endpoint_id: codex-t2-parent-stage04-reviewer-002
+  required_mechanisms:
+  - communication_system
+  - model_routing
+  missing_preconditions: []
+  route_requirements:
+  - receiver_setup
+  action_allowed_to_enter_enforcement: true
+  ordinary_Human_discussion_allowed: false
+gate:
+  gate_result: VERIFIED
+  action_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00010
+  action_class: formal_cross_endpoint_task_dispatch
+  required_mechanisms:
+  - communication_system
+  - model_routing
+  verified_precondition_refs:
+    communication_system: manifest.yml
+    model_routing: role_context/codex-t2-parent-stage04-reviewer-002.yml
+  blocking_failures: []
+  authority_effect: none
+receiver_setup:
+  surface: codex_desktop
+  communication_carrier: GitHub
+  availability_assumption_or_observation_ref: role_context/codex-t2-parent-stage04-reviewer-002.yml
+  repository_access_mode: GitHub_plus_task_scoped_local_worktree
+  required_branch_or_sha: 8be63c167b16882cf0136d668c86e5e6796be30c
+  model: GPT-5.6 Sol
+  local_files_required: true
+  limitations:
+  - executor_private_context
+  - no_Claude_private_reasoning_or_undocumented_executor_context
+  - no_foreground_private_reasoning_dependency
+  - no_previous_Codex_private_reasoning_dependency
+  - no_candidate_or_implementation_branch_edits
+  - no_fixing_findings_inside_independent_review
+  - no_treating_executor_green_or_persisted_regressions_as_independent_acceptance
+  - no_Stage05_canonical_or_master_write
+  - no_force_rebase_squash_amend_or_history_rewrite
+  - no_redelegation_or_automatic_progression
+  product: Codex Desktop
+  provider: OpenAI
+  repository_or_worktree_requirement: Use a fresh isolated Codex session and a clean
+    task-scoped worktree detached at exact publication head 8be63c167b16882cf0136d668c86e5e6796be30c.
+    Treat 628dd60e3505516254bf37956bcde5fb93c2723a as the immutable frozen successor
+    candidate. Preserve the previous 4ce3e09e candidate and 5f4520dd FIX_REQUIRED
+    review as historical evidence. Do not modify or publish dev/os-v2-t2-completion-001
+    or master.
+  session_mode: fresh_isolated
+  collaboration_role: independent_review
+  reasoning_or_parameter_profile: codex_sol_strongest_exposed
+  isolation_level: fresh_session
+  routing_basis_ref: role_context/codex-t2-parent-stage04-reviewer-002.yml
+  github_publication_required_before_start: true

@@ -1,0 +1,67 @@
+schema_version: window_role_binding.role_contract.v1
+mechanism_version: 1
+status: active
+authority_effect: none
+authority_note: >-
+  A role describes expected work and required independence. It never grants
+  authority. Authority comes only from the current task, the current Human
+  authorization and the repository and tool guards, read fresh.
+roles:
+  foreground_planning_dispatch_adjudication:
+    responsibility: plan, dispatch, adjudicate and accept results
+    context_requirement: task packet, current stage entry and approved refs only
+    independence_requirement: must not act as final reviewer of a task it dispatched
+    allowed_handoff_to_roles:
+      - backend_execution
+      - independent_review
+      - deep_research
+      - closed_corpus_refinement
+    prohibited_authority_effects:
+      - grant of write scope
+      - grant of publication rights
+      - grant of security or gated actions
+  backend_execution:
+    responsibility: execute inside the authorized boundary and return one handoff
+    context_requirement: minimum effective context for the current step
+    independence_requirement: must not design the verification of its own output
+    master_write_authorized: false
+    allowed_handoff_to_roles:
+      - foreground_planning_dispatch_adjudication
+      - independent_review
+    prohibited_authority_effects:
+      - self widening of the authorized boundary
+      - grant of publication rights
+  independent_review:
+    responsibility: judge primary evidence and return accept or reject
+    context_requirement: raw material with the author conclusions removed
+    independence_requirement: distinct window from the implementation window
+    prohibited_provider: []
+    evidence_refs:
+      provider_of_record: not_observable
+    allowed_handoff_to_roles:
+      - foreground_planning_dispatch_adjudication
+    prohibited_authority_effects:
+      - grant of publication rights
+      - substitution for the Human gate
+  deep_research:
+    responsibility: produce sourced material and a first synthesis, never a verdict
+    context_requirement: research scope and declared source lanes
+    independence_requirement: report is input to review, never an accepted result
+    allowed_handoff_to_roles:
+      - foreground_planning_dispatch_adjudication
+      - independent_review
+    prohibited_authority_effects:
+      - grant of acceptance
+  closed_corpus_refinement:
+    responsibility: answer only from supplied sources and surface disagreement
+    context_requirement: the supplied corpus and nothing else
+    independence_requirement: must not synthesise beyond the corpus
+    allowed_handoff_to_roles:
+      - foreground_planning_dispatch_adjudication
+      - independent_review
+    prohibited_authority_effects:
+      - grant of acceptance
+role_label_effect:
+  grants_operational_authority: false
+  provider_independent: true
+model_routing_contract_ref: mechanism/../model_routing/contract_v1.yml

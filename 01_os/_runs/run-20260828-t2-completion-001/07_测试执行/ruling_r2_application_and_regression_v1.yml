@@ -1,0 +1,129 @@
+schema_version: citystate.run_evidence.v1
+run_id: run-20260828-t2-completion-001
+task_id: os-v2-t2-completion-001
+produced_by_endpoint_id: claude-cowork-t2-completion-executor-001
+collaboration_role: execution
+round: 3
+applies_ruling: FG-T2-COMPLETION-BLK-002-R2
+ruling_ref: >-
+  436b4cf6d66cc8c04ba9c69d723cf58177638b21:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-t2-completion-001/documents/gpt56-t2-completion-foreground-001/00003_r2_claimability_integration_ruling.yml
+entered_from_head: e6e0157f29c041922573ed262264d84234a91ae9
+
+work_performed_or_requested: >-
+  Apply the three R2 adjudications (Q1 profile-scoped transparency, Q2 the
+  evaluator-bound sibling condition_definitions region, Q3 the exact historical S14
+  document identity) to the completion-branch evaluator-owned binding, re-run the
+  inherited v3 and v4 suites, and report the failing-set transition by test identity.
+
+implementation_or_review_method: >-
+  Read the parser first to establish the schema before editing: transparent_containers
+  is a per-profile list of selector mappings and document_profiles is a flat
+  path-to-profile mapping, so all three closures fit the existing schema with no
+  parser or adapter change. Applied the additions exactly as adjudicated, then re-ran
+  both runners unmodified and diffed the failing sets by test identity. The two
+  remaining failures assert only arity, so their cause was isolated with a read-only
+  probe that reuses the test module's own helpers and lives outside the worktree.
+
+supportability_rationale: >-
+  Each edit is the ruling's own text placed at the schema position the parser reads.
+  The transition is a set difference over per-test records. The remaining cause is the
+  evaluator's own reported detail string for one named case, not an inference from
+  aggregate counts.
+
+feasibility_rationale: >-
+  All three closures were representable in the existing binding schema, so no adapter,
+  fixture, test or upstream change was needed, and Q1 was scoped per profile rather
+  than by widening the shared anchor.
+
+changes_applied:
+  file: 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/02_acceptance/实现/semantic_acceptance/structural_binding_v1.yml
+  Q1_transparency:
+    method: two new profile-scoped anchor lists; shared _transparent anchor left unchanged
+    role_contract_v1: base + [contract]
+    handoff_contract_v1: base + [contract]
+    window_contract_v1: base + [contract] + [window_contract]
+    tail_matching_restored: false
+    generic_wrapper_inference_added: false
+    note: >-
+      YAML cannot merge sequences, so each scoped list restates the shared base. That
+      duplication is recorded in the file itself as a maintenance obligation.
+  Q2_condition_definitions:
+    added:
+    - selector: [lifecycle, condition_definitions]
+      child_keys: instance_identity
+    - selector: [lifecycle, condition_definitions, "*"]
+      child_keys: declaration_name
+  Q3_document_identity:
+    added: {workflow/new_role_source.yml: role_source_v1}
+    default_profile_added: false
+    path_inference_added: false
+  source_files_modified: 0
+  adapters_modified: 0
+  fixtures_or_tests_modified: 0
+  upstream_branch_modified: false
+
+regressions_after_R2:
+  vendored_baseline_tests: {result: 65/65 passed, process_exit_code: 0}
+  v4_tests: {result: 27/29 passed, process_exit_code: 1}
+  worktree_residue_lines: 1
+  residue_explanation: the single intended modification to structural_binding_v1.yml
+
+failing_set_transition:
+  method: set difference over per-test failure records
+  before_R2: 7
+  after_R2: 2
+  fixed_by_R2: 5
+  fixed_list:
+  - test_v4_reviewer_replay.test_A_accepted_engine_reproduces_reviewer_46_of_46
+  - test_v4_reviewer_replay.test_B_v4_engine_meets_all_46_reviewer_expectations
+  - test_v4_reviewer_replay.test_C_accepted_baseline_passes_all_seven_accepted_predicates
+  - test_v4_metamorphic.test_all_invariance_properties_hold
+  - test_v4_metamorphic.test_no_invariant_transformation_silently_removes_a_predicate
+  newly_failing: 0
+  still_failing: 2
+  still_failing_list:
+  - test_v4_reviewer_replay.test_A_control_really_ran_seven_predicates
+  - test_v4_reviewer_replay.test_B_v4_returns_fourteen_predicates_for_every_case
+
+cumulative_v4_transition:
+  parent_baseline_3002d617: 29/29
+  after_capability_transfer: 15/29
+  after_R1: 22/29
+  after_R2: 27/29
+
+remaining_cause:
+  single_case: S23
+  case_description: nested authority grant
+  verdict_correctness: >-
+    S23 expected fail and got fail. The probe reports correct=True. The engine reaches
+    the right verdict; only the length of the result vector is wrong for the assertion.
+  observed_vector_length: 15
+  asserted_vector_length: 14
+  nonpass_detail:
+  - "P05 fail: authority granted: roles.backend_execution.permissions@master_write_authorized.state"
+  - "P00 unsupported_or_ambiguous_representation: mechanism/roles_v1.yml: no authoritative structural binding resolves this position, so it fails closed as unknown (role_contract_v1:no_rule_for_container)"
+  unbound_position: roles.*.permissions (and its entries) under role_contract_v1
+  role_contract_v1_current_containers:
+  - [roles]
+  - [roles, "*"]
+  - [roles, "*", evidence_refs]
+  - [role_label_effect]
+  test_A_relationship: >-
+    test_A asserts the accepted-only control ran exactly the seven-predicate set and
+    observed {P01..P07} and {P00,P01..P07}, i.e. one case carries an extra P00 in the
+    control too. The control runs the same vendored engine over the same 46 reviewer
+    cases, so S23 is the evident candidate, but the control report did not expose a
+    per-case predicate-id field under the keys probed, so this specific attribution is
+    inference and is not claimed as measured.
+
+probe_hygiene:
+  probe_location: outside the repository worktree
+  probe_method: reuses test_v4_reviewer_replay's own helpers rather than reimplementing them
+  repository_residue_added_by_probe: 0
+
+residual_risk_or_unproved_limits:
+- The attribution of the control's odd case to S23 is inference, explicitly not measurement.
+- The 5 tests fixed by R2 are proven to change state; they are not proven to pass for the
+  intended reason rather than incidentally.
+- Only the two parent suites were run. No claim about any other Stage04 gate.
+- Executor measurement only. Not independent acceptance.

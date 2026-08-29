@@ -1,0 +1,107 @@
+schema_version: citystate.run_blocked_finding.v1
+finding_id: T2-COMPLETION-BLK-001
+run_id: run-20260828-t2-completion-001
+task_id: os-v2-t2-completion-001
+raised_by_endpoint_id: claude-cowork-t2-completion-executor-001
+raised_by_task_role: parent_t2_completion_implementation_executor
+collaboration_role: execution
+state: blocked_returned_to_foreground
+evidence_ref: ../07_测试执行/transfer_and_regression_evidence_v1.yml
+
+title: >-
+  The accepted structural binding has no container rule for the v4 typed
+  invalidation_conditions position that ruling F03-D created.
+
+work_performed_or_requested: >-
+  Construct the correction-003 replacement on dev/os-v2-t2-completion-001 from parent
+  checkpoint 3002d617 using 7cf91957 as the accepted structural-provenance source.
+  Construction reached a position where the next step is a semantic choice rather than
+  a derivation, so it stopped there and returned.
+
+implementation_or_review_method: >-
+  Transferred the accepted capability byte-exactly, ran the parent's own v3 and v4
+  suites, then localised the single shared failure signature to one container position
+  by reading the transferred binding's window_contract_v1 profile against both fixture
+  corpora.
+
+measured_root_cause:
+  one_sentence: >-
+    The v3 corpus writes lifecycle.invalidation_conditions as a list of strings; the v4
+    corpus writes it as a mapping of author-chosen condition names to {subject,
+    observation}; the accepted binding's window_contract_v1 profile has rules for
+    [lifecycle] but none for [lifecycle, invalidation_conditions], so that position
+    resolves to no authoritative binding and fails closed as unknown.
+  fixture_v3_shape: list_of_strings
+  fixture_v3_path: successor_v4/02_acceptance/fixtures/baseline/mechanism/windows_v1.yml
+  fixture_v4_shape: mapping_of_condition_name_to_typed_observation
+  fixture_v4_path: successor_v4/02_acceptance/fixtures/baseline_v4/mechanism/windows_v1.yml
+  binding_profile: window_contract_v1
+  binding_has_rules_for:
+  - [failure_states]
+  - [entry_modes]
+  - [entry_modes, "*"]
+  - [lifecycle]
+  - [window_identity]
+  - [window_identity, latest_session_pointer]
+  - [model_route_binding]
+  - [model_route_binding, route_receipt]
+  binding_missing_rule_for:
+  - [lifecycle, invalidation_conditions]
+  provenance_of_the_v4_shape: >-
+    The v4 shape is the product of ruling F03-D, which is the ruling the parent
+    checkpoint commit 3002d617 is titled for. The accepted structural-provenance work
+    on 7cf91957 was authored against the v3 corpus, where this position did not exist
+    as a keyed collection, so the omission is a coverage gap between two accepted
+    results rather than a defect in either one.
+
+why_this_is_a_choice_and_not_a_derivation:
+- Closing it means adding a container rule that declares whether the children of
+  lifecycle.invalidation_conditions are instance_identity (author-chosen names) or
+  declaration_name (normative slots). That declaration decides what is claimable at
+  that position, which is a semantic ruling, not a computation.
+- The v4 fixture contains a prose comment asserting that the names carry no decision
+  weight. Reading evaluator authority out of that comment would let the payload mint
+  structural authority, which the preserved invariant list forbids.
+- Two competent executors following the stated objective, source and rules would not
+  produce a byte-identical binding here, which is the entry criterion in section 2 of
+  01_os/开发入口与单窗口任务规范_v1.md for a choice rather than a derivation.
+- The executor's role context forbids new authority or claimability semantics without
+  a foreground return.
+
+stop_condition_invoked:
+- 01_os/开发入口与单窗口任务规范_v1.md section 11 case 3 (a semantic adjudication is required)
+- current_model_v1.yml stop condition
+  a_new_load_bearing_choice_changes_what_is_authoritative_or_claimable
+- role_context constraint no_new_authority_or_claimability_semantics_without_foreground_return
+
+what_the_foreground_is_asked_to_rule:
+  question: >-
+    At window_contract_v1 selector [lifecycle, invalidation_conditions], are the child
+    keys instance_identity or declaration_name, and does that ruling belong in the
+    evaluator-owned structural_binding_v1.yml on this completion branch or upstream in
+    the accepted structural-provenance line?
+  why_the_executor_will_not_answer_it: >-
+    Either answer produces a passing v4 suite. That is precisely why the executor must
+    not pick one: a green suite would then be evidence of the executor's own choice
+    rather than of an adjudicated invariant, which is the false-green shape this task
+    exists to avoid.
+
+supportability_rationale: >-
+  The root cause is a single measured signature shared by all 14 failing tests and is
+  reproduced by reading the binding profile and both fixtures directly. No part of this
+  finding rests on inference about intent.
+
+feasibility_rationale: >-
+  Once the ruling exists, the remaining construction is a bounded edit to one
+  evaluator-owned file plus a re-run of the two existing suites. No new architecture,
+  no Stage01-03 rerun and no bulk merge are implied by either possible answer.
+
+residual_risk_or_unproved_limits:
+- This finding does not claim the ruling is the only remaining obstacle to a complete
+  correction-003 replacement; it claims it is the first blocking one reached.
+- The 14 failures were observed together, so a second latent cause hidden behind the
+  P00 short-circuit cannot be excluded until the position is bound.
+- Executor measurement only; not independent acceptance.
+
+next_owner: foreground_t2_completion_coordinator
+p2_2_state: not_started_gate_not_reached

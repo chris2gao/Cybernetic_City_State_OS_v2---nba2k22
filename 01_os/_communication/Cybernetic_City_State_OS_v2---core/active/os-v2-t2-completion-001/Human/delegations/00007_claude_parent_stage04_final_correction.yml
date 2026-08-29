@@ -1,0 +1,37 @@
+schema_version: citystate.communication.task_authority_delegation.v2
+task_id: os-v2-t2-completion-001
+task_authority_id: TA-os-v2-t2-completion-001-v1
+delegation_id: DEL-os-v2-t2-completion-001-claude-stage04-final-correction-001
+delegator_endpoint_id: gpt56-t2-completion-foreground-001
+delegator_task_role: foreground_t2_completion_coordinator
+recipient_endpoint_id: claude-cowork-t2-stage04-final-correction-executor-001
+recipient_task_role: parent_stage04_final_correction_executor
+authorized_actions:
+- correct_parent_stage04_successor_findings_SR001_SR002_from_review_04e7a7ba492e8e6037b150809e12cdb0e941d682
+- regenerate_stage04_freeze_and_result_pointer_for_final_successor_candidate
+- publish_exact_execution_results_on_authorized_task_branch
+- perform_task_scoped_local_git_recovery
+delegated_scope:
+- P2_2_provenance_audit
+- P2_2_receipt_binding
+- freeze_receipt_and_refreeze_report
+- exact_result_pointer_and_stage04_candidate_binding
+- durable_T2_completion_evidence
+- task_scoped_local_git_environment_recovery
+- task_branch_source_publication
+- formal_dispatch_and_review
+allow_redelegation: false
+Human_task_authority_ref: Human/task_authority_v2.yml
+granted: true
+revoked: false
+parent_delegation_ref: null
+execution_gate: >-
+  Use only after foreground accepts the formal reviewer-002 FIX_REQUIRED result at
+  04e7a7ba492e8e6037b150809e12cdb0e941d682. Begin only when the observed remote
+  implementation branch head is exact 8be63c167b16882cf0136d668c86e5e6796be30c.
+  Produce a forward successor and stop before self-acceptance.
+scope_boundary: >-
+  This delegation authorizes the second and final post-delivery correction round,
+  bounded to SR-001 and SR-002 plus deterministic evidence/refreeze consequences.
+  It does not authorize a third correction round, Stage01-03 rewrite, Stage05,
+  canonical implementation, master publication or history rewrite.

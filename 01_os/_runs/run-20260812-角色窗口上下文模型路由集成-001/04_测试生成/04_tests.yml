@@ -1,0 +1,850 @@
+schema_version: citystate.workflow.artifact.v1
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+stage_id: workflow_stage_04_test_generation
+artifact_kind: frozen_test_package
+artifact_version: 3
+status: complete
+
+artifact_version_history:
+  - artifact_version: 1
+    frozen_at: '2026-08-12'
+    freeze_receipt: 04_测试生成/freeze_receipt_v1.yml
+    test_package_sha256: d4fd85889a73e8dd313065e355290992cbf166fa6034420efe9f9c68974996e1
+    disposition: superseded_for_active_acceptance_retained_as_history
+  - artifact_version: 2
+    frozen_at: '2026-08-12'
+    freeze_receipt: 04_测试生成/freeze_receipt_v2.yml
+    test_content_changed: true
+    change: >-
+      Human-gated narrow correction round 1. Independent acceptance returned
+      FIX_REQUIRED with six blocking findings: an A11 clause omitted on a premise
+      contradicted by this branch's own tree, two overconstrained naming/mode
+      freezes, three lexical scans that rejected conforming representations, a
+      validator-probe topology that rejected a valid cross-mechanism composition,
+      and a Markdown role-table rule weaker than its YAML twin. RW-T08/T19/T25/
+      T34/T35/T36 rewritten, RW-T43 added, discovery made naming-neutral, probes
+      given a full dependency closure. 42 -> 43 tests.
+    authorization_ref: 04_测试生成/Stage04_Human窄修正授权_v1.yml
+    adjudication_ref: 04_测试生成/独立接收审核/Stage04冻结测试包独立接收裁决_v1.yml
+    entry_mode: explicit_reentry
+    disposition: superseded_for_active_acceptance_retained_as_history
+    test_package_sha256: 993658e84f7481d1c96fe48d074a3ef401831d05f5da44c38c28295874df3848
+  - artifact_version: 3
+    frozen_at: '2026-08-12'
+    freeze_receipt: 04_测试生成/freeze_receipt_v3.yml
+    test_content_changed: true
+    change: >-
+      Human-gated narrow correction round 2. The second independent acceptance
+      returned FIX_REQUIRED with six findings: four conforming representations
+      were rejected (disabled-suffix prohibitions, list-of-record entry modes,
+      YAML role applicability matrices) and two real violations passed (a
+      mapping-shaped normative provider pin, a Markdown definition-list second
+      model catalog), while the validator-probe dependency closure was shown to
+      be both history-heavy and incomplete. The crawler is deleted and the
+      probes now run the mechanism's own validator against the full candidate
+      tree. Test count unchanged at 43; the corrections are to judgement logic,
+      not to the behaviour surface.
+    authorization_ref: 04_测试生成/Stage04_Human窄修正授权_v2.yml
+    adjudication_ref: 04_测试生成/独立接收审核/v2/Stage04_v2独立接收裁决_v1.yml
+    entry_mode: explicit_reentry
+
+correction_round:
+  round: 2
+  closes:
+    - ST04-IR-001
+    - ST04-IR-002
+    - ST04-IR-003
+    - ST04-IR-004
+    - ST04-IR-005
+    - ST04-IR-006
+    - ST04-V2-IR-001
+    - ST04-V2-IR-002
+    - ST04-V2-IR-003
+    - ST04-V2-IR-004
+    - ST04-V2-IR-005
+    - ST04-V2-IR-006
+  round_1_closes_readjudicated_by_review: >-
+    The v2 review reconfirmed ST04-IR-003 as closed and carried the other five
+    forward as still-blocking in their v2 form. Round 2 closes both generations.
+  author_is_not_final_acceptor: true
+  fresh_independent_acceptance_required_before_stage05: true
+
+input_refs:
+  - stage_id: workflow_stage_01_requirement_modeling
+    path: 01_需求建模/requirement/A_需求建模_v1.yml
+    artifact_version: 1
+    sha256: 09c71ad815841bd67fc5aa771e8a3c5b1e0eba1950a6e9cdd1ef45034279cfbb
+  - stage_id: workflow_stage_02_information_collection
+    path: 02_信息收集与提炼/Stage02_证据结论_v1.yml
+    artifact_version: 1
+    sha256: cb0a8cb56bc2a8bcd9cd4261dc9454bf21bd73dc16c7650970d27655d2cfb3d5
+  - stage_id: workflow_stage_03_result_modeling
+    path: 03_结果建模/B_结果模型_v1.yml
+    artifact_version: 1
+    sha256: 47c1dc0fca495d805c3b02f316dce134d6b46c5c407c212e4339e1bef5cb9ddc
+
+supporting_refs:
+  - path: 01_需求建模/requirement/人类确认_v1.yml
+    sha256: a22453ef0b310f0620799b530bcf5bdcec0638cd15c94f0d4bbd0a0922ee734a
+  - path: 02_信息收集与提炼/evidence/证据索引_v1.yml
+    sha256: eed563f23d78d88ed770849cd1b28dbf0424fbd568ccefae809626dd11f3a734
+  - path: 04_测试生成/Stage04_窄修正派单_v2.md
+    sha256: e4ee87064790cfdae9dd2d64024bac047ceeef57a914d8d517976d0f9b9de22b
+  - path: 04_测试生成/Stage04_Human窄修正授权_v1.yml
+    sha256: 543f811ef5650be525f17a9df70b20e1f6e8961f330387bbe5b170577fa9e4d3
+  - path: 04_测试生成/Stage04_FIX_REQUIRED接收与Human窄修正提案_v1.yml
+    sha256: e31d6179faedaacfe0c4f372c1e0d2b0bb83d21d3f6a62c71d75031c20001073
+  - path: 04_测试生成/独立接收审核/Stage04冻结测试包独立接收裁决_v1.yml
+    sha256: f8a062234d3931027beacabf2c0c2116715e0d299400065b3a7441fa91cbc199
+  - path: 04_测试生成/freeze_receipt_v1.yml
+    sha256: c17c76895c89c4aaf72e97890c5ea95b2e44e536f77dba42fd33f2bedda40154
+  - path: 04_测试生成/Stage04_第二轮窄修正派单_v3.md
+    sha256: 94907da8b3bbc549d9254e4d3606e18a74be1341ac0ecb4503aed09c2c8f6671
+  - path: 04_测试生成/Stage04_Human窄修正授权_v2.yml
+    sha256: a2db83e16384670bace4500618cbe58c0ce2eb2245f1628ca0a08a9c2ce8e15f
+  - path: 04_测试生成/Stage04_v2_FIX_REQUIRED接收与Human窄修正提案_v1.yml
+    sha256: 6461ecbd2c4555d6a78b4802cb5b8dcc4b4be9e5573bcd4c0e0a04a70c1f48cd
+  - path: 04_测试生成/独立接收审核/v2/Stage04_v2独立接收裁决_v1.yml
+    sha256: da894d6283512125099ac66a8c46faa2323e051ad25bd3bad7f04864566966e8
+  - path: 04_测试生成/独立接收审核/v2/independent_variant_probe_results_v1.json
+    sha256: efef015570d4ea6dbbc579e11e1d2c8f087bfd7840f92d907880bbbdf5be1249
+  - path: 04_测试生成/freeze_receipt_v2.yml
+    sha256: 5e8cbda40bf6b8a82735eb2955d10e9664db0cab2d3945c878e5fd6a26341866
+
+deliberation_receipt:
+  mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
+  activation_state: active_dormant
+  profile_id: workflow_stage_04_test_generation
+  route: dormant
+  receipt_status: valid
+  session_id: null
+  task_gate_ref: null
+  Human_authorization_ref: 04_测试生成/Stage04_Human窄修正授权_v2.yml
+
+credential_selection_record:
+  adjudicator: Stage 04 independent test designer, correction round 2 (Claude Opus 5, Cowork desktop surface)
+  reasoning_setting: not_exposed
+  entry_mode: explicit_reentry
+  date: '2026-08-12'
+  independence: >-
+    Same session that produced artifact_version 1 and 2, re-entered explicitly
+    and re-reading task, head and authorization facts from the remote rather
+    than from conversational continuity. This author is not the final acceptor;
+    a fresh independent session must review the corrected package. Two
+    independent OpenAI/Codex reviews have already overturned this author's own
+    completeness judgement, which is the reason the gate exists.
+  measurement_choice: >-
+    Static structure and contract checks decided deterministically by
+    实现/verify_stage04_acceptance.py. Six checks execute the mechanism's own
+    declared validator against the FULL candidate tree and require exit 0 before
+    the injected defect and non-zero after it. The dependency crawler used by
+    artifact_version 2 is deleted, not improved.
+  tolerance: >-
+    Zero tolerance; all 43 checks are binary. The normalized digest uses the same
+    normalization as
+    01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py.
+
+method_qualification:
+  testability: every check runs on an arbitrary tree and returns a binary result
+  peer_review: >-
+    artifact_version 1 and artifact_version 2 were each independently reviewed by
+    an OpenAI/Codex session and each returned FIX_REQUIRED. This third package has
+    not been reviewed; a fresh independent acceptance is a hard gate before Stage 05.
+  known_error_rate: >-
+    Mutation kill rate 47/47 and conforming-variant pass rate 14/14. Neither is a
+    completeness claim, and the history says so plainly: v1 reported 42/42 and was
+    overturned on six findings; v2 reported 43/43 plus 9/9 conforming and was
+    overturned on six more. Four of the v2 findings were false positives that no
+    mutation can expose and two were false negatives that no conforming variant
+    can expose, so both sample classes had to be extended adversarially.
+  operating_standard: 实现/verify_stage04_acceptance.py subcommands package / acceptance / selftest
+
+frozen_contract_surface:
+  note: >-
+    Neither the mechanism directory name, nor canonical filenames, nor field
+    names, nor schema_version naming, nor the number of contract documents, nor
+    the existence of a third entry mode is frozen.
+  mechanism_parent: 01_os/03_mechanisms
+  discovery_rule: >-
+    exactly one directory under 01_os/03_mechanisms whose documents cover the
+    role, window and handoff contract kinds, established either by a descriptive
+    declaration in its boot manifest or registry, or by document content.
+    Content evidence takes precedence over descriptive wording.
+  discovery_is_naming_neutral: true
+  pointer_convention:
+    boot: 01_os/02_boot/<mechanism>/
+    registry: 01_os/05_registry/<mechanism>_v*.yml
+    execution_loader: 01_os/06_execution/boot/<mechanism>/
+  validator_cli_convention: <validator> static <tree_root>
+  validator_probe_environment: full boot-declared dependency closure
+  publisher_authority_baseline_sha256: ae9abdf5d729550511de857511a73d36c53f5d52d76e9f57c77b23ad19c29c1a
+
+pre_implementation_check:
+  constraints_satisfiable: true
+  evidence: >-
+    fixtures/overlay/** plus fixtures/overlay_edits_v1.yml turns the current tree
+    from 4/43 to 43/43, and all nine conforming variants of that overlay stay at
+    43/43.
+  boundary_overreach:
+    - claim: RW-T06 requires editing a context_management-owned boot manifest
+      disposition: >-
+        Retained. Independent review confirmed RW-T06 valid. Stage 05/06 must
+        include 01_os/02_boot/context_management/启动清单_v1.yml in
+        allowed_changed_paths.
+    - claim: B02 names specific canonical filenames
+      disposition: not frozen; the conforming overlay uses different names throughout
+    - claim: B05 names a forked_successor entry mode
+      disposition: >-
+        not frozen after ST04-IR-002; a third mode is optional and may carry any
+        name, but if present must keep its own identity.
+    - claim: B12 places window/handoff instances under a run subtree
+      disposition: not frozen; A does not constrain the instance path
+
+corrected_from_v1:
+  - test_id: RW-T08
+    closes: [ST04-IR-002]
+    change: exact `forked_successor` token requirement replaced by fresh/reentry separability plus optional-successor semantics
+  - test_id: RW-T19
+    closes: [ST04-IR-004]
+    change: provider scan narrowed from every scalar to normative binding keys, excluding provenance
+  - test_id: RW-T25
+    closes: [ST04-IR-004]
+    change: prohibition declarations accepted in list, mapping and suffix forms
+  - test_id: RW-T34
+    closes: [ST04-IR-004]
+    change: polarity-aware; a negated key name asserts the prohibition instead of enabling it
+  - test_id: RW-T35
+    closes: [ST04-IR-004]
+    change: same polarity fix for quota and entitlement keys
+  - test_id: RW-T36
+    closes: [ST04-IR-004]
+    change: same polarity fix for retention and continuation keys
+  - test_id: RW-T31
+    closes: [ST04-IR-006]
+    change: Markdown role-table rule now requires normative per-role attributes, matching YAML
+  - test_id: RW-T05
+    closes: [ST04-IR-006]
+    change: same Markdown correction on the wider active surface
+  - test_id: RW-T43
+    closes: [ST04-IR-001]
+    change: new; the A11 model-catalog thinness clause omitted by v1
+  - test_id: RW-T37
+    closes: [ST04-IR-005]
+    change: probe now stages the full boot-declared dependency closure
+  - test_id: RW-T38
+    closes: [ST04-IR-005]
+    change: same closure fix
+  - test_id: RW-T39
+    closes: [ST04-IR-005]
+    change: same closure fix
+  - test_id: RW-T40
+    closes: [ST04-IR-005]
+    change: same closure fix
+  - test_id: RW-T41
+    closes: [ST04-IR-005]
+    change: same closure fix
+  - test_id: RW-T42
+    closes: [ST04-IR-005]
+    change: same closure fix
+  - test_id: RW-T01
+    closes: [ST04-IR-003]
+    change: discovery no longer keys on exact schema-version document-kind substrings
+  - test_id: RW-T02
+    closes: [ST04-IR-003]
+    change: role document resolved by naming-neutral discovery
+  - test_id: RW-T24
+    closes: [ST04-IR-003]
+    change: handoff document resolved by naming-neutral discovery
+
+not_covered_by_this_package:
+  - item: runtime window behaviour
+    reason: no executable window runtime exists before Stage 06; such assertions cannot fail honestly at freeze time
+  - item: real host-session freshness
+    reason: not machine observable; only the disclosure requirement is frozen (RW-T23)
+  - item: window and handoff instance storage location
+    reason: A does not constrain it
+  - item: completeness of the mechanism and boot index READMEs
+    reason: pre-existing drift unrelated to T2; RW-T30 is scoped to the T2 mechanism only
+
+findings:
+  - id: F1
+    statement: >-
+      v1 的设计说明以"入口 §7.1 仍有完整模型档位表"为由跳过 A11 catalog thinness。该前提
+      在本任务分支上不成立——它读的是另一个 worktree 上的旧版 §7.1。本轮已在 T2 worktree
+      重新实测，§7.1 已是薄的模型路由 preflight，A11 检查补为 RW-T43，在当前仓库为绿。
+    blocking: false
+  - id: F2
+    statement: >-
+      修正过程中自身踩到一次同类缺陷：naming-neutral 发现的第一版把 boot/registry 条目的
+      path 值也拼进描述性 blob，目录名 window_role_binding 里的 role/window 让每个文件都
+      自称是角色契约与窗口契约，43 条中 15 条静默绑错文档。已修为只取描述性键并丢弃含
+      "/" 的 token，并加入内容优先规则。记录在此以免同一形状再犯。
+    blocking: false
+  - id: F3
+    statement: >-
+      `preferred_provider` 曾因含有子串 "ref" 被 provenance 排除规则误放行，M19 存活。
+      provenance 的 ref 现按整段匹配。裸子串匹配是 T1 MR-T25 已经付过一次学费的形状。
+    blocking: false
+  - id: F4
+    statement: >-
+      B13 未规定 composition validator 调用既有 validator 的语义。本包只要求 T2 自带
+      validator 对六类缺陷 fail closed，并要求既有三个 validator 仍退出 0；不冻结
+      "必须调用"这一实现选择。
+    blocking: false
+  - id: F5
+    statement: 未发现 B 的 claim 与 Stage 02 已接受证据矛盾。
+    blocking: false
+
+payload:
+  frozen: true
+  freeze_authorization_ref: 04_测试生成/Stage04_Human窄修正授权_v1.yml@dev/os-v2-role-window-context-model-routing-integration-001
+  test_package_sha256: 3567d3409c181efd970bdeeab1952c9a2c37419b8f8401d63097653ea5781e9f
+  counts:
+    positive: 17
+    negative: 17
+    boundary: 9
+    total: 43
+  tests:
+    - test_id: RW-T01
+      kind: positive
+      title: a single role/window composition mechanism exists and is self-describing
+      success_criterion_ids: [A01, A10]
+      evidence_claim_ids: [E-001, E-006, I09]
+      closes: [ST04-IR-003]
+      measurement: >-
+        exactly one directory under 01_os/03_mechanisms covers the role, window
+        and handoff contract kinds, established by descriptive declaration in its
+        boot manifest or registry, or by document content, and carries a README.
+      pass_condition: exactly one such directory, README present
+      can_fail: true
+      fails_when: the composition lives inside workflow or the entry spec, or more than one candidate exists
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T02
+      kind: positive
+      title: role contract registers the real project roles A requires
+      success_criterion_ids: [A01]
+      evidence_claim_ids: [E-006, I03]
+      closes: [ST04-IR-003]
+      measurement: at least five structured role entries covering all five A R01 role concepts, matched by concept not literal id
+      pass_condition: all five A R01 role concepts are registered
+      can_fail: true
+      fails_when: a role is dropped or a new backend executor role replaces the existing one
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T03
+      kind: positive
+      title: every role entry declares responsibility, independence, handoff and authority limits
+      success_criterion_ids: [A01]
+      evidence_claim_ids: [E-006]
+      measurement: each role entry's key set covers the four A R01 properties by concept
+      pass_condition: no role entry is missing any of the four
+      can_fail: true
+      fails_when: a role is registered as a bare label with no declared constraints
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T04
+      kind: negative
+      title: role metadata cannot grant publisher, filesystem, security or Human-gated authority
+      success_criterion_ids: [A13, A01]
+      evidence_claim_ids: [E-006, I01]
+      measurement: polarity-aware scan for enabled authority-granting keys, plus a required declaration that the contract's authority effect is none
+      pass_condition: no enabled grant key, and authority declared none
+      can_fail: true
+      fails_when: a role entry carries an enabled publication or filesystem grant
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T05
+      kind: negative
+      title: no second canonical role source outside the composition mechanism
+      success_criterion_ids: [A01, A11]
+      evidence_claim_ids: [E-006, I01, I08]
+      closes: [ST04-IR-006, ST04-V2-IR-004]
+      measurement: >-
+        scan the active surface for a table keyed by three or more role concepts
+        whose entries also carry normative per-role attributes. Markdown and YAML
+        use the same dual condition.
+      pass_condition: no such table outside the mechanism directory
+      can_fail: true
+      fails_when: the working discipline or a workflow README keeps its own normative role table
+      baseline_2026_08_12: fail
+      false_positive_boundary: >-
+        A role-keyed applicability table with no normative per-role attribute
+        column is not a role source; conforming variant C06 proves it stays green.
+      vacuous_on_empty_tree: true
+
+    - test_id: RW-T06
+      kind: negative
+      title: context_management boot does not carry an active role source
+      success_criterion_ids: [A01, A10]
+      evidence_claim_ids: [I02, I03, E-007]
+      measurement: every load_order entry of the context boot manifest whose declared purpose names a role must point inside the composition mechanism
+      pass_condition: no foreign role source in the context boot manifest
+      can_fail: true
+      fails_when: context_management keeps loading a _dev role decision as an active source
+      baseline_2026_08_12: fail
+      retained_by_independent_review: true
+
+    - test_id: RW-T07
+      kind: positive
+      title: window contract defines a project-level window identity bound to task facts
+      success_criterion_ids: [A02]
+      evidence_claim_ids: [E-002, E-004]
+      measurement: the window contract binds window_id, task_id, run_id, role, stage/step, repository head or branch, and declares a uniqueness scope
+      pass_condition: all seven bindings present
+      can_fail: true
+      fails_when: the window identity is not bound to the task facts that make it reconstructable
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T08
+      kind: positive
+      title: fresh and reentry are separately defined, and any further mode keeps its own identity
+      success_criterion_ids: [A02, A03]
+      evidence_claim_ids: [E-003]
+      closes: [ST04-IR-002, ST04-V2-IR-002]
+      measurement: >-
+        fresh and reentry must both be declared. A third mode is optional; if one
+        exists it must declare its own window identity and name the window it
+        descends from.
+      pass_condition: fresh and reentry separable; any further mode does not impersonate reentry
+      can_fail: true
+      fails_when: an additional mode carries no identity of its own and behaves as reentry
+      baseline_2026_08_12: fail
+      false_positive_boundary: >-
+        Absence of a third mode is conforming (C08) and so is a differently named
+        one (C09). A rename alone is no longer a defect.
+
+    - test_id: RW-T09
+      closes: [ST04-V2-IR-002]
+      kind: positive
+      title: formal reentry requires an exact predecessor window identity
+      success_criterion_ids: [A02, A05]
+      evidence_claim_ids: [E-002, E-003]
+      measurement: the reentry mode block declares a predecessor window id as required and requires an exact match
+      pass_condition: predecessor declared required and exact
+      can_fail: true
+      fails_when: reentry accepts a window without naming the exact predecessor
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T10
+      kind: negative
+      title: latest or most-recent session is rejected as a formal window identity
+      success_criterion_ids: [A02, A05]
+      evidence_claim_ids: [E-003]
+      measurement: any latest/most-recent pointer must be marked prohibited or discovery-only and must never be an identity field
+      pass_condition: explicitly rejected, never enabled
+      can_fail: true
+      fails_when: the convenience continue pointer is treated as identity
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T11
+      kind: boundary
+      title: host session identity may be not_observable and is never required
+      success_criterion_ids: [A02, A08]
+      evidence_claim_ids: [E-003]
+      measurement: not_observable is a declared legal value and no host session id field is mandatory
+      pass_condition: optional with an explicit not_observable disposition
+      can_fail: true
+      fails_when: the contract demands a provider-specific session id that cannot be produced
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T12
+      kind: positive
+      title: window lifecycle declares its states and deterministic invalidation
+      success_criterion_ids: [A03]
+      evidence_claim_ids: [E-003, E-004]
+      measurement: lifecycle covers entered, active, handoff_ready, closed and stale, and declares invalidation conditions
+      pass_condition: five states plus invalidation
+      can_fail: true
+      fails_when: staleness has no deterministic trigger
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T13
+      kind: positive
+      title: window binds context_management by pointer, with fingerprints and stale receipt
+      success_criterion_ids: [A04, A05, A10]
+      evidence_claim_ids: [E-004, E-007, I02]
+      measurement: the window contract names context_management and binds entry/refs, fingerprints and stale state
+      pass_condition: all four bindings present
+      can_fail: true
+      fails_when: context is bound as free text with no mechanism pointer
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T14
+      kind: negative
+      title: the composition mechanism does not restate context_management policy
+      success_criterion_ids: [A10]
+      evidence_claim_ids: [E-007, I02]
+      measurement: no document inside the mechanism claims a context_management schema token or copies its policy keys
+      pass_condition: no duplicated context semantics
+      can_fail: true
+      fails_when: the composition layer grows its own copy of the layout or lifecycle contract
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T15
+      kind: negative
+      title: no silent fallback to full run history or old chat
+      success_criterion_ids: [A04, A05]
+      evidence_claim_ids: [E-004, E-005, I08]
+      measurement: historical preload and chat-as-source are named and prohibited, and no preload key is enabled
+      pass_condition: prohibition stated, nothing enabled
+      can_fail: true
+      fails_when: the mechanism is silent about history, or enables a default preload
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T16
+      kind: positive
+      title: role and task requirements are translated into model_routing's declared inputs
+      success_criterion_ids: [A06]
+      evidence_claim_ids: [E-008, I04, I05]
+      measurement: read model_routing's own required inputs from its live contract and require the composition layer to produce every one of them
+      pass_condition: full input parity with the live routing contract
+      can_fail: true
+      fails_when: the composition layer invents its own routing inputs or bypasses model_routing
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T17
+      kind: positive
+      title: a routed window binds a route receipt with the fields A R07 requires
+      success_criterion_ids: [A07]
+      evidence_claim_ids: [E-008, I04]
+      measurement: the receipt covers version, loaded paths/validator, surface, model, profile, basis, evidence, limitations, availability and authority
+      pass_condition: all ten properties present
+      can_fail: true
+      fails_when: a window records only the chosen model without the evidence that justified it
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T18
+      kind: negative
+      title: route authority is constant routing_only and never alters task authority
+      success_criterion_ids: [A07, A13]
+      evidence_claim_ids: [E-008, I04]
+      measurement: routing_only is asserted, no authority field escalates, and no task-authority field is written by the composition
+      pass_condition: authority constant held, no task-authority mutation
+      can_fail: true
+      fails_when: a route or window is allowed to widen allowed_changed_paths or risk tier
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T19
+      kind: negative
+      title: role architecture pins no provider in a normative binding
+      success_criterion_ids: [A06, A08]
+      evidence_claim_ids: [E-006, E-008]
+      closes: [ST04-IR-004, ST04-V2-IR-003]
+      measurement: >-
+        only normative selection keys are scanned for provider tokens; provenance,
+        evidence and citation fields are excluded, and `ref` is matched as a whole
+        segment so that `preferred_provider` is not mistaken for a reference field.
+      pass_condition: no provider token in a normative role binding
+      can_fail: true
+      fails_when: a role entry pins a vendor instead of passing a routing constraint
+      baseline_2026_08_12: fail
+      false_positive_boundary: >-
+        A provenance block naming vendors as compared prior art stays green;
+        conforming variant C05 proves it.
+
+    - test_id: RW-T20
+      kind: boundary
+      title: an unrouted or receipt-less window is not silently accepted
+      success_criterion_ids: [A07, A12]
+      evidence_claim_ids: [E-008]
+      measurement: the window contract declares a fail-closed disposition tied to the receipt
+      pass_condition: fail-closed declared
+      can_fail: true
+      fails_when: a missing receipt degrades to a warning
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T21
+      kind: positive
+      title: review and implementation windows must be distinct project windows
+      success_criterion_ids: [A08]
+      evidence_claim_ids: [E-006, I01]
+      measurement: the mechanism expresses independence and requires the review window to differ from the implementation window
+      pass_condition: both expressed
+      can_fail: true
+      fails_when: self-review in the same window is merely discouraged
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T22
+      kind: positive
+      title: different_model_family is a routing constraint, not a vendor in role architecture
+      success_criterion_ids: [A08, A06]
+      evidence_claim_ids: [E-006, E-008]
+      measurement: model-family independence is declared and delivered as a routing constraint; the role contract pins no family
+      pass_condition: expressed as a constraint, no family pinned in roles
+      can_fail: true
+      fails_when: the reviewer's model family is written into the role architecture
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T23
+      kind: boundary
+      title: host session freshness is disclosed, not claimed as proof
+      success_criterion_ids: [A08]
+      evidence_claim_ids: [E-003, I01]
+      measurement: a disclosure/assertion representation exists and no freshness field is described as proven or verified
+      pass_condition: disclosed, never claimed as technical proof
+      can_fail: true
+      fails_when: the mechanism asserts it can prove a hidden provider session was fresh
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T24
+      kind: positive
+      title: handoff contract carries the fields A R09 requires
+      success_criterion_ids: [A09]
+      evidence_claim_ids: [E-005, E-009]
+      closes: [ST04-IR-003]
+      measurement: the handoff covers from-window, task, from-role, next-role, outputs, blockers, exact refs, invalidation and authority boundary
+      pass_condition: all nine properties present
+      can_fail: true
+      fails_when: the handoff degenerates into a prose summary
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T25
+      kind: negative
+      title: handoff prohibits private reasoning and delivery/acceptance state
+      success_criterion_ids: [A09]
+      evidence_claim_ids: [E-009, I06]
+      closes: [ST04-IR-004, ST04-V2-IR-001]
+      measurement: >-
+        prohibition declarations are read in list, mapping and `<field>_prohibited`
+        suffix form; A does not constrain the representation.
+      pass_condition: private reasoning and delivery/read/acceptance state both prohibited
+      can_fail: true
+      fails_when: the handoff becomes a transcript carrier or a delivery-state store
+      baseline_2026_08_12: fail
+      false_positive_boundary: conforming variant C04 expresses the same prohibitions as a mapping and stays green
+
+    - test_id: RW-T26
+      kind: negative
+      title: handoff does not imply automatic delivery, acceptance or progression
+      success_criterion_ids: [A09, A14]
+      evidence_claim_ids: [E-010, I07]
+      measurement: the contract states it does not progress the task by itself, and no autonomy key is enabled
+      pass_condition: declared and nothing enabled
+      can_fail: true
+      fails_when: writing a handoff is treated as delivering it
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T27
+      kind: negative
+      title: communication_system transport stays separable from window handoff
+      success_criterion_ids: [A09, A10]
+      evidence_claim_ids: [E-009, I06]
+      measurement: no window lifecycle field enters the message contract, and the handoff states its relation to communication_system
+      pass_condition: message contract unchanged, relation declared
+      can_fail: true
+      fails_when: the message schema is extended into a live window store
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T28
+      kind: positive
+      title: boot manifest, registry and execution loader pointers exist and resolve
+      success_criterion_ids: [A12, A10]
+      evidence_claim_ids: [I09, I02, I04]
+      measurement: the three convention pointers exist and every declared boot path, validator and registry resolves on disk
+      pass_condition: all pointers resolve
+      can_fail: true
+      fails_when: the mechanism is added without a boot, registry or loader surface
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T29
+      kind: positive
+      title: the mechanism registry declares failure surfacing for every entry
+      success_criterion_ids: [A12]
+      evidence_claim_ids: [I09]
+      measurement: every registry entry carries all nine required fields and the mechanism directory is covered
+      pass_condition: nine fields on every entry
+      can_fail: true
+      fails_when: a mechanism whose breakage is silent is registered without saying when it surfaces
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T30
+      kind: positive
+      title: the mechanism index lists the composition mechanism
+      success_criterion_ids: [A10, A11]
+      evidence_claim_ids: [I09]
+      measurement: the mechanism index mentions the discovered mechanism name
+      pass_condition: mentioned
+      can_fail: true
+      fails_when: a mechanism exists on disk but is invisible from the index
+      baseline_2026_08_12: fail
+      scope_note: only the T2 mechanism is required; index completeness is pre-existing drift, not a T2 defect
+
+    - test_id: RW-T31
+      kind: negative
+      title: workflow and the development entry keep no second role source or context policy
+      success_criterion_ids: [A11]
+      evidence_claim_ids: [E-006, I08]
+      closes: [ST04-IR-006, ST04-V2-IR-004]
+      measurement: no normative role table and no duplicated context boot schema under the workflow tree or the entry spec
+      pass_condition: neither present
+      can_fail: true
+      fails_when: a workflow stage grows its own normative role table
+      baseline_2026_08_12: pass
+      false_positive_boundary: role-keyed applicability tables without normative attributes stay green (C06)
+      vacuous_on_empty_tree: true
+
+    - test_id: RW-T32
+      kind: positive
+      title: existing context, model and communication validators still pass
+      success_criterion_ids: [A10]
+      evidence_claim_ids: [I02, I04, I06]
+      measurement: run all three declared validators against the tree and require exit 0
+      pass_condition: three zero exits
+      can_fail: true
+      fails_when: the composition breaks a mechanism it was supposed to only reference
+      baseline_2026_08_12: pass
+
+    - test_id: RW-T33
+      kind: negative
+      title: publisher authority is byte-identical to the Stage 04 baseline
+      success_criterion_ids: [A13]
+      evidence_claim_ids: [I01, I08]
+      measurement: sha256 of the publisher authority registry equals the frozen baseline
+      pass_condition: byte identity
+      can_fail: true
+      fails_when: Stage 05/06 edits publication authority while implementing a routing layer
+      baseline_2026_08_12: pass
+
+    - test_id: RW-T34
+      kind: negative
+      title: no scheduler, watcher, daemon or automatic progression is enabled
+      success_criterion_ids: [A14, A03]
+      evidence_claim_ids: [E-010, I07]
+      closes: [ST04-IR-004]
+      measurement: >-
+        polarity-aware positional scan of the mechanism, its boot manifest and its
+        registry; the boot manifest must declare its autonomy posture.
+      pass_condition: nothing enabled, posture declared
+      can_fail: true
+      fails_when: window lifecycle acquires a background runner
+      baseline_2026_08_12: fail
+      false_positive_boundary: >-
+        `automatic_task_progression_prohibited: true` asserts the prohibition and
+        stays green; conforming variant C03 proves it.
+
+    - test_id: RW-T35
+      kind: negative
+      title: no automated quota or account probing is enabled
+      success_criterion_ids: [A14]
+      evidence_claim_ids: [E-010, I04]
+      closes: [ST04-IR-004]
+      measurement: polarity-aware positional scan for enabled quota, entitlement or account-probe keys
+      pass_condition: nothing enabled
+      can_fail: true
+      fails_when: availability is resolved by probing instead of by Human override
+      baseline_2026_08_12: fail
+      false_positive_boundary: "`quota_probe_prohibited: true` stays green (C03)"
+
+    - test_id: RW-T36
+      kind: negative
+      title: no T3 retention or T4 autonomous-continuation semantics is enabled
+      success_criterion_ids: [A03, A14]
+      evidence_claim_ids: [E-004]
+      closes: [ST04-IR-004]
+      measurement: polarity-aware positional scan for enabled retention, archive-policy, long-running or autonomous-continuation keys
+      pass_condition: nothing enabled
+      can_fail: true
+      fails_when: T2 absorbs the roadmap items A puts out of scope
+      baseline_2026_08_12: fail
+      false_positive_boundary: "`retention_policy_disabled: true` stays green (C03)"
+
+    - test_id: RW-T37
+      kind: boundary
+      title: mechanism validator fails closed on an unknown role reference
+      success_criterion_ids: [A12]
+      evidence_claim_ids: [E-006, E-002]
+      closes: [ST04-IR-005, ST04-V2-IR-006]
+      measurement: >-
+        stage the mechanism and its full boot-declared dependency closure, require
+        the declared validator to exit 0 unmutated, inject an unresolvable role
+        reference, require a non-zero exit.
+      pass_condition: zero before, non-zero after
+      can_fail: true
+      fails_when: an unknown role is accepted at boot instead of surfacing
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T38
+      kind: boundary
+      title: mechanism validator fails closed on a lost window-identity uniqueness rule
+      success_criterion_ids: [A12, A02]
+      evidence_claim_ids: [E-002, E-004]
+      closes: [ST04-IR-005, ST04-V2-IR-006]
+      measurement: remove the identity uniqueness declaration in the closure and require a non-zero exit
+      pass_condition: zero before, non-zero after
+      can_fail: true
+      fails_when: window identity uniqueness is documentation only
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T39
+      kind: boundary
+      title: mechanism validator fails closed on an invalid reentry
+      success_criterion_ids: [A12, A05]
+      evidence_claim_ids: [E-002, E-003]
+      closes: [ST04-IR-005, ST04-V2-IR-006]
+      measurement: rebind reentry to a latest-session pointer and require a non-zero exit
+      pass_condition: zero before, non-zero after
+      can_fail: true
+      fails_when: latest-session reentry passes validation
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T40
+      kind: boundary
+      title: mechanism validator fails closed on a broken declared pointer
+      success_criterion_ids: [A12]
+      evidence_claim_ids: [I09]
+      closes: [ST04-IR-005, ST04-V2-IR-006]
+      measurement: point the boot registry at a non-existent path and require a non-zero exit
+      pass_condition: zero before, non-zero after
+      can_fail: true
+      fails_when: a broken pointer is silent until misuse
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T41
+      kind: boundary
+      title: mechanism validator fails closed on an authority escalation attempt
+      success_criterion_ids: [A12, A13]
+      evidence_claim_ids: [E-006]
+      closes: [ST04-IR-005, ST04-V2-IR-006]
+      measurement: give a role entry an enabled master-write grant and require a non-zero exit
+      pass_condition: zero before, non-zero after
+      can_fail: true
+      fails_when: the authority barrier is enforced only by this outer package and not by the mechanism itself
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T42
+      kind: boundary
+      title: mechanism validator fails closed on a missing route receipt binding
+      success_criterion_ids: [A12, A07]
+      evidence_claim_ids: [E-008]
+      closes: [ST04-IR-005, ST04-V2-IR-006]
+      measurement: empty the route receipt's required-field set and require a non-zero exit
+      pass_condition: zero before, non-zero after
+      can_fail: true
+      fails_when: a window without a routing receipt boots successfully
+      baseline_2026_08_12: fail
+
+    - test_id: RW-T43
+      kind: negative
+      title: workflow and the development entry keep no second mutable model catalog
+      success_criterion_ids: [A11, A10]
+      evidence_claim_ids: [E-008, I04, I05, I08]
+      closes: [ST04-IR-001, ST04-V2-IR-005]
+      measurement: >-
+        read the live catalog's own model identifiers from the mechanism, then
+        reject any workflow or entry document that restates three or more of them
+        as structured entries, or that claims the catalog schema itself. Pointers,
+        validator invocation and receipt field references are explicitly allowed.
+      pass_condition: no duplicated catalog under workflow or the entry spec
+      can_fail: true
+      fails_when: a workflow stage or the entry grows its own model tier table
+      baseline_2026_08_12: pass
+      false_positive_boundary: >-
+        A thin pointer plus receipt field names is exactly what A11 asks for;
+        conforming variant C07 proves it stays green. Identifiers are read from
+        the tree under test, so the check follows the live catalog rather than a
+        hard-coded model list.
+      premise_correction: >-
+        v1 omitted this check on the stated premise that the entry still carried
+        the old model tier table. That premise was measured on a different
+        worktree; on this task branch the entry is already thin.

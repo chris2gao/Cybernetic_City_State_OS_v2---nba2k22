@@ -1,0 +1,46 @@
+schema_version: citystate.stage04.overlay_edits.v1
+task_id: os-v2-role-window-context-model-routing-integration-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+purpose: >-
+  The good tree is "the current repository plus a conforming T2 delta". New
+  files live in fixtures/overlay/**; the three edits to files that already exist
+  live here, so the fixture does not carry a second copy of a 300-line canonical
+  document that would silently drift from the real one.
+applies_after: fixtures/overlay/**
+edits:
+  - edit_id: X01
+    file: AGENT_WORKING_DISCIPLINE.md
+    rationale: >-
+      A11/A01. The working discipline keeps the boundary rules and drops the
+      second mutable role table; the canonical table moves to the mechanism.
+    operation: replace
+    find: |
+      | Role | Produces |
+      |:--|:--|
+      | Foreground: dispatch, adjudication, verification | Task packets, verdicts, decision records |
+      | Backend execution | Changed files, exit codes, one consolidated handoff |
+      | Independent review | Accept / reject with the evidence it rests on |
+      | Analysis and design discussion | Options, trade-offs, failure modes |
+      | Deep research | Sourced material and a first synthesis |
+      | Closed-corpus refinement | Citation-grounded comparison across supplied sources |
+    replace: |
+      The canonical role table is
+      `01_os/03_mechanisms/window_role_binding/roles_v1.yml`. This file keeps the
+      boundary discipline and the routing rules below; it does not maintain a
+      second copy of the roles.
+  - edit_id: X02
+    file: 01_os/02_boot/context_management/启动清单_v1.yml
+    rationale: >-
+      A01. context_management stops carrying an active role source; the role
+      decision it used to point at is absorbed by the role contract.
+    operation: replace
+    find: "  - path: 01_os/_dev/决定_谁执行_v0.2.md\n    purpose: 活动 D2 执行角色与边界裁决\n"
+    replace: ""
+  - edit_id: X03
+    file: 01_os/03_mechanisms/README.md
+    rationale: A11/A10. The mechanism index points at the new mechanism.
+    operation: append
+    append: |
+
+      - `window_role_binding/`：角色契约、正式工作窗口身份与结构化交接的组合机制；
+        以 pointer 引用 `context_management` 与 `model_routing`，authority 恒为 none。

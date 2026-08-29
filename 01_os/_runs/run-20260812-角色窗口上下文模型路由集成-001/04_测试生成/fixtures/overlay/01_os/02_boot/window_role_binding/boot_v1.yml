@@ -1,0 +1,26 @@
+schema_version: window_role_binding.boot_manifest.v1
+mechanism_version: 1
+failure_policy: fail_closed_on_missing_partial_or_stale
+load_order:
+  - path: 01_os/03_mechanisms/window_role_binding/README.md
+    purpose: mechanism boundary and Human-facing navigation
+  - path: 01_os/03_mechanisms/window_role_binding/roles_v1.yml
+    purpose: provider-independent canonical role contract
+  - path: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+    purpose: formal working window identity, lifecycle and bindings
+  - path: 01_os/03_mechanisms/window_role_binding/handoff_v1.yml
+    purpose: structured cross-window handoff contract
+validator: 01_os/03_mechanisms/window_role_binding/impl/check_binding.py
+registry: 01_os/05_registry/window_role_binding_v1.yml
+invocation: explicit_Human_or_authorized_task_executor_only
+background_processes_started: false
+automatic_window_spawn: false
+automatic_handoff_delivery: false
+automatic_task_progression: false
+canonical_live_state_created_by_boot: false
+receipt_required:
+  - mechanism_version
+  - loaded_paths
+  - validator_exit_code
+  - window_id
+  - entry_mode

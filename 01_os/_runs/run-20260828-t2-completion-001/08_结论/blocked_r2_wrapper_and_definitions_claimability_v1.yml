@@ -1,0 +1,118 @@
+schema_version: citystate.run_blocked_finding.v1
+finding_id: T2-COMPLETION-BLK-002
+run_id: run-20260828-t2-completion-001
+task_id: os-v2-t2-completion-001
+raised_by_endpoint_id: claude-cowork-t2-completion-executor-001
+raised_by_task_role: parent_t2_completion_implementation_executor
+collaboration_role: execution
+state: blocked_returned_to_foreground
+supersedes_state_of: T2-COMPLETION-BLK-001
+evidence_ref: ../07_测试执行/ruling_r1_application_and_regression_v1.yml
+
+title: >-
+  Ruling R1 closed the first gap. The 7 remaining v4 failures are three further
+  claimability questions, none of which R1 decides.
+
+work_performed_or_requested: >-
+  Applied ruling FG-T2-COMPLETION-BLK-001-R1, re-ran the inherited suites, and classified
+  every remaining failure by its primary signature to determine whether the next step is a
+  derivation or another adjudication.
+
+implementation_or_review_method: >-
+  Read each remaining failure's own detail string rather than its test name, grouped the
+  failures by the exact position and reason the evaluator reported, then read the corpus
+  transformation that produces each group to establish what document shape each one tests.
+
+outcome_of_ruling_r1:
+  v3_suite: 65/65 (exit 0), unchanged
+  v4_suite: 15/29 -> 22/29 (exit 1)
+  fixed: 8
+  newly_exposed: 1
+  net_open: 7
+
+open_questions:
+
+- id: Q1
+  name: transparent-wrapper coverage for an undeclared ancestor
+  affected_tests:
+  - test_v4_metamorphic.test_all_invariance_properties_hold (V4MT02)
+  - test_v4_metamorphic.test_no_invariant_transformation_silently_removes_a_predicate (V4MT02)
+  - test_v4_reviewer_replay S01 (mechanism/roles_v1.yml, role_contract_v1)
+  - test_v4_reviewer_replay S02 (mechanism/windows_v1.yml, window_contract_v1)
+  - test_v4_reviewer_replay S03 (mechanism/handoff_v1.yml, handoff_contract_v1)
+  measured_transformation: >-
+    V4MT02 executes doc["window_contract"] = {"lifecycle": doc.pop("lifecycle")}, so the
+    evaluated path becomes [window_contract, lifecycle, ...]. The binding states that
+    selectors are ROOT-ANCHORED and matched only after declared transparent containers are
+    removed, and explicitly not by tail match.
+  why_it_is_a_choice: >-
+    Making the failure go away means declaring a new name transparent. The binding's own
+    commentary records why that is load-bearing: the Codex B1_UNDECLARED_ANCESTOR_TAIL_PROMOTION
+    fix removed tail matching precisely because an undeclared ancestor would let an author
+    host a claimable name inside a container the evaluator models nowhere and collect
+    claimability from it. Deciding which ancestors are transparent is therefore a
+    claimability decision, and it is the exact decision that fix was made to protect.
+  what_is_needed: a foreground ruling naming which wrapper names are transparent for which profiles, or a ruling that these corpus forms are out of contract
+
+- id: Q2
+  name: bare-name collection resolved by a sibling definitions block
+  affected_tests:
+  - test_v4_metamorphic.test_all_invariance_properties_hold (V4MT13)
+  - test_v4_metamorphic.test_no_invariant_transformation_silently_removes_a_predicate (V4MT13)
+  measured_transformation: >-
+    V4MT13 rewrites lifecycle.invalidation_conditions into a list of bare names and moves
+    the typed records into a sibling lifecycle.condition_definitions mapping. The corpus
+    calls this "the one form in which a bare string is admitted", and the case that
+    separates F03-D from a blanket ban on bare strings.
+  why_it_is_a_choice: >-
+    R1 ruled on invalidation_conditions as a keyed collection. It did not rule that a
+    sibling condition_definitions block is an authoritative definition region, nor that a
+    bare name may draw its structure from that sibling. Granting that is a new statement
+    about where authority for a position may come from, which is broader than R1.
+  what_is_needed: a foreground ruling on whether this form is inside the promised equivalence contract and, if so, what binds condition_definitions
+
+- id: Q3
+  name: judging a document that no profile binds
+  affected_tests:
+  - test_v4_reviewer_replay S14 (workflow/new_role_source.yml)
+  measured_signature: structural_binding_v1.yml:document_not_bound
+  observed_vs_expected: the v4 expectation is fail; the engine returns unsupported_or_ambiguous_representation
+  why_it_is_a_choice: >-
+    This is not a container question. It asks whether an unbound document can be judged at
+    all, or must fail closed as unknown. Either answer changes what the evaluator claims
+    authority over, and the fail-closed behaviour here is the accepted invariant
+    unknown_missing_or_conflicting_binding_fails_closed_visibly working as written.
+  what_is_needed: a foreground ruling on whether an unbound document is judged, or whether the v4 expectation should be reclassified
+
+why_the_executor_stops_here:
+- The 00002 request states that a new failure signature after the P00 short-circuit is
+  removed is new evidence, not permission to broaden semantics, and that another
+  load-bearing authority or claimability choice is a stop-and-return condition.
+- All three open questions are claimability questions. None is derivable from R1.
+- As with the first blocker, each has an option that turns the suite green. That is why
+  the executor must not choose: a green suite chosen by the executor would be evidence of
+  the executor's preference, not of an adjudicated invariant.
+
+stop_condition_invoked:
+- 01_os/开发入口与单窗口任务规范_v1.md section 11 case 3
+- role_context constraint no_new_authority_or_claimability_semantics_without_foreground_return
+- 00002_request constraint: stop and return if another load-bearing choice appears
+
+supportability_rationale: >-
+  Every group above is named by the evaluator's own reported position and reason, and each
+  is traced to the exact corpus function that produces the shape. No group rests on
+  inference about intent.
+
+feasibility_rationale: >-
+  Each question is bounded to the same evaluator-owned binding file already in scope. Once
+  ruled, applying them is the same shape of bounded edit plus re-run that R1 required.
+
+residual_risk_or_unproved_limits:
+- Q1 and Q2 both surface through the same two metamorphic tests, so a ruling on one may
+  not clear those tests until the other is also ruled.
+- A further latent failure behind these signatures cannot be excluded until they clear.
+- Executor measurement only. Not independent acceptance.
+
+correction003_replacement_complete: false
+p2_2_state: not_started_gate_not_reached
+next_owner: foreground_t2_completion_coordinator

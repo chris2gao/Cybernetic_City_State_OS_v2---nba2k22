@@ -1,0 +1,586 @@
+schema_version: citystate.stage04.mutation_set.v2
+task_id: os-v2-role-window-context-model-routing-integration-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+supersedes:
+  path: fixtures/mutations_v1.yml
+  disposition: >-
+    retained_for_history。v1 记录的是 artifact_version 1 的杀伤集合，包括独立审核证明
+    有缺陷的那两条（M08 的 mere rename、M19 的 provenance 误伤）。删掉它会抹掉这些缺陷
+    曾经存在的痕迹。
+
+purpose: >-
+  两类样本。mutations 把 candidate tree 改成"看起来完整但违反一条已接受要求"的树，
+  必须让目标检查变红；conforming_variants 把 candidate tree 改成"合法的另一种实现"，
+  必须保持全绿。第二类是本轮新增的：独立审核指出 v1 会拒绝多种合规表达，只有正面反例
+  才能证明这些误伤真的被修掉了。
+
+collateral_policy: >-
+  顺带变红的其他检查记录但不计失败。让机制自带 validator 变红的 mutation 会必然让六条
+  validator 探针一起红——探针基线已失败时它证明不了任何事。
+
+candidate_tree_assembly:
+  base: the repository tree under test, copied without .git/08_os/caches
+  new_files: fixtures/overlay/**
+  edits_to_existing_files: fixtures/overlay_edits_v1.yml
+  git: the copy is re-initialised and committed so the context_management
+    validator's `git ls-files` / `git check-ignore` calls have a real index
+
+mutations:
+  - mutation_id: M01
+    target_check: RW-T01
+    file: 01_os/03_mechanisms/window_role_binding/README.md
+    operation: delete_file
+
+  - mutation_id: M02
+    target_check: RW-T02
+    operations:
+      - file: 01_os/03_mechanisms/window_role_binding/roles_v1.yml
+        operation: replace
+        find: "  closed_corpus_refinement:"
+        replace: "  auxiliary_reader:"
+      - file: 01_os/03_mechanisms/window_role_binding/roles_v1.yml
+        operation: replace
+        find: "      - closed_corpus_refinement"
+        replace: "      - auxiliary_reader"
+
+  - mutation_id: M03
+    target_check: RW-T03
+    file: 01_os/03_mechanisms/window_role_binding/roles_v1.yml
+    operation: delete_line
+    find: "    responsibility: execute inside the authorized boundary and return one handoff"
+
+  - mutation_id: M04
+    target_check: RW-T04
+    file: 01_os/03_mechanisms/window_role_binding/roles_v1.yml
+    operation: replace
+    find: "    context_requirement: minimum effective context for the current step"
+    replace: "    context_requirement: minimum effective context for the current step\n    publish_authorized: \"enabled\""
+
+  - mutation_id: M05
+    target_check: RW-T05
+    closes: [ST04-IR-006]
+    note: >-
+      A real duplicate normative role table: role-concept rows AND a normative
+      per-role attribute column. The conforming counterexample C06 has the rows
+      but no normative column and must stay green.
+    file: 01_os/README.md
+    operation: append
+    append: |
+
+      | Role | Produces |
+      |:--|:--|
+      | Foreground dispatch | task packets and verdicts |
+      | Backend execution | changed files and one handoff |
+      | Independent review | accept or reject with evidence |
+
+  - mutation_id: M06
+    target_check: RW-T06
+    file: 01_os/02_boot/context_management/启动清单_v1.yml
+    operation: replace
+    find: "  - path: 01_os/03_mechanisms/context_management/README.md"
+    replace: "  - path: 01_os/_dev/决定_谁执行_v0.2.md\n    purpose: 活动 D2 执行角色与边界裁决\n  - path: 01_os/03_mechanisms/context_management/README.md"
+
+  - mutation_id: M07
+    target_check: RW-T07
+    operations:
+      - file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+        operation: delete_line
+        find: "    - run_id"
+      - file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+        operation: replace
+        find: "    required_fields: [window_id, task_id, run_id, role_id]"
+        replace: "    required_fields: [window_id, task_id, role_id]"
+
+  - mutation_id: M08
+    target_check: RW-T08
+    closes: [ST04-IR-002]
+    note: >-
+      v1 killed a mere rename of forked_successor, which the independent review
+      correctly called a literal requirement A does not make. The real defect is
+      an additional mode that carries no identity of its own and therefore
+      impersonates reentry. Renaming alone is now conforming (variant C08).
+    operations:
+      - file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+        operation: delete_line
+        find: "    required_fields: [window_id, predecessor_window_id]\n"
+      - file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+        operation: replace
+        find: "  forked_successor:\n    new_window_id_required: true\n    predecessor_window_id_required: true"
+        replace: "  forked_successor:\n    behaves_like: reentry"
+
+  - mutation_id: M09
+    target_check: RW-T09
+    file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+    operation: replace
+    find: "    required_fields: [window_id, predecessor_window_id]\n    predecessor_window_id_required: true\n    predecessor_match: exact"
+    replace: "    required_fields: [window_id]\n    predecessor_match: exact"
+
+  - mutation_id: M10
+    target_check: RW-T10
+    file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+    operation: replace
+    find: "    status: prohibited_as_formal_identity"
+    replace: "    status: accepted_as_formal_identity"
+
+  - mutation_id: M11
+    target_check: RW-T11
+    operations:
+      - file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+        operation: delete_line
+        find: "      - not_observable"
+      - file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+        operation: delete_line
+        find: "      not_observable is a legal value. A host identifier is never fabricated and"
+
+  - mutation_id: M12
+    target_check: RW-T12
+    file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+    operation: replace
+    find: "  states: [entered, active, handoff_ready, closed, stale]"
+    replace: "  states: [active, closed]"
+
+  - mutation_id: M13
+    target_check: RW-T13
+    operations:
+      - file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+        operation: delete_line
+        find: "  owner_mechanism: context_management"
+      - file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+        operation: delete_line
+        find: "  owner_contract_ref: 01_os/03_mechanisms/context_management/实现/文件布局契约_v1.yml"
+      - file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+        operation: delete_line
+        find: "    This block binds context_management by pointer. Minimum-context, stale and"
+
+  - mutation_id: M14
+    target_check: RW-T14
+    file: 01_os/03_mechanisms/window_role_binding/context_layout_v1.yml
+    operation: create_file
+    content: |
+      schema_version: context_management.boot_manifest.v9
+      mechanism_version: 9
+      load_order: []
+
+  - mutation_id: M15
+    target_check: RW-T15
+    file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+    operation: replace
+    find: "  default_preload_of_01_os_runs: prohibited"
+    replace: "  default_preload_of_01_os_runs: enabled"
+
+  - mutation_id: M16
+    target_check: RW-T16
+    file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+    operation: delete_line
+    find: "    - task_shape"
+
+  - mutation_id: M17
+    target_check: RW-T17
+    file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+    operation: delete_line
+    find: "      - limitations"
+
+  - mutation_id: M18
+    target_check: RW-T18
+    file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+    operation: replace
+    find: "    authority_constant: routing_only"
+    replace: "    authority_constant: execution"
+
+  - mutation_id: M19
+    target_check: RW-T19
+    closes: [ST04-IR-004]
+    note: >-
+      v1 flagged any provider token anywhere in the role document, which also
+      condemned a provenance citation. The real defect is a normative binding
+      that pins a role to a vendor. Variant C05 adds provenance naming the same
+      vendors and must stay green.
+    file: 01_os/03_mechanisms/window_role_binding/roles_v1.yml
+    operation: replace
+    find: "    independence_requirement: distinct window from the implementation window"
+    replace: "    independence_requirement: distinct window from the implementation window\n    preferred_provider: Anthropic Claude"
+
+  - mutation_id: M20
+    target_check: RW-T20
+    file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+    operation: delete_line
+    find: "fail_closed"
+
+  - mutation_id: M21
+    target_check: RW-T21
+    operations:
+      - file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+        operation: replace
+        find: "  implementation_and_final_review_windows: distinct_window_id_required"
+        replace: "  implementation_and_final_review_windows: recommended"
+      - file: 01_os/03_mechanisms/window_role_binding/roles_v1.yml
+        operation: replace
+        find: "    independence_requirement: distinct window from the implementation window"
+        replace: "    independence_requirement: reviewer exercises judgement"
+
+  - mutation_id: M22
+    target_check: RW-T22
+    operations:
+      - file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+        operation: delete_line
+        find: "    expressed_as: routing_constraint"
+      - file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+        operation: delete_line
+        find: "    delivered_to: model_routing"
+      - file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+        operation: delete_line
+        find: "  different_model_family:"
+
+  - mutation_id: M23
+    target_check: RW-T23
+    operations:
+      - file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+        operation: delete_line
+        find: "    representation: disclosed_assertion"
+      - file: 01_os/03_mechanisms/window_role_binding/handoff_v1.yml
+        operation: delete_line
+        find: "  immutable_after_publication: true"
+
+  - mutation_id: M24
+    target_check: RW-T24
+    file: 01_os/03_mechanisms/window_role_binding/handoff_v1.yml
+    operation: delete_line
+    find: "    - unresolved_blockers_and_findings"
+
+  - mutation_id: M25
+    target_check: RW-T25
+    closes: [ST04-IR-004]
+    note: >-
+      Removes every delivery/read/acceptance prohibition in any form. Variant
+      C04 expresses the same prohibitions as a mapping instead of a list and
+      must stay green.
+    operations:
+      - file: 01_os/03_mechanisms/window_role_binding/handoff_v1.yml
+        operation: delete_line
+        find: "    - delivery_state"
+      - file: 01_os/03_mechanisms/window_role_binding/handoff_v1.yml
+        operation: delete_line
+        find: "    - read_state"
+      - file: 01_os/03_mechanisms/window_role_binding/handoff_v1.yml
+        operation: delete_line
+        find: "    - accepted_state"
+
+  - mutation_id: M26
+    target_check: RW-T26
+    file: 01_os/03_mechanisms/window_role_binding/handoff_v1.yml
+    operation: replace
+    find: "  automatic_task_progression: false"
+    replace: "  automatic_task_progression: true"
+
+  - mutation_id: M27
+    target_check: RW-T27
+    file: 01_os/03_mechanisms/communication_system/消息契约_v1.yml
+    operation: replace
+    find: "optional_fields:\n  - requested_action"
+    replace: "optional_fields:\n  - window_id\n  - requested_action"
+
+  - mutation_id: M28
+    target_check: RW-T28
+    file: 01_os/02_boot/window_role_binding/boot_v1.yml
+    operation: replace
+    find: "  - path: 01_os/03_mechanisms/window_role_binding/README.md"
+    replace: "  - path: 01_os/03_mechanisms/window_role_binding/MISSING.md"
+
+  - mutation_id: M29
+    target_check: RW-T29
+    file: 01_os/05_registry/window_role_binding_v1.yml
+    operation: delete_line
+    find: "    cache_dirs: []"
+
+  - mutation_id: M30
+    target_check: RW-T30
+    file: 01_os/03_mechanisms/README.md
+    operation: delete_line
+    find: "`window_role_binding/`"
+
+  - mutation_id: M31
+    target_check: RW-T31
+    file: 01_os/01_workflow/README.md
+    operation: append
+    append: |
+
+      | Role | Produces |
+      |:--|:--|
+      | Foreground dispatch | task packets |
+      | Backend execution | changed files |
+      | Independent review | verdicts |
+
+  - mutation_id: M32
+    target_check: RW-T32
+    file: 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+    operation: replace
+    find: "  authority_constant: routing_only"
+    replace: "  authority_constant: execution"
+
+  - mutation_id: M33
+    target_check: RW-T33
+    file: 01_os/05_registry/repository_publisher_authority_v1.yml
+    operation: append
+    append: "\n# stage04 mutation probe\n"
+
+  - mutation_id: M34
+    target_check: RW-T34
+    closes: [ST04-IR-004]
+    file: 01_os/02_boot/window_role_binding/boot_v1.yml
+    operation: replace
+    find: "background_processes_started: false"
+    replace: "background_processes_started: true"
+
+  - mutation_id: M35
+    target_check: RW-T35
+    closes: [ST04-IR-004]
+    file: 01_os/02_boot/window_role_binding/boot_v1.yml
+    operation: append
+    append: "quota_probe_enabled: true\n"
+
+  - mutation_id: M36
+    target_check: RW-T36
+    closes: [ST04-IR-004]
+    file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+    operation: append
+    append: "retention_policy_active: true\n"
+
+  - mutation_id: M37
+    target_check: RW-T37
+    file: 01_os/03_mechanisms/window_role_binding/impl/check_binding.py
+    operation: replace
+    find: "            if leaf in (\"role_id\", \"role\") or leaf.endswith((\"_role\", \"_roles\")):"
+    replace: "            if False:"
+
+  - mutation_id: M38
+    target_check: RW-T38
+    file: 01_os/03_mechanisms/window_role_binding/impl/check_binding.py
+    operation: replace
+    find: "        if not isinstance(uniq, str) or \"unique\" not in uniq.lower():"
+    replace: "        if False:"
+
+  - mutation_id: M39
+    target_check: RW-T39
+    operations:
+      - file: 01_os/03_mechanisms/window_role_binding/impl/check_binding.py
+        operation: replace
+        find: "        if not any(\"predecessor\" in x for x in req):"
+        replace: "        if False:"
+      - file: 01_os/03_mechanisms/window_role_binding/impl/check_binding.py
+        operation: replace
+        find: "            if re.search(r\"latest|most[_\\- ]recent\", val, re.I):"
+        replace: "            if False:"
+
+  - mutation_id: M40
+    target_check: RW-T40
+    file: 01_os/03_mechanisms/window_role_binding/impl/check_binding.py
+    operation: replace
+    find: "        if not isinstance(v, str) or not (root / v).exists():"
+    replace: "        if False:"
+
+  - mutation_id: M41
+    target_check: RW-T41
+    file: 01_os/03_mechanisms/window_role_binding/impl/check_binding.py
+    operation: replace
+    find: "            if AUTHORITY_DENY.search(leaf) and val is True:"
+    replace: "            if False:"
+
+  - mutation_id: M42
+    target_check: RW-T42
+    file: 01_os/03_mechanisms/window_role_binding/impl/check_binding.py
+    operation: replace
+    find: "    if not route.get(\"required_fields\"):"
+    replace: "    if False:"
+
+  - mutation_id: M43
+    target_check: RW-T43
+    closes: [ST04-IR-001]
+    note: >-
+      The A11 clause the v1 package omitted. A workflow stage grows its own
+      mutable copy of the live catalog's model identifiers. Variant C07 keeps a
+      pointer and receipt reference instead and must stay green.
+    file: 01_os/01_workflow/03_结果建模/README.md
+    operation: append
+    append: |
+
+      ## 本阶段推荐模型
+
+      | 型号 | 定位 | 输入/输出价格 |
+      |:--|:--|:--|
+      | GPT-5.6 Sol | 旗舰 | $5 / $30 |
+      | GPT-5.6 Terra | 均衡 | $2 / $12 |
+      | GPT-5.6 Luna | 快省 | $0.20 / $1.20 |
+
+conforming_variants:
+  - variant_id: C01
+    closes: [ST04-IR-003]
+    note: >-
+      Same semantics, different schema_version naming, and boot purposes made
+      deliberately non-committal so that only content-based discovery can
+      succeed. v1 recognised a mechanism solely by the English substrings
+      role_contract.v / window_contract.v / handoff_contract.v.
+    operations:
+      - file: 01_os/03_mechanisms/window_role_binding/roles_v1.yml
+        operation: replace
+        find: "schema_version: window_role_binding.role_contract.v1"
+        replace: "schema_version: wrb.契约.甲.v1"
+      - file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+        operation: replace
+        find: "schema_version: window_role_binding.window_contract.v1"
+        replace: "schema_version: wrb.契约.乙.v1"
+      - file: 01_os/03_mechanisms/window_role_binding/handoff_v1.yml
+        operation: replace
+        find: "schema_version: window_role_binding.handoff_contract.v1"
+        replace: "schema_version: wrb.契约.丙.v1"
+      - file: 01_os/02_boot/window_role_binding/boot_v1.yml
+        operation: replace_all
+        find: "    purpose: provider-independent canonical role contract"
+        replace: "    purpose: canonical document one"
+      - file: 01_os/02_boot/window_role_binding/boot_v1.yml
+        operation: replace_all
+        find: "    purpose: formal working window identity, lifecycle and bindings"
+        replace: "    purpose: canonical document two"
+      - file: 01_os/02_boot/window_role_binding/boot_v1.yml
+        operation: replace_all
+        find: "    purpose: structured cross-window handoff contract"
+        replace: "    purpose: canonical document three"
+
+  - variant_id: C02
+    closes: [ST04-IR-003]
+    note: canonical filenames carry no meaning; the boot manifest is updated to match.
+    operations:
+      - file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+        operation: replace
+        find: "role_source_ref: 01_os/03_mechanisms/window_role_binding/roles_v1.yml"
+        replace: "role_source_ref: 01_os/03_mechanisms/window_role_binding/doc_a.yml"
+      - file: 01_os/03_mechanisms/window_role_binding/roles_v1.yml
+        operation: move_file
+        to: 01_os/03_mechanisms/window_role_binding/doc_a.yml
+      - file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+        operation: move_file
+        to: 01_os/03_mechanisms/window_role_binding/doc_b.yml
+      - file: 01_os/03_mechanisms/window_role_binding/handoff_v1.yml
+        operation: move_file
+        to: 01_os/03_mechanisms/window_role_binding/doc_c.yml
+      - file: 01_os/02_boot/window_role_binding/boot_v1.yml
+        operation: replace
+        find: "  - path: 01_os/03_mechanisms/window_role_binding/roles_v1.yml"
+        replace: "  - path: 01_os/03_mechanisms/window_role_binding/doc_a.yml"
+      - file: 01_os/02_boot/window_role_binding/boot_v1.yml
+        operation: replace
+        find: "  - path: 01_os/03_mechanisms/window_role_binding/windows_v1.yml"
+        replace: "  - path: 01_os/03_mechanisms/window_role_binding/doc_b.yml"
+      - file: 01_os/02_boot/window_role_binding/boot_v1.yml
+        operation: replace
+        find: "  - path: 01_os/03_mechanisms/window_role_binding/handoff_v1.yml"
+        replace: "  - path: 01_os/03_mechanisms/window_role_binding/doc_c.yml"
+
+  - variant_id: C03
+    closes: [ST04-IR-004]
+    note: >-
+      Negative-polarity declarations. `*_prohibited: true` asserts the
+      prohibition; v1 read the truthy value as the behaviour being enabled.
+    operations:
+      - file: 01_os/03_mechanisms/window_role_binding/handoff_v1.yml
+        operation: append
+        append: |
+          autonomy_posture:
+            automatic_task_progression_prohibited: true
+            automatic_handoff_delivery_prohibited: true
+            scheduler_prohibited: true
+            watcher_prohibited: true
+            daemon_prohibited: true
+      - file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+        operation: append
+        append: |
+          out_of_scope_posture:
+            retention_policy_disabled: true
+            long_running_continuation_prohibited: true
+            quota_probe_prohibited: true
+      - file: 01_os/02_boot/window_role_binding/boot_v1.yml
+        operation: append
+        append: "account_quota_probe_prohibited: true\n"
+
+  - variant_id: C04
+    closes: [ST04-IR-004]
+    note: prohibited fields expressed as a mapping instead of a list.
+    operations:
+      - file: 01_os/03_mechanisms/window_role_binding/handoff_v1.yml
+        operation: replace
+        find: "  prohibited_fields:\n    - private_chain_of_thought\n    - private_reasoning\n    - delivery_state\n    - read_state\n    - accepted_state"
+        replace: "  prohibited_fields:\n    private_chain_of_thought: true\n    private_reasoning: true\n    delivery_state: true\n    read_state: true\n    accepted_state: true"
+
+  - variant_id: C05
+    closes: [ST04-IR-004]
+    note: >-
+      Provenance naming vendors. Nothing here binds a role to a vendor; it says
+      where the taxonomy was cross-checked. v1 rejected this.
+    file: 01_os/03_mechanisms/window_role_binding/roles_v1.yml
+    operation: append
+    append: |
+      provenance:
+        evidence_note: >-
+          Role taxonomy cross-checked against Anthropic Claude Code session
+          semantics and the OpenAI Agents SDK handoff model; neither is adopted
+          as architecture.
+        source_refs:
+          - external primary docs, OpenAI Agents SDK
+          - external primary docs, Claude Code CLI
+        citation_of_prior_art: gemini and gpt-5.6 product surfaces were compared
+
+  - variant_id: C06
+    closes: [ST04-IR-006]
+    note: >-
+      A role-keyed applicability table in Markdown. Three role concepts in the
+      first column, but no normative per-role attribute, so it is not a second
+      canonical role source. v1's Markdown rule flagged it.
+    file: 01_os/01_workflow/README.md
+    operation: append
+    append: |
+
+      ## 各角色的推荐思考档位（仅适用性提示，权威定义见组合机制）
+
+      | 角色 | 推荐档位 |
+      |:--|:--|
+      | backend execution | medium |
+      | independent review | high |
+      | deep research | high |
+
+  - variant_id: C07
+    closes: [ST04-IR-001]
+    note: >-
+      A thin pointer to model_routing plus receipt field names. This is exactly
+      what A11 asks a workflow stage to do and must never be mistaken for a
+      duplicated catalog.
+    file: 01_os/01_workflow/03_结果建模/README.md
+    operation: append
+    append: |
+
+      ## 模型路由
+
+      本阶段不保存模型目录。执行者按
+      `01_os/03_mechanisms/model_routing/路由契约_v1.yml` 做 preflight，
+      运行 `01_os/02_boot/model_routing/启动清单_v1.yml` 声明的 validator，
+      并在任务包中记录 receipt 的 provider、surface、model、parameter_profile、
+      routing_basis、evidence_refs、limitations、availability_assumption 与
+      authority 字段。authority 恒为 routing_only。
+
+  - variant_id: C08
+    closes: [ST04-IR-002]
+    note: >-
+      No third entry mode at all. A02 requires fresh versus reentry; E-003 offers
+      a forked successor without requiring it. v1 demanded the exact token.
+    operations:
+      - file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+        operation: replace
+        find: "  forked_successor:\n    required_fields: [window_id, predecessor_window_id]\n    new_window_id_required: true\n    predecessor_window_id_required: true\n"
+        replace: ""
+
+  - variant_id: C09
+    closes: [ST04-IR-002]
+    note: a third mode under a different name, with its own identity, is equally conforming.
+    operations:
+      - file: 01_os/03_mechanisms/window_role_binding/windows_v1.yml
+        operation: replace
+        find: "  forked_successor:"
+        replace: "  分叉后继:"

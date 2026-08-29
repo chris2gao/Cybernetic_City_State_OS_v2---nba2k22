@@ -1,0 +1,258 @@
+schema_version: citystate.stage04.independent_acceptance_review.v2
+task_id: os-v2-role-window-context-model-routing-integration-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+reviewed_stage: workflow_stage_04_test_generation
+reviewed_artifact_version: 2
+review_date: '2026-08-12'
+
+verdict: FIX_REQUIRED
+completion_marker: stage04_t2_v2_independent_review_fix_required
+pass_completion_marker_emitted: false
+pass_completion_marker_reserved: stage04_t2_v2_independently_accepted_for_stage05
+stage05_entry_authorized_by_this_review: false
+
+reviewer:
+  provider_family: OpenAI
+  surface: Codex Desktop
+  exact_runtime_model: not_observable_from_review_session
+  exact_reasoning_setting: not_observable_from_review_session
+  different_model_family_from_correction_author: true
+  correction_author: Claude Opus 5 / Cowork
+  correction_author_private_context_received: false
+  host_session_freshness_proof: not_observable
+  independence_basis: >-
+    Fresh review context. The reviewer reconstructed the package from the remote
+    branch, the exact correction primary diff, the twelve dispatched primary
+    inputs and executable evidence. The foreground candidate check and freeze
+    receipt were treated as claims rather than proof.
+
+physical_binding:
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  branch: dev/os-v2-role-window-context-model-routing-integration-001
+  remote_master_fresh_read_at_review_start: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  remote_branch_head_fresh_read_at_review_start: 22d61f36cc52ffcfbb87274ff12029e1f4595755
+  corrected_package_primary_diff:
+    base: e76ffb6305c8e015979a8b8f6c81821186b1fb49
+    candidate: c720988454e120bed9e6acbe63146c83144866f6
+    commit_count: 1
+    candidate_parent: e76ffb6305c8e015979a8b8f6c81821186b1fb49
+    changed_path_count: 6
+    changed_paths:
+      - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/04_tests.yml
+      - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/fixtures/mutations_v2.yml
+      - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/fixtures/overlay/01_os/03_mechanisms/window_role_binding/impl/check_binding.py
+      - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/freeze_receipt_v2.yml
+      - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/实现/verify_stage04_acceptance.py
+      - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/测试设计说明_v2.md
+    scope_verdict: passed_all_paths_inside_Human_authorized_correction_boundary
+    protected_inputs_modified: []
+    protected_inputs_checked:
+      - A
+      - Stage02
+      - B
+      - freeze_receipt_v1
+      - v1_independent_review
+      - Human_correction_authorization
+      - canonical
+      - master
+  excluded_later_foreground_commits:
+    - baf1466c
+    - 3c0cbbd8
+    - 22d61f36
+
+independent_reproduction:
+  artifact_version: 2
+  package_validation:
+    command: >-
+      python 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/实现/verify_stage04_acceptance.py
+      package 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001
+    exit_code: 0
+    result: 43 tests
+  normalized_digest_recomputation:
+    method: >-
+      yaml.safe_dump of payload without test_package_sha256, allow_unicode true,
+      sort_keys true, width 4096, followed by SHA-256
+    value: 993658e84f7481d1c96fe48d074a3ef401831d05f5da44c38c28295874df3848
+    matches_claim: true
+  current_repository_acceptance:
+    command_exit_code_with_expect_red: 0
+    green: 4
+    total: 43
+    green_ids: [RW-T31, RW-T32, RW-T33, RW-T43]
+  full_repository_selftest:
+    status: passed
+    exit_code: 0
+    elapsed_seconds: 812
+    positive_candidate: 43/43
+    mutations_killed: 43/43
+    declared_conforming_variants_green: 9/9
+    boundary_empty_tree: passed
+    boundary_missing_boot_and_registry: passed
+    reduced_tree_substitution_used: false
+  primary_diff_check:
+    command: git diff --check e76ffb6305c8e015979a8b8f6c81821186b1fb49..c720988454e120bed9e6acbe63146c83144866f6
+    exit_code: 0
+  independent_adversarial_probe:
+    script: 04_测试生成/独立接收审核/v2/independent_variant_probes.py
+    result: 04_测试生成/独立接收审核/v2/independent_variant_probe_results_v1.json
+    result_sha256: efef015570d4ea6dbbc579e11e1d2c8f087bfd7840f92d907880bbbdf5be1249
+    base_candidate_green: 43/43
+
+old_blocker_readjudication:
+  ST04-IR-001:
+    status: remains_blocking
+    judgment: >-
+      RW-T43 now exists and correctly allows C07-style pointers, but V15 proves
+      that a second mutable catalog in Markdown definition-list form remains
+      43/43 green. The A11 requirement is therefore present but not enforced
+      across an obvious structured Markdown representation.
+  ST04-IR-002:
+    status: remains_blocking
+    judgment: >-
+      Absence and renaming of a third mode are fixed. V11 expresses fresh and
+      reentry as a list of structured mode records, preserves exact predecessor
+      semantics and updates the candidate validator accordingly, yet RW-T08 and
+      RW-T09 reject it. A still does not require a mapping-of-mappings shape.
+  ST04-IR-003:
+    status: closed_in_isolation
+    judgment: >-
+      C01/C02 and independent V14 cover alternate schema/filenames plus mixed
+      role/window/handoff descriptive wording. V14 remains 43/43 green and
+      confirms that content evidence wins over ambiguous descriptions. Other
+      blocking representation defects are recorded under their owning tests.
+  ST04-IR-004:
+    status: remains_blocking
+    judgment: >-
+      V10 uses the explicitly requested `*_disabled: true` prohibition suffix
+      and is rejected by RW-T25. V12 adds a normative
+      `preferred_provider: {openai: true}` binding and remains 43/43 green,
+      proving that the provider scan misses mapping-shaped pins while accepting
+      the existing scalar mutation.
+  ST04-IR-005:
+    status: remains_blocking
+    judgment: >-
+      The closure is deterministic over two independent builds and contains the
+      directly referenced context_management, model_routing and
+      communication_system files. It nevertheless stages 1012 files, including
+      776 under historical `_runs`, while leaving 16 resolvable file references
+      and 11 resolvable directory members unstaged. Green therefore depends on
+      an accidental history-heavy, still-incomplete path scan rather than a
+      complete bounded dependency closure.
+    unrelated_history_sensitivity: >-
+      Before the final review evidence files existed, the same probe staged
+      1009 files with 773 historical paths. Adding unrelated v2 review evidence
+      changed those counts to 1012/776 without changing the candidate mechanism
+      or its declared dependencies.
+  ST04-IR-006:
+    status: remains_blocking
+    judgment: >-
+      C06 covers only Markdown. V13 adds a legitimate YAML role/stage/context
+      applicability matrix with no responsibility, independence, handoff or
+      authority source-of-truth fields; RW-T05 and RW-T31 reject it because
+      `stage_scope` and `context_hint` are misread as two normative role
+      attributes.
+
+conforming_variant_assessment:
+  declared_variant_count: 9
+  mutually_independent: false
+  clusters:
+    - C01/C02 are naming-surface variations over the same overlay.
+    - C03/C04/C05 cover three distinct polarity, structure and provenance cases.
+    - C08/C09 both retain the mapping-shaped entry-mode representation.
+    - No declared conforming variant audits the dependency-closure topology.
+  obvious_equivalent_shapes_missing:
+    - V10 `*_disabled: true` field prohibitions
+    - V11 list-of-record entry modes
+    - V13 YAML role/stage/context applicability matrix
+  old_blocker_counterexample_adequacy:
+    ST04-IR-001: insufficient_C07_proves_pointer_acceptance_not_catalog_rejection_completeness
+    ST04-IR-002: insufficient_only_mapping_shape_varied
+    ST04-IR-003: sufficient_for_the_named_naming_surfaces
+    ST04-IR-004: insufficient_disabled_suffix_and_mapping_pin_missing
+    ST04-IR-005: insufficient_no_declared_conforming_variant_and_closure_not_closed
+    ST04-IR-006: insufficient_YAML_counterexample_missing
+  can_pass_while_weakening_semantics: true
+  weakening_examples:
+    - V12 normative provider pin remains 43/43 green.
+    - V15 second mutable model catalog remains 43/43 green.
+
+new_blocking_findings:
+  - id: ST04-V2-IR-001
+    title: RW-T25 rejects a compliant disabled-suffix prohibition shape
+    evidence: independent_variant_probe_results_v1.json#V10_disabled_suffix_prohibitions
+    observed: 42/43; only RW-T25 red
+    required_fix: >-
+      Normalize prohibition, forbidden, disallowed and disabled suffixes before
+      judging both declared prohibitions and carried private-reasoning fields.
+
+  - id: ST04-V2-IR-002
+    title: RW-T08/RW-T09 freeze entry_modes as a mapping of mappings
+    evidence: independent_variant_probe_results_v1.json#V11_list_shaped_entry_modes
+    observed: 41/43; RW-T08 and RW-T09 red while the candidate validator exits zero
+    required_fix: >-
+      Normalize mapping and list-of-record mode declarations, then judge only
+      fresh/reentry identity and exact-predecessor semantics.
+
+  - id: ST04-V2-IR-003
+    title: RW-T19 misses a normative provider pin expressed as a mapping key
+    evidence: independent_variant_probe_results_v1.json#V12_structured_provider_pin
+    observed: nonconforming candidate remains 43/43 green
+    required_fix: >-
+      Inspect complete normative key paths and structured mapping keys/values;
+      keep provenance exclusion segment-aware and scoped to the provenance subtree.
+
+  - id: ST04-V2-IR-004
+    title: YAML applicability metadata is still mistaken for a second role source
+    evidence: independent_variant_probe_results_v1.json#V13_yaml_role_applicability_matrix
+    observed: 41/43; RW-T05 and RW-T31 red
+    required_fix: >-
+      Require actual per-role source-of-truth properties rather than allowing
+      generic `scope` plus `context` substrings to establish a canonical role table.
+
+  - id: ST04-V2-IR-005
+    title: RW-T43 misses a second mutable catalog in Markdown definition-list form
+    evidence: independent_variant_probe_results_v1.json#V15_markdown_definition_list_catalog
+    observed: nonconforming candidate remains 43/43 green
+    required_fix: >-
+      Parse structured Markdown representations semantically, including
+      definition lists, while retaining the pointer/receipt allowlist.
+
+  - id: ST04-V2-IR-006
+    title: The validator dependency closure is history-heavy and not closed
+    evidence: independent_variant_probe_results_v1.json#dependency_closure
+    observed: >-
+      two builds identical; 1012 staged files; 776 historical run files; all
+      three named foreign mechanisms present; 16 resolvable file refs and 11
+      directory members still unresolved
+    required_fix: >-
+      Use explicit boot/registry/validator dependency declarations or a full
+      candidate tree. A staged closure must exclude unrelated history, reach a
+      real bounded fixpoint and report zero required resolvable dependencies left out.
+
+test_derivation_verdict:
+  derived_only_from_A_and_stage02: false
+  reason: >-
+    RW-T08/RW-T09, RW-T25 and RW-T05/RW-T31 still freeze representations A does
+    not constrain, while RW-T19 and RW-T43 allow direct A06/A08/A11 violations.
+    Passing the declared mutations and variants therefore does not restore exact
+    traceability to A plus Stage02 evidence.
+
+retained_verdicts:
+  RW_T06: valid_and_retained
+  future_stage05_stage06_boundary_must_include:
+    - 01_os/02_boot/context_management/启动清单_v1.yml
+  publisher_authority_preservation: passed
+  existing_validator_preservation: passed
+  runtime_claims: honestly_degraded_to_contract_checks
+
+stage05_boundary_implication:
+  status: blocked_pending_another_Human_gated_stage04_correction_and_fresh_independent_acceptance
+  canonical_write_authorized_by_this_review: false
+  master_write_authorized_by_this_review: false
+
+next_owner:
+  role: foreground_and_Human_for_correction_gate
+  required_action: >-
+    Adjudicate the six v2 findings, authorize any next frozen-package correction,
+    preserve the existing v1/v2 evidence, and obtain another fresh independent
+    acceptance before Stage05.

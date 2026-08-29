@@ -1,0 +1,30 @@
+schema_version: citystate.communication.task_authority_delegation.v2
+task_id: os-v2-t2-completion-001
+task_authority_id: TA-os-v2-t2-completion-001-v1
+delegation_id: DEL-os-v2-t2-completion-001-claude-execution-001
+delegator_endpoint_id: gpt56-t2-completion-foreground-001
+delegator_task_role: foreground_t2_completion_coordinator
+recipient_endpoint_id: claude-cowork-t2-completion-executor-001
+recipient_task_role: parent_t2_completion_implementation_executor
+authorized_actions:
+- construct_correction003_replacement_candidate_from_parent_checkpoint_using_accepted_structural_provenance
+- after_fresh_independent_correction003_PASS_complete_P2_2_and_freeze_chain
+- publish_exact_execution_results_on_authorized_task_branch
+- perform_task_scoped_local_git_recovery
+delegated_scope:
+- correction003_replacement_candidate_construction
+- parent_T2_checkpoint_reentry_from_3002d617
+- P2_2_provenance_audit
+- P2_2_receipt_binding
+- freeze_receipt_and_refreeze_report
+- exact_result_pointer_and_stage04_candidate_binding
+- durable_T2_completion_evidence
+- task_scoped_local_git_environment_recovery
+- task_branch_source_publication
+allow_redelegation: false
+Human_task_authority_ref: Human/task_authority_v2.yml
+granted: true
+revoked: false
+parent_delegation_ref: null
+execution_gate: >-
+  The second authorized action is usable only after a fresh independent correction-003 PASS is durably published and foreground verifies its exact candidate binding. Root authority removes the need for a new Human micro-grant; it does not remove this evidence gate.

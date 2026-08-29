@@ -1,0 +1,108 @@
+schema_version: window_role_binding.window_contract.v1
+mechanism_version: 1
+status: active
+authority_effect: none
+role_source_ref: mechanism/roles_v1.yml
+
+window_identity:
+  window_id_field: window_id
+  uniqueness: unique_within_repository_across_every_run
+  required: true
+  bound_facts:
+    - task_id
+    - run_id
+    - role_id
+    - workflow_stage_id
+    - workflow_step_id
+    - task_branch
+    - entry_repository_head
+  host_session_id:
+    required: false
+    allowed_values:
+      - observed_host_identifier
+      - not_observable
+  latest_session_pointer:
+    status: prohibited_as_formal_identity
+    usable_for: discovery_only
+
+entry_modes:
+  fresh:
+    required_fields: [window_id, task_id, run_id, role_id]
+  reentry:
+    required_fields: [window_id, predecessor_window_id]
+    predecessor_window_id_required: true
+    predecessor_match: exact
+    fresh_reads_required: [task_branch, entry_repository_head, authorization_ref]
+  forked_successor:
+    required_fields: [window_id, predecessor_window_id]
+    new_window_id_required: true
+    predecessor_window_id_required: true
+    predecessor_match: exact
+
+lifecycle:
+  states: [entered, active, handoff_ready, closed, stale]
+  invalidation_conditions:
+    - context_dependency_fingerprint_changed
+    - task_branch_or_head_changed
+    - authorization_ref_changed
+    - explicit_reentry_boundary
+  stale_effect: fail_closed
+  background_progression: false
+
+context_binding:
+  owner_mechanism: context_management
+  owner_contract_ref: mechanism/../context_management/layout_v1.yml
+  context_entry_ref: required
+  dependency_fingerprints: required
+  stale_receipt: required
+  default_preload_of_all_runs: prohibited
+
+model_route_binding:
+  owner_mechanism: model_routing
+  owner_contract_ref: model_routing/contract_v1.yml
+  routing_inputs_produced:
+    - task_id
+    - role
+    - risk_tier
+    - task_shape
+    - required_capabilities
+    - surface_constraints
+    - independence_constraints
+  route_receipt:
+    required_fields:
+      - mechanism_version
+      - catalog_version
+      - loaded_paths
+      - validator_exit_code
+      - provider
+      - surface
+      - model
+      - parameter_profile
+      - routing_basis
+      - evidence_refs
+      - limitations
+      - availability_assumption
+      - authority
+    authority_constant: routing_only
+    missing_or_stale_or_inconsistent: fail_closed
+
+independence:
+  implementation_and_final_review_windows: distinct_window_id_required
+  same_window_review: prohibited
+  different_model_family:
+    expressed_as: routing_constraint
+    delivered_to: model_routing
+  host_session_freshness:
+    machine_observable: false
+    representation: disclosed_assertion
+
+failure_states:
+  - unknown_role_reference
+  - missing_or_duplicate_window_id
+  - reentry_without_exact_predecessor
+  - task_branch_or_head_mismatch
+  - stale_or_broken_context_ref
+  - missing_or_stale_route_receipt
+  - independence_violation
+  - broken_declared_pointer
+on_failure: fail_closed

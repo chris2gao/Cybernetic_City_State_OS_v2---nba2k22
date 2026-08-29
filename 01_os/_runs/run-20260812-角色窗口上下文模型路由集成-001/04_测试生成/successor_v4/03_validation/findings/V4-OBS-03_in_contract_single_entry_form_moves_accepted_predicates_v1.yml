@@ -1,0 +1,119 @@
+schema_version: citystate.stage04.successor_finding.v1
+finding_id: V4-OBS-03
+task_id: os-v2-stage04-successor-acceptance-refreeze-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+raised_by: claude-cowork-stage04-successor-tail-executor-003
+raised_at: '2026-08-16'
+document_status: open_observation_reported_to_foreground
+authority_effect: none
+blocks_freeze: false
+class: representation_coupling_outside_write_boundary
+
+title: >-
+  Rewriting a list of bare identifiers as a list of single-entry mappings - a
+  form the accepted equivalence contract admits - moves accepted P02 and v4 P24.
+  The accepted engine alone moves P02 on it.
+
+why_this_is_an_observation_and_not_a_finding_against_successor_v4: >-
+  The movement is reproduced by the vendored accepted engine with
+  `semantic_acceptance_v4` never imported. It is therefore a property of the
+  independently accepted package, whose bytes this task may not edit
+  (`no_vendored_semantic_acceptance_byte_edits`), and it is outside the
+  `successor_v4/**` write boundary. Raising it as a v4 defect would attribute it
+  to the wrong code. Whether it is a defect at all is a semantic question this
+  executor has no authority to settle - see `the_open_question` below.
+
+discovered_while: >-
+  Verifying the 08affd retraction of V4-FND-04-a and -04-c rather than accepting
+  the commit message for it. Probing the in-contract forms alongside the
+  out-of-contract ones is what surfaced this; checking only the retracted claim
+  would not have.
+
+measured_evidence:
+  measured_at: '2026-08-16'
+  measured_by: claude-cowork-stage04-successor-tail-executor-003
+  runtime: CPython 3.14.6, PyYAML 6.0.3
+  base_tree: 02_acceptance/fixtures/baseline_v4
+  tree_sha: 08affd036a4033960b69aff2def4a0932d8193b9
+  transformation: >-
+    mechanism/windows_v1.yml `failure_states` from a list of eight bare
+    identifiers to a list of eight single-entry mappings, each `{identifier: {}}`
+  full_engine_measurement:
+    evaluator: semantic_acceptance_v4.evaluate_v4.build_full_fact_set + evaluate_all
+    moved: {P02: "pass -> fail", P24: "pass -> fail"}
+    v4_failure_case_facts: 7 before, 7 after
+    note: >-
+      The v4 A12 adapter is unaffected: it reads the same seven failure-case
+      facts either way. What moves is P02 (A02 window identity) and P24 (A07
+      route receipt), neither of which owns this region.
+  control_accepted_engine_only:
+    method: >-
+      separate probe, isolated interpreter, `semantic_acceptance_v4` never
+      imported, asserted before and after the run. Process isolation is the only
+      honest control here - once the v4 module is imported anywhere in the
+      process, `semantic_acceptance.evaluate.evaluate_tree` is no longer a
+      seven-predicate function. That is V4-FND-01's lesson applied.
+    evaluator: semantic_acceptance.evaluate.evaluate_tree
+    moved: {P02: "pass -> fail"}
+    other_in_contract_form_control:
+      transformation: "[{id: X}] list of identity-declaring records"
+      moved: {}
+    out_of_contract_form_control:
+      transformation: "[{case: X}]"
+      moved: {}
+      note: >-
+        moves nothing under the accepted engine because the accepted seven
+        predicates do not read `failure_states` at all; it moves P27 only under
+        the v4 engine, which is the V4-FND-04-c test error
+
+likely_mechanism_not_confirmed: >-
+  The transformation moves the identifiers from VALUE position into KEY position.
+  Two of them - `missing_or_duplicate_window_id` and
+  `missing_or_stale_route_receipt` - carry tokens that other region locators
+  claim (`window`/`id`, `route`/`receipt`). A locator that walks the whole
+  document by key token then sees a region that was never declared. This is
+  stated as a hypothesis: it was not confirmed by reading the accepted adapters,
+  because doing so was not needed to establish that the movement is the accepted
+  engine's own behaviour, and confirming it would be work inside a package this
+  task may not change.
+
+the_open_question:
+  statement: >-
+    Is `[a, b]` -> `[{a: {}}, {b: {}}]` meaning-preserving for a list of failure
+    CASE NAMES?
+  case_for_yes: >-
+    `normalize_keyed_collection`'s own docstring lists both forms as required to
+    produce identical output, and the reviewer's S02/S04 established list-form
+    equivalence as required.
+  case_for_no: >-
+    In this methodology, key position is declaration position. Turning a list of
+    names into a set of keys with empty bodies genuinely changes the document's
+    declaration surface, so it may be a different document rather than the same
+    one written differently.
+  ruling_needed_under: 01_os/开发入口与单窗口任务规范_v1.md section 11, stop condition 3
+  who_decides: not this executor
+
+what_this_does_not_claim:
+  - no claim that the accepted package's independent acceptance was wrong
+  - the accepted adapters were not read; the mechanism above is a hypothesis
+  - no other container was probed with this form
+  - no estimate of how many real documents would be affected
+
+handling_under_dispatch_00009:
+  constraint: new_material_finding_fails_closed_to_foreground
+  what_was_done: >-
+    Recorded and reported. No fix attempted, no vendored byte touched, and the
+    corpus case for V4-FND-04-c deliberately uses the `[{id: X}]` form rather
+    than this one, with a comment saying why, so the corpus does not silently
+    encode an unruled semantic position.
+  human_ruling_2026_08_16: >-
+    Record as an observation and continue with F03-D and the surviving F04
+    corrections. That instruction is the reason this file is an observation
+    rather than a stop.
+
+next_owner:
+  role: foreground_stage04_successor_dispatch
+  required_action: >-
+    decide whether the form is inside the equivalence contract for a list of
+    bare identifiers, and if so whether the accepted package needs a finding of
+    its own raised against it in a task that is allowed to touch it

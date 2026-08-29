@@ -1,0 +1,79 @@
+schema_version: citystate.stage04.human_correction_authorization.v1
+task_id: os-v2-role-window-context-model-routing-integration-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+stage: workflow_stage_04_test_generation
+status: authorized
+created_at: '2026-08-12'
+
+Human_authorization:
+  instruction: >-
+    确认授权 T2 Stage 04 冻结测试包进行一次窄修正，严格按
+    `Stage04_FIX_REQUIRED接收与Human窄修正提案_v1.yml` 关闭 ST04-IR-001 至
+    ST04-IR-006；允许修改当前 run 的 Stage04 frozen tests / harness / fixtures /
+    test-design documentation 并生成新的 artifact version、digest 与
+    `freeze_receipt_v2.yml`。保留 `freeze_receipt_v1.yml` 与独立审核裁决不改；
+    RW-T06 语义保留；不得修改 A、Stage02、B、canonical、run 之外业务文件或 master；
+    不得 force/rebase/squash/amend/history rewrite；修正后必须重新经过新的独立接收审核，
+    通过前不得进入 Stage 05。
+  authorization_scope: one_narrow_stage04_frozen_package_correction
+  authorization_effect:
+    frozen_test_edit: allowed_only_within_declared_stage04_paths
+    canonical_write: false
+    master_write: false
+    destructive_git: false
+    stage05_entry: false_until_fresh_independent_acceptance
+
+binding:
+  branch: dev/os-v2-role-window-context-model-routing-integration-001
+  branch_head_before_authorization_record: 11cd3e17132e83f2b321869cbca45e7cf4f0b093
+  master_basis: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  correction_proposal: 04_测试生成/Stage04_FIX_REQUIRED接收与Human窄修正提案_v1.yml
+  independent_review: 04_测试生成/独立接收审核/Stage04冻结测试包独立接收裁决_v1.yml
+  original_freeze_receipt: 04_测试生成/freeze_receipt_v1.yml
+
+must_close:
+  - ST04-IR-001
+  - ST04-IR-002
+  - ST04-IR-003
+  - ST04-IR-004
+  - ST04-IR-005
+  - ST04-IR-006
+
+retained_semantics:
+  RW_T06: valid_and_must_remain
+  runtime_only_requirements: may_remain_honest_contract_checks
+  original_history: immutable_no_rewrite
+
+allowed_changed_paths:
+  - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/04_tests.yml
+  - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/实现/**
+  - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/fixtures/**
+  - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/测试设计说明_v*.md
+  - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/freeze_receipt_v2.yml
+
+must_preserve_byte_history:
+  - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/freeze_receipt_v1.yml
+  - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/独立接收审核/Stage04冻结测试包独立接收裁决_v1.yml
+
+prohibited:
+  - modify_A
+  - modify_Stage02
+  - modify_B
+  - canonical_mutation
+  - run_outside_stage04_business_mutation
+  - master_publication
+  - force_push
+  - rebase
+  - squash
+  - amend
+  - history_rewrite
+
+completion_condition:
+  - artifact_version_incremented
+  - new_normalized_digest_recorded
+  - package_validation_passes
+  - selftest_passes
+  - six_blockers_have_regression_or_conforming_counterexample_coverage
+  - current_repository_remains_preimplementation_red_except_preservation_checks
+  - RW_T06_semantics_retained
+  - fresh_independent_acceptance_required_before_stage05

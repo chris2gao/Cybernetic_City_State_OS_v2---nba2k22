@@ -1,0 +1,84 @@
+message_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00007
+task_id: os-v2-t2-completion-001
+title: 'Codex big review: final parent Stage04 acceptance of frozen T2 candidate'
+message_type: request
+sender_endpoint_id: gpt56-t2-completion-foreground-001
+sender_task_role: foreground_t2_completion_coordinator
+expected_recipient_endpoint_id: codex-t2-parent-stage04-reviewer-001
+expected_recipient_task_role: parent_stage04_independent_acceptance_reviewer
+content: Start the reserved fresh relationship-isolated Codex parent-Stage04 big review.
+  Enter at exact publication head 4f6bd40518ff7dc652d1e5819f9a10781cc2e425, treat
+  4ce3e09e8c75881165f7705ab3a0398a4d3acf9c as the exact frozen candidate, and independently
+  reconstruct the acceptance contract from primary repository evidence. Review the
+  entire lineage from parent checkpoint 3002d6177779abf81e6d476bfc434ee5d6dbe3c8 through
+  correction-003 and P2-2, not just executor summaries or green test totals.
+required_refs:
+- Human/task_authority_v2.yml
+- Human/delegations/00004_codex_parent_stage04_big_review.yml
+- role_context/gpt56-t2-completion-foreground-001.yml
+- role_context/codex-t2-parent-stage04-reviewer-001.yml
+requested_action: independently_review_parent_stage04_exact_frozen_candidate_4ce3e09e8c75881165f7705ab3a0398a4d3acf9c
+authorization_ref: Human/delegations/00004_codex_parent_stage04_big_review.yml
+recipient_delegation_ref: Human/delegations/00004_codex_parent_stage04_big_review.yml
+facts:
+  work_performed_or_requested: Perform the full final independent parent Stage04 acceptance
+    review as one Codex large task, bound to frozen candidate 4ce3e09e and publication
+    head 4f6bd405.
+  implementation_or_review_method: Reconstruct acceptance independently, inspect the
+    complete exact-ref lineage and changed-path scope, rerun inherited v3 and final
+    v4 suites with actual exit codes, execute adversarial probes where needed, and
+    audit provenance, receipt topology, requirement trace, inventory, freeze/refreeze
+    and result-pointer binding from primary evidence before issuing PASS, FIX_REQUIRED
+    or BLOCKED.
+  supportability_rationale: Opus 5 completed all six named P2-2 obligations and froze
+    the candidate without claiming parent Stage04 PASS. The current root authority
+    explicitly reserves fresh relationship-isolated parent Stage04 acceptance, and
+    the review lane cannot modify the candidate or substitute Human/foreground/executor
+    conclusions for its own.
+  feasibility_rationale: All review inputs are durable at exact Git refs; the final
+    publication head is a direct child of the frozen candidate and the v3/v4 runners,
+    provenance ledger, receipt validator, refreeze report and result pointer are present
+    in the candidate lineage for independent replay.
+  parent_checkpoint_sha: 3002d6177779abf81e6d476bfc434ee5d6dbe3c8
+  correction003_candidate_sha: 9c50a4fe56b12c1add15967a5515785e8e6fb760
+  P2_2_implementation_sha: a1d376c0fb857759080e5bbe733ef4df9f1f7415
+  frozen_candidate_sha: 4ce3e09e8c75881165f7705ab3a0398a4d3acf9c
+  publication_head_sha: 4f6bd40518ff7dc652d1e5819f9a10781cc2e425
+  freeze_receipt_ref: 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/freeze_receipt_v4.yml
+  refreeze_report_ref: 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/03_validation/refreeze_report_v1.yml
+  p2_2_evidence_ref: 01_os/_runs/run-20260828-t2-completion-001/07_测试执行/p2_2_execution_evidence_v1.yml
+  result_pointer_ref: 01_os/_runs/run-20260828-t2-completion-001/08_结论/stage04_result_pointer_v1.yml
+  executor_reported_v3: 65/65_exit_0
+  foreground_reproduced_v4: 57/57_exit_0_at_4f6bd405
+  known_open_review_items:
+  - V4-FND-01_through_V4-FND-04_not_independently_accepted
+  - V4-OBS-01_through_V4-OBS-03_open_for_adjudication
+  - correction003_independent_review_waived_by_Human_for_progression_not_equivalent_to_independent_PASS
+  - foreground_R1_R3_author_and_foreground_pre_review_overlap_must_be_explicitly_accounted
+constraints:
+- use a fresh isolated Codex session with no Claude private context and no reliance
+  on foreground private reasoning
+- inspect exact publication head 4f6bd405 and exact frozen candidate 4ce3e09e before
+  drawing conclusions
+- independently inspect the complete parent-base-to-candidate diff, not only current
+  artifact files
+- independently re-run v3 and v4 and record actual process exit codes
+- actively attack false-green risks in structural provenance, applicability gating,
+  cross-adapter ownership, provenance completeness and receipt topology
+- treat Human override and foreground adjudication as disclosed task facts, never
+  as independent acceptance evidence
+- do not modify implementation or candidate branches and do not fix findings during
+  review
+- publish exactly one independent PASS, FIX_REQUIRED or BLOCKED result with primary
+  evidence, residuals and exact candidate binding
+- no Stage05, canonical implementation, master write, force, rebase, squash, amend,
+  history rewrite, redelegation or automatic progression
+risks:
+- executor green tests may still encode a wrong acceptance question; review the predicates
+  and evidence model, not only totals
+- freeze receipt external closure is intentionally false for self-byte observability;
+  distinguish disclosed topology limits from invalid binding
+- V4-FND-01 has a byte-identity rationale that predates the adjudicated structural_binding_v1.yml
+  integration change and must be re-attacked explicitly
+- a PASS is supportable only if all material open findings are either independently
+  closed or shown nonblocking under the accepted parent Stage04 contract

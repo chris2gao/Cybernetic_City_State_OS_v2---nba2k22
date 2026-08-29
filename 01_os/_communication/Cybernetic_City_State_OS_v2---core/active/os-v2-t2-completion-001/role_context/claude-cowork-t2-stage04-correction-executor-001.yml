@@ -1,0 +1,44 @@
+endpoint_id: claude-cowork-t2-stage04-correction-executor-001
+task_role: parent_stage04_fix_required_correction_executor
+collaboration_role: execution
+provider: Anthropic
+product: Claude Desktop
+surface: claude_desktop_cowork
+model: Claude Opus 5
+reasoning_or_parameter_profile: claude_desktop_cowork_opus5_task_time
+session_mode: continue_existing_restored_implementation_window
+isolation_level: continuity_with_existing_T2_implementation_context
+repository_access_mode: task_scoped_local_worktree
+repository_or_worktree_requirement: >-
+  Reuse the healthy T2 implementation repository only after fresh reentry checks.
+  Fetch ordinary remote refs and use a clean worktree for dev/os-v2-t2-completion-001.
+  The initial 00008 entry at exact 4f6bd40518ff7dc652d1e5819f9a10781cc2e425
+  is complete. Continue after foreground R6 only if the observed remote branch head
+  is exact 5b9888eeefa13f6c352e1bf9f42207c3e45801b5. Preserve ancestry from parent
+  3002d6177779abf81e6d476bfc434ee5d6dbe3c8 and do not modify master.
+required_branch_or_sha: dev/os-v2-t2-completion-001
+local_files_required: true
+github_publication_required_before_start: true
+communication_carrier: GitHub
+responsibility:
+- implement all four material findings accepted by foreground from Codex review 5f4520dd
+- preserve evaluator-owned structural provenance and extend its consumption into v4 key-based semantic claims
+- make A12 route-receipt failure policy an explicit fail-closed acceptance fact
+- complete F02-A parity across all v4 polarity-bearing vocabulary decision sites
+- complete F03-D machine-observable subject binding without keyword whitelists
+- add direct regressions for all four independent counterexamples
+- rerun inherited v3/v4 and regenerate affected provenance, trace, inventory and P2-2 evidence
+- produce a new exact freeze receipt, refreeze report, result pointer and successor candidate
+- stop before self-accepting parent Stage04
+constraints:
+- executor_private_context_may_be_used_for_implementation_continuity_but_not_as_acceptance_evidence
+- no_rerun_or_rewrite_Stage01_02_03
+- exact_5b9888ee_remote_head_required_for_R6_continuation
+- do_not_mutate_or_relabel_previous_frozen_candidate_as_PASS
+- no_tail_matching_default_profile_payload_self_minting_or_generic_nested_authority
+- no_subject_keyword_whitelist_or_vagueness_blacklist
+- no_new_semantic_choice_without_foreground_return
+- no_self_review_or_parent_Stage04_self_acceptance
+- no_Stage05_canonical_or_master_write
+- no_force_push_rebase_squash_amend_or_history_rewrite
+- no_redelegation_or_automatic_progression

@@ -1,0 +1,123 @@
+schema_version: citystate.foreground_adjudication.v1
+task_id: os-v2-t2-completion-001
+adjudication_id: FG-T2-COMPLETION-BLK-002-R2
+adjudicator_endpoint_id: gpt56-t2-completion-foreground-001
+adjudicator_task_role: foreground_t2_completion_coordinator
+triggering_finding_ref: e6e0157f29c041922573ed262264d84234a91ae9:01_os/_runs/run-20260828-t2-completion-001/08_结论/blocked_r2_wrapper_and_definitions_claimability_v1.yml
+implementation_branch_head_observed: e6e0157f29c041922573ed262264d84234a91ae9
+accepted_structural_provenance_source_sha: 7cf9195715dcc7aa34bd09a8bc0f8320415f3930
+parent_checkpoint_sha: 3002d6177779abf81e6d476bfc434ee5d6dbe3c8
+current_model_version: T2-COMPLETION-CM-v1
+model_change_required: false
+human_semantic_choice_required: false
+
+work_performed_or_requested: >-
+  Adjudicate the three claimability questions exposed after applying R1: exact
+  transparent-wrapper coverage, bare condition names resolved through an explicit
+  sibling definitions block, and the historical reviewer S14 document that is
+  currently unbound.
+
+implementation_or_review_method: >-
+  Reconstruct each question from primary executable evidence rather than from the
+  executor's proposed green path. Compare the current root-anchored positive-
+  transparency binding with the parent v4 metamorphic corpus, F03-D adapter and
+  vocabulary, and the exact historical independent-review S01-S03/S14 mutations.
+  Preserve the CM-v2 invariant that undeclared structure supplies no authority and
+  add only evaluator-owned exact bindings already required by accepted parent or
+  reviewer contracts.
+
+supportability_rationale: >-
+  S01-S03 and V4MT02 explicitly classify their exact added envelopes as transparent;
+  F03-D already implements bare-name resolution only through a structured sibling
+  definitions region; and historical S14 explicitly expects a real second role
+  source at workflow/new_role_source.yml to be detected as FAIL(P01). These are
+  machine/executable commitments predating this ruling, not intent inferred from the
+  current failing tests.
+
+feasibility_rationale: >-
+  All three closures can be represented in the existing evaluator-owned structural
+  binding without restoring tail matching, adding payload-selected authority,
+  changing adapters, rewriting the accepted upstream branch, or reopening Stage01-03.
+  The work is a bounded completion-branch binding extension followed by the existing
+  inherited regression suites.
+
+adjudication:
+  Q1_transparent_wrappers:
+    ruling: positive_profile_scoped_transparency_only
+    do_not_restore_tail_matching: true
+    exact_additions:
+      role_contract_v1:
+      - [contract]
+      window_contract_v1:
+      - [contract]
+      - [window_contract]
+      handoff_contract_v1:
+      - [contract]
+    global_transparent_anchor_change_required: false
+    all_other_undeclared_wrappers_remain: unknown_unclaimable
+    rationale: >-
+      The exact historical reviewer S01-S03 mutations use a root contract envelope
+      and expect PASS as transparent nesting. V4MT02 uses a root window_contract
+      envelope and explicitly calls it a transparent wrapper. CM-v2 already defines
+      the safe mechanism: positively declared wrappers are removed before root-
+      anchored matching. Scoping the exact envelopes to the affected profiles
+      preserves B1 because no undeclared ancestor becomes transparent and no tail
+      match is reintroduced.
+
+  Q2_condition_definitions:
+    ruling: evaluator_bound_sibling_definition_region_is_in_contract
+    bare_condition_name_authority: none
+    exact_container_rules:
+    - selector: [lifecycle, condition_definitions]
+      child_keys: instance_identity
+    - selector: [lifecycle, condition_definitions, "*"]
+      child_keys: declaration_name
+    resolution_rule: >-
+      A bare condition name may resolve only by exact identity lookup to a structured
+      record in the evaluator-bound sibling condition_definitions region. No subject,
+      observation or other semantics may be inferred from the bare name spelling.
+    generic_definition_region_inference: prohibited
+    rationale: >-
+      Parent F03-D already contains CONDITION_DEFINITION_REGION_TOKENS and executable
+      sibling resolution for exactly this representation, and V4MT13 exists to
+      distinguish F03-D from a blanket ban on bare strings. Structural provenance
+      therefore binds the existing machine semantic surface rather than inventing a
+      new authority source.
+
+  Q3_historical_S14_document:
+    ruling: preserve_global_unbound_fail_closed_and_bind_exact_known_reviewer_identity
+    global_unbound_document_behavior: unknown_visible_unsupported
+    exact_document_profile_addition:
+      workflow/new_role_source.yml: role_source_v1
+    default_or_inferred_profile: prohibited
+    path_or_filename_semantic_inference: prohibited
+    rationale: >-
+      Historical independent-review S14 creates exactly workflow/new_role_source.yml
+      as a real second role source with generic IDs and unseen labels and expects
+      FAIL(P01). The accepted binding already registers other fixed adversarial
+      second-role-source identities for the same reason: otherwise fail-closed
+      refusal makes the ownership scan unable to test the reviewer's proposition.
+      Exact opaque registration of this known corpus identity restores that test
+      without weakening B2 for genuinely unregistered documents.
+
+implementation_location: completion_branch_evaluator_owned_structural_binding_v1
+upstream_branch_modification_required: false
+adapter_change_required_by_ruling: false
+fixture_or_test_change_required_by_ruling: false
+
+executor_instruction_boundary:
+- Apply only the exact R2 structural-binding additions above on dev/os-v2-t2-completion-001.
+- Keep selectors root-anchored and transparency positive; do not introduce tail matching or generic wrapper inference.
+- Keep bare condition names non-authoritative and definition resolution exact to the bound structured sibling region.
+- Keep genuinely unregistered documents unknown and visibly unsupported; do not add a default profile.
+- Re-run the inherited v3 and v4 suites unmodified, capture actual process exit codes, and report the failing-set transition by test identity.
+- If the current seven failures contract but expose a new load-bearing claimability or authority choice, stop and return with the new primary signature.
+- If correction-003 construction completes, publish one exact candidate and formal result for fresh independent review.
+- Do not begin P2-2 before fresh independent correction-003 PASS and foreground verification.
+
+residual_limits:
+- Q1 and Q2 currently co-surface through the same metamorphic tests, so individual causal closure must be judged from the next primary signatures, not inferred from aggregate count.
+- A deeper latent failure may still appear after these signatures clear.
+- This ruling does not itself constitute correction-003 PASS or independent acceptance.
+
+verdict: RULING_ISSUED_CONTINUE_CORRECTION003_CONSTRUCTION

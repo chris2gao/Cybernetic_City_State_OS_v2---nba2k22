@@ -1,0 +1,272 @@
+schema_version: citystate.stage04.freeze_receipt.v1
+task_id: os-v2-role-window-context-model-routing-integration-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+stage: 04_测试生成
+artifact_version: 2
+frozen_at: '2026-08-12'
+status: corrected_frozen_awaiting_fresh_independent_acceptance
+
+supersedes:
+  path: 04_测试生成/freeze_receipt_v1.yml
+  sha256: c17c76895c89c4aaf72e97890c5ea95b2e44e536f77dba42fd33f2bedda40154
+  effect: superseded_for_active_stage04_acceptance
+  disposition: >-
+    v1 is retained byte-identical as history. It records the package the
+    independent review found six blocking defects in; deleting or editing it
+    would erase the evidence that those defects existed.
+
+freeze_authorization:
+  authorization_ref: 04_测试生成/Stage04_Human窄修正授权_v1.yml
+  authorization_sha256: 543f811ef5650be525f17a9df70b20e1f6e8961f330387bbe5b170577fa9e4d3
+  dispatch_ref: 04_测试生成/Stage04_窄修正派单_v2.md
+  dispatch_sha256: e4ee87064790cfdae9dd2d64024bac047ceeef57a914d8d517976d0f9b9de22b
+  adjudication_ref: 04_测试生成/独立接收审核/Stage04冻结测试包独立接收裁决_v1.yml
+  adjudication_sha256: f8a062234d3931027beacabf2c0c2116715e0d299400065b3a7441fa91cbc199
+  proposal_ref: 04_测试生成/Stage04_FIX_REQUIRED接收与Human窄修正提案_v1.yml
+  proposal_sha256: e31d6179faedaacfe0c4f372c1e0d2b0bb83d21d3f6a62c71d75031c20001073
+  scope: one_narrow_stage04_frozen_package_correction
+  canonical_write: false
+  master_write: false
+  destructive_git: false
+
+executor_identity:
+  role: stage_04_test_designer_correction
+  provider: Anthropic
+  exact_model: Claude Opus 5
+  ui_surface: Claude desktop app, Cowork mode
+  reasoning_setting: not_exposed
+  entry_mode: explicit_reentry
+  entry_mode_basis: >-
+    Same window as the artifact_version 1 design session. Re-entry was performed
+    by re-reading remote branch head, master, the authorization, the adjudication
+    and the proposal from the repository rather than relying on conversational
+    continuity. Host session identity remains not machine observable; this is a
+    disclosed assertion, not a technical proof — the same disposition the package
+    itself freezes in RW-T23.
+  author_is_not_final_acceptor: true
+
+source_binding:
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  task_branch: dev/os-v2-role-window-context-model-routing-integration-001
+  source_base_head: e76ffb6305c8e015979a8b8f6c81821186b1fb49
+  remote_master_at_freeze: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  master_is_ancestor_of_task_branch: true
+  local_worktree_fast_forwarded_from: 3aa32088e60ac80ad1afbad9a530231c03e937db
+  worktree: separate sibling git worktree per the workspace adjudication
+  other_worktree_untouched: true
+
+closes_blockers:
+  - id: ST04-IR-001
+    how: >-
+      New RW-T43. Ownership-aware A11 model-catalog thinness: a workflow or entry
+      document may point at model_routing, invoke its validator and name receipt
+      fields, but may not restate three or more of the live catalog's own model
+      identifiers as structured entries, nor claim the catalog schema. Identifiers
+      are read from the tree under test rather than hard-coded.
+    regression: M43 (a model tier table appended to a workflow stage README)
+    conforming_counterexample: C07 (pointer plus receipt field names)
+    premise_correction: >-
+      v1 omitted this check because its design note claimed entry section 7.1
+      still carried the old model tier table. That was measured on a different
+      worktree; on this task branch section 7.1 is already the thin model-routing
+      preflight. Re-measured on the T2 worktree this round.
+  - id: ST04-IR-002
+    how: >-
+      RW-T08 rewritten. Only fresh and reentry are mandatory. A third mode is
+      optional and unnamed by the test; if present it must declare its own window
+      identity and name the window it descends from.
+    regression: M08 (third mode degraded to `behaves_like: reentry` with no identity)
+    conforming_counterexample: C08 (no third mode at all), C09 (third mode renamed to 分叉后继)
+    note: the fixture validator was relaxed to match, or C08/C09 would have failed inside the fixture
+  - id: ST04-IR-003
+    how: >-
+      Discovery is naming-neutral. A mechanism is recognised when its documents
+      cover the role, window and handoff kinds, established either by a
+      descriptive declaration in its boot manifest or registry, or by document
+      content. Content evidence takes precedence over descriptive wording.
+    regression: covered indirectly by every mechanism-dependent check
+    conforming_counterexample: C01 (renamed schema_version plus non-committal boot purposes), C02 (renamed canonical files)
+    self_inflicted_defect_found_and_fixed: >-
+      The first correction attempt built the descriptive blob from all string
+      values in a boot/registry entry, including `path`. The directory name
+      window_role_binding then declared every one of its files to be both the
+      role contract and the window contract, and 15 of 43 checks silently bound
+      the wrong document. Fixed by restricting the blob to descriptive keys and
+      dropping any token containing a slash.
+  - id: ST04-IR-004
+    how: >-
+      Three independent fixes. Polarity: enabled_positions() skips keys whose own
+      name carries a negation marker and treats prohibition-naming values as not
+      truthy. Structure: declared_prohibitions() accepts list, mapping and
+      `<field>_prohibited: true` forms. Provenance: RW-T19 scans only normative
+      binding keys and excludes provenance, evidence and citation fields.
+    regression: M19, M25, M26, M34, M35, M36
+    conforming_counterexample: C03 (negative-polarity declarations), C04 (mapping-form prohibitions), C05 (provenance naming vendors)
+    self_inflicted_defect_found_and_fixed: >-
+      `preferred_provider` was initially excluded as provenance because the bare
+      substring `ref` matched inside "preferred". M19 survived. `ref` is now
+      matched as a whole segment. This is the same bare-substring shape T1 paid
+      for in MR-T25.
+  - id: ST04-IR-005
+    how: >-
+      stage_dependency_closure() replaces the mechanism-only staging. Starting
+      from the mechanism, boot, loader and registry, it follows every
+      repository-relative path appearing in staged text to a bounded fixpoint,
+      pulling in a whole foreign mechanism when a dependency lands inside one.
+      Zero-before / non-zero-after semantics unchanged.
+    regression: M37..M42
+    conforming_counterexample: >-
+      The fixture validator now really reads
+      01_os/03_mechanisms/model_routing/路由契约_v1.yml and asserts its authority
+      constant. Measured closure size 1004 files; if model_routing were missing
+      from the closure all six probes would fail at baseline.
+  - id: ST04-IR-006
+    how: >-
+      markdown_role_table() now requires the same dual condition as the YAML
+      side: three or more role concepts in the first column AND a normative
+      per-role attribute in the header.
+    regression: M05, M31 (`| Role | Produces |` tables)
+    conforming_counterexample: C06 (`| 角色 | 推荐档位 |` applicability table)
+
+retained_unchanged:
+  RW_T06: valid_and_retained
+  RW_T30_scope: limited_to_T2_mechanism_indexing
+  publisher_authority_preservation: RW-T33 unchanged
+  existing_validator_preservation: RW-T32 unchanged
+  runtime_behavior: still degraded to honest contract checks, no runtime proof claimed
+  instance_storage_path: still not frozen
+
+frozen_payload:
+  normalized_digest: 993658e84f7481d1c96fe48d074a3ef401831d05f5da44c38c28295874df3848
+  superseded_digest: d4fd85889a73e8dd313065e355290992cbf166fa6034420efe9f9c68974996e1
+  digest_scope: payload without test_package_sha256
+  normalization: >-
+    yaml.safe_dump(allow_unicode=True, sort_keys=True, width=4096) then SHA-256,
+    identical to
+    01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py
+
+counts:
+  total: 43
+  positive: 17
+  negative: 17
+  boundary: 9
+  delta_from_v1: "+1 (RW-T43 added; RW-T08/T19/T25/T31/T34/T35/T36 rewritten; RW-T05 and RW-T37..T42 corrected)"
+
+harness_and_fixture_hashes:
+  - path: 04_tests.yml
+    sha256: bbadb1fe3119408a60d17e0e2e5c151d7c995724771ceccffd4e646113d2d1be
+  - path: 实现/verify_stage04_acceptance.py
+    sha256: 9b1db597120b8b375b668fc23aa1b4c0d5518d455d68faf932e708853e320917
+  - path: 测试设计说明_v2.md
+    sha256: 491e70965972797625289a3832e70b34371153123ed53d2dddd1c7abd771da60
+  - path: 测试设计说明_v1.md
+    sha256: a891b424c0a753aef921b74d13101713f6afe2737d0b160f2bf7dd9f4b1b4ab7
+    disposition: retained_as_history
+  - path: fixtures/mutations_v2.yml
+    sha256: 7e2178824eb8787ec3932c8a6289d01aadbfe7c5698bd1d00a005681744eba9d
+  - path: fixtures/mutations_v1.yml
+    sha256: fbeb0f0cb1becd4375fc8f5ed16ee3904b86f89c4fb85b02e1dc2f66f3294956
+    disposition: retained_as_history
+  - path: fixtures/overlay_edits_v1.yml
+    sha256: 959012279f48a584a594334f18878d8f5eb78ec16dc64e961acdc14982cc8117
+  - path: fixtures/overlay/01_os/02_boot/window_role_binding/boot_v1.yml
+    sha256: c8993cb2c3fa18a8b469906e1ab25144f1bb2c25738fecfa24ac335748983319
+  - path: fixtures/overlay/01_os/03_mechanisms/window_role_binding/README.md
+    sha256: 9a1c3e326d085c474f820cabd0c5c7a3ec4f1afe51b41375e1e4782b148a4596
+  - path: fixtures/overlay/01_os/03_mechanisms/window_role_binding/roles_v1.yml
+    sha256: 30a0d38468563779dcfa81bc06c179cf091e3034f382632ea1e6167fcd527862
+  - path: fixtures/overlay/01_os/03_mechanisms/window_role_binding/windows_v1.yml
+    sha256: 72666ef5c552ea1339e7ce7dc232e4424de014aedfa9ccca712b0967f2d409a5
+  - path: fixtures/overlay/01_os/03_mechanisms/window_role_binding/handoff_v1.yml
+    sha256: c187f29f3659107dc0c5460a95e173555d778b6c41abba982ae0cfead5771e59
+  - path: fixtures/overlay/01_os/03_mechanisms/window_role_binding/impl/check_binding.py
+    sha256: 924e0782a450f8820ae9ce78b302d0e988322af7c8f2635d6ec754eca4eda6fe
+  - path: fixtures/overlay/01_os/05_registry/window_role_binding_v1.yml
+    sha256: 5d3c1aa37b48b0915cc26ba82d6857fc493917b3fc1bfd36cb3f7758df0afab0
+  - path: fixtures/overlay/01_os/06_execution/boot/window_role_binding/README.md
+    sha256: 1813a2984bf32ef9e22dac693145cbf1ba66c5ed4d59bae2b50c812ccb72e2d4
+
+results:
+  environment:
+    os: Windows
+    python: 3.14.6
+    pyyaml: 6.0.3
+  package_validation:
+    command: verify_stage04_acceptance.py package <run_root>
+    exit_code: 0
+    detail: >-
+      43 tests, digest matches, every input_ref and supporting_ref sha verified
+      on disk, artifact_version >= 2 enforced, and all six accepted blockers
+      bound to the package.
+  selftest:
+    command: verify_stage04_acceptance.py selftest <repo_root>
+    exit_code: 0
+    elapsed_seconds: 844.7
+    positive:
+      tree: current repository tree plus fixtures/overlay/** plus fixtures/overlay_edits_v1.yml
+      green: 43
+      total: 43
+    negative:
+      mutations: 43
+      killed: 43
+      kill_rate: '100%'
+    conforming:
+      variants: 9
+      green: 9
+      note: >-
+        New category this round. Four of the six blocking findings were false
+        positives that no mutation could expose; only a legitimate alternative
+        implementation that must stay green can prove they are fixed.
+    boundary:
+      - probe: empty_tree
+        expected_green: [RW-T05, RW-T31]
+        result: ok
+      - probe: mechanism_without_boot_or_registry
+        expected_red: [RW-T28, RW-T29, RW-T34, RW-T37, RW-T38, RW-T39, RW-T40, RW-T41, RW-T42]
+        result: ok
+  current_repository_baseline:
+    command: verify_stage04_acceptance.py acceptance <repo_root>
+    exit_code: 1
+    green: 4
+    red: 39
+    total: 43
+    green_ids: [RW-T31, RW-T32, RW-T33, RW-T43]
+    interpretation: >-
+      Red as expected: the T2 canonical mechanism does not exist yet. The four
+      green checks are preservation checks that are already true and must stay
+      true after implementation — workflow and entry are thin on roles and on the
+      model catalog, the three existing mechanism validators exit 0, and
+      publisher authority is unchanged.
+  performance_note: >-
+    The full selftest takes about 14 minutes because every mutation and variant
+    rebuilds a candidate tree and every validator probe stages a 1004-file
+    dependency closure. The previous independent review timed out at 300 s and
+    had to run on a reduced tree. A reviewer should budget 15-20 minutes or run
+    the acceptance and package commands alone, which take seconds.
+
+known_limitations:
+  - statement: >-
+      43/43 kills and 9/9 conforming passes are not a completeness claim.
+      artifact_version 1 also reported 42/42 and was still found to contain six
+      blocking defects, four of which no mutation could have exposed.
+  - statement: >-
+      The conforming variants cover the representation classes the independent
+      review named. Other legitimate shapes may still be rejected; only a fresh
+      adversarial review can find them.
+  - statement: >-
+      Two defects were introduced and caught inside this correction round itself
+      (the path-leak in declared-kind discovery, and the bare `ref` substring).
+      Both are recorded rather than silently repaired, because both are instances
+      of failure shapes this project has already paid for.
+
+next_gate:
+  required: fresh_independent_acceptance_review
+  reviewer_must_be: a new session, preferably a different model family
+  reviewer_must_reattack:
+    - all six blockers
+    - test derivation from A and Stage02 rather than B
+    - false-positive surface of every lexical or structural scan
+    - mutation and conforming-variant adequacy
+  stage05_entry: blocked_until_that_review_passes
+
+completion_marker: stage04_t2_corrected_frozen_tests_ready_for_fresh_independent_acceptance

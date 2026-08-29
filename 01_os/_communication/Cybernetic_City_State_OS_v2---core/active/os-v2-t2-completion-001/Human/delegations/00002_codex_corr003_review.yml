@@ -1,0 +1,33 @@
+schema_version: citystate.communication.task_authority_delegation.v2
+task_id: os-v2-t2-completion-001
+task_authority_id: TA-os-v2-t2-completion-001-v1
+granted: true
+revoked: true
+Human_task_authority_ref: Human/task_authority_v2.yml
+delegation_id: DEL-os-v2-t2-completion-001-codex-corr003-review-001
+delegator_endpoint_id: gpt56-t2-completion-foreground-001
+delegator_task_role: foreground_t2_completion_coordinator
+recipient_endpoint_id: codex-t2-correction003-reviewer-001
+recipient_task_role: correction003_independent_acceptance_reviewer
+authorized_actions:
+- independently_reconstruct_correction003_acceptance_from_exact_durable_refs
+- independently_review_exact_candidate_9c50a4fe56b12c1add15967a5515785e8e6fb760
+- run_read_only_independent_regressions_and_external_adversarial_probes
+- publish_independent_review_result_without_modifying_candidate_branch
+delegated_scope:
+- correction003_independent_acceptance_and_closure
+- formal_dispatch_and_review
+- durable_T2_completion_evidence
+- task_scoped_local_git_environment_recovery
+parent_delegation_ref: null
+allow_redelegation: false
+revocation_reason: >-
+  Current Human decision D-T2-COMPLETION-002-HUMAN-CORR003-ACCEPT-AND-BIG-TASK
+  accepts exact candidate 9c50a4fe56b12c1add15967a5515785e8e6fb760 for progression
+  based on foreground review and waives this narrow correction-003 independent review.
+  Formal request 00005 remains historical evidence but is no longer actionable under
+  this revoked delegation.
+scope_boundary: >-
+  Historical narrow correction-003 independent-review delegation. It never authorized
+  implementation changes, P2-2, parent Stage04 PASS, Stage05, canonical/master writes,
+  or automatic progression.

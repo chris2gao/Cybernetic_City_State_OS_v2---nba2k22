@@ -1,0 +1,28 @@
+schema_version: citystate.run.v1
+run_id: run-20260814-stage04-successor-refreeze-001
+task_id: os-v2-stage04-successor-acceptance-refreeze-001
+parent_task_id: os-v2-role-window-context-model-routing-integration-001
+phase: construction
+status: authorized_ready_for_executor_dispatch
+owner: core
+branch: dev/os-v2-stage04-successor-acceptance-refreeze-001
+exact_base_sha: fa2c9b658df5ecfe9235261cb1f207af84efdfb3
+Human_authorization_ref: 00_governance/Human授权_v1.yml
+task_packet_ref: 00_governance/任务包_v1.yml
+accepted_methodology:
+  exact_sha: 19c39ed37f14c97cfa132ffafabcb9afa33dd7f0
+  independent_acceptance_closure_sha: 2fb7c6699fa8f6436d5d87053b841316074a7b6d
+  verdict: PASS
+write_boundary:
+  allowed_prefix: 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/
+  all_other_paths: read_only
+gates:
+  root_cause_replacement_acceptance: PASS
+  successor_construction_authorized: true
+  successor_fresh_independent_acceptance: required_after_freeze
+  parent_T2_Stage04_pass: false
+  parent_T2_Stage05: prohibited
+  canonical_write: prohibited
+  master_publication: prohibited
+  automatic_progression: prohibited
+next_action: dispatch Codex successor Stage04 v4 construction executor through communication-v2 control surface

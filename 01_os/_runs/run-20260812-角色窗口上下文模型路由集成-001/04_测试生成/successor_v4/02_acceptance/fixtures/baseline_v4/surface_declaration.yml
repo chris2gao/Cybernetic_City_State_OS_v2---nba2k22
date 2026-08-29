@@ -1,0 +1,23 @@
+schema_version: prototype.surface_declaration.v1
+purpose: >-
+  Declares surface MEMBERSHIP only. It stands in for the repository's real
+  discovery routes — the boot manifest load_order, the registry path-sets and the
+  development entry's workflow prefix. A11 is itself stated in terms of a surface
+  ("workflow stages and the stable development entry"), so surface membership is
+  a legitimate declared input.
+not_a_discovery_route_for:
+  document_kind: >-
+    What a document IS (role contract / window contract / handoff contract) is
+    derived from its content by facts.classify_kinds. It is never taken from a
+    file name, a directory name or a schema_version token. ST04-IR-003 was closed
+    on that basis and stays closed.
+catalog_owner: model_routing/catalog_v1.yml
+surface_prefixes:
+  mechanism:
+    - mechanism/
+  boot:
+    - boot/
+  registry:
+    - registry/
+  workflow_or_entry:
+    - workflow/

@@ -1,0 +1,58 @@
+schema_version: window_role_binding.handoff_contract.v1
+mechanism_version: 1
+status: active
+authority_effect: none
+
+handoff_record:
+  required_fields:
+    - from_window_id
+    - task_id
+    - from_role_id
+    - expected_next_role_id
+    - completed_outputs
+    - unresolved_blockers_and_findings
+    - exact_artifact_and_commit_refs
+    - allowed_next_refs
+    - invalidation_and_stale_conditions
+    - unchanged_authority_boundary
+  prohibited_fields:
+    - private_chain_of_thought
+    - private_reasoning
+    - delivery_state
+    - read_state
+    - accepted_state
+  immutable_after_publication: true
+
+progression:
+  human_triggered: true
+  human_relayed: true
+  does_not_imply:
+    - delivered
+    - opened
+    - read
+    - understood
+    - accepted
+    - task_advanced
+  automatic_handoff_delivery: false
+  automatic_task_progression: false
+  automatic_window_spawn: false
+  scheduler: false
+  watcher: false
+  daemon: false
+
+communication_boundary:
+  transport_owner: communication_system
+  transport_contract_ref: 01_os/03_mechanisms/communication_system/消息契约_v1.yml
+  relation: >-
+    A communication message may reference a handoff artifact by exact path. The
+    window lifecycle never enters the message schema, and the message schema
+    never becomes the live window store.
+
+authority_boundary:
+  unchanged_by_handoff:
+    - allowed_changed_paths
+    - risk_tier
+    - publisher_authority
+    - filesystem_and_security_authority
+    - human_gated_actions
+  effect: none

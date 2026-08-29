@@ -1,0 +1,73 @@
+message_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00008
+task_id: os-v2-t2-completion-001
+title: Correct four parent Stage04 findings and publish successor candidate
+message_type: request
+sender_endpoint_id: gpt56-t2-completion-foreground-001
+sender_task_role: foreground_t2_completion_coordinator
+expected_recipient_endpoint_id: claude-cowork-t2-stage04-correction-executor-001
+expected_recipient_task_role: parent_stage04_fix_required_correction_executor
+content: Continue the existing T2 implementation lineage from exact remote head 4f6bd40518ff7dc652d1e5819f9a10781cc2e425.
+  The fresh relationship-isolated Codex parent Stage04 review returned FIX_REQUIRED
+  and foreground accepts all four material findings. Implement the bounded successor
+  correction defined by task packet v3 and foreground adjudication 00005, add direct
+  regressions for all four counterexamples, rerun inherited v3/v4, regenerate affected
+  provenance/trace/ inventory/P2-2 evidence, then generate a new exact freeze receipt,
+  refreeze report and result pointer for one successor candidate. Preserve the previous
+  frozen candidate and FIX_REQUIRED review as historical evidence. Do not self-accept
+  the new candidate; return it for a new relationship-isolated review.
+required_refs:
+- Human/task_authority_v2.yml
+- Human/delegations/00005_claude_parent_stage04_fix_required_correction.yml
+- role_context/gpt56-t2-completion-foreground-001.yml
+- role_context/claude-cowork-t2-stage04-correction-executor-001.yml
+- documents/gpt56-t2-completion-foreground-001/00005_parent_stage04_fix_required_adjudication.md
+- messages/codex-t2-parent-stage04-reviewer-001/00001_result.yml
+- documents/codex-t2-parent-stage04-reviewer-001/00001_parent_stage04_independent_review.md
+requested_action: correct_parent_stage04_four_material_findings_from_codex_review_5f4520dd123ba634b1082f3ac7dbb6284a79849c
+authorization_ref: Human/delegations/00005_claude_parent_stage04_fix_required_correction.yml
+recipient_delegation_ref: Human/delegations/00005_claude_parent_stage04_fix_required_correction.yml
+facts:
+  work_performed_or_requested: Correct all four independently established parent Stage04
+    defects in one bounded successor pass and regenerate the exact freeze/result chain.
+  implementation_or_review_method: Enter at exact 4f6bd405, implement only the four
+    foreground-accepted corrections, add direct counterexample regressions, rerun
+    inherited suites with actual exit codes, regenerate affected evidence and publish
+    one newly frozen successor.
+  supportability_rationale: Each correction is already fixed in direction by Human-confirmed
+    A, F02-A, F03-D or correction-003 evaluator-owned structural provenance; no new
+    Human semantic choice is needed for the reported defects.
+  feasibility_rationale: The defects are confined to existing successor_v4 acceptance/corpus/evidence
+    paths and the existing T2 completion run, all inside the authorized allowlist.
+  exact_entry_head: 4f6bd40518ff7dc652d1e5819f9a10781cc2e425
+  previous_frozen_candidate: 4ce3e09e8c75881165f7705ab3a0398a4d3acf9c
+  independent_FIX_REQUIRED_commit: 5f4520dd123ba634b1082f3ac7dbb6284a79849c
+  current_model_ref: 01_os/_runs/run-20260828-t2-completion-001/02_当前模型/current_model_v3.yml
+  task_packet_ref: 01_os/_runs/run-20260828-t2-completion-001/01_任务输入/任务包_v3.yml
+constraints:
+- preserve Stage01-03 without rerun or rewrite
+- begin only from exact remote implementation head 4f6bd40518ff7dc652d1e5819f9a10781cc2e425
+- v4 key-based semantic ownership must consume evaluator-owned structural provenance
+- route-receipt missing/stale/inconsistent policy must be explicitly fail-closed or
+  non-pass
+- every v4 polarity-bearing token-vocabulary decision must use accepted negation parity
+- F03-D subject resolution must prove machine-observable binding; non-empty text alone
+  is insufficient
+- do not introduce subject keyword whitelists, vagueness blacklists, tail matching
+  or payload authority
+- do not mutate or relabel previous frozen candidate 4ce3e09e as PASS
+- run direct regressions for all four Codex counterexamples plus inherited v3/v4
+- regenerate affected provenance, trace, inventory, receipt, refreeze and result-pointer
+  evidence
+- do not self-review or claim parent Stage04 PASS
+- no Stage05, canonical implementation, master write, force, rebase, squash, amend
+  or history rewrite
+- no redelegation or automatic progression
+risks:
+- fixing only the four literal strings can leave the defect families open; audit the
+  full v4 ownership and polarity decision surfaces
+- machine-observable subject binding must be structural or exact-reference based,
+  not a lexical blessed-subject vocabulary
+- receipt/refreeze ordering must again prove exact full_candidate_tree topology for
+  the new candidate
+- inherited suite greenness is necessary but not sufficient; the four direct counterexamples
+  are load-bearing regressions

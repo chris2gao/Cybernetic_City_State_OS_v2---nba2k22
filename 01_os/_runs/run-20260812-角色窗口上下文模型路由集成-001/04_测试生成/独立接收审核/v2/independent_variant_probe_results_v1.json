@@ -1,0 +1,293 @@
+{
+  "review_probe_version": 1,
+  "independent_normalized_digest": "993658e84f7481d1c96fe48d074a3ef401831d05f5da44c38c28295874df3848",
+  "base_candidate": {
+    "green": 43,
+    "total": 43,
+    "red": []
+  },
+  "variants": {
+    "V10_disabled_suffix_prohibitions": {
+      "semantic_expectation": "conforming; all checks should remain green",
+      "green": 42,
+      "total": 43,
+      "red": [
+        "RW-T25"
+      ],
+      "details": {
+        "RW-T25": "handoff never prohibits a private reasoning field; declared=[]"
+      },
+      "target_results": {
+        "RW-T08": {
+          "passed": true,
+          "detail": "fresh and reentry are separable; optional further modes ['forked_successor'] keep their own identity"
+        },
+        "RW-T09": {
+          "passed": true,
+          "detail": "reentry requires an exact predecessor (required_fields[1]='predecessor_window_id')"
+        },
+        "RW-T19": {
+          "passed": true,
+          "detail": "no provider is bound normatively in the role contract"
+        },
+        "RW-T25": {
+          "passed": false,
+          "detail": "handoff never prohibits a private reasoning field; declared=[]"
+        },
+        "RW-T05": {
+          "passed": true,
+          "detail": "single role source across the active surface"
+        },
+        "RW-T31": {
+          "passed": true,
+          "detail": "workflow and entry carry no role table or context boot duplicate"
+        },
+        "RW-T43": {
+          "passed": true,
+          "detail": "no duplicated catalog (10 live identifiers checked); pointers are allowed"
+        }
+      }
+    },
+    "V11_list_shaped_entry_modes": {
+      "semantic_expectation": "conforming; all checks should remain green",
+      "green": 41,
+      "total": 43,
+      "red": [
+        "RW-T08",
+        "RW-T09"
+      ],
+      "details": {
+        "RW-T08": "no entry-mode block found",
+        "RW-T09": "no reentry entry-mode block"
+      },
+      "target_results": {
+        "RW-T08": {
+          "passed": false,
+          "detail": "no entry-mode block found"
+        },
+        "RW-T09": {
+          "passed": false,
+          "detail": "no reentry entry-mode block"
+        },
+        "RW-T19": {
+          "passed": true,
+          "detail": "no provider is bound normatively in the role contract"
+        },
+        "RW-T25": {
+          "passed": true,
+          "detail": "private reasoning and delivery state are prohibited (5 declared)"
+        },
+        "RW-T05": {
+          "passed": true,
+          "detail": "single role source across the active surface"
+        },
+        "RW-T31": {
+          "passed": true,
+          "detail": "workflow and entry carry no role table or context boot duplicate"
+        },
+        "RW-T43": {
+          "passed": true,
+          "detail": "no duplicated catalog (10 live identifiers checked); pointers are allowed"
+        }
+      }
+    },
+    "V12_structured_provider_pin": {
+      "semantic_expectation": "nonconforming; RW-T19 must turn red",
+      "green": 43,
+      "total": 43,
+      "red": [],
+      "details": {},
+      "target_results": {
+        "RW-T08": {
+          "passed": true,
+          "detail": "fresh and reentry are separable; optional further modes ['forked_successor'] keep their own identity"
+        },
+        "RW-T09": {
+          "passed": true,
+          "detail": "reentry requires an exact predecessor (required_fields[1]='predecessor_window_id')"
+        },
+        "RW-T19": {
+          "passed": true,
+          "detail": "no provider is bound normatively in the role contract"
+        },
+        "RW-T25": {
+          "passed": true,
+          "detail": "private reasoning and delivery state are prohibited (5 declared)"
+        },
+        "RW-T05": {
+          "passed": true,
+          "detail": "single role source across the active surface"
+        },
+        "RW-T31": {
+          "passed": true,
+          "detail": "workflow and entry carry no role table or context boot duplicate"
+        },
+        "RW-T43": {
+          "passed": true,
+          "detail": "no duplicated catalog (10 live identifiers checked); pointers are allowed"
+        }
+      }
+    },
+    "V13_yaml_role_applicability_matrix": {
+      "semantic_expectation": "conforming; RW-T05/RW-T31 must remain green",
+      "green": 41,
+      "total": 43,
+      "red": [
+        "RW-T05",
+        "RW-T31"
+      ],
+      "details": {
+        "RW-T05": "duplicate normative role table: 01_os/01_workflow/03_结果建模/role_stage_context_applicability.yml['backend_execution', 'deep_research', 'independent_review']",
+        "RW-T31": "01_os/01_workflow/03_结果建模/role_stage_context_applicability.yml role table ['backend_execution', 'deep_research', 'independent_review']"
+      },
+      "target_results": {
+        "RW-T08": {
+          "passed": true,
+          "detail": "fresh and reentry are separable; optional further modes ['forked_successor'] keep their own identity"
+        },
+        "RW-T09": {
+          "passed": true,
+          "detail": "reentry requires an exact predecessor (required_fields[1]='predecessor_window_id')"
+        },
+        "RW-T19": {
+          "passed": true,
+          "detail": "no provider is bound normatively in the role contract"
+        },
+        "RW-T25": {
+          "passed": true,
+          "detail": "private reasoning and delivery state are prohibited (5 declared)"
+        },
+        "RW-T05": {
+          "passed": false,
+          "detail": "duplicate normative role table: 01_os/01_workflow/03_结果建模/role_stage_context_applicability.yml['backend_execution', 'deep_research', 'independent_review']"
+        },
+        "RW-T31": {
+          "passed": false,
+          "detail": "01_os/01_workflow/03_结果建模/role_stage_context_applicability.yml role table ['backend_execution', 'deep_research', 'independent_review']"
+        },
+        "RW-T43": {
+          "passed": true,
+          "detail": "no duplicated catalog (10 live identifiers checked); pointers are allowed"
+        }
+      }
+    },
+    "V14_mixed_descriptive_declarations": {
+      "semantic_expectation": "conforming; content priority must keep all checks green",
+      "green": 43,
+      "total": 43,
+      "red": [],
+      "details": {},
+      "target_results": {
+        "RW-T08": {
+          "passed": true,
+          "detail": "fresh and reentry are separable; optional further modes ['forked_successor'] keep their own identity"
+        },
+        "RW-T09": {
+          "passed": true,
+          "detail": "reentry requires an exact predecessor (required_fields[1]='predecessor_window_id')"
+        },
+        "RW-T19": {
+          "passed": true,
+          "detail": "no provider is bound normatively in the role contract"
+        },
+        "RW-T25": {
+          "passed": true,
+          "detail": "private reasoning and delivery state are prohibited (5 declared)"
+        },
+        "RW-T05": {
+          "passed": true,
+          "detail": "single role source across the active surface"
+        },
+        "RW-T31": {
+          "passed": true,
+          "detail": "workflow and entry carry no role table or context boot duplicate"
+        },
+        "RW-T43": {
+          "passed": true,
+          "detail": "no duplicated catalog (10 live identifiers checked); pointers are allowed"
+        }
+      }
+    },
+    "V15_markdown_definition_list_catalog": {
+      "semantic_expectation": "nonconforming; RW-T43 must turn red",
+      "green": 43,
+      "total": 43,
+      "red": [],
+      "details": {},
+      "target_results": {
+        "RW-T08": {
+          "passed": true,
+          "detail": "fresh and reentry are separable; optional further modes ['forked_successor'] keep their own identity"
+        },
+        "RW-T09": {
+          "passed": true,
+          "detail": "reentry requires an exact predecessor (required_fields[1]='predecessor_window_id')"
+        },
+        "RW-T19": {
+          "passed": true,
+          "detail": "no provider is bound normatively in the role contract"
+        },
+        "RW-T25": {
+          "passed": true,
+          "detail": "private reasoning and delivery state are prohibited (5 declared)"
+        },
+        "RW-T05": {
+          "passed": true,
+          "detail": "single role source across the active surface"
+        },
+        "RW-T31": {
+          "passed": true,
+          "detail": "workflow and entry carry no role table or context boot duplicate"
+        },
+        "RW-T43": {
+          "passed": true,
+          "detail": "no duplicated catalog (10 live identifiers checked); pointers are allowed"
+        }
+      }
+    }
+  },
+  "dependency_closure": {
+    "deterministic_two_runs": true,
+    "staged_file_count": 1012,
+    "staged_list_sha256": "590a5d2dfcb47ad2b2c83ba238f8611eeecc839de1f1a4ebcf92d9b526f758e9",
+    "required_dependency_presence": {
+      "context_management": true,
+      "model_routing": true,
+      "communication_system": true
+    },
+    "history_path_count": 776,
+    "unresolved_file_ref_count": 16,
+    "unresolved_file_refs_first_20": [
+      ".githooks/.gitattributes",
+      ".githooks/README.md",
+      ".githooks/install.ps1",
+      ".githooks/pre-push",
+      ".githooks/test_pre_push_logic.ps1",
+      "01_os/04_skills_and_tools/README.md",
+      "01_os/04_skills_and_tools/check-jsonschema/README.md",
+      "01_os/04_skills_and_tools/cosmic-ray/README.md",
+      "01_os/04_skills_and_tools/mutmut/README.md",
+      "01_os/04_skills_and_tools/工具选型_v1.md",
+      "01_os/04_skills_and_tools/模型与供应商能力清单_v1.md",
+      "01_os/04_skills_and_tools/确定性工具接入收益与风险评估_v1.md",
+      "01_os/07_content/README.md",
+      "01_os/README.md",
+      "01_os/claude与人类的开发对话日志.md",
+      "01_os/开发入口与单窗口任务规范_v1.md"
+    ],
+    "unresolved_directory_member_count": 11,
+    "unresolved_directory_members_first_20": [
+      "01_os/04_skills_and_tools/README.md",
+      "01_os/04_skills_and_tools/check-jsonschema/README.md",
+      "01_os/04_skills_and_tools/cosmic-ray/README.md",
+      "01_os/04_skills_and_tools/mutmut/README.md",
+      "01_os/04_skills_and_tools/工具选型_v1.md",
+      "01_os/04_skills_and_tools/模型与供应商能力清单_v1.md",
+      "01_os/04_skills_and_tools/确定性工具接入收益与风险评估_v1.md",
+      "01_os/07_content/README.md",
+      "01_os/README.md",
+      "01_os/claude与人类的开发对话日志.md",
+      "01_os/开发入口与单窗口任务规范_v1.md"
+    ]
+  }
+}

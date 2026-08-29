@@ -1,0 +1,41 @@
+schema_version: citystate.communication.task_authority_delegation.v2
+task_id: os-v2-t2-completion-001
+task_authority_id: TA-os-v2-t2-completion-001-v1
+delegation_id: DEL-os-v2-t2-completion-001-claude-stage04-fix-required-001
+delegator_endpoint_id: gpt56-t2-completion-foreground-001
+delegator_task_role: foreground_t2_completion_coordinator
+recipient_endpoint_id: claude-cowork-t2-stage04-correction-executor-001
+recipient_task_role: parent_stage04_fix_required_correction_executor
+authorized_actions:
+- correct_parent_stage04_four_material_findings_from_codex_review_5f4520dd123ba634b1082f3ac7dbb6284a79849c
+- regenerate_stage04_freeze_and_result_pointer_for_successor_candidate
+- publish_exact_execution_results_on_authorized_task_branch
+- perform_task_scoped_local_git_recovery
+delegated_scope:
+- correction003_replacement_candidate_construction
+- P2_2_provenance_audit
+- P2_2_receipt_binding
+- freeze_receipt_and_refreeze_report
+- exact_result_pointer_and_stage04_candidate_binding
+- durable_T2_completion_evidence
+- task_scoped_local_git_environment_recovery
+- task_branch_source_publication
+- formal_dispatch_and_review
+allow_redelegation: false
+Human_task_authority_ref: Human/task_authority_v2.yml
+granted: true
+revoked: false
+parent_delegation_ref: null
+execution_gate: >-
+  Use only after foreground has accepted the formal Codex FIX_REQUIRED result at
+  5f4520dd123ba634b1082f3ac7dbb6284a79849c. The initial 00008 entry gate at exact 4f6bd40518ff7dc652d1e5819f9a10781cc2e425
+  was satisfied and produced WIP 5b9888eeefa13f6c352e1bf9f42207c3e45801b5.
+  After foreground R6 ruling 00006, continuation may begin only when the observed
+  remote implementation branch head is exact 5b9888eeefa13f6c352e1bf9f42207c3e45801b5.
+  The previous frozen candidate remains historical evidence and must not be mutated
+  or relabeled PASS. Produce a successor candidate and stop before self-acceptance.
+scope_boundary: >-
+  This delegation authorizes the bounded successor correction necessary to close the
+  four independently established Stage04 findings and regenerate affected evidence,
+  freeze/refreeze and result-pointer artifacts. It does not authorize Stage01-03
+  rewrite, Stage05, canonical implementation, master publication or history rewrite.

@@ -1,0 +1,55 @@
+schema_version: citystate.stage04.corrected_candidate.foreground_check.v1
+task_id: os-v2-role-window-context-model-routing-integration-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+stage: workflow_stage_04_test_generation
+created_at: '2026-08-12'
+status: accepted_for_fresh_independent_acceptance_only
+
+physical_binding:
+  branch: dev/os-v2-role-window-context-model-routing-integration-001
+  correction_source_base: e76ffb6305c8e015979a8b8f6c81821186b1fb49
+  corrected_candidate_commit: c720988454e120bed9e6acbe63146c83144866f6
+  correction_commit_count: 1
+  correction_changed_path_count: 6
+  correction_scope_verdict: all_paths_within_Human_authorized_Stage04_correction_boundary
+  remote_branch_readback_at_check: c720988454e120bed9e6acbe63146c83144866f6
+  master_basis: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  master_modified_by_correction: false
+
+candidate_v2:
+  artifact_version: 2
+  freeze_receipt: 04_测试生成/freeze_receipt_v2.yml
+  normalized_digest: 993658e84f7481d1c96fe48d074a3ef401831d05f5da44c38c28295874df3848
+  test_count: 43
+  test_kinds: {positive: 17, negative: 17, boundary: 9}
+  executor_claimed_selftest:
+    candidate_green: 43/43
+    mutations_killed: 43/43
+    conforming_variants_green: 9/9
+    boundary_probes: passed
+  current_repository_baseline_claim: 4/43_green_39_red
+
+foreground_spot_check:
+  verdict: no_new_blocker_found_before_fresh_independent_review
+  not_a_final_acceptance: true
+  observations:
+    - Human-gated correction produced only the six authorized Stage04 paths; immutable v1 receipt, prior independent review, Human authorization, A, Stage02, B, canonical and run state were not modified by the correction commit.
+    - RW-T08 is no longer specified as an exact forked_successor token requirement; fresh and reentry remain mandatory while an additional successor mode is optional and semantically constrained only if present.
+    - provider-independence scanning is narrowed to normative bindings and provenance/citation text is excluded; ref matching is segment-aware rather than bare-substring.
+    - autonomy/quota/retention scanning is polarity-aware so *_prohibited:true and *_disabled:true are not interpreted as enabled behavior.
+    - Markdown duplicate-role-table detection now requires both role concepts and normative per-role attributes, aligning its shape with YAML detection.
+    - mechanism discovery no longer depends solely on exact schema_version document-kind tokens and records the path-leak defect found during correction.
+    - RW-T37..RW-T42 now use a declared dependency closure rather than a mechanism-only isolated staging surface.
+    - RW-T43 adds the previously omitted A11 mutable-model-catalog thinness preservation check.
+    - RW-T06 remains retained as valid; future Stage05/06 implementation boundary must include 01_os/02_boot/context_management/启动清单_v1.yml.
+
+risk_focus_for_fresh_reviewer:
+  - attack naming-neutral discovery with legal alternate declarations not present in the nine conforming variants
+  - attack polarity parsing with nested/mixed YAML shapes and synonyms not explicitly named by the correction author
+  - attack provenance-versus-normative-binding discrimination without relying on the existing C05 fixture
+  - verify RW-T43 cannot mistake pointers/receipt fields/model-routing references for a copied mutable catalog
+  - verify dependency closure is bounded, deterministic and includes every legitimate existing-mechanism dependency required by the candidate validator
+  - independently recompute digest and run package/acceptance; run full selftest if feasible and report not_run or timeout honestly otherwise
+
+stage05_entry: blocked
+next_gate: fresh_independent_stage04_v2_acceptance

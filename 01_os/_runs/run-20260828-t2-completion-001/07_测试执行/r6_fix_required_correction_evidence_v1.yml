@@ -1,0 +1,124 @@
+schema_version: citystate.run_evidence.v1
+run_id: run-20260828-t2-completion-001
+task_id: os-v2-t2-completion-001
+produced_by_endpoint_id: claude-cowork-t2-stage04-correction-executor-001
+collaboration_role: execution
+round: 6
+responds_to: 5f4520dd123ba634b1082f3ac7dbb6284a79849c (Codex parent Stage04 FIX_REQUIRED)
+
+work_performed_or_requested: >-
+  Close the four independently established parent Stage04 findings, persist a direct
+  regression for each, apply foreground rulings 00005 and 00006, regenerate derived
+  evidence and refreeze a successor candidate.
+
+implementation_or_review_method: >-
+  Reproduce each counterexample against the unmutated tree, correct at the mechanism the
+  finding names rather than at the string it reports, then re-measure the same mutation.
+  The measurement table below is the whole argument; the corrections are only how it was
+  reached.
+
+supportability_rationale: >-
+  Every row was produced in this session by mutating a private temporary copy of
+  baseline_v4 and running the real evaluator. The control row is what stops "the mutation
+  fails" from being satisfied by a package that fails everything.
+
+feasibility_rationale: >-
+  All four corrections were representable inside the existing acceptance layer and the
+  authorized allowlist. No Stage01-03 rerun, canonical write, master write or history
+  rewrite was required.
+
+counterexample_table:
+  control_unmutated_baseline_v4: all fourteen predicates pass
+  rows:
+  - case: T2-PARENT-IR-001 failure_states rewritten to [{X: {}}]
+    at_review: P24 pass -> fail
+    now: no predicate moves at all
+  - case: T2-PARENT-IR-002 route policy -> best_effort
+    at_review: all fourteen pass
+    now: P27 fail
+  - case: T2-PARENT-IR-002 route policy absent
+    at_review: not tested
+    now: P27 fail
+  - case: T2-PARENT-IR-002 route policy -> not_fail_closed
+    at_review: not tested
+    now: P27 fail
+  - case: T2-PARENT-IR-003 required stale state -> not_stale
+    at_review: all fourteen pass
+    now: P21 fail
+  - case: T2-PARENT-IR-003 every observation -> not_changed
+    at_review: all fourteen pass
+    now: P21 fail
+  - case: T2-PARENT-IR-003 consequence -> not_fail_closed
+    at_review: all fourteen pass
+    now: P21 fail
+  - case: T2-PARENT-IR-004 every subject -> subjective prose
+    at_review: all fourteen pass
+    now: P21 fail
+
+ir001_family_conversion:
+  contract: >-
+    bound_nodes' own docstring: the only traversal an adapter may use to pick a claim
+    site. v4 used raw walk_nodes, which is the defect, not the one witness.
+  converted_selectors:
+  - _regions and _regions_with_parent
+  - adapt_preload_positions (container and leaf)
+  - adapt_freshness_binding (leaf and container)
+  - adapt_route_receipts window-declaration scan
+  - adapt_family_requirements (container and leaf)
+  - adapt_mechanism_separation
+  - adapt_fallback_positions (container and leaf)
+  deliberately_left_raw:
+  - _regions_with_parent's parent scan, a structural sub-scan whose yielded node is gated
+  - _observable_positions, a referential-existence proof that mints no ownership,
+    explicitly permitted by the R6 ruling
+  residual_risk: >-
+    six selectors were found and converted by searching for document-wide raw traversal.
+    A seventh reached by a different route would not have been found by that search.
+
+structural_binding_changes:
+  from_foreground_r6_ruling:
+    registered: {mechanism/context_contract_v1.yml: context_contract_v1}
+    profile: root declaration_name, profile-scoped transparent_contract, four
+      declaration_name containers, no instance_identity
+  derived_by_analogy_and_reported:
+    added: window_contract_v1 [context_binding] -> declaration_name
+    reason: >-
+      a contract-owned field block with fixed slots, identical in shape to
+      [model_route_binding] which the same profile already rules declaration_name.
+      Needed because gating dropped context_binding.dependency_fingerprints to unknown
+      and P23 lost its binding leaf. Reported rather than absorbed silently.
+
+suites:
+  vendored_baseline_tests: {result: 65/65 passed, exit_code: 0, unchanged_every_round: true}
+  v4_tests: {before: 57/57, after: 68/68, exit_code: 0}
+  repeatability: {processes: 2, identical_output_sha256: true}
+  regenerated:
+    decision_provenance: {rules: 130, was: 128, untraced: 0}
+    requirement_trace: {criteria: 14, with_deciding_predicate: 14}
+    test_inventory: {modules: 16, tests: 133}
+
+freeze:
+  frozen_candidate: 628dd60e3505516254bf37956bcde5fb93c2723a
+  receipt: 04_测试生成/freeze_receipt_v4.yml
+  validation: valid, zero failures
+  changed_paths: 34
+  artifact_entries: 85
+  topology: full_candidate_tree
+  previous_frozen_candidate_untouched: 4ce3e09e8c75881165f7705ab3a0398a4d3acf9c
+
+what_this_does_and_does_not_prove:
+- The four reported counterexamples are closed, reproducibly, with persisted regressions.
+- The corrections were made at the mechanism, and for IR-003 the two role resolvers are
+  asserted directly so the fix cannot be a three-string patch.
+- It does NOT prove the defect families are closed, only the reported witnesses plus the
+  extra cases added here.
+- It does NOT prove the IR-001 conversion is complete.
+- It is NOT acceptance. The previous round was green on 57/57 and was rejected on
+  exactly this distinction.
+
+residual_risk_or_unproved_limits:
+- V4-FND-01 to -04 remain open and never independently read.
+- The vendored engine's byte-identity claim now has four adjudicated exceptions in
+  structural_binding_v1.yml; the other four transferred files are still byte-identical.
+- Windows only; no Linux measurement.
+- Executor measurement only. Not independent acceptance. Parent Stage04 PASS not claimed.

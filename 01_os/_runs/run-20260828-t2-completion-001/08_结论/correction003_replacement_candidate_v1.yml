@@ -1,0 +1,125 @@
+schema_version: citystate.run_candidate.v1
+candidate_id: T2-COMPLETION-CORR003-CAND-001
+run_id: run-20260828-t2-completion-001
+task_id: os-v2-t2-completion-001
+produced_by_endpoint_id: claude-cowork-t2-completion-executor-001
+produced_by_task_role: parent_t2_completion_implementation_executor
+collaboration_role: execution
+state: ready_for_fresh_independent_review
+supersedes_state_of: T2-COMPLETION-BLK-003
+
+title: >-
+  correction-003 replacement candidate, constructed on the parent checkpoint from the
+  accepted structural-provenance source under four foreground adjudications.
+
+work_performed_or_requested: >-
+  Construct the correction-003 replacement on dev/os-v2-t2-completion-001 from parent
+  checkpoint 3002d617, using 7cf91957 as an independently accepted read-only
+  structural-provenance source rather than a branch to merge.
+
+implementation_or_review_method: >-
+  Two phases. First, a byte-exact transfer of the accepted capability: five files
+  verified by git hash-object against their source blob SHAs, with the other nine
+  files of the package already byte-identical. Second, four rounds in which the
+  executor measured, localised each blocking signature to its exact position, stopped
+  at every claimability question rather than choosing, and applied only what the
+  foreground then adjudicated. Every round was measured by failing-set difference over
+  test identity, never by aggregate count.
+
+supportability_rationale: >-
+  Every number in this candidate came from a run in the task-scoped worktree in this
+  session. The transfer rests on blob-SHA equality, which is stronger than diff review.
+  The final pass rests on two runs with byte-identical v4 output and observed exit code
+  0 on both suites. Each of the four adjudications is cited by id and by the exact ref
+  of the ruling document that issued it.
+
+feasibility_rationale: >-
+  The whole construction stayed inside one evaluator-owned binding file plus the
+  transferred package, needed no parser, adapter, vocabulary, fixture or test change,
+  no Stage01-03 rerun, no merge of the divergent upstream history, and no protected
+  publication.
+
+exact_candidate:
+  branch: dev/os-v2-t2-completion-001
+  base: 3002d6177779abf81e6d476bfc434ee5d6dbe3c8
+  accepted_structural_provenance_source: 7cf9195715dcc7aa34bd09a8bc0f8320415f3930
+  upstream_source_modified: false
+
+capability_transfer:
+  files: 5
+  verification: git hash-object of each written file equals its source blob SHA
+  result: all_five_match
+  blobs:
+    adapters.py: 142ee5491593d3c547c4078d8d233f243e839a5a
+    core.py: 3fe5ab4141bb0c5236b4e1cadce6934e9d7e5b99
+    facts.py: 3e38b99e722e1ae084d266079e9fa0afee25151d
+    structural_binding.py: 67172bc7a8702a66cb86e3d45f21c06b2062a2f5
+    structural_binding_v1.yml: 0048291b650b68b25658f012ce46993d3e4eb959
+  note: >-
+    structural_binding_v1.yml has since been extended by the four adjudications below
+    and no longer matches its source blob; the other four files are unmodified since
+    transfer.
+
+adjudications_applied:
+- id: FG-T2-COMPLETION-BLK-001-R1
+  ref: 6543f7054909fd6271010af543b72d58532db2dc:.../00002_invalidation_conditions_structural_role_ruling.yml
+  content: window_contract_v1 [lifecycle, invalidation_conditions] instance_identity; its "*" declaration_name
+  v4_after: 22/29
+- id: FG-T2-COMPLETION-BLK-002-R2
+  ref: 436b4cf6d66cc8c04ba9c69d723cf58177638b21:.../00003_r2_claimability_integration_ruling.yml
+  content: profile-scoped positive transparency for role/handoff/window; the [lifecycle, condition_definitions] region; the exact S14 document identity
+  v4_after: 27/29
+- id: FG-T2-COMPLETION-BLK-003-R3
+  ref: baf0a393bfabe192142dac0e4c48f655f050992c:.../00004_r3_s23_permissions_structural_ruling.yml
+  content: role_contract_v1 [roles, "*", permissions] instance_identity; its "*" declaration_name
+  v4_after: 29/29
+
+verification_evidence:
+  ref: ../07_测试执行/ruling_r3_application_and_completion_v1.yml
+  vendored_baseline_tests: 65/65 passed, exit 0, unchanged across all four rounds
+  v4_tests: 29/29 passed, exit 0
+  repeated_run: identical v4 output by SHA-256
+  new_failure_signature: none
+  worktree_clean_at_publication: true
+
+preserved_invariants_not_weakened_by_this_candidate:
+- evaluator-owned structural binding is consulted before any adapter claim
+- unknown, missing or conflicting binding still fails closed and stays visible
+- payload prose never minted structural authority; every ruling came from the foreground
+- selectors stayed root-anchored; tail matching was never restored
+- transparency stayed positive and profile-scoped; the shared anchor was never widened
+- no default document profile was added; genuinely unregistered documents stay unknown
+- the fixed seven/fourteen result-vector assertions were preserved, not relaxed
+- no subject, failure-name, depth, arity, homogeneity, empty-body or prose-shape
+  ownership heuristic was introduced
+
+executor_rationale_boundary: >-
+  The executor chose nothing that decided what is claimable. At each of the four
+  blocking signatures there was an option that would have turned the suite green
+  immediately; in each case the executor stopped and returned the primary signature
+  instead, and the foreground ruled. This candidate is therefore the product of applied
+  adjudications, not of executor preference. That is the whole reason its green state
+  is worth reviewing.
+
+open_item_for_foreground:
+  question: >-
+    Should a correction-003 run directory be materialised on this branch at
+    01_os/_runs/run-20260816-stage04-cross-region-applicability-correction-003/, mirroring
+    the upstream layout? It is inside allowed_changed_paths, but the executor did not
+    create it: a half-populated duplicate of a run-id that already exists on the upstream
+    lineage would add ambiguity rather than evidence. All construction evidence is in
+    run-20260828-t2-completion-001 instead. Foreground may direct otherwise.
+
+residual_risk_or_unproved_limits:
+- Passing tests prove their own asserted propositions and nothing wider. Green is not
+  proof that the four adjudications were correct, only that they were applied faithfully
+  and that the suites accept the result.
+- Repeatability was two runs, one session, one machine, Windows only.
+- No claim is made about Stage04 gates outside these two suites.
+- The executor did not independently re-derive the four rulings.
+- This is construction evidence produced by the executor. It is NOT independent
+  acceptance and does NOT constitute correction-003 PASS.
+
+next_owner: fresh_relationship_isolated_independent_review
+p2_2_state: not_started_gate_not_reached
+p2_2_precondition: fresh independent correction-003 PASS plus foreground verification of this exact candidate binding

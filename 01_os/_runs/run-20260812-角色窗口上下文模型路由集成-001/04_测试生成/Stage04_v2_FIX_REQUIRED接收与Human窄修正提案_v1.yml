@@ -1,0 +1,155 @@
+schema_version: citystate.stage04.fix_required_adjudication.v2
+task_id: os-v2-role-window-context-model-routing-integration-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+stage: workflow_stage_04_test_generation
+status: awaiting_explicit_Human_narrow_correction_round_2_authorization
+created_at: '2026-08-12'
+
+physical_binding:
+  branch: dev/os-v2-role-window-context-model-routing-integration-001
+  corrected_package_v2_commit: c720988454e120bed9e6acbe63146c83144866f6
+  independent_review_v2_head: b2a80618b906f4f23d5e2fafbd13a662fcb140f6
+  master_basis: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  review_write_scope:
+    commit_count: 2
+    changed_path_count: 4
+    all_under: 04_测试生成/独立接收审核/v2/**
+    out_of_scope_paths: 0
+
+foreground_adjudication:
+  independent_review_verdict: FIX_REQUIRED
+  accepted: true
+  stage05_entry: blocked
+  stage01_invalidated: false
+  stage02_invalidated: false
+  stage03_invalidated: false
+  stage04_action: narrow_reopen_round_2_after_Human_gate
+  frozen_package_v2_may_be_edited_now: false
+  reason: >-
+    Independent adversarial probes demonstrate both false positives against semantically conforming
+    representations and false negatives that allow direct A-level violations. The dependency-closure
+    implementation also fails the authorized requirement of either a full candidate tree or a complete
+    bounded dependency closure. These are Stage04 observability/test-definition defects, not invalidation
+    of A, Stage02 evidence, or the Stage03 architecture result.
+
+accepted_blockers:
+  - id: ST04-V2-IR-001
+    disposition: must_fix
+    correction: >-
+      Normalize private-reasoning/delivery-state prohibition declarations across prohibition,
+      forbidden, disallowed and disabled suffix forms, including *_disabled: true, without weakening
+      detection of actually enabled prohibited state.
+    independent_probe: V10_disabled_suffix_prohibitions
+    observed: 42/43; RW-T25 false positive
+
+  - id: ST04-V2-IR-002
+    disposition: must_fix
+    correction: >-
+      Normalize entry-mode declarations across mapping and list-of-record representations. Judge only
+      mandatory fresh/reentry separability and exact predecessor semantics; do not freeze container shape.
+    independent_probe: V11_list_shaped_entry_modes
+    observed: 41/43; RW-T08 and RW-T09 false positives
+
+  - id: ST04-V2-IR-003
+    disposition: must_fix
+    correction: >-
+      Inspect complete normative provider/model binding structures, including mapping keys and values,
+      while retaining segment-aware provenance exclusion scoped only to provenance subtrees.
+    independent_probe: V12_structured_provider_pin
+    observed: nonconforming provider pin remains 43/43 green
+
+  - id: ST04-V2-IR-004
+    disposition: must_fix
+    correction: >-
+      Tighten duplicate-role-source detection so applicability metadata such as stage_scope/context_hint
+      cannot establish a canonical role source. Require actual role source-of-truth properties such as
+      responsibility, independence, handoff direction or authority constraints.
+    independent_probe: V13_yaml_role_applicability_matrix
+    observed: 41/43; RW-T05 and RW-T31 false positives
+
+  - id: ST04-V2-IR-005
+    disposition: must_fix
+    correction: >-
+      Extend A11 mutable-model-catalog detection to structured Markdown representations including
+      definition-list form while retaining the model_routing pointer/receipt allowlist and reading live
+      model identifiers from the tested tree.
+    independent_probe: V15_markdown_definition_list_catalog
+    observed: nonconforming second catalog remains 43/43 green
+
+  - id: ST04-V2-IR-006
+    disposition: must_fix
+    correction: >-
+      Replace the current history-heavy incomplete path-scan closure. Preferred correction is to run
+      mechanism-validator defect probes against the full candidate tree. If a staged closure is retained,
+      it must be based on explicit declared dependencies, exclude unrelated historical runs, reach a bounded
+      fixpoint, and report zero required resolvable dependencies omitted.
+    independent_probe: dependency_closure
+    observed:
+      deterministic_two_runs: true
+      staged_file_count: 1012
+      historical_run_files: 776
+      unresolved_file_refs: 16
+      unresolved_directory_members: 11
+
+closed_or_retained_from_v1_review:
+  ST04-IR-003_schema_naming_neutrality:
+    verdict: closed_in_isolation
+    evidence: V14_mixed_descriptive_declarations remains 43/43 green
+  RW_T06:
+    verdict: valid_and_retained
+    future_implementation_boundary_must_include: 01_os/02_boot/context_management/启动清单_v1.yml
+  runtime_behavior_degradation_to_contract_checks:
+    verdict: valid_and_retained
+  historical_commit_BOM:
+    verdict: nonblocking_no_history_rewrite
+
+correction_constraints:
+  Human_gate_required_before_frozen_test_edit: true
+  proposed_allowed_after_gate:
+    - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/04_tests.yml
+    - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/实现/**
+    - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/fixtures/**
+    - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/测试设计说明_v3.md
+    - 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/freeze_receipt_v3.yml
+  preserve_immutable_history:
+    - 04_测试生成/freeze_receipt_v1.yml
+    - 04_测试生成/freeze_receipt_v2.yml
+    - 04_测试生成/独立接收审核/Stage04冻结测试包独立接收裁决_v1.yml
+    - 04_测试生成/独立接收审核/v2/**
+    - 04_测试生成/Stage04_Human窄修正授权_v1.yml
+  prohibited:
+    - modify_A
+    - modify_Stage02
+    - modify_B
+    - canonical_mutation
+    - master_publication
+    - force_push
+    - rebase
+    - squash
+    - amend
+    - history_rewrite
+  new_package_requirements:
+    - artifact_version_must_increment_to_3
+    - new_normalized_digest_required
+    - package_validation_must_pass
+    - current_repository_must_remain_preimplementation_red_except_preservation_checks
+    - all_six_v2_blockers_must_have_regression_or_conforming_counterexample_coverage
+    - V10_V11_V13_semantically_conforming_shapes_must_be_green
+    - V12_V15_direct_A_violations_must_be_red
+    - validator_probes_must_use_full_candidate_tree_or_demonstrably_complete_declared_dependency_closure
+    - RW_T06_semantics_retained
+    - fresh_independent_acceptance_review_required_before_stage05
+
+upstream_invalidation:
+  stage01: false
+  stage02: false
+  stage03: false
+  rationale: >-
+    The independent probes challenge Stage04 representation coverage and validator-test topology only;
+    they do not refute accepted evidence or the selected role/window integration architecture.
+
+next_gate:
+  owner: Human
+  required_authorization: explicit_narrow_Stage04_frozen_package_correction_round_2
+  no_frozen_test_edit_before_gate: true
+  stage05_before_fresh_acceptance: prohibited

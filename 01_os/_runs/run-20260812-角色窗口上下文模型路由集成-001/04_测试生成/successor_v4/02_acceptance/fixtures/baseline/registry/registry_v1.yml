@@ -1,0 +1,22 @@
+schema_version: citystate.registry.v1
+registry_id: window_role_binding_v1
+mechanism_version: 1
+entries:
+  - path: mechanism/**
+    purpose: canonical role contract, formal window contract and handoff contract
+    loader: boot/boot_v1.yml
+    loader_class: in_repo_program
+    discovery: referenced from the boot manifest
+    evidence: boot/boot_v1.yml
+    cache_dirs: []
+    failure_surfacing: next explicit window preflight
+    deletion_rule: protected
+  - path: boot/**
+    purpose: load order, failure policy and receipt fields
+    loader: OS bootstrap when a formal task opens a working window
+    loader_class: host_application
+    discovery: canonical pointer from the development entry specification
+    evidence: boot/boot_v1.yml
+    cache_dirs: []
+    failure_surfacing: next window boot
+    deletion_rule: protected

@@ -1,0 +1,42 @@
+schema_version: citystate.stage04.workspace_adjudication.v1
+task_id: os-v2-role-window-context-model-routing-integration-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+stage: 04_测试生成
+status: resolved_continue_in_separate_worktree
+created_at: '2026-08-12'
+
+measured_remote_state:
+  master: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  task_branch: dev/os-v2-role-window-context-model-routing-integration-001
+  task_branch_head_before_this_adjudication: 25c673ce8840302ec90a7e1e1b13829038cb935b
+  topology: task_branch_contains_current_master
+
+reported_local_conflict:
+  existing_worktree_branch: dev/os-v2-global-model-capability-and-availability-routing-002
+  existing_worktree_head_reported: 2f86395ed49e38ef322873e24a0419a6e98167ea
+  existing_worktree_has_foreign_untracked_file: true
+  foreign_untracked_path: 01_os/_runs/run-20260811-全局模型能力与可用性机制-001/01_需求建模/requirement/独立DeepResearch任务包_v2_网页模型.md
+  tracked_modifications_reported: 0
+  external_actor_changed_checkout_since_session_bootstrap: true
+
+adjudication:
+  classification: workspace_partition_conflict_not_stage04_semantic_blocker
+  existing_worktree_must_not_be_switched: true
+  existing_worktree_must_not_be_cleaned_or_reset: true
+  foreign_untracked_file_must_not_be_touched: true
+  continuation_mode: create_separate_sibling_git_worktree_for_T2
+  source_for_new_worktree: fresh_remote_task_branch_head
+  rebase_required: false
+  history_rewrite_allowed: false
+  force_push_allowed: false
+  authority_effect: none
+
+continuation_rules:
+  - Fresh-fetch/read origin task branch immediately before creating the T2 worktree.
+  - Create the T2 worktree outside the existing repository worktree and outside any tracked run/runtime path.
+  - Bind the new worktree to the exact current remote T2 task-branch head; do not base it on the stale routing-002 local checkout.
+  - Do not delete, stash, move, stage, or otherwise alter the existing worktree's foreign untracked file.
+  - Run Stage04 only in the new worktree and preserve the dispatch write boundary 01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/**.
+  - Before publication, fresh-read the remote T2 head and require ordinary fast-forward; stop on remote drift not caused by this adjudication/known Stage04 work.
+
+next: stage04_independent_test_generation_continue

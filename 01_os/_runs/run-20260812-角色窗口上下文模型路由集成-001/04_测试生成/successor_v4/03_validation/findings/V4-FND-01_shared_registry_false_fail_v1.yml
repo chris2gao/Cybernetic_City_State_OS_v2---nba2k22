@@ -1,0 +1,130 @@
+schema_version: citystate.stage04.successor_finding.v1
+finding_id: V4-FND-01
+task_id: os-v2-stage04-successor-acceptance-refreeze-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+raised_by: claude-cowork-stage04-successor-tail-executor-002
+raised_at: '2026-08-15'
+document_status: resolved_pending_foreground_readback
+authority_effect: none
+blocks_freeze: true
+resolution_status:
+  ruled: R-A
+  ruled_by: Human
+  ruled_at: '2026-08-15'
+  implemented: true
+  verified_by: 03_validation/stage1_checkpoint_state_v1.yml#V4_FND_01.measured_after_fix
+  still_blocks_freeze_because: >-
+    freeze is not this executor's to declare, and fresh independent acceptance
+    after freeze remains mandatory. The flag stays true until a reviewer who did
+    not write the fix has read the primary evidence.
+
+title: >-
+  Importing semantic_acceptance_v4 changes what the accepted engine's own entry
+  point returns, and makes it return a wrong verdict.
+
+severity_argument: >-
+  This is a false FAIL, not a false PASS, so it cannot let a nonconforming
+  candidate through. It is recorded as freeze-blocking anyway, because the
+  package's central safety claim is that the vendored engine is untouched, and
+  "untouched" is currently carried by byte-identity alone while behaviour
+  changes. A reviewer who runs the accepted entry point in a process where
+  anything has imported the extension gets a confident wrong answer and no error.
+
+mechanism:
+  by_design_part: >-
+    semantic_acceptance_v4.predicates_v4 registers P21..P27 into the shared
+    semantic_acceptance.predicates.REGISTRY at import time. This is the declared
+    extension mechanism (03_validation/checkpoint_state_v1.yml
+    #coverage_extension.extension_mechanism) and it is what lets the C-09
+    provenance ledger cover v4 rules on the same terms as accepted rules.
+  unintended_part: >-
+    semantic_acceptance.evaluate.evaluate_tree iterates that same REGISTRY but
+    builds its FactSet with the accepted build_fact_set, which never runs
+    augment_fact_set. The seven v4 predicates therefore evaluate against a
+    FactSet on which the v4_* fact lists do not exist, read them as absent, and
+    report absence as failure - the correct rule applied to a fact set that was
+    never populated.
+
+measured_evidence:
+  measured_at: '2026-08-15'
+  measured_in: fresh Python 3.14.6 interpreters, one mode per process
+  engine_under_test: successor_v4/02_acceptance/实现/semantic_acceptance
+  observations:
+    - id: OBS-1
+      what: registry contents observed through evaluate_tree, one process
+      before_v4_import: [P01, P02, P03, P04, P05, P06, P07]
+      after_v4_import: [P01, P02, P03, P04, P05, P06, P07, P21, P22, P23, P24, P25, P26, P27]
+    - id: OBS-2
+      what: same tree, two entry points, v4 imported
+      tree: 02_acceptance/fixtures/baseline_v4
+      evaluate_full: {predicates: 14, overall: pass, failing: []}
+      evaluate_tree: {predicates: 14, overall: fail, failing: [P21, P22, P23, P24, P25, P27]}
+      note: >-
+        baseline_v4 is the tree this package declares conforming for all
+        fourteen criteria. Two entry points in one process return opposite
+        verdicts on it.
+    - id: OBS-3
+      what: unaffected paths, confirmed rather than assumed
+      vendored_baseline_suite: 65 of 65 pass, reproduced this session
+      reason_unaffected: vendored_baseline_tests never imports semantic_acceptance_v4
+      evaluate_full_on_baseline: {predicates: 14, failing: [P22]}
+      evaluate_full_on_baseline_v4: {predicates: 14, failing: []}
+      note: >-
+        These two figures reproduce 03_validation/checkpoint_state_v1.yml
+        #measured_evidence.full_evaluation exactly. The checkpoint's numbers are
+        confirmed; this finding is about a path the checkpoint did not measure.
+
+what_this_does_not_claim:
+  - no false PASS was produced, and none was looked for by this finding
+  - P26 does not appear in the failing set; not investigated, and its absence
+    from that list is not evidence that P26 is immune
+  - no claim about whether any downstream consumer actually imports both
+
+discovery_context: >-
+  Found while building the v4 replay of the independent reviewer's 46 semantic
+  cases. The replay's first measurement was written to call evaluate_tree as a
+  seven-predicate control that reproduces the reviewer's own result. It could
+  not: by the time the control ran, the module had imported the v4 package. The
+  control was a defective test and repairing it is straightforward - run it in a
+  subprocess. The defect is recorded rather than quietly fixed because the
+  reason it failed is a property of the package under test, not of the test.
+
+remedy_options_not_chosen:
+  note: >-
+    Choosing between these decides what "the accepted engine is untouched" means,
+    which is a semantic ruling under
+    01_os/开发入口与单窗口任务规范_v1.md section 11, stop condition 3.
+    The executor does not choose it.
+  ruled: R-A, by the Human, 2026-08-15; implemented in
+    02_acceptance/实现/semantic_acceptance_v4/predicates_v4.py and pinned by three
+    guard tests in 03_validation/v4_tests/test_v4_reviewer_replay.py
+  options:
+    - id: R-A
+      change: >-
+        v4 predicates detect an unaugmented FactSet and report a distinct
+        not_applicable / unsupported status instead of fail.
+      keeps_shared_registry: true
+      cost: >-
+        introduces a third status into a two-valued predicate contract, or
+        routes through the existing P00 unsupported-representation report.
+    - id: R-B
+      change: >-
+        v4 predicates register into a separate registry; evaluate_full composes
+        the two registries.
+      keeps_shared_registry: false
+      cost: >-
+        contradicts the stated basis for C-09 coverage in
+        semantic_acceptance_v4/__init__.py; the provenance audit would have to
+        be redesigned before it could claim the same property.
+    - id: R-C
+      change: >-
+        accept the coupling as declared behaviour, add a guard test that pins it,
+        and state it in the freeze receipt as a known limit.
+      keeps_shared_registry: true
+      cost: >-
+        a documented sharp edge remains; a reviewer must be told never to call
+        evaluate_tree in a process that imported the extension.
+
+next_owner:
+  role: foreground_stage04_successor_dispatch
+  required_action: rule on R-A / R-B / R-C, or reject the framing

@@ -1,0 +1,256 @@
+schema_version: citystate.stage04.successor_checkpoint.v1
+task_id: os-v2-stage04-successor-acceptance-refreeze-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+created_at: '2026-08-16'
+
+document_status: in_progress_checkpoint
+authority_effect: none
+terminal_state: IN_PROGRESS_CHECKPOINT_NOT_FROZEN
+stop_reason: checkpoint_and_pause_for_foreground_readback_as_dispatched
+
+supersedes:
+  file: 03_validation/phase2_checkpoint_state_v1.yml
+  relationship: >-
+    that file records the round that RAISED V4-FND-02/03/04 and is left intact as
+    the record of that round. This file records the correction round P2-1R. Where
+    the two disagree about what is open, this one is current.
+
+not_claimed:
+  frozen_candidate: false
+  ready_for_fresh_independent_acceptance: false
+  parent_stage04_pass: false
+  stage05_entry: false
+  final_result_pointer_published: false
+  phase2_complete: false
+  freeze_receipt_produced: false
+  package_is_sound: false
+  findings_independently_accepted: false
+
+dispatch:
+  responding_to: os-v2-stage04-successor-acceptance-refreeze-001::foreground-stage04-successor-dispatch-001::00009
+  pointer_commit: df7b317f915fa2a9d50315e86c1cecce36e990d9
+  requested_action: >-
+    reconcile_P2_1R_evidence_then_complete_F03_D_and_surviving_F04_corrections_and_checkpoint
+  outcome: completed_as_dispatched_with_one_new_observation_reported
+
+physical_binding:
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  transport: local_git
+  worktree: E:/newStand/study/_wt_stage04_v4_tail
+  branch: dev/os-v2-stage04-successor-acceptance-refreeze-001
+  start_sha: 08affd036a4033960b69aff2def4a0932d8193b9
+  start_sha_verified: >-
+    read from the worktree HEAD and from `git ls-remote origin` before any write;
+    worktree dirty count was 0 at start
+  master_modified: false
+  parent_T2_branch_modified: false
+  vendored_semantic_acceptance_bytes_changed: 0
+  remote_master_observed_during_this_session: e5bf669d39179c172fc10fbb3b73557e8b05bf1e
+
+executor:
+  provider: Anthropic
+  product: Claude Desktop
+  surface: claude_desktop_cowork
+  model: Claude Opus 5
+  session_mode: fresh
+  endpoint_id: claude-cowork-stage04-successor-tail-executor-003
+  authority: routing_only
+  bootstrap_source: git_checkpoint_and_formal_refs_only
+  prior_executor_private_reasoning_used: false
+
+# ---------------------------------------------------------------------------
+# 1. Evidence reconciliation, done before any new semantic code
+# ---------------------------------------------------------------------------
+
+evidence_reconciliation:
+  method: >-
+    every claim inherited from the 08affd commit message was re-measured in this
+    session rather than accepted. Two of them were confirmed, one was found
+    unsupported by the corpus as it stood, and one adjacent fact was found that
+    no finding recorded.
+  V4-FND-02:
+    was: open finding, mechanism recorded as "matched by substring"
+    now: ruled_and_implemented_pending_independent_acceptance
+    correction: >-
+      the matchers were already whole-token; `_seg_tokens` calls the accepted
+      `tokens()`. The defect was negation blindness, not substring matching. Both
+      manifestations and both directions stand as filed.
+    measured: nine required regressions, all green
+  V4-FND-03:
+    was: open finding, unruled at the time it was written
+    now: ruled_and_implemented_pending_independent_acceptance
+    implemented_this_round: true
+  V4-FND-04:
+    was: three manifestations, all recorded open
+    now: a and c RETRACTED as executor test errors; b CLOSED
+    correction: >-
+      `state` and `case` are not COLLECTION_ID_FIELD_TOKENS, so the filed forms
+      were single-entry mappings keyed literally "state" and "case" - outside the
+      accepted equivalence contract. All three in-contract forms were measured to
+      move no predicate.
+  hole_table_disagreement_found_and_resolved:
+    observed: >-
+      the 08affd commit message retracted V4-FND-04-a and -04-c, but
+      `corpus_v4.OPEN_INVARIANCE_HOLES` at 08affd still carried all three as open.
+      Only the F02 entries had been removed. Code, findings and hole table
+      disagreed about what was open.
+    resolved: >-
+      OPEN_INVARIANCE_HOLES is now empty and carries a comment recording which
+      entries were test errors and which was a real defect; OPEN_HOLES no longer
+      contains a false_pass entry; the two finding files say the same thing.
+  dispatch_claim_not_reproduced_as_stated:
+    claim: >-
+      "the load-entry adapter's region scoping reaches into derivation_inputs"
+      (08affd commit message, repeated in dispatch 00009)
+    measured: >-
+      NOT reproduced by the filed V4MT05 transform - load entries were unchanged
+      at 5 under it. The claim is nonetheless CORRECT, and this session
+      constructed the case that shows it: declaring the A-required input
+      `approved_reference_set` as a structured record rather than the scalar
+      `required` makes the load-set locator claim it, because
+      `approved_reference_set` carries the token `set`. Recorded because the
+      claim was true but had no demonstration behind it, and a claim with no
+      case is one a reviewer cannot check.
+    now_covered_by: INVARIANTS V4MT17
+
+# ---------------------------------------------------------------------------
+# 2. Implementation
+# ---------------------------------------------------------------------------
+
+implemented_this_round:
+  F03-D_typed_determinism_fact:
+    ruling: F03-D, dispatch 00008
+    deleted: NONDETERMINISTIC_CONDITION_TOKENS (the closed negative vocabulary)
+    added_rules: [V4-LIFE-04, V4-LIFE-06, V4-LIFE-07, V4-LIFE-08]
+    slot_3_reuses: [V4-FRESH-05, V4-FRESH-06]
+    fact_change: >-
+      LifecycleConditionFact drops `marker` and gains `subject_resolved`,
+      `observation_role`, `consequence_role`, `unresolved_slots`
+    not_a_lexical_whitelist: >-
+      the SUBJECT is never compared with any vocabulary. It is read verbatim from
+      a declared slot position, or from the structured definition a bare string
+      resolves to. That is what separates the implementation from rejected
+      option F03-A.
+    not_a_canonical_shape: >-
+      four admitted representations are asserted invariant (V4MT11-V4MT14). That
+      is what separates it from rejected option F03-B.
+  F04-A_REFINED_surviving_corrections:
+    root_cause_1:
+      name: entity-identity normalization applied to a field mapping
+      fix: adapters_v4._normalize_field_mapping
+    root_cause_2:
+      name: over-broad load-entry sub-region scoping
+      fix: adapters_v4._subregion gained a `not_under` barrier
+      why_structural_not_lexical: >-
+        narrowing LOAD_SET_REGION_TOKENS would only move the collision; any token
+        shared between two locators reproduces it. Terminating descent at a
+        sibling declared region removes the class.
+
+fixture_change_and_its_authority:
+  file: 02_acceptance/fixtures/baseline_v4/mechanism/windows_v1.yml
+  change: >-
+    lifecycle.invalidation_conditions rewritten from four bare strings to four
+    structured records naming subject and observation; stale_effect unchanged
+  necessity: >-
+    under F03-D a bare string is admitted only by resolving to an explicit
+    structured definition, and baseline_v4 had none. Reading the slots out of the
+    strings' own spellings is rejected option F03-A.
+  authority: >-
+    reported to the Human before it was made rather than absorbed silently;
+    authorised in-session on 2026-08-16. The path is inside the successor_v4
+    write boundary.
+  accepted_baseline_untouched: true
+  consequence_recorded_in:
+    - test_v4_reviewer_replay.UNSATISFIED_BY_ACCEPTED_BASELINE
+    - test_v4_v3_variants.FIXTURE_ROOT_ACCOUNTED_DIFFERENCES
+  consequence: >-
+    fixtures/baseline now fails P21 as well as P22. Both are criteria the
+    accepted seven-predicate package never covered. Before F03-D its bare-string
+    conditions scored deterministic because they matched no vagueness word -
+    V4-FND-03's false pass, visible on the accepted fixture itself.
+
+# ---------------------------------------------------------------------------
+# 3. Measured evidence
+# ---------------------------------------------------------------------------
+
+measured_evidence:
+  runtime: CPython 3.14.6, PyYAML 6.0.3
+  measured_at: '2026-08-16'
+  reproduce_before_change:
+    performed: true
+    result: v4 29/29 exit 0; vendored baseline 65/65 exit 0, at 08affd before any edit
+  gates:
+    v4_suite: {result: 29/29 passed, exit_code: 0}
+    vendored_baseline_suite:
+      result: 65/65 passed
+      exit_code: 0
+      interpreter: separate process, semantic_acceptance_v4 never imported
+    python_compile: {scope: every .py under successor_v4, exit_code: 0}
+    strict_yaml: {checked: 32, failed: 0, exit_code: 0}
+    git_diff_check: {exit_code: 0}
+    changed_path_boundary:
+      changed_total: 14
+      inside_boundary: 14
+      outside_boundary: 0
+      method: >-
+        git status --porcelain -z --untracked-files=all, so core.quotepath and
+        status.showUntrackedFiles cannot change the result
+    crlf_bom_binary: {crlf: 0, bom: 0, binary: 0, exit_code: 0}
+    evidence_currency:
+      method: re-emitted the results JSON and re-counted changed paths
+      changed_after_reemit: 14
+      meaning: the committed evidence is what the current code produces, not a stale copy
+  new_regression_cases_added:
+    invariants: [V4MT11, V4MT12, V4MT13, V4MT14, V4MT15, V4MT16, V4MT17]
+    differences: [V4AB11, V4AB12, V4AB13, V4AB14, V4AB15]
+    debt_discharged: >-
+      V4AB11 is the variant V4-FND-03 recorded as owed: A-named triggers kept,
+      conditions written as prose, so P23 has no complaint and P21 alone fails.
+  what_green_means_here: >-
+    the suite describes the package accurately. It does NOT mean the package is
+    sound, and it is not an acceptance. The hole tables are empty of false-pass
+    entries because two findings closed, not because nothing else is wrong.
+
+# ---------------------------------------------------------------------------
+# 4. Raised this round
+# ---------------------------------------------------------------------------
+
+observations_raised:
+  - id: V4-OBS-03
+    blocks_freeze: false
+    file: 03_validation/findings/V4-OBS-03_in_contract_single_entry_form_moves_accepted_predicates_v1.yml
+    summary: >-
+      the in-contract `[{name: {}}]` form of `failure_states` moves accepted P02
+      and v4 P24. Measured in an isolated interpreter, the ACCEPTED engine alone
+      moves P02, so it sits in the vendored package - outside this task's write
+      boundary and not editable here.
+    handling: >-
+      reported, not fixed. Human ruling in session on 2026-08-16 was to record it
+      as an observation and continue with F03-D and F04. Whether the form is
+      inside the equivalence contract for a list of bare identifiers is a
+      semantic question for the foreground.
+
+# ---------------------------------------------------------------------------
+# 5. Still open
+# ---------------------------------------------------------------------------
+
+still_open:
+  not_started_work_items:
+    - adapter applicability negative tests
+    - combined accepted-plus-v4 decision provenance audit
+    - receipt external binding and tamper tests
+    - 01_semantic_binding/requirement_trace_v4.yml
+    - 02_acceptance/04_tests_v4.yml
+    - freeze artifacts, candidate freeze, result pointer
+  reason: >-
+    dispatch 00009 prohibits P2-2 work before foreground readback. None of it was
+    started.
+  findings_awaiting_independent_acceptance: [V4-FND-02, V4-FND-03, V4-FND-04]
+  observations_awaiting_foreground_ruling: [V4-OBS-01, V4-OBS-02, V4-OBS-03]
+
+next_owner:
+  role: foreground_stage04_successor_dispatch
+  required_action: >-
+    read back this checkpoint and the four finding files; rule on V4-OBS-03;
+    decide whether P2-2 is released. This checkpoint authorises nothing, freezes
+    nothing, and is not an independent acceptance.

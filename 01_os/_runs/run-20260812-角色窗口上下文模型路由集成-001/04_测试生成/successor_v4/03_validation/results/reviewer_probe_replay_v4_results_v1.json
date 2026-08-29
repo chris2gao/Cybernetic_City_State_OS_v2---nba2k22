@@ -1,0 +1,3558 @@
+{
+  "corpus": "independent_reviewer_probe_suite_replayed_against_successor_v4",
+  "provenance": {
+    "source_rev": "19c39ed37f14c97cfa132ffafabcb9afa33dd7f0",
+    "suite_blob_sha1": "d8f6d7d9d705efae153ff566cdc80a5a56336a0e",
+    "suite_git_path": "01_os/_runs/run-20260812-stage04-semantic-acceptance-root-cause-001/08_独立审核/independent_probe_suite.py",
+    "reviewer_fixture_files": 9,
+    "engine_under_test": "E:\\newStand\\study\\_wt_stage04_v4_tail\\01_os\\_runs\\run-20260812-角色窗口上下文模型路由集成-001\\04_测试生成\\successor_v4\\02_acceptance\\实现\\semantic_acceptance"
+  },
+  "measurement_A_accepted_engine_accepted_baseline": {
+    "isolation": "separate interpreter; semantic_acceptance_v4 never imported",
+    "predicate_id_sets_observed": [
+      [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ]
+    ],
+    "total": 46,
+    "expected_classifications_met": 46,
+    "counterexample_ids": [],
+    "proves": "the vendored engine reproduces the reviewer's own measurement",
+    "does_not_prove": "anything about the v4 extension predicates"
+  },
+  "measurement_B_v4_engine_baseline_v4": {
+    "total": 46,
+    "expected_classifications_met": 46,
+    "counterexample_ids": [],
+    "predicates_per_case": [
+      14
+    ],
+    "proves": "the reviewer's 46 semantic expectations still hold under 14 predicates"
+  },
+  "measurement_receipt_attacks": {
+    "total": 17,
+    "expected_classifications_met": 17,
+    "counterexample_ids": []
+  },
+  "combined_total": 63,
+  "combined_expected_classifications_met": 63,
+  "semantic_cases_A": [
+    {
+      "case_id": "S01",
+      "category": "representation",
+      "description": "transparent nested role wrapper",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {
+        "P01": "pass"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    },
+    {
+      "case_id": "S02",
+      "category": "representation",
+      "description": "transparent nested window wrapper",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {
+        "P02": "pass"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    },
+    {
+      "case_id": "S03",
+      "category": "representation",
+      "description": "transparent nested handoff wrapper",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {
+        "P04": "pass"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    },
+    {
+      "case_id": "S04",
+      "category": "representation",
+      "description": "mixed list-record/list-pair entry modes",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {
+        "P02": "pass"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    },
+    {
+      "case_id": "S05",
+      "category": "representation",
+      "description": "safe YAML anchors and aliases in inert metadata",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {},
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    },
+    {
+      "case_id": "S06",
+      "category": "representation",
+      "description": "deep mapping reordering",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {},
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    },
+    {
+      "case_id": "S07",
+      "category": "representation",
+      "description": "equivalent closed-negative scalar spellings",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {
+        "P06": "pass"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    },
+    {
+      "case_id": "S08",
+      "category": "provider",
+      "description": "unfamiliar provider as mapping key label",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P03": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P03",
+          "status": "fail",
+          "detail": "provider pinned by a normative selector: roles.independent_review.provider_selection.NacreCompute-QX='nacrecompute_qx'"
+        }
+      ]
+    },
+    {
+      "case_id": "S09",
+      "category": "provider",
+      "description": "unfamiliar provider as nested chosen value",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P03": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P03",
+          "status": "fail",
+          "detail": "provider pinned by a normative selector: roles.independent_review.provider_selection.chosen='nacrecompute_qx'"
+        }
+      ]
+    },
+    {
+      "case_id": "S10",
+      "category": "provider",
+      "description": "unfamiliar provider direct normative selector",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P03": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P03",
+          "status": "fail",
+          "detail": "provider pinned by a normative selector: roles.independent_review.selected_provider='nacrecompute_qx'"
+        }
+      ]
+    },
+    {
+      "case_id": "S11",
+      "category": "provider",
+      "description": "unfamiliar provider provenance mention",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {
+        "P03": "pass"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    },
+    {
+      "case_id": "S12",
+      "category": "polarity",
+      "description": "negative unfamiliar provider constraint",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {
+        "P03": "pass"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    },
+    {
+      "case_id": "S13",
+      "category": "polarity",
+      "description": "mixed allow/deny provider policy with positive choice",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P03": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P03",
+          "status": "fail",
+          "detail": "provider pinned by a normative selector: roles.independent_review.provider_policy.allow.chosen='nacrecompute_qx'"
+        }
+      ]
+    },
+    {
+      "case_id": "S14",
+      "category": "role",
+      "description": "real second role source with generic IDs and unseen labels",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P01": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P01",
+          "status": "fail",
+          "detail": "2 documents own role semantics: ['mechanism/roles_v1.yml', 'workflow/new_role_source.yml']"
+        }
+      ]
+    },
+    {
+      "case_id": "S15",
+      "category": "role",
+      "description": "role reference list records",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {
+        "P01": "pass"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    },
+    {
+      "case_id": "S16",
+      "category": "role",
+      "description": "role-keyed applicability and context scope metadata",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {
+        "P01": "pass"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    },
+    {
+      "case_id": "S17",
+      "category": "role",
+      "description": "unrelated review/research metric names",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {
+        "P01": "pass"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    },
+    {
+      "case_id": "S18",
+      "category": "authority",
+      "description": "short plain authority mention",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {
+        "P05": "pass"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    },
+    {
+      "case_id": "S19",
+      "category": "authority",
+      "description": "authority pointer",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {
+        "P05": "pass"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    },
+    {
+      "case_id": "S20",
+      "category": "authority",
+      "description": "short authority description",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {
+        "P05": "pass"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    },
+    {
+      "case_id": "S21",
+      "category": "authority",
+      "description": "direct structured authority grant",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P05": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P05",
+          "status": "fail",
+          "detail": "authority granted: roles.backend_execution.authority_grant@self"
+        }
+      ]
+    },
+    {
+      "case_id": "S22",
+      "category": "authority",
+      "description": "novel string publication grant",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P05": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P05",
+          "status": "fail",
+          "detail": "authority granted: roles.backend_execution.publication_authorized@self"
+        }
+      ]
+    },
+    {
+      "case_id": "S23",
+      "category": "authority",
+      "description": "nested authority grant",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P05": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P05",
+          "status": "fail",
+          "detail": "authority granted: roles.backend_execution.permissions@master_write_authorized.state, roles.backend_execution.permissions.master_write_authorized@state"
+        }
+      ]
+    },
+    {
+      "case_id": "S24",
+      "category": "authority",
+      "description": "unknown authority action under capabilities",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P05": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P05",
+          "status": "fail",
+          "detail": "authority granted: roles.backend_execution.capabilities@publish_master"
+        }
+      ]
+    },
+    {
+      "case_id": "S25",
+      "category": "polarity",
+      "description": "double-negative master-write declaration",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P05": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P05",
+          "status": "fail",
+          "detail": "authority granted: roles.backend_execution.master_write_not_forbidden@self"
+        }
+      ]
+    },
+    {
+      "case_id": "S26",
+      "category": "handoff",
+      "description": "immutable acceptance-state pointer",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {
+        "P04": "pass"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    },
+    {
+      "case_id": "S27",
+      "category": "handoff",
+      "description": "mutable inline acceptance state",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P04": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P04",
+          "status": "fail",
+          "detail": "the handoff payload carries prohibited state: handoff_record.accepted_state (mutable_delivery_state)"
+        }
+      ]
+    },
+    {
+      "case_id": "S28",
+      "category": "handoff",
+      "description": "*_ref key with non-path mutable value",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P04": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P04",
+          "status": "fail",
+          "detail": "the handoff payload carries prohibited state: handoff_record.accepted_state_ref (mutable_delivery_state)"
+        }
+      ]
+    },
+    {
+      "case_id": "S29",
+      "category": "handoff",
+      "description": "non-ref state key with path-looking value fails closed",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P04": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P04",
+          "status": "fail",
+          "detail": "the handoff payload carries prohibited state: handoff_record.accepted_state (mutable_delivery_state)"
+        }
+      ]
+    },
+    {
+      "case_id": "S30",
+      "category": "handoff",
+      "description": "nested mapping carries delivery state",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P04": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P04",
+          "status": "fail",
+          "detail": "the handoff payload carries prohibited state: handoff_record.events.event_1.delivery_state (mutable_delivery_state)"
+        }
+      ]
+    },
+    {
+      "case_id": "S31",
+      "category": "handoff",
+      "description": "list-of-records carries nested delivery state",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P04": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P04",
+          "status": "fail",
+          "detail": "the handoff payload carries prohibited state: handoff_record.events[0].delivery_state (mutable_delivery_state)"
+        }
+      ]
+    },
+    {
+      "case_id": "S32",
+      "category": "automation",
+      "description": "explicit scheduler true",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P06": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P06",
+          "status": "fail",
+          "detail": "autonomous behaviour enabled: progression.scheduler@self"
+        }
+      ]
+    },
+    {
+      "case_id": "S33",
+      "category": "automation",
+      "description": "explicit scheduler false",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {
+        "P06": "pass"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    },
+    {
+      "case_id": "S34",
+      "category": "automation",
+      "description": "unknown configured scheduler token",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P06": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P06",
+          "status": "fail",
+          "detail": "autonomous behaviour enabled: progression.scheduler@self"
+        }
+      ]
+    },
+    {
+      "case_id": "S35",
+      "category": "automation",
+      "description": "explicit YAML null is in the declared negative set",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {
+        "P06": "pass"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    },
+    {
+      "case_id": "S36",
+      "category": "automation",
+      "description": "nested scheduler enablement",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P06": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P06",
+          "status": "fail",
+          "detail": "autonomous behaviour enabled: progression.scheduler@enabled"
+        }
+      ]
+    },
+    {
+      "case_id": "S37",
+      "category": "automation",
+      "description": "prose mention that explicitly prohibits scheduler",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {
+        "P06": "pass"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    },
+    {
+      "case_id": "S38",
+      "category": "automation",
+      "description": "explicit prohibition value",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {
+        "P06": "pass"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    },
+    {
+      "case_id": "S39",
+      "category": "polarity",
+      "description": "double-negative scheduler declaration",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P06": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P05",
+          "status": "fail",
+          "detail": "authority granted: progression.scheduler_not_prohibited@self"
+        },
+        {
+          "predicate_id": "P06",
+          "status": "fail",
+          "detail": "autonomous behaviour enabled: progression.scheduler_not_prohibited@self"
+        }
+      ]
+    },
+    {
+      "case_id": "S40",
+      "category": "automation",
+      "description": "contradictory nested scheduler declarations",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P06": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P06",
+          "status": "fail",
+          "detail": "autonomous behaviour enabled: progression.scheduler@enabled"
+        }
+      ]
+    },
+    {
+      "case_id": "S41",
+      "category": "automation",
+      "description": "positive automation hidden in unfamiliar nested representation",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P06": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P06",
+          "status": "fail",
+          "detail": "autonomous behaviour enabled: progression.automation_controls@cadence.trigger"
+        }
+      ]
+    },
+    {
+      "case_id": "S42",
+      "category": "catalog",
+      "description": "new authoritative mutable catalog with unseen labels",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P07": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P03",
+          "status": "fail",
+          "detail": "provider pinned by a normative selector: route_catalog.entries[0].model='nacrecompute_qx', route_catalog.entries[1].model='obsidianinference_r', route_catalog.entries[2].model='juniperreasoner'"
+        },
+        {
+          "predicate_id": "P07",
+          "status": "fail",
+          "detail": "second mutable catalog: workflow/normative_route_source.yml (independent_declaration, 3 entries)"
+        }
+      ]
+    },
+    {
+      "case_id": "S43",
+      "category": "catalog",
+      "description": "two-entry authoritative mutable catalog",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P07": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P07",
+          "status": "fail",
+          "detail": "second mutable catalog: workflow/two_entry_model_catalog.yml (restatement, 2 entries)"
+        }
+      ]
+    },
+    {
+      "case_id": "S44",
+      "category": "catalog",
+      "description": "case-spacing-punctuation equivalents of live labels",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P07": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P07",
+          "status": "fail",
+          "detail": "second mutable catalog: workflow/case_variant_model_catalog.yml (restatement, 3 entries)"
+        }
+      ]
+    },
+    {
+      "case_id": "S45",
+      "category": "catalog",
+      "description": "Markdown table plus definition-list catalog",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_results": {
+        "P07": "fail"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": [
+        {
+          "predicate_id": "P07",
+          "status": "fail",
+          "detail": "second mutable catalog: workflow/combined_model_catalog.md (restatement, 3 entries)"
+        }
+      ]
+    },
+    {
+      "case_id": "S46",
+      "category": "catalog",
+      "description": "pointer-only catalog reference",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_results": {
+        "P07": "pass"
+      },
+      "correct": true,
+      "predicate_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "nonpass": []
+    }
+  ],
+  "semantic_cases_B": [
+    {
+      "case_id": "S01",
+      "category": "representation",
+      "description": "transparent nested role wrapper",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P01"
+      ],
+      "deciding_results": {
+        "P01": "pass"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "case_id": "S02",
+      "category": "representation",
+      "description": "transparent nested window wrapper",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P02"
+      ],
+      "deciding_results": {
+        "P02": "pass"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "case_id": "S03",
+      "category": "representation",
+      "description": "transparent nested handoff wrapper",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P04"
+      ],
+      "deciding_results": {
+        "P04": "pass"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "case_id": "S04",
+      "category": "representation",
+      "description": "mixed list-record/list-pair entry modes",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P02"
+      ],
+      "deciding_results": {
+        "P02": "pass"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "case_id": "S05",
+      "category": "representation",
+      "description": "safe YAML anchors and aliases in inert metadata",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [],
+      "deciding_results": {},
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "case_id": "S06",
+      "category": "representation",
+      "description": "deep mapping reordering",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [],
+      "deciding_results": {},
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "case_id": "S07",
+      "category": "representation",
+      "description": "equivalent closed-negative scalar spellings",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P06"
+      ],
+      "deciding_results": {
+        "P06": "pass"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "case_id": "S08",
+      "category": "provider",
+      "description": "unfamiliar provider as mapping key label",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P03"
+      ],
+      "deciding_results": {
+        "P03": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "fail",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P03",
+          "status": "fail",
+          "detail": "provider pinned by a normative selector: roles.independent_review.provider_selection.NacreCompute-QX='nacrecompute_qx'"
+        }
+      ]
+    },
+    {
+      "case_id": "S09",
+      "category": "provider",
+      "description": "unfamiliar provider as nested chosen value",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P03"
+      ],
+      "deciding_results": {
+        "P03": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "fail",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P03",
+          "status": "fail",
+          "detail": "provider pinned by a normative selector: roles.independent_review.provider_selection.chosen='nacrecompute_qx'"
+        }
+      ]
+    },
+    {
+      "case_id": "S10",
+      "category": "provider",
+      "description": "unfamiliar provider direct normative selector",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P03"
+      ],
+      "deciding_results": {
+        "P03": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "fail",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P03",
+          "status": "fail",
+          "detail": "provider pinned by a normative selector: roles.independent_review.selected_provider='nacrecompute_qx'"
+        }
+      ]
+    },
+    {
+      "case_id": "S11",
+      "category": "provider",
+      "description": "unfamiliar provider provenance mention",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P03"
+      ],
+      "deciding_results": {
+        "P03": "pass"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "case_id": "S12",
+      "category": "polarity",
+      "description": "negative unfamiliar provider constraint",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P03"
+      ],
+      "deciding_results": {
+        "P03": "pass"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "case_id": "S13",
+      "category": "polarity",
+      "description": "mixed allow/deny provider policy with positive choice",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P03"
+      ],
+      "deciding_results": {
+        "P03": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "fail",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P03",
+          "status": "fail",
+          "detail": "provider pinned by a normative selector: roles.independent_review.provider_policy.allow.chosen='nacrecompute_qx'"
+        }
+      ]
+    },
+    {
+      "case_id": "S14",
+      "category": "role",
+      "description": "real second role source with generic IDs and unseen labels",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P01"
+      ],
+      "deciding_results": {
+        "P01": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "fail",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P01",
+          "status": "fail",
+          "detail": "2 documents own role semantics: ['mechanism/roles_v1.yml', 'workflow/new_role_source.yml']"
+        }
+      ]
+    },
+    {
+      "case_id": "S15",
+      "category": "role",
+      "description": "role reference list records",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P01"
+      ],
+      "deciding_results": {
+        "P01": "pass"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "case_id": "S16",
+      "category": "role",
+      "description": "role-keyed applicability and context scope metadata",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P01"
+      ],
+      "deciding_results": {
+        "P01": "pass"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "case_id": "S17",
+      "category": "role",
+      "description": "unrelated review/research metric names",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P01"
+      ],
+      "deciding_results": {
+        "P01": "pass"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "case_id": "S18",
+      "category": "authority",
+      "description": "short plain authority mention",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P05"
+      ],
+      "deciding_results": {
+        "P05": "pass"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "case_id": "S19",
+      "category": "authority",
+      "description": "authority pointer",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P05"
+      ],
+      "deciding_results": {
+        "P05": "pass"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "case_id": "S20",
+      "category": "authority",
+      "description": "short authority description",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P05"
+      ],
+      "deciding_results": {
+        "P05": "pass"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "case_id": "S21",
+      "category": "authority",
+      "description": "direct structured authority grant",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P05"
+      ],
+      "deciding_results": {
+        "P05": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "fail",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P05",
+          "status": "fail",
+          "detail": "authority granted: roles.backend_execution.authority_grant@self"
+        }
+      ]
+    },
+    {
+      "case_id": "S22",
+      "category": "authority",
+      "description": "novel string publication grant",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P05"
+      ],
+      "deciding_results": {
+        "P05": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "fail",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P05",
+          "status": "fail",
+          "detail": "authority granted: roles.backend_execution.publication_authorized@self"
+        }
+      ]
+    },
+    {
+      "case_id": "S23",
+      "category": "authority",
+      "description": "nested authority grant",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P05"
+      ],
+      "deciding_results": {
+        "P05": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "fail",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P05",
+          "status": "fail",
+          "detail": "authority granted: roles.backend_execution.permissions@master_write_authorized.state, roles.backend_execution.permissions.master_write_authorized@state"
+        }
+      ]
+    },
+    {
+      "case_id": "S24",
+      "category": "authority",
+      "description": "unknown authority action under capabilities",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P05"
+      ],
+      "deciding_results": {
+        "P05": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "fail",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P05",
+          "status": "fail",
+          "detail": "authority granted: roles.backend_execution.capabilities@publish_master"
+        }
+      ]
+    },
+    {
+      "case_id": "S25",
+      "category": "polarity",
+      "description": "double-negative master-write declaration",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P05"
+      ],
+      "deciding_results": {
+        "P05": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "fail",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P05",
+          "status": "fail",
+          "detail": "authority granted: roles.backend_execution.master_write_not_forbidden@self"
+        }
+      ]
+    },
+    {
+      "case_id": "S26",
+      "category": "handoff",
+      "description": "immutable acceptance-state pointer",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P04"
+      ],
+      "deciding_results": {
+        "P04": "pass"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "case_id": "S27",
+      "category": "handoff",
+      "description": "mutable inline acceptance state",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P04"
+      ],
+      "deciding_results": {
+        "P04": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "fail",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P04",
+          "status": "fail",
+          "detail": "the handoff payload carries prohibited state: handoff_record.accepted_state (mutable_delivery_state)"
+        }
+      ]
+    },
+    {
+      "case_id": "S28",
+      "category": "handoff",
+      "description": "*_ref key with non-path mutable value",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P04"
+      ],
+      "deciding_results": {
+        "P04": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "fail",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P04",
+          "status": "fail",
+          "detail": "the handoff payload carries prohibited state: handoff_record.accepted_state_ref (mutable_delivery_state)"
+        }
+      ]
+    },
+    {
+      "case_id": "S29",
+      "category": "handoff",
+      "description": "non-ref state key with path-looking value fails closed",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P04"
+      ],
+      "deciding_results": {
+        "P04": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "fail",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P04",
+          "status": "fail",
+          "detail": "the handoff payload carries prohibited state: handoff_record.accepted_state (mutable_delivery_state)"
+        }
+      ]
+    },
+    {
+      "case_id": "S30",
+      "category": "handoff",
+      "description": "nested mapping carries delivery state",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P04"
+      ],
+      "deciding_results": {
+        "P04": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "fail",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P04",
+          "status": "fail",
+          "detail": "the handoff payload carries prohibited state: handoff_record.events.event_1.delivery_state (mutable_delivery_state)"
+        }
+      ]
+    },
+    {
+      "case_id": "S31",
+      "category": "handoff",
+      "description": "list-of-records carries nested delivery state",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P04"
+      ],
+      "deciding_results": {
+        "P04": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "fail",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P04",
+          "status": "fail",
+          "detail": "the handoff payload carries prohibited state: handoff_record.events[0].delivery_state (mutable_delivery_state)"
+        }
+      ]
+    },
+    {
+      "case_id": "S32",
+      "category": "automation",
+      "description": "explicit scheduler true",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P06"
+      ],
+      "deciding_results": {
+        "P06": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "fail",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P06",
+          "status": "fail",
+          "detail": "autonomous behaviour enabled: progression.scheduler@self"
+        }
+      ]
+    },
+    {
+      "case_id": "S33",
+      "category": "automation",
+      "description": "explicit scheduler false",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P06"
+      ],
+      "deciding_results": {
+        "P06": "pass"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "case_id": "S34",
+      "category": "automation",
+      "description": "unknown configured scheduler token",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P06"
+      ],
+      "deciding_results": {
+        "P06": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "fail",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P06",
+          "status": "fail",
+          "detail": "autonomous behaviour enabled: progression.scheduler@self"
+        }
+      ]
+    },
+    {
+      "case_id": "S35",
+      "category": "automation",
+      "description": "explicit YAML null is in the declared negative set",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P06"
+      ],
+      "deciding_results": {
+        "P06": "pass"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "case_id": "S36",
+      "category": "automation",
+      "description": "nested scheduler enablement",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P06"
+      ],
+      "deciding_results": {
+        "P06": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "fail",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P06",
+          "status": "fail",
+          "detail": "autonomous behaviour enabled: progression.scheduler@enabled"
+        }
+      ]
+    },
+    {
+      "case_id": "S37",
+      "category": "automation",
+      "description": "prose mention that explicitly prohibits scheduler",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P06"
+      ],
+      "deciding_results": {
+        "P06": "pass"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "case_id": "S38",
+      "category": "automation",
+      "description": "explicit prohibition value",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P06"
+      ],
+      "deciding_results": {
+        "P06": "pass"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    },
+    {
+      "case_id": "S39",
+      "category": "polarity",
+      "description": "double-negative scheduler declaration",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P06"
+      ],
+      "deciding_results": {
+        "P06": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "fail",
+        "P06": "fail",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P05",
+          "status": "fail",
+          "detail": "authority granted: progression.scheduler_not_prohibited@self"
+        },
+        {
+          "predicate_id": "P06",
+          "status": "fail",
+          "detail": "autonomous behaviour enabled: progression.scheduler_not_prohibited@self"
+        }
+      ]
+    },
+    {
+      "case_id": "S40",
+      "category": "automation",
+      "description": "contradictory nested scheduler declarations",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P06"
+      ],
+      "deciding_results": {
+        "P06": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "fail",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P06",
+          "status": "fail",
+          "detail": "autonomous behaviour enabled: progression.scheduler@enabled"
+        }
+      ]
+    },
+    {
+      "case_id": "S41",
+      "category": "automation",
+      "description": "positive automation hidden in unfamiliar nested representation",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P06"
+      ],
+      "deciding_results": {
+        "P06": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "fail",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P06",
+          "status": "fail",
+          "detail": "autonomous behaviour enabled: progression.automation_controls@cadence.trigger"
+        }
+      ]
+    },
+    {
+      "case_id": "S42",
+      "category": "catalog",
+      "description": "new authoritative mutable catalog with unseen labels",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P07"
+      ],
+      "deciding_results": {
+        "P07": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "fail",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "fail",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "fail",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P03",
+          "status": "fail",
+          "detail": "provider pinned by a normative selector: route_catalog.entries[0].model='nacrecompute_qx', route_catalog.entries[1].model='obsidianinference_r', route_catalog.entries[2].model='juniperreasoner'"
+        },
+        {
+          "predicate_id": "P07",
+          "status": "fail",
+          "detail": "second mutable catalog: workflow/normative_route_source.yml (independent_declaration, 3 entries)"
+        },
+        {
+          "predicate_id": "P24",
+          "status": "fail",
+          "detail": "receipt is not bound to a window: route_catalog"
+        }
+      ]
+    },
+    {
+      "case_id": "S43",
+      "category": "catalog",
+      "description": "two-entry authoritative mutable catalog",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P07"
+      ],
+      "deciding_results": {
+        "P07": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "fail",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P07",
+          "status": "fail",
+          "detail": "second mutable catalog: workflow/two_entry_model_catalog.yml (restatement, 2 entries)"
+        }
+      ]
+    },
+    {
+      "case_id": "S44",
+      "category": "catalog",
+      "description": "case-spacing-punctuation equivalents of live labels",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P07"
+      ],
+      "deciding_results": {
+        "P07": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "fail",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P07",
+          "status": "fail",
+          "detail": "second mutable catalog: workflow/case_variant_model_catalog.yml (restatement, 3 entries)"
+        }
+      ]
+    },
+    {
+      "case_id": "S45",
+      "category": "catalog",
+      "description": "Markdown table plus definition-list catalog",
+      "expected_overall": "fail",
+      "actual_overall": "fail",
+      "deciding_predicates": [
+        "P07"
+      ],
+      "deciding_results": {
+        "P07": "fail"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "fail",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": [
+        {
+          "predicate_id": "P07",
+          "status": "fail",
+          "detail": "second mutable catalog: workflow/combined_model_catalog.md (restatement, 3 entries)"
+        }
+      ]
+    },
+    {
+      "case_id": "S46",
+      "category": "catalog",
+      "description": "pointer-only catalog reference",
+      "expected_overall": "pass",
+      "actual_overall": "pass",
+      "deciding_predicates": [
+        "P07"
+      ],
+      "deciding_results": {
+        "P07": "pass"
+      },
+      "correct": true,
+      "counterexample": false,
+      "result_vector": {
+        "P01": "pass",
+        "P02": "pass",
+        "P03": "pass",
+        "P04": "pass",
+        "P05": "pass",
+        "P06": "pass",
+        "P07": "pass",
+        "P21": "pass",
+        "P22": "pass",
+        "P23": "pass",
+        "P24": "pass",
+        "P25": "pass",
+        "P26": "pass",
+        "P27": "pass"
+      },
+      "nonpass": []
+    }
+  ],
+  "receipt_cases": [
+    {
+      "case_id": "R01",
+      "category": "receipt",
+      "description": "valid strict-YAML receipt with self sentinel",
+      "expected_valid": true,
+      "actual_valid": true,
+      "correct": true,
+      "counterexample": false,
+      "exception": null,
+      "validation": {
+        "strict_yaml_parsed": true,
+        "parse_error": null,
+        "required_fields_present": true,
+        "missing_fields": [],
+        "ledger_matches_diff": true,
+        "declared_path_count": 3,
+        "actual_path_count": 3,
+        "self_entry_present": true,
+        "self_hash_recursion_avoided": true,
+        "artifact_hash_mismatches": [],
+        "topology_declared": "full_candidate_tree",
+        "declared_count_matches": true,
+        "paths_canonical": true,
+        "paths_unique": true,
+        "artifact_paths_contained": true,
+        "artifact_paths_unique": true,
+        "hash_scope_complete": true,
+        "sha_syntax_valid": true,
+        "external_bindings_hold": true,
+        "receipt_bytes_binding_holds": true,
+        "external_artifact_bindings_hold": true,
+        "execution_provenance_holds": true,
+        "external_closure_complete": false,
+        "external_bindings_checked": [],
+        "topology_comparison_holds": true,
+        "topology_comparison_detail": "declared topology matches the observed execution",
+        "failures": [],
+        "valid": true
+      }
+    },
+    {
+      "case_id": "R02",
+      "category": "receipt",
+      "description": "malformed YAML",
+      "expected_valid": false,
+      "actual_valid": false,
+      "correct": true,
+      "counterexample": false,
+      "exception": null,
+      "validation": {
+        "strict_yaml_parsed": false,
+        "parse_error": "ScannerError: mapping values are not allowed here\n  in \"<unicode string>\", line 2, column 15:\n    note: unquoted: nested\n                  ^",
+        "required_fields_present": false,
+        "missing_fields": [
+          "schema_version",
+          "receipt_version",
+          "task_id",
+          "run_id",
+          "base_sha",
+          "candidate_sha",
+          "changed_paths",
+          "artifact_hashes",
+          "artifact_hash_scope",
+          "topology"
+        ],
+        "ledger_matches_diff": false,
+        "declared_path_count": 0,
+        "actual_path_count": 3,
+        "self_entry_present": false,
+        "self_hash_recursion_avoided": false,
+        "artifact_hash_mismatches": [],
+        "topology_declared": null,
+        "declared_count_matches": true,
+        "paths_canonical": true,
+        "paths_unique": true,
+        "artifact_paths_contained": true,
+        "artifact_paths_unique": true,
+        "hash_scope_complete": true,
+        "sha_syntax_valid": true,
+        "external_bindings_hold": true,
+        "receipt_bytes_binding_holds": true,
+        "external_artifact_bindings_hold": true,
+        "execution_provenance_holds": true,
+        "external_closure_complete": false,
+        "external_bindings_checked": [],
+        "topology_comparison_holds": true,
+        "topology_comparison_detail": "",
+        "failures": [
+          "strict_yaml_parse: ScannerError: mapping values are not allowed here\n  in \"<unicode string>\", line 2, column 15:\n    note: unquoted: nested\n                  ^"
+        ],
+        "valid": false
+      }
+    },
+    {
+      "case_id": "R03",
+      "category": "receipt",
+      "description": "duplicate YAML key",
+      "expected_valid": false,
+      "actual_valid": false,
+      "correct": true,
+      "counterexample": false,
+      "exception": null,
+      "validation": {
+        "strict_yaml_parsed": false,
+        "parse_error": "DuplicateKeyError: duplicate key: 'task_id'",
+        "required_fields_present": false,
+        "missing_fields": [
+          "schema_version",
+          "receipt_version",
+          "task_id",
+          "run_id",
+          "base_sha",
+          "candidate_sha",
+          "changed_paths",
+          "artifact_hashes",
+          "artifact_hash_scope",
+          "topology"
+        ],
+        "ledger_matches_diff": false,
+        "declared_path_count": 0,
+        "actual_path_count": 3,
+        "self_entry_present": false,
+        "self_hash_recursion_avoided": false,
+        "artifact_hash_mismatches": [],
+        "topology_declared": null,
+        "declared_count_matches": true,
+        "paths_canonical": true,
+        "paths_unique": true,
+        "artifact_paths_contained": true,
+        "artifact_paths_unique": true,
+        "hash_scope_complete": true,
+        "sha_syntax_valid": true,
+        "external_bindings_hold": true,
+        "receipt_bytes_binding_holds": true,
+        "external_artifact_bindings_hold": true,
+        "execution_provenance_holds": true,
+        "external_closure_complete": false,
+        "external_bindings_checked": [],
+        "topology_comparison_holds": true,
+        "topology_comparison_detail": "",
+        "failures": [
+          "strict_yaml_parse: DuplicateKeyError: duplicate key: 'task_id'"
+        ],
+        "valid": false
+      }
+    },
+    {
+      "case_id": "R04",
+      "category": "receipt",
+      "description": "multi-document YAML",
+      "expected_valid": false,
+      "actual_valid": false,
+      "correct": true,
+      "counterexample": false,
+      "exception": null,
+      "validation": {
+        "strict_yaml_parsed": false,
+        "parse_error": "ValueError: multi-document YAML stream: 2 documents",
+        "required_fields_present": false,
+        "missing_fields": [
+          "schema_version",
+          "receipt_version",
+          "task_id",
+          "run_id",
+          "base_sha",
+          "candidate_sha",
+          "changed_paths",
+          "artifact_hashes",
+          "artifact_hash_scope",
+          "topology"
+        ],
+        "ledger_matches_diff": false,
+        "declared_path_count": 0,
+        "actual_path_count": 3,
+        "self_entry_present": false,
+        "self_hash_recursion_avoided": false,
+        "artifact_hash_mismatches": [],
+        "topology_declared": null,
+        "declared_count_matches": true,
+        "paths_canonical": true,
+        "paths_unique": true,
+        "artifact_paths_contained": true,
+        "artifact_paths_unique": true,
+        "hash_scope_complete": true,
+        "sha_syntax_valid": true,
+        "external_bindings_hold": true,
+        "receipt_bytes_binding_holds": true,
+        "external_artifact_bindings_hold": true,
+        "execution_provenance_holds": true,
+        "external_closure_complete": false,
+        "external_bindings_checked": [],
+        "topology_comparison_holds": true,
+        "topology_comparison_detail": "",
+        "failures": [
+          "strict_yaml_parse: ValueError: multi-document YAML stream: 2 documents"
+        ],
+        "valid": false
+      }
+    },
+    {
+      "case_id": "R05",
+      "category": "receipt",
+      "description": "missing changed path",
+      "expected_valid": false,
+      "actual_valid": false,
+      "correct": true,
+      "counterexample": false,
+      "exception": null,
+      "validation": {
+        "strict_yaml_parsed": true,
+        "parse_error": null,
+        "required_fields_present": true,
+        "missing_fields": [],
+        "ledger_matches_diff": false,
+        "declared_path_count": 2,
+        "actual_path_count": 3,
+        "self_entry_present": true,
+        "self_hash_recursion_avoided": true,
+        "artifact_hash_mismatches": [],
+        "topology_declared": "full_candidate_tree",
+        "declared_count_matches": false,
+        "paths_canonical": true,
+        "paths_unique": true,
+        "artifact_paths_contained": true,
+        "artifact_paths_unique": true,
+        "hash_scope_complete": true,
+        "sha_syntax_valid": true,
+        "external_bindings_hold": true,
+        "receipt_bytes_binding_holds": true,
+        "external_artifact_bindings_hold": true,
+        "execution_provenance_holds": true,
+        "external_closure_complete": false,
+        "external_bindings_checked": [],
+        "topology_comparison_holds": true,
+        "topology_comparison_detail": "declared topology matches the observed execution",
+        "failures": [
+          "declared_changed_path_count 3 != 2 ledger entries",
+          "ledger_does_not_match_diff: declared=2 actual=3"
+        ],
+        "valid": false
+      }
+    },
+    {
+      "case_id": "R06",
+      "category": "receipt",
+      "description": "extra changed path",
+      "expected_valid": false,
+      "actual_valid": false,
+      "correct": true,
+      "counterexample": false,
+      "exception": null,
+      "validation": {
+        "strict_yaml_parsed": true,
+        "parse_error": null,
+        "required_fields_present": true,
+        "missing_fields": [],
+        "ledger_matches_diff": false,
+        "declared_path_count": 4,
+        "actual_path_count": 3,
+        "self_entry_present": true,
+        "self_hash_recursion_avoided": true,
+        "artifact_hash_mismatches": [],
+        "topology_declared": "full_candidate_tree",
+        "declared_count_matches": false,
+        "paths_canonical": true,
+        "paths_unique": true,
+        "artifact_paths_contained": true,
+        "artifact_paths_unique": true,
+        "hash_scope_complete": true,
+        "sha_syntax_valid": true,
+        "external_bindings_hold": true,
+        "receipt_bytes_binding_holds": true,
+        "external_artifact_bindings_hold": true,
+        "execution_provenance_holds": true,
+        "external_closure_complete": false,
+        "external_bindings_checked": [],
+        "topology_comparison_holds": true,
+        "topology_comparison_detail": "declared topology matches the observed execution",
+        "failures": [
+          "declared_changed_path_count 3 != 4 ledger entries",
+          "ledger_does_not_match_diff: declared=4 actual=3"
+        ],
+        "valid": false
+      }
+    },
+    {
+      "case_id": "R07",
+      "category": "receipt",
+      "description": "duplicate changed path",
+      "expected_valid": false,
+      "actual_valid": false,
+      "correct": true,
+      "counterexample": false,
+      "exception": null,
+      "validation": {
+        "strict_yaml_parsed": true,
+        "parse_error": null,
+        "required_fields_present": true,
+        "missing_fields": [],
+        "ledger_matches_diff": false,
+        "declared_path_count": 4,
+        "actual_path_count": 3,
+        "self_entry_present": true,
+        "self_hash_recursion_avoided": true,
+        "artifact_hash_mismatches": [],
+        "topology_declared": "full_candidate_tree",
+        "declared_count_matches": false,
+        "paths_canonical": true,
+        "paths_unique": false,
+        "artifact_paths_contained": true,
+        "artifact_paths_unique": true,
+        "hash_scope_complete": true,
+        "sha_syntax_valid": true,
+        "external_bindings_hold": true,
+        "receipt_bytes_binding_holds": true,
+        "external_artifact_bindings_hold": true,
+        "execution_provenance_holds": true,
+        "external_closure_complete": false,
+        "external_bindings_checked": [],
+        "topology_comparison_holds": true,
+        "topology_comparison_detail": "declared topology matches the observed execution",
+        "failures": [
+          "declared_changed_path_count 3 != 4 ledger entries",
+          "duplicate_changed_path_entries",
+          "ledger_does_not_match_diff: declared=4 actual=3"
+        ],
+        "valid": false
+      }
+    },
+    {
+      "case_id": "R08",
+      "category": "receipt",
+      "description": "receipt missing itself",
+      "expected_valid": false,
+      "actual_valid": false,
+      "correct": true,
+      "counterexample": false,
+      "exception": null,
+      "validation": {
+        "strict_yaml_parsed": true,
+        "parse_error": null,
+        "required_fields_present": true,
+        "missing_fields": [],
+        "ledger_matches_diff": false,
+        "declared_path_count": 2,
+        "actual_path_count": 3,
+        "self_entry_present": false,
+        "self_hash_recursion_avoided": false,
+        "artifact_hash_mismatches": [],
+        "topology_declared": "full_candidate_tree",
+        "declared_count_matches": false,
+        "paths_canonical": true,
+        "paths_unique": true,
+        "artifact_paths_contained": true,
+        "artifact_paths_unique": true,
+        "hash_scope_complete": true,
+        "sha_syntax_valid": true,
+        "external_bindings_hold": true,
+        "receipt_bytes_binding_holds": true,
+        "external_artifact_bindings_hold": true,
+        "execution_provenance_holds": true,
+        "external_closure_complete": false,
+        "external_bindings_checked": [],
+        "topology_comparison_holds": true,
+        "topology_comparison_detail": "declared topology matches the observed execution",
+        "failures": [
+          "declared_changed_path_count 3 != 2 ledger entries",
+          "ledger_does_not_match_diff: declared=2 actual=3",
+          "receipt_not_declared_in_its_own_ledger"
+        ],
+        "valid": false
+      }
+    },
+    {
+      "case_id": "R09",
+      "category": "receipt",
+      "description": "receipt includes itself with digest",
+      "expected_valid": false,
+      "actual_valid": false,
+      "correct": true,
+      "counterexample": false,
+      "exception": null,
+      "validation": {
+        "strict_yaml_parsed": true,
+        "parse_error": null,
+        "required_fields_present": true,
+        "missing_fields": [],
+        "ledger_matches_diff": true,
+        "declared_path_count": 3,
+        "actual_path_count": 3,
+        "self_entry_present": true,
+        "self_hash_recursion_avoided": false,
+        "artifact_hash_mismatches": [],
+        "topology_declared": "full_candidate_tree",
+        "declared_count_matches": true,
+        "paths_canonical": true,
+        "paths_unique": true,
+        "artifact_paths_contained": true,
+        "artifact_paths_unique": true,
+        "hash_scope_complete": true,
+        "sha_syntax_valid": true,
+        "external_bindings_hold": true,
+        "receipt_bytes_binding_holds": true,
+        "external_artifact_bindings_hold": true,
+        "execution_provenance_holds": true,
+        "external_closure_complete": false,
+        "external_bindings_checked": [],
+        "topology_comparison_holds": true,
+        "topology_comparison_detail": "declared topology matches the observed execution",
+        "failures": [
+          "receipt_self_entry_carries_a_digest_of_its_own_bytes"
+        ],
+        "valid": false
+      }
+    },
+    {
+      "case_id": "R10",
+      "category": "receipt",
+      "description": "wrong artifact digest",
+      "expected_valid": false,
+      "actual_valid": false,
+      "correct": true,
+      "counterexample": false,
+      "exception": null,
+      "validation": {
+        "strict_yaml_parsed": true,
+        "parse_error": null,
+        "required_fields_present": true,
+        "missing_fields": [],
+        "ledger_matches_diff": true,
+        "declared_path_count": 3,
+        "actual_path_count": 3,
+        "self_entry_present": true,
+        "self_hash_recursion_avoided": true,
+        "artifact_hash_mismatches": [
+          "a.txt"
+        ],
+        "topology_declared": "full_candidate_tree",
+        "declared_count_matches": true,
+        "paths_canonical": true,
+        "paths_unique": true,
+        "artifact_paths_contained": true,
+        "artifact_paths_unique": true,
+        "hash_scope_complete": true,
+        "sha_syntax_valid": true,
+        "external_bindings_hold": true,
+        "receipt_bytes_binding_holds": true,
+        "external_artifact_bindings_hold": true,
+        "execution_provenance_holds": true,
+        "external_closure_complete": false,
+        "external_bindings_checked": [],
+        "topology_comparison_holds": true,
+        "topology_comparison_detail": "declared topology matches the observed execution",
+        "failures": [
+          "artifact_hash_mismatch: ['a.txt']"
+        ],
+        "valid": false
+      }
+    },
+    {
+      "case_id": "R11",
+      "category": "receipt",
+      "description": "wrong declared diff count",
+      "expected_valid": false,
+      "actual_valid": false,
+      "correct": true,
+      "counterexample": false,
+      "exception": null,
+      "validation": {
+        "strict_yaml_parsed": true,
+        "parse_error": null,
+        "required_fields_present": true,
+        "missing_fields": [],
+        "ledger_matches_diff": true,
+        "declared_path_count": 3,
+        "actual_path_count": 3,
+        "self_entry_present": true,
+        "self_hash_recursion_avoided": true,
+        "artifact_hash_mismatches": [],
+        "topology_declared": "full_candidate_tree",
+        "declared_count_matches": false,
+        "paths_canonical": true,
+        "paths_unique": true,
+        "artifact_paths_contained": true,
+        "artifact_paths_unique": true,
+        "hash_scope_complete": true,
+        "sha_syntax_valid": true,
+        "external_bindings_hold": true,
+        "receipt_bytes_binding_holds": true,
+        "external_artifact_bindings_hold": true,
+        "execution_provenance_holds": true,
+        "external_closure_complete": false,
+        "external_bindings_checked": [],
+        "topology_comparison_holds": true,
+        "topology_comparison_detail": "declared topology matches the observed execution",
+        "failures": [
+          "declared_changed_path_count 999 != 3 ledger entries"
+        ],
+        "valid": false
+      }
+    },
+    {
+      "case_id": "R12",
+      "category": "receipt",
+      "description": "noncanonical changed path with dot-dot segment",
+      "expected_valid": false,
+      "actual_valid": false,
+      "correct": true,
+      "counterexample": false,
+      "exception": null,
+      "validation": {
+        "strict_yaml_parsed": true,
+        "parse_error": null,
+        "required_fields_present": true,
+        "missing_fields": [],
+        "ledger_matches_diff": true,
+        "declared_path_count": 3,
+        "actual_path_count": 3,
+        "self_entry_present": true,
+        "self_hash_recursion_avoided": true,
+        "artifact_hash_mismatches": [],
+        "topology_declared": "full_candidate_tree",
+        "declared_count_matches": true,
+        "paths_canonical": false,
+        "paths_unique": true,
+        "artifact_paths_contained": true,
+        "artifact_paths_unique": true,
+        "hash_scope_complete": true,
+        "sha_syntax_valid": true,
+        "external_bindings_hold": true,
+        "receipt_bytes_binding_holds": true,
+        "external_artifact_bindings_hold": true,
+        "execution_provenance_holds": true,
+        "external_closure_complete": false,
+        "external_bindings_checked": [],
+        "topology_comparison_holds": true,
+        "topology_comparison_detail": "declared topology matches the observed execution",
+        "failures": [
+          "noncanonical_changed_paths: ['dir/../a.txt']"
+        ],
+        "valid": false
+      }
+    },
+    {
+      "case_id": "R13",
+      "category": "receipt",
+      "description": "artifact hash path escapes artifact root",
+      "expected_valid": false,
+      "actual_valid": false,
+      "correct": true,
+      "counterexample": false,
+      "exception": null,
+      "validation": {
+        "strict_yaml_parsed": true,
+        "parse_error": null,
+        "required_fields_present": true,
+        "missing_fields": [],
+        "ledger_matches_diff": true,
+        "declared_path_count": 3,
+        "actual_path_count": 3,
+        "self_entry_present": true,
+        "self_hash_recursion_avoided": true,
+        "artifact_hash_mismatches": [],
+        "topology_declared": "full_candidate_tree",
+        "declared_count_matches": true,
+        "paths_canonical": true,
+        "paths_unique": true,
+        "artifact_paths_contained": false,
+        "artifact_paths_unique": true,
+        "hash_scope_complete": true,
+        "sha_syntax_valid": true,
+        "external_bindings_hold": true,
+        "receipt_bytes_binding_holds": true,
+        "external_artifact_bindings_hold": true,
+        "execution_provenance_holds": true,
+        "external_closure_complete": false,
+        "external_bindings_checked": [],
+        "topology_comparison_holds": false,
+        "topology_comparison_detail": "full_candidate_tree hash scope does not equal the artifact tree; unhashed=[] unknown=['../outside.txt']",
+        "failures": [
+          "artifact_hash_path_outside_artifact_root: ['../outside.txt']",
+          "artifact_hash_ledger_does_not_cover_its_declared_scope: scope=2 hashed=3",
+          "topology: full_candidate_tree hash scope does not equal the artifact tree; unhashed=[] unknown=['../outside.txt']"
+        ],
+        "valid": false
+      }
+    },
+    {
+      "case_id": "R14",
+      "category": "receipt",
+      "description": "invalid/unbound candidate SHA",
+      "expected_valid": false,
+      "actual_valid": false,
+      "correct": true,
+      "counterexample": false,
+      "exception": null,
+      "validation": {
+        "strict_yaml_parsed": true,
+        "parse_error": null,
+        "required_fields_present": true,
+        "missing_fields": [],
+        "ledger_matches_diff": true,
+        "declared_path_count": 3,
+        "actual_path_count": 3,
+        "self_entry_present": true,
+        "self_hash_recursion_avoided": true,
+        "artifact_hash_mismatches": [],
+        "topology_declared": "full_candidate_tree",
+        "declared_count_matches": true,
+        "paths_canonical": true,
+        "paths_unique": true,
+        "artifact_paths_contained": true,
+        "artifact_paths_unique": true,
+        "hash_scope_complete": true,
+        "sha_syntax_valid": false,
+        "external_bindings_hold": true,
+        "receipt_bytes_binding_holds": true,
+        "external_artifact_bindings_hold": true,
+        "execution_provenance_holds": true,
+        "external_closure_complete": false,
+        "external_bindings_checked": [],
+        "topology_comparison_holds": true,
+        "topology_comparison_detail": "declared topology matches the observed execution",
+        "failures": [
+          "sha_not_40_hex: base='1111111111111111111111111111111111111111' candidate='not-a-40-character-sha'"
+        ],
+        "valid": false
+      }
+    },
+    {
+      "case_id": "R15",
+      "category": "receipt",
+      "description": "empty artifact hash ledger",
+      "expected_valid": false,
+      "actual_valid": false,
+      "correct": true,
+      "counterexample": false,
+      "exception": null,
+      "validation": {
+        "strict_yaml_parsed": true,
+        "parse_error": null,
+        "required_fields_present": true,
+        "missing_fields": [],
+        "ledger_matches_diff": true,
+        "declared_path_count": 3,
+        "actual_path_count": 3,
+        "self_entry_present": true,
+        "self_hash_recursion_avoided": true,
+        "artifact_hash_mismatches": [],
+        "topology_declared": "full_candidate_tree",
+        "declared_count_matches": true,
+        "paths_canonical": true,
+        "paths_unique": true,
+        "artifact_paths_contained": true,
+        "artifact_paths_unique": true,
+        "hash_scope_complete": true,
+        "sha_syntax_valid": true,
+        "external_bindings_hold": true,
+        "receipt_bytes_binding_holds": true,
+        "external_artifact_bindings_hold": true,
+        "execution_provenance_holds": true,
+        "external_closure_complete": false,
+        "external_bindings_checked": [],
+        "topology_comparison_holds": false,
+        "topology_comparison_detail": "full_candidate_tree hash scope does not equal the artifact tree; unhashed=['a.txt', 'b.txt'] unknown=[]",
+        "failures": [
+          "artifact_hash_ledger_does_not_cover_its_declared_scope: scope=2 hashed=0",
+          "topology: full_candidate_tree hash scope does not equal the artifact tree; unhashed=['a.txt', 'b.txt'] unknown=[]"
+        ],
+        "valid": false
+      }
+    },
+    {
+      "case_id": "R16",
+      "category": "receipt",
+      "description": "duplicate artifact hash entry",
+      "expected_valid": false,
+      "actual_valid": false,
+      "correct": true,
+      "counterexample": false,
+      "exception": null,
+      "validation": {
+        "strict_yaml_parsed": true,
+        "parse_error": null,
+        "required_fields_present": true,
+        "missing_fields": [],
+        "ledger_matches_diff": true,
+        "declared_path_count": 3,
+        "actual_path_count": 3,
+        "self_entry_present": true,
+        "self_hash_recursion_avoided": true,
+        "artifact_hash_mismatches": [],
+        "topology_declared": "full_candidate_tree",
+        "declared_count_matches": true,
+        "paths_canonical": true,
+        "paths_unique": true,
+        "artifact_paths_contained": true,
+        "artifact_paths_unique": false,
+        "hash_scope_complete": true,
+        "sha_syntax_valid": true,
+        "external_bindings_hold": true,
+        "receipt_bytes_binding_holds": true,
+        "external_artifact_bindings_hold": true,
+        "execution_provenance_holds": true,
+        "external_closure_complete": false,
+        "external_bindings_checked": [],
+        "topology_comparison_holds": true,
+        "topology_comparison_detail": "declared topology matches the observed execution",
+        "failures": [
+          "duplicate_artifact_hash_entries"
+        ],
+        "valid": false
+      }
+    },
+    {
+      "case_id": "R17",
+      "category": "receipt",
+      "description": "declared topology is not the executed topology",
+      "expected_valid": false,
+      "actual_valid": false,
+      "correct": true,
+      "counterexample": false,
+      "exception": null,
+      "validation": {
+        "strict_yaml_parsed": true,
+        "parse_error": null,
+        "required_fields_present": true,
+        "missing_fields": [],
+        "ledger_matches_diff": true,
+        "declared_path_count": 3,
+        "actual_path_count": 3,
+        "self_entry_present": true,
+        "self_hash_recursion_avoided": true,
+        "artifact_hash_mismatches": [],
+        "topology_declared": "history_dependent_partial_closure",
+        "declared_count_matches": true,
+        "paths_canonical": true,
+        "paths_unique": true,
+        "artifact_paths_contained": true,
+        "artifact_paths_unique": true,
+        "hash_scope_complete": true,
+        "sha_syntax_valid": true,
+        "external_bindings_hold": true,
+        "receipt_bytes_binding_holds": true,
+        "external_artifact_bindings_hold": true,
+        "execution_provenance_holds": true,
+        "external_closure_complete": false,
+        "external_bindings_checked": [],
+        "topology_comparison_holds": false,
+        "topology_comparison_detail": "unauthorized topology 'history_dependent_partial_closure'",
+        "failures": [
+          "topology: unauthorized topology 'history_dependent_partial_closure'"
+        ],
+        "valid": false
+      }
+    }
+  ]
+}

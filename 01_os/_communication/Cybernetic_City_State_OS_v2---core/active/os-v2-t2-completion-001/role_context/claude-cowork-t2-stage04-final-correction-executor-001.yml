@@ -1,0 +1,43 @@
+endpoint_id: claude-cowork-t2-stage04-final-correction-executor-001
+task_role: parent_stage04_final_correction_executor
+collaboration_role: execution
+provider: Anthropic
+product: Claude Desktop
+surface: claude_desktop_cowork
+model: Claude Opus 5
+reasoning_or_parameter_profile: claude_desktop_cowork_opus5_task_time
+session_mode: continue_existing_restored_implementation_window
+isolation_level: continuity_with_existing_T2_implementation_context
+repository_access_mode: task_scoped_local_worktree
+required_branch_or_sha: dev/os-v2-t2-completion-001
+local_files_required: true
+github_publication_required_before_start: true
+communication_carrier: GitHub
+repository_or_worktree_requirement: >-
+  Reuse the healthy T2 implementation repository after fresh reentry checks.
+  Begin this final correction only if remote dev/os-v2-t2-completion-001 is exact
+  8be63c167b16882cf0136d668c86e5e6796be30c. Preserve frozen candidates
+  4ce3e09e and 628dd60e and both independent FIX_REQUIRED reviews as historical
+  evidence. Construct only a forward successor; do not modify master.
+responsibility:
+- correct T2-PARENT-SR-001 contradictory route-policy false PASS
+- correct T2-PARENT-SR-002 spliced subject-path false PASS
+- persist family-level regressions for complete role conflict and exact path resolution
+- rerun inherited v3/v4 and regenerate affected provenance, trace, inventory and P2-2 evidence
+- produce a new exact freeze receipt, refreeze report, result pointer and final successor candidate
+- stop before self-accepting parent Stage04
+constraints:
+- exact_8be63c16_remote_head_required_at_entry
+- no_rerun_or_rewrite_Stage01_02_03
+- no_literal_only_patch_for_SR001_or_SR002
+- route_policy_resolution_must_consume_complete_value_and_fail_closed_on_ambiguity
+- dotted_subject_must_resolve_one_real_ordered_parent_child_path
+- no_subject_keyword_whitelist_or_component_bag_resolution
+- preserve accepted representation and polarity semantics outside the two defect families
+- no_new_semantic_choice_without_foreground_return
+- this_is_second_and_final_post_delivery_correction_round
+- if_next_fresh_review_still_has_blocking_finding_do_not_start_third_correction
+- no_self_review_or_parent_Stage04_self_acceptance
+- no_Stage05_canonical_or_master_write
+- no_force_push_rebase_squash_amend_or_history_rewrite
+- no_redelegation_or_automatic_progression

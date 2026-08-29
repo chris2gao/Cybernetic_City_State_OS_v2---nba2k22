@@ -1,0 +1,99 @@
+schema_version: citystate.run_blocked_finding.v1
+finding_id: T2-COMPLETION-BLK-003
+run_id: run-20260828-t2-completion-001
+task_id: os-v2-t2-completion-001
+raised_by_endpoint_id: claude-cowork-t2-completion-executor-001
+raised_by_task_role: parent_t2_completion_implementation_executor
+collaboration_role: execution
+state: blocked_returned_to_foreground
+supersedes_state_of: T2-COMPLETION-BLK-002
+evidence_ref: ../07_测试执行/ruling_r2_application_and_regression_v1.yml
+
+title: >-
+  R2 closed all three questions. The last two failures are one case, S23, where the
+  verdict is already correct and only the fixed result-vector arity disagrees.
+
+work_performed_or_requested: >-
+  Apply R2, then determine whether the residual failures are a derivation or a further
+  adjudication.
+
+implementation_or_review_method: >-
+  Isolated the residual cause to a single named reviewer case using the suite's own
+  helpers, and read the evaluator's own detail strings for that case rather than
+  reasoning from the assertion text.
+
+outcome_of_ruling_r2:
+  v3_suite: 65/65 exit 0, unchanged across all rounds
+  v4_suite: 22/29 -> 27/29 exit 1
+  fixed: 5
+  newly_exposed: 0
+  net_open: 2
+
+the_single_remaining_cause:
+  case: S23
+  description: nested authority grant
+  expected_overall: fail
+  actual_overall: fail
+  case_correct: true
+  what_is_wrong: only the result-vector length - 15 observed against an asserted 14
+  results:
+  - "P05 fail: authority granted: roles.backend_execution.permissions@master_write_authorized.state"
+  - "P00 unsupported_or_ambiguous_representation: mechanism/roles_v1.yml: no authoritative structural binding resolves this position, so it fails closed as unknown (role_contract_v1:no_rule_for_container)"
+  unbound_position: roles.*.permissions and its entries, under role_contract_v1
+  why_it_is_unbound: >-
+    role_contract_v1 binds [roles], [roles,"*"], [roles,"*",evidence_refs] and
+    [role_label_effect]. S23 nests the grant one level deeper, under a `permissions`
+    sub-container that no rule covers, so the position fails closed as unknown while
+    P05 independently and correctly detects the grant.
+  affected_tests:
+  - test_v4_reviewer_replay.test_B_v4_returns_fourteen_predicates_for_every_case
+  - test_v4_reviewer_replay.test_A_control_really_ran_seven_predicates
+
+why_this_is_a_choice_and_not_a_derivation:
+- This failure is not a wrong verdict. The engine judges S23 correctly and additionally
+  reports a visible unknown at a genuinely unbound nested position, which is the
+  accepted fail-closed invariant behaving as written.
+- There are two coherent closures and they are not equivalent. Binding
+  [roles,"*",permissions] declares what is claimable at a new nested position inside
+  the role contract. Reclassifying the fixed-arity expectation instead accepts that a
+  result vector may carry an accompanying P00, which changes what the suite asserts.
+- R2 states fixture_or_test_change_required_by_ruling: false, so the second closure is
+  outside what R2 authorised, and the first is a claimability decision the executor is
+  forbidden to make alone.
+- The precedent for the second option exists and is not the executor's to apply: ruling
+  F04-A_REFINED already says that if a tested form is not in the contract, reclassify
+  the test rather than the candidate. Whether that precedent governs a fixed-arity
+  expectation is exactly the question being returned.
+- As in both previous rounds, each option turns the suite green. That is the reason to
+  return it rather than to pick one.
+
+stop_condition_invoked:
+- 00003_request: stop and return if another load-bearing claimability or authority choice appears
+- 01_os/开发入口与单窗口任务规范_v1.md section 11 case 3
+- role_context constraint no_new_authority_or_claimability_semantics_without_foreground_return
+
+what_the_foreground_is_asked_to_rule:
+  question: >-
+    Does role_contract_v1 gain a container rule for [roles,"*",permissions] and its
+    entries - and if so with which child_keys roles - or is the fixed 14/7 result-vector
+    arity expectation the thing that should be reclassified to admit an accompanying
+    fail-closed P00?
+  executor_position: none taken
+
+supportability_rationale: >-
+  The cause is one case, named by the evaluator's own detail string, with the verdict
+  independently confirmed correct by the same probe. Nothing here rests on the shape of
+  the assertion message.
+
+feasibility_rationale: >-
+  Either closure is bounded: one is a single container rule in the file already in
+  scope; the other is a test-expectation change that R2 explicitly did not authorise.
+
+residual_risk_or_unproved_limits:
+- Attribution of the accepted-only control's odd case to S23 is inference, not measurement.
+- A deeper latent failure behind this signature cannot be excluded until it clears.
+- Executor measurement only. Not independent acceptance.
+
+correction003_replacement_complete: false
+p2_2_state: not_started_gate_not_reached
+next_owner: foreground_t2_completion_coordinator

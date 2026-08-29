@@ -1,0 +1,79 @@
+message_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00011
+task_id: os-v2-t2-completion-001
+title: Final Stage04 correction round for SR-001 and SR-002
+message_type: request
+sender_endpoint_id: gpt56-t2-completion-foreground-001
+sender_task_role: foreground_t2_completion_coordinator
+expected_recipient_endpoint_id: claude-cowork-t2-stage04-final-correction-executor-001
+expected_recipient_task_role: parent_stage04_final_correction_executor
+content: Continue the T2 implementation lineage from exact remote head 8be63c167b16882cf0136d668c86e5e6796be30c.
+  Fresh relationship-isolated reviewer-002 returned FIX_REQUIRED for exact frozen
+  successor 628dd60e with two independently reproduced material residuals, and foreground
+  accepts both findings. Execute the second and final post-delivery correction round
+  defined by task packet v4, CM-v4 and foreground adjudication 00008. Correct SR-001
+  and SR-002 at family level, persist the required regressions, rerun inherited v3/v4,
+  regenerate affected provenance/trace/inventory/P2-2 evidence, then generate one
+  new exact freeze receipt, refreeze report and result pointer for a forward successor.
+  Do not self-accept it.
+required_refs:
+- Human/task_authority_v2.yml
+- Human/delegations/00007_claude_parent_stage04_final_correction.yml
+- role_context/gpt56-t2-completion-foreground-001.yml
+- role_context/claude-cowork-t2-stage04-final-correction-executor-001.yml
+- documents/gpt56-t2-completion-foreground-001/00008_successor_review_fix_required_adjudication.md
+- messages/codex-t2-parent-stage04-reviewer-002/00001_result.yml
+- documents/codex-t2-parent-stage04-reviewer-002/00001_parent_stage04_successor_independent_review.md
+requested_action: correct_parent_stage04_successor_findings_SR001_SR002_from_review_04e7a7ba492e8e6037b150809e12cdb0e941d682
+authorization_ref: Human/delegations/00007_claude_parent_stage04_final_correction.yml
+recipient_delegation_ref: Human/delegations/00007_claude_parent_stage04_final_correction.yml
+facts:
+  work_performed_or_requested: Execute correction round 2 of 2 for SR-001 contradictory
+    route-policy resolution and SR-002 spliced subject-path resolution, then regenerate
+    the exact Stage04 evidence/freeze/result chain for one forward successor.
+  implementation_or_review_method: Enter only at exact 8be63c16, repair complete-value
+    role conflict semantics and exact ordered structural-path resolution, persist
+    family matrices rather than literal-only witnesses, rerun inherited suites with
+    actual exit codes, and regenerate deterministic downstream evidence.
+  supportability_rationale: Reviewer-002 independently reproduced both false PASS
+    cases. Foreground source inspection confirms first-match role resolution and component-bag
+    dotted-path resolution. A12/R12 and F03-D already determine the required directions.
+  feasibility_rationale: Both defects are localized to successor-v4 semantic resolution
+    and deterministic derived evidence inside the existing implementation allowlist;
+    no Stage01-03, master or architecture rewrite is required.
+  exact_entry_head: 8be63c167b16882cf0136d668c86e5e6796be30c
+  frozen_successor_under_review: 628dd60e3505516254bf37956bcde5fb93c2723a
+  independent_FIX_REQUIRED_commit: 04e7a7ba492e8e6037b150809e12cdb0e941d682
+  current_model_ref: 01_os/_runs/run-20260828-t2-completion-001/02_当前模型/current_model_v4.yml
+  task_packet_ref: 01_os/_runs/run-20260828-t2-completion-001/01_任务输入/任务包_v4.yml
+  correction_round: 2_of_2
+constraints:
+- preserve Stage01-03 without rerun or rewrite
+- continue only from exact remote implementation head 8be63c167b16882cf0136d668c86e5e6796be30c
+- SR-001 must evaluate the complete route-policy declaration, not first-match
+- compliant plus non-compliant, compliant plus unknown, or conflicting normalized
+  roles must non-pass independent of order
+- SR-002 dotted subjects must resolve one real ordered parent-child structural path
+- component splicing, reversal, dangling reference and subject-slot self-vouching
+  must non-pass
+- do not add route-policy spelling blacklists or subject keyword whitelists
+- preserve accepted structural-provenance, representation-equivalence and polarity
+  semantics outside these defect families
+- persist family-level regressions including both reviewer witnesses and order-reversal
+  controls
+- rerun inherited v3/v4 and regenerate affected provenance, trace, inventory, P2-2,
+  freeze, refreeze and result-pointer evidence
+- do not mutate or relabel earlier frozen candidates as PASS
+- do not self-review or claim parent Stage04 PASS
+- this is correction round 2 of 2; do not initiate a third correction if the next
+  independent review still has a blocker
+- no Stage05, canonical implementation, master write, force, rebase, squash, amend
+  or history rewrite
+- no redelegation or automatic progression
+risks:
+- a literal patch for [fail_closed, best_effort] can leave alternate ordering or unknown
+  composites false-green
+- exact-path resolution must not collapse back into a global bag of component names
+- a shared resolver change can disturb admitted equivalent representations, so inherited/metamorphic
+  tests remain load-bearing
+- if implementation exposes a new semantic choice rather than a deterministic consequence
+  of A12/F03-D, stop and return to foreground

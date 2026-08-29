@@ -1,0 +1,101 @@
+schema_version: citystate.formal_action.constitution_evidence.v1
+action_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00006
+action_class: formal_cross_endpoint_task_dispatch
+sender_endpoint_id: gpt56-t2-completion-foreground-001
+intended_recipient_endpoint_id: claude-cowork-t2-completion-executor-001
+classification_basis_ref: Human/current.yml
+required_mechanisms:
+- communication_system
+- model_routing
+resolver_result_ref: constitutions/gpt56-t2-completion-foreground-001/00006.yml#resolution
+gate_result_ref: constitutions/gpt56-t2-completion-foreground-001/00006.yml#gate
+mechanism_execution_ref: 01_os/06_execution/boot/communication_system/publisher/publish_message.py
+formal_artifact_ref: messages/gpt56-t2-completion-foreground-001/00006_request.yml
+activation_context:
+  intended_cross_endpoint_side_effect: true
+  actionable_content: true
+  requires_receiver_selection: true
+  communication_context_ref: manifest.yml
+  classification_basis_ref: Human/current.yml
+  collaboration_role: execution
+  risk_tier: T2_semantic
+  task_shape: parent_T2_P2_2_freeze_stage04_candidate_big_task
+  required_capabilities:
+  - local_file_read
+  - local_file_write
+  - GitHub_read
+  - GitHub_write
+  routing_basis_ref: role_context/claude-cowork-t2-completion-executor-001.yml
+  availability_assumption_or_observation_ref: role_context/claude-cowork-t2-completion-executor-001.yml
+  action_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00006
+  formal_message_type: request
+  task_id: os-v2-t2-completion-001
+  sender_endpoint_id: gpt56-t2-completion-foreground-001
+  intended_recipient_endpoint_id: claude-cowork-t2-completion-executor-001
+mechanism_preconditions:
+  communication_system:
+    verification_result: VERIFIED
+    evidence_ref: manifest.yml
+  model_routing:
+    verification_result: VERIFIED
+    evidence_ref: role_context/claude-cowork-t2-completion-executor-001.yml
+authority_effect: none
+resolution:
+  classification: formal_cross_endpoint_action
+  action_class: formal_cross_endpoint_task_dispatch
+  formal: true
+  formal_segment_indexes:
+  - 0
+  mixed_action_segmented: false
+  authority_effect: none
+  action_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00006
+  normalized_recipient_endpoint_id: claude-cowork-t2-completion-executor-001
+  required_mechanisms:
+  - communication_system
+  - model_routing
+  missing_preconditions: []
+  route_requirements:
+  - receiver_setup
+  action_allowed_to_enter_enforcement: true
+  ordinary_Human_discussion_allowed: false
+gate:
+  gate_result: VERIFIED
+  action_id: os-v2-t2-completion-001::gpt56-t2-completion-foreground-001::00006
+  action_class: formal_cross_endpoint_task_dispatch
+  required_mechanisms:
+  - communication_system
+  - model_routing
+  verified_precondition_refs:
+    communication_system: manifest.yml
+    model_routing: role_context/claude-cowork-t2-completion-executor-001.yml
+  blocking_failures: []
+  authority_effect: none
+receiver_setup:
+  surface: claude_desktop_cowork
+  communication_carrier: GitHub
+  availability_assumption_or_observation_ref: role_context/claude-cowork-t2-completion-executor-001.yml
+  repository_access_mode: task_scoped_local_worktree
+  required_branch_or_sha: dev/os-v2-t2-completion-001
+  model: Claude Opus 5
+  local_files_required: true
+  limitations:
+  - no_rerun_or_rewrite_Stage01_02_03
+  - exact_9c50a4fe_remote_head_required_at_big_task_entry
+  - no_new_authority_claimability_or_acceptance_semantics_without_foreground_return
+  - no_self_review_or_final_parent_Stage04_self_acceptance
+  - no_Stage05_canonical_or_master_write
+  - no_force_push_rebase_squash_amend_or_history_rewrite
+  - no_redelegation
+  product: Claude Desktop
+  provider: Anthropic
+  repository_or_worktree_requirement: Use a clean task-scoped worktree for dev/os-v2-t2-completion-001
+    and begin only if the observed remote head is exact 9c50a4fe56b12c1add15967a5515785e8e6fb760.
+    Preserve parent lineage from 3002d6177779abf81e6d476bfc434ee5d6dbe3c8 and treat
+    7cf9195715dcc7aa34bd09a8bc0f8320415f3930 as accepted read-only provenance source.
+    Do not bulk-merge divergent upstream history or modify master.
+  session_mode: continue_existing_restored_implementation_window
+  collaboration_role: execution
+  reasoning_or_parameter_profile: claude_desktop_cowork_opus5_task_time
+  isolation_level: continuity_with_existing_003_and_candidate_context
+  routing_basis_ref: role_context/claude-cowork-t2-completion-executor-001.yml
+  github_publication_required_before_start: true

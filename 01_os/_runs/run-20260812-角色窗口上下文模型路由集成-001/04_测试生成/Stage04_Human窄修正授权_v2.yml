@@ -1,0 +1,96 @@
+schema_version: citystate.stage04.human_narrow_correction_authorization.v2
+task_id: os-v2-role-window-context-model-routing-integration-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+stage: workflow_stage_04_test_generation
+authorization_round: 2
+authorized_at: '2026-08-12'
+status: granted
+
+physical_binding:
+  branch: dev/os-v2-role-window-context-model-routing-integration-001
+  branch_head_before_authorization: cb8cc4c8418c79273452dd637f8e2b37743df590
+  master_at_authorization: 9492fc940c58784297dc92d8602e5dfaad446d1a
+  reviewed_frozen_candidate_v2: c720988454e120bed9e6acbe63146c83144866f6
+  independent_review_v2_head: b2a80618b906f4f23d5e2fafbd13a662fcb140f6
+  proposal_ref: 04_测试生成/Stage04_v2_FIX_REQUIRED接收与Human窄修正提案_v1.yml
+
+Human_instruction_verbatim: >-
+  确认授权 T2 Stage 04 冻结测试包进行第二轮窄修正，严格按
+  `Stage04_v2_FIX_REQUIRED接收与Human窄修正提案_v1.yml` 关闭
+  ST04-V2-IR-001 至 ST04-V2-IR-006；允许修改当前 run 的 Stage04
+  `04_tests.yml`、harness、fixtures、新 `测试设计说明_v3.md` 并生成
+  `freeze_receipt_v3.yml`。保留 v1/v2 freeze receipts、两轮独立审核证据及既有
+  Human 授权不改；RW-T06 语义保留；validator defect probes 优先改为直接运行完整
+  candidate tree，不继续扩张历史依赖 crawler；不得修改 A、Stage02、B、canonical、master，
+  不得 force/rebase/squash/amend/history rewrite；修正后必须重新经过新的独立接收审核，
+  通过前不得进入 Stage 05。
+
+authorized_blockers:
+  - ST04-V2-IR-001
+  - ST04-V2-IR-002
+  - ST04-V2-IR-003
+  - ST04-V2-IR-004
+  - ST04-V2-IR-005
+  - ST04-V2-IR-006
+
+authorized_changed_paths:
+  - 04_测试生成/04_tests.yml
+  - 04_测试生成/实现/**
+  - 04_测试生成/fixtures/**
+  - 04_测试生成/测试设计说明_v3.md
+  - 04_测试生成/freeze_receipt_v3.yml
+
+required_corrections:
+  ST04-V2-IR-001: normalize prohibition/forbidden/disallowed/disabled suffix representations including '*_disabled: true'
+  ST04-V2-IR-002: normalize mapping and list-of-record entry-mode representations; judge fresh/reentry and exact predecessor semantics only
+  ST04-V2-IR-003: inspect complete normative provider/model binding structures including mapping keys and values while excluding provenance subtrees only
+  ST04-V2-IR-004: distinguish applicability metadata from canonical role source-of-truth properties
+  ST04-V2-IR-005: detect structured Markdown mutable model catalogs including definition-list form while preserving pointer/receipt allowlist
+  ST04-V2-IR-006: run validator defect probes against the full candidate tree; do not continue expanding the historical dependency crawler
+
+retained_semantics:
+  RW_T06: valid_and_retained
+  future_implementation_boundary_must_include: 01_os/02_boot/context_management/启动清单_v1.yml
+  schema_naming_neutrality: retained
+  runtime_behavior_degradation_to_contract_checks: retained
+
+must_preserve_immutable:
+  - 04_测试生成/freeze_receipt_v1.yml
+  - 04_测试生成/freeze_receipt_v2.yml
+  - 04_测试生成/独立接收审核/Stage04冻结测试包独立接收裁决_v1.yml
+  - 04_测试生成/独立接收审核/v2/**
+  - 04_测试生成/Stage04_Human窄修正授权_v1.yml
+  - 04_测试生成/Stage04_v2_FIX_REQUIRED接收与Human窄修正提案_v1.yml
+
+prohibited:
+  - modify_A
+  - modify_Stage02
+  - modify_B
+  - canonical_mutation
+  - modify_master
+  - force_push
+  - rebase
+  - squash
+  - amend
+  - history_rewrite
+
+completion_requirements:
+  - artifact_version_3
+  - new_normalized_digest
+  - package_validation_pass
+  - selftest_pass
+  - V10_V11_V13_conforming_shapes_green
+  - V12_V15_direct_A_violations_red
+  - each_ST04_V2_IR_001_through_006_has_regression_or_conforming_counterexample
+  - validator_defect_probes_run_on_full_candidate_tree
+  - current_repository_remains_preimplementation_red_except_preservation_checks
+  - git_diff_check_pass
+  - ordinary_fast_forward_push_only
+  - fresh_independent_acceptance_required_before_Stage05
+
+authority:
+  frozen_test_correction_round_2: true
+  canonical_write: false
+  master_write: false
+  publication: false
+  destructive_git: false

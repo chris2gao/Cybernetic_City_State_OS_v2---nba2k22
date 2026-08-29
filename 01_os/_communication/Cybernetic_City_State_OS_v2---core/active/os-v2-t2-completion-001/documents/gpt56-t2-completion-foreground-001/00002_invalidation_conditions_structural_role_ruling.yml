@@ -1,0 +1,88 @@
+schema_version: citystate.foreground_adjudication.v1
+task_id: os-v2-t2-completion-001
+adjudication_id: FG-T2-COMPLETION-BLK-001-R1
+adjudicator_endpoint_id: gpt56-t2-completion-foreground-001
+adjudicator_task_role: foreground_t2_completion_coordinator
+triggering_finding_ref: 2a8282981810219d2d3050e2e4559bf67a3c371f:01_os/_runs/run-20260828-t2-completion-001/08_结论/blocked_v4_window_contract_container_rule_v1.yml
+implementation_branch_head_observed: 2a8282981810219d2d3050e2e4559bf67a3c371f
+accepted_structural_provenance_source_sha: 7cf9195715dcc7aa34bd09a8bc0f8320415f3930
+parent_checkpoint_sha: 3002d6177779abf81e6d476bfc434ee5d6dbe3c8
+current_model_version: T2-COMPLETION-CM-v1
+
+work_performed_or_requested: >-
+  Adjudicate the first correction-003 integration blocker: the structural role of
+  child keys under window_contract_v1 selector [lifecycle, invalidation_conditions],
+  and the proper branch on which the integration binding belongs.
+
+implementation_or_review_method: >-
+  Re-read the accepted evaluator-owned structural binding contract, the parent v4
+  F03-D typed lifecycle fixture and executable adapter behavior, and compare the
+  disputed position with already accepted same-profile keyed collections such as
+  entry_modes and failure_states. Judge the structural role from what the key is in
+  the document structure, not from whether a specialized business adapter later maps
+  the key spelling to a semantic role or whether a test turns green.
+
+primary_evidence:
+- 6d3171321970e3f99141539b22da8c1e9ad561b1:01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/02_acceptance/实现/semantic_acceptance/structural_binding_v1.yml
+- 6d3171321970e3f99141539b22da8c1e9ad561b1:01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/02_acceptance/实现/semantic_acceptance/structural_binding.py
+- 3002d6177779abf81e6d476bfc434ee5d6dbe3c8:01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/02_acceptance/fixtures/baseline_v4/mechanism/windows_v1.yml
+- 3002d6177779abf81e6d476bfc434ee5d6dbe3c8:01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/02_acceptance/实现/semantic_acceptance_v4/adapters_v4.py
+- 3002d6177779abf81e6d476bfc434ee5d6dbe3c8:01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/02_acceptance/实现/semantic_acceptance_v4/vocabulary_v4.py
+
+adjudication:
+  disputed_container_selector: [lifecycle, invalidation_conditions]
+  child_keys_role: instance_identity
+  entry_record_selector: [lifecycle, invalidation_conditions, "*"]
+  entry_record_child_keys_role: declaration_name
+  implementation_location: completion_branch_evaluator_owned_structural_binding_v1
+  upstream_branch_modification_required: false
+  model_change_required: false
+
+rationale:
+- >-
+  structural_binding defines instance_identity as an author-chosen entry identity in
+  an open keyed collection and declaration_name as a semantic-contract-owned field
+  name. Only declaration_name is globally claimable. The role is decided by the
+  holding container, not by the key's spelling.
+- >-
+  F03-D represents invalidation_conditions as named condition entries whose records
+  carry the typed semantic slots subject and observation, with consequence resolved
+  from the entry or region. The determinism adapter does not infer determinism from
+  the condition-name spelling; the typed slots carry the decision-bearing structure.
+- >-
+  A specialized A05 adapter may map a condition entry name onto a freshness-trigger
+  business role. That does not make the entry name a globally claimable declaration
+  field. The accepted failure_states collection is the direct precedent: its entry
+  names are instance_identity even though the A12 adapter maps those names onto
+  failure-case roles.
+- >-
+  entry_modes supplies the same structural two-level pattern already accepted in
+  window_contract_v1: the collection's direct child keys are instance_identity and
+  each entry record's direct fields are declaration_name. invalidation_conditions is
+  likewise a named-entry collection whose record fields are contract-owned typed slots.
+- >-
+  The integration gap exists only because parent v4 F03-D introduced a keyed typed
+  representation after the accepted structural-provenance candidate was built against
+  the v3 corpus. Therefore the additional binding belongs in the parent-based completion
+  branch. Rewriting 7cf91957 would mutate an already independently accepted upstream
+  candidate without adding supportability.
+
+supportability_rationale: >-
+  The ruling is supported by the executable structural-role definitions, the accepted
+  same-profile collection precedents, and the F03-D adapter's actual slot-based decoding.
+  It does not rely on the payload prose comment or on which option makes the suite green.
+
+feasibility_rationale: >-
+  The ruling requires only a bounded extension of the evaluator-owned binding on the
+  existing completion branch, followed by the already declared focused and inherited
+  regressions. It introduces no new structural-provenance architecture and does not
+  require Stage01-03 reruns, an upstream-history merge, or any protected publication.
+
+executor_instruction_boundary:
+- Add binding coverage consistent with the adjudication; implementation details remain executor-owned where non-load-bearing.
+- Re-run the relevant v3 and v4 suites and capture actual exit codes this time when technically observable.
+- Treat any new failure signature after the P00 short-circuit is removed as new evidence, not as permission to broaden semantics.
+- Stop and return if another load-bearing authority/claimability choice appears.
+- Do not begin P2-2 until correction-003 receives fresh independent PASS and foreground verifies the exact candidate binding.
+
+verdict: RULING_ISSUED_CONTINUE_CORRECTION003_CONSTRUCTION

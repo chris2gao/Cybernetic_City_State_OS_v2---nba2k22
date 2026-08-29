@@ -1,0 +1,205 @@
+schema_version: citystate.stage04.successor_checkpoint.v1
+task_id: os-v2-stage04-successor-acceptance-refreeze-001
+run_id: run-20260812-角色窗口上下文模型路由集成-001
+created_at: '2026-08-15'
+
+document_status: superseded_checkpoint_retained_as_the_record_of_its_own_round
+authority_effect: none
+terminal_state: IN_PROGRESS_CHECKPOINT_NOT_FROZEN
+stop_reason: new_material_finding_fails_closed_to_foreground
+
+superseded_by:
+  file: 03_validation/p2_1r_checkpoint_state_v1.yml
+  round: P2-1R
+  recorded_at: '2026-08-16'
+  by: claude-cowork-stage04-successor-tail-executor-003
+  what_changed_since:
+    - V4-FND-02 ruled F02-A and implemented; its filed mechanism was corrected from
+      "substring matching" to negation blindness, because the matchers were already
+      whole-token
+    - V4-FND-03 ruled F03-D and implemented
+    - V4-FND-04 manifestations a and c retracted as executor test errors; b closed
+    - "findings_raised below still reads ruled:false for V4-FND-02 and V4-FND-03 and
+      implemented:false for V4-FND-04; all three are stale as of 2026-08-16"
+  read_this_file_as: >-
+    the record of the round that RAISED the three findings, kept intact so the
+    sequence stays auditable. It is not current state. Where it and
+    p2_1r_checkpoint_state_v1.yml disagree about what is open, that one is current.
+
+not_claimed:
+  frozen_candidate: false
+  ready_for_fresh_independent_acceptance: false
+  parent_stage04_pass: false
+  stage05_entry: false
+  final_result_pointer_published: false
+  phase2_complete: false
+  freeze_receipt_produced: false
+  package_is_sound: false
+
+dispatch:
+  responding_to: os-v2-stage04-successor-acceptance-refreeze-001::foreground-stage04-successor-dispatch-001::00007
+  pointer_commit: 9812a4c878076a92cca2aa725ddf2f38391e4f60
+  requested_action: complete_phase2_validate_freeze_and_publish_successor_v4_candidate_if_green
+  outcome: >-
+    Not green. Three material findings were raised in the first Phase2 work
+    item, so the dispatch's own constraint
+    new_material_finding_fails_closed_to_foreground applies and the freeze tail
+    was not attempted.
+
+physical_binding:
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  transport: local_git
+  hook_guard: passed
+  worktree: E:/newStand/study/_wt_stage04_v4_tail
+  branch: dev/os-v2-stage04-successor-acceptance-refreeze-001
+  phase2_parent_sha: 76c75a95cc09ff68aa25c4a5de32e86fda5471f4
+  master_modified: false
+  parent_T2_branch_modified: false
+  checkpoint_sha: read_back_from_remote_after_push_not_recorded_here
+
+executor:
+  provider: Anthropic
+  product: Claude Desktop
+  surface: claude_desktop_cowork
+  model: Claude Opus 5
+  profile: claude_desktop_cowork_opus5_task_time
+  session_mode: explicit_reentry
+  endpoint_id: claude-cowork-stage04-successor-tail-executor-002
+  authority: routing_only
+
+# ---------------------------------------------------------------------------
+# What was completed
+# ---------------------------------------------------------------------------
+
+completed_work_items:
+  - v4 metamorphic representation-equivalence corpus
+  - poisoned-vocabulary, polarity-inversion and double-negation corpus for v4 rules
+
+not_started_work_items:
+  reason: >-
+    Human ruled that the remaining items wait until V4-FND-02 and V4-FND-03 are
+    ruled. F02-A would touch the same adapter layer as the already-ruled F04-A,
+    and negative tests written against the current traversal would be
+    invalidated by it.
+  items:
+    - adapter applicability negative tests
+    - combined accepted-plus-v4 decision provenance audit
+    - receipt external binding and tamper tests
+    - 01_semantic_binding/requirement_trace_v4.yml
+    - 02_acceptance/04_tests_v4.yml
+    - freeze artifacts, candidate freeze, result pointer
+
+# ---------------------------------------------------------------------------
+# Evidence measured this session
+# ---------------------------------------------------------------------------
+
+measured_evidence:
+  runtime: CPython 3.14.6, PyYAML 6.0.3
+  v4_suite:
+    command: python run_all_v4.py --emit ../results --json
+    total: 29
+    passed: 29
+    failed: 0
+    what_green_means_here: >-
+      The suite describes the package accurately, including six transformations
+      it cannot catch. It does NOT mean the package is sound. Tests that assert
+      an open hole is still open are green precisely because the hole is open.
+  vendored_baseline_suite:
+    total: 65
+    passed: 65
+    interpreter: separate process, semantic_acceptance_v4 never imported
+  v4_metamorphic_corpus:
+    invariants_total: 10
+    invariants_holding: 6
+    invariants_open_as_findings: 4
+    differences_total: 24
+    differences_holding: 24
+    attack_classes: [poisoned_vocabulary, polarity_inversion, double_negation,
+                     absence_is_not_a_pass, determinism_required,
+                     exactness_required, ownership_separation]
+    every_v4_predicate_probed: true
+    baseline_control: 14 of 14 pass before any transformation
+
+# ---------------------------------------------------------------------------
+# Findings
+# ---------------------------------------------------------------------------
+
+findings_raised:
+  - id: V4-FND-02
+    class: negation_blind_token_matching
+    direction: false_pass and false_fail from one defect
+    blocks_freeze: true
+    ruled: false
+    file: 03_validation/findings/V4-FND-02_self_review_double_negation_v1.yml
+  - id: V4-FND-03
+    class: closed_negative_vocabulary_presumes_determinism
+    direction: false_pass
+    blocks_freeze: true
+    ruled: false
+    file: 03_validation/findings/V4-FND-03_nondeterministic_condition_presumed_deterministic_v1.yml
+  - id: V4-FND-04
+    class: representation_coupling
+    root_cause_class: RC-01
+    direction: false_fail
+    blocks_freeze: true
+    ruled: F04-A
+    implemented: false
+    file: 03_validation/findings/V4-FND-04_container_shape_coupling_rc01_recurrence_v1.yml
+
+observations_raised:
+  - id: V4-OBS-01
+    blocks_freeze: false
+    file: 03_validation/findings/V4-OBS-01_exactness_fields_declared_but_unread_v1.yml
+  - id: V4-OBS-02
+    blocks_freeze: false
+    file: 03_validation/findings/V4-OBS-02_route_receipt_staleness_field_unread_v1.yml
+
+executor_authoring_errors_found_and_corrected:
+  note: >-
+    Recorded separately from the findings. Four cases initially looked like
+    package defects and were the test being wrong. Reading the A statements is
+    what separated them, and a reader should be able to see that the separation
+    was done by reading the requirement rather than by judgement.
+  errors:
+    - id: V4PV01
+      wrong: deciding predicate declared P21
+      right: P23; the stale EFFECT is read by the freshness adapter
+    - id: V4PL05
+      wrong: deciding predicate declared P21
+      right: P06, the accepted autonomy predicate, already owns background progression
+    - id: V4DN03
+      wrong: deciding predicate declared P21
+      right: P06, same reason
+    - id: V4AB07
+      wrong: >-
+        required the receipt to keep a named field, validator_exit_code
+      right: >-
+        A07 requires five concept ROLES, not thirteen field names. Requiring an
+        exact field list is the spelling coupling the methodology exists to
+        avoid, so the case now removes every field carrying two concepts.
+
+# ---------------------------------------------------------------------------
+# Assessment offered to the foreground, not a verdict
+# ---------------------------------------------------------------------------
+
+executor_assessment:
+  authority: none
+  statement: >-
+    Three freeze-blocking findings in the first Phase2 work item, one of them a
+    recurrence of RC-01 inside the successor's own new adapters, is a different
+    situation from a package that needs patching. The foreground and a fresh
+    independent reviewer should decide whether the v4 extension is repairable in
+    place or whether its adapter layer should be rebuilt on the accepted
+    engine's traversal from the start. F04-A as ruled is the first step either
+    way.
+  what_would_change_this_assessment: >-
+    If F04-A turns out to close V4-FND-04 and F02-A closes both manifestations of
+    V4-FND-02 without touching predicate logic, the remaining defect surface is
+    small and patching is reasonable. That is not known yet and is not assumed
+    here.
+
+next_owner:
+  role: foreground_stage04_successor_dispatch
+  required_action: >-
+    Rule on V4-FND-02 (F02-A/B/C) and V4-FND-03 (F03-A/B/C). Phase2 resumes after
+    that. This checkpoint authorises nothing and freezes nothing.
