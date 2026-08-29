@@ -62,3 +62,21 @@ domain-owned。两个集合不得重叠。
 供应商无关、Human 触发与 Human 中转的通讯契约位于
 `03_mechanisms/communication_system/`，启动清单位于
 `02_boot/communication_system/启动清单_v1.yml`。V1 不包含自动投递或状态推进。
+
+## 全局 Minimum Work Unit 输出
+
+正式 material work unit 在以下三个边界必须加载
+`02_boot/minimum_work_unit_output/启动清单_v1.yml` 并遵循
+`03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml`：
+
+- decision / architecture 的正式派单；
+- execution completion / handoff；
+- independent review completion。
+
+该契约要求“做/要求了什么、方法、supportability rationale、feasibility rationale”，并由角色补充
+结果、证据、边界或审核字段。reviewer 必须把 executor rationale 当作待验证命题，以 primary
+evidence 检查其支撑性，而不是把 rationale 本身当证据。
+
+这只是一项 output obligation：不适用于每个工具调用、微操作或 private reasoning，不要求
+chain-of-thought，不改变 communication envelope、task scope、model routing 或 Human confirmation
+规则，`authority_effect: none`。Legacy artifact 不因缺少 MWU 字段而被追溯判无效。

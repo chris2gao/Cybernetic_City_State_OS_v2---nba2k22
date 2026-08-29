@@ -1,0 +1,95 @@
+schema_version: citystate.minimum_work_unit_output.contract.v1
+mechanism_version: 1
+status: active_global
+authority_effect: none
+scope_effect: none
+purpose: >-
+  Make each material work-unit dispatch or completion auditable by recording what
+  was requested or done, the method used, why the result is supportable, and why
+  it is feasible. Independent review treats executor rationale as a claim to test
+  against primary evidence, not as evidence itself.
+application:
+  required_for:
+    - formal_decision_or_architecture_dispatch
+    - execution_completion_or_handoff
+    - independent_review_completion
+  not_a_work_unit:
+    - individual_tool_call
+    - micro_operation
+    - private_reasoning_step
+    - scratch_iteration_that_does_not_create_a_handoff_or_result
+  declared_container_key: minimum_work_unit_output
+  legacy_policy: >-
+    Artifacts that predate this mechanism or do not declare a minimum_work_unit_output
+    remain readable and are not retroactively invalidated. New formal outputs that
+    claim MWU compliance must satisfy this contract.
+minimum_work_unit_required_fields:
+  - work_performed_or_requested
+  - implementation_or_review_method
+  - supportability_rationale
+  - feasibility_rationale
+field_semantics:
+  work_performed_or_requested: >-
+    State the concrete work unit and intended or actual result.
+  implementation_or_review_method: >-
+    State the decisive implementation structure, evidence path, verification method,
+    or review method actually used; generic process slogans are insufficient.
+  supportability_rationale: >-
+    Give a concise, task-specific justification tied to requirements, invariants,
+    primary evidence, tests, ownership boundaries, or failure surfacing. Distinguish
+    measurement from inference. A bare "tests passed" or "best practice" is insufficient.
+  feasibility_rationale: >-
+    Give a concise, task-specific justification that the work is achievable in the
+    current code, dependencies, environment, scope and available verification surface.
+    State assumptions or unproved limits. A bare "feasible" is insufficient.
+role_specific_requirements:
+  decision_architecture:
+    required_additions:
+      - task_constraints_and_boundaries
+      - stop_or_return_conditions
+  execution:
+    required_additions:
+      - exact_result_or_candidate_ref
+      - verification_evidence
+      - residual_risk_or_unproved_limits
+  independent_review:
+    required_additions:
+      - verdict
+      - primary_evidence_examined
+      - findings_and_residual_risk
+      - executor_rationale_assessment
+    executor_rationale_assessment_required_fields:
+      - supportability_assessment
+      - feasibility_assessment
+      - primary_evidence_refs
+      - unsupported_or_inferred_claims
+review_rule: >-
+  An independent reviewer must explicitly test whether the executor's supportability
+  and feasibility rationales are supported by the primary evidence examined. The
+  executor rationale is testimony under review, never a substitute for primary evidence.
+quality_rules:
+  - rationale_is_concise_justification_not_private_chain_of_thought
+  - material_claims_trace_to_primary_evidence_or_are_marked_inference_or_unverified
+  - passing_tests_prove_only_the_properties_the_tests_actually_assert
+  - feasibility_does_not_grant_authority
+  - supportability_does_not_grant_authority
+  - output_contract_does_not_change_task_scope_permissions_or_confirmation_requirements
+  - unknown_or_unverified_items_are_named
+  - vague_generic_rationale_alone_is_noncompliant
+authority_compatibility:
+  ordinary_task_execution: no_separate_Human_authorization_required_by_MWU
+  ordinary_cross_model_dispatch: no_task_authority_or_delegation_required_by_MWU
+  protected_actions: unchanged_use_existing_Human_confirmation_rules
+  feasibility_or_supportability_as_permission: prohibited
+communication_binding: >-
+  Communication envelopes remain owned by communication_system. An MWU may be
+  carried in a task/result artifact or referenced by exact pointer from a message;
+  this contract does not change delivery, acknowledgement, or progression semantics.
+private_reasoning:
+  chain_of_thought_required: false
+  scratchpad_required: false
+  prohibited_artifact_keys:
+    - chain_of_thought
+    - private_chain_of_thought
+    - private_reasoning
+    - scratchpad

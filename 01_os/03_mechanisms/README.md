@@ -41,6 +41,9 @@ assessed one at a time, not copied wholesale.
   `routing_only` authority。
 - `mechanism_activation/`：formal-action constitution、机制触发、pre-action gate、
   L0–L4 生效盘点与 material claim 期望—观察—comparator 双向绑定。
+- `minimum_work_unit_output/`：material decision dispatch、execution completion 与
+  independent review completion 的最小输出契约；把 rationale 绑定到可审核证据，并要求 reviewer
+  攻击 executor rationale；`authority_effect: none`。
 
 工作流只引用该机制，不在 `01_workflow/` 内保留第二份实例。
 # 全局通讯机制
