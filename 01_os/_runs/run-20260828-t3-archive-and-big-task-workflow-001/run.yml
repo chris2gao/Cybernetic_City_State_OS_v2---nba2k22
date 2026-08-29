@@ -18,18 +18,31 @@ branch:
   worktree: E:\newStand\study\_wt_t3_archive_big_task_001
 dispatch:
   control_branch: dev/os-v2-t3-archive-and-big-task-workflow-control-001
-  control_head_read: 771869cb98a1e95f9f2943192b04a84d1a55153e
+  pointer_commit_read: 6a229b92a3317b765cfd2570254db4099dc412ed
+  receiver_bootstrap_exit_code: 0
   execution_brief_blob: >-
-    771869cb98a1e95f9f2943192b04a84d1a55153e:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-t3-archive-and-big-task-workflow-001/documents/gpt56-t3-archive-big-task-foreground-001/00001_T3_big_task_execution_brief.yml
+    6a229b92a3317b765cfd2570254db4099dc412ed:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-t3-archive-and-big-task-workflow-001/documents/gpt56-t3-archive-big-task-foreground-001/00001_T3_big_task_execution_brief.yml
   human_decision_blob: >-
-    771869cb98a1e95f9f2943192b04a84d1a55153e:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-t3-archive-and-big-task-workflow-001/Human/decisions/00001_t3_big_task_start.yml
+    6a229b92a3317b765cfd2570254db4099dc412ed:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-t3-archive-and-big-task-workflow-001/Human/decisions/00001_t3_big_task_start.yml
 outputs:
-  - 01_任务输入/
-  - 02_测量/
-  - 03_方案设计/
-  - 06_执行/
-  - 07_测试执行/
-  - 08_结论/
+  - 01_任务输入/任务包_v1.yml
+  - 02_测量/measure_working_set.py
+  - 02_测量/survey_run_lifecycle.py
+  - 02_测量/baseline_measurement_v1.json
+  - 02_测量/run_lifecycle_survey_v1.json
+  - 02_测量/测量结论_v1.md
+  - 03_方案设计/设计决策_v1.md
+  - 07_测试执行/测试执行记录_v1.md
+  - 07_测试执行/visible_set_measure_v1.json
+  - 07_测试执行/changed_path_ledger_v1.json
+  - 08_结论/结论_v1.md
+  - 08_结论/completion_pointer_v1.yml
 validation:
-  status: not_run
-lifecycle: candidate_pending_validation
+  status: executor_measured_all_gates_exit_0
+  independent_acceptance: not_run
+  detail: 07_测试执行/测试执行记录_v1.md
+
+# 本 run 的生命周期值。它是 open 状态，不是笔误：本任务交付的是待独立审核的候选，
+# 在审核关闭它之前，该 run 属于活动工作集，不进入归档资格评估。
+lifecycle: candidate_ready_for_independent_review
+closure_record: 08_结论/completion_pointer_v1.yml

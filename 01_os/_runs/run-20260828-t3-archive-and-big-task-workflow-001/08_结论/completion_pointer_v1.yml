@@ -1,0 +1,76 @@
+completion_pointer:
+  packet_id: os-v2-t3-archive-and-big-task-workflow-001
+  status: ready_for_independent_review
+  source_branch: dev/os-v2-t3-archive-and-big-task-workflow-001
+  source_base: d9a18b57749a0608a06ab546fd179b63e696e7f1
+
+  # 实现与证据全部在这个提交。它的值来自本地 git rev-parse，并在推送后由
+  # git ls-remote 从远端读回核对，读回值记录在 publication 段。
+  source_head: pending_readback_recorded_in_publication
+
+  validation:
+    tests: >-
+      新增 85（working_set 39 + task_orchestration 46），继承 131 passed + 6 subtests
+      （task_discipline 51、communication 80+6）。全部 exit 0。
+      逐条命令与退出码见 ../07_测试执行/测试执行记录_v1.md。
+    candidate_caused_failures: 0
+    diff_scope: passed
+    hook_guard: passed
+
+  repository:
+    changed_paths_count: 30
+    out_of_scope_paths: 0
+    out_of_scope_evidence: >-
+      python 01_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py
+      --base d9a18b57749a0608a06ab546fd179b63e696e7f1 --packet
+      01_os/_runs/run-20260828-t3-archive-and-big-task-workflow-001/01_任务输入/任务包_v1.yml
+      exit 0（退出 0 即全部路径在 allowlist 内），账本在
+      ../07_测试执行/changed_path_ledger_v1.json
+    binary_artifact_count: 0
+    worktree_clean: true
+
+  publication:
+    transport: local_git
+    replacement_gate: not_applicable
+    hook_guard_command: git config --get core.hooksPath
+    hook_guard_observed: .githooks
+    expected_remote_head: pending_readback_recorded_in_publication
+    resulting_remote_head: pending_readback_recorded_in_publication
+    compare_and_swap: not_applicable
+    fast_forward_verified: pending
+    push_performed: false
+    master_modified: false
+    force_push: false
+
+  # 指针不能命名承载它自己的那个提交。本文件随内容一起进入 source_head 所指的提交；
+  # 推送后读回的远端 head 记录在 08_结论/发布读回_v1.yml，该文件构成分支的最后一个提交，
+  # 与 source_head 的差别仅是这份读回记录。审核对象是分支 head。
+  review_target: branch_head
+  pointer_cannot_name_its_own_commit: true
+  publication_readback_ref: 08_结论/发布读回_v1.yml
+
+  residuals:
+    blocking: 0
+    nonblocking: 6
+    detail: 结论_v1.md
+    summary:
+      - R-01 66 个 run 组仍是 unknown 生命周期状态，本任务不回填
+      - R-02 未对真实历史执行迁移；搬移能力只在合成 fixture 上验证
+      - R-03 task_orchestration 无 02_boot 启动清单（路径不在 allowed_changed_paths 内，已登记缺项）
+      - R-04 字节不是 token；未测墙钟时间
+      - R-05 隐藏面清单在契约与代码两处镜像，由漂移守卫看守，未合并为单一来源
+      - R-06 通用归档器与 communication 归档器暂为两份实现，未合并
+
+  dispatch_findings:
+    - DF-01 派单中文路径 mojibake，已确定性还原并报告
+    - DF-02 "master 已含授权改动"与实测不符，以物理事实为准并报告
+    - DF-03 开发入口 §7 任务包模板与两个消费工具的字段层级不一致，已报告不自行裁决
+
+  self_assessment_boundary:
+    executor_self_acceptance: prohibited
+    independent_acceptance: not_run
+    claim: >-
+      以上全部为 executor 自测结果，不构成 independent acceptance。
+      passing test 只证明它实际测试的命题。
+
+  next_owner: foreground_independent_review
