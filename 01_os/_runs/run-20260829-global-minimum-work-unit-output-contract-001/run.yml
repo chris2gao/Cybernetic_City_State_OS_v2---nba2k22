@@ -11,14 +11,22 @@ outputs:
   integration_design: 03_方案设计/minimum_canonical_integration_design_v1.yml
   canonical_contract: ../../03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml
   validator: ../../06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py
-  validation_evidence: 07_测试执行/targeted_validation_v1.yml
-  completion_pointer: 08_结论/completion_pointer_v1.yml
-canonical_candidate_commit: c8f38c67595747f851785218c511ae461c233167
+  validation_evidence: 07_测试执行/correction_round_2_execution_evidence_v1.yml
+  finding_closure_ledger: 08_结论/finding_closure_ledger_v2.yml
+  completion_pointer: 08_结论/completion_pointer_v3.yml
+canonical_candidate_commit: b17bdc0826a4519af0da69b61370f0b657acc7c4
+prior_canonical_candidate_commits:
+  - c8f38c67595747f851785218c511ae461c233167
+  - 04e243dac34dd9e2183acebd3fd9f71919804d01
+correction_round: 2
 validation:
-  status: targeted_regression_passed
-  cases: 8
+  status: correction_round_2_regression_passed
+  selftest_cases: 58
+  drift_cases: 13
+  artifact_cli_cases: 6
+  candidate_caused_failures: 0
   out_of_scope_paths: 0
-  exact_remote_branch_static_execution: not_run_in_connector_environment
+  linux_execution: not_run
 lifecycle:
   master_integration: not_authorized
   independent_review: pending_Human_selected_reviewer
