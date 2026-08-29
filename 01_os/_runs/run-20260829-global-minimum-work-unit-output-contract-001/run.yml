@@ -1,6 +1,6 @@
 run_id: run-20260829-global-minimum-work-unit-output-contract-001
 task_id: os-v2-global-minimum-work-unit-output-contract-001
-status: candidate_pending_validation
+status: candidate_ready_for_independent_review
 exact_base_sha: 1559346ca2eab776cad110c7d96475f34a33f9b2
 branch: dev/os-v2-global-minimum-work-unit-output-contract-001
 ownership: core
@@ -11,9 +11,14 @@ outputs:
   integration_design: 03_方案设计/minimum_canonical_integration_design_v1.yml
   canonical_contract: ../../03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml
   validator: ../../06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py
+  validation_evidence: 07_测试执行/targeted_validation_v1.yml
+  completion_pointer: 08_结论/completion_pointer_v1.yml
+canonical_candidate_commit: c8f38c67595747f851785218c511ae461c233167
 validation:
-  status: not_run
-  evidence: null
+  status: targeted_regression_passed
+  cases: 8
+  out_of_scope_paths: 0
+  exact_remote_branch_static_execution: not_run_in_connector_environment
 lifecycle:
   master_integration: not_authorized
-  independent_review: deferred_to_Human_selected_reviewer
+  independent_review: pending_Human_selected_reviewer

@@ -1,0 +1,77 @@
+schema_version: citystate.minimum_work_unit_output.promotion_validation.v1
+task_id: os-v2-global-minimum-work-unit-output-contract-001
+validated_candidate_commit: c8f38c67595747f851785218c511ae461c233167
+base_commit: 1559346ca2eab776cad110c7d96475f34a33f9b2
+validation_status: targeted_regression_passed
+scope_verification:
+  compare_status: ahead
+  ahead_by: 2
+  behind_by: 0
+  changed_path_count: 11
+  out_of_scope_paths: []
+  protected_or_unrelated_mechanisms_modified: false
+targeted_validator_regression:
+  execution_surface: locally_reconstructed_candidate_bundle
+  result: pass
+  exit_code: 0
+  built_in_cases: 8
+  covered_properties:
+    - decision_architecture_required_shape_accepts
+    - execution_required_shape_accepts
+    - independent_review_required_shape_accepts
+    - bare_tests_passed_rationale_rejected
+    - reviewer_assessment_without_primary_evidence_refs_rejected
+    - private_chain_of_thought_artifact_key_rejected
+    - legacy_artifact_without_declared_MWU_remains_readable
+    - new_formal_artifact_can_require_declared_MWU
+  limitation: >-
+    The GitHub connector environment did not execute the exact remote branch filesystem.
+    The validator logic and candidate bundle were exercised before publication, then
+    contract, boot, registry, navigation, validator path and blob identities were read
+    back from the published candidate. Independent review remains not run.
+remote_readback:
+  contract_blob_sha: b5af9cb250077e6f1faaa4b937224b65ac8763aa
+  boot_blob_sha: 47fb8bdc7a015c28c7dfd5af5f00180b5785017d
+  registry_blob_sha: 115d62d2d96872609422a6a3fa7bef0e96226f08
+  validator_blob_sha: 74caad0c827ffc14bf541c7687a9893573db1803
+  os_readme_blob_sha: 419a8595bd9280a5d36fc64f769760a8e19d5f4f
+semantic_regressions:
+  ordinary_task_authorization_added: false
+  cross_model_delegation_chain_added: false
+  private_chain_of_thought_required: false
+  communication_envelope_modified: false
+  workflow_progression_modified: false
+  context_or_model_routing_ownership_modified: false
+residual_risk_or_unproved_limits:
+  - exact_remote_branch_static_command_not_executed_in_connector_environment
+  - no_independent_review_yet
+  - validator_quality_rules_are_intentionally_minimal_and_may_need_future_refinement_if_real_false_accept_or_false_reject_evidence_appears
+conclusion: candidate_ready_for_independent_review
+
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Promote the task-local T2 MWU trial into a thin global mechanism and validate
+    its role-specific output shapes, rationale-quality gates, legacy compatibility,
+    authority neutrality, registry/boot wiring, and task-scope isolation.
+  implementation_or_review_method: >-
+    Added one versioned mechanism contract with separate boot, registry and validator,
+    exposed it through always-loaded OS navigation, exercised positive and adversarial
+    in-memory examples, then compared and read back the published task-branch candidate.
+  supportability_rationale: >-
+    The promoted semantics preserve the exact four-field core and role-specific
+    obligations from the primary T2 trial, while the real T2 execution sample shows the
+    fields were usable in practice. The candidate diff does not modify the mechanisms
+    whose ownership it explicitly excludes.
+  feasibility_rationale: >-
+    The mechanism is YAML plus a bounded Python validator using dependencies already
+    used by repository validators; every changed path is inside the task allowlist and
+    task-branch publication requires no protected master action.
+  exact_result_or_candidate_ref: c8f38c67595747f851785218c511ae461c233167
+  verification_evidence:
+    - targeted_validator_regression_exit_0_cases_8
+    - remote_compare_ahead_2_behind_0_changed_paths_11_out_of_scope_0
+    - remote_contract_boot_registry_validator_and_navigation_readback
+  residual_risk_or_unproved_limits:
+    - exact_remote_branch_static_command_not_executed_in_connector_environment
+    - independent_review_not_run
