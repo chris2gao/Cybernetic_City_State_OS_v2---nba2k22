@@ -1,0 +1,143 @@
+schema_version: citystate.minimum_work_unit_output.independent_review.v1
+task_id: os-v2-t3-archive-and-big-task-workflow-001
+review_id: T3-INDEPENDENT-REVIEW-AFTER-CORRECTION-001
+review_date: 2026-09-01
+reviewer_role: foreground_relationship_isolated_independent_review
+base_master: 6757bee2f8dfa3cf55abb464189b953e2b072773
+canonical_implementation_candidate: 454c07e475f54a921e6233bc435b3a9247f8cf9f
+evidence_head_examined: 22359e66f0328107a4ed5021f08dc8e43d3b66ea
+verdict: PASS
+blocking_findings: 0
+
+primary_evidence_examined:
+  - 6757bee2f8dfa3cf55abb464189b953e2b072773..454c07e475f54a921e6233bc435b3a9247f8cf9f
+  - 454c07e475f54a921e6233bc435b3a9247f8cf9f:01_os/03_mechanisms/context_management/工作集与归档契约_v1.yml
+  - 454c07e475f54a921e6233bc435b3a9247f8cf9f:01_os/06_execution/boot/context_management/working_set/visible_set.py
+  - 454c07e475f54a921e6233bc435b3a9247f8cf9f:01_os/06_execution/boot/context_management/working_set/archive_group.py
+  - 454c07e475f54a921e6233bc435b3a9247f8cf9f:01_os/06_execution/boot/context_management/working_set/test_working_set.py
+  - 454c07e475f54a921e6233bc435b3a9247f8cf9f:01_os/03_mechanisms/task_orchestration/大任务与长时执行契约_v1.yml
+  - 22359e66f0328107a4ed5021f08dc8e43d3b66ea:01_os/_runs/run-20260828-t3-archive-and-big-task-workflow-001/08_结论/completion_pointer_v3.yml
+  - 22359e66f0328107a4ed5021f08dc8e43d3b66ea:01_os/_runs/run-20260828-t3-archive-and-big-task-workflow-001/09_rebaseline/修正说明_v1.md
+  - independent_local_reproduction:working_set_44_passed
+  - independent_local_reproduction:task_orchestration_46_passed
+  - independent_local_reproduction:task_discipline_54_passed
+  - independent_local_reproduction:communication_84_passed_plus_6_subtests
+  - independent_local_reproduction:working_set_static_passed
+  - independent_local_reproduction:communication_static_passed
+  - independent_local_reproduction:mechanism_activation_static_passed
+  - independent_local_reproduction:context_structure_passed
+  - independent_local_reproduction:mwu_selftest_58_and_static_passed
+  - independent_local_reproduction:git_diff_check_passed
+  - foreground_adjudication_r07_v1.yml
+
+finding_assessment:
+  T3-IR-001:
+    status: CLOSED
+    basis: >-
+      The corrected code defines open and unknown as default-visible and terminal as default-hidden;
+      index/report semantics match that rule. The focused test independently passes and archive_group
+      still rejects unknown/freeform state because archival requires exact terminal classification.
+  T3-IR-002:
+    status: CLOSED
+    basis: >-
+      Fresh Git compare from current master to the canonical implementation candidate reports 44
+      changed paths, matching completion_pointer_v3 and the task ledger. The evidence head adds run-local
+      evidence without altering canonical implementation semantics.
+  T3-IR-003:
+    status: ACCEPTED_NONBLOCKING
+    basis: >-
+      Corrected measurement withdraws the old 89.19 percent claim and shows no current run/dev exclusion
+      benefit because there are no terminal groups. The Human explicitly prioritizes execution quality
+      over token savings for core guidance. The 6,285-byte always-on increase is therefore acceptable
+      for load-bearing lifecycle and long-task execution rules and is not a merge blocker.
+
+independent_reproduction:
+  physical_state:
+    remote_master_observed: 6757bee2f8dfa3cf55abb464189b953e2b072773
+    remote_task_branch_observed_before_review_write: 22359e66f0328107a4ed5021f08dc8e43d3b66ea
+    master_to_candidate_status: ahead_only
+    candidate_merge_base: 6757bee2f8dfa3cf55abb464189b953e2b072773
+  tests:
+    working_set: 44_passed
+    task_orchestration: 46_passed
+    task_discipline: 54_passed
+    communication: 84_passed_plus_6_subtests
+  validators:
+    working_set_static: PASS
+    communication_static: PASS
+    mechanism_activation_static: PASS
+    context_structure: PASS
+    mwu_selftest: PASS_58_cases
+    mwu_static: PASS
+    git_diff_check: PASS
+  corrected_visibility_probe:
+    branch_head_full_listing_bytes: 217383
+    branch_head_visible_listing_bytes: 156575
+    branch_head_excluded_listing_bytes: 60808
+    branch_head_excluded_fraction: 0.2797
+    groups_total: 70
+    groups_terminal: 0
+    groups_default_hidden: 0
+    groups_unknown: 68
+    unknown_default_visible: true
+    unknown_archivable: false
+    note: >-
+      Evidence-head path bytes are slightly larger than the canonical-candidate measurement because
+      review/evidence files were added. The excluded byte count remains 60,808, consistent with the
+      delegated communication surface rather than T3 terminal-group hiding.
+
+residual_risk:
+  - 68 existing groups remain lifecycle unknown and therefore remain visible and non-archivable until explicitly adjudicated or backfilled.
+  - No real historical group migration was performed; archiving behavior is validated on synthetic real-Git fixtures.
+  - DF-03 task-packet field-level inconsistency remains a separate canonical follow-up and was intentionally not repaired here.
+  - Current immediate working-set byte reduction attributable to terminal run/dev classification is zero because there are no terminal-classified groups yet.
+  - The always-on bootstrap increase is accepted by explicit Human optimization priority, not claimed to be token-efficient.
+
+minimum_work_unit_output:
+  role: independent_review
+  work_performed_or_requested: >-
+    Independently review T3 correction round 1, verify closure of the unknown-visibility and stale
+    completion-pointer findings, and adjudicate whether the corrected candidate is acceptable for
+    master integration after the Human resolved R-07 in favor of execution-quality-first core guidance.
+  implementation_or_review_method: >-
+    Read the exact candidate and evidence artifacts, compare exact SHAs to current master, independently
+    rerun the working-set, orchestration, inherited discipline/communication, context, activation and MWU
+    gates, inspect the corrected visibility and archive code paths, and remeasure the visible-set behavior
+    on the actual evidence-head worktree.
+  supportability_rationale: >-
+    PASS rests on independent executable reproduction plus source inspection: unknown groups are visibly
+    retained and still rejected by the archiver, all critical suites and validators pass, the canonical
+    changed-path count is 44 against the exact current master, and the withdrawn visibility-benefit claim
+    is no longer used to support acceptance.
+  feasibility_rationale: >-
+    The candidate is a fast-forward descendant of current master, its canonical changes are confined to
+    the T3 mechanism/task-owned surfaces, and no protected action is needed to preserve the reviewed tree;
+    master integration can be performed later as a normal non-force fast-forward if Human confirmation covers it.
+  verdict: PASS
+  primary_evidence_examined:
+    - 6757bee2f8dfa3cf55abb464189b953e2b072773..454c07e475f54a921e6233bc435b3a9247f8cf9f
+    - independent_local_reproduction:critical_gate_matrix
+    - foreground_adjudication_r07_v1.yml
+  findings_and_residual_risk:
+    - T3-IR-001 CLOSED
+    - T3-IR-002 CLOSED
+    - T3-IR-003 ACCEPTED_NONBLOCKING
+    - existing unknown lifecycle backlog remains visible and non-archivable
+    - real-history archive migration remains unperformed
+    - DF-03 remains separate follow-up
+  executor_rationale_assessment:
+    supportability_assessment: >-
+      Executor claims about corrected visibility and path counts are supported by independent Git compare,
+      source inspection, focused tests, and a fresh measure run; the old 89.19 percent benefit claim is
+      correctly withdrawn and not relied upon.
+    feasibility_assessment: >-
+      The correction remains inside the existing T3 task surface and preserves current master semantics;
+      no history rewrite, force operation, runtime activation, or unrelated canonical repair is required.
+    primary_evidence_refs:
+      - 6757bee2f8dfa3cf55abb464189b953e2b072773..454c07e475f54a921e6233bc435b3a9247f8cf9f
+      - independent_local_reproduction:critical_gate_matrix
+      - foreground_adjudication_r07_v1.yml
+    unsupported_or_inferred_claims:
+      - no current T3-attributable run/dev listing-byte reduction is claimed
+      - no claim that existing unknown groups are actually live or completed
+      - no claim that synthetic archive tests prove every real-history migration case
