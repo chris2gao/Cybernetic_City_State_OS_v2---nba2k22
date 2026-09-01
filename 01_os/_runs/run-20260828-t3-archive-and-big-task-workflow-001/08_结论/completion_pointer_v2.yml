@@ -1,0 +1,150 @@
+schema_version: citystate.completion_pointer.v1
+supersedes: 08_结论/completion_pointer_v1.yml
+supersession_note: >-
+  v1 是在 MWU 进入 master 之前、以 d9a18b57 为 base 产出的历史 evidence。它保留、
+  不改写、不 retroactively 套用当前规则。本 v2 是 rebaseline 之后的当前正式输出，
+  按当前 master 的 Global MWU 契约产出。
+
+minimum_work_unit_output:
+  role: execution
+
+  work_performed_or_requested: >-
+    把已发布的 T3 候选 06d0c60e 以普通非 force merge 同步到当前 master 6757bee2，
+    保留两个已发布提交不改写，解决唯一一处内容冲突并同时保住 master 的 MWU discovery
+    与 T3 的 task_orchestration discovery，然后在同步后的树上重跑全部测量与门禁，
+    产出 rebaseline 证据与本 v2 completion pointer，供关系隔离的独立审核。
+    T3 本体交付未变：累计面工作集与归档治理，以及默认大任务与长时执行编排。
+
+  implementation_or_review_method: >-
+    先 fresh 读回远端 master 与 T3 分支头确认 diverged 且 merge-base 为 d9a18b57，
+    再 git merge --no-ff --no-commit origin/master；冲突只有
+    01_os/03_mechanisms/README.md 一处，人工保留双方条目并补一行说明两机制的分工。
+    以 git diff origin/master 对三份常驻文档逐行核对，确认 T3 只增不删
+    （+36 / +41 −1 / +14，唯一那条删除是 T3 自己上一版的句子被更长的一句替换）。
+    随后在合并树上重跑 measure_working_set.py、survey_run_lifecycle.py、
+    visible_set.py --measure、changed_path_ledger.py（base 换成当前 master），
+    以及 T3 全套门禁加当前 master 新增的 MWU selftest 与 static。
+
+  supportability_rationale: >-
+    支撑设计的那条命题在当前 master 上被重新测量而不是被沿用：run 组 50→53、
+    互不相同的自由文本状态串 24→27、可被机器判为终态的 run 仍为 0、
+    communication archive 仍为空。根因"仓库无法机器区分已完成与在跑的 run"不但成立
+    而且略微恶化，因此按 rebaseline 指令保持架构不变。回归判定用
+    current master vs candidate 的 delta：继承套件在合并后为 task_discipline 54 passed、
+    communication 84 passed + 6 subtests，均较合并前增加且无失败，
+    MWU selftest 58 cases 与 static 均 validation_passed，故 candidate-caused regression 为 0。
+    反向证据一并给出并且不加折扣：常驻 bootstrap 面由 61,534 增至 73,879 字节，
+    其中 T3 自负 5,566，这一项是否值得由独立审核单独判定，不接受执行者的比值论证。
+
+  feasibility_rationale: >-
+    T3 早已隔离在自己的已发布任务分支上，普通 merge 即可保留其两个提交而无需任何
+    history rewrite；实际冲突只有一处且是两条并列的 discovery 条目，不存在需要在
+    master 语义与 T3 语义之间二选一的情形。所有测量脚本与 validator 都已在仓库内，
+    重测无需新工具；发布走 local_git，hooksPath 实测为 .githooks，
+    非 force、不写 master、无破坏性动作，因此整条路径在当前授权内可完成。
+
+  exact_result_or_candidate_ref:
+    source_branch: dev/os-v2-t3-archive-and-big-task-workflow-001
+    original_base: d9a18b57749a0608a06ab546fd179b63e696e7f1
+    rebaseline_master: 6757bee2f8dfa3cf55abb464189b953e2b072773
+    original_candidate: 06d0c60e2ba526ac66138c578176a1f8d833e0a4
+    post_sync_candidate: pending_readback_recorded_in_publication
+    merge_commit_local: d603ab6076cf7081a734e774d9ae4c2c97efd910
+    merge_conflicts_total: 1
+    merge_conflicts_resolved: 1
+    conflict_detail: >-
+      01_os/03_mechanisms/README.md — master 新增 minimum_work_unit_output 条目，
+      T3 新增 task_orchestration 条目，双方保留，并补一行说明 MWU 管"输出什么"、
+      task_orchestration 管"多大、何时停"。
+
+  verification_evidence:
+    gates_all_exit_0: true
+    detail_ref: 09_rebaseline/重测对照_v1.md
+    gates:
+      - validate_working_set.py = 0 (working_set_contract ok)
+      - pytest working_set = 0 (39 passed)
+      - pytest task_orchestration = 0 (46 passed)
+      - validate_communication_system.py static = 0 (validation_passed)
+      - validate_mechanism_activation.py static = 0 (validation_passed)
+      - verify_context_structure.py = 0
+      - pytest task_discipline = 0 (54 passed)
+      - pytest boot/communication_system = 0 (84 passed, 6 subtests)
+      - validate_minimum_work_unit_output.py selftest = 0 (58 cases, validation_passed)
+      - validate_minimum_work_unit_output.py static --root . = 0 (validation_passed)
+      - git diff --check = 0
+      - changed_path_ledger.py --base 6757bee2 = 0 (34 paths, out_of_scope 0)
+    t3_new_tests_total: 85
+    inherited_tests_total: 138 passed + 6 subtests
+    candidate_caused_regressions: 0
+    current_measurement:
+      accumulating_share_of_listing: 0.9020
+      probe_historical_share_range: 0.695-0.926
+      default_visible_listing_bytes: 23350
+      excluded_listing_bytes: 192613
+      excluded_fraction: 0.8919
+      run_groups: 53
+      distinct_freeform_state_strings: 27
+      machine_classifiable_terminal_runs: 0
+      communication_archive_groups: 0
+      bootstrap_default_load_bytes: 73879
+      bootstrap_bytes_attributable_to_t3: 5566
+    architecture_conclusion_changed: false
+
+  residual_risk_or_unproved_limits:
+    blocking: 0
+    nonblocking: 7
+    items:
+      - R-01 68 个 run 组仍是 unknown 生命周期；本任务不回填，回填属运营判断
+      - R-02 未对真实历史执行迁移；搬移能力仅在合成 fixture 上验证正负例与幂等
+      - R-03 task_orchestration 无 02_boot 启动清单（路径不在 allowed_changed_paths 内，已在 registry 显式登记缺项）
+      - R-04 字节不是 token；未测墙钟时间
+      - R-05 隐藏面清单在契约与代码两处镜像，由漂移守卫看守，未合并为单一来源
+      - R-06 通用归档器与 communication 归档器暂为两份实现，未合并
+      - R-07 常驻 bootstrap 面因 T3 增加 5,566 字节；该代价每个窗口都付，是否值得需独立判定
+    dispatch_findings_open:
+      - DF-01 派单中文路径 mojibake（已确定性还原并报告）
+      - DF-02 "master 已含授权改动"与实测不符（已按物理事实处理；其后 master 正常演进 20 个提交，已确认非 history rewrite）
+      - DF-03 开发入口 §7 任务包模板与 changed_path_ledger.py / preflight_task_context.py 的字段层级不一致；按 foreground 指令不在本任务顺手统一，保留 flat packet workaround，留待单独 canonical adjudication
+
+completion_pointer:
+  packet_id: os-v2-t3-archive-and-big-task-workflow-001
+  status: ready_for_independent_review
+  source_branch: dev/os-v2-t3-archive-and-big-task-workflow-001
+  source_base: d9a18b57749a0608a06ab546fd179b63e696e7f1
+  rebaseline_master: 6757bee2f8dfa3cf55abb464189b953e2b072773
+  source_head: pending_readback_recorded_in_publication
+  validation:
+    tests: 见 minimum_work_unit_output.verification_evidence
+    candidate_caused_failures: 0
+    diff_scope: passed
+    hook_guard: passed
+  repository:
+    changed_paths_vs_current_master: 34
+    out_of_scope_paths: 0
+    binary_artifact_count: 0
+    worktree_clean: true
+  publication:
+    transport: local_git
+    replacement_gate: not_applicable
+    hook_guard_command: git config --get core.hooksPath
+    hook_guard_observed: .githooks
+    resulting_remote_head: pending_readback_recorded_in_publication
+    compare_and_swap: not_applicable
+    fast_forward_verified: pending
+    push_performed: false
+    master_modified: false
+    force_push: false
+    rebase_amend_squash: false
+  review_target: branch_head
+  pointer_cannot_name_its_own_commit: true
+  publication_readback_ref: 09_rebaseline/发布读回_v1.yml
+  self_assessment_boundary:
+    executor_self_acceptance: prohibited
+    independent_acceptance: not_run
+  independent_review_must_specifically_judge:
+    - 不执行真实历史迁移是否符合 conditional_archive_pilot
+    - unknown 状态是否默认保持 visible 且 non-archivable
+    - 归档工具能否被模糊状态字符串诱导误归档一个 live run
+    - 89% 级收益是否来自安全的默认隐藏规则，而非把 unknown/live 项错误排除
+    - T3 使常驻 bootstrap 面增加 5,566 字节是否值得
+  next_owner: relationship_isolated_independent_review

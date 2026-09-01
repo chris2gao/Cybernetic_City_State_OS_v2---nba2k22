@@ -37,12 +37,29 @@ outputs:
   - 07_测试执行/changed_path_ledger_v1.json
   - 08_结论/结论_v1.md
   - 08_结论/completion_pointer_v1.yml
+  - 08_结论/completion_pointer_v2.yml
+  - 09_rebaseline/重测对照_v1.md
+  - 09_rebaseline/baseline_measurement_v2.json
+  - 09_rebaseline/run_lifecycle_survey_v2.json
+  - 09_rebaseline/visible_set_measure_v2.json
+  - 09_rebaseline/changed_path_ledger_v2.json
+  - 09_rebaseline/发布读回_v1.yml
+rebaseline:
+  original_base: d9a18b57749a0608a06ab546fd179b63e696e7f1
+  rebaseline_master: 6757bee2f8dfa3cf55abb464189b953e2b072773
+  original_candidate: 06d0c60e2ba526ac66138c578176a1f8d833e0a4
+  method: normal_non_force_merge
+  history_rewritten: false
+  merge_conflicts: 1
+  architecture_conclusion_changed: false
+  detail: 09_rebaseline/重测对照_v1.md
 validation:
   status: executor_measured_all_gates_exit_0
   independent_acceptance: not_run
-  detail: 07_测试执行/测试执行记录_v1.md
+  detail: 09_rebaseline/重测对照_v1.md
+  original_base_detail: 07_测试执行/测试执行记录_v1.md
 
 # 本 run 的生命周期值。它是 open 状态，不是笔误：本任务交付的是待独立审核的候选，
 # 在审核关闭它之前，该 run 属于活动工作集，不进入归档资格评估。
 lifecycle: candidate_ready_for_independent_review
-closure_record: 08_结论/completion_pointer_v1.yml
+closure_record: 08_结论/completion_pointer_v2.yml
