@@ -1,0 +1,131 @@
+schema_version: citystate.t3.correction_dispatch.v1
+task_id: os-v2-t3-archive-and-big-task-workflow-001
+correction_id: T3-CORRECTION-R1
+correction_round: 1
+review_source: 08_结论/independent_review_foreground_v1.yml
+expected_master: 6757bee2f8dfa3cf55abb464189b953e2b072773
+expected_branch_parent_before_dispatch_artifact: 56ff302b50ac0ad10367f37aae58ff1ae28128b3
+
+objective: >-
+  Close T3-IR-001 and T3-IR-002 without reopening the accepted archive eligibility or task-orchestration architecture,
+  then remeasure the corrected working-set benefit so R-07 can be judged from safe visibility semantics.
+
+blocking_findings:
+  - T3-IR-001_unknown_groups_hidden_by_default
+  - T3-IR-002_completion_pointer_scope_count_stale
+
+required_semantics:
+  visibility:
+    open_group_default_visible: true
+    unknown_group_default_visible: true
+    terminal_group_default_hidden: true
+    archived_group_default_hidden: true
+    communication_surface: retain_existing_delegated_policy
+    filtered_result_reports_excluded_counts: true
+    include_hidden_widens_to_full_tree: true
+  archive:
+    unknown_archivable: false
+    freeform_archivable: false
+    exact_terminal_enum_required: true
+    closure_record_required: true
+    reference_safety_required: true
+    tracked_private_runtime_blocks: true
+    force_override: prohibited
+  index:
+    visible_groups_must_include:
+      - open
+      - unknown
+    hidden_groups_must_include:
+      - terminal
+      - archived_when_indexed
+    unknown_state_groups_still_reported_separately: true
+  validator:
+    must_bind_unknown_visibility_policy: true
+    must_fail_if_contract_or_code_drifts_to_unknown_hidden: true
+  tests:
+    replace_unknown_hidden_expectation_with_unknown_visible_expectation: true
+    retain_open_visible_terminal_hidden_cases: true
+    retain_unknown_non_archivable_case: true
+
+remeasurement_required:
+  - visible_set_measure_v3
+  - full_listing_bytes
+  - visible_listing_bytes
+  - excluded_listing_bytes
+  - excluded_fraction
+  - groups_open_terminal_unknown
+  - bootstrap_default_load_bytes
+  - bootstrap_bytes_attributable_to_t3
+  - current_master_vs_candidate_regression_delta
+
+R07_adjudication_input: >-
+  Do not defend the 5,566-byte bootstrap increase with the old 89.19 percent exclusion figure. Recompute benefit after
+  UNKNOWN groups remain visible. If the corrected measurement materially undercuts the architecture's operational value,
+  stop and return for foreground semantic adjudication rather than weakening fail-closed visibility.
+
+completion_evidence:
+  do_not_rewrite: completion_pointer_v2.yml
+  create: completion_pointer_v3.yml
+  v3_must_distinguish:
+    - canonical_implementation_candidate_sha
+    - evidence_commit_or_branch_head
+    - exact_changed_paths_vs_current_master
+    - out_of_scope_paths
+    - corrected_measurement
+    - candidate_caused_regressions
+    - independent_review_status_not_run_after_correction
+
+scope_constraints:
+  preserve_current_master_authorization_simplification: true
+  preserve_global_MWU: true
+  do_not_modify_DF03: true
+  no_master_write: true
+  no_rebase_amend_squash_force: true
+  preserve_published_history: true
+  do_not_execute_real_history_archive: true
+
+validation_required:
+  - working_set tests
+  - task_orchestration tests
+  - validate_working_set static
+  - inherited task_discipline and communication suites
+  - verify_context_structure
+  - MWU selftest and static
+  - git diff --check
+  - changed_path_ledger against current master
+  - focused fixture proving UNKNOWN visible and non-archivable
+
+stop_conditions:
+  - current master or task branch drift before mutation
+  - corrected visibility destroys the claimed operational value enough to require a new design choice
+  - archive fail-closed semantics must be weakened to make tests pass
+  - new scope outside allowed paths is required
+  - candidate-caused regression appears
+
+minimum_work_unit_output:
+  role: decision_architecture
+  work_performed_or_requested: >-
+    Dispatch a narrow correction to make unknown lifecycle groups default-visible while keeping them non-archivable,
+    repair the stale formal completion count, and remeasure T3 value under the corrected safety semantics.
+  implementation_or_review_method: >-
+    Preserve the accepted lifecycle enum, archive eligibility and task-orchestration design; change only the working-set
+    visibility/index/static-binding/test surface plus run-local evidence, then rerun the complete current-master gates.
+  supportability_rationale: >-
+    Independent review found the implementation and committed test explicitly hide UNKNOWN groups while the review
+    boundary requires unclassifiable groups to remain visible; the same review also found the v2 pointer's 34-path count
+    differs from the fresh 41-path Git comparison. Both are direct primary-evidence contradictions.
+  feasibility_rationale: >-
+    The defects are isolated to deterministic visibility policy and completion evidence and can be repaired on the existing
+    task branch without changing archive eligibility, authorization, MWU, communication ownership, or published history.
+  task_constraints_and_boundaries:
+    - unknown visible but non-archivable
+    - terminal hidden only after exact enum classification
+    - no real archive migration
+    - no DF-03 repair
+    - no master write or history rewrite
+  stop_or_return_conditions:
+    - corrected measurement invalidates the architecture value proposition
+    - scope expansion or semantic redesign becomes necessary
+    - current-master regression is introduced
+
+next_action: executor_correction_then_fresh_independent_review
