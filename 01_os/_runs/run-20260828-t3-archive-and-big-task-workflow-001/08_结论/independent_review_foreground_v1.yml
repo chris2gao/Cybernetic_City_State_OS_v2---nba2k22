@@ -1,0 +1,134 @@
+schema_version: citystate.t3.independent_review.v1
+review:
+  reviewer_role: relationship_isolated_independent_review
+  review_date: 2026-09-01
+  base_master: 6757bee2f8dfa3cf55abb464189b953e2b072773
+  canonical_implementation_candidate: f85e66de3d86ee3eb685124739e60f007893248e
+  observed_branch_head_before_review_evidence: d7e3e1e9cb18bf13898b32ff73ee7df2de466130
+  verdict: FIX_REQUIRED
+  blocking_findings: 2
+  nonblocking_findings: 1
+
+primary_evidence_examined:
+  - d7e3e1e9cb18bf13898b32ff73ee7df2de466130:01_os/03_mechanisms/context_management/工作集与归档契约_v1.yml
+  - d7e3e1e9cb18bf13898b32ff73ee7df2de466130:01_os/06_execution/boot/context_management/working_set/visible_set.py
+  - d7e3e1e9cb18bf13898b32ff73ee7df2de466130:01_os/06_execution/boot/context_management/working_set/test_working_set.py
+  - d7e3e1e9cb18bf13898b32ff73ee7df2de466130:01_os/06_execution/boot/context_management/working_set/validate_working_set.py
+  - d7e3e1e9cb18bf13898b32ff73ee7df2de466130:01_os/06_execution/boot/context_management/working_set/archive_group.py
+  - d7e3e1e9cb18bf13898b32ff73ee7df2de466130:01_os/03_mechanisms/task_orchestration/大任务与长时执行契约_v1.yml
+  - d7e3e1e9cb18bf13898b32ff73ee7df2de466130:01_os/_runs/run-20260828-t3-archive-and-big-task-workflow-001/09_rebaseline/visible_set_measure_v2.json
+  - d7e3e1e9cb18bf13898b32ff73ee7df2de466130:01_os/_runs/run-20260828-t3-archive-and-big-task-workflow-001/08_结论/completion_pointer_v2.yml
+  - git_compare:6757bee2f8dfa3cf55abb464189b953e2b072773..d7e3e1e9cb18bf13898b32ff73ee7df2de466130
+  - git_compare:f85e66de3d86ee3eb685124739e60f007893248e..d7e3e1e9cb18bf13898b32ff73ee7df2de466130
+
+findings:
+  T3-IR-001:
+    severity: blocking
+    title: unknown lifecycle groups are hidden by default
+    evidence: >-
+      visible_set.partition makes only OPEN groups visible and explicitly hides terminal or UNKNOWN groups.
+      test_open_group_visible_terminal_and_unknown_hidden codifies that behavior. The current measurement has
+      70 accumulating groups: 2 open, 0 terminal, 68 unknown, while reporting 89.19 percent excluded listing bytes.
+    why_blocking: >-
+      The foreground review criterion required unknown groups to remain visible and non-archivable so an
+      unclassifiable group cannot be silently treated as history. Current behavior obtains a material part of
+      the reported visibility gain by hiding the exact 68 groups whose lifecycle cannot be trusted.
+    required_correction:
+      - unknown groups default visible; terminal groups may be hidden
+      - archive eligibility remains terminal-only and fail closed
+      - update build_index semantics consistently
+      - replace the current unknown-hidden test with positive unknown-visible coverage
+      - bind unknown visibility semantics in validate_working_set drift/static checks
+      - rerun visible-set measurement and reassess R-07 using the corrected benefit
+
+  T3-IR-002:
+    severity: blocking
+    title: completion pointer changed-path count is stale
+    evidence: >-
+      completion_pointer_v2 states changed_paths_vs_current_master=34, while fresh Git compare from
+      6757bee2 to d7e3e1e9 shows 41 changed paths. The executor's latest foreground report also states 41.
+    why_blocking: >-
+      This is a formal completion/handoff artifact and its scope evidence must describe the actual review target.
+      The discrepancy does not imply scope escape, but the durable pointer cannot be accepted while its exact count is stale.
+    required_correction:
+      - publish a new completion pointer rather than rewriting v2
+      - distinguish canonical implementation candidate from later evidence-only branch head
+      - record exact fresh compare path count and out-of-scope count
+
+  T3-IR-003:
+    severity: nonblocking
+    title: R-07 bootstrap cost cannot be finally judged until visibility semantics are corrected
+    evidence: >-
+      T3 adds 5,566 bytes to the always-loaded bootstrap while the current 89.19 percent listing reduction is
+      measured under the now-rejected unknown-hidden policy.
+    disposition: >-
+      Recompute the corrected visible-set benefit. The 5,566-byte cost is not independently blocking by itself;
+      it becomes a design blocker only if the corrected measurement no longer supports the claimed operational value.
+
+accepted_dimensions:
+  archive_fail_closed: >-
+    PASS. archive_group requires exact TERMINAL classification, a readable in-group closure record, reference
+    safety, and no tracked private runtime. Freeform or unknown state is not archivable and there is no force override.
+  task_orchestration_boundary: >-
+    PASS on inspected semantics. Ordinary task-branch commit/push is internal continuation; size alone adds no
+    authorization; genuine protected/destructive/runtime/semantic boundaries still stop.
+  master_compatibility: >-
+    PASS on fresh Git relation. Current branch is ahead of master with merge-base equal to current master; no rebase
+    or history rewrite is needed for the correction.
+  authorization_and_mwu_preservation: PASS_on_inspected_diff_and_rebaseline_evidence
+
+review_execution_limit:
+  independent_local_test_execution: not_run
+  reason: authorized remote desktop device was unavailable when execution was attempted
+  effect_on_verdict: >-
+    None for T3-IR-001 or T3-IR-002: both are direct contradictions visible in immutable source, committed tests,
+    measurement output, completion evidence, and fresh Git compare. A later reviewer should still rerun the corrected suites.
+
+minimum_work_unit_output:
+  role: independent_review
+  work_performed_or_requested: >-
+    Independently review the rebaselined T3 working-set/archive and big-task orchestration candidate against current
+    master, with special attack on unknown visibility, archive fail-closed behavior, measured benefit, bootstrap cost,
+    and exact completion evidence.
+  implementation_or_review_method: >-
+    Fresh-read the remote branch and master relation, inspected the canonical contracts and implementation rather than
+    accepting executor summaries, traced the visibility partition into its committed tests and measurement output,
+    inspected archive eligibility and task-orchestration boundaries, and compared the formal completion pointer with
+    the exact Git diff for the current review target.
+  supportability_rationale: >-
+    The FIX_REQUIRED verdict rests on two primary-evidence contradictions: code and tests deliberately hide UNKNOWN
+    groups although the review boundary requires them visible, and the durable completion pointer reports 34 changed
+    paths while the exact current Git comparison reports 41. Neither finding depends on executor interpretation.
+  feasibility_rationale: >-
+    Both blockers are narrow and can be corrected on the existing task branch without changing the lifecycle enum,
+    archive eligibility model, authorization semantics, MWU, communication ownership, or published history.
+  verdict: FIX_REQUIRED
+  primary_evidence_examined:
+    - visible_set.py@d7e3e1e9cb18bf13898b32ff73ee7df2de466130
+    - test_working_set.py@d7e3e1e9cb18bf13898b32ff73ee7df2de466130
+    - visible_set_measure_v2.json@d7e3e1e9cb18bf13898b32ff73ee7df2de466130
+    - completion_pointer_v2.yml@d7e3e1e9cb18bf13898b32ff73ee7df2de466130
+    - git_compare:6757bee2..d7e3e1e9
+  findings_and_residual_risk:
+    - T3-IR-001 blocking: UNKNOWN groups hidden by default
+    - T3-IR-002 blocking: completion pointer scope count stale
+    - T3-IR-003 nonblocking: R-07 value judgement deferred until corrected measurement
+  executor_rationale_assessment:
+    supportability_assessment: >-
+      The executor's archive fail-closed and rebaseline claims are supported by the inspected code and Git relation,
+      but the claimed safe 89.19 percent visibility benefit is not supportable because the measurement hides 68 UNKNOWN groups.
+    feasibility_assessment: >-
+      A correction is feasible inside the existing T3 ownership surface: visibility/index/test/validator semantics and
+      run-local evidence can be updated without reopening the archive or orchestration architecture.
+    primary_evidence_refs:
+      - visible_set.py@d7e3e1e9cb18bf13898b32ff73ee7df2de466130
+      - test_working_set.py@d7e3e1e9cb18bf13898b32ff73ee7df2de466130
+      - visible_set_measure_v2.json@d7e3e1e9cb18bf13898b32ff73ee7df2de466130
+      - completion_pointer_v2.yml@d7e3e1e9cb18bf13898b32ff73ee7df2de466130
+      - git_compare:6757bee2..d7e3e1e9
+    unsupported_or_inferred_claims:
+      - current 89.19 percent exclusion is not established as a safe benefit because UNKNOWN groups are part of the hidden set
+      - final worth of the 5,566-byte bootstrap increase remains unproved until corrected visibility is remeasured
+
+next_action: foreground_correction_round_1
+master_integration_allowed: false
