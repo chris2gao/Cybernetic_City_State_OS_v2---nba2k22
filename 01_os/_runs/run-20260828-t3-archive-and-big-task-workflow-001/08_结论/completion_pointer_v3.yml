@@ -1,0 +1,175 @@
+schema_version: citystate.completion_pointer.v1
+supersedes: 08_结论/completion_pointer_v2.yml
+supersession_note: >-
+  v2 保留、不改写。它的 changed_paths_vs_current_master=34 是 T3-IR-002 认定的过期值；
+  本 v3 用实测重算并显式区分 canonical implementation candidate 与 evidence/branch head。
+
+correction_round: 1
+review_source: 08_结论/independent_review_foreground_v1.yml
+correction_dispatch: 08_结论/correction_round_1_dispatch_v1.yml
+
+minimum_work_unit_output:
+  role: execution
+
+  work_performed_or_requested: >-
+    关闭独立审核的两个 blocking finding。T3-IR-001：把 unknown 生命周期组从默认隐藏
+    改为默认可见，同时保持其不可归档，并在契约、代码、validator、测试四处双向绑定该
+    策略。T3-IR-002：新建 v3 completion pointer，用实测重算相对当前 master 的变更路径
+    数，并区分 canonical implementation candidate 与只增加证据的 branch head。
+    同时按派单在修正后的安全语义下重测工作集收益，并把 R-07 上交 foreground 裁决。
+    未重做 archiver 与 task_orchestration，未修 DF-03，未执行真实历史迁移。
+
+  implementation_or_review_method: >-
+    先 fresh 读回 master 与分支头确认无漂移并 fast-forward 到 a2961a8a，再读审核与派单
+    原件而非转述。修正把可见性语义提成两个模块级集合
+    DEFAULT_VISIBLE_CLASSIFICATIONS={open,unknown} 与
+    DEFAULT_HIDDEN_CLASSIFICATIONS={terminal}，partition 与 build_index 共用它们，
+    契约新增六个显式布尔，validate_working_set 对契约与代码双向核对，并新增两条把契约
+    翻回旧策略的漂移测试。归档侧一行未改：archive_group 仍要求逐字符命中终态枚举，
+    focused fixture 断言同一个 unknown 组既可见又被拒绝归档。收益用
+    visible_set.py --measure 在修正后的树上重测，并独立统计 communication 面字节以
+    确认排除量的归属。变更范围用 changed_path_ledger.py 以当前 master 为 base 实测。
+
+  supportability_rationale: >-
+    T3-IR-001 的关闭由三类互相独立的证据支撑：working_set 套件 39→44 passed，
+    其中 focused fixture 直接断言 unknown 可见且 archive_group 以
+    group_state_not_terminal 拒绝且目录仍在原处；两条漂移测试证明把契约翻回
+    unknown-hidden 会被 validator 拒绝；重测输出显示默认隐藏组为 0、默认可见组为 70。
+    T3-IR-002 的关闭由 git diff --name-only 与 path ledger 双源给出同一个 44。
+    反向证据一并列出且不折扣：修正后排除量为 60,808 字节（28.04%），经独立统计
+    communication 面同为 60,808 字节，故本机制自身当前削减 0 字节；旧 89.19% 作废。
+    常驻 bootstrap 的 T3 增量由 5,566 升至 6,285，比上一轮更差。
+
+  feasibility_rationale: >-
+    两个 finding 都落在既有 T3 所有权面内：可见性策略是确定性判定，不触及生命周期枚举、
+    归档资格模型、授权语义、MWU 或 communication 归属；completion 证据是 run 内文件。
+    分支已发布且与当前 master 的 merge-base 等于当前 master，普通提交即可推进，
+    无需 rebase 或改写历史。所有 validator、测量脚本与测试都已在仓库内，无新依赖。
+
+  exact_result_or_candidate_ref:
+    source_branch: dev/os-v2-t3-archive-and-big-task-workflow-001
+    original_base: d9a18b57749a0608a06ab546fd179b63e696e7f1
+    current_master: 6757bee2f8dfa3cf55abb464189b953e2b072773
+    branch_head_before_correction: a2961a8a4329f84e351844824351372640fe136d
+
+    canonical_implementation_candidate: 454c07e475f54a921e6233bc435b3a9247f8cf9f
+    canonical_candidate_scope:
+      changed_paths_vs_current_master: 44
+      out_of_scope_paths: 0
+      measurement_method: >-
+        git diff --name-only 6757bee2..454c07e4 (=44) 与
+        changed_path_ledger.py --base 6757bee2 --packet <任务包> exit 0，双源一致
+      ledger_ref: 09_rebaseline/changed_path_ledger_v3.json
+
+    evidence_branch_head:
+      what: 只增加 run 内证据文件，不改动任何机制、测试或测量结果
+      adds_paths:
+        - 01_os/_runs/run-20260828-t3-archive-and-big-task-workflow-001/09_rebaseline/修正说明_v1.md
+        - 01_os/_runs/run-20260828-t3-archive-and-big-task-workflow-001/09_rebaseline/changed_path_ledger_v3.json
+        - 01_os/_runs/run-20260828-t3-archive-and-big-task-workflow-001/08_结论/completion_pointer_v3.yml
+      modifies_paths:
+        - 01_os/_runs/run-20260828-t3-archive-and-big-task-workflow-001/run.yml
+      exact_sha: pending_readback_recorded_in_publication
+      readback_ref: 09_rebaseline/发布读回_v2.yml
+      note: >-
+        指针不能命名承载它自己的提交。branch head 的确切 SHA 由推送后
+        git ls-remote 读回给出，任何人可独立复核；review_target 是 branch head。
+
+  verification_evidence:
+    gates_all_exit_0: true
+    gates:
+      - validate_working_set.py = 0 (working_set_contract ok)
+      - pytest working_set = 0 (44 passed，较修正前 39 增 5)
+      - pytest task_orchestration = 0 (46 passed)
+      - validate_communication_system.py static = 0 (validation_passed)
+      - validate_mechanism_activation.py static = 0 (validation_passed)
+      - verify_context_structure.py = 0
+      - pytest task_discipline = 0 (54 passed)
+      - pytest boot/communication_system = 0 (84 passed, 6 subtests)
+      - validate_minimum_work_unit_output.py selftest = 0 (58 cases)
+      - validate_minimum_work_unit_output.py static --root . = 0
+      - git diff --check = 0
+      - changed_path_ledger.py --base 6757bee2 = 0 (44 paths, out_of_scope 0)
+    candidate_caused_regressions: 0
+    corrected_measurement:
+      measure_ref: 09_rebaseline/visible_set_measure_v3.json
+      tracked_files: 1853
+      full_listing_bytes: 216886
+      visible_listing_bytes: 156078
+      excluded_listing_bytes: 60808
+      excluded_fraction: 0.2804
+      groups_total: 70
+      groups_open: 2
+      groups_terminal: 0
+      groups_unknown: 68
+      groups_default_visible: 70
+      groups_default_hidden: 0
+      unknown_state_groups_default_visible: true
+      unknown_state_groups_archivable: false
+      excluded_bytes_from_communication_surface: 60808
+      excluded_bytes_attributable_to_this_mechanism: 0
+      withdrawn_figure: 0.8919
+      withdrawn_reason: >-
+        旧 89.19% 由把 68 个不可判定组算入隐藏集得出，T3-IR-001 认定该策略 blocking，
+        该数字作废，不得用于任何辩护。
+    bootstrap_cost:
+      original_base_bytes: 61534
+      current_master_bytes: 68313
+      candidate_bytes: 74598
+      attributable_to_t3: 6285
+      note: 较上一轮报告的 5,566 增大，因本轮如实补写了修正后的语义与收益说明。
+
+  residual_risk_or_unproved_limits:
+    blocking: 0
+    escalated_unresolved: 1
+    nonblocking: 6
+    items:
+      - R-07 / T3-IR-003 escalated_to_foreground 未关闭：常驻 bootstrap 增量 6,285 字节，
+        而本机制当前枚举削减为 0 字节；28.04% 排除全部归属于早于 T3 的 communication 策略。
+        是否值得是对常驻面的语义选择，按开发入口 §11 第 3 类不由执行者裁决。
+        备选方案见 09_rebaseline/修正说明_v1.md 的三条。
+      - R-01 68 个 run 组仍是 unknown；本轮只保证它们可见且不可归档，不回填状态
+      - R-02 未对真实历史执行迁移；搬移能力仅在合成 fixture 上验证
+      - R-03 task_orchestration 无 02_boot 启动清单（路径不在 allowed paths 内，已登记缺项）
+      - R-04 字节不是 token；未测墙钟时间
+      - R-05 隐藏面清单在契约与代码两处镜像，由漂移守卫看守，未合并为单一来源
+      - R-06 通用归档器与 communication 归档器暂为两份实现，未合并
+    dispatch_findings_open:
+      - DF-03 按派单明令不在本轮修，保留 flat packet workaround 与 finding
+
+completion_pointer:
+  packet_id: os-v2-t3-archive-and-big-task-workflow-001
+  status: ready_for_fresh_independent_review
+  source_branch: dev/os-v2-t3-archive-and-big-task-workflow-001
+  source_base: d9a18b57749a0608a06ab546fd179b63e696e7f1
+  current_master: 6757bee2f8dfa3cf55abb464189b953e2b072773
+  canonical_implementation_candidate: 454c07e475f54a921e6233bc435b3a9247f8cf9f
+  evidence_branch_head: pending_readback_recorded_in_publication
+  review_target: branch_head
+  validation:
+    candidate_caused_failures: 0
+    diff_scope: passed
+    hook_guard: passed
+  repository:
+    changed_paths_vs_current_master: 44
+    out_of_scope_paths: 0
+    binary_artifact_count: 0
+    worktree_clean: true
+  publication:
+    transport: local_git
+    hook_guard_observed: .githooks
+    master_modified: false
+    force_push: false
+    rebase_amend_squash: false
+    published_history_preserved: true
+  findings_closed:
+    - T3-IR-001
+    - T3-IR-002
+  findings_open:
+    - T3-IR-003 escalated_to_foreground
+  independent_review_status_after_correction: not_run
+  master_integration_allowed: false
+  self_assessment_boundary:
+    executor_self_acceptance: prohibited
+    independent_acceptance: not_run
+  next_owner: fresh_relationship_isolated_independent_review

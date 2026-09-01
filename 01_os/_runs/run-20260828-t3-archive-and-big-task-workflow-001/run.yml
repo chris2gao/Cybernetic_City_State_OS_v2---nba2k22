@@ -44,6 +44,21 @@ outputs:
   - 09_rebaseline/visible_set_measure_v2.json
   - 09_rebaseline/changed_path_ledger_v2.json
   - 09_rebaseline/发布读回_v1.yml
+  - 09_rebaseline/修正说明_v1.md
+  - 09_rebaseline/visible_set_measure_v3.json
+  - 09_rebaseline/changed_path_ledger_v3.json
+  - 08_结论/independent_review_foreground_v1.yml
+  - 08_结论/correction_round_1_dispatch_v1.yml
+  - 08_结论/completion_pointer_v3.yml
+correction_round_1:
+  review_source: 08_结论/independent_review_foreground_v1.yml
+  verdict_received: FIX_REQUIRED
+  findings_closed: [T3-IR-001, T3-IR-002]
+  findings_escalated: [T3-IR-003]
+  canonical_implementation_candidate: 454c07e475f54a921e6233bc435b3a9247f8cf9f
+  corrected_excluded_fraction: 0.2804
+  withdrawn_figure: 0.8919
+  detail: 09_rebaseline/修正说明_v1.md
 rebaseline:
   original_base: d9a18b57749a0608a06ab546fd179b63e696e7f1
   rebaseline_master: 6757bee2f8dfa3cf55abb464189b953e2b072773
@@ -62,4 +77,4 @@ validation:
 # 本 run 的生命周期值。它是 open 状态，不是笔误：本任务交付的是待独立审核的候选，
 # 在审核关闭它之前，该 run 属于活动工作集，不进入归档资格评估。
 lifecycle: candidate_ready_for_independent_review
-closure_record: 08_结论/completion_pointer_v2.yml
+closure_record: 08_结论/completion_pointer_v3.yml
