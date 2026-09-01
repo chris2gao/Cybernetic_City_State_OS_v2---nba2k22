@@ -1,0 +1,75 @@
+schema_version: citystate.publication_readback.v1
+task_id: os-v2-t3-archive-and-big-task-workflow-001
+correction_round: 1
+supersedes: none
+note_on_v1: 09_rebaseline/发布读回_v1.yml 记录 rebaseline 轮次，保留不改写。
+
+transport: local_git
+hook_guard:
+  command: git config --get core.hooksPath
+  expected: .githooks
+  observed: .githooks
+  result: passed
+
+publications:
+  - sequence: 3
+    what: correction round 1 —— 证据与 completion pointer v3
+    local_head: bffde65a7a7385817d8b3cbe683e6d467d765f53
+    contains_canonical_implementation_candidate: 454c07e475f54a921e6233bc435b3a9247f8cf9f
+    push_refspec: HEAD:refs/heads/dev/os-v2-t3-archive-and-big-task-workflow-001
+    push_exit_code: 0
+    remote_before: a2961a8a4329f84e351844824351372640fe136d
+    remote_after_readback: bffde65a7a7385817d8b3cbe683e6d467d765f53
+    readback_command: git ls-remote origin refs/heads/dev/os-v2-t3-archive-and-big-task-workflow-001
+    fast_forward: true
+    force_push: false
+    changed_paths_vs_current_master_at_this_head: 47
+
+scope_ledger:
+  canonical_implementation_candidate:
+    sha: 454c07e475f54a921e6233bc435b3a9247f8cf9f
+    changed_paths_vs_current_master: 44
+    out_of_scope_paths: 0
+  evidence_head_bffde65a:
+    changed_paths_vs_current_master: 47
+    delta_over_canonical_candidate: 3
+    delta_paths:
+      - 09_rebaseline/修正说明_v1.md
+      - 09_rebaseline/changed_path_ledger_v3.json
+      - 08_结论/completion_pointer_v3.yml
+    also_modified: 09_rebaseline 之外仅 run.yml，且仅登记新证据文件与 correction_round_1 摘要
+
+master_untouched:
+  observed_before_push: 6757bee2f8dfa3cf55abb464189b953e2b072773
+  observed_after_push: 6757bee2f8dfa3cf55abb464189b953e2b072773
+  master_modified: false
+
+history_integrity:
+  rebase: false
+  amend: false
+  squash: false
+  force_push: false
+  history_rewritten: false
+  published_commits_preserved:
+    - 3680b1984d94360d07e41337e9b12bb28653e3e7
+    - 06d0c60e2ba526ac66138c578176a1f8d833e0a4
+    - d603ab6076cf7081a734e774d9ae4c2c97efd910
+    - f85e66de3d86ee3eb685124739e60f007893248e
+    - d7e3e1e9cb18bf13898b32ff73ee7df2de466130
+    - 56ff302b50ac0ad10367f37aae58ff1ae28128b3
+    - a2961a8a4329f84e351844824351372640fe136d
+    - 454c07e475f54a921e6233bc435b3a9247f8cf9f
+    - bffde65a7a7385817d8b3cbe683e6d467d765f53
+
+final_branch_head_readback:
+  note: >-
+    本文件所在的提交是分支的最后一个提交，它推送后的远端读回值不能写进它自己。
+    该提交相对 bffde65a 只增加本文件，不改动任何机制、测试、测量或 completion pointer 内容。
+    确切 SHA 由执行者在回报中给出，任何人可用下列命令独立复核。
+  review_target: branch_head
+  verification_command: git ls-remote origin refs/heads/dev/os-v2-t3-archive-and-big-task-workflow-001
+
+evidence_boundary:
+  executor_self_acceptance: prohibited
+  independent_acceptance: not_run
+  claim: 以上 SHA 全部来自实际 push 输出与远端读回，无期望值冒充结果。
