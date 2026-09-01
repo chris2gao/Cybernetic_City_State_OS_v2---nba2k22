@@ -49,6 +49,20 @@ COMMUNICATION_ROOT = "01_os/_communication/"
 
 RESERVED_GROUP_NAMES = frozenset({"_archive", "_index", "_runtime"})
 
+# Which lifecycle classifications are visible by default.
+#
+# UNKNOWN is visible. That is the whole point of the distinction and it was got
+# wrong once: an earlier revision hid UNKNOWN alongside TERMINAL, which meant the
+# 68 groups whose state the tree cannot vouch for were the ones being treated as
+# history, and most of the reported visibility gain came from hiding exactly
+# them. A group is hidden only after it has been positively classified as
+# finished against the declared enum. Unclassifiable is not finished.
+#
+# Visible and archivable are different questions. UNKNOWN is visible here and
+# still non-archivable in archive_group.py, which requires exact TERMINAL.
+DEFAULT_VISIBLE_CLASSIFICATIONS = frozenset({OPEN, UNKNOWN})
+DEFAULT_HIDDEN_CLASSIFICATIONS = frozenset({TERMINAL})
+
 INDEX_PATH = "01_os/_runs/_index/工作集索引_v1.yml"
 
 
@@ -93,12 +107,15 @@ def partition(
 ) -> dict[str, list[str]]:
     """Split tracked paths into visible and hidden.
 
-    An open group stays visible: work in flight is part of the current working
-    set. A terminal or unknown-state group is hidden by default — unknown is
-    hidden precisely because the tree cannot vouch for it.
+    Open and unknown groups stay visible; only a group positively classified as
+    terminal, or already sitting under an archive root, is hidden. Hiding
+    requires proof that the work is finished, not the absence of proof that it
+    is live.
     """
     visible_groups = {
-        rel for rel, st in groups.items() if st.classification == OPEN
+        rel
+        for rel, st in groups.items()
+        if st.classification in DEFAULT_VISIBLE_CLASSIFICATIONS
     }
     visible: list[str] = []
     hidden: list[str] = []
@@ -151,6 +168,13 @@ def build_report(repo_root: Path) -> dict[str, object]:
         "groups_open": sorted(by_class[OPEN]),
         "groups_terminal": sorted(by_class[TERMINAL]),
         "groups_unknown_state": sorted(by_class[UNKNOWN]),
+        "groups_default_visible": sorted(by_class[OPEN] + by_class[UNKNOWN]),
+        "groups_default_hidden": sorted(by_class[TERMINAL]),
+        # Visible and archivable are different questions, and the report says so
+        # rather than leaving a reader to infer that a visible group is live.
+        "unknown_state_groups_default_visible": True,
+        "unknown_state_groups_archivable": False,
+        "communication_surface_policy": "delegated_to_communication_navigation_archive_contract",
         "filtered_result_is_not_exhaustive": True,
     }
 
@@ -162,10 +186,16 @@ def build_index(repo_root: Path, head: str | None = None) -> dict[str, object]:
         "generated_from_sha": head,
         "index_is_not_authority": True,
         "authority_is_physical_tree": True,
-        "visible_groups": report["groups_open"],
-        "hidden_groups": report["groups_terminal"] + report["groups_unknown_state"],
+        # Visible carries open and unknown; hidden carries only what has been
+        # positively classified as finished.
+        "visible_groups": report["groups_default_visible"],
+        "hidden_groups": report["groups_default_hidden"],
         "archived_groups": [],
+        # Unknown groups are reported separately as well, because "visible" must
+        # not be read as "classified".
         "unknown_state_groups": report["groups_unknown_state"],
+        "unknown_state_groups_default_visible": True,
+        "unknown_state_groups_archivable": False,
     }
 
 
@@ -207,6 +237,9 @@ def main() -> int:
                 f"# default working set: {len(split['visible'])} listed, "
                 f"{len(split['hidden'])} hidden "
                 f"({_listing_bytes(split['hidden'])} bytes of path text). "
+                f"Hidden means positively classified as finished, or already "
+                f"archived, or the delegated communication surface; groups whose "
+                f"lifecycle is unknown are listed, not hidden. "
                 f"Re-run with --include-hidden when history is the subject.",
                 file=sys.stderr,
             )

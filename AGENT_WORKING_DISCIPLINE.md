@@ -261,14 +261,24 @@ still empty, because nothing could answer "is this one done?". Fragmented tasks
 each invent their own status word; nobody has to agree with anyone. The bill
 arrives later, as a repository that cannot tell live work from history.
 
-That bill is also why enumeration is expensive here. On the same commit the three
-accumulating surfaces were **90.52%** of all listing bytes and **69–94%** of the
-hits on ordinary routing terms, while the fixed startup load was 61,534 bytes and
-touched none of them. So the cost is not size, and moving files does not fix it:
-use
+That bill is also why enumeration is expensive here: the three accumulating
+surfaces are about **90%** of all listing bytes and **69–93%** of the hits on
+ordinary routing terms, while the fixed startup load touches none of them. So
+the cost is not size. But that 90% is a *composition*, not a saving — a group may
+be hidden only once it is positively classified as finished, and today none is,
+so the measured exclusion is 28.0% and all of it is the communication surface.
+Use
 `01_os/06_execution/boot/context_management/working_set/visible_set.py --list`,
-which reports what it hid. Never add a global silent exclusion — it converts
-noise into false negatives, and section 3 already records what those cost.
+which reports what it hid.
+
+Two rules that cost more than they look:
+
+- **Hiding requires proof of completion, not absence of proof of life.** An
+  earlier revision of that tool hid unknown-state groups alongside finished ones
+  and reported an 89% reduction. Independent review rejected it: the hidden set
+  was exactly the 68 groups whose state the repository cannot vouch for.
+- **Never add a global silent exclusion.** It converts noise into false
+  negatives, and section 3 already records what those cost.
 
 ## Roles and the flow between them
 

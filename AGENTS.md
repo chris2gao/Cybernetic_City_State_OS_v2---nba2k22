@@ -33,13 +33,16 @@ task-triggered steps loads by default.
    triggers.
 9. Never default-preload `01_os/_runs/**`; read only a run explicitly required by
    the current task or its verification. The same applies to `01_os/_communication/**`
-   and `01_os/_dev/**`. When you need to enumerate or search the repository, use
+   and `01_os/_dev/**`. When you enumerate or search the repository,
    `01_os/06_execution/boot/context_management/working_set/visible_set.py --list`
-   rather than a bare `git ls-files` or an unscoped `rg`: on `d9a18b57` those
-   three surfaces were 90.52% of all listing bytes and 69–94% of the hits on
-   ordinary routing terms. The tool always reports what it hid, and
+   gives the default working set and always reports what it hid;
    `--include-hidden` widens when history is genuinely the subject. A filtered
    listing is never exhaustive and must not be presented as one.
+   Measured on the current tree, it excludes 28.0% of listing bytes, and all of
+   that is the communication surface under its own navigation/archive contract:
+   a group is hidden only once positively classified as finished, and no run
+   currently is. The three accumulating surfaces are about 90% of listing bytes,
+   but that is their share, not a saving anyone has yet realised.
 
 `01_os/**` is the permanent active OS namespace. The retained global surface outside it is this file,
 `AGENT_WORKING_DISCIPLINE.md`, `CLAUDE.md`, `GEMINI.md`, `README.md`,

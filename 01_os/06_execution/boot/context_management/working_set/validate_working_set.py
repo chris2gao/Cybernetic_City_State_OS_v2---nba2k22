@@ -19,8 +19,13 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from lifecycle import OPEN_STATES, TERMINAL_STATES  # noqa: E402
-from visible_set import COMMUNICATION_ROOT, HIDDEN_SURFACES  # noqa: E402
+from lifecycle import OPEN, TERMINAL, UNKNOWN, OPEN_STATES, TERMINAL_STATES  # noqa: E402
+from visible_set import (  # noqa: E402
+    COMMUNICATION_ROOT,
+    DEFAULT_HIDDEN_CLASSIFICATIONS,
+    DEFAULT_VISIBLE_CLASSIFICATIONS,
+    HIDDEN_SURFACES,
+)
 
 CONTRACT = "01_os/03_mechanisms/context_management/工作集与归档契约_v1.yml"
 
@@ -82,6 +87,36 @@ def validate(repo_root: Path) -> list[str]:
             findings.append(f"hidden_root_not_declared:{root}")
     if COMMUNICATION_ROOT not in hidden:
         findings.append(f"hidden_root_not_declared:{COMMUNICATION_ROOT}")
+    # Unknown-visibility policy, bound in both directions.
+    #
+    # This block exists because the opposite policy shipped once and passed every
+    # other check: hiding UNKNOWN alongside TERMINAL is internally consistent,
+    # produces a much larger headline number, and is wrong. Independent review
+    # T3-IR-001 called it blocking. So the contract must say unknown is visible,
+    # the code must agree, and drifting either one back must fail here.
+    expected_visibility = {
+        "open_group_default_visible": True,
+        "unknown_group_default_visible": True,
+        "terminal_group_default_hidden": True,
+        "archived_group_default_hidden": True,
+        "unknown_group_archivable": False,
+        "unknown_state_groups_reported_separately": True,
+    }
+    for key, want in expected_visibility.items():
+        if visibility.get(key) is not want:
+            findings.append(f"visibility_policy_drift:{key}:expected={str(want).lower()}")
+
+    if UNKNOWN not in DEFAULT_VISIBLE_CLASSIFICATIONS:
+        findings.append("code_hides_unknown_groups_contrary_to_contract")
+    if OPEN not in DEFAULT_VISIBLE_CLASSIFICATIONS:
+        findings.append("code_hides_open_groups_contrary_to_contract")
+    if UNKNOWN in DEFAULT_HIDDEN_CLASSIFICATIONS:
+        findings.append("code_lists_unknown_as_default_hidden")
+    if DEFAULT_HIDDEN_CLASSIFICATIONS != {TERMINAL}:
+        findings.append("default_hidden_classifications_must_be_terminal_only")
+    if DEFAULT_VISIBLE_CLASSIFICATIONS & DEFAULT_HIDDEN_CLASSIFICATIONS:
+        findings.append("classification_in_both_visible_and_hidden")
+
     if visibility.get("global_silent_exclusion") != "prohibited":
         findings.append("global_silent_exclusion_must_be_prohibited")
     if visibility.get("tool_must_report_excluded_counts") is not True:

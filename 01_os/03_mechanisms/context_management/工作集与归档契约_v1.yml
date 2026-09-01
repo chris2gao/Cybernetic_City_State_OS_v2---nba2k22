@@ -122,7 +122,21 @@ default_visibility:
     - 01_os/_communication/
     - 01_os/_dev/
     - 01_os/07_content/_runs/
-  open_groups_stay_visible: true
+  # 谁默认可见、谁默认隐藏。这四条是逐条绑定的，validator 会对它们做漂移守卫。
+  #
+  # unknown 默认**可见**。这一条曾经写反过：早期实现把 unknown 与 terminal 一起隐藏，
+  # 结果被隐藏的恰恰是那 68 个仓库无法为其状态背书的组，而报出的可见性收益里很大一部分
+  # 正来自隐藏它们。独立审核 T3-IR-001 判定该行为 blocking。
+  # 隐藏需要「已被证明完成」，不是「没有证据表明它还活着」。
+  open_group_default_visible: true
+  unknown_group_default_visible: true
+  terminal_group_default_hidden: true
+  archived_group_default_hidden: true
+
+  # 可见与可归档是两个问题，不可互推。
+  unknown_group_archivable: false
+  unknown_state_groups_reported_separately: true
+
   hidden_material_access:
     - task_triggered_exact_path
     - exact_archive_or_run_pointer

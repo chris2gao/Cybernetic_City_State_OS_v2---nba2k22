@@ -248,9 +248,16 @@ def test_reference_scan_reports_exact_referencing_paths(repo):
 # --------------------------------------------------------------------------
 
 
-def test_open_group_visible_terminal_and_unknown_hidden(repo):
+def test_open_and_unknown_visible_terminal_hidden(repo):
+    """Hiding requires proof of completion, not absence of proof of life.
+
+    An earlier revision hid UNKNOWN alongside TERMINAL. That is what independent
+    review T3-IR-001 rejected: it hid exactly the groups whose state the tree
+    cannot vouch for, and took most of the reported benefit from doing so.
+    """
     _make_group(repo, "run-open", state="candidate_pending_validation")
     _make_group(repo, "run-done", state="excluded")
+    _make_group(repo, "run-freeform", state="COMPLETE_MASTER_PUBLISHED")
     unknown = repo / "01_os" / "_runs" / "run-unknown"
     _write(unknown / "notes.md", "no run.yml here\n")
     _write(repo / "01_os" / "03_mechanisms" / "m.yml", "a: 1\n")
@@ -262,8 +269,50 @@ def test_open_group_visible_terminal_and_unknown_hidden(repo):
 
     assert "01_os/03_mechanisms/m.yml" in split["visible"]
     assert any(p.startswith("01_os/_runs/run-open/") for p in split["visible"])
+    # Unknown, by either route — no run.yml at all, or a freeform status string.
+    assert any(p.startswith("01_os/_runs/run-unknown/") for p in split["visible"])
+    assert any(p.startswith("01_os/_runs/run-freeform/") for p in split["visible"])
+    # Only the positively classified terminal group is hidden.
     assert not any(p.startswith("01_os/_runs/run-done/") for p in split["visible"])
-    assert not any(p.startswith("01_os/_runs/run-unknown/") for p in split["visible"])
+    assert any(p.startswith("01_os/_runs/run-done/") for p in split["hidden"])
+
+
+def test_unknown_group_is_visible_and_still_not_archivable(repo):
+    """The focused fixture for T3-IR-001: visible and archivable are separate."""
+    _make_group(repo, "run-unknown-state", state="architecture_root_cause_active")
+    _commit_all(repo)
+
+    paths = reference_safety.tracked_paths(repo)
+    groups = working_set.collect_groups(repo, paths)
+    split = working_set.partition(repo, paths, groups)
+
+    state = groups["01_os/_runs/run-unknown-state"]
+    assert state.classification == UNKNOWN
+    assert any(p.startswith("01_os/_runs/run-unknown-state/") for p in split["visible"])
+
+    with pytest.raises(WorkingSetError, match="group_state_not_terminal"):
+        archive_group.archive_group(repo, "01_os/_runs/run-unknown-state")
+    assert (repo / "01_os/_runs/run-unknown-state").is_dir()
+
+
+def test_index_puts_unknown_in_visible_and_reports_it_separately(repo):
+    _make_group(repo, "run-open", state="research_only")
+    _make_group(repo, "run-done", state="verified_on_demand")
+    _make_group(repo, "run-unclear", state="whatever_string")
+    _commit_all(repo)
+
+    index = working_set.build_index(repo, head="0" * 40)
+    assert "01_os/_runs/run-unclear" in index["visible_groups"]
+    assert "01_os/_runs/run-open" in index["visible_groups"]
+    assert index["hidden_groups"] == ["01_os/_runs/run-done"]
+    assert "01_os/_runs/run-unclear" in index["unknown_state_groups"]
+    assert index["unknown_state_groups_default_visible"] is True
+    assert index["unknown_state_groups_archivable"] is False
+
+
+def test_default_classification_sets_are_the_corrected_policy():
+    assert working_set.DEFAULT_VISIBLE_CLASSIFICATIONS == {OPEN, UNKNOWN}
+    assert working_set.DEFAULT_HIDDEN_CLASSIFICATIONS == {TERMINAL}
 
 
 def test_report_always_states_what_it_excluded(repo):
@@ -320,6 +369,45 @@ def test_contract_drift_is_detected(tmp_path):
     fake.write_text(text, encoding="utf-8")
     findings = validate_working_set.validate(tmp_path)
     assert any(f.startswith("terminal_state_drift") for f in findings)
+
+
+def test_contract_flipping_unknown_back_to_hidden_is_rejected(tmp_path):
+    """The regression guard for T3-IR-001.
+
+    The rejected policy is internally consistent and produces a much larger
+    headline number, so nothing else in the suite would catch its return.
+    """
+    source = REPO_ROOT / validate_working_set.CONTRACT
+    fake = tmp_path / validate_working_set.CONTRACT
+    fake.parent.mkdir(parents=True, exist_ok=True)
+    text = source.read_text(encoding="utf-8").replace(
+        "unknown_group_default_visible: true",
+        "unknown_group_default_visible: false",
+        1,
+    )
+    fake.write_text(text, encoding="utf-8")
+    findings = validate_working_set.validate(tmp_path)
+    assert any(
+        f.startswith("visibility_policy_drift:unknown_group_default_visible")
+        for f in findings
+    )
+
+
+def test_contract_marking_unknown_archivable_is_rejected(tmp_path):
+    source = REPO_ROOT / validate_working_set.CONTRACT
+    fake = tmp_path / validate_working_set.CONTRACT
+    fake.parent.mkdir(parents=True, exist_ok=True)
+    text = source.read_text(encoding="utf-8").replace(
+        "unknown_group_archivable: false",
+        "unknown_group_archivable: true",
+        1,
+    )
+    fake.write_text(text, encoding="utf-8")
+    findings = validate_working_set.validate(tmp_path)
+    assert any(
+        f.startswith("visibility_policy_drift:unknown_group_archivable")
+        for f in findings
+    )
 
 
 def test_missing_contract_is_reported_not_crashed(tmp_path):
