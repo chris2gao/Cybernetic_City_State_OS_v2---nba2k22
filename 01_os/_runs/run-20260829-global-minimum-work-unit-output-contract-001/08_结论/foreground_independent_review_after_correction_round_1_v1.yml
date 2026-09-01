@@ -1,0 +1,95 @@
+schema_version: citystate.minimum_work_unit_output.independent_review.v1
+review:
+  reviewer_role: independent_review
+  review_date: 2026-08-29
+  base_sha: 1559346ca2eab776cad110c7d96475f34a33f9b2
+  canonical_candidate_sha: 04e243dac34dd9e2183acebd3fd9f71919804d01
+  observed_task_branch_head_before_review_artifact: f6d66313efd3c58e07dbed680d2b391bdd267d91
+  verdict: FIX_REQUIRED
+  prior_blockers_reopened: false
+primary_evidence_examined:
+  - 04e243dac34dd9e2183acebd3fd9f71919804d01:01_os/03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml
+  - 04e243dac34dd9e2183acebd3fd9f71919804d01:01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py
+  - a71db910e9f0e17963e73aa8e6bd5d05f5aa7574:01_os/_runs/run-20260828-t2-stage04-structural-provenance-upstream-001/04_机制试验/minimum_work_unit_output_contract_v1.yml
+  - 6cc0362c298e5c6a766083840392c5107caef259:01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/08_结论/finding_closure_ledger_v1.yml
+  - 6cc0362c298e5c6a766083840392c5107caef259:01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/08_结论/completion_pointer_v2.yml
+prior_finding_assessment:
+  MWU-IR-001: remains_closed_for_reproduced_original_shapes
+  MWU-IR-002: remains_closed_for_reproduced_original_shapes
+  MWU-IR-003: remains_closed_for_reproduced_original_shapes
+  MWU-IR-004: remains_closed_for_reproduced_original_shapes
+findings:
+  - id: MWU-R1-FG-IR-001
+    severity: blocking
+    claim: The rationale text floor has a material multilingual false-reject because normalization discards non-ASCII text.
+    evidence: >-
+      _normalized_phrase applies re.sub(r"[^a-z0-9]+", " ", value.lower()). A non-empty
+      Chinese rationale such as “该实现由当前契约和验证证据直接支撑。” normalizes to an
+      empty string and _text_floor_errors returns missing_or_empty even though the value is
+      valid non-empty text. The global repository and Human task language are not English-only.
+    consequence: >-
+      Legitimate Chinese or other non-ASCII MWU rationales and reviewer assessments can be
+      rejected by the global mechanism, so the candidate is not safe to promote as a
+      repository-wide output contract.
+  - id: MWU-R1-FG-IR-002
+    severity: blocking
+    claim: Two of the four core narrative fields still accept arbitrary non-text scalars.
+    evidence: >-
+      validate_document applies _text_floor_errors only to supportability_rationale and
+      feasibility_rationale. work_performed_or_requested and implementation_or_review_method
+      use _present(), for which booleans and numbers are present. The T2 source contract says
+      these fields must state the concrete work and implementation/review method.
+    consequence: >-
+      A formal MWU can satisfy half of the four-field core with values such as true and 1,
+      contradicting the core narrative-output semantics and the advertised structural floor.
+nonblocking_observations:
+  - >-
+    The prior review artifact failing the corrected unit-local evidence-containment rule is
+    historical compatibility, not a blocker; do not weaken unit-local containment merely to
+    make old evidence retroactively compliant.
+authority_scope_and_communication_regression:
+  result: PASS
+  notes: correction changes remain MWU-owned and do not alter authority, communication, context-management, model-routing, T2, or automatic progression semantics.
+next_action: correction_round_2_narrow_text_structure_fix
+minimum_work_unit_output:
+  role: independent_review
+  work_performed_or_requested: >-
+    Independently review correction round 1 after its original four findings were reported
+    closed and determine whether the corrected global candidate is safe to promote.
+  implementation_or_review_method: >-
+    Read the corrected contract and validator, checked the original T2 semantic source and
+    closure evidence, then attacked new false-pass and false-reject surfaces not covered by
+    the executor regression matrix.
+  supportability_rationale: >-
+    FIX_REQUIRED rests on two direct validator code paths: ASCII-only normalization rejects
+    valid non-ASCII rationale text, while _present accepts booleans and numbers for two core
+    narrative fields. Both contradict the global four-field output contract rather than a
+    stylistic preference.
+  feasibility_rationale: >-
+    Both defects are narrow structural issues inside the existing MWU validator/contract and
+    can be corrected without reopening architecture, authority, communication, or the four
+    original Codex findings.
+  verdict: FIX_REQUIRED
+  primary_evidence_examined:
+    - 04e243dac34dd9e2183acebd3fd9f71919804d01:01_os/03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml
+    - 04e243dac34dd9e2183acebd3fd9f71919804d01:01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py
+    - a71db910e9f0e17963e73aa8e6bd5d05f5aa7574:01_os/_runs/run-20260828-t2-stage04-structural-provenance-upstream-001/04_机制试验/minimum_work_unit_output_contract_v1.yml
+  findings_and_residual_risk:
+    - MWU-R1-FG-IR-001 blocking multilingual false-reject
+    - MWU-R1-FG-IR-002 blocking non-text core-field false-pass
+    - no Linux execution reproduced in this foreground connector review
+  executor_rationale_assessment:
+    supportability_assessment: >-
+      The executor evidence supports closure of the four previously reproduced failure
+      shapes, but it does not support multilingual safety or text typing for the first two
+      core fields because those cases were not exercised and the validator code contradicts them.
+    feasibility_assessment: >-
+      The correction remains mechanically feasible and isolated, but master promotion is not
+      feasible until the two new structural gaps are closed and retested.
+    primary_evidence_refs:
+      - 04e243dac34dd9e2183acebd3fd9f71919804d01:01_os/03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml
+      - 04e243dac34dd9e2183acebd3fd9f71919804d01:01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py
+      - a71db910e9f0e17963e73aa8e6bd5d05f5aa7574:01_os/_runs/run-20260828-t2-stage04-structural-provenance-upstream-001/04_机制试验/minimum_work_unit_output_contract_v1.yml
+    unsupported_or_inferred_claims:
+      - multilingual safety was not established by correction-round-1 tests
+      - four-core-field text typing was not established by correction-round-1 tests

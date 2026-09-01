@@ -1,0 +1,19 @@
+minimum_work_unit_output:
+  role: independent_review
+  work_performed_or_requested: 审核修正轮次二的候选，判断两个阻塞性发现是否真的关闭。
+  implementation_or_review_method: 从精确提交重建候选，重跑校验器四个模式并比对退出码与错误码。
+  supportability_rationale: 结论建立在复现的退出码与契约绑定之上，而不是执行者的自述。
+  feasibility_rationale: 全部被引用的产物都能在给定提交上读取，复算不需要受保护动作。
+  verdict: PASS
+  primary_evidence_examined:
+    - 契约_最小工作单元输出契约_v1.yml
+    - 校验器_validate_minimum_work_unit_output.py
+  findings_and_residual_risk:
+    - 通过的检查只证明结构性属性本身
+  executor_rationale_assessment:
+    supportability_assessment: 该结论由复现的校验器退出码与契约绑定支撑，而不是风格偏好。
+    feasibility_assessment: 修正范围局限于既有机制文件，在当前执行环境可以完整复算。
+    primary_evidence_refs:
+      - 契约_最小工作单元输出契约_v1.yml
+      - 校验器_validate_minimum_work_unit_output.py
+    unsupported_or_inferred_claims: []

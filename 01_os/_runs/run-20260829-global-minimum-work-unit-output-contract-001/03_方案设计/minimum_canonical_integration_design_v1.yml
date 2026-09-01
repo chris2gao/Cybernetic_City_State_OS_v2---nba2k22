@@ -1,0 +1,70 @@
+schema_version: citystate.minimum_work_unit_output.promotion_design.v1
+task_id: os-v2-global-minimum-work-unit-output-contract-001
+status: implementation_design_frozen_for_task_branch
+source_trial:
+  exact_commit: a71db910e9f0e17963e73aa8e6bd5d05f5aa7574
+  exact_path: 01_os/_runs/run-20260828-t2-stage04-structural-provenance-upstream-001/04_机制试验/minimum_work_unit_output_contract_v1.yml
+  experiment_id: T2-MWU-OUTPUT-TRIAL-001
+observed_usage:
+  execution_sample:
+    path: 01_os/_runs/run-20260828-t2-completion-001/07_测试执行/p2_2_execution_evidence_v1.yml
+    observation: >-
+      Real T2 execution evidence used all four core fields and explicitly separated
+      measured support from residual unproved limits.
+minimal_canonical_integration:
+  mechanism:
+    path: 01_os/03_mechanisms/minimum_work_unit_output/
+    owns:
+      - material_work_unit_output_contract
+      - role_specific_output_obligations
+      - rationale_quality_rules
+      - reviewer_attack_of_executor_rationale
+    does_not_own:
+      - workflow_stage_progression
+      - communication_delivery_or_envelope
+      - context_selection
+      - model_routing
+      - permission_or_authority
+  boot:
+    path: 01_os/02_boot/minimum_work_unit_output/启动清单_v1.yml
+  registry:
+    path: 01_os/05_registry/minimum_work_unit_output_v1.yml
+  validator:
+    path: 01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py
+  always_loaded_navigation:
+    - 01_os/README.md
+    - 01_os/03_mechanisms/README.md
+  deliberately_not_modified_in_v1:
+    - AGENTS.md
+    - AGENT_WORKING_DISCIPLINE.md
+    - 01_os/开发入口与单窗口任务规范_v1.md
+  reason_for_thin_navigation: >-
+    The always-loaded 01_os README can point formal material work units to the mechanism.
+    The mechanism owns the detailed semantics, avoiding duplicate workflow/discipline text.
+    A later review may promote an additional root-level pointer only if evidence shows the
+    OS-level pointer is insufficient.
+semantic_invariants:
+  authority_effect: none
+  scope_effect: none
+  legacy_artifacts_remain_readable: true
+  private_chain_of_thought_required: false
+  applies_to:
+    - formal_decision_or_architecture_dispatch
+    - execution_completion_or_handoff
+    - independent_review_completion
+  excludes:
+    - individual_tool_calls
+    - micro_operations
+    - private_reasoning_steps
+  core_fields:
+    - work_performed_or_requested
+    - implementation_or_review_method
+    - supportability_rationale
+    - feasibility_rationale
+  reviewer_invariant: >-
+    Executor rationale is a claim under review, not primary evidence. Independent review
+    must assess both executor supportability and feasibility rationale against primary evidence.
+authorization_compatibility: >-
+  MWU is an output obligation only. Feasibility and supportability never grant authority;
+  ordinary task execution/cross-model dispatch retain the already-merged no-separate-
+  authorization default, and protected actions retain their existing Human confirmation rules.

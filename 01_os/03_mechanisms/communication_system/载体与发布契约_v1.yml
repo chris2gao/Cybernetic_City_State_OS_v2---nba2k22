@@ -10,7 +10,7 @@ privacy_classes:
   local_only: local_public_task_folder_only
   forbidden: must_not_be_materialized_in_any_carrier
 publication_order:
-  - validate_documents_and_authorization_refs
+  - validate_documents_and_applicable_confirmation_or_legacy_refs
   - publish_immutable_canonical_message
   - append_sender_owned_index
   - emit_Human_relay_pointer

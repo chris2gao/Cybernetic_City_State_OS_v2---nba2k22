@@ -1,0 +1,110 @@
+schema_version: citystate.minimum_work_unit_output.correction_dispatch.v1
+task_id: os-v2-global-minimum-work-unit-output-contract-001
+correction_id: MWU-CORRECTION-R2
+correction_round: 2
+review_source: 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/08_结论/foreground_independent_review_after_correction_round_1_v1.yml
+expected_branch_head_before_this_dispatch_commit: 0ba87f28c2c5e1cdc1b936ecd0e4214356153ac7
+base_master_sha: 1559346ca2eab776cad110c7d96475f34a33f9b2
+prior_canonical_candidate_sha: 04e243dac34dd9e2183acebd3fd9f71919804d01
+objective: >-
+  Close exactly the two new structural findings discovered after correction round 1:
+  multilingual-safe text handling and text typing for the first two core narrative fields.
+  Preserve all prior architecture and finding closures.
+blocking_findings:
+  - MWU-R1-FG-IR-001
+  - MWU-R1-FG-IR-002
+required_semantics:
+  multilingual_text:
+    - nonempty Chinese rationale must be accepted when otherwise structurally valid
+    - nonempty Unicode text must not be erased merely because it is outside ASCII a-z0-9
+    - Chinese independent-review supportability and feasibility assessments must also be accepted
+    - English generic-only negative cases such as tests passed and feasible must remain rejected
+    - do_not_introduce_heuristic_language_understanding
+    - structural_floor_must_remain_deterministic_and_language_neutral
+  four_core_fields:
+    - work_performed_or_requested must be nonempty text
+    - implementation_or_review_method must be nonempty text
+    - supportability_rationale remains subject to rationale structural anti-vacuity floor
+    - feasibility_rationale remains subject to rationale structural anti-vacuity floor
+    - boolean_number_list_mapping values for either first core narrative field must be rejected
+  preserved_decisions:
+    - assessment evidence containment remains unit-local
+    - historical prior-review artifacts are not retroactively rewritten
+    - verdict enum remains PASS_FIX_REQUIRED_REJECT
+    - duplicate mapping keys remain fail-closed
+    - static drift bindings remain enforced
+    - semantic truth remains independent-review judgement
+scope:
+  allowed_changed_paths:
+    - 01_os/03_mechanisms/minimum_work_unit_output/**
+    - 01_os/06_execution/boot/minimum_work_unit_output/**
+    - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/**
+  prohibited:
+    - master
+    - authorization_semantics
+    - communication_semantics
+    - context_management
+    - model_routing
+    - T2
+    - automatic_workflow_progression
+    - force_push_rebase_amend_squash
+minimum_regressions:
+  positive:
+    - valid_English_architecture_execution_review
+    - valid_Chinese_supportability_rationale
+    - valid_Chinese_feasibility_rationale
+    - valid_Chinese_independent_review_assessments
+    - valid_mixed_Unicode_text
+  negative:
+    - boolean_work_performed_or_requested
+    - numeric_work_performed_or_requested
+    - list_work_performed_or_requested
+    - boolean_implementation_or_review_method
+    - numeric_implementation_or_review_method
+    - mapping_implementation_or_review_method
+    - prior_generic_only_rationale_cases
+    - prior_disjoint_evidence_cases
+    - prior_invalid_verdict_cases
+    - prior_duplicate_key_cases
+  preservation:
+    - all_previous_38_selftests_or_stronger_superset_pass
+    - all_previous_drift_cases_pass
+    - prior_9_false_accepts_remain_closed
+    - MWU_IR_004_duplicate_key_cases_remain_closed
+    - candidate_caused_quiet_verify_delta_zero_or_no_new_failure
+publication:
+  canonical_correction_commit_first: true
+  evidence_commit_after_candidate: true
+  source_branch_only: dev/os-v2-global-minimum-work-unit-output-contract-001
+  master_integration: prohibited_in_this_round
+completion_rule: >-
+  Publish a new exact canonical candidate plus durable execution/regression evidence and stop
+  at ready_for_independent_review. Do not self-review the correction and do not start another
+  correction round.
+minimum_work_unit_output:
+  role: decision_architecture
+  work_performed_or_requested: >-
+    Dispatch correction round 2 to close the multilingual false-reject and non-text core-field
+    false-pass without reopening the Global MWU architecture or the four prior Codex findings.
+  implementation_or_review_method: >-
+    Freeze the review findings into two testable structural invariants: Unicode-aware
+    language-neutral text handling for rationale/assessment floors and strict nonempty text
+    typing for the first two core narrative fields, with preservation regressions for all
+    previously closed properties.
+  supportability_rationale: >-
+    Both findings follow directly from current validator code paths and the T2 source
+    semantics: ASCII-only normalization erases legitimate repository-language text, while
+    generic scalar presence cannot represent the concrete work and method fields.
+  feasibility_rationale: >-
+    Both corrections are localized to the existing contract/validator surface and can be
+    covered by deterministic multilingual and non-text fixtures without changing authority,
+    communication, routing, workflow progression, or master.
+  task_constraints_and_boundaries:
+    - close_only_MWU_R1_FG_IR_001_and_002
+    - preserve_prior_four_finding_closures
+    - no_master_write
+    - no_self_review
+  stop_or_return_conditions:
+    - required_fix_needs_path_outside_allowlist
+    - correction_requires_new_semantic_choice_beyond_language_neutral_text_structure
+    - candidate_causes_new_repository_regression

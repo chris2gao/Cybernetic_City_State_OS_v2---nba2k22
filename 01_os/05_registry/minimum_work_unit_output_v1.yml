@@ -1,0 +1,40 @@
+schema_version: citystate.registry.v1
+registry_id: minimum_work_unit_output_v1
+mechanism_version: 1
+entries:
+  - path: 01_os/03_mechanisms/minimum_work_unit_output/**
+    purpose: material work-unit output contract, rationale quality rules, and reviewer attack-of-rationale semantics
+    loader: 01_os/02_boot/minimum_work_unit_output/启动清单_v1.yml
+    loader_class: in_repo_program
+    discovery: referenced from the always-loaded 01_os README and mechanism index
+    evidence: 01_os/02_boot/minimum_work_unit_output/启动清单_v1.yml
+    cache_dirs: []
+    failure_surfacing: next declared MWU validation or independent review
+    deletion_rule: protected
+  - path: 01_os/02_boot/minimum_work_unit_output/**
+    purpose: MWU loading order, version, failure policy, and receipt requirements
+    loader: OS bootstrap when a formal material work unit is dispatched or completed
+    loader_class: host_application
+    discovery: canonical pointer from 01_os/README.md
+    evidence: 01_os/02_boot/minimum_work_unit_output/启动清单_v1.yml
+    cache_dirs: []
+    failure_surfacing: next formal material work unit
+    deletion_rule: protected
+  - path: 01_os/06_execution/boot/minimum_work_unit_output/**
+    purpose: MWU static and artifact validator with regression self-tests
+    loader: Human or current task executor/reviewer
+    loader_class: external_tool_convention
+    discovery: referenced from MWU boot manifest and registry
+    evidence: 01_os/06_execution/boot/minimum_work_unit_output/README.md
+    cache_dirs: []
+    failure_surfacing: next validator run
+    deletion_rule: protected
+  - path: 01_os/05_registry/minimum_work_unit_output_v1.yml
+    purpose: registration and failure-surfacing declaration for the MWU mechanism
+    loader: OS registry reader
+    loader_class: in_repo_program
+    discovery: referenced from MWU boot manifest
+    evidence: 01_os/02_boot/minimum_work_unit_output/启动清单_v1.yml
+    cache_dirs: []
+    failure_surfacing: next registry or MWU validator run
+    deletion_rule: protected

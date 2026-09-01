@@ -41,8 +41,15 @@ assessed one at a time, not copied wholesale.
   `routing_only` authority。
 - `mechanism_activation/`：formal-action constitution、机制触发、pre-action gate、
   L0–L4 生效盘点与 material claim 期望—观察—comparator 双向绑定。
+- `minimum_work_unit_output/`：material decision dispatch、execution completion 与
+  independent review completion 的最小输出契约；把 rationale 绑定到可审核证据，并要求 reviewer
+  攻击 executor rationale；`authority_effect: none`。
 - `task_orchestration/`：默认大任务与长时执行；内部 continuation 与真停止的边界、
   闭合前检查、终态生命周期声明。`authority_effect: none`。
+
+后两者相邻不是巧合：`minimum_work_unit_output/` 规定一个工作单元**输出什么**，
+`task_orchestration/` 规定工作单元**多大、什么时候停**。两者都不授予权限，
+也都不替代对方——一个大任务的每一次正式输出仍按 MWU 契约产出。
 
 工作流只引用该机制，不在 `01_workflow/` 内保留第二份实例。
 

@@ -1,0 +1,281 @@
+schema_version: citystate.minimum_work_unit_output.contract.v1
+mechanism_version: 1
+status: active_global
+authority_effect: none
+scope_effect: none
+purpose: >-
+  Make each material work-unit dispatch or completion auditable by recording what
+  was requested or done, the method used, why the result is supportable, and why
+  it is feasible. Independent review treats executor rationale as a claim to test
+  against primary evidence, not as evidence itself.
+application:
+  required_for:
+    - formal_decision_or_architecture_dispatch
+    - execution_completion_or_handoff
+    - independent_review_completion
+  not_a_work_unit:
+    - individual_tool_call
+    - micro_operation
+    - private_reasoning_step
+    - scratch_iteration_that_does_not_create_a_handoff_or_result
+  declared_container_key: minimum_work_unit_output
+  legacy_policy: >-
+    Artifacts that predate this mechanism or do not declare a minimum_work_unit_output
+    remain readable and are not retroactively invalidated. New formal outputs that
+    claim MWU compliance must satisfy this contract.
+minimum_work_unit_required_fields:
+  - work_performed_or_requested
+  - implementation_or_review_method
+  - supportability_rationale
+  - feasibility_rationale
+field_semantics:
+  work_performed_or_requested: >-
+    State the concrete work unit and intended or actual result.
+  implementation_or_review_method: >-
+    State the decisive implementation structure, evidence path, verification method,
+    or review method actually used; generic process slogans are insufficient.
+  supportability_rationale: >-
+    Give a concise, task-specific justification tied to requirements, invariants,
+    primary evidence, tests, ownership boundaries, or failure surfacing. Distinguish
+    measurement from inference. A bare "tests passed" or "best practice" is insufficient.
+  feasibility_rationale: >-
+    Give a concise, task-specific justification that the work is achievable in the
+    current code, dependencies, environment, scope and available verification surface.
+    State assumptions or unproved limits. A bare "feasible" is insufficient.
+role_specific_requirements:
+  decision_architecture:
+    required_additions:
+      - task_constraints_and_boundaries
+      - stop_or_return_conditions
+  execution:
+    required_additions:
+      - exact_result_or_candidate_ref
+      - verification_evidence
+      - residual_risk_or_unproved_limits
+  independent_review:
+    required_additions:
+      - verdict
+      - primary_evidence_examined
+      - findings_and_residual_risk
+      - executor_rationale_assessment
+    executor_rationale_assessment_required_fields:
+      - supportability_assessment
+      - feasibility_assessment
+      - primary_evidence_refs
+      - unsupported_or_inferred_claims
+review_rule: >-
+  An independent reviewer must explicitly test whether the executor's supportability
+  and feasibility rationales are supported by the primary evidence examined. The
+  executor rationale is testimony under review, never a substitute for primary evidence.
+quality_rules:
+  - rationale_is_concise_justification_not_private_chain_of_thought
+  - material_claims_trace_to_primary_evidence_or_are_marked_inference_or_unverified
+  - passing_tests_prove_only_the_properties_the_tests_actually_assert
+  - feasibility_does_not_grant_authority
+  - supportability_does_not_grant_authority
+  - output_contract_does_not_change_task_scope_permissions_or_confirmation_requirements
+  - unknown_or_unverified_items_are_named
+  - vague_generic_rationale_alone_is_noncompliant
+authority_compatibility:
+  ordinary_task_execution: no_separate_Human_authorization_required_by_MWU
+  ordinary_cross_model_dispatch: no_task_authority_or_delegation_required_by_MWU
+  protected_actions: unchanged_use_existing_Human_confirmation_rules
+  feasibility_or_supportability_as_permission: prohibited
+communication_binding: >-
+  Communication envelopes remain owned by communication_system. An MWU may be
+  carried in a task/result artifact or referenced by exact pointer from a message;
+  this contract does not change delivery, acknowledgement, or progression semantics.
+private_reasoning:
+  chain_of_thought_required: false
+  scratchpad_required: false
+  prohibited_artifact_keys:
+    - chain_of_thought
+    - private_chain_of_thought
+    - private_reasoning
+    - scratchpad
+machine_enforcement_boundary: >-
+  The validator enforces a deterministic structural anti-vacuity floor only:
+  required text type for all four core narrative fields, non-emptiness, a closed set
+  of generic-only forms, a minimum content-token count counted in a Unicode-aware and
+  language-neutral way, a closed independent-review verdict enum, and set containment
+  between an independent review's assessment evidence refs and the primary evidence
+  that same review declares it examined. Passing these checks proves those structural
+  properties and nothing wider. It does not prove that a rationale is true, sufficient
+  or task-appropriate, and it does not prove that a reviewer actually attacked the
+  executor rationale against that evidence. Full semantic sufficiency remains
+  load-bearing independent-review judgement, not a machine result.
+core_narrative_text_floor:
+  applies_to:
+    - work_performed_or_requested
+    - implementation_or_review_method
+  required_value_type: text
+  reject_non_text_values: true
+  reject_empty_or_whitespace_only: true
+  note: >-
+    These two fields state the concrete work unit and the decisive method, so a
+    boolean, number, list or mapping cannot express either one. This floor is type
+    and emptiness only; the generic-only form set and the content-token count stay
+    on the two rationale fields, where a justification is being made rather than a
+    statement of what was done.
+  proves:
+    - value_is_nonempty_text
+  does_not_prove:
+    - statement_is_true
+    - statement_is_semantically_sufficient
+    - statement_is_task_appropriate
+rationale_machine_floor:
+  applies_to:
+    - supportability_rationale
+    - feasibility_rationale
+  required_value_type: text
+  reject_non_text_values: true
+  minimum_content_tokens: 3
+  text_normalization:
+    unicode_aware: true
+    ascii_only_normalization: prohibited
+    language_understanding_heuristics: prohibited
+    kept_character_class: unicode_word_characters_excluding_underscore
+    note: >-
+      Normalization keeps the letters and digits of every script instead of ASCII
+      a-z0-9. For ASCII input the result is identical to the previous rule; for any
+      other script the text is no longer erased before the floor is applied.
+  content_token_rule:
+    space_delimited_run: one_content_token
+    unspaced_script_character: one_content_token
+    language_identification: prohibited
+    note: >-
+      A script written without a word separator cannot be measured by a whitespace
+      token count, so each of its characters is one content unit. Membership is
+      decided only by the declared codepoint ranges below, never by identifying a
+      language. Scripts outside this list keep whitespace-delimited tokens.
+    unspaced_script_ranges:
+      - "0E00-0E7F"
+      - "0E80-0EFF"
+      - "0F00-0FFF"
+      - "1000-109F"
+      - "1780-17FF"
+      - "2E80-2FDF"
+      - "3040-30FF"
+      - "31F0-31FF"
+      - "3400-4DBF"
+      - "4E00-9FFF"
+      - "F900-FAFF"
+      - "FF66-FF9D"
+      - "20000-2A6DF"
+      - "2A700-2EBEF"
+      - "2F800-2FA1F"
+  proves:
+    - value_is_nonempty_text
+    - value_is_not_a_listed_generic_only_form
+    - value_carries_at_least_the_minimum_content_token_count
+  does_not_prove:
+    - rationale_is_true
+    - rationale_is_semantically_sufficient
+    - rationale_is_task_appropriate
+  filler_tokens_removed_before_floor:
+    - "a"
+    - "all"
+    - "also"
+    - "an"
+    - "and"
+    - "are"
+    - "as"
+    - "at"
+    - "be"
+    - "been"
+    - "being"
+    - "by"
+    - "can"
+    - "completely"
+    - "could"
+    - "did"
+    - "do"
+    - "does"
+    - "for"
+    - "from"
+    - "fully"
+    - "had"
+    - "has"
+    - "have"
+    - "i"
+    - "in"
+    - "is"
+    - "it"
+    - "its"
+    - "just"
+    - "my"
+    - "of"
+    - "on"
+    - "or"
+    - "our"
+    - "quite"
+    - "should"
+    - "so"
+    - "successfully"
+    - "that"
+    - "the"
+    - "these"
+    - "this"
+    - "those"
+    - "to"
+    - "us"
+    - "very"
+    - "was"
+    - "we"
+    - "were"
+    - "will"
+    - "with"
+    - "work"
+    - "would"
+  generic_only_rejected_forms:
+    - "best practice"
+    - "best practices"
+    - "correct"
+    - "done"
+    - "feasibility"
+    - "feasible"
+    - "fine"
+    - "good"
+    - "lgtm"
+    - "looks good"
+    - "n a"
+    - "na"
+    - "no issues"
+    - "none"
+    - "nothing"
+    - "ok"
+    - "okay"
+    - "pass"
+    - "passed"
+    - "supportable"
+    - "supported"
+    - "test passed"
+    - "tests pass"
+    - "tests passed"
+    - "true"
+    - "valid"
+    - "verified"
+    - "works"
+    - "yes"
+independent_review_machine_floor:
+  verdict_allowed_values:
+    - PASS
+    - FIX_REQUIRED
+    - REJECT
+  assessment_text_floor_applies_to:
+    - supportability_assessment
+    - feasibility_assessment
+  primary_evidence_refs_must_be_nonempty_list: true
+  primary_evidence_refs_must_be_subset_of_primary_evidence_examined: true
+  proves:
+    - verdict_is_within_the_closed_enum
+    - assessment_texts_clear_the_same_structural_floor_as_rationales
+    - every_assessment_evidence_ref_is_drawn_from_the_declared_examined_evidence
+  does_not_prove:
+    - reviewer_reasoning_is_correct
+    - assessment_is_semantically_adequate
+    - the_examined_evidence_was_actually_sufficient
+formal_artifact_parsing:
+  loader: unique_key_safe_loader
+  duplicate_mapping_key_at_any_level: rejected
+  last_key_wins_parsing: prohibited_for_formal_MWU_artifacts

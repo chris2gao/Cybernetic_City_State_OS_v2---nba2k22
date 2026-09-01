@@ -117,6 +117,34 @@ class TestHardFailures(unittest.TestCase):
         self.assertTrue(
             any(f.startswith("remote_master_moved") for f in pf.hard_failures(r, True)))
 
+    def test_big_task_missing_confirmation_closure_blocks(self):
+        r = dict(CLEAN, big_task=True, big_task_confirmation_closure=None)
+        self.assertIn(
+            "big_task_confirmation_closure_missing",
+            pf.hard_failures(r, require_clean=True),
+        )
+
+    def test_big_task_uncovered_confirmation_blocks_before_dispatch(self):
+        r = dict(CLEAN, big_task=True, big_task_confirmation_closure={
+            "enabled": True,
+            "known_confirmation_required_actions": ["publish-to-master"],
+            "preconfirmed_actions": [],
+            "uncovered_actions": ["publish-to-master"],
+        })
+        self.assertIn(
+            "big_task_confirmation_closure_incomplete:publish-to-master",
+            pf.hard_failures(r, require_clean=True),
+        )
+
+    def test_big_task_complete_confirmation_closure_passes(self):
+        r = dict(CLEAN, big_task=True, big_task_confirmation_closure={
+            "enabled": True,
+            "known_confirmation_required_actions": ["publish-to-master"],
+            "preconfirmed_actions": ["publish-to-master"],
+            "uncovered_actions": [],
+        })
+        self.assertEqual(pf.hard_failures(r, require_clean=True), [])
+
 
 class TestUnverifiedMasterF2(unittest.TestCase):
     """Review finding F2: an unread master must not pass as verified."""

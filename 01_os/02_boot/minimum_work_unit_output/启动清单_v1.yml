@@ -1,0 +1,18 @@
+schema_version: citystate.minimum_work_unit_output.boot_manifest.v1
+mechanism_version: 1
+failure_policy: fail_closed_for_declared_MWU_noncompliance
+load_order:
+  - path: 01_os/03_mechanisms/minimum_work_unit_output/README.md
+    purpose: mechanism boundary and navigation
+  - path: 01_os/03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml
+    purpose: stable material-work-unit output semantics and role-specific obligations
+validator: 01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py
+registry: 01_os/05_registry/minimum_work_unit_output_v1.yml
+invocation: formal_material_work_unit_dispatch_or_completion
+background_processes_started: false
+automatic_task_progression: false
+authority_effect: none
+receipt_required:
+  - mechanism_version
+  - loaded_paths
+  - validator_exit_code

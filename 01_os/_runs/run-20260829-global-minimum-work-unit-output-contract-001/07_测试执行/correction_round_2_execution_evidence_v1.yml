@@ -1,0 +1,282 @@
+schema_version: citystate.minimum_work_unit_output.execution_evidence.v1
+task_id: os-v2-global-minimum-work-unit-output-contract-001
+correction_id: MWU-CORRECTION-R2
+correction_round: 2
+dispatch: 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/08_结论/correction_round_2_dispatch_v1.yml
+review_source: 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/08_结论/foreground_independent_review_after_correction_round_1_v1.yml
+
+physical_preconditions_fresh_read:
+  dispatch_branch_head_expected: 6eb8441cc5db3a4cb9dbcdd620f569d71dc58997
+  dispatch_branch_head_observed: 6eb8441cc5db3a4cb9dbcdd620f569d71dc58997
+  base_master_expected: 1559346ca2eab776cad110c7d96475f34a33f9b2
+  base_master_observed: 1559346ca2eab776cad110c7d96475f34a33f9b2
+  drift: none
+  observation_method: git ls-remote origin refs/heads/master refs/heads/dev/os-v2-global-minimum-work-unit-output-contract-001
+  worktree: detached HEAD at 6eb8441c, porcelain 0 lines before first write
+  publication_transport: local_git
+  hook_guard: passed
+  hook_guard_observation: git config --get core.hooksPath returned .githooks
+
+execution_environment:
+  os: Windows
+  shell: pwsh 7 with UTF-8 console encoding pinned per script
+  python: 3.14.6
+  pyyaml: 6.0.3
+  linux_execution: not_run
+  worktree_path_class: repository-local detached worktree, not the primary checkout
+
+local_environment_incident_and_recovery:
+  classification: local execution accident, not a correction-round finding
+  what_happened: >-
+    The preflight and checkout steps were written into one PowerShell script without
+    fail-fast. `git switch dev/os-v2-global-minimum-work-unit-output-contract-001`
+    returned exit 128 because that branch is checked out by another worktree at
+    C:/Users/gk/.codex/worktrees/mwu-independent-review-001, which holds the historical
+    independent-review checkout at c76bc77c. The script did not stop, so the next line
+    `git merge --ff-only 6eb8441c` executed while HEAD was still on master.
+  effect: local master fast-forwarded d9a18b57 -> 6eb8441c
+  remote_master_effect: none
+  remote_master_observed_after_incident: 1559346ca2eab776cad110c7d96475f34a33f9b2
+  push_performed_during_incident: false
+  disclosure: reported to the Human before any further write
+  recovery_authorization: explicit current-Human approval, scoped to undoing this exact accident only
+  recovery_command: git reset --hard d9a18b57749a0608a06ab546fd179b63e696e7f1
+  recovery_verified:
+    head_after_reset: d9a18b57749a0608a06ab546fd179b63e696e7f1
+    worktree_clean_before_reset: true
+    worktree_clean_after_reset: true
+    remote_master_after_reset: 1559346ca2eab776cad110c7d96475f34a33f9b2
+    master_pushed: false
+    git_clean_run: false
+    force_push_run: false
+    codex_worktree_touched: false
+  method_change_after_recovery: >-
+    Correction round 2 was executed in a new detached worktree created from the exact
+    remote branch head, so the occupied branch was never checked out.
+  root_cause: the script did not fail fast after a non-zero exit code
+  remedy_applied: >-
+    Every script in this window now defines an Assert-Ok helper that exits on a non-zero
+    $LASTEXITCODE, and precondition checks abort before any mutating command.
+
+reproduction_before_correction:
+  method: >-
+    The pre-correction validator was extracted with `git show 6eb8441c:<validator path>`
+    into a temporary file outside the repository and run against the new fixtures, so the
+    two findings are observed failing rather than asserted.
+  cases:
+    - fixture: 07_测试执行/fixtures/multilingual_valid_execution_artifact_v1.yml
+      finding: MWU-R1-FG-IR-001
+      prefix_exit: 1
+      prefix_errors: [missing_or_empty:supportability_rationale, missing_or_empty:feasibility_rationale]
+      corrected_exit: 0
+    - fixture: 07_测试执行/fixtures/multilingual_valid_review_artifact_v1.yml
+      finding: MWU-R1-FG-IR-001
+      prefix_exit: 1
+      prefix_errors:
+        - missing_or_empty:supportability_rationale
+        - missing_or_empty:feasibility_rationale
+        - missing_or_empty:supportability_assessment
+        - missing_or_empty:feasibility_assessment
+      corrected_exit: 0
+    - fixture: 07_测试执行/fixtures/non_text_core_field_artifact_v1.yml
+      finding: MWU-R1-FG-IR-002
+      prefix_exit: 0
+      prefix_result: accepted a boolean work_performed_or_requested and a numeric implementation_or_review_method
+      corrected_exit: 1
+      corrected_errors:
+        - core_field_must_be_text:work_performed_or_requested
+        - core_field_must_be_text:implementation_or_review_method
+
+executed_commands:
+  - id: selftest
+    command: python validate_minimum_work_unit_output.py selftest
+    exit_code: 0
+    observed: validation_passed mode=selftest cases=58
+  - id: static
+    command: python validate_minimum_work_unit_output.py static --root .
+    exit_code: 0
+    observed: validation_passed mode=static selftests=58
+  - id: drift
+    command: python validate_minimum_work_unit_output.py drift --root .
+    exit_code: 0
+    observed: validation_passed mode=drift cases=13
+  - id: git_diff_check
+    command: git diff --check
+    exit_code: 0
+  - id: ascii_equivalence_probe
+    command: differential probe comparing pre-correction and corrected normalization on an ASCII corpus
+    exit_code: 0
+    observed: ascii_corpus_size=207 ascii_behaviour_differences=0
+    positive_control: >-
+      The same probe shows the pre-correction rule returning empty for a Chinese sample
+      and the corrected rule returning 12 content units, so a zero difference on ASCII is
+      a measured result and not a probe that cannot see differences.
+    probe_location: session scratchpad, not committed
+selftest_count:
+  before_this_round: 38
+  after_this_round: 58
+  relation: strict_superset
+  method: every prior case id is retained; 20 cases added
+drift_count:
+  before_this_round: 9
+  after_this_round: 13
+  added_bindings:
+    - contract_core_narrative_text_fields_drift
+    - contract_core_narrative_reject_non_text_drift
+    - contract_unicode_normalization_drift
+    - contract_unspaced_script_ranges_drift
+
+multilingual_regression_matrix:
+  positive:
+    - id: positive_chinese_supportability_rationale
+      result: accepted
+    - id: positive_chinese_feasibility_rationale
+      result: accepted
+    - id: positive_chinese_core_narrative_fields
+      result: accepted
+    - id: positive_chinese_full_unit
+      result: accepted
+    - id: positive_chinese_independent_review_assessments
+      result: accepted
+    - id: positive_mixed_unicode_text
+      result: accepted
+  negative_multilingual:
+    - id: negative_below_floor_unspaced_rationale
+      expected_error: rationale_below_content_floor:supportability_rationale
+      result: rejected_with_expected_error
+    - id: negative_below_floor_unspaced_assessment
+      expected_error: rationale_below_content_floor:feasibility_assessment
+      result: rejected_with_expected_error
+    - id: negative_generic_only_survives_unicode_normalization
+      expected_error: vague_rationale_alone:supportability_rationale
+      result: rejected_with_expected_error
+    - id: negative_punctuation_only_rationale
+      expected_error: missing_or_empty:feasibility_rationale
+      result: rejected_with_expected_error
+  negative_core_field_typing:
+    - id: negative_boolean_work_performed_or_requested
+      result: rejected_with_expected_error
+    - id: negative_numeric_work_performed_or_requested
+      result: rejected_with_expected_error
+    - id: negative_list_work_performed_or_requested
+      result: rejected_with_expected_error
+    - id: negative_mapping_work_performed_or_requested
+      result: rejected_with_expected_error
+    - id: negative_boolean_implementation_or_review_method
+      result: rejected_with_expected_error
+    - id: negative_numeric_implementation_or_review_method
+      result: rejected_with_expected_error
+    - id: negative_list_implementation_or_review_method
+      result: rejected_with_expected_error
+    - id: negative_mapping_implementation_or_review_method
+      result: rejected_with_expected_error
+    - id: negative_whitespace_only_work_performed_or_requested
+      result: rejected_with_expected_error
+    - id: negative_whitespace_only_implementation_or_review_method
+      result: rejected_with_expected_error
+  preserved_english_negatives:
+    - negative_bare_tests_passed
+    - negative_bare_feasible
+    - adversarial_generic_supportability_synonym
+    - adversarial_generic_feasibility_sentence
+    - adversarial_single_content_token_rationale
+    - adversarial_one_word_supportability_assessment
+    - adversarial_one_word_feasibility_assessment
+
+artifact_cli_focused_cases:
+  - fixture: fixtures/valid_execution_artifact_v1.yml
+    expected_exit: 0
+    observed_exit: 0
+  - fixture: fixtures/multilingual_valid_execution_artifact_v1.yml
+    expected_exit: 0
+    observed_exit: 0
+  - fixture: fixtures/multilingual_valid_review_artifact_v1.yml
+    expected_exit: 0
+    observed_exit: 0
+  - fixture: fixtures/non_text_core_field_artifact_v1.yml
+    expected_exit: 1
+    observed_exit: 1
+    observed_errors: [core_field_must_be_text:work_performed_or_requested, core_field_must_be_text:implementation_or_review_method]
+  - fixture: fixtures/duplicate_key_supportability_rationale_v1.yml
+    expected_exit: 1
+    observed_exit: 1
+    observed_errors: [duplicate_mapping_key:supportability_rationale]
+  - fixture: fixtures/duplicate_key_nested_assessment_v1.yml
+    expected_exit: 1
+    observed_exit: 1
+    observed_errors: [duplicate_mapping_key:supportability_assessment]
+
+quiet_verify_delta:
+  method: >-
+    quiet_verify default check set run in two isolated detached worktrees of the same
+    clone: the base worktree pinned at the dispatch master baseline and this correction
+    worktree. Same interpreter, same command, same session.
+  base_sha: 1559346ca2eab776cad110c7d96475f34a33f9b2
+  base_summary: checks 2/4 ok
+  base_failing: [workflow_static exit 22, stage_deliberation_v2_static exit 13]
+  candidate_summary: checks 2/4 ok
+  candidate_failing: [workflow_static exit 22, stage_deliberation_v2_static exit 13]
+  candidate_caused_failures: 0
+  note: >-
+    The repository is not globally green at the dispatch master baseline. The claim proved
+    here is only that the candidate introduces no failure the base does not already have.
+
+changed_paths:
+  canonical_commit:
+    - 01_os/03_mechanisms/minimum_work_unit_output/README.md
+    - 01_os/03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml
+    - 01_os/06_execution/boot/minimum_work_unit_output/README.md
+    - 01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py
+  evidence_commit_prefix: 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/
+  out_of_scope_paths: 0
+  binary_artifact_count: 0
+  prohibited_areas_touched: none
+  historical_review_artifacts_modified: none
+
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Execute Global MWU correction round 2: make the rationale and assessment structural
+    text floor Unicode-safe and language-neutral, and require non-empty text for
+    work_performed_or_requested and implementation_or_review_method, closing
+    MWU-R1-FG-IR-001 and MWU-R1-FG-IR-002 without reopening the MWU architecture.
+  implementation_or_review_method: >-
+    Replaced the ASCII-only normalization with the exact complement rule so ASCII output
+    is unchanged, added a declared codepoint-range content-unit rule for scripts written
+    without word separators, added a type-and-emptiness floor for the two non-rationale
+    core fields, declared both in the canonical contract, bound them with new static drift
+    mutations, then reproduced each finding against the pre-correction validator extracted
+    from 6eb8441c before rerunning selftest, static, drift, artifact CLI, an ASCII
+    differential probe and a base-versus-candidate quiet_verify comparison.
+  supportability_rationale: >-
+    Closure rests on observed opposite behaviour rather than on assertion: the
+    pre-correction validator rejects both valid Chinese fixtures and accepts the non-text
+    core-field fixture, while the corrected validator inverts all three, and the ASCII
+    differential probe returns zero behaviour differences over 207 samples with a working
+    positive control, so the multilingual fix demonstrably did not move the English floor.
+  feasibility_rationale: >-
+    Every change is confined to the two MWU canonical paths and this run directory, needs
+    only the PyYAML dependency already present, requires no protected action beyond an
+    ordinary task-branch push, and is checkable by rerunning the four validator modes on
+    the exact candidate commit.
+  exact_result_or_candidate_ref: b17bdc0826a4519af0da69b61370f0b657acc7c4
+  verification_evidence:
+    - selftest exit 0 with 58 cases, a strict superset of the previous 38
+    - static exit 0 and drift exit 0 with 13 cases, up from 9
+    - artifact CLI 6 focused cases each matching its expected exit code
+    - ASCII differential probe exit 0, 0 differences over 207 samples
+    - quiet_verify identical failure set at base and candidate, delta 0
+  residual_risk_or_unproved_limits:
+    - No independent review of this correction has been performed in this window.
+    - >-
+      The generic-only rejection set remains an English-only enumeration, so a vacuous
+      non-English phrase that clears the content-unit floor is not caught. This is a
+      structural limit of a closed list, not a defect introduced by this round, and
+      closing it would require the language heuristics the dispatch prohibits.
+    - >-
+      The unspaced-script codepoint list is finite and declared. A script that lacks word
+      separators but is absent from that list is still measured by whitespace tokens.
+    - Machine checks remain a structural floor and prove nothing about semantic truth.
+    - >-
+      Windows-only execution; no Linux measurement, and the repository is not globally
+      green at the dispatch master baseline.

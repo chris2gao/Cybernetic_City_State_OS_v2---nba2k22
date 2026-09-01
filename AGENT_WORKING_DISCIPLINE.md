@@ -127,12 +127,12 @@ A task packet states the goal, the boundary, what must not happen, and how the
 result will be judged. It should not pin counts, path totals or SHAs that the
 executor can measure — those go stale between writing and running.
 
-A path list falls under the same rule. What authorizes the work is the objective,
+A path list falls under the same rule. What defines the work scope is the objective,
 the red lines and the `allowed_changed_paths` boundary; the files a dispatcher can
 name before execution are a forecast of the diff, not a second and tighter
 boundary. A dispatcher is not expected to predict every leaf of a deterministic
 dependency graph, and an executor reaching an unforecast leaf **inside** the
-boundary has not exceeded its authorization. What that boundary means, and the two
+boundary has not exceeded its task scope. What that boundary means, and the two
 conditions under which an executor may keep working inside it, are defined once in
 section 2 of `01_os/开发入口与单窗口任务规范_v1.md`. No additional packet field
 carries this; the boundary field already in use is the whole mechanism.
@@ -170,6 +170,26 @@ Report first, then act: history rewriting, force push, repository deletion,
 visibility changes, publishing to master, activating a runtime or scheduler,
 touching a real learner store.
 
+Ordinary reversible work inside the current task scope does **not** require a
+separate Human authorization ceremony. The current Human task request, plus a
+durable task packet when material mutation is involved, is enough to execute the
+work and publish an ordinary task/source branch. Authorization codes, nonces and
+per-action delegation chains are not prerequisites for ordinary work.
+
+The actions listed above are confirmation-bound instead. If the current Human
+instruction or a big-task preconfirmation already covers the exact action, proceed
+without asking again. Otherwise ask the Human directly at the action boundary; a
+clear current answer is sufficient. Persist a compact confirmation record only when
+a later window or another endpoint needs replayable evidence. Do not require a
+separate authorization code.
+
+For a large task, the dispatcher resolves all **known** confirmation-bound actions
+before dispatch. An executor must not stop later to re-request a known confirmation
+that the task preflight already covered. A genuinely new protected action or a new
+semantic choice is different: surface it when discovered. Historical finding fields
+such as `blocks_freeze` or `authorization_required` can describe technical state,
+but cannot create a current Human permission gate by themselves.
+
 `core` history is never rewritten. Every domain shares an ancestor with it; one
 rewrite breaks mergeability for all of them at once and nothing repairs it
 afterwards.
@@ -180,8 +200,8 @@ writing to master through one of them is the same announced action as writing to
 master through another. The local pre-push hook covers only the local transport,
 so its silence elsewhere proves nothing — read the remote for that. What each
 transport must prove instead is the matrix in section 1.1 of
-`01_os/开发入口与单窗口任务规范_v1.md`; who may publish at all, and which acts stay
-action-bound even under the widest grant, is
+`01_os/开发入口与单窗口任务规范_v1.md`; the ordinary publication scope and the
+small set of confirmation-bound actions are defined in
 `01_os/05_registry/repository_publisher_authority_v1.yml`.
 
 *Paid for once:* an executor with only a connector read "I cannot run
@@ -211,7 +231,8 @@ Two rules follow from that, and they are what make a stored note checkable later
   memory — they are read fresh from the repository every time.
 - **Resuming an earlier session is a re-entry, not a continuation.** Resume only by
   explicit session identifier, and only after re-checking repository, task, current
-  head and authorization. "The latest session" is not an identifier.
+  head, task scope and any confirmation-bound action that is actually about to run.
+  "The latest session" is not an identifier.
 
 ## 8. One big task, and a state a machine can read
 
@@ -258,15 +279,17 @@ it. You cannot recognise "this is not mine to do" or "this reviewer is checking
 its own output" without the map.
 
 **A role label grants nothing.** It says what you are expected to do, never what
-you are permitted to do. Authority comes only from current Human instruction and
-the canonical protocol. This applies to every line below.
+the task scope is. Ordinary execution scope comes from the current Human task input,
+the durable task packet and canonical repository rules; it does not require a
+separate Human authorization artifact. Protected actions still require the direct
+Human confirmation described in section 6. This applies to every line below.
 
 ### Reasoning work and local capability
 
 - **Foreground/decision work is primarily intellectual:** understand, model, plan,
   adjudicate, synthesize evidence and verify claims. Do not turn high-value
   foreground attention into the default execution engine.
-- **Delegate repetitive local mechanics when a capable authorized Desktop executor
+- **Delegate repetitive local mechanics when a capable in-scope Desktop executor
   is available:** bulk file interaction, repeated searches, test matrices, scripted
   transformations and routine Git plumbing belong there unless the task itself
   makes direct foreground execution material.
@@ -278,8 +301,9 @@ the canonical protocol. This applies to every line below.
 - **Intellectual execution is task-fit dependent:** the foreground may do it or
   delegate it to an execution/review model when that produces better evidence,
   isolation or throughput.
-- **Tool availability never grants authority.** These are allocation defaults only;
-  current task scope, role separation and publication rules still govern every act.
+- **Tool availability never expands scope.** These are allocation defaults only;
+  current task scope, role separation and confirmation-bound publication rules still
+  govern every act.
 
 ### Who does what
 

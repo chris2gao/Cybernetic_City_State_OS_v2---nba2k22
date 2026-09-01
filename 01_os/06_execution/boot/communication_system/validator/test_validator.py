@@ -89,6 +89,13 @@ class SafeYamlAndMessageTests(unittest.TestCase):
     def test_valid_message_passes(self):
         self.validator.validate_message(valid_message())
 
+    def test_ordinary_message_needs_no_authority_or_delegation(self):
+        message = valid_message()
+        self.assertNotIn("authorization_ref", message)
+        self.assertNotIn("confirmation_ref", message)
+        self.assertNotIn("recipient_delegation_ref", message)
+        self.validator.validate_message(message)
+
     def test_duplicate_key_is_rejected(self):
         with self.assertRaisesRegex(CommunicationValidationError, "duplicate_yaml_key"):
             parse_safe_yaml("a: 1\na: 2\n")
@@ -262,6 +269,69 @@ class SafeYamlAndMessageTests(unittest.TestCase):
                 self.validator.validate_protected_action_authority(
                     message, task_root=root, current_task_authority=current,
                     Human_authorization={**authorization, "granted": True},
+                )
+
+
+    def test_protected_action_simple_Human_confirmation_passes_without_task_authority(self):
+        message = valid_message()
+        message["requested_action"] = "publish-to-master"
+        message["confirmation_ref"] = "Human/confirm-master.yml"
+        message["required_refs"] = [message["confirmation_ref"]]
+        confirmation = {
+            "schema_version": "citystate.communication.human_confirmation.v1",
+            "task_id": "task-001",
+            "confirmation_id": "HC-001",
+            "confirmed_by": "Human",
+            "disposition": "confirmed",
+            "confirmed_actions": ["publish-to-master"],
+            "revoked": False,
+        }
+        with TemporaryDirectory() as temp:
+            root = Path(temp)
+            target = root / message["confirmation_ref"]
+            target.parent.mkdir(parents=True)
+            target.write_text(yaml.safe_dump(confirmation), encoding="utf-8")
+            self.validator.validate_protected_action_authority(
+                message,
+                task_root=root,
+                Human_authorization=confirmation,
+            )
+
+    def test_protected_action_confirmation_must_cover_exact_action(self):
+        message = valid_message()
+        message["requested_action"] = "publish-to-master"
+        message["confirmation_ref"] = "Human/confirm-other.yml"
+        message["required_refs"] = [message["confirmation_ref"]]
+        confirmation = {
+            "schema_version": "citystate.communication.human_confirmation.v1",
+            "task_id": "task-001",
+            "confirmation_id": "HC-002",
+            "confirmed_by": "Human",
+            "disposition": "confirmed",
+            "confirmed_actions": ["delete-merged-task-branch"],
+            "revoked": False,
+        }
+        with TemporaryDirectory() as temp:
+            root = Path(temp)
+            target = root / message["confirmation_ref"]
+            target.parent.mkdir(parents=True)
+            target.write_text(yaml.safe_dump(confirmation), encoding="utf-8")
+            with self.assertRaisesRegex(
+                CommunicationValidationError, "Human_confirmation_action_not_confirmed"
+            ):
+                self.validator.validate_protected_action_authority(
+                    message, task_root=root, Human_authorization=confirmation,
+                )
+
+    def test_protected_action_without_confirmation_requests_confirmation_not_task_authority(self):
+        message = valid_message()
+        message["requested_action"] = "publish-to-master"
+        with TemporaryDirectory() as temp:
+            with self.assertRaisesRegex(
+                CommunicationValidationError, "protected_action_human_confirmation_required"
+            ):
+                self.validator.validate_protected_action_authority(
+                    message, task_root=Path(temp)
                 )
 
 

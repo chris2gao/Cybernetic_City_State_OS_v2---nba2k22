@@ -1,0 +1,12 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: Bind a material work unit to the canonical contract.
+  implementation_or_review_method: Use the versioned contract and validator over the artifact.
+  supportability_rationale: The requirement is explicit in the canonical contract text.
+  feasibility_rationale: The artifact is YAML inside the current task boundary already.
+  exact_result_or_candidate_ref: commit:example
+  verification_evidence:
+    - validator exit 0
+  residual_risk_or_unproved_limits:
+    - not independently reviewed
+  supportability_rationale: true

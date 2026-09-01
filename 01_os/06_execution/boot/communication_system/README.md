@@ -14,8 +14,11 @@
 - `archive/archive_task.py`：满足前置条件后整体归档任务并删除显式 private runtime；
 - `validator/run_frozen_stage04_tests.py`：只读加载冻结 Stage04 oracle，并把每个案例路由到上述生产实现；不回退到 Stage04 synthetic adapter。
 
-受保护动作必须同时绑定当前任务权限结构和 `required_refs` 中可物理读取的 Human 授权文件。
-发布器先读取并绑定发送方/接收方端点卡，再验证文档与权限引用，最后按“消息→发送方索引”顺序提交；
+普通 formal handoff 不要求 task-authority / delegation。confirmation-bound 受保护动作若当前执行窗口
+需要可重放证据，则使用 `confirmation_ref` 指向 `citystate.communication.human_confirmation.v1`；
+Human 明确答复即可形成该记录，不要求授权码或 nonce。legacy `authorization_ref` / delegation 仅在
+历史消息显式引用时继续严格校验。
+发布器先读取并绑定发送方/接收方端点卡，再验证文档与适用的 confirmation/legacy 引用，最后按“消息→发送方索引”顺序提交；
 任一步失败均不留下可见的悬空消息。归档命令只接受任务目录内可读的完成指针、残留记录和
 private-runtime 策略引用，并在仓库内运行时确认为未跟踪且已忽略后才执行删除。
 

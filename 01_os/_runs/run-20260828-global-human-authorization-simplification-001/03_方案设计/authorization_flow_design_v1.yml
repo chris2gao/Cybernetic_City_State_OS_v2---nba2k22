@@ -1,0 +1,50 @@
+design_id: GLOBAL-HUMAN-AUTH-SIMPLIFICATION-DESIGN-v1
+status: foreground_architecture_selected
+default_rule:
+  ordinary_task_execution: no_separate_Human_authorization_required
+  ordinary_cross_model_dispatch: no_task_authority_or_delegation_required
+  basis:
+    - current_Human_task_input
+    - durable_task_scope_when_material_mutation_occurs
+    - repository_path_and_transport_guards
+confirmation_required_actions:
+  - publish_or_merge_to_master_unless_already_explicitly_preapproved_for_this_task
+  - force_push
+  - rewrite_published_history
+  - delete_master_or_repository
+  - change_repository_visibility_or_credentials
+  - activate_runtime_scheduler_or_coordinator
+  - secrets_credentials_or_key_material_access
+confirmation_mechanism:
+  default: ask_Human_directly
+  sufficient_answer: clear_current_Human_confirmation
+  authorization_code_required: false
+  nonce_required: false
+  task_authority_chain_required: false
+  durable_record: simple_confirmation_record_when_cross_window_or_future_execution_needs_replay
+big_task_rule:
+  before_dispatch:
+    - enumerate_known_obligation_graph
+    - enumerate_known_confirmation_required_actions
+    - ask_Human_once_for_any_uncovered_actions
+    - persist_one_confirmation_record_when_receiver_needs_replayable_evidence
+    - mark_exact_actions_covered
+  during_execution:
+    known_preapproved_action: continue_without_reasking
+    unexpected_new_confirmation_required_action: ask_immediately_then_continue_after_clear_answer
+    unexpected_semantic_choice: return_for_Human_decision_not_authorization
+    technical_failure_or_evidence_failure: report_as_technical_blocker_not_authorization_blocker
+historical_evidence_rule: >-
+  A historical finding may remain technically open, but a field such as blocks_freeze,
+  authorization_required or pending_independent_acceptance cannot by itself create a
+  current Human permission gate. Current canonical policy decides whether Human
+  confirmation is required. Technical acceptance requirements remain separate.
+legacy_compatibility:
+  Human_task_authority_v2: readable_but_not_required_for_new_ordinary_tasks
+  task_authority_delegation_v2: readable_but_not_required_for_new_ordinary_handoffs
+  existing_authorization_ref: accepted_for_legacy_and_protected_action_records
+  plaintext_authorization_code: neither_required_nor_stored
+merge_discipline:
+  current_T2: unaffected_until_it_merges_first
+  this_branch: stays_separate_until_T2_is_on_master
+  final_step: sync_post_T2_master_then_retest_before_master_integration

@@ -1,0 +1,11 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: 关闭多语言误拒与核心字段非文本误通过这两个结构性缺陷。
+  implementation_or_review_method: 以 Unicode 感知的规范化与无分词脚本逐字符计数替换原有 ASCII 归一化。
+  supportability_rationale: 该修正由当前契约文本与验证器代码路径直接支撑，并有确定性回归覆盖。
+  feasibility_rationale: 改动集中在既有校验器与契约文件内部，可在当前依赖下确定性复算。
+  exact_result_or_candidate_ref: correction_round_2_candidate
+  verification_evidence:
+    - selftest 与 drift 均为退出码 0
+  residual_risk_or_unproved_limits:
+    - generic-only 列表仍只枚举英文形式

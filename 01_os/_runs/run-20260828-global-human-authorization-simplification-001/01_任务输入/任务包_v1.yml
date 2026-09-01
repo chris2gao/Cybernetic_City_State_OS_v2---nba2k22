@@ -1,0 +1,48 @@
+task_id: os-v2-global-human-authorization-simplification-001
+objective: >-
+  Replace default per-task Human authorization gates with default executable task
+  authority derived from current Human task input and durable task scope. Preserve
+  explicit Human confirmation only for genuinely action-bound irreversible/high-impact
+  actions. For big tasks, resolve all known Human confirmation needs before dispatch.
+work_branch: dev/os-v2-global-human-authorization-simplification-001
+big_task: false
+exact_base_sha: c149ae626d63d3818c110d5a29972c32d083f350
+allowed_changed_paths:
+  - AGENT_WORKING_DISCIPLINE.md
+  - AGENTS.md
+  - 01_os/开发入口与单窗口任务规范_v1.md
+  - 01_os/03_mechanisms/communication_system/**
+  - 01_os/05_registry/repository_publisher_authority_v1.yml
+  - 01_os/05_registry/repository_guards_v1.yml
+  - 01_os/05_registry/task_discipline_v1.yml
+  - 01_os/06_execution/boot/communication_system/**
+  - 01_os/06_execution/task_discipline/**
+  - 01_os/_runs/run-20260828-global-human-authorization-simplification-001/**
+protected_actions_not_authorized:
+  - merge_to_master_before_T2_integration
+  - force_push
+  - rebase_published_history
+  - squash_or_amend_published_history
+  - rewrite_history
+  - delete_master_or_repository
+  - change_repository_visibility_or_credentials
+  - activate_runtime_scheduler_or_coordinator
+success_criteria:
+  - ordinary_task_execution_requires_no_separate_Human_authorization_artifact
+  - ordinary_cross_model_dispatch_requires_no_task_authority_or_delegation_chain
+  - explicit_Human_confirmation_is_limited_to_a_small_action_bound_set
+  - clear_current_Human_confirmation_immediately_satisfies_a_required_confirmation
+  - big_task_preflight_resolves_all_known_confirmation_needs_before_dispatch
+  - historical_findings_cannot_create_a_current_Human_gate_by_themselves
+  - current_T2_behavior_is_not_modified_by_this_branch_before_T2_merge
+  - communication_system_and_task_discipline_tests_pass
+  - final_integration_waits_until_after_T2_master_integration_and_master_sync
+non_goals:
+  - remove evidence_or_review_requirements
+  - make workflow_progression_automatic
+  - remove branch_scope_or_path_scope_controls
+  - permit secrets_credentials_or_unrequested_external_side_effects
+  - relax core_history_rewrite_prohibition
+review_method: >-
+  Foreground architecture review plus machine regression on the changed validators.
+  Final merge review is intentionally deferred until after T2 is present on master.

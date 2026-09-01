@@ -1,0 +1,75 @@
+schema_version: citystate.minimum_work_unit_output.foreground_adjudication.v1
+task_id: os-v2-global-minimum-work-unit-output-contract-001
+correction_id: MWU-CORRECTION-R1
+adjudication_date: 2026-08-29
+observed_master_sha: 1559346ca2eab776cad110c7d96475f34a33f9b2
+observed_branch_head_before_decision: 6cc0362c298e5c6a766083840392c5107caef259
+canonical_candidate_sha: 04e243dac34dd9e2183acebd3fd9f71919804d01
+executor_evidence_commit: 6cc0362c298e5c6a766083840392c5107caef259
+foreground_disposition: ready_for_fresh_independent_review
+accepted_executor_claims_for_routing_only:
+  - MWU-IR-001_reproduced_failure_shapes_reported_closed
+  - MWU-IR-002_reproduced_failure_shapes_reported_closed
+  - MWU-IR-003_reproduced_failure_shapes_reported_closed
+  - MWU-IR-004_reproduced_failure_shapes_reported_closed
+  - candidate_caused_regression_reported_zero
+independent_acceptance: not_yet_performed
+semantic_adjudication:
+  prior_review_artifact_nonconformance_under_corrected_validator:
+    disposition: nonblocking_historical_compatibility_residual
+    decision: >-
+      Keep independent-review evidence containment unit-local. For an independent-review
+      MWU, primary_evidence_examined is a role-specific field inside the
+      minimum_work_unit_output container, so executor_rationale_assessment.primary_evidence_refs
+      must be a subset of that same unit-local declared examined set. Do not fall back to a
+      document-level field with the same name.
+    rationale: >-
+      Unit-local binding keeps the formal MWU self-contained and prevents unrelated
+      document metadata from satisfying the reviewer attack-of-rationale obligation.
+      The prior Codex review artifact was produced against the pre-correction candidate and
+      remains durable historical evidence; it must not be rewritten merely to satisfy a
+      later stricter validator. Historical readability is distinct from current-candidate
+      compliance.
+    reviewer_instruction: >-
+      Do not classify the prior review artifact's failure under the corrected validator as
+      a blocker by itself. A blocker requires evidence that unit-local containment rejects a
+      legitimate new review shape, creates a material false-pass/false-reject, or conflicts
+      with the canonical Human requirement.
+review_scope:
+  must_independently_retest:
+    - MWU-IR-001
+    - MWU-IR-002
+    - MWU-IR-003
+    - MWU-IR-004
+    - candidate_caused_regression_delta
+    - authority_scope_and_communication_neutrality
+  must_not_treat_as_acceptance:
+    - executor_finding_closure_ledger
+    - executor_selftests
+    - this_foreground_routing_adjudication
+next_action: fresh_relationship_isolated_independent_review
+minimum_work_unit_output:
+  role: decision_architecture
+  work_performed_or_requested: >-
+    Adjudicate the correction-round residual about whether reviewer evidence containment
+    may fall back from the MWU-local evidence set to a document-level field, and route the
+    corrected candidate to fresh independent review.
+  implementation_or_review_method: >-
+    Read the corrected contract, validator, completion pointer and finding-closure ledger,
+    and separated historical evidence readability from compliance of new formal MWU output.
+  supportability_rationale: >-
+    The corrected contract lists primary_evidence_examined as an independent-review field
+    inside the minimum_work_unit_output container and defines containment against the
+    evidence that same review declares examined, so unit-local binding matches the declared
+    abstraction and avoids cross-container evidence leakage.
+  feasibility_rationale: >-
+    The decision requires no canonical modification or protected action; it only fixes the
+    review interpretation for a candidate already published with executable regression
+    evidence on the task branch.
+  task_constraints_and_boundaries:
+    - do_not_modify_canonical_candidate
+    - do_not_modify_master
+    - do_not_rewrite_prior_review_evidence
+  stop_or_return_conditions:
+    - fresh_reviewer_finds_new_material_false_pass_or_false_reject
+    - fresh_reviewer_finds_contract_conflict_or_candidate_caused_regression

@@ -1,0 +1,78 @@
+schema_version: citystate.minimum_work_unit_output.foreground_adjudication.v1
+task_id: os-v2-global-minimum-work-unit-output-contract-001
+adjudication_date: 2026-08-29
+review_commit: c76bc77c032b78c1daabec8aefda21302de862a3
+review_artifact: 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/08_结论/independent_review_codex_v1.yml
+adversarial_evidence: 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/08_结论/independent_review_adversarial_results_codex_v1.yml
+review_verdict: FIX_REQUIRED
+foreground_decision: accepted_FIX_REQUIRED
+architecture_disposition: retain_global_MWU_abstraction_and_correct_machine_enforcement
+blocking_findings_accepted:
+  - MWU-IR-001
+  - MWU-IR-002
+  - MWU-IR-003
+  - MWU-IR-004
+finding_disposition:
+  MWU-IR-001: >-
+    Accepted. Machine validation must require textual rationales and reject a bounded
+    set of structurally vacuous/generic-only forms, while explicitly leaving full
+    natural-language semantic sufficiency to independent review.
+  MWU-IR-002: >-
+    Accepted. Review verdict must be bounded, rationale assessments must be meaningful
+    text, and assessment primary_evidence_refs must structurally bind to the review's
+    primary_evidence_examined set. Semantic adequacy remains reviewer judgement.
+  MWU-IR-003: >-
+    Accepted. Static validation must bind the exact role additions, reviewer-assessment
+    fields, boot load_order, and registry entry path-set expected by mechanism v1.
+  MWU-IR-004: >-
+    Accepted. Formal YAML parsing must reject duplicate mapping keys rather than rely
+    on last-key-wins SafeLoader behavior.
+non_findings_preserved:
+  - trial_fidelity_PASS
+  - abstraction_level_PASS
+  - authority_neutrality_PASS
+  - communication_boundary_PASS
+  - diff_scope_PASS
+correction_round:
+  number: 1
+  classification: first_post_delivery_targeted_correction
+  redesign_required: false
+  master_integration_allowed: false
+  next_owner: new_isolated_Claude_execution_window
+  fresh_independent_review_required_after_correction: true
+protected_state:
+  master_expected_sha_at_adjudication: 1559346ca2eab776cad110c7d96475f34a33f9b2
+  master_must_not_be_modified_by_correction: true
+  force_push: prohibited
+  rebase_amend_squash_history_rewrite: prohibited
+
+minimum_work_unit_output:
+  role: decision_architecture
+  work_performed_or_requested: >-
+    Adjudicate the Codex independent FIX_REQUIRED review and determine whether to
+    merge, redesign, or perform a bounded correction of the Global MWU candidate.
+  implementation_or_review_method: >-
+    Re-read the durable independent review and its 25-case adversarial evidence,
+    separate architectural findings from machine-enforcement gaps, and preserve all
+    semantic dimensions that independently passed while accepting the four reproducible
+    validator/parser blockers.
+  supportability_rationale: >-
+    Each accepted blocker has direct reproduced evidence: nine false accepts across
+    rationale, evidence-linkage and static-drift cases plus duplicate-key acceptance.
+    The same review independently passed trial fidelity, abstraction, authority,
+    communication and diff scope, so a targeted correction is better supported than
+    either merging the current candidate or redesigning the mechanism.
+  feasibility_rationale: >-
+    All blockers are localized to the MWU contract/validator/static binding surface
+    and can be corrected on the existing task branch without touching master, T2,
+    communication, authorization, context management or model routing.
+  task_constraints_and_boundaries:
+    - preserve_the_four_core_MWU_fields_and_three_role_model
+    - do_not_turn_semantic_sufficiency_into_unbounded_NLP_heuristics
+    - do_not_change_authority_scope_or_communication_semantics
+    - correction_only_on_existing_MWU_task_branch
+  stop_or_return_conditions:
+    - new_semantic_choice_not_determined_by_this_adjudication
+    - required_change_outside_MWU_task_boundary
+    - master_or_task_branch_drift
+    - blocking_finding_cannot_be_closed_without_redesign

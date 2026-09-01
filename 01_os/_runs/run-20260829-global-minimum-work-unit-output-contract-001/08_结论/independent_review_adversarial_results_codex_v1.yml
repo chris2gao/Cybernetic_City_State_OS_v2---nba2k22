@@ -1,0 +1,108 @@
+schema_version: citystate.minimum_work_unit_output.independent_adversarial_results.v1
+reviewer_role: independent_review
+candidate_sha: c8f38c67595747f851785218c511ae461c233167
+validator_path: 01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py
+validator_blob_sha: 74caad0c827ffc14bf541c7687a9893573db1803
+execution_date: 2026-08-29
+execution_surface: repository_external_temporary_harness_against_exact_candidate_module
+expected_contract_basis:
+  - 01_os/03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml
+  - current Human independent-review dispatch
+
+summary:
+  total_cases: 25
+  expected_observed_matches: 16
+  false_accept_mismatches: 9
+  harness_exit_code: 1
+  duplicate_key_artifact_exit_code: 0
+
+expected_observed_matches:
+  - {case: positive_architecture, expected_valid: true, observed_valid: true}
+  - {case: positive_execution, expected_valid: true, observed_valid: true}
+  - {case: positive_independent_review, expected_valid: true, observed_valid: true}
+  - {case: negative_missing_core_work_performed_or_requested, expected_valid: false, observed_valid: false}
+  - {case: negative_missing_core_implementation_or_review_method, expected_valid: false, observed_valid: false}
+  - {case: negative_missing_core_supportability_rationale, expected_valid: false, observed_valid: false}
+  - {case: negative_missing_core_feasibility_rationale, expected_valid: false, observed_valid: false}
+  - {case: negative_bare_tests_passed, expected_valid: false, observed_valid: false}
+  - {case: negative_bare_feasible, expected_valid: false, observed_valid: false}
+  - {case: negative_reviewer_missing_primary_evidence_refs, expected_valid: false, observed_valid: false}
+  - {case: negative_reviewer_assessment_not_mapping, expected_valid: false, observed_valid: false}
+  - {case: negative_private_chain_of_thought, expected_valid: false, observed_valid: false}
+  - {case: negative_unknown_role, expected_valid: false, observed_valid: false}
+  - {case: negative_container_not_mapping, expected_valid: false, observed_valid: false}
+  - {case: negative_new_formal_output_missing_mwu, expected_valid: false, observed_valid: false}
+  - {case: legacy_without_declared_mwu, expected_valid: true, observed_valid: true}
+
+false_accept_mismatches:
+  - case: adversarial_generic_supportability_synonym
+    fixture_delta: 'supportability_rationale: All tests passed'
+    expected_valid: false
+    observed_valid: true
+    observed_errors: []
+  - case: adversarial_generic_feasibility_sentence
+    fixture_delta: 'feasibility_rationale: This work is feasible'
+    expected_valid: false
+    observed_valid: true
+    observed_errors: []
+  - case: adversarial_non_text_rationales
+    fixture_delta: 'supportability_rationale: true; feasibility_rationale: 1'
+    expected_valid: false
+    observed_valid: true
+    observed_errors: []
+  - case: adversarial_unbounded_verdict
+    fixture_delta: 'verdict: BANANA'
+    expected_valid: false
+    observed_valid: true
+    observed_errors: []
+  - case: adversarial_disjoint_evidence_and_vague_assessment
+    fixture_delta: >-
+      primary_evidence_examined=[evidence:A], assessment primary_evidence_refs=[evidence:B],
+      supportability_assessment=supported, feasibility_assessment=feasible
+    expected_valid: false
+    observed_valid: true
+    observed_errors: []
+  - case: adversarial_static_role_additions_drift
+    fixture_delta: execution required_additions reduced to exact_result_or_candidate_ref only
+    expected_valid: false
+    observed_valid: true
+    observed_static_errors: []
+  - case: adversarial_static_assessment_fields_drift
+    fixture_delta: independent-review executor_rationale_assessment_required_fields erased
+    expected_valid: false
+    observed_valid: true
+    observed_static_errors: []
+  - case: adversarial_static_boot_load_order_erased
+    fixture_delta: boot load_order set to empty list
+    expected_valid: false
+    observed_valid: true
+    observed_static_errors: []
+  - case: adversarial_static_registry_entries_erased
+    fixture_delta: registry entries set to empty list
+    expected_valid: false
+    observed_valid: true
+    observed_static_errors: []
+
+parser_adversarial:
+  case: duplicate_supportability_rationale_keys
+  fixture_shape: >-
+    A valid execution MWU with two supportability_rationale keys; the second value
+    is boolean true.
+  command: python validate_minimum_work_unit_output.py artifact duplicate-key-fixture.yml --require-mwu
+  expected_exit_code: 1
+  observed_exit_code: 0
+  observed_result: validation_passed mode=artifact
+  consequence: yaml.safe_load silently applied last-key-wins parsing
+
+reproduction_semantics:
+  validate_document_cases: >-
+    Import the exact candidate validator module, construct each mapping above, call
+    validate_document(document, require_mwu=True), and compare emptiness of the
+    returned error list to expected_valid. The legacy case uses require_mwu=False.
+  static_drift_cases: >-
+    Copy only the seven paths consumed by validate_static into an isolated temporary
+    root, apply the named single mutation, call validate_static(root), and require a
+    nonempty error list. All four mutations incorrectly returned an empty list.
+  parser_case: >-
+    Invoke the exact candidate artifact CLI against the duplicate-key YAML fixture
+    with --require-mwu and observe the physical exit code and output.

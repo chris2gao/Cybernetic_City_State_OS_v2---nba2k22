@@ -1,0 +1,273 @@
+schema_version: citystate.minimum_work_unit_output.independent_review.v1
+
+review:
+  reviewer_role: independent_review
+  review_date: 2026-08-29
+  transport: local_git
+  base_sha: 1559346ca2eab776cad110c7d96475f34a33f9b2
+  observed_master_sha: 1559346ca2eab776cad110c7d96475f34a33f9b2
+  master_drift_from_dispatch: false
+  canonical_candidate_sha: c8f38c67595747f851785218c511ae461c233167
+  observed_task_branch_head: cae7b49cb465c6062c3f5087260a2013c1132329
+  verdict: FIX_REQUIRED
+  candidate_branch_modified_by_review: false
+  canonical_candidate_modified_by_review: false
+
+primary_evidence_examined:
+  - 1559346ca2eab776cad110c7d96475f34a33f9b2..c8f38c67595747f851785218c511ae461c233167
+  - c8f38c67595747f851785218c511ae461c233167:01_os/03_mechanisms/minimum_work_unit_output/README.md
+  - c8f38c67595747f851785218c511ae461c233167:01_os/03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml
+  - c8f38c67595747f851785218c511ae461c233167:01_os/02_boot/minimum_work_unit_output/启动清单_v1.yml
+  - c8f38c67595747f851785218c511ae461c233167:01_os/05_registry/minimum_work_unit_output_v1.yml
+  - c8f38c67595747f851785218c511ae461c233167:01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py
+  - a71db910e9f0e17963e73aa8e6bd5d05f5aa7574:01_os/_runs/run-20260828-t2-stage04-structural-provenance-upstream-001/04_机制试验/minimum_work_unit_output_contract_v1.yml
+  - 01_os/_runs/run-20260828-t2-completion-001/07_测试执行/p2_2_execution_evidence_v1.yml
+  - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/01_任务输入/任务包_v1.yml
+  - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/03_方案设计/minimum_canonical_integration_design_v1.yml
+  - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/07_测试执行/targeted_validation_v1.yml
+  - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/08_结论/completion_pointer_v1.yml
+  - 1559346ca2eab776cad110c7d96475f34a33f9b2:01_os/05_registry/repository_publisher_authority_v1.yml
+  - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/08_结论/independent_review_adversarial_results_codex_v1.yml
+
+semantic_review:
+  trial_fidelity:
+    result: PASS
+    notes: >-
+      The candidate preserves the four-field core, all three material-work-unit
+      roles, their role-specific additions, the distinction between measurement
+      and inference, and the executor-rationale-as-claim invariant. Task-local
+      carrier and experiment metadata were correctly not promoted.
+  abstraction_level:
+    result: PASS
+    notes: >-
+      The mechanism is a thin cross-workflow output obligation. It does not create
+      a second workflow, context selector, model router, communication envelope, or
+      per-tool-call log.
+  authority_neutrality:
+    result: PASS
+    notes: >-
+      Contract and boot both declare authority_effect none; the contract declares
+      scope_effect none and preserves current Human confirmation rules. The exact
+      canonical diff does not touch authority or publication policy files.
+  communication_boundary:
+    result: PASS
+    notes: >-
+      The contract leaves envelope, delivery, acknowledgement, progression, and
+      exact-pointer transport with communication_system and only allows MWU output
+      to be carried or referenced.
+  reviewer_attack_of_rationale:
+    result: FAIL
+    notes: >-
+      Contract prose states the invariant, but the validator permits disjoint
+      evidence sets and one-word assessments, so formal compliance does not prove
+      that the reviewer examined or attacked the executor rationale.
+  diff_scope:
+    result: PASS
+    changed_paths: 11
+    out_of_scope_paths: 0
+    notes: >-
+      The canonical diff changes only MWU mechanism, boot, registry, validator,
+      navigation, and this task run. The later evidence commit does not change the
+      canonical mechanism.
+
+tests_reproduced:
+  - command: python 01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py selftest
+    tree: c8f38c67595747f851785218c511ae461c233167
+    exit_code: 0
+    result: validation_passed mode=selftest cases=8
+  - command: python 01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py static --root .
+    tree: c8f38c67595747f851785218c511ae461c233167
+    exit_code: 0
+    result: validation_passed mode=static selftests=8
+  - command: python independent-review-adversarial-harness.py candidate-validator
+    tree: c8f38c67595747f851785218c511ae461c233167
+    execution_surface: repository_external_temporary_harness
+    exit_code: 1
+    result: 25 cases; 9 material false-accept mismatches
+    evidence_ref: independent_review_adversarial_results_codex_v1.yml
+    accepted_but_expected_invalid:
+      - adversarial_generic_supportability_synonym
+      - adversarial_generic_feasibility_sentence
+      - adversarial_non_text_rationales
+      - adversarial_unbounded_verdict
+      - adversarial_disjoint_evidence_and_vague_assessment
+      - adversarial_static_role_additions_drift
+      - adversarial_static_assessment_fields_drift
+      - adversarial_static_boot_load_order_erased
+      - adversarial_static_registry_entries_erased
+  - command: python validate_minimum_work_unit_output.py artifact duplicate-key-fixture.yml --require-mwu
+    tree: c8f38c67595747f851785218c511ae461c233167
+    execution_surface: repository_external_temporary_fixture
+    exit_code: 0
+    result: duplicate supportability_rationale keys accepted with last-key-wins parsing
+  - command: python validate_minimum_work_unit_output.py artifact targeted_validation_v1.yml --require-mwu
+    tree: c8f38c67595747f851785218c511ae461c233167
+    exit_code: 0
+    result: executor MWU artifact accepted
+  - command: python 01_os/06_execution/task_discipline/quiet_verify/quiet_verify.py --repo-root . --tail 12 --max-chars 3000
+    tree: c8f38c67595747f851785218c511ae461c233167
+    exit_code: 1
+    result: workflow_static=22; context_structure=0; no_canonical_live_state=0; stage_deliberation_v2_static=13
+  - command: python 01_os/06_execution/task_discipline/quiet_verify/quiet_verify.py --repo-root . --tail 12 --max-chars 3000
+    tree: 1559346ca2eab776cad110c7d96475f34a33f9b2
+    exit_code: 1
+    result: same workflow_static=22 and stage_deliberation_v2_static=13 baseline failures
+  - command: git diff --check 1559346ca2eab776cad110c7d96475f34a33f9b2..c8f38c67595747f851785218c511ae461c233167
+    exit_code: 0
+    result: no whitespace errors
+
+candidate_caused_regression_assessment:
+  result: no_candidate_caused_failure_observed_in_quiet_verify
+  notes: >-
+    The exact base and exact candidate produced the same two nonzero checks and the
+    same two passing checks. Those full-repository failures are baseline state, not
+    evidence against this candidate; they also prevent claiming a globally green
+    repository verification.
+
+findings:
+  - id: MWU-IR-001
+    severity: blocking
+    claim: Rationale type and semantic-minimum checks have material false passes.
+    evidence: >-
+      validate_minimum_work_unit_output.py:38-46 treats any nonempty non-container
+      scalar as present and only rejects a small exact normalized phrase set.
+      The candidate accepted boolean/integer rationales, "All tests passed", and
+      "This work is feasible" in the independent adversarial run.
+    consequence: >-
+      A new formal output can be declared MWU-compliant without either required
+      task-specific justification, contradicting field_semantics and quality_rules.
+  - id: MWU-IR-002
+    severity: blocking
+    claim: Independent-review rationale attack is not structurally bound to examined primary evidence.
+    evidence: >-
+      validate_minimum_work_unit_output.py:86-95 checks mapping keys and nonemptiness
+      only. It accepted primary_evidence_examined=[evidence:A], assessment refs=[evidence:B],
+      one-word supported/feasible assessments, and an unbounded BANANA verdict.
+    consequence: >-
+      The load-bearing implementation-choice-to-rationale-to-primary-evidence-to-
+      independent-attack invariant can pass without an actual evidence linkage or
+      meaningful independent assessment.
+  - id: MWU-IR-003
+    severity: blocking
+    claim: Static validation does not bind key contract, boot, and registry structures to implementation constants.
+    evidence: >-
+      validate_minimum_work_unit_output.py:169-203 checks the core field list and
+      role-name set but not role additions, assessment field list, boot load_order,
+      or registry entries. Four independently mutated shadow bundles erased or
+      changed those structures and still returned no static errors.
+    consequence: >-
+      Future schema/validator, boot, or registry drift can remain silent while the
+      advertised static gate reports success.
+  - id: MWU-IR-004
+    severity: blocking
+    claim: Artifact YAML parsing accepts duplicate mapping keys.
+    evidence: >-
+      _load_yaml uses yaml.safe_load without a unique-key loader. A fixture with two
+      supportability_rationale keys, the second boolean true, returned
+      validation_passed with exit code 0.
+    consequence: >-
+      Ambiguous last-key-wins artifacts can cross the formal compliance gate and
+      different parsers may observe different rationale evidence.
+
+executor_rationale_assessment:
+  supportability_assessment: >-
+    Partially supported. Exact comparison with the T2 trial proves that the four
+    fields and role-specific obligations were preserved, and the canonical diff
+    proves excluded mechanisms were not modified. The single real T2 execution
+    sample shows usability in one task. It does not prove the global validator's
+    rationale-quality or reviewer-attack gates are adequate; independent tests
+    directly contradict that wider implication.
+  feasibility_assessment: >-
+    Supported for implementation mechanics but not for acceptance readiness. The
+    YAML/Python surface runs locally with existing dependencies, official selftest
+    and static commands exit 0, all changed paths are in scope, and no protected
+    master action is needed for the task branch. Safe global enforcement remains
+    infeasible on this candidate until the blocking false-pass and drift gaps are
+    corrected and independently retested.
+  primary_evidence_refs:
+    - a71db910e9f0e17963e73aa8e6bd5d05f5aa7574:01_os/_runs/run-20260828-t2-stage04-structural-provenance-upstream-001/04_机制试验/minimum_work_unit_output_contract_v1.yml
+    - c8f38c67595747f851785218c511ae461c233167:01_os/03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml
+    - c8f38c67595747f851785218c511ae461c233167:01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py
+    - 1559346ca2eab776cad110c7d96475f34a33f9b2..c8f38c67595747f851785218c511ae461c233167
+    - 01_os/_runs/run-20260828-t2-completion-001/07_测试执行/p2_2_execution_evidence_v1.yml
+    - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/07_测试执行/targeted_validation_v1.yml
+  unsupported_or_inferred_claims:
+    - Eight built-in cases are sufficient to establish validator quality.
+    - Exact-phrase vague-rationale rejection enforces the task-specific rationale semantics.
+    - Presence of primary_evidence_refs proves the reviewer attacked the executor rationale against examined evidence.
+    - Current static validation prevents role-addition, assessment-field, boot-load-order, or registry-entry drift.
+
+authority_and_scope_regression:
+  result: PASS
+  notes: >-
+    No authority, communication, context-management, model-routing, T2 implementation,
+    or automatic-progression path appears in the exact canonical diff. Candidate
+    declarations match the current master policy that ordinary task execution and
+    cross-model work require no extra authorization/delegation chain while protected
+    actions retain direct Human confirmation rules.
+
+residual_risk:
+  - Full quiet verification is not green on either base or candidate; no candidate-caused delta was observed.
+  - Natural-language semantic sufficiency cannot be completely machine-proved, so validator checks must be structural and independent review remains load-bearing.
+  - No Linux execution was performed in this review.
+
+next_action: >-
+  Keep the candidate out of master. Correct the blocking validator/parser and
+  schema-binding gaps on the task branch, publish a new exact canonical candidate
+  SHA with focused regressions for every finding, then request a fresh isolated
+  independent review. Do not amend or rewrite c8f38c67595747f851785218c511ae461c233167.
+
+minimum_work_unit_output:
+  role: independent_review
+  work_performed_or_requested: >-
+    Independently reconstruct the Global Minimum Work Unit Output candidate from
+    exact primary sources, test its semantic and machine-enforcement boundaries,
+    and decide whether the exact canonical candidate may enter master.
+  implementation_or_review_method: >-
+    Compared the task-local T2 trial to the exact canonical diff, inspected contract,
+    boot, registry, navigation, validator and run evidence, reproduced official
+    commands on detached base/candidate trees, and ran independent positive,
+    negative, semantic-adversarial, parser and static-drift cases before assigning
+    the verdict.
+  supportability_rationale: >-
+    FIX_REQUIRED is supported by nine reproducible false accepts, an independently
+    reproduced duplicate-key parser acceptance, and direct code paths showing the
+    missing type, evidence-linkage and static-binding checks. Passing official tests
+    are reported but do not cover those propositions.
+  feasibility_rationale: >-
+    The review was feasible from immutable Git commits and isolated local worktrees;
+    all required candidate and run evidence was readable and every cited command was
+    executed in this session. Linux behavior and a globally green repository check
+    remain unproved and are named as limits.
+  verdict: FIX_REQUIRED
+  primary_evidence_examined:
+    - exact base-to-candidate diff
+    - canonical MWU contract, boot, registry, validator, and navigation
+    - task-local T2 trial and real execution sample
+    - executor targeted validation and completion pointer
+    - independent 25-case adversarial matrix and duplicate-key artifact result
+    - exact base/candidate quiet-verification comparison
+  findings_and_residual_risk:
+    - MWU-IR-001 blocking rationale false passes
+    - MWU-IR-002 blocking missing reviewer evidence linkage
+    - MWU-IR-003 blocking static drift blindness
+    - MWU-IR-004 blocking duplicate-key YAML acceptance
+    - baseline full-repository verification remains nonzero on two pre-existing checks
+    - Linux behavior not measured
+  executor_rationale_assessment:
+    supportability_assessment: >-
+      Trial fidelity and diff isolation are supported; adequacy of rationale-quality
+      and reviewer-attack enforcement is not supported and is contradicted by the
+      independent adversarial evidence.
+    feasibility_assessment: >-
+      Mechanical implementation and local execution are feasible, but safe global
+      acceptance is not feasible until the blocking validator gaps are corrected.
+    primary_evidence_refs:
+      - a71db910e9f0e17963e73aa8e6bd5d05f5aa7574:01_os/_runs/run-20260828-t2-stage04-structural-provenance-upstream-001/04_机制试验/minimum_work_unit_output_contract_v1.yml
+      - c8f38c67595747f851785218c511ae461c233167:01_os/03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml
+      - c8f38c67595747f851785218c511ae461c233167:01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py
+      - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/07_测试执行/targeted_validation_v1.yml
+    unsupported_or_inferred_claims:
+      - Official 8-case coverage is sufficient for semantic acceptance.
+      - Nonempty assessment fields prove a primary-evidence-based independent attack.
+      - Current static validation detects all material canonical wiring drift.

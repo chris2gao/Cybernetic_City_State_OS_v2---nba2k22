@@ -1,0 +1,100 @@
+schema_version: citystate.minimum_work_unit_output.adversarial_regression.v1
+task_id: os-v2-global-minimum-work-unit-output-contract-001
+correction_id: MWU-CORRECTION-R1
+candidate_sha: 04e243dac34dd9e2183acebd3fd9f71919804d01
+prior_candidate_sha: c8f38c67595747f851785218c511ae461c233167
+source_matrix: 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/08_结论/independent_review_adversarial_results_codex_v1.yml
+execution_date: 2026-08-29
+
+coverage_relation_to_original_matrix:
+  original_total_cases: 25
+  original_expected_observed_matches: 16
+  original_false_accept_mismatches: 9
+  relation: strict_superset
+  in_repo_permanent_cases: 47
+  document_cases_in_selftest: 32
+  non_document_selftest_cases: 6
+  drift_cases: 9
+  external_harness_required: false
+  note: >-
+    The original review had to run its matrix from a repository-external temporary
+    harness. Every one of those cases is now a permanent in-repository case that
+    selftest or drift runs unconditionally, so the same attack cannot silently
+    regress later. The four static-drift cases run against isolated copies of the
+    consumed paths and never write to the repository.
+
+prior_false_accept_closure_summary:
+  closed_count: 9
+  still_open_count: 0
+  note: >-
+    adversarial_disjoint_evidence_and_vague_assessment mixes two independent defects.
+    Its first reported error is the vague assessment, so a dedicated
+    adversarial_disjoint_evidence_only case isolates the evidence-containment defect
+    on its own and reports assessment_evidence_ref_not_examined.
+
+prior_false_accepts_now_closed:
+  - {case: adversarial_generic_supportability_synonym, previously: accepted, now: rejected, error: "vague_rationale_alone:supportability_rationale"}
+  - {case: adversarial_generic_feasibility_sentence, previously: accepted, now: rejected, error: "vague_rationale_alone:feasibility_rationale"}
+  - {case: adversarial_non_text_rationales, previously: accepted, now: rejected, error: "rationale_must_be_text:supportability_rationale"}
+  - {case: adversarial_unbounded_verdict, previously: accepted, now: rejected, error: "verdict_must_be_one_of:PASS,FIX_REQUIRED,REJECT"}
+  - {case: adversarial_disjoint_evidence_and_vague_assessment, previously: accepted, now: rejected, error: "vague_rationale_alone:supportability_assessment"}
+  - {case: adversarial_static_role_additions_drift, previously: accepted, now: rejected, error: "contract_role_additions_drift:execution"}
+  - {case: adversarial_static_assessment_fields_drift, previously: accepted, now: rejected, error: "contract_assessment_fields_drift"}
+  - {case: adversarial_static_boot_load_order_erased, previously: accepted, now: rejected, error: "boot_load_order_drift"}
+  - {case: adversarial_static_registry_entries_erased, previously: accepted, now: rejected, error: "registry_entry_path_set_drift"}
+
+parser_adversarial_now_closed:
+  - {case: duplicate_supportability_rationale_keys, previously_exit_code: 0, now_exit_code: 1, now_error: "duplicate_mapping_key:supportability_rationale", traceback_emitted: false}
+  - {case: duplicate_nested_assessment_keys, previously: not_covered, now_exit_code: 1, now_error: "duplicate_mapping_key:supportability_assessment", traceback_emitted: false}
+  - {case: unique_key_loader_does_not_reject_ordinary_documents, result: pass, note: guards against over-rejecting valid single-key mappings}
+
+commands:
+  - {command: "validator selftest", exit_code: 0, result: "validation_passed mode=selftest cases=38"}
+  - {command: "validator static --root .", exit_code: 0, result: "validation_passed mode=static selftests=38"}
+  - {command: "validator drift --root .", exit_code: 0, result: "validation_passed mode=drift cases=9"}
+
+case_matrix_observed:
+  document_cases:
+    - {case: positive_architecture, expected_valid: true, observed_valid: true, status: MATCH, first_error: ""}
+    - {case: positive_execution, expected_valid: true, observed_valid: true, status: MATCH, first_error: ""}
+    - {case: positive_independent_review, expected_valid: true, observed_valid: true, status: MATCH, first_error: ""}
+    - {case: positive_concise_task_specific_rationale, expected_valid: true, observed_valid: true, status: MATCH, first_error: ""}
+    - {case: negative_missing_core_work_performed_or_requested, expected_valid: false, observed_valid: false, status: MATCH, first_error: "missing_or_empty:work_performed_or_requested"}
+    - {case: negative_missing_core_implementation_or_review_method, expected_valid: false, observed_valid: false, status: MATCH, first_error: "missing_or_empty:implementation_or_review_method"}
+    - {case: negative_missing_core_supportability_rationale, expected_valid: false, observed_valid: false, status: MATCH, first_error: "missing_or_empty:supportability_rationale"}
+    - {case: negative_missing_core_feasibility_rationale, expected_valid: false, observed_valid: false, status: MATCH, first_error: "missing_or_empty:feasibility_rationale"}
+    - {case: negative_bare_tests_passed, expected_valid: false, observed_valid: false, status: MATCH, first_error: "vague_rationale_alone:supportability_rationale"}
+    - {case: negative_bare_feasible, expected_valid: false, observed_valid: false, status: MATCH, first_error: "vague_rationale_alone:feasibility_rationale"}
+    - {case: negative_unknown_role, expected_valid: false, observed_valid: false, status: MATCH, first_error: "role_must_be_one_of:decision_architecture,execution,independent_review"}
+    - {case: negative_container_not_mapping, expected_valid: false, observed_valid: false, status: MATCH, first_error: "minimum_work_unit_output_must_be_mapping"}
+    - {case: negative_private_chain_of_thought, expected_valid: false, observed_valid: false, status: MATCH, first_error: "private_reasoning_keys_prohibited:chain_of_thought"}
+    - {case: negative_reviewer_assessment_not_mapping, expected_valid: false, observed_valid: false, status: MATCH, first_error: "executor_rationale_assessment_must_be_mapping"}
+    - {case: negative_reviewer_missing_primary_evidence_refs, expected_valid: false, observed_valid: false, status: MATCH, first_error: "empty_executor_rationale_assessment_field:primary_evidence_refs"}
+    - {case: adversarial_generic_supportability_synonym, expected_valid: false, observed_valid: false, status: MATCH, first_error: "vague_rationale_alone:supportability_rationale"}
+    - {case: adversarial_generic_feasibility_sentence, expected_valid: false, observed_valid: false, status: MATCH, first_error: "vague_rationale_alone:feasibility_rationale"}
+    - {case: adversarial_non_text_rationales, expected_valid: false, observed_valid: false, status: MATCH, first_error: "rationale_must_be_text:supportability_rationale"}
+    - {case: adversarial_list_rationale, expected_valid: false, observed_valid: false, status: MATCH, first_error: "rationale_must_be_text:supportability_rationale"}
+    - {case: adversarial_mapping_rationale, expected_valid: false, observed_valid: false, status: MATCH, first_error: "rationale_must_be_text:feasibility_rationale"}
+    - {case: adversarial_single_content_token_rationale, expected_valid: false, observed_valid: false, status: MATCH, first_error: "rationale_below_content_floor:supportability_rationale"}
+    - {case: adversarial_unbounded_verdict, expected_valid: false, observed_valid: false, status: MATCH, first_error: "verdict_must_be_one_of:PASS,FIX_REQUIRED,REJECT"}
+    - {case: adversarial_lowercase_verdict, expected_valid: false, observed_valid: false, status: MATCH, first_error: "verdict_must_be_one_of:PASS,FIX_REQUIRED,REJECT"}
+    - {case: positive_fix_required_verdict, expected_valid: true, observed_valid: true, status: MATCH, first_error: ""}
+    - {case: positive_reject_verdict, expected_valid: true, observed_valid: true, status: MATCH, first_error: ""}
+    - {case: adversarial_disjoint_evidence_and_vague_assessment, expected_valid: false, observed_valid: false, status: MATCH, first_error: "vague_rationale_alone:supportability_assessment"}
+    - {case: adversarial_disjoint_evidence_only, expected_valid: false, observed_valid: false, status: MATCH, first_error: "assessment_evidence_ref_not_examined:evidence:B"}
+    - {case: adversarial_one_word_supportability_assessment, expected_valid: false, observed_valid: false, status: MATCH, first_error: "vague_rationale_alone:supportability_assessment"}
+    - {case: adversarial_one_word_feasibility_assessment, expected_valid: false, observed_valid: false, status: MATCH, first_error: "vague_rationale_alone:feasibility_assessment"}
+    - {case: adversarial_non_text_assessment, expected_valid: false, observed_valid: false, status: MATCH, first_error: "rationale_must_be_text:supportability_assessment"}
+    - {case: adversarial_refs_not_list, expected_valid: false, observed_valid: false, status: MATCH, first_error: "primary_evidence_refs_must_be_list"}
+    - {case: adversarial_partially_disjoint_refs, expected_valid: false, observed_valid: false, status: MATCH, first_error: "assessment_evidence_ref_not_examined:evidence:Z"}
+  document_case_count: 32
+  drift_mutations:
+    - {case: adversarial_static_role_additions_drift, expected_static_error: "contract_role_additions_drift:execution"}
+    - {case: adversarial_static_assessment_fields_drift, expected_static_error: "contract_assessment_fields_drift"}
+    - {case: adversarial_static_boot_load_order_erased, expected_static_error: "boot_load_order_drift"}
+    - {case: adversarial_static_registry_entries_erased, expected_static_error: "registry_entry_path_set_drift"}
+    - {case: adversarial_static_verdict_enum_drift, expected_static_error: "contract_verdict_enum_drift"}
+    - {case: adversarial_static_content_token_floor_drift, expected_static_error: "contract_minimum_content_tokens_drift"}
+    - {case: adversarial_static_generic_forms_erased, expected_static_error: "contract_generic_only_forms_drift"}
+    - {case: adversarial_static_boot_load_order_reordered, expected_static_error: "boot_load_order_drift"}
+  drift_mutation_count: 8

@@ -1,0 +1,128 @@
+schema_version: citystate.minimum_work_unit_output.correction_dispatch.v1
+task_id: os-v2-global-minimum-work-unit-output-contract-001
+correction_id: MWU-CORRECTION-R1
+status: ready_for_execution
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+branch: dev/os-v2-global-minimum-work-unit-output-contract-001
+expected_branch_head_at_dispatch: 7cb97c509c5b02fa50b9d3d4144f5f1209856b7d
+expected_master_sha: 1559346ca2eab776cad110c7d96475f34a33f9b2
+source_candidate_sha: c8f38c67595747f851785218c511ae461c233167
+review_commit: c76bc77c032b78c1daabec8aefda21302de862a3
+objective: >-
+  Close MWU-IR-001 through MWU-IR-004 with the smallest deterministic correction
+  while preserving the approved Global MWU abstraction, four-field core, role model,
+  authority neutrality, communication boundary, and legacy readability.
+allowed_changed_paths:
+  - 01_os/03_mechanisms/minimum_work_unit_output/**
+  - 01_os/02_boot/minimum_work_unit_output/**
+  - 01_os/05_registry/minimum_work_unit_output_v1.yml
+  - 01_os/06_execution/boot/minimum_work_unit_output/**
+  - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/**
+prohibitions:
+  - modify_master
+  - modify_T2
+  - modify_authorization_semantics
+  - modify_communication_semantics
+  - modify_context_management_or_model_routing
+  - add_automatic_workflow_progression
+  - force_push
+  - rebase
+  - amend_or_squash_published_history
+  - require_private_chain_of_thought
+semantic_requirements:
+  preserve:
+    - four_core_fields
+    - decision_architecture_execution_independent_review_roles
+    - executor_rationale_is_claim_not_primary_evidence
+    - legacy_artifacts_without_declared_MWU_remain_readable
+    - authority_effect_none
+    - scope_effect_none
+  machine_enforcement_boundary: >-
+    Enforce only reliable structural minima. Do not claim that a validator can prove
+    full natural-language supportability or feasibility. Semantic sufficiency remains
+    load-bearing independent-review judgement.
+corrections:
+  MWU-IR-001:
+    requirements:
+      - supportability_rationale_and_feasibility_rationale_must_be_nonempty_strings
+      - reject_boolean_numeric_container_or_other_non_text_rationales
+      - reject_generic_only_forms_including_All_tests_passed_and_This_work_is_feasible
+      - preserve_concise_valid_task_specific_rationales
+      - document_that_machine_checks_are_a_structural_floor_not_semantic_proof
+  MWU-IR-002:
+    requirements:
+      - independent_review_verdict_is_enum_PASS_FIX_REQUIRED_REJECT
+      - supportability_assessment_and_feasibility_assessment_are_nonempty_nonvacuous_text
+      - executor_rationale_assessment_primary_evidence_refs_is_nonempty
+      - every_assessment_primary_evidence_ref_must_be_present_in_primary_evidence_examined
+      - disjoint_evidence_sets_must_fail
+      - document_that_structural_linkage_does_not_replace_semantic_review
+  MWU-IR-003:
+    requirements:
+      - static_validator_binds_each_role_required_additions_exactly_to_v1_constants
+      - static_validator_binds_independent_review_assessment_required_fields_exactly
+      - static_validator_binds_boot_load_order_expected_paths_and_order
+      - static_validator_binds_registry_expected_entry_paths
+      - mutations_erasing_or_reducing_these_structures_must_fail_static_validation
+  MWU-IR-004:
+    requirements:
+      - formal_YAML_loader_rejects_duplicate_mapping_keys_at_any_mapping_level
+      - artifact_CLI_returns_nonzero_clean_validation_failure_for_duplicate_keys
+      - duplicate_supportability_rationale_fixture_must_fail
+required_regression:
+  - reproduce_official_positive_architecture_execution_review_cases
+  - reproduce_all_original_negative_cases
+  - reproduce_Codex_25_case_adversarial_matrix_or_equivalent_superset
+  - explicitly_close_all_9_prior_false_accept_mismatches
+  - duplicate_key_fixture_must_fail
+  - static_role_additions_mutation_must_fail
+  - static_assessment_fields_mutation_must_fail
+  - static_boot_load_order_erasure_must_fail
+  - static_registry_entries_erasure_must_fail
+  - git_diff_check
+  - compare_candidate_quiet_verify_to_same_master_baseline_and_report_only_delta
+completion_requirements:
+  - publish_new_exact_candidate_SHA_without_rewriting_old_candidate
+  - record_changed_paths_and_out_of_scope_count
+  - record_commands_exit_codes_and_concise_results
+  - record_each_MWU_IR_finding_as_closed_or_still_open
+  - produce_new_completion_pointer_status_ready_for_independent_review_only_if_all_four_close
+  - fresh_independent_review_by_a_new_isolated_endpoint_after_execution
+review_sources:
+  - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/08_结论/independent_review_codex_v1.yml
+  - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/08_结论/independent_review_adversarial_results_codex_v1.yml
+  - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/08_结论/foreground_adjudication_after_codex_review_v1.yml
+stop_conditions:
+  - master_or_branch_head_drift_from_expected_preflight
+  - correction_requires_semantic_redesign_beyond_requirements_above
+  - correction_requires_path_outside_allowed_changed_paths
+  - evidence_cannot_close_any_blocking_finding
+  - new_candidate_causes_regression_not_present_on_same_master_baseline
+
+minimum_work_unit_output:
+  role: decision_architecture
+  work_performed_or_requested: >-
+    Dispatch the first bounded correction round for the Global MWU candidate after
+    independent FIX_REQUIRED review.
+  implementation_or_review_method: >-
+    Convert each reproduced blocking finding into explicit machine-testable closure
+    requirements while keeping natural-language semantic sufficiency with independent
+    review rather than expanding validator heuristics without bound.
+  supportability_rationale: >-
+    The dispatch is directly derived from the independent review and adversarial matrix:
+    all four blockers have exact failure shapes and localized correction surfaces, while
+    the architecture, authority, communication and diff-scope dimensions already passed.
+  feasibility_rationale: >-
+    The work is confined to the existing MWU mechanism/boot/registry/validator and its
+    run evidence on an ordinary task branch; no protected master action or unrelated
+    mechanism change is required.
+  task_constraints_and_boundaries:
+    - existing_MWU_task_branch_only
+    - smallest_correction_that_closes_four_findings
+    - no_master_integration_in_execution_window
+    - no_semantic_scope_expansion
+  stop_or_return_conditions:
+    - branch_or_master_drift
+    - new_semantic_choice
+    - out_of_scope_write_needed
+    - blocker_requires_redesign

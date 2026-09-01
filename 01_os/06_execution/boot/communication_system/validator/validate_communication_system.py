@@ -37,7 +37,7 @@ MESSAGE_REQUIRED = {
 }
 MESSAGE_OPTIONAL = {
     "requested_action", "in_reply_to", "supersedes", "references",
-    "authorization_ref", "recipient_delegation_ref", "facts", "decisions", "assumptions", "unknowns",
+    "confirmation_ref", "authorization_ref", "recipient_delegation_ref", "facts", "decisions", "assumptions", "unknowns",
     "constraints", "risks",
 }
 MESSAGE_TYPES = {"request", "response", "result", "decision_required", "correction", "blocked"}
@@ -197,8 +197,11 @@ class CommunicationValidator:
             raise CommunicationValidationError("self_authorization_prohibited")
         if message.get("identity_claim_grants_authority") is True:
             raise CommunicationValidationError("identity_claim_cannot_authorize")
-        authorization_ref = message.get("authorization_ref")
         refs = message.get("required_refs") or []
+        confirmation_ref = message.get("confirmation_ref")
+        if confirmation_ref and confirmation_ref not in refs:
+            raise CommunicationValidationError("confirmation_ref_not_in_required_refs")
+        authorization_ref = message.get("authorization_ref")
         if authorization_ref and authorization_ref not in refs:
             raise CommunicationValidationError("authorization_ref_not_in_required_refs")
 
@@ -454,18 +457,62 @@ class CommunicationValidator:
             authority_loader=authority_loader,
         )
 
+    def _validate_Human_confirmation_v1(
+        self, physical: dict[str, Any], *, task_id: str, requested_action: str,
+    ) -> None:
+        actions = physical.get("confirmed_actions")
+        confirmation_id = physical.get("confirmation_id")
+        if (
+            physical.get("schema_version") != "citystate.communication.human_confirmation.v1"
+            or physical.get("task_id") != task_id
+            or not isinstance(confirmation_id, str) or not SAFE_ID.fullmatch(confirmation_id)
+            or physical.get("confirmed_by") != "Human"
+            or physical.get("disposition") != "confirmed"
+            or physical.get("revoked") is True
+            or not isinstance(actions, list) or not actions
+            or any(not isinstance(item, str) or not item for item in actions)
+            or len(actions) != len(set(actions))
+        ):
+            raise CommunicationValidationError("Human_confirmation_v1_invalid")
+        if requested_action not in actions:
+            raise CommunicationValidationError("Human_confirmation_action_not_confirmed")
+
     def validate_protected_action_authority(
         self,
         message: dict[str, Any],
         *,
         task_root: Path,
-        current_task_authority: dict[str, Any],
-        Human_authorization: dict[str, Any] | None,
+        current_task_authority: dict[str, Any] | None = None,
+        Human_authorization: dict[str, Any] | None = None,
     ) -> None:
         task_id = str(message.get("task_id"))
         sender = str(message.get("sender_endpoint_id"))
         role = str(message.get("sender_task_role"))
         action = str(message.get("requested_action"))
+        refs = message.get("required_refs", [])
+
+        # New default: protected actions use a compact Human confirmation record.
+        # No task-authority event, nonce, code or delegation chain is required.
+        confirmation_ref = message.get("confirmation_ref")
+        if confirmation_ref is not None:
+            if message.get("authorization_ref") is not None:
+                raise CommunicationValidationError("multiple_Human_confirmation_mechanisms")
+            if confirmation_ref not in refs:
+                raise CommunicationValidationError("confirmation_ref_not_in_required_refs")
+            physical = self._load_authority_mapping(task_root, str(confirmation_ref))
+            if Human_authorization is not None and Human_authorization != physical:
+                raise CommunicationValidationError("Human_confirmation_physical_state_mismatch")
+            self._validate_Human_confirmation_v1(
+                physical, task_id=task_id, requested_action=action,
+            )
+            return
+
+        # Legacy compatibility: old authorization documents remain strictly readable
+        # when an existing message already references them. New ordinary work should
+        # not create these artifacts.
+        authorization_ref = message.get("authorization_ref")
+        if not authorization_ref or authorization_ref not in refs:
+            raise CommunicationValidationError("protected_action_human_confirmation_required")
         if not isinstance(current_task_authority, dict) or (
             current_task_authority.get("task_id") != task_id
             or current_task_authority.get("writer_endpoint_id") != sender
@@ -473,10 +520,6 @@ class CommunicationValidator:
             or current_task_authority.get("requested_action") != action
         ):
             raise CommunicationValidationError("current_task_authority_binding_invalid")
-        authorization_ref = message.get("authorization_ref")
-        refs = message.get("required_refs", [])
-        if not authorization_ref or authorization_ref not in refs:
-            raise CommunicationValidationError("protected_action_human_authorization_required")
         physical = self._load_authority_mapping(task_root, str(authorization_ref))
         if Human_authorization is not None and Human_authorization != physical:
             raise CommunicationValidationError("Human_authorization_physical_state_mismatch")
@@ -497,7 +540,7 @@ class CommunicationValidator:
             or physical.get("authorized_action") != action
             or physical.get("granted") is not True
         ):
-            raise CommunicationValidationError("protected_action_human_authorization_required")
+            raise CommunicationValidationError("protected_action_human_confirmation_required")
 
     def validate_message(self, message: dict[str, Any], *, message_path: Path | None = None,
                          task_root: Path | None = None,
@@ -544,6 +587,8 @@ class CommunicationValidator:
             raise CommunicationValidationError("required_refs_must_be_unique")
         for ref in refs:
             canonical_task_relative_ref(ref, "required_ref_noncanonical")
+        if message.get("confirmation_ref") and message["confirmation_ref"] not in refs:
+            raise CommunicationValidationError("confirmation_ref_not_in_required_refs")
         if message.get("authorization_ref") and message["authorization_ref"] not in refs:
             raise CommunicationValidationError("authorization_ref_not_in_required_refs")
         if message.get("recipient_delegation_ref") and message["recipient_delegation_ref"] not in refs:

@@ -1,0 +1,113 @@
+schema_version: citystate.minimum_work_unit_output.finding_closure_ledger.v2
+task_id: os-v2-global-minimum-work-unit-output-contract-001
+correction_id: MWU-CORRECTION-R2
+correction_round: 2
+canonical_candidate_sha: b17bdc0826a4519af0da69b61370f0b657acc7c4
+prior_candidate_sha: 04e243dac34dd9e2183acebd3fd9f71919804d01
+supersedes: 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/08_结论/finding_closure_ledger_v1.yml
+supersession_note: >-
+  v1 is not rewritten. It remains the closure record for MWU-IR-001..004 and is carried
+  forward here by reference only. This file adds the two findings raised after round 1.
+closure_meaning: >-
+  CLOSED means the executor observed the finding's failure shape rejecting or accepting
+  as the finding describes on the pre-correction validator, and the opposite result on
+  the candidate. It is not an independent acceptance.
+
+findings:
+  - id: MWU-R1-FG-IR-001
+    severity: blocking
+    claim: rationale/assessment normalization is ASCII-only, so valid non-ASCII text is judged empty
+    status: CLOSED
+    root_cause: >-
+      _normalized_phrase applied re.sub(r"[^a-z0-9]+", " ", value.lower()), which deletes
+      every non-ASCII character before the floor is applied.
+    correction: >-
+      Normalization now uses re.sub(r"[\W_]+", " ", value.lower()), the exact complement of
+      the old class for ASCII input, so ASCII results are unchanged while the letters and
+      digits of every script survive. Content units are counted with a declared
+      codepoint-range rule in which one character of a script written without a word
+      separator is one unit, because a whitespace token count cannot measure such a script.
+    language_understanding_introduced: false
+    declared_in_contract:
+      - rationale_machine_floor.text_normalization
+      - rationale_machine_floor.content_token_rule.unspaced_script_ranges
+    static_bindings_added:
+      - contract_unicode_normalization_drift
+      - contract_language_heuristic_prohibition_drift
+      - contract_unspaced_script_ranges_drift
+    executed_closure_cases:
+      - pre-correction validator from 6eb8441c rejects multilingual_valid_execution_artifact_v1.yml with missing_or_empty:supportability_rationale; candidate accepts it, exit 0
+      - pre-correction validator from 6eb8441c rejects multilingual_valid_review_artifact_v1.yml with missing_or_empty on both rationales and both assessments; candidate accepts it, exit 0
+      - positive_chinese_supportability_rationale, positive_chinese_feasibility_rationale, positive_chinese_core_narrative_fields, positive_chinese_full_unit, positive_chinese_independent_review_assessments, positive_mixed_unicode_text all accepted
+      - negative_generic_only_survives_unicode_normalization still rejected with vague_rationale_alone
+      - negative_below_floor_unspaced_rationale and negative_below_floor_unspaced_assessment rejected with rationale_below_content_floor
+      - ASCII differential probe, 207 samples, 0 behaviour differences, positive control observed
+    not_proved:
+      - that a non-English rationale is meaningful; the generic-only list stays English-only
+
+  - id: MWU-R1-FG-IR-002
+    severity: blocking
+    claim: work_performed_or_requested and implementation_or_review_method accept non-text scalars
+    status: CLOSED
+    root_cause: >-
+      validate_document applied the text floor only to the two rationale fields; the other
+      two core fields used _present(), for which True, 1 and non-empty containers are present.
+    correction: >-
+      Both fields now pass through a type-and-emptiness floor that rejects any non-string
+      value with core_field_must_be_text and any empty or whitespace-only string with
+      missing_or_empty. The generic-only set and content-token count deliberately stay on
+      the two rationale fields, matching the dispatch's split of the four core fields.
+    declared_in_contract:
+      - core_narrative_text_floor
+    static_bindings_added:
+      - contract_core_narrative_text_fields_drift
+      - contract_core_narrative_required_type_drift
+      - contract_core_narrative_reject_non_text_drift
+    executed_closure_cases:
+      - pre-correction validator from 6eb8441c accepts non_text_core_field_artifact_v1.yml, exit 0; candidate rejects it with core_field_must_be_text on both fields, exit 1
+      - boolean, numeric, list and mapping negatives rejected for work_performed_or_requested
+      - boolean, numeric, list and mapping negatives rejected for implementation_or_review_method
+      - whitespace-only negatives rejected with missing_or_empty for both fields
+      - negative_missing_core_work_performed_or_requested and negative_missing_core_implementation_or_review_method keep their original missing_or_empty error codes
+    not_proved:
+      - that a non-empty string states real work; only that it is text
+
+carried_forward_from_v1:
+  MWU-IR-001: CLOSED in v1, not reopened and not re-verified in this round
+  MWU-IR-002: CLOSED in v1, not reopened and not re-verified in this round
+  MWU-IR-003: CLOSED in v1, not reopened and not re-verified in this round
+  MWU-IR-004: CLOSED in v1, and its duplicate-key negatives were re-executed here, both rejecting with the expected duplicate_mapping_key codes
+preserved_decisions_verified_this_round:
+  unit_local_evidence_containment: unchanged, adversarial_disjoint_evidence cases still reject
+  verdict_enum: unchanged, PASS/FIX_REQUIRED/REJECT, out-of-enum and lowercase still reject
+  duplicate_mapping_keys: unchanged, both fixtures still reject
+  static_drift_bindings: all 8 prior mutations still fire, 4 added
+  historical_review_artifacts: not modified
+nonblocking_observation_from_review:
+  text: the prior review artifact failing unit-local containment is historical compatibility
+  action_taken: none; containment was not weakened and the historical artifact was not edited
+
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Record the closure state of MWU-R1-FG-IR-001 and MWU-R1-FG-IR-002 against the round 2
+    candidate, and carry the four round 1 closures forward by reference without rewriting
+    the round 1 ledger.
+  implementation_or_review_method: >-
+    For each finding, name the code path that produced it, the exact correction, the
+    contract declaration and static binding that now hold it in place, and the executed
+    cases whose observed results differ between the pre-correction and corrected validator.
+  supportability_rationale: >-
+    Each closure entry cites a case that was actually run in this window and whose result
+    inverted between the two validator versions, so the ledger reports measurement rather
+    than intent; the carried-forward entries are explicitly marked not re-verified.
+  feasibility_rationale: >-
+    The ledger only records results already produced by the executed command set in this
+    run directory, so it needs no further environment, dependency or authority.
+  exact_result_or_candidate_ref: b17bdc0826a4519af0da69b61370f0b657acc7c4
+  verification_evidence:
+    - 07_测试执行/correction_round_2_execution_evidence_v1.yml
+  residual_risk_or_unproved_limits:
+    - Executor closure is not independent acceptance.
+    - Round 1 findings are carried forward by reference and were not re-verified here.
+    - The generic-only rejection set remains English-only by design.

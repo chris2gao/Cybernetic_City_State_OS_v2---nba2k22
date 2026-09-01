@@ -1,0 +1,24 @@
+﻿schema_version: citystate.global_authorization_simplification_verification.v1
+task_id: os-v2-global-human-authorization-simplification-001
+base_master_sha: d9a18b57749a0608a06ab546fd179b63e696e7f1
+verified_branch_head_before_evidence_commit: 8d84e466
+result: PASS
+checks:
+  communication_test_groups: PASS
+  communication_validator_test_count: 31
+  task_discipline_test_count: 54
+  big_task_confirmation_closure_preflight_tests: 30
+  model_routing_receiver_setup_tests: 7
+  communication_static: validation_passed
+  mechanism_activation_static: validation_passed
+  git_diff_check: PASS
+semantic_result:
+  ordinary_task_human_authorization_required: false
+  protected_action_confirmation_mode: simple_explicit_Human_confirmation
+  legacy_authority_chain: read_compatibility_only
+  big_task_known_confirmation_actions_must_be_closed_before_dispatch: true
+  executor_micro_authorization_after_preclosure: prohibited_for_preclosed_actions
+integration_order:
+  t2_master_first: satisfied
+  sync_latest_master_into_rule_branch: satisfied
+  rule_branch_merge_after_t2: ready

@@ -1,0 +1,20 @@
+schema_version: citystate.run.v1
+run_id: run-20260828-global-human-authorization-simplification-001
+task_id: os-v2-global-human-authorization-simplification-001
+status: active_branch_only
+branch: dev/os-v2-global-human-authorization-simplification-001
+base_master_sha: c149ae626d63d3818c110d5a29972c32d083f350
+Human_task_input: >-
+  Simplify the global authorization flow: ordinary work should not require separate
+  Human authorization; when explicit Human confirmation is genuinely required, ask
+  directly and continue after a clear Human answer; big tasks must resolve all known
+  Human confirmation needs before dispatch so execution is not interrupted by repeated
+  micro-authorization requests.
+merge_order:
+  - complete_this_task_on_its_own_branch
+  - wait_for_current_T2_to_merge_to_master
+  - merge_or_fast_forward_new_master_into_this_branch
+  - run_final_conflict_and_regression_checks
+  - only_then_integrate_this_branch
+current_T2_is_out_of_scope: true
+master_write_authorized_now: false

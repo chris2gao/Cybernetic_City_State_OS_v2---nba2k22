@@ -1,0 +1,127 @@
+schema_version: citystate.minimum_work_unit_output.completion_pointer.v3
+completion_pointer:
+  packet_id: os-v2-global-minimum-work-unit-output-contract-001
+  correction_id: MWU-CORRECTION-R2
+  correction_round: 2
+  status: ready_for_independent_review
+  status_basis: >-
+    Both blocking findings are recorded CLOSED in finding_closure_ledger_v2.yml, each with
+    a case whose observed result inverts between the pre-correction validator extracted
+    from 6eb8441c and the candidate. Status is a request for review, never an acceptance.
+  source_branch: dev/os-v2-global-minimum-work-unit-output-contract-001
+  source_base: 1559346ca2eab776cad110c7d96475f34a33f9b2
+  dispatch_branch_head: 6eb8441cc5db3a4cb9dbcdd620f569d71dc58997
+  canonical_candidate_sha: b17bdc0826a4519af0da69b61370f0b657acc7c4
+  prior_candidate_sha: 04e243dac34dd9e2183acebd3fd9f71919804d01
+  prior_candidate_disposition: preserved_unmodified_as_the_round_1_review_object
+  evidence_commit: >-
+    The commit that carries this file, published as the branch head by this window and
+    reported to the Human from a remote readback. This file cannot contain its own SHA;
+    the canonical candidate SHA above is what a reviewer needs to reconstruct the fix.
+  blocking_findings_closed:
+    - MWU-R1-FG-IR-001
+    - MWU-R1-FG-IR-002
+  findings_not_reopened:
+    - MWU-IR-001
+    - MWU-IR-002
+    - MWU-IR-003
+    - MWU-IR-004
+  validation:
+    tests: >-
+      selftest 58 cases exit 0; static exit 0; drift 13 cases exit 0; artifact CLI 6
+      focused cases each matching its expected exit code; git diff --check exit 0; ASCII
+      differential probe exit 0 with 0 differences over 207 samples
+    selftest_relation_to_previous: strict_superset_38_to_58
+    drift_relation_to_previous: superset_9_to_13
+    candidate_caused_failures: 0
+    diff_scope: passed
+    hook_guard: passed
+  repository:
+    changed_paths_canonical_commit:
+      - 01_os/03_mechanisms/minimum_work_unit_output/README.md
+      - 01_os/03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml
+      - 01_os/06_execution/boot/minimum_work_unit_output/README.md
+      - 01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py
+    changed_paths_evidence_commit:
+      - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/**
+    out_of_scope_paths: 0
+    binary_artifact_count: 0
+    worktree_clean: true
+    historical_review_artifacts_modified: none
+  publication:
+    transport: local_git
+    replacement_gate: not_applicable
+    master_modified: false
+    force_push: false
+    rebase_amend_squash: false
+  supersedes: 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/08_结论/completion_pointer_v2.yml
+  required_next_step: fresh_relationship_isolated_independent_review
+  next_owner: foreground_independent_review
+  executor_self_review_performed: false
+  third_correction_round_started: false
+  master_integration: not_authorized_and_not_attempted
+  evidence_refs:
+    - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/07_测试执行/correction_round_2_execution_evidence_v1.yml
+    - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/08_结论/finding_closure_ledger_v2.yml
+    - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/07_测试执行/fixtures/multilingual_valid_execution_artifact_v1.yml
+    - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/07_测试执行/fixtures/multilingual_valid_review_artifact_v1.yml
+    - 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/07_测试执行/fixtures/non_text_core_field_artifact_v1.yml
+  local_environment_incident:
+    summary: >-
+      A local master fast-forward happened by accident in this window before any correction
+      work, because a script did not stop after git switch returned exit 128. It was
+      disclosed, the Human authorized the exact undo, and local master was restored to its
+      pre-incident SHA. Remote master was never written and never changed.
+    detail_ref: 01_os/_runs/run-20260829-global-minimum-work-unit-output-contract-001/07_测试执行/correction_round_2_execution_evidence_v1.yml
+    affects_candidate_semantics: false
+  residual_risk:
+    - The structural floor proves structure only; semantic sufficiency stays with independent review.
+    - >-
+      The generic-only rejection set is an English enumeration. A vacuous non-English
+      phrase that clears the content-unit floor is not caught, and closing that gap would
+      need the language heuristics this dispatch prohibits.
+    - >-
+      The unspaced-script set is a finite declared codepoint list; a separator-less script
+      outside it is still measured by whitespace tokens.
+    - >-
+      One character equals one content unit makes the three-unit floor easier to clear in
+      those scripts than in space-delimited ones. This is a deliberate structural trade,
+      and whether three units is the right floor for them is a reviewer question.
+    - Round 1 findings were carried forward by reference and not re-verified in this round.
+    - Windows-only execution; no Linux measurement.
+    - >-
+      Repository quiet verification is not globally green at the dispatch master baseline;
+      only the base-versus-candidate delta is proved to be zero.
+
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Publish the correction round 2 completion pointer for the Global MWU output contract,
+    binding the new canonical candidate to the round 2 closure ledger and executed
+    evidence, and hand the result to a fresh relationship-isolated independent review.
+  implementation_or_review_method: >-
+    Recorded only values produced by executed commands in this window: fresh-read remote
+    SHAs, the commit SHA returned by the canonical correction commit, the exit codes and
+    case counts printed by each validator mode, the artifact CLI results, the pre-correction
+    reproduction, the ASCII differential probe, and the base-versus-candidate quiet_verify
+    comparison run in two isolated detached worktrees of the same clone.
+  supportability_rationale: >-
+    The ready_for_independent_review status rests on two ledger entries whose closure each
+    names a case whose observed result inverts between the pre-correction and corrected
+    validator, on a zero-delta regression comparison against the exact dispatch master, and
+    on the round 1 candidate and all historical review artifacts remaining unmodified so
+    the review chain stays reconstructible.
+  feasibility_rationale: >-
+    Publication needs only an ordinary non-force fast-forward push of a task branch already
+    authorized by this task, on a transport whose registered hook guard was observed
+    enabled, with no master write and no destructive Git action.
+  exact_result_or_candidate_ref: b17bdc0826a4519af0da69b61370f0b657acc7c4
+  verification_evidence:
+    - 07_测试执行/correction_round_2_execution_evidence_v1.yml
+    - 08_结论/finding_closure_ledger_v2.yml
+  residual_risk_or_unproved_limits:
+    - No independent review of this correction has been performed.
+    - The generic-only form set remains English-only, by dispatch constraint.
+    - The unspaced-script codepoint list is finite and declared, not exhaustive.
+    - Machine checks are a structural floor and prove nothing about semantic truth.
+    - No Linux execution; the repository is not globally green on either tree.

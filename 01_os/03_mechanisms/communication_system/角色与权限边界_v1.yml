@@ -1,44 +1,76 @@
 schema_version: citystate.communication.role_permission_boundary.v1
-authority_protocol: citystate-human-task-authority-v2
+authority_protocol: default_task_scope_with_direct_Human_confirmation_v1
 role_fields:
   - sender_task_role
   - expected_recipient_task_role
-purposes: [Human_routing, context_selection, endpoint_card_consistency_validation, scoped_authority_delegation]
+purposes: [Human_routing, context_selection, endpoint_card_consistency_validation, scoped_work_assignment]
 grants_authority: false
-self_declared_identity_grants_authority: false
-validator_grants_authority: false
-root_authority: current_Human
-authority_sources:
-  - Human_task_authority_v2
-  - current_task
-  - direct_current_Human_authorization
-  - live_dispatcher_scoped_delegation
-  - repository_and_tool_guards
-authority_binding:
-  current_task_authority_must_match: [task_id, writer_endpoint_id, writer_task_role, requested_action]
-  authorization_ref_must_be: [physically_readable_inside_task_root, directly_listed_in_required_refs]
-  v2_Human_task_authority_ref_must_be: [physically_readable_inside_task_root, directly_listed_in_required_refs, same_task_id, live_not_revoked]
-  delegated_writer_must_match: [task_authority_id, recipient_endpoint_id, recipient_task_role, authorized_actions, delegated_scope]
-delegation_v2:
-  schema_version: citystate.communication.task_authority_delegation.v2
-  required_fields: [task_id, task_authority_id, delegation_id, delegator_endpoint_id, delegator_task_role, recipient_endpoint_id, recipient_task_role, authorized_actions, delegated_scope, allow_redelegation, Human_task_authority_ref, granted, revoked]
-  optional_fields: [parent_delegation_ref]
-  self_delegation_to_expand_scope: prohibited
-  code_possession_without_delegation: unauthorized
-  root_delegator_must_equal_Human_bound_initial_holder: true
-  recipient_redelegation: only_when_parent_delegation_is_live_and_allow_redelegation_true
-  child_actions_must_be_subset_of_parent_actions: true
-  child_scope_must_be_subset_of_parent_and_Human_task_scope: true
-  delegated_endpoint_start_gate: [live_delegation_chain_VERIFIED, exact_task_authority_identity_match, exact_recipient_action_scope_match]
-  durable_delegation_authorizes_Human_relay_of_task_code: false
-  plaintext_task_code_in_communication_artifact: prohibited
-  Human_override: may_authorize_revoke_or_supersede_any_delegation
-direct_Human_authorization_v2:
-  schema_version: citystate.communication.direct_human_authorization.v2
-  required_fields: [task_id, writer_endpoint_id, writer_task_role, authorized_actions, Human_task_authority_ref, granted, revoked]
+self_declared_identity_expands_scope: false
+validator_expands_scope: false
+
+ordinary_task_execution:
+  separate_Human_authorization_required: false
+  task_code_required: false
+  nonce_required: false
+  Human_task_authority_v2_required: false
+  recipient_delegation_required: false
+  basis:
+    - current_Human_task_input
+    - durable_task_packet_scope_when_present
+    - exact_formal_message_scope
+    - repository_and_transport_guards
+
+ordinary_formal_handoff:
+  authorization_ref_required: false
+  recipient_delegation_ref_required: false
+  exact_task_endpoint_role_and_requested_action_still_required: true
+  receiver_setup_and_formal_constitution_still_required: true
+  Human_relay_remains_manual: true
+protected_action_confirmation:
+  schema_version: citystate.communication.human_confirmation.v1
+  required_fields:
+    - task_id
+    - confirmation_id
+    - confirmed_by
+    - disposition
+    - confirmed_actions
+  confirmed_by_must_be: Human
+  disposition_must_be: confirmed
+  confirmed_actions_must_include_requested_action: true
+  authorization_code_required: false
+  nonce_required: false
+  task_authority_chain_required: false
+  confirmation_ref_required_only_for_replayable_cross_window_formal_action: true
+  current_Human_instruction_covering_exact_action_is_sufficient: true
+  missing_confirmation_behavior: ask_Human_directly
+
+big_task_confirmation_closure:
+  before_dispatch: enumerate_all_known_confirmation_bound_actions
+  ask_once_for_uncovered_known_actions: true
+  persist_replayable_confirmation_when_receiver_needs_it: true
+  known_covered_action_must_not_be_reasked: true
+  unexpected_new_protected_action: ask_Human_then_continue_after_clear_answer
+  semantic_choice_is_not_authorization: true
+
+legacy_authority_compatibility:
+  Human_task_authority_v2: readable_not_required_for_new_ordinary_work
+  task_authority_delegation_v2: readable_not_required_for_new_ordinary_handoff
+  direct_Human_authorization_v2: readable_not_required_for_new_ordinary_work
+  recipient_delegation_ref: optional_legacy_or_protected_action_field
+  legacy_validation_when_present: strict
+
+scope_rules:
+  role_label_alone_expands_scope: false
+  provider_or_model_name_expands_scope: false
+  tool_availability_expands_scope: false
+  self_scope_expansion: prohibited
+  current_Human_may_change_or_stop_task: true
+  historical_finding_creates_current_Human_permission_gate: false
+
 recipient_authority_handoff:
   message_field: recipient_delegation_ref
-  must_be_in_required_refs: true
-  must_match_expected_recipient_and_requested_action: true
-self_authorization: prohibited
+  status_for_new_ordinary_messages: omit
+  when_present: validate_as_legacy_compatibility
+
 model_provider_role_or_code_possession_alone_authorizes: false
+plaintext_task_code_required: false

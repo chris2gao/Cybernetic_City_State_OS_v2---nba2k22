@@ -1,0 +1,18 @@
+minimum_work_unit_output:
+  role: independent_review
+  work_performed_or_requested: Review the exact candidate against primary evidence.
+  implementation_or_review_method: Reconstruct from immutable commits and rerun commands.
+  supportability_rationale: The verdict rests on reproduced command exit codes here.
+  feasibility_rationale: Every cited artifact is readable at the exact commit given.
+  verdict: PASS
+  primary_evidence_examined:
+    - contract
+  findings_and_residual_risk:
+    - none material
+  executor_rationale_assessment:
+    supportability_assessment: supported by the cited contract text
+    feasibility_assessment: supported by the observed repository surface
+    primary_evidence_refs:
+      - contract
+    unsupported_or_inferred_claims: []
+    supportability_assessment: ok

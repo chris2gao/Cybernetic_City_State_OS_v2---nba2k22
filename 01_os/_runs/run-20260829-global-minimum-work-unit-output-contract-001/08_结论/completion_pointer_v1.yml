@@ -1,0 +1,22 @@
+schema_version: citystate.completion_pointer.v1
+task_id: os-v2-global-minimum-work-unit-output-contract-001
+status: ready_for_independent_review
+source_branch: dev/os-v2-global-minimum-work-unit-output-contract-001
+source_base: 1559346ca2eab776cad110c7d96475f34a33f9b2
+canonical_candidate_commit: c8f38c67595747f851785218c511ae461c233167
+validation_evidence: ../07_测试执行/targeted_validation_v1.yml
+repository:
+  candidate_changed_paths: 11
+  out_of_scope_paths: 0
+  master_modified: false
+publication:
+  transport: github_api_connector
+  source_branch_publication: completed
+  force_push: false
+  master_integration: not_performed
+independent_review:
+  status: not_run
+  next_owner: Human_selected_independent_reviewer
+notes:
+  - Review the canonical candidate commit plus validation evidence; run-local evidence commits are not part of the canonical mechanism diff.
+  - T2 and the global Human authorization simplification are inputs, not reopened work.
