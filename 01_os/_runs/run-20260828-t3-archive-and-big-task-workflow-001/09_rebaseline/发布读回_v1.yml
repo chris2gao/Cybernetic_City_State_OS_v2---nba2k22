@@ -1,0 +1,67 @@
+schema_version: citystate.publication_readback.v1
+task_id: os-v2-t3-archive-and-big-task-workflow-001
+
+# 一个指针不能命名承载它自己的那个提交。本文件记录的是「证据齐备候选」f85e66de 的
+# 实际远端读回值；本文件本身构成分支的最后一个提交，与 f85e66de 的差别仅是这份读回
+# 记录。审核对象是分支 head，其读回值在下面 final_branch_head_readback 说明中处理。
+
+transport: local_git
+hook_guard:
+  command: git config --get core.hooksPath
+  expected: .githooks
+  observed: .githooks
+  result: passed
+
+publications:
+  - sequence: 1
+    what: 原始 T3 候选（base d9a18b57）
+    local_head: 06d0c60e2ba526ac66138c578176a1f8d833e0a4
+    push_refspec: HEAD:refs/heads/dev/os-v2-t3-archive-and-big-task-workflow-001
+    push_exit_code: 0
+    remote_before: d9a18b57749a0608a06ab546fd179b63e696e7f1
+    remote_after_readback: 06d0c60e2ba526ac66138c578176a1f8d833e0a4
+    readback_command: git ls-remote origin refs/heads/dev/os-v2-t3-archive-and-big-task-workflow-001
+    fast_forward: true
+    force_push: false
+
+  - sequence: 2
+    what: rebaseline 后的证据齐备候选（merge master 6757bee2）
+    local_head: f85e66de3d86ee3eb685124739e60f007893248e
+    push_refspec: HEAD:refs/heads/dev/os-v2-t3-archive-and-big-task-workflow-001
+    push_exit_code: 0
+    remote_before: 06d0c60e2ba526ac66138c578176a1f8d833e0a4
+    remote_after_readback: f85e66de3d86ee3eb685124739e60f007893248e
+    readback_command: git ls-remote origin refs/heads/dev/os-v2-t3-archive-and-big-task-workflow-001
+    fast_forward: true
+    force_push: false
+
+master_untouched:
+  observed_before_each_push: 6757bee2f8dfa3cf55abb464189b953e2b072773
+  observed_after_each_push: 6757bee2f8dfa3cf55abb464189b953e2b072773
+  master_modified: false
+  readback_command: git ls-remote origin refs/heads/master
+
+history_integrity:
+  rebase: false
+  amend: false
+  squash: false
+  force_push: false
+  history_rewritten: false
+  published_commits_preserved:
+    - 3680b1984d94360d07e41337e9b12bb28653e3e7
+    - 06d0c60e2ba526ac66138c578176a1f8d833e0a4
+
+final_branch_head_readback:
+  note: >-
+    本文件所在的提交是分支的最后一个提交。它推送后的远端读回值不能写进它自己，
+    因此由执行者在回报中给出确切 SHA，并且任何人都可以用
+    git ls-remote origin refs/heads/dev/os-v2-t3-archive-and-big-task-workflow-001
+    独立复核。该提交相对 f85e66de 只增加本文件与 completion_pointer_v2 中两个
+    pending 字段的填写，不改动任何机制、测试或测量结果。
+  review_target: branch_head
+  verification_command: git ls-remote origin refs/heads/dev/os-v2-t3-archive-and-big-task-workflow-001
+
+evidence_boundary:
+  executor_self_acceptance: prohibited
+  independent_acceptance: not_run
+  claim: 以上 SHA 全部来自实际 push 输出与远端读回，无期望值冒充结果。

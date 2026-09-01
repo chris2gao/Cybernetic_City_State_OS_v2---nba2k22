@@ -48,7 +48,10 @@ minimum_work_unit_output:
     original_base: d9a18b57749a0608a06ab546fd179b63e696e7f1
     rebaseline_master: 6757bee2f8dfa3cf55abb464189b953e2b072773
     original_candidate: 06d0c60e2ba526ac66138c578176a1f8d833e0a4
-    post_sync_candidate: pending_readback_recorded_in_publication
+    post_sync_candidate: f85e66de3d86ee3eb685124739e60f007893248e
+    post_sync_candidate_readback: >-
+      git ls-remote origin refs/heads/dev/os-v2-t3-archive-and-big-task-workflow-001
+      -> f85e66de3d86ee3eb685124739e60f007893248e（实际远端读回，非本地 HEAD 复制）
     merge_commit_local: d603ab6076cf7081a734e774d9ae4c2c97efd910
     merge_conflicts_total: 1
     merge_conflicts_resolved: 1
@@ -112,7 +115,7 @@ completion_pointer:
   source_branch: dev/os-v2-t3-archive-and-big-task-workflow-001
   source_base: d9a18b57749a0608a06ab546fd179b63e696e7f1
   rebaseline_master: 6757bee2f8dfa3cf55abb464189b953e2b072773
-  source_head: pending_readback_recorded_in_publication
+  source_head: f85e66de3d86ee3eb685124739e60f007893248e
   validation:
     tests: 见 minimum_work_unit_output.verification_evidence
     candidate_caused_failures: 0
@@ -128,10 +131,10 @@ completion_pointer:
     replacement_gate: not_applicable
     hook_guard_command: git config --get core.hooksPath
     hook_guard_observed: .githooks
-    resulting_remote_head: pending_readback_recorded_in_publication
+    resulting_remote_head: f85e66de3d86ee3eb685124739e60f007893248e
     compare_and_swap: not_applicable
-    fast_forward_verified: pending
-    push_performed: false
+    fast_forward_verified: true
+    push_performed: true
     master_modified: false
     force_push: false
     rebase_amend_squash: false
