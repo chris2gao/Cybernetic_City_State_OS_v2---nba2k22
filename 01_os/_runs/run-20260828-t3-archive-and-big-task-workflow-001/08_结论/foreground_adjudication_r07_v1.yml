@@ -1,0 +1,69 @@
+schema_version: citystate.foreground_adjudication.v1
+task_id: os-v2-t3-archive-and-big-task-workflow-001
+adjudication_id: T3-R07-FOREGROUND-001
+review_target_candidate: 454c07e475f54a921e6233bc435b3a9247f8cf9f
+branch_head_before_adjudication: 22359e66f0328107a4ed5021f08dc8e43d3b66ea
+master_observed: 6757bee2f8dfa3cf55abb464189b953e2b072773
+
+issue:
+  id: T3-IR-003
+  alias: R-07
+  measured_cost:
+    bootstrap_current_master_bytes: 68313
+    bootstrap_candidate_bytes: 74598
+    attributable_to_t3_bytes: 6285
+  corrected_immediate_visibility_benefit:
+    t3_terminal_group_excluded_bytes: 0
+    communication_existing_policy_excluded_bytes: 60808
+  executor_disposition: escalated_to_foreground
+
+human_priority:
+  decision: execution_quality_over_token_savings_for_core_guidance
+  interpretation: >-
+    Core guidance that materially improves agent execution should not be weakened merely to
+    reduce bootstrap tokens or bytes. Token economy is subordinate here to reliable adherence,
+    boundary recognition, lifecycle discipline, and long-task continuation behavior.
+
+foreground_decision:
+  status: ACCEPTED_NONBLOCKING
+  selected_option: retain_load_bearing_core_guidance
+  do_not_slim_for_token_savings_only: true
+  rationale: >-
+    The corrected measurement invalidates the old claim that T3 currently removes most run/dev
+    enumeration noise, but it does not invalidate the primary governance value of T3. The
+    load-bearing changes make run lifecycle machine-readable going forward, keep unknown work
+    visible and non-archivable, and encode long-horizon continuation/stop boundaries in files
+    every agent reads. Under the Human priority, the measured 6,285-byte always-on increase is
+    an acceptable cost for those core execution rules. Immediate listing-byte savings are not
+    the acceptance criterion for core guidance.
+  constraints:
+    - do not restore unknown-hidden behavior
+    - do not weaken lifecycle enum enforcement
+    - do not weaken task_orchestration continuation/stop guidance
+    - do not claim the 28.04 percent exclusion as a new T3 benefit
+    - keep corrected measurements and withdrawn 89.19 percent claim explicit
+    - future edits may improve clarity, but not solely optimize token count at the expense of execution quality
+
+minimum_work_unit_output:
+  role: decision_architecture
+  work_performed_or_requested: >-
+    Adjudicate R-07 after corrected visibility measurement and the Human's explicit priority that
+    core guidance should optimize agent execution quality rather than bootstrap token economy.
+  implementation_or_review_method: >-
+    Separate immediate enumeration benefit from governance value, use the corrected measurement
+    rather than the withdrawn 89.19 percent figure, and apply the Human's stated optimization
+    objective to the always-on guidance tradeoff.
+  supportability_rationale: >-
+    The candidate independently measures zero T3-attributable run/dev exclusion today while also
+    enforcing machine-readable lifecycle states, unknown-visible fail-closed behavior, and explicit
+    long-task stop boundaries; those are direct execution controls rather than speculative byte savings.
+  feasibility_rationale: >-
+    Accepting the 6,285-byte guidance cost requires no code change or protected action and preserves
+    the already-tested candidate semantics; only the review disposition changes from escalated to nonblocking.
+  task_constraints_and_boundaries:
+    - no master write in this adjudication
+    - no candidate modification
+    - no reopening T3-IR-001 or T3-IR-002
+  stop_or_return_conditions:
+    - new evidence shows the always-on guidance is contradictory or degrades execution
+    - candidate semantics differ from the independently reviewed tree
