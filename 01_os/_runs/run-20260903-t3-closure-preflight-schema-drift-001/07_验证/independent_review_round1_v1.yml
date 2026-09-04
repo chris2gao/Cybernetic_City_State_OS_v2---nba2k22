@@ -1,0 +1,61 @@
+schema_version: citystate.independent_review.v1
+run_id: run-20260903-t3-closure-preflight-schema-drift-001
+reviewed_candidate_sha: 4f34cbba2b0addabec70ad5f152d3e26c4e8601d
+reviewer: Claude_Code_dossier_only_fresh_nonworkspace_session
+verdict: FIX_REQUIRED
+
+work_performed_or_requested: >-
+  Independently review the Task 0 implementation candidate against the current
+  section-7 packet semantics and the P5 false-negative objective, without repository writes.
+implementation_or_review_method: >-
+  Reviewer received a 29,076-character dossier containing the exact base/candidate
+  diff, canonical section 7 and 7.2 text, task-orchestration contract, bounded test
+  outputs, and deterministic probes. Reviewer had no live repository access and
+  manually traced the supplied code paths.
+supportability_rationale: >-
+  The dossier proves the original base false negative and candidate improvements,
+  but manual tracing found an untested path where a confirmed master action is
+  derived while the entire big_task_confirmation_closure block is absent; current
+  validate_packet skips the closure-disposition checks in that case.
+feasibility_rationale: >-
+  The blocker is local to validate_packet: when protected actions are derived,
+  absence or disabled state of the confirmation closure can be rejected before
+  disposition validation, with a focused regression test and no architecture change.
+
+primary_evidence_examined:
+  - exact diff c919c1760929ff23d58083de9498e38850500afe..4f34cbba2b0addabec70ad5f152d3e26c4e8601d
+  - 01_os/开发入口与单窗口任务规范_v1.md sections 7 and 7.2
+  - 01_os/03_mechanisms/task_orchestration/大任务与长时执行契约_v1.yml
+  - big_task_pytest reported 51/51 passed in dossier
+  - task_orchestration_pytest reported 51/51 passed in dossier
+  - deterministic P5/adversarial probes supplied in dossier
+
+findings_and_residual_risk:
+  blocking:
+    - id: IR1-F1
+      finding: >-
+        publisher.master_integration_confirmation=current_Human_confirmed with the
+        big_task_confirmation_closure key entirely absent derives
+        known_protected_actions=[master_integration] but validate_packet returns no
+        findings because both closure-consistency and disposition checks are gated
+        on confirmation_raw being present.
+      required_correction: >-
+        Whenever derived protected actions are non-empty, absence of a confirmation
+        closure or a closure that is not enabled must itself be a fail-closed finding;
+        add a regression test for the omitted-key path.
+  nonblocking:
+    - Reviewer did not independently execute the repository tests; it reviewed the exact dossier outputs.
+    - principal_binding behavior is adjacent but out of Task 0 scope.
+
+executor_rationale_assessment:
+  supportability: >-
+    The candidate fixes the originally demonstrated old-field P5 symptom and the
+    supplied tests support that claim, but supportability is incomplete because a
+    materially equivalent omission-path false negative remains.
+  feasibility: >-
+    The candidate approach remains feasible; one focused fail-closed condition and
+    regression test should close the remaining gap.
+
+p5_status: OPEN
+master_integration_authorized: false
+reviewer_repository_writes: none
