@@ -220,6 +220,35 @@ def test_explicit_closure_block_wins_over_derivation():
     assert closure["known_protected_actions"] == ["runtime_activation"]
 
 
+def test_legacy_explicit_closure_cannot_mask_current_master_integration():
+    packet = _packet(big_task_closure={"known_protected_actions": []})
+    packet["publisher"]["master_integration_confirmation"] = "current_Human_confirmed"
+    packet["big_task_confirmation_closure"].update(
+        known_confirmation_required_actions=["master_integration"],
+        preconfirmed_actions=["master_integration"],
+    )
+    closure = closure_preflight.derive_closure(packet)
+    assert closure["known_protected_actions"] == ["master_integration"]
+    assert closure_preflight.validate_packet(packet) == []
+
+
+def test_malformed_confirmation_action_item_fails_closed_without_crashing():
+    packet = _packet(
+        big_task_confirmation_closure={
+            "enabled": True,
+            "known_confirmation_required_actions": [{"bad": "mapping"}],
+            "preconfirmed_actions": [],
+            "confirmation_ref": None,
+            "uncovered_actions": [],
+        }
+    )
+    findings = closure_preflight.validate_packet(packet)
+    assert (
+        "confirmation_closure_known_confirmation_required_actions_items_must_be_nonempty_strings"
+        in findings
+    )
+
+
 # --------------------------------------------------------------------------
 # this task's own packet must pass its own gate
 # --------------------------------------------------------------------------

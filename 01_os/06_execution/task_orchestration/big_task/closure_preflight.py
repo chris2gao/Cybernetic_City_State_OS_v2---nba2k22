@@ -120,7 +120,9 @@ def derive_closure(packet: dict[str, Any]) -> dict[str, Any]:
     Deliberately derived rather than demanded as a new schema block: every value
     below is already fixed somewhere in the packet, so requiring authors to
     restate it would add a migration and a second place to be wrong. An explicit
-    `big_task_closure` block, when present, wins.
+    `big_task_closure` block may override derived fields, except protected-action
+    detection is a safety union: a legacy explicit block may add actions but may
+    not erase actions derived from the current section-7 packet.
     """
     explicit = packet.get("big_task_closure")
     explicit = explicit if isinstance(explicit, dict) else {}
@@ -147,14 +149,25 @@ def derive_closure(packet: dict[str, Any]) -> dict[str, Any]:
     # publisher state and confirmation-closure block describe the same action.
     protected = list(dict.fromkeys(protected))
 
+    explicit_protected = explicit.get("known_protected_actions")
+    if isinstance(explicit_protected, list):
+        # Safety union: current canonical packet fields are authoritative for
+        # discovering protected actions. A legacy explicit block can add an
+        # action, but an empty/stale block cannot mask a current master action.
+        for action in explicit_protected:
+            if action not in protected:
+                protected.append(action)
+    elif explicit_protected is not None:
+        # Preserve malformed explicit input so the normal closure validator can
+        # report its type instead of silently replacing it.
+        protected = explicit_protected
+
     return {
         "objective": explicit.get("objective", packet.get("objective")),
         "allowed_changed_paths": explicit.get(
             "allowed_changed_paths", packet.get("allowed_changed_paths")
         ),
-        "known_protected_actions": explicit.get(
-            "known_protected_actions", protected
-        ),
+        "known_protected_actions": protected,
         "evidence_gates": explicit.get("evidence_gates", packet.get("required_tests")),
         "stop_conditions": explicit.get("stop_conditions", packet.get("prohibitions")),
         "final_reviewer_boundary": explicit.get(
@@ -182,6 +195,10 @@ def validate_packet(packet: dict[str, Any]) -> list[str]:
                 findings.append("closure_field_missing:known_protected_actions")
             elif not isinstance(value, list):
                 findings.append("known_protected_actions_must_be_a_list")
+            elif any(not isinstance(action, str) or not action for action in value):
+                findings.append(
+                    "known_protected_actions_items_must_be_nonempty_strings"
+                )
             continue
         if value is None or (isinstance(value, (list, dict, str)) and not value):
             findings.append(f"closure_field_missing:{field}")
@@ -228,13 +245,22 @@ def validate_packet(packet: dict[str, Any]) -> list[str]:
                 value = confirmation.get(field)
                 if value is not None and not isinstance(value, list):
                     findings.append(f"confirmation_closure_{field}_must_be_a_list")
+                elif isinstance(value, list) and any(
+                    not isinstance(action, str) or not action for action in value
+                ):
+                    findings.append(
+                        f"confirmation_closure_{field}_items_must_be_nonempty_strings"
+                    )
 
             known = confirmation.get("known_confirmation_required_actions")
             preconfirmed = confirmation.get("preconfirmed_actions")
             uncovered = confirmation.get("uncovered_actions")
-            if enabled is True and all(
-                isinstance(value, list) for value in (known, preconfirmed, uncovered)
-            ):
+            valid_action_lists = all(
+                isinstance(value, list)
+                and all(isinstance(action, str) and action for action in value)
+                for value in (known, preconfirmed, uncovered)
+            )
+            if enabled is True and valid_action_lists:
                 known_set = set(known)
                 preconfirmed_set = set(preconfirmed)
                 uncovered_set = set(uncovered)
@@ -258,10 +284,19 @@ def validate_packet(packet: dict[str, Any]) -> list[str]:
                     )
 
     protected = closure.get("known_protected_actions")
-    if isinstance(protected, list) and protected and confirmation_raw is not None:
+    valid_protected = (
+        isinstance(protected, list)
+        and all(isinstance(action, str) and action for action in protected)
+    )
+    if valid_protected and protected and confirmation_raw is not None:
         preconfirmed = confirmation.get("preconfirmed_actions")
         uncovered = confirmation.get("uncovered_actions")
-        if isinstance(preconfirmed, list) and isinstance(uncovered, list):
+        valid_disposition_lists = all(
+            isinstance(value, list)
+            and all(isinstance(action, str) and action for action in value)
+            for value in (preconfirmed, uncovered)
+        )
+        if valid_disposition_lists:
             classified = set(preconfirmed) | set(uncovered)
             for action in protected:
                 if action not in classified:
