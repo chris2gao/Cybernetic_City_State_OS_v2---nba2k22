@@ -4,11 +4,11 @@ task_id: os-v2-t3-closure-preflight-schema-drift-001
 objective: Repair T3 closure_preflight schema drift against the current section-7
   task-packet publisher and big_task_confirmation_closure fields, with P5 regression
   coverage.
-lifecycle: verified_on_demand
+lifecycle: integrated_and_verified_on_demand
 exact_base_sha: c919c1760929ff23d58083de9498e38850500afe
 branch: dev/os-v2-t3-closure-preflight-schema-drift-001
-current_owner: repository_publisher
-next_owner: repository_publisher
+current_owner: Human
+next_owner: Human
 protected_actions:
   master_integration: current_Human_confirmed
   destructive_git: prohibited
@@ -22,4 +22,7 @@ notes:
   only; no communication canonical change is part of Task 0.
 - Human accepted Task 0 result after Claude Desktop final PASS and explicitly confirmed
   integration of this task into master in the same instruction.
+- Task 0 implementation, evidence, independent PASS, and Human acceptance were fast-forward
+  integrated into master; master readback matched 9096f44465b3b3581f45250bf1f4c004e12bfc43
+  before this final evidence-only lifecycle commit.
 closure_record: 08_结论/human_acceptance_v1.yml
