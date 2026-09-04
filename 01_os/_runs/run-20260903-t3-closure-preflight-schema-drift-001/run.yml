@@ -4,13 +4,13 @@ task_id: os-v2-t3-closure-preflight-schema-drift-001
 objective: Repair T3 closure_preflight schema drift against the current section-7
   task-packet publisher and big_task_confirmation_closure fields, with P5 regression
   coverage.
-lifecycle: candidate_ready_for_independent_review
+lifecycle: verified_on_demand
 exact_base_sha: c919c1760929ff23d58083de9498e38850500afe
 branch: dev/os-v2-t3-closure-preflight-schema-drift-001
-current_owner: independent_reviewer
-next_owner: independent_reviewer
+current_owner: repository_publisher
+next_owner: repository_publisher
 protected_actions:
-  master_integration: not_requested
+  master_integration: current_Human_confirmed
   destructive_git: prohibited
 notes:
 - Broader seven-stage Human Semantic Decision Gate integration is explicitly out of
@@ -20,3 +20,6 @@ notes:
   code blocker-free; evidence package required correction before final acceptance.
 - Communication mandatory-route/adherence defect is recorded as a separate follow-up
   only; no communication canonical change is part of Task 0.
+- Human accepted Task 0 result after Claude Desktop final PASS and explicitly confirmed
+  integration of this task into master in the same instruction.
+closure_record: 08_结论/human_acceptance_v1.yml
