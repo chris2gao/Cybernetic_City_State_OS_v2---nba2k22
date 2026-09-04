@@ -1,0 +1,89 @@
+schema_version: citystate.task_execution_evidence.v1
+run_id: run-20260903-t3-closure-preflight-schema-drift-001
+task_id: os-v2-t3-closure-preflight-schema-drift-001
+exact_base_sha: c919c1760929ff23d58083de9498e38850500afe
+implementation_candidate_sha: 4f34cbba2b0addabec70ad5f152d3e26c4e8601d
+branch: dev/os-v2-t3-closure-preflight-schema-drift-001
+
+work_performed_or_requested: >-
+  Repair closure_preflight so current section-7 publisher and
+  big_task_confirmation_closure fields drive protected-action discovery and closure
+  validation, closing the P5 master-integration false negative without restoring the
+  retired authorization_ref/code/nonce ceremony or entering the broader workflow task.
+implementation_or_review_method: >-
+  Reproduced P5 on the exact base, patched only closure_preflight.py and its tests,
+  ran bounded task-orchestration verification after each correction, attacked stale
+  legacy explicit-block masking, malformed action lists, and contradictory master
+  confirmation state, then re-ran the exact base/candidate probes from a detached
+  review worktree.
+supportability_rationale: >-
+  The current task-packet template names publisher.master_integration_confirmation,
+  publisher.confirmation_ref, and big_task_confirmation_closure. On the base, an exact
+  current-schema master-confirmed fixture derived known_protected_actions=[] with no
+  findings. On candidate 4f34cbba the same fixture derives [master_integration] with no
+  findings; uncovered actions, malformed action items, and contradictory preconfirmed
+  master state all fail closed with explicit findings.
+feasibility_rationale: >-
+  The repair is confined to the existing preflight derivation/validation layer and its
+  tests. It reuses the existing eight-field closure contract and does not add a new
+  authority mechanism, workflow, runtime, scheduler, or publication path. Historical
+  T3 packets remain readable under the candidate.
+
+evidence:
+  baseline_p5:
+    candidate_source: c919c1760929ff23d58083de9498e38850500afe
+    known_protected_actions: []
+    findings: []
+    observed_false_negative: true
+  candidate_p5:
+    candidate_source: 4f34cbba2b0addabec70ad5f152d3e26c4e8601d
+    known_protected_actions: [master_integration]
+    findings: []
+    p5_closed: true
+  adversarial_probes:
+    stale_legacy_explicit_empty_block:
+      derived_known_protected_actions: [master_integration]
+      findings: []
+      result: current_fields_cannot_be_masked
+    uncovered_master_integration:
+      finding: confirmation_required_action_uncovered:master_integration
+      result: fail_closed
+    malformed_confirmation_action_item:
+      finding: confirmation_closure_known_confirmation_required_actions_items_must_be_nonempty_strings
+      result: fail_closed_without_exception
+    preconfirmed_master_with_publisher_not_requested:
+      finding: master_integration_preconfirmed_but_publisher_not_confirmed
+      result: fail_closed
+    current_Human_confirmed_without_legacy_authorization_ref:
+      findings: []
+      result: pass_without_legacy_ceremony
+    historical_t3_packet:
+      findings: []
+      result: readable_without_retroactive_migration
+  verification:
+    big_task_pytest:
+      command: python -m pytest 01_os/06_execution/task_orchestration/big_task -q
+      exit_code: 0
+    task_orchestration_pytest:
+      command: python -m pytest 01_os/06_execution/task_orchestration -q
+      exit_code: 0
+    diff_check:
+      command: git diff c919c1760929ff23d58083de9498e38850500afe..4f34cbba2b0addabec70ad5f152d3e26c4e8601d --check
+      exit_code: 0
+
+correction_history:
+  - candidate: 88262c5dfdc020f588e2da701c497003edfa860a
+    finding: legacy big_task_closure could mask current master integration
+    disposition: corrected
+  - candidate: 88262c5dfdc020f588e2da701c497003edfa860a
+    finding: malformed action mapping could raise TypeError instead of fail closed
+    disposition: corrected
+  - candidate: ef6b6df523338d9a66b845152bce00e2b4502009
+    finding: publisher not_requested could contradict preconfirmed master action
+    disposition: corrected
+
+unproved_limits_and_residual_risk:
+  - This task does not implement workflow Human semantic decision integration.
+  - This task does not make confirmation_ref universally mandatory; replay requirements remain governed by current section 7.2.
+  - Independent external review is a separate gate and was not substituted by executor tests.
+  - No master integration is authorized by this evidence.
