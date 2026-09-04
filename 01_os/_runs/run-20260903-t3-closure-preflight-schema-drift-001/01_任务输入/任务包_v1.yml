@@ -1,0 +1,81 @@
+schema_version: citystate.task_packet.v1
+
+task_id: os-v2-t3-closure-preflight-schema-drift-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T2_semantic
+risk_tier_basis: >-
+  This task changes validator behavior at a protected-action detection boundary.
+  The Human has already fixed the intended semantics: current section-7 task-packet
+  fields are authoritative, ordinary in-scope execution remains authorization-light,
+  and protected master integration must not be silently missed. Implementation must
+  preserve those semantics rather than invent a new authority model.
+exact_base_sha: c919c1760929ff23d58083de9498e38850500afe
+branch: dev/os-v2-t3-closure-preflight-schema-drift-001
+objective: >-
+  Repair the T3 big-task closure preflight schema drift so it derives and validates
+  protected-action closure from the current section-7 task-packet fields, including
+  master_integration_confirmation, confirmation_ref, and big_task_confirmation_closure,
+  and add regression coverage for the P5 false negative. Do not implement the broader
+  seven-stage Human Semantic Decision Gate in this task.
+source_evidence:
+  - 01_os/开发入口与单窗口任务规范_v1.md#7
+  - 01_os/开发入口与单窗口任务规范_v1.md#7.2
+  - 01_os/03_mechanisms/task_orchestration/大任务与长时执行契约_v1.yml
+  - 01_os/06_execution/task_orchestration/big_task/closure_preflight.py
+  - 01_os/06_execution/task_orchestration/big_task/test_closure_preflight.py
+allowed_changed_paths:
+  - 01_os/06_execution/task_orchestration/big_task/closure_preflight.py
+  - 01_os/06_execution/task_orchestration/big_task/test_closure_preflight.py
+  - 01_os/_runs/run-20260903-t3-closure-preflight-schema-drift-001/**
+required_tests:
+  - python -m pytest 01_os/06_execution/task_orchestration/big_task -q
+  - python -m pytest 01_os/06_execution/task_orchestration -q
+  - git diff --check
+prohibitions:
+  - modify_master_without_required_Human_confirmation
+  - force_push
+  - rebase
+  - squash
+  - amend
+  - history_rewrite
+  - runtime_or_scheduler_activation
+  - broaden_into_workflow_Human_decision_integration
+  - restore_authorization_code_nonce_or_delegation_ceremony
+required_completion_pointer: >-
+  A durable completion pointer under this run recording exact candidate SHA, exact
+  changed paths, actual test results, residual risk, and next_owner for independent review.
+big_task: false
+terminal_lifecycle_state: candidate_ready_for_independent_review
+
+publisher:
+  principal_binding: connector_authenticated
+  publication_transport: github_api_connector
+  source_branch_publication: task_scope_default
+  master_integration_confirmation: not_requested
+  confirmation_ref: null
+  expected_remote_head: c919c1760929ff23d58083de9498e38850500afe
+
+big_task_confirmation_closure:
+  enabled: false
+  known_confirmation_required_actions: []
+  preconfirmed_actions: []
+  confirmation_ref: null
+  uncovered_actions: []
+
+executor_profile:
+  provider: OpenAI
+  model: GPT-5.6 Sol
+  reasoning_effort: high
+  mode: standard
+  rollout_token_budget: null
+  routing_basis: >-
+    Small bounded Python validator/test repair with current remote GitHub as authority;
+    no broad mechanism redesign is required.
+  authority: routing_only
+
+verification_profile:
+  reproduce_before_change: required
+  independent_reviewer: fresh_relationship_isolated_model
+  different_model_family: preferred
+  different_measurement_tool: true
+  executor_self_acceptance: prohibited
