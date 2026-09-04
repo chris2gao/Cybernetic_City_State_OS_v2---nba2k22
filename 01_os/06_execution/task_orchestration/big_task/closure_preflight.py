@@ -295,19 +295,26 @@ def validate_packet(packet: dict[str, Any]) -> list[str]:
         isinstance(protected, list)
         and all(isinstance(action, str) and action for action in protected)
     )
-    if valid_protected and protected and confirmation_raw is not None:
-        preconfirmed = confirmation.get("preconfirmed_actions")
-        uncovered = confirmation.get("uncovered_actions")
-        valid_disposition_lists = all(
-            isinstance(value, list)
-            and all(isinstance(action, str) and action for action in value)
-            for value in (preconfirmed, uncovered)
-        )
-        if valid_disposition_lists:
-            classified = set(preconfirmed) | set(uncovered)
-            for action in protected:
-                if action not in classified:
-                    findings.append(f"protected_action_without_closure_disposition:{action}")
+    if valid_protected and protected:
+        if confirmation_raw is None:
+            findings.append("protected_action_without_confirmation_closure")
+        elif isinstance(confirmation_raw, dict) and confirmation.get("enabled") is not True:
+            findings.append("protected_action_without_enabled_confirmation_closure")
+        elif isinstance(confirmation_raw, dict):
+            preconfirmed = confirmation.get("preconfirmed_actions")
+            uncovered = confirmation.get("uncovered_actions")
+            valid_disposition_lists = all(
+                isinstance(value, list)
+                and all(isinstance(action, str) and action for action in value)
+                for value in (preconfirmed, uncovered)
+            )
+            if valid_disposition_lists:
+                classified = set(preconfirmed) | set(uncovered)
+                for action in protected:
+                    if action not in classified:
+                        findings.append(
+                            f"protected_action_without_closure_disposition:{action}"
+                        )
 
     return findings
 
