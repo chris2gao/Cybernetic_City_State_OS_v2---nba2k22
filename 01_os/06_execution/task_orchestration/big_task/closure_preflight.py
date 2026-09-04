@@ -282,6 +282,13 @@ def validate_packet(packet: dict[str, Any]) -> list[str]:
                     findings.append(
                         "master_integration_missing_from_confirmation_closure"
                     )
+                if (
+                    MASTER_INTEGRATION_ACTION in preconfirmed_set
+                    and master_state not in {"current_Human_confirmed", "preconfirmed"}
+                ):
+                    findings.append(
+                        "master_integration_preconfirmed_but_publisher_not_confirmed"
+                    )
 
     protected = closure.get("known_protected_actions")
     valid_protected = (

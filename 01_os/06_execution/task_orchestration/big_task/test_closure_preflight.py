@@ -167,6 +167,18 @@ def test_current_human_confirmation_does_not_require_legacy_authorization_ref():
     assert closure_preflight.validate_packet(packet) == []
 
 
+def test_preconfirmed_master_action_requires_matching_publisher_state():
+    packet = _packet()
+    packet["big_task_confirmation_closure"].update(
+        known_confirmation_required_actions=["master_integration"],
+        preconfirmed_actions=["master_integration"],
+    )
+    assert (
+        "master_integration_preconfirmed_but_publisher_not_confirmed"
+        in closure_preflight.validate_packet(packet)
+    )
+
+
 @pytest.mark.parametrize(
     "field",
     ["objective", "allowed_changed_paths", "required_tests", "prohibitions",
