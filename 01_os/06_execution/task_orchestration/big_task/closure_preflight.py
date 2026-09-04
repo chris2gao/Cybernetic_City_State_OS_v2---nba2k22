@@ -81,6 +81,11 @@ OPEN_LIFECYCLE_STATES = frozenset(
 # value here would force every implementation task to either lie or self-accept.
 DECLARABLE_LIFECYCLE_STATES = TERMINAL_LIFECYCLE_STATES | OPEN_LIFECYCLE_STATES
 
+MASTER_INTEGRATION_ACTION = "master_integration"
+MASTER_INTEGRATION_CONFIRMATION_STATES = frozenset(
+    {"not_requested", "current_Human_confirmed", "preconfirmed"}
+)
+
 
 class PreflightError(Exception):
     """Raised when the input cannot be read as a packet."""
@@ -122,12 +127,25 @@ def derive_closure(packet: dict[str, Any]) -> dict[str, Any]:
 
     publisher = packet.get("publisher") or {}
     verification = packet.get("verification_profile") or {}
+    confirmation_closure = packet.get("big_task_confirmation_closure") or {}
 
     protected: list[str] = []
-    if publisher.get("master_write_authorized") is True:
-        protected.append("master_write")
-    if publisher.get("destructive_git_authorized") is True:
-        protected.append("destructive_git")
+    if isinstance(confirmation_closure, dict) and confirmation_closure.get("enabled") is True:
+        known = confirmation_closure.get("known_confirmation_required_actions")
+        if isinstance(known, list):
+            protected.extend(
+                action for action in known if isinstance(action, str) and action
+            )
+
+    if isinstance(publisher, dict) and publisher.get("master_integration_confirmation") in {
+        "current_Human_confirmed",
+        "preconfirmed",
+    }:
+        protected.append(MASTER_INTEGRATION_ACTION)
+
+    # Preserve first-seen order while preventing duplicate action names when the
+    # publisher state and confirmation-closure block describe the same action.
+    protected = list(dict.fromkeys(protected))
 
     return {
         "objective": explicit.get("objective", packet.get("objective")),
@@ -176,11 +194,78 @@ def validate_packet(packet: dict[str, Any]) -> list[str]:
     if verification.get("executor_self_acceptance") not in (None, "prohibited", False):
         findings.append("executor_self_acceptance_must_be_prohibited")
 
+    publisher_raw = packet.get("publisher")
+    if publisher_raw is not None and not isinstance(publisher_raw, dict):
+        findings.append("publisher_must_be_a_mapping")
+        publisher: dict[str, Any] = {}
+    else:
+        publisher = publisher_raw or {}
+
+    master_state = publisher.get("master_integration_confirmation")
+    if (
+        master_state is not None
+        and master_state not in MASTER_INTEGRATION_CONFIRMATION_STATES
+    ):
+        findings.append(f"master_integration_confirmation_invalid:{master_state}")
+
+    confirmation_raw = packet.get("big_task_confirmation_closure")
+    confirmation: dict[str, Any] = {}
+    if confirmation_raw is not None:
+        if not isinstance(confirmation_raw, dict):
+            findings.append("big_task_confirmation_closure_must_be_a_mapping")
+        else:
+            confirmation = confirmation_raw
+            enabled = confirmation.get("enabled")
+            if enabled is not None and not isinstance(enabled, bool):
+                findings.append("big_task_confirmation_closure_enabled_must_be_boolean")
+
+            list_fields = (
+                "known_confirmation_required_actions",
+                "preconfirmed_actions",
+                "uncovered_actions",
+            )
+            for field in list_fields:
+                value = confirmation.get(field)
+                if value is not None and not isinstance(value, list):
+                    findings.append(f"confirmation_closure_{field}_must_be_a_list")
+
+            known = confirmation.get("known_confirmation_required_actions")
+            preconfirmed = confirmation.get("preconfirmed_actions")
+            uncovered = confirmation.get("uncovered_actions")
+            if enabled is True and all(
+                isinstance(value, list) for value in (known, preconfirmed, uncovered)
+            ):
+                known_set = set(known)
+                preconfirmed_set = set(preconfirmed)
+                uncovered_set = set(uncovered)
+                for action in sorted(preconfirmed_set - known_set):
+                    findings.append(
+                        f"preconfirmed_action_not_declared_known:{action}"
+                    )
+                for action in sorted(uncovered_set - known_set):
+                    findings.append(f"uncovered_action_not_declared_known:{action}")
+                for action in sorted(known_set - preconfirmed_set - uncovered_set):
+                    findings.append(f"confirmation_required_action_unclassified:{action}")
+                for action in sorted(uncovered_set):
+                    findings.append(f"confirmation_required_action_uncovered:{action}")
+
+                if (
+                    master_state in {"current_Human_confirmed", "preconfirmed"}
+                    and MASTER_INTEGRATION_ACTION not in known_set
+                ):
+                    findings.append(
+                        "master_integration_missing_from_confirmation_closure"
+                    )
+
     protected = closure.get("known_protected_actions")
-    if isinstance(protected, list) and protected:
-        publisher = packet.get("publisher") or {}
-        if not publisher.get("authorization_ref"):
-            findings.append("protected_action_without_authorization_ref")
+    if isinstance(protected, list) and protected and confirmation_raw is not None:
+        preconfirmed = confirmation.get("preconfirmed_actions")
+        uncovered = confirmation.get("uncovered_actions")
+        if isinstance(preconfirmed, list) and isinstance(uncovered, list):
+            classified = set(preconfirmed) | set(uncovered)
+            for action in protected:
+                if action not in classified:
+                    findings.append(f"protected_action_without_closure_disposition:{action}")
 
     return findings
 

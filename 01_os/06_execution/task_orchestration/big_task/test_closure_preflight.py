@@ -27,9 +27,19 @@ def _packet(**overrides) -> dict:
         "required_completion_pointer": "section 10 shape",
         "terminal_lifecycle_state": "integrated_and_verified_on_demand",
         "publisher": {
-            "master_write_authorized": False,
-            "destructive_git_authorized": False,
-            "authorization_ref": "Human instruction",
+            "principal_binding": "connector_authenticated",
+            "publication_transport": "github_api_connector",
+            "source_branch_publication": "task_scope_default",
+            "master_integration_confirmation": "not_requested",
+            "confirmation_ref": None,
+            "expected_remote_head": "0" * 40,
+        },
+        "big_task_confirmation_closure": {
+            "enabled": True,
+            "known_confirmation_required_actions": [],
+            "preconfirmed_actions": [],
+            "confirmation_ref": None,
+            "uncovered_actions": [],
         },
         "verification_profile": {
             "independent_reviewer": "fresh isolated window",
@@ -94,23 +104,67 @@ def test_empty_protected_action_set_is_valid():
     assert closure_preflight.validate_packet(_packet()) == []
 
 
-def test_master_write_is_surfaced_as_a_protected_action():
+def test_current_schema_master_integration_is_surfaced_as_a_protected_action():
     packet = _packet(
         publisher={
-            "master_write_authorized": True,
-            "destructive_git_authorized": False,
-            "authorization_ref": "Human instruction",
-        }
+            "principal_binding": "connector_authenticated",
+            "publication_transport": "github_api_connector",
+            "source_branch_publication": "task_scope_default",
+            "master_integration_confirmation": "current_Human_confirmed",
+            "confirmation_ref": None,
+            "expected_remote_head": "0" * 40,
+        },
+        big_task_confirmation_closure={
+            "enabled": True,
+            "known_confirmation_required_actions": ["master_integration"],
+            "preconfirmed_actions": ["master_integration"],
+            "confirmation_ref": None,
+            "uncovered_actions": [],
+        },
     )
     closure = closure_preflight.derive_closure(packet)
-    assert "master_write" in closure["known_protected_actions"]
+    assert closure["known_protected_actions"] == ["master_integration"]
+    assert closure_preflight.validate_packet(packet) == []
 
 
-def test_protected_action_without_authorization_ref_is_a_finding():
-    packet = _packet(
-        publisher={"master_write_authorized": True, "destructive_git_authorized": False}
+def test_current_schema_master_integration_p5_false_negative_is_closed():
+    """Regression for P5: current section-7 fields must not derive []."""
+    packet = _packet()
+    packet["publisher"]["master_integration_confirmation"] = "current_Human_confirmed"
+    packet["big_task_confirmation_closure"].update(
+        known_confirmation_required_actions=["master_integration"],
+        preconfirmed_actions=["master_integration"],
+        uncovered_actions=[],
     )
-    assert "protected_action_without_authorization_ref" in closure_preflight.validate_packet(packet)
+    closure = closure_preflight.derive_closure(packet)
+    assert "master_integration" in closure["known_protected_actions"]
+    assert closure_preflight.validate_packet(packet) == []
+
+
+def test_uncovered_confirmation_required_action_is_a_finding():
+    packet = _packet(
+        big_task_confirmation_closure={
+            "enabled": True,
+            "known_confirmation_required_actions": ["master_integration"],
+            "preconfirmed_actions": [],
+            "confirmation_ref": None,
+            "uncovered_actions": ["master_integration"],
+        }
+    )
+    assert (
+        "confirmation_required_action_uncovered:master_integration"
+        in closure_preflight.validate_packet(packet)
+    )
+
+
+def test_current_human_confirmation_does_not_require_legacy_authorization_ref():
+    packet = _packet()
+    packet["publisher"]["master_integration_confirmation"] = "current_Human_confirmed"
+    packet["big_task_confirmation_closure"].update(
+        known_confirmation_required_actions=["master_integration"],
+        preconfirmed_actions=["master_integration"],
+    )
+    assert closure_preflight.validate_packet(packet) == []
 
 
 @pytest.mark.parametrize(
