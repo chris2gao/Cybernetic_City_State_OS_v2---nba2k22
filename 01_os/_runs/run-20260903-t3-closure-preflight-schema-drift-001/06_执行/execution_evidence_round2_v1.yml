@@ -1,0 +1,60 @@
+schema_version: citystate.task_execution_evidence.v1
+run_id: run-20260903-t3-closure-preflight-schema-drift-001
+task_id: os-v2-t3-closure-preflight-schema-drift-001
+exact_base_sha: c919c1760929ff23d58083de9498e38850500afe
+implementation_candidate_sha: 738f66ec5c00a90ee929b993252960008e6d6c78
+branch: dev/os-v2-t3-closure-preflight-schema-drift-001
+supersedes_execution_evidence_ref: 06_执行/execution_evidence_v1.yml
+work_performed_or_requested: Close the evidence package for the final Task 0 implementation
+  candidate after independent review established P5 CLOSED but found the run evidence
+  stale and incomplete.
+implementation_or_review_method: Re-ran the exact bounded test set on 738f66ec, rebound
+  execution evidence to that exact implementation SHA, reconciled the round-1 P5 OPEN
+  finding as superseded by the correction in 738f66ec, and prepared the run for a
+  fresh evidence-focused independent review.
+supportability_rationale: Fresh execution on 738f66ec produced 53/53 passing tests
+  in both big_task and task_orchestration suites and git diff --check exit 0. Claude
+  Desktop independently reproduced base P5 false-negative and candidate closure, ran
+  20 adversarial probes with no code blocker, and explicitly judged P5 CLOSED.
+feasibility_rationale: The remaining independent-review blockers are evidence-state
+  defects only. No implementation code or architecture change is required; durable
+  evidence, lifecycle, and completion-pointer closure are sufficient.
+verification:
+  big_task_pytest:
+    command: python -B -m pytest 01_os/06_execution/task_orchestration/big_task -q
+      -p no:cacheprovider
+    exit_code: 0
+    result: 53 passed
+  task_orchestration_pytest:
+    command: python -B -m pytest 01_os/06_execution/task_orchestration -q -p no:cacheprovider
+    exit_code: 0
+    result: 53 passed
+  diff_check:
+    command: git diff --check c919c1760929ff23d58083de9498e38850500afe..738f66ec5c00a90ee929b993252960008e6d6c78
+    exit_code: 0
+review_reconciliation:
+  independent_review_source: Claude Desktop Opus 5 fresh session with live repository
+    access
+  independent_review_verdict: FIX_REQUIRED_evidence_only
+  independent_p5_status: CLOSED
+  round1_p5_open_ref: 07_验证/independent_review_round1_v1.yml
+  round1_p5_open_disposition: superseded_by_738f66ec_correction_and_Claude_Desktop_independent_reproduction
+  blocking_code_findings: []
+  evidence_blockers_closed_by_this_round:
+  - IR2-B1_final_candidate_evidence_binding
+  - IR2-B2_run_assertion_reconciliation
+  - IR2-B3_completion_pointer_and_lifecycle
+residual_risk:
+- This task does not prove Human identity cryptographically, master-publication safety,
+  workflow Human-decision enforcement, or communication-system compliance.
+- Legacy master_write_authorized / destructive_git_authorized / authorization_ref
+  fields remain readable but no longer drive current preflight decisions; a new packet
+  incorrectly using only those old fields can therefore appear to have no protected
+  action.
+- Non-master confirmation-bound actions still depend on the task packet enumerating
+  them in big_task_confirmation_closure; this task does not add automatic discovery
+  for all registry actions.
+- Action naming remains split between master_integration in the packet/preflight and
+  publish_or_merge_to_master in the publisher-authority registry; current behavior
+  is fail-closed rather than silently permissive.
+master_integration_authorized: false

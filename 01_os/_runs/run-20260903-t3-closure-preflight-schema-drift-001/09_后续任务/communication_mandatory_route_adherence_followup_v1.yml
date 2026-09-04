@@ -1,0 +1,40 @@
+schema_version: citystate.followup_task_candidate.v1
+status: recorded_pending_formal_task_entry_and_Human_preimplementation_decision
+title: Communication Mandatory Route & Adherence Repair
+origin: Human observed that cross-model dispatches were repeatedly pasted as long
+  chat content despite the communication system's document/pointer design.
+findings:
+- id: C-01
+  finding: Human-mediated cross-model relay can be classified as ordinary Human-facing
+    chat instead of a mandatory formal cross-endpoint action.
+- id: C-02
+  finding: Missing communication_context_ref has no mandatory deterministic transition
+    into task-space initialization; ordinary chat remains an allowed fallback.
+- id: C-03
+  finding: publish_message.py is strict after entry, but the publisher is not a mandatory
+    doorway for all cross-model intent.
+- id: C-04
+  finding: long_content_requires_document is enforced only inside the publisher path,
+    so long cross-model prompts can bypass it by being emitted directly in chat.
+- id: C-05
+  finding: Human relay pointer contracts define pointer shape but are not enforced
+    as an assistant-output gate for cross-model relay.
+candidate_direction:
+- Treat any intended destination of another model/endpoint, including Human-mediated
+  relay, as a formal cross-endpoint action.
+- When communication context is missing, initialize or block; do not fall back to
+  pasting the formal body into Human chat.
+- Provide one thin formal-handoff orchestration entry that calls existing initializer,
+  routing, activation, publisher, document, and pointer owners without duplicating
+  them.
+- For formal cross-model actions, Human chat should default to pointer plus one-line
+  routing purpose; long bodies belong in communication documents.
+- Receiver should reject a Human-pasted artifact explicitly identified as another
+  model's formal dispatch when no valid v2 pointer is supplied.
+- Require fresh-model behavioral conformance pilots before claiming the repair effective.
+constraints:
+- Do not rewrite the communication system from scratch.
+- Do not restore authorization code/nonce/delegation ceremony.
+- Human must receive a pre-implementation explanation of objective, causal mechanism,
+  feasibility, limitations, and risks before implementation begins.
+implementation_started: false
