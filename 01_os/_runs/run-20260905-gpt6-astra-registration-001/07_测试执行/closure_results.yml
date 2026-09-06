@@ -1,0 +1,11 @@
+schema_version: citystate.verification_receipt.v1
+date: '2026-09-05'
+checks_ref: 01_os/_runs/run-20260905-gpt6-astra-registration-001/07_测试执行/closure_checks.yml
+command: python -X utf8 01_os/06_execution/task_discipline/quiet_verify/quiet_verify.py --checks 01_os/_runs/run-20260905-gpt6-astra-registration-001/07_测试执行/closure_checks.yml --repo-root . --tail 12 --max-chars 2200 --json
+exit_code: 0
+results:
+  completion_output_contract: {exit_code: 0, ok: true}
+  canonical_content_matches_verified_candidate: {exit_code: 0, ok: true}
+  whitespace_check: {exit_code: 0, ok: true}
+summary: checks 3/3 ok
+independent_review: false

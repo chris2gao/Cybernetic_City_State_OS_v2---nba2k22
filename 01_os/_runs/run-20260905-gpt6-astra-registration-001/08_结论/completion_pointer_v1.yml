@@ -1,0 +1,61 @@
+schema_version: citystate.task_completion.v1
+task_id: gpt6-astra-registration-20260905
+completion_pointer:
+  carrier: GitHub
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  candidate_sha: da7380ccaf0378f6f7e81c3f210c400ba3f19b6b
+  candidate_evidence_path: 01_os/_runs/run-20260905-gpt6-astra-registration-001/07_测试执行/candidate_results.json
+  source_branch: codex/register-gpt6-astra-20260905
+  remote_candidate_head_read_back: da7380ccaf0378f6f7e81c3f210c400ba3f19b6b
+  master_read_back: 820c61a322b5a7c5ea71c02bd7722dfbd448ab28
+  publication_transport: local_git
+  hooks_path: .githooks
+  master_integration: not_performed
+  formal_cross_endpoint_message: false
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Registered GPT-6 Astra on the existing Codex Desktop surface, preserved all prior
+    model entries, and synchronized catalog and source-index versions to 3.
+  implementation_or_review_method: >-
+    Read fresh remote master and canonical startup contracts, opened first-party
+    model and Codex documentation, reproduced the absent route before editing,
+    then exercised the existing route builder and unchanged static validators.
+  supportability_rationale: >-
+    Provider sources support model and product identity while the Human observation
+    binds only the active task selection. Tests demonstrate successful Astra route
+    construction, rejection of an invented profile and an unregistered route, and
+    semantic preservation of all previous catalog entries and source records.
+  feasibility_rationale: >-
+    This uses the existing catalog schema, source resolution and receiver builder;
+    no dependency or implementation change is needed. Desktop context limits,
+    vision, latency and the active reasoning setting remain unobserved rather than
+    being inferred from API specifications. Publication used the available local Git transport.
+  exact_result_or_candidate_ref: da7380ccaf0378f6f7e81c3f210c400ba3f19b6b
+  verification_evidence:
+    - 01_os/_runs/run-20260905-gpt6-astra-registration-001/07_测试执行/baseline_results.json
+    - 01_os/_runs/run-20260905-gpt6-astra-registration-001/07_测试执行/candidate_results.json
+  residual_risk_or_unproved_limits:
+    - Self-verification only; no independent review or L4 acceptance claimed.
+    - Registration is on the published task branch, not master.
+    - Current reasoning setting is not observable; the profile retains surface_current.
+    - No universal account availability or independent quality benchmark is claimed.
+    - No formal receiver bootstrap, automatic delivery or runtime activation was performed.
+initialization:
+  canonical_base_sha: 820c61a322b5a7c5ea71c02bd7722dfbd448ab28
+  startup_documents_loaded:
+    - AGENT_WORKING_DISCIPLINE.md
+    - AGENTS.md
+    - 01_os/README.md
+    - 01_os/开发入口与单窗口任务规范_v1.md
+  mechanism_load_orders_loaded:
+    - 01_os/02_boot/model_routing/启动清单_v1.yml
+    - 01_os/02_boot/mechanism_activation/启动清单_v1.yml
+    - 01_os/02_boot/communication_system/启动清单_v1.yml
+  registration_overlay_sha: da7380ccaf0378f6f7e81c3f210c400ba3f19b6b
+  static_validation: all_three_passed
+  model_routing_versions: {mechanism: 1, catalog: 3, source_index: 3}
+  selected_route: {provider: OpenAI, surface: codex_desktop, model: GPT-6 Astra, profile: codex_astra_task_time}
+  operational_activation_claimed: false
+  old_T2_task_resumed: false
+  main_worktree_changes: none

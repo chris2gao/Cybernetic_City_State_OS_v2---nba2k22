@@ -1,0 +1,10 @@
+checks:
+  - name: completion_output_contract
+    cmd: [python, 01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py, artifact, 01_os/_runs/run-20260905-gpt6-astra-registration-001/08_结论/completion_pointer_v1.yml, --require-mwu]
+    expect_exit: 0
+  - name: canonical_content_matches_verified_candidate
+    cmd: [git, diff, --exit-code, da7380ccaf0378f6f7e81c3f210c400ba3f19b6b, --, 01_os/03_mechanisms/model_routing, 01_os/02_boot/model_routing]
+    expect_exit: 0
+  - name: whitespace_check
+    cmd: [git, diff, --check]
+    expect_exit: 0
