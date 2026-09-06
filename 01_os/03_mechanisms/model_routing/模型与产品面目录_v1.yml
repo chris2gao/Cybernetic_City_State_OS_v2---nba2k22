@@ -1,10 +1,40 @@
 schema_version: citystate.model_routing.catalog.v1
 mechanism_version: 1
-catalog_version: 2
+catalog_version: 3
 status: active
 entitlement_is_account_availability: false
 source_index_ref: 01_os/03_mechanisms/model_routing/来源索引_v1.yml
 entries:
+  - provider: OpenAI
+    surface_id: codex_desktop
+    model_label: GPT-6 Astra
+    registered: true
+    capabilities:
+      context: unknown
+      reasoning_controls: surface_runtime_exposed_levels
+      agent_and_tools: supported
+      coding: supported
+      research: supported
+      multimodal_vision: unknown
+      speed_latency: unknown
+    parameter_profiles:
+      - profile_id: codex_astra_task_time
+        reasoning_levels: [surface_current]
+        source_class: provider_documentation_plus_Human_task_time_observation
+        surface_exposure_evidence: [OAI_CODEX_MODELS_20260905, HUMAN_CODEX_ASTRA_20260905]
+    source_refs: [OAI_GPT6_ASTRA_20260905, OAI_CODEX_MODELS_20260905, HUMAN_CODEX_ASTRA_20260905]
+    evidence_binding:
+      surface_and_product_identity: provider_first_party_documentation
+      model_identity_and_general_capabilities: provider_first_party_documentation
+      active_session_model_selection: Human_task_time_observation
+      current_reasoning_setting: not_observable
+      API_limits_and_effort_levels_applied_to_desktop: false
+    verified_at: '2026-09-05'
+    invalidation_conditions:
+      - OpenAI Codex model or product update
+      - Human task-time surface or model observation differs
+    confidence: high
+
   - provider: OpenAI
     surface_id: chatgpt_web
     model_label: GPT-5.6 Sol

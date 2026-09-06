@@ -1,6 +1,6 @@
 schema_version: citystate.model_routing.source_index.v1
 mechanism_version: 1
-source_index_version: 2
+source_index_version: 3
 status: active
 resolution_contract:
   token_scope: catalog_source_refs_and_surface_exposure_evidence
@@ -17,6 +17,28 @@ resolution_contract:
       invalidates_when_task_time_model_observation_differs: true
     Human_task_time_observation_grants_authority: false
 sources:
+  OAI_GPT6_ASTRA_20260905:
+    kind: provider_first_party
+    title: GPT-6 Astra model documentation
+    url: https://developers.openai.com/api/docs/models/gpt-6-astra
+    verified_at: '2026-09-05'
+    supports: [model identity, coding and research capabilities]
+    limitations: [API numeric limits and effort levels are not Desktop surface observations]
+  OAI_CODEX_MODELS_20260905:
+    kind: provider_first_party
+    title: Codex models
+    url: https://learn.chatgpt.com/docs/models
+    original_url: https://developers.openai.com/codex/models/
+    verified_at: '2026-09-05'
+    supports: [GPT-6 Astra in Codex, task-time model and reasoning controls]
+    limitations: [availability and controls depend on current product surface and rollout]
+  HUMAN_CODEX_ASTRA_20260905:
+    kind: Human_task_time_observation
+    title: Human-confirmed GPT-6 Astra selection in this Codex Desktop task
+    path: 01_os/_runs/run-20260905-gpt6-astra-registration-001/01_任务输入/Human与来源证据_v1.yml
+    verified_at: '2026-09-05'
+    supports: [active task model selection only]
+    limitations: [not a quality benchmark, not universal account availability, grants no authority]
   OAI_CHATGPT_56:
     kind: provider_first_party
     title: GPT-5.6 in ChatGPT

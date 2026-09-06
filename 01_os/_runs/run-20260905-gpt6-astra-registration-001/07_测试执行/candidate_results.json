@@ -1,0 +1,107 @@
+{
+  "phase": "candidate",
+  "exact_base_sha": "820c61a322b5a7c5ea71c02bd7722dfbd448ab28",
+  "independent_review": false,
+  "canonical_sha256": {
+    "01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml": "fb029c38736d5c7eae0ecff29b4ed2de6e5dad8f29cbeab5b659d6e8de447578",
+    "01_os/03_mechanisms/model_routing/来源索引_v1.yml": "a9a646dc18987a02db64661b952f20e0d1dbb39bdf588e6ae9e61c0e5445324e",
+    "01_os/02_boot/model_routing/启动清单_v1.yml": "5747a462f469018bbcd5b6dc87257b5fe5745df66aa6c65f3ac4a52675ba8306"
+  },
+  "checks": [
+    {
+      "name": "task_preflight",
+      "command": [
+        "python",
+        "01_os/06_execution/task_discipline/preflight/preflight_task_context.py",
+        "--packet",
+        "01_os/_runs/run-20260905-gpt6-astra-registration-001/01_任务输入/任务包_v1.yml",
+        "--repo-root",
+        ".",
+        "--allow-dirty",
+        "--json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\r\n  \"report\": {\r\n    \"task_id\": \"gpt6-astra-registration-20260905\",\r\n    \"branch_declared\": \"codex/register-gpt6-astra-20260905\",\r\n    \"base_declared\": \"820c61a322b5a7c5ea71c02bd7722dfbd448ab28\",\r\n    \"branch_actual\": \"codex/register-gpt6-astra-20260905\",\r\n    \"local_head\": \"820c61a322b5a7c5ea71c02bd7722dfbd448ab28\",\r\n    \"hooks_path\": \".githooks\",\r\n    \"quotepath\": \"false\",\r\n    \"allowlist\": [\r\n      \"01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml\",\r\n      \"01_os/03_mechanisms/model_routing/来源索引_v1.yml\",\r\n      \"01_os/02_boot/model_routing/启动清单_v1.yml\",\r\n      \"01_os/_runs/run-20260905-gpt6-astra-registration-001/**\"\r\n    ],\r\n    \"prohibitions\": [\r\n      \"master_write\",\r\n      \"rewrite_history\",\r\n      \"change_routing_or_validator_semantics\"\r\n    ],\r\n    \"required_tests\": [\r\n      \"model_routing_static\",\r\n      \"mechanism_activation_static\",\r\n      \"communication_static\",\r\n      \"existing_receiver_setup_tests\",\r\n      \"astra_registration_acceptance\"\r\n    ],\r\n    \"big_task\": false,\r\n    \"big_task_confirmation_closure\": null,\r\n    \"dirty_path_count\": 10,\r\n    \"head_descends_from_base\": true,\r\n    \"commits_since_base\": [],\r\n    \"remote_master\": \"820c61a322b5a7c5ea71c02bd7722dfbd448ab28\",\r\n    \"remote_branch\": null,\r\n    \"expected_remote_master\": \"820c61a322b5a7c5ea71c02bd7722dfbd448ab28\",\r\n    \"master_unchanged\": true,\r\n    \"master_verification\": \"verified_unchanged\"\r\n  },\r\n  \"gate\": null,\r\n  \"hard_failures\": []\r\n}\r\n",
+      "stderr": ""
+    },
+    {
+      "name": "model_routing_static",
+      "command": [
+        "python",
+        "01_os/03_mechanisms/model_routing/实现/verify_model_routing.py",
+        "static",
+        "."
+      ],
+      "exit_code": 0,
+      "stdout": "validation_passed\r\n",
+      "stderr": ""
+    },
+    {
+      "name": "mechanism_activation_static",
+      "command": [
+        "python",
+        "01_os/06_execution/boot/mechanism_activation/validate_mechanism_activation.py",
+        "static",
+        "."
+      ],
+      "exit_code": 0,
+      "stdout": "validation_passed\r\n",
+      "stderr": ""
+    },
+    {
+      "name": "communication_static",
+      "command": [
+        "python",
+        "01_os/06_execution/boot/communication_system/validator/validate_communication_system.py",
+        "static",
+        "."
+      ],
+      "exit_code": 0,
+      "stdout": "validation_passed\r\n",
+      "stderr": ""
+    },
+    {
+      "name": "existing_receiver_setup_tests",
+      "command": [
+        "python",
+        "01_os/06_execution/boot/model_routing/test_receiver_setup.py"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".......\r\n----------------------------------------------------------------------\r\nRan 7 tests in 0.001s\r\n\r\nOK\r\n"
+    },
+    {
+      "name": "astra_registration_acceptance",
+      "exit_code": 0,
+      "detail": {
+        "registered_route_builds": true,
+        "existing_entries_preserved": true,
+        "unsupported_profile_rejected": true,
+        "unregistered_route_rejected": true,
+        "receiver_setup_test_fixture": {
+          "product": "Codex Desktop",
+          "surface": "codex_desktop",
+          "session_mode": "standard",
+          "provider": "OpenAI",
+          "repository_or_worktree_requirement": "authorized_task_branch",
+          "collaboration_role": "execution",
+          "repository_access_mode": "local_worktree",
+          "required_branch_or_sha": "codex/register-gpt6-astra-20260905",
+          "availability_assumption_or_observation_ref": "01_os/_runs/run-20260905-gpt6-astra-registration-001/01_任务输入/Human与来源证据_v1.yml",
+          "model": "GPT-6 Astra",
+          "limitations": [
+            "role_grants_no_authority"
+          ],
+          "github_publication_required_before_start": false,
+          "routing_basis_ref": "01_os/_runs/run-20260905-gpt6-astra-registration-001/01_任务输入/任务包_v1.yml",
+          "reasoning_or_parameter_profile": "codex_astra_task_time",
+          "isolation_level": "task_branch",
+          "communication_carrier": "local",
+          "local_files_required": true
+        },
+        "authority": "routing_only"
+      }
+    }
+  ],
+  "passed": true
+}

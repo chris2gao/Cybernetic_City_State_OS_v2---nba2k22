@@ -1,0 +1,13 @@
+schema_version: citystate.run.v1
+run_id: run-20260905-gpt6-astra-registration-001
+task_id: gpt6-astra-registration-20260905
+exact_base_sha: 820c61a322b5a7c5ea71c02bd7722dfbd448ab28
+branch: codex/register-gpt6-astra-20260905
+ownership: core
+lifecycle: candidate_pending_validation
+purpose: Register GPT-6 Astra using the existing model-routing catalog and complete reinitialization.
+outputs:
+  - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+  - 01_os/03_mechanisms/model_routing/来源索引_v1.yml
+  - 01_os/02_boot/model_routing/启动清单_v1.yml
+validation: 07_测试执行/verify_registration.py
