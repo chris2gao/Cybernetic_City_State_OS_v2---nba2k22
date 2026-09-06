@@ -1,12 +1,13 @@
 schema_version: citystate.task_packet.v1
 task_id: gpt6-astra-registration-20260905
 repository: chris2gao/Cybernetic_City_State_OS_v2---core
-risk_tier: T1_standard
+risk_tier: T3_high_risk
 exact_base_sha: 820c61a322b5a7c5ea71c02bd7722dfbd448ab28
 branch: codex/register-gpt6-astra-20260905
-objective: Register the Human-selected GPT-6 Astra on the existing Codex Desktop surface and finish OS reinitialization.
+objective: Register GPT-6 Astra, publish the verified registration to master with current Human confirmation and review waiver, and finish OS reinitialization.
 source_evidence:
   - 01_os/_runs/run-20260905-gpt6-astra-registration-001/01_任务输入/Human与来源证据_v1.yml
+  - 01_os/_runs/run-20260905-gpt6-astra-registration-001/01_任务输入/master确认与审核豁免_v1.yml
 allowed_changed_paths:
   - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
   - 01_os/03_mechanisms/model_routing/来源索引_v1.yml
@@ -19,21 +20,22 @@ required_tests:
   - existing_receiver_setup_tests
   - astra_registration_acceptance
 prohibitions:
-  - master_write
+  - master_write_outside_this_registration_scope
   - rewrite_history
   - change_routing_or_validator_semantics
   - remove_existing_models
   - invent_current_reasoning_setting
-explicit_prohibitions: [master_write, rewrite_history, change_routing_or_validator_semantics]
+explicit_prohibitions: [master_write_outside_this_registration_scope, rewrite_history, change_routing_or_validator_semantics]
 required_completion_pointer: 01_os/_runs/run-20260905-gpt6-astra-registration-001/08_结论/completion_pointer_v1.yml
 big_task: false
 publisher:
   principal_binding: local_authenticated
   publication_transport: local_git
   source_branch_publication: task_scope_default
-  master_integration_confirmation: not_requested
+  master_integration_confirmation: current_Human_confirmed
+  confirmation_ref: 01_os/_runs/run-20260905-gpt6-astra-registration-001/01_任务输入/master确认与审核豁免_v1.yml
   expected_remote_master_head: 820c61a322b5a7c5ea71c02bd7722dfbd448ab28
-  expected_remote_head: '0000000000000000000000000000000000000000'
+  expected_remote_head: 9cb7f1adf7d35ea15e347f4f12003f4871172c91
   identity_evidence: gh api user returned chris2gao; origin is the corresponding core repository
 executor_profile:
   provider: OpenAI
@@ -45,6 +47,6 @@ executor_profile:
   authority: routing_only
 verification_profile:
   reproduce_before_change: required
-  independent_reviewer: not_run
+  independent_reviewer: Human_waived_for_this_task
   different_model_family: false
   different_measurement_tool: false
