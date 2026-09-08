@@ -1,4 +1,5 @@
 schema_version: citystate.execution_foundation.progress.v1
+snapshot_scope: Historical pre-46acc091 observations; see resumed_route_update for current progress. Old failure evidence is not rewritten as success.
 candidate_status: candidate_pending_validation
 independent_acceptance: not_run
 master_integration: not_requested
@@ -75,3 +76,29 @@ subsequent_construction_evidence:
     live_state_guard: passed
     static_refs: diagnostic_only_reports_known_mismatch
   - observation: Broad cached Git status omitted a packet-reader test that exact-path ls-files showed as untracked. Source-reading helpers now disable untracked-cache and fsmonitor per invocation; no repository configuration was changed.
+resumed_route_update:
+  decision_ref: ../03_方案设计/baseline_route_decision.md
+  Human_delegation: Three route decisions delegated; existing architecture and implementation delegation retained.
+  route: Continue master-based Codex reconstruction without importing rejected receipts or phase1.
+  frozen_branch_action: none
+  master_action: none
+  allowlist_amended_before_reference_edits: true
+  baseline_reference_repair:
+    wrapper_count: 7
+    pin_only_byte_delta_verified: true
+    target_and_dependency_bodies_unchanged: true
+    required_check_plan_unchanged: true
+    probe: verify_profile_pin_delta.py
+    working_tree_workflow_static_exit: 0
+    working_tree_deliberation_static_exit: 0
+    exact_new_candidate_managed_run: pending
+  original_exact_candidate_attempt:
+    candidate: 46acc0918d3d262e21e69ffe99002837a989ff53
+    verdict: failure
+    workflow_exit: 22
+    subsequent_checks: not_run
+    evidence_preserved: true
+  remaining_requirements:
+    - Run and inspect the complete unchanged plan on a new clean exact candidate, then publish and read back the task branch.
+    - Resolve or explicitly disposition the residual per-stage confirmation semantics; structural green is not semantic consistency.
+    - Obtain fresh independent acceptance and Human integration/deployment decisions; global enforcement is not established.

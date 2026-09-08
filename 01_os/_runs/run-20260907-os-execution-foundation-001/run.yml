@@ -8,6 +8,8 @@ task_packet: 01_任务/task_packet.yml
 lifecycle: candidate_pending_validation
 outputs:
   - 03_方案设计/architecture.md
+  - 03_方案设计/baseline_route_decision.md
+  - 03_方案设计/remaining_semantic_boundary.md
   - 07_测试执行/progress_and_baseline_blocker.yml
 verification:
   implementation: partial_local_regressions_passed_not_candidate_accepted
@@ -23,3 +25,6 @@ progress:
   - Local tests passed; whole-workflow static check exposed a stale exact profile reference already present on master.
   - Affected seven reference files are outside the declared boundary; no repair or scope expansion was performed.
   - Human clarified concurrent baseline work by Claude. Treat the stale refs as a baseline coordination item, not failure of the foundation task; retain the actual nonzero check result and continue non-overlapping work.
+  - Human resumed the task and delegated the three route decisions. Continue the clean master-based rebuild, preserve the frozen harness as evidence, and do not merge phase1 into master.
+  - The task packet now explicitly adds the seven exact wrapper paths for a pin-only baseline consistency repair, before making those reference edits. No protected authority or semantic target changes are added.
+  - Seven pin-only edits passed byte-exact delta checks. Both affected static checks now return zero in the worktree; the new exact-candidate complete managed run remains required.
