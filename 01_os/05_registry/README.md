@@ -53,6 +53,9 @@ that is neither present nor correctly ignored.
 
 ## 当前注册
 
+- `task_discipline_v1.yml`：任务包共享读取、物理预检/路径账本、完整日志诊断和受控候选验证。
+  执行者仍须显式调用；注册不表示远端强制执行或独立验收已完成。
+
 - `context_management_v1.yml`：上下文管理的 canonical 机制、boot adapter、
   execution loader/validator、活动开发规范、受保护历史和阶段二拆分补充。
 - `stage_collaborative_deliberation_v1.yml`：阶段协同推演闭环的 active-dormant 状态、

@@ -1,0 +1,108 @@
+task_packet:
+  task_id: os-execution-foundation-20260907-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T2_semantic
+  exact_base_sha: 3dc058a1a3cf393b936025f43fd737b0848937b4
+  branch: codex/os-execution-foundation-20260907
+  objective: >-
+    Reconstruct the rejected Opus infrastructure diagnosis, resolve task-entry
+    contradictions, and implement a simple managed execution and evidence gate
+    connecting required verification to candidate readiness. Audit the full gap
+    between policy, artifact validation, actual execution and enforced publication;
+    do not declare the OS operational merely because a new tool passes tests.
+  source_evidence:
+    - 3dc058a1a3cf393b936025f43fd737b0848937b4:AGENTS.md
+    - 3dc058a1a3cf393b936025f43fd737b0848937b4:AGENT_WORKING_DISCIPLINE.md
+    - 3dc058a1a3cf393b936025f43fd737b0848937b4:01_os/开发入口与单窗口任务规范_v1.md
+    - b79922dce8975add161de69d4614543644ef52f5
+    - Human supplied Opus CORRECTION-002 and explicit architecture/implementation delegation
+  allowed_changed_paths:
+    - AGENTS.md
+    - AGENT_WORKING_DISCIPLINE.md
+    - 01_os/README.md
+    - 01_os/开发入口与单窗口任务规范_v1.md
+    - 01_os/03_mechanisms/task_orchestration/**
+    - 01_os/01_workflow/实现/七阶段最小运行契约_v1.yml
+    - 01_os/06_execution/task_discipline/**
+    - 01_os/06_execution/workflow/minimum_operational_loop/**
+    - 01_os/05_registry/task_discipline_v1.yml
+    - 01_os/05_registry/task_orchestration_v1.yml
+    - 01_os/05_registry/workflow_minimum_operational_loop_v1.yml
+    - 01_os/05_registry/README.md
+    - 01_os/_runs/run-20260907-os-execution-foundation-001/**
+  acceptance_obligations:
+    - targeted real-Git task-packet, source and path-scope regressions
+    - managed verification positive, mismatch, skipped, timeout and spawn-error cases
+    - malformed, falsey, duplicate and unknown plan/result fields fail closed
+    - exact candidate, dirty source, source mutation, missing and damaged evidence cases
+    - full log preservation and distinct non-overwriting attempts
+    - current canonical model-routing, workflow and context static checks
+    - baseline versus candidate checks and real candidate pilot through managed entry
+    - exact changed-path allowlist and git diff --check
+  verification_plan: 01_os/_runs/run-20260907-os-execution-foundation-001/07_测试执行/required_checks.json
+  required_tests:
+    - unit_and_process_regressions
+    - model_routing_static
+    - workflow_static
+    - context_structure
+    - canonical_live_state_guard
+    - deliberation_static
+    - diff_whitespace
+  prohibitions:
+    - change_frozen_claude_task_discipline_receipts_branch
+    - copy_rejected_conformance_harness_as_accepted_implementation
+    - modify_master_without_current_task_Human_confirmation
+    - force_push
+    - rebase
+    - squash
+    - runtime_scheduler_or_daemon_activation
+    - read_or_publish_secrets_credentials_or_private_session_data
+    - clean_unrelated_untracked_files
+    - claim_self_authenticating_execution_or_global_bypass_prevention
+    - claim_independent_acceptance_from_implementation_team
+  required_completion_pointer: section_10_candidate_pointer_with_exact_remote_readback
+  big_task: true
+  expected_artifacts:
+    - evidence-led diagnosis and architecture decision
+    - canonical execution contract, implementation, tests and registry wiring
+    - exact candidate pilot evidence and review/deployment handoff
+  completion_conditions:
+    - named task-scope implementation and adversarial tests physically complete
+    - every requirement mapped to inspected primary evidence
+    - unproven global enforcement and integration explicitly separated
+  genuine_stop_conditions:
+    - new load-bearing decision outside the delegated foundation architecture
+    - allowed-path escape or external changes
+    - independent final review requires Human relay
+    - unconfirmed master integration or runtime activation
+    - security or evidence boundary
+  terminal_lifecycle_state: candidate_ready_for_independent_review
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 3dc058a1a3cf393b936025f43fd737b0848937b4
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+    scope_note: >-
+      Build and task-branch publication are in scope. Master integration and any
+      stronger independently controlled execution/publish boundary are later
+      Human gates, not implicitly authorized by this packet or old waivers.
+  executor_profile:
+    provider: OpenAI
+    surface: codex_desktop
+    model: surface_current
+    reasoning_effort: surface_current
+    mode: standard
+    rollout_token_budget: null
+    routing_basis: Human selected this current task; exact runtime settings not independently observable.
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: required
+    independent_reviewer: Human_selected_fresh_session
+    different_model_family: true
+    different_measurement_tool: true

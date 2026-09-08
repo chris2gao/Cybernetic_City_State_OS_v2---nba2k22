@@ -6,9 +6,12 @@ and only genuine stop conditions may count as hard failures.
 from __future__ import annotations
 
 import sys
+import json
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import preflight_task_context as pf  # noqa: E402
@@ -103,10 +106,10 @@ class TestHardFailures(unittest.TestCase):
         self.assertIn("head_not_descended_from_declared_base",
                       pf.hard_failures(r, require_clean=True))
 
-    def test_unknown_base_ancestry_does_not_block(self):
-        """No declared base leaves ancestry unknown; that alone must not block."""
+    def test_unknown_base_ancestry_blocks(self):
+        """Unknown ancestry cannot stand in for the required declared base."""
         r = dict(CLEAN, head_descends_from_base=None)
-        self.assertEqual(pf.hard_failures(r, require_clean=True), [])
+        self.assertIn("base_ancestry_unverified", pf.hard_failures(r, require_clean=True))
 
     def test_branch_mismatch_blocks(self):
         r = dict(CLEAN, branch_actual="dev/other")
@@ -203,6 +206,91 @@ class TestHelpers(unittest.TestCase):
         out = pf.render(dict(CLEAN, base_declared="x", allowlist=[], prohibitions=[],
                              required_tests=[], remote_branch=None), None, ["hook_guard:unset"])
         self.assertIn("preflight       BLOCKED", out)
+
+
+class TestPacketAgainstRealGit(unittest.TestCase):
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.root = Path(self._tmp.name)
+        self.repo = self.root / "repo"
+        self.repo.mkdir()
+        self._git("init", "-q", "-b", "master")
+        self._git("config", "user.email", "test@example.invalid")
+        self._git("config", "user.name", "test")
+        self._git("config", "core.hooksPath", ".githooks")
+        (self.repo / "seed").write_text("seed\n", encoding="utf-8")
+        self._git("add", "seed")
+        self._git("commit", "-qm", "seed")
+        self.base = self._git("rev-parse", "HEAD").strip()
+        self.remote = self.root / "remote.git"
+        self._git("init", "--bare", "-q", str(self.remote))
+        self._git("remote", "add", "origin", str(self.remote))
+        self._git("push", "-q", "origin", "master")
+        self._git("switch", "-q", "-c", "codex/test")
+        self.body = {
+            "task_id": "packet-test", "branch": "codex/test", "exact_base_sha": self.base,
+            "allowed_changed_paths": ["seed"], "required_tests": ["unit"],
+            "prohibitions": ["force_push"],
+            "publisher": {"expected_remote_master_head": self.base},
+        }
+        self.packet = self.root / "packet.yml"
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def _git(self, *args):
+        result = subprocess.run(["git", *args], cwd=self.repo, check=True,
+                                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        return result.stdout.decode("utf-8")
+
+    def _cli(self, data):
+        self.packet.write_text(pf.yaml.safe_dump(data), encoding="utf-8")
+        result = subprocess.run(
+            [sys.executable, str(Path(pf.__file__).resolve()), "--packet", str(self.packet),
+             "--repo-root", str(self.repo), "--json"],
+            cwd=self.root, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False,
+        )
+        return result
+
+    def test_wrapped_and_flat_packets_pass_same_real_git_facts(self):
+        for data, expected in (({"task_packet": self.body}, "wrapped_v1"),
+                               (self.body, "legacy_flat")):
+            with self.subTest(expected=expected):
+                result = self._cli(data)
+                self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8"))
+                report = json.loads(result.stdout)["report"]
+                self.assertEqual(report["packet_format"], expected)
+                self.assertEqual(report["prohibitions"], ["force_push"])
+                self.assertEqual(report["local_head"], self.base)
+                self.assertEqual(report["master_verification"], "verified_unchanged")
+
+    def test_publication_expected_head_does_not_verify_master(self):
+        self.body["publisher"] = {"expected_remote_head": self.base}
+        result = self._cli({"task_packet": self.body})
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("master_not_verified:no_expectation_declared",
+                      json.loads(result.stdout)["hard_failures"])
+
+    def test_missing_fields_fail_before_git_collection(self):
+        for field in ("task_id", "branch", "exact_base_sha", "allowed_changed_paths",
+                      "required_tests", "prohibitions"):
+            data = dict(self.body)
+            del data[field]
+            with self.subTest(field=field), patch.object(pf, "git") as git_mock:
+                with self.assertRaises(pf.PacketInputError):
+                    pf.collect(self.repo, {"task_packet": data}, use_remote=True)
+                git_mock.assert_not_called()
+
+    def test_invalid_packet_cli_returns_input_error(self):
+        for field, value in (("task_id", False), ("exact_base_sha", "HEAD"),
+                             ("allowed_changed_paths", []), ("prohibitions", False)):
+            data = dict(self.body)
+            data[field] = value
+            with self.subTest(field=field):
+                result = self._cli({"task_packet": data})
+                self.assertEqual(result.returncode, 3)
+                self.assertIn(b"preflight_error:", result.stderr)
+                self.assertNotIn(b"Traceback", result.stderr)
 
 
 if __name__ == "__main__":

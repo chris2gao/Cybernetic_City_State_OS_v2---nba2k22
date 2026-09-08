@@ -366,9 +366,11 @@ passes disagree — that disagreement is the signal worth having.
    authorized dispatcher explicitly selects it and the review discloses that shared
    family as a limitation. This lets the system measure same-family review quality
    instead of assuming either equivalence or invalidity.
-2. **The author does not design the verification of their own work.** Where it
-   matters, separate the two endpoints/contexts or hand the reviewer the raw material
-   with the conclusions removed. A fresh reviewer using the same model family is still
+2. **The author does not solely define or perform final acceptance of their own
+   work.** Implementation tests and regression probes are required construction
+   evidence, not independent acceptance. For final acceptance, separate the two
+   endpoints/contexts and let the reviewer reconstruct the requirements and tests
+   from primary material. A fresh reviewer using the same model family is still
    not the author when endpoint, session and private context are genuinely isolated.
 
 ### The flow

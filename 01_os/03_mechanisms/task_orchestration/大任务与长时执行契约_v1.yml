@@ -28,7 +28,9 @@ default_orchestration:
 
 # 任务内部的确定性推进。这些**不产生新的 Human 门**。
 # 与开发入口第 2 节「边界内继续施工的两个条件」是同一判据：路径仍在授权边界内，
-# 且内容由本 objective 已固定的规则从声明的 source 确定性算出。
+# 且内容属于本 objective 已委托的决策空间。逐字节推导只定义 T0；
+# T1 实现选择、Human 已委托的 T2 设计不自动成为新的 Human 裁决。
+# 新负载关键选择仍按 genuine_stop 和入口第 2/11 节停止。
 internal_continuation:
   actions:
     - deterministic_in_scope_construction

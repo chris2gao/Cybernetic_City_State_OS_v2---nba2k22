@@ -9,6 +9,7 @@ from __future__ import annotations
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -18,7 +19,7 @@ PY = sys.executable
 
 
 def check(name, code, noise=""):
-    script = f"import sys; sys.stdout.write({noise!r}); sys.exit({code})"
+    script = f"import sys; sys.stdout.buffer.write({noise!r}.encode()); sys.exit({code})"
     return {"name": name, "cmd": [PY, "-c", script]}
 
 
@@ -40,11 +41,25 @@ class TestRunCheck(unittest.TestCase):
     def tearDown(self):
         self._tmp.cleanup()
 
-    def test_passing_check_discards_output(self):
+    def test_passing_check_hides_output_but_preserves_full_log(self):
         noisy = "line\n" * 500
         r = qv.run_check(check("ok", 0, noisy), self.root, tail=20)
         self.assertTrue(r["ok"])
         self.assertEqual(r["tail"], "", "a passing check must not carry its output")
+        self.assertEqual((Path(r["attempt_directory"]) / "001.stdout.bin").read_bytes(), noisy.encode())
+        self.assertEqual((Path(r["attempt_directory"]) / "001.stderr.bin").read_bytes(), b"")
+
+    def test_spawn_error_is_not_an_expected_success(self):
+        r = qv.run_check({"name": "missing", "cmd": ["nonexistent-citystate-check-9844"]}, self.root, tail=20)
+        self.assertFalse(r["ok"])
+        self.assertEqual(r["status"], "error")
+        self.assertIsNone(r["exit_code"])
+
+    def test_temp_environment_cannot_place_logs_inside_source(self):
+        with patch.object(qv.tempfile, "gettempdir", return_value=str(self.root)):
+            with self.assertRaisesRegex(qv.managed.VerificationError, "outside_source"):
+                qv.run_check(check("ok", 0), self.root, tail=20)
+        self.assertEqual(list(self.root.iterdir()), [])
 
     def test_failing_check_keeps_bounded_tail(self):
         noisy = "".join(f"l{i}\n" for i in range(500))
@@ -105,6 +120,22 @@ class TestSummaryAndLoading(unittest.TestCase):
         f.write_text("checks: []\n", encoding="utf-8")
         with self.assertRaises(RuntimeError):
             qv.load_checks(f)
+
+    def test_load_checks_rejects_falsey_unknown_and_duplicate_declarations(self):
+        for text in ("checks: false\n", "checks: {}\n", "checks: [false]\n",
+                     "checks: [{name: x, cmd: [python], skip: true}]\n",
+                     "checks: [{name: x, cmd: [python], expect_exit: false}]\n",
+                     "checks: [{name: x, cmd: [python]}, {name: x, cmd: [python]}]\n",
+                     "checks: [{name: x, name: y, cmd: [python]}]\n"):
+            f = self.root / "checks.yml"
+            f.write_text(text, encoding="utf-8")
+            with self.subTest(text=text), self.assertRaises(RuntimeError):
+                qv.load_checks(f)
+
+    def test_bad_yaml_is_structured_cli_error(self):
+        f = self.root / "checks.yml"
+        f.write_text("checks: [\n", encoding="utf-8")
+        self.assertEqual(qv.main(["--checks", str(f)]), 3)
 
     def test_main_returns_1_when_a_check_fails(self):
         f = self.root / "checks.yml"

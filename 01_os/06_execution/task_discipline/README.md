@@ -1,13 +1,14 @@
 # task_discipline — 任务纪律工具
 
-三个只读或只报告的执行辅助工具。它们**不扩大 task scope，也不产生 Human confirmation**，只把每次任务都要重复付出的
-三类成本收敛成一次调用。
+任务事实读取、前台验证执行和候选证据门。它们**不扩大 task scope，也不产生 Human confirmation**。
+验证日志写入仓库外部；全权限调用者可以绕过工具，因此不能把工具可用称为全局强制执行。
 
 | 工具 | 入口 | 一句话 |
 |---|---|---|
 | 预检 | `preflight/preflight_task_context.py` | 开工前一次性给出真实 HEAD、门禁、allowlist、禁止项、工作区状态 |
 | 安静验证 | `quiet_verify/quiet_verify.py` | 跑一组检查，通过只留一行，失败才展开尾部输出 |
 | 路径账本 | `path_ledger/changed_path_ledger.py` | 从 Git 生成规范化 UTF-8 变更路径集合，并与任务包 allowlist 求子集 |
+| 受控验证 | `managed_verification/managed_verify.py` | 从候选内任务包和计划运行全部必需检查，完整留证，再由 inspect 重算结果 |
 
 ## 为什么存在
 
@@ -25,8 +26,9 @@
 | 工具 | 0 | 1 | 3 |
 |---|---|---|---|
 | preflight | 预检完成且硬前提成立 | 硬前提失败（工作区脏、hook 守卫不符、HEAD 非声明 base 后代、分支不符、master 已移动） | 输入或 git 错误 |
-| quiet_verify | 全部检查符合预期退出码 | 有检查不符 | 输入错误 |
+| quiet_verify | 全部诊断检查符合预期退出码 | 有检查不符 | 输入、启动或超时错误 |
 | path_ledger | 账本生成；给了 allowlist 则全部在内 | 有路径越出 allowlist | git 或输入错误 |
+| managed_verify | 必需检查实际完成且符合预期、源未变 | 检查退出码不符 | 输入/源/执行/证据不完整或损坏 |
 
 ## 用法
 
@@ -48,6 +50,9 @@ python 01_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py \
 ```
 
 ## 复核状态
+
+本轮 OS execution foundation 改造的任务包、共享读取器、完整日志和受控验证路线仍待
+新的独立验收。下面是旧工具的历史复核状态，不代表新候选已通过。
 
 第一次独立复核结论是 **REJECT_CORRECTION_REQUIRED**，四条行为缺陷经执行者独立复现后
 成立，**现已全部修复**。完整记录见
@@ -71,6 +76,12 @@ F4 单行 30 万字符降到 4,034。**尚未经过第二轮独立复核。**
 - `preflight` 报告"门开着"只等于"那个文件此刻写着 true"，不等于动作被允许；
   权限仍然只来自当前 Human 指令与 canonical 协议。
 - `quiet_verify` 通过只证明所列命令在本次会话的这棵工作树上通过，不证明更宽的命题。
+- `quiet_verify` 为每个检查创建独立的外部诊断目录，保留完整 stdout/stderr 与进程记录；
+  展示时仍只取有界尾部。这些 unbound_diagnostic 记录不替代候选门。
+- 任务包读取共享 `packet_input/`：规范包装优先，旧平铺格式显式报告；混用不回退。
+  预检的 `publisher.expected_remote_master_head` 只指 master 基线，不能从发布目标
+  `expected_remote_head` 猜测。缺必填字段、非法类型、显式重复键、循环或坏 UTF-8 为输入错误。
+- 受控候选验证用法、检查计划和保证边界见 [managed_verification](managed_verification/README.md)。
 
 ## 测试
 

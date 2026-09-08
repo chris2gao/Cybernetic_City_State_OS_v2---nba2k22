@@ -29,6 +29,9 @@ import subprocess
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "packet_input"))
+from task_packet_input import PacketInput, PacketInputError, normalize_packet, read_packet
+
 try:
     import yaml
 except ImportError:  # pragma: no cover
@@ -37,7 +40,7 @@ except ImportError:  # pragma: no cover
 
 def git(repo_root: Path, *args: str, check: bool = True) -> tuple[int, str]:
     proc = subprocess.run(
-        ["git", "-c", "core.quotepath=false", *args],
+        ["git", "-c", "core.quotepath=false", "-c", "core.untrackedCache=false", "-c", "core.fsmonitor=false", *args],
         cwd=repo_root, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False,
     )
     out = proc.stdout.decode("utf-8", "replace").strip()
@@ -118,20 +121,24 @@ def read_gate(gate_path: Path, dotted: str) -> dict:
     }
 
 
-def collect(repo_root: Path, packet: dict, use_remote: bool) -> dict:
-    base = packet.get("exact_base_sha")
-    branch = packet.get("branch")
+def collect(repo_root: Path, packet: dict | PacketInput, use_remote: bool) -> dict:
+    loaded = packet if isinstance(packet, PacketInput) else normalize_packet(packet)
+    packet = loaded.body
+    base = packet["exact_base_sha"]
+    branch = packet["branch"]
     report: dict = {
-        "task_id": packet.get("task_id"),
+        "task_id": packet["task_id"],
+        "packet_format": loaded.source_format,
+        "normalized_fields": list(loaded.normalized_fields),
         "branch_declared": branch,
         "base_declared": base,
         "branch_actual": git(repo_root, "rev-parse", "--abbrev-ref", "HEAD")[1],
         "local_head": git(repo_root, "rev-parse", "HEAD")[1],
         "hooks_path": git(repo_root, "config", "--get", "core.hooksPath", check=False)[1],
         "quotepath": git(repo_root, "config", "--get", "core.quotepath", check=False)[1],
-        "allowlist": packet.get("allowed_changed_paths") or [],
-        "prohibitions": packet.get("explicit_prohibitions") or [],
-        "required_tests": packet.get("required_tests") or [],
+        "allowlist": packet["allowed_changed_paths"],
+        "prohibitions": packet["prohibitions"],
+        "required_tests": packet["required_tests"],
         "big_task": packet.get("big_task") is True,
         "big_task_confirmation_closure": packet.get("big_task_confirmation_closure"),
     }
@@ -182,7 +189,9 @@ def hard_failures(report: dict, require_clean: bool,
         failures.append(f"worktree_dirty:{report['dirty_path_count']}")
     if report["hooks_path"] != ".githooks":
         failures.append(f"hook_guard:{report['hooks_path'] or 'unset'}")
-    if report["head_descends_from_base"] is False:
+    if report["head_descends_from_base"] is None:
+        failures.append("base_ancestry_unverified")
+    elif report["head_descends_from_base"] is False:
         failures.append("head_not_descended_from_declared_base")
     if report["branch_declared"] and report["branch_actual"] != report["branch_declared"]:
         failures.append(f"branch_mismatch:{report['branch_actual']}")
@@ -223,6 +232,8 @@ def hard_failures(report: dict, require_clean: bool,
 def render(report: dict, gate: dict | None, failures: list[str]) -> str:
     lines = [
         f"task            {report['task_id']}",
+        f"packet_format   {report.get('packet_format', '(not reported)')}",
+        f"normalized      {','.join(report.get('normalized_fields', [])) or '(none)'}",
         f"branch          {report['branch_actual']}",
         f"local_head      {report['local_head']}",
         f"remote_branch   {report['remote_branch'] or '(not read)'}",
@@ -279,10 +290,10 @@ def main(argv: list[str] | None = None) -> int:
         return 3
     try:
         repo_root = Path(args.repo_root).resolve()
-        packet = yaml.safe_load(Path(args.packet).read_text(encoding="utf-8")) or {}
+        packet = read_packet(Path(args.packet))
         report = collect(repo_root, packet, use_remote=not args.no_remote)
         gate = read_gate(repo_root / args.gate, args.gate_key) if args.gate else None
-    except (RuntimeError, OSError, yaml.YAMLError) as exc:
+    except (PacketInputError, RuntimeError, OSError, UnicodeError, yaml.YAMLError) as exc:
         print(f"preflight_error: {exc}", file=sys.stderr)
         return 3
 

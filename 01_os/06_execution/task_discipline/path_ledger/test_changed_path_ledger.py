@@ -7,6 +7,7 @@ inside an untracked directory with non-ASCII names.
 from __future__ import annotations
 
 import subprocess
+import json
 import sys
 import tempfile
 import unittest
@@ -97,6 +98,46 @@ class TestWorktreeAgainstRealGit(unittest.TestCase):
     def test_tracked_modification_is_included(self):
         (self.repo / "seed.txt").write_text("changed\n", encoding="utf-8")
         self.assertIn("seed.txt", ledger.worktree_paths(self.repo))
+
+    def test_canonical_packet_drives_real_git_allowlist(self):
+        base = subprocess.run(["git", "rev-parse", "HEAD"], cwd=self.repo, check=True,
+                              stdout=subprocess.PIPE).stdout.decode("utf-8").strip()
+        packet = {
+            "task_id": "ledger-test", "branch": "main", "exact_base_sha": base,
+            "allowed_changed_paths": ["seed.txt"], "required_tests": ["unit"],
+            "prohibitions": [],
+        }
+        (self.repo / "seed.txt").write_text("changed\n", encoding="utf-8")
+        with tempfile.TemporaryDirectory() as external:
+            packet_path = Path(external) / "packet.yml"
+            for data, format_name in (({"task_packet": packet}, "wrapped_v1"),
+                                      (packet, "legacy_flat")):
+                packet_path.write_text(ledger.yaml.safe_dump(data), encoding="utf-8")
+                result = subprocess.run(
+                    [sys.executable, str(Path(ledger.__file__).resolve()), "--repo-root", str(self.repo),
+                     "--base", base, "--packet", str(packet_path), "--json"],
+                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False,
+                )
+                self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8"))
+                report = json.loads(result.stdout)
+                self.assertEqual(report["packet_format"], format_name)
+                self.assertEqual(report["paths"], ["seed.txt"])
+                self.assertEqual(report["outside_allowlist"], [])
+
+    def test_malformed_packet_fails_before_git_or_empty_diff_success(self):
+        with tempfile.TemporaryDirectory() as external:
+            packet_path = Path(external) / "packet.yml"
+            for raw in (b"task_packet: false\n", b"allowed_changed_paths: false\n",
+                        b"task_packet: \xff", b"a: &a [*a]\n"):
+                packet_path.write_bytes(raw)
+                result = subprocess.run(
+                    [sys.executable, str(Path(ledger.__file__).resolve()), "--repo-root", str(self.repo),
+                     "--base", "HEAD", "--packet", str(packet_path)],
+                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False,
+                )
+                self.assertEqual(result.returncode, 3)
+                self.assertIn(b"path_ledger_error:", result.stderr)
+                self.assertNotIn(b"Traceback", result.stderr)
 
 
 class TestRenameRegressionF1(unittest.TestCase):

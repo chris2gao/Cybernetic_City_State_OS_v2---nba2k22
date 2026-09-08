@@ -2,6 +2,15 @@ schema_version: citystate.registry.v1
 registry_id: task_orchestration_v1
 mechanism_version: 1
 entries:
+  - path: 01_os/03_mechanisms/task_orchestration/受控验证执行契约_v1.yml
+    purpose: 候选绑定、必需检查实际执行、完整证据和消费者复算的前台契约；不授予发布或运行时权限
+    loader: Human and task executor read; managed_verify implements this contract
+    loader_class: external_tool_convention
+    discovery: 01_os/开发入口与单窗口任务规范_v1.md 第 1.2 节
+    evidence: 01_os/06_execution/task_discipline/managed_verification/test_managed_verify.py
+    cache_dirs: []
+    failure_surfacing: managed run/inspect exit 1 or 3; independent review checks semantic sufficiency
+    deletion_rule: protected
   - path: 01_os/03_mechanisms/task_orchestration/{README.md,大任务与长时执行契约_v1.yml}
     purpose: >-
       默认大任务与长时执行的 canonical 契约：内部 continuation 集合、真停止集合、

@@ -27,6 +27,9 @@ import subprocess
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "packet_input"))
+from task_packet_input import PacketInputError, read_packet
+
 try:
     import yaml
 except ImportError:  # pragma: no cover - yaml ships with the repo toolchain
@@ -47,7 +50,7 @@ def matches(pattern: str, path: str) -> bool:
 
 def _git(repo_root: Path, *args: str) -> str:
     proc = subprocess.run(
-        ["git", "-c", "core.quotepath=false", *args],
+        ["git", "-c", "core.quotepath=false", "-c", "core.untrackedCache=false", "-c", "core.fsmonitor=false", *args],
         cwd=repo_root,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
@@ -102,16 +105,11 @@ def classify(paths: set[str], allowlist: list[str]) -> tuple[list[str], list[str
 
 
 def load_allowlist(packet: Path) -> list[str]:
-    if yaml is None:
-        raise RuntimeError("PyYAML is required to read a task packet")
-    data = yaml.safe_load(packet.read_text(encoding="utf-8"))
-    allowlist = (data or {}).get("allowed_changed_paths")
-    if not allowlist:
-        raise RuntimeError(f"{packet}: allowed_changed_paths missing or empty")
-    return list(allowlist)
+    return read_packet(packet).body["allowed_changed_paths"]
 
 
 def build(repo_root: Path, base: str, head: str, packet: Path | None) -> dict:
+    loaded = read_packet(packet) if packet is not None else None
     paths = committed_paths(repo_root, base, head) | worktree_paths(repo_root)
     result: dict = {
         "base": base,
@@ -122,10 +120,12 @@ def build(repo_root: Path, base: str, head: str, packet: Path | None) -> dict:
     if packet is None:
         result["allowlist_checked"] = False
         return result
-    allowlist = load_allowlist(packet)
+    allowlist = loaded.body["allowed_changed_paths"]
     inside, outside = classify(paths, allowlist)
     result.update(
         allowlist_checked=True,
+        packet_format=loaded.source_format,
+        normalized_fields=list(loaded.normalized_fields),
         allowlist_source=str(packet).replace("\\", "/"),
         allowlist=allowlist,
         inside_count=len(inside),
@@ -151,7 +151,7 @@ def main(argv: list[str] | None = None) -> int:
             args.head,
             Path(args.packet) if args.packet else None,
         )
-    except (RuntimeError, OSError) as exc:
+    except (PacketInputError, RuntimeError, OSError, UnicodeError) as exc:
         print(f"path_ledger_error: {exc}", file=sys.stderr)
         return 3
 
@@ -162,6 +162,9 @@ def main(argv: list[str] | None = None) -> int:
         if ledger.get("allowlist_checked"):
             outside = ledger["outside_allowlist"]
             line += f" allowlist={'ok' if not outside else f'VIOLATION({len(outside)})'}"
+            line += f" packet_format={ledger['packet_format']}"
+            if ledger["normalized_fields"]:
+                line += " normalized=" + ",".join(ledger["normalized_fields"])
         print(line)
         if args.list:
             for path in ledger["paths"]:

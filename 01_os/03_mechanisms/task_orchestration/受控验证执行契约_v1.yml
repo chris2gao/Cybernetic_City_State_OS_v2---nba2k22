@@ -1,0 +1,48 @@
+schema_version: citystate.managed_verification.contract.v1
+status: candidate_pending_independent_review
+authority_effect: none
+entry: 01_os/06_execution/task_discipline/managed_verification/managed_verify.py
+plan:
+  format: strict_UTF8_JSON
+  schema_version: citystate.verification_plan.v1
+  location: exact_regular_file_tracked_in_candidate
+  root_fields: [schema_version, task_packet, checks]
+  task_binding: canonical_wrapped_packet_verification_plan_backref_and_ordered_required_tests_equal_check_ids
+  scope_binding: candidate_is_base_descendant_and_changed_paths_within_packet_allowlist
+  check_fields: [id, argv, timeout_seconds, expected_exit_code]
+  all_checks_required: true
+  id: unique_ASCII_identifier
+  argv: nonempty_array_of_nonempty_strings_no_shell_interpolation
+  python_token: '@python at argv[0] resolves to the entry interpreter'
+  timeout_seconds: integer_1_through_3600
+  expected_exit_code: integer_0_through_255
+  reject: [empty_checks, unknown_fields, duplicate_keys, nonfinite_numbers, falsey_type_coercion]
+execution:
+  trigger: explicit_foreground_invocation
+  source: exact_40_character_commit_and_clean_worktree
+  attempt: exclusive_new_directory_outside_source_worktree
+  logs: separate_complete_binary_stdout_and_stderr_per_started_check
+  records: [input.json, per_check_started.json, per_check_finished.json, per_check_source.json, source_after.json, result.json]
+  source_guard: before_chain_after_each_executed_check_and_at_completion
+  final_record: write_last_with_atomic_rename
+  first_failure: stop_and_classify_remaining_checks_not_run
+  automatic_retry_cache_resume: false
+  timeouts: terminate_process_tree_best_effort_and_always_return_error
+consumer:
+  expected_candidate_and_plan_required: true
+  recompute: from_candidate_plan_order_start_finish_records_log_digests_and_source_states
+  accept_only: every_required_check_executed_with_expected_exit_and_unchanged_clean_source
+  reject: [missing_final_record, missing_log, damaged_log, missing_check, stale_candidate, changed_source]
+exit_codes:
+  0: all_required_checks_completed_as_expected
+  1: executed_check_exit_mismatch
+  3: input_source_execution_timeout_or_evidence_error
+boundaries:
+  - This is foreground verification, not business execution, semantic acceptance or publication authority.
+  - Checks run with caller privileges and must not start detached or background work.
+  - Git cleanliness excludes ignored inputs and does not detect transient reverted writes.
+  - Recorded runtime facts are not a hermetic environment or an environment dump.
+  - Hashes detect inconsistency, not forgery by the same full-access actor.
+  - The route cannot prevent bypass; independently controlled enforcement needs Human deployment.
+  - A timeout does not prove side effects absent; do not automatically retry it.
+  - A missing final record is incomplete evidence, never success.

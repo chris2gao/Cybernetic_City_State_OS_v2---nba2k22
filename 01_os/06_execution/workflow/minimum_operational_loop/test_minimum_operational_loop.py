@@ -40,12 +40,74 @@ def rebind(root:Path):
     save(root/"manifest.yml",manifest)
 
 class MinimumLoopTests(unittest.TestCase):
+    def copy_contract(self,repo):
+        source=HERE.parents[3]
+        contract=load(source/loop.CONTRACT_PATH)
+        for rel in [loop.CONTRACT_PATH]+[stage["schema_path"] for stage in contract["stage_order"]]:
+            target=repo/rel;target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source/rel,target)
     def copy_fixture(self)->Path:
         temp=Path(tempfile.mkdtemp());self.addCleanup(lambda:shutil.rmtree(temp,ignore_errors=True))
         shutil.copytree(FIXTURE,temp/"run");return temp/"run"
     def mutate(self,name,fn):
         root=self.copy_fixture();p=root/name;data=load(p);fn(data);save(p,data);rebind(root);return root
     def test_positive_fixture(self):self.assertEqual(loop.validate_run(FIXTURE)[0],0)
+    def test_every_schema_required_payload_field_is_consumed(self):
+        repo=HERE.parents[3]
+        contract=load(repo/loop.CONTRACT_PATH)
+        for stage in contract["stage_order"]:
+            schema=load(repo/stage["schema_path"])
+            for field in schema["payload_required_fields"]:
+                with self.subTest(stage=stage["stage_id"],field=field):
+                    root=self.mutate(stage["artifact_filename"],lambda d:d["payload"].pop(field))
+                    code,findings=loop.validate_run(root)
+                    self.assertEqual(code,33)
+                    self.assertIn(f"payload_required:{stage['stage_id']}:{field}",findings)
+    def test_payload_must_be_mapping(self):
+        for value in (None,False,0,"",[],"payload"):
+            with self.subTest(value=value):
+                root=self.mutate("06_execution.yml",lambda d:d.update(payload=value))
+                self.assertEqual(loop.validate_run(root)[0],33)
+    def test_execution_and_verification_field_types_fail_closed(self):
+        cases=[
+            ("06_execution.yml","executor_role",[None,False,0,"",[],{},["executor"]]),
+            ("06_execution.yml","allowed_write_paths",[None,False,0,"",{},[[]],[False]]),
+            ("06_execution.yml","actual_write_paths",[None,False,0,"",{},[[]],[False]]),
+            ("06_execution.yml","attempts",[None,False,0,"",{},[False]]),
+            ("06_execution.yml","unauthorized_write_attempts",[None,False,0,"",{}]),
+            ("07_verification.yml","reviewer_role",[None,False,0,"",[],{}]),
+            ("07_verification.yml","verdict",[None,False,0,"",[],{}]),
+            ("07_verification.yml","test_results",[None,False,0,"",{},[False]]),
+            ("07_verification.yml","implementation_claims",[None,False,0,"",{},[False]]),
+            ("07_verification.yml","upstream_invalidation",[False,0,"",[]]),
+            ("07_verification.yml","completion",[None,0,1,"true",[],{}]),
+        ]
+        for name,field,values in cases:
+            for value in values:
+                with self.subTest(name=name,field=field,value=value):
+                    root=self.mutate(name,lambda d:d["payload"].update({field:value}))
+                    code,findings=loop.validate_run(root)
+                    self.assertNotEqual(code,0)
+                    self.assertTrue(findings)
+    def test_execution_attempt_boolean_is_not_integer(self):
+        root=self.mutate("06_execution.yml",lambda d:d["payload"]["attempts"][0].update(attempt=True))
+        self.assertEqual(loop.validate_run(root)[0],37)
+    def test_implementation_claim_references_must_be_string_lists(self):
+        for field in ("result_claim_ids","evidence_claim_ids"):
+            for value in (None,False,0,"",{},[[]],[False]):
+                with self.subTest(field=field,value=value):
+                    root=self.mutate("07_verification.yml",lambda d:d["payload"]["implementation_claims"][0].update({field:value}))
+                    self.assertNotEqual(loop.validate_run(root)[0],0)
+    def test_missing_schema_source_is_structured_failure(self):
+        temp=Path(tempfile.mkdtemp());self.addCleanup(lambda:shutil.rmtree(temp,ignore_errors=True))
+        code,findings=loop.validate_run(FIXTURE,temp)
+        self.assertEqual(code,33)
+        self.assertTrue(findings[0].startswith("payload_schema_source:"))
+    def test_malformed_earlier_payload_is_structured_failure(self):
+        root=self.mutate("02_evidence.yml",lambda d:d["payload"].update(claims=[None]))
+        self.assertEqual(loop.validate_run(root)[0],33)
+    def test_empty_claim_list_is_not_replaced_with_missing_field(self):
+        root=self.mutate("07_verification.yml",lambda d:d["payload"].update(implementation_claims=[]))
+        self.assertEqual(loop.validate_run(root),(0,[]))
     def test_missing_artifact(self):
         root=self.copy_fixture();(root/"03_result.yml").unlink();self.assertEqual(loop.validate_run(root)[0],30)
     def test_hash_mismatch(self):
@@ -77,7 +139,7 @@ class MinimumLoopTests(unittest.TestCase):
         self.assertEqual(loop.validate_run(self.mutate("07_verification.yml",lambda d:d["payload"].update(upstream_invalidation={"target":"workflow_stage_03_result_modeling"})))[0],39)
     def test_materialize_pilot(self):
         temp=Path(tempfile.mkdtemp());self.addCleanup(lambda:shutil.rmtree(temp,ignore_errors=True))
-        repo=temp/"repo";repo.mkdir();src=repo/loop.PILOT_PATH;src.parent.mkdir(parents=True);shutil.copytree(FIXTURE,src)
+        repo=temp/"repo";repo.mkdir();self.copy_contract(repo);src=repo/loop.PILOT_PATH;src.parent.mkdir(parents=True);shutil.copytree(FIXTURE,src)
         code,findings=loop.materialize_pilot(repo,temp/"out");self.assertEqual((code,findings),(0,[]));self.assertTrue((temp/"out/workflow_completion.yml").is_file())
     def test_prohibited_canonical_output(self):
         temp=Path(tempfile.mkdtemp());self.addCleanup(lambda:shutil.rmtree(temp,ignore_errors=True))

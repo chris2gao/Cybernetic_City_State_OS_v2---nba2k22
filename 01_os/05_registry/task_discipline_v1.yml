@@ -3,10 +3,28 @@ registry_id: task_discipline_v1
 area: 01_os/06_execution/task_discipline
 status: active
 purpose: >-
-  登记任务纪律工具：开工前上下文预检、统一安静验证入口、物理变更路径账本。
-  三者只读取与报告，不扩大 task scope、不产生 Human confirmation，也不修改仓库内容。
+  登记任务纪律工具：上下文预检、完整日志诊断、物理路径账本与受控候选验证。
+  工具不扩大 task scope、不产生 Human confirmation；验证证据写在源仓库之外。
 origin_run: 01_os/_runs/run-20260809-任务纪律工具-001/
 entries:
+- path: 01_os/06_execution/task_discipline/managed_verification/**
+  purpose: 精确候选、任务包及必需检查绑定的前台执行、完整日志、结果复算与真进程/Git回归
+  loader: 执行者显式调用 managed_verify.py；收尾消费者调用 inspect；pytest 发现测试
+  loader_class: in_repo_program
+  discovery: 01_os/开发入口与单窗口任务规范_v1.md 第 1.2 节
+  evidence: 01_os/06_execution/task_discipline/managed_verification/test_managed_verify.py
+  cache_dirs: []
+  failure_surfacing: exit 1 检查结果不符；exit 3 输入、源、执行或证据错误；无最终记录不能通过
+  deletion_rule: human_decision_required
+- path: 01_os/06_execution/task_discipline/packet_input/**
+  purpose: 共用任务包结构、字段、类型和原始 YAML 键/循环校验；显式报告旧平铺输入
+  loader: preflight、path_ledger、managed_verification 导入；pytest 发现测试
+  loader_class: in_repo_program
+  discovery: 三个消费者直接 import task_packet_input
+  evidence: 01_os/06_execution/task_discipline/packet_input/test_task_packet_input.py
+  cache_dirs: []
+  failure_surfacing: 共享 reader 错误转换为消费者 exit 3
+  deletion_rule: human_decision_required
 - path: 01_os/06_execution/task_discipline/README.md
   purpose: 三个工具的边界、退出码与用法
   loader: Human 与执行者阅读
@@ -26,7 +44,7 @@ entries:
   failure_surfacing: 退出码 1 表示硬前提失败，3 表示输入或 git 错误
   deletion_rule: human_decision_required
 - path: 01_os/06_execution/task_discipline/quiet_verify/quiet_verify.py
-  purpose: 统一验证入口；通过时每检查一行加一行摘要，失败时才打印尾部输出
+  purpose: 非候选绑定的诊断入口；完整日志先留存，展示时通过一行、失败有界尾部
   loader: 执行者与审查者手动调用
   loader_class: in_repo_program
   discovery: 01_os/开发入口与单窗口任务规范_v1.md 第 1.2 节
@@ -45,7 +63,8 @@ entries:
   deletion_rule: human_decision_required
 invariants:
   tools_never_expand_task_scope_or_create_Human_confirmation: true
-  tool_code_itself_writes_no_repository_content: true
+  tool_code_itself_writes_no_source_repository_content: true
+  verification_evidence_written_outside_source: true
   user_supplied_checks_run_with_caller_privileges: true
   user_supplied_checks_may_write: >-
     quiet_verify --checks 执行调用者声明的任意命令，这些命令能写仓库。

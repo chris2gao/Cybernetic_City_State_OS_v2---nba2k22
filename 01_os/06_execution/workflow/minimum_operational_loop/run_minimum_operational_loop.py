@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic control-plane runner for the seven-stage minimum operational loop."""
+"""Validate declared seven-stage artifacts; do not execute their business work."""
 from __future__ import annotations
 import argparse, hashlib, json, shutil, subprocess, sys
 from pathlib import Path
@@ -94,7 +94,7 @@ def validate_static(repo_root:Path,run_subvalidators:bool=True)->tuple[int,list[
         for label,cmd in commands:
             code=run_subvalidator(cmd,repo_root)
             if code!=0:return 22,[f"{label}:{code}"]
-    code,more=validate_run(repo_root/PILOT_PATH)
+    code,more=validate_run(repo_root/PILOT_PATH,repo_root)
     if code:return code,[f"pilot:{x}" for x in more]
     return 0,[]
 
@@ -110,7 +110,69 @@ def validate_receipt(receipt:Any,stage_id:str)->bool:
         return bool(receipt.get("session_id")) and bool(receipt.get("task_gate_ref")) and bool(receipt.get("Human_authorization_ref"))
     return False
 
-def validate_run(run_root:Path)->tuple[int,list[str]]:
+def payload_schemas(repo_root:Path)->dict[str,dict]:
+    """Read required fields from the same canonical schemas checked by static."""
+    contract=load_yaml(repo_root/CONTRACT_PATH)
+    if not isinstance(contract,dict):raise ValueError("contract_mapping")
+    stages=contract.get("stage_order")
+    if not isinstance(stages,list) or any(not isinstance(x,dict) for x in stages):
+        raise ValueError("schema_stage_order")
+    if [x.get("stage_id") for x in stages]!=EXPECTED_STAGE_IDS:
+        raise ValueError("schema_stage_order")
+    schemas={}
+    for item in stages:
+        schema=load_yaml(repo_root/item["schema_path"])
+        if not isinstance(schema,dict) or schema.get("stage_id")!=item["stage_id"] or schema.get("artifact_kind")!=item["artifact_kind"]:
+            raise ValueError("schema_binding")
+        fields=schema.get("payload_required_fields")
+        if not isinstance(fields,list) or not fields or any(not isinstance(f,str) or not f for f in fields) or len(set(fields))!=len(fields):
+            raise ValueError("schema_payload_required_fields")
+        schemas[item["stage_id"]]=schema
+    return schemas
+
+def payload_type_findings(payload:dict,stage_id:str)->list[str]:
+    """Types needed by the execution/review checks, not semantic acceptance."""
+    def text(value):return isinstance(value,str) and bool(value.strip())
+    def strings(value):return isinstance(value,list) and all(text(x) for x in value)
+    def rows(value):return isinstance(value,list) and all(isinstance(x,dict) for x in value)
+    findings=[]
+    def require(field,predicate):
+        if not predicate(payload.get(field)):findings.append(f"payload_type:{stage_id}:{field}")
+    if stage_id==EXPECTED_STAGE_IDS[5]:
+        for field in ("executor_role","frozen_test_package_sha256"):require(field,text)
+        for field in ("allowed_write_paths","actual_write_paths"):require(field,strings)
+        require("unauthorized_write_attempts",lambda value:isinstance(value,list))
+        require("attempts",rows)
+        if rows(payload.get("attempts")):
+            for index,row in enumerate(payload["attempts"]):
+                if not text(row.get("step_id")) or not text(row.get("result")):
+                    findings.append(f"payload_type:{stage_id}:attempts:{index}")
+    elif stage_id==EXPECTED_STAGE_IDS[6]:
+        for field in ("reviewer_role","verdict"):require(field,text)
+        require("completion",lambda value:type(value) is bool)
+        require("upstream_invalidation",lambda value:value is None or isinstance(value,dict))
+        for field in ("test_results","implementation_claims"):require(field,rows)
+        if rows(payload.get("test_results")):
+            for index,row in enumerate(payload["test_results"]):
+                if not text(row.get("test_id")) or not text(row.get("status")):
+                    findings.append(f"payload_type:{stage_id}:test_results:{index}")
+        if rows(payload.get("implementation_claims")):
+            for index,row in enumerate(payload["implementation_claims"]):
+                for field in ("result_claim_ids","evidence_claim_ids"):
+                    if not strings(row.get(field)):
+                        findings.append(f"payload_type:{stage_id}:implementation_claims:{index}:{field}")
+    return findings
+
+def validate_run(run_root:Path,repo_root:Path|None=None)->tuple[int,list[str]]:
+    repo_root=repo_root if repo_root is not None else Path(__file__).resolve().parents[4]
+    try:schemas=payload_schemas(repo_root)
+    except (OSError,ValueError,TypeError,KeyError,yaml.YAMLError,RecursionError) as exc:
+        return 33,[f"payload_schema_source:{type(exc).__name__}"]
+    try:return _validate_run(run_root,schemas)
+    except (OSError,ValueError,TypeError,KeyError,AttributeError,yaml.YAMLError,RecursionError) as exc:
+        return 33,[f"artifact_structure:{type(exc).__name__}"]
+
+def _validate_run(run_root:Path,schemas:dict[str,dict])->tuple[int,list[str]]:
     manifest_path=run_root/"manifest.yml"
     if not manifest_path.is_file():return 30,["manifest"]
     try:manifest=load_yaml(manifest_path)
@@ -121,6 +183,7 @@ def validate_run(run_root:Path)->tuple[int,list[str]]:
     if manifest.get("route")!="normal" or manifest.get("deliberation_default_route")!="dormant":return 33,["manifest_route"]
     if manifest.get("completion_expected") is not True:return 39,["manifest_completion_expected"]
     entries=manifest.get("artifacts",[])
+    if not isinstance(entries,list) or any(not isinstance(x,dict) for x in entries):return 33,["manifest_artifacts_list"]
     if [x.get("stage_id") for x in entries if isinstance(x,dict)]!=EXPECTED_STAGE_IDS:return 32,["manifest_stage_order"]
     artifacts={};paths={};hashes={}
     for item in entries:
@@ -130,6 +193,7 @@ def validate_run(run_root:Path)->tuple[int,list[str]]:
         if item.get("sha256")!=actual:return 31,[f"{sid}:{rel}"]
         try:art=load_yaml(path)
         except Exception as exc:return 33,[f"{sid}:{type(exc).__name__}:{exc}"]
+        if not isinstance(art,dict):return 33,[f"artifact_mapping:{sid}"]
         if item.get("artifact_version")!=art.get("artifact_version"):return 32,[f"manifest_version:{sid}"]
         artifacts[sid]=art;paths[sid]=path;hashes[sid]=actual
     required={"schema_version","run_id","stage_id","artifact_kind","artifact_version","status","input_refs","deliberation_receipt","payload"}
@@ -143,6 +207,12 @@ def validate_run(run_root:Path)->tuple[int,list[str]]:
     for sid in EXPECTED_STAGE_IDS:
         art=artifacts[sid]
         if not required.issubset(art) or art.get("schema_version")!="citystate.workflow.artifact.v1" or art.get("stage_id")!=sid or art.get("run_id")!=run_id:return 33,[f"common:{sid}"]
+        payload=art["payload"]
+        if not isinstance(payload,dict):return 33,[f"payload_mapping:{sid}"]
+        missing=[field for field in schemas[sid]["payload_required_fields"] if field not in payload]
+        if missing:return 33,[f"payload_required:{sid}:{field}" for field in missing]
+        type_findings=payload_type_findings(payload,sid)
+        if type_findings:return 33,type_findings
         if art.get("artifact_kind")!=kinds[sid] or art.get("status")!="complete" or not positive_int(art.get("artifact_version")):
             return 33,[f"identity:{sid}"]
         if not validate_receipt(art.get("deliberation_receipt"),sid):return 34,[sid]
@@ -186,7 +256,7 @@ def validate_run(run_root:Path)->tuple[int,list[str]]:
     for step in p5.get("steps",[]):
         sid,budget=step.get("step_id"),step.get("retry_budget");budgets[sid]=budget;step_dependencies[sid]=set(step.get("depends_on",[]))
         if not step.get("test_ids") or not set(step.get("test_ids",[])).issubset(test_ids):return 37,["stage5_test_binding"]
-        if not isinstance(budget,int) or budget<1 or budget>3:return 37,["stage5_retry_budget"]
+        if not positive_int(budget) or budget>3:return 37,["stage5_retry_budget"]
         if set(step.get("exits",[]))!={"pass","retry","invalidate_upstream"}:return 37,["stage5_exits"]
     if not budgets or any(not deps.issubset(budgets) for deps in step_dependencies.values()):return 37,["stage5_dependencies"]
     resolved=set()
@@ -198,13 +268,13 @@ def validate_run(run_root:Path)->tuple[int,list[str]]:
     invalidation_targets=set(p5.get("upstream_invalidation_targets",[]))
     if not invalidation_targets or not invalidation_targets.issubset(set(EXPECTED_STAGE_IDS[:4])):return 37,["stage5_invalidation_targets"]
     allowed,actual=set(p6.get("allowed_write_paths",[])),set(p6.get("actual_write_paths",[]))
-    if not actual.issubset(allowed) or p6.get("unauthorized_write_attempts") not in ([],None):return 36,["stage6_allowlist"]
+    if not actual.issubset(allowed) or p6["unauthorized_write_attempts"]!=[]:return 36,["stage6_allowlist"]
     if p6.get("frozen_test_package_sha256")!=p4.get("test_package_sha256"):return 35,["stage6_test_digest"]
     attempt_rows=p6.get("attempts",[])
     grouped={}
     for attempt in attempt_rows:
         sid,n=attempt.get("step_id"),attempt.get("attempt")
-        if sid not in budgets or not isinstance(n,int) or n<1 or n>budgets[sid]:return 37,["stage6_attempt"]
+        if sid not in budgets or not positive_int(n) or n>budgets[sid]:return 37,["stage6_attempt"]
         if attempt.get("result") not in {"pass","retry","invalidate_upstream"}:return 37,["stage6_attempt_result"]
         grouped.setdefault(sid,[]).append((n,attempt.get("result")))
     if set(grouped)!=set(budgets):return 37,["stage6_attempt_coverage"]
@@ -233,7 +303,7 @@ def materialize_pilot(repo_root:Path,output_root:Path)->tuple[int,list[str]]:
     output_root.mkdir(parents=True,exist_ok=True)
     for item in source.iterdir():
         if item.is_file():shutil.copy2(item,output_root/item.name)
-    code,findings=validate_run(output_root)
+    code,findings=validate_run(output_root,repo_root)
     if code:return code,findings
     manifest=load_yaml(output_root/"manifest.yml")
     completion={"schema_version":"citystate.workflow.completion.v1","run_id":manifest.get("run_id"),"workflow_id":manifest.get("workflow_id"),"status":"complete","final_stage":EXPECTED_STAGE_IDS[-1],"artifacts":manifest.get("artifacts"),"default_deliberation_route":"dormant","canonical_live_state_created":False}

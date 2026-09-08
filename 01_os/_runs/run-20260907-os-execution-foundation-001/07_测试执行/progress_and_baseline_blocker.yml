@@ -1,0 +1,77 @@
+schema_version: citystate.execution_foundation.progress.v1
+candidate_status: candidate_pending_validation
+independent_acceptance: not_run
+master_integration: not_requested
+local_regressions:
+  command: python -B -m pytest 01_os/06_execution/task_discipline 01_os/06_execution/workflow/minimum_operational_loop -q -p no:cacheprovider
+  raw_exit_code: 0
+  tests_passed: 147
+  subtests_passed: 257
+  elapsed_seconds: 61.65
+  local_evidence_name: local-tests-001.log
+  limitation: Working-tree implementation-team tests, not exact-commit or independent acceptance.
+model_routing_static:
+  command: python -B 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py static .
+  observed_result: validation_passed
+  raw_exit_code: 0
+whole_workflow_static:
+  status: failed
+  attribution: pre_existing_committed_baseline_reference_mismatch
+  candidate_caused: false
+  task_failure_inferred: false
+  workflow_exit_code: 22
+  subvalidator: deliberation_static
+  subvalidator_exit_code: 13
+  preserve_as_failure: true
+baseline_defect:
+  base_sha: 3dc058a1a3cf393b936025f43fd737b0848937b4
+  target: 01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml
+  declared_blob_in_seven_workflow_refs: 9c2828be3231ffd5370f9170cd67c1af61347bcb
+  actual_head_blob: 0a49b85a4518dc123b3c01e3a46f5454d9a55cc1
+  physical_worktree_blob: 0a49b85a4518dc123b3c01e3a46f5454d9a55cc1
+  exact_ref_probe: diagnose_static_refs.py
+  affected_refs: 01_os/01_workflow/<each_of_seven_stages>/实现/阶段协同推演profile引用_v1.yml
+  current_task_allowlist_covers_affected_refs: false
+  next_action: Continue non-overlapping foundation work; Human will coordinate Claude's baseline task using the verified exact repository anchors. Do not repair the seven references or expand scope before coordination resolves ownership and candidate.
+  repairs_performed: false
+coordination_update:
+  Human_context: Two tasks are running; Claude was working on the baseline task. Report the physical repository state and let Human coordinate Claude against these anchors.
+  original_worktree_branch: claude/task-discipline-receipts-001
+  original_worktree_head: b79922dce8975add161de69d4614543644ef52f5
+  foundation_worktree_branch: codex/os-execution-foundation-20260907
+  foundation_worktree_head: 3dc058a1a3cf393b936025f43fd737b0848937b4
+  fresh_remote_master: 3dc058a1a3cf393b936025f43fd737b0848937b4
+  exact_commit_probe: git grep of the old blob in all seven refs plus git rev-parse of the target blob at the same explicit master SHA
+  conclusion: The mismatch exists within committed master, not merely a mutable local branch mix. Parallel baseline work may resolve it later but no such new exact candidate was supplied or verified here.
+  boundary: A check failure remains recorded; it is not a conclusion that the current foundation task or Claude's work has failed.
+corrections_to_interim_observations:
+  - CRLF conversion was initially asserted as the static-failure cause without sufficient evidence. The exact blob comparison disproves that cause for this mismatch; it is stale references on master.
+  - The capture_baseline script's first launch used Windows PowerShell 5 against UTF-8 source and failed to open its Chinese path. The later pwsh launch omitted a required model-routing subcommand, so that exit 2 is invocation error, not a validator finding.
+  - The later capture_baseline preflight ran after a parallel agent had edited the tool. It is not pristine-baseline evidence; its dirty result is expected during construction.
+  - Neither failed setup attempt nor the incomplete static run is counted as a passed requirement.
+remaining_work:
+  - Coordinate the pre-existing exact-reference mismatch with Claude's baseline task through Human; recheck the agreed exact candidate before integration.
+  - Complete candidate-level admission and strict result-type adversarial coverage.
+  - Verify contract, registry, all planned static checks and big-task closure against the final candidate.
+  - Commit, run and inspect an exact clean candidate through the managed route.
+  - Produce durable evidence, ordinary task-branch publication and an independent-review handoff.
+  - Obtain independent acceptance and a separate Human integration/enforcement decision; no global operational claim before that.
+subsequent_construction_evidence:
+  - log: boundary-before-001.log
+    result: Five new implementation-team probes failed; source changes did not stop the next check, Python equality conflated boolean/integer fields, and JSON exponent overflow was accepted.
+  - log: boundary-after-001.log
+    result: All five probes passed after per-check source observations, type-preserving JSON comparison and finite-float parsing were implemented.
+  - log: local-tests-003.log
+    raw_exit_code: 0
+    tests_passed: 210
+    subtests_passed: 264
+    elapsed_seconds: 74.77
+    limitation: A subsequent diagnostic-temp-directory guard still requires the next exact-candidate run; do not apply this count to later code.
+  - log_directory: state-002
+    scope: passed
+    closure: passed
+    model_routing: passed
+    context_structure: passed
+    live_state_guard: passed
+    static_refs: diagnostic_only_reports_known_mismatch
+  - observation: Broad cached Git status omitted a packet-reader test that exact-path ls-files showed as untracked. Source-reading helpers now disable untracked-cache and fsmonitor per invocation; no repository configuration was changed.
