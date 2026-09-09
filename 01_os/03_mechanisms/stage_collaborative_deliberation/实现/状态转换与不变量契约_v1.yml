@@ -91,7 +91,7 @@ invariants:
   violation_code: executor_self_clearance
   failure_code_resolution_target: {contract_path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/路由与失败契约_v1.yml, json_pointer: /complete_failure_code_union/executor_self_clearance, required_code: executor_self_clearance, owner_package: P3, resolution_state: required_future_P3_target}
 - invariant_id: INV-12
-  rule: execution_authorized_requires_current_Human_authorization_and_confirmation
+  rule: execution_requires_verified_current_task_scope_and_current_Human_confirmation_only_for_an_uncovered_confirmation_bound_action_or_undelegated_load_bearing_decision
   violation_code: execution_without_current_authority
   failure_code_resolution_target: {contract_path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/路由与失败契约_v1.yml, json_pointer: /complete_failure_code_union/execution_without_current_authority, required_code: execution_without_current_authority, owner_package: P3, resolution_state: required_future_P3_target}
 - invariant_id: INV-13

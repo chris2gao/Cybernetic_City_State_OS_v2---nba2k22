@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Deterministic validator for the staged stage-collaborative-deliberation mechanism."""
 from __future__ import annotations
-import argparse, hashlib, hmac, json, sys
+import argparse, hashlib, hmac, json, re, sys
 from pathlib import Path
 from typing import Any
 
@@ -355,7 +355,7 @@ DOWNSTREAM_IMPACT_DIMENSIONS = (
 )
 
 
-def validate_deferred_unknown(element: dict[str, Any]) -> int:
+def validate_deferred_unknown(element: dict[str, Any], *, _validated_task_scope: bool = False) -> int:
     """A required stage field disposed as unknown blocks by default.
 
     UNKNOWN_DISPOSED stays a real capability - some things genuinely are not
@@ -387,7 +387,7 @@ def validate_deferred_unknown(element: dict[str, Any]) -> int:
             # unstated or asserted-blocked both block
             return 16
 
-    if element.get("load_bearing") is True or element.get("Human_decision_boundary") is True:
+    if not _validated_task_scope and (element.get("load_bearing") is True or element.get("Human_decision_boundary") is True):
         basis = element.get("Human_basis")
         if not isinstance(basis, dict):
             return 15
@@ -734,6 +734,7 @@ def validate_model_readiness(
     repo_root: Path | None = None,
     *,
     synthetic_authority_context: bool = False,
+    _validated_task_scope: bool = False,
 ) -> int:
     """Readiness of the single Current Model, in every activation mode.
 
@@ -750,17 +751,16 @@ def validate_model_readiness(
     code = validate_common_model_completeness(model)
     if code:
         return code
-    code = validate_mandatory_Human_confirmation(model)
-    if code:
-        return code
-    # resolve and validate the durable disposition itself; a self-asserted
-    # actor_class never reaches this far on its own
-    code = validate_human_authority(
-        model, data, repo_root,
-        synthetic_authority_context=synthetic_authority_context,
-    )
-    if code:
-        return code
+    if not _validated_task_scope:
+        code = validate_mandatory_Human_confirmation(model)
+        if code:
+            return code
+        code = validate_human_authority(
+            model, data, repo_root,
+            synthetic_authority_context=synthetic_authority_context,
+        )
+        if code:
+            return code
 
     open_items = model.get("open_load_bearing_items") or []
     for item in open_items:
@@ -973,6 +973,417 @@ def validate_instance(
         return code
     return validate_completion_pointer(data)
 
+
+# The old validate_instance API above remains for referenced historical callers.
+# New CLI input uses this explicit task-scope path; no missing-field fallback.
+class TaskScopeError(ValueError):
+    def __init__(self, code: int, reason: str):
+        super().__init__(reason)
+        self.code = code
+
+
+TASK_SCOPE_STAGES = {
+    "workflow_stage_01_requirement_modeling", "workflow_stage_02_information_collection",
+    "workflow_stage_03_result_modeling", "workflow_stage_04_test_generation",
+    "workflow_stage_05_step_decomposition", "workflow_stage_06_execution",
+    "workflow_stage_07_test_execution",
+}
+
+
+def task_scope_support():
+    support = repo_root_from_here() / "01_os/06_execution/task_discipline"
+    for directory in (support / "packet_input", support / "managed_verification"):
+        if str(directory) not in sys.path:
+            sys.path.insert(0, str(directory))
+    import managed_verify
+    return managed_verify
+
+
+def load_task_scope_doc(path: Path) -> Any:
+    support = task_scope_support()
+    raw = path.read_bytes()
+    if path.suffix.lower() == ".json":
+        return support.decode_json(raw)
+    doc = support.load_yaml_text(raw.decode("utf-8"))
+    support.same_json(doc, doc)  # reject YAML nonfinite/non-JSON scalar values too
+    return doc
+
+
+def _scope_require(condition: bool, code: int, reason: str) -> None:
+    if not condition:
+        raise TaskScopeError(code, reason)
+
+
+def _scope_keys(value: Any, keys: set[str], name: str) -> None:
+    _scope_require(isinstance(value, dict) and set(value) == keys, 11, name)
+
+
+def _scope_string(value: Any) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
+def _scope_strings(value: Any, *, nonempty: bool = True) -> bool:
+    return (isinstance(value, list) and (bool(value) or not nonempty)
+            and all(_scope_string(item) for item in value)
+            and len(set(value)) == len(value))
+
+
+def _scope_path(value: Any, *, pattern: bool = False) -> bool:
+    if not _scope_string(value) or "\\" in value or ":" in value:
+        return False
+    if pattern and value.endswith("/**"):
+        value = value[:-3]
+    parts = value.split("/")
+    return (not any(part in {"", ".", ".."} or part.lower() == ".git"
+                    or part.endswith((".", " "))
+                    or re.fullmatch(r"(?i:con|prn|aux|nul|com[1-9¹²³]|lpt[1-9¹²³])(?:\..*)?", part)
+                    for part in parts)
+            and not any(ord(char) < 32 or char in '*?[]<>|"' for char in value))
+
+
+def _scope_candidate_path(repo: Path, candidate: str, path: str, source: Any) -> None:
+    """Planned paths may be absent, but existing prefixes cannot be links/files.
+
+    This checks Git tree entries, not the safety of a future mutable filesystem.
+    """
+    parts = path.split("/")
+    prefixes = ["/".join(parts[:index]) for index in range(1, len(parts) + 1)]
+    # Mixing ancestor and descendant pathspecs makes ls-tree traverse the
+    # ancestor and emit unrelated siblings. Query each exact prefix separately.
+    for prefix in prefixes:
+        raw = source.git(repo, "ls-tree", "-z", candidate, "--", prefix)
+        entries = list(filter(None, raw.split(b"\0")))
+        _scope_require(len(entries) <= 1, 13, "ambiguous_path_entry")
+        for entry in entries:
+            metadata, actual = entry.split(b"\t", 1)
+            mode, kind, _oid = metadata.split()
+            _scope_require(actual.decode("utf-8") == prefix, 13, "unexpected_path_entry")
+            if prefix != path:
+                _scope_require(mode == b"040000" and kind == b"tree", 15, "action_parent_not_directory")
+            else:
+                _scope_require((mode, kind) in {(b"040000", b"tree"), (b"100644", b"blob"),
+                                               (b"100755", b"blob")}, 15, "action_link_or_gitlink")
+
+
+def _scope_allowed(path: str, patterns: list[str]) -> bool:
+    return any(path == pattern or (pattern.endswith("/**") and
+               path.startswith(pattern[:-3] + "/")) for pattern in patterns)
+
+
+def _scope_blob(repo: Path, candidate: str, ref: Any, source: Any) -> bytes:
+    _scope_keys(ref, {"path", "blob_sha"}, "exact_source_reference_required")
+    _scope_require(_scope_path(ref["path"]), 13, "invalid_source_path")
+    raw = source.tracked_blob(repo, candidate, ref["path"])
+    blob = hashlib.sha1(f"blob {len(raw)}\0".encode("ascii") + raw).hexdigest()
+    _scope_require(ref["blob_sha"] == blob, 13, "source_blob_mismatch")
+    return raw
+
+
+def _scope_profile(profile_doc: Any, stage_id: str, reference: Any) -> dict[str, Any]:
+    _scope_require(isinstance(profile_doc, dict), 11, "profile_mapping_required")
+    profiles = profile_doc.get("profiles")
+    _scope_require(isinstance(profiles, list) and len(profiles) == 7, 16, "seven_profiles_required")
+    identities = []
+    for profile in profiles:
+        _scope_require(isinstance(profile, dict), 11, "profile_mapping_required")
+        _scope_require(_scope_string(profile.get("profile_id")), 16, "profile_id_required")
+        _scope_require(type(profile.get("profile_version")) is int and profile["profile_version"] > 0,
+                       16, "profile_version_required")
+        _scope_require(_scope_strings(profile.get("required_model_fields")), 16,
+                       "profile_required_fields_nonempty_unique")
+        _scope_require(_scope_string(profile.get("mechanism_ref")), 16, "mechanism_ref_required")
+        identities.append(profile["profile_id"])
+    _scope_require(set(identities) == TASK_SCOPE_STAGES, 16, "unknown_or_duplicate_profiles")
+    selected = [p for p in profiles if p["profile_id"] == stage_id]
+    _scope_require(len(selected) == 1, 16, "unknown_stage")
+    profile = selected[0]
+    _scope_require(reference == f'{stage_id}@{profile["profile_version"]}', 16, "stage_profile_mismatch")
+    return profile
+
+
+def _scope_decision_basis(item: dict[str, Any], repo: Path, candidate: str,
+                          scope: dict[str, Any], packet: dict[str, Any],
+                          action: dict[str, Any], source: Any) -> None:
+    decision = item.get("decision_id")
+    basis = item.get("Human_basis")
+    _scope_require(_scope_string(decision) and isinstance(basis, dict), 15, "decision_basis_required")
+    _scope_require(basis.get("decision_id") == decision, 15, "decision_identity_mismatch")
+    if basis.get("kind") == "current_task_scope":
+        _scope_keys(basis, {"kind", "decision_id", "task_packet", "action_id"}, "task_scope_decision_schema")
+        _scope_require(source.same_json(basis["task_packet"], scope["task_packet"])
+                       and basis["action_id"] == action["action_id"]
+                       and decision in action.get("covered_decision_ids", []), 15, "decision_not_covered")
+    else:
+        _scope_keys(basis, {"kind", "decision_id", "source_ref"}, "explicit_decision_schema")
+        _scope_require(basis["kind"] == "explicit_statement", 15, "explicit_decision_required")
+        expected = {"actor_class": "current_Human", "kind": "explicit_statement", "decision_id": decision,
+                    "task_id": packet["task_id"], "action_id": action["action_id"],
+                    "exact_base_sha": packet["exact_base_sha"], "target": action["target"],
+                    "expected_target_head": action["expected_target_head"], "stage_ids": action["stage_ids"],
+                    "paths": action["paths"], "stale": False, "revoked": False}
+        recorded = source.load_yaml_text(_scope_blob(repo, candidate, basis["source_ref"], source).decode("utf-8"))
+        _scope_require(source.same_json(recorded, expected), 15, "decision_source_mismatch")
+
+
+def _scope_completion(model: dict[str, Any], repo: Path, candidate: str,
+                       scope: dict[str, Any], source: Any) -> None:
+    completion = model.get("completion", {})
+    if "current_exact_output_version" in model:
+        _scope_require(model["current_exact_output_version"] == candidate, 12, "output_candidate_mismatch")
+    if "progression_requested" in completion:
+        _scope_require(type(completion["progression_requested"]) is bool, 11, "typed_progression_flag")
+    if "bound_output_version" in completion:
+        _scope_require(completion["bound_output_version"] == candidate, 12, "completion_candidate_mismatch")
+    if completion.get("progression_requested") is True:
+        _scope_require(model.get("current_exact_output_version") == candidate
+                       and completion.get("bound_output_version") == candidate, 12, "completion_binding_required")
+        _scope_require(_scope_string(completion.get("actual_result")), 14, "actual_result_required")
+        _scope_require("verification_result" in completion, 14, "verification_result_required")
+    if "verification_result" in completion:
+        ref = completion["verification_result"]
+        _scope_keys(ref, {"commit", "path", "blob_sha"}, "verification_reference_required")
+        source.candidate_id(repo, ref["commit"])
+        # A later independent evidence commit avoids embedding a commit's own SHA.
+        raw = _scope_blob(repo, ref["commit"], {key: ref[key] for key in ("path", "blob_sha")}, source)
+        recorded = source.load_yaml_text(raw.decode("utf-8"))
+        expected = {"schema_version": "stage_verification_result.v1", "candidate": candidate,
+                    "task_id": scope["task_id"], "stage_id": scope["stage_id"], "status": "verified"}
+        _scope_require(source.same_json(recorded, expected), 14, "verification_source_mismatch")
+
+
+def _scope_model(data: dict[str, Any], candidate: str, scope: dict[str, Any],
+                 profile: dict[str, Any], repo: Path, packet: dict[str, Any],
+                 action: dict[str, Any], source: Any) -> None:
+    model = data.get("current_model")
+    _scope_require(isinstance(model, dict), 16, "current_model_required")
+    _scope_require("Human_confirmation" not in model, 11, "mixed_legacy_confirmation")
+    for field in SUBSTANTIVE_COMMON_FIELDS + NULLABLE_COMMON_FIELDS:
+        value = model.get(field)
+        _scope_require((_scope_string(value) or isinstance(value, (dict, list)) and bool(value)),
+                       16, "common_model_field_required:" + field)
+    _scope_require(model.get("task_id") == scope["task_id"] and model.get("stage_id") == scope["stage_id"],
+                   13, "model_task_stage_mismatch")
+    _scope_require(model["current_exact_model_version"] == candidate, 12, "model_candidate_mismatch")
+    for owner, field in ((model, "open_load_bearing_items"), (model, "ordinary_local_choices"),
+                         (data, "inquiry_items")):
+        if field not in owner and field != "open_load_bearing_items":
+            continue
+        items = owner.get(field)
+        _scope_require(isinstance(items, list) and all(isinstance(item, dict) for item in items),
+                       11, "typed_list_required:" + field)
+        for item in items:
+            for flag in ("load_bearing", "requires_Human_confirmation", "re_asks_resolved_input"):
+                if flag in item:
+                    _scope_require(type(item[flag]) is bool, 11, "boolean_required:" + flag)
+            if field == "open_load_bearing_items":
+                _scope_require(type(item.get("load_bearing")) is bool, 11, "load_bearing_required")
+                if item.get("disposition") == "deferred_non_blocking":
+                    _scope_require(item["load_bearing"] is False and _scope_string(item.get("revisit_trigger")),
+                                   16, "load_bearing_item_cannot_be_deferred")
+                if item["load_bearing"]:
+                    _scope_decision_basis(item, repo, candidate, scope, packet, action, source)
+    for field in ("Human_alignment", "completion"):
+        if field in model:
+            _scope_require(isinstance(model[field], dict), 11, "mapping_required:" + field)
+    if "additional_inquiry_required" in data:
+        _scope_require(type(data["additional_inquiry_required"]) is bool, 11, "typed_inquiry_flag")
+    _scope_completion(model, repo, candidate, scope, source)
+    code = validate_model_readiness(data, _validated_task_scope=True)
+    _scope_require(code == 0, code, "substantive_readiness_failed")
+    elements = model.get("stage_specific_model_elements")
+    _scope_require(isinstance(elements, dict), 16, "stage_elements_required")
+    for field in profile["required_model_fields"]:
+        element = elements.get(field)
+        _scope_require(isinstance(element, dict), 16, "stage_field_missing:" + field)
+        disposition = element.get("disposition")
+        _scope_require(disposition in ALLOWED_ELEMENT_DISPOSITIONS, 16, "stage_disposition_invalid")
+        if disposition == REPRESENTED:
+            value = element.get("value")
+            _scope_require(_scope_string(value) or isinstance(value, (list, dict)) and bool(value),
+                           16, "stage_value_required")
+        elif disposition == EXPLICITLY_IRRELEVANT:
+            _scope_require(_scope_string(element.get("reason_and_scope")), 16, "irrelevance_scope_required")
+        else:
+            for flag in ("load_bearing", "Human_decision_boundary"):
+                if flag in element:
+                    _scope_require(type(element[flag]) is bool, 11, "typed_unknown_flag")
+            _scope_require(_scope_string(element.get("reason_and_scope"))
+                           and _scope_string(element.get("revisit_trigger")), 16, "unknown_scope_required")
+            if element.get("load_bearing") is True or element.get("Human_decision_boundary") is True:
+                _scope_decision_basis(element, repo, candidate, scope, packet, action, source)
+            code = validate_deferred_unknown(element, _validated_task_scope=True)
+            _scope_require(code == 0, code, "unknown_not_disposed")
+
+
+def _scope_receipt(data: dict[str, Any], scope: dict[str, Any], profile: dict[str, Any]) -> None:
+    receipt = data.get("receipt")
+    _scope_require(isinstance(receipt, dict), 17, "receipt_required")
+    result = receipt.get("validator_mode_and_exit_code")
+    _scope_require(isinstance(result, dict) and type(result.get("exit_code")) is int
+                   and result.get("exit_code") == 0 and result.get("mode") == "instance",
+                   17, "receipt_validator_result_invalid")
+    for field in ("loaded_paths", "missing_partial_or_stale_paths", "open_detail_divergence_event_refs",
+                  "deferred_detail_record_refs"):
+        _scope_require(_scope_strings(receipt.get(field), nonempty=False), 17, "receipt_list_required:" + field)
+    for field in ("mechanism_version", "active_contract_version", "boot_manifest_version", "registry_version",
+                  "loader_version"):
+        _scope_require(type(receipt.get(field)) is int and receipt[field] > 0, 17, "receipt_version_invalid")
+    for field in ("receipt_schema_version", "trigger_evaluation_result_ref", "activation_mode_or_dormant_reason",
+                  "detail_granularity_evaluation_result", "created_by_actor_ref", "created_at"):
+        _scope_require(_scope_string(receipt.get(field)), 17, "receipt_field_required:" + field)
+    _scope_require(_scope_strings(receipt.get("main_mechanism_ref")), 17, "receipt_mechanism_required")
+    code = validate_base_stage_receipt(receipt)
+    _scope_require(code == 0, code, "base_receipt_failed")
+    _scope_require(receipt["exact_candidate_version"] == scope["candidate"], 12, "receipt_candidate_mismatch")
+    if "seven_stage_child" in data:
+        _scope_require(type(data["seven_stage_child"]) is bool, 11, "typed_child_flag")
+    if data.get("seven_stage_child") is True:
+        binding = receipt.get("alignment_binding")
+        expected = {"bound_model_version": scope["candidate"], "task_id": scope["task_id"],
+                    "action_id": scope["action_id"], "task_packet": scope["task_packet"]}
+        _scope_require(binding == expected, 17, "child_scope_alignment_mismatch")
+        expected_profile = {"profile_id_and_version": receipt["profile_id_and_version"],
+                            "mechanism_ref": profile["mechanism_ref"]}
+        _scope_require(receipt.get("profile_binding") == expected_profile, 17, "child_profile_mismatch")
+    if "completion_pointer" in data:
+        pointer = data["completion_pointer"]
+        _scope_require(isinstance(pointer, dict), 11, "pointer_mapping_required")
+        _scope_require(set(pointer) <= {"append_only", "bound_candidate_version", "supersedes", "supersedes_record_ref"},
+                       11, "pointer_unknown_fields")
+        _scope_require(pointer.get("bound_candidate_version") == scope["candidate"], 12, "pointer_candidate_mismatch")
+        if "supersedes" in pointer or "supersedes_record_ref" in pointer:
+            _scope_require(_scope_string(pointer.get("supersedes"))
+                           and _scope_string(pointer.get("supersedes_record_ref")), 14, "supersession_pair_required")
+    code = validate_completion_pointer(data)
+    _scope_require(code == 0, code, "completion_pointer_failed")
+
+
+def validate_task_scope_instance(data: Any, repo_root: Path | None, candidate: str | None) -> int:
+    """Validate declared stage/action readiness, not execute or authenticate it.
+
+    Scope sources are exact candidate blobs; completion evidence has its own commit.
+    A same-writer confirmation record does not
+    authenticate the Human; neither a declared action nor this result controls an
+    arbitrary future command, independent acceptance, publication or activation.
+    """
+    source = task_scope_support()
+    try:
+        _scope_require(isinstance(data, dict) and repo_root is not None, 11, "explicit_repository_required")
+        source.same_json(data, data)
+        allowed_fields = {"task_scope", "activation_mode", "dormant_reason", "additional_inquiry_required",
+                          "current_model", "receipt", "seven_stage_child", "completion_pointer", "inquiry_items",
+                          "readiness_basis", "stage_profile_id_and_version"}
+        _scope_require(set(data) <= allowed_fields, 11, "unknown_instance_fields")
+        repo = repo_root.resolve()
+        _scope_require(Path(source.git(repo, "rev-parse", "--show-toplevel").decode("utf-8").strip()).resolve() == repo,
+                       13, "repository_root_required")
+        source.candidate_id(repo, candidate)
+        scope = data.get("task_scope")
+        _scope_keys(scope, {"schema_version", "task_id", "candidate", "task_packet", "action_id", "stage_id", "paths"},
+                    "task_scope_schema")
+        _scope_require(type(scope["schema_version"]) is int and scope["schema_version"] == 1, 11, "task_scope_version")
+        _scope_require(scope["candidate"] == candidate, 12, "expected_candidate_mismatch")
+        for field in ("task_id", "action_id", "stage_id"):
+            _scope_require(_scope_string(scope[field]), 11, "scope_identity_required")
+        _scope_require(_scope_strings(scope["paths"]) and all(_scope_path(p) for p in scope["paths"]),
+                       11, "scope_paths_invalid")
+        raw = _scope_blob(repo, candidate, scope["task_packet"], source)
+        normalized = source.normalize_packet(source.load_yaml_text(raw.decode("utf-8")))
+        _scope_require(normalized.source_format == "wrapped_v1", 11, "canonical_wrapped_packet_required")
+        packet = normalized.body
+        _scope_require(packet["task_id"] == scope["task_id"], 13, "packet_task_mismatch")
+        source.candidate_id(repo, packet["exact_base_sha"])
+        source.git(repo, "merge-base", "--is-ancestor", packet["exact_base_sha"], candidate)
+        allowed = packet["allowed_changed_paths"]
+        _scope_require(all(_scope_path(p, pattern=True) for p in allowed), 11, "packet_allowlist_invalid")
+        changed = source.git(repo, "diff", "--name-only", "--no-renames", "-z", packet["exact_base_sha"], candidate).decode("utf-8").split("\0")
+        _scope_require(all(_scope_path(p) and _scope_allowed(p, allowed) for p in changed if p), 15, "candidate_outside_allowlist")
+        actions = packet.get("stage_actions")
+        _scope_require(isinstance(actions, list) and bool(actions), 11, "stage_actions_required")
+        policy_raw = source.tracked_blob(repo, candidate, "01_os/05_registry/repository_publisher_authority_v1.yml")
+        policy = source.load_yaml_text(policy_raw.decode("utf-8"))
+        _scope_require(isinstance(policy, dict) and isinstance(policy.get("confirmation_bound_actions"), dict),
+                       11, "publisher_policy_required")
+        protected = set(policy["confirmation_bound_actions"])
+        known = {"publish_or_merge_to_master", "force_push", "rewrite_published_history", "delete_master_or_repository",
+                 "change_repository_visibility_or_credentials", "activate_runtime_scheduler_or_coordinator",
+                 "access_secrets_credentials_or_key_material"}
+        _scope_require(protected == known and policy.get("core_history_rewrite") == "prohibited_regardless_of_confirmation",
+                       15, "unrecognized_protected_policy")
+        ids = []
+        for action in actions:
+            required_action = {"action_id", "kind", "target", "expected_target_head", "stage_ids", "paths", "confirmation"}
+            _scope_require(isinstance(action, dict) and required_action <= set(action)
+                           and set(action) <= required_action | {"covered_decision_ids"}, 11, "stage_action_schema")
+            if "covered_decision_ids" in action:
+                _scope_require(_scope_strings(action["covered_decision_ids"], nonempty=False), 11, "decision_coverage_list_required")
+            _scope_require(_scope_string(action["action_id"]) and _scope_string(action["target"]), 11, "action_identity_required")
+            _scope_require(_scope_string(action["kind"]) and action["kind"] in known | {"ordinary_task_work"}, 15, "action_kind_unknown")
+            head = action["expected_target_head"]
+            _scope_require(head is None or isinstance(head, str) and re.fullmatch(r"[0-9a-f]{40}", head) is not None,
+                           11, "expected_target_head_invalid")
+            if action["kind"] in {"publish_or_merge_to_master", "force_push", "delete_master_or_repository"}:
+                _scope_require(head is not None, 15, "expected_target_head_required")
+            _scope_require(_scope_strings(action["stage_ids"]) and _scope_strings(action["paths"]), 11, "action_lists_required")
+            _scope_require(set(action["stage_ids"]) <= TASK_SCOPE_STAGES, 16, "unknown_action_stage")
+            _scope_require(all(_scope_path(p) and _scope_allowed(p, allowed) for p in action["paths"]), 15, "action_outside_scope")
+            for path in action["paths"]:
+                _scope_candidate_path(repo, candidate, path, source)
+            ids.append(action["action_id"])
+        _scope_require(len(set(ids)) == len(ids), 11, "duplicate_action_ids")
+        selected = [a for a in actions if a["action_id"] == scope["action_id"]]
+        _scope_require(len(selected) == 1, 15, "planned_action_missing")
+        action = selected[0]
+        _scope_require(scope["stage_id"] in action["stage_ids"] and scope["paths"] == action["paths"], 15, "action_scope_mismatch")
+        _scope_require(action["kind"] not in packet["prohibitions"] and action["action_id"] not in packet["prohibitions"],
+                       15, "packet_action_prohibited")
+        if action["kind"] == "ordinary_task_work":
+            branch = packet["branch"]
+            _scope_require(branch != "master" and not branch.startswith("refs/") and _scope_path(branch), 15, "nonmaster_task_branch_required")
+            _scope_require(action["target"] == "refs/heads/" + branch and action["confirmation"] is None
+                           and action["expected_target_head"] is None,
+                           15, "ordinary_target_or_confirmation_invalid")
+        else:
+            _scope_require(action["kind"] != "rewrite_published_history", 15, "core_history_rewrite_prohibited")
+            if action["kind"] == "force_push":
+                source.candidate_id(repo, action["expected_target_head"])
+                source.git(repo, "merge-base", "--is-ancestor", action["expected_target_head"], candidate)
+            confirmation = action["confirmation"]
+            keys = {"actor_class", "kind", "source_ref", "task_id", "action_id", "exact_base_sha", "target", "expected_target_head",
+                    "stage_ids", "paths", "stale", "revoked"}
+            _scope_keys(confirmation, keys, "simple_confirmation_required")
+            _scope_require(confirmation["actor_class"] == "current_Human" and confirmation["kind"] == "explicit_statement"
+                           and confirmation["stale"] is False and confirmation["revoked"] is False, 15, "confirmation_not_current")
+            for field, expected in {"task_id": packet["task_id"], "action_id": action["action_id"], "exact_base_sha": packet["exact_base_sha"],
+                                    "target": action["target"], "expected_target_head": action["expected_target_head"],
+                                    "stage_ids": action["stage_ids"], "paths": action["paths"]}.items():
+                _scope_require(confirmation[field] == expected, 15, "confirmation_scope_mismatch:" + field)
+            recorded = source.load_yaml_text(_scope_blob(repo, candidate, confirmation["source_ref"], source).decode("utf-8"))
+            expected = {k: v for k, v in confirmation.items() if k != "source_ref"}
+            _scope_require(source.same_json(recorded, expected), 15, "confirmation_source_mismatch")
+        _scope_require(_scope_string(data.get("activation_mode")) and data["activation_mode"] in {"dormant", "full", "incremental"}, 11, "activation_mode_invalid")
+        if data["activation_mode"] == "dormant":
+            _scope_require(_scope_string(data.get("dormant_reason")), 16, "dormant_reason_required")
+        for field in ("ordinary", "authorization_mode", "authority_route", "synthetic_authority_context"):
+            _scope_require(field not in data, 11, "route_override_prohibited")
+        code = direct_error_code(data)
+        _scope_require(code == 0, code, "declared_failure")
+        receipt = data.get("receipt")
+        _scope_require(isinstance(receipt, dict), 17, "receipt_required")
+        profile_doc = source.load_yaml_text(source.tracked_blob(repo, candidate, PROFILE_SET_PATH).decode("utf-8"))
+        profile = _scope_profile(profile_doc, scope["stage_id"], receipt.get("profile_id_and_version"))
+        if "stage_profile_id_and_version" in data:
+            _scope_require(data["stage_profile_id_and_version"] == receipt["profile_id_and_version"], 16, "declared_profile_mismatch")
+        _scope_model(data, candidate, scope, profile, repo, packet, action, source)
+        _scope_receipt(data, scope, profile)
+        return 0
+    except TaskScopeError as exc:
+        return exc.code
+    except (ValueError, UnicodeError, TypeError, KeyError, RecursionError):
+        return 11
+    except (source.VerificationError, OSError):
+        return 13
+
 def validate_material_event(data: dict[str, Any]) -> int:
     code = direct_error_code(data)
     if code:
@@ -1013,17 +1424,20 @@ def validate_review_execution(data: dict[str, Any]) -> int:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("mode", choices=("static","instance","material_event","review_execution"))
+    parser.add_argument("mode", choices=("static","instance","legacy_instance","material_event","review_execution"))
     parser.add_argument("target")
     parser.add_argument("--case-id")
     parser.add_argument("--json-output", action="store_true")
+    parser.add_argument("--repo-root", type=Path)
+    parser.add_argument("--candidate")
     args = parser.parse_args()
     try:
         target = Path(args.target)
         if args.mode == "static" and target.is_dir():
             code = validate_static_repo(target)
         else:
-            data = select_case(load_doc(target), args.case_id)
+            loader = load_task_scope_doc if args.mode == "instance" else load_doc
+            data = select_case(loader(target), args.case_id)
             if not isinstance(data, dict):
                 code = 11
             else:
@@ -1031,7 +1445,9 @@ def main() -> int:
                 if args.mode == "static":
                     code = validate_static_fixture(payload)
                 elif args.mode == "instance":
-                    code = validate_instance(payload)
+                    code = validate_task_scope_instance(payload, args.repo_root, args.candidate)
+                elif args.mode == "legacy_instance":
+                    code = validate_instance(payload, args.repo_root)
                 elif args.mode == "material_event":
                     code = validate_material_event(payload)
                 else:

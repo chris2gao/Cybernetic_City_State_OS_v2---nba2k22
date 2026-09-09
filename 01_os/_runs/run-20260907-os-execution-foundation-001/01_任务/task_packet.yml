@@ -17,6 +17,7 @@ task_packet:
     - b79922dce8975add161de69d4614543644ef52f5
     - Human supplied Opus CORRECTION-002 and explicit architecture/implementation delegation
     - Human delegated the three baseline convergence decisions on 2026-09-07 after relaying Claude's exact-ref alignment report
+    - Human explicitly confirmed the exact semantic-convergence scope proposal on 2026-09-08 with 确认
   scope_amendment:
     decision_ref: 01_os/_runs/run-20260907-os-execution-foundation-001/03_方案设计/baseline_route_decision.md
     Human_basis: Current Human explicitly delegated the three route decisions; the existing foundation task already delegates architecture and implementation.
@@ -24,6 +25,17 @@ task_packet:
     added_scope: Only the profile_contract_ref blob in the seven explicitly listed workflow reference wrappers; no target contract, stage profile, activation or authority semantics change.
     recorded_before_reference_edits: true
     protected_action_authority_added: none
+  semantic_scope_amendment:
+    decision_ref: 01_os/_runs/run-20260907-os-execution-foundation-001/03_方案设计/semantic_convergence_decision.md
+    Human_basis: Current Human replied 确认 to the precise scope-extension proposal after the goal paused at that boundary.
+    proposal_name: 20260908_OS语义收敛_精确变更范围提案.yml
+    implementation_anchor: b0473587877d1dfca445a92ed5429f71202c7314
+    recorded_before_body_edits: true
+    added_scope: The exact named stage contracts, production validators, two new test files, conditional explanations and affected current exact-ref consumers listed below.
+    wrapper_scope: Replace the prior profile_contract_ref-only limitation with exact-ref propagation for actually changed approved target bodies; no copied mechanism body.
+    target_policy: Existing ordinary task-scope execution policy; covered actions do not acquire repeat stage authorization, while new load-bearing choices and uncovered protected actions retain current Human gates.
+    review_waiver: none
+    master_or_runtime_authority_added: none
   allowed_changed_paths:
     - AGENTS.md
     - AGENT_WORKING_DISCIPLINE.md
@@ -38,6 +50,17 @@ task_packet:
     - 01_os/01_workflow/05_步骤拆分/实现/阶段协同推演profile引用_v1.yml
     - 01_os/01_workflow/06_执行/实现/阶段协同推演profile引用_v1.yml
     - 01_os/01_workflow/07_测试执行/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/方法论_v1.md
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/实现/状态转换与不变量契约_v1.yml
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/实现/README.md
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/README.md
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/实现/test_task_scope_readiness.py
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/实现/fixtures/instance/task_scope_cases_v1.yml
+    - 01_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml
     - 01_os/06_execution/task_discipline/**
     - 01_os/06_execution/workflow/minimum_operational_loop/**
     - 01_os/05_registry/task_discipline_v1.yml
@@ -54,8 +77,22 @@ task_packet:
     - current canonical model-routing, workflow and context static checks
     - baseline versus candidate checks and real candidate pilot through managed entry
     - exact changed-path allowlist and git diff --check
+    - actual production ordinary task-scope positive and malformed/mismatched/protected-action negative cases
+    - explicit historical helper regression with synthetic non-secret data and unchanged legal merge fixtures
+    - no fixed round minimum in current loaded rules, no stage-only reauthorization of covered ordinary work, and no inferred review waiver
   verification_plan: 01_os/_runs/run-20260907-os-execution-foundation-001/07_测试执行/required_checks.json
+  stage_actions:
+    - action_id: semantic_candidate_readiness_pilot
+      kind: ordinary_task_work
+      target: refs/heads/codex/os-execution-foundation-20260907
+      expected_target_head: null
+      stage_ids: [workflow_stage_06_execution]
+      paths: [01_os/_runs/run-20260907-os-execution-foundation-001/03_方案设计/semantic_convergence_decision.md]
+      confirmation: null
+      covered_decision_ids: [semantic_scope_convergence_as_confirmed_20260908]
   required_tests:
+    - stage_task_scope_regressions
+    - stage_actual_candidate_pilot
     - unit_and_process_regressions
     - model_routing_static
     - workflow_static

@@ -10,7 +10,9 @@ outputs:
   - 03_方案设计/architecture.md
   - 03_方案设计/baseline_route_decision.md
   - 03_方案设计/remaining_semantic_boundary.md
+  - 03_方案设计/semantic_convergence_decision.md
   - 07_测试执行/progress_and_baseline_blocker.yml
+  - 07_测试执行/semantic_convergence_evidence.md
 verification:
   implementation: partial_local_regressions_passed_not_candidate_accepted
   independent_acceptance: not_run
@@ -28,3 +30,5 @@ progress:
   - Human resumed the task and delegated the three route decisions. Continue the clean master-based rebuild, preserve the frozen harness as evidence, and do not merge phase1 into master.
   - The task packet now explicitly adds the seven exact wrapper paths for a pin-only baseline consistency repair, before making those reference edits. No protected authority or semantic target changes are added.
   - Seven pin-only edits passed byte-exact delta checks. Both affected static checks now return zero in the worktree; the new exact-candidate complete managed run remains required.
+  - Human explicitly confirmed the exact semantic scope proposal on 2026-09-08. The same task resumed and its exact path boundary was amended before body edits; historical b0473587 passed all seven checks but does not prove the new semantic work.
+  - Approved stage body, production task-scope input and exact-ref consumer changes are implemented. The complete 221-test regression suite passed after a diagnosed Git pathspec regression was fixed; failed evidence is retained. The clean exact-candidate nine-check managed attempt is still required.

@@ -2,6 +2,65 @@ schema_version: stage_collaborative_deliberation.profile_contract.v1
 mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
 mechanism_version: 1
 status: staged_inert
+policy_revision: 2026-09-08-current-task-scope-with-explicit-historical-input
+task_scope_execution_contract:
+  production_cli: instance --repo-root REPOSITORY_ROOT --candidate FULL_COMMIT_SHA
+  historical_cli: legacy_instance
+  implicit_historical_fallback: prohibited
+  input_policy: strict_UTF8_JSON_or_safe_subset_YAML_with_explicit_duplicate_detection_before_legal_merge
+  schema_version: 1
+  required_scope_fields: [schema_version, task_id, candidate, task_packet, action_id, stage_id, paths]
+  exact_source_reference_fields: [path, blob_sha]
+  scope_sources: regular_Git_blobs_in_exact_candidate_not_mutable_worktree_files
+  packet_format: canonical_wrapped_v1
+  packet_base: existing_commit_ancestor_of_candidate
+  candidate_diff: every_changed_path_inside_packet_allowed_changed_paths
+  allowed_path_forms: canonical_relative_literal_or_trailing_double_star_for_packet_allowlist_only
+  planned_paths: literal_paths_with_existing_Git_parents_checked_against_links_and_gitlinks
+  stage_actions:
+    required_fields: [action_id, kind, target, expected_target_head, stage_ids, paths, confirmation]
+    optional_fields: [covered_decision_ids]
+    uniqueness: action_ids_and_each_string_list_are_unique
+    stages: only_the_seven_canonical_profile_identities_in_every_action
+    action_scope: selected_action_paths_equal_instance_paths_and_stage_is_in_action_stages
+    ordinary_task_work:
+      target: refs_heads_of_packet_nonmaster_task_branch
+      expected_target_head: null
+      confirmation: null
+    protected_actions:
+      names_source: candidate_repository_publisher_authority_confirmation_bound_actions
+      missing_or_unknown_policy: fail_closed
+      core_history_rewrite: prohibited_regardless_of_confirmation
+      confirmation_fields: [actor_class, kind, source_ref, task_id, action_id, exact_base_sha, target, expected_target_head, stage_ids, paths, stale, revoked]
+      confirmation_source: candidate_regular_YAML_blob_exactly_equal_to_confirmation_without_source_ref
+      current_values: {actor_class: current_Human, kind: explicit_statement, stale: false, revoked: false}
+      branch_head_semantics: declared_expected_target_head_is_not_a_live_remote_check
+  load_bearing_decisions:
+    identity: item_decision_id_equals_basis_decision_id
+    already_covered_basis_fields: [kind, decision_id, task_packet, action_id]
+    already_covered_kind: current_task_scope
+    already_covered_gate: exact_packet_reference_and_selected_action_with_decision_id_in_covered_decision_ids
+    new_explicit_basis_fields: [kind, decision_id, source_ref]
+    new_explicit_kind: explicit_statement
+    explicit_source_fields: [actor_class, kind, decision_id, task_id, action_id, exact_base_sha, target, expected_target_head, stage_ids, paths, stale, revoked]
+    explicit_source_gate: exact_candidate_regular_YAML_blob_matching_current_task_and_action_scope
+    applies_to: load_bearing_open_items_and_load_bearing_or_Human_boundary_stage_unknowns
+    bare_ref_actor_label_silence_or_inference: insufficient
+  completion:
+    progression_requires: actual_result_string_and_exact_candidate_output_bindings_and_verification_reference
+    verification_reference_fields: [commit, path, blob_sha]
+    verification_source: regular_YAML_blob_in_explicit_existing_evidence_commit_which_may_postdate_candidate
+    verification_record_fields: [schema_version, candidate, task_id, stage_id, status]
+    verification_record_values: {schema_version: stage_verification_result.v1, status: verified}
+    cycle_rule: evidence_commit_is_separate_so_candidate_never_embeds_its_own_SHA
+    optional_pointer_fields: [append_only, bound_candidate_version, supersedes, supersedes_record_ref]
+    pointer_gate: append_only_true_and_exact_candidate_binding_and_nonempty_supersession_pair_when_present
+  retained_gates: complete_common_model_and_stage_fields_typed_receipt_unknown_disposition_and_separate_independent_acceptance
+  proof_limits:
+  - No action execution or control of arbitrary shell commands or mutable filesystem paths.
+  - No authentication of a Human or evidence author from same-writer records.
+  - A verified record is a bound declaration, not an independently replayed test result.
+  - No implicit independent-review waiver, master permission, delivery or runtime activation.
 purpose: Define the closed machine-readable contract for workflow-stage profiles without copying the global mechanism body.
 required_profile_fields:
 - mechanism_ref
@@ -159,7 +218,7 @@ common_task_stage_model:
     - assumptions_risks_alternatives_unknowns
     key_required_empty_list_accepted:
     - open_load_bearing_items
-    plus: explicit_current_Human_confirmation_bound_to_exact_current_model_version
+    plus: verified_current_task_scope_basis_and_any_actually_required_exact_Human_decision
     Human_facing_brief_length_unaffected: true
   stage_specific_unknown_deferral_contract:
     default_for_required_field_disposed_unknown: block
@@ -190,13 +249,13 @@ readiness_contract:
   removal_reason: >-
     how many conversational rounds occurred never proved the model was adequate. Whether
     *additional* deliberation continues is decided only by whether a load-bearing gap still
-    exists. This removal does not weaken the mandatory confirmation below.
+    exists. This removal does not weaken any actually required Human decision or independent review.
   substantive_execution_allowed_iff:
   - current_stage_model_complete
   - proposed_method_or_solution_present
   - feasibility_support_present
   - verification_or_acceptance_method_present
-  - explicit_current_Human_confirmation_of_exact_model_version
+  - verified_task_scope_or_explicit_historical_authority_and_any_required_Human_decision
   all_five_required_together: true
   current_stage_model_complete_means: common_required_fields_plus_this_profile_required_model_fields
   readiness_must_not_require:
@@ -208,13 +267,19 @@ readiness_contract:
   brief_is_projection_not_state_machine: true
   brief_length_adapts_to_model_complexity: true
 Human_authority_contract:
+  applicability: explicitly_referenced_historical_authority_input_only
+  new_ordinary_or_protected_action_default: current_task_scope_and_simple_confirmation_when_required
+  new_authority_code_or_chain_issuance_by_this_route: prohibited
+  historical_helpers_retained_for_reading_and_explicit_provenance_checks: true
   scheme: citystate-human-task-authority-v2
   algorithm: sha256
   delegated_start_semantics_version: '2.1'
   root_authority: current_Human
   purpose: >-
-    Bind one Human-generated task authority code to one task, then let the Human-authorized
-    foreground/dispatcher issue durable scoped delegations to execution, review or other endpoints.
+    Describe the stored v2/v1 authority semantics for explicitly referenced historical
+    records. The fields below are historical verification rules, not issuance instructions
+    or a start gate for a new task. New ordinary work uses current task scope; protected
+    actions use the current publisher policy's simple Human confirmation when required.
     Code possession, model identity, provider, role or self-authored records never grant authority alone.
   migration:
     legacy_scheme: citystate-human-authority-v1
@@ -310,27 +375,33 @@ Human_authority_contract:
       remains available only for explicit Human authority events or provenance checks where the Human is actually acting.
 mandatory_Human_confirmation_contract:
   rule: >-
-    Every task and every workflow stage must project the current model - what will be done,
-    how, what supports its feasibility, the expected result, the verification method, and the
-    load-bearing risks and choices - to the current Human, discuss it, and obtain explicit
-    Human confirmation before any substantive execution.
-  applies_even_when_no_load_bearing_gap_exists: true
-  minimal_form_when_no_gap: single concise proposal followed by one explicit Human confirmation
+    Project the current model and material changes to the Human, but execute ordinary
+    reversible work by current Human task input and durable task scope. Stage or mode
+    changes alone do not require a new confirmation for an already covered action.
+    Obtain an explicit current Human decision for a new load-bearing choice outside
+    delegation, a scope expansion, or an uncovered confirmation-bound action under
+    current canonical policy. Preserve required independent acceptance separately.
+  applies_even_when_no_load_bearing_gap_exists: false
+  ordinary_work_when_no_gap: concise_projection_and_verified_existing_task_scope_without_repeat_confirmation
+  policy_ref: 01_os/05_registry/repository_publisher_authority_v1.yml
   must_not_produce:
   - fixed_round_counts
   - long_forms
   - per_choice_microapproval
-  confirmation_must_bind: current_exact_model_version
-  cannot_substitute_for_current_stage_confirmation:
+  confirmation_when_required_must_bind: exact_action_or_load_bearing_decision_and_current_scope
+  covered_action_may_reuse: existing_current_Human_task_input_or_simple_durable_confirmation_covering_that_exact_action
+  stage_change_alone_invalidates_covered_confirmation: false
+  cannot_substitute_for_a_missing_required_confirmation:
   - Human_silence_or_non_response
   - inferred_or_implied_consent
-  - previous_stage_confirmation
-  - confirmation_of_an_older_model_version
+  - previous_confirmation_that_does_not_cover_the_current_action_or_scope
+  - stale_revoked_or_materially_superseded_confirmation
   - executor_confirmation
   - independent_reviewer_confirmation
   - any_non_Human_actor_confirmation
 inquiry_contract:
-  mandatory_projection_and_confirmation: always
+  mandatory_projection: current_model_and_material_changes
+  new_Human_confirmation: only_when_current_policy_or_an_undelegated_load_bearing_choice_requires_it
   additional_inquiry_and_multi_round_deliberation_trigger: open_load_bearing_gap_only
   must_not_trigger_additional_rounds_on:
   - ordinary_local_reversible_choice
@@ -350,10 +421,11 @@ activation_contract:
   dormant_does_not_mean:
   - no_task_or_stage_model_is_built
   - no_projection_to_the_Human_is_required
-  - no_explicit_Human_confirmation_is_required
-  dormant_still_requires: concise_projection_plus_one_explicit_current_Human_confirmation
+  - actually_required_Human_decisions_or_independent_acceptance_can_be_skipped
+  dormant_still_requires: concise_projection_plus_verified_current_task_scope_and_any_actually_required_decision
   current_model_required_in_every_mode: true
-  mandatory_Human_confirmation_required_in_every_mode: true
+  new_Human_confirmation_required_in_every_mode: false
+  current_scope_and_applicable_confirmation_checks_required_in_every_mode: true
   formalistic_round_counts: false
   Human_authorization_required_when_profile_gate_requires_activation: true
 reference_not_copy:

@@ -247,17 +247,20 @@ def validate_static_repo(repo_root: Path) -> int:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("mode", choices=("static", "instance", "material_event", "review_execution"))
+    parser.add_argument("mode", choices=("static", "instance", "legacy_instance", "material_event", "review_execution"))
     parser.add_argument("target")
     parser.add_argument("--case-id")
     parser.add_argument("--json-output", action="store_true")
+    parser.add_argument("--repo-root", type=Path)
+    parser.add_argument("--candidate")
     args = parser.parse_args()
     try:
         target = Path(args.target)
         if args.mode == "static" and target.is_dir():
             code = validate_static_repo(target)
         else:
-            data = base.select_case(base.load_doc(target), args.case_id)
+            loader = base.load_task_scope_doc if args.mode == "instance" else base.load_doc
+            data = base.select_case(loader(target), args.case_id)
             if not isinstance(data, dict):
                 code = 11
             else:
@@ -265,7 +268,9 @@ def main() -> int:
                 if args.mode == "static":
                     code = validate_static_fixture(payload)
                 elif args.mode == "instance":
-                    code = base.validate_instance(payload)
+                    code = base.validate_task_scope_instance(payload, args.repo_root, args.candidate)
+                elif args.mode == "legacy_instance":
+                    code = base.validate_instance(payload, args.repo_root)
                 elif args.mode == "material_event":
                     code = base.validate_material_event(payload)
                 else:

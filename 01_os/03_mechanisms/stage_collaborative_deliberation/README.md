@@ -8,7 +8,7 @@
 
 当前全局状态为 `active_dormant`：机制已可被七个 workflow 阶段发现、加载并评估触发条件，但默认路线仍为 `dormant`，不会自动创建讨论 session。只有命中当前 profile 的条件并满足任务级 start gate 与权限要求时，才进入 full 或 incremental；全局激活不替代外部行动授权、不可逆操作授权或当前任务的其他 Human 门。
 
-当前运行状态的权威记录是 `激活状态_v1.yml`。核心机器契约的既有 blob 保持不变；其中历史 `staged_inert` candidate-state 字段仅表示激活前候选状态，由该 append-only 激活记录对当前运行状态作明确后继解释。
+当前运行状态的权威记录是 `激活状态_v1.yml`；本次任务范围内的契约修订不改变该激活记录。正文修订后的实际 blob 必须同步到当前 boot 与 workflow 引用，历史指针不改写。其中历史 `staged_inert` candidate-state 字段仅表示激活前候选状态，由该 append-only 激活记录对当前运行状态作明确后继解释。
 
 ## 核心判断
 
@@ -37,6 +37,13 @@
 - `实现/`：结果对象、状态转换、路由失败、加载 receipt、validator 与 fixture。
 
 ## 运行原则
+
+普通、可逆、范围内工作以当前 Human 任务输入及持久任务范围为基础，不因换阶段重复要求已覆盖的
+Human 确认，也不新建 task authority code、nonce 或 delegation chain。现行政策见
+`01_os/05_registry/repository_publisher_authority_v1.yml`。新承重决定超出已有委托、未覆盖的受保护
+动作和独立最终验收仍分别保留其门；普通实例通过不代表审核通过或允许 master 集成。
+旧 authority helper 仅用于显式历史输入或对已存历史证据的核验，不是新普通实例的隐式备用路径。
+讨论是否继续由实际承重缺口与就绪证据决定，不设固定轮次下限。
 
 - reference-not-copy：阶段只引用 profile，不复制机制正文；
 - default dormant：全局可加载不等于每个任务自动进入讨论；

@@ -5,6 +5,15 @@ profile_contract_ref: 01_os/03_mechanisms/stage_collaborative_deliberation/é˜¶æ®
 profile_set_version: 1
 status: staged_inert
 profile_count: 7
+current_task_scope_interpretation:
+  policy_ref: 01_os/05_registry/repository_publisher_authority_v1.yml
+  ordinary_authority_basis: current_Human_task_input_plus_candidate_bound_durable_task_scope
+  authorization_field_meaning: Human_execution_authorization and authority_to_start may be satisfied by the existing current task scope for ordinary work; they do not require legacy code or nonce artifacts.
+  interpretation_scope: Applies to every authorization and confirmation gate token in this file, including compound gate names; any independent-review part of a compound gate remains required and is not satisfied by task-scope validation.
+  confirmed_baseline_meaning: Current confirmed or explicitly delegated task requirements; a new undelegated load-bearing change still requires the Human decision.
+  stage_change_repeats_covered_Human_confirmation: false
+  required_Human_confirmation: Only where current policy or a new undelegated load-bearing choice actually requires one; exact covered confirmations remain reusable within their scope.
+  independent_review: Existing profile-required independent review remains required; task-scope validation is not review or acceptance and does not waive it.
 profiles:
 - mechanism_ref: 01_os/03_mechanisms/stage_collaborative_deliberation/README.md
   profile_id: workflow_stage_01_requirement_modeling
