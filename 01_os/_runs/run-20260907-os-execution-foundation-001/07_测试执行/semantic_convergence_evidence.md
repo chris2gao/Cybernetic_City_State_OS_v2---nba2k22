@@ -61,7 +61,7 @@ completed all nine checks in `candidate-99090d40-attempt-001`. `run` and `inspec
 both returned 0. The plan SHA-256 was
 `bf412043b0b21819c0eb1b82f93937192e7b0f162ede479fe058977869f4d725`.
 The stage suite passed 221 tests in 271.99 s; the existing suite passed 211 tests
-and 264 subtests in 75.51 s. All six remaining checks passed, including the actual
+and 264 subtests in 75.51 s. All seven remaining checks passed, including the actual
 task-packet pilot: both CLIs returned 0 for the ordinary action and 15 for its
 unplanned-action counterexample. Candidate scope was 58 changed paths, all within
 the task allowlist; preflight was clean. No binary artifacts were added.
