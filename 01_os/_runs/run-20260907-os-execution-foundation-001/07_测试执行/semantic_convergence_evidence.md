@@ -54,13 +54,29 @@ remote/head checks passed during construction. The two original merge fixtures
 remain byte-identical to master. Implementation-team testing is not independent
 review; two auxiliary agents stopped on quota and provided no final acceptance.
 
-## Exact-candidate verification still required at this commit
+## Exact-candidate verification and closure
 
-The committed nine-check plan will run against a clean exact candidate and create
-a new external attempt. It retains all seven prior checks, adds the full stage
-scope regressions, and adds an actual task-packet pilot through both production
-CLIs. The pilot explicitly treats its input receipt gates as test declarations,
-does not request progression and does not assert canonical stage completion.
+The clean semantic candidate `99090d40690ca690dabb4e211a1d44c34c523edb`
+completed all nine checks in `candidate-99090d40-attempt-001`. `run` and `inspect`
+both returned 0. The plan SHA-256 was
+`bf412043b0b21819c0eb1b82f93937192e7b0f162ede479fe058977869f4d725`.
+The stage suite passed 221 tests in 271.99 s; the existing suite passed 211 tests
+and 264 subtests in 75.51 s. All six remaining checks passed, including the actual
+task-packet pilot: both CLIs returned 0 for the ordinary action and 15 for its
+unplanned-action counterexample. Candidate scope was 58 changed paths, all within
+the task allowlist; preflight was clean. No binary artifacts were added.
+
+The pilot explicitly treats its input receipt gates as test declarations, does
+not request progression and does not assert canonical stage completion. Its raw
+stdout was complete but did not decode as UTF-8 on this Windows host. The closure
+plan therefore adds explicit `-X utf8` to all Python check commands. No validator
+or production semantic body changes accompany that logging/runtime fix.
+
+Closure changes the commit and plan identity: the resulting final candidate must
+rerun all nine checks and pass inspection before publication. Final resulting
+remote SHA, attempt directory and exact plan identity belong in the external
+Human review handoff, avoiding a commit that embeds its own SHA. No earlier
+result is relabelled as the final candidate result.
 
 Do not reuse either earlier candidate's result: `46acc091` failed and `b0473587`
 passed its then-seven checks. Neither measured the present semantic bodies.

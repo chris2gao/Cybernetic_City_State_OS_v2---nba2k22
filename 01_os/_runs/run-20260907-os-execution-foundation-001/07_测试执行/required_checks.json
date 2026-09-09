@@ -2,14 +2,14 @@
   "schema_version": "citystate.verification_plan.v1",
   "task_packet": "01_os/_runs/run-20260907-os-execution-foundation-001/01_任务/task_packet.yml",
   "checks": [
-    {"id": "stage_task_scope_regressions", "argv": ["@python", "-B", "-m", "pytest", "01_os/03_mechanisms/stage_collaborative_deliberation/实现/test_task_scope_readiness.py", "-q", "-p", "no:cacheprovider"], "timeout_seconds": 600, "expected_exit_code": 0},
-    {"id": "stage_actual_candidate_pilot", "argv": ["@python", "-B", "01_os/_runs/run-20260907-os-execution-foundation-001/07_测试执行/stage_actual_candidate_pilot.py"], "timeout_seconds": 120, "expected_exit_code": 0},
-    {"id": "unit_and_process_regressions", "argv": ["@python", "-B", "-m", "pytest", "01_os/06_execution/task_discipline", "01_os/06_execution/workflow/minimum_operational_loop", "01_os/06_execution/task_orchestration/big_task", "-q", "-p", "no:cacheprovider"], "timeout_seconds": 300, "expected_exit_code": 0},
-    {"id": "model_routing_static", "argv": ["@python", "-B", "01_os/03_mechanisms/model_routing/实现/verify_model_routing.py", "static", "."], "timeout_seconds": 120, "expected_exit_code": 0},
-    {"id": "workflow_static", "argv": ["@python", "-B", "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py", "static", "."], "timeout_seconds": 120, "expected_exit_code": 0},
-    {"id": "context_structure", "argv": ["@python", "-B", "01_os/03_mechanisms/context_management/实现/verify_context_structure.py"], "timeout_seconds": 120, "expected_exit_code": 0},
-    {"id": "canonical_live_state_guard", "argv": ["@python", "-B", "01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_no_canonical_live_state.py", "."], "timeout_seconds": 120, "expected_exit_code": 0},
-    {"id": "deliberation_static", "argv": ["@python", "-B", "01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py", "static", ".", "--json-output"], "timeout_seconds": 120, "expected_exit_code": 0},
+    {"id": "stage_task_scope_regressions", "argv": ["@python", "-X", "utf8", "-B", "-m", "pytest", "01_os/03_mechanisms/stage_collaborative_deliberation/实现/test_task_scope_readiness.py", "-q", "-p", "no:cacheprovider"], "timeout_seconds": 600, "expected_exit_code": 0},
+    {"id": "stage_actual_candidate_pilot", "argv": ["@python", "-X", "utf8", "-B", "01_os/_runs/run-20260907-os-execution-foundation-001/07_测试执行/stage_actual_candidate_pilot.py"], "timeout_seconds": 120, "expected_exit_code": 0},
+    {"id": "unit_and_process_regressions", "argv": ["@python", "-X", "utf8", "-B", "-m", "pytest", "01_os/06_execution/task_discipline", "01_os/06_execution/workflow/minimum_operational_loop", "01_os/06_execution/task_orchestration/big_task", "-q", "-p", "no:cacheprovider"], "timeout_seconds": 300, "expected_exit_code": 0},
+    {"id": "model_routing_static", "argv": ["@python", "-X", "utf8", "-B", "01_os/03_mechanisms/model_routing/实现/verify_model_routing.py", "static", "."], "timeout_seconds": 120, "expected_exit_code": 0},
+    {"id": "workflow_static", "argv": ["@python", "-X", "utf8", "-B", "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py", "static", "."], "timeout_seconds": 120, "expected_exit_code": 0},
+    {"id": "context_structure", "argv": ["@python", "-X", "utf8", "-B", "01_os/03_mechanisms/context_management/实现/verify_context_structure.py"], "timeout_seconds": 120, "expected_exit_code": 0},
+    {"id": "canonical_live_state_guard", "argv": ["@python", "-X", "utf8", "-B", "01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_no_canonical_live_state.py", "."], "timeout_seconds": 120, "expected_exit_code": 0},
+    {"id": "deliberation_static", "argv": ["@python", "-X", "utf8", "-B", "01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py", "static", ".", "--json-output"], "timeout_seconds": 120, "expected_exit_code": 0},
     {"id": "diff_whitespace", "argv": ["git", "diff", "--check", "3dc058a1a3cf393b936025f43fd737b0848937b4", "HEAD", "--"], "timeout_seconds": 60, "expected_exit_code": 0}
   ]
 }

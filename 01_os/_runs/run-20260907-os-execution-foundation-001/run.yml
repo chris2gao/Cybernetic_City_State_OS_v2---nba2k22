@@ -5,7 +5,7 @@ branch: codex/os-execution-foundation-20260907
 ownership: core
 purpose: Evidence-led OS execution foundation remediation, not a third correction of the frozen harness.
 task_packet: 01_任务/task_packet.yml
-lifecycle: candidate_pending_validation
+lifecycle: candidate_ready_for_independent_review
 outputs:
   - 03_方案设计/architecture.md
   - 03_方案设计/baseline_route_decision.md
@@ -14,7 +14,7 @@ outputs:
   - 07_测试执行/progress_and_baseline_blocker.yml
   - 07_测试执行/semantic_convergence_evidence.md
 verification:
-  implementation: partial_local_regressions_passed_not_candidate_accepted
+  implementation: exact_99090d40_nine_checks_and_inspect_passed_closure_candidate_requires_fresh_run_before_publication
   independent_acceptance: not_run
   master_integration: not_requested
   global_operational_enforcement: not_established
@@ -32,3 +32,5 @@ progress:
   - Seven pin-only edits passed byte-exact delta checks. Both affected static checks now return zero in the worktree; the new exact-candidate complete managed run remains required.
   - Human explicitly confirmed the exact semantic scope proposal on 2026-09-08. The same task resumed and its exact path boundary was amended before body edits; historical b0473587 passed all seven checks but does not prove the new semantic work.
   - Approved stage body, production task-scope input and exact-ref consumer changes are implemented. The complete 221-test regression suite passed after a diagnosed Git pathspec regression was fixed; failed evidence is retained. The clean exact-candidate nine-check managed attempt is still required.
+  - The clean semantic candidate 99090d40690ca690dabb4e211a1d44c34c523edb passed all nine checks and independent record inspection (implementation team, not independent acceptance). The actual-candidate pilot passed both CLIs and rejected unplanned action input.
+  - Closure records retain the semantic candidate evidence and explicitly set UTF-8 in all Python plan commands after the pilot stdout was observed not to decode as UTF-8. The resulting closure candidate must rerun the complete plan before task-branch publication; final remote and evidence binding are in the external Human review handoff.
