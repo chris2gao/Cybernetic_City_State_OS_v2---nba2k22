@@ -18,6 +18,7 @@ task_packet:
     - Human supplied Opus CORRECTION-002 and explicit architecture/implementation delegation
     - Human delegated the three baseline convergence decisions on 2026-09-07 after relaying Claude's exact-ref alignment report
     - Human explicitly confirmed the exact semantic-convergence scope proposal on 2026-09-08 with 确认
+    - On 2026-09-09 Human stated review was complete, withheld the report, authorized merging this candidate, and defined task completion after merge.
   scope_amendment:
     decision_ref: 01_os/_runs/run-20260907-os-execution-foundation-001/03_方案设计/baseline_route_decision.md
     Human_basis: Current Human explicitly delegated the three route decisions; the existing foundation task already delegates architecture and implementation.
@@ -128,22 +129,31 @@ task_packet:
     - independent final review requires Human relay
     - unconfirmed master integration or runtime activation
     - security or evidence boundary
-  terminal_lifecycle_state: candidate_ready_for_independent_review
+  terminal_lifecycle_state: integrated_and_verified_on_demand
+  integration_closure:
+    Human_confirmation: 审核完毕了，报告就不给你了，可以合并了。这个任务算完成了。你提交合并之后，我们就正式完成。
+    reviewed_candidate: f83e1bace6416a79eb79e7b17802064959a6103a
+    review_evidence_limit: Review completion is Human-reported; no report was supplied or independently read by this executor.
+    master_before_integration: 3dc058a1a3cf393b936025f43fd737b0848937b4
+    master_after_reviewed_candidate_integration: f83e1bace6416a79eb79e7b17802064959a6103a
+    integration_method: Enabled local hook and non-force atomic fast-forward push, followed by fresh remote readback.
+    remaining_closure_work: Revalidate and publish this metadata-only closure; exact final SHA is recorded externally to avoid self-reference.
+    completion_basis: Current Human accepts this task as complete after verified integration; no runtime deployment or stronger global enforcement is claimed.
   publisher:
     principal_binding: local_authenticated
     publication_transport: local_git
     source_branch_publication: task_scope_default
-    master_integration_confirmation: not_requested
-    expected_remote_master_head: 3dc058a1a3cf393b936025f43fd737b0848937b4
+    master_integration_confirmation: current_Human_confirmed
+    expected_remote_master_head: f83e1bace6416a79eb79e7b17802064959a6103a
   big_task_confirmation_closure:
     enabled: true
-    known_confirmation_required_actions: []
-    preconfirmed_actions: []
+    known_confirmation_required_actions: [master_integration]
+    preconfirmed_actions: [master_integration]
     uncovered_actions: []
     scope_note: >-
-      Build and task-branch publication are in scope. Master integration and any
-      stronger independently controlled execution/publish boundary are later
-      Human gates, not implicitly authorized by this packet or old waivers.
+      Current Human explicitly confirmed this candidate's master integration and
+      ordinary metadata closure. Runtime activation and stronger independently
+      controlled execution/publish deployment are not included.
   executor_profile:
     provider: OpenAI
     surface: codex_desktop

@@ -5,7 +5,7 @@ branch: codex/os-execution-foundation-20260907
 ownership: core
 purpose: Evidence-led OS execution foundation remediation, not a third correction of the frozen harness.
 task_packet: 01_任务/task_packet.yml
-lifecycle: candidate_ready_for_independent_review
+lifecycle: integrated_and_verified_on_demand
 outputs:
   - 03_方案设计/architecture.md
   - 03_方案设计/baseline_route_decision.md
@@ -14,9 +14,9 @@ outputs:
   - 07_测试执行/progress_and_baseline_blocker.yml
   - 07_测试执行/semantic_convergence_evidence.md
 verification:
-  implementation: exact_99090d40_nine_checks_and_inspect_passed_closure_candidate_requires_fresh_run_before_publication
-  independent_acceptance: not_run
-  master_integration: not_requested
+  implementation: exact_f83e1bac_nine_checks_and_inspect_passed_metadata_closure_requires_fresh_run_before_final_publication
+  independent_acceptance: Human_reported_review_complete_report_withheld_not_read_by_executor
+  master_integration: reviewed_f83e1bac_fast_forwarded_and_remote_readback_verified
   global_operational_enforcement: not_established
 progress:
   - Fresh remote master and frozen candidate were read; a separate clean worktree was created from master.
@@ -34,3 +34,5 @@ progress:
   - Approved stage body, production task-scope input and exact-ref consumer changes are implemented. The complete 221-test regression suite passed after a diagnosed Git pathspec regression was fixed; failed evidence is retained. The clean exact-candidate nine-check managed attempt is still required.
   - The clean semantic candidate 99090d40690ca690dabb4e211a1d44c34c523edb passed all nine checks and separate record inspection (implementation team, not independent acceptance). The actual-candidate pilot passed both CLIs and rejected unplanned action input.
   - Closure records retain the semantic candidate evidence and explicitly set UTF-8 in all Python plan commands after the pilot stdout was observed not to decode as UTF-8. The resulting closure candidate must rerun the complete plan before task-branch publication; final remote and evidence binding are in the external Human review handoff.
+  - Human confirmed on 2026-09-09 that review was complete, declined to provide its report, authorized master integration and accepted task closure after merge. No report content or reviewer identity is inferred.
+  - The accepted candidate f83e1bace6416a79eb79e7b17802064959a6103a was fast-forwarded to master from 3dc058a1a3cf393b936025f43fd737b0848937b4 with the enabled hook and verified remote readback. Only this run record and its task packet are changed for closure; final exact-candidate verification and publication evidence remain external.
