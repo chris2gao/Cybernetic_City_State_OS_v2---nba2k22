@@ -1,0 +1,185 @@
+schema_version: citystate.measured_baseline.v1
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+work_package: W1
+measured_at_sha: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+measured_by_endpoint_id: claude-cowork-stage-alignment-wiring-executor-001
+measured_at: 2026-09-11
+
+reading_rules:
+  every_row_carries_its_evidence_location: true
+  rows_are_this_task_readings_not_pinned_conclusions: true
+  later_work_must_re_measure_before_citing: true
+  unmeasured_claims_are_absent_rather_than_estimated: true
+
+M1_control_surface:
+  question: where, if anywhere, can a gate fire before substantive stage work
+  finding: no_progression_engine_exists
+  rows:
+    - id: M1-1
+      statement: the seven-stage runner validates finished artifacts and drives nothing
+      evidence: 01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py#_validate_run
+      detail: >-
+        reads manifest.yml, verifies each artifact file's sha256 against the manifest, checks
+        stage order and predecessor bindings. Every artifact already exists when it runs. Its
+        own docstring states it does not execute the stages' business work.
+    - id: M1-2
+      statement: the runner CLI has three commands and none advances a stage
+      evidence: same file, main()
+      detail: 'choices=("static","validate","materialize-pilot")'
+    - id: M1-3
+      statement: materialize-pilot is the only writer and is a fixture materializer
+      evidence: same file, materialize_pilot()
+      detail: copies the pilot fixture directory, runs validate_run on the copy, writes workflow_completion.yml
+    - id: M1-4
+      statement: the repository has exactly one real git hook
+      evidence: .githooks/
+      detail: 'pre-push (82 lines) plus .gitattributes, README.md, install.ps1, test_pre_push_logic.ps1. No pre-commit, no post-commit.'
+    - id: M1-5
+      statement: pre-push invokes no python validator
+      evidence: .githooks/pre-push
+      detail: matches for python or .py are absent; matches for verify are the --no-verify discussion
+    - id: M1-6
+      statement: the repository has no continuous integration surface
+      evidence: repository tree at the measured sha
+      detail: no .github/, no .gitlab-ci, no azure-pipelines, no Jenkinsfile
+    - id: M1-7
+      statement: automatic and background progression are explicitly prohibited, not merely absent
+      evidence: 01_os/06_execution/boot/mechanism_activation/validate_mechanism_activation.py:81
+      detail: >-
+        asserts boot.automatic_delivery_polling_acknowledgement_scheduling_or_progression is
+        False.
+      scope_of_the_prohibition: >-
+        it forbids automatic and background progression. It does not forbid a foreground,
+        Human-gated coordinator. No canonical rule forbids one; none has been built or
+        evaluated. Do not restate this row as "a runtime is prohibited".
+    - id: M1-8
+      statement: nothing in the repository invokes the mechanism's instance validator
+      evidence: repository-wide search excluding _runs
+      detail: >-
+        the production CLI appears only in 实现/README.md:21 as documentation and in
+        阶段profile契约_v1.yml:7 as a declared contract field.
+  consequence:
+    stated_plainly: >-
+      Nothing in this repository observes or mediates the doing of work. The seven stages are a
+      documentary convention carried out by an agent in a session; the runner is a checker
+      someone chooses to run afterwards. The only automatic trigger in the whole repository
+      fires at publication time.
+    therefore: >-
+      A post-hoc validator cannot establish that an acceptance preceded the work it authorises.
+      It can only establish that a well-formed record claiming so exists. Wiring the runner to
+      the mechanism raises detection; by itself it does not prevent anything.
+
+M2_production_path_enforced:
+  subject: validate_task_scope_instance in verify_stage_collaborative_deliberation.py
+  invoked_by_workflow: false
+  rows:
+    - id: M2-1
+      gate: entry
+      statement: current_model is required in every activation mode including dormant
+      evidence: _scope_model, "current_model_required" exit 16; validate_model_readiness docstring
+    - id: M2-2
+      gate: entry
+      statement: every SUBSTANTIVE and NULLABLE common field must be non-empty
+      evidence: _scope_model, "common_model_field_required:" exit 16
+    - id: M2-3
+      gate: entry
+      statement: current_exact_model_version must equal the exact candidate commit
+      evidence: _scope_model, "model_candidate_mismatch" exit 12
+    - id: M2-4
+      gate: entry
+      statement: the candidate diff must lie entirely inside the task packet allowlist
+      evidence: validate_task_scope_instance, "candidate_outside_allowlist" exit 15
+    - id: M2-5
+      gate: entry
+      statement: a load-bearing open item requires a decision basis; bare ref, actor label, silence or inference are insufficient
+      evidence: _scope_decision_basis; 阶段profile契约_v1.yml#task_scope_execution_contract.load_bearing_decisions
+    - id: M2-6
+      gate: entry
+      statement: stage_specific_model_elements must cover profile.required_model_fields with an allowed disposition
+      evidence: _scope_model, "stage_field_missing:" exit 16
+    - id: M2-7
+      gate: exit
+      statement: progression requires output version bound twice to the candidate
+      evidence: _scope_completion, "completion_binding_required" exit 12
+    - id: M2-8
+      gate: exit
+      statement: actual_result is required as a non-empty string
+      evidence: _scope_completion, "actual_result_required" exit 14
+    - id: M2-9
+      gate: exit
+      statement: verification evidence is fetched, not trusted
+      evidence: _scope_completion, "verification_source_mismatch" exit 14
+      detail: >-
+        verification_result must be {commit, path, blob_sha}; the blob is read from that commit
+        and compared to {schema_version: stage_verification_result.v1, candidate, task_id,
+        stage_id, status: verified}.
+    - id: M2-10
+      gate: exit
+      statement: the evidence commit must be separate so a candidate never embeds its own SHA
+      evidence: 阶段profile契约_v1.yml#task_scope_execution_contract.completion.cycle_rule
+
+M3_production_path_not_enforced:
+  load_bearing:
+    - id: G1
+      statement: feasibility_support requires only a non-empty value; no evidence or support basis is required
+      evidence: _scope_model iterates SUBSTANTIVE_COMMON_FIELDS for non-emptiness only
+    - id: G2
+      statement: no per-stage Human plan acceptance exists on the production path
+      evidence:
+        - _scope_model, '_scope_require("Human_confirmation" not in model, 11, "mixed_legacy_confirmation")'
+        - _scope_model, 'validate_model_readiness(data, _validated_task_scope=True)'
+        - validate_model_readiness, 'if not _validated_task_scope:' guards validate_mandatory_Human_confirmation and validate_human_authority
+      detail: >-
+        on the production path both the mandatory Human confirmation check and the Human
+        authority check are skipped. What survives binds load-bearing open items, not the stage.
+    - id: G3
+      statement: no per-stage Human completion acceptance exists on the production path
+      evidence: _scope_completion binds output version and verification evidence and records no Human disposition
+    - id: G4
+      statement: a covered confirmation is reusable across stages
+      evidence: 阶段profiles_v1.yml#current_task_scope_interpretation.stage_change_repeats_covered_Human_confirmation is false
+    - id: G5
+      statement: completion requires neither plan-vs-actual delta nor material_deviation nor residual_risk
+      evidence: _scope_completion requires actual_result, bound_output_version and verification_result only
+    - id: G9
+      statement: no temporal ordering between acceptance and work is established anywhere
+      evidence: M1 rows
+      detail: >-
+        newly identified by W1. Not previously numbered because earlier readings assumed a
+        control point existed to be wired.
+  secondary:
+    - id: G6
+      statement: no why_this_stage_is_needed_now dimension
+      evidence: common_task_stage_model.fields
+    - id: G7
+      statement: downstream_impact exists only inside validate_deferred_unknown as DOWNSTREAM_IMPACT_DIMENSIONS
+      evidence: verify_stage_collaborative_deliberation.py, the constant has one consumer
+    - id: G8
+      statement: no downstream_baseline dimension at completion
+      evidence: _scope_completion
+
+M4_workflow_receipt_check:
+  subject: run_minimum_operational_loop.py validate_receipt
+  rows:
+    - id: M4-1
+      statement: the workflow keeps its own shallow receipt definition
+      evidence: run_minimum_operational_loop.py#validate_receipt
+      detail: >-
+        checks mechanism_id, activation_state, profile_id, receipt_status and route. On route
+        dormant it requires session_id and Human_authorization_ref to be absent. The mechanism's
+        REQUIRED_RECEIPT_FIELDS has twenty fields including gate_results.
+    - id: M4-2
+      statement: the shipped pilot fixture demonstrates the bypass
+      evidence: 01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard/03_result.yml
+      detail: 'status complete, route dormant, Human_authorization_ref null, and no current_model field at all; validate_run accepts it'
+
+corrections_to_earlier_readings_in_this_task:
+  - withdrawn: master enforces no completion-side requirements
+    superseded_by: M2-7 through M2-10
+  - withdrawn: explicit Human disposition is already enforced on the production path
+    superseded_by: G2 and G3
+  - withdrawn: the remaining work is to wire the runner to the instance validator
+    superseded_by: >-
+      M1 and G9. Wiring is necessary and is not sufficient. There is no control point for a
+      pre-work gate to occupy.

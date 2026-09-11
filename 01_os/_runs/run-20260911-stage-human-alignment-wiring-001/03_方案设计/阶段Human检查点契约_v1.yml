@@ -1,0 +1,144 @@
+schema_version: citystate.stage_human_checkpoint_contract.v1
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+work_package: W2
+kind: load_bearing_architecture
+status: Human_decided_at_HG1
+HG1_decision_recorded: 2026-09-11
+based_on_sha: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+
+design_inputs:
+  - 架构决定_Human阶段对齐层_v1.yml#acceptance_principle
+  - Human架构决定_前台阶段简报与讨论闭环_v1.yml#machine_enforcement_scope
+  - 02_信息收集/当前强制点实测_v1.yml
+
+purpose: >-
+  Define the two per-stage Human checkpoints as bindings, independent of where they are
+  enforced. What they bind is decided here; where a machine can check them is decided in W3.
+
+checkpoints:
+
+  stage_plan_acceptance:
+    occurs: before substantive work of this stage
+    decision_type: substantive_execution_authorization
+    must_bind:
+      task_id: exact
+      stage_id: exact, one of the seven canonical profile identities
+      plan_version: current_exact_model_version of the model being accepted
+      accepted_model_digest: digest over the accepted plan fields, not over the whole document
+    accepted_plan_fields:
+      rationale: >-
+        These five are the plan. Everything else in the model may change freely without
+        re-acceptance, which is what keeps ordinary local reversible choices free of
+        micro-approval.
+      fields:
+        - problem_or_objective
+        - proposed_method_or_solution
+        - feasibility_support
+        - expected_output
+        - verification_or_acceptance_method
+    staleness:
+      rule: a material change to any accepted_plan_field invalidates this acceptance
+      detection: recomputed digest differs from accepted_model_digest
+      on_stale: acceptance is void and a new stage_plan_acceptance is required
+      not_stale_on:
+        - changes to fields outside accepted_plan_fields
+        - ordinary local reversible implementation choices
+        - stage or mode change alone
+
+  stage_completion_acceptance:
+    occurs: before progression to the next stage
+    decision_type: completion_acceptance
+    must_bind:
+      task_id: exact
+      stage_id: exact
+      output_version: exact output artifact version, equal to the candidate
+      verification_evidence_ref: {commit, path, blob_sha}
+      accepted_plan_digest: the digest this stage's work was authorised against
+    additionally_requires:
+      - actual_result present as a substantive value
+      - plan_vs_actual_delta stated, with none_material an allowed and explicit answer
+      - material_deviation stated
+      - residual_risk stated
+    staleness:
+      rule: a change to the output version after acceptance voids the acceptance
+      detection: bound output version differs from the candidate
+
+non_substitution_rules:
+  rationale: >-
+    Each of these was observed on the measured baseline as a live substitution path, or was
+    named as one by the predecessor architecture decisions.
+  rules:
+    - task_scope_does_not_substitute_for_stage_plan_acceptance
+    - task_scope_does_not_substitute_for_stage_completion_acceptance
+    - stage_plan_acceptance_does_not_substitute_for_stage_completion_acceptance
+    - a_previous_stage_acceptance_does_not_substitute_for_this_stage
+    - a_task_level_authorization_does_not_substitute_for_either_stage_checkpoint
+    - Human_silence_or_non_response_does_not_substitute
+    - inferred_or_implied_consent_does_not_substitute
+    - a_stale_or_revoked_acceptance_does_not_substitute
+    - executor_confirmation_does_not_substitute
+    - independent_reviewer_confirmation_does_not_substitute
+    - any_non_Human_actor_confirmation_does_not_substitute
+    - passing_tests_do_not_substitute
+    - independent_review_acceptance_does_not_substitute_for_Human_completion_acceptance
+  supersedes_within_the_seven_stages:
+    target: 阶段profiles_v1.yml#current_task_scope_interpretation.stage_change_repeats_covered_Human_confirmation
+    current_value: false
+    reason: >-
+      reuse of a covered confirmation across a stage boundary is precisely G4. It remains
+      correct for ordinary actions inside a stage; it must not reach across stage boundaries.
+    proposed_narrowing: covered confirmation reuse applies within a stage, never across one
+
+preserved_properties:
+  dormant_waives_either_checkpoint: false
+  dormant_means: the model is already adequate and no new load-bearing gap exists
+  dormant_does_not_mean: no model was built, or no Human saw this stage
+  ordinary_local_reversible_choice_requires_individual_approval: false
+  fixed_round_counts: not_reintroduced
+  additional_deliberation_rounds_forced_without_a_load_bearing_gap: false
+  Human_facing_output: may be a compressed load-bearing summary, projected from the Current Model
+  second_briefing_mechanism_parallel_to_stage_collaborative_deliberation: prohibited
+
+invariant_layers:
+  basis: W3 part_1, decided at HG1
+  operational_invariant:
+    status: in_force_not_withdrawn
+    rule: >-
+      plan acceptance before substantive stage work; completion acceptance after the work and
+      before progression. This is an OS operating rule whose force does not depend on a machine
+      being able to prove it.
+  machine_enforced_invariant:
+    cannot_prove: local keyboard or worktree ordering, for want of a runtime supervisor
+    must_prove: >-
+      any accepted or published workflow history carries stage-exact checkpoints, exact version
+      bindings and correct ancestor ordering
+    on_failure: fail_closed
+
+required_durable_ordering:
+  basis: W3 CP_B, accepted at HG1
+  chain_per_stage:
+    - plan_acceptance_checkpoint
+    - stage_work_and_result
+    - completion_acceptance_checkpoint
+    - next_stage_plan_acceptance_checkpoint
+  assertions:
+    - plan_acceptance_commit is an ancestor of the stage work commit
+    - the stage work commit is an ancestor of the completion_acceptance commit
+    - stage N completion_acceptance is an ancestor of stage N+1 plan_acceptance
+    - no checkpoint commit equals the commit it is asserted to precede
+  claims: durable commit ordering only, never keystroke order
+
+proof_limits:
+  rule: >-
+    This contract defines what an acceptance binds. It does not establish that the acceptance
+    preceded the work in wall-clock time. That boundary is stated in invariant_layers and in
+    W3 part_1; it bounds what the machine proves, not what the OS requires.
+  same_writer_limitation: >-
+    An acceptance record committed by the executor is a declaration, not an authentication of
+    its author. Its weight comes from the Human being present in the session and reviewing the
+    run, and from the ordering evidence W3 specifies.
+  not_claimed:
+    - cryptographic proof of natural person identity
+    - proof of Human comprehension
+    - proof that the work had not already been done when the acceptance was recorded

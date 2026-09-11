@@ -1,0 +1,272 @@
+schema_version: citystate.artifact_to_instance_mapping_contract.v1
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+work_package: W3
+kind: load_bearing_architecture
+status: Human_decided_at_HG1
+HG1_decision_recorded: 2026-09-11
+based_on_sha: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+blocks: W6_runner_and_schema_implementation
+
+prohibitions_governing_this_contract:
+  - runner_or_adapter_synthesises_Human_evidence
+  - runner_or_adapter_infers_Human_evidence
+  - runner_or_adapter_self_asserts_Human_evidence
+  - filling_an_underivable_field_with_a_placeholder_instead_of_reporting_the_gap
+  - simulating_a_temporal_guarantee_with_an_after_the_fact_receipt
+  - claiming_a_git_hook_is_an_access_boundary
+  - copying_the_mechanism_body_or_the_full_Current_Model_into_the_seven_stage_schemas
+
+part_1_two_layer_invariants:
+  basis: 02_信息收集/当前强制点实测_v1.yml#M1
+  measured_finding: >-
+    The seven-stage runner is a post-hoc validator. Nothing in the repository observes the doing
+    of work, there is no continuous integration surface, and the only automatic trigger is
+    pre-push. Automatic and background progression are explicitly required to be false by
+    validate_mechanism_activation.py:81.
+
+  operational_invariant:
+    status: in_force_not_withdrawn
+    rule_1: >-
+      Every workflow stage must complete Human plan acceptance before substantive work of that
+      stage begins.
+    rule_2: >-
+      Every workflow stage must complete Human completion acceptance after the work and before
+      progression to the next stage.
+    note: >-
+      This is an OS operating rule. Its force does not depend on a machine being able to prove
+      it. The absence of a supervisor changes what can be verified, not what is required.
+
+  machine_enforced_invariant:
+    status: in_force_and_precisely_bounded
+    cannot_prove: >-
+      local keyboard or worktree ordering. No runtime supervisor exists, so no artifact can
+      establish that a Human acceptance preceded the first keystroke of the work.
+    must_prove: >-
+      any workflow history the OS accepts or publishes carries stage-exact Human checkpoints,
+      exact version bindings, and correct ancestor ordering.
+    on_failure: fail_closed
+    explicitly_not_claimed:
+      - that a passing history proves no local work preceded acceptance
+      - that a git hook is an access boundary
+
+part_2_control_points:
+
+  CP_B_durable_ordering:
+    status: accepted
+    verifies: durable commit ordering
+    does_not_claim: actual keystroke or authoring order
+    required_chain_per_stage:
+      - plan_acceptance_checkpoint
+      - stage_work_and_result
+      - completion_acceptance_checkpoint
+      - next_stage_plan_acceptance_checkpoint
+    ordering_assertions:
+      - plan_acceptance_commit is an ancestor of the stage work commit
+      - the stage work commit is an ancestor of the completion_acceptance commit
+      - the completion_acceptance commit of stage N is an ancestor of the plan_acceptance commit of stage N+1
+      - no checkpoint commit equals the commit it is asserted to precede
+    why_this_is_tamper_evident: >-
+      back-dating a checkpoint into published history requires rewriting that history. core
+      history rewriting is prohibited by policy and refused by the publication gate's
+      non-fast-forward check.
+    honest_residual: >-
+      an executor may do the work in the worktree and then commit the checkpoints in the correct
+      order. Ancestry orders commits, not keystrokes. This is the boundary named in
+      part_1.machine_enforced_invariant.cannot_prove.
+
+  CP_A_workflow_publication_gate:
+    status: accepted_as_transport_independent_gate
+    definition: >-
+      a transport-independent workflow publication gate: a callable check that decides whether a
+      given run history may be published. It is not a git hook. A git hook is one caller.
+    interface:
+      callable: 01_os/06_execution/workflow/publication_gate/workflow_publication_gate.py
+      invocation: gate --run-root RUN_ROOT --candidate FULL_COMMIT_SHA
+      contract: exit 0 permits publication; any nonzero refuses and names the failing checkpoint
+    callers:
+      - id: local_git
+        caller: .githooks/pre-push
+        status: to_be_wired_by_W6
+        honest_limit: >-
+          git push --no-verify skips the hook entirely. This is already documented as a known
+          limit of the existing hook and is not changed or concealed by this task.
+      - id: api_or_other_transport
+        caller: any GitHub API, web, or tooling path that publishes
+        status: unguarded_until_it_calls_the_gate
+        requirement: >-
+          every transport that can publish must invoke the equivalent gate. A transport that does
+          not call it is unguarded, and this contract records that rather than implying coverage.
+    explicitly_recorded:
+      the_hook_is_not_an_access_boundary: true
+      non_hook_transports_are_not_covered_by_the_hook: true
+      coverage_claims_must_enumerate_callers_not_assume_them: true
+
+  CP_C_remote_observed_ordering:
+    status: optional
+    use_for: high-risk tasks that need a stronger shared-history ordering guarantee
+    mechanism: the acceptance commit is pushed before the work commit is created
+    not_a_default: true
+    rejected_as_default_because: fourteen remote round trips per run, two per stage
+
+  CP_D_foreground_coordinator:
+    status: not_built_in_this_task_recorded_as_residual_structural_finding
+    what_is_currently_prohibited: automatic_and_background_progression
+    what_is_not_prohibited: >-
+      a foreground, Human-gated coordinator. Nothing in the canonical rules forbids one. It has
+      simply never been built or evaluated.
+    finding: >-
+      the operational invariant's pre-work half has no machine enforcement because the OS has no
+      component that mediates work. Closing that would require a foreground Human-gated
+      coordinator, which is a separate task and a separate Human decision.
+    must_not_be_stated_as: runtime is canonically prohibited
+
+part_3_field_mapping:
+  principle: reference_not_copy
+  rule: >-
+    The seven stage schemas gain exact refs and bindings to durable stage-control artifacts.
+    They do not gain a copy of the Current Model or of the alignment mechanism body. Bulky
+    authored content is referenced by {path, blob_sha} or {commit, path, blob_sha}; only
+    identity, binding and disposition values are embedded.
+  embed_criteria:
+    - the value is an identity or a binding
+    - the value must be diffable without following a reference
+    - the value is short and bounded
+  ref_criteria:
+    - the content is authored prose or a multi-field model
+    - the content is owned by another mechanism
+    - embedding it would duplicate a single source of truth across seven files
+
+  rows:
+    - target: task_scope.schema_version
+      disposition: constructed_at_invocation
+      durable_source: constant 1
+    - target: task_scope.task_id
+      disposition: constructed_at_invocation
+      durable_source: run.yml#task_id at the candidate
+      fail_closed: missing or mismatched run.yml refuses; never defaulted
+    - target: task_scope.candidate
+      disposition: constructed_at_invocation
+      durable_source: the --candidate argument
+      fail_closed: never inferred from HEAD
+    - target: task_scope.task_packet
+      disposition: constructed_at_invocation
+      durable_source: run.yml#task_packet_ref resolved to {path, blob_sha}
+    - target: task_scope.stage_id
+      disposition: embed
+      durable_source: artifact.stage_id
+      note: already present
+    - target: task_scope.action_id
+      disposition: embed
+      durable_source: NEW stage_control.action_id, bound to a packet stage_actions entry
+      was: gap
+      resolution: the task packet gains stage_actions; the artifact embeds the id it acts under
+      fail_closed: unresolvable action id refuses; never synthesised
+    - target: task_scope.paths
+      disposition: ref
+      durable_source: NEW packet stage_actions[action_id].paths
+      was: gap
+      resolution: path scope is declared by the packet, never derived from the diff
+      rationale: deriving paths from the diff would let the work define its own scope
+    - target: activation_mode
+      disposition: embed
+      durable_source: deliberation_receipt.route
+    - target: dormant_reason
+      disposition: embed
+      durable_source: NEW deliberation_receipt.dormant_reason
+      was: gap
+      fail_closed: dormant without a reason refuses; a generated reason is a self-assertion
+    - target: stage_profile_id_and_version
+      disposition: embed
+      durable_source: NEW deliberation_receipt.profile_id_and_version as id@version
+      was: partial
+      fail_closed: never append a guessed version
+    - target: current_model
+      disposition: ref
+      durable_source: NEW stage_control.current_model_ref {path, blob_sha}
+      was: gap
+      resolution: >-
+        the Current Model lives in one durable artifact per stage and is referenced by exact
+        blob. It is not embedded and not copied into seven schemas.
+      fail_closed: unresolvable or absent ref refuses; a generated model is fabricated evidence
+    - target: receipt
+      disposition: ref_plus_embedded_bindings
+      durable_source: NEW stage_control.deliberation_receipt_ref {path, blob_sha}
+      was: partial, five to eight of twenty fields present
+      resolution: >-
+        the full twenty-field receipt lives in its own artifact; the stage artifact embeds only
+        route, profile_id_and_version and exact_candidate_version
+      fail_closed: report missing receipt field names individually; never pad
+    - target: completion_pointer
+      disposition: ref
+      durable_source: NEW stage_control.completion_acceptance.{commit, path, blob_sha}
+      was: gap
+      fail_closed: refuse when progression is requested and the ref is absent or unresolvable
+    - target: inquiry_items, readiness_basis, additional_inquiry_required
+      disposition: ref_optional
+      durable_source: the referenced current_model artifact when present
+      fail_closed: omit rather than fabricate, and record that they were omitted
+    - target: seven_stage_child
+      disposition: constructed_at_invocation
+      durable_source: manifest ordering plus artifact.input_refs
+      was: partial
+
+  new_stage_artifact_block:
+    name: stage_control
+    rationale: one new block per stage artifact, all refs, no mechanism body
+    shape:
+      action_id: string, an id in the packet's stage_actions
+      current_model_ref: {path, blob_sha}
+      deliberation_receipt_ref: {path, blob_sha}
+      plan_acceptance: {commit, path, blob_sha, accepted_plan_digest}
+      completion_acceptance: {commit, path, blob_sha, bound_output_version}
+      ordering_assertions: the CP_B chain for this stage
+  schema_change_scope:
+    seven_stage_schemas: add stage_control to common_required_fields
+    seven_stage_contract: add stage_control to artifact_common_required_fields
+    task_packet_format: add stage_actions
+    mechanism_body_copied_into_schemas: false
+    Current_Model_copied_into_schemas: false
+
+part_4_bootstrap_boundary:
+  constraint: no self-referential commit sha
+  design: >-
+    applies_to_runs_created_after is bound by a successor record committed after the semantic
+    landing commit and naming that commit. The landing commit never contains its own sha. This is
+    the shape the mechanism already requires of completion evidence
+    (task_scope_execution_contract.completion.cycle_rule) and the shape master already used for
+    实现后继记录_v1.yml.
+  record: 08_结论/生效边界后继记录_v1.yml
+  must_bind: [exact_semantic_landing_commit, applies_to_runs_created_after]
+  must_not: [exempt_by_path_pattern, exempt_by_actor, exempt_without_a_commit_boundary, self_referential_sha]
+
+HG1_dispositions:
+  - id: HG1-1
+    subject: capability boundary versus operating rule
+    disposition: accepted_with_correction
+    correction: >-
+      the pre-work Human gate is not withdrawn as an OS operating rule. The two-layer split in
+      part_1 replaces the executor's earlier framing, which wrongly proposed weakening the goal.
+  - id: HG1-2
+    subject: CP-B commit ancestry
+    disposition: accepted
+  - id: HG1-3
+    subject: CP-A publication gate
+    disposition: accepted_with_correction
+    correction: transport-independent gate, pre-push is one caller, the hook is not an access boundary
+  - id: HG1-4
+    subject: CP-C
+    disposition: optional_not_default
+  - id: HG1-5
+    subject: seven stage schema changes
+    disposition: approved_with_constraint
+    constraint: exact refs and bindings to durable stage-control artifacts, not seven copies of the model
+  - id: HG1-6
+    subject: CP-D
+    disposition: recorded_as_residual_structural_finding
+    correction: >-
+      what is prohibited is automatic and background progression. A future foreground
+      Human-gated coordinator remains open for separate evaluation.
+  - id: HG1-7
+    subject: bootstrap boundary
+    disposition: accepted, successor record binding, no self-referential sha
