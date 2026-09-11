@@ -1,0 +1,66 @@
+schema_version: citystate.human_task_authorization.v1
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+recorded_by_endpoint_id: claude-cowork-stage-alignment-wiring-executor-001
+recorded_at: 2026-09-11
+
+provenance:
+  kind: foreground_current_Human_interaction
+  channel: current Human chat session with the foreground executor
+  actor_class: current_Human
+  relayed_by_model: true
+
+proof_limits:
+  rule: >-
+    This record is a foreground transcription of an explicit current-Human disposition. It is
+    not a cryptographic attestation and does not authenticate a natural person. It follows the
+    master interpretation of CR-002: bind durable records to the foreground-current-Human
+    interaction and its explicit disposition, without introducing a new external attestation
+    architecture.
+  does_not_prove:
+    - natural_person_identity
+    - Human_subjective_comprehension
+  same_writer_limitation: >-
+    The executor wrote this file. A same-writer record cannot authenticate its own author. Its
+    weight comes from the Human being present in the session that produced it and from the
+    Human reviewing this run, not from the file itself.
+
+disposition: authorized_to_start
+decision_type: substantive_execution_authorization
+
+authorized_scope:
+  construction_baseline: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+  baseline_rule: current master is the only construction baseline
+  predecessor_branch_eaf6748b: design_and_test_evidence_only_no_merge_no_cherry_pick
+  objective: >-
+    establish non-bypassable per-stage Human plan acceptance and per-stage Human completion
+    acceptance across the seven workflow stages
+  explicit_boundaries:
+    - dormant does not waive Human alignment
+    - ordinary local reversible choices must not produce micro-approval
+    - the 10-entry/7-exit predecessor contract is semantic coverage input, not a wholesale port
+    - Human-facing output may be compressed to a load-bearing summary
+    - alignment disclosure composes with Current Model, it does not merge into it
+    - exit 34 may be reused but findings must keep a precise diagnosis
+    - the existing pilot fixture is retained as a bypass negative control; a conforming pilot is added
+    - the mapping contract must be defined and verified before any runner coding
+    - synthesising, inferring or self-asserting Human evidence to satisfy the validator is prohibited
+    - CR-002/nonce and CR-005/base-receipt composition are inherited components, not an end-to-end PASS
+    - the bootstrap exemption must bind an exact landing commit and must not become a permanent bypass
+    - internal construction converges by failure-set contraction; the two-round budget applies only to post-delivery formal correction
+  out_of_scope:
+    - the freeze/escalate visibility defect, which is recorded as an independent open finding
+
+required_return_gates:
+  - id: HG1
+    subject: per-stage Human checkpoint contract and artifact-to-instance mapping contract
+    before: runner coding
+  - id: HG2
+    subject: delivery evidence and dispatch to independent review
+    required_evidence: [exact_base_sha, exact_head_sha, changed_paths, published_byte_validation, all_positive_and_negative_cases, completion_pointer]
+
+not_authorized:
+  - master_publication
+  - self_declaration_of_master_readiness
+  - self_review_as_independent_review
+  - runtime_or_scheduler_activation

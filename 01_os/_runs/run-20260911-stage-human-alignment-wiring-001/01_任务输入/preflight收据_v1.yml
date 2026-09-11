@@ -1,0 +1,59 @@
+schema_version: citystate.preflight_receipt.v1
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+produced_by_endpoint_id: claude-cowork-stage-alignment-wiring-executor-001
+measured_at: 2026-09-11T04:40:49-08:00
+
+baseline:
+  remote_read: git fetch origin then git rev-parse origin/master
+  origin_master: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+  carried_forward_from_chat: false
+  prior_session_reading_2026_09_09: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+  master_moved_since_prior_reading: false
+  consequence: the 2026-09-09 measurements remain valid at this baseline
+
+branch:
+  created: claude/stage-human-alignment-wiring-001
+  created_from: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+  created_from_current_worktree_head: false
+  prior_worktree_branch: claude/task-discipline-receipts-001
+  name_collision_checked: true
+
+worktree:
+  tracked_modifications_at_start: 0
+  untracked_paths_at_start:
+    - gpt_pre/1.jpg
+    - gpt_pre/2.jpg
+    - gpt_pre/3.jpg
+    - gpt_pre/4.jpg
+    - gpt_pre/5.jpg
+  untracked_paths_owner: not_this_task
+  disposition: not_read_not_staged_not_deleted_not_moved
+
+run_id_collision_check:
+  searched_prefixes: [run-20260909, run-20260910, run-20260911, stage-human-alignment]
+  existing_matches:
+    - run-20260817-stage-human-alignment-enforcement-root-cause-001
+  collision_with_this_run_id: false
+
+target_state_reverified_at_this_baseline:
+  alignment_disclosure_contract_present_on_master: false
+  runner_calls_mechanism_validator: false
+  frozen_predecessor_head_unmoved: true
+  frozen_predecessor_head: eaf6748bd4a2fa789f28f985541ea724a31e4ade
+
+standing_constraints_respected:
+  force_rebase_squash_amend_reset_clean: none_used
+  master_publication: none
+  destructive_git: none
+  merge_or_cherry_pick_from_predecessor_branch: none
+  network_writes: none
+  secrets_or_credentials_read: none
+
+environment:
+  shell: pwsh 7 with explicit UTF8 console encoding pinned in every script
+  scripts_written_to_file_not_inline: true
+  inline_command_incident: >-
+    One inline -Command invocation lost a $false literal to the wrapper, exactly as the standing
+    constraint warns. The invocation still returned the requested blob. All task scripts are
+    written to .ps1 files; this is recorded rather than hidden.

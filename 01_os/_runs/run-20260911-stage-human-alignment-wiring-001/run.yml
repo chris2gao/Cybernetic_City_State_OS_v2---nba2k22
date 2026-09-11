@@ -1,0 +1,44 @@
+schema_version: citystate.run.v1
+run_id: run-20260911-stage-human-alignment-wiring-001
+task_id: os-v2-stage-human-alignment-wiring-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+branch: claude/stage-human-alignment-wiring-001
+base_sha: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+status: architecture_active
+risk_tier: T2_semantic
+current_phase: architecture_before_implementation
+Human_authorization_ref: 01_任务输入/Human授权_v1.yml
+task_packet_ref: 01_任务输入/任务包_v1.yml
+
+predecessors:
+  - task_id: os-v2-stage-human-alignment-deliberation-001
+    status: frozen_after_round_2_changes_required
+    round_2_review_carrier: eaf6748bd4a2fa789f28f985541ea724a31e4ade
+    semantic_candidate_reviewed: 3f41b1342e487b23dcd5dd6af0c40999ebfe13bf
+    relationship_to_this_run: design_and_test_evidence_only
+    reopen_or_merge: prohibited
+  - task_id: os-v2-stage-human-alignment-enforcement-root-cause-001
+    status: implemented_and_on_master
+    relationship_to_this_run: inherited_implementation_evidence
+    scope_boundary_that_left_this_gap: >-
+      its allowed_changed_paths covered the deliberation mechanism, its boot, its registry and
+      the seven profile reference files. It did not cover the workflow progression spine, so the
+      seven-stage runner was never wired to the mechanism's instance path.
+
+target_gap:
+  statement: the seven-stage runner never invokes validate_task_scope_instance
+  consequence: per-stage Human plan acceptance and completion acceptance are not enforced by workflow progression
+
+architecture_gate:
+  canonical_implementation_allowed_now: false
+  Human_decision_required_before_runner_coding: true
+  gate_id: HG1
+
+next_expected_artifacts:
+  - 02_信息收集/当前强制点实测_v1.yml
+  - 03_方案设计/阶段Human检查点契约_v1.yml
+  - 03_方案设计/阶段产物到instance映射契约_v1.yml
+
+master_modified: false
+independent_review_completed: false
+master_readiness_claimed: false

@@ -1,0 +1,294 @@
+schema_version: citystate.task_packet.v1
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T2_semantic
+exact_base_sha: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+branch: claude/stage-human-alignment-wiring-001
+phase: architecture_then_implementation_with_intermediate_Human_gate
+Human_authorization_ref: 01_os/_runs/run-20260911-stage-human-alignment-wiring-001/01_任务输入/Human授权_v1.yml
+
+objective: >-
+  Make per-stage Human plan acceptance and per-stage Human completion acceptance
+  non-bypassable in the seven-stage workflow progression. The stage_collaborative_deliberation
+  mechanism already carries a strong task-scope instance validator; the seven-stage runner
+  never calls it and uses its own shallow receipt check instead. Close that, and close the
+  Current Model and checkpoint dimensions that the production path does not yet constrain.
+  Do not re-architect Human alignment: the 2026-08-17 architecture decisions are design input.
+
+design_inputs:
+  - b6782775d7734fb10f5119ce04a057b5af0ef5f3:01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/03_方案设计/Human架构决定_前台阶段简报与讨论闭环_v1.yml
+  - b6782775d7734fb10f5119ce04a057b5af0ef5f3:01_os/_runs/run-20260817-stage-human-alignment-enforcement-root-cause-001/06_执行/实现后继记录_v1.yml
+  - eaf6748bd4a2fa789f28f985541ea724a31e4ade:01_os/_runs/run-20260817-stage-human-alignment-deliberation-001/03_方案设计/架构决定_Human阶段对齐层_v1.yml
+  - eaf6748bd4a2fa789f28f985541ea724a31e4ade:01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml#alignment_disclosure_contract
+  - eaf6748bd4a2fa789f28f985541ea724a31e4ade:01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-stage-human-alignment-deliberation-001/messages/gpt56-stage-alignment-independent-reviewer-002/00001_result.yml
+
+design_input_rules:
+  frozen_predecessor_branch_is_evidence_not_authority: true
+  merge_or_cherry_pick_from_eaf6748b: prohibited
+  only_construction_baseline: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+  reopening_or_patching_frozen_predecessor_task: prohibited
+
+inherited_implementation_evidence:
+  rule: >-
+    The following are existing components on the construction baseline. They are inherited
+    evidence, not a prediction of end-to-end PASS. Real workflow progression must be
+    re-verified against them by this task's negative controls and by independent review.
+  components:
+    CR_005_mechanism_side: seven_stage_child composes the real base stage-receipt validation before overlays
+    nonce_and_authority: verify_human_challenge, dual task+event commitments, provenance and synthetic-marker gating
+    completion_evidence_binding: _scope_completion exact output binding plus separately committed verification record
+  end_to_end_pass_presumed: false
+
+measured_baseline:
+  rule: >-
+    Recorded as measurements against the exact base sha, each with its evidence location.
+    Numbers here are this task's own readings and may be corrected by later measurement;
+    they are not pinned conclusions and no later work may cite them without re-measuring.
+  measured_at_sha: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+  measured_by: claude-cowork-stage-alignment-wiring-executor-001
+  structural_gap:
+    statement: the seven-stage runner never invokes the mechanism's instance path
+    evidence: 01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py#validate_receipt
+    detail: >-
+      Its own receipt check tests mechanism_id, activation_state, profile_id, receipt_status
+      and route only. On route dormant it additionally requires session_id and
+      Human_authorization_ref to be absent. It never calls validate_task_scope_instance.
+  production_path_enforced:
+    entry:
+      - current_model required in every activation mode including dormant
+      - every SUBSTANTIVE_COMMON_FIELDS and NULLABLE_COMMON_FIELDS value non-empty
+      - current_exact_model_version equals the exact candidate commit
+      - candidate diff confined to the task packet allowed_changed_paths
+      - load_bearing open items require _scope_decision_basis; bare ref, actor label, silence or inference insufficient
+      - stage_specific_model_elements cover profile.required_model_fields with an allowed disposition
+    exit:
+      - progression_requested true requires current_exact_output_version and bound_output_version equal to candidate
+      - actual_result required as a non-empty string
+      - verification_result required as {commit, path, blob_sha}, blob fetched and compared to stage_verification_result.v1
+      - evidence commit is separate so the candidate never embeds its own SHA
+  production_path_not_enforced:
+    load_bearing:
+      - id: G1
+        statement: feasibility_support requires only a non-empty value; no evidence or support basis is required
+      - id: G2
+        statement: no per-stage Human plan acceptance exists on the production path
+        detail: >-
+          _scope_model forbids current_model.Human_confirmation (mixed_legacy_confirmation) and
+          validate_model_readiness is entered with _validated_task_scope=True, which skips both
+          validate_mandatory_Human_confirmation and validate_human_authority. The surviving
+          _scope_decision_basis binds load-bearing open items, not the stage itself.
+      - id: G3
+        statement: no per-stage Human completion acceptance exists on the production path
+        detail: >-
+          _scope_completion binds output version and verification evidence but records no Human
+          disposition for stage completion.
+      - id: G4
+        statement: covered confirmation is reusable across stages
+        detail: 阶段profiles_v1.yml#current_task_scope_interpretation.stage_change_repeats_covered_Human_confirmation is false
+      - id: G5
+        statement: completion does not require plan-vs-actual delta, material_deviation or residual_risk
+    secondary:
+      - id: G6
+        statement: no why_this_stage_is_needed_now dimension
+      - id: G7
+        statement: downstream_impact exists only as DOWNSTREAM_IMPACT_DIMENSIONS inside validate_deferred_unknown, not as a required model dimension
+      - id: G8
+        statement: no downstream_baseline dimension at completion
+  withdrawn_claims_by_this_task:
+    - claim: master enforces no completion-side requirements, the exit gate has only a name
+      published_in: E:\newStand\城邦简报\core\03_决策档案\20260909_workflow阶段闭环是否交人审核_检查.md
+      withdrawn_because: >-
+        read only common_task_stage_model.required_before_substantive_execution. The completion
+        requirements live in task_scope_execution_contract.completion and _scope_completion.
+    - claim: explicit Human disposition is already enforced on the production path
+      published_in: this session's chat coverage mapping, not a durable document
+      withdrawn_because: see G2 and G3
+
+work_packages:
+  - id: W1
+    title: measured coverage baseline
+    kind: read_only
+    output: 02_信息收集/当前强制点实测_v1.yml
+    rule: every row carries its evidence location; no row asserts an unmeasured number
+  - id: W2
+    title: mandatory per-stage Human checkpoint contract
+    kind: load_bearing_architecture
+    output: 03_方案设计/阶段Human检查点契约_v1.yml
+    must_define:
+      stage_plan_acceptance:
+        binds: [exact_task_id, exact_stage_id, exact_current_model_or_plan_version]
+        precedes: substantive_stage_execution
+      stage_completion_acceptance:
+        binds: [exact_task_id, exact_stage_id, exact_output_version, verification_evidence_ref]
+        precedes: next_stage_progression
+    non_substitution_rules:
+      - task_scope_does_not_substitute_for_stage_plan_acceptance
+      - task_scope_does_not_substitute_for_stage_completion_acceptance
+      - previous_stage_confirmation_does_not_substitute_for_current_stage_acceptance
+      - stage_plan_acceptance_does_not_substitute_for_stage_completion_acceptance
+      - Human_silence_inferred_or_implied_consent_does_not_substitute
+      - executor_or_independent_reviewer_confirmation_does_not_substitute
+    preserved:
+      dormant_waives_either_checkpoint: false
+      ordinary_local_reversible_choice_requires_microapproval: false
+      fixed_round_counts_reintroduced: false
+  - id: W3
+    title: seven-stage artifact to deliberation instance mapping contract
+    kind: load_bearing_architecture
+    output: 03_方案设计/阶段产物到instance映射契约_v1.yml
+    precedes: any_runner_code_change
+    Human_gate: required_before_W6
+    must_define_per_field:
+      - durable_source
+      - derivation_rule
+      - fail_closed_behaviour_when_underivable
+    prohibitions:
+      - runner_or_adapter_synthesises_Human_evidence
+      - runner_or_adapter_infers_Human_evidence
+      - runner_or_adapter_self_asserts_Human_evidence
+      - filling_an_underivable_field_with_a_placeholder_instead_of_reporting_the_gap
+  - id: W4
+    title: close the measured Current Model and stage brief gaps
+    kind: contract
+    scope: G1 and G5 through G8 only
+    explicitly_not: wholesale port of the predecessor 10-entry/7-exit alignment_disclosure_contract
+    feasibility_basis_tiering:
+      workflow_stage_01_requirement_modeling: [Human_confirmed, prior_task_precedent]
+      workflow_stage_02_information_collection: [source_id, Human_confirmed]
+      workflow_stage_03_result_modeling: [evidence_claim_id, measurement_receipt_ref]
+      workflow_stage_04_test_generation: [evidence_claim_id, measurement_receipt_ref]
+      workflow_stage_05_step_decomposition: [evidence_claim_id, measurement_receipt_ref]
+      workflow_stage_06_execution: [measurement_receipt_ref, test_result_ref]
+      workflow_stage_07_test_execution: [measurement_receipt_ref, test_result_ref]
+      unresolvable_ref_disposition: unknown_not_conforming
+  - id: W5
+    title: task_orchestration workflow-stage checkpoint carve-out
+    kind: contract
+    reason: >-
+      大任务与长时执行契约_v1.yml:108 sets relay_is_a_transport_boundary_not_a_per_step_gate true.
+      Without an explicit carve-out the two stage checkpoints contradict it.
+    must_state: >-
+      workflow_stage_plan_checkpoint and workflow_stage_completion_checkpoint are mandatory
+      Human alignment boundaries inside a long-horizon task; they are neither micro-approval
+      nor a new task.
+  - id: W6
+    title: runner wiring
+    kind: implementation
+    blocked_by: W3_Human_gate
+    rule: reuse existing exit 34 and carry a precise diagnostic in findings; do not extend the runner exit-code table
+  - id: W7
+    title: adversarial negative controls on real workflow progression
+    kind: test
+    must_fail:
+      - substantive stage work begins without stage_plan_acceptance
+      - a model-authored Human acceptance record is accepted
+      - stage_plan_acceptance is reused after the current model version materially changed
+      - status complete without stage_completion_acceptance progresses to the next stage
+      - a dormant receipt exists without a complete Current Model
+      - completion without exact output binding or verification evidence
+      - a prior stage's acceptance is reused for the current stage
+    must_pass:
+      - dormant plus complete Current Model plus both stage acceptances
+      - an ordinary local reversible change does not require re-acceptance
+      - no additional deliberation round is forced when no load-bearing gap exists
+    fixture_policy:
+      existing_pilot_cross_platform_path_guard: retained_as_bypass_negative_control
+      new_conforming_pilot: required
+    constraints:
+      - no_network_access_in_tests
+      - tests_must_fail_fast
+      - expected_values_must_not_be_derived_by_the_code_under_test
+  - id: W8
+    title: evidence, completion pointer and independent review handoff
+    kind: evidence
+    required: [exact_base_sha, exact_head_sha, changed_path_ledger, published_byte_validation, full_positive_and_negative_case_ledger, append_only_completion_pointer]
+    rule: >-
+      the completion pointer binds this round's real candidate, real case count and real changed
+      path count. RR2-001 is the recorded failure of not doing so.
+
+bootstrap_exemption:
+  applies_to_runs_created_after: TO_BE_BOUND_TO_EXACT_LANDING_COMMIT
+  binding_required_before_delivery: true
+  permanent_legacy_bypass: prohibited
+  rationale: >-
+    W2 and W4 raise requirements on stage artifacts. Pre-existing runs in core and in every
+    domain fork must not retroactively fail. The exemption is a dated boundary, not a class.
+  must_not: [exempt_by_path_pattern, exempt_by_actor, exempt_without_a_commit_boundary]
+
+allowed_changed_paths:
+  - 01_os/03_mechanisms/stage_collaborative_deliberation/**
+  - 01_os/02_boot/stage_collaborative_deliberation/**
+  - 01_os/05_registry/stage_collaborative_deliberation_v1.yml
+  - 01_os/03_mechanisms/task_orchestration/大任务与长时执行契约_v1.yml
+  - 01_os/01_workflow/实现/七阶段最小运行契约_v1.yml
+  - 01_os/06_execution/workflow/minimum_operational_loop/**
+  - 01_os/02_boot/workflow_minimum_operational_loop/**
+  - 01_os/05_registry/workflow_minimum_operational_loop_v1.yml
+  - 01_os/01_workflow/01_需求建模/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/01_workflow/02_信息收集与提炼/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/01_workflow/03_结果建模/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/01_workflow/04_测试生成/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/01_workflow/05_步骤拆分/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/01_workflow/06_执行/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/01_workflow/07_测试执行/实现/阶段协同推演profile引用_v1.yml
+  - 01_os/_runs/run-20260911-stage-human-alignment-wiring-001/**
+  - 01_os/_communication/Cybernetic_City_State_OS_v2---core/active/os-v2-stage-human-alignment-wiring-001/**
+
+conditionally_allowed_changed_paths:
+  gate: only_if_the_W3_mapping_contract_demonstrates_the_change_is_required
+  paths:
+    - 01_os/01_workflow/01_需求建模/实现/最小运行schema_v1.yml
+    - 01_os/01_workflow/02_信息收集与提炼/实现/最小运行schema_v1.yml
+    - 01_os/01_workflow/03_结果建模/实现/最小运行schema_v1.yml
+    - 01_os/01_workflow/04_测试生成/实现/最小运行schema_v1.yml
+    - 01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml
+    - 01_os/01_workflow/06_执行/实现/最小运行schema_v1.yml
+    - 01_os/01_workflow/07_测试执行/实现/最小运行schema_v1.yml
+  rule: the mapping contract must name the field and the reason before any schema is touched
+
+required_acceptance:
+  - preserved_counts_unchanged: [profiles7, object_types45, result_names47, state_dimensions10, active_invariants16, failure_codes26, workflow_references7]
+  - blob_sha_repin_complete_across_every_reference_to_a_changed_contract
+  - every_W7_must_fail_case_fails_and_every_must_pass_case_passes
+  - published_byte_validation_via_git_archive_into_a_clean_tree
+  - working_tree_zero_residue
+  - exact_base_and_head_recorded
+
+stop_conditions:
+  - W3 mapping cannot derive a required field from a durable source
+  - a change is required outside allowed_changed_paths and outside the conditional gate
+  - the design would require synthesising, inferring or self-asserting Human evidence
+  - a semantic goal or Human-confirmed architecture would have to change
+  - evidence cannot support a claim
+
+prohibitions:
+  - master_publication
+  - force_push_rebase_squash_amend_reset_or_history_rewrite
+  - merge_or_cherry_pick_from_the_frozen_predecessor_branch
+  - self_declaration_of_master_readiness
+  - self_review_as_independent_review
+  - creating_a_second_briefing_or_attestation_mechanism_parallel_to_stage_collaborative_deliberation
+  - inferring_Human_consent_from_silence
+  - runtime_or_scheduler_activation
+  - reading_or_exposing_secrets_or_credentials
+
+correction_budget:
+  internal_construction: converges_by_failure_set_contraction_not_by_a_round_counter
+  post_delivery_formal_correction: two_rounds_then_freeze_and_escalate
+
+Human_gates:
+  - id: HG1
+    after: W3
+    before: W6
+    subject: per-stage Human checkpoint contract and the artifact-to-instance mapping contract
+    status: pending
+  - id: HG2
+    after: W8
+    subject: stage completion acceptance and dispatch to independent review
+    status: pending
+
+verification_profile:
+  independent_review_required: true
+  independent_reviewer_is_not_this_executor: true
+  master_integration_requires: independent_acceptance_plus_Human_authorization
