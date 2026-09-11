@@ -158,16 +158,22 @@ part_3_field_mapping:
       note: already present
     - target: task_scope.action_id
       disposition: embed
-      durable_source: NEW stage_control.action_id, bound to a packet stage_actions entry
-      was: gap
-      resolution: the task packet gains stage_actions; the artifact embeds the id it acts under
+      durable_source: stage_control.action_id, bound to an existing packet stage_actions entry
+      was: reported_as_gap_in_the_pre_HG1_draft
+      corrected_by: 02_信息收集/packet_parser透传实测_v1.yml
+      correction: >-
+        not a format gap. stage_actions is already mandatory on the production path
+        (verify_stage_collaborative_deliberation.py:1302 stage_actions_required) and the parser
+        already carries it transparently, proven 5/5 by probe. The gap is content: existing
+        seven-stage runs do not populate it. Filled by the packet author, not by a parser change.
       fail_closed: unresolvable action id refuses; never synthesised
     - target: task_scope.paths
       disposition: ref
-      durable_source: NEW packet stage_actions[action_id].paths
-      was: gap
-      resolution: path scope is declared by the packet, never derived from the diff
-      rationale: deriving paths from the diff would let the work define its own scope
+      durable_source: existing packet stage_actions[action_id].paths
+      was: reported_as_gap_in_the_pre_HG1_draft
+      corrected_by: 02_信息收集/packet_parser透传实测_v1.yml
+      correction: same as action_id; the field exists and is required, the content is absent
+      rationale: path scope is declared by the packet, never derived from the diff, because deriving it from the diff would let the work define its own scope
     - target: activation_mode
       disposition: embed
       durable_source: deliberation_receipt.route
@@ -224,7 +230,13 @@ part_3_field_mapping:
   schema_change_scope:
     seven_stage_schemas: add stage_control to common_required_fields
     seven_stage_contract: add stage_control to artifact_common_required_fields
-    task_packet_format: add stage_actions
+    task_packet_format: unchanged
+    task_packet_parser: unchanged
+    parser_non_modification_is_binding: true
+    parser_evidence: 02_信息收集/packet_parser透传实测_v1.yml
+    forbidden_paths_for_this_task:
+      - 01_os/06_execution/task_discipline/packet_input/**
+      - 01_os/06_execution/task_discipline/managed_verification/**
     mechanism_body_copied_into_schemas: false
     Current_Model_copied_into_schemas: false
 

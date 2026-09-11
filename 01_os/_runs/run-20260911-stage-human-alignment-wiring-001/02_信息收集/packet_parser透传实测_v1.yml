@@ -1,0 +1,90 @@
+schema_version: citystate.measured_probe.v1
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+work_package: W3_prerequisite
+measured_at_sha: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+measured_by_endpoint_id: claude-cowork-stage-alignment-wiring-executor-001
+measured_at: 2026-09-11T05:40:31-08:00
+
+question: >-
+  Does the existing packet parser already carry stage_actions transparently, and does
+  validate_task_scope_instance already consume it natively? If so, no parser change may be made.
+
+subject_under_test:
+  file: 01_os/06_execution/task_discipline/packet_input/task_packet_input.py
+  function: normalize_packet, defined at line 89
+  identical_to_master: true
+  identity_evidence: >-
+    git diff --name-only b6782775..HEAD over packet_input/ and managed_verification/ returns
+    nothing, so the working tree carries master semantics for both directories.
+
+probe_design:
+  reproducible_script: 02_信息收集/probe_packet_passthrough.py
+  invocation: python probe_packet_passthrough.py <repo-root>
+  independence: >-
+    the probe input is authored in the probe file. The expected value is the input itself, an
+    identity property. Nothing is recomputed by the code under test.
+  first_run_was_invalid:
+    observed: 4 of 5 probes failed with packet_field_missing:branch
+    cause: the probe body omitted branch, required_tests and prohibitions
+    classification: defect in the probe, not a finding about the parser
+    action: input corrected and re-run; the failed run is recorded rather than discarded
+
+results:
+  passed: 5
+  total: 5
+  rows:
+    - probe: wrapped_preserves_stage_actions
+      result: PASS
+      observed: source_format=wrapped_v1, stage_actions present and equal to the authored value
+    - probe: bare_preserves_stage_actions
+      result: PASS
+      observed: source_format=legacy_flat, stage_actions equal to the authored value
+    - probe: unknown_field_passes_through
+      result: PASS
+      observed: a field no parser knows about, carrying a nested structure, survives unchanged
+    - probe: whole_body_roundtrips
+      result: PASS
+      observed: out.body equals the authored body exactly; normalized_fields is the empty tuple
+    - probe: sibling_next_to_task_packet_rejected
+      result: PASS
+      observed: PacketInputError
+      note: >-
+        this is a wrapper-shape rule (packet_mixed_wrapped_and_top_level_fields), not a field
+        whitelist. It rejects siblings of task_packet at the root, not unknown fields in the body.
+
+source_corroboration:
+  body_handling: body = dict(body), a shallow copy of every key
+  only_deletion_in_the_whole_file: del body["explicit_prohibitions"]
+  field_whitelist_present: false
+  searched_for: [del body, pop(, allowed_fields, set(body), known_fields, whitelist]
+  validation_style: >-
+    required fields are asserted present and typed; no key is enumerated, filtered or dropped.
+
+native_consumption:
+  claim: validate_task_scope_instance already consumes stage_actions
+  status: confirmed
+  evidence:
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py:1301
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py:1302
+  detail: >-
+    actions = packet.get("stage_actions"); _scope_require(isinstance(actions, list) and
+    bool(actions), 11, "stage_actions_required"). The field is not merely accepted, it is
+    mandatory on the production path.
+  test_coverage_already_present: >-
+    test_task_scope_readiness.py exercises stage_actions at lines 77, 102, 214, 231, 330-360,
+    401-412, 467 and 516, including empty, wrong-type, duplicate and out-of-scope cases.
+
+conclusion:
+  parser_change_required: false
+  binding_consequence: >-
+    task_discipline/packet_input and task_discipline/managed_verification must not be modified
+    by this task.
+  correction_to_W3: >-
+    the earlier mapping contract described task_scope.action_id and task_scope.paths as gaps to
+    be closed by "the task packet gains stage_actions". That was wrong. The format already
+    carries the field and the validator already requires it. The real gap is content: existing
+    seven-stage runs do not populate it. A content gap is filled by whoever authors the packet,
+    not by changing the parser.
+  scope_defect_reported: false
+  reason: the stop condition does not apply because no change outside the allowlist is needed
