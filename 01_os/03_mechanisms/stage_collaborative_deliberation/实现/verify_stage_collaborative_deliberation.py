@@ -194,6 +194,7 @@ def validate_static_repo(repo_root: Path) -> int:
     return 0
 
 PROFILE_SET_PATH = "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml"
+PROFILE_CONTRACT_PATH = "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml"
 RESOLVED_DISPOSITIONS = {"resolved", "deferred_non_blocking"}
 # Allowed dispositions for a model element, from the profile contract's
 # model_space_contract. Field occupancy alone never proves adequacy.
@@ -219,6 +220,9 @@ NON_HUMAN_ACTOR_CLASSES = {"executor", "reviewer", "independent_reviewer", "mode
 NONE_MATERIAL = "none_material"
 SUBSTANTIVE_COMMON_FIELDS = (
     "problem_or_objective",
+    # Why now is not the same question as what. A stage that cannot say why it is
+    # running at this point in the task is usually running out of momentum.
+    "why_this_stage_is_needed_now",
     "Human_intent_understanding",
     "current_baseline_and_inputs",
     "proposed_method_or_solution",
@@ -230,6 +234,15 @@ SUBSTANTIVE_COMMON_FIELDS = (
 NULLABLE_COMMON_FIELDS = (
     "constraints_and_dependencies",
     "assumptions_risks_alternatives_unknowns",
+    # none_material is a real answer here: an early stage may genuinely have no
+    # downstream consumer yet. "Never considered" is not.
+    "downstream_impact",
+)
+CLOSURE_FIELDS = (
+    "plan_vs_actual_delta",
+    "material_deviation",
+    "residual_risk",
+    "downstream_baseline",
 )
 LISTED_COMMON_FIELDS = ("open_load_bearing_items",)
 STAGE_MODEL_COMPLETENESS_FIELDS = (
@@ -274,6 +287,20 @@ def load_profile_set(repo_root: Path | None = None) -> dict[str, Any]:
     doc = load_doc(root / PROFILE_SET_PATH)
     if not isinstance(doc, dict):
         raise ValueError("profile set must be a mapping")
+    return doc
+
+
+def load_profile_contract(repo_root: Path | None = None) -> dict[str, Any]:
+    """Read the contract rather than restating it as constants.
+
+    The allowed feasibility basis kinds live in one place. Copying the table into
+    this file would create exactly the drift this mechanism exists to catch: a
+    contract that says one thing while the checker enforces another.
+    """
+    root = repo_root or repo_root_from_here()
+    doc = load_doc(root / PROFILE_CONTRACT_PATH)
+    if not isinstance(doc, dict):
+        raise ValueError("profile contract must be a mapping")
     return doc
 
 
@@ -1125,6 +1152,37 @@ def _scope_decision_basis(item: dict[str, Any], repo: Path, candidate: str,
         _scope_require(source.same_json(recorded, expected), 15, "decision_source_mismatch")
 
 
+def _scope_feasibility(model: dict[str, Any], scope: dict[str, Any],
+                       contract: dict[str, Any]) -> None:
+    """feasibility_support must carry a stage-allowed basis, not only a value.
+
+    Of the eight substantively required dimensions this was the one with no
+    support requirement of its own, so a confident sentence satisfied it.
+
+    The contract arrives already loaded from the exact candidate blob by
+    validate_task_scope_instance. Two earlier revisions of this check got the
+    source wrong: the first read the filesystem, which would have let a mutable
+    working-tree file decide what the candidate may claim; the second read the
+    candidate correctly but did it here, adding a second candidate read inside a
+    per-field check.
+    """
+    support = model.get("feasibility_support")
+    _scope_require(isinstance(support, dict), 16, "feasibility_support_must_carry_a_basis")
+    _scope_require(_scope_string(support.get("value")), 16, "feasibility_value_required")
+    basis = support.get("basis")
+    _scope_keys(basis, {"kind", "ref"}, "feasibility_basis_schema")
+    _scope_require(_scope_string(basis.get("ref")), 16, "feasibility_basis_ref_required")
+    table = contract.get("common_task_stage_model", {}).get("feasibility_basis_contract")
+    _scope_require(isinstance(table, dict), 11, "feasibility_basis_contract_missing")
+    allowed = table.get("basis_kinds_by_stage", {}).get(scope["stage_id"])
+    _scope_require(isinstance(allowed, list) and bool(allowed), 11,
+                   "feasibility_basis_kinds_missing_for_stage")
+    kind = basis.get("kind")
+    _scope_require(kind not in set(table.get("prohibited_basis_kinds", ())), 16,
+                   "feasibility_basis_kind_prohibited")
+    _scope_require(kind in allowed, 16, "feasibility_basis_kind_not_allowed_for_stage")
+
+
 def _scope_completion(model: dict[str, Any], repo: Path, candidate: str,
                        scope: dict[str, Any], source: Any) -> None:
     completion = model.get("completion", {})
@@ -1139,6 +1197,16 @@ def _scope_completion(model: dict[str, Any], repo: Path, candidate: str,
                        and completion.get("bound_output_version") == candidate, 12, "completion_binding_required")
         _scope_require(_scope_string(completion.get("actual_result")), 14, "actual_result_required")
         _scope_require("verification_result" in completion, 14, "verification_result_required")
+        # Binding an output version and a verification record proves what was
+        # produced and that some record says it verified. It does not say whether
+        # the result matched the plan it was authorised against, what moved, what
+        # risk is left, or what the next stage inherits. none_material is a real
+        # answer for each; absent and null are not.
+        for field in CLOSURE_FIELDS:
+            _scope_require(field in completion, 14, "closure_field_required:" + field)
+            value = completion[field]
+            _scope_require(_scope_string(value) or isinstance(value, (dict, list)) and bool(value),
+                           14, "closure_field_empty:" + field)
     if "verification_result" in completion:
         ref = completion["verification_result"]
         _scope_keys(ref, {"commit", "path", "blob_sha"}, "verification_reference_required")
@@ -1153,7 +1221,7 @@ def _scope_completion(model: dict[str, Any], repo: Path, candidate: str,
 
 def _scope_model(data: dict[str, Any], candidate: str, scope: dict[str, Any],
                  profile: dict[str, Any], repo: Path, packet: dict[str, Any],
-                 action: dict[str, Any], source: Any) -> None:
+                 action: dict[str, Any], source: Any, contract: dict[str, Any]) -> None:
     model = data.get("current_model")
     _scope_require(isinstance(model, dict), 16, "current_model_required")
     _scope_require("Human_confirmation" not in model, 11, "mixed_legacy_confirmation")
@@ -1187,6 +1255,7 @@ def _scope_model(data: dict[str, Any], candidate: str, scope: dict[str, Any],
             _scope_require(isinstance(model[field], dict), 11, "mapping_required:" + field)
     if "additional_inquiry_required" in data:
         _scope_require(type(data["additional_inquiry_required"]) is bool, 11, "typed_inquiry_flag")
+    _scope_feasibility(model, scope, contract)
     _scope_completion(model, repo, candidate, scope, source)
     code = validate_model_readiness(data, _validated_task_scope=True)
     _scope_require(code == 0, code, "substantive_readiness_failed")
@@ -1372,9 +1441,16 @@ def validate_task_scope_instance(data: Any, repo_root: Path | None, candidate: s
         _scope_require(isinstance(receipt, dict), 17, "receipt_required")
         profile_doc = source.load_yaml_text(source.tracked_blob(repo, candidate, PROFILE_SET_PATH).decode("utf-8"))
         profile = _scope_profile(profile_doc, scope["stage_id"], receipt.get("profile_id_and_version"))
+        # Canonical sources are loaded here, once, from the exact candidate, next
+        # to the profile set. Loading the contract deeper in the call graph put a
+        # second candidate read inside a per-field check and made it easy for a
+        # future check to add a third. Never fall back to a worktree read: a
+        # mutable file must not decide what the candidate is allowed to claim.
+        contract = source.load_yaml_text(source.tracked_blob(repo, candidate, PROFILE_CONTRACT_PATH).decode("utf-8"))
+        _scope_require(isinstance(contract, dict), 11, "profile_contract_mapping_required")
         if "stage_profile_id_and_version" in data:
             _scope_require(data["stage_profile_id_and_version"] == receipt["profile_id_and_version"], 16, "declared_profile_mismatch")
-        _scope_model(data, candidate, scope, profile, repo, packet, action, source)
+        _scope_model(data, candidate, scope, profile, repo, packet, action, source, contract)
         _scope_receipt(data, scope, profile)
         return 0
     except TaskScopeError as exc:

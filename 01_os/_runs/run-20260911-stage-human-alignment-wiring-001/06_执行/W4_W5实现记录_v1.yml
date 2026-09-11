@@ -1,0 +1,140 @@
+schema_version: citystate.execution_record.v1
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+work_packages: [W4, W5]
+produced_by_endpoint_id: claude-cowork-stage-alignment-wiring-executor-001
+exact_base_sha: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+recorded_at: 2026-09-11
+
+W4_contract_changes:
+  file: 01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml
+  G6_why_now:
+    added_to: [common_task_stage_model.fields, required_before_substantive_execution.substantive_value_required]
+    field: why_this_stage_is_needed_now
+  G7_downstream_impact:
+    added_to: [common_task_stage_model.fields, required_before_substantive_execution.key_required_none_material_accepted]
+    field: downstream_impact
+    rationale: none_material is a real answer for an early stage; never considered is not
+  model_key_count: {before: 11, after: 13}
+  G5_G8_closure:
+    block: task_scope_execution_contract.completion
+    added: closure_fields_required_on_progression
+    fields: [plan_vs_actual_delta, material_deviation, residual_risk, downstream_baseline]
+    none_material_accepted: true
+    absent_or_null: refused
+  G1_feasibility_basis:
+    block: common_task_stage_model.feasibility_basis_contract
+    shape: {value: substantive, basis: {kind: stage_allowed, ref: nonempty}}
+    bare_string_accepted: false
+
+W4_grounding_authority_separation:
+  raised_by: Human at HG1 follow-up
+  defect_in_the_executor_draft: >-
+    the first tiering allowed Human_confirmed as a feasibility basis for stages 01 and 02. That
+    lets Human approval serve as epistemic evidence for an arbitrary feasibility claim, which
+    inverts the order the checkpoint exists to serve and collapses the authority/grounding
+    separation the mechanism maintains everywhere else.
+  correction: >-
+    a basis must be a statement of fact the world could falsify, never a decision that cannot be
+    wrong. A Human may still ground a claim by supplying a premise, a constraint or a resource
+    as fact, because those can turn out to be false.
+  approval_kinds_now_prohibited: [Human_confirmed, Human_approved, Human_authorized, authority_reference, decision_ref]
+  factual_Human_kinds_introduced: [Human_stated_premise, Human_supplied_constraint, Human_provided_resource]
+
+W4_validator_changes:
+  file: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py
+  lockstep_rule: >-
+    contract and checker changed in the same round. A contract field with no checker is the
+    declared-but-unenforced defect this task was created to close; introducing one while closing
+    one would have been the fifth recorded instance of that pattern in this line of work.
+  constants: {SUBSTANTIVE_COMMON_FIELDS: +why_this_stage_is_needed_now, NULLABLE_COMMON_FIELDS: +downstream_impact, CLOSURE_FIELDS: new}
+  new_check: _scope_feasibility
+  changed_check: _scope_completion enforces the four closure fields on progression
+  contract_load_site: validate_task_scope_instance, once, from the exact candidate blob
+  contract_passed_down_to: _scope_model then _scope_feasibility
+  worktree_fallback: prohibited_and_absent
+
+W4_defects_found_in_this_executor_own_work:
+  - id: SD-1
+    defect: _scope_feasibility read the contract from the filesystem
+    found_by: 56 failing candidate-scoped tests
+    severity: >-
+      not merely a test break. It violated task_scope_execution_contract.scope_sources
+      (regular_Git_blobs_in_exact_candidate_not_mutable_worktree_files) and would have let a
+      mutable working-tree file decide what a candidate is allowed to claim.
+    fix: read the blob at the exact candidate, as the profile set already is
+  - id: SD-2
+    defect: the corrected read sat inside a per-field check
+    consequence: a second candidate read per validation, and an easy path for a third
+    fix: hoisted to validate_task_scope_instance and passed down
+  - id: SD-3
+    defect: the executor reported the suite as hung, then as a four-fold slowdown
+    correction: >-
+      the suite was slow, not hung: process CPU rose throughout. The 304s figure cited as a
+      before-baseline was a run containing 56 early-exiting failures, so it measured a different
+      population than the 413s all-green run. No master-baseline suite timing was ever taken, so
+      no fold-change can be stated.
+
+W5_carve_out:
+  file: 01_os/03_mechanisms/task_orchestration/大任务与长时执行契约_v1.yml
+  anchor: human_boundary.relay_is_a_transport_boundary_not_a_per_step_gate
+  added: human_boundary.workflow_stage_checkpoint_carve_out
+  exempt_checkpoints: [workflow_stage_plan_checkpoint, workflow_stage_completion_checkpoint]
+  exemption_is_exhaustive: true
+  does_not_exempt: [ordinary_local_reversible_choices, internal_deterministic_steps, any_checkpoint_not_named]
+  reason: without it the two stage checkpoints would read as forbidden by the relay clause
+
+performance:
+  measured_by: probe wrapping subprocess.run, counting and timing every child process
+  method_note: the probe counts and times only; no expected value derives from the code under test
+  per_validation:
+    without_scope_feasibility: {child_processes: 13.0, wall: 0.451s}
+    with_scope_feasibility: {child_processes: 15.0, wall: 0.574s}
+    delta: {child_processes: +2, wall: +0.123s, percent: +27}
+  child_process_cost: 30.7ms each, Windows process creation bound
+  hoist_effect_on_cost: none
+  hoist_effect_explanation: >-
+    the contract was never read repeatedly. _scope_feasibility runs once per validation, so it
+    read the contract once. The hoist is structural, not an optimisation: it puts the load beside
+    the profile set, fails closed earlier, and stops a future check from adding a third read.
+  irreducible_because: >-
+    the profile set and the profile contract are two files, each read once. Further reduction
+    would require modifying managed_verification, which this task is forbidden to touch, or
+    merging two canonical files, which would change ownership.
+  master_baseline_timing: not_measured
+  accepted_by: Human, performance is not a blocker
+
+verification:
+  suite: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/test_task_scope_readiness.py
+  result: 223 passed, 0 failed
+  wall: 403.05s
+  regression_suites: [minimum_operational_loop, task_discipline/packet_input]
+  regression_result: 51 passed, 245 subtests passed, 24.84s
+  mol_static_exit: 0
+  delib_v2_static_exit: 0
+
+active_blob_repin:
+  policy: current active dependencies only; historical evidence never rewritten
+  historical_references_touched: 0
+  files_repinned: 8
+  repinned:
+    - 01_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml
+    - 01_os/01_workflow/01_需求建模/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/01_workflow/02_信息收集与提炼/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/01_workflow/03_结果建模/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/01_workflow/04_测试生成/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/01_workflow/05_步骤拆分/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/01_workflow/06_执行/实现/阶段协同推演profile引用_v1.yml
+    - 01_os/01_workflow/07_测试执行/实现/阶段协同推演profile引用_v1.yml
+  self_reference_chain: none, the repinned files are not themselves pinned by the changed files
+
+forbidden_paths_untouched:
+  - 01_os/06_execution/task_discipline/packet_input/**
+  - 01_os/06_execution/task_discipline/managed_verification/**
+  evidence: 02_信息收集/packet_parser透传实测_v1.yml and the changed-path ledger
+
+not_claimed:
+  master_readiness: false
+  independent_acceptance: false
+  end_to_end_workflow_progression_verified: false
+  reason: W6 and W7 are not started; no negative control has yet attacked real progression

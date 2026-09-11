@@ -17,6 +17,9 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[3]
 PROFILE = "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml"
 POLICY = "01_os/05_registry/repository_publisher_authority_v1.yml"
+# The validator reads the feasibility basis table from this blob at the exact
+# candidate, so the synthetic repository must carry it like the profile set.
+CONTRACT = "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml"
 PACKET = "scope/task_packet.yml"
 BASELINE = "b0473587877d1dfca445a92ed5429f71202c7314"
 spec = importlib.util.spec_from_file_location("scope_subject", HERE / "verify_stage_collaborative_deliberation.py")
@@ -49,6 +52,15 @@ def build_instance(candidate, packet_blob, profile, *, task_id="scope-test", act
                           "stage_id": profile["profile_id"], "paths": paths or ["scope/result.txt"]}
     model = data["current_model"]
     model.update(task_id=task_id, stage_id=profile["profile_id"], current_exact_model_version=candidate)
+    # The allowed feasibility basis kinds differ by stage, so one template cannot
+    # serve all seven. Read the allowed kinds from the contract rather than
+    # restating them here, so this driver cannot drift from what it validates.
+    kinds = (v.load_profile_contract()["common_task_stage_model"]
+             ["feasibility_basis_contract"]["basis_kinds_by_stage"][profile["profile_id"]])
+    model["feasibility_support"] = {
+        "value": model["feasibility_support"]["value"],
+        "basis": {"kind": kinds[0], "ref": "synthetic-fixture-basis-001"},
+    }
     model["stage_specific_model_elements"] = {field: {"disposition": v.REPRESENTED,
                                                       "value": "Synthetic supported value for " + field}
                                                for field in profile["required_model_fields"]}
@@ -65,7 +77,7 @@ class Source:
         # Identity/config are scoped to this new temporary repository only.
         git(self.repo, "config", "user.name", "Synthetic scope fixture")
         git(self.repo, "config", "user.email", "scope-fixture@example.invalid")
-        for path in (PROFILE, POLICY):
+        for path in (PROFILE, POLICY, CONTRACT):
             target = self.repo / path
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_bytes((ROOT / path).read_bytes())
@@ -446,8 +458,10 @@ def test_fabricated_load_bearing_Human_basis_ref_rejected(source, tmp_path):
 def test_completion_verification_cannot_be_truthy_malformed(source, tmp_path, verification):
     data = source.instance()
     data["current_model"]["current_exact_output_version"] = source.candidate
+    # Closure fields are supplied so this case still fails for the malformed
+    # verification reference it is named for, not for a missing closure field.
     data["current_model"]["completion"] = {"progression_requested": True, "actual_result": "declared output",
-        "bound_output_version": source.candidate, "verification_result": verification}
+        "bound_output_version": source.candidate, "verification_result": verification, **CLOSURE}
     assert run_cli(source, data, tmp_path) != 0
 
 
@@ -600,10 +614,14 @@ def verification_record(source, profile=None, *, record_change=None, raw=None):
     return {"commit": commit, "path": "verification.yml", "blob_sha": oid}
 
 
+CLOSURE = {"plan_vs_actual_delta": "none_material", "material_deviation": "none_material",
+           "residual_risk": "none_material", "downstream_baseline": "synthetic next-stage baseline"}
+
+
 def completed_model(data, source, result):
     data["current_model"]["current_exact_output_version"] = source.candidate
     data["current_model"]["completion"] = {"progression_requested": True, "actual_result": "synthetic declared result",
-        "bound_output_version": source.candidate, "verification_result": result}
+        "bound_output_version": source.candidate, "verification_result": result, **CLOSURE}
     data["completion_pointer"] = {"append_only": True, "bound_candidate_version": source.candidate}
 
 

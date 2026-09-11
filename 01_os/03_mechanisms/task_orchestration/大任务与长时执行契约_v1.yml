@@ -106,6 +106,29 @@ human_boundary:
   auto_acknowledgement: false
   automatic_cross_model_progression: false
   relay_is_a_transport_boundary_not_a_per_step_gate: true
+  workflow_stage_checkpoint_carve_out:
+    rationale: >-
+      relay_is_a_transport_boundary_not_a_per_step_gate exists so a long-horizon task does not
+      return to the Human for every internal deterministic step. It is correct and unchanged.
+      Without this carve-out it would also read as forbidding the two per-stage Human
+      checkpoints, which are a different thing: they are the designed boundary of the workflow
+      itself, not transport and not a step.
+    exempt_checkpoints:
+    - workflow_stage_plan_checkpoint
+    - workflow_stage_completion_checkpoint
+    exemption_is_exhaustive: true
+    these_checkpoints_are:
+    - mandatory_Human_alignment_boundaries_inside_a_long_horizon_task
+    these_checkpoints_are_not:
+    - micro_approval
+    - a_new_task
+    - a_transport_relay
+    - a_per_step_gate
+    does_not_exempt:
+    - ordinary_local_reversible_choices
+    - internal_deterministic_steps
+    - any_checkpoint_not_named_in_exempt_checkpoints
+    contract_ref: 01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml
 
 review_boundary:
   executor_is_own_independent_reviewer: prohibited

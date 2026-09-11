@@ -47,7 +47,15 @@ task_scope_execution_contract:
     applies_to: load_bearing_open_items_and_load_bearing_or_Human_boundary_stage_unknowns
     bare_ref_actor_label_silence_or_inference: insufficient
   completion:
-    progression_requires: actual_result_string_and_exact_candidate_output_bindings_and_verification_reference
+    progression_requires: actual_result_string_and_exact_candidate_output_bindings_and_verification_reference_and_closure_fields
+    closure_fields_required_on_progression: [plan_vs_actual_delta, material_deviation, residual_risk, downstream_baseline]
+    closure_field_none_material_accepted: true
+    closure_field_absent_or_null: refused
+    closure_rationale: >-
+      Binding an output version and a verification record proves what was produced and that a
+      record says it verified. It does not say whether the result matched the plan it was
+      authorised against, what moved, what risk is left, or what the next stage inherits. A
+      stage that cannot answer those four has not closed; it has only stopped.
     verification_reference_fields: [commit, path, blob_sha]
     verification_source: regular_YAML_blob_in_explicit_existing_evidence_commit_which_may_postdate_candidate
     verification_record_fields: [schema_version, candidate, task_id, stage_id, status]
@@ -186,6 +194,7 @@ common_task_stage_model:
   synonyms_or_compatibility_aliases: prohibited
   fields:
   - problem_or_objective
+  - why_this_stage_is_needed_now
   - Human_intent_understanding
   - current_baseline_and_inputs
   - constraints_and_dependencies
@@ -195,17 +204,20 @@ common_task_stage_model:
   - open_load_bearing_items
   - expected_output
   - verification_or_acceptance_method
+  - downstream_impact
   - actual_result
   - material_deviation
   - residual_risk
+  - downstream_baseline
   - current_exact_model_version
   required_before_substantive_execution:
     note: >-
-      All eleven keys must be present. "Checked and there is nothing" is a real answer and
+      All thirteen keys must be present. "Checked and there is nothing" is a real answer and
       must be expressible; "never considered" must not pass. A missing key fails; a present
       but null value fails, because it is neither a value nor a disposition.
     substantive_value_required:
     - problem_or_objective
+    - why_this_stage_is_needed_now
     - Human_intent_understanding
     - current_baseline_and_inputs
     - proposed_method_or_solution
@@ -216,10 +228,56 @@ common_task_stage_model:
     key_required_none_material_accepted:
     - constraints_and_dependencies
     - assumptions_risks_alternatives_unknowns
+    - downstream_impact
     key_required_empty_list_accepted:
     - open_load_bearing_items
     plus: verified_current_task_scope_basis_and_any_actually_required_exact_Human_decision
     Human_facing_brief_length_unaffected: true
+  feasibility_basis_contract:
+    applies_to: current_model.feasibility_support
+    problem: >-
+      A non-empty feasibility_support satisfies field presence with a confident sentence. The
+      dimension most likely to be asserted rather than supported was the one dimension with no
+      support requirement of its own.
+    shape: {value: substantive, basis: {kind: one_of_the_stage_kinds, ref: nonempty_string}}
+    bare_string_accepted: false
+    grounding_and_authority_are_separate:
+      rule: >-
+        A basis must be a statement of fact that the world could falsify, never a decision that
+        cannot be wrong. Human approval is authority, not evidence. Treating it as a feasibility
+        basis inverts the order it exists to serve: the Human approves because the work is
+        feasible, so feasibility cannot be established by the approval.
+      a_Human_may_still_ground_a_claim_by: >-
+        supplying a premise, a constraint or a resource as fact. Those are testimony about the
+        world and can turn out to be false, which is exactly what makes them evidence.
+      approval_as_basis: prohibited
+    basis_kinds_by_stage:
+      workflow_stage_01_requirement_modeling: [Human_stated_premise, Human_supplied_constraint, Human_provided_resource, prior_task_precedent, existing_artifact_ref]
+      workflow_stage_02_information_collection: [source_id, Human_stated_premise, Human_provided_resource, existing_artifact_ref]
+      workflow_stage_03_result_modeling: [evidence_claim_id, measurement_receipt_ref, existing_artifact_ref]
+      workflow_stage_04_test_generation: [evidence_claim_id, measurement_receipt_ref, existing_artifact_ref]
+      workflow_stage_05_step_decomposition: [evidence_claim_id, measurement_receipt_ref, existing_artifact_ref]
+      workflow_stage_06_execution: [measurement_receipt_ref, test_result_ref]
+      workflow_stage_07_test_execution: [measurement_receipt_ref, test_result_ref]
+    basis_kind_meanings:
+      Human_stated_premise: a fact about the domain or situation the Human asserts, falsifiable
+      Human_supplied_constraint: a given the Human states, such as platform, deadline or budget
+      Human_provided_resource: access, data or a tool the Human says exists and may be used
+      prior_task_precedent: a completed task that already did this kind of thing
+      existing_artifact_ref: a thing in the repository that shows the capability exists
+      source_id: an identified source in this run's evidence package
+      evidence_claim_id: a claim id in the stage 02 evidence package
+      measurement_receipt_ref: a recorded measurement of the actual system
+      test_result_ref: a recorded test outcome
+    tiering_rationale: >-
+      Stage 01 has no collected evidence to cite yet, so requiring an evidence id there would
+      force a fabricated reference. What it does have is what the Human knows about the world.
+      Stages 03 and later run after evidence exists, so a feasibility claim that cites nothing
+      is an assertion.
+    prohibited_basis_kinds: [silence, no_response, inferred, implied, assumed, model_confidence,
+                             plausibility, Human_confirmed, Human_approved, Human_authorized,
+                             authority_reference, decision_ref]
+    unresolvable_ref_disposition: unknown_not_conforming
   stage_specific_unknown_deferral_contract:
     default_for_required_field_disposed_unknown: block
     capability_retained: unknown_with_blocking_or_deferred_disposition_and_revisit_trigger

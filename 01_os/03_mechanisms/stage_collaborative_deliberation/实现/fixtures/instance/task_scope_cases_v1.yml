@@ -6,12 +6,18 @@ instance:
   additional_inquiry_required: false
   current_model:
     problem_or_objective: Verify bounded task-scope readiness
+    why_this_stage_is_needed_now: Readiness must be decided before this candidate is treated as executable
     Human_intent_understanding: Continue already covered task work without repeated stage consent
     current_baseline_and_inputs: Exact candidate and packet supplied by the external test driver
     proposed_method_or_solution: Validate immutable planned action and preserve all model gates
-    feasibility_support: Real temporary Git source and production CLI tests
+    feasibility_support:
+      value: Real temporary Git source and production CLI tests
+      basis: {kind: measurement_receipt_ref, ref: synthetic-fixture-measurement-001}
+      # The driver replaces this kind with one allowed for the stage under test.
+      # Approval kinds are not allowed anywhere: authority is not evidence.
     expected_output: Readiness verdict, not execution or independent acceptance
     verification_or_acceptance_method: Required positive and counterexample tests
+    downstream_impact: none_material
     current_exact_model_version: REPLACED_BY_REAL_CANDIDATE
     constraints_and_dependencies: none_material
     assumptions_risks_alternatives_unknowns: none_material
