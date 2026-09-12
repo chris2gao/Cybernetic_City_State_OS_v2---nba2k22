@@ -1,0 +1,73 @@
+schema_version: citystate.human_task_authorization.v1
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+authorization_id: SB-004-deterministic-companion-closure
+extends: 01_os/_runs/run-20260911-stage-human-alignment-wiring-001/01_任务输入/Human授权_v4_SB003.yml
+recorded_by_endpoint_id: claude-cowork-stage-alignment-wiring-executor-001
+recorded_at: 2026-09-11
+
+provenance:
+  kind: foreground_current_Human_interaction
+  actor_class: current_Human
+  relayed_by_model: true
+
+proof_limits:
+  same_writer_limitation: the executor wrote this file and it cannot authenticate its own author
+  no_nonce_commitment_present: true
+  challengeable: false
+
+decision_type: material_scope_change
+disposition: authorized
+shape: deterministic companion closure with exact-path scope
+
+authorized_scope:
+  add_to_allowed_changed_paths:
+  - 01_os/05_registry/repository_guards_v1.yml
+  - .githooks/README.md
+  - .githooks/test_pre_push_logic.ps1
+  - .githooks/install.ps1
+  and_only_those: true
+  must_not_widen_to: [.githooks/**, 01_os/05_registry/**]
+  must_not_modify: .githooks/.gitattributes
+  exception_for_gitattributes: only if new physical evidence shows it is necessary
+
+Human_stated_reasoning:
+- repository_guards_v1.yml is the canonical owner of the hook behaviour and the local_git transport scope, so a new refusal must be registered in the same change
+- .githooks/README.md maintains the What pre-push refuses table and is therefore a deterministic companion
+- test_pre_push_logic.ps1 is the registry-named decision-table evidence; the nine existing behaviours are preserved and three cases are added
+- install.ps1 currently claims a master refusal on any BLOCKED output, which becomes false-positive evidence once the gate can also emit BLOCKED
+
+Human_required_test_additions:
+- publication gate PASS leaves a previously allowed feature-branch push allowed
+- publication gate nonzero blocks a previously allowed local_git push
+- the caller actually consumes the verdict instead of running the gate and continuing
+
+executor_verification_before_recording:
+  claims_checked_against_the_files: true
+  install_ps1_defect: confirmed, the match is on the bare word BLOCKED at the master dry-run check
+  readme_behaviour_table: confirmed, three rows under What pre-push refuses
+  test_case_count: confirmed, nine cases driven through stdin with two documented harness traps
+  reason_for_checking: >-
+    a claim about existing code is not repeated on authority. The standing rule is that nothing is
+    asserted without being read.
+
+ownership_split_restated:
+  repository_guards_v1: owns .githooks/pre-push and local_git transport scope
+  workflow_publication_gate_v1: owns the transport-independent gate
+  new_entry_references_not_copies: the transport semantics stay in one place
+
+open_finding_requested_by_Human:
+  id: OF-003
+  implement_in_this_task: false
+  substance: >-
+    dispatch or preflight should compute the registry and dependency companion closure of the
+    paths a task intends to modify, fail fast on a missing companion, and require the packet to
+    name it. A tool must never silently add companion paths, because discovering a dependency is
+    not acquiring scope authority.
+
+not_authorized:
+- any allowlist entry beyond the four named above
+- master_publication
+- self_declaration_of_master_readiness
+- self_review_as_independent_review
+- runtime_or_scheduler_activation

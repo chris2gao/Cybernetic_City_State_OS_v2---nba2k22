@@ -1,0 +1,105 @@
+schema_version: citystate.task_packet.v2
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+packet_version: 5
+phase: W6_publication_gate_and_caller
+supersedes_for_current_phase: 01_os/_runs/run-20260911-stage-human-alignment-wiring-001/01_任务输入/任务包_v4_SB003.yml
+supersession_scope: adds exactly four allowed paths; every clause of v1 through v4 remains in force
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+exact_base_sha: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+branch: claude/stage-human-alignment-wiring-001
+Human_authorization_ref: 01_os/_runs/run-20260911-stage-human-alignment-wiring-001/01_任务输入/Human授权_v5_SB004.yml
+
+authorisation_shape:
+  name: deterministic companion closure, exact-path scope
+  principle: >-
+    changing a registered behaviour drags its canonical description and its declared evidence
+    with it. Those companions are authorised by name, never by widening a prefix.
+
+added_allowed_changed_paths:
+- path: 01_os/05_registry/repository_guards_v1.yml
+  why_deterministic: >-
+    it is the canonical owner of what .githooks/pre-push refuses and of the local_git transport
+    scope. Adding a workflow publication-gate refusal without updating it would leave an existing
+    path whose registered description no longer matches its behaviour.
+- path: .githooks/README.md
+  why_deterministic: it carries the What pre-push refuses behaviour table, verified to have three rows
+- path: .githooks/test_pre_push_logic.ps1
+  why_deterministic: the registry names it as the hook decision-table evidence
+- path: .githooks/install.ps1
+  why_deterministic: see install_evidence_defect below
+must_not_widen_to: [.githooks/**, 01_os/05_registry/**]
+must_not_modify: .githooks/.gitattributes
+must_not_modify_unless: new physical evidence shows it is necessary
+
+install_evidence_defect:
+  id: HK-001
+  measured: true
+  file: .githooks/install.ps1
+  current_code: if ($out -match 'BLOCKED') { 'guard ACTIVE - master push was refused' }
+  defect: >-
+    the match is on the bare word BLOCKED. The hook already emits two different refusals that
+    both contain it, and the publication gate will emit a third. Any of them would be reported as
+    a master-authorization refusal.
+  classification: false-positive evidence, a receipt that names the wrong reason
+  required_fix: >-
+    prove a specific master-authorization refusal rather than any refusal
+  note: >-
+    this is the same failure shape as reporting hook_guard passed from a non-local_git transport,
+    which repository_guards_v1.yml already calls a false receipt.
+
+test_requirements:
+  preserve_all_existing_cases: 9
+  preserve_documented_harness_traps:
+  - PowerShell pipes append CRLF and the trailing CR lands in the last field
+  - naming a parameter $args shadows the automatic variable and drops the arguments
+  add_at_least:
+  - id: T10
+    case: publication gate returns PASS, a previously allowed feature-branch push is still allowed
+    guards_against: the gate blocking work it has no verdict against
+  - id: T11
+    case: publication gate returns nonzero, a previously allowed local_git push is blocked
+    guards_against: a gate whose verdict changes nothing
+  - id: T12
+    case: the caller actually consumes the verdict rather than running the gate and continuing
+    guards_against: >-
+      the exact defect class this task exists to close, and the one the executor reproduced in
+      SD-5 by running a check and committing anyway
+
+ownership_split_unchanged:
+  repository_guards_v1: owns .githooks/pre-push and the local_git transport scope
+  workflow_publication_gate_v1: owns the transport-independent gate
+  new_entry_must: reference the repository_guards transport semantics
+  new_entry_must_not: copy the coverage matrix or restate transport scope
+
+open_finding_recorded_not_implemented:
+  id: OF-003
+  title: task dispatch does not compute the companion closure of the paths it authorises
+  statement: >-
+    this task stopped four times, at SB-001 through SB-004, each time because a path that was
+    deterministically required by an already authorised change had not been authorised. The
+    dependency was discoverable before construction started in every case.
+  proposed_behaviour: >-
+    dispatch or preflight computes the registry and dependency companion closure of the paths a
+    task intends to modify, fails fast when a required companion is absent, and requires the task
+    packet to name it explicitly.
+  hard_constraint: >-
+    a tool must never silently add companion paths to allowed_changed_paths. Discovering a
+    dependency is not the same as acquiring scope authority, and a tool that grants itself the
+    second because it found the first would remove the only point at which a Human sees the
+    change in scope.
+  in_scope_for_this_task: false
+  belongs_with:
+  - the still unlanded 05_registry/open_findings_v1.yml
+  - the freeze and escalate visibility finding recorded earlier in this run
+
+carried_forward_unchanged:
+  forbidden_paths:
+  - 01_os/06_execution/task_discipline/packet_input/**
+  - 01_os/06_execution/task_discipline/managed_verification/**
+  gate_boundary: exact-ref resolution, tree and blob separation, strict ancestry, composition, fail-closed only
+  completion_claim_prohibition: no claim of unbypassable remote access control
+  sequencing: the gate file and its registry entry land in the same commit
+  bootstrap_exemption:
+    applies_to_runs_created_after: TO_BE_BOUND_TO_EXACT_LANDING_COMMIT
+    binding_required_before_delivery: true
