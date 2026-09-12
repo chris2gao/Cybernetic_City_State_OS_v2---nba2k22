@@ -94,8 +94,11 @@ def validate_static(repo_root:Path,run_subvalidators:bool=True)->tuple[int,list[
         for label,cmd in commands:
             code=run_subvalidator(cmd,repo_root)
             if code!=0:return 22,[f"{label}:{code}"]
-    code,more=validate_run(repo_root/PILOT_PATH,repo_root)
-    if code:return code,[f"pilot:{x}" for x in more]
+    # The pilot is a structural fixture with no commit history of its own, so it
+    # is checked for shape only. Passing here says the schemas and the fixture
+    # agree; it says nothing about a governed run having been validated.
+    code,more=validate_structure(repo_root/PILOT_PATH,repo_root)
+    if code:return code,[f"pilot_structural:{x}" for x in more]
     return 0,[]
 
 # Retained for the historical callers that still import it. It is no longer the
@@ -223,7 +226,32 @@ def payload_type_findings(payload:dict,stage_id:str)->list[str]:
                         findings.append(f"payload_type:{stage_id}:implementation_claims:{index}:{field}")
     return findings
 
+def validate_structure(run_root:Path,repo_root:Path|None=None)->tuple[int,list[str]]:
+    """Shape, hashes, stage order and payload schemas. Not a governed-run verdict.
+
+    Structurally inspectable is not authoritatively validated. This entry never
+    reaches the deliberation mechanism and must never be reported as a passing
+    run: it is what static uses on a schema fixture, where no candidate exists.
+    """
+    repo_root=repo_root if repo_root is not None else Path(__file__).resolve().parents[4]
+    try:schemas=payload_schemas(repo_root)
+    except (OSError,ValueError,TypeError,KeyError,yaml.YAMLError,RecursionError) as exc:
+        return 33,[f"payload_schema_source:{type(exc).__name__}"]
+    try:return _validate_run(run_root,schemas,repo_root,None)
+    except (OSError,ValueError,TypeError,KeyError,AttributeError,yaml.YAMLError,RecursionError) as exc:
+        return 33,[f"artifact_structure:{type(exc).__name__}"]
+
 def validate_run(run_root:Path,repo_root:Path|None=None,candidate:str|None=None)->tuple[int,list[str]]:
+    """Full validation. Refuses when the authoritative check cannot be performed.
+
+    An earlier revision returned 0 here with findings saying the deliberation
+    instance had not been validated. Anything downstream reading only the exit
+    code would have taken never ran the authoritative validator for a pass, which
+    is the same defect as collecting a verdict and not consuming it.
+    """
+    if candidate is None:
+        return 41,["deliberation_not_validated:no_candidate:"
+                   "full validation requires the commit the run is judged at"]
     repo_root=repo_root if repo_root is not None else Path(__file__).resolve().parents[4]
     try:schemas=payload_schemas(repo_root)
     except (OSError,ValueError,TypeError,KeyError,yaml.YAMLError,RecursionError) as exc:
@@ -377,7 +405,10 @@ def materialize_pilot(repo_root:Path,output_root:Path)->tuple[int,list[str]]:
     output_root.mkdir(parents=True,exist_ok=True)
     for item in source.iterdir():
         if item.is_file():shutil.copy2(item,output_root/item.name)
-    code,findings=validate_run(output_root,repo_root)
+    # Materialising the fixture checks its shape. The copy has no commit history
+    # of its own, so there is nothing for the authoritative validator to judge and
+    # this is not, and must not be reported as, a governed-run validation.
+    code,findings=validate_structure(output_root,repo_root)
     if code:return code,findings
     manifest=load_yaml(output_root/"manifest.yml")
     completion={"schema_version":"citystate.workflow.completion.v1","run_id":manifest.get("run_id"),"workflow_id":manifest.get("workflow_id"),"status":"complete","final_stage":EXPECTED_STAGE_IDS[-1],"artifacts":manifest.get("artifacts"),"default_deliberation_route":"dormant","canonical_live_state_created":False}

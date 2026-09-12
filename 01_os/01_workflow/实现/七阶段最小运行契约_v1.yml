@@ -139,6 +139,17 @@ completion:
   - PASS_WITH_NON_BLOCKING_NOTES
   all_stage_status: complete
   canonical_live_state_absent: true
+validation_entries:
+  validate_structure: >-
+    shape, hashes, stage order and payload schemas. Used by static on the schema fixture, where
+    no commit exists to judge against. Structurally inspectable is not authoritatively validated,
+    and a pass here is never a governed-run verdict.
+  validate_run: >-
+    full validation. Requires the commit the run is judged at, resolves stage_control, composes
+    the canonical instance and consumes the deliberation mechanism's verdict. Without a candidate
+    it returns 41 rather than a pass, because a caller reading only the exit code would otherwise
+    read never ran the authoritative validator as success.
+
 exit_codes:
   0: pass
   20: missing_static_path
@@ -156,4 +167,5 @@ exit_codes:
   37: retry_or_invalidation_failure
   38: independent_verification_failure
   39: completion_failure
+  41: deliberation_not_validated
   40: prohibited_output_root
