@@ -68,6 +68,11 @@ that is neither present nor correctly ignored.
   （当前为 `.githooks/`）。这正是本 README 开头所述、reachability 分析必然漏掉的
   那一类文件。所有权在 `CORE_MANIFEST.yml` 另行声明：那份答"谁有权编写"，
   本 registry 答"谁加载、怎么被发现、失败何时显形"，两者不可互相替代。
+- `workflow_publication_gate_v1.yml`：transport-independent 的发布闸，判定一份 run 历史是否可以
+  发布。它拥有 exact ref 解析、严格祖先、阶段内容分离与 fail-closed；不拥有 hook。
+  `.githooks/pre-push` 与 local_git transport scope 仍由 `repository_guards_v1.yml` 拥有，
+  本条只引用不复制。当前登记一条**缺项**：尚无任何 transport 调用该闸。
+
 - `communication_system_v1.yml`：全局通讯契约、boot、显式执行工具与 Stage06 证据入口。
 - `model_routing_v1.yml`：证据化动态路由、稳定 collaboration-role 输入与 receiver setup builder。
 - `mechanism_activation_v1.yml`：always-on formal-action constitution、trigger/gate、双向物理事实

@@ -1,0 +1,75 @@
+schema_version: citystate.registry.v1
+registry_id: workflow_publication_gate_v1
+status: implemented_no_caller_wired_yet
+
+purpose: >-
+  Registers the transport-independent workflow publication gate: the component that decides
+  whether a run history may be published. It is not a git hook. A git hook is one caller, and a
+  transport that does not call this gate is not covered by it.
+
+ownership_boundary:
+  this_registry_owns: the gate itself
+  does_not_own: >-
+    .githooks/pre-push and the local_git transport scope, which stay with
+    01_os/05_registry/repository_guards_v1.yml. That entry already states that the hook covers
+    exactly one publication transport and that reporting hook_guard passed from another is a false
+    receipt. The transport semantics live there and are referenced, never copied.
+  mechanism_semantics_owner: >-
+    01_os/03_mechanisms/stage_collaborative_deliberation owns Human disposition, Current Model
+    completeness, receipt validity, feasibility basis and closure. The gate does not evaluate any
+    of them and must not grow a second copy.
+
+what_the_gate_decides:
+- exact reference resolution
+- strict Git ancestry between the nodes of each stage chain
+- phase content separation, read from trees at named commits
+- composition of the seven stages into one chain
+- fail-closed progression
+
+what_the_gate_does_not_decide:
+- whether a Human accepted anything
+- whether the work happened after the acceptance
+- whether a design is sound or a risk matters
+- whether the supplied publication base is the transport's real old head
+
+exact_claim:
+  gate: validates the transition given an authentic publication base
+  caller: establishes the publication-base binding
+  reason: >-
+    ancestry does not make a commit the real old head. Many commits are ancestors, and a caller
+    that picks a convenient one narrows the governance history it will be judged against.
+
+entries:
+- path: 01_os/06_execution/workflow/publication_gate/{workflow_publication_gate.py,test_publication_gate.py}
+  purpose: >-
+    the gate implementation and its synthetic-Git cases. Each negative case asserts an exit code
+    and a failure reason, so a refusal for the wrong cause cannot pass as a refusal.
+  loader: Python, invoked by a publication caller or by hand
+  loader_class: in_repo_program
+  discovery: referenced from this registry and from the caller that invokes it
+  evidence: >-
+    01_os/_runs/run-20260911-stage-human-alignment-wiring-001/06_执行/网关S1_S9审核_v1.yml records
+    the review that found five defects in the first draft, three of them fail-open, before any of
+    it was tracked
+  cache_dirs: []
+  failure_surfacing: next publication attempt by a caller that invokes it
+  deletion_rule: protected
+
+caller_coverage:
+  rule: only a transport that actually invokes the gate is covered
+  canonical_transport_semantics: 01_os/05_registry/repository_guards_v1.yml
+  transports:
+    local_git: {caller: .githooks/pre-push, wired: false}
+    github_api_connector: {caller: none, wired: false}
+    cli_without_verified_hooks: {caller: none, wired: false}
+    unknown: blocked
+  current_state: >-
+    no transport calls the gate yet. Until one does, nothing is gated at publication time, and no
+    completion brief may say otherwise.
+
+registered_gap:
+  statement: the local_git caller is not wired
+  reason: it is the next work package, not an omission
+  rule_followed: >-
+    the registry README requires a gap to be written down rather than left blank, as
+    task_orchestration_v1.yml does for its missing boot manifest
