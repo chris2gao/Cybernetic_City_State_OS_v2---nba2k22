@@ -1,0 +1,90 @@
+schema_version: citystate.task_packet.v2
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+packet_version: 3
+phase: W6_publication_gate_and_caller
+supersedes_for_current_phase: 01_os/_runs/run-20260911-stage-human-alignment-wiring-001/01_任务输入/任务包_v2_W6.yml
+supersession_scope: >-
+  Adds exactly one allowed path. Every clause of v1 and v2 remains in force, including the
+  forbidden parser paths, the prohibitions, the stop conditions, the hook narrowness and the
+  caller coverage matrix requirement.
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+exact_base_sha: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+branch: claude/stage-human-alignment-wiring-001
+Human_authorization_ref: 01_os/_runs/run-20260911-stage-human-alignment-wiring-001/01_任务输入/Human授权_v3_SB002.yml
+
+added_allowed_changed_path:
+  path: 01_os/06_execution/workflow/publication_gate/**
+  must_not_widen_to: 01_os/06_execution/workflow/**
+  Human_reasoning_recorded: >-
+    W3-v2 already defines the publication gate as an independent transport-independent
+    composition and ordering owner. The missing authorisation was an omission in the task packet.
+    Placing the gate inside minimum_operational_loop only to avoid a scope correction would
+    create false ownership and a backwards dependency for every future caller.
+
+gate_responsibility_boundary:
+  owns:
+  - exact reference resolution
+  - Git tree and blob content separation
+  - strict ancestry
+  - composition
+  - fail-closed progression
+  must_not_copy:
+  - deliberation semantics
+  - Human authentication semantics
+
+untracked_file_status:
+  path: 01_os/06_execution/workflow/publication_gate/workflow_publication_gate.py
+  written_before_authorisation: true
+  committed_before_authorisation: false
+  disposition: >-
+    the path is now authorised; the content is not thereby ratified. It must be reviewed against
+    W3-v2 S1 through S9 before it is tracked.
+
+registry_obligation:
+  rule_source: 01_os/05_registry/README.md
+  rule: >-
+    the registry is updated with the development and never after it, and a validator over this
+    registry should fail on an existing path that has no entry
+  consequence: the publication gate requires a registry entry in the same change
+  blocking_gap:
+    id: SB-003
+    needed_path: 01_os/05_registry/workflow_publication_gate_v1.yml
+    authorised: false
+    action_taken: stopped and reported, path not created
+  precedent_considered:
+    source: 01_os/05_registry/README.md line 76
+    precedent: >-
+      task_orchestration_v1.yml records an explicit gap, its missing 01_os/02_boot manifest,
+      because that path was outside the producing task's allowed paths. The README's rule is that
+      a gap is written into the registry rather than left blank.
+    why_it_does_not_resolve_this_case: >-
+      in that precedent the registry file itself existed and was authorised, and the gap was a
+      different path. Here the registry file itself is the unauthorised path, so there is no
+      authorised place to record the gap in its own right.
+  options_for_Human:
+  - id: O1
+    option: authorise 01_os/05_registry/workflow_publication_gate_v1.yml
+    effect: the gate is registered in its own file, consistent with every other capability
+  - id: O2
+    option: record the gate's entries inside the already authorised workflow_minimum_operational_loop_v1.yml
+    effect: no new path, but it files a transport-independent component under the minimum loop's registry, which repeats the ownership confusion SB-002 rejected
+  - id: O3
+    option: defer registration to a successor task and record the gap in the run only
+    effect: violates the registry README's with-the-development rule for the duration
+
+CORE_MANIFEST_check:
+  needed: false
+  basis: CORE_MANIFEST.yml core_owned_paths already contains the prefix 01_os/06_execution/
+  measured_at: 2026-09-11
+
+carried_forward_unchanged:
+  forbidden_paths:
+  - 01_os/06_execution/task_discipline/packet_input/**
+  - 01_os/06_execution/task_discipline/managed_verification/**
+  hook_scope: .githooks/pre-push may only call the gate and propagate its exit code
+  coverage_rule: only a transport that actually invokes the gate may be declared covered
+  completion_claim_prohibition: no claim of unbypassable remote access control
+  bootstrap_exemption:
+    applies_to_runs_created_after: TO_BE_BOUND_TO_EXACT_LANDING_COMMIT
+    binding_required_before_delivery: true

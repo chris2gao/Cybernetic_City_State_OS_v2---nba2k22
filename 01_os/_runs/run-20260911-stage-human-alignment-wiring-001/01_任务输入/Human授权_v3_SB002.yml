@@ -1,0 +1,59 @@
+schema_version: citystate.human_task_authorization.v1
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+authorization_id: SB-002-publication-gate-path
+extends: 01_os/_runs/run-20260911-stage-human-alignment-wiring-001/01_任务输入/Human授权_v2_SB001.yml
+recorded_by_endpoint_id: claude-cowork-stage-alignment-wiring-executor-001
+recorded_at: 2026-09-11
+
+provenance:
+  kind: foreground_current_Human_interaction
+  actor_class: current_Human
+  relayed_by_model: true
+
+proof_limits:
+  same_writer_limitation: the executor wrote this file and it cannot authenticate its own author
+  no_nonce_commitment_present: true
+  challengeable: false
+
+decision_type: material_scope_change
+disposition: authorized
+
+authorized_scope:
+  add_to_allowed_changed_paths:
+  - 01_os/06_execution/workflow/publication_gate/**
+  and_only_that: true
+  must_not_widen_to: 01_os/06_execution/workflow/**
+
+Human_stated_reasoning:
+  quote_of_substance: >-
+    W3-v2 already defines the publication gate as an independent transport-independent
+    composition and ordering owner. The gap was an omission in the task packet. Putting it inside
+    minimum_operational_loop merely to avoid a scope correction would create false ownership and a
+    backwards dependency for future callers.
+
+Human_stated_constraints:
+- the gate owns exact-ref resolution, Git tree and blob separation, strict ancestry, composition and fail-closed only
+- the gate must not copy deliberation or Human-authentication semantics
+- the already-written untracked gate file is not ratified by this path authorisation; it must be reviewed against W3-v2 S1 through S9 before being tracked
+- a new 01_os file must complete the registry registration the registry requires, in the same change
+- if that registration needs another unauthorised path, stop and report again
+- .githooks/pre-push remains limited to the SB-001 caller role; the gate itself stays transport-independent
+- fix the fixed-commit-message script first; do not amend the four existing commits
+
+executor_compliance_record:
+  registry_obligation_checked_before_acting: true
+  result: >-
+    01_os/05_registry/README.md requires registration in the same change and says a validator
+    should fail on an existing path with no entry. The needed file
+    01_os/05_registry/workflow_publication_gate_v1.yml is not authorised, so the executor stopped
+    and reported rather than creating it.
+  stop_id: SB-003
+  path_not_created: true
+
+not_authorized:
+- any allowlist entry beyond the one named above
+- master_publication
+- self_declaration_of_master_readiness
+- self_review_as_independent_review
+- runtime_or_scheduler_activation

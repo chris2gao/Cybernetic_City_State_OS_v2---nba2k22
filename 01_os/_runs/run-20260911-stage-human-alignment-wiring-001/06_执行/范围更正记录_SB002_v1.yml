@@ -1,0 +1,88 @@
+schema_version: citystate.scope_correction.v1
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+correction_id: SB-002
+recorded_by_endpoint_id: claude-cowork-stage-alignment-wiring-executor-001
+recorded_at: 2026-09-11
+rewrites_prior_records: false
+supersedes_status_fields_only: []
+
+false_statement_of_fact:
+  where: 03_方案设计/阶段产物到instance映射契约_v2.yml#part_8_open_items_for_W6, item W6-1
+  text_as_written: the gate is a new executable under 01_os/06_execution/workflow/publication_gate/, status allowlisted
+  truth: >-
+    that path was in neither allowed_changed_paths nor conditionally_allowed_changed_paths of the
+    task packet in force at the time.
+  classification: unverified assertion of fact in a load-bearing architecture document
+  measured_by: an allowlist check run against the packets after the gate file was written
+  prior_record_left_unmodified: true
+  reason_prior_record_is_not_edited: >-
+    the append-only discipline applies. The wrong line stays where a reviewer will find it, and
+    this record is what corrects it.
+
+pattern_this_belongs_to:
+  name: asserted without verifying
+  instances_in_this_task:
+  - id: SD-4
+    statement: a record file claimed everything was green while being itself unparseable YAML
+  - id: SD-7
+    statement: an architecture document declared a path allowlisted without checking the packet
+  common_property: >-
+    in both cases the subject of the assertion was an arrangement the executor had just made, and
+    the executor treated intending the arrangement as the arrangement being in force.
+  countermeasure_adopted: >-
+    the commit gate now assembles the effective allowlist from the packets themselves and refuses
+    to stage any path it does not cover, so the claim cannot be made by hand any more.
+
+scope_decision:
+  decided_by: Human
+  decision: extend allowed_changed_paths by exactly 01_os/06_execution/workflow/publication_gate/**
+  rejected_alternative:
+    option: place the gate inside the already authorised minimum_operational_loop directory
+    rejected_because: >-
+      it would avoid the scope correction by creating false ownership. The minimum loop has three
+      commands and the gate is not one of them; every future caller would then depend on a path
+      whose name says it is something else.
+  widening_explicitly_refused: 01_os/06_execution/workflow/**
+
+dedicated_owner_confirmed:
+  component: workflow publication gate
+  owns:
+  - exact reference resolution
+  - Git tree and blob content separation
+  - strict ancestry
+  - composition
+  - fail-closed progression
+  does_not_own:
+  - deliberation semantics
+  - Human authentication semantics
+  contract_ref: 03_方案设计/阶段产物到instance映射契约_v2.yml
+
+consequent_stop:
+  id: SB-003
+  trigger: the registry requires an entry in the same change, and the entry's path is not authorised
+  rule_source: 01_os/05_registry/README.md
+  quoted_rule_substance: >-
+    the registry is updated with the development and never after it; a validator over it should
+    fail on an existing path that has no entry
+  needed_path: 01_os/05_registry/workflow_publication_gate_v1.yml
+  action_taken: stopped and reported; the file was not created
+  gate_file_state: written, untracked, uncommitted, not reviewed against S1 through S9 yet
+
+commit_message_defect:
+  id: SD-8
+  statement: >-
+    four consecutive commits carry the same message, repair W3-v2 YAML, because the commit script
+    had the message hardcoded. The message describes only the first of them.
+  amend_refused: true
+  amend_refusal_basis: force_push_rebase_squash_amend_or_history_rewrite is a standing prohibition
+  remedy: the commit script now takes the message as a required parameter
+  commit_to_content_map:
+  - commit: 087b5c65ce96aec0a8060a13aa593c199a39d8b5
+    actual_content: repaired the W3-v2 YAML parse error and the W4_W5 record parse error
+  - commit: cce2f0f7235ceb3a183b7525df7154facaa6adb3
+    actual_content: recorded SD-4 and SD-5 in the W4_W5 implementation record
+  - commit: 274879abe48818ae955489ed1564c1adc00358e5
+    actual_content: W3-v2 wording tightening, phase content separation S9, Human authenticity ownership part_9, scope boundary defect part_10
+  - commit: dd352fe9c46fb2fa5d5964949a5323f874c1bf26
+    actual_content: task packet v2 and Human authorisation v2 for SB-001
