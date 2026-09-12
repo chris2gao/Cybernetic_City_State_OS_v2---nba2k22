@@ -1,0 +1,62 @@
+schema_version: citystate.human_task_authorization.v1
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+authorization_id: SB-003-registry-paths
+extends: 01_os/_runs/run-20260911-stage-human-alignment-wiring-001/01_任务输入/Human授权_v3_SB002.yml
+recorded_by_endpoint_id: claude-cowork-stage-alignment-wiring-executor-001
+recorded_at: 2026-09-11
+
+provenance:
+  kind: foreground_current_Human_interaction
+  actor_class: current_Human
+  relayed_by_model: true
+
+proof_limits:
+  same_writer_limitation: the executor wrote this file and it cannot authenticate its own author
+  no_nonce_commitment_present: true
+  challengeable: false
+
+decision_type: material_scope_change
+disposition: authorized
+chosen_option: O1
+
+authorized_scope:
+  add_to_allowed_changed_paths:
+  - path: 01_os/05_registry/workflow_publication_gate_v1.yml
+  - path: 01_os/05_registry/README.md
+    purpose_limit: add the new publication-gate entry to the 当前注册 navigation and responsibility list only
+    must_not: alter any other registry semantics in that file
+  and_only_those: true
+  must_not_widen_to: 01_os/05_registry/**
+
+Human_stated_reasoning:
+- the registry canonical requires updating with the development and never after it, and requires a validator to fail on an existing path with no entry, so deferring registration was not acceptable
+- the publication gate is already established by W3-v2 as an independent transport-independent composition and ordering owner, so filing it under the minimum loop registry would recreate the ownership confusion
+- the new entry registers only the gate capability, its implementation and tests, its discovery and its failure manifestation
+- .githooks/pre-push stays registered in repository_guards_v1.yml; the new entry must not duplicate ownership of the hook
+- no chain widening; stop and report again if registration deterministically requires another unauthorised canonical path
+
+executor_compliance_record:
+  chain_widening_checked_before_acting: true
+  result: >-
+    wiring the hook would change what it refuses, and repository_guards_v1.yml registers that
+    behaviour in its purpose field, so the hook wiring deterministically requires modifying an
+    unauthorised path. The executor stopped and reported it as SB-004 rather than editing it.
+  stop_id: SB-004
+  path_not_modified: 01_os/05_registry/repository_guards_v1.yml
+  unblocked_work_continues: the gate, its registry entry and its tests do not depend on that path
+
+incidental_finding:
+  statement: >-
+    the canonical transport-scope semantics the coverage matrix needs already exist in the
+    pre-push guard entry, including the rule that reporting hook_guard passed from a non-local_git
+    transport is a false receipt
+  consequence: the coverage matrix must reference that statement rather than write a second one
+
+not_authorized:
+- any allowlist entry beyond the two named above
+- modifying repository_guards_v1.yml
+- master_publication
+- self_declaration_of_master_readiness
+- self_review_as_independent_review
+- runtime_or_scheduler_activation

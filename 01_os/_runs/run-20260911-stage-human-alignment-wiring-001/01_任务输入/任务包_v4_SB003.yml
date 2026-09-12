@@ -1,0 +1,86 @@
+schema_version: citystate.task_packet.v2
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+packet_version: 4
+phase: W6_publication_gate_and_caller
+supersedes_for_current_phase: 01_os/_runs/run-20260911-stage-human-alignment-wiring-001/01_任务输入/任务包_v3_SB002.yml
+supersession_scope: >-
+  Adds exactly two allowed paths. Every clause of v1 through v3 remains in force.
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+exact_base_sha: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+branch: claude/stage-human-alignment-wiring-001
+Human_authorization_ref: 01_os/_runs/run-20260911-stage-human-alignment-wiring-001/01_任务输入/Human授权_v4_SB003.yml
+
+added_allowed_changed_paths:
+- path: 01_os/05_registry/workflow_publication_gate_v1.yml
+  purpose_limit: register the publication gate capability, its implementation and tests, its discovery and its failure manifestation
+- path: 01_os/05_registry/README.md
+  purpose_limit: add the new entry to the 当前注册 navigation list only
+  must_not: modify any other registry semantics in that file
+must_not_widen_to: 01_os/05_registry/**
+
+new_registry_entry_constraints:
+  registers: the publication gate capability only
+  must_not_copy:
+  - Human_authentication semantics
+  - deliberation mechanism semantics
+  - minimum operational loop semantics
+  hook_ownership:
+    rule: the local caller stays registered in repository_guards_v1.yml
+    new_entry_must_not: claim or duplicate ownership of .githooks/pre-push
+    relationship: the new entry registers the gate; repository_guards registers the local caller
+
+consequent_stop:
+  id: SB-004
+  trigger: >-
+    wiring .githooks/pre-push to call the gate changes what the hook refuses, and
+    repository_guards_v1.yml registers that behaviour in its purpose field. Leaving it unchanged
+    would leave an existing path whose registered description no longer matches its behaviour,
+    which the registry README's own rule forbids.
+  evidence:
+    file: 01_os/05_registry/repository_guards_v1.yml
+    field: guards[path=.githooks/pre-push].purpose
+    current_text_substance: >-
+      refuses non-fast-forward pushes to any ref, and pushes to or deletion of master or main
+      without per-command authorization, with the 2026-08-02 branch-deletion change and its reason
+  needed_path: 01_os/05_registry/repository_guards_v1.yml
+  authorised: false
+  action_taken: stopped and reported; the file was not modified
+  blocks: the local_git caller wiring only
+  does_not_block: the gate itself, its registry entry, its tests
+
+canonical_coverage_semantics_already_exist:
+  found_at: 01_os/05_registry/repository_guards_v1.yml, the same pre-push entry
+  fields:
+    transport_scope: local_git
+    outside_transport_scope: >-
+      states that this guard covers exactly one publication transport, that an executor
+      publishing through the GitHub API, a connector, or a CLI whose hooks are not verified never
+      gives the file a chance to run, that its absence there is neither a pass nor a failure but
+      out of scope, and that reporting hook_guard passed from a non-local_git transport is a
+      false receipt
+  consequence_for_W6: >-
+    the caller coverage matrix required by packet v2 must reference this canonical statement
+    rather than restate it. A second copy of transport-scope semantics would be the duplicated
+    mechanism this task exists to avoid.
+  executor_note: >-
+    this was found while checking whether SB-004 applied. The requirement to produce a coverage
+    matrix was nearly satisfied by writing a new one; the repository already owned the rule.
+
+sequencing_constraint:
+  rule: >-
+    the registry entry and the gate file must land in the same commit, because the registry
+    README forbids both a registered path that does not exist and an existing path with no entry
+  consequence: >-
+    the gate file stays untracked until it has been reviewed against W3-v2 S1 through S9, and the
+    registry entry is committed together with it, not before
+
+carried_forward_unchanged:
+  forbidden_paths:
+  - 01_os/06_execution/task_discipline/packet_input/**
+  - 01_os/06_execution/task_discipline/managed_verification/**
+  gate_boundary: exact-ref resolution, tree and blob separation, strict ancestry, composition, fail-closed only
+  completion_claim_prohibition: no claim of unbypassable remote access control
+  bootstrap_exemption:
+    applies_to_runs_created_after: TO_BE_BOUND_TO_EXACT_LANDING_COMMIT
+    binding_required_before_delivery: true
