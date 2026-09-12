@@ -1,0 +1,119 @@
+schema_version: citystate.architecture_decision.v1
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+decision_id: responsibility_boundary_and_delegated_semantic_space_v1
+status: Human_decided
+recorded_at: 2026-09-11
+recorded_by_endpoint_id: claude-cowork-stage-alignment-wiring-executor-001
+supersedes_nothing: true
+note: >-
+  Recorded as decided. It is deliberately short: a decision whose content is stop manufacturing
+  structure should not arrive as a field forest.
+
+the_loop:
+  per_stage:
+  - model understands the single current problem
+  - model proposes the main implementation
+  - model states why it is feasible, the main risks and the implementation boundary
+  - Human accepts or rejects that main implementation
+  - once accepted it is the construction baseline for the stage
+  - model implements autonomously inside the accepted boundary
+  - model reports actual result, main deviation, verification and residual risk
+  - Human accepts stage completion and moves to the next problem
+  Human_owns: direction, main implementation, feasibility acceptance, boundary
+  model_owns: understanding, judgement, design and engineering inside that boundary
+  model_must_not: exceed the boundary, or hand its own engineering judgement back to the Human
+
+checkpoint_eligibility:
+  rule: a new choice earns a Human checkpoint only if it changes one of these
+  categories:
+  - task or stage objective, or the main implementation
+  - Human interaction, Human authority or Human workload
+  - machine guarantee, acceptance criteria, or what the system claims to prove
+  - subsystem ownership or an external contract
+  - allowed_changed_paths, protected actions, runtime, security or permission boundary
+  otherwise: delegated semantic engineering space, the model decides
+  not_reasons_to_escalate:
+  - I am unsure exactly how to write it
+  - two field designs are both legal
+  - this implementation detail is complicated
+
+new_work_after_the_main_implementation_is_frozen:
+  test: is it necessary to complete the approved main implementation
+  necessary: model does it without asking, including field names, helper structure, pointer
+    representation, exact Git commands, fixtures, harness, exit codes, schema layout, validator
+    algorithm and registry wording
+  merely_better: not done by default; may be recorded as a finding or future option
+  changes_a_load_bearing_boundary: stop and ask
+
+necessity_trace:
+  requirement: >-
+    for any addition beyond a small local implementation choice, the model must be able to say
+    which approved main implementation it serves and why that implementation cannot be completed
+    without it
+  if_unanswerable: do not do it
+  form: semantic judgement with a short rationale where it matters, not new YAML fields
+  purpose: >-
+    stop ninety percent of a task's time going into side design the Human never confirmed and the
+    main implementation never needed
+
+semantic_first_structure_assisted_mechanically_guarded:
+  semantic_first: >-
+    the model's understanding is the main work. It judges what the right implementation is from
+    Human intent, the current problem, repository fact, upstream and downstream constraints, the
+    approved implementation, risk and feasibility, and gives the Human advice worth having rather
+    than a filled template
+  structure_assisted: >-
+    fields and templates are scaffolding. They name the minimum dimensions worth considering,
+    hold durable state and bind exact evidence. A field existing is not understanding; a field
+    filled is not modelling done. Do not invent fields to make a validator easier to write.
+  mechanically_guarded:
+    validators_own: exact commit path and blob refs, Git ancestry, path and scope boundaries,
+      presence of a required durable disposition, protected action boundaries, evidence
+      integrity, whether a caller consumed a nonzero verdict
+    validators_do_not_own: whether a design is sound, whether intent was understood, whether a
+      risk matters, whether an addition is worth making, whether an unknown affects downstream,
+      which engineering choice is better
+    rule: a validator must not stand in for the model thinking
+
+Human_facing_brief:
+  before_construction:
+  - the single problem this stage solves
+  - how it will mainly be implemented
+  - why that is believed feasible
+  - main risks and alternatives
+  - the implementation boundary
+  - whether any genuinely load-bearing item needs a Human decision
+  at_completion:
+  - what was planned
+  - what was actually done
+  - whether there was a main deviation
+  - verification result
+  - remaining important risk
+  - whether acceptance and progression are recommended
+  must_not_contain: field design, SHA topology, pointer layout, validator helpers
+
+MC_002_disposition:
+  escalation_withdrawn: true
+  Human_invariants_only:
+  - final closure must have one unambiguous authoritative completion evidence
+  - currency must never be guessed by version number, timestamp, directory enumeration, history
+    search or blob to commit inference
+  - the implementation must not change the approved workflow, machine guarantee, ownership or scope
+  - choose the simplest implementation that stays correct and verifiable over time
+  representation_is_delegated_to_the_model: true
+
+interpretation_of_the_four_earlier_stops:
+  SB_001_to_SB_004: correct, because allowed_changed_paths is Human scope authority
+  does_not_generalise_to: escalating whenever something is uncertain
+  distinction: scope, authority and main implementation go to the Human; engineering inside an
+    approved boundary stays with the model
+
+executor_acknowledgement:
+  behaviour_being_corrected: >-
+    the executor escalated implementation representation as if it were architecture. The clearest
+    instance is GD-5b, where it required a run.yml field that no contract defined and then asked
+    the Human to choose among three representations. Field names and pointer representation were
+    always inside the delegated space.
+  consequence_for_the_rest_of_W6: >-
+    the executor decides representation, and stops only for the five categories above

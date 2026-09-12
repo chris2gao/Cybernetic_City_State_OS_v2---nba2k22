@@ -152,8 +152,15 @@ part_4_gate_algorithm:
     do: chain the stages, C_i of stage i against predecessor_completion_commit of stage i+1
     fail_closed_when: they differ, or an intermediate stage is missing
   - id: S8
-    do: confirm the run completion pointer names C_7 exactly
-    fail_closed_when: absent or mismatched
+    do: read final_stage_completion_commit from the run's run.yml at the candidate, as C_7
+    fail_closed_when: absent or not a 40-character sha
+    representation_chosen_by_executor: true
+    why_no_pointer_file: >-
+      which record is current is only a question when there are several, and 08_結論 accumulates
+      pointer versions. A path at a commit resolves to exactly one blob, so a field in run.yml has
+      no currency question to answer, needs no supersession rule, and cannot be guessed by version
+      number, timestamp, enumeration or history search. Pointer files keep their value as a human
+      ledger; the gate does not need them.
   - id: S9
     name: phase content separation
     reason: >-
@@ -249,15 +256,27 @@ part_6_stage_control_shape:
       accepted_model_commit: M_i
       accepted_model_path: string
       accepted_model_blob_sha: string
-      accepted_plan_digest: string
       predecessor_completion_commit: C_prev, absent for stage 01
     completion_acceptance:
       path: string
       blob_sha: string
       bound_output_version: W_i
+      output_path: string
+      output_blob_sha: string
       verification_result: {commit, path, blob_sha}
       absent_until: C_i
-    ordering_assertions: declaration only, never trusted, recomputed by the gate
+  removed_by_minimization_review:
+  - field: ordering_assertions
+    consumed_by: nobody
+    reason: >-
+      its only stated purpose was to be distrusted. The gate recomputes every edge from Git and
+      the contract forbids reading a verdict from it, so the field carried no approved
+      requirement, no machine invariant and no evidence.
+  - field: accepted_plan_digest
+    consumed_by: nobody
+    reason: >-
+      accepted_model_blob_sha already binds the acceptance to exact content. A digest over a
+      chosen subset of fields is strictly weaker and was never read.
   within_commit_reference_rule: >-
     a record committed alongside the artifact is referenced by path and blob_sha, never by commit
     sha. A blob sha is content-addressed and computable before the commit exists, so this creates

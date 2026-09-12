@@ -1,0 +1,95 @@
+schema_version: citystate.minimization_review.v1
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+basis: 03_方案设计/Human架构裁决_职责边界与委托空间_v1.yml section six
+reviewed_at: 2026-09-11
+scope: everything W6 added, not everything that exists
+
+test_applied:
+  q1: who actually consumes this
+  q2: does deleting it lose an approved Human requirement, a machine hard invariant, or necessary durable evidence
+  rule: if neither, delete or do not add
+
+removed:
+- item: stage_control.ordering_assertions
+  consumer: none
+  reason: >-
+    its only stated purpose was to be distrusted. The gate recomputes every edge from Git and the
+    contract forbids taking a verdict from it. A field that exists to be ignored is the clearest
+    possible case of structure manufactured for its own sake.
+- item: stage_control.plan_acceptance.accepted_plan_digest
+  consumer: none
+  reason: >-
+    accepted_model_blob_sha already binds the acceptance to exact content, and the staleness rule
+    is implemented as a blob comparison. A digest over a chosen subset is weaker and was read by
+    nothing.
+- item: gate exit code BINDING = 12
+  consumer: none
+  reason: defined and never raised
+
+kept_with_reason:
+- item: the five nodes C_prev M P W C
+  consumer: the gate
+  reason: Human-approved chain; each node is named by an exact ref and carries an edge
+- item: S1 through S9
+  consumer: the gate
+  reason: each was approved individually; S9 was added by the Human to close the identical-tree case
+- item: stage_control.current_model_ref
+  consumer: the runner, to compose the instance document
+  reason: >-
+    distinct from accepted_model_*, which pins what was accepted at M. The current model at W may
+    legitimately differ from it
+- item: stage_control.deliberation_receipt_ref
+  consumer: the runner
+  reason: >-
+    the mechanism requires a twenty-field receipt; the artifact carries an eight-field inline one.
+    A ref keeps reference-not-copy instead of expanding the inline field
+- item: completion_acceptance.output_path and output_blob_sha
+  consumer: S4 and S9b
+  reason: an output binding that names a commit proves nothing if the thing it binds is not in it
+
+not_added_after_review:
+- item: a per-token predicate map for the forty-odd start_gate and completion_gate tokens
+  reason: >-
+    requiring each token to be disposed with an evidence ref already makes the gate answerable.
+    Mapping every token to a function would be a large mechanism that no approved requirement asks
+    for.
+- item: a second coverage matrix for transports
+  reason: repository_guards_v1.yml already owns that semantics; a copy would be a second mechanism
+- item: a currency rule for completion pointer files
+  reason: see MC-002 below; the need disappeared rather than being met
+
+MC_002_resolution:
+  decided_by: executor, under the delegated representation authority
+  choice: the run states final_stage_completion_commit in run.yml; no pointer-file indirection
+  why:
+  - the currency question exists only because several pointer files accumulate. A path at a commit
+    resolves to exactly one blob, so there is nothing to disambiguate
+  - run.yml is already the run's single identity record and the gate already reads it for base_sha
+  - it needs no supersession rule, no enumeration, no timestamps, no history search and no blob to
+    commit inference
+  - the alternative, keeping pointer files and adding a currency declaration, needs both the file
+    and the declaration, and the declaration alone already answers the gate's question
+  invariants_satisfied:
+    unique_and_unambiguous: one path, one commit, one blob
+    unguessable: declared, never derived
+    no_prohibited_discovery: confirmed
+    changes_no_approved_boundary: run.yml already exists and is already read
+    simplest_correct_over_time: one field, no new file, no new rule
+  what_is_not_deleted: >-
+    completion pointer files keep their value as a human-readable ledger with supersession
+    history. The gate does not consume them
+  supersedes: >-
+    GD-5b, which required a run.yml completion_pointer_ref that no contract defined. That field is
+    gone; the gate reads a field the seven-stage contract will define
+  positive_and_negative_cases_owed:
+  - a run stating a well-formed final_stage_completion_commit that resolves to the real C_7 passes
+  - absent field refuses with a distinct reason
+  - malformed value refuses with a distinct reason
+  - a well-formed sha that is not the commit carrying stage 7's completion acceptance blob fails at S9c
+
+executor_note:
+  behaviour_corrected: >-
+    three of the items removed here were added by the executor to make the design look complete.
+    None of them was consumed by anything. The review took one pass and found them immediately,
+    which suggests the cost of adding them was never the writing but the reading.

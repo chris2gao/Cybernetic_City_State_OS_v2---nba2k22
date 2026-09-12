@@ -1,0 +1,106 @@
+schema_version: citystate.structural_gap.v1
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+gap_id: MC-002
+raised_during: W6 step 2, while satisfying the constraint that the gate must not invent a latest rule
+raised_by_endpoint_id: claude-cowork-stage-alignment-wiring-executor-001
+measured_at_head: 4e41622862e23b1a17fcd30807ae84cb63a151bb
+status: reported_stopped_before_defining_a_rule
+
+question: >-
+  S8 requires the gate to read the run's current completion pointer. Which record is canonically
+  current must be established, not guessed. Is there an authoritative carrier?
+
+finding: no canonical carrier exists
+
+measured_evidence:
+  runs_referencing_a_completion_pointer_in_run_yml: 11
+  distinct_shapes_found: 5
+  shapes:
+  - field: completion_pointer_ref
+    example: 'run-20260819-human-task-authority-delegated-start-simplification-001: 08_结论/completion_pointer_v5.yml'
+    position: top level
+    occurrences: 1
+  - field: completion_pointer
+    position: nested under another key
+    occurrences: 4
+  - field: closure_record
+    example: 'run-20260828-t3-archive-and-big-task-workflow-001: 08_结论/completion_pointer_v3.yml'
+    occurrences: 1
+  - field: accepted_completion_pointer_blob
+    note: carries a blob sha, not a path
+    occurrences: 1
+  - field: bare list entries under an unrelated key
+    occurrences: 2
+  decisive_counterexample:
+    run: run-20260817-stage-human-alignment-enforcement-root-cause-001
+    pointers_present: [completion_pointer_v1.yml, completion_pointer_v2.yml, completion_pointer_v3.yml, completion_pointer_v4.yml]
+    run_yml_declares_a_current_pointer: false
+    significance: >-
+      the run that most needs a currency declaration, because it has four, declares none. A
+      convention that the case needing it does not follow is not a convention.
+
+supersession_is_declared_backwards_only:
+  each_pointer_declares: what it supersedes, via supersedes and supersedes_record_ref
+  no_pointer_declares: whether it is itself superseded
+  consequence: >-
+    currency is computable as the head of the supersession chain, the one pointer no other
+    supersedes, but only by enumerating the pointers first
+
+object_conflation_to_avoid:
+  mechanism_completion_pointer:
+    what: an inline field inside the instance document
+    validated_by: validate_completion_pointer(data), reading data["completion_pointer"]
+    checks: append_only true, bound_candidate_version equals current_exact_output_version, supersedes paired with supersedes_record_ref
+  run_level_completion_pointer:
+    what: a file under 08_結論
+    validated_by: nothing
+  rule: >-
+    these are two different objects. The seven-stage runner does not know the file exists at all;
+    its completion hits are stage payload fields and the manifest's completion_expected. Treating
+    the mechanism's inline field as authority over the file would be a real error.
+
+executor_defect_disclosed:
+  id: GD-5b
+  statement: >-
+    the GD-5 fix made the gate require run.yml#completion_pointer_ref and refuse otherwise.
+    Refusing to guess is correct, but requiring a field that no contract defines and that exactly
+    one run out of eleven uses is defining the rule by implementation, which is what the
+    constraint forbids.
+  status: not corrected, awaiting the decision below
+  current_gate_behaviour: refuses any governed run that does not declare completion_pointer_ref
+
+prohibited_alternatives_confirmed_unused:
+- highest _vN suffix
+- file mtime
+- commit timestamp
+- git log over the path
+- glob then assume the newest
+- blob to commit reverse search
+
+options_for_Human:
+- id: O1
+  option: >-
+    define the carrier canonically in 01_os/01_workflow/实现/七阶段最小运行契约_v1.yml, which is
+    already in this task's allowed paths, as a required run-level field naming the current pointer
+  effect: the gate then reads a contract-defined field instead of an invented one
+  cost: every governed run must carry it; pre-existing runs are covered by the bootstrap boundary
+  executor_view: cleanest, and needs no further scope correction
+- id: O2
+  option: compute currency as the head of the supersession chain
+  effect: no new field; uses only declared content, no prohibited technique
+  cost: >-
+    requires enumerating pointer files by directory, which fails silently if a pointer lives
+    elsewhere, and produces no answer when two chains exist
+  executor_view: legitimate but weaker, because enumeration is itself a discovery convention
+- id: O3
+  option: defer; the gate refuses any run without an explicit declaration and the requirement is recorded as an open finding
+  effect: fail-closed today, unresolved tomorrow
+  cost: the first governed run cannot pass until someone decides anyway
+
+not_decided_by_this_document: true
+awaiting: Human disposition
+blocks: S8 implementation and therefore the gate tests that exercise a complete five-node chain
+does_not_block: >-
+  S1 through S7 and S9, the registry entry, and the negative cases that do not reach the final
+  stage pointer
