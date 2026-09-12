@@ -29,6 +29,9 @@ unguarded until someone sets it. `install.ps1` does it and reports the result.
 | Non-fast-forward push (force, rebase, squash, amend of published history) | Refused. **No override.** |
 | Push to `master` / `main` | Refused unless `CITYSTATE_ALLOW_MASTER=1` is set for that command |
 | Deleting `master` / `main` | Refused unless `CITYSTATE_ALLOW_MASTER=1` is set for that command |
+| A push the workflow publication gate refuses | Refused. **No override here.** The verdict is the gate's; this hook only propagates its exit code. |
+| Any ref in a multi-ref push | Every ref is asked about, not only the first |
+| The gate cannot be run at all | Refused. Being unable to check is not the same as nothing to check. |
 | Deleting an ordinary remote branch | **Allowed** since 2026-08-02 |
 | Normal push to a feature branch | Allowed |
 
@@ -64,6 +67,14 @@ partition and an enforced boundary. It stops the accident, the stale habit and t
 agent that never considered the rule. It does not stop a caller that has decided to
 go around it, and it should never be cited as proof that history cannot have been
 rewritten. For that, read the remote.
+
+**A clean push is not semantic acceptance.** The publication gate this hook calls
+judges structure and ancestry: that a governed run's seven stages chain by strict
+Git ancestry, that each phase contributed its own artifact, and that declared
+verification evidence exists where it says it does. It does not invoke the
+authoritative deliberation validator. Passing here means the record is shaped and
+ordered as the contract requires — not that anyone examined the reasoning, and not
+that a Human accepted anything.
 
 It also covers exactly one transport. An executor pushing through the GitHub API or
 a CLI that never invokes hooks is not unguarded and not unpermitted — it owes a

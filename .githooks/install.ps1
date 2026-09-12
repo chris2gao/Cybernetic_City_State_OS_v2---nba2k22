@@ -30,9 +30,22 @@ Write-Output ('line endings   : ' + $(if ($crlf) { 'CRLF  <-- FIX THIS, the hook
 
 Write-Output ''
 Write-Output 'Proving the guard actually refuses a master push (dry-run, nothing is sent):'
+# Match the specific refusal, not the word BLOCKED.
+#
+# The hook now emits BLOCKED for several different reasons, and the publication
+# gate adds more. Matching the bare word would report "master push was refused"
+# for a refusal that had nothing to do with master authorization: a receipt that
+# names the wrong cause, which repository_guards_v1.yml already calls a false
+# receipt when it happens the other way round.
 $out = (git push --dry-run origin HEAD:master 2>&1 | Out-String)
-if ($out -match 'BLOCKED') {
-    Write-Output '  guard ACTIVE - master push was refused'
+if ($out -match 'BLOCKED\s+push to refs/heads/master without authorization') {
+    Write-Output '  guard ACTIVE - master push was refused for lack of authorization'
+}
+elseif ($out -match 'BLOCKED') {
+    Write-Output '  guard fired, but NOT for master authorization. Raw output:'
+    ($out -split "`n" | Select-Object -First 8) | ForEach-Object { Write-Output ('    ' + $_.TrimEnd()) }
+    Write-Output '  This proves the hook runs; it does not prove the master rule works.'
+    exit 1
 }
 else {
     Write-Output '  guard DID NOT FIRE - do not rely on it. Raw output:'

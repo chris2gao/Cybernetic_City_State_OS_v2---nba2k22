@@ -30,6 +30,21 @@ guards:
       check here at once, so routine branch cleanup and history rewriting shared
       one switch. Separating them removes a standing reason to reach for the
       lever that also unlocks the unrepairable action.
+
+      Since 2026-09-12 it also refuses any ref the workflow publication gate
+      refuses, and refuses when that gate cannot be run at all - no python on
+      PATH, or the gate file missing - because being unable to check is not the
+      same as having nothing to check. There is no override for either.
+
+      That verdict is not made here. This file calls
+      01_os/06_execution/workflow/publication_gate/workflow_publication_gate.py
+      once per ref and propagates its exit code. What a governed run is, whether
+      a stage chain holds, whether anything was accepted: all of it belongs to
+      the gate and to the deliberation mechanism behind it, and copying any of
+      that judgement into this hook would create a second definition of it. The
+      base handed to the gate is the remote old sha git supplies on stdin, which
+      is what makes this caller's base binding real rather than self-asserted;
+      the gate itself can only check that a base strictly precedes a candidate.
     loader: "git, when core.hooksPath points at .githooks"
     loader_class: external_tool_convention
     transport_scope: local_git
@@ -62,9 +77,22 @@ guards:
       still gated. install.ps1 measures the master case alone, so it did not need
       to change - which is exactly why it was never sufficient evidence for this
       entry. The decision table is now measured by
-      .githooks/test_pre_push_logic.ps1, nine cases driven through stdin with no
-      remote involved, including the one that matters most: CITYSTATE_ALLOW_MASTER
-      must not also unlock a non-fast-forward push to master.
+      .githooks/test_pre_push_logic.ps1, thirteen cases driven through stdin with
+      no remote involved, including the one that matters most: CITYSTATE_ALLOW_MASTER
+      must not also unlock a non-fast-forward push to master. Four of the thirteen
+      cover the publication gate as a consumed verdict: a gate PASS still allows an
+      ordinary push, a gate refusal blocks a push every other rule permits, and the
+      real gate invoked without a candidate refuses rather than assuming one, with
+      the hook blocking on that refusal. Measured 13/13 on 2026-09-12.
+
+      One limit, stated because the case name alone would overstate it: exit 41,
+      deliberation_not_validated, reaches the hook in that suite only from a stub.
+      run_minimum_operational_loop.validate_run returns 41 when it has no
+      candidate, and no publication consumer calls that function - it reads the
+      working tree while this gate judges a commit, so wiring the two would swap
+      "judges what is being pushed" for "judges whatever is on disk". The suite
+      proves this hook blocks on 41 if it arrives, not that the publication path
+      can presently produce it.
     cache_dirs: []
     failure_surfacing: "never until misuse"
     failure_note: >-
@@ -81,6 +109,17 @@ guards:
       boundary - the same distinction run-007 drew for workspace partitions. It
       must never be cited as evidence that history was not rewritten; read the
       remote for that.
+
+      Second limit, added with the publication gate call on 2026-09-12. That gate
+      judges structure and ancestry: that a governed run's seven stages chain by
+      strict Git ancestry, that each phase contributed its own artifact rather
+      than repeating its predecessor's tree, and that declared verification
+      evidence exists at the commit and path it names. It does not invoke the
+      authoritative deliberation validator. So a pass here is never evidence that
+      a stage's reasoning was examined or that a Human accepted anything - only
+      that the record is shaped, ordered and separated as the contract requires.
+      Citing a clean push as semantic acceptance would be the same false receipt
+      this entry already names for the wrong-transport case.
 
   - path: ".githooks/README.md"
     purpose: "How to enable the guard, what it refuses, and what it cannot do."
@@ -115,12 +154,23 @@ guards:
     loader_class: in_repo_program
     discovery: "referenced from .githooks/README.md and from this registry"
     evidence: >-
-      its own exit code; it returns non-zero when any of the nine cases departs
-      from the specified behaviour. Two harness defects were found and fixed
-      while writing it - a PowerShell pipe appending CRLF into the null-sha
-      comparison, and a parameter named $args shadowing the automatic variable -
-      each of which had produced a confident wrong verdict first. That is the
-      argument for keeping the cases in the repository rather than retyping them.
+      its own exit code; it returns non-zero when any of the thirteen cases
+      departs from the specified behaviour. Three harness defects were found and
+      fixed while writing it, each of which produced a confident wrong result
+      first: a PowerShell pipe appending CRLF into the null-sha comparison; a
+      parameter named $args shadowing the automatic variable; and a stub
+      mechanism that overwrote the real publication gate and restored it from a
+      backup taken afresh on every call, so the second call backed up the stub
+      the first had written and the restore put a stub back. The repository's
+      646-line gate sat in the working tree as three lines that always exit 13,
+      and nothing caught it - not the path allowlist, which saw an authorized
+      path, and not the YAML gate, which does not read .py. It was found by eye
+      one step before a commit. The stub now lives in a throwaway --no-checkout
+      worktree and the real file is never written to, and the suite compares the
+      gate's blob hash before and after, failing if it differs. A test that can
+      leave a production validator broken is worse than the gap it closes.
+      That is the argument for keeping the cases in the repository rather than
+      retyping them.
     cache_dirs: []
     failure_surfacing: "immediately, by design - it exits non-zero"
     deletion_rule: protected

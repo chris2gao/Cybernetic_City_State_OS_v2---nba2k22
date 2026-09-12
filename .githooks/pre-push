@@ -6,6 +6,12 @@
 #     one rewrite makes all of them unmergeable, and it cannot be repaired after)
 #   - master moves only after independent audit and human authorization
 #   - the trunk itself is not deleted without that same authorization
+#   - a push whose run history the workflow publication gate refuses is refused
+#
+# The last one is delegated, not decided here. This file calls one gate and
+# propagates its exit code. Whether a run is governed, whether its stage chain
+# holds, whether anything was accepted: all of that belongs to the gate and to
+# the deliberation mechanism behind it.
 #
 # Deleting an ordinary remote branch is NOT guarded here. See the note below.
 #
@@ -19,6 +25,50 @@ Z40=0000000000000000000000000000000000000000
 fail=0
 
 say() { printf '%s\n' "$*" >&2; }
+
+# The workflow publication gate. This hook is one caller of it, for one transport.
+# It does not decide what a governed run is, what a valid stage chain looks like,
+# or whether anything was accepted: it asks, and refuses if the answer is no.
+# Copying any of that judgement here would create a second definition of it.
+GATE=01_os/06_execution/workflow/publication_gate/workflow_publication_gate.py
+REPO=$(git rev-parse --show-toplevel 2>/dev/null)
+
+pick_python() {
+	for candidate in python3 python py; do
+		if command -v "$candidate" >/dev/null 2>&1; then
+			printf '%s' "$candidate"
+			return 0
+		fi
+	done
+	return 1
+}
+PY=$(pick_python)
+
+# Being unable to ask is not an answer. A clone that cannot run the gate cannot
+# check what it is publishing, and reporting that as a pass is the failure this
+# whole guard exists to remove. --no-verify remains the documented way out.
+gate_ref() {
+	_candidate=$1
+	_base=$2
+	if [ -z "$PY" ] || [ ! -f "$REPO/$GATE" ]; then
+		say "BLOCKED  cannot run the workflow publication gate."
+		[ -z "$PY" ] && say "         no python interpreter found on PATH."
+		[ -f "$REPO/$GATE" ] || say "         missing $GATE"
+		say "         Unable to check is not the same as nothing to check."
+		return 1
+	fi
+	if [ "$_base" = "$Z40" ]; then
+		"$PY" "$REPO/$GATE" --repo-root "$REPO" --candidate "$_candidate" >&2
+	else
+		"$PY" "$REPO/$GATE" --repo-root "$REPO" --candidate "$_candidate" --base "$_base" >&2
+	fi
+	_code=$?
+	if [ "$_code" -ne 0 ]; then
+		say "BLOCKED  workflow publication gate refused $_candidate (exit $_code)."
+		return 1
+	fi
+	return 0
+}
 
 while read -r local_ref local_sha remote_ref remote_sha; do
 	[ -z "$local_ref" ] && continue
@@ -71,6 +121,18 @@ while read -r local_ref local_sha remote_ref remote_sha; do
 			fail=1
 			continue
 		fi
+	fi
+
+	# Every ref in this push is asked about, not just the first. git hands several
+	# lines on stdin for a multi-ref push, and a guard that judged one of them
+	# would report a verdict it had not reached for the rest.
+	#
+	# The base is the remote old sha git supplies here. That is what makes this
+	# caller's base binding real: the gate can only check that a base precedes the
+	# candidate, so which commit it is told about has to come from the transport.
+	if ! gate_ref "$local_sha" "$remote_sha"; then
+		fail=1
+		continue
 	fi
 done
 
