@@ -101,7 +101,8 @@ part_3_two_phases:
     stage_control_required: [action_id, current_model_ref, deliberation_receipt_ref, plan_acceptance, completion_acceptance]
     output_binding:
       bound_output_version: W_i
-      verification_result: {commit, path, blob_sha} in a commit separate from W_i
+      verification_result_fields: [commit, path, blob_sha]
+      verification_commit_rule: the verification record must live in a commit separate from W_i
   validation_points_per_stage: 2
   note_corrected_from_v1: >-
     v1 described one artifact-to-instance mapping per stage. The mechanism pins
