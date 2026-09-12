@@ -1,0 +1,111 @@
+schema_version: citystate.task_packet.v2
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+packet_version: 2
+phase: W6_publication_gate_and_caller
+supersedes_for_current_phase: 01_os/_runs/run-20260911-stage-human-alignment-wiring-001/01_任务输入/任务包_v1.yml
+supersession_scope: >-
+  Extends v1 allowed_changed_paths by exactly one entry and adds the W6 completion semantics.
+  Every other clause of v1 remains in force unchanged, including the prohibitions, the stop
+  conditions, the forbidden parser paths and the bootstrap exemption rule.
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T2_semantic
+exact_base_sha: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+branch: claude/stage-human-alignment-wiring-001
+Human_authorization_ref: 01_os/_runs/run-20260911-stage-human-alignment-wiring-001/01_任务输入/Human授权_v2_SB001.yml
+
+SB_001_disposition:
+  defect: >-
+    .githooks/pre-push was in neither allowed_changed_paths nor
+    conditionally_allowed_changed_paths, so W6 would have delivered a gate with no caller.
+  reported_in: 03_方案设计/阶段产物到instance映射契约_v2.yml#part_10_scope_boundary_defect
+  Human_decision: extend the allowlist within this task
+  Human_reasoning_recorded: >-
+    removing the validator-exists-but-nothing-consumes-the-verdict failure shape is one of this
+    task's core objectives. Delivering a zero-caller gate would reproduce the same defect class
+    as SD-5 and would not close the objective.
+
+added_allowed_changed_path:
+  path: .githooks/pre-push
+  authorization_is_narrow: true
+  permitted_changes:
+  - invoke the single canonical gate entrypoint
+  - block the push by propagating a nonzero gate exit code unchanged
+  prohibited_changes:
+  - copy or restate any gate semantics in the hook
+  - reimplement stage, Human or ancestry judgement in the hook
+  - alter publisher authority semantics
+  - alter transport semantics
+  escalation_rule: >-
+    if wiring the caller requires any change beyond .githooks/pre-push itself, or requires
+    changing publisher authority or transport semantics, stop and report rather than widening
+    scope further.
+
+hook_status_declaration:
+  the_hook_is: a local_git caller and an accident guard
+  the_hook_is_not: an access control boundary
+  bypasses_that_remain:
+  - git push --no-verify skips the hook entirely
+  - the GitHub API connector does not execute local hooks
+  - any CLI transport whose hooks are not installed or verified
+  completion_claim_prohibition: >-
+    the completion brief must not state that all publication transports are technically enforced
+
+required_caller_coverage_matrix:
+  rule: >-
+    coverage is declared per transport and only a transport that actually invokes the gate may be
+    called covered. Hook coverage must never be extrapolated to transport-independent enforcement.
+  transports:
+    local_git:
+      caller: .githooks/pre-push
+      required_state: wired and consuming the gate verdict
+      claimable_as: covered for pushes that run hooks
+    github_api_connector:
+      caller: none by default
+      required_state: must explicitly invoke the same transport-independent gate
+      claimable_as: covered only when it does
+    github_cli_without_verified_hooks:
+      caller: none by default
+      required_state: must explicitly invoke the same transport-independent gate
+      claimable_as: covered only when it does
+    unknown:
+      required_state: blocked
+      claimable_as: never covered
+
+verification_coverage_versus_publication_gating:
+  quiet_verify_DEFAULT_CHECKS_may_call_the_gate: true
+  purpose: verification coverage
+  does_not_substitute_for_a_publication_caller: true
+  reason: running in the test set is not blocking at publication time
+
+W6_acceptable_completion_semantics:
+  must_all_hold:
+  - the transport-independent gate is implemented as a single canonical entrypoint
+  - the local_git caller is actually wired and propagates a nonzero exit code
+  - coverage for non-hook transports is declared per transport, and only transports that invoke the gate are claimed as covered
+  - no claim of unbypassable remote access control is made anywhere in the deliverable
+
+carried_forward_unchanged_from_v1:
+  forbidden_paths:
+  - 01_os/06_execution/task_discipline/packet_input/**
+  - 01_os/06_execution/task_discipline/managed_verification/**
+  prohibitions:
+  - master_publication
+  - force_push_rebase_squash_amend_or_history_rewrite
+  - merge_or_cherry_pick_from_the_frozen_predecessor_branch
+  - self_declaration_of_master_readiness
+  - self_review_as_independent_review
+  - creating_a_second_briefing_or_attestation_mechanism_parallel_to_stage_collaborative_deliberation
+  - inferring_Human_consent_from_silence
+  - runtime_or_scheduler_activation
+  - reading_or_exposing_secrets_or_credentials
+  stop_conditions:
+  - W3 mapping cannot derive a required field from a durable source
+  - a change is required outside allowed_changed_paths and outside the conditional gate
+  - the design would require synthesising, inferring or self-asserting Human evidence
+  - a semantic goal or Human-confirmed architecture would have to change
+  - evidence cannot support a claim
+  bootstrap_exemption:
+    applies_to_runs_created_after: TO_BE_BOUND_TO_EXACT_LANDING_COMMIT
+    binding_required_before_delivery: true
+    permanent_legacy_bypass: prohibited

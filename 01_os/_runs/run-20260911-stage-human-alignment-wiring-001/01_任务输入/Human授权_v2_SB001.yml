@@ -1,0 +1,74 @@
+schema_version: citystate.human_task_authorization.v1
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+authorization_id: SB-001-scope-extension
+supersedes: nothing
+extends: 01_os/_runs/run-20260911-stage-human-alignment-wiring-001/01_任务输入/Human授权_v1.yml
+recorded_by_endpoint_id: claude-cowork-stage-alignment-wiring-executor-001
+recorded_at: 2026-09-11
+
+provenance:
+  kind: foreground_current_Human_interaction
+  channel: current Human chat session with the foreground executor
+  actor_class: current_Human
+  relayed_by_model: true
+
+proof_limits:
+  rule: >-
+    a foreground transcription of an explicit current-Human disposition, not a cryptographic
+    attestation and not an authentication of a natural person
+  same_writer_limitation: >-
+    the executor wrote this file. Its weight comes from the Human being present in the session
+    that produced it and reviewing this run, not from the file.
+  no_nonce_commitment_present: true
+  challengeable: false
+  note: >-
+    this record carries no nonce commitment, so human_challenge_verify.py cannot be run against
+    it. It is a scope authorization, not a stage acceptance. Stage acceptances under W6 are a
+    different object with different requirements.
+
+decision_type: material_scope_change
+disposition: authorized
+
+requested_because:
+  defect: SB-001
+  statement: >-
+    .githooks/pre-push was outside the task allowlist, so W6 would have delivered a publication
+    gate that nothing calls.
+  reported_before_acting: true
+  path_not_expanded_before_authorization: true
+
+authorized_scope:
+  add_to_allowed_changed_paths:
+  - .githooks/pre-push
+  purpose_limit: >-
+    wire the workflow publication gate as the local_git transport caller and actually consume its
+    exit code
+  permitted_in_the_hook:
+  - invoke the single canonical gate entrypoint
+  - propagate a nonzero gate exit code so the push is blocked
+  prohibited_in_the_hook:
+  - copying gate semantics
+  - reimplementing stage, Human or ancestry judgement
+  - changing publisher authority semantics
+  - changing transport semantics
+
+Human_stated_boundaries:
+  hook_is_not_an_access_boundary: true
+  bypasses_that_remain: [git push --no-verify, github_api_connector, cli_without_verified_hooks]
+  completion_claim_prohibition: >-
+    must not be written as all publication transports are technically enforced
+  coverage_matrix_required: true
+  coverage_rule: only a transport that actually invokes the gate may be declared covered
+  quiet_verify_is_verification_coverage_not_a_publication_caller: true
+
+escalation_condition:
+  if: wiring requires changes beyond .githooks/pre-push, or changes to publisher authority or transport semantics
+  then: stop and report; do not widen scope further
+
+not_authorized:
+  - master_publication
+  - self_declaration_of_master_readiness
+  - self_review_as_independent_review
+  - runtime_or_scheduler_activation
+  - any_allowlist_entry_beyond_the_one_named_above
