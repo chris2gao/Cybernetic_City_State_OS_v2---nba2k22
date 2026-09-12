@@ -1,0 +1,118 @@
+schema_version: citystate.mapping_contract_defect.v1
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+raised_during: W6_precondition_check
+raised_by_endpoint_id: claude-cowork-stage-alignment-wiring-executor-001
+measured_at_head: 8a515966314141ebbe12f3ccd6fb6e3c4cc0c247
+status: reported_stopped_before_runner_implementation
+stop_condition_invoked: W3 mapping cannot derive a required field from a durable source
+
+defect_id: MC-001
+defect: >-
+  The CP-B ordering chain requires three commits per stage. Two have durable machine-parsable
+  sources. The third, C_i, has none, so the assertion C_i ancestor-of P_(i+1) cannot be verified
+  from Git. The W3 mapping contract specified the chain without establishing that every node in
+  it was resolvable.
+
+chain_under_test:
+  P_i: plan acceptance checkpoint commit
+  W_i: stage work and output commit
+  C_i: completion acceptance checkpoint commit
+  assertions:
+  - P_i ancestor-of W_i
+  - W_i ancestor-of C_i
+  - C_i ancestor-of P_(i+1)
+
+node_resolvability:
+  P_i:
+    resolvable: true
+    durable_source: stage_control.plan_acceptance.commit
+    no_future_sha: P_i exists before W_i, so an artifact in W_i may name it
+  W_i:
+    resolvable: true
+    durable_source: stage_control.completion_acceptance.bound_output_version
+    corroboration: >-
+      _scope_completion already requires bound_output_version == candidate, exit 12
+      completion_candidate_mismatch. At completion validation the candidate is the stage output
+      commit, so bound_output_version is W_i by construction of the existing mechanism.
+  C_i:
+    resolvable: false
+    reasons:
+    - id: R1
+      statement: an artifact inside C_i cannot name C_i
+      basis: >-
+        the commit sha does not exist until the commit is written. The mechanism already names
+        this cycle in task_scope_execution_contract.completion.cycle_rule.
+    - id: R2
+      statement: nothing downstream names C_i either
+      basis: >-
+        input_refs binds {stage_id, path, artifact_version, sha256}. Measured: the seven-stage
+        chain carries content hashes only and no commit identity. run_minimum_operational_loop
+        verifies them with sha256_file against the manifest.
+    - id: R3
+      statement: no precedent exists for recovering a commit from a blob
+      basis: >-
+        repository-wide search for diff-filter=A, --reverse, rev-list --all and log --format
+        over 01_os excluding _runs and _communication returned no matches.
+    - id: R4
+      statement: the obvious recovery method is a known contamination source in this work line
+      basis: >-
+        git log --diff-filter=A -- <path> was previously used to date run groups and produced a
+        wrong result, because the 2026-08-10 namespace cutover re-added every path and made all
+        runs report the same date. Using it to establish ordering would repeat that error in a
+        place where the answer is a gate verdict.
+
+second_consequence_not_previously_recorded:
+  statement: a stage artifact must be validated twice, not once
+  basis: >-
+    _scope_model requires current_exact_model_version == candidate, exit 12
+    model_candidate_mismatch. If the plan side binds the Current Model as it existed at P_i, the
+    artifact must satisfy that equality at P_i as well as at W_i or C_i.
+  consequence_for_W3: >-
+    the mapping contract describes one artifact-to-instance mapping per stage. There are two
+    validation points per stage, and the mapping must say which fields are required at which.
+
+future_sha_paradox_avoided_as_directed:
+  plan_side_must_bind: the exact Current Model blob and digest as of P_i
+  plan_side_must_not_bind: the eventual candidate sha, which does not exist at plan time
+  completion_side_binds: the actual stage output commit, its blob and its verification evidence
+  within_commit_references_are_safe: >-
+    a blob sha is content-addressed and computable before the commit exists, so an artifact may
+    reference a record committed alongside it by {path, blob_sha} without a cycle. Only commit
+    shas create the paradox.
+
+proposed_remedy_not_implemented:
+  id: MC-001-R1
+  change: >-
+    stage i's plan acceptance names stage i-1's completion commit, because C_(i-1) exists before
+    P_i. The final stage's C_n is named by the run completion pointer under 08_结论, which is
+    authored after C_n.
+  new_field: stage_control.plan_acceptance.predecessor_completion_commit
+  first_stage: field absent, no predecessor exists
+  properties:
+    future_sha: none
+    blob_to_commit_inference: none
+    synthesised_evidence: none
+  cost:
+  - the profile contract changes again and the active blob pins are repinned again
+  - the stage_control block in seven schemas gains one field
+  - the publication gate must treat the first and last stage as boundary cases
+  alternatives_considered:
+  - id: A1
+    option: recover C_i by searching history for the commit that introduced the acceptance blob
+    rejected_because: R3 and R4
+  - id: A2
+    option: drop the third assertion and verify only P_i before W_i before C_i
+    rejected_because: >-
+      the chain would no longer establish that stage i was accepted before stage i+1 was planned,
+      which is the progression property the checkpoints exist to make checkable.
+  - id: A3
+    option: have the gate require a single linear branch and use commit order on that branch
+    rejected_because: >-
+      it substitutes a topology assumption for evidence, and merges are already normal in this
+      repository's task branches.
+
+authority_note:
+  this_document_decides_nothing: true
+  awaiting: Human disposition on MC-001-R1 or an alternative
+  runner_implementation_blocked_until_resolved: true
