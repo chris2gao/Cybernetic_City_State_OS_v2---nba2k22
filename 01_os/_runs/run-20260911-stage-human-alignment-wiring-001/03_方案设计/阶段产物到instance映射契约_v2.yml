@@ -1,0 +1,248 @@
+schema_version: citystate.artifact_to_instance_mapping_contract.v2
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+work_package: W3
+kind: load_bearing_architecture
+status: Human_decided_two_phase_successor_binding
+supersedes: 03_方案设计/阶段产物到instance映射契约_v1.yml
+supersession_scope: >-
+  Replaces v1 part_2 (control points) and part_3 (field mapping) in full. v1 is retained
+  unmodified; its part_1 two-layer invariants and part_4 bootstrap boundary remain in force.
+closes_defect: MC-001
+based_on_sha: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+blocks: W6_runner_and_schema_implementation
+
+part_1_chain:
+  nodes_per_stage: [C_prev, M_i, P_i, W_i, C_i]
+  meaning:
+    C_prev: the previous stage's completion acceptance commit; absent for stage 01
+    M_i: the commit that publishes the Current Model content this stage will be judged on
+    P_i: the commit that publishes the Human plan acceptance record
+    W_i: the commit that publishes the stage work and its output
+    C_i: the commit that publishes the Human completion acceptance record
+  edges:
+  - C_prev -> M_i
+  - M_i -> P_i
+  - P_i -> W_i
+  - W_i -> C_i
+  edge_relation: strict Git ancestry
+  strictness_definition: >-
+    X strictly precedes Y when X != Y and git merge-base --is-ancestor X Y exits 0. The
+    inequality is a separate assertion because --is-ancestor exits 0 when X equals Y, so
+    ancestry alone would let a single commit satisfy an edge with itself.
+  why_M_i_is_a_separate_node:
+    rationale: >-
+      If the model and its acceptance were written in one commit, the acceptance would have been
+      authored in the same act as the thing it accepts. Requiring M_i to strictly precede P_i
+      forces the accepted content to exist as published history before any record refers to it,
+      which is the difference between accepting something and writing down that you did.
+
+part_2_node_sources:
+  rule: every node is named by an exact ref written in a commit that already exists when it is written
+  nodes:
+    C_prev:
+      named_by: stage_control.plan_acceptance.predecessor_completion_commit
+      written_in: P_i
+      no_future_sha: C_prev exists before P_i
+      stage_01: field absent, no predecessor exists
+    M_i:
+      named_by: stage_control.plan_acceptance.accepted_model_commit
+      accompanied_by: [accepted_model_path, accepted_model_blob_sha]
+      written_in: P_i
+      no_future_sha: M_i exists before P_i
+    P_i:
+      named_by: stage_control.plan_acceptance.commit
+      written_in: the stage artifact as published at W_i
+      no_future_sha: P_i exists before W_i
+    W_i:
+      named_by: stage_control.completion_acceptance.bound_output_version
+      written_in: C_i
+      no_future_sha: W_i exists before C_i
+      corroboration: >-
+        _scope_completion already requires bound_output_version == candidate, so at completion
+        validation this field is the stage output commit by construction of the existing mechanism
+    C_i:
+      named_by: the next stage's stage_control.plan_acceptance.predecessor_completion_commit
+      written_in: P_(i+1)
+      final_stage: >-
+        C_7 is named by the run completion pointer under 08_结论, which is authored after C_7
+      no_future_sha: C_i exists before P_(i+1) and before the completion pointer
+  prohibited_discovery_methods:
+    - id: D1
+      method: searching history for the commit that introduced a blob
+      examples: [git log --diff-filter=A, git rev-list --all with a pathspec, git log --reverse]
+      reason: >-
+        no precedent for it exists in this repository, and the technique already produced a wrong
+        result in this work line: the 2026-08-10 namespace cutover re-added every path, so every
+        run reported the same add date. A gate verdict must not rest on it.
+    - id: D2
+      method: assuming a linear branch and reading commit order off it
+      reason: substitutes a topology assumption for evidence; merges are normal on task branches
+    - id: D3
+      method: inferring any node from timestamps
+      reason: committer dates are writable
+
+part_3_two_phases:
+  phase_1_plan:
+    commits: [M_i, P_i]
+    artifact_state: {artifact_version: 1, status: planned}
+    stage_control_required: [action_id, current_model_ref, deliberation_receipt_ref, plan_acceptance]
+    completion_acceptance: absent
+    model_binding:
+      accepted_model_blob_sha: the blob sha of the Current Model at M_i
+      staleness_rule: >-
+        the Current Model blob at P_i must be byte-identical to accepted_model_blob_sha. If the
+        model changed between M_i and P_i, the acceptance refers to content that is no longer
+        there and is void.
+      must_not_bind: the eventual candidate sha, which does not exist at plan time
+  phase_2_execution:
+    commits: [W_i, C_i]
+    artifact_state: {artifact_version: 2, status: complete}
+    stage_control_required: [action_id, current_model_ref, deliberation_receipt_ref, plan_acceptance, completion_acceptance]
+    output_binding:
+      bound_output_version: W_i
+      verification_result: {commit, path, blob_sha} in a commit separate from W_i
+  validation_points_per_stage: 2
+  note_corrected_from_v1: >-
+    v1 described one artifact-to-instance mapping per stage. The mechanism pins
+    current_exact_model_version to the candidate under validation, so an artifact accepted at P_i
+    and completed at C_i is validated at two different candidates and must satisfy the equality
+    at each.
+
+part_4_gate_algorithm:
+  owner: workflow publication gate
+  trust_rule: >-
+    ordering_assertions in a stage artifact is a declaration by its author. The gate never reads
+    a verdict from it. The gate recomputes every edge from Git and, when the declaration and Git
+    disagree, fails closed and names both.
+  steps:
+  - id: S1
+    do: resolve every node ref from the stage artifacts as published at the head being gated
+    fail_closed_when: any required ref is absent, malformed, or not a 40-character object name
+  - id: S2
+    do: confirm each named commit exists in this repository
+    fail_closed_when: an object is missing or is not a commit
+  - id: S3
+    do: for each edge, assert X != Y and merge-base --is-ancestor X Y
+    fail_closed_when: either half fails
+  - id: S4
+    do: >-
+      confirm the stage output blob named by the artifact actually exists in W_i, by reading it
+      at that commit and comparing its blob sha
+    fail_closed_when: the blob is absent at W_i or its sha differs
+    reason: >-
+      an output binding that names a commit proves nothing if the thing it claims to bind is not
+      in that commit
+  - id: S5
+    do: >-
+      confirm the Current Model blob at P_i equals accepted_model_blob_sha, and that the same blob
+      exists at M_i
+    fail_closed_when: either differs
+  - id: S6
+    do: >-
+      confirm the verification record blob exists at its named commit and that commit is not W_i
+    fail_closed_when: absent, or the evidence commit equals the output commit
+  - id: S7
+    do: chain the stages, C_i of stage i against predecessor_completion_commit of stage i+1
+    fail_closed_when: they differ, or an intermediate stage is missing
+  - id: S8
+    do: confirm the run completion pointer names C_7 exactly
+    fail_closed_when: absent or mismatched
+  gate_does_not:
+  - evaluate Human disposition semantics
+  - evaluate Current Model completeness
+  - evaluate receipt validity
+  - re-implement any check the mechanism owns
+  division_of_ownership:
+    stage_collaborative_deliberation_mechanism: >-
+      sole owner of Human disposition, Current Model completeness, receipt validity, feasibility
+      basis and closure semantics
+    workflow_runner_and_publication_gate: >-
+      ref resolution, composition, Git ordering, blob presence and progression fail-closed only
+    second_mechanism: prohibited
+
+part_5_what_the_chain_does_and_does_not_prove:
+  proves:
+  - the accepted model content existed as published history before any record referred to it
+  - the acceptance record names that exact content by blob sha, not by description
+  - the output commit descends from the acceptance commit
+  - the completion acceptance names that exact output, and a verification record in a separate commit
+  - each stage's plan acceptance names and descends from the previous stage's completion commit
+  - back-dating any node requires rewriting published history, which core policy prohibits and the gate refuses
+  does_not_prove:
+  - id: L1
+    statement: that no stage work happened before P_i
+    reason: no runtime supervises the working tree; unchanged from v1 part_1
+  - id: L2
+    statement: >-
+      that planning for stage i began after stage i-1 was accepted
+    reason: >-
+      C_prev -> M_i is commit order, not activity order. An author may model and plan stage i
+      while stage i-1 is still under review and commit in the required order afterwards. This
+      edge must never be cited as evidence that planning started late enough.
+    explicitly_not_a_sufficient_proof_of: planning_started_after_predecessor_acceptance
+  - id: L3
+    statement: that a Human read, understood or agreed with anything
+    reason: a record is a declaration; comprehension is not observable
+  - id: L4
+    statement: the identity of the acceptor
+    reason: >-
+      unchanged from the master interpretation of CR-002; this task introduces no new attestation
+      architecture
+  honest_summary: >-
+    The content bindings carry the weight: a blob sha ties an acceptance to exactly what was
+    accepted, and a missing or altered blob is detectable. The ancestry edges carry only order of
+    commits, and their value is that changing them after publication requires a prohibited and
+    refused history rewrite.
+
+part_6_stage_control_shape:
+  principle: reference_not_copy
+  mechanism_body_copied: false
+  Current_Model_copied: false
+  Human_gate_semantics_copied: false
+  shape:
+    action_id: string, an id in the packet's stage_actions
+    current_model_ref: {path, blob_sha}
+    deliberation_receipt_ref: {path, blob_sha}
+    plan_acceptance:
+      commit: P_i
+      path: string
+      blob_sha: string
+      accepted_model_commit: M_i
+      accepted_model_path: string
+      accepted_model_blob_sha: string
+      accepted_plan_digest: string
+      predecessor_completion_commit: C_prev, absent for stage 01
+    completion_acceptance:
+      path: string
+      blob_sha: string
+      bound_output_version: W_i
+      verification_result: {commit, path, blob_sha}
+      absent_until: C_i
+    ordering_assertions: declaration only, never trusted, recomputed by the gate
+  within_commit_reference_rule: >-
+    a record committed alongside the artifact is referenced by path and blob_sha, never by commit
+    sha. A blob sha is content-addressed and computable before the commit exists, so this creates
+    no cycle. Only commit shas create the future-sha paradox.
+
+part_7_schema_change_scope:
+  seven_stage_schemas: add stage_control to common_required_fields
+  seven_stage_contract: add stage_control to artifact_common_required_fields
+  task_packet_format: unchanged
+  task_packet_parser: unchanged
+  parser_non_modification_is_binding: true
+  parser_evidence: 02_信息收集/packet_parser透传实测_v1.yml
+  forbidden_paths_for_this_task:
+  - 01_os/06_execution/task_discipline/packet_input/**
+  - 01_os/06_execution/task_discipline/managed_verification/**
+
+part_8_open_items_for_W6:
+  - id: W6-1
+    item: the gate is a new executable under 01_os/06_execution/workflow/publication_gate/
+    status: allowlisted
+  - id: W6-2
+    item: pre-push becomes one caller of the gate; other transports remain unguarded and must be recorded as such
+    status: carried from v1 CP_A
+  - id: W6-3
+    item: exit 34 is reused with a precise finding string; the runner exit-code table is not extended
+    status: carried from HG1
