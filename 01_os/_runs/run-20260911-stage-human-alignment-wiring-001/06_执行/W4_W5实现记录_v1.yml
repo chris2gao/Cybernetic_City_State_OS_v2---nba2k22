@@ -67,6 +67,29 @@ W4_defects_found_in_this_executor_own_work:
     defect: the corrected read sat inside a per-field check
     consequence: a second candidate read per validation, and an easy path for a third
     fix: hoisted to validate_task_scope_instance and passed down
+  - id: SD-4
+    defect: >-
+      this record file was committed in 8a515966 without ever being parsed. It asserted that
+      everything was green while being itself unreadable YAML: a sequence and a mapping key were
+      mixed under forbidden_paths_untouched.
+    found_by: a later run-wide YAML sweep, two commits afterwards
+    note: >-
+      the document that records the verification was the one artifact not verified. The round's
+      YAML check covered the contract files the executor had edited and not the record written
+      about them.
+    remedy: the commit gate now parses every YAML under the run directory, not a remembered subset
+  - id: SD-5
+    defect: >-
+      the commit script for W3-v2 ran a twelve-invariant self-check, received exit 1, and
+      committed anyway. There was no guard between the check and the commit.
+    severity: >-
+      this is the exact failure class the task exists to close. A check that runs, reports and is
+      not consumed is decoration. Producing one while building a gate is the fifth recorded
+      instance of fixing a defect by introducing another of its kind in this work line.
+    remedy: >-
+      the gate script now exits non-zero and refuses to stage when either the invariant check or
+      the YAML sweep fails, and it prints GATED so the refusal is visible in the round trip
+    corrected_in: 087b5c65ce96aec0a8060a13aa593c199a39d8b5
   - id: SD-3
     defect: the executor reported the suite as hung, then as a four-fold slowdown
     correction: >-
