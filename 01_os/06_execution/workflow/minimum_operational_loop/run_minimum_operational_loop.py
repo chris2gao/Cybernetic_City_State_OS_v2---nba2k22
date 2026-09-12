@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate declared seven-stage artifacts; do not execute their business work."""
 from __future__ import annotations
-import argparse, hashlib, json, shutil, subprocess, sys
+import argparse, hashlib, importlib.util, json, shutil, subprocess, sys
 from pathlib import Path
 from typing import Any
 import yaml
@@ -98,6 +98,9 @@ def validate_static(repo_root:Path,run_subvalidators:bool=True)->tuple[int,list[
     if code:return code,[f"pilot:{x}" for x in more]
     return 0,[]
 
+# Retained for the historical callers that still import it. It is no longer the
+# workflow's receipt check: the mechanism owns that, and this shallow copy being
+# the one the workflow actually reached was the defect this work removed.
 def validate_receipt(receipt:Any,stage_id:str)->bool:
     if not isinstance(receipt,dict):return False
     if receipt.get("mechanism_id")!=EXPECTED_MECHANISM_ID:return False
@@ -109,6 +112,63 @@ def validate_receipt(receipt:Any,stage_id:str)->bool:
     if route in {"full","incremental"}:
         return bool(receipt.get("session_id")) and bool(receipt.get("task_gate_ref")) and bool(receipt.get("Human_authorization_ref"))
     return False
+
+DELIBERATION_VALIDATOR="01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py"
+
+def load_deliberation_validator(repo_root:Path):
+    spec=importlib.util.spec_from_file_location("scd_authoritative",repo_root/DELIBERATION_VALIDATOR)
+    if spec is None or spec.loader is None:raise RuntimeError("cannot load the deliberation validator")
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);return module
+
+def compose_instance(run_root:Path,art:dict,sid:str,run_doc:dict,candidate:str)->dict:
+    """Resolve stage_control refs and assemble the canonical instance.
+
+    This function locates and arranges. It decides nothing. Whether the model is
+    complete, whether a feasibility basis holds, whether a Human disposition is
+    present and current: all of that belongs to the deliberation mechanism and is
+    read there, from the document this builds.
+    """
+    control=art.get("stage_control")
+    if not isinstance(control,dict):raise ValueError(f"stage_control missing:{sid}")
+    model_ref=control.get("current_model_ref")
+    if not isinstance(model_ref,dict) or "path" not in model_ref:
+        raise ValueError(f"current_model_ref missing:{sid}")
+    model=load_yaml(run_root/model_ref["path"])
+    if not isinstance(model,dict):raise ValueError(f"current model unreadable:{sid}")
+    receipt=art.get("deliberation_receipt")
+    scope={"schema_version":1,"task_id":run_doc.get("task_id"),"candidate":candidate,
+           "task_packet":run_doc.get("task_packet_ref"),"action_id":control.get("action_id"),
+           "stage_id":sid,"paths":run_doc.get("stage_paths",[])}
+    instance={"task_scope":scope,"current_model":model,"receipt":receipt,
+              "stage_profile_id_and_version":(receipt or {}).get("profile_id_and_version")}
+    mode=(receipt or {}).get("route")
+    if mode:instance["activation_mode"]=mode
+    reason=(receipt or {}).get("dormant_reason")
+    if reason:instance["dormant_reason"]=reason
+    return instance
+
+def validate_deliberation(repo_root:Path|None,run_root:Path,art:dict,sid:str,
+                          run_doc:dict,candidate:str|None)->tuple[int,str]:
+    """Hand the composed instance to the authoritative validator and consume its verdict.
+
+    The runner used to carry its own ten-line receipt check here. That check and
+    the mechanism's twenty-field contract were two definitions of one object, and
+    the strict one was never reached from the workflow. There is now one owner.
+
+    Without a candidate the canonical instance cannot be built: the mechanism
+    binds the model version and the packet allowlist to an exact commit. That is
+    reported as not validated rather than replaced by something weaker.
+    """
+    if candidate is None or repo_root is None:
+        return 0,f"deliberation_instance_not_validated:no_candidate:{sid}"
+    try:
+        validator=load_deliberation_validator(repo_root)
+        instance=compose_instance(run_root,art,sid,run_doc,candidate)
+    except Exception as exc:
+        return 34,f"deliberation_instance_uncomposable:{sid}:{type(exc).__name__}"
+    code=validator.validate_task_scope_instance(instance,repo_root,candidate)
+    if code:return 34,f"deliberation_instance_rejected:{sid}:mechanism_exit_{code}"
+    return 0,""
 
 def payload_schemas(repo_root:Path)->dict[str,dict]:
     """Read required fields from the same canonical schemas checked by static."""
@@ -163,16 +223,17 @@ def payload_type_findings(payload:dict,stage_id:str)->list[str]:
                         findings.append(f"payload_type:{stage_id}:implementation_claims:{index}:{field}")
     return findings
 
-def validate_run(run_root:Path,repo_root:Path|None=None)->tuple[int,list[str]]:
+def validate_run(run_root:Path,repo_root:Path|None=None,candidate:str|None=None)->tuple[int,list[str]]:
     repo_root=repo_root if repo_root is not None else Path(__file__).resolve().parents[4]
     try:schemas=payload_schemas(repo_root)
     except (OSError,ValueError,TypeError,KeyError,yaml.YAMLError,RecursionError) as exc:
         return 33,[f"payload_schema_source:{type(exc).__name__}"]
-    try:return _validate_run(run_root,schemas)
+    try:return _validate_run(run_root,schemas,repo_root,candidate)
     except (OSError,ValueError,TypeError,KeyError,AttributeError,yaml.YAMLError,RecursionError) as exc:
         return 33,[f"artifact_structure:{type(exc).__name__}"]
 
-def _validate_run(run_root:Path,schemas:dict[str,dict])->tuple[int,list[str]]:
+def _validate_run(run_root:Path,schemas:dict[str,dict],repo_root:Path|None=None,
+                  candidate:str|None=None)->tuple[int,list[str]]:
     manifest_path=run_root/"manifest.yml"
     if not manifest_path.is_file():return 30,["manifest"]
     try:manifest=load_yaml(manifest_path)
@@ -207,6 +268,9 @@ def _validate_run(run_root:Path,schemas:dict[str,dict])->tuple[int,list[str]]:
       EXPECTED_STAGE_IDS[6]:[EXPECTED_STAGE_IDS[2],EXPECTED_STAGE_IDS[3],EXPECTED_STAGE_IDS[5]]}
     kinds=dict(zip(EXPECTED_STAGE_IDS,["requirement_package","evidence_package","result_package","frozen_test_package","step_package","execution_package","verification_package"]))
     run_id=manifest.get("run_id")
+    run_doc=load_yaml(run_root/"run.yml") if (run_root/"run.yml").is_file() else {}
+    if not isinstance(run_doc,dict):run_doc={}
+    deliberation_notes:list[str]=[]
     for sid in EXPECTED_STAGE_IDS:
         art=artifacts[sid]
         if not required.issubset(art) or art.get("schema_version")!="citystate.workflow.artifact.v1" or art.get("stage_id")!=sid or art.get("run_id")!=run_id:return 33,[f"common:{sid}"]
@@ -218,7 +282,11 @@ def _validate_run(run_root:Path,schemas:dict[str,dict])->tuple[int,list[str]]:
         if type_findings:return 33,type_findings
         if art.get("artifact_kind")!=kinds[sid] or art.get("status")!="complete" or not positive_int(art.get("artifact_version")):
             return 33,[f"identity:{sid}"]
-        if not validate_receipt(art.get("deliberation_receipt"),sid):return 34,[sid]
+        # One owner for the deliberation verdict. The runner composes and consumes;
+        # it does not judge. A nonzero from the mechanism stops the run here.
+        code,note=validate_deliberation(repo_root,run_root,art,sid,run_doc,candidate)
+        if code:return code,[note]
+        if note:deliberation_notes.append(note)
         refs=art.get("input_refs",[])
         if not isinstance(refs,list):return 32,[f"refs:{sid}"]
         by_id={x.get("stage_id"):x for x in refs if isinstance(x,dict)}
@@ -292,7 +360,10 @@ def _validate_run(run_root:Path,schemas:dict[str,dict])->tuple[int,list[str]]:
         if not set(claim.get("result_claim_ids",[])).issubset(result_ids):return 38,["stage7_result_claim_binding"]
         if not set(claim.get("evidence_claim_ids",[])).issubset(evidence_ids):return 38,["stage7_evidence_claim_binding"]
     if p7.get("completion") is not True or p7.get("upstream_invalidation") is not None:return 39,["stage7_completion"]
-    return 0,[]
+    # Surfaced, not swallowed. An earlier revision collected these and returned an
+    # empty list, so a run validated without a candidate looked identical to one
+    # whose deliberation instance had actually been checked.
+    return 0,deliberation_notes
 
 def prohibited_output(repo_root:Path,output_root:Path)->bool:
     try:rel=output_root.resolve().relative_to(repo_root.resolve()).as_posix().rstrip("/")+"/"
@@ -318,9 +389,13 @@ def main()->int:
     parser.add_argument("command",choices=("static","validate","materialize-pilot"))
     parser.add_argument("target");parser.add_argument("output",nargs="?")
     parser.add_argument("--json-output",action="store_true");parser.add_argument("--skip-subvalidators",action="store_true",help=argparse.SUPPRESS)
+    parser.add_argument("--repo-root",type=Path,default=None)
+    parser.add_argument("--candidate",default=None,
+                        help="the commit this run is being judged at. Without it the deliberation "
+                             "instance cannot be composed and is reported as not validated")
     args=parser.parse_args()
     if args.command=="static":code,findings=validate_static(Path(args.target),not args.skip_subvalidators)
-    elif args.command=="validate":code,findings=validate_run(Path(args.target))
+    elif args.command=="validate":code,findings=validate_run(Path(args.target),args.repo_root,args.candidate)
     else:
         if not args.output:parser.error("materialize-pilot requires output")
         code,findings=materialize_pilot(Path(args.target),Path(args.output))

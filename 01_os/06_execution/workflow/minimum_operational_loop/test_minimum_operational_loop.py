@@ -106,19 +106,36 @@ class MinimumLoopTests(unittest.TestCase):
         root=self.mutate("02_evidence.yml",lambda d:d["payload"].update(claims=[None]))
         self.assertEqual(loop.validate_run(root)[0],33)
     def test_empty_claim_list_is_not_replaced_with_missing_field(self):
+        # The proposition is that an empty list is not misread as an absent field.
+        # It used to be written as findings == [], which stopped being true when
+        # the runner began reporting that the deliberation instance was not
+        # validated. Asserting the claim rather than the old shape.
         root=self.mutate("07_verification.yml",lambda d:d["payload"].update(implementation_claims=[]))
-        self.assertEqual(loop.validate_run(root),(0,[]))
+        code,findings=loop.validate_run(root)
+        self.assertEqual(code,0)
+        self.assertFalse([f for f in findings if "implementation_claims" in f],findings)
     def test_missing_artifact(self):
         root=self.copy_fixture();(root/"03_result.yml").unlink();self.assertEqual(loop.validate_run(root)[0],30)
     def test_hash_mismatch(self):
         root=self.copy_fixture();p=root/"02_evidence.yml";p.write_text(p.read_text(encoding="utf-8")+"\n# drift\n",encoding="utf-8");self.assertEqual(loop.validate_run(root)[0],31)
     def test_stage_order(self):
         root=self.copy_fixture();m=load(root/"manifest.yml");m["artifacts"][0],m["artifacts"][1]=m["artifacts"][1],m["artifacts"][0];save(root/"manifest.yml",m);self.assertEqual(loop.validate_run(root)[0],32)
-    def test_dormant_receipt_cannot_have_session(self):
-        root=self.mutate("01_requirement.yml",lambda d:d["deliberation_receipt"].update(session_id="unexpected"));self.assertEqual(loop.validate_run(root)[0],34)
-    def test_full_receipt_requires_authority(self):
-        def f(d):d["deliberation_receipt"].update(route="full",session_id="S1")
-        self.assertEqual(loop.validate_run(self.mutate("01_requirement.yml",f))[0],34)
+    # Receipt semantics moved to their owner.
+    #
+    # test_dormant_receipt_cannot_have_session, test_full_receipt_requires_authority
+    # and test_receipt_mechanism_id used to assert that this runner rejected a bad
+    # receipt. It no longer judges receipts: the deliberation mechanism does, and
+    # its own suite covers those three cases against its twenty-field contract
+    # rather than the runner's former ten-line copy. Keeping them here would have
+    # meant keeping the copy alive to satisfy the tests.
+    #
+    # What replaces them is the boundary this runner is responsible for: that a run
+    # validated without a candidate says so instead of appearing checked.
+    def test_without_a_candidate_the_deliberation_check_is_reported_as_not_done(self):
+        code,findings=loop.validate_run(FIXTURE)
+        self.assertEqual(code,0)
+        self.assertTrue(any("deliberation_instance_not_validated" in f for f in findings),
+                        f"a silently skipped check is the defect this replaced: {findings}")
     def test_unfrozen_tests(self):
         self.assertEqual(loop.validate_run(self.mutate("04_tests.yml",lambda d:d["payload"].update(frozen=False)))[0],35)
     def test_test_digest_drift(self):
@@ -147,8 +164,6 @@ class MinimumLoopTests(unittest.TestCase):
         self.assertEqual(loop.materialize_pilot(repo,repo/"01_os/01_workflow/_runtime")[0],40)
     def test_manifest_identity(self):
         root=self.copy_fixture();m=load(root/"manifest.yml");m["workflow_id"]="wrong";save(root/"manifest.yml",m);self.assertEqual(loop.validate_run(root)[0],33)
-    def test_receipt_mechanism_id(self):
-        root=self.mutate("01_requirement.yml",lambda d:d["deliberation_receipt"].update(mechanism_id="wrong"));self.assertEqual(loop.validate_run(root)[0],34)
     def test_step_dependency_cycle(self):
         def f(d):d["payload"]["steps"][0]["depends_on"]=["S-3"]
         self.assertEqual(loop.validate_run(self.mutate("05_steps.yml",f))[0],37)
