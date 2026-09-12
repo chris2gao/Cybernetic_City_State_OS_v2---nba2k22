@@ -34,8 +34,13 @@ part_1_chain:
     rationale: >-
       If the model and its acceptance were written in one commit, the acceptance would have been
       authored in the same act as the thing it accepts. Requiring M_i to strictly precede P_i
-      forces the accepted content to exist as published history before any record refers to it,
-      which is the difference between accepting something and writing down that you did.
+      forces the accepted content to exist as an independently committed Git node before any
+      record refers to it, which is the difference between accepting something and writing down
+      that you did.
+    wording_constraint: >-
+      say independently committed Git node, never published history. A local commit is not
+      published. CP-B establishes nothing about the remote, and remote-before-acceptance is the
+      optional CP-C property only.
 
 part_2_node_sources:
   rule: every node is named by an exact ref written in a commit that already exists when it is written
@@ -149,6 +154,33 @@ part_4_gate_algorithm:
   - id: S8
     do: confirm the run completion pointer names C_7 exactly
     fail_closed_when: absent or mismatched
+  - id: S9
+    name: phase content separation
+    reason: >-
+      Strict ancestry alone is satisfiable by five commits with identical trees. Four empty
+      commits would pass every edge and the chain would prove nothing. Each phase must be shown
+      to have actually added its own artifact, by reading the trees rather than the order.
+    do:
+    - id: S9a
+      check: the plan acceptance blob must not already exist at M_i under the same path and blob_sha
+      fail_closed_when: it is already present
+      catches: an acceptance written alongside or before the model it accepts
+    - id: S9b
+      check: >-
+        the stage output named by bound_output_version must not already exist at P_i under the
+        same path and blob_sha, and must be present at W_i
+      fail_closed_when: present at P_i, or absent at W_i
+      catches: an output that already existed when it was authorised, so the acceptance approved nothing new
+    - id: S9c
+      check: the completion acceptance blob must not already exist at W_i under the same path and blob_sha
+      fail_closed_when: it is already present
+      catches: a completion acceptance written in the same act as the output it accepts
+    method: read the tree at each named commit; never search history for where a blob first appeared
+    proves: committed-history separation between the phases
+    does_not_prove: >-
+      real keyboard or working-tree activity order. An author may produce all content first and
+      then commit it in the required phases. S9 removes the empty-commit degenerate case; it does
+      not observe the work.
   gate_does_not:
   - evaluate Human disposition semantics
   - evaluate Current Model completeness
@@ -164,12 +196,17 @@ part_4_gate_algorithm:
 
 part_5_what_the_chain_does_and_does_not_prove:
   proves:
-  - the accepted model content existed as published history before any record referred to it
+  - the accepted model content existed as an independently committed Git node before any record referred to it
   - the acceptance record names that exact content by blob sha, not by description
   - the output commit descends from the acceptance commit
   - the completion acceptance names that exact output, and a verification record in a separate commit
   - each stage's plan acceptance names and descends from the previous stage's completion commit
-  - back-dating any node requires rewriting published history, which core policy prohibits and the gate refuses
+  - each phase added its own artifact, so the chain cannot be satisfied by commits with identical trees
+  - once a node is pushed, back-dating it requires rewriting published history, which core policy prohibits and the gate refuses
+  back_dating_scope_limit: >-
+    the rewrite protection applies only to commits already on the remote. Local-only history can
+    be rebased freely, so for an unpushed branch the chain records order without protecting it.
+    Remote-before-acceptance is the optional CP-C property and is not established here.
   does_not_prove:
   - id: L1
     statement: that no stage work happened before P_i
@@ -236,6 +273,63 @@ part_7_schema_change_scope:
   forbidden_paths_for_this_task:
   - 01_os/06_execution/task_discipline/packet_input/**
   - 01_os/06_execution/task_discipline/managed_verification/**
+
+part_9_Human_authenticity_ownership:
+  measured_at_head: cce2f0f7235ceb3a183b7525df7154facaa6adb3
+  canonical_owner_exists: true
+  owner: 01_os/06_execution/boot/stage_collaborative_deliberation/human_challenge_verify.py
+  what_it_does: >-
+    reads the durable decision record, asks the current Human for the Task Authority Code on
+    stdin only, recomputes the commitment from the record's bound fields plus that code, and
+    compares. The code is never a command-line argument, never echoed, never persisted.
+  its_own_stated_rule: >-
+    a plaintext code obtained from executor output, the repository, a run artifact, a
+    communication document or another model's report is not proof, because any of those could
+    have produced the record being challenged.
+  measured_limits:
+  - id: HA1
+    limit: it is interactive and requires a live Human at a terminal
+    consequence: a publication gate cannot invoke it
+  - id: HA2
+    limit: the production task-scope path does not reach Human authentication at all
+    basis: >-
+      _scope_model calls validate_model_readiness with _validated_task_scope=True, and that flag
+      guards both validate_mandatory_Human_confirmation and validate_human_authority
+  - id: HA3
+    limit: no Human-authentication role is registered in registry or boot
+    basis: search of 01_os/05_registry and 01_os/02_boot returned no such role
+    consequence: it is a tool a downstream reviewer may choose to run, not a declared startup-visible validator
+  binding_consequence_for_W6:
+    gate_may_claim:
+    - an acceptance record is present at the named commit and path
+    - it is structurally valid, via the existing validate_authority_record_commitments
+    - it binds this exact task, stage and model or output version
+    - its commitment is well formed, so a Human can later challenge it
+    gate_must_not_claim:
+    - that Human acceptance has been machine verified
+    - that actor_class current_Human or a disposition field proves anything about a person
+    gate_must_not_do:
+    - invent a second Human-authentication semantics
+    - treat a same-writer record as authentication
+    honest_formulation: >-
+      the gate proves the record is challengeable. Only a Human running the challenge tool proves
+      it is authentic. These are different claims and the completion brief must keep them apart.
+
+part_10_scope_boundary_defect:
+  id: SB-001
+  measured_at_head: cce2f0f7235ceb3a183b7525df7154facaa6adb3
+  finding: >-
+    .githooks/pre-push appears in neither allowed_changed_paths nor
+    conditionally_allowed_changed_paths of this task's packet.
+  consequence: >-
+    this task may build the publication gate but may not wire the local caller. The gate will
+    therefore have no caller, which is the checker-without-a-trigger shape this task exists to
+    remove.
+  action_taken: reported, path not expanded
+  completion_claim_constraint: >-
+    the completion brief must not state that local publication is gated. It must state that the
+    gate exists, is callable, and that no transport currently calls it.
+  Human_decision_required: whether to extend the allowlist in this task or wire the caller in a successor
 
 part_8_open_items_for_W6:
   - id: W6-1
