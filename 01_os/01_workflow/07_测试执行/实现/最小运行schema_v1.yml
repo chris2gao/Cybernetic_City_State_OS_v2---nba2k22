@@ -1,6 +1,7 @@
 schema_version: citystate.workflow.stage_artifact_schema.v1
 artifact_schema_version: 1
 common_required_fields:
+- stage_control
 - schema_version
 - run_id
 - stage_id
@@ -17,6 +18,7 @@ common_rules:
 - deliberation_receipt_must_bind_stage_profile
 - dormant_receipt_must_not_create_session
 - full_or_incremental_receipt_requires_task_gate_and_Human_authorization_ref
+- stage_control_must_carry_exact_refs_only
 stage_id: workflow_stage_07_test_execution
 artifact_kind: verification_package
 artifact_filename: 07_verification.yml

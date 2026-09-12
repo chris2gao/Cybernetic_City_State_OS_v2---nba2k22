@@ -8,11 +8,11 @@ input_refs:
 - stage_id: workflow_stage_01_requirement_modeling
   path: 01_requirement.yml
   artifact_version: 1
-  sha256: 11a5aea60da22db8023fa6b4950795caf0ed13b33fac364e7019076da8cf5288
+  sha256: 70fd90cb4cead1617b97cf33eb448d36d5eba80b60168ff497a9fb85b80b571e
 - stage_id: workflow_stage_02_information_collection
   path: 02_evidence.yml
   artifact_version: 1
-  sha256: 2f191cd0fce787c5e91e45df31ee48d364b54de548132b36e42e2fd3e58eb990
+  sha256: ce1836a150026accc6440f40fa7a4786f2de11cae3598df468a2f896da0d5557
 deliberation_receipt:
   mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
   activation_state: active_dormant
@@ -55,3 +55,25 @@ payload:
     reason: Produces backslashes on Windows and breaks exact repository-path comparisons.
     evidence_claim_ids:
     - E-1
+stage_control:
+  action_id: pilot-stage-03
+  current_model_ref:
+    path: 03_result.yml
+    blob_sha: c53c7560ee64b1ec1475c12299cb1776470c0232
+  plan_acceptance:
+    commit: '0000000000000000000000000000000000000000'
+    path: 03_result.yml
+    blob_sha: c53c7560ee64b1ec1475c12299cb1776470c0232
+    accepted_model_commit: '0000000000000000000000000000000000000000'
+    accepted_model_path: 03_result.yml
+    accepted_model_blob_sha: c53c7560ee64b1ec1475c12299cb1776470c0232
+  completion_acceptance:
+    path: 03_result.yml
+    blob_sha: c53c7560ee64b1ec1475c12299cb1776470c0232
+    bound_output_version: '0000000000000000000000000000000000000000'
+    output_path: 03_result.yml
+    output_blob_sha: c53c7560ee64b1ec1475c12299cb1776470c0232
+    verification_result:
+      commit: '0000000000000000000000000000000000000000'
+      path: 03_result.yml
+      blob_sha: c53c7560ee64b1ec1475c12299cb1776470c0232

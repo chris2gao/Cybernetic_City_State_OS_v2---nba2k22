@@ -79,7 +79,16 @@ class Chain:
     candidate must never embed its own sha.
     """
 
-    def __init__(self, root: Path):
+    def __init__(self, root: Path, plan_mutators: dict | None = None):
+        """plan_mutators changes a stage's plan acceptance record as it is written.
+
+        Structural cases have to be built into the chain, not edited afterwards.
+        The gate reads each record at the commit that carries it, so rewriting a
+        file at the branch head leaves the accepted record untouched and the gate
+        correctly sees nothing. Changing what was accepted means changing that
+        commit, which rewrites history.
+        """
+        plan_mutators = plan_mutators or {}
         self.repo = root / "repo"
         self.repo.mkdir(parents=True)
         git(self.repo, "init", "-b", "fixture")
@@ -97,8 +106,14 @@ class Chain:
                                {"stage_id": sid, "model": f"model for {sid}"})
             m = commit(self.repo, f"{sid} model")
 
-            plan_blob = write(self.repo, f"{d}/plan_acceptance.yml",
-                              {"stage_id": sid, "accepts": model_blob})
+            plan_record = {"stage_id": sid, "accepts": model_blob}
+            if prev_c is not None:
+                # The binding lives in the record the Human accepted, where the
+                # blob sha covers it, not in a summary field of the artifact.
+                plan_record["predecessor_completion_commit"] = prev_c
+            if sid in plan_mutators:
+                plan_mutators[sid](plan_record, self)
+            plan_blob = write(self.repo, f"{d}/plan_acceptance.yml", plan_record)
             p = commit(self.repo, f"{sid} plan acceptance")
 
             out_blob = write(self.repo, f"{d}/output.yml",
@@ -116,8 +131,6 @@ class Chain:
                     "accepted_model_blob_sha": model_blob,
                 },
             }
-            if prev_c is not None:
-                control["plan_acceptance"]["predecessor_completion_commit"] = prev_c
             write(self.repo, f"{RUN}/{FILES[index]}",
                   {"stage_id": sid, "stage_control": control})
             w = commit(self.repo, f"{sid} work")
@@ -249,11 +262,19 @@ class GateCases(unittest.TestCase):
         self.assertRefused(code, findings, 15, "plan acceptance at P")
 
     def test_right_blob_wrong_path_is_refused(self):
+        """Refused at reference resolution, before separation is reached.
+
+        The reason moved when the predecessor binding moved into the accepted
+        record: the gate now has to read that record while collecting nodes, so an
+        unresolvable path fails there rather than later at the blob comparison.
+        Both are correct refusals; this asserts the one that actually fires.
+        """
         sid = STAGES[1]
         self.chain.rewrite_artifact(
             sid, lambda c: c["plan_acceptance"].__setitem__("path", f"{RUN}/nope.yml"))
         code, findings = self.chain.run_gate()
-        self.assertRefused(code, findings, 15, "absent at")
+        self.assertRefused(code, findings, 11,
+                           "plan acceptance record is absent or unreadable at its own commit")
 
     def test_output_already_present_at_P_is_refused(self):
         """S9b. An output that existed when it was authorised was not authorised."""
@@ -286,21 +307,44 @@ class GateCases(unittest.TestCase):
         self.assertRefused(code, findings, 14, "must not live in the output commit")
 
     def test_stage_one_naming_a_predecessor_is_refused(self):
-        sid = STAGES[0]
-        self.chain.rewrite_artifact(
-            sid, lambda c: c["plan_acceptance"].__setitem__(
-                "predecessor_completion_commit", self.chain.stages[STAGES[3]]["c"]))
-        code, findings = self.chain.run_gate()
-        self.assertRefused(code, findings, 11, "must not name a predecessor")
+        def name_one(record, chain):
+            record["predecessor_completion_commit"] = chain.boundary
+        chain = Chain(Path(tempfile.mkdtemp(prefix="gate-mut-")),
+                      {STAGES[0]: name_one})
+        try:
+            code, findings = chain.run_gate()
+            self.assertRefused(code, findings, 11, "must not name a predecessor")
+        finally:
+            shutil.rmtree(chain.repo.parent, ignore_errors=True)
 
-    def test_broken_chain_link_is_refused(self):
-        """A wrong predecessor fails because the blob is not in the named commit."""
-        sid = STAGES[4]
-        wrong = self.chain.stages[STAGES[0]]["c"]
-        self.chain.rewrite_artifact(
-            sid, lambda c: c["plan_acceptance"].__setitem__("predecessor_completion_commit", wrong))
-        code, findings = self.chain.run_gate()
-        self.assertNotEqual(code, 0, " | ".join(findings))
+    def test_stage_two_without_a_predecessor_binding_is_refused(self):
+        def drop(record, chain):
+            record.pop("predecessor_completion_commit", None)
+        chain = Chain(Path(tempfile.mkdtemp(prefix="gate-mut-")),
+                      {STAGES[1]: drop})
+        try:
+            code, findings = chain.run_gate()
+            self.assertRefused(code, findings, 11, "must name predecessor_completion_commit")
+        finally:
+            shutil.rmtree(chain.repo.parent, ignore_errors=True)
+
+    def test_wrong_predecessor_breaks_the_chain(self):
+        """A record naming the wrong completion commit fails S9c.
+
+        The named commit does not carry that stage's completion acceptance blob,
+        so the chain does not close. Nothing here depends on a summary field being
+        consistent with the record: the binding is the record.
+        """
+        def wrong(record, chain):
+            if chain.stages:
+                record["predecessor_completion_commit"] = chain.boundary
+        chain = Chain(Path(tempfile.mkdtemp(prefix="gate-mut-")),
+                      {STAGES[4]: wrong})
+        try:
+            code, findings = chain.run_gate()
+            self.assertNotEqual(code, 0, " | ".join(findings))
+        finally:
+            shutil.rmtree(chain.repo.parent, ignore_errors=True)
 
     # -- run identity -------------------------------------------------------
 

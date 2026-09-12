@@ -8,15 +8,15 @@ input_refs:
 - stage_id: workflow_stage_01_requirement_modeling
   path: 01_requirement.yml
   artifact_version: 1
-  sha256: 11a5aea60da22db8023fa6b4950795caf0ed13b33fac364e7019076da8cf5288
+  sha256: 70fd90cb4cead1617b97cf33eb448d36d5eba80b60168ff497a9fb85b80b571e
 - stage_id: workflow_stage_02_information_collection
   path: 02_evidence.yml
   artifact_version: 1
-  sha256: 2f191cd0fce787c5e91e45df31ee48d364b54de548132b36e42e2fd3e58eb990
+  sha256: ce1836a150026accc6440f40fa7a4786f2de11cae3598df468a2f896da0d5557
 - stage_id: workflow_stage_03_result_modeling
   path: 03_result.yml
   artifact_version: 1
-  sha256: eb8624d066d282596cb895aa32b128cc7d064b379fff2d90e8b753d77c084ba3
+  sha256: 167ea54cbad6a88b00a9ad14531ae4b9be8b02ffa34cc8d20bf0235bc5911d7a
 deliberation_receipt:
   mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
   activation_state: active_dormant
@@ -52,3 +52,25 @@ payload:
     command_or_method: Check the computed logical path for a backslash.
     expected: No backslash is present.
   test_package_sha256: 1437a7648568e6ade480e91d1cd8772fe4785e9e5cda9176fa7f2149ba7f6175
+stage_control:
+  action_id: pilot-stage-04
+  current_model_ref:
+    path: 04_tests.yml
+    blob_sha: d114cfe903c7c35f2b41aaeaa74a5b8fbaa77638
+  plan_acceptance:
+    commit: '0000000000000000000000000000000000000000'
+    path: 04_tests.yml
+    blob_sha: d114cfe903c7c35f2b41aaeaa74a5b8fbaa77638
+    accepted_model_commit: '0000000000000000000000000000000000000000'
+    accepted_model_path: 04_tests.yml
+    accepted_model_blob_sha: d114cfe903c7c35f2b41aaeaa74a5b8fbaa77638
+  completion_acceptance:
+    path: 04_tests.yml
+    blob_sha: d114cfe903c7c35f2b41aaeaa74a5b8fbaa77638
+    bound_output_version: '0000000000000000000000000000000000000000'
+    output_path: 04_tests.yml
+    output_blob_sha: d114cfe903c7c35f2b41aaeaa74a5b8fbaa77638
+    verification_result:
+      commit: '0000000000000000000000000000000000000000'
+      path: 04_tests.yml
+      blob_sha: d114cfe903c7c35f2b41aaeaa74a5b8fbaa77638

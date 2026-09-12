@@ -8,11 +8,11 @@ input_refs:
 - stage_id: workflow_stage_04_test_generation
   path: 04_tests.yml
   artifact_version: 1
-  sha256: 838e2b3f3b94c53e002ff071c0efc67d1d641afdba12e1912e33fedbb0b413cc
+  sha256: 5b16b12d14110c8d80a3673fd8617dd076df960cb0eb359594b27b7ff5cc3ae1
 - stage_id: workflow_stage_05_step_decomposition
   path: 05_steps.yml
   artifact_version: 1
-  sha256: 2bdc7b0fb7c7f4374cd4e79ad40bf9eb971b20ab3f2d71a93b33d49014316bc1
+  sha256: 56a41698433d4ae22fb2036419b2ea5d1a56c347d3dad3f3f478ac2907c56aff
 deliberation_receipt:
   mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
   activation_state: active_dormant
@@ -56,3 +56,25 @@ payload:
     attempt: 1
     result: pass
   unauthorized_write_attempts: []
+stage_control:
+  action_id: pilot-stage-06
+  current_model_ref:
+    path: 06_execution.yml
+    blob_sha: 7c8d7f1ff96f243f43dd1034fdecddaa4f4cc66b
+  plan_acceptance:
+    commit: '0000000000000000000000000000000000000000'
+    path: 06_execution.yml
+    blob_sha: 7c8d7f1ff96f243f43dd1034fdecddaa4f4cc66b
+    accepted_model_commit: '0000000000000000000000000000000000000000'
+    accepted_model_path: 06_execution.yml
+    accepted_model_blob_sha: 7c8d7f1ff96f243f43dd1034fdecddaa4f4cc66b
+  completion_acceptance:
+    path: 06_execution.yml
+    blob_sha: 7c8d7f1ff96f243f43dd1034fdecddaa4f4cc66b
+    bound_output_version: '0000000000000000000000000000000000000000'
+    output_path: 06_execution.yml
+    output_blob_sha: 7c8d7f1ff96f243f43dd1034fdecddaa4f4cc66b
+    verification_result:
+      commit: '0000000000000000000000000000000000000000'
+      path: 06_execution.yml
+      blob_sha: 7c8d7f1ff96f243f43dd1034fdecddaa4f4cc66b

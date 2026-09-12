@@ -38,6 +38,7 @@ run_roots:
   private_runtime_suffix: _runtime/
   canonical_live_state: prohibited
 artifact_common_required_fields:
+- stage_control
 - schema_version
 - run_id
 - stage_id
@@ -47,6 +48,30 @@ artifact_common_required_fields:
 - input_refs
 - deliberation_receipt
 - payload
+
+stage_control_contract:
+  purpose: >-
+    the exact bindings a stage artifact must carry so that composition and publication
+    verification are possible. It holds references, never content.
+  fields:
+    action_id: the id of the packet stage_actions entry this stage acts under
+    current_model_ref: {path, blob_sha}
+    plan_acceptance: {commit, path, blob_sha, accepted_model_commit, accepted_model_path, accepted_model_blob_sha}
+    completion_acceptance: {path, blob_sha, bound_output_version, output_path, output_blob_sha, verification_result}
+  reference_not_copy: true
+  deliberately_absent:
+    a_second_receipt_reference: >-
+      deliberation_receipt is already a required field of this artifact. A parallel ref would
+      create two locations for one object. A receipt short of the mechanism's required fields is
+      a content gap for its author to fill, not a reason for a second field.
+    predecessor_binding: >-
+      stages two through seven bind the previous stage's completion acceptance inside the plan
+      acceptance artifact itself, where the blob hash covers it. A summary field here could be
+      edited without disturbing the record it summarises.
+    proof_vocabulary: >-
+      the node names, ancestry, phase separation and transition rules used to verify a published
+      history belong to the runner and the publication gate. They are not stage semantics and do
+      not appear in these schemas.
 stage_order:
 - stage_id: workflow_stage_01_requirement_modeling
   artifact_kind: requirement_package
@@ -96,6 +121,18 @@ stage_order:
   - workflow_stage_04_test_generation
   - workflow_stage_06_execution
 completion:
+  run_identity_must_state: final_stage_completion_commit
+  final_stage_completion_commit:
+    where: the run's run.yml
+    shape: a 40-character commit sha
+    why_here_and_not_a_pointer_file: >-
+      which record is current is only a question when several accumulate, and 08_結論 accumulates
+      pointer versions. A path at a commit resolves to exactly one blob, so this field has no
+      currency question to answer and needs no supersession rule. It is never inferred from a
+      version suffix, a timestamp, directory enumeration or history search.
+    artifact_identity_comes_from: >-
+      stage seven's own stage_control.completion_acceptance path and blob_sha. This field supplies
+      only which commit carries it.
   final_stage: workflow_stage_07_test_execution
   required_final_verdicts:
   - PASS

@@ -8,7 +8,7 @@ input_refs:
 - stage_id: workflow_stage_01_requirement_modeling
   path: 01_requirement.yml
   artifact_version: 1
-  sha256: 11a5aea60da22db8023fa6b4950795caf0ed13b33fac364e7019076da8cf5288
+  sha256: 70fd90cb4cead1617b97cf33eb448d36d5eba80b60168ff497a9fb85b80b571e
 deliberation_receipt:
   mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
   activation_state: active_dormant
@@ -46,3 +46,25 @@ payload:
   completion:
     feasibility_basis_complete: true
     conflicts_resolved_or_durable: true
+stage_control:
+  action_id: pilot-stage-02
+  current_model_ref:
+    path: 02_evidence.yml
+    blob_sha: 54c490745f1262372f9d175c02f41b35666edb80
+  plan_acceptance:
+    commit: '0000000000000000000000000000000000000000'
+    path: 02_evidence.yml
+    blob_sha: 54c490745f1262372f9d175c02f41b35666edb80
+    accepted_model_commit: '0000000000000000000000000000000000000000'
+    accepted_model_path: 02_evidence.yml
+    accepted_model_blob_sha: 54c490745f1262372f9d175c02f41b35666edb80
+  completion_acceptance:
+    path: 02_evidence.yml
+    blob_sha: 54c490745f1262372f9d175c02f41b35666edb80
+    bound_output_version: '0000000000000000000000000000000000000000'
+    output_path: 02_evidence.yml
+    output_blob_sha: 54c490745f1262372f9d175c02f41b35666edb80
+    verification_result:
+      commit: '0000000000000000000000000000000000000000'
+      path: 02_evidence.yml
+      blob_sha: 54c490745f1262372f9d175c02f41b35666edb80

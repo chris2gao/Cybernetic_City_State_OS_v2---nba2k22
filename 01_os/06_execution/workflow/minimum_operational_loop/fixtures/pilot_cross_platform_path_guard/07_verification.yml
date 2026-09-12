@@ -8,15 +8,15 @@ input_refs:
 - stage_id: workflow_stage_03_result_modeling
   path: 03_result.yml
   artifact_version: 1
-  sha256: eb8624d066d282596cb895aa32b128cc7d064b379fff2d90e8b753d77c084ba3
+  sha256: 167ea54cbad6a88b00a9ad14531ae4b9be8b02ffa34cc8d20bf0235bc5911d7a
 - stage_id: workflow_stage_04_test_generation
   path: 04_tests.yml
   artifact_version: 1
-  sha256: 838e2b3f3b94c53e002ff071c0efc67d1d641afdba12e1912e33fedbb0b413cc
+  sha256: 5b16b12d14110c8d80a3673fd8617dd076df960cb0eb359594b27b7ff5cc3ae1
 - stage_id: workflow_stage_06_execution
   path: 06_execution.yml
   artifact_version: 1
-  sha256: f8f32ae3bf8d7ee2bd975efb5f892eeb356deb83109c59490cbfcf5d9189e2b8
+  sha256: 0f71b0931ada38467bef4e47837390740823faabb2ee4e7c6aeb6eba9c310f60
 deliberation_receipt:
   mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
   activation_state: active_dormant
@@ -59,3 +59,25 @@ payload:
     - E-3
   upstream_invalidation: null
   completion: true
+stage_control:
+  action_id: pilot-stage-07
+  current_model_ref:
+    path: 07_verification.yml
+    blob_sha: 582f3e36eb4ac3fffb1f4316afafdb879bf1cafc
+  plan_acceptance:
+    commit: '0000000000000000000000000000000000000000'
+    path: 07_verification.yml
+    blob_sha: 582f3e36eb4ac3fffb1f4316afafdb879bf1cafc
+    accepted_model_commit: '0000000000000000000000000000000000000000'
+    accepted_model_path: 07_verification.yml
+    accepted_model_blob_sha: 582f3e36eb4ac3fffb1f4316afafdb879bf1cafc
+  completion_acceptance:
+    path: 07_verification.yml
+    blob_sha: 582f3e36eb4ac3fffb1f4316afafdb879bf1cafc
+    bound_output_version: '0000000000000000000000000000000000000000'
+    output_path: 07_verification.yml
+    output_blob_sha: 582f3e36eb4ac3fffb1f4316afafdb879bf1cafc
+    verification_result:
+      commit: '0000000000000000000000000000000000000000'
+      path: 07_verification.yml
+      blob_sha: 582f3e36eb4ac3fffb1f4316afafdb879bf1cafc

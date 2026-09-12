@@ -315,12 +315,22 @@ def _collect_nodes(repo: Path, candidate: str, run_root: str,
         for key in ("commit", "accepted_model_commit"):
             _require(_is_sha(plan.get(key)), REF, f"{sid}: plan_acceptance.{key} is not a 40-char sha")
 
-        c_prev = plan.get("predecessor_completion_commit")
+        # The predecessor binding is read from the plan acceptance record itself,
+        # not from a summary field in the stage artifact. The record is covered by
+        # its blob sha, so editing the binding changes the hash and is caught; a
+        # field in the artifact could be edited while the record it claims to
+        # summarise stayed untouched.
+        accepted = _load_yaml_at(repo, plan["commit"], plan.get("path", ""))
+        _require(isinstance(accepted, dict), REF,
+                 f"{sid}: plan acceptance record is absent or unreadable at its own commit")
+        c_prev = accepted.get("predecessor_completion_commit")
         if index == 0:
             _require(c_prev is None, REF,
                      f"{sid}: stage 01 must not name a predecessor completion commit")
         else:
-            _require(_is_sha(c_prev), REF, f"{sid}: predecessor_completion_commit is not a 40-char sha")
+            _require(_is_sha(c_prev), REF,
+                     f"{sid}: the plan acceptance record must name predecessor_completion_commit "
+                     f"as a 40-character sha")
 
         completion = control.get("completion_acceptance")
         _require(isinstance(completion, dict), REF, f"{sid}: completion_acceptance missing")

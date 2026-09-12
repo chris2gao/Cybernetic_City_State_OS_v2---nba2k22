@@ -196,7 +196,10 @@ def _validate_run(run_root:Path,schemas:dict[str,dict])->tuple[int,list[str]]:
         if not isinstance(art,dict):return 33,[f"artifact_mapping:{sid}"]
         if item.get("artifact_version")!=art.get("artifact_version"):return 32,[f"manifest_version:{sid}"]
         artifacts[sid]=art;paths[sid]=path;hashes[sid]=actual
-    required={"schema_version","run_id","stage_id","artifact_kind","artifact_version","status","input_refs","deliberation_receipt","payload"}
+    # stage_control is required with the rest. A field declared in the schema and
+    # not checked here would be exactly the declared-but-unenforced defect this
+    # work exists to remove, so the contract and the checker change together.
+    required={"stage_control","schema_version","run_id","stage_id","artifact_kind","artifact_version","status","input_refs","deliberation_receipt","payload"}
     predecessors={
       EXPECTED_STAGE_IDS[0]:[],EXPECTED_STAGE_IDS[1]:[EXPECTED_STAGE_IDS[0]],
       EXPECTED_STAGE_IDS[2]:EXPECTED_STAGE_IDS[:2],EXPECTED_STAGE_IDS[3]:EXPECTED_STAGE_IDS[:3],
