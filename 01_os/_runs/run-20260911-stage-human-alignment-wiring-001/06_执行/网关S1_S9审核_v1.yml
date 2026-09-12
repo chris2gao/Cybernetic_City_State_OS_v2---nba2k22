@@ -1,0 +1,122 @@
+schema_version: citystate.self_review.v1
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+work_package: W6
+subject: 01_os/06_execution/workflow/publication_gate/workflow_publication_gate.py
+subject_state: written before path authorisation, untracked, not yet fixed
+review_basis: 03_方案设计/阶段产物到instance映射契约_v2.yml part_4 S1 through S9
+reviewed_by_endpoint_id: claude-cowork-stage-alignment-wiring-executor-001
+reviewed_at: 2026-09-11
+review_is_not_independent_review: true
+review_purpose: >-
+  SB-002 required the content to be reviewed against S1 through S9 before the file is tracked.
+  Findings are recorded before any fix, so that a reviewer sees what was wrong rather than only
+  what is now right.
+
+steps_implemented:
+  S1_resolve_refs: present
+  S2_commits_exist: present, _commit_exists in _check_ordering
+  S3_strict_ancestry: present, inequality checked separately from --is-ancestor
+  S4_output_blob_at_W: present, line 330
+  S5_model_blob_at_M_and_P: present, lines 323 to 325
+  S6_verification_separate_commit: present, lines 350 to 352
+  S7_stage_chaining: DEFECTIVE, see GD-1
+  S8_completion_pointer: present but reads a hardcoded version, see GD-5
+  S9a_acceptance_not_at_M: present, line 317
+  S9b_output_not_at_P: present, line 331
+  S9c_completion_not_at_W: present, line 340
+
+defects:
+- id: GD-1
+  severity: high
+  step: S7
+  statement: _chain_stages is a tautology and can never fail
+  detail: >-
+    _collect_nodes assigns nodes[i].c = nodes[i+1].c_prev at line 281. _chain_stages then asserts
+    nodes[i].c_prev == nodes[i-1].c at line 358. Substituting the assignment, both sides are the
+    same value. The comparison is between a variable and itself.
+  why_it_matters: >-
+    it is a check that runs, reports success and decides nothing, while its presence implies the
+    stage chain was verified. That is the failure class this whole task exists to remove, and the
+    executor produced it while building the remover.
+  what_actually_binds_the_chain: >-
+    S9c. The C_i named by stage i+1 must contain stage i's completion acceptance blob. A wrong
+    commit fails there because the blob is not in it.
+  remedy: delete the tautology and state in the code that S9c carries the chain
+- id: GD-5
+  severity: medium
+  step: S8
+  statement: the completion pointer path is hardcoded to completion_pointer_v1.yml
+  detail: >-
+    runs supersede pointers. The precedent run carries v1 through v4, where v1's own supersession
+    note says its validation block asserted a pass that did not hold for the published bytes.
+    Reading v1 by name would read a superseded record.
+  remedy: >-
+    resolve the pointer the run itself declares as current, and refuse when the run does not say
+    which one is current rather than guessing the highest suffix
+- id: GD-6
+  severity: medium
+  statement: main breaks on the first failing run
+  detail: with several governed runs only the first failure is reported
+  why_it_matters: >-
+    a caller sees one defect, fixes it, pushes again, and meets the next. The ledger discipline
+    used elsewhere in this repository requires the whole population, not the first row
+  remedy: collect every run's verdict and report all failures
+- id: GD-7
+  severity: high
+  statement: a git failure while discovering runs is silently converted into no runs
+  detail: >-
+    main wraps discover_runs in except GateError and sets runs to the empty list. A repository
+    where 01_os/_runs is absent and a repository where git failed are then indistinguishable, and
+    both permit publication.
+  why_it_matters: fail-open. Unable to look is not the same as nothing to see
+  remedy: >-
+    distinguish the absent tree from an error. Absent means no governed runs; any other git
+    failure refuses
+- id: GD-10
+  severity: high
+  step: boundary
+  statement: a run with no run.yml or a malformed base_sha is exempted rather than refused
+  detail: >-
+    gate_run exempts when base is not a sha or not a descendant of the boundary. The first
+    condition makes unreadable runs exempt.
+  why_it_matters: >-
+    fail-open again, and it is the cheapest possible bypass: delete or corrupt one field and the
+    run stops being governed
+  remedy: >-
+    only a well-formed base_sha that is provably not a descendant of the boundary exempts a run.
+    Missing or malformed refuses
+
+defect_pattern:
+  shared_by: [GD-1, GD-7, GD-10]
+  statement: could not judge was treated as passed
+  note: >-
+    three of five defects in a gate whose purpose is fail-closed are fail-open. The executor wrote
+    fail_closed into the contract eleven times and then wrote the opposite into the implementation
+    three times. Writing the rule is not the same as obeying it, which is the thesis of the task.
+
+requirements_added_after_the_file_was_written:
+- id: NR-1
+  requirement: >-
+    the gate must not trust a caller-supplied run root; it must derive or verify all governed run
+    roots itself, or a caller that omits a run bypasses the gate
+  current_state: satisfied in shape, the CLI has no run-root argument and discover_runs enumerates
+  residual: GD-7 undermines it, because a failed enumeration currently yields an empty set
+- id: NR-2
+  requirement: pre-push receives several refs in one invocation and every applicable ref must be covered
+  current_state: not applicable to the gate, which is per candidate
+  belongs_to: step 4, the hook caller, which must invoke the gate once per pushed ref
+- id: NR-3
+  requirement: applicability of an ordinary non-governed push is decided by the gate, not the hook
+  current_state: satisfied in shape, the hook will pass a candidate and the gate decides
+  note: the hook must not learn what a governed run looks like
+
+claims_this_gate_may_make:
+- the named commits exist and stand in strict ancestry
+- each phase added its own artifact
+- the acceptance records are present at the commits that claim to carry them
+- the verification record lives in a separate commit
+claims_this_gate_may_not_make:
+- that a Human accepted anything
+- that the work happened after the acceptance
+- that any transport other than one that actually calls it is covered
