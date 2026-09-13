@@ -47,7 +47,20 @@ what_the_mechanism_decides_when_this_gate_asks: >-
   type that distinguishes a plan acceptance from a completion acceptance, so one cannot be filed
   as the other; a plan record accepting exactly the model stage_control bound; a completion record
   binding the output commit stage_control declares and naming the verification evidence; the closure
-  fields; a complete Current Model; and a passing base stage receipt. The gate compares nothing.
+  fields; a complete Current Model whose feasibility_support carries a basis of a kind the profile
+  contract allows for that stage, approval-as-basis being prohibited; a verification document that
+  is a verified result for this task, stage and output rather than merely a blob sitting where it
+  was declared; and a base stage receipt, resolved through deliberation_receipt_ref, whose
+  exact_candidate_version can at least be a commit id. The gate compares nothing.
+
+what_each_of_those_cost_before_it_was_reached: >-
+  Reached is the operative word: these are the mechanism's own checks, and the failure was calling
+  a narrower subset of them from here. A verification document reading status failed, correctly
+  bound and at a real blob, published as "seven stages chained, separated and accepted". A receipt
+  whose exact_candidate_version read "not-a-commit" published cleanly, while the declared receipt
+  ref pointed at model.yml and was never resolved at all. A feasibility_support of one confident
+  sentence passed here while _scope_feasibility refused the same model with 16. All three are
+  negative cases now.
 
 what_the_gate_does_not_decide:
 - >-

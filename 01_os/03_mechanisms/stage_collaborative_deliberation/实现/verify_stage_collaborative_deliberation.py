@@ -772,6 +772,20 @@ def validate_stage_acceptance_context(
         code = validate_common_model_completeness(model)
         if code:
             return code, "current_model_completeness"
+        # Completeness is presence and disposition. It is satisfied by a confident
+        # sentence, which is exactly the weakness feasibility_basis_contract was
+        # written for: of the substantively required dimensions, feasibility was
+        # the one with no support requirement of its own. Calling only the
+        # completeness helper and reporting a stage accepted let a bare string
+        # through on the publication path while _scope_feasibility refused the
+        # same model with 16. Same function, same contract, called here too.
+        contract = context.get("contract")
+        if not isinstance(contract, dict):
+            return 11, "profile_contract_unreadable"
+        try:
+            _scope_feasibility(model, {"stage_id": context["stage_id"]}, contract)
+        except TaskScopeError as exc:
+            return exc.code, str(exc)
     else:
         output = context.get("accepted_output")
         verification = context.get("accepted_verification")
@@ -795,15 +809,47 @@ def validate_stage_acceptance_context(
             return 13, "completion_record_does_not_bind_the_stage_output_commit"
         if not _same_ref(record.get("verification_result"), verification):
             return 13, "completion_record_does_not_name_the_verification_evidence"
+        # The reference was checked and the document was never opened, so a
+        # verification record saying status: failed - correctly bound to its own W,
+        # task and stage, at a real blob - was published as an accepted stage. The
+        # contract has always required these five fields with status verified
+        # (阶段profile契约_v1 verification_record_fields / _values), and
+        # _scope_completion already compares exactly this shape. It is compared
+        # here too rather than restated: the document is one source, the control's
+        # declared output is another, so this is a real comparison and not the
+        # single-source kind deleted above.
+        recorded = context.get("verification")
+        if not isinstance(recorded, dict):
+            return 11, "verification_document_unreadable"
+        expected = {"schema_version": "stage_verification_result.v1",
+                    "candidate": output["commit"],
+                    "task_id": context.get("task_id"),
+                    "stage_id": context.get("stage_id"),
+                    "status": "verified"}
+        if recorded != expected:
+            return 14, "verification_document_is_not_a_verified_result_for_this_stage"
         for field in CLOSURE_FIELDS:
             if field not in record:
                 return 14, f"closure_field_absent:{field}"
             if record.get(field) is None:
                 return 14, f"closure_field_null:{field}"
 
-    code = validate_base_stage_receipt(context.get("receipt"))
+    receipt = context.get("receipt")
+    code = validate_base_stage_receipt(receipt)
     if code:
         return code, "base_stage_receipt"
+    # validate_base_stage_receipt requires exact_candidate_version to be truthy,
+    # which "not-a-commit" satisfies. Truthy is not exact. This does not decide
+    # which commit it must name - that binding is not settled for the publication
+    # path and is recorded as an open finding rather than invented here - but a
+    # value that cannot be a commit at all is refused.
+    version = receipt.get("exact_candidate_version")
+    if not isinstance(version, str) or len(version) != 40:
+        return 17, "receipt_exact_candidate_version_is_not_a_commit_id"
+    try:
+        int(version, 16)
+    except ValueError:
+        return 17, "receipt_exact_candidate_version_is_not_a_commit_id"
 
     return 0, ""
 

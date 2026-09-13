@@ -133,6 +133,48 @@ def accepted(sid: str, decision_type: str, **extra) -> dict:
     return record
 
 
+# Which basis kinds each stage may use, from the profile contract's
+# feasibility_basis_contract. Stages 06 and 07 accept only measurement or test
+# results; the earlier stages accept an existing artifact reference.
+BASIS_KIND = {sid: ("measurement_receipt_ref" if sid in STAGES[5:] else "existing_artifact_ref")
+              for sid in STAGES}
+
+# The profile contract the fixture repository carries, cut down to what the
+# publication path reads from it. It is written into the synthetic repository
+# because the gate reads it at the candidate: it states what that candidate's own
+# stages must satisfy, so it is evidence the push carries rather than a rule the
+# checkout supplies. A governed run whose repository has no contract is refused,
+# which is the right answer.
+PROFILE_CONTRACT_PATH = "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml"
+PROFILE_CONTRACT_DOC = {
+    "common_task_stage_model": {
+        "feasibility_basis_contract": {
+            "shape": {"value": "substantive", "basis": {"kind": "one_of_the_stage_kinds",
+                                                        "ref": "nonempty_string"}},
+            "bare_string_accepted": False,
+            "prohibited_basis_kinds": ["Human_confirmed", "Human_approved", "Human_authorized",
+                                       "authority_reference", "decision_ref"],
+            "basis_kinds_by_stage": {sid: [BASIS_KIND[sid]] for sid in STAGES},
+        }
+    }
+}
+
+
+def verification_doc(sid: str, output_commit: str) -> dict:
+    """Exactly the five fields the contract names, and status verified.
+
+    verification_record_fields and verification_record_values in the profile
+    contract. The mechanism compares the whole document, so an extra key or a
+    different status is a refusal - which is the point: a record reading
+    status: failed used to publish as an accepted stage.
+    """
+    return {"schema_version": "stage_verification_result.v1",
+            "candidate": output_commit,
+            "task_id": TASK_ID,
+            "stage_id": sid,
+            "status": "verified"}
+
+
 def current_model(sid: str, baseline: str) -> dict:
     """A complete Current Model: every common field present with a disposition.
 
@@ -148,7 +190,13 @@ def current_model(sid: str, baseline: str) -> dict:
         "Human_intent_understanding": "exercise the publication gate end to end",
         "current_baseline_and_inputs": baseline,
         "proposed_method_or_solution": f"author the {sid} artifact and bind it exactly",
-        "feasibility_support": "the preceding stage completed and its output is bound",
+        # A bare string satisfies completeness and nothing else. The contract asks
+        # for a basis the world could falsify, and names which kinds each stage may
+        # use; Human approval is authority, not evidence, and is prohibited here.
+        "feasibility_support": {
+            "value": "the preceding stage completed and its output is bound",
+            "basis": {"kind": BASIS_KIND[sid], "ref": f"{RUN}/{sid}/output.yml"},
+        },
         "expected_output": f"one {sid} artifact with exact stage_control bindings",
         "verification_or_acceptance_method": "independent verification record at its own commit",
         "current_exact_model_version": baseline,
@@ -223,7 +271,10 @@ class Chain:
     """
 
     def __init__(self, root: Path, plan_mutators: dict | None = None,
-                 completion_mutators: dict | None = None):
+                 completion_mutators: dict | None = None,
+                 model_mutators: dict | None = None,
+                 receipt_mutators: dict | None = None,
+                 verification_mutators: dict | None = None):
         """The mutators change a stage's acceptance record as it is written.
 
         Structural cases have to be built into the chain, not edited afterwards.
@@ -240,23 +291,50 @@ class Chain:
         """
         plan_mutators = plan_mutators or {}
         completion_mutators = completion_mutators or {}
+        # The model, the receipt and the verification document each live at their
+        # own commit, so a case that changes one has to change it as the chain is
+        # built. Editing any of them afterwards leaves the published object alone
+        # and the gate correctly sees nothing.
+        model_mutators = model_mutators or {}
+        receipt_mutators = receipt_mutators or {}
+        verification_mutators = verification_mutators or {}
         self.repo = root / "repo"
         self.repo.mkdir(parents=True)
         git(self.repo, "init", "-b", "fixture")
         git(self.repo, "config", "user.name", "Synthetic gate fixture")
         git(self.repo, "config", "user.email", "gate-fixture@example.invalid")
         write(self.repo, "README.md", "fixture\n")
+        # The gate reads the profile contract at the candidate, so the repository
+        # being judged has to carry it. A governed run in a repository without one
+        # is refused rather than judged against whatever the checkout happens to
+        # have.
+        write(self.repo, PROFILE_CONTRACT_PATH, PROFILE_CONTRACT_DOC)
         self.boundary = commit(self.repo, "boundary")
         self.stages: dict[str, dict] = {}
         self.controls: dict[str, dict] = {}
         self.receipts: dict[str, dict] = {}
+        self.embedded: dict[str, dict] = {}
         prev_c: str | None = None
 
         for index, sid in enumerate(STAGES):
             d = f"{RUN}/{sid}"
             baseline = prev_c or self.boundary
+            # The full twenty-field receipt is its own artifact, published at M and
+            # reached through stage_control.deliberation_receipt_ref. The stage
+            # artifact embeds only the binding fields. Keeping a second full copy
+            # inside the artifact would be two sources for one object, and while
+            # the gate read that copy the declared ref was never resolved at all.
             receipt = stage_receipt(sid, baseline)
-            model_blob = write(self.repo, f"{d}/model.yml", current_model(sid, baseline))
+            if sid in receipt_mutators:
+                receipt_mutators[sid](receipt, self)
+            receipt_blob = write(self.repo, f"{d}/receipt.yml", receipt)
+            embedded = {key: receipt[key] for key in
+                        ("profile_id_and_version", "exact_candidate_version")}
+            embedded["route"] = "active"
+            model = current_model(sid, baseline)
+            if sid in model_mutators:
+                model_mutators[sid](model, self)
+            model_blob = write(self.repo, f"{d}/model.yml", model)
             m = commit(self.repo, f"{sid} model")
 
             # exact_model_version names M, which exists by now. A record written at
@@ -277,7 +355,10 @@ class Chain:
             control = {
                 "action_id": f"act-{index + 1}",
                 "current_model_ref": {"path": f"{d}/model.yml", "blob_sha": model_blob},
-                "deliberation_receipt_ref": {"path": f"{d}/model.yml", "blob_sha": model_blob},
+                # Points at the receipt, not at the model. It pointed at model.yml
+                # and passed, because nothing resolved it.
+                "deliberation_receipt_ref": {"path": f"{d}/receipt.yml",
+                                             "blob_sha": receipt_blob},
                 "plan_acceptance": {
                     "commit": p,
                     "path": f"{d}/plan_acceptance.yml",
@@ -289,10 +370,13 @@ class Chain:
             }
             write(self.repo, f"{RUN}/{FILES[index]}",
                   {"stage_id": sid, "stage_control": control,
-                   "deliberation_receipt": receipt})
+                   "deliberation_receipt": embedded})
             w = commit(self.repo, f"{sid} work")
 
-            ver_blob = write(self.repo, f"{d}/verification.yml", {"stage_id": sid, "of": w})
+            ver_doc = verification_doc(sid, w)
+            if sid in verification_mutators:
+                verification_mutators[sid](ver_doc, self)
+            ver_blob = write(self.repo, f"{d}/verification.yml", ver_doc)
             ver_commit = commit(self.repo, f"{sid} verification evidence")
 
             # The completion record names the output commit it accepted and the
@@ -324,12 +408,13 @@ class Chain:
             }
             write(self.repo, f"{RUN}/{FILES[index]}",
                   {"stage_id": sid, "stage_control": control,
-                   "deliberation_receipt": receipt})
+                   "deliberation_receipt": embedded})
             c = commit(self.repo, f"{sid} completion acceptance")
 
             self.stages[sid] = {"m": m, "p": p, "w": w, "c": c}
             self.controls[sid] = control
             self.receipts[sid] = receipt
+            self.embedded[sid] = embedded
             prev_c = c
 
         write(self.repo, f"{RUN}/manifest.yml",
@@ -351,7 +436,7 @@ class Chain:
         # the invariant the case is actually about.
         write(self.repo, f"{RUN}/{FILES[index]}",
               {"stage_id": sid, "stage_control": control,
-               "deliberation_receipt": self.receipts[sid]})
+               "deliberation_receipt": self.embedded[sid]})
         self.head = commit(self.repo, f"mutate {sid}")
 
     def rewrite_run(self, mutate) -> None:
@@ -679,7 +764,8 @@ class AcceptanceCases(unittest.TestCase):
     def tearDown(self) -> None:
         discard(self.tmp)
 
-    def chain(self, plan=None, completion=None) -> Chain:
+    def chain(self, plan=None, completion=None, model=None, receipt=None,
+              verification=None) -> Chain:
         """A chain whose first stage carries the mutation under test.
 
         A mutation is a mapping to merge, or a callable for cases that must remove
@@ -691,9 +777,13 @@ class AcceptanceCases(unittest.TestCase):
             if callable(mutation):
                 return {STAGES[0]: lambda record, _: mutation(record)}
             return {STAGES[0]: lambda record, _: record.update(mutation)}
-        return Chain(self.tmp,
-                     plan_mutators=at_first(plan) if plan is not None else None,
-                     completion_mutators=at_first(completion) if completion is not None else None)
+        return Chain(
+            self.tmp,
+            plan_mutators=at_first(plan) if plan is not None else None,
+            completion_mutators=at_first(completion) if completion is not None else None,
+            model_mutators=at_first(model) if model is not None else None,
+            receipt_mutators=at_first(receipt) if receipt is not None else None,
+            verification_mutators=at_first(verification) if verification is not None else None)
 
     def assertMechanismRefused(self, code: int, findings: list[str], half: str,
                                reason: str, owner_code: int | None = None) -> None:
@@ -908,31 +998,132 @@ class AcceptanceCases(unittest.TestCase):
         Its blob identity was checked all along; whether it was a Current Model
         at all was not.
         """
-        chain = Chain(self.tmp)
+        code, findings = self.chain(
+            model=lambda m: m.pop("expected_output")).run_gate()
+        self.assertMechanismRefused(code, findings, "plan",
+                                    "current_model_completeness", 16)
+
+    def test_receipt_with_a_failing_gate_is_refused(self):
+        def fail_completion(receipt):
+            receipt["gate_results"]["completion"] = "fail"
+        code, findings = self.chain(receipt=fail_completion).run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "base_stage_receipt", 17)
+
+    def test_receipt_version_that_is_not_a_commit_is_refused(self):
+        """Truthy is not exact.
+
+        validate_base_stage_receipt requires exact_candidate_version to be
+        non-empty, and "not-a-commit" is non-empty. A receipt whose version cannot
+        be a commit id at all was published as an accepted stage.
+        """
+        code, findings = self.chain(
+            receipt={"exact_candidate_version": "not-a-commit"}).run_gate()
+        self.assertMechanismRefused(
+            code, findings, "plan",
+            "receipt_exact_candidate_version_is_not_a_commit_id", 17)
+
+    def test_receipt_version_naming_a_real_but_wrong_commit_is_not_refused(self):
+        """A characterisation test for an open contract ambiguity. Read the name.
+
+        This asserts what the publication path currently does, not what it should
+        do. exact_candidate_version here is a real commit in this repository, well
+        formed, and wrong: it is the boundary, not anything this stage produced.
+        It passes.
+
+        The format check added alongside it refuses "not-a-commit", which is a
+        string that could never be a commit id. It deliberately does not decide
+        which commit the field must name, because no governing contract settles
+        that for the publication path. _scope_receipt defines it for the
+        task-scope path as equal to the candidate being validated, but applying
+        that per stage would require a stage receipt to name a commit that does
+        not exist when the receipt is written.
+
+        So this is recorded rather than guessed. If someone later gives the field
+        a referent, this test fails and forces the contract to be updated with it,
+        which is the point of writing it down instead of leaving a silent gap.
+        """
+        # The boundary commit: real, well formed, and not this stage's anything.
+        chain = Chain(self.tmp,
+                      receipt_mutators={STAGES[0]: lambda r, ch: r.__setitem__(
+                          "exact_candidate_version", ch.boundary)})
+        code, findings = chain.run_gate()
+        joined = " | ".join(findings)
+        self.assertEqual(code, 0, f"behaviour changed - update the contract too: {joined}")
+
+    def test_receipt_reference_pointing_at_something_else_is_refused(self):
+        """The declared ref is resolved, so it has to name the receipt.
+
+        It pointed at model.yml in the fixture and passed, because the gate read
+        an embedded copy and never resolved the ref at all.
+        """
+        chain = self.chain()
         sid = STAGES[0]
-        path = chain.repo / RUN / sid / "model.yml"
-        model = yaml.safe_load(path.read_text(encoding="utf-8"))
-        del model["feasibility_support"]
-        blob = write(chain.repo, f"{RUN}/{sid}/model.yml", model)
-        chain.rewrite_artifact(sid, lambda c: (
-            c["current_model_ref"].__setitem__("blob_sha", blob),
-            c["plan_acceptance"].__setitem__("accepted_model_blob_sha", blob)))
+        model_blob = chain.controls[sid]["current_model_ref"]["blob_sha"]
+        chain.rewrite_artifact(sid, lambda c: c["deliberation_receipt_ref"].update(
+            {"path": f"{RUN}/{sid}/model.yml", "blob_sha": model_blob}))
         code, findings = chain.run_gate()
         joined = " | ".join(findings)
         self.assertNotEqual(code, 0, joined)
 
-    def test_receipt_with_a_failing_gate_is_refused(self):
-        chain = Chain(self.tmp)
-        sid = STAGES[0]
-        index = STAGES.index(sid)
-        receipt = json_round(chain.receipts[sid])
-        receipt["gate_results"]["completion"] = "fail"
-        write(chain.repo, f"{RUN}/{FILES[index]}",
-              {"stage_id": sid, "stage_control": json_round(chain.controls[sid]),
-               "deliberation_receipt": receipt})
-        chain.head = commit(chain.repo, "receipt with a failing gate")
-        code, findings = chain.run_gate()
-        self.assertMechanismRefused(code, findings, "plan", "base_stage_receipt", 17)
+    # -- the evidence the completion rests on --------------------------------
+
+    def test_verification_document_saying_failed_is_refused(self):
+        """A verification record that says it failed is not acceptance evidence.
+
+        The reference was checked and the document was never opened, so a
+        verification file correctly bound to its own W, task and stage, at a real
+        blob, reading status: failed, published as "seven stages chained,
+        separated and accepted".
+
+        This asks nothing new of anyone. The contract has required these five
+        fields with status verified all along, and _scope_completion already
+        compares exactly this shape; it simply was not reached from here.
+        """
+        code, findings = self.chain(
+            verification={"status": "failed"}).run_gate()
+        self.assertMechanismRefused(
+            code, findings, "completion",
+            "verification_document_is_not_a_verified_result_for_this_stage", 14)
+
+    def test_verification_document_for_another_stage_is_refused(self):
+        code, findings = self.chain(
+            verification={"stage_id": STAGES[4]}).run_gate()
+        self.assertMechanismRefused(
+            code, findings, "completion",
+            "verification_document_is_not_a_verified_result_for_this_stage", 14)
+
+    # -- feasibility is supported, not asserted ------------------------------
+
+    def test_feasibility_support_as_a_bare_string_is_refused(self):
+        """Completeness is satisfied by a confident sentence. That was the gap.
+
+        The publication path called only the completeness helper, so a model whose
+        feasibility_support was one string passed here while _scope_feasibility
+        refused the same model with 16.
+        """
+        code, findings = self.chain(
+            model={"feasibility_support": "it will be fine"}).run_gate()
+        self.assertMechanismRefused(code, findings, "plan",
+                                    "feasibility_support_must_carry_a_basis", 16)
+
+    def test_feasibility_basis_kind_not_allowed_for_the_stage_is_refused(self):
+        code, findings = self.chain(model={"feasibility_support": {
+            "value": "a real sentence",
+            "basis": {"kind": "test_result_ref", "ref": "somewhere"}}}).run_gate()
+        self.assertMechanismRefused(code, findings, "plan",
+                                    "feasibility_basis_kind_not_allowed_for_stage", 16)
+
+    def test_human_approval_as_a_feasibility_basis_is_refused(self):
+        """Approval is authority, not evidence.
+
+        The Human approves because the work is feasible, so feasibility cannot be
+        established by the approval. The contract prohibits these kinds by name.
+        """
+        code, findings = self.chain(model={"feasibility_support": {
+            "value": "the Human approved it",
+            "basis": {"kind": "Human_approved", "ref": "a decision"}}}).run_gate()
+        self.assertMechanismRefused(code, findings, "plan",
+                                    "feasibility_basis_kind_prohibited", 16)
 
     # -- what the verdict is about -------------------------------------------
 

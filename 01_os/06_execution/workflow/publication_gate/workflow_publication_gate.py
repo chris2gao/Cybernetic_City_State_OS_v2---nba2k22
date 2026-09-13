@@ -110,6 +110,11 @@ STAGE_IDS = [
 
 RUNS_ROOT = "01_os/_runs"
 MECHANISM = "01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py"
+# The profile contract is read at the candidate, not next to this file. It states
+# what the candidate's own stages must satisfy - a feasibility basis table among
+# them - so it is evidence the push carries, unlike the mechanism, which is the
+# judge and comes from the installation.
+PROFILE_CONTRACT = "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml"
 
 
 class GateError(Exception):
@@ -490,7 +495,7 @@ def _exact(repo: Path, ref: Any, where: str) -> dict:
     return {"commit": ref["commit"], "path": ref["path"], "blob_sha": ref["blob_sha"]}
 
 
-def _acceptance_context(repo: Path, node: StageNodes, control: dict, art: dict,
+def _acceptance_context(repo: Path, candidate: str, node: StageNodes, control: dict,
                         task_id: str, phase: str) -> dict:
     """Assemble what one stage acceptance claims to accept, from candidate objects.
 
@@ -510,9 +515,37 @@ def _acceptance_context(repo: Path, node: StageNodes, control: dict, art: dict,
     _require(isinstance(record, dict), REF,
              f"{node.stage_id}: {field_name} at {commit[:12]} is not a mapping")
 
+    # The receipt is resolved through the ref stage_control declares, not taken
+    # from a copy embedded in the artifact. 阶段产物到instance映射契约_v2 makes
+    # deliberation_receipt_ref {path, blob_sha} part of the canonical stage_control
+    # shape. Reading the embedded copy meant the declared ref was never resolved at
+    # all: the fixture's pointed at model.yml and nothing noticed.
+    #
+    # Which commit it is read at is derived, not chosen. An earlier revision read
+    # it at M because the ref has the same {path, blob_sha} shape as
+    # current_model_ref. That was an invention wearing an inference's clothes:
+    # current_model_ref gets M from a real contract field, plan_acceptance
+    # .accepted_model_commit, and the receipt ref has no analogue. Two refs sharing
+    # a shape does not put them in the same commit.
+    #
+    # What the governing contract does support is that stage_control is read at the
+    # candidate, so an object it names must exist there. That is weaker than a
+    # node binding and it is all that is derivable, so it is what is enforced.
+    # Which commit the receipt should properly be bound to, and what
+    # exact_candidate_version must refer to, are one open question recorded in the
+    # run's audit response - not two, and not settled by whichever commit a test
+    # fixture happened to make convenient.
+    receipt_ref = control.get("deliberation_receipt_ref")
+    _require(isinstance(receipt_ref, dict), REF,
+             f"{node.stage_id}: stage_control must carry deliberation_receipt_ref")
+    receipt_at = _exact(repo, {"commit": candidate, "path": receipt_ref.get("path"),
+                               "blob_sha": receipt_ref.get("blob_sha")},
+                        f"{node.stage_id} deliberation_receipt_ref")
+
     context = {"task_id": task_id, "stage_id": node.stage_id, "phase": phase,
                "record": record, "record_ref": record_ref,
-               "receipt": art.get("deliberation_receipt")}
+               "receipt": _load_yaml_at(repo, receipt_at["commit"], receipt_at["path"]),
+               "contract": _load_yaml_at(repo, candidate, PROFILE_CONTRACT)}
 
     if phase == "plan":
         model_ref = control.get("current_model_ref")
@@ -542,14 +575,19 @@ def _acceptance_context(repo: Path, node: StageNodes, control: dict, art: dict,
                    "path": completion.get("output_path"),
                    "blob_sha": completion.get("output_blob_sha")},
             f"{node.stage_id} completion_acceptance accepted output")
-        context["accepted_verification"] = _exact(
+        verification = _exact(
             repo, completion.get("verification_result"),
             f"{node.stage_id} completion_acceptance verification evidence")
+        context["accepted_verification"] = verification
+        # Resolved and opened. Checking only that a blob sits where it was declared
+        # let a document reading status: failed publish as an accepted stage.
+        context["verification"] = _load_yaml_at(repo, verification["commit"],
+                                                verification["path"])
     return context
 
 
-def _check_acceptance(repo: Path, nodes: list[StageNodes], controls: dict[str, dict],
-                      arts: dict[str, dict], run_doc: dict) -> None:
+def _check_acceptance(repo: Path, candidate: str, nodes: list[StageNodes],
+                      controls: dict[str, dict], run_doc: dict) -> None:
     """Open both acceptance records and let the mechanism judge them.
 
     Until this existed the gate checked that a run's seven stages chained by
@@ -576,9 +614,8 @@ def _check_acceptance(repo: Path, nodes: list[StageNodes], controls: dict[str, d
              "task, and a record that simply omits the field would bind to nothing")
     for node in nodes:
         control = controls[node.stage_id]
-        art = arts[node.stage_id]
         for phase in ("plan", "completion"):
-            context = _acceptance_context(repo, node, control, art, task_id, phase)
+            context = _acceptance_context(repo, candidate, node, control, task_id, phase)
             code, reason = mech.validate_stage_acceptance_context(context)
             _require(code == 0, ACCEPT,
                      f"{node.stage_id}: {phase} acceptance was refused by the deliberation "
@@ -683,16 +720,10 @@ def gate_run(repo: Path, candidate: str, run_root: str,
 
     nodes = _collect_nodes(repo, candidate, run_root, manifest, findings)
     controls: dict[str, dict] = {}
-    arts: dict[str, dict] = {}
     entries = manifest["artifacts"]
     for item in entries:
         art = _load_yaml_at(repo, candidate, f"{run_root}/{item['path']}")
         controls[item["stage_id"]] = art["stage_control"]  # type: ignore[index]
-        # The whole artifact is kept, not just stage_control. The stage receipt is
-        # a required field of the artifact and the mechanism needs it to judge an
-        # acceptance; re-reading it from a second location would be a second
-        # source for one object.
-        arts[item["stage_id"]] = art  # type: ignore[assignment]
 
     # C_7 comes from run.yml directly. There is no completion-pointer file in
     # this path at all.
@@ -716,7 +747,7 @@ def gate_run(repo: Path, candidate: str, run_root: str,
     _check_ordering(repo, nodes)
     _check_separation(repo, nodes, controls)
     _check_verification(repo, nodes, controls)
-    _check_acceptance(repo, nodes, controls, arts, run_doc)
+    _check_acceptance(repo, candidate, nodes, controls, run_doc)
     findings.note(f"{run_root}: seven stages chained, separated and accepted")
     return PASS
 

@@ -143,3 +143,71 @@ correction_after_physical_recheck:
   docs_corrected:
   - 01_os/05_registry/workflow_publication_gate_v1.yml
   - 01_os/05_registry/repository_guards_v1.yml
+
+third_round_evidence_closures:
+  date: 2026-09-13
+  responds_to: 20260913_6306a91c_W6只读二次审计
+  verification_document:
+    was: >-
+      only the reference was checked. A verification document reading status failed, correctly
+      bound to its own W, task and stage, at a real blob, published as accepted.
+    now: >-
+      the document is opened and compared against the same five-field shape _scope_completion
+      already compares - schema_version stage_verification_result.v1, the declared output commit,
+      this task, this stage, status verified. Refused as
+      verification_document_is_not_a_verified_result_for_this_stage, code 14.
+    note: the contract required this all along; it simply was not reached from the publication path
+  feasibility:
+    was: >-
+      only validate_common_model_completeness was called, so a feasibility_support of one
+      confident sentence passed while _scope_feasibility refused the same model with 16
+    now: >-
+      _scope_feasibility is consumed, with the profile contract read at the candidate. Bare string,
+      a basis kind not allowed for the stage, and approval-as-basis are each refused with their own
+      reason.
+    not_claimed: >-
+      fixing the feasibility gap does not mean every stage-specific acceptance semantic is now
+      covered. The audit said so explicitly and it is correct; no such claim is made.
+  receipt_source:
+    was: >-
+      the gate read the receipt embedded in the artifact and never resolved
+      stage_control.deliberation_receipt_ref, so the pilot's ref pointed at model.yml unnoticed
+    now: >-
+      the ref is resolved and the full receipt is one object behind it. The artifact embeds only
+      route, profile_id_and_version and exact_candidate_version, which is what the runner reads.
+    partial: true
+
+open_finding_receipt_binding_is_one_question_not_two:
+  statement: >-
+    neither the commit a deliberation_receipt_ref resolves at, nor the referent of
+    exact_candidate_version, is settled by a governing contract for the publication path.
+  how_the_executor_got_this_wrong_first: >-
+    the first fix declared the version referent an open question and, in the same change, quietly
+    decided the read commit was M because the ref has the same {path, blob_sha} shape as
+    current_model_ref. Those two positions are incoherent. current_model_ref gets M from a real
+    contract field, plan_acceptance.accepted_model_commit; the receipt ref has no analogue. Two
+    refs sharing a shape does not put them in the same commit. The co-auditor caught it: do not
+    list the version binding as unresolved while treating the read commit as decided.
+  what_is_enforced_now: >-
+    the only binding derivable from the governing contract - stage_control is read at the candidate,
+    so an object it names must exist at the candidate. Weaker than a node binding, and stated as
+    weaker rather than dressed up.
+  exact_candidate_version:
+    enforced: a value that could not be a commit id at all is refused
+    not_enforced: which commit it must name
+    why_not: >-
+      _scope_receipt defines it for the task-scope path as equal to the candidate being validated.
+      Applying that per stage would require a stage receipt to name a commit that does not exist
+      when the receipt is written. No contract resolves that, and the executor is not entitled to
+      invent one.
+    measured: >-
+      a receipt whose exact_candidate_version is the boundary commit - real, well formed, wrong -
+      is not refused. Recorded as test_receipt_version_naming_a_real_but_wrong_commit_is_not_-
+      refused, a characterisation test that fails if the behaviour changes, so the contract has to
+      be updated alongside it.
+  affects_principal_guarantee: >-
+    it does not create a known bypass of stage acceptance: the record, model, output, verification
+    and commitment bindings are all enforced independently of it. It does mean the receipt's
+    version field is currently closer to a declared string than to a binding, and that should be
+    settled before anyone cites it as one.
+  classification: contract ambiguity, referred rather than resolved by the executor

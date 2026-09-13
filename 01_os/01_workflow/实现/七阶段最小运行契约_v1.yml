@@ -56,14 +56,28 @@ stage_control_contract:
   fields:
     action_id: the id of the packet stage_actions entry this stage acts under
     current_model_ref: {path, blob_sha}
+    deliberation_receipt_ref: {path, blob_sha}
     plan_acceptance: {commit, path, blob_sha, accepted_model_commit, accepted_model_path, accepted_model_blob_sha}
     completion_acceptance: {path, blob_sha, bound_output_version, output_path, output_blob_sha, verification_result}
   reference_not_copy: true
+  corrected_2026_09_13:
+    was: >-
+      this block listed a_second_receipt_reference under deliberately_absent, arguing that
+      deliberation_receipt is already a field of the artifact so a parallel ref would create two
+      locations for one object.
+    why_it_was_wrong: >-
+      阶段产物到instance映射契约_v2 part_6 makes deliberation_receipt_ref {path, blob_sha} part of
+      the canonical stage_control shape and requires it in both the planned and the complete
+      artifact states. That contract governs; this one contradicted it, and the contradiction had
+      a consequence. The publication gate read the receipt embedded in the artifact and never
+      resolved the declared ref at all, so the pilot's ref pointed at model.yml and nothing
+      noticed, and a receipt whose exact_candidate_version read "not-a-commit" published cleanly.
+    resolution: >-
+      the full receipt is one object in its own artifact, reached through the ref. The artifact
+      embeds only the binding fields - route, profile_id_and_version, exact_candidate_version -
+      which is what the runner actually reads from it. One object, one source, and the ref is
+      resolved rather than decorative.
   deliberately_absent:
-    a_second_receipt_reference: >-
-      deliberation_receipt is already a required field of this artifact. A parallel ref would
-      create two locations for one object. A receipt short of the mechanism's required fields is
-      a content gap for its author to fill, not a reason for a second field.
     predecessor_binding: >-
       stages two through seven bind the previous stage's completion acceptance inside the plan
       acceptance artifact itself, where the blob hash covers it. A summary field here could be
