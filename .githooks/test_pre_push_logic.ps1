@@ -164,6 +164,12 @@ finally {
 # what is being pushed" for "judges whatever is on disk". The case above proves
 # this hook blocks on 41 if it ever arrives. It does not prove the publication
 # path can currently produce it. Recorded rather than implied.
+#
+# Do not read that as "nothing semantic is checked on a push". Since 2026-09-12
+# the gate resolves each stage's plan and completion acceptance records at their
+# own commits and hands them to the deliberation mechanism, refusing with exit 17
+# when the mechanism refuses. That path does not go through validate_run, which is
+# why 41 stays unreachable while acceptance is still judged.
 
 $gateShaAfter = (git hash-object $realGate)
 Write-Output ''

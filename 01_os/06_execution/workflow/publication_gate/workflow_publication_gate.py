@@ -95,6 +95,7 @@ ORDERING = 13
 SEPARATION = 14
 BLOB = 15
 CHAIN = 16
+ACCEPT = 17
 REPO = 20
 
 STAGE_IDS = [
@@ -108,6 +109,7 @@ STAGE_IDS = [
 ]
 
 RUNS_ROOT = "01_os/_runs"
+MECHANISM = "01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py"
 
 
 class GateError(Exception):
@@ -425,6 +427,105 @@ def _check_verification(repo: Path, nodes: list[StageNodes], controls: dict[str,
                          f"{node.stage_id} verification record")
 
 
+def _load_mechanism() -> object:
+    """Import the deliberation mechanism, which is what judges an acceptance record.
+
+    Where it is loaded from is a security property, not a convenience. It comes
+    from the installation this gate is part of - resolved next to this file - and
+    never from the repository under judgement or from a candidate blob.
+
+    The first version of this function took it from the repo-root argument. That
+    is the repository being judged. A crafted repository could have shipped its
+    own permissive verify_stage_collaborative_deliberation.py, and this gate would
+    have imported it and executed it, letting the push choose its own judge and
+    run arbitrary code in the process. The docstring at the time already said "the
+    checkout judges, the candidate is judged"; the code did the opposite. It was
+    caught because a synthetic fixture repository correctly reported the mechanism
+    missing, which would not have happened had the lookup been right.
+
+    Evidence is read at the candidate, because evidence is what the push asserts.
+    Judgement is read from here, because a judge the defendant supplies is not one.
+    """
+    import importlib.util
+
+    path = Path(__file__).resolve().parents[4] / MECHANISM
+    if not path.is_file():
+        raise GateError(REPO, f"the deliberation mechanism is missing at {MECHANISM}. "
+                              f"Unable to ask is not an answer.")
+    spec = importlib.util.spec_from_file_location("scd_for_publication_gate", path)
+    if spec is None or spec.loader is None:
+        raise GateError(REPO, f"cannot load the deliberation mechanism at {MECHANISM}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    if not hasattr(module, "validate_standalone_acceptance_record"):
+        raise GateError(REPO, "the deliberation mechanism has no "
+                              "validate_standalone_acceptance_record entry; this gate will not "
+                              "substitute a judgement of its own")
+    return module
+
+
+def _acceptance_ref(control: dict, field_name: str, stage_id: str, fallback_commit: str | None):
+    """Where one acceptance record lives. References only; content comes next."""
+    ref = control.get(field_name)
+    _require(isinstance(ref, dict), REF, f"{stage_id}: {field_name} is missing or not a mapping")
+    path = ref.get("path")
+    blob = ref.get("blob_sha")
+    _require(isinstance(path, str) and path, REF, f"{stage_id}: {field_name} has no path")
+    _require(_is_sha(blob), REF, f"{stage_id}: {field_name} blob_sha is not a 40-character sha")
+    commit = ref.get("commit", fallback_commit)
+    _require(_is_sha(commit), REF,
+             f"{stage_id}: {field_name} has no commit to read it at")
+    return commit, path, blob
+
+
+def _check_acceptance(repo: Path, nodes: list[StageNodes], controls: dict[str, dict],
+                      run_doc: dict) -> None:
+    """Open both acceptance records and let the mechanism judge them.
+
+    Until this existed the gate checked that a run's seven stages chained by
+    strict ancestry, that each phase added its own artifact, and that a
+    verification record sat where it was declared - and never opened the two
+    records the whole arrangement is about. A chain whose plan acceptance said
+    actor_class: executor and Human_disposition: rejected passed with
+    "seven stages chained and separated", while the mechanism refused the same
+    record with exit 15. Topology was measured; acceptance was declared.
+
+    The records are read at their own commits from the declared blob, so what is
+    judged is what was published, not what happens to be in the working tree.
+    The verdict is the mechanism's; this function resolves references and
+    consumes an exit code.
+
+    This runs last on purpose. A malformed chain should still report its own
+    ordering, separation or blob diagnosis rather than every defect collapsing
+    into one acceptance failure.
+    """
+    mech = _load_mechanism()
+    task_id = run_doc.get("task_id")
+    for node in nodes:
+        control = controls[node.stage_id]
+        for field_name, fallback in (("plan_acceptance", node.p),
+                                     ("completion_acceptance", node.c)):
+            commit, path, blob = _acceptance_ref(control, field_name, node.stage_id, fallback)
+            _blob_must_match(repo, commit, path, blob, f"{node.stage_id} {field_name}")
+            record = _load_yaml_at(repo, commit, path)
+            _require(isinstance(record, dict), REF,
+                     f"{node.stage_id}: {field_name} at {commit[:12]} is not a mapping")
+            code = mech.validate_standalone_acceptance_record(record)
+            _require(code == 0, ACCEPT,
+                     f"{node.stage_id}: {field_name} was refused by the deliberation mechanism "
+                     f"(exit {code}). The record is at {path} in {commit[:12]}. This gate does "
+                     f"not restate what a Human acceptance is; it asked the owner and the owner "
+                     f"said no.")
+            if task_id is not None and record.get("task_id") is not None:
+                _require(record.get("task_id") == task_id, ACCEPT,
+                         f"{node.stage_id}: {field_name} names task {record.get('task_id')!r}, "
+                         f"but this run is {task_id!r}")
+            if record.get("stage_id") is not None:
+                _require(record.get("stage_id") == node.stage_id, ACCEPT,
+                         f"{node.stage_id}: {field_name} names stage "
+                         f"{record.get('stage_id')!r}, which is not this stage")
+
+
 ABSENT = "absent"
 NOT_GOVERNED = "not_governed"
 UNREADABLE = "unreadable"
@@ -547,7 +648,8 @@ def gate_run(repo: Path, candidate: str, run_root: str,
     _check_ordering(repo, nodes)
     _check_separation(repo, nodes, controls)
     _check_verification(repo, nodes, controls)
-    findings.note(f"{run_root}: seven stages chained and separated")
+    _check_acceptance(repo, nodes, controls, run_doc)
+    findings.note(f"{run_root}: seven stages chained, separated and accepted")
     return PASS
 
 

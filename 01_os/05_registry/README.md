@@ -71,7 +71,10 @@ that is neither present nor correctly ignored.
 - `workflow_publication_gate_v1.yml`：transport-independent 的发布闸，判定一份 run 历史是否可以
   发布。它拥有 exact ref 解析、严格祖先、阶段内容分离与 fail-closed；不拥有 hook。
   `.githooks/pre-push` 与 local_git transport scope 仍由 `repository_guards_v1.yml` 拥有，
-  本条只引用不复制。当前登记一条**缺项**：尚无任何 transport 调用该闸。
+  本条只引用不复制。2026-09-12 起该闸还会解析每阶段两份 acceptance 记录并调用
+  deliberation mechanism 判定，非零即拒（exit 17）——判决属机制，闸只消费，不得复制语义。
+  local_git caller 已接线；**其余 transport 仍未接**，且登记一条缺项：cross-record binding
+  与 Human 认证都不在发布路径上。
 
 - `communication_system_v1.yml`：全局通讯契约、boot、显式执行工具与 Stage06 证据入口。
 - `model_routing_v1.yml`：证据化动态路由、稳定 collaboration-role 输入与 receiver setup builder。

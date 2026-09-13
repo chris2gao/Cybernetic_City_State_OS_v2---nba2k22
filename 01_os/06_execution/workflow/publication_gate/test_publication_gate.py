@@ -16,7 +16,9 @@ One valid chain is built once and each case mutates exactly one invariant.
 from __future__ import annotations
 
 import json
+import os
 import shutil
+import stat
 import subprocess
 import sys
 import tempfile
@@ -24,6 +26,27 @@ import unittest
 from pathlib import Path
 
 import yaml
+
+def discard(path: Path) -> None:
+    """Remove a fixture repository, read-only git objects included.
+
+    shutil.rmtree(..., ignore_errors=True) does not do this on Windows. Git marks
+    loose objects read-only, unlink refuses, and ignore_errors swallows it without
+    a word. 246 abandoned fixture repositories had piled up in TEMP before anyone
+    looked, each one a full seven-stage chain, and every later run got slower for
+    it. A cleanup that cannot fail loudly is a cleanup that stops happening.
+    """
+    def clear_readonly(func, target, _exc):
+        os.chmod(target, stat.S_IWRITE)
+        func(target)
+
+    handler = ("onexc" if sys.version_info >= (3, 12) else "onerror")
+    try:
+        shutil.rmtree(path, **{handler: clear_readonly})
+    except OSError:
+        # Never fail a test on cleanup, but do not pretend it succeeded either.
+        print(f"could not remove fixture repository {path}", file=sys.stderr)
+
 
 HERE = Path(__file__).resolve().parent
 GATE = HERE / "workflow_publication_gate.py"
@@ -45,6 +68,29 @@ def git(repo: Path, *args: str, stdin: bytes | None = None) -> str:
     proc = subprocess.run(["git", "-C", str(repo), *args], capture_output=True,
                           input=stdin, check=True)
     return proc.stdout.decode("utf-8").strip()
+
+
+# The shape a stage acceptance record must have for the deliberation mechanism to
+# accept it at all: foreground interaction, a current Human, explicit, and an
+# affirmative disposition. These are the mechanism's own field names; this file
+# does not decide what they mean.
+#
+# Read this next part before copying it anywhere. These are fabricated approvals.
+# They exist in a throwaway repository, for a run id that is not real, to give the
+# suite a positive control - without one, a gate that refused every record for the
+# wrong reason would look exactly like a working gate. They are NOT a template for
+# a real run: writing one of these into 01_os/_runs/** by hand is manufacturing a
+# Human acceptance, which is the thing this whole arrangement exists to detect.
+#
+# test_synthetic_marked_record_is_refused is the guard on that. The mechanism
+# refuses any record carrying synthetic_test_record outside a synthetic authority
+# context, and that test proves the refusal still happens through the real gate.
+ACCEPTED = {
+    "provenance": "foreground_current_Human_interaction",
+    "actor_class": "current_Human",
+    "explicit": True,
+    "Human_disposition": "accepted",
+}
 
 
 def write(repo: Path, rel: str, data) -> str:
@@ -79,16 +125,24 @@ class Chain:
     candidate must never embed its own sha.
     """
 
-    def __init__(self, root: Path, plan_mutators: dict | None = None):
-        """plan_mutators changes a stage's plan acceptance record as it is written.
+    def __init__(self, root: Path, plan_mutators: dict | None = None,
+                 completion_mutators: dict | None = None):
+        """The mutators change a stage's acceptance record as it is written.
 
         Structural cases have to be built into the chain, not edited afterwards.
         The gate reads each record at the commit that carries it, so rewriting a
         file at the branch head leaves the accepted record untouched and the gate
         correctly sees nothing. Changing what was accepted means changing that
         commit, which rewrites history.
+
+        Both halves take mutators because the gate judges both, and for a while
+        only the plan half could be varied. A chain with a well-formed plan record
+        and an untouched completion record was refused on the completion record -
+        correct, but it meant no negative could be aimed at one half while the
+        other was known good.
         """
         plan_mutators = plan_mutators or {}
+        completion_mutators = completion_mutators or {}
         self.repo = root / "repo"
         self.repo.mkdir(parents=True)
         git(self.repo, "init", "-b", "fixture")
@@ -106,7 +160,7 @@ class Chain:
                                {"stage_id": sid, "model": f"model for {sid}"})
             m = commit(self.repo, f"{sid} model")
 
-            plan_record = {"stage_id": sid, "accepts": model_blob}
+            plan_record = dict(ACCEPTED, stage_id=sid, accepts=model_blob)
             if prev_c is not None:
                 # The binding lives in the record the Human accepted, where the
                 # blob sha covers it, not in a summary field of the artifact.
@@ -138,8 +192,10 @@ class Chain:
             ver_blob = write(self.repo, f"{d}/verification.yml", {"stage_id": sid, "of": w})
             ver_commit = commit(self.repo, f"{sid} verification evidence")
 
-            comp_blob = write(self.repo, f"{d}/completion_acceptance.yml",
-                              {"stage_id": sid, "accepts_output_commit": w})
+            comp_record = dict(ACCEPTED, stage_id=sid, accepts_output_commit=w)
+            if sid in completion_mutators:
+                completion_mutators[sid](comp_record, self)
+            comp_blob = write(self.repo, f"{d}/completion_acceptance.yml", comp_record)
             control["completion_acceptance"] = {
                 "path": f"{d}/completion_acceptance.yml",
                 "blob_sha": comp_blob,
@@ -203,7 +259,7 @@ class GateCases(unittest.TestCase):
         self.chain = Chain(self.tmp)
 
     def tearDown(self) -> None:
-        shutil.rmtree(self.tmp, ignore_errors=True)
+        discard(self.tmp)
 
     def assertRefused(self, code: int, findings: list[str], expect_code: int, expect: str) -> None:
         joined = " | ".join(findings)
@@ -231,7 +287,7 @@ class GateCases(unittest.TestCase):
                                   capture_output=True, check=False)
             self.assertEqual(proc.returncode, 0, proc.stdout.decode("utf-8"))
         finally:
-            shutil.rmtree(empty, ignore_errors=True)
+            discard(empty)
 
     # -- one mutated invariant per case -------------------------------------
 
@@ -315,7 +371,7 @@ class GateCases(unittest.TestCase):
             code, findings = chain.run_gate()
             self.assertRefused(code, findings, 11, "must not name a predecessor")
         finally:
-            shutil.rmtree(chain.repo.parent, ignore_errors=True)
+            discard(chain.repo.parent)
 
     def test_stage_two_without_a_predecessor_binding_is_refused(self):
         def drop(record, chain):
@@ -326,7 +382,7 @@ class GateCases(unittest.TestCase):
             code, findings = chain.run_gate()
             self.assertRefused(code, findings, 11, "must name predecessor_completion_commit")
         finally:
-            shutil.rmtree(chain.repo.parent, ignore_errors=True)
+            discard(chain.repo.parent)
 
     def test_wrong_predecessor_breaks_the_chain(self):
         """A record naming the wrong completion commit fails S9c.
@@ -344,7 +400,7 @@ class GateCases(unittest.TestCase):
             code, findings = chain.run_gate()
             self.assertNotEqual(code, 0, " | ".join(findings))
         finally:
-            shutil.rmtree(chain.repo.parent, ignore_errors=True)
+            discard(chain.repo.parent)
 
     # -- run identity -------------------------------------------------------
 
@@ -471,6 +527,128 @@ class GateCases(unittest.TestCase):
         self.chain.head = commit(self.chain.repo, "drop run identity")
         code, findings = self.chain.run_gate()
         self.assertRefused(code, findings, 11, "no readable run.yml")
+
+
+class AcceptanceCases(unittest.TestCase):
+    """Both acceptance records are opened, and the mechanism judges them.
+
+    Before these existed the gate proved that a run's seven stages chained by
+    strict ancestry, that each phase added its own artifact, and that a
+    verification record sat where it was declared - and never opened the two
+    records the whole arrangement is about. A chain whose plan acceptance read
+    actor_class: executor with Human_disposition: rejected passed, reported as
+    "seven stages chained and separated". The mechanism refused that identical
+    record with exit 15. Topology was measured; acceptance was declared.
+
+    Worse, the fixture's own records were no better: {stage_id, accepts} carries
+    nothing to accept, and the mechanism refused it with the same 15. The
+    baseline was not a valid chain with one bad case next to it - the whole
+    population was unjudgeable, and a gate that never looked could not tell.
+
+    Every refusal here asserts exit 17 and which half was refused, so a refusal
+    for the wrong cause cannot pass as a refusal.
+    """
+
+    def setUp(self) -> None:
+        self.tmp = Path(tempfile.mkdtemp(prefix="gate-accept-"))
+
+    def tearDown(self) -> None:
+        discard(self.tmp)
+
+    def chain(self, plan: dict | None = None, completion: dict | None = None) -> Chain:
+        """A chain whose first stage carries the mutation under test."""
+        def at_first(mutation):
+            return {STAGES[0]: lambda record, _: record.update(mutation)}
+        return Chain(self.tmp,
+                     plan_mutators=at_first(plan) if plan is not None else None,
+                     completion_mutators=at_first(completion) if completion is not None else None)
+
+    def assertMechanismRefused(self, code: int, findings: list[str], half: str) -> None:
+        joined = " | ".join(findings)
+        self.assertEqual(code, 17, f"expected exit 17, got {code}: {joined}")
+        self.assertIn(f"{half} was refused by the deliberation mechanism", joined, joined)
+
+    # -- the positive control ------------------------------------------------
+
+    def test_wellformed_chain_passes(self):
+        """Without this, a gate that refused everything would look like a gate."""
+        code, findings = self.chain().run_gate()
+        self.assertEqual(code, 0, " | ".join(findings))
+
+    # -- the plan half -------------------------------------------------------
+
+    def test_plan_record_from_an_executor_is_refused(self):
+        code, findings = self.chain(plan={"actor_class": "executor"}).run_gate()
+        self.assertMechanismRefused(code, findings, "plan_acceptance")
+
+    def test_plan_record_with_a_rejected_disposition_is_refused(self):
+        code, findings = self.chain(plan={"Human_disposition": "rejected"}).run_gate()
+        self.assertMechanismRefused(code, findings, "plan_acceptance")
+
+    def test_plan_record_that_is_not_explicit_is_refused(self):
+        code, findings = self.chain(plan={"explicit": False}).run_gate()
+        self.assertMechanismRefused(code, findings, "plan_acceptance")
+
+    def test_plan_record_without_foreground_provenance_is_refused(self):
+        code, findings = self.chain(plan={"provenance": None}).run_gate()
+        self.assertMechanismRefused(code, findings, "plan_acceptance")
+
+    def test_stale_plan_record_is_refused(self):
+        code, findings = self.chain(plan={"stale": True}).run_gate()
+        self.assertMechanismRefused(code, findings, "plan_acceptance")
+
+    def test_synthetic_marked_record_is_refused(self):
+        """A fixture must not be able to manufacture an acceptance.
+
+        This is the guard on the fabricated approvals in ACCEPTED above. The
+        mechanism refuses any record carrying synthetic_test_record outside a
+        synthetic authority context, and the gate has no flag that could supply
+        one - offering it would be a production bypass wearing a test's clothes.
+        """
+        code, findings = self.chain(plan={"synthetic_test_record": True}).run_gate()
+        self.assertMechanismRefused(code, findings, "plan_acceptance")
+
+    # -- the completion half, judged on its own ------------------------------
+
+    def test_completion_record_is_judged_independently(self):
+        """A good plan record does not vouch for the completion record."""
+        code, findings = self.chain(completion={"actor_class": "executor"}).run_gate()
+        self.assertMechanismRefused(code, findings, "completion_acceptance")
+
+    def test_synthetic_marked_completion_record_is_refused(self):
+        code, findings = self.chain(completion={"synthetic_test_record": True}).run_gate()
+        self.assertMechanismRefused(code, findings, "completion_acceptance")
+
+    # -- binding -------------------------------------------------------------
+
+    def test_record_naming_another_stage_is_refused(self):
+        chain = self.chain(plan={"stage_id": STAGES[4]})
+        code, findings = chain.run_gate()
+        joined = " | ".join(findings)
+        self.assertEqual(code, 17, joined)
+        self.assertIn("which is not this stage", joined, joined)
+
+    # -- what the verdict is about -------------------------------------------
+
+    def test_working_tree_cannot_move_the_verdict(self):
+        """The verdict is about the candidate, not about what is on disk.
+
+        The runner's validate_run reads the working tree, which is why it was not
+        wired into this gate: a push of commit X with a dirty tree would have been
+        judged on the tree rather than on X. Here the same candidate is judged
+        twice with both acceptance files vandalised in between, and the answer
+        does not move.
+        """
+        chain = self.chain()
+        first, findings = chain.run_gate()
+        self.assertEqual(first, 0, " | ".join(findings))
+        for name in ("plan_acceptance.yml", "completion_acceptance.yml"):
+            path = chain.repo / RUN / STAGES[0] / name
+            path.write_text("actor_class: executor\nHuman_disposition: rejected\n",
+                            encoding="utf-8")
+        second, findings = chain.run_gate()
+        self.assertEqual(second, 0,
+                         f"the working tree moved a verdict about a commit: {' | '.join(findings)}")
 
 
 if __name__ == "__main__":

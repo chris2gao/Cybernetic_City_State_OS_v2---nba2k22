@@ -673,6 +673,37 @@ def validate_durable_disposition_record(
     return _validate_v2_record(record, confirmation, model)
 
 
+def validate_standalone_acceptance_record(
+    record: Any, *, synthetic_authority_context: bool = False,
+) -> int:
+    """One durable acceptance record, judged on its own terms.
+
+    Why this entry exists. The workflow publication gate holds a stage's plan or
+    completion acceptance record resolved from an exact Git blob, and nothing to
+    cross-check it against: there is no surrounding model whose
+    current_exact_model_version it must equal, and no Human_confirmation pointer
+    carrying a matching decision_id. validate_durable_disposition_record needs
+    both. So the gate could either reach into a private helper or restate these
+    rules itself, and restating them would create a second definition of what a
+    Human acceptance is - the one thing this whole arrangement exists to prevent.
+
+    This adds no rule. It is the part of durable-disposition validation a record
+    must satisfy alone, plus the synthetic marker check that
+    validate_durable_disposition_record applies first. Cross-record binding stays
+    where it was; a caller holding a model and a confirmation should still call
+    validate_durable_disposition_record and get the stronger answer.
+
+    A record marked synthetic is refused outside a synthetic authority context.
+    That is deliberate and it is load-bearing for the gate: a test fixture cannot
+    manufacture an acceptance the publication path will honour.
+    """
+    if not isinstance(record, dict):
+        return 11
+    if record.get(SYNTHETIC_MARKER) is True and not synthetic_authority_context:
+        return 15
+    return _validate_common_Human_record(record)
+
+
 def validate_human_authority(
     model: dict[str, Any], data: dict[str, Any], repo_root: Path | None = None, *,
     synthetic_authority_context: bool = False,

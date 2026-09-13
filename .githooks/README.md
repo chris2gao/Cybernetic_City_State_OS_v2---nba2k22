@@ -68,13 +68,24 @@ agent that never considered the rule. It does not stop a caller that has decided
 go around it, and it should never be cited as proof that history cannot have been
 rewritten. For that, read the remote.
 
-**A clean push is not semantic acceptance.** The publication gate this hook calls
-judges structure and ancestry: that a governed run's seven stages chain by strict
-Git ancestry, that each phase contributed its own artifact, and that declared
-verification evidence exists where it says it does. It does not invoke the
-authoritative deliberation validator. Passing here means the record is shaped and
-ordered as the contract requires — not that anyone examined the reasoning, and not
-that a Human accepted anything.
+**What a clean push does and does not mean.** The publication gate this hook calls
+checks structure and ancestry — seven stages chained by strict Git ancestry, each
+phase contributing its own artifact, verification evidence where it says it is —
+and then reads both stage acceptance records at their own commits and hands each
+to the deliberation mechanism. The verdict on a record is the mechanism's, not the
+gate's, and a refusal stops the push with exit 17.
+
+Three things a pass still does not prove:
+
+- **It does not authenticate the Human.** The record says a current Human accepted;
+  nothing on this path proves one did. The canonical challenge is interactive and
+  cannot run here. The record is *challengeable*, not challenged.
+- **It does not do the cross-record binding.** The stronger check needs a
+  surrounding model and a confirmation pointer to compare decision ids and model
+  versions. The gate has a record and neither, so it gets what a record can be
+  judged on alone.
+- **It does not turn commit order into work order.** Ancestry proves publication
+  sequence, never when anyone thought or decided.
 
 It also covers exactly one transport. An executor pushing through the GitHub API or
 a CLI that never invokes hooks is not unguarded and not unpermitted — it owes a

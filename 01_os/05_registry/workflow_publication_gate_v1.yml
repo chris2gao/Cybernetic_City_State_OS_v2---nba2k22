@@ -1,6 +1,6 @@
 schema_version: citystate.registry.v1
 registry_id: workflow_publication_gate_v1
-status: implemented_no_caller_wired_yet
+status: implemented_local_git_caller_wired
 
 purpose: >-
   Registers the transport-independent workflow publication gate: the component that decides
@@ -16,21 +16,56 @@ ownership_boundary:
     receipt. The transport semantics live there and are referenced, never copied.
   mechanism_semantics_owner: >-
     01_os/03_mechanisms/stage_collaborative_deliberation owns Human disposition, Current Model
-    completeness, receipt validity, feasibility basis and closure. The gate does not evaluate any
-    of them and must not grow a second copy.
+    completeness, receipt validity, feasibility basis and closure. The gate evaluates none of them.
+    Since 2026-09-12 it does ask: it resolves each stage's two acceptance records and calls
+    validate_standalone_acceptance_record, then refuses on a non-zero answer. Asking the owner and
+    consuming the answer is the opposite of growing a second copy, and the distinction is the whole
+    point - a gate that restated what a Human acceptance is would be a second definition of it.
 
 what_the_gate_decides:
 - exact reference resolution
 - strict Git ancestry between the nodes of each stage chain
 - phase content separation, read from trees at named commits
 - composition of the seven stages into one chain
+- that both acceptance records exist at their declared commit and blob, and that the deliberation
+  mechanism accepts each one
+- that an acceptance record names this stage and this task, where it names either
 - fail-closed progression
 
 what_the_gate_does_not_decide:
-- whether a Human accepted anything
-- whether the work happened after the acceptance
+- >-
+    whether a Human actually produced the record. The record is challengeable, not challenged;
+    the canonical challenge is interactive and cannot run on a publication path.
+- the cross-record binding between a record, a surrounding model version and a confirmation
+  pointer. validate_durable_disposition_record is the stronger check and needs inputs the gate
+  does not hold; the gate gets the part a record can be judged on alone.
+- whether the work happened after the acceptance. Ancestry is publication order, never work order.
 - whether a design is sound or a risk matters
 - whether the supplied publication base is the transport's real old head
+
+exit_codes:
+  0: pass
+  10: usage
+  11: reference_shape_or_readability
+  13: ordering
+  14: phase_separation
+  15: blob_mismatch
+  16: chain_or_governance_transition
+  17: acceptance_refused_by_mechanism
+  20: repository_or_mechanism_unavailable
+  deliberately_absent:
+    12: >-
+      defined as a binding code in the first draft and never raised. Removed by the mechanization
+      minimization review rather than left as a code nothing could produce.
+
+where_judgement_is_loaded_from: >-
+  the installation the gate is part of, resolved next to the gate file, never from the repository
+  under judgement and never from a candidate blob. An early revision took it from the --repo-root
+  argument, which is the repository being judged: a crafted repository could have shipped a
+  permissive verify_stage_collaborative_deliberation.py and the gate would have imported and
+  executed it, letting a push choose its own judge and run arbitrary code. Evidence is read at the
+  candidate because evidence is what the push asserts; judgement is read locally because a judge
+  the defendant supplies is not one.
 
 exact_claim:
   gate: validates the transition given an authentic publication base
@@ -50,7 +85,16 @@ entries:
   evidence: >-
     01_os/_runs/run-20260911-stage-human-alignment-wiring-001/06_执行/网关S1_S9审核_v1.yml records
     the review that found five defects in the first draft, three of them fail-open, before any of
-    it was tracked
+    it was tracked. Acceptance consumption was measured on 2026-09-12 over a twelve-population
+    matrix: a chain with well-formed records passes; the same chain with the plan record set to
+    actor_class executor, or a rejected or declined disposition, or explicit false, or no
+    provenance, or stale, or marked synthetic, is refused with exit 17 carrying the mechanism's own
+    code (12 stale, 14 not explicit, 15 otherwise); the same mutations applied to the completion
+    record are refused independently; and a record naming another stage is refused on the binding.
+  worktree_independence: >-
+    measured, not assumed. With the candidate fixed and both acceptance files overwritten in the
+    working tree to say actor_class executor and Human_disposition rejected, the verdict stayed
+    pass. The gate reads blobs at commits, so what is on disk cannot move a verdict either way.
   cache_dirs: []
   failure_surfacing: next publication attempt by a caller that invokes it
   deletion_rule: protected
@@ -59,17 +103,25 @@ caller_coverage:
   rule: only a transport that actually invokes the gate is covered
   canonical_transport_semantics: 01_os/05_registry/repository_guards_v1.yml
   transports:
-    local_git: {caller: .githooks/pre-push, wired: false}
+    local_git: {caller: .githooks/pre-push, wired: true, wired_at: 490b76b25f24bd11f7dabe41b1715d069f459ad6}
     github_api_connector: {caller: none, wired: false}
     cli_without_verified_hooks: {caller: none, wired: false}
     unknown: blocked
   current_state: >-
-    no transport calls the gate yet. Until one does, nothing is gated at publication time, and no
-    completion brief may say otherwise.
+    one transport calls the gate. A push through local_git with hooks enabled is refused when the
+    gate refuses, and refused when the gate cannot be run at all. Every other transport is
+    ungated, so no completion brief may say that publication is gated without naming which
+    transport it means.
 
 registered_gap:
-  statement: the local_git caller is not wired
-  reason: it is the next work package, not an omission
+  statement: >-
+    the gate consumes the part of acceptance validation a record can carry alone, and no
+    publication consumer performs the cross-record binding or any Human authentication
+  reason: >-
+    validate_durable_disposition_record needs a surrounding model and a confirmation pointer that
+    the gate does not hold, and human_challenge_verify.py is interactive and unreachable from a
+    publication path. Both are real gaps, not scope reductions, and neither is closed by this
+    entry existing.
   rule_followed: >-
     the registry README requires a gap to be written down rather than left blank, as
     task_orchestration_v1.yml does for its missing boot manifest
