@@ -130,9 +130,15 @@ guards:
       commitment; a task id and stage id that are present and correct; a decision
       type that distinguishes a plan acceptance from a completion acceptance; a
       plan record that accepts exactly the model stage_control bound; a completion
-      record that binds this stage's output commit and names the verification
-      evidence; the closure fields; a complete Current Model; and a passing base
-      stage receipt. A non-zero answer refuses the push with exit 17 carrying the
+      record that binds the output commit stage_control declares and names the
+      verification evidence; the closure fields; a complete Current Model; and a
+      passing base stage receipt. Whether that declared output really is this
+      stage's output node is decided by strict ancestry and phase separation, not
+      by the acceptance check: the stage's W node is derived from the same field,
+      so a comparison between the two would have both sides from one source. A
+      revision on 2026-09-13 briefly made that comparison and it could not fire;
+      it was deleted rather than propped up with a second source of W.
+      A non-zero answer refuses the push with exit 17 carrying the
       mechanism's own code and diagnosis.
 
       An earlier wording of this field, written the previous day, described a

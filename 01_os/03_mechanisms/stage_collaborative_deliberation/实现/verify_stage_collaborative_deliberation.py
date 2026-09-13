@@ -777,12 +777,20 @@ def validate_stage_acceptance_context(
         verification = context.get("accepted_verification")
         if not isinstance(output, dict) or "commit" not in output:
             return 11, "accepted_output_reference_missing"
-        # The caller supplies the stage's real output commit as a topology fact and
-        # what the control declares as an accepted object. Comparing them is this
-        # mechanism's job: a control may declare an output that is not the one the
-        # stage actually produced.
-        if output["commit"] != context.get("stage_output_commit"):
-            return 13, "declared_accepted_output_is_not_this_stage_output"
+        # What is checked here is that the record binds the output the control
+        # declares. Whether that declaration is really this stage's output node is
+        # not decided here and must not be restated here: the caller derives the
+        # stage's W node from that same field, so any comparison between the two
+        # would have both sides from one source.
+        #
+        # A revision on 2026-09-13 did exactly that, with a comment claiming it
+        # caught a control declaring an output the stage never produced. It could
+        # not fire. Measured: a control pointed at another stage's W was still
+        # refused, but by strict ancestry (W->C), exit 13, while the comparison
+        # reported nothing. It is deleted rather than repaired, and no second
+        # source of W is introduced to make it work. What actually constrains the
+        # declaration is ancestry and phase separation, which have independent
+        # physical basis in the object graph.
         if record.get("bound_output_version") != output["commit"]:
             return 13, "completion_record_does_not_bind_the_stage_output_commit"
         if not _same_ref(record.get("verification_result"), verification):

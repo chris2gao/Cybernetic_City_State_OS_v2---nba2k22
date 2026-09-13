@@ -869,6 +869,31 @@ class AcceptanceCases(unittest.TestCase):
             code, findings, "completion",
             "completion_record_does_not_name_the_verification_evidence", 13)
 
+    def test_control_declaring_another_stages_output_is_refused_by_ancestry(self):
+        """What actually constrains the declared output, stated as it really is.
+
+        A revision on 2026-09-13 added an acceptance check meant to catch a control
+        declaring an output the stage never produced. It could never fire: the W
+        node is derived from that same bound_output_version, so both sides of the
+        comparison came from one field. It is gone, and no second source of W was
+        introduced to prop it up.
+
+        This records the true proposition instead. The declaration is still not
+        free - strict ancestry refuses it, and that refusal has independent
+        physical basis in the object graph rather than in a restated field.
+        """
+        chain = self.chain()
+        sid = STAGES[0]
+        elsewhere = chain.stages[STAGES[3]]["w"]
+        self.assertNotEqual(elsewhere, chain.stages[sid]["w"])
+        chain.rewrite_artifact(
+            sid,
+            lambda c: c["completion_acceptance"].__setitem__("bound_output_version", elsewhere))
+        code, findings = chain.run_gate()
+        joined = " | ".join(findings)
+        self.assertEqual(code, 13, joined)
+        self.assertIn("not strict ancestry", joined, joined)
+
     def test_completion_record_missing_a_closure_field_is_refused(self):
         code, findings = self.chain(
             completion=lambda r: r.pop("residual_risk")).run_gate()

@@ -532,7 +532,11 @@ def _acceptance_context(repo: Path, node: StageNodes, control: dict, art: dict,
         context["model"] = _load_yaml_at(repo, accepted["commit"], accepted["path"])
     else:
         completion = control[field_name]
-        context["stage_output_commit"] = node.w
+        # node.w is not passed. It is derived from this same bound_output_version,
+        # so handing both to the mechanism would give it a comparison with one
+        # source - which is what the deleted declared_accepted_output check was.
+        # A field with no consumer is removed rather than left for someone to
+        # build another dead check on.
         context["accepted_output"] = _exact(
             repo, {"commit": completion.get("bound_output_version"),
                    "path": completion.get("output_path"),
