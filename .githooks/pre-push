@@ -23,6 +23,13 @@
 
 Z40=0000000000000000000000000000000000000000
 fail=0
+# The first publication-gate verdict of this push, kept so the hook can exit with
+# it. The task packet says this caller propagates a nonzero gate exit code
+# unchanged; it used to flatten every refusal to 1, which git treats identically
+# but which made the packet's wording untrue and threw away the diagnosis. Git
+# only distinguishes zero from nonzero, so nothing about blocking changes here -
+# what changes is that the number a reader sees is the one the gate produced.
+gate_verdict=0
 
 say() { printf '%s\n' "$*" >&2; }
 
@@ -65,6 +72,9 @@ gate_ref() {
 	_code=$?
 	if [ "$_code" -ne 0 ]; then
 		say "BLOCKED  workflow publication gate refused $_candidate (exit $_code)."
+		if [ "$gate_verdict" -eq 0 ]; then
+			gate_verdict=$_code
+		fi
 		return 1
 	fi
 	return 0
@@ -138,6 +148,14 @@ done
 
 if [ "$fail" -ne 0 ]; then
 	say "city-state pre-push guard refused this push. Nothing was sent."
+	# A gate verdict exits with the gate's own code. This hook's own refusals -
+	# master authorization, non-fast-forward, a gate that could not be run at all -
+	# are not the gate's and exit 1. On a multi-ref push the first gate verdict is
+	# the one reported; every ref was still asked about, and each refusal was
+	# printed with its own code above.
+	if [ "$gate_verdict" -ne 0 ]; then
+		exit "$gate_verdict"
+	fi
 	exit 1
 fi
 

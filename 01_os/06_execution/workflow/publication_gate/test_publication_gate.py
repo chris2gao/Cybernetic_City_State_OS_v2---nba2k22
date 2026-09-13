@@ -70,27 +70,124 @@ def git(repo: Path, *args: str, stdin: bytes | None = None) -> str:
     return proc.stdout.decode("utf-8").strip()
 
 
-# The shape a stage acceptance record must have for the deliberation mechanism to
-# accept it at all: foreground interaction, a current Human, explicit, and an
-# affirmative disposition. These are the mechanism's own field names; this file
-# does not decide what they mean.
+# A stage acceptance the mechanism will actually accept.
 #
-# Read this next part before copying it anywhere. These are fabricated approvals.
-# They exist in a throwaway repository, for a run id that is not real, to give the
+# The earlier version of this constant carried four fields - provenance,
+# actor_class, explicit, Human_disposition - and that was the whole positive
+# control. It was not a compliant example of anything. A record with those four
+# fields and nothing else carries no commitment, names no task, no stage and no
+# decision type, and says nothing about which model or which output it accepted,
+# so a PASS built on it proved only that four strings were present. Three
+# bypasses lived behind that: records omitting task_id and stage_id, a plan
+# record naming the wrong model, and a plan record copied into the completion
+# slot. All three passed the gate.
+#
+# Everything below is the mechanism's own vocabulary. The identity, decision type
+# and model-version names are EVENT_COMMITMENT_BOUND_FIELDS, the exact fields a v2
+# commitment is computed over. This file invents no schema.
+#
+# Read this before copying it anywhere. These are fabricated approvals. They exist
+# in a throwaway repository, for a task and run id that are not real, to give the
 # suite a positive control - without one, a gate that refused every record for the
 # wrong reason would look exactly like a working gate. They are NOT a template for
 # a real run: writing one of these into 01_os/_runs/** by hand is manufacturing a
 # Human acceptance, which is the thing this whole arrangement exists to detect.
+# test_synthetic_marked_record_is_refused is the guard on that.
 #
-# test_synthetic_marked_record_is_refused is the guard on that. The mechanism
-# refuses any record carrying synthetic_test_record outside a synthetic authority
-# context, and that test proves the refusal still happens through the real gate.
-ACCEPTED = {
-    "provenance": "foreground_current_Human_interaction",
-    "actor_class": "current_Human",
-    "explicit": True,
-    "Human_disposition": "accepted",
-}
+# The commitments are structurally valid and deliberately not recomputable. The
+# mechanism checks commitment structure, which is what makes a record
+# challengeable; recomputing a digest against the Human's nonce is the interactive
+# challenge, which does not run on a publication path. Computing real digests here
+# would also mean importing the mechanism to build the fixture, and the fixture
+# does not borrow production code to manufacture its own expected truth.
+TASK_ID = "task-gate-fixture-001"
+AUTHORITY_ID = "authority-gate-fixture-001"
+PLAN_DECISION = "substantive_execution_authorization"
+COMPLETION_DECISION = "completion_acceptance"
+_TASK_DIGEST = "1f" * 32
+_EVENT_DIGEST = "2e" * 32
+
+
+def commitment(digest: str) -> dict:
+    return {"scheme": "citystate-human-task-authority-v2", "algorithm": "sha256",
+            "digest": digest}
+
+
+def accepted(sid: str, decision_type: str, **extra) -> dict:
+    """One Human acceptance record, in the mechanism's own field names."""
+    record = {
+        "provenance": "foreground_current_Human_interaction",
+        "actor_class": "current_Human",
+        "explicit": True,
+        "Human_disposition": "accepted",
+        "task_id": TASK_ID,
+        "stage_id": sid,
+        "task_authority_id": AUTHORITY_ID,
+        "decision_id": f"decision-{sid}-{decision_type}",
+        "decision_type": decision_type,
+        "authorized_scope": [RUN],
+        "task_nonce_commitment": commitment(_TASK_DIGEST),
+        "nonce_commitment": commitment(_EVENT_DIGEST),
+    }
+    record.update(extra)
+    return record
+
+
+def current_model(sid: str, baseline: str) -> dict:
+    """A complete Current Model: every common field present with a disposition.
+
+    none_material is a real answer and the mechanism accepts it; a missing key or
+    a null value is not, and it refuses those. The model cannot name its own
+    commit - it is the content of that commit - so the version it carries is the
+    baseline it was authored against.
+    """
+    return {
+        "stage_id": sid,
+        "problem_or_objective": f"establish the {sid} artifact for the fixture run",
+        "why_this_stage_is_needed_now": f"{sid} has no accepted artifact in this run yet",
+        "Human_intent_understanding": "exercise the publication gate end to end",
+        "current_baseline_and_inputs": baseline,
+        "proposed_method_or_solution": f"author the {sid} artifact and bind it exactly",
+        "feasibility_support": "the preceding stage completed and its output is bound",
+        "expected_output": f"one {sid} artifact with exact stage_control bindings",
+        "verification_or_acceptance_method": "independent verification record at its own commit",
+        "current_exact_model_version": baseline,
+        "constraints_and_dependencies": "none_material",
+        "assumptions_risks_alternatives_unknowns": "none_material",
+        "downstream_impact": "none_material",
+        "open_load_bearing_items": [],
+    }
+
+
+def stage_receipt(sid: str, candidate_version: str) -> dict:
+    """A base stage receipt the mechanism will accept.
+
+    Twenty required fields, both gates passing, a zero validator exit code, no
+    missing or stale paths, and an exact candidate version. The mechanism checks
+    all of that; a receipt short of it is refused with 17 or 12.
+    """
+    return {
+        "receipt_schema_version": "stage_receipt.v1",
+        "mechanism_version": "stage_collaborative_deliberation.v1",
+        "active_contract_version": "阶段profile契约_v1",
+        "boot_manifest_version": "fixture-boot-1",
+        "registry_version": "fixture-registry-1",
+        "loader_version": "fixture-loader-1",
+        "profile_id_and_version": f"{sid}@v1",
+        "loaded_paths": [f"{RUN}/{sid}/model.yml"],
+        "missing_partial_or_stale_paths": [],
+        "trigger_evaluation_result_ref": f"{RUN}/{sid}/model.yml",
+        "activation_mode_or_dormant_reason": "active",
+        "main_mechanism_ref": "01_os/03_mechanisms/stage_collaborative_deliberation",
+        "detail_granularity_evaluation_result": "sufficient",
+        "open_detail_divergence_event_refs": [],
+        "deferred_detail_record_refs": [],
+        "gate_results": {"start": "pass", "completion": "pass"},
+        "validator_mode_and_exit_code": {"mode": "full", "exit_code": 0},
+        "exact_candidate_version": candidate_version,
+        "created_by_actor_ref": "gate-fixture",
+        "created_at": "2026-09-13T00:00:00Z",
+    }
 
 
 def write(repo: Path, rel: str, data) -> str:
@@ -152,15 +249,20 @@ class Chain:
         self.boundary = commit(self.repo, "boundary")
         self.stages: dict[str, dict] = {}
         self.controls: dict[str, dict] = {}
+        self.receipts: dict[str, dict] = {}
         prev_c: str | None = None
 
         for index, sid in enumerate(STAGES):
             d = f"{RUN}/{sid}"
-            model_blob = write(self.repo, f"{d}/model.yml",
-                               {"stage_id": sid, "model": f"model for {sid}"})
+            baseline = prev_c or self.boundary
+            receipt = stage_receipt(sid, baseline)
+            model_blob = write(self.repo, f"{d}/model.yml", current_model(sid, baseline))
             m = commit(self.repo, f"{sid} model")
 
-            plan_record = dict(ACCEPTED, stage_id=sid, accepts=model_blob)
+            # exact_model_version names M, which exists by now. A record written at
+            # P can name the commit it accepted; it could not name its own.
+            plan_record = accepted(sid, PLAN_DECISION,
+                                   exact_model_version=m, accepts=model_blob)
             if prev_c is not None:
                 # The binding lives in the record the Human accepted, where the
                 # blob sha covers it, not in a summary field of the artifact.
@@ -186,13 +288,27 @@ class Chain:
                 },
             }
             write(self.repo, f"{RUN}/{FILES[index]}",
-                  {"stage_id": sid, "stage_control": control})
+                  {"stage_id": sid, "stage_control": control,
+                   "deliberation_receipt": receipt})
             w = commit(self.repo, f"{sid} work")
 
             ver_blob = write(self.repo, f"{d}/verification.yml", {"stage_id": sid, "of": w})
             ver_commit = commit(self.repo, f"{sid} verification evidence")
 
-            comp_record = dict(ACCEPTED, stage_id=sid, accepts_output_commit=w)
+            # The completion record names the output commit it accepted and the
+            # verification evidence it rests on, and carries the closure fields.
+            # A plan record copied here is refused on its decision type alone.
+            comp_record = accepted(
+                sid, COMPLETION_DECISION,
+                bound_output_version=w,
+                verification_result={"commit": ver_commit,
+                                     "path": f"{d}/verification.yml",
+                                     "blob_sha": ver_blob},
+                plan_vs_actual_delta="none_material",
+                material_deviation="none_material",
+                residual_risk="none_material",
+                downstream_baseline=w,
+            )
             if sid in completion_mutators:
                 completion_mutators[sid](comp_record, self)
             comp_blob = write(self.repo, f"{d}/completion_acceptance.yml", comp_record)
@@ -207,17 +323,20 @@ class Chain:
                                         "blob_sha": ver_blob},
             }
             write(self.repo, f"{RUN}/{FILES[index]}",
-                  {"stage_id": sid, "stage_control": control})
+                  {"stage_id": sid, "stage_control": control,
+                   "deliberation_receipt": receipt})
             c = commit(self.repo, f"{sid} completion acceptance")
 
             self.stages[sid] = {"m": m, "p": p, "w": w, "c": c}
             self.controls[sid] = control
+            self.receipts[sid] = receipt
             prev_c = c
 
         write(self.repo, f"{RUN}/manifest.yml",
               {"artifacts": [{"stage_id": s, "path": f} for s, f in zip(STAGES, FILES)]})
         write(self.repo, f"{RUN}/run.yml",
-              {"base_sha": self.boundary_child(), "final_stage_completion_commit": prev_c})
+              {"task_id": TASK_ID, "base_sha": self.boundary_child(),
+               "final_stage_completion_commit": prev_c})
         self.head = commit(self.repo, "run identity")
 
     def boundary_child(self) -> str:
@@ -227,7 +346,12 @@ class Chain:
         index = STAGES.index(sid)
         control = json_round(self.controls[sid])
         mutate(control)
-        write(self.repo, f"{RUN}/{FILES[index]}", {"stage_id": sid, "stage_control": control})
+        # The receipt travels with the artifact. Rewriting one without it would
+        # make every structural mutation fail on a missing receipt instead of on
+        # the invariant the case is actually about.
+        write(self.repo, f"{RUN}/{FILES[index]}",
+              {"stage_id": sid, "stage_control": control,
+               "deliberation_receipt": self.receipts[sid]})
         self.head = commit(self.repo, f"mutate {sid}")
 
     def rewrite_run(self, mutate) -> None:
@@ -555,18 +679,39 @@ class AcceptanceCases(unittest.TestCase):
     def tearDown(self) -> None:
         discard(self.tmp)
 
-    def chain(self, plan: dict | None = None, completion: dict | None = None) -> Chain:
-        """A chain whose first stage carries the mutation under test."""
+    def chain(self, plan=None, completion=None) -> Chain:
+        """A chain whose first stage carries the mutation under test.
+
+        A mutation is a mapping to merge, or a callable for cases that must remove
+        a field rather than change one. Omission is its own attack: the identity
+        checks used to fire only when both sides were present, so a record that
+        simply left task_id out bound to nothing and passed.
+        """
         def at_first(mutation):
+            if callable(mutation):
+                return {STAGES[0]: lambda record, _: mutation(record)}
             return {STAGES[0]: lambda record, _: record.update(mutation)}
         return Chain(self.tmp,
                      plan_mutators=at_first(plan) if plan is not None else None,
                      completion_mutators=at_first(completion) if completion is not None else None)
 
-    def assertMechanismRefused(self, code: int, findings: list[str], half: str) -> None:
+    def assertMechanismRefused(self, code: int, findings: list[str], half: str,
+                               reason: str, owner_code: int | None = None) -> None:
+        """Exit 17, the right half, and the mechanism's own diagnosis.
+
+        Asserting only 17 and the half was too weak: two different defects in the
+        same record satisfied the same assertion, so a case could pass while
+        proving something other than what it claimed. The reason string comes from
+        the mechanism, not from the gate.
+        """
         joined = " | ".join(findings)
         self.assertEqual(code, 17, f"expected exit 17, got {code}: {joined}")
-        self.assertIn(f"{half} was refused by the deliberation mechanism", joined, joined)
+        self.assertIn(f"{half} acceptance was refused by the deliberation mechanism",
+                      joined, joined)
+        self.assertIn(reason, joined, f"refused, but not for the named reason: {joined}")
+        if owner_code is not None:
+            self.assertIn(f"exit {owner_code})", joined,
+                          f"refused with a different mechanism code: {joined}")
 
     # -- the positive control ------------------------------------------------
 
@@ -575,58 +720,194 @@ class AcceptanceCases(unittest.TestCase):
         code, findings = self.chain().run_gate()
         self.assertEqual(code, 0, " | ".join(findings))
 
-    # -- the plan half -------------------------------------------------------
+    # -- who the record says accepted ----------------------------------------
 
     def test_plan_record_from_an_executor_is_refused(self):
         code, findings = self.chain(plan={"actor_class": "executor"}).run_gate()
-        self.assertMechanismRefused(code, findings, "plan_acceptance")
+        self.assertMechanismRefused(code, findings, "plan", "common_Human_record", 15)
 
     def test_plan_record_with_a_rejected_disposition_is_refused(self):
         code, findings = self.chain(plan={"Human_disposition": "rejected"}).run_gate()
-        self.assertMechanismRefused(code, findings, "plan_acceptance")
+        self.assertMechanismRefused(code, findings, "plan", "common_Human_record", 15)
 
     def test_plan_record_that_is_not_explicit_is_refused(self):
         code, findings = self.chain(plan={"explicit": False}).run_gate()
-        self.assertMechanismRefused(code, findings, "plan_acceptance")
+        self.assertMechanismRefused(code, findings, "plan", "common_Human_record", 14)
 
     def test_plan_record_without_foreground_provenance_is_refused(self):
         code, findings = self.chain(plan={"provenance": None}).run_gate()
-        self.assertMechanismRefused(code, findings, "plan_acceptance")
+        self.assertMechanismRefused(code, findings, "plan", "common_Human_record", 15)
 
     def test_stale_plan_record_is_refused(self):
         code, findings = self.chain(plan={"stale": True}).run_gate()
-        self.assertMechanismRefused(code, findings, "plan_acceptance")
+        self.assertMechanismRefused(code, findings, "plan", "common_Human_record", 12)
 
     def test_synthetic_marked_record_is_refused(self):
         """A fixture must not be able to manufacture an acceptance.
 
-        This is the guard on the fabricated approvals in ACCEPTED above. The
-        mechanism refuses any record carrying synthetic_test_record outside a
-        synthetic authority context, and the gate has no flag that could supply
-        one - offering it would be a production bypass wearing a test's clothes.
+        This is the guard on the fabricated approvals above. The mechanism refuses
+        any record carrying synthetic_test_record outside a synthetic authority
+        context, and the gate has no flag that could supply one - offering it
+        would be a production bypass wearing a test's clothes.
         """
         code, findings = self.chain(plan={"synthetic_test_record": True}).run_gate()
-        self.assertMechanismRefused(code, findings, "plan_acceptance")
+        self.assertMechanismRefused(code, findings, "plan",
+                                    "synthetic_record_outside_synthetic_context", 15)
 
-    # -- the completion half, judged on its own ------------------------------
+    # -- the record must carry a commitment at all ---------------------------
+
+    def test_record_without_a_commitment_is_refused(self):
+        """"Challengeable" is a claim about a commitment nobody had checked.
+
+        Until this, the publication path validated the common Human fields and
+        stopped. A record with no nonce_commitment at all passed, while the
+        registry described it as challengeable. Structure is the challengeable
+        part; recomputing the digest is the interactive challenge and does not
+        run here.
+        """
+        code, findings = self.chain(
+            plan=lambda r: r.pop("nonce_commitment")).run_gate()
+        self.assertMechanismRefused(code, findings, "plan",
+                                    "authority_record_commitments", 15)
+
+    def test_record_with_a_malformed_commitment_digest_is_refused(self):
+        code, findings = self.chain(
+            plan={"nonce_commitment": commitment("not-hex" + "0" * 57)}).run_gate()
+        self.assertMechanismRefused(code, findings, "plan",
+                                    "authority_record_commitments", 15)
+
+    # -- identity, including by omission -------------------------------------
+
+    def test_record_naming_another_stage_is_refused(self):
+        code, findings = self.chain(plan={"stage_id": STAGES[4]}).run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "stage_id_mismatch", 15)
+
+    def test_record_naming_another_task_is_refused(self):
+        code, findings = self.chain(plan={"task_id": "some-other-task"}).run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "task_id_mismatch", 15)
+
+    def test_record_omitting_task_id_is_refused(self):
+        """Bypass 1. The run declares a task; the record simply left it out.
+
+        The identity comparisons used to fire only when both sides were present,
+        so omission bound the record to nothing and passed.
+        """
+        code, findings = self.chain(plan=lambda r: r.pop("task_id")).run_gate()
+        self.assertMechanismRefused(code, findings, "plan",
+                                    "task_id_absent_from_record", 15)
+
+    def test_record_omitting_stage_id_is_refused(self):
+        code, findings = self.chain(plan=lambda r: r.pop("stage_id")).run_gate()
+        self.assertMechanismRefused(code, findings, "plan",
+                                    "stage_id_absent_from_record", 15)
+
+    # -- what the plan record accepted ---------------------------------------
+
+    def test_plan_record_naming_a_stale_model_version_is_refused(self):
+        """Bypass 2. The record accepts a model other than the one bound.
+
+        stage_control binds the real current model; the record names an older
+        commit. Nothing compared the two, so it passed.
+        """
+        chain = self.chain(plan=lambda r: r.update({"exact_model_version": r["accepts"]}))
+        code, findings = chain.run_gate()
+        self.assertMechanismRefused(
+            code, findings, "plan",
+            "plan_record_model_version_is_not_the_accepted_model_commit", 13)
+
+    def test_control_accepting_a_model_it_did_not_bind_is_refused(self):
+        """The same gap from the control side rather than the record side."""
+        chain = self.chain()
+        sid = STAGES[0]
+        other = chain.controls[STAGES[3]]["current_model_ref"]["blob_sha"]
+        chain.rewrite_artifact(
+            sid, lambda c: c["plan_acceptance"].__setitem__("accepted_model_blob_sha", other))
+        code, findings = chain.run_gate()
+        joined = " | ".join(findings)
+        self.assertNotEqual(code, 0, joined)
+
+    # -- what the completion record accepted ---------------------------------
 
     def test_completion_record_is_judged_independently(self):
         """A good plan record does not vouch for the completion record."""
         code, findings = self.chain(completion={"actor_class": "executor"}).run_gate()
-        self.assertMechanismRefused(code, findings, "completion_acceptance")
+        self.assertMechanismRefused(code, findings, "completion", "common_Human_record", 15)
 
     def test_synthetic_marked_completion_record_is_refused(self):
         code, findings = self.chain(completion={"synthetic_test_record": True}).run_gate()
-        self.assertMechanismRefused(code, findings, "completion_acceptance")
+        self.assertMechanismRefused(code, findings, "completion",
+                                    "synthetic_record_outside_synthetic_context", 15)
 
-    # -- binding -------------------------------------------------------------
+    def test_plan_record_copied_into_the_completion_slot_is_refused(self):
+        """Bypass 3. The same decision filed twice, accepting nothing new.
 
-    def test_record_naming_another_stage_is_refused(self):
-        chain = self.chain(plan={"stage_id": STAGES[4]})
+        A completion acceptance that is a copy of the plan acceptance accepts no
+        output and rests on no verification evidence. Nothing distinguished the
+        two decisions, so it passed. They are different decision types, and the
+        mechanism refuses the substitution on that alone.
+        """
+        def as_plan(record):
+            record.clear()
+            record.update(accepted(STAGES[0], PLAN_DECISION,
+                                   exact_model_version="0" * 40, accepts="0" * 40))
+        code, findings = self.chain(completion=as_plan).run_gate()
+        self.assertMechanismRefused(code, findings, "completion",
+                                    "decision_type_is_not_a_completion_acceptance", 15)
+
+    def test_completion_record_not_binding_the_stage_output_is_refused(self):
+        chain = self.chain(completion={"bound_output_version": "0" * 40})
+        code, findings = chain.run_gate()
+        self.assertMechanismRefused(
+            code, findings, "completion",
+            "completion_record_does_not_bind_the_stage_output_commit", 13)
+
+    def test_completion_record_not_naming_the_verification_evidence_is_refused(self):
+        chain = self.chain(completion={"verification_result": {
+            "commit": "0" * 40, "path": "elsewhere.yml", "blob_sha": "0" * 40}})
+        code, findings = chain.run_gate()
+        self.assertMechanismRefused(
+            code, findings, "completion",
+            "completion_record_does_not_name_the_verification_evidence", 13)
+
+    def test_completion_record_missing_a_closure_field_is_refused(self):
+        code, findings = self.chain(
+            completion=lambda r: r.pop("residual_risk")).run_gate()
+        self.assertMechanismRefused(code, findings, "completion",
+                                    "closure_field_absent:residual_risk", 14)
+
+    # -- the model and the receipt the mechanism requires --------------------
+
+    def test_incomplete_current_model_is_refused(self):
+        """The model is judged, not merely hashed.
+
+        Its blob identity was checked all along; whether it was a Current Model
+        at all was not.
+        """
+        chain = Chain(self.tmp)
+        sid = STAGES[0]
+        path = chain.repo / RUN / sid / "model.yml"
+        model = yaml.safe_load(path.read_text(encoding="utf-8"))
+        del model["feasibility_support"]
+        blob = write(chain.repo, f"{RUN}/{sid}/model.yml", model)
+        chain.rewrite_artifact(sid, lambda c: (
+            c["current_model_ref"].__setitem__("blob_sha", blob),
+            c["plan_acceptance"].__setitem__("accepted_model_blob_sha", blob)))
         code, findings = chain.run_gate()
         joined = " | ".join(findings)
-        self.assertEqual(code, 17, joined)
-        self.assertIn("which is not this stage", joined, joined)
+        self.assertNotEqual(code, 0, joined)
+
+    def test_receipt_with_a_failing_gate_is_refused(self):
+        chain = Chain(self.tmp)
+        sid = STAGES[0]
+        index = STAGES.index(sid)
+        receipt = json_round(chain.receipts[sid])
+        receipt["gate_results"]["completion"] = "fail"
+        write(chain.repo, f"{RUN}/{FILES[index]}",
+              {"stage_id": sid, "stage_control": json_round(chain.controls[sid]),
+               "deliberation_receipt": receipt})
+        chain.head = commit(chain.repo, "receipt with a failing gate")
+        code, findings = chain.run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "base_stage_receipt", 17)
 
     # -- what the verdict is about -------------------------------------------
 

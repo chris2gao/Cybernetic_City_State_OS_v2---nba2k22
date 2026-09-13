@@ -120,14 +120,24 @@ try {
     StubGate 0
     Case 'gate PASS, feature push still allowed' "refs/heads/x $head refs/heads/tmp/foo $parent" 0 $false
 
+    # The expected code is the gate's own, not 1. The task packet says this caller
+    # propagates a nonzero gate exit code unchanged, and until 2026-09-13 it
+    # flattened every refusal to 1 - identical to git, which only distinguishes
+    # zero from nonzero, but it made the packet's wording untrue and discarded the
+    # diagnosis. These two cases are what hold the caller to that wording.
     StubGate 13
-    Case 'gate nonzero blocks an allowed push'   "refs/heads/x $head refs/heads/tmp/foo $parent" 1 $false
+    Case 'gate verdict 13 propagates'            "refs/heads/x $head refs/heads/tmp/foo $parent" 13 $false
 
     # Verdict consumed, not merely produced. With the gate forced to refuse, a
     # push that every other rule permits must still be refused; if the hook ran
     # the gate and carried on, this case would report exit 0.
     StubGate 41
-    Case 'gate not-validated also blocks'        "refs/heads/x $head refs/heads/tmp/new $Z"      1 $false
+    Case 'gate verdict 41 propagates'            "refs/heads/x $head refs/heads/tmp/new $Z"      41 $false
+
+    # A refusal this hook makes on its own is not the gate's, and stays 1. Without
+    # this, propagating the gate's code could quietly swallow the master rule.
+    StubGate 0
+    Case 'hook own refusal stays 1'              "refs/heads/x $head refs/heads/master $parent"  1 $false
 
     # The real gate, asked to judge without being told what to judge.
     #
@@ -150,7 +160,9 @@ try {
         "runpy.run_path('$target', run_name='__main__')"
     ) -join "`n"
     [System.IO.File]::WriteAllText($wtGate, $wrapper + "`n", $enc)
-    Case 'real gate, no candidate, blocks'       "refs/heads/x $head refs/heads/tmp/foo $parent" 1 $false
+    # argparse refuses a missing required argument with 2, and 2 is what reaches
+    # the caller. The chain measured end to end is gate 2 -> hook 2.
+    Case 'real gate, no candidate, blocks'       "refs/heads/x $head refs/heads/tmp/foo $parent" 2 $false
 }
 finally {
     $CaseCwd = $root
@@ -184,6 +196,6 @@ else { Write-Output ('  gate file untouched: ' + $gateShaBefore) }
 
 Remove-Item $inp -ErrorAction SilentlyContinue
 Write-Output ''
-if ($fails -eq 0) { Write-Output 'all 13 cases as specified'; exit 0 }
+if ($fails -eq 0) { Write-Output 'all 14 cases as specified'; exit 0 }
 Write-Output "$fails case(s) did not behave as specified"
 exit 1

@@ -71,21 +71,28 @@ rewritten. For that, read the remote.
 **What a clean push does and does not mean.** The publication gate this hook calls
 checks structure and ancestry — seven stages chained by strict Git ancestry, each
 phase contributing its own artifact, verification evidence where it says it is —
-and then reads both stage acceptance records at their own commits and hands each
-to the deliberation mechanism. The verdict on a record is the mechanism's, not the
-gate's, and a refusal stops the push with exit 17.
+and then, for each stage and each of the two acceptances separately, assembles from
+exact candidate Git objects everything that acceptance claims to accept and hands
+the lot to the deliberation mechanism. Every comparison is the mechanism's: who
+accepted, whether the record carries a valid commitment, whether it names this task
+and this stage, whether a plan acceptance accepted exactly the model that was bound,
+whether a completion acceptance binds the real output and its verification evidence,
+and whether the two decisions are being kept distinct. A refusal stops the push, and
+the hook exits with the gate's own code.
 
-Three things a pass still does not prove:
+Two things a pass still does not prove:
 
-- **It does not authenticate the Human.** The record says a current Human accepted;
-  nothing on this path proves one did. The canonical challenge is interactive and
-  cannot run here. The record is *challengeable*, not challenged.
-- **It does not do the cross-record binding.** The stronger check needs a
-  surrounding model and a confirmation pointer to compare decision ids and model
-  versions. The gate has a record and neither, so it gets what a record can be
-  judged on alone.
+- **It does not authenticate the Human.** The record's commitment structure is
+  checked, which is what makes it *challengeable*; recomputing that digest against
+  the Human's nonce is the interactive challenge and does not run here.
 - **It does not turn commit order into work order.** Ancestry proves publication
   sequence, never when anyone thought or decided.
+
+**Exit codes.** A semantic refusal travels as mechanism → gate 17 → hook 17.
+Refusals this hook makes itself — master authorization, non-fast-forward, or a gate
+it could not run at all — exit 1. Git only distinguishes zero from nonzero, so this
+changes nothing about whether a push is blocked; it changes what the number tells
+you afterwards.
 
 It also covers exactly one transport. An executor pushing through the GitHub API or
 a CLI that never invokes hooks is not unguarded and not unpermitted — it owes a

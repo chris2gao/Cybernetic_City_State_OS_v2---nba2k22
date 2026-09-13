@@ -1,0 +1,117 @@
+record_kind: audit_response
+record_version: 1
+date: 2026-09-13
+responds_to: 20260913_0ecc4d5a_W6只读审计
+audited_candidate: 0ecc4d5a84ca8a6b6bc0c68d425e32f5bdad63f3
+verdict_accepted: NOT_CLOSED
+
+summary: >-
+  The secondary co-auditor found three reproducible bypasses on 0ecc4d5a and was right about all
+  three. The data source was already commit-bound; the semantic entry was too weak. Every
+  comparison that was missing now lives in the deliberation mechanism, reached through one
+  candidate-bound context entry, and the gate compares nothing itself.
+
+bypasses_closed:
+- id: P1-1a
+  was: >-
+    a run declaring task_id whose stage records omitted task_id and stage_id passed, because the
+    identity comparisons fired only when both sides were present
+  now: refused, mechanism reason task_id_absent_from_record / stage_id_absent_from_record, code 15
+  negative_cases:
+  - test_record_omitting_task_id_is_refused
+  - test_record_omitting_stage_id_is_refused
+- id: P1-1b
+  was: >-
+    a plan record naming a wrong model blob and a stale exact_model_version passed while
+    stage_control still bound the real current model, because nothing compared them
+  now: >-
+    refused, mechanism reason plan_record_model_version_is_not_the_accepted_model_commit, code 13;
+    the control-side variant is refused as plan_accepted_model_is_not_the_bound_current_model
+  negative_cases:
+  - test_plan_record_naming_a_stale_model_version_is_refused
+  - test_control_accepting_a_model_it_did_not_bind_is_refused
+- id: P1-1c
+  was: >-
+    a plan record copied verbatim into the completion slot passed, accepting no output and resting
+    on no verification evidence, because nothing distinguished the two decisions
+  now: refused, mechanism reason decision_type_is_not_a_completion_acceptance, code 15
+  negative_cases:
+  - test_plan_record_copied_into_the_completion_slot_is_refused
+  - test_completion_record_not_binding_the_stage_output_is_refused
+  - test_completion_record_not_naming_the_verification_evidence_is_refused
+- id: P1-2
+  was: >-
+    the publication path never called validate_authority_record_commitments, so a record with no
+    commitment at all passed while the registry described it as challengeable
+  now: >-
+    refused, mechanism reason authority_record_commitments, code 15. Commitment structure is what
+    makes a record challengeable; recomputing the digest is verify_human_challenge and remains
+    interactive and off this path. The word is now backed by a check.
+  negative_cases:
+  - test_record_without_a_commitment_is_refused
+  - test_record_with_a_malformed_commitment_digest_is_refused
+- id: P1-3
+  was: Current Model, receipt and closure were never judged on the publication path
+  now: >-
+    the mechanism consumes validate_common_model_completeness, validate_base_stage_receipt and the
+    closure fields as part of one acceptance verdict
+  negative_cases:
+  - test_incomplete_current_model_is_refused
+  - test_receipt_with_a_failing_gate_is_refused
+  - test_completion_record_missing_a_closure_field_is_refused
+
+single_owner_preserved:
+  entry: validate_stage_acceptance_context
+  location: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py
+  gate_role: resolve exact refs at the candidate, assemble context, call, consume, refuse
+  weaker_entry_removed: >-
+    validate_standalone_acceptance_record was deleted rather than kept beside the new entry. A
+    second, weaker source of truth for "accepted" is worse than none, because its PASS reads
+    exactly like the real one.
+  no_manufactured_inputs: >-
+    no Human_confirmation was fabricated, no authority chain invented, no second receipt or second
+    Current Model created, no new pointer layer added, and no validator written inside the gate.
+    The identity, decision type and model version names are EVENT_COMMITMENT_BOUND_FIELDS, which a
+    v2 commitment is already computed over.
+
+positive_example_rebuilt:
+  was: four common fields, which was not a compliant example of anything
+  now: >-
+    full Current Model with every common field disposed, a base stage receipt with all twenty
+    required fields and both gates passing, structurally valid task and event commitments, exact
+    task and stage identity, decision types that separate the two acceptances, a plan record
+    naming the bound model commit, and a completion record binding the stage output and naming the
+    verification evidence with closure fields
+  synthetic_guard_kept: >-
+    records marked synthetic_test_record are still refused on the publication path, and the gate
+    exposes no flag that could supply a synthetic authority context
+
+exit_code_contract:
+  measured: mechanism 15 -> gate 17 -> hook 17
+  change: >-
+    the caller was changed to propagate the gate's code instead of flattening to 1, because the
+    task packet says it propagates unchanged. The wording was held and the caller corrected, not
+    the reverse. Refusals the hook makes itself still exit 1.
+  packet_wording_now_true: 任务包_v2_W6.yml line 33
+
+boundary_still_unbound:
+  field: applies_to_runs_created_after
+  state: TO_BE_BOUND_TO_EXACT_LANDING_COMMIT
+  rule: >-
+    --base is the remote old head the transport supplies and is not --boundary. No caller passes
+    --boundary, so every governed run at the candidate is judged, which is the conservative
+    reading. The cutoff must be bound by a successor record naming the exact landing commit and
+    cannot be a self-referential sha; it must not be inferred from --base.
+
+residual_limitations:
+- Human authentication is not on the publication path and is not claimed to be
+- non-local_git transports are uncovered and are marked uncovered, not covered
+- exit 41 remains unreachable from publication by design; no wiring was added to manufacture it
+
+not_done_this_round:
+- interactive Human authentication
+- github_api or github_cli transport adapters
+- historical worktree cleanup
+- any new future-shaped schema or field
+
+w6_status: not_closed

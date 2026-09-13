@@ -673,35 +673,131 @@ def validate_durable_disposition_record(
     return _validate_v2_record(record, confirmation, model)
 
 
-def validate_standalone_acceptance_record(
-    record: Any, *, synthetic_authority_context: bool = False,
-) -> int:
-    """One durable acceptance record, judged on its own terms.
+STAGE_ACCEPTANCE_DECISION_TYPES = {
+    "plan": AUTHORIZATION_DECISION_TYPE,
+    "completion": COMPLETION_DECISION_TYPE,
+}
 
-    Why this entry exists. The workflow publication gate holds a stage's plan or
-    completion acceptance record resolved from an exact Git blob, and nothing to
-    cross-check it against: there is no surrounding model whose
-    current_exact_model_version it must equal, and no Human_confirmation pointer
-    carrying a matching decision_id. validate_durable_disposition_record needs
-    both. So the gate could either reach into a private helper or restate these
-    rules itself, and restating them would create a second definition of what a
-    Human acceptance is - the one thing this whole arrangement exists to prevent.
 
-    This adds no rule. It is the part of durable-disposition validation a record
-    must satisfy alone, plus the synthetic marker check that
-    validate_durable_disposition_record applies first. Cross-record binding stays
-    where it was; a caller holding a model and a confirmation should still call
-    validate_durable_disposition_record and get the stronger answer.
+def _same_ref(left: Any, right: Any) -> bool:
+    """Two exact references name the same object."""
+    keys = ("commit", "path", "blob_sha")
+    if not isinstance(left, dict) or not isinstance(right, dict):
+        return False
+    if set(left) != set(keys) or set(right) != set(keys):
+        return False
+    return all(left[k] == right[k] for k in keys)
 
-    A record marked synthetic is refused outside a synthetic authority context.
-    That is deliberate and it is load-bearing for the gate: a test fixture cannot
-    manufacture an acceptance the publication path will honour.
+
+def validate_stage_acceptance_context(
+    context: Any, *, synthetic_authority_context: bool = False,
+) -> tuple[int, str]:
+    """One stage acceptance, judged against the exact objects it claims to accept.
+
+    This replaced validate_standalone_acceptance_record, which was a weaker entry
+    that answered a narrower question and let its PASS be read as "the stage was
+    accepted". A second, weaker source of truth for "accepted" is worse than none,
+    so it is gone rather than kept alongside this.
+
+    What that weakness cost, measured on 0ecc4d5a: a run declaring a task_id whose
+    records simply omitted task_id and stage_id passed, because the identity
+    comparisons were written to fire only when both sides were present. A plan
+    record naming the wrong model blob and a stale exact_model_version passed,
+    because nothing compared what the record said it accepted against what
+    stage_control bound. A plan record copied verbatim into the completion slot
+    passed, because nothing distinguished the two decisions. Three refusals that
+    should have been automatic.
+
+    The caller assembles the context from exact Git objects at the candidate and
+    consumes the verdict. It does not compare anything itself; every comparison
+    below belongs to this mechanism, and a publication gate that restated them
+    would be the second definition this file exists to prevent.
+
+    Nothing here is a new rule or a new field. The identity, decision type and
+    model-version names are EVENT_COMMITMENT_BOUND_FIELDS - precisely the fields a
+    v2 commitment is computed over - so requiring them is requiring what the
+    record's own commitment already covers.
+
+    Returns (code, reason). The reason is a short diagnosis so a caller can report
+    which binding failed without knowing why it matters.
     """
+    if not isinstance(context, dict):
+        return 11, "context_not_a_mapping"
+    phase = context.get("phase")
+    if phase not in STAGE_ACCEPTANCE_DECISION_TYPES:
+        return 11, "unknown_acceptance_phase"
+    record = context.get("record")
     if not isinstance(record, dict):
-        return 11
+        return 11, "record_not_a_mapping"
+
     if record.get(SYNTHETIC_MARKER) is True and not synthetic_authority_context:
-        return 15
-    return _validate_common_Human_record(record)
+        return 15, "synthetic_record_outside_synthetic_context"
+
+    code = _validate_common_Human_record(record)
+    if code:
+        return code, "common_Human_record"
+
+    # Without this, "the record is challengeable" is an assertion about a record
+    # nobody checked carried a commitment at all. Structure is the challengeable
+    # part; recomputing the digest against the Human's nonce is verify_human_-
+    # challenge, which is interactive and deliberately not on this path.
+    code = validate_authority_record_commitments(record)
+    if code:
+        return code, "authority_record_commitments"
+
+    for field, expected in (("task_id", context.get("task_id")),
+                            ("stage_id", context.get("stage_id"))):
+        actual = record.get(field)
+        if not actual:
+            return 15, f"{field}_absent_from_record"
+        if expected is not None and actual != expected:
+            return 15, f"{field}_mismatch"
+
+    decision_type = record.get("decision_type")
+    if decision_type not in DECISION_TYPES:
+        return 15, "decision_type_unknown"
+    if decision_type != STAGE_ACCEPTANCE_DECISION_TYPES[phase]:
+        return 15, f"decision_type_is_not_a_{phase}_acceptance"
+
+    if phase == "plan":
+        bound = context.get("bound_model")
+        accepted = context.get("accepted_model")
+        if not _same_ref(accepted, bound):
+            return 13, "plan_accepted_model_is_not_the_bound_current_model"
+        if record.get("exact_model_version") != accepted["commit"]:
+            return 13, "plan_record_model_version_is_not_the_accepted_model_commit"
+        model = context.get("model")
+        if not isinstance(model, dict):
+            return 11, "current_model_unreadable"
+        code = validate_common_model_completeness(model)
+        if code:
+            return code, "current_model_completeness"
+    else:
+        output = context.get("accepted_output")
+        verification = context.get("accepted_verification")
+        if not isinstance(output, dict) or "commit" not in output:
+            return 11, "accepted_output_reference_missing"
+        # The caller supplies the stage's real output commit as a topology fact and
+        # what the control declares as an accepted object. Comparing them is this
+        # mechanism's job: a control may declare an output that is not the one the
+        # stage actually produced.
+        if output["commit"] != context.get("stage_output_commit"):
+            return 13, "declared_accepted_output_is_not_this_stage_output"
+        if record.get("bound_output_version") != output["commit"]:
+            return 13, "completion_record_does_not_bind_the_stage_output_commit"
+        if not _same_ref(record.get("verification_result"), verification):
+            return 13, "completion_record_does_not_name_the_verification_evidence"
+        for field in CLOSURE_FIELDS:
+            if field not in record:
+                return 14, f"closure_field_absent:{field}"
+            if record.get(field) is None:
+                return 14, f"closure_field_null:{field}"
+
+    code = validate_base_stage_receipt(context.get("receipt"))
+    if code:
+        return code, "base_stage_receipt"
+
+    return 0, ""
 
 
 def validate_human_authority(

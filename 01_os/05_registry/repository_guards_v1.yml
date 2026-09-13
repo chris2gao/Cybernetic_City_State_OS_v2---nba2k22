@@ -115,37 +115,46 @@ guards:
       validator. That stopped being true within hours, and a limit that outlives
       the thing it describes is worse than no limit at all.
 
-      What the gate does as of 2026-09-12. Structure and ancestry: a governed
+      What the gate does as of 2026-09-13. Structure and ancestry: a governed
       run's seven stages chain by strict Git ancestry, each phase contributed its
       own artifact rather than repeating its predecessor's tree, and declared
-      verification evidence exists at the commit and path it names. Then both
-      acceptance records - the stage plan acceptance and the stage completion
-      acceptance - are read at their own commits from the declared blob and handed
-      to the deliberation mechanism's validate_standalone_acceptance_record. That
-      is the mechanism's judgement, not the gate's: foreground interaction, a
-      current Human, explicit, an affirmative disposition, not stale, and not a
-      record marked synthetic. A non-zero answer refuses the push with exit 17.
+      verification evidence exists at the commit and path it names.
 
-      What a pass still does not establish, stated because each one is a real gap
-      and not a hedge:
+      Then, for each stage and for each of the two acceptances separately, the
+      gate assembles from exact candidate Git objects what that acceptance claims
+      to accept - the record, the Current Model bound by stage_control, the stage
+      output, the verification evidence and the stage receipt - and hands the
+      whole context to the mechanism's validate_stage_acceptance_context. Every
+      comparison is the mechanism's. It requires a foreground, explicit, current
+      Human with an affirmative disposition; a structurally valid authority
+      commitment; a task id and stage id that are present and correct; a decision
+      type that distinguishes a plan acceptance from a completion acceptance; a
+      plan record that accepts exactly the model stage_control bound; a completion
+      record that binds this stage's output commit and names the verification
+      evidence; the closure fields; a complete Current Model; and a passing base
+      stage receipt. A non-zero answer refuses the push with exit 17 carrying the
+      mechanism's own code and diagnosis.
 
-      It does not authenticate the Human. The record says a current Human
-      accepted; nothing here proves one did. human_challenge_verify.py is the
-      canonical challenge and it is interactive, so it cannot run on this path.
-      The honest claim is that the record is challengeable, not that it was
-      challenged.
+      An earlier wording of this field, written the previous day, described a
+      weaker entry that checked four common fields. Three bypasses lived behind
+      it, all measured on 0ecc4d5a: records that simply omitted task_id and
+      stage_id, a plan record naming a model other than the bound one, and a plan
+      record copied into the completion slot. All three passed. They are negative
+      cases now.
 
-      It does not perform the cross-record binding. The stronger check is
-      validate_durable_disposition_record, and it needs a surrounding model and a
-      Human_confirmation pointer to compare decision ids and model versions
-      against. The gate holds a record and neither of those, so it gets the part a
-      record can be judged on alone.
+      What a pass still does not establish:
+
+      It does not authenticate the Human. The record carries a commitment whose
+      structure is checked, which is what makes it challengeable; recomputing that
+      digest against the Human's nonce is verify_human_challenge, which is
+      interactive and cannot run on a publication path. Challengeable, not
+      challenged - and now the word is backed by a check rather than asserted.
 
       It does not make commit order into work order. Ancestry proves what was
       published in which sequence, never when anyone thought or decided.
 
-      Citing a clean push as proof of any of those three would be the same false
-      receipt this entry already names for the wrong-transport case.
+      Citing a clean push as proof of either would be the same false receipt this
+      entry already names for the wrong-transport case.
 
   - path: ".githooks/README.md"
     purpose: "How to enable the guard, what it refuses, and what it cannot do."

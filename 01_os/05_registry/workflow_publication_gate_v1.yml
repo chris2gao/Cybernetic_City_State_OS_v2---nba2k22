@@ -17,31 +17,52 @@ ownership_boundary:
   mechanism_semantics_owner: >-
     01_os/03_mechanisms/stage_collaborative_deliberation owns Human disposition, Current Model
     completeness, receipt validity, feasibility basis and closure. The gate evaluates none of them.
-    Since 2026-09-12 it does ask: it resolves each stage's two acceptance records and calls
-    validate_standalone_acceptance_record, then refuses on a non-zero answer. Asking the owner and
-    consuming the answer is the opposite of growing a second copy, and the distinction is the whole
-    point - a gate that restated what a Human acceptance is would be a second definition of it.
+    Since 2026-09-13 it asks properly: it assembles, from exact candidate Git objects, everything
+    a stage acceptance claims to accept and calls validate_stage_acceptance_context, then refuses
+    on a non-zero answer. Asking the owner and consuming the answer is the opposite of growing a
+    second copy, and the distinction is the whole point - a gate that restated what a Human
+    acceptance is would be a second definition of it.
+
+    The first attempt at this, on 2026-09-12, called a weaker entry that judged four common fields
+    of one record in isolation. It was replaced rather than kept alongside: a second, weaker source
+    of truth for "accepted" is worse than none, because its PASS reads exactly like the real one.
 
 what_the_gate_decides:
 - exact reference resolution
 - strict Git ancestry between the nodes of each stage chain
 - phase content separation, read from trees at named commits
 - composition of the seven stages into one chain
-- that both acceptance records exist at their declared commit and blob, and that the deliberation
-  mechanism accepts each one
-- that an acceptance record names this stage and this task, where it names either
+- >-
+    resolution of everything a stage acceptance claims to accept - the record, the Current Model
+    stage_control bound, the stage output, the verification evidence and the stage receipt - each
+    read at its own commit and checked against its declared blob
+- that the deliberation mechanism accepts each of the two acceptances, judged separately
 - fail-closed progression
+
+what_the_mechanism_decides_when_this_gate_asks: >-
+  validate_stage_acceptance_context, in stage_collaborative_deliberation, is the single owner and
+  every comparison lives there. It requires a foreground, explicit, current Human with an
+  affirmative disposition; a structurally valid authority commitment; a task id and a stage id
+  that are present and correct, so omission is a refusal rather than a skipped check; a decision
+  type that distinguishes a plan acceptance from a completion acceptance, so one cannot be filed
+  as the other; a plan record accepting exactly the model stage_control bound; a completion record
+  binding this stage's real output commit and naming the verification evidence; the closure
+  fields; a complete Current Model; and a passing base stage receipt. The gate compares nothing.
 
 what_the_gate_does_not_decide:
 - >-
-    whether a Human actually produced the record. The record is challengeable, not challenged;
-    the canonical challenge is interactive and cannot run on a publication path.
-- the cross-record binding between a record, a surrounding model version and a confirmation
-  pointer. validate_durable_disposition_record is the stronger check and needs inputs the gate
-  does not hold; the gate gets the part a record can be judged on alone.
+    whether a Human actually produced the record. The commitment structure is checked, which is
+    what makes the record challengeable; recomputing the digest against the Human's nonce is
+    verify_human_challenge, which is interactive and cannot run on a publication path.
 - whether the work happened after the acceptance. Ancestry is publication order, never work order.
 - whether a design is sound or a risk matters
 - whether the supplied publication base is the transport's real old head
+- >-
+    the effective non-retroactive cutoff. --base is the remote old head the transport supplies and
+    is not --boundary; no caller passes --boundary today, so every governed run at the candidate is
+    judged. applies_to_runs_created_after is still unbound and must be bound by a successor record
+    naming the exact landing commit. Deriving it from --base would be substituting one concept for
+    another.
 
 exit_codes:
   0: pass
@@ -112,16 +133,31 @@ caller_coverage:
     gate refuses, and refused when the gate cannot be run at all. Every other transport is
     ungated, so no completion brief may say that publication is gated without naming which
     transport it means.
+  exit_code_contract: >-
+    the hook exits with the gate's own code, so a real semantic refusal travels as mechanism 15 ->
+    gate 17 -> hook 17. Refusals the hook makes itself - master authorization, non-fast-forward,
+    or a gate it could not run at all - are not the gate's and exit 1. Until 2026-09-13 every
+    refusal was flattened to 1, which git treats identically but which made the task packet's
+    "propagates a nonzero gate exit code unchanged" untrue and discarded the diagnosis; the caller
+    was changed to match the wording rather than the wording relaxed to match the caller. On a
+    multi-ref push the first gate verdict is the one reported, and every ref is still asked about.
 
 registered_gap:
   statement: >-
-    the gate consumes the part of acceptance validation a record can carry alone, and no
-    publication consumer performs the cross-record binding or any Human authentication
+    no publication consumer authenticates a Human, and the effective non-retroactive cutoff is
+    still unbound
   reason: >-
-    validate_durable_disposition_record needs a surrounding model and a confirmation pointer that
-    the gate does not hold, and human_challenge_verify.py is interactive and unreachable from a
-    publication path. Both are real gaps, not scope reductions, and neither is closed by this
-    entry existing.
+    human_challenge_verify.py recomputes a commitment against the Human's nonce and is
+    interactive, so it cannot run on a publication path; the structural commitment check is what
+    makes a record challengeable, and the distinction is stated rather than blurred.
+    applies_to_runs_created_after must be bound by a successor record naming the exact landing
+    commit, which cannot be a self-referential sha and must not be inferred from --base. Both are
+    real gaps, not scope reductions, and neither is closed by this entry existing.
+  closed_on_2026-09-13: >-
+    the cross-record binding, previously registered here as open. task and stage identity, the
+    plan record's accepted model, the completion record's output and verification evidence, and
+    the non-interchangeability of the two decisions are all judged by the mechanism now, with the
+    three bypasses that proved the gap kept as negative cases.
   rule_followed: >-
     the registry README requires a gap to be written down rather than left blank, as
     task_orchestration_v1.yml does for its missing boot manifest

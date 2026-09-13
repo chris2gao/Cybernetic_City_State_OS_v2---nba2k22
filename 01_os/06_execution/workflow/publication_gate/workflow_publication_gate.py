@@ -457,9 +457,9 @@ def _load_mechanism() -> object:
         raise GateError(REPO, f"cannot load the deliberation mechanism at {MECHANISM}")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    if not hasattr(module, "validate_standalone_acceptance_record"):
+    if not hasattr(module, "validate_stage_acceptance_context"):
         raise GateError(REPO, "the deliberation mechanism has no "
-                              "validate_standalone_acceptance_record entry; this gate will not "
+                              "validate_stage_acceptance_context entry; this gate will not "
                               "substitute a judgement of its own")
     return module
 
@@ -478,8 +478,74 @@ def _acceptance_ref(control: dict, field_name: str, stage_id: str, fallback_comm
     return commit, path, blob
 
 
+def _exact(repo: Path, ref: Any, where: str) -> dict:
+    """An exact {commit, path, blob_sha} reference, verified against the candidate."""
+    _require(isinstance(ref, dict), REF, f"{where}: reference is missing or not a mapping")
+    missing = {"commit", "path", "blob_sha"} - set(ref)
+    _require(not missing, REF, f"{where}: reference is missing {sorted(missing)}")
+    _require(_is_sha(ref["commit"]), REF, f"{where}: commit is not a 40-character sha")
+    _require(_is_sha(ref["blob_sha"]), REF, f"{where}: blob_sha is not a 40-character sha")
+    _require(isinstance(ref["path"], str) and ref["path"], REF, f"{where}: path is empty")
+    _blob_must_match(repo, ref["commit"], ref["path"], ref["blob_sha"], where)
+    return {"commit": ref["commit"], "path": ref["path"], "blob_sha": ref["blob_sha"]}
+
+
+def _acceptance_context(repo: Path, node: StageNodes, control: dict, art: dict,
+                        task_id: str, phase: str) -> dict:
+    """Assemble what one stage acceptance claims to accept, from candidate objects.
+
+    Resolution only. Every reference is read at its own commit and checked against
+    its declared blob, so the content handed to the mechanism is what was
+    published rather than what happens to be on disk. Nothing here decides whether
+    the acceptance is valid: no field of the record is compared with any other,
+    because that comparison belongs to the mechanism and a second copy of it here
+    is precisely the failure this arrangement exists to prevent.
+    """
+    field_name = f"{phase}_acceptance"
+    fallback = node.p if phase == "plan" else node.c
+    commit, path, blob = _acceptance_ref(control, field_name, node.stage_id, fallback)
+    record_ref = _exact(repo, {"commit": commit, "path": path, "blob_sha": blob},
+                        f"{node.stage_id} {field_name}")
+    record = _load_yaml_at(repo, commit, path)
+    _require(isinstance(record, dict), REF,
+             f"{node.stage_id}: {field_name} at {commit[:12]} is not a mapping")
+
+    context = {"task_id": task_id, "stage_id": node.stage_id, "phase": phase,
+               "record": record, "record_ref": record_ref,
+               "receipt": art.get("deliberation_receipt")}
+
+    if phase == "plan":
+        model_ref = control.get("current_model_ref")
+        _require(isinstance(model_ref, dict), REF,
+                 f"{node.stage_id}: current_model_ref is missing or not a mapping")
+        # The model lives at M, which is a topology fact this gate already holds.
+        # The control states path and blob; it does not restate the commit.
+        bound = _exact(repo, {"commit": node.m, "path": model_ref.get("path"),
+                              "blob_sha": model_ref.get("blob_sha")},
+                       f"{node.stage_id} current_model_ref")
+        accepted = _exact(repo, {"commit": control[field_name].get("accepted_model_commit"),
+                                 "path": control[field_name].get("accepted_model_path"),
+                                 "blob_sha": control[field_name].get("accepted_model_blob_sha")},
+                          f"{node.stage_id} plan_acceptance accepted model")
+        context["bound_model"] = bound
+        context["accepted_model"] = accepted
+        context["model"] = _load_yaml_at(repo, accepted["commit"], accepted["path"])
+    else:
+        completion = control[field_name]
+        context["stage_output_commit"] = node.w
+        context["accepted_output"] = _exact(
+            repo, {"commit": completion.get("bound_output_version"),
+                   "path": completion.get("output_path"),
+                   "blob_sha": completion.get("output_blob_sha")},
+            f"{node.stage_id} completion_acceptance accepted output")
+        context["accepted_verification"] = _exact(
+            repo, completion.get("verification_result"),
+            f"{node.stage_id} completion_acceptance verification evidence")
+    return context
+
+
 def _check_acceptance(repo: Path, nodes: list[StageNodes], controls: dict[str, dict],
-                      run_doc: dict) -> None:
+                      arts: dict[str, dict], run_doc: dict) -> None:
     """Open both acceptance records and let the mechanism judge them.
 
     Until this existed the gate checked that a run's seven stages chained by
@@ -501,29 +567,21 @@ def _check_acceptance(repo: Path, nodes: list[StageNodes], controls: dict[str, d
     """
     mech = _load_mechanism()
     task_id = run_doc.get("task_id")
+    _require(isinstance(task_id, str) and task_id, REF,
+             "run.yml must state task_id; without it an acceptance record cannot be bound to a "
+             "task, and a record that simply omits the field would bind to nothing")
     for node in nodes:
         control = controls[node.stage_id]
-        for field_name, fallback in (("plan_acceptance", node.p),
-                                     ("completion_acceptance", node.c)):
-            commit, path, blob = _acceptance_ref(control, field_name, node.stage_id, fallback)
-            _blob_must_match(repo, commit, path, blob, f"{node.stage_id} {field_name}")
-            record = _load_yaml_at(repo, commit, path)
-            _require(isinstance(record, dict), REF,
-                     f"{node.stage_id}: {field_name} at {commit[:12]} is not a mapping")
-            code = mech.validate_standalone_acceptance_record(record)
+        art = arts[node.stage_id]
+        for phase in ("plan", "completion"):
+            context = _acceptance_context(repo, node, control, art, task_id, phase)
+            code, reason = mech.validate_stage_acceptance_context(context)
             _require(code == 0, ACCEPT,
-                     f"{node.stage_id}: {field_name} was refused by the deliberation mechanism "
-                     f"(exit {code}). The record is at {path} in {commit[:12]}. This gate does "
-                     f"not restate what a Human acceptance is; it asked the owner and the owner "
-                     f"said no.")
-            if task_id is not None and record.get("task_id") is not None:
-                _require(record.get("task_id") == task_id, ACCEPT,
-                         f"{node.stage_id}: {field_name} names task {record.get('task_id')!r}, "
-                         f"but this run is {task_id!r}")
-            if record.get("stage_id") is not None:
-                _require(record.get("stage_id") == node.stage_id, ACCEPT,
-                         f"{node.stage_id}: {field_name} names stage "
-                         f"{record.get('stage_id')!r}, which is not this stage")
+                     f"{node.stage_id}: {phase} acceptance was refused by the deliberation "
+                     f"mechanism ({reason}, exit {code}). The record is at "
+                     f"{context['record_ref']['path']} in {context['record_ref']['commit'][:12]}. "
+                     f"This gate does not restate what a Human acceptance is; it assembled the "
+                     f"exact objects from the candidate, asked the owner, and the owner said no.")
 
 
 ABSENT = "absent"
@@ -621,10 +679,16 @@ def gate_run(repo: Path, candidate: str, run_root: str,
 
     nodes = _collect_nodes(repo, candidate, run_root, manifest, findings)
     controls: dict[str, dict] = {}
+    arts: dict[str, dict] = {}
     entries = manifest["artifacts"]
     for item in entries:
         art = _load_yaml_at(repo, candidate, f"{run_root}/{item['path']}")
         controls[item["stage_id"]] = art["stage_control"]  # type: ignore[index]
+        # The whole artifact is kept, not just stage_control. The stage receipt is
+        # a required field of the artifact and the mechanism needs it to judge an
+        # acceptance; re-reading it from a second location would be a second
+        # source for one object.
+        arts[item["stage_id"]] = art  # type: ignore[assignment]
 
     # C_7 comes from run.yml directly. There is no completion-pointer file in
     # this path at all.
@@ -648,7 +712,7 @@ def gate_run(repo: Path, candidate: str, run_root: str,
     _check_ordering(repo, nodes)
     _check_separation(repo, nodes, controls)
     _check_verification(repo, nodes, controls)
-    _check_acceptance(repo, nodes, controls, run_doc)
+    _check_acceptance(repo, nodes, controls, arts, run_doc)
     findings.note(f"{run_root}: seven stages chained, separated and accepted")
     return PASS
 
