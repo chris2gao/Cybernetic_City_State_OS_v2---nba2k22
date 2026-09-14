@@ -160,6 +160,35 @@ PROFILE_CONTRACT_DOC = {
 }
 
 
+# The seven profiles this synthetic repository declares. Each names the
+# stage-specific fields its stage must carry, and the mechanism composes
+# effective_current_stage_model = common fields + these. Two per stage rather than
+# one, so a model that happens to carry a single element cannot pass by accident.
+PROFILE_SET_PATH = "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml"
+STAGE_FIELDS = {sid: [f"{sid}_element_a", f"{sid}_element_b"] for sid in STAGES}
+PROFILE_SET_DOC = {
+    "profiles": [
+        {"profile_id": sid,
+         "profile_version": 1,
+         "required_model_fields": STAGE_FIELDS[sid],
+         "mechanism_ref": "01_os/03_mechanisms/stage_collaborative_deliberation"}
+        for sid in STAGES
+    ]
+}
+
+
+def stage_elements(sid: str) -> dict:
+    """One disposition per field this stage's profile requires.
+
+    represented_with_supported_value carries a value; the mechanism also accepts
+    an explicit irrelevance with a reason and scope. A missing field, or a
+    disposition it does not recognise, is refused.
+    """
+    return {field: {"disposition": "represented_with_supported_value",
+                    "value": f"{field} for the fixture run"}
+            for field in STAGE_FIELDS[sid]}
+
+
 def verification_doc(sid: str, output_commit: str) -> dict:
     """Exactly the five fields the contract names, and status verified.
 
@@ -184,7 +213,12 @@ def current_model(sid: str, baseline: str) -> dict:
     baseline it was authored against.
     """
     return {
+        # A model is valid for a task and a stage, not in the abstract. Without
+        # these two a stage 01 control could bind a model whose content said
+        # stage 02 and publish.
+        "task_id": TASK_ID,
         "stage_id": sid,
+        "stage_specific_model_elements": stage_elements(sid),
         "problem_or_objective": f"establish the {sid} artifact for the fixture run",
         "why_this_stage_is_needed_now": f"{sid} has no accepted artifact in this run yet",
         "Human_intent_understanding": "exercise the publication gate end to end",
@@ -215,13 +249,19 @@ def stage_receipt(sid: str, candidate_version: str) -> dict:
     all of that; a receipt short of it is refused with 17 or 12.
     """
     return {
-        "receipt_schema_version": "stage_receipt.v1",
+        # 加载与receipt契约_v1 names this identifier. The fixture said
+        # "stage_receipt.v1", which is a different schema, and passed: the object
+        # existed at the declared blob and nobody asked what schema it was.
+        "receipt_schema_version": "stage_collaborative_deliberation.stage_receipt.v1",
         "mechanism_version": "stage_collaborative_deliberation.v1",
         "active_contract_version": "阶段profile契约_v1",
         "boot_manifest_version": "fixture-boot-1",
         "registry_version": "fixture-registry-1",
         "loader_version": "fixture-loader-1",
-        "profile_id_and_version": f"{sid}@v1",
+        # resolve_profile parses the part after @ as an integer version, so this
+        # is "@1" and not "@v1". A reference that does not resolve means the
+        # stage's obligations are unknown, which the mechanism refuses.
+        "profile_id_and_version": f"{sid}@1",
         "loaded_paths": [f"{RUN}/{sid}/model.yml"],
         "missing_partial_or_stale_paths": [],
         "trigger_evaluation_result_ref": f"{RUN}/{sid}/model.yml",
@@ -309,6 +349,7 @@ class Chain:
         # is refused rather than judged against whatever the checkout happens to
         # have.
         write(self.repo, PROFILE_CONTRACT_PATH, PROFILE_CONTRACT_DOC)
+        write(self.repo, PROFILE_SET_PATH, PROFILE_SET_DOC)
         self.boundary = commit(self.repo, "boundary")
         self.stages: dict[str, dict] = {}
         self.controls: dict[str, dict] = {}
@@ -989,6 +1030,109 @@ class AcceptanceCases(unittest.TestCase):
             completion=lambda r: r.pop("residual_risk")).run_gate()
         self.assertMechanismRefused(code, findings, "completion",
                                     "closure_field_absent:residual_risk", 14)
+
+    # -- the model belongs to this task and this stage ------------------------
+
+    def test_model_naming_another_task_is_refused(self):
+        code, findings = self.chain(model={"task_id": "some-other-task"}).run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "model_task_mismatch", 13)
+
+    def test_model_naming_another_stage_is_refused(self):
+        """stage 01's control binding a model whose content says stage 02.
+
+        The binding was exact - right path, right blob, right commit - and the
+        model inside it belonged to a different stage. Everything the gate checked
+        was true and the stage was still not this stage's.
+        """
+        code, findings = self.chain(model={"stage_id": STAGES[1]}).run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "model_stage_mismatch", 13)
+
+    # -- the model satisfies this stage's profile, not just the common fields --
+
+    def test_model_missing_a_stage_specific_required_field_is_refused(self):
+        """effective_current_stage_model = common fields + this profile's fields.
+
+        Validating only the common set lets any stage pass another stage's
+        obligations, which is exactly what the publication path was doing.
+        """
+        def drop_one(model):
+            del model["stage_specific_model_elements"][STAGE_FIELDS[STAGES[0]][1]]
+        code, findings = self.chain(model=drop_one).run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "effective_stage_model", 16)
+
+    def test_model_with_no_stage_specific_surface_at_all_is_refused(self):
+        code, findings = self.chain(
+            model=lambda m: m.pop("stage_specific_model_elements")).run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "effective_stage_model", 16)
+
+    def test_element_with_an_unrecognised_disposition_is_refused(self):
+        def bad_disposition(model):
+            field = STAGE_FIELDS[STAGES[0]][0]
+            model["stage_specific_model_elements"][field] = {"disposition": "looks_fine"}
+        code, findings = self.chain(model=bad_disposition).run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "effective_stage_model", 16)
+
+    def test_receipt_naming_a_profile_that_does_not_resolve_is_refused(self):
+        """An unidentified profile means the stage's obligations are unknown."""
+        code, findings = self.chain(
+            receipt={"profile_id_and_version": "workflow_stage_01_requirement_modeling@99"}
+        ).run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "effective_stage_model", 16)
+
+    def test_receipt_naming_another_stages_profile_is_refused(self):
+        """Stage 01 judged against stage 05's obligations is not stage 01 judged."""
+        code, findings = self.chain(
+            receipt={"profile_id_and_version": f"{STAGES[4]}@1"}).run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "effective_stage_model", 16)
+
+    # -- the receipt is this schema's receipt --------------------------------
+
+    def test_receipt_with_another_schema_identifier_is_refused(self):
+        """Existing at the right blob is not the same as being this schema.
+
+        The fixture carried "stage_receipt.v1" while the contract names
+        "stage_collaborative_deliberation.stage_receipt.v1", and it passed,
+        because the object resolved and nobody asked what it was.
+        """
+        code, findings = self.chain(
+            receipt={"receipt_schema_version": "stage_receipt.v1"}).run_gate()
+        self.assertMechanismRefused(
+            code, findings, "plan",
+            "receipt_schema_version_is_not_the_canonical_stage_receipt", 17)
+
+    def test_receipt_missing_a_required_field_is_refused(self):
+        code, findings = self.chain(
+            receipt=lambda r: r.pop("trigger_evaluation_result_ref")).run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "base_stage_receipt", 17)
+
+    # -- object id syntax is syntax ------------------------------------------
+
+    def test_receipt_version_with_a_sign_is_refused(self):
+        """int(value, 16) accepts a leading sign. An object id does not.
+
+        "+" followed by 39 hex digits is forty characters and parses as a number,
+        so the first version of this check passed it.
+        """
+        code, findings = self.chain(
+            receipt={"exact_candidate_version": "+" + "a" * 39}).run_gate()
+        self.assertMechanismRefused(
+            code, findings, "plan",
+            "receipt_exact_candidate_version_is_not_a_commit_id", 17)
+
+    def test_receipt_version_with_underscores_is_refused(self):
+        """int(value, 16) treats underscores as digit separators. Same defect."""
+        code, findings = self.chain(
+            receipt={"exact_candidate_version": "a" * 20 + "_" * 2 + "b" * 18}).run_gate()
+        self.assertMechanismRefused(
+            code, findings, "plan",
+            "receipt_exact_candidate_version_is_not_a_commit_id", 17)
+
+    def test_receipt_version_in_uppercase_is_refused(self):
+        code, findings = self.chain(
+            receipt={"exact_candidate_version": "A" * 40}).run_gate()
+        self.assertMechanismRefused(
+            code, findings, "plan",
+            "receipt_exact_candidate_version_is_not_a_commit_id", 17)
 
     # -- the model and the receipt the mechanism requires --------------------
 

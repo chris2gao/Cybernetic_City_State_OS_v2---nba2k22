@@ -304,12 +304,19 @@ def load_profile_contract(repo_root: Path | None = None) -> dict[str, Any]:
     return doc
 
 
-def resolve_profile(profile_id_and_version: Any, repo_root: Path | None = None) -> dict[str, Any] | None:
+def resolve_profile(profile_id_and_version: Any, repo_root: Path | None = None,
+                    profile_set: dict[str, Any] | None = None) -> dict[str, Any] | None:
     """Resolve the exact profile named by a receipt's profile_id_and_version.
 
     Returns None when the reference is malformed or does not resolve, which the
     caller must treat as a failure - a stage cannot be validated against a
     profile that was never identified.
+
+    profile_set lets a caller supply the set it already holds instead of having
+    this read the working tree. The publication gate needs that: it judges a
+    commit, and a profile set read from disk would let an uncommitted edit decide
+    what a published stage was required to contain. Callers that pass nothing
+    keep the previous behaviour exactly.
     """
     if not isinstance(profile_id_and_version, str) or "@" not in profile_id_and_version:
         return None
@@ -318,7 +325,8 @@ def resolve_profile(profile_id_and_version: Any, repo_root: Path | None = None) 
         version = int(raw_version)
     except ValueError:
         return None
-    for profile in load_profile_set(repo_root).get("profiles", []):
+    known = profile_set if isinstance(profile_set, dict) else load_profile_set(repo_root)
+    for profile in known.get("profiles", []):
         if not isinstance(profile, dict):
             continue
         if profile.get("profile_id") == profile_id and profile.get("profile_version") == version:
@@ -327,7 +335,8 @@ def resolve_profile(profile_id_and_version: Any, repo_root: Path | None = None) 
 
 
 def validate_effective_stage_model(
-    data: dict[str, Any], model: dict[str, Any], repo_root: Path | None = None
+    data: dict[str, Any], model: dict[str, Any], repo_root: Path | None = None,
+    profile_set: dict[str, Any] | None = None,
 ) -> int:
     """effective_current_stage_model = common_task_stage_model + this profile's
     required_model_fields.
@@ -340,7 +349,7 @@ def validate_effective_stage_model(
     receipt = data.get("receipt")
     reference = receipt.get("profile_id_and_version") if isinstance(receipt, dict) else None
     try:
-        profile = resolve_profile(reference, repo_root)
+        profile = resolve_profile(reference, repo_root, profile_set)
     except Exception:
         return 11
     if profile is None:
@@ -677,6 +686,20 @@ STAGE_ACCEPTANCE_DECISION_TYPES = {
     "plan": AUTHORIZATION_DECISION_TYPE,
     "completion": COMPLETION_DECISION_TYPE,
 }
+# 01_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml
+STAGE_RECEIPT_SCHEMA_VERSION = "stage_collaborative_deliberation.stage_receipt.v1"
+_OBJECT_ID_DIGITS = frozenset("0123456789abcdef")
+
+
+def _is_object_id(value: Any) -> bool:
+    """A full lowercase hexadecimal Git object id, as syntax rather than as a number.
+
+    Forty characters drawn from 0-9a-f and nothing else. int(value, 16) is not
+    this: it accepts a sign and underscore separators, so it read "+" plus 39 hex
+    digits, and a forty-character string with underscores in it, as valid.
+    """
+    return (isinstance(value, str) and len(value) == 40
+            and all(character in _OBJECT_ID_DIGITS for character in value))
 
 
 def _same_ref(left: Any, right: Any) -> bool:
@@ -786,6 +809,26 @@ def validate_stage_acceptance_context(
             _scope_feasibility(model, {"stage_id": context["stage_id"]}, contract)
         except TaskScopeError as exc:
             return exc.code, str(exc)
+        # A model is valid for a stage, not in the abstract. _scope_model states
+        # this rule for the task-scope path; the same rule applies per stage here.
+        # Without it a stage 01 control could bind a model whose own content said
+        # stage 02 and publish, which is what happened.
+        if model.get("task_id") != context.get("task_id"):
+            return 13, "model_task_mismatch"
+        if model.get("stage_id") != context.get("stage_id"):
+            return 13, "model_stage_mismatch"
+        # effective_current_stage_model = common_task_stage_model + this profile's
+        # required_model_fields. Validating only the common fields lets any stage
+        # pass another stage's obligations, which is the canonical composition
+        # rule and already implemented once. It is called, not restated, and the
+        # profile set comes from the candidate rather than the working tree.
+        profile_set = context.get("profile_set")
+        if not isinstance(profile_set, dict):
+            return 11, "profile_set_unreadable"
+        code = validate_effective_stage_model(
+            {"receipt": context.get("receipt")}, model, profile_set=profile_set)
+        if code:
+            return code, "effective_stage_model"
     else:
         output = context.get("accepted_output")
         verification = context.get("accepted_verification")
@@ -838,17 +881,26 @@ def validate_stage_acceptance_context(
     code = validate_base_stage_receipt(receipt)
     if code:
         return code, "base_stage_receipt"
+    # An object existing at the right blob is not the same as it satisfying the
+    # receipt contract. 加载与receipt契约_v1 names this identifier; a receipt
+    # carrying some other schema is not this schema's receipt, however complete
+    # its field list looks.
+    if receipt.get("receipt_schema_version") != STAGE_RECEIPT_SCHEMA_VERSION:
+        return 17, "receipt_schema_version_is_not_the_canonical_stage_receipt"
     # validate_base_stage_receipt requires exact_candidate_version to be truthy,
-    # which "not-a-commit" satisfies. Truthy is not exact. This does not decide
-    # which commit it must name - that binding is not settled for the publication
-    # path and is recorded as an open finding rather than invented here - but a
-    # value that cannot be a commit at all is refused.
-    version = receipt.get("exact_candidate_version")
-    if not isinstance(version, str) or len(version) != 40:
-        return 17, "receipt_exact_candidate_version_is_not_a_commit_id"
-    try:
-        int(version, 16)
-    except ValueError:
+    # which "not-a-commit" satisfies. Truthy is not exact.
+    #
+    # The first attempt used int(value, 16), which is a number parser, not a
+    # syntax check: Python accepts a leading + or -, and underscores as digit
+    # separators. So "+" followed by 39 hex digits passed, and so did a
+    # forty-character string containing underscores. Neither is an object id.
+    # Syntax is checked as syntax now.
+    #
+    # This still does not decide which commit the field must name. That referent
+    # is not defined for the publication path by any governing contract, and is
+    # recorded as an open finding rather than invented. Syntax is all that is
+    # claimed here, and the claim is limited to that.
+    if not _is_object_id(receipt.get("exact_candidate_version")):
         return 17, "receipt_exact_candidate_version_is_not_a_commit_id"
 
     return 0, ""

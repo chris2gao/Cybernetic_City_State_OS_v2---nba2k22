@@ -115,6 +115,10 @@ MECHANISM = "01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_
 # them - so it is evidence the push carries, unlike the mechanism, which is the
 # judge and comes from the installation.
 PROFILE_CONTRACT = "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml"
+# The seven profiles, each naming the stage-specific fields its stage must carry.
+# Read at the candidate for the same reason as the contract, and so that the
+# mechanism does not fall back to reading the working tree for them.
+PROFILE_SET = "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml"
 
 
 class GateError(Exception):
@@ -545,7 +549,8 @@ def _acceptance_context(repo: Path, candidate: str, node: StageNodes, control: d
     context = {"task_id": task_id, "stage_id": node.stage_id, "phase": phase,
                "record": record, "record_ref": record_ref,
                "receipt": _load_yaml_at(repo, receipt_at["commit"], receipt_at["path"]),
-               "contract": _load_yaml_at(repo, candidate, PROFILE_CONTRACT)}
+               "contract": _load_yaml_at(repo, candidate, PROFILE_CONTRACT),
+               "profile_set": _load_yaml_at(repo, candidate, PROFILE_SET)}
 
     if phase == "plan":
         model_ref = control.get("current_model_ref")
