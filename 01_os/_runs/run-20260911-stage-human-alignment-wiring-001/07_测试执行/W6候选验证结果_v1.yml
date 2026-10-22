@@ -1,0 +1,111 @@
+schema_version: citystate.execution_candidate_evidence.v1
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+record_kind: executor_candidate_for_existing_HG2
+recorded_at: 2026-10-22
+implementation_candidate: 73398e468cf56d62094c2f19e27d9ee048b47298
+predecessor_candidate: c85dce2e913349edb5aa34d04dd75ea3159d9364
+construction_base: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+source_branch: claude/stage-human-alignment-wiring-001
+decision_archive_root_convention: 城邦简报/core/03_决策档案/
+output_contract_load_receipt:
+  mechanism_version: 1
+  loaded_paths:
+    - 01_os/02_boot/minimum_work_unit_output/启动清单_v1.yml
+    - 01_os/03_mechanisms/minimum_work_unit_output/README.md
+    - 01_os/03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml
+  validator_exit_code: 0
+  validator_proof_scope: structural_MWU_floor_only
+
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Close the measured W6 profile, content, scope, decision, receipt and committed-source
+    gaps in the approved seven-stage publication implementation; retain the original task boundary.
+  implementation_or_review_method: >-
+    Reuse the deliberation owner's strong checks, resolve exact packet/action and Git sources,
+    consume the history verdict in the committed runner, and test actual positive and negative
+    Git histories. Bind test sources to the exact candidate exported by git archive.
+  supportability_rationale: >-
+    Wrong profiles with matching fields, label-only decisions, boolean receipt exit codes and
+    ambiguous or nonregular sources were demonstrated before repair. Counterexamples now refuse
+    with asserted causes while legitimate chains, per-stage scopes and permitted local choices pass.
+  feasibility_rationale: >-
+    The implementation reuses installed Git and YAML helpers inside the packet allowlist.
+    Candidate bytes, complete test logs and exit codes are available; source code remained fixed
+    during the completed runs. Human identity and independent acceptance remain outside these proofs.
+  exact_result_or_candidate_ref: 73398e468cf56d62094c2f19e27d9ee048b47298
+  verification_evidence:
+    - 20261022-W6-publication-complete.json
+    - 20261022-W6-published-bytes/validated_completion.json
+    - 20261022-W6-archive-runner-full/completion.json
+    - 20261022-W6-final-hook/completion.json
+    - 20261022-W6-candidate-scope.json
+  residual_risk_or_unproved_limits:
+    - The receipt version referent and its stronger node binding remain the recorded contract ambiguity.
+    - Commitment structure does not authenticate a Human or replay the claimed verification work.
+    - Existing HG2 and independent co-audit remain pending; no boundary-closure signature is issued.
+    - No new development, test expansion, review layer or runtime activation is started by this record.
+
+completed_checks:
+  publication:
+    methods_run: 120
+    methods_passed: 120
+    modules: {publication_gate: 90, partial_owner_values: 17, decision_sources: 5, source_reading: 8}
+    partitions: 3
+    disjoint_complete_partition: true
+    skipped_methods: 0
+    actual_child_exit_codes: [0, 0, 0]
+    source_hashes_equal_archived_candidate: true
+  archived_runner:
+    methods_run: 34
+    methods_passed: 34
+    seconds: 362.586
+    actual_child_exit_code: 0
+  hook:
+    cases_run: 14
+    cases_passed: 14
+    actual_child_exit_code: 0
+    transport_scope: local_git_with_hooks_enabled
+  active_mechanism_static: {actual_exit_code: 0}
+  archived_runner_static_with_subvalidators: {actual_exit_code: 0}
+  source_integrity:
+    git_archive_candidate: 73398e468cf56d62094c2f19e27d9ee048b47298
+    changed_file_byte_records: 15
+    git_metadata_added_without_source_changes: true
+    validation_clone_core_longpaths: true
+    validation_clone_worktree_clean: true
+  scope_ledger:
+    candidate_changed_paths: 74
+    outside_allowed_paths: 0
+    forbidden_changed_paths: 0
+    binary_paths: 0
+
+reused_mechanism_regression:
+  evidence: 20260915-W6-scope-regression/completion.json
+  tests_passed: 223
+  seconds: 390.85
+  owner_sha256: a4e3fbb1dc51bac50cc957db9c1e32dae06cf855347726e4f27706658e5c452b
+  current_owner_matches_recorded_source: true
+  rerun_in_20261022_execution: false
+
+publication_preflight:
+  evidence: 20261022-W6-candidate-publication-preflight/completion.json
+  actual_exit_code: 0
+  non_seven_stage_runs_not_judged: 57
+  governed_seven_stage_population: 0
+  semantic_coverage_proof: false
+
+preserved_failures:
+  - The old uncompleted September jobs were not counted as passing.
+  - The initial archive runner static exited 22 because the context check required Git metadata.
+  - The successful Git-aware recheck supersedes that environment failure without deleting it.
+  - One interrupted fixture remains outside the repository because deletion was rejected by tool policy.
+
+existing_pending_boundaries:
+  Human_HG2: pending
+  independent_coaudit: pending
+  READY_FOR_BOUNDARY_CLOSURE: not_signed
+  landing_boundary_successor_record: not_created
+  master_modified: false
+  formal_cross_endpoint_delivery_started: false
