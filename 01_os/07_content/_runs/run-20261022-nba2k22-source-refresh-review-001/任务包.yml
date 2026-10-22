@@ -1,0 +1,65 @@
+task_id: nba2k22-source-refresh-independent-review-20261022
+repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+risk_tier: T2_semantic
+exact_base_sha: 26cd0bfabc5e4857e37bf491756d885ad592f41f
+branch: review/nba2k22-source-refresh-20261022
+objective: Independent GitHub-only verification of Gemini's NBA2K22 source refresh candidate at 8bdae1700ecd3ed47d2ad197cca86ace388083bb, with evidence-backed findings and acceptance recommendation.
+source_evidence:
+  - 8bdae1700ecd3ed47d2ad197cca86ace388083bb
+  - eb275a46765c758fa5ce6aaf6ca8dae217baaf97
+  - 21d62ec9e04b86a1f737c1500ea2f41c34583215
+  - d1038811ecee3a6b35a5d9c4787c67bf65456438
+allowed_changed_paths:
+  - 01_os/07_content/_runs/run-20261022-nba2k22-source-refresh-review-001/**
+verification_plan: 01_os/07_content/_runs/run-20261022-nba2k22-source-refresh-review-001/verification_plan.json
+required_tests: [remote_branch_and_scope, source_tree_path_union, critical_blob_identity, offline_evidence_limitations, os_contract_evidence]
+prohibitions: [publish_or_merge_master, change_executor_candidate, access_DCR_without_Human_permission, access_user_local_files, modify_shared_os_or_business, fabricate_local_test_results]
+required_completion_pointer: 01_os/07_content/_runs/run-20261022-nba2k22-source-refresh-review-001/completion_pointer.json
+big_task: false
+publisher:
+  principal_binding: connector_authenticated
+  publication_transport: github_api_connector
+  source_branch_publication: task_scope_default
+  master_integration_confirmation: not_requested
+  expected_remote_master_head: 26cd0bfabc5e4857e37bf491756d885ad592f41f
+big_task_confirmation_closure:
+  enabled: false
+  known_confirmation_required_actions: []
+  preconfirmed_actions: []
+  uncovered_actions: []
+executor_profile:
+  provider: OpenAI
+  surface: ChatGPT with GitHub connector
+  model: GPT-6
+  reasoning_effort: not_exposed
+  mode: standard
+  routing_basis: Current Human requested independent review; repository-native OS design and GitHub remote evidence available.
+  authority: routing_only
+  routing_validator_status: NOT_RUN_NO_LOCAL_OS_EXECUTION
+verification_profile:
+  reproduce_before_change: not_required
+  independent_reviewer: current_different_session_than_Gemini_executor
+  different_model_family: true
+  different_measurement_tool: true
+minimum_work_unit_output:
+  role: independent_review
+  work_performed_or_requested: Inspect actual remote task commit and compare imported file tree and blob evidence against pinned historical source commits.
+  implementation_or_review_method: Use GitHub refs, trees, immutable Git blobs and code inspection; compare source union and isolate SQLite binary changes to reported test code.
+  supportability_rationale: Remote path union exactly covers pinned A plus B native and C audit; run evidence conflicts with test command and sample database changed unexpectedly during a read-only migration.
+  feasibility_rationale: Source branch and all provenance blobs are available via GitHub connector; remote evidence confirms file identity without Desktop Commander, while local verification logs and untracked backup remain unobservable.
+  verdict: FIX_REQUIRED
+  primary_evidence_examined:
+    - remote_git_commit_8bdae1700ecd3ed47d2ad197cca86ace388083bb
+    - source_tree_blob_comparison_A_B_C
+    - migrated_AG_NATIVE_01D_test_and_exporter
+    - migrated_task_packet_and_completion_pointer
+    - OS_entry_and_managed_verification_contract
+  findings_and_residual_risk:
+    - Tracked SQLite sample mutated during test, not byte-identical to source.
+    - Claimed 41 tests conflicts with stated B C D command covering 23 tests.
+    - Required candidate-tracked JSON verification_plan and detailed completion transport receipt missing.
+  executor_rationale_assessment:
+    supportability_assessment: File-scope and primary source identity supported, but tests and zero-difference wording overstate the evidence: tracked SQLite sample was overwritten.
+    feasibility_assessment: Remote migration is demonstrably feasible and near complete; remaining defects are scoped documentary and deterministic asset restoration, not grounds to repeat full migration.
+    primary_evidence_refs: [remote_git_commit_8bdae1700ecd3ed47d2ad197cca86ace388083bb, source_tree_blob_comparison_A_B_C, migrated_AG_NATIVE_01D_test_and_exporter, migrated_task_packet_and_completion_pointer]
+    unsupported_or_inferred_claims: [all_41_tests_reproduced_from_reported_command, tracked_binary_fixture_unchanged, complete_OS_managed_verification]
